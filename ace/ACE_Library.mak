@@ -218,10 +218,10 @@ CLEAN :
 
 CPP=cl.exe
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /I "..\STL" /I ".." /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=1 /c
+# ADD CPP /nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=1 /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /I "..\STL" /I ".." /D "_DEBUG"\
- /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=1 /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "_DEBUG" /D "WIN32" /D\
+ "_WINDOWS" /D ACE_HAS_DLL=1 /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\DLL\Debug/
 CPP_SBRS=.\.
 
@@ -556,10 +556,10 @@ CLEAN :
 
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MT /W3 /GX /O2 /I "..\STL" /I ".." /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /c
+# ADD CPP /nologo /G5 /MT /W3 /GX /O2 /I ".." /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /G5 /MT /W3 /GX /O2 /I "..\STL" /I ".." /D "NDEBUG" /D "WIN32"\
- /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /Fo"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /G5 /MT /W3 /GX /O2 /I ".." /D "NDEBUG" /D "WIN32" /D\
+ "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /Fo"$(INTDIR)/" /c 
 CPP_OBJS=.\LIB\Release/
 CPP_SBRS=.\.
 
@@ -885,10 +885,10 @@ CLEAN :
 
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MTd /W3 /GX /Z7 /Od /I "..\STL" /I ".." /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /c
+# ADD CPP /nologo /G5 /MTd /W3 /GX /Z7 /Od /I ".." /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /G5 /MTd /W3 /GX /Z7 /Od /I "..\STL" /I ".." /D "_DEBUG" /D\
- "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /Fo"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /G5 /MTd /W3 /GX /Z7 /Od /I ".." /D "_DEBUG" /D "WIN32" /D\
+ "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /Fo"$(INTDIR)/" /c 
 CPP_OBJS=.\LIB\Debug/
 CPP_SBRS=.\.
 
@@ -1214,11 +1214,10 @@ CLEAN :
 
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MTd /W3 /GX /Z7 /Od /I "..\STL" /I ".." /D "_DEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /c
+# ADD CPP /nologo /G5 /MTd /W3 /GX /Z7 /Od /I ".." /D "_DEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /G5 /MTd /W3 /GX /Z7 /Od /I "..\STL" /I ".." /D "_DEBUG" /D\
- "UNICODE" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0\
- /Fo"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /G5 /MTd /W3 /GX /Z7 /Od /I ".." /D "_DEBUG" /D "UNICODE" /D\
+ "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /Fo"$(INTDIR)/" /c 
 CPP_OBJS=.\LIB\Unicode_Debug/
 CPP_SBRS=.\.
 
@@ -1544,11 +1543,10 @@ CLEAN :
 
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MT /W3 /GX /O2 /I "..\STL" /I ".." /D "NDEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /c
+# ADD CPP /nologo /G5 /MT /W3 /GX /O2 /I ".." /D "NDEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /G5 /MT /W3 /GX /O2 /I "..\STL" /I ".." /D "NDEBUG" /D\
- "UNICODE" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0\
- /Fo"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /G5 /MT /W3 /GX /O2 /I ".." /D "NDEBUG" /D "UNICODE" /D\
+ "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /Fo"$(INTDIR)/" /c 
 CPP_OBJS=.\LIB\Unicode_Release/
 CPP_SBRS=.\.
 
@@ -1880,11 +1878,10 @@ CLEAN :
 
 CPP=cl.exe
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /I "..\STL" /I ".." /D "_DEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=1 /c
+# ADD CPP /nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "_DEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=1 /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /I "..\STL" /I ".." /D "_DEBUG"\
- /D "UNICODE" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=1 /Fo"$(INTDIR)/"\
- /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "_DEBUG" /D "UNICODE"\
+ /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=1 /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\DLL\Unicode_Debug/
 CPP_SBRS=.\.
 
@@ -2221,10 +2218,10 @@ CLEAN :
 
 CPP=cl.exe
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MD /W3 /GX /O2 /I "..\STL" /I ".." /D "NDEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=1 /c
+# ADD CPP /nologo /G5 /MD /W3 /GX /O2 /I ".." /D "NDEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=1 /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /G5 /MD /W3 /GX /O2 /I "..\STL" /I ".." /D "NDEBUG" /D\
- "UNICODE" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=1 /Fo"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /G5 /MD /W3 /GX /O2 /I ".." /D "NDEBUG" /D "UNICODE" /D\
+ "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=1 /Fo"$(INTDIR)/" /c 
 CPP_OBJS=.\DLL\Unicode_Release/
 CPP_SBRS=.\.
 
@@ -2561,10 +2558,10 @@ CLEAN :
 
 CPP=cl.exe
 # ADD BASE CPP /nologo /G5 /MD /W3 /GX /O2 /I "..\STL" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=1 /YX /c
-# ADD CPP /nologo /G5 /MD /W3 /GX /O2 /I "..\STL" /I ".." /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=1 /c
+# ADD CPP /nologo /G5 /MD /W3 /GX /O2 /I ".." /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=1 /c
 # SUBTRACT CPP /YX
-CPP_PROJ=/nologo /G5 /MD /W3 /GX /O2 /I "..\STL" /I ".." /D "NDEBUG" /D "WIN32"\
- /D "_WINDOWS" /D ACE_HAS_DLL=1 /Fo"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /G5 /MD /W3 /GX /O2 /I ".." /D "NDEBUG" /D "WIN32" /D\
+ "_WINDOWS" /D ACE_HAS_DLL=1 /Fo"$(INTDIR)/" /c 
 CPP_OBJS=.\DLL\Release/
 CPP_SBRS=.\.
 
@@ -4075,12 +4072,145 @@ DEP_CPP_UPIPE_A=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
 
-NODEP_CPP_UPIPE_A=\
-	".\ace\UPIPE_Acceptor.h"\
-	".\ace\UPIPE_Acceptor.i"\
+DEP_CPP_UPIPE_A=\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Addr.h"\
+	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/IPC_SAP.h"\
+	"..\ace/IPC_SAP.i"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/LOG_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Module.cpp"\
+	"..\ace/Module.h"\
+	"..\ace/Module.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SPIPE.h"\
+	"..\ace/SPIPE.i"\
+	"..\ace/SPIPE_Acceptor.h"\
+	"..\ace/SPIPE_Addr.h"\
+	"..\ace/SPIPE_Addr.i"\
+	"..\ace/SPIPE_Stream.h"\
+	"..\ace/SPIPE_Stream.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/Stream.cpp"\
+	"..\ace/Stream.h"\
+	"..\ace/Stream.i"\
+	"..\ace/Stream_Modules.cpp"\
+	"..\ace/Stream_Modules.h"\
+	"..\ace/Stream_Modules.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Task.h"\
+	"..\ace/Task.i"\
+	"..\ace/Task_T.cpp"\
+	"..\ace/Task_T.h"\
+	"..\ace/Task_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Time_Value.h"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/UPIPE_Acceptor.h"\
+	"..\ace/UPIPE_Acceptor.i"\
+	"..\ace/UPIPE_Addr.h"\
+	"..\ace/UPIPE_Stream.h"\
+	"..\ace/UPIPE_Stream.i"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
 	
 
-"$(INTDIR)\UPIPE_Acceptor.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\UPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_UPIPE_A) "$(INTDIR)"
 
 
 !ENDIF 
@@ -11012,6 +11142,7 @@ DEP_CPP_SPIPE_AC=\
 	"..\ace/ACE.i"\
 	"..\ace/Addr.h"\
 	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
 	"..\ace/Auto_Ptr.cpp"\
 	"..\ace/Auto_Ptr.h"\
 	"..\ace/Auto_Ptr.i"\
@@ -11022,6 +11153,8 @@ DEP_CPP_SPIPE_AC=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
 	"..\ace/inc_user_config.h"\
 	"..\ace/iosfwd.h"\
 	"..\ace/IPC_SAP.h"\
@@ -11048,7 +11181,18 @@ DEP_CPP_SPIPE_AC=\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
 	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
 	"..\ace/Trace.h"\
 	"..\ace/ws2tcpip.h"\
 	
@@ -11063,6 +11207,7 @@ DEP_CPP_SPIPE_AC=\
 	"..\ace/ACE.i"\
 	"..\ace/Addr.h"\
 	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
 	"..\ace/Auto_Ptr.cpp"\
 	"..\ace/Auto_Ptr.h"\
 	"..\ace/Auto_Ptr.i"\
@@ -11073,6 +11218,8 @@ DEP_CPP_SPIPE_AC=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
 	"..\ace/inc_user_config.h"\
 	"..\ace/iosfwd.h"\
 	"..\ace/IPC_SAP.h"\
@@ -11099,7 +11246,18 @@ DEP_CPP_SPIPE_AC=\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
 	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
 	"..\ace/Trace.h"\
 	"..\ace/ws2tcpip.h"\
 	
@@ -11114,6 +11272,7 @@ DEP_CPP_SPIPE_AC=\
 	"..\ace/ACE.i"\
 	"..\ace/Addr.h"\
 	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
 	"..\ace/Auto_Ptr.cpp"\
 	"..\ace/Auto_Ptr.h"\
 	"..\ace/Auto_Ptr.i"\
@@ -11124,6 +11283,8 @@ DEP_CPP_SPIPE_AC=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
 	"..\ace/inc_user_config.h"\
 	"..\ace/iosfwd.h"\
 	"..\ace/IPC_SAP.h"\
@@ -11150,7 +11311,18 @@ DEP_CPP_SPIPE_AC=\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
 	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
 	"..\ace/Trace.h"\
 	"..\ace/ws2tcpip.h"\
 	
@@ -11160,11 +11332,67 @@ DEP_CPP_SPIPE_AC=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
 
-NODEP_CPP_SPIPE_AC=\
-	".\ace\SPIPE_Acceptor.h"\
+DEP_CPP_SPIPE_AC=\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Addr.h"\
+	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/IPC_SAP.h"\
+	"..\ace/IPC_SAP.i"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/LOG_Record.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/SPIPE.h"\
+	"..\ace/SPIPE.i"\
+	"..\ace/SPIPE_Acceptor.h"\
+	"..\ace/SPIPE_Addr.h"\
+	"..\ace/SPIPE_Addr.i"\
+	"..\ace/SPIPE_Stream.h"\
+	"..\ace/SPIPE_Stream.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
 	
 
-"$(INTDIR)\SPIPE_Acceptor.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\SPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_SPIPE_AC) "$(INTDIR)"
 
 
 !ENDIF 
@@ -33669,12 +33897,145 @@ SOURCE=.\UPIPE_Acceptor.cpp
 
 !IF  "$(CFG)" == "ACE static library - Win32 Release"
 
-NODEP_CPP_UPIPE_A=\
-	".\ace\UPIPE_Acceptor.h"\
-	".\ace\UPIPE_Acceptor.i"\
+DEP_CPP_UPIPE_A=\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Addr.h"\
+	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.cpp"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/IPC_SAP.h"\
+	"..\ace/IPC_SAP.i"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/LOG_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Module.cpp"\
+	"..\ace/Module.h"\
+	"..\ace/Module.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/SPIPE.h"\
+	"..\ace/SPIPE.i"\
+	"..\ace/SPIPE_Acceptor.h"\
+	"..\ace/SPIPE_Addr.h"\
+	"..\ace/SPIPE_Addr.i"\
+	"..\ace/SPIPE_Stream.h"\
+	"..\ace/SPIPE_Stream.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/Stream.cpp"\
+	"..\ace/Stream.h"\
+	"..\ace/Stream.i"\
+	"..\ace/Stream_Modules.cpp"\
+	"..\ace/Stream_Modules.h"\
+	"..\ace/Stream_Modules.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Task.h"\
+	"..\ace/Task.i"\
+	"..\ace/Task_T.cpp"\
+	"..\ace/Task_T.h"\
+	"..\ace/Task_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Time_Value.h"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/UPIPE_Acceptor.h"\
+	"..\ace/UPIPE_Acceptor.i"\
+	"..\ace/UPIPE_Addr.h"\
+	"..\ace/UPIPE_Stream.h"\
+	"..\ace/UPIPE_Stream.i"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
 	
 
-"$(INTDIR)\UPIPE_Acceptor.obj" : $(SOURCE) "$(INTDIR)"
+"$(INTDIR)\UPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_UPIPE_A) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Debug"
@@ -41030,20 +41391,12 @@ SOURCE=.\SPIPE_Acceptor.cpp
 
 !IF  "$(CFG)" == "ACE static library - Win32 Release"
 
-NODEP_CPP_SPIPE_AC=\
-	".\ace\SPIPE_Acceptor.h"\
-	
-
-"$(INTDIR)\SPIPE_Acceptor.obj" : $(SOURCE) "$(INTDIR)"
-
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Debug"
-
 DEP_CPP_SPIPE_AC=\
 	"..\ace/ACE.h"\
 	"..\ace/ACE.i"\
 	"..\ace/Addr.h"\
 	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
 	"..\ace/Auto_Ptr.cpp"\
 	"..\ace/Auto_Ptr.h"\
 	"..\ace/Auto_Ptr.i"\
@@ -41054,6 +41407,8 @@ DEP_CPP_SPIPE_AC=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
 	"..\ace/inc_user_config.h"\
 	"..\ace/iosfwd.h"\
 	"..\ace/IPC_SAP.h"\
@@ -41080,7 +41435,83 @@ DEP_CPP_SPIPE_AC=\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
 	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	
+
+"$(INTDIR)\SPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_SPIPE_AC) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Debug"
+
+DEP_CPP_SPIPE_AC=\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Addr.h"\
+	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/IPC_SAP.h"\
+	"..\ace/IPC_SAP.i"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/LOG_Record.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/SPIPE.h"\
+	"..\ace/SPIPE.i"\
+	"..\ace/SPIPE_Acceptor.h"\
+	"..\ace/SPIPE_Addr.h"\
+	"..\ace/SPIPE_Addr.i"\
+	"..\ace/SPIPE_Stream.h"\
+	"..\ace/SPIPE_Stream.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
 	"..\ace/Trace.h"\
 	"..\ace/ws2tcpip.h"\
 	
@@ -41095,6 +41526,7 @@ DEP_CPP_SPIPE_AC=\
 	"..\ace/ACE.i"\
 	"..\ace/Addr.h"\
 	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
 	"..\ace/Auto_Ptr.cpp"\
 	"..\ace/Auto_Ptr.h"\
 	"..\ace/Auto_Ptr.i"\
@@ -41105,6 +41537,8 @@ DEP_CPP_SPIPE_AC=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
 	"..\ace/inc_user_config.h"\
 	"..\ace/iosfwd.h"\
 	"..\ace/IPC_SAP.h"\
@@ -41131,7 +41565,18 @@ DEP_CPP_SPIPE_AC=\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
 	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
 	"..\ace/Trace.h"\
 	"..\ace/ws2tcpip.h"\
 	
@@ -41146,6 +41591,7 @@ DEP_CPP_SPIPE_AC=\
 	"..\ace/ACE.i"\
 	"..\ace/Addr.h"\
 	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
 	"..\ace/Auto_Ptr.cpp"\
 	"..\ace/Auto_Ptr.h"\
 	"..\ace/Auto_Ptr.i"\
@@ -41156,6 +41602,8 @@ DEP_CPP_SPIPE_AC=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
 	"..\ace/inc_user_config.h"\
 	"..\ace/iosfwd.h"\
 	"..\ace/IPC_SAP.h"\
@@ -41182,7 +41630,18 @@ DEP_CPP_SPIPE_AC=\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
 	"..\ace/sys_conf.h"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
 	"..\ace/Trace.h"\
 	"..\ace/ws2tcpip.h"\
 	
@@ -55714,6 +56173,7 @@ DEP_CPP_IO_SA=\
 	"..\ace/Auto_Ptr.h"\
 	"..\ace/Auto_Ptr.i"\
 	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
 	"..\ace/config-win32-borland.h"\
 	"..\ace/config-win32-common.h"\
 	"..\ace/config-win32.h"\
