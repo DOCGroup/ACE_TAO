@@ -1,3 +1,11 @@
+Wed Mar 15 22:02:22 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/iiop_lite.conf:
+	* performance-tests/Cubit/TAO/IDL_Cubit/uiop_lite.conf: Added
+	  these new service configurator files. 
+	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl: Changed the
+	  script for using GIOPlite. 
+
 Wed Mar 15 21:50:42 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/TAO.dsp: Added new files to the project. Many thanks to
