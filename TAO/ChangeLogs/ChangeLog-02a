@@ -1,3 +1,12 @@
+Sun Apr 23 00:45:00 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+        * orbsvcs/tests/AVStreams/*/Makefile
+          All AVStreams tests now depend on libACE_QoS.so (even if they
+          do not use QoS), because libTAO_AV.so links against libACE_QoS.so
+          if QoS was enabled. 
+          libACE_QoS.so should only be conditionally linked in.
+          (Check if rapi=1)
+
 Sun Apr 22 19:59:06 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/AV/Transport.cpp:
