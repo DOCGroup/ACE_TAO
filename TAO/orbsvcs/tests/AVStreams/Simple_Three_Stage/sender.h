@@ -104,12 +104,6 @@ public:
   FILE *file (void);
   // File handle from which data is read to be sent.
 
-  TAO_StreamCtrl* streamctrl (void);
-  // The stream control interface that manages the stream set up
-
-  int frame_rate (void);
-  // The requested frame rate for sending each frame of data read from the file.
-  
 private:
   int parse_args (int argc, char **argv);
   // Method to parse the command line arguments.
@@ -119,22 +113,19 @@ private:
   
   ENDPOINT_STRATEGY endpoint_strategy_;
   // The reactive strategy of the client.
-
+  
   AVStreams::MMDevice_var receiver_mmdevice_;
   // The receiver MMDevice that the sender connects to
-
+  
   TAO_MMDevice* sender_mmdevice_;
   // The sender MMDevice.
-
+  
   Sender_StreamEndPoint* endpoint_;
   // Reference to the sender streamendpoint
-
+  
   int count_;
   // Number of frames sent.
   
-  int argc_;
-  char **argv_;
-
   ACE_CString filename_;
   // File from which data is read.
 
@@ -147,7 +138,7 @@ private:
   int frame_rate_;
   // The sepcified data frame rate
   
-  ACE_Message_Block mb;
+  ACE_Message_Block mb_;
   // Message block into which data is read from a file and then sent.
 
   TAO_AV_Protocol_Object* protocol_object_;

@@ -4,20 +4,23 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 
-ACE_High_Res_Timer last_frame_sent_time;
-// The time taken for sending a frmae and preparing for the next frame
-
-ACE_Time_Value inter_frame_time;
-// The time that should lapse between two consecutive frames sent.
-
 int
 Sender_Callback::handle_start (void)
 {
   // Connection setup, start sending data.
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-  SENDER::instance ()->pace_data (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
+  ACE_TRY_NEW_ENV
+    {
+      SENDER::instance ()->pace_data (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Sender_Callback::handle_start pace data failed");
+      
+      return -1;
+    }
+  ACE_ENDTRY;
 
   return 0;
 }
@@ -36,6 +39,7 @@ Sender_StreamEndPoint::get_callback (const char *,
 
   // Store reference to the sender stream endpoint
   SENDER::instance ()->set_endpoint (this);
+
   return 0;
 }
 
@@ -49,15 +53,15 @@ Sender_StreamEndPoint::set_protocol_object (const char *,
 }
 
 Sender::Sender (void)
-  :sender_mmdevice_ (0),
-   endpoint_ (0),
-   count_ (0),
-   filename_ ("Makefile"),
-   fp_ (0),
-   frame_rate_ (30),
-   protocol_object_ (0)
+  : sender_mmdevice_ (0),
+    endpoint_ (0),
+    count_ (0),
+    filename_ ("Makefile"),
+    fp_ (0),
+    frame_rate_ (30),
+    protocol_object_ (0)
 {
-  this->mb.size (BUFSIZ);
+  this->mb_.size (BUFSIZ);
 }
 
 void
@@ -117,13 +121,6 @@ Sender::file (void)
   return this->fp_;
 }
 
-int
-Sender::frame_rate (void)
-{
-  return this->frame_rate_;
-}
-
-
 // Method to bind the sender reference to the Naming Service.
 int
 Sender::register_sender (CORBA::Environment &ACE_TRY_ENV)
@@ -140,11 +137,6 @@ Sender::register_sender (CORBA::Environment &ACE_TRY_ENV)
                   TAO_MMDevice (&this->endpoint_strategy_),
                   -1);
   
-
-  CosNaming::Name sender_mmdevice_name (1);
-  sender_mmdevice_name.length (1);
-  sender_mmdevice_name [0].id = CORBA::string_dup ("Sender");
-  
   // Servant Reference Counting to manage lifetime
   PortableServer::ServantBase_var safe_sender_mmdevice =
     this->sender_mmdevice_;
@@ -153,6 +145,10 @@ Sender::register_sender (CORBA::Environment &ACE_TRY_ENV)
     this->sender_mmdevice_->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN(-1);
 
+  CosNaming::Name sender_mmdevice_name (1);
+  sender_mmdevice_name.length (1);
+  sender_mmdevice_name [0].id = CORBA::string_dup ("Sender");
+  
   // Register the server object with the naming server.
   this->my_naming_client_->rebind (sender_mmdevice_name,
                                    mmdevice.in (),
@@ -165,26 +161,21 @@ Sender::register_sender (CORBA::Environment &ACE_TRY_ENV)
 int
 Sender::init (int argc,
 	      char **argv,
-	      CORBA::Environment& ACE_TRY_ENV)
+	      CORBA::Environment &ACE_TRY_ENV)
 {
-  this->argc_ = argc;
-  this->argv_ = argv;
-  
-  CORBA::String_var ior;
-  
   // Initialize the endpoint strategy with the orb and poa.
-  this->endpoint_strategy_.init(TAO_AV_CORE::instance ()->orb (), 
-                                TAO_AV_CORE::instance ()->poa ());
-
+  int result =   
+    this->endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (), 
+                                   TAO_AV_CORE::instance ()->poa ());
+  
   // Parse the command line arguments
-  int result = this->parse_args (argc, 
+  result = this->parse_args (argc, 
 				 argv);
 
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       " (%P|%t) Error in Parse Args \n"),
 		      -1);
-
   
   // Open file to read.
   this->fp_ = ACE_OS::fopen (this->filename_.c_str (),
@@ -194,8 +185,9 @@ Sender::init (int argc,
 		       "Cannot open output file %s\n",
 		       this->filename_.c_str ()),
 		      -1);
-  else ACE_DEBUG ((LM_DEBUG,
-		   "File opened successfully\n"));		  
+  else 
+    ACE_DEBUG ((LM_DEBUG,
+                "File opened successfully\n"));		  
 
   // Register the object reference with the Naming Service.
   result = this->register_sender (ACE_TRY_ENV);
@@ -211,7 +203,7 @@ Sender::init (int argc,
 
 // Method to send data at the specified rate
 int
-Sender::pace_data (CORBA::Environment& ACE_TRY_ENV)
+Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
 {
 
   // Time within which a frame should be sent.
@@ -222,7 +214,11 @@ Sender::pace_data (CORBA::Environment& ACE_TRY_ENV)
                 "Frame Time ONE = %f\n Frame Rate = %d\n",
                 frame_time,
                 this->frame_rate_));
-  
+
+  // The time that should lapse between two consecutive frames sent.
+  ACE_Time_Value inter_frame_time;
+
+
   // The time between two consecutive frames.
   inter_frame_time.set (frame_time);
   
@@ -233,65 +229,63 @@ Sender::pace_data (CORBA::Environment& ACE_TRY_ENV)
   
   ACE_TRY
     {
-
+      
+      // The time taken for sending a frame and preparing for the next frame
+      ACE_High_Res_Timer elapsed_timer;
+            
       // Continue to send data till the file is read to the end.
       while (1)
 	{
-
           // Count the frames sent.
 	  count_++;
           
           // Reset the message block.
-          this->mb.reset ();
+          this->mb_.reset ();
           
           // Read from the file into a message block.
-          int n = ACE_OS::fread (this->mb.wr_ptr (),
+          int n = ACE_OS::fread (this->mb_.wr_ptr (),
                                  1,
-                                 this->mb.size (),
+                                 this->mb_.size (),
                                  SENDER::instance ()->file ());
 	  
-          this->mb.wr_ptr (n);
-          
           if (n < 0)
 	    ACE_ERROR_RETURN ((LM_ERROR,
-			       "FTP_Client_Flow_Handler::fread end of file\n"),
+			       "Sender::pace_data fread failed\n"),
 			      -1);
 	  
 	  if (n == 0)
 	    {
-	      if (feof (SENDER::instance ()->file ()))
-		{
-                  // At end of file break the loop and end the client.
-                  if (TAO_debug_level > 0)
-                    ACE_DEBUG ((LM_DEBUG,"Handle_Start:End of file\n"));
-                  break;
-                }
-	      
-	    }
+              // At end of file break the loop and end the client.
+              if (TAO_debug_level > 0)
+                ACE_DEBUG ((LM_DEBUG,"Handle_Start:End of file\n"));
+              break;
+            }
+          
+          this->mb_.wr_ptr (n);
           
   	  if (this->count_ > 1)
   	    {
               // Second frame and beyond
               
               // Stop the timer that was started just before the previous frame was sent.
-  	      last_frame_sent_time.stop ();
+  	      elapsed_timer.stop ();
               
               // Get the time elapsed after sending the previous frame.
-  	      ACE_Time_Value tv;
-              last_frame_sent_time.elapsed_time (tv);
+  	      ACE_Time_Value elapsed_time;
+              elapsed_timer.elapsed_time (elapsed_time);
 
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,
                             "Elapsed Time = %d\n",
-                            tv.msec ()));
+                            elapsed_time.msec ()));
               
               // Check to see if the inter frame time has elapsed.
-  	      if (tv < inter_frame_time)
+  	      if (elapsed_time < inter_frame_time)
                 {
                   // Inter frame time has not elapsed.
 
-                  // Claculate the time to wait before the next frame needs to be sent.
-  		  ACE_Time_Value wait_time (inter_frame_time - tv);
+                  // Calculate the time to wait before the next frame needs to be sent.
+  		  ACE_Time_Value wait_time (inter_frame_time - elapsed_time);
                   if (TAO_debug_level > 0)
                     ACE_DEBUG ((LM_DEBUG,
                                 "Wait Time = %d\n",
@@ -305,16 +299,16 @@ Sender::pace_data (CORBA::Environment& ACE_TRY_ENV)
   	    }
           
           // Start timer before sending the frame.
-  	  last_frame_sent_time.start ();
+  	  elapsed_timer.start ();
 	  
           // Send frame.
-          int result = this->protocol_object_->send_frame (&this->mb);
+          int result = this->protocol_object_->send_frame (&this->mb_);
 
   	  if (result < 0)
   	    ACE_ERROR_RETURN ((LM_ERROR,
-  			       "send failed:%p","FTP_Client_Flow_Handler::send\n"),
+  			       "send failed:%p","Sender::pace_data send\n"),
                               -1);
-          ACE_DEBUG ((LM_DEBUG,"Client::pace_data buffer sent succesfully\n"));
+          ACE_DEBUG ((LM_DEBUG,"Sender::pace_data buffer sent succesfully\n"));
           
         } // end while
 
@@ -322,8 +316,10 @@ Sender::pace_data (CORBA::Environment& ACE_TRY_ENV)
       AVStreams::flowSpec stop_spec;
       
       // Get the strem controoler for this stream.
-      CORBA::Any_ptr streamctrl_any = SENDER::instance ()->get_endpoint ()->get_property_value ("Related_StreamCtrl",
-                                                                                                ACE_TRY_ENV);
+      CORBA::Any_ptr streamctrl_any = 
+        SENDER::instance ()->get_endpoint ()->get_property_value ("Related_StreamCtrl",
+                                                                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       
       AVStreams::StreamCtrl_ptr streamctrl;
       
@@ -332,16 +328,18 @@ Sender::pace_data (CORBA::Environment& ACE_TRY_ENV)
       // Destroy the stream
       streamctrl->destroy (stop_spec,
                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       
       // Shut the orb down.
-      TAO_AV_CORE::instance ()->orb ()->shutdown (0);
+      TAO_AV_CORE::instance ()->orb ()->shutdown (0,
+                                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
       
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-			   "Client::pace_data Failed");
+			   "Client::pace_data Failed\n");
       return -1;
     }
   ACE_ENDTRY;
@@ -393,7 +391,7 @@ main (int argc,
 
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-			   "client::init failed\n"), -1);
+			   "Sender::init failed\n"), -1);
 
       orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;

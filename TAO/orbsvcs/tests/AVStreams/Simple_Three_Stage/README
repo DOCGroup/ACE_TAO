@@ -51,6 +51,10 @@ receiver [-f <filename>]
 distributer:
 -----------
 
-distributer 
+distributer [-s <sender_port_number>] [-r <receiver_port_number]
+
+-s sender port number --> The port at which the sender stream endpoint is opened
+
+--r receiver port number --> The port at which the receiver stream endpoint is opened
 
 

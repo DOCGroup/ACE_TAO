@@ -10,22 +10,25 @@ int
 Distributer_StreamEndPoint::set_protocol_object (const char *flow_name,
 						 TAO_AV_Protocol_Object *object)
 {
-  // Set the protocol object corresponding to the transport protocol selected.
-  DISTRIBUTER::instance ()->set_protocol_object (flow_name, object);
-
+  if (ACE_OS::strcmp (flow_name, "Data_Sender") == 0)
+    {
+      // Set the protocol object corresponding to the transport protocol selected.
+      DISTRIBUTER::instance ()->set_sender_protocol_object (object);
+    }
+  
   // Store the flowname of the stream that this callback belongs to.
-  ACE_CString fname = flow_name;
-  this->callback_.flowname (fname);
+  this->callback_.flowname (flow_name);
 
   // Increment the stream count.
   DISTRIBUTER::instance ()->stream_created ();
+  
   return 0;
 }
 
 
 int
 Distributer_StreamEndPoint::get_callback (const char *,
-                                     TAO_AV_Callback *&callback)
+                                          TAO_AV_Callback *&callback)
 {
   // Create and return the application callback and return to the AVStreams
   // for further upcalls.
@@ -34,7 +37,7 @@ Distributer_StreamEndPoint::get_callback (const char *,
 }
 
 void
-Distributer_Callback::flowname (ACE_CString flowname)
+Distributer_Callback::flowname (const ACE_CString &flowname)
 {
   this->flowname_ = flowname;
 }
@@ -56,11 +59,15 @@ Distributer_Callback::receive_frame (ACE_Message_Block *frame,
   ACE_DEBUG ((LM_DEBUG,
               "Distributer_Callback::receive_frame\n"));
 
-  ACE_CString flowname = "Data_Receiver";
-  
   // Get the protocol object corresponding to the receiver stream
   // send the data received from sender to the receiver.
-  DISTRIBUTER::instance ()->get_protocol_object (flowname.c_str())->send_frame (frame);
+
+  int result = DISTRIBUTER::instance ()->get_sender_protocol_object ()->send_frame (frame);
+  
+  if (result < 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Distributer_Callback::receive_frame send failed\n"),
+                      -1);
   
   return 0;
 }
@@ -69,81 +76,115 @@ int
 Distributer_Callback::handle_destroy (void)
 {
   // Called when the sender requests the stream to be shutdown.
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_DEBUG ((LM_DEBUG,
-              "Distributer_Callback::end_stream\n"));
-
-  if (ACE_OS::strcmp (this->flowname_.c_str (), "Data_Sender") == 0)
+  ACE_TRY_NEW_ENV
     {
-      // Destroy the sender receiver stream as the sender has requested a stream destroy
-      AVStreams::flowSpec stop_spec;
-      DISTRIBUTER::instance ()->get_receiver_streamctrl ()->destroy (stop_spec,
-                                                                     ACE_TRY_ENV);
+      
+      ACE_DEBUG ((LM_DEBUG,
+                  "Distributer_Callback::end_stream\n"));
+      
+      if (ACE_OS::strcmp (this->flowname_.c_str (), "Data_Sender") == 0)
+        {
+          // Destroy the sender receiver stream as the sender has requested a stream destroy
+          AVStreams::flowSpec stop_spec;
+          DISTRIBUTER::instance ()->get_receiver_streamctrl ()->destroy (stop_spec,
+                                                                         ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      
+      // Decrement the stream count.
+      DISTRIBUTER::instance ()->stream_destroyed ();
     }
-  
-  // Decrement the stream count.
-  DISTRIBUTER::instance ()->stream_destroyed ();
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+			   "Distributer_Callback::handle_destroy Failed\n");
+      return -1;
+    }
+  ACE_ENDTRY;
+
   return 0;
 }
 
 int
-Distributer::set_protocol_object (const char* flowname, TAO_AV_Protocol_Object* object)
+Distributer::set_sender_protocol_object (TAO_AV_Protocol_Object* object)
 {
   // Set the corresponding protocol objects for the different streams created.
-  if (ACE_OS::strcmp ("Data_Sender", flowname) == 0)
-    this->protocol_object_ [0] = object;
-  else if (ACE_OS::strcmp ("Data_Receiver", flowname) == 0)
-    this->protocol_object_ [1] = object;
+  this->sender_protocol_object_ = object;
 
   return 0;
 }
 
 TAO_AV_Protocol_Object*
-Distributer::get_protocol_object (const char* flowname)
+Distributer::get_sender_protocol_object (void)
 {
-  if (ACE_OS::strcmp ("Data_Sender", flowname) == 0)
-    return this->protocol_object_ [0];
-  else if (ACE_OS::strcmp ("Data_Receiver", flowname) == 0)
-    return this->protocol_object_ [1];
-
-  return *(this->protocol_object_);
+  return this->sender_protocol_object_;
 }
 
 
 Distributer::Distributer (void)
   :distributer_mmdevice_ (0),
+   sender_protocol_object_ (0),
    count_ (0),
    protocol_ ("UDP"),
-   sender_streamctrl_ (0),
    receiver_streamctrl_ (0),
    stream_count_ (0),
-   done_ (0)
+   done_ (0),
+   host_sender_port_ ("8000"),
+   host_receiver_port_ ("8010")
 {
-  
+
   // Get the local host name
   char buf [BUFSIZ];
   ACE_OS::hostname (buf, 
                     BUFSIZ);
 
   // Set the address to the local host and port.
-  this->address_ = buf;
-  this->address_ += ":8000";
+  this->sender_address_ = buf;
+  this->sender_address_ += ":";
+  this->sender_address_ += host_sender_port_.c_str ();
+
+  // Set the address to the local host and port.
+  this->receiver_address_ = buf;
+  this->receiver_address_ += ":";
+  this->receiver_address_ += host_receiver_port_.c_str ();
   
-  protocol_object_ [0] = 0;
-  protocol_object_ [1] = 0;
-  this->mb.size (BUFSIZ);
 }
 
 Distributer::~Distributer (void)
 {
 }
 
+int
+Distributer::parse_args (int argc,
+                         char **argv)
+{
+  // Parse command line arguments
+  ACE_Get_Opt opts (argc,argv,"r:s:");
+
+  int c;
+  while ((c= opts ()) != -1)
+    {
+      switch (c)
+        {
+        case 'r':
+          this->host_receiver_port_ = opts.optarg;
+          break;
+	case 's':
+	  this->host_sender_port_ = opts.optarg;
+	  break;
+        default:
+          ACE_DEBUG ((LM_DEBUG,"Unknown Option\n"));
+          return -1;
+        }
+    }
+  return 0;
+}
+
 
 // Method to bind the sender reference to the Naming Service.
 int
 Distributer::bind_to_mmdevice (AVStreams::MMDevice_ptr &mmdevice,
-			       ACE_CString mmdevice_name,
+			       const ACE_CString &mmdevice_name,
 			       CORBA::Environment &ACE_TRY_ENV)
 {
   // Initialize the naming services
@@ -177,16 +218,26 @@ Distributer::bind_to_mmdevice (AVStreams::MMDevice_ptr &mmdevice,
 
 
 int
-Distributer::init (int,
-              char **,
-              CORBA::Environment &ACE_TRY_ENV)
+Distributer::init (int argc,
+                   char **argv,
+                   CORBA::Environment &ACE_TRY_ENV)
 {
+
   // Initialize the endpoint strategy with the orb and poa.
   int result =
     this->a_endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                      TAO_AV_CORE::instance ()->poa ());
   if (result != 0)
     return result;
+
+  result = this->parse_args (argc, 
+                             argv);
+
+  if (result < 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       " (%P|%t) Error in Parse Args \n"),
+		      -1);
+  
 
   // Bind to the receiver mmdevice
   ACE_CString mmdevice_name ("Receiver");
@@ -208,24 +259,17 @@ Distributer::init (int,
   if (result != 0)
     return result;
   
-  // Create the Flow protocol name
-  ACE_CString flow_protocol_str;
-  
-  flow_protocol_str = "";
-  
   // Initialize the  QoS
   AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
   
   // Set the address of the of the distributer receiver endpoint.
-  ACE_INET_Addr receiver_addr (this->address_.c_str ());
+  ACE_INET_Addr receiver_addr (this->receiver_address_.c_str ());
 
-  this->receiver_flowname_ = "Data_Receiver";
-  
   // Create the forward flow specification to describe the flow.
-  TAO_Forward_FlowSpec_Entry receiver_entry (this->receiver_flowname_.c_str (),
+  TAO_Forward_FlowSpec_Entry receiver_entry ("Data_Receiver",
 					     "IN",
 					     "USER_DEFINED",
-					     flow_protocol_str.c_str (),
+					     "", // Flowname
 					     this->protocol_.c_str (),
 					     &receiver_addr);
 
@@ -263,54 +307,51 @@ Distributer::init (int,
                                           ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  // Flowname for the stream bewteen the sender and distributer
-  this->sender_flowname_ = "Data_Sender";
-
   // Get the local host name
   char buf [BUFSIZ];
   ACE_OS::hostname (buf, 
                     BUFSIZ);
 
-  // Set the address to the local host and port
-  this->address_ = buf;
-  this->address_ += ":8001";
-    
   // Set the address of the sender.
-  ACE_INET_Addr sender_addr (this->address_.c_str ());
+  ACE_INET_Addr sender_addr (this->sender_address_.c_str ());
   
   // Create the forward flow specification to describe the flow.
-  TAO_Forward_FlowSpec_Entry sender_entry (this->sender_flowname_.c_str (),
+  TAO_Forward_FlowSpec_Entry sender_entry ("Data_Sender",
 					   "OUT",
 					   "USER_DEFINED",
-					   flow_protocol_str.c_str (),
+					   "", // Flowname
 					   this->protocol_.c_str (),
 					   &sender_addr);
 
-  // Set the flow specification for the stream between sender and distributer
-  flow_spec [0] = CORBA::string_dup (sender_entry.entry_to_string ());
-
-  ACE_NEW_RETURN (this->sender_streamctrl_,
+  TAO_StreamCtrl* sender_streamctrl_;
+  // Video stream controller for the stream between sender and distributer
+  
+  ACE_NEW_RETURN (sender_streamctrl_,
                   TAO_StreamCtrl,
                   -1);
 
   // Servant Reference Counting to manage lifetime
   PortableServer::ServantBase_var safe_sender_streamctrl =
-    this->sender_streamctrl_;
+    sender_streamctrl_;
+
+  // Set the flow specification for the stream between sender and distributer
+  flow_spec [0] = CORBA::string_dup (sender_entry.entry_to_string ());
 
   // Bind/Connect  the sender and sitributer MMDevices.
   CORBA::Boolean res =
-    this->sender_streamctrl_->bind_devs (distributer_mmdevice.in (),  
-                                         this->sender_mmdevice_.in (),
-                                         the_qos.inout (),
-                                         flow_spec,
-                                         ACE_TRY_ENV);
+    sender_streamctrl_->bind_devs (distributer_mmdevice.in (),  
+                                   sender_mmdevice_.in (),
+                                   the_qos.inout (),
+                                   flow_spec,
+                                   ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
   
   if (res == 0)
     ACE_ERROR_RETURN ((LM_ERROR,"Streamctrl::bind_devs failed\n"),-1);
     
   AVStreams::flowSpec start_spec;
-  this->sender_streamctrl_->start (start_spec,ACE_TRY_ENV);
+  sender_streamctrl_->start (start_spec,
+                             ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
   
   return 0;
@@ -320,12 +361,6 @@ TAO_StreamCtrl*
 Distributer::get_receiver_streamctrl (void)
 {
   return this->receiver_streamctrl_;
-}
-
-TAO_StreamCtrl*
-Distributer::get_sender_streamctrl (void)
-{
-  return this->sender_streamctrl_;
 }
 
 
@@ -369,7 +404,7 @@ main (int argc,
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA",
                                            ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+       ACE_TRY_CHECK;
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
@@ -392,15 +427,15 @@ main (int argc,
 
       // Initialize the Distributer
       int result = DISTRIBUTER::instance ()->init (argc,
-					       argv,
-					       ACE_TRY_ENV);
+                                                   argv,
+                                                   ACE_TRY_ENV);
       ACE_TRY_CHECK;
       
       if (result != 0)
         return result;
   
       // run the orb till the streams are not destroyed.
-      while (!DISTRIBUTER::instance ()->done () && orb->work_pending ())
+      while (!DISTRIBUTER::instance ()->done ())
         {
           orb->perform_work (ACE_TRY_ENV);
           ACE_TRY_CHECK;
@@ -420,14 +455,10 @@ main (int argc,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton <Distributer,ACE_Null_Mutex>;
-template class TAO_AV_Endpoint_Reactive_Strategy_A
-<Distributer_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
-template class TAO_AV_Endpoint_Reactive_Strategy
-<Distributer_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
+template class TAO_AV_Endpoint_Reactive_Strategy_A<Distributer_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
+template class TAO_AV_Endpoint_Reactive_Strategy<Distributer_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton <Client,ACE_Null_Mutex>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A
-<Distributer_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy
-<Distributer_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
+#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<Distributer_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
+#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<Distributer_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
