@@ -7,7 +7,7 @@
 
 const char* filename = "test.ior";
 
-class test_impl :public POA_test
+class test_impl : public POA_test
 {
 public:
   
@@ -19,24 +19,25 @@ public:
   }
   
   virtual void one_way (const char * message
-			ACE_ENV_ARG_DECL)
+			                  ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_DEBUG ((LM_DEBUG,
-		"One-Way Message = %s\n",
-		message));
+		            "One-Way Message = %s\n",
+		            message));
   }
   
   virtual char * two_way (const char * message
-			  ACE_ENV_ARG_DECL)
+			                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_DEBUG ((LM_DEBUG,
-		"Two-Way Message = %s\n",
-		message));
+		            "Two-Way Message = %s\n",
+		            message));
 
-    RTScheduling::DistributableThread_var DT = this->current_->lookup (*(this->current_->id ())
-								       ACE_ENV_ARG_PARAMETER);
+    RTScheduling::DistributableThread_var DT = 
+      this->current_->lookup (*(this->current_->id ())
+								              ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
     
     DT->cancel (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -45,7 +46,7 @@ public:
     return CORBA::string_dup (message);
   }
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     orb_->shutdown ();

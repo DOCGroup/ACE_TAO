@@ -1,6 +1,12 @@
+Mon Jul 28 08:45:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/RTScheduling/Scheduling_Interceptor/test_server.cpp:
+
+          Fixed some problems with environment variable usage.
+
 Sun Jul 27 19:23:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-        * RTScheduling/Scheduling_Interceptor/test_server.cpp:
+        * tests/RTScheduling/Scheduling_Interceptor/test_server.cpp:
 
           Changed filename string literal assignment at top of file
           to const char *.
