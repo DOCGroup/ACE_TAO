@@ -12,6 +12,13 @@
 #ifndef _ACEXML_VALIDATOR_H_
 #define _ACEXML_VALIDATOR_H_
 
+#include "ace/pre.h"
+#include "ACEXML/common/ACEXML_Export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ACEXML/common/Attributes.h"
 #include "ACEXML/common/Env.h"
 
@@ -53,5 +60,8 @@ public:
     //    ACE_THROW_SPEC ((ACEXML_SAXException))
     = 0;
 };
+
+
+#include "ace/post.h"
 
 #endif /* _ACEXML_VALIDATOR_H_ */

@@ -13,6 +13,13 @@
 #ifndef _ACEXML_INPUTSOURCE_H_
 #define _ACEXML_INPUTSOURCE_H_
 
+#include "ace/pre.h"
+#include "ACEXML/common/ACEXML_Export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ACEXML/common/CharStream.h"
 
 /**
@@ -116,5 +123,8 @@ private:
   ACEXML_CharStream *charStream_;
   ACEXML_Char *encoding_;
 };
+
+
+#include "ace/post.h"
 
 #endif /* _ACEXML_INPUTSOURCE_H_ */

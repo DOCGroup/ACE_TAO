@@ -12,6 +12,13 @@
 #ifndef _ACEXML_ATTRIBUTES_DEF_BUILDER_H_
 #define _ACEXML_ATTRIBUTES_DEF_BUILDER_H_
 
+#include "ace/pre.h"
+#include "ACEXML/common/ACEXML_Export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ACEXML/common/XML_Types.h"
 #include "ACEXML/common/Env.h"
 #include "ace/Auto_Ptr.h"
@@ -19,11 +26,11 @@
 /**
  * @class ACEXML_Attribute_Def_Builder Attributes_Def_Builder.h "common/Attributes_Def_Builder.h"
  *
- * @brief An abstract virtual class defining an interface
- *         for building an attribute definition from DTD.
+ * @brief An abstract virtual class defining an interface for building an
+ *        attribute definition from DTD.
  *
- * This class should be invisible to application programmers and
- * is only used for validator implementors.
+ * This class should be invisible to application programmers and is only
+ * used for validator implementors.
  */
 class ACEXML_Export ACEXML_Attribute_Def_Builder
 {
@@ -105,8 +112,8 @@ public:
 /**
  * @ class ACEXML_Attributes_Def_Builder Attributes_Def_Builder.h "common/Attributes_Def_Builder.h"
  *
- * @ brief An abstract virtual class defining an interface
- *         for building attribute definitions from DTD.
+ * @ brief An abstract virtual class defining an interface for building
+ *         attribute definitions from DTD.
  *
  * This class should be invisible to application programmers and
  * is only used for validator implementors.
@@ -148,5 +155,7 @@ public:
    */
   virtual void dump (void) = 0;
 };
+
+#include "ace/post.h"
 
 #endif /* _ACEXML_ATTRIBUTES_DEF_BUILDER_H_ */

@@ -129,7 +129,7 @@ ACEXML_Debug_Attribute_Builder::dump (void)
       }
       break;
     default:
-      cout << "*** UNKNOW TYPE ***";
+      cout << "*** UNKNOWN TYPE ***";
       break;
     }
 

@@ -3,6 +3,7 @@
 #include "ACEXML/parser/parser/Parser.h"
 #include "ACEXML/common/Transcode.h"
 #include "ACEXML/common/AttributesImpl.h"
+#include "ace/ACE.h"
 
 static const ACEXML_Char default_attribute_type[] = {'C', 'D', 'A', 'T', 'A', 0};
 static const ACEXML_Char empty_string[] = { 0 };
@@ -19,18 +20,6 @@ ACEXML_Parser::namespace_prefixes_feature_[] = {'h', 't', 't', 'p', ':', '/', '/
 #if !defined (__ACEXML_INLINE__)
 # include "ACEXML/parser/parser/Parser.i"
 #endif /* __ACEXML_INLINE__ */
-
-/***
-    TO-DO:
-
-    END-OF-LINE handling: x read quoted string
-    ignore whitespace
-    processing instruction
-    x element contents
-
-    Make sure we are freezing the obstack in all cases.
-
-***/
 
 ACEXML_Parser::ACEXML_Parser (void)
   :   dtd_handler_ (0),

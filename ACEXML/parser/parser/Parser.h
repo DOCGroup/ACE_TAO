@@ -13,11 +13,17 @@
 #ifndef _ACEXML_BASIC_PARSER_H_
 #define _ACEXML_BASIC_PARSER_H_
 
+#include "ace/pre.h"
+#include "ACEXML/parser/parser/Parser_export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ACEXML/common/XMLReader.h"
 #include "ACEXML/common/LocatorImpl.h"
 #include "ACEXML/common/NamespaceSupport.h"
 #include "ACEXML/common/CharStream.h"
-#include "ACEXML/parser/parser/Parser_export.h"
 #include "ace/Obstack.h"
 #include "ace/Functor.h"
 #include "ace/SString.h"
@@ -501,4 +507,7 @@ private:
 #if defined (__ACEXML_INLINE__)
 # include "ACEXML/parser/parser/Parser.i"
 #endif /* __ACEXML_INLINE__ */
+
+#include "ace/post.h"
+
 #endif /* _ACEXML_BASIC_PARSER_H_ */
