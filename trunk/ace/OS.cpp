@@ -2823,7 +2823,7 @@ writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 
   // Determine the total length of all the buffers in <iov>.
   for (i = 0; i < n; i++)
-    if (iov[i].iov_len < 0)
+    if (ACE_static_cast (int, iov[i].iov_len) < 0)
       return -1;
     else
       length += iov[i].iov_len;
@@ -2868,7 +2868,7 @@ readv (ACE_HANDLE handle,
   int i;
 
   for (i = 0; i < n; i++)
-    if (iov[i].iov_len < 0)
+    if (ACE_static_cast (int, iov[i].iov_len) < 0)
       return -1;
     else
       length += iov[i].iov_len;
