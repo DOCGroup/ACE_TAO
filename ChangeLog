@@ -1,3 +1,53 @@
+Thu May 16 15:28:24 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_Connector.h:
+	* ace/SSL/SSL_Connector.cpp:
+
+	  New ACE_SSL-specific subclasses of the standard
+	  ACE_{Strategy_}Connector classes.  The standard ACE_Connector
+	  class assumes that a connection is established once the stream
+	  handle becomes writable.  However, that only holds for protocols
+	  with a single handshake, such as TCP.  Protocols with multiple
+	  handshakes, such as SSL, require special handling to prevent the
+	  connection from being considered completed once the stream
+	  handle becomes writable.  The subclasses simply override the
+	  handle_input() and handle_output() methods for each of base
+	  classes that were subclassed.  If possible, these changes will
+	  be generalized and merged into ACE proper.  When that occurs,
+	  these classes will be deprecated.  As such, these classes are
+	  only intended to be an interim solution.
+
+	* ace/SSL/SSL_SOCK_Connector.cpp (connect):
+
+	  Fixed bug where the handle in the SSL_SOCK_Stream was not set if
+	  a connection is in progress.  In that case, the handle must also
+	  be set in the SSL_SOCK_Stream so that the correct handle is
+	  returned from SSL_SOCK_Stream::get_handle() when performing
+	  non-blocking connect()s via the SSL_SOCK_Connector.
+
+	  (complete):
+
+	  No need to set the handle in SSL_SOCK_Stream since it is
+	  already set in the connect() method.
+
+	  Only attempt to complete the TCP connection if that hasn't
+	  already been done.
+
+	* ace/SSL/SSL_SOCK_Stream.h (peer):
+
+	  Made this method public so that it can be called by the new
+	  SSL_{Strategy_}Connector classes.
+
+	* ace/SSL/SSL_SOCK_Stream.cpp (get_remote_addr):
+
+	  Overrode the base class implementations of this method.  Some
+	  applications use get_remote_addr() as a way of determining
+	  whether or not a connection has been established.  In SSL's
+	  case, the remote addr will be available once the TCP handshake
+	  has been complete.  Despite that fact, the SSL connection may
+	  not have been completed.  In such a case, a successful return
+	  from get_remote_addr() would be misleading.
+
 Thu May 16 13:34:19 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACEXML/examples/SAXPrint/main.cpp: Added constness to

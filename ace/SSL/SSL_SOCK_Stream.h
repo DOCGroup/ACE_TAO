@@ -258,12 +258,21 @@ public:
   /// Return a pointer to the underlying SSL structure.
   SSL *ssl (void) const;
 
-  //@}
-
-protected:
+  /**
+   * Return the address of the remotely connected peer (if there is
+   * one), in the referenced <ACE_Addr>. Returns 0 if successful, else
+   * -1.
+   *
+   * @note If the TCP connection has been completed but the SSL
+   *       connection has not been completed yet, -1 will be
+   *       returned.
+   */
+  int get_remote_addr (ACE_Addr &) const;
 
   /// Return the underlying ACE_SOCK_Stream which ACE_SSL runs atop of.
   ACE_SOCK_Stream & peer (void);
+
+protected:
 
   /// Underlying send() helper method common to all public send()
   /// methods.
