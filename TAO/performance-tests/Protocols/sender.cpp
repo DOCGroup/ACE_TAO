@@ -161,7 +161,8 @@ double
 to_seconds (ACE_UINT64 hrtime,
             ACE_UINT32 sf)
 {
-  double seconds = ACE_UINT64_DBLCAST_ADAPTER (hrtime / sf);
+  double seconds = static_cast<double> (
+                     ACE_UINT64_DBLCAST_ADAPTER (hrtime / sf));
   seconds /= ACE_HR_SCALE_CONVERSION;
 
   return seconds;
