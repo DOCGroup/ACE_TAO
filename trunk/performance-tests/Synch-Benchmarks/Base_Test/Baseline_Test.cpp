@@ -25,15 +25,15 @@ Baseline_Test_Base::Baseline_Test_Base (void)
 }
 
 int
-Baseline_Test_Base::init (int argc, char *argv[])
+Baseline_Test_Base::init (int argc, ACE_TCHAR *argv[])
 {
   return this->parse_args (argc, argv);
 }
 
 int
-Baseline_Test_Base::parse_args (int argc, char *argv[])
+Baseline_Test_Base::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt getopt (argc, argv, "i:ylrw", 0);
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT("i:ylrw"), 0);
   int c;
 
   while ((c = getopt ()) != -1)
@@ -93,9 +93,9 @@ Baseline_Test_Options::Baseline_Test_Options (void)
 }
 
 int
-Baseline_Test_Options::parse_args (int argc, char *argv[])
+Baseline_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt getopt (argc, argv, "tv", 0);
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT("tv"), 0);
   int c;
 
   while ((c = getopt ()) != -1)
@@ -155,7 +155,7 @@ Baseline_Test::Baseline_Test (void)
 // Initialize and run the benchmarks tests.
 
 int
-Baseline_Test::init (int argc, char **argv)
+Baseline_Test::init (int argc, ACE_TCHAR **argv)
 {
   return baseline_options.parse_args (argc, argv);
 }
