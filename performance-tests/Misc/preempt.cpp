@@ -124,22 +124,26 @@ High_Priority_Task::open (void *)
     }
   else
     {
-  long flags = THR_BOUND | THR_NEW_LWP | THR_SCHED_FIFO;
+      long flags = THR_BOUND | THR_NEW_LWP | THR_SCHED_FIFO;
 
-  // Become an active object.
-  if (this->activate (flags, 1, 0, this->priority_) == -1)
-    {
-      ACE_DEBUG ((LM_ERROR, "(%P|%t) task activation failed, exiting!\n%a",
-                  -1));
-    }
+      // Become an active object.
+      if (this->activate (flags, 1, 0, this->priority_) == -1)
+        {
+          ACE_DEBUG ((LM_ERROR, "(%P|%t) task activation failed, exiting!\n%a",
+                      -1));
+        }
 
-  return 0;
+      return 0;
     }
 }
 
 int
 High_Priority_Task::svc (void)
 {
+  // On Solaris 2.5.x, the LWP priority needs to be set.  This is the
+  // ACE way to do that . . .
+  ACE_OS::thr_setprio (priority_);
+
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
   int prio;
@@ -238,6 +242,10 @@ Low_Priority_Task::open (void *)
 int
 Low_Priority_Task::svc (void)
 {
+  // On Solaris 2.5.x, the LWP priority needs to be set.  This is the
+  // ACE way to do that . . .
+  ACE_OS::thr_setprio (priority_);
+
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
   int prio;
@@ -386,7 +394,11 @@ main (int argc, char *argv[])
 
   Low_Priority_Task low_priority_task (high_priority_task[0]);
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) main (), wait for threads to exit . . .\n"));
+  if (! use_fork)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) main (), wait for threads to exit . . .\n"));
+    }
 
   // Save the start time, so that deltas can be displayed later.
   starttime = ACE_OS::gethrtime ();
