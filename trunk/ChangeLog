@@ -1,3 +1,11 @@
+Mon Nov 24 05:26:14 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * include/makeinclude/rules.local.GNU:
+          Only cleanup shared libraries when shared_libs is defined and
+          static libraries when static_libs is defined.  Also, test for
+          whether or not the CLEANUP targets in this case are empty, not
+          just for existience, since they always exist by this time.
+
 Mon Nov 24 02:38:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * include/makeinclude/all_in_one.GNU:
