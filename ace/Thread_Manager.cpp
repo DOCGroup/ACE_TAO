@@ -442,18 +442,20 @@ ACE_Thread_Exit::instance (void)
 
   // Implement the Double Check pattern.
 
-  if (instance_ == 0)
+  if (ACE_Thread_Exit::is_constructed_ == 0)
     {
       ACE_MT (ACE_Thread_Mutex *lock =
               ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
                 (ACE_Object_Manager::ACE_THREAD_EXIT_LOCK);
               ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0));
 
-      if (instance_ == 0)
+      if (ACE_Thread_Exit::is_constructed_ == 0)
         {
-           ACE_NEW_RETURN (instance_,
-                           ACE_TSS_TYPE (ACE_Thread_Exit),
-                           0);
+          ACE_NEW_RETURN (instance_,
+                          ACE_TSS_TYPE (ACE_Thread_Exit),
+                          0);
+
+          ACE_Thread_Exit::is_constructed_ = 1;
 
           // Register for destruction with ACE_Object_Manager.
 #if defined ACE_HAS_SIG_C_FUNC
@@ -499,6 +501,8 @@ ACE_Thread_Exit::thr_mgr (ACE_Thread_Manager *tm)
 ACE_Thread_Exit::~ACE_Thread_Exit (void)
 {
   ACE_TRACE ("ACE_Thread_Exit::~ACE_Thread_Exit");
+
+  ACE_Thread_Exit::is_constructed_ = 0;
 }
 
 // Run the entry point for thread spawned under the control of the
