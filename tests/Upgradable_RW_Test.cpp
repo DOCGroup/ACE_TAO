@@ -41,6 +41,8 @@ static size_t n_iterations = 50;
 static size_t n_iterations = 50;
 #endif /* ACE_HAS_WINCE */
 
+#define MAX_STRING_SIZE 200
+
 // Default number of loops.
 static size_t n_loops = 100;
 
@@ -296,15 +298,13 @@ init (u_int kind)
     case 0:
       // The space will be reused several times, We can do this
       // because the map copies the strings
-      // @@ Michael, can you please use a symbolic constant here,
-      // rather than a magic number like 100. 
-      char entry[100]; 
+      char entry[MAX_STRING_SIZE]; 
       ACE_CString cString1;
       ACE_CString cString2;
 
       for (u_int i = 0; i < n_entries; i++)
         {
-          itoa (i,entry,10);
+          ACE_OS::sprintf(entry,"%d",i);
           cString1.set (/*entry*/"100");
           cString2.set (ACE_OS::strcat (entry,"X"));
           hash_Map_ptr->bind (cString1, cString2);
