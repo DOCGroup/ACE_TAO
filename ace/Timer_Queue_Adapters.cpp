@@ -15,6 +15,8 @@ ACE_RCSID(ace, Timer_Queue_Adapters, "$Id$")
 #  include "ace/Timer_Queue_Adapters.i"
 # endif /* __ACE_INLINE__ */
 
+#include "ace/Condition_Recursive_Thread_Mutex.h"
+
 template <class TQ> TQ &
 ACE_Async_Timer_Queue_Adapter<TQ>::timer_queue (void)
 {
