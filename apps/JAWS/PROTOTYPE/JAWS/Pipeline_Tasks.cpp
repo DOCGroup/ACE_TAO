@@ -5,6 +5,29 @@
 #include "JAWS/IO_Handler.h"
 #include "JAWS/Policy.h"
 
+JAWS_Pipeline_Handler::~JAWS_Pipeline_Handler (void)
+{
+}
+
+int
+JAWS_Pipeline_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
+{
+  JAWS_Data_Block *db = ACE_dynamic_cast (JAWS_Data_Block *, mb->data_block ());
+
+  int status = this->handle_put (db, tv);
+
+  if (status != -1)
+    {
+      JAWS_Pipeline_Handler *task = db->io_handler ()->task ();
+      JAWS_Pipeline_Handler *next
+        = ACE_dynamic_cast (JAWS_Pipeline_Handler *, task->next ());
+
+      db->io_handler ()->task (next);
+    }
+
+  return status;
+}
+
 int
 JAWS_Pipeline_Accept_Task::handle_put (JAWS_Data_Block *data,
                                        ACE_Time_Value *)

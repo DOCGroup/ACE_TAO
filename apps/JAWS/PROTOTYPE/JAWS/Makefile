@@ -279,9 +279,10 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Stream.cpp \
  JAWS/JAWS/JAWS/Pipeline_Handler.h JAWS/JAWS/JAWS/JAWS/Pipeline.h \
  JAWS/JAWS/JAWS/JAWS/Pipeline_Handler.cpp \
- JAWS/JAWS/JAWS/JAWS/JAWS/Pipeline_Handler.h JAWS/Data_Block.h \
- JAWS/IO_Handler.h $(ACE_ROOT)/ace/Asynch_IO.h \
- JAWS/Policy.h JAWS/JAWS/Concurrency.h JAWS/JAWS/JAWS/IO.h \
+ JAWS/JAWS/JAWS/JAWS/JAWS/Pipeline_Handler.h JAWS/JAWS/Data_Block.h \
+ JAWS/JAWS/JAWS/Pipeline.h JAWS/Data_Block.h JAWS/IO_Handler.h \
+ $(ACE_ROOT)/ace/Asynch_IO.h JAWS/Policy.h \
+ JAWS/JAWS/Concurrency.h JAWS/JAWS/JAWS/IO.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -655,15 +656,16 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/SOCK_Stream.i JAWS/Pipeline.h \
- $(ACE_ROOT)/ace/Stream.h \
+ $(ACE_ROOT)/ace/SOCK_Stream.i JAWS/IO_Handler.h \
+ JAWS/Pipeline.h $(ACE_ROOT)/ace/Stream.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/Stream.i \
  $(ACE_ROOT)/ace/Stream.cpp \
  JAWS/JAWS/Pipeline_Handler.h JAWS/JAWS/JAWS/Pipeline.h \
  JAWS/JAWS/JAWS/Pipeline_Handler.cpp \
- JAWS/JAWS/JAWS/JAWS/Pipeline_Handler.h JAWS/Policy.h \
- JAWS/JAWS/Concurrency.h JAWS/Data_Block.h JAWS/JAWS/Pipeline.h
+ JAWS/JAWS/JAWS/JAWS/Pipeline_Handler.h JAWS/Pipeline_Tasks.h \
+ JAWS/JAWS/Pipeline.h JAWS/JAWS/Data_Block.h JAWS/Policy.h \
+ JAWS/JAWS/Concurrency.h JAWS/Data_Block.h
 .obj/Server.o .obj/Server.so .shobj/Server.o .shobj/Server.so: Server.cpp $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \

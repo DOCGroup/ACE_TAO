@@ -32,11 +32,7 @@ class JAWS_IO_Handler_Factory;
 class JAWS_Synch_IO_Handler_Factory;
 class JAWS_Asynch_IO_Handler_Factory;
 class JAWS_Data_Block;
-
-//#include "JAWS/Data_Block.h"
-template <class TYPE> class JAWS_Pipeline_Abstract_Handler;
-typedef JAWS_Pipeline_Abstract_Handler<JAWS_Data_Block>
-        JAWS_Pipeline_Handler;
+class JAWS_Pipeline_Handler;
 
 class JAWS_IO_Handler
   // = TITLE
