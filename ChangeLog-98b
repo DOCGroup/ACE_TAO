@@ -1,38 +1,44 @@
+Fri Jun 26 11:50:03 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: map ACE_dynamic_cast to static_cast with Sun C++,
+          without RTTI, to avoid warning about using dynamic_cast
+          without RTTI.
+
 Fri Jun 26 11:39:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ACE-INSTALL.html: Added more infomation in {Free,Net}BSD.
+        * ACE-INSTALL.html: Added more infomation in {Free,Net}BSD.
 
 Fri Jun 26 10:51:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.h: 
-	  Fixed problem in ACE_DES_* macros, some preprocessors were
-	  tokenizing ::~CLASS as ":: ~CLASS" and we wanted ":: ~ CLASS"
-	  (were class in a macro argument).
+        * ace/OS.h:
+          Fixed problem in ACE_DES_* macros, some preprocessors were
+          tokenizing ::~CLASS as ":: ~CLASS" and we wanted ":: ~ CLASS"
+          (were class in a macro argument).
 
 Fri Jun 26 09:45:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* tests/{tests.dsw, Makefile}: Added the Upgradable RW lock test
-	  to the workspace.
+        * tests/{tests.dsw, Makefile}: Added the Upgradable RW lock test
+          to the workspace.
 
 Fri Jun 26 09:48:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* VERSION: Updated this file to direct bug reports to 
-	  the ACE mailing list.
+        * VERSION: Updated this file to direct bug reports to
+          the ACE mailing list.
 
 Fri Jun 26 10:43:02 EET DST 1998 Wei Chiang <wei.chiang@ntc.nokia.com>
 
-	* ace/CLASSIX/CLASSIX_OS.cpp:
-	ACE_CLASSIX_OS::ACE_CLASSIX_OS()
-	After created an CLASSIX reactor as an actor-wide singleton
-	reactor, delete the original reator singleton, if any.
+        * ace/CLASSIX/CLASSIX_OS.cpp:
+        ACE_CLASSIX_OS::ACE_CLASSIX_OS()
+        After created an CLASSIX reactor as an actor-wide singleton
+        reactor, delete the original reator singleton, if any.
 
 
 Fri Jun 26 02:18:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Synch-Benchmarks/Benchmark[_Base].{h,cpp}:
-	* performance-tests/Synch_Benchmarks/Makefile: Added a new class
-	  Benchmark_Base so we can not only load the test items
-	  but also the test methods dynamically.
+        * performance-tests/Synch-Benchmarks/Benchmark[_Base].{h,cpp}:
+        * performance-tests/Synch_Benchmarks/Makefile: Added a new class
+          Benchmark_Base so we can not only load the test items
+          but also the test methods dynamically.
 
 Wed Jun 24 21:37:22 1998  David L. Levine  <levine@cs.wustl.edu>
 
