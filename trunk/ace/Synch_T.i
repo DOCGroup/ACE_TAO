@@ -23,6 +23,7 @@ ACE_Guard<ACE_LOCK>::ACE_Guard (ACE_LOCK &l, int block)
   else
     this->tryacquire ();
 }
+
 // Implicitly and automatically acquire (or try to acquire) the
 // lock.
 
@@ -31,6 +32,7 @@ ACE_Guard<ACE_LOCK>::~ACE_Guard (void)
 {
   this->release ();
 }
+
 // Implicitly release the lock.
 
 template <class ACE_LOCK> ACE_INLINE int
@@ -38,6 +40,7 @@ ACE_Guard<ACE_LOCK>::acquire (void)
 {
   return this->owner_ = this->lock_->acquire ();
 }
+
 // Explicitly acquire the lock.
 
 template <class ACE_LOCK> ACE_INLINE int
@@ -45,19 +48,21 @@ ACE_Guard<ACE_LOCK>::tryacquire (void)
 {
   return this->owner_ = this->lock_->tryacquire ();
 }
+
 // Conditionally acquire the lock (i.e., won't block).
 
 template <class ACE_LOCK> ACE_INLINE int
 ACE_Guard<ACE_LOCK>::release (void)
 {
   if (this->owner_ != -1)
-  {
-    this->owner_ = -1;
-    return this->lock_->release ();
-  }
+    {
+      this->owner_ = -1;
+      return this->lock_->release ();
+    }
   else
     return 0;
 }
+
 // Explicitly release the lock, but only if it is held!
 
 template <class ACE_LOCK> ACE_INLINE int
@@ -65,6 +70,7 @@ ACE_Guard<ACE_LOCK>::locked (void)
 {
   return this->owner_ != -1;
 }
+
 // 1 if locked, 0 if couldn't acquire the lock
 // (errno will contain the reason for this).
 
