@@ -990,7 +990,8 @@ typedef struct
 
 // Define the name of the environment variable that defines the temp
 // directory.
-#   define ACE_DEFAULT_TEMP_DIR_ENV "TMP"
+#   define ACE_DEFAULT_TEMP_DIR_ENV_A "TMP"
+#   define ACE_DEFAULT_TEMP_DIR_ENV_W L"TMP"
 
 #   define ACE_DLL_SUFFIX ".so"
 #   define ACE_DLL_PREFIX "lib"
@@ -3294,7 +3295,8 @@ typedef int (*ACE_SEH_EXCEPT_HANDLER)(void *);
 
 // Define the name of the environment variable that defines the temp
 // directory.
-#   define ACE_DEFAULT_TEMP_DIR_ENV "TEMP"
+#   define ACE_DEFAULT_TEMP_DIR_ENV_A "TEMP"
+#   define ACE_DEFAULT_TEMP_DIR_ENV_W L"TEMP"
 
 // This will help until we figure out everything:
 #   define NFDBITS 32 /* only used in unused functions... */
@@ -3561,7 +3563,8 @@ typedef char TCHAR;
 
 // Define the name of the environment variable that defines the temp
 // directory.
-#   define ACE_DEFAULT_TEMP_DIR_ENV "TMP"
+#   define ACE_DEFAULT_TEMP_DIR_ENV_A "TMP"
+#   define ACE_DEFAULT_TEMP_DIR_ENV_W L"TMP"
 
 // We're some kind of UNIX...
 #   define ACE_PLATFORM_A "UNIX"
@@ -8299,6 +8302,9 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 #   if !defined (ACE_DEFAULT_MUTEX)
 #     define ACE_DEFAULT_MUTEX ACE_DEFAULT_MUTEX_W
 #   endif /* ACE_DEFAULT_MUTEX */
+#   if !defined (ACE_DEFAULT_TEMP_DIR_ENV)
+#     define ACE_DEFAULT_TEMP_DIR_ENV ACE_DEFAULT_TEMP_DIR_ENV_W
+#   endif /* ACE_DEFAULT_TEMP_DIR_ENV */
 
 # else
 
@@ -8329,6 +8335,9 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 #   if !defined (ACE_DEFAULT_MUTEX)
 #     define ACE_DEFAULT_MUTEX ACE_DEFAULT_MUTEX_A
 #   endif /* ACE_DEFAULT_MUTEX */
+#   if !defined (ACE_DEFAULT_TEMP_DIR_ENV)
+#     define ACE_DEFAULT_TEMP_DIR_ENV ACE_DEFAULT_TEMP_DIR_ENV
+#   endif /* ACE_DEFAULT_TEMP_DIR_ENV */
 # endif /* UNICODE */
 
 // Some ACE classes always use inline functions to maintain high

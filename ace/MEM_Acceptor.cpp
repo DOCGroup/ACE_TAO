@@ -106,7 +106,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
                                   reset_new_handle) == -1)
     return -1;
 
-  ASYS_TCHAR buf [MAXPATHLEN];
+  TCHAR buf [MAXPATHLEN];
   ACE_INET_Addr local_addr;
   if (new_stream.get_local_addr (local_addr) == -1)
     return -1;
@@ -114,25 +114,25 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
   if (this->mmap_prefix_ != 0)
     {
       ACE_OS::sprintf (buf,
-                       ASYS_TEXT ("%s_%d_"),
+                       ACE_TEXT ("%s_%d_"),
                        this->mmap_prefix_,
                        local_addr.get_port_number ());
     }
   else
     {
-      const ASYS_TCHAR* temp_dir =
-        ACE_OS::getenv (ASYS_TEXT (ACE_DEFAULT_TEMP_DIR_ENV));
+      LPCTSTR temp_dir =
+        ACE_OS::getenv (ACE_DEFAULT_TEMP_DIR_ENV);
 
       if (temp_dir == 0)
-        temp_dir = ASYS_TEXT ("/tmp");
+        temp_dir = ACE_TEXT ("/tmp");
 
       ACE_OS::sprintf (buf,
-                       ASYS_TEXT ("%s%cMEM_Acceptor_%d_"),
+                       ACE_TEXT ("%s%cMEM_Acceptor_%d_"),
                        temp_dir,
                        ACE_DIRECTORY_SEPARATOR_CHAR,
                        local_addr.get_port_number ());
     }
-  ASYS_TCHAR unique [MAXPATHLEN];
+  TCHAR unique [MAXPATHLEN];
   ACE_OS::unique_name (&new_stream, unique, MAXPATHLEN);
   ACE_OS::strcat (buf, unique);
 
@@ -144,7 +144,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
     return -1;
 
   // @@ Need to handle timeout here.
-  ACE_UINT16 buf_len = ACE_OS::strlen (buf) + 1;
+  ACE_UINT16 buf_len = (ACE_OS::strlen (buf) + 1) * sizeof (TCHAR);
   ACE_HANDLE new_handle = new_stream.get_handle ();
 
   // No need to worry about byte-order because both parties should always
