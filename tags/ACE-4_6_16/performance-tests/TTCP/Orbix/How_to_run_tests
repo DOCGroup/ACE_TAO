@@ -1,0 +1,59 @@
+// Orbix
+//
+// sequence AND string
+
+// HOSTNAMES:
+// for our tests, enatm0-tango.cs.wustl.edu was the receiver hostname used for atm transfers
+//                tango.cs.wustl.edu was the receiver hostname used for ethernet transfers
+// substitute the proper receiver hostname for your system.
+
+// ORBIX DAEMONS:
+// there must be an orbix daemon running on the receiver host in your system.
+// in our case, we had an orbix daemon running on tango.cs.wustl.edu
+
+// ACE_ROOT:
+// ACE_ROOT can be set to the root directory of ACE so that these lines
+// can be cut and pasted to run tests.
+
+// Results:
+// These examples show the result files being stored in a /results directory off
+// the current path.  This can be set to whatever you like.
+
+// ****** sequence ******
+
+// ATM with 64k receiver buffers
+Receiver_Host: putit ttcp_sequence "$ACE_ROOT/apps/TTCP/Orbix/server -q -s -r -fm -b 65536"
+Sender_Host: run_test 64 encip1-tango.cs.wustl.edu ./results/sequence.atm.64 -q
+	 or: client -D -fm -s -t -l 1048576 -n 100 -h encip1-tango.cs.wustl.edu -L ./results/sequence.atm.64 -q
+
+// ATM with 8k reciever buffers
+Receiver_Host: putit ttcp_sequence "$ACE_ROOT/apps/TTCP/Orbix/server -q -s -r -fm"
+Sender_Host: run_test 64 encip1-tango.cs.wustl.edu ./results/sequence.atm.8 -q
+
+// ETHERNET with 64k receiver buffers
+Receiver_Host: putit ttcp_sequence "$ACE_ROOT/apps/TTCP/Orbix/server -q -s -r -fm -b 65536"
+Sender_Host: run_test 64 tango.cs.wustl.edu ./results/sequence.ethernet.64 -q
+
+// ETHERNET with 8k reciever buffers
+Receiver_Host: putit ttcp_sequence "$ACE_ROOT/apps/TTCP/Orbix/server -q -s -r -fm"
+Sender_Host: run_test 64 tango.cs.wustl.edu ./results/sequence.ethernet.8 -q
+
+// ****** string ******
+
+// ATM with 64k receiver buffers
+Receiver_Host: putit ttcp_string "$ACE_ROOT/apps/TTCP/Orbix/server -s -r -fm -b 65536"
+Sender_Host: run_test 64 encip1-tango.cs.wustl.edu ./results/string.atm.64
+	 or: client -D -fm -s -t -l 1048576 -n 100  -h encip1-tango.cs.wustl.edu -L ./results/string.atm.64
+
+// ATM with 8k reciever buffers
+Receiver_Host: putit ttcp_string "$ACE_ROOT/apps/TTCP/Orbix/server -s -r -fm"
+Sender_Host: run_test 64 encip1-tango.cs.wustl.edu ./results/string.atm.8
+
+// ETHERNET with 64k receiver buffers
+Receiver_Host: putit ttcp_string "$ACE_ROOT/apps/TTCP/Orbix/server -s -r -fm -b 65536"
+Sender_Host: run_test 64 tango.cs.wustl.edu ./results/string.ethernet.64
+
+// ETHERNET with 8k reciever buffers
+Receiver_Host: putit ttcp_string "$ACE_ROOT/apps/TTCP/Orbix/server -s -r -fm"
+Sender_Host: run_test 64 tango.cs.wustl.edu ./results/string.ethernet.8
+
