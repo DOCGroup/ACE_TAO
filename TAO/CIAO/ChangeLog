@@ -1,3 +1,19 @@
+Mon Sep 13 04:20:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/ciao/CCM_Core.mpc:
+
+	  Removed iorinterceptor and objreftemplate from CIAO_DnC_Server
+	  project. No reason to believe that they need thes. This should
+	  hopefully remove the warnings in our daily builds.
+	
+	* examples/Hello/Sender/Sender_exec.cpp:
+
+	  Added a simple debug statement. 
+	
+	* performance-tests/Benchmark/Benchmark.mpc:
+
+	  Tried fixing the link errors on the scoreboard.
+
 Mon Sep 13 03:50:08 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/ciao/CCM_Core.mpc:
