@@ -15,11 +15,6 @@ ACE_RCSID(DynamicInterface, DII_Reply_Dispatcher, "$Id$")
 #include "tao/ORB_Core.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 
-#if !defined (__ACE_INLINE__)
-#include "DII_Reply_Dispatcher.inl"
-#endif /* __ACE_INLINE__ */
-
-
 // Constructor.
 TAO_DII_Deferred_Reply_Dispatcher::TAO_DII_Deferred_Reply_Dispatcher (
     const CORBA::Request_ptr req,
