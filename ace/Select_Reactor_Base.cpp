@@ -880,7 +880,7 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
 
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
-  return result;
+  return 1;
 }
 
 int
@@ -931,8 +931,8 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
   int result = 0;
   ACE_Notification_Buffer buffer;
 
-  while ((result = this->read_notify_pipe (handle,
-                                           buffer) > 0))
+  while (this->read_notify_pipe (handle,
+                                 buffer) > 0)
     {
       // Dispatch the buffer
       if (this->dispatch_notify (buffer) > 0)
