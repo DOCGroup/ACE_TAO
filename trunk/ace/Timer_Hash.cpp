@@ -1,3 +1,5 @@
+// $Id$
+
 // Timer_Hash.cpp
 
 #if !defined (ACE_TIMER_HASH_C)
