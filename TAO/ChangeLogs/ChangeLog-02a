@@ -1,3 +1,12 @@
+Mon Jan 21 17:37:47 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/InterfaceDef_i.cpp:
+
+          Added checks for illegal oneway operation properties
+          (non-void return type, user exceptions, OUT or INOUT
+          parameters) that CORBA 2.6 says must cause BAD_PARAM
+          minor code 31 to be thrown.
+
 Mon Jan 21 17:15:18 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/include/utl_scope.h:
