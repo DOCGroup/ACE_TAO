@@ -1,3 +1,77 @@
+Wed Mar 07 19:19:18 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/PortableServer:
+
+	  The SINGLE_THREAD_MODEL was not implemented correctly in the
+	  POA.  As documented in Bug 483, the spec was misread to
+	  understand that two threads cannot call the same servant in
+	  a single threaded POA.  The spec actually meant that any two
+	  servants in a single threaded POA cannot be called
+	  simultaneously.  This was fixed by the following changes:
+
+	  - There is one lock per single threaded POA instead of one
+	    lock per servant.
+
+	  - Since the lock is now on the POA instead of being on the
+	    servant, there is no need to set up the per servant lock
+	    when the servant is registered or when the servant is
+	    removed from the POA.  Thus the <teardown_servant_lock>
+	    and the <establish_servant_lock> were removed from the
+	    POA.
+
+	  - The lock type was changed from regular to recursive.
+
+	* tests/POA/Single_Threaded_POA: 
+
+          New test added. This program tests to make sure that two threads
+	  cannot call servants in a single threaded POA simultaneously.
+	  At the same time, it makes sure that a servant can call itself
+	  or other servants in the same POA while in an upcall.
+
+	* Updated the following files wrt the new test:
+
+	  ACE_wrappers/TAO/tests/TAO_Tests.dsw
+	  ACE_wrappers/TAO/tests/POA/Makefile
+	  ACE_wrappers/TAO/tests/POA/README
+	  ACE_wrappers/bin/auto_compile_win32.pl
+	  ACE_wrappers/bin/auto_run_tests.lst
+	
+	* tao/ORB_Core.cpp:
+
+          - There was a memory leak when an ORB was not explicitly
+	    destroyed or shutdown by the user.  The fix was to call
+	    TAO_ORB_Core::shutdown() from TAO_ORB_Core::fini().  This
+	    will ensure that the Object Adapter(s) gets closed,
+	    reactor registry is shutdown, the threads are canceled,
+	    etc. when the user does not explicitly destroyed or
+	    shutdown the ORB.  This fixes move than Bug 406 since it
+	    cleans up after the user even when the user does not call
+	    shutdown() or destroy() on the ORB.
+
+	  - There was a guard added to avoid repeated shutdowns and
+            then there was no need to guard repeated destroys.
+
+          - Ossama's change to make <root_poa_> a ptr from the
+            original var type was incorrect because he thought that
+            poa_adapter->root() doesn't return a duplicate.  It
+            actually does duplicate (TAO_POA *root_poa() doesn't but
+            CORBA::Object_ptr root()does).  Therefore, his change was
+            reverted.
+
+          - Moved destroy_interceptors() from destroy() to shutdown().
+            All destroy() should do is (a) call shutdown() and (b)
+            unbind() from the ORB table.  Nothing else should really
+            be added to this method.  Everything else should go to the
+            shutdown() method.  Remember when the ORB Core is finally
+            removed from the ORB table, the reference count goes to
+            zero and fini() is called.  fini() calls shutdown() and
+            does not call destory() since destroy() will try to unbind
+            from the ORB table again.  Additional code should not be
+            added to destroy() since there is no guarantee that
+            orb->destroy() will ever be called by the user.  Since TAO
+            guarantees that shutdown() will be called, all cleanup
+            code should go there.
+
 Wed Mar  7 16:17:16 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation_cs/cpp:

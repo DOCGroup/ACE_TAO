@@ -31,3 +31,12 @@ Object Adapter (POA) interfaces and their usage scenarios.
 
                 This program tests the <wait_for_completion> feature
                 of the POA.
+
+        . Single_Threaded_POA 
+
+                This program tests to make sure that two threads
+                cannot call servants in a single threaded POA
+                simultaneously.  At the same time, it makes sure that
+                a servant can call itself or other servants in the
+                same POA while in an upcall.
+

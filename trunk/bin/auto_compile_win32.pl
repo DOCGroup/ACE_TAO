@@ -233,6 +233,7 @@ TAO/tests/MT_Client/MT_Client.dsw, MT_Client Client:
 TAO/tests/MT_Server/MT_Server.dsw, MT_Server Server:
 TAO/tests/MT_Server/MT_Server.dsw, MT_Server Client:
 TAO/tests/POA/Destruction/Destruction.dsw, POA Destruction:
+TAO/tests/POA/Single_Threaded_POA/Single_Threaded_POA.dsw, POA Single_Threaded_POA:
 TAO/tests/POA/Non_Servant_Upcalls/Non_Servant_Upcalls.dsw, POA Non_Servant_Upcalls:
 TAO/tests/POA/Deactivation/Deactivation.dsw, POA Deactivation:
 TAO/tests/POA/Identity/Identity.dsw, POA Identity:
@@ -457,6 +458,7 @@ TAO/tests/MT_Client/MT_Client.dsw, MT_Client Client:
 TAO/tests/MT_Server/MT_Server.dsw, MT_Server Server:
 TAO/tests/MT_Server/MT_Server.dsw, MT_Server Client:
 TAO/tests/POA/Destruction/Destruction.dsw, POA Destruction:
+TAO/tests/POA/Single_Threaded_POA/Single_Threaded_POA.dsw, POA Single_Threaded_POA:
 TAO/tests/POA/Non_Servant_Upcalls/Non_Servant_Upcalls.dsw, POA Non_Servant_Upcalls:
 TAO/tests/POA/Deactivation/Deactivation.dsw, POA Deactivation:
 TAO/tests/POA/Identity/Identity.dsw, POA Identity:
