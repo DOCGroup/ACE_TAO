@@ -1,3 +1,12 @@
+Sun Jun 27 16:57:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/IIOP_Connect.cpp:
+	* tao/UIOP_Connect.cpp:
+	  Do not return 1 from a handle_input() call
+
+	* tao/default_resource.cpp:
+	  Cleanup ACE_LOG_MSG->errnum() before creating Reactor.
+
 Sun Jun 27 16:48:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Makefile:
