@@ -1,3 +1,8 @@
+Mon Jun  4 17:38:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/tutorials/Quoter/Event_Service/Makefile: Updated
+	  dependencies. 
+
 Mon Jun  4 11:00:28 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/orb.idl:
