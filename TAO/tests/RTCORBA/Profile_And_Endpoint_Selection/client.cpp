@@ -268,18 +268,20 @@ Client::priority_invocations (int debug
 
   Worker_Thread **workers = 0;
 
-  ACE_NEW (workers,
-           Worker_Thread *[priorities.size ()]);
+  ACE_NEW_THROW_EX (workers,
+                    Worker_Thread *[priorities.size ()],
+                    CORBA::NO_MEMORY ());
 
   for (i = 0;
        i < priorities.size ();
        ++i)
     {
-      ACE_NEW (workers[i],
-               Worker_Thread (*this,
-                              this->test_.in (),
-                              this->current_.in (),
-                              priorities[i]));
+      ACE_NEW_THROW_EX (workers[i],
+                        Worker_Thread (*this,
+                                       this->test_.in (),
+                                       this->current_.in (),
+                                       priorities[i]),
+                        CORBA::NO_MEMORY ());
 
       long flags =
         THR_NEW_LWP |
