@@ -23,8 +23,8 @@ void TAO_Base_Sequence::_shrink_buffer (CORBA::ULong, CORBA::ULong)
 
 void
 TAO_Base_Sequence::_downcast (void*,
-			      CORBA_Object*,
-			      CORBA_Environment &)
+                              CORBA_Object*,
+                              CORBA_Environment &)
 {
   // default is no op.
   // @@ TODO Maybe throw an exception?
@@ -90,6 +90,14 @@ TAO_String_Manager::operator= (const char * p)
       *this->ptr_ = ACE_const_cast(char*,p);
     }
   return *this;
+}
+
+char *&
+TAO_String_Manager::out (void)
+{
+  CORBA::string_free (*this->ptr_);
+  *this->ptr_ = 0;
+  return *this->ptr_;
 }
 
 // *************************************************************
@@ -268,12 +276,12 @@ TAO_Unbounded_Sequence (const TAO_Unbounded_Sequence<CORBA::Octet> &rhs)
     {
       size_t offset = 0;
       for (const ACE_Message_Block *i = rhs.mb_;
-	   i != 0;
-	   i = i->cont ())
-	{
-	  ACE_OS::memcpy (tmp1 + offset, i->rd_ptr (), i->length ());
-	  offset += i->length ();
-	}
+           i != 0;
+           i = i->cont ())
+        {
+          ACE_OS::memcpy (tmp1 + offset, i->rd_ptr (), i->length ());
+          offset += i->length ();
+        }
     }
 
   this->buffer_ = tmp1;
@@ -321,12 +329,12 @@ TAO_Unbounded_Sequence<CORBA::Octet>::operator= (const TAO_Unbounded_Sequence<CO
     {
       size_t offset = 0;
       for (const ACE_Message_Block *i = rhs.mb_;
-	   i != 0;
-	   i = i->cont ())
-	{
-	  ACE_OS::memcpy (tmp1 + offset, i->rd_ptr (), i->length ());
-	  offset += i->length ();
-	}
+           i != 0;
+           i = i->cont ())
+        {
+          ACE_OS::memcpy (tmp1 + offset, i->rd_ptr (), i->length ());
+          offset += i->length ();
+        }
     }
 
   return *this;
@@ -334,7 +342,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::operator= (const TAO_Unbounded_Sequence<CO
 
 TAO_Unbounded_Sequence<CORBA::Octet>::
 TAO_Unbounded_Sequence (CORBA::ULong length,
-			const ACE_Message_Block *mb)
+                        const ACE_Message_Block *mb)
   :  TAO_Unbounded_Base_Sequence (length,
                                   length,
                                   mb->rd_ptr (),
