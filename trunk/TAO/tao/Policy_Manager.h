@@ -46,6 +46,14 @@ public:
   TAO_Policy_Manager_Impl (void);
   // Constructor
 
+  ~TAO_Policy_Manager_Impl (void);
+  // Destructor
+
+  void copy_from (TAO_Policy_Manager_Impl* source,
+                  CORBA::Environment &ACE_TRY_ENV);
+  // Copy the state from <source>, it uses the copy() operator to
+  // obtain independent copies of all the policies.
+
   void set_policy_overrides (
       const CORBA::PolicyList & policies,
       CORBA::SetOverrideType set_add,
@@ -80,6 +88,15 @@ public:
 
   POA_TAO::ClientPriorityPolicy*
       client_priority (void) const;
+
+private:
+  ACE_UNIMPLEMENTED_FUNC (TAO_Policy_Manager_Impl operator=(const TAO_Policy_Manager_Impl&))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Policy_Manager_Impl(const TAO_Policy_Manager_Impl&))
+
+  void cleanup_i (CORBA::Environment &ACE_TRY_ENV);
+  // Remove and destroy all the policy objects owned by this policy
+  // manager.
+
 private:
   // The known policies are kept as pointers to the implementation
   // objects, this allow us to query the supported policies really

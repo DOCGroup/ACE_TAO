@@ -55,56 +55,26 @@ public:
   ~TAO_UIOP_Transport (void);
   // Default destructor.
 
-  CORBA::ULong tag (void);
-  // Returns the specific IOP instance, in this case UIOP.
-
-  void close_connection (void);
-  // Call the corresponding connection handlers close method.
-
-  int idle (void);
-  // Idles the corresponding connection handler.
-
   TAO_UIOP_Handler_Base *&handler (void);
   // Return a reference to the corresponding connection handler.
 
-  ACE_HANDLE handle (void);
-  // Return the underlying connection handle.
-
-  ssize_t send (const ACE_Message_Block *mblk,
-                ACE_Time_Value *s = 0);
-  // Write the contents of the Message_Block to the connection.
-
-  ssize_t send (const u_char *buf,
-                size_t len,
-                ACE_Time_Value *s = 0);
-  // Write the contents of the buffer of length len to the connection.
-
-  ssize_t send (const iovec *iov,
-                int iovcnt,
-                ACE_Time_Value *s = 0);
-  // Write the contents of iovcnt iovec's to the connection.
-
-  ssize_t recv (char *buf,
-                size_t len,
-                ACE_Time_Value *s = 0);
-  // Read len bytes from into buf.
-
-  ssize_t recv (char *buf,
-                size_t len,
-                int flags,
-                ACE_Time_Value *s = 0);
-  // Read len bytes from into buf using flags.
-
-  ssize_t recv (iovec *iov,
-                int iovcnt,
-                ACE_Time_Value *s = 0);
-  //  Read received data into the iovec buffers.
-
+  // = The TAO_Transport methods, please check the documentation in
+  //   "tao/Pluggable.h" for more details.
+  virtual void close_connection (void);
+  virtual int idle (void);
+  virtual ACE_HANDLE handle (void);
+  virtual ssize_t send (const ACE_Message_Block *mblk,
+                        ACE_Time_Value *s = 0);
+  virtual ssize_t send (const u_char *buf,
+                        size_t len,
+                        ACE_Time_Value *s = 0);
+  virtual ssize_t recv (char *buf,
+                        size_t len,
+                        ACE_Time_Value *s = 0);
   virtual int send_request (TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,
                             int twoway,
                             ACE_Time_Value *max_wait_time);
-  // Default action to be taken for send request.
 
 protected:
   TAO_UIOP_Handler_Base *handler_;
@@ -135,44 +105,28 @@ public:
   TAO_UIOP_Client_Connection_Handler *client_handler (void);
   // return a pointer to the client's connection handler.
 
+  // = The TAO_Transport methods, please check the documentation in
+  //   "tao/Pluggable.h" for more details.
   virtual void start_request (TAO_ORB_Core *orb_core,
                               const TAO_Profile *profile,
                               TAO_OutputCDR &output,
                               CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Fill into <output> the right headers to make a request.
-
   virtual void start_locate (TAO_ORB_Core *orb_core,
                              const TAO_Profile *profile,
                              CORBA::ULong request_id,
                              TAO_OutputCDR &output,
                              CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Fill into <output> the right headers to make a locate request.
-
-  int send_request (TAO_ORB_Core *orb_core,
-                    TAO_OutputCDR &stream,
-                    int twoway,
-                    ACE_Time_Value *max_wait_time);
-  // This is a bridge method for the connection handlers
-  // <send_request> method.  The connection handler is responsible for
-  // concurrency strategies, typically using the leader-follower
-  // pattern.
-
-  int handle_client_input (int block = 0,
-                           ACE_Time_Value *max_time_value = 0);
-  // Read and handle the reply. Returns 0 when there is Short Read on
-  // the connection. Returns 1 when the full reply is read and
-  // handled. If <block> is 1, then reply is read in a blocking
-  // manner.
-
+  virtual int send_request (TAO_ORB_Core *orb_core,
+                            TAO_OutputCDR &stream,
+                            int twoway,
+                            ACE_Time_Value *max_wait_time);
+  virtual int handle_client_input (int block = 0,
+                                   ACE_Time_Value *max_time_value = 0);
   virtual int register_handler (void);
   // Register the handler with the reactor. This will be called by the
   // Wait Strategy if Reactor is used  for that strategy.
-
-protected:
-  int check_unexpected_data (void);
-  // This method checks for unexpected data.
 
 private:
   TAO_UIOP_Client_Connection_Handler *client_handler_;

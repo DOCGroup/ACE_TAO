@@ -1,3 +1,26 @@
+Wed Sep 15 11:17:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Policy_Manager.h:
+	* tao/Policy_Manager.cpp:
+	  The class lacked a destructor and thus was a source of memory
+	  and resource leaks.  It should be OK now, but needs more
+	  testing.  Thanks to Marina for pointing this out.
+	  This partly fixes [BUGID:318]
+
+	* tao/Stub.i:
+	* tao/Stub.cpp:
+	  Moved the destructor to the .cpp file and added code to release
+	  the Policy_Manager if it is present. Thanks to Marina for
+	  pointing out this problem.
+	  This is another step to fix [BUGID:318]
+
+	* tao/Pluggable.h:
+	* tao/IIOP_Transport.h:
+	* tao/IIOP_Transport.cpp:
+	* tao/UIOP_Transport.h:
+	* tao/UIOP_Transport.cpp:
+	  Removed unused methods.
+
 Wed Sep 15 10:30:38 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (destroy):

@@ -295,64 +295,6 @@ TAO_UIOP_Client_Transport::register_handler (void)
                               ACE_Event_Handler::READ_MASK);
 }
 
-int
-TAO_UIOP_Client_Transport::check_unexpected_data (void)
-{
-  // @@ It seems like this method should go away, all the error
-  //    detection code is in GIOP::handle_input() now.
-  // @@ Alex: This should *not* be part of the client connection
-  //    handler, we should treat any incoming data as a GIOP message.
-  //    The server can always send the "CloseConnection" message and
-  //    we should act accordingly.
-  //    Finally: in the future the server may send requests though
-  //    GIOP 1.2 connections, we shouldn't hard-code the current GIOP
-  //    state machine at this level...
-
-  // We're a client, so we're not expecting to see input.  Still we
-  // better check what it is!
-  char ignored;
-  ssize_t ret = this->client_handler ()->peer().recv (&ignored,
-                                                      sizeof ignored,
-                                                      MSG_PEEK);
-  switch (ret)
-    {
-    case 0:
-    case -1:
-      // 0 is a graceful shutdown
-      // -1 is a somewhat ugly shutdown
-      //
-      // Both will result in us returning -1 and this connection
-      // getting closed
-      //
-      // if (errno == EWOULDBLOCK)
-      // return 0;
-
-      if (TAO_debug_level)
-        ACE_DEBUG ((LM_WARNING,
-                    "TAO_UIOP_Client_Transport::check_unexpected_data: "
-                    "closing connection on fd %d\n",
-                    this->client_handler ()->peer().get_handle ()));
-      break;
-
-    case 1:
-      //
-      // @@ Fix me!!
-      //
-      // This should be the close connection message.  Since we don't
-      // handle this yet, log an error, and close the connection.
-      ACE_ERROR ((LM_WARNING,
-                  "TAO_UIOP_Client_Transport::check_unexpected_data: "
-                  "input while not expecting a response; "
-                  "closing connection on fd %d\n",
-                  this->client_handler ()->peer().get_handle ()));
-      break;
-    }
-
-  // We're not expecting input at this time, so we'll always
-  // return -1 for now.
-  return -1;
-}
-
 // ****************************************************************
 
 ssize_t
@@ -427,23 +369,12 @@ TAO_UIOP_Transport::send (const u_char *buf,
                           size_t len,
                           ACE_Time_Value *)
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_SEND_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_BIOP_TRANSPORT_SEND_START);
 
   return this->handler_->peer ().send_n (buf, len);
 }
 
 ssize_t
-TAO_UIOP_Transport::send (const iovec *iov,
-                          int iovcnt,
-                          ACE_Time_Value *)
-{
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_SEND_START);
-
-  return this->handler_->peer ().sendv_n ((const iovec *) iov,
-                                          iovcnt);
-}
-
-ssize_t
 TAO_UIOP_Transport::recv (char *buf,
                           size_t len,
                           ACE_Time_Value *max_wait_time)
@@ -454,31 +385,6 @@ TAO_UIOP_Transport::recv (char *buf,
                       buf,
                       len,
                       max_wait_time);
-}
-
-ssize_t
-TAO_UIOP_Transport::recv (char *buf,
-                          size_t len,
-                          int flags,
-                          ACE_Time_Value *max_wait_time)
-{
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_RECEIVE_START);
-
-  return ACE::recv_n (this->handler_->peer ().get_handle (),
-                      buf,
-                      len,
-                      flags,
-                      max_wait_time);
-}
-
-ssize_t
-TAO_UIOP_Transport::recv (iovec *iov,
-                          int iovcnt,
-                          ACE_Time_Value *)
-{
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_RECEIVE_START);
-
-  return handler_->peer ().recvv_n (iov, iovcnt);
 }
 
 // Default action to be taken for send request.

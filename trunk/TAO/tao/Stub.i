@@ -85,27 +85,6 @@ TAO_Stub::reset_profiles (void)
   reset_profiles_i ();
 }
 
-ACE_INLINE
-TAO_Stub::~TAO_Stub (void)
-{
-  assert (this->refcount_ == 0);
-
-  if (forward_profiles_)
-    reset_profiles ();
-
-  if (this->profile_in_use_ != 0)
-    {
-      this->profile_in_use_->reset_hint ();
-      // decrease reference count on profile
-      this->profile_in_use_->_decr_refcnt ();
-      this->profile_in_use_ = 0;
-    }
-
-  if (this->profile_lock_ptr_)
-    delete this->profile_lock_ptr_;
-
-}
-
 ACE_INLINE TAO_Profile *
 TAO_Stub::profile_in_use (void)
 {
