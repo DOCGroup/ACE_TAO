@@ -58,7 +58,7 @@ public:
   virtual int close (void) = 0;
   // Close down the message queue and release all resources.
 
-  virtual ~ACE_Message_Queue_Base (void) = 0;
+  virtual ~ACE_Message_Queue_Base (void);
   // Close down the message queue and release all resources.
 
   // = Enqueue and dequeue methods.
