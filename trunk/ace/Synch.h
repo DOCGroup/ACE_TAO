@@ -1073,6 +1073,9 @@ private:
 };
 
 class ACE_Export ACE_Recursive_Thread_Mutex
+#if defined (ACE_WIN32)
+  : public ACE_Thread_Mutex
+#endif /* ACE_WIN32 */
 {
   // = TITLE
   //     Implement a C++ wrapper that allows calls to class
@@ -1091,6 +1094,7 @@ public:
 			      void *arg = 0);
   // Initialize a recursive mutex.
 
+#if !defined (ACE_WIN32)
   ~ACE_Recursive_Thread_Mutex (void);
   // Implicitly release a recursive mutex.
 
@@ -1137,6 +1141,7 @@ public:
   // Releases a recursive mutex (will not release mutex until all the
   // nesting level drops to 0, which means the mutex is no longer
   // held).
+#endif /* ! ACE_WIN32 */
 
   ACE_thread_t get_thread_id (void);
   // Return the id of the thread that currently owns the mutex.
@@ -1147,6 +1152,7 @@ public:
   // The nesting level is incremented every time the thread acquires
   // the mutex recursively.
 
+#if !defined (ACE_WIN32)
   void dump (void) const;
   // Dump the state of an object.
 
@@ -1169,6 +1175,7 @@ protected:
 
   ACE_thread_t owner_id_;
   // Current owner of the lock.
+#endif /* ! ACE_WIN32 */
 
 private:
   // = Prevent assignment and initialization.

@@ -513,6 +513,7 @@ ACE_Condition_Thread_Mutex::mutex (void)
   return this->mutex_;
 }
 
+#if !defined (ACE_WIN32)
 ACE_INLINE int
 ACE_Recursive_Thread_Mutex::remove (void)
 {
@@ -551,6 +552,28 @@ ACE_Recursive_Thread_Mutex::tryacquire_write (void)
 {
   return tryacquire ();
 }
+
+#else /* ACE_WIN32 */
+// The counter part of the following two functions for non-Win32 platforms
+// are located in file Synch.cpp
+ACE_thread_t
+ACE_Recursive_Thread_Mutex::get_thread_id (void)
+{
+  // @@ The structure CriticalSection in Win32 doesn't hold
+  // the thread handle of the thread that owns the lock.  However
+  // it is still not clear at this point how to translate a
+  // thread handle to its corresponding thread id.
+  errno = ENOTSUP;
+  return ACE_OS::NULL_thread;
+}
+
+int
+ACE_Recursive_Thread_Mutex::get_nesting_level (void)
+{
+  return this->lock_.RecursionCount;
+}
+
+#endif /* ACE_WIN32 */
 
 #endif /* ACE_HAS_THREADS */
 
