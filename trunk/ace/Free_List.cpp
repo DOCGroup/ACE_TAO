@@ -15,29 +15,19 @@ ACE_Free_List<T>::~ACE_Free_List (void)
   // Nothing
 }
 
-template <class T, class LOCK>
-ACE_Locked_Simple_Free_List<T, LOCK>::ACE_Locked_Simple_Free_List (void)
-  : size_ (0),
-    head_ (0)
-{
-}
-
-template <class T, class LOCK>
-ACE_Locked_Simple_Free_List<T, LOCK>::~ACE_Locked_Simple_Free_List (void)
-{
-}
-
 // Default constructor that takes in a preallocation number
 // (<prealloc>), a low and high water mark (<lwm> and <hwm>) and an
 // increment value (<inc>)
 
 template <class T, class LOCK>  
-ACE_Locked_Free_List<T, LOCK>::ACE_Locked_Free_List (size_t prealloc, 
+ACE_Locked_Free_List<T, LOCK>::ACE_Locked_Free_List (ACE_Free_List_Op_Mode mode,
+						     size_t prealloc, 
                                                      size_t lwm, 
                                                      size_t hwm, 
                                                      size_t inc,
                                                      LOCK *mutex)
-  : free_list_ (NULL),
+  : mode_ (mode),
+    free_list_ (NULL),
     lwm_ (lwm),
     hwm_ (hwm),
     inc_ (inc),
@@ -53,12 +43,13 @@ ACE_Locked_Free_List<T, LOCK>::ACE_Locked_Free_List (size_t prealloc,
 template <class T, class LOCK>  
 ACE_Locked_Free_List<T, LOCK>::~ACE_Locked_Free_List (void)
 {
-  while (this->free_list_ != NULL)
-    {
-      T *temp = this->free_list_;
-      this->free_list_ = this->free_list_->get_next ();
-      delete temp;
-    }
+  if (this->mode_ != ACE_PURE_FREE_LIST)
+    while (this->free_list_ != NULL)
+      {
+	T *temp = this->free_list_;
+	this->free_list_ = this->free_list_->get_next ();
+	delete temp;
+      }
 
   if (this->delete_mutex_)
     delete this->mutex_;
