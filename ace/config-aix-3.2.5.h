@@ -21,6 +21,7 @@
 #define ACE_HAS_POSIX_NONBLOCK
 #define ACE_HAS_AIX_GETTIMEOFDAY
 #define ACE_HAS_NO_SYSCALL_H
+#define ACE_NEEDS_DEV_IO_CONVERSION
 
 // Compiler/platform has the getrusage() system call.
 #define ACE_HAS_GETRUSAGE

@@ -48,6 +48,7 @@
 #define ACE_MT_SAFE
 #define ACE_HAS_UTIME
 #define ACE_HAS_SELECT_H
+#define ACE_NEEDS_DEV_IO_CONVERSION
 
 #define ACE_HAS_MSG
 

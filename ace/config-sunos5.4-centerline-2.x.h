@@ -138,6 +138,8 @@
 // Platform supports ACE_TLI.
 #define ACE_HAS_TLI
 
+#define ACE_NEEDS_DEV_IO_CONVERSION
+
 // 10 millisecond fudge factor to account for Solaris timers...
 #if !defined (ACE_TIMER_SKEW)
 #define ACE_TIMER_SKEW 1000 * 10
