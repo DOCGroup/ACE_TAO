@@ -1,3 +1,16 @@
+Sun Jun 30 16:42:25 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+
+          Changed the accessors and modifiers for Any members to
+          pass and return by reference instead of by value, as
+          specified in the CORBA C++ mapping, sections 1.12 and
+          1.17.1. Thanks to Nanbor <nanbor@cs.wustl.edu> for 
+          questioning the valuetype case.
+
 Fri Jun 28 17:06:46 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_viistor_typecode/typecode_defn.cpp:
