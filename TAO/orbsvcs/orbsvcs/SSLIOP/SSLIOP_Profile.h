@@ -88,9 +88,9 @@ public:
   virtual void reset_hint (void);
 
 private:
-  TAO_SSLIOP_Profile (const TAO_SSLIOP_Profile &pfile);
-  TAO_SSLIOP_Profile &operator= (const TAO_SSLIOP_Profile &src);
-  // private & undefined
+  ACE_UNIMPLEMENTED_FUNC (TAO_SSLIOP_Profile (const TAO_SSLIOP_Profile &pfile))
+  ACE_UNIMPLEMENTED_FUNC (TAO_SSLIOP_Profile & operator= (const TAO_SSLIOP_Profile &src))
+  // Profiles should not be copied.
 
 private:
   SSLIOP::SSL ssl_component_;
