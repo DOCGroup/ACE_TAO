@@ -1,7 +1,6 @@
 // $Id$
 
 #include "ace/TLI_Acceptor.h"                             
-#include "ace/ATM_Addr.h"
 
 ACE_RCSID(TLI_SAP, CPP_server, "$Id$")
 
@@ -11,19 +10,11 @@ ACE_RCSID(TLI_SAP, CPP_server, "$Id$")
 int 
 main (int argc, char *argv[])
 {
-#if defined (ACE_HAS_FORE_ATM_XTI)
-  ACE_Time_Value timeout (argc > 1 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_TIMEOUT);
-#else
   u_short port = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
   ACE_Time_Value timeout (argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_TIMEOUT);
-#endif /* ACE_HAS_FORE_ATM_XTI */
 
   // Create a server address. 
-#if defined (ACE_HAS_FORE_ATM_XTI)
-  ACE_ATM_Addr addr;
-#else
   ACE_INET_Addr addr (port);
-#endif /* ACE_HAS_FORE_ATM_XTI */
 
   // Create a server, reuse the addr. 
   ACE_TLI_Acceptor peer_acceptor;
@@ -39,8 +30,8 @@ main (int argc, char *argv[])
   ACE_TLI_Stream new_stream;                                   
 
   ACE_DEBUG ((LM_DEBUG,
-              "starting server at address %s\n", 
-              addr.addr_to_string ()));
+              "starting server at host %s\n", 
+              addr.get_host_name ()));
 
   // Performs the iterative server activities 
 
@@ -62,7 +53,7 @@ main (int argc, char *argv[])
                                                                  
       ACE_DEBUG ((LM_DEBUG,
                   "client %s connected\n",
-                  addr.addr_to_string ()));
+                  addr.get_host_name ()));
 
       // Read data from client (terminate on error).
 
