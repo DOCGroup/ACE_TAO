@@ -1,3 +1,12 @@
+Thu May 29 11:09:52 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* include/makeinclude/rules.local.GNU: check for directory
+	  write permission before attempting to install.  This helps
+	  support shared ACE workspaces.  There are two easy ways
+	  to not install "private" libraries in the shared workspace:
+	  1) remove write permission from $WRAPPER_ROOT/ace, or
+	  2) add "INSTALL=" to invocations of "make".
+
 Thu May 29 06:07:18 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i (thr_join): Revised some code in the #ifdef'd out
