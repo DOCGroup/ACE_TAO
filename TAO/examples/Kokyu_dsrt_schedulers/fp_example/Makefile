@@ -376,9 +376,9 @@ realclean: clean
   $(TAO_ROOT)/tao/PICurrent.h \
   $(TAO_ROOT)/tao/PICurrent.inl \
   $(TAO_ROOT)/tao/ORB_Core.i testC.h testC.i \
-  $(TAO_ROOT)/examples/Kokyu_dsrt_schedulers/MIF_Scheduler.h \
-  $(TAO_ROOT)/examples/Kokyu_dsrt_schedulers/MIF_SchedulingC.h \
-  $(TAO_ROOT)/examples/Kokyu_dsrt_schedulers/MIF_SchedulingC.i \
+  $(TAO_ROOT)/examples/Kokyu_dsrt_schedulers/FP_Scheduler.h \
+  $(TAO_ROOT)/examples/Kokyu_dsrt_schedulers/FP_SchedulingC.h \
+  $(TAO_ROOT)/examples/Kokyu_dsrt_schedulers/FP_SchedulingC.i \
   $(ACE_ROOT)/Kokyu/Kokyu_dsrt.h \
   $(ACE_ROOT)/Kokyu/kokyu_export.h \
   $(ACE_ROOT)/Kokyu/Kokyu_defs.h \
@@ -392,13 +392,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
   $(ACE_ROOT)/ace/Dynamic_Service.i \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp \
-  $(ACE_ROOT)/Kokyu/Default_DSRT_Dispatcher_Impl_T.h \
-  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl_T.h \
-  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl_T.i \
-  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl_T.cpp \
-  $(ACE_ROOT)/Kokyu/Default_DSRT_Dispatcher_Impl_T.i \
-  $(ACE_ROOT)/Kokyu/Default_DSRT_Dispatcher_Impl_T.cpp \
-  $(ACE_ROOT)/Kokyu/DSRT_Scheduler_T.h \
+  $(ACE_ROOT)/Kokyu/DSRT_Direct_Dispatcher_Impl_T.h \
   $(ACE_ROOT)/Kokyu/DSRT_Sched_Queue_T.h \
   $(ACE_ROOT)/Kokyu/DSRT_Dispatch_Item_T.h \
   $(ACE_ROOT)/ace/Bound_Ptr.h \
@@ -409,7 +403,10 @@ realclean: clean
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(ACE_ROOT)/Kokyu/DSRT_Sched_Queue_T.cpp \
-  $(ACE_ROOT)/Kokyu/DSRT_Scheduler_T.cpp \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl_T.h \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl_T.i \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl_T.cpp \
+  $(ACE_ROOT)/Kokyu/DSRT_Direct_Dispatcher_Impl_T.cpp \
   $(TAO_ROOT)/examples/Kokyu_dsrt_schedulers/Kokyu_dsrt_schedulers_export.h
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp test_i.h testS.h testC.h \
@@ -735,9 +732,9 @@ realclean: clean
   $(TAO_ROOT)/tao/PICurrent.h \
   $(TAO_ROOT)/tao/PICurrent.inl \
   $(TAO_ROOT)/tao/ORB_Core.i \
-  $(TAO_ROOT)/examples/Kokyu_dsrt_schedulers/MIF_Scheduler.h \
-  $(TAO_ROOT)/examples/Kokyu_dsrt_schedulers/MIF_SchedulingC.h \
-  $(TAO_ROOT)/examples/Kokyu_dsrt_schedulers/MIF_SchedulingC.i \
+  $(TAO_ROOT)/examples/Kokyu_dsrt_schedulers/FP_Scheduler.h \
+  $(TAO_ROOT)/examples/Kokyu_dsrt_schedulers/FP_SchedulingC.h \
+  $(TAO_ROOT)/examples/Kokyu_dsrt_schedulers/FP_SchedulingC.i \
   $(ACE_ROOT)/Kokyu/Kokyu_dsrt.h \
   $(ACE_ROOT)/Kokyu/kokyu_export.h \
   $(ACE_ROOT)/Kokyu/Kokyu_defs.h \
@@ -751,13 +748,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
   $(ACE_ROOT)/ace/Dynamic_Service.i \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp \
-  $(ACE_ROOT)/Kokyu/Default_DSRT_Dispatcher_Impl_T.h \
-  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl_T.h \
-  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl_T.i \
-  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl_T.cpp \
-  $(ACE_ROOT)/Kokyu/Default_DSRT_Dispatcher_Impl_T.i \
-  $(ACE_ROOT)/Kokyu/Default_DSRT_Dispatcher_Impl_T.cpp \
-  $(ACE_ROOT)/Kokyu/DSRT_Scheduler_T.h \
+  $(ACE_ROOT)/Kokyu/DSRT_Direct_Dispatcher_Impl_T.h \
   $(ACE_ROOT)/Kokyu/DSRT_Sched_Queue_T.h \
   $(ACE_ROOT)/Kokyu/DSRT_Dispatch_Item_T.h \
   $(ACE_ROOT)/ace/Bound_Ptr.h \
@@ -768,7 +759,10 @@ realclean: clean
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(ACE_ROOT)/Kokyu/DSRT_Sched_Queue_T.cpp \
-  $(ACE_ROOT)/Kokyu/DSRT_Scheduler_T.cpp \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl_T.h \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl_T.i \
+  $(ACE_ROOT)/Kokyu/DSRT_Dispatcher_Impl_T.cpp \
+  $(ACE_ROOT)/Kokyu/DSRT_Direct_Dispatcher_Impl_T.cpp \
   $(TAO_ROOT)/examples/Kokyu_dsrt_schedulers/Kokyu_dsrt_schedulers_export.h
 
 .obj/test_i.o .obj/test_i.so .shobj/test_i.o .shobj/test_i.so: test_i.cpp test_i.h testS.h testC.h \
