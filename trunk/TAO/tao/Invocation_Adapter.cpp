@@ -68,8 +68,10 @@ namespace TAO
         Collocation_Strategy strat = TAO_CS_REMOTE_STRATEGY;
 
         // If we have a collocated proxy broker we look if we maybe
-        // can use a collocated invocation.
-        if (cpb_ != 0)
+        // can use a collocated invocation.  Similarly, if the
+        // target object reference contains a pointer to a servant,
+        // the object reference also refers to a collocated object.
+        if (cpb_ != 0 || effective_target->_servant () != 0)
           {
             strat =
               TAO_ORB_Core::collocation_strategy (effective_target.in ()
