@@ -16,6 +16,13 @@
 #    define ACE_NEEDS_DEV_IO_CONVERSION
 #  elif (__SUNPRO_CC >= 0x420)
 #  define ACE_HAS_ANSI_CASTS
+#  if !defined (ACE_HAS_RTTI)
+     // Sun C++ with castop but without rtti converts
+     // dynamic_cast to static cast.  Replace dynamic_cast
+     // with static_cast explicitly in OS.h, to avoid the
+     // warning.
+#    define ACE_LACKS_RTTI
+#  endif /* ! ACE_HAS_RTTI */
 #  if 0 /* Explicit instantiation isn't useful without -instances=global,
            but that results in link collisions.  We need to figure out how
            to disable CC's implicit template instantiation. */
