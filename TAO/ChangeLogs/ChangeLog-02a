@@ -1,3 +1,28 @@
+2001-02-12  Yamuna Krishnamurthy  <yamuna@ace.cs.wustl.edu>
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp: 
+	
+	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast/serevr.cpp: 
+
+	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp: 
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
+
+	* orbsvcs/tests/AVStreams/Latency/pong.cpp: 
+	* orbsvcs/tests/AVStreams/Latency/ping.cpp: 
+
+	* orbsvcs/tests/AVStreams/Pluggable/server.cpp: 
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp: 
+
+	* orbsvcs/tests/AVStreams/benchmark/server.cpp: 
+	* orbsvcs/tests/AVStreams/benchmark/client.cpp: 
+
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp: 
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h: 
+	
+	  Added an init method to the endpoint strategies to initialize
+	  the orb and poa and hence fix the SUNCC5 compile errors.
+	
 Mon Feb 12 00:28:26 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tao/Strategies/SHMIOP_Acceptor.cpp (open): Added error detection
