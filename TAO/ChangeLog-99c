@@ -1,3 +1,9 @@
+Sun Feb  7 00:52:36 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * orbsvcs/tests/EC_Custom_Marshal/ECCM_Consumer.dsp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECCM_Supplier.dsp:
+          Changed the tao_idl.exe path to ACE_wrappers/bin.
+
 Sat Feb  6 23:16:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_global.cpp: 
