@@ -9856,6 +9856,100 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const FT_Properties *&_t
   return 0;
 }
 
+
+// Hack for FT_Name and not a good one at that.
+
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const FT_Name &_tao_elem
+  ) // copying
+{
+  TAO_OutputCDR stream;
+  if (stream << _tao_elem)
+  {
+    _tao_any._tao_replace (
+        FT::_tc_Name,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin ()
+      );
+  }
+}
+
+void operator<<= (CORBA::Any &_tao_any,
+                  FT_Name *_tao_elem) // non copying
+{
+  TAO_OutputCDR stream;
+  stream << *_tao_elem;
+  _tao_any._tao_replace (
+      FT::_tc_Name,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin (),
+      1,
+      _tao_elem,
+      FT::Name::_tao_any_destructor
+    );
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, FT::Name *&_tao_elem)
+{
+  return _tao_any >>= ACE_const_cast(
+      const FT::Name*&,
+      _tao_elem
+    );
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const FT::Name *&_tao_elem)
+{
+  _tao_elem = 0;
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    if (!type->equivalent (FT::_tc_Name, ACE_TRY_ENV)) // not equal
+      {
+        return 0;
+      }
+    ACE_TRY_CHECK;
+    if (_tao_any.any_owns_data ())
+    {
+      _tao_elem = ACE_static_cast(
+          const FT::Name*,
+          _tao_any.value ()
+        );
+      return 1;
+    }
+    else
+    {
+      FT::Name *tmp;
+      ACE_NEW_RETURN (tmp, FT::Name, 0);
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *tmp)
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            FT::_tc_Name,
+            1,
+            ACE_static_cast (void *, tmp),
+            FT::Name::_tao_any_destructor
+          );
+        _tao_elem = tmp;
+        return 1;
+      }
+      else
+      {
+        delete tmp;
+      }
+    }
+  }
+  ACE_CATCHANY
+  {
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+
 void operator<<= (
     CORBA::Any &_tao_any,
     const FT_Locations &_tao_elem
