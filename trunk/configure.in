@@ -3389,9 +3389,9 @@ else
   dnl The password file related functions above are required for ACE's
   dnl alternate implementation.
 
+ ACE_CONVERT_WARNINGS_TO_ERRORS([
   dnl Check for functions necessary for ACE's alternate implementation
   dnl of the now obsolete cuserid() function.
-
   ACE_CACHE_CHECK([checking if ACE cuserid implementation should be used],
     [ace_cv_lib_use_alt_cuserid],
     [
@@ -3444,6 +3444,7 @@ else
     [
      AC_DEFINE(ACE_HAS_ALT_CUSERID)
     ],)
+ ])
 fi
 
 
