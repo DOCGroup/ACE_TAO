@@ -1,12 +1,16 @@
+Tue Oct  2 15:52:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* THANKS: Added Sunny Leung to the Hall of Fame.
+
 Tue Oct  2 15:33:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* THANKS: Removed one instance of Peter Phillips
-	  <pphillip@opentext.com> from the hall of fame.
+	  <pphillip@opentext.com> from the Hall of Fame.
 
 Tue Oct  2 15:00:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/CDR_Stream.cpp (clone_from): Copied the GIOP major and minor
-	  versions from the incoming CDR stream. Thanks to
+	  versions from the incoming CDR stream. Thanks to Sunny Leung 
 	  <sleung@opentext.com> for reporting this. This closes bugzilla
 	  #1043.  
 
@@ -383,8 +387,8 @@ Fri Sep 21 17:11:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  ACE_Message_Block. Thanks to Tom Wagner <TomW@CoManage.net> for
 	  suggesting this.
 
-	* THANKS: Added Tom Wagner <TomW@CoManage.net> to the hall of
-	  fame.
+	* THANKS: Added Tom Wagner <TomW@CoManage.net> to the Hall of
+	  Fame.
 
 Fri Sep 21 22:11:53 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -589,8 +593,8 @@ Fri Sep 14 17:02:39 2001  Steve Huston  <shuston@riverace.com>
 
 Fri Sep 14 11:39:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-        * THANKS: Added Mahes Varadarajan and Kevin Clien to the hall of
-          fame.
+        * THANKS: Added Mahesh Varadarajan and Kevin Clien to the Hall of
+          Fame.
 
 Thu Sep 13 22:43:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -625,7 +629,7 @@ Thu Sep 13 13:33:29 2001  Steve Huston  <shuston@riverace.com>
 
 Thu Sep 13 12:04:04 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-        * THANKS: Added Werner Buchert to the hall of fame.
+        * THANKS: Added Werner Buchert to the Hall of Fame.
 
 Wed Sep 12 15:10:41 2001  Steve Huston  <shuston@riverace.com>
 
@@ -924,8 +928,8 @@ Wed Sep  5 18:58:00 2001 Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 Wed Sep  5 16:50:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-        * THANKS: Added Peter Phillips <pphillip@opentext.com> to the hall
-          of fame.
+        * THANKS: Added Peter Phillips <pphillip@opentext.com> to the Hall
+          of Fame.
 
         * ace/OS_String.cpp: Fixed a warning in TRU64 builds.
 
@@ -997,8 +1001,8 @@ Tue Sep  4 09:14:36 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Tue Sep  4 07:41:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-        * THANKS: Added Eyal Neuman <eyal@tradertools.com> to the hall of
-          fame.
+        * THANKS: Added Eyal Neuman <eyal@tradertools.com> to the Hall of
+          Fame.
 
 Tue Sep  4 07:37:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -1726,7 +1730,7 @@ Fri Aug 24 16:10:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Fri Aug 24 14:25:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * THANKS: Added Massimo Pichini <massimo@webbridges.it> to the
-          hall of fame.
+          Hall of Fame.
 
 Fri Aug 24 13:40:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
