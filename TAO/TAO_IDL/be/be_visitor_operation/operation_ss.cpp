@@ -415,10 +415,16 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   *os << "static size_t const _tao_nargs =" << be_nl
       << "  sizeof (_tao_args) / sizeof (_tao_args[0]);" << be_nl << be_nl;
 
-  *os << "TAO::" << node->flat_name ()
+  *os << "TAO_" << node->flat_name ()
       << "_Upcall_Command _tao_upcall_command (" << be_idt_nl
-      << "  _tao_args, _tao_nargs);" << be_uidt_nl
-      << be_nl;
+      << "  _tao_impl";
+
+  if (!node->void_return_type () || node->argument_count () > 0)
+    {
+      *os << ", _tao_args";
+    }
+
+  *os << ");" << be_uidt_nl << be_nl;
 
 
   *os << "TAO::Upcall_Wrapper _tao_upcall_wrapper;" << be_nl

@@ -117,7 +117,7 @@ be_visitor_operation_upcall_command_ss::visit_operation (be_operation * node)
 
   // No need to accept an argument array parameter if the operation
   // has no arguments.
-  if (node->argument_count () > 0)
+  if (!node->void_return_type () || node->argument_count () > 0)
     {
       *os << "," << be_nl
           << "TAO::Argument * const args[])" << be_nl;
@@ -131,7 +131,7 @@ be_visitor_operation_upcall_command_ss::visit_operation (be_operation * node)
 
   // If the operation has no arguments don't generate a member
   // initializer for the class argument array member/attribute.
-  if (node->argument_count () > 0)
+  if (!node->void_return_type () || node->argument_count () > 0)
     {
       *os << be_nl
           << ", args_ (args)";
@@ -154,7 +154,7 @@ be_visitor_operation_upcall_command_ss::visit_operation (be_operation * node)
                                          node->return_type (),
                                          os);
 
-      *os << ">::ret_val *> (args[0])->arg () =" << be_idt_nl;
+      *os << ">::ret_val *> (this->args_[0])->arg () =" << be_idt_nl;
     }
 
   if (this->gen_upcall (node) == -1)
@@ -177,7 +177,7 @@ be_visitor_operation_upcall_command_ss::visit_operation (be_operation * node)
 
   // Don't bother generating an argument array attribute if the
   // operation has no arguments.
-  if (node->argument_count () > 0)
+  if (!node->void_return_type () || node->argument_count () > 0)
     {
       *os << be_nl
           << "TAO::Argument * const * const args_;";
@@ -243,7 +243,7 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
             break;
         }
 
-      *os << "_arg_val *> (args[" << index << "])->arg ()";
+      *os << "_arg_val *> (this->args_[" << index << "])->arg ()";
     }
 
   // End the upcall
