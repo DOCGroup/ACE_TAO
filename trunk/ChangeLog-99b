@@ -1,3 +1,12 @@
+Thu Aug 12 17:14:35 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* ace/OS.h:
+	  Changed typedef of WChar to ACE_UINT16. The CDR operations
+	  are already using write_2, read_2 and SHORT_SIZE, and
+	  in the process of implementing wchars and wstrings in
+	  IDL, it's going to be important to optimize for the
+	  Unicode common case.
+
 Thu Aug 12 16:24:16 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/make_release: chdir up a level before removing the
