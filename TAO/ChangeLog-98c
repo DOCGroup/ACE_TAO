@@ -1,3 +1,8 @@
+Thu Mar 20 17:05:42 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+        * $TAO_ROOT/docs/releasenotes/index.html:
+          Documentation about the DOVE demo
+
 Fri Mar 20 16:21:28 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/POA/Generic_Servant/MyFooServant.h: No need to include
