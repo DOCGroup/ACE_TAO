@@ -1,3 +1,13 @@
+Wed Aug 13 22:16:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Exception.cpp: The static type_code_array [] will now hold
+	  pointers to the typecode pointers. This way the initialization
+	  of the typecode pointers in make_standard_typecode () are not
+	  lost. 
+
+	  This should fix the tests/Portable_Interceptor/Dynamic test
+	  failure in our daily builds.
+
 Thu Aug 14 01:46:47 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * TAO_IDL/fe/fe_tmplinst.cpp:
