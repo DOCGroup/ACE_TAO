@@ -1,9 +1,20 @@
+Thu Jan 31 11:57:07 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* XML/parser/debug_validator/Debug_Attributes_Builder.cpp:
+	* XML/parser/debug_validator/Debug_Element_Builder.cpp:
+	  Temporarily removed unused arguments.
+
+	* XML/common/FileCharStream.cpp (get): Made sure the character
+	  read from the input file was converted to ACEXML_Char type
+	  correctly.  Casted the read XML_Char before comparing it to
+	  'EOF'.
+
 Thu Jan 31 13:06:12 2002  Boris Kolpackov <bosk@ipmce.ru>
-	
+
 	* THANKS:
- 	
+
 	  Added Koushik Banerjee to the hall of fame.
-	
+
 Wed Jan 30 22:41:39 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * include/makeinclude/platform_linux.GNU (CXX_VERSION):
