@@ -1,56 +1,63 @@
+Thu Jul 23 14:05:20 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Misc/context_switch_test.cpp:
+          helped yield test on VxWorks by timing each yield.
+          Added half-second delay between outer interations to give
+          LynxOS (w/ ACE_LACKS_SETDETACH) a chance to cleanup exited threads.
+
 Wed Jul 22 19:20:43 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Proactor.h (ACE_Proactor): Since <completion_strategy> is a
- 	  valid constructor parameter for all platforms,
- 	  POSIX_COMPLETION_STRATEGY should be defined for all platforms.
+        * ace/Proactor.h (ACE_Proactor): Since <completion_strategy> is a
+          valid constructor parameter for all platforms,
+          POSIX_COMPLETION_STRATEGY should be defined for all platforms.
 
-	* ace/Proactor.cpp (ACE_Proactor): Only use the
- 	  completion_strategy when ACE_HAS_AIO_CALLS is defined.
+        * ace/Proactor.cpp (ACE_Proactor): Only use the
+          completion_strategy when ACE_HAS_AIO_CALLS is defined.
 
-	* ace/Asynch_IO.cpp (ACE_Asynch_Result): Only delete
- 	  this->aiocb_ptr_ when ACE_HAS_AIO_CALLS is defined.
+        * ace/Asynch_IO.cpp (ACE_Asynch_Result): Only delete
+          this->aiocb_ptr_ when ACE_HAS_AIO_CALLS is defined.
 
 Wed Jul 22 17:58:27 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/OS.h: Updated the comments.
+        * ace/OS.h: Updated the comments.
 
 Wed Jul 22 17:55:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Synch-Benchmarks/token_test.cpp: A new test.
+        * performance-tests/Synch-Benchmarks/token_test.cpp: A new test.
 
 Wed Jul 22 17:50:58 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/OS.h: Defiend ACE_SIG_AIO to be SIGRTMIN. This is the only
-	signal used for all the <Asynch_Operation>s.
+        * ace/OS.h: Defiend ACE_SIG_AIO to be SIGRTMIN. This is the only
+        signal used for all the <Asynch_Operation>s.
 
 Wed Jul 22 17:46:45 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/Asynch_IO.h,Asynch_IO.cpp Proactor.h Proactor.cpp : 
+        * ace/Asynch_IO.h,Asynch_IO.cpp Proactor.h Proactor.cpp :
 
- 		First round of changes for sigtimedwait () based approach
-	of completion querying.
+                First round of changes for sigtimedwait () based approach
+        of completion querying.
 
-		Added one more parameter to the Proactor contructor to
-	decide the <aio> completion strategy for the POSIX implementation,
-	either <aiocb> control blocks or the RT signals. The default is RT
-	signals. 
+                Added one more parameter to the Proactor contructor to
+        decide the <aio> completion strategy for the POSIX implementation,
+        either <aiocb> control blocks or the RT signals. The default is RT
+        signals.
 
-		Fixed Transmit file. Proactor's handle_events () is done
-	with in the ACE_Asynch_Transmit_Handler so that control does not
-	return to the user's application before the whole file is
-	transmitted. Otherwise the user's application might start writing
-	to the same socket and this might change the order of the file
-	that is being transmitted. 
+                Fixed Transmit file. Proactor's handle_events () is done
+        with in the ACE_Asynch_Transmit_Handler so that control does not
+        return to the user's application before the whole file is
+        transmitted. Otherwise the user's application might start writing
+        to the same socket and this might change the order of the file
+        that is being transmitted.
 
 Wed Jul 22 15:51:48 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Synch-Benchmarks/Benchmark_Base.h
-	  (Benchmark_Method_Base): Passing the test item into pre_run_test
-	  so the thread can be setup correctly.  Duh!
+        * performance-tests/Synch-Benchmarks/Benchmark_Base.h
+          (Benchmark_Method_Base): Passing the test item into pre_run_test
+          so the thread can be setup correctly.  Duh!
 
-	* performance-tests/Synch-Benchmarks/Performance_Test.{h,cpp}
-	  (pre_run_test): Added code so that it iterates thru test items
-	  in svc.conf properly.  Duh**2!
+        * performance-tests/Synch-Benchmarks/Performance_Test.{h,cpp}
+          (pre_run_test): Added code so that it iterates thru test items
+          in svc.conf properly.  Duh**2!
 
 Wed Jul 22 15:48:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
