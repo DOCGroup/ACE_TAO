@@ -1,3 +1,8 @@
+Mon May  7 06:40:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
+	  Fixed a warning in g++.
+
 Sun May  6 11:15:36 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Component_Switching/sender.h:
