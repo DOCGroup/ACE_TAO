@@ -116,17 +116,26 @@ public:
 private:
   void close_i (ACE_ENV_SINGLE_ARG_DECL);
 
+  /// Disconnect the supplier proxy
   void disconnect_supplier_proxy_i (ACE_ENV_SINGLE_ARG_DECL);
 
+  /// Disconnect all consumer proxies
   void disconnect_consumer_proxies_i (ACE_ENV_SINGLE_ARG_DECL);
 
+  /// Remove all consumer proxies without calling disconnect on them
   void cleanup_consumer_proxies_i (ACE_ENV_SINGLE_ARG_DECL);
 
   void update_consumer_i (const RtecEventChannelAdmin::ConsumerQOS& sub
                           ACE_ENV_ARG_DECL);
 
+  /// Create all connections to consumer ec and to supplier ec.
+  void open_i (const RtecEventChannelAdmin::ConsumerQOS& sub
+               ACE_ENV_ARG_DECL);
+
+  /// Helper method to see if consumer ec is connected
   CORBA::Boolean is_consumer_ec_connected_i (void) const;
 
+  /// Push the @a event to the @a consumer.
   void push_to_consumer (RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
                          const RtecEventComm::EventSet& event ACE_ENV_ARG_DECL);
 

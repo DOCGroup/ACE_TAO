@@ -1,3 +1,13 @@
+Wed Aug 13 09:05:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.cpp:
+          Removed not needed include
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.(h,cpp):
+          Moved all code to setup a new connection to open_i() and use
+          this in the update_consumer_i(). This makes reuse of this large
+          piece of code easier.
+
 Wed Aug 13 08:42:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
