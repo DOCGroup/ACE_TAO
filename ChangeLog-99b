@@ -1,3 +1,9 @@
+Tue Aug 17 06:33:05 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Task.h: Clarified the comment regarding
+	  open() and close() on ACE_Task_Base.  Thanks to Jeff Franks
+ 	  <Jeffrey_Franks@i-o.com> for suggesting this.
+
 Tue Aug 17 11:56:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Select_Reactor_T.h:
