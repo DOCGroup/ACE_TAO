@@ -1,3 +1,22 @@
+Sat Dec 16 09:40:15 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/BiDirectional: New test for BiDirectional connections.  
+
+	* tests/BiDirectional/README:
+	* tests/BiDirectional/client.cpp:
+	* tests/BiDirectional/server.cpp:
+	* tests/BiDirectional/test_i.h:
+	* tests/BiDirectional/test_i.cpp:
+	* tests/BiDirectional/test_i.i:
+	* tests/BiDirectional/test.idl:
+	* tests/BiDirectional/BiDir.dsw:
+	* tests/BiDirectional/client.dsp:
+	* tests/BiDirectional/server.dsp:
+	* tests/BiDirectional/client.bor:
+	* tests/BiDirectional/server.bor:
+	* tests/BiDirectional/Makefile.bor:
+	* tests/BiDirectional/Makefile: Files for the new test.
+
 Fri Dec 15 21:30:54 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* */Makefile: Updated dependencies.
