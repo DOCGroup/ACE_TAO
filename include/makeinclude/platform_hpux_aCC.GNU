@@ -1,3 +1,5 @@
+# $Id$
+#
 # This is for the HP-UX aC++ compiler.  Most of the difference for threaded
 # vs. non-threaded is contained in ace/config-hpux-10.x.h.  However, there
 # is a line to verify in this file - if you are using DCE threads, "-lcma"
