@@ -20,6 +20,7 @@
 #include "ace/INET_Addr.h"
 
 #include "tao/ORB.h"
+#include "tao/IOR_LookupTable.h"
 
 // ORB pseudo-objref
 
@@ -46,6 +47,12 @@ public:
   CORBA::String object_to_string (CORBA::Object_ptr obj,
                                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Convert an object reference to an IOR stringified form.
+
+  int _tao_add_to_IOR_table (ACE_CString object_id, CORBA::Object_ptr obj);
+  // Add a mapping ObjectID->IOR to the table.
+
+  int _tao_find_in_IOR_table (ACE_CString object_id, CORBA::Object_ptr &obj);
+  // Find the given ObjectID in the table.
 
   TAO_ServantBase *_get_collocated_servant (STUB_Object *sobj);
   // Return the object pointer of an collocated object it there is
@@ -77,6 +84,9 @@ private:
 
   ACE_Unbounded_Set<ACE_INET_Addr> collocation_record_;
 
+  TAO_IOR_LookupTable lookup_table_;
+  // Table of ObjectID->IOR mappings.
+  
   // = These are not provided.
   IIOP_ORB (const IIOP_ORB &);
   IIOP_ORB &operator = (const IIOP_ORB &);

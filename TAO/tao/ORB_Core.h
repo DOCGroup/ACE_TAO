@@ -206,6 +206,9 @@ public:
   // See if we have a collocated address, if yes, return the POA
   // associated with the address.
 
+  int add_to_ior_table (ACE_CString init_ref, TAO_IOR_LookupTable &table);
+  // Add the init_ref (objectID->IOR) to the Lookup Table.
+
 #if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
   CORBA::Boolean arl_same_port_connect (void);
   // Access function to query whether we want this feature or not.

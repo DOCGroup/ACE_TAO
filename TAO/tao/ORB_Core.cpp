@@ -13,6 +13,7 @@
 #include "tao/default_client.h"
 #include "tao/default_server.h"
 #include "tao/debug.h"
+#include "tao/IOR_LookupTable.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/ORB_Core.i"
@@ -91,6 +92,27 @@ TAO_Default_Reactor::~TAO_Default_Reactor (void)
 }
 
 int
+TAO_ORB_Core::add_to_ior_table (ACE_CString init_ref, TAO_IOR_LookupTable &table)
+{
+  
+  ACE_CString object_id;
+  ACE_CString ior;
+  
+  if (ACE_OS::strtok (init_ref.rep (),"=") == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "Unable to parse -ORBInitRef parameter\n"),
+		      -1);
+  
+  // Parse the InitRef to set the object ID and the IOR.
+  object_id.set (ACE_OS::strtok (init_ref.rep (), "="), 1);
+  ior.set (ACE_OS::strtok(0,"="), 1);
+  
+  // Add the objectID-IOR to the table and return the status.  
+  return table.add_ior (object_id, ior);
+
+}
+
+int
 TAO_ORB_Core::init (int &argc, char *argv[])
 {
   // Right now, this code expects to begin parsing in argv[1] rather
@@ -138,6 +160,17 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // resolve_initial_references ()
   ACE_CString init_ref;
 
+  // Table for <ObjectID>:<IOR> mapping specified on commandline
+  // using ORBInitRef.
+  TAO_IOR_LookupTable *ior_lookup_table;
+
+  ACE_NEW_RETURN (ior_lookup_table,
+		  TAO_IOR_LookupTable,
+		  -1);
+  
+  // List of comma separated prefixes from ORBDefaultInitRef.
+  ACE_CString default_init_ref;
+  
   // Name Service port #.
   u_short ns_port = 0;
 
@@ -404,20 +437,33 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
       // A new <ObjectID>:<IOR> mapping has been specified. This will be
       // used by the resolve_initial_references ().
-
+      
       else if (ACE_OS::strcmp (current_arg, "-ORBInitRef") == 0)
         {
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
               init_ref = arg_shifter.get_current ();
+              if (this->add_to_ior_table (init_ref,*ior_lookup_table) != 0)
+		ACE_ERROR_RETURN ((LM_ERROR,
+				   "Unable to add IOR to the Table\n"),
+				  -1);
               arg_shifter.consume_arg ();
             }
         }
+      else if (ACE_OS::strcmp (current_arg, "-ORBDefaultInitRef") == 0)
+	{
+	  arg_shifter.consume_arg ();
+          if (arg_shifter.is_parameter_next ())
+            {
+              default_init_ref = arg_shifter.get_current ();
+              arg_shifter.consume_arg ();
+            }
+	}
       else
         arg_shifter.ignore_arg ();
-   }
-
+    }
+  
 #if defined (DEBUG)
   // Make it a little easier to debug programs using this code.
   {
@@ -545,6 +591,12 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
   // Set the init_ref.
   this->orb_params ()->init_ref (init_ref);
+
+  // Set the IOR Table.
+  this->orb_params ()->ior_lookup_table (ior_lookup_table);
+
+  // Set the list of prefixes from -ORBDefaultInitRef.
+  this->orb_params ()->default_init_ref (default_init_ref);
 
   this->orb_params ()->name_service_ior (ns_ior);
   this->orb_params ()->name_service_port (ns_port);
