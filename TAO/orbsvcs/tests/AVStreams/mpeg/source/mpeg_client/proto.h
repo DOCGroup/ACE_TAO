@@ -45,7 +45,7 @@ void decodeDCTCoeffNext P((unsigned int *run , int *level ));
 
 /* main.c */
 int get_more_data P((unsigned int *buf_start , int max_length , int *length_ptr , unsigned int **buf_ptr ));
-void main P((int argc , char **argv ));
+int main P((int argc , char **argv ));
 void usage P((char *s ));
 
 /* gdith.c */

@@ -18,12 +18,12 @@ Display		*dpy;
 GC		 mib_gc;
 static struct _mib_event_handle_funcs {
 #ifdef __cplusplus
-  void		(*mib_pick_mib_Widget)(.../* Widget, XtPointer,
-			XButtonPressedEvent *, Boolean * */);
-  void		(*mib_move_mib_Widget)(.../* Widget, XtPointer,
-			XPointerMovedEvent *, Boolean * */);
-  void		(*mib_unpick_mib_Widget)(.../* Widget, XtPointer,
-			XButtonReleasedEvent *, Boolean * */);
+  void		(*mib_pick_mib_Widget)( Widget, XtPointer,
+			XEvent *, Boolean * );
+  void		(*mib_move_mib_Widget)( Widget, XtPointer,
+			XEvent *, Boolean *);
+  void		(*mib_unpick_mib_Widget)( Widget, XtPointer,
+			XEvent *, Boolean * );
 #else
   void		(*mib_pick_mib_Widget)(/* Widget, XtPointer,
 			XButtonPressedEvent *, Boolean * */);
@@ -156,14 +156,14 @@ void mib_remove_mib_Widget(mib_Widget *thisw)
 
 void mib_clear_myres(mib_Widget *thisw)
 {
-  free(thisw->mib_class);
-  free(thisw->name);
+  ACE_OS::free(thisw->mib_class);
+  ACE_OS::free(thisw->name);
 
   if ((thisw->mib_class_num < 1) || (thisw->mib_class_num > MI_NUMCLASSES))
     return;
 
   mwfuncs[thisw->mib_class_num].mib_delete(thisw);
-  free(thisw);
+  ACE_OS::free(thisw);
 }
 
 /*****************************************************************************/
@@ -171,7 +171,7 @@ void mib_clear_myres(mib_Widget *thisw)
 mib_Widget *mib_new_mib_Widget()
 {
   mib_Widget *thisw;
-  thisw = (mib_Widget *)malloc(sizeof(mib_Widget));
+  thisw = (mib_Widget *)ACE_OS::malloc(sizeof(mib_Widget));
   thisw->me = NULL;
   thisw->mib_class_num = MIB_NULL;
   thisw->mib_selected = 0;
@@ -466,7 +466,7 @@ mib_Widget *mib_load_public(mib_Widget *root, mib_Widget *thisw, mib_Buffer *fin
     {
       val[strlen(val)-1] = '\0';
       mib_load_mib_class(&thisw, root, valcp, &(val[1]), fin);
-      thisw->name = (char *)malloc(strlen(val));
+      thisw->name = (char *)ACE_OS::malloc(strlen(val));
       sprintf(thisw->name,"%s",&(val[1]));
       thisw->mib_mynum = mynum;
       done = 1;
@@ -603,7 +603,7 @@ int mib_load_Root(Widget parent, mib_Widget **thisw, mib_Buffer *fin)
     return 0;
 
   (*thisw) = mib_new_mib_Widget();
-  (*thisw)->mib_class = (char*)malloc(9);
+  (*thisw)->mib_class = (char*)ACE_OS::malloc(9);
   sprintf((*thisw)->mib_class,"RootForm");
 
 /*  (*thisw)->me = XmCreateForm(parent, "MainForm", args, 0); */
@@ -769,7 +769,13 @@ void mib_reset_size(mib_Widget *temp)
 /*****************************************************************************/
 
 #ifdef __cplusplus
-void mib_set_eventhandlers(void a(...), void b(...), void c(...))
+void mib_set_eventhandlers(void a(Widget, XtPointer,
+			XEvent *, Boolean * ),
+                           void b( Widget, XtPointer,
+			XEvent *, Boolean* ),
+                           void c(Widget, XtPointer,
+			XEvent *, Boolean *)
+                           )
 #else
 void mib_set_eventhandlers(void * a, void * b, void * c)
 #endif

@@ -23,14 +23,20 @@
  *         Department of Computer Science and Engineering
  *         email: scen@cse.ogi.edu
  */
+#if !defined (_MPEG_COMMON_H)
+#define _MPEG_COMMON_H
+
 #include <sys/types.h>
 #include <netdb.h>
 #include <sys/socket.h>
+#include "ace/OS.h"
 /*
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <sys/un.h>
 */
+
+extern int gethostname (char*, size_t);
 
 #define VERSION 200   /* version 2.00 */
 
@@ -573,3 +579,6 @@ typedef struct {
   int refcount;				 /* reference count    */
   unsigned char * data;                  /* data buffer for image */
 } FrameBlock;
+
+
+#endif /* _MPEG_COMMON_H */

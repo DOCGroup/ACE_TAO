@@ -36,16 +36,16 @@ mib_Widget *mib_create_Toggle(mib_Widget *parent, char *name, char *label,
   else
     mib_add_mib_Widget(temp, parent);
 
-  myres = (mib_Toggle *)malloc(sizeof(mib_Toggle));
+  myres = (mib_Toggle *)ACE_OS::malloc(sizeof(mib_Toggle));
 
   /* initialize public resources */
 
   if (mib_fill == WDEFAULT)
   {
-    temp->name = (char *)malloc(strlen(name)+1);
+    temp->name = (char *)ACE_OS::malloc(strlen(name)+1);
     strcpy(temp->name,name);
   }
-  temp->mib_class = (char *)malloc(7);
+  temp->mib_class = (char *)ACE_OS::malloc(7);
   sprintf(temp->mib_class,"Toggle");
   temp->mib_class_num = MIB_TOGGLE;
   temp->width = 0 /*width*/;
@@ -68,7 +68,7 @@ mib_Widget *mib_create_Toggle(mib_Widget *parent, char *name, char *label,
   myres->isize = 0;
   if (mib_fill == WDEFAULT)
   {
-    myres->label = (char *)malloc(strlen(label)+1);
+    myres->label = (char *)ACE_OS::malloc(strlen(label)+1);
     strcpy(myres->label,label);
   }
 
@@ -116,8 +116,8 @@ void mib_delete_Toggle(mib_Widget *thisw)
 {
   mib_Toggle *temp = (mib_Toggle *)thisw->myres;
 
-  free(temp->label);
-  free(temp);
+  ACE_OS::free(temp->label);
+  ACE_OS::free(temp);
 }
 
 void mib_save_Toggle(mib_Widget *thisw, FILE *fout)
@@ -149,7 +149,7 @@ int mib_load_Toggle(mib_Widget *thisw, mib_Buffer *fin)
     if (vallen < 2)
       return 0;
     val[vallen-1] = '\0';
-    myres->label = (char *)malloc(vallen-1);
+    myres->label = (char *)ACE_OS::malloc(vallen-1);
     sprintf(myres->label,"%s",&(val[1]));
 
     label_text = XmStringCreateLtoR(myres->label, XmSTRING_DEFAULT_CHARSET);
