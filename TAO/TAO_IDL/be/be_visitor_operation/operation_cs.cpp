@@ -748,12 +748,12 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
       if (bt->size_type () == be_decl::VARIABLE
           || bt->base_node_type () == AST_Decl::NT_array)
         {
-          *os << "_tao_safe_retval.in ();";
+          *os << "_tao_safe_retval.in ()";
         }
       else
         {
-          *os << "_tao_retval;";
-            }
+          *os << "_tao_retval";
+        }
 
           *os <<");" << be_nl;
     }
