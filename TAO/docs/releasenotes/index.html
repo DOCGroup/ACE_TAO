@@ -100,6 +100,8 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <li>
 <a href="#logging">TAO's Logging Service</a></li>
 
+<li><a href="#loadbalancer">TAO's Load Balancer</a></li>
+
 </UL>
 </TD>
 <TD>
@@ -1703,6 +1705,72 @@ Add persistence and then to add event notification</li>
 </ul>
 
 <hr>
+
+<h3><a NAME="loadbalancer"></a>TAO's Load Balancer</h3>
+
+<p>
+Point of contact: <a href="mailto:ossama@uci.edu">Ossama Othman</a>
+
+<h4>Current Status:</h4>
+<p>TAO's Load Balancer currently implements the following load
+balancing algorithms:
+<ul>
+<li><FONT COLOR=BLUE>Round Robin</FONT>
+  <ul>
+  <li>Simply forwards requests to the next registered replica in a
+      circular list.</li>
+  </ul>
+</li>
+<li><FONT COLOR=BLUE>Minimum Dispersion</FONT>
+  <ul>
+  <li>Basically tries to keep the load on each registered replica
+      close to the average.  If the load on a given server is much
+      higher than the average load it is deemed too loaded, at which
+      point the load balancer informs the replica of this condition,
+      which in turn causes it to stop accepting requests until its
+      load is close to the average.</li>
+  </ul>
+</li>
+</ul>
+
+<h4>Known Issues:</h4>
+<ul>
+<li>Factory must be implemented to allow applications to create load
+balancers at run-time, rather than at application start up time.</li>
+<li>Thread safety needs improvement.</li>
+<li>Exception safety needs improvement.</li>
+</ul>
+
+<h4>Recent Work:</h4>
+<ul>
+<li>TBD</li>
+</ul>
+
+<h4>Future Work:</h4>
+<ul>
+<li>Implement a load balancing algorithm strategy factory.</li>
+<li>Implement load balancing via Interceptors.</li>
+<li>Implement cooperative load balancing support.</li>
+<li>Implement additional load balancing strategies:
+  <ul>
+  <li>load based on power consumption</li>
+  <li>load based on the number of requests currently serviced
+      (maybe)</li>
+  <li>adaptive load balancing strategy that utilizes load history to
+      attempt to predict future load conditions</li>
+  </ul>
+</li>
+<li>Active load balancing:
+  <ul>
+  <li>Actively poll replicas for current load, as opposed to the
+      currently implemented passive load balancing where the load
+      balancer listens for load reports from the replicas.
+  </ul>
+</li>
+</ul>
+
+<hr>
+
 
 <h3>
 <a NAME="apps"></a>Test &amp; Performance Tests</h3>
