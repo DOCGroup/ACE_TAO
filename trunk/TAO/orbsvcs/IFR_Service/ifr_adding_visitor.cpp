@@ -115,8 +115,7 @@ ifr_adding_visitor::visit_scope (UTL_Scope *node)
 int
 ifr_adding_visitor::visit_predefined_type (AST_PredefinedType *node)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       this->ir_current_ =
       be_global->repository ()->get_primitive (
@@ -1967,6 +1966,14 @@ ifr_adding_visitor::visit_operation (AST_Operation *node)
 int
 ifr_adding_visitor::visit_field (AST_Field *node)
 {
+  AST_Decl *scope = ScopeAsDecl (node->defined_in ());
+  AST_Decl::NodeType nt = scope->node_type ();
+
+  if (nt == AST_Decl::NT_valuetype || nt == AST_Decl::NT_eventtype)
+    {
+      return this->create_value_member (node);
+    }
+
   AST_Type *ft = AST_Type::narrow_from_decl (node->field_type ());
 
   if (ft == 0)
@@ -3566,6 +3573,86 @@ ifr_adding_visitor::create_event_def (AST_EventType *node
   return 0;
 }
 
+int
+ifr_adding_visitor::create_value_member (AST_Field *node)
+{
+  ACE_TRY_NEW_ENV
+    {
+      AST_Type *bt = node->field_type ();
+
+      /// This will put the repo entry into ir_current_ whether it exists
+      /// already or not.
+      if (bt->ast_accept (this) != 0)
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_adding_visitor::create_value_member -")
+              ACE_TEXT (" visit base type failed\n")
+            ),
+            -1
+          );
+        }
+
+      CORBA::Visibility vis = CORBA::PUBLIC_MEMBER;
+
+      switch (node->visibility ())
+        {
+          case AST_Field::vis_PUBLIC:
+            break;
+          case AST_Field::vis_PRIVATE:
+            vis = CORBA::PRIVATE_MEMBER;
+            break;
+          default:
+            ACE_ERROR_RETURN ((
+                LM_ERROR,
+                ACE_TEXT ("(%N:%l) ifr_adding_visitor::create_value_member -")
+                ACE_TEXT (" bad visibility value in node\n")
+              ),
+              -1
+            );
+        };
+
+      CORBA::Container_ptr current_scope = CORBA::Container::_nil ();
+
+      if (be_global->ifr_scopes ().top (current_scope) != 0)
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+              ACE_TEXT ("create_value_member -")
+              ACE_TEXT (" scope stack empty\n")
+            ),
+            -1
+          );
+        }
+      ACE_TRY_CHECK;
+
+      CORBA::ValueDef_var vt = 
+        CORBA::ValueDef::_narrow (current_scope
+                                  ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CORBA::ValueMemberDef_var vm = 
+        vt->create_value_member (node->repoID (),
+                                 node->local_name ()->get_string (),
+                                 node->version (),
+                                 this->ir_current_.in (),
+                                 vis
+                                 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           ACE_TEXT ("create_value_member"));
+
+      return -1;
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
 void
 ifr_adding_visitor::get_referenced_type (AST_Type *node
                                          ACE_ENV_ARG_DECL)
@@ -3933,20 +4020,27 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
       for (UTL_ScopeActiveIterator f_iter (factories[i],
                                            UTL_Scope::IK_decls);
            !f_iter.is_done ();
-           f_iter.next ())
+           f_iter.next (), ++index)
         {
           arg = AST_Argument::narrow_from_decl (f_iter.item ());
           result[i].members[index].name = arg->local_name ()->get_string ();  
-          result[i].members[index].type = CORBA::TypeCode::_nil ();
-          holder = 
-            be_global->repository ()->lookup_id (arg->repoID ()
-                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          result[i].members[index].type = 
+            CORBA::TypeCode::_duplicate (CORBA::_tc_void);
+          
+          /// This will put the field type in ir_current_, and also add it
+          /// to the repository if it's not already there.
+          if (arg->field_type ()->ast_accept (this) != 0)
+            {
+              ACE_ERROR ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                  ACE_TEXT ("fill_initializers -")
+                  ACE_TEXT (" failed to accept arg type visitor\n")
+                ));
+            }
 
-          result[i].members[index++].type_def =
-            CORBA::IDLType::_narrow (holder.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          result[i].members[index].type_def = 
+            CORBA::IDLType::_duplicate (this->ir_current_.in ());
         }
 
       CORBA::ULong n_exceptions = 
@@ -3966,7 +4060,8 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
           result[i].exceptions[index].defined_in =
             ScopeAsDecl (excp->defined_in ())->repoID ();
           result[i].exceptions[index].version = excp->version ();
-          result[i].exceptions[index++].type = CORBA::TypeCode::_nil ();
+          result[i].exceptions[index++].type = 
+            CORBA::TypeCode::_duplicate (CORBA::_tc_void);
         }
     }
 }

@@ -1,3 +1,19 @@
+Mon Aug  4 19:06:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * IFR_Service/ifr_adding_visitor.cpp:
+        * IFR_Service/ifr_adding_visitor.h:
+        * IFR_Service/ifr_adding_visitor_operation.cpp:
+        * orbsvcs/IFRService/ExtValueDef_i.cpp:
+        * orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        * orbsvcs/IFRService/IFR_Service_Utils.h:
+        * orbsvcs/IFRService/ValueDef_i.cpp:
+        * orbsvcs/IFRService/ValueDef_i.h:
+        * tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
+        * tests/InterfaceRepo/IDL3_Test/idl3_client.h:
+        * tests/InterfaceRepo/IDL3_Test/test.idl:
+
+	  More testing and debugging of IFR valuetype support.
+
 Mon Aug  4 18:28:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IORManipulation/IOR.pidl:

@@ -11,6 +11,7 @@
 #include "ifr_adding_visitor_operation.h"
 #include "utl_exceptlist.h"
 #include "utl_strlist.h"
+#include "nr_extern.h"
 
 ACE_RCSID (IFR_Service,
            ifr_adding_visitor_operation,
@@ -87,11 +88,12 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       CORBA::ExceptionDefSeq exceptions (length);
       exceptions.length (length);
 
-      UTL_ExceptlistActiveIterator ex_iter (excepts);
       AST_Exception *ex = 0;
       CORBA::ULong i = 0;
 
-      while (!ex_iter.is_done ())
+      for (UTL_ExceptlistActiveIterator ex_iter (excepts);
+           !ex_iter.is_done ();
+           ex_iter.next (), ++i)
         {
           ex = ex_iter.item ();
 
@@ -100,11 +102,10 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
                                                  ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          exceptions[i++] = CORBA::ExceptionDef::_narrow (prev_def.in ()
-                                                         ACE_ENV_ARG_PARAMETER);
+          exceptions[i] = 
+            CORBA::ExceptionDef::_narrow (prev_def.in ()
+                                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-
-          ex_iter.next ();
         }
 
       // Build the context list.
@@ -158,22 +159,47 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 
       if (be_global->ifr_scopes ().top (current_scope) == 0)
         {
-          CORBA::InterfaceDef_var iface =
-            CORBA::InterfaceDef::_narrow (current_scope
-                                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          AST_Decl *op_scope = ScopeAsDecl (node->defined_in ());
+          AST_Decl::NodeType nt = op_scope->node_type ();
 
-          CORBA::OperationDef_var new_def =
-            iface->create_operation (node->repoID (),
-                                     node->local_name ()->get_string (),
-                                     node->version (),
-                                     this->ir_current_.in (),
-                                     mode,
-                                     this->params_,
-                                     exceptions,
-                                     contexts
-                                     ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          if (nt == AST_Decl::NT_interface)
+            {
+              CORBA::InterfaceDef_var iface =
+                CORBA::InterfaceDef::_narrow (current_scope
+                                              ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+
+              CORBA::OperationDef_var new_def =
+                iface->create_operation (node->repoID (),
+                                         node->local_name ()->get_string (),
+                                         node->version (),
+                                         this->ir_current_.in (),
+                                         mode,
+                                         this->params_,
+                                         exceptions,
+                                         contexts
+                                         ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
+          else
+            {
+              CORBA::ValueDef_var vtype =
+                CORBA::ValueDef::_narrow (current_scope
+                                          ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+
+              CORBA::OperationDef_var new_def =
+                vtype->create_operation (node->repoID (),
+                                         node->local_name ()->get_string (),
+                                         node->version (),
+                                         this->ir_current_.in (),
+                                         mode,
+                                         this->params_,
+                                         exceptions,
+                                         contexts
+                                         ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
         }
       else
         {

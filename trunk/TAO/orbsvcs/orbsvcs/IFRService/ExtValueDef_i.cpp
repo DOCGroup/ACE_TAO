@@ -417,23 +417,20 @@ TAO_ExtValueDef_i::describe_ext_value_i (
           
           if (status == 0)
             {
+              CORBA::ULong excep_count = 0;
               this->repo_->config ()->get_integer_value (excepts_key,
                                                          "count",
-                                                         count);
-              fv_desc->operations[i].exceptions.length (count);
+                                                         excep_count);
+              fv_desc->operations[i].exceptions.length (excep_count);
               ACE_Configuration_Section_Key except_def_key;
 
-              for (j = 0; j < count; ++j)
+              for (j = 0; j < excep_count; ++j)
                 {
                   stringified = TAO_IFR_Service_Utils::int_to_string (j);
                   this->repo_->config ()->get_string_value (excepts_key,
                                                             stringified,
                                                             holder);
 
-                  // Get the TAO_IDLType_i before 'holder' is clobbered.
-                  idl_type = 
-                    TAO_IFR_Service_Utils::path_to_idltype (holder,
-                                                            this->repo_);
                   this->repo_->config ()->expand_path (
                                               this->repo_->root_key (),
                                               holder,
@@ -461,9 +458,10 @@ TAO_ExtValueDef_i::describe_ext_value_i (
                   fv_desc->operations[i].exceptions[j].version = 
                     holder.fast_rep ();
 
-                  // Use the TAO_IDLType_i fetched above.
+                  TAO_ExceptionDef_i impl (this->repo_);
+                  impl.section_key (except_def_key);
                   fv_desc->operations[i].exceptions[j].type =
-                    idl_type->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+                    impl.type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
                   ACE_CHECK_RETURN (0);
                 }
             }                          
