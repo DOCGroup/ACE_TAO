@@ -1,157 +1,163 @@
+Mon Sep 14 11:06:00 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Cubit/TAO/MT_Cubit/{Globals.cpp,Task_Client.cpp}:
+          moved ACE_Condition<ACE_SYNCH_MUTEX> instantiation from
+          Task_Client.cpp to Globals.cpp so that the server can link it.
+
 Sun Sep 13 22:40:57 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.10 released.
 
 Sun Sep 13 18:16:46 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/Globals.{h,cpp}: Converted some old
-	  #ifdefed code in server.cpp and client.cpp into macros
-	  for sched_params and new method for fifo scheduling initialization.
+        * tests/Cubit/TAO/MT_Cubit/Globals.{h,cpp}: Converted some old
+          #ifdefed code in server.cpp and client.cpp into macros
+          for sched_params and new method for fifo scheduling initialization.
 
-	* tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp: Replaced magic numbers
-	  with symbolic constants.
+        * tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp: Replaced magic numbers
+          with symbolic constants.
 
-	* tests/Cubit/TAO/MT_Cubit/Timer.cpp: Fixed the elapsed time
+        * tests/Cubit/TAO/MT_Cubit/Timer.cpp: Fixed the elapsed time
           calculation for vxworks. Thanks to sergio for finding this.
 
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: 
-	* tests/Cubit/TAO/MT_Cubit/client.cpp:
-		Fixed memory leaks.
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+        * tests/Cubit/TAO/MT_Cubit/client.cpp:
+                Fixed memory leaks.
 
 Sun Sep 13 00:44:07 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/server.cpp: 	
-	* tests/Cubit/TAO/MT_Cubit/client.cpp: Added some template
- 	instantiations. Fixed bug related to the task name when creating
- 	the active object.
+        * tests/Cubit/TAO/MT_Cubit/server.cpp:
+        * tests/Cubit/TAO/MT_Cubit/client.cpp: Added some template
+        instantiations. Fixed bug related to the task name when creating
+        the active object.
 
-	* tests/Cubit/TAO/MT_Cubit/Makefile (CUBIT_SVR_OBJS): Deleted some
- 	unnecessary object files.
+        * tests/Cubit/TAO/MT_Cubit/Makefile (CUBIT_SVR_OBJS): Deleted some
+        unnecessary object files.
 
 Sat Sep 12 23:34:17 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* tao/Typecode.h:
-	  Fixed the equivalent(0 function I added a few days ago -
-	  seems the .h and .cpp signatures didn't agree. Must be
-	  Alzheimer's.
+        * tao/Typecode.h:
+          Fixed the equivalent(0 function I added a few days ago -
+          seems the .h and .cpp signatures didn't agree. Must be
+          Alzheimer's.
 
 Sat Sep 12 21:54:04 1998  Seth Widoff  <swidoff@sophocles.cimds.ri.cmu.edu>
 
-	* orbsvcs/orbsvcs/Trader/constraint.l:
-	* orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
-	* orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
-	TAO_Literal_Constraint has constructors that need to distinguish
-	between CORBA::Long and CORBA::Boolean parameters. When CORBA::B_FALSE
-	and CORBA::B_TRUE in the TAO_Literal_Constraint constructors were
-	changed to 0 and 1, they were interpreted as longs and not
-	booleans. Bad things happened. So I added explicit casts. 
+        * orbsvcs/orbsvcs/Trader/constraint.l:
+        * orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
+        TAO_Literal_Constraint has constructors that need to distinguish
+        between CORBA::Long and CORBA::Boolean parameters. When CORBA::B_FALSE
+        and CORBA::B_TRUE in the TAO_Literal_Constraint constructors were
+        changed to 0 and 1, they were interpreted as longs and not
+        booleans. Bad things happened. So I added explicit casts.
 
 Sat Sep 12 20:42:49 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: Fixed the bugs in
-	  latency and jitter calculation.
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: Fixed the bugs in
+          latency and jitter calculation.
 
-	* tests/Cubit/TAO/MT_Cubit/Globals.h : Removed the
-          TIME_IN_MICROSEC macro as all time calculations are made 
-	  uniformly in microseconds.
-	
+        * tests/Cubit/TAO/MT_Cubit/Globals.h : Removed the
+          TIME_IN_MICROSEC macro as all time calculations are made
+          uniformly in microseconds.
+
 Sat Sep 12 18:45:03 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp: Guarded the
-	  print_RtiPacket statements with TAO_debug_level > 0 condition.
+        * tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp: Guarded the
+          print_RtiPacket statements with TAO_debug_level > 0 condition.
 
 Sat Sep 12 18:05:22 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Invocation.cpp: 
-	  Added compatibility with ORBs that return a status of
-	  SYSTEM_EXCEPTION, but are actually returning a UserException;
-	  Visibroker does this.
+        * tao/Invocation.cpp:
+          Added compatibility with ORBs that return a status of
+          SYSTEM_EXCEPTION, but are actually returning a UserException;
+          Visibroker does this.
 
-	* tao/encode.cpp: 
-	* tao/decode.cpp: 
-	  Fixed decoding and encoding of structures that have object
-	  references as fields.
+        * tao/encode.cpp:
+        * tao/decode.cpp:
+          Fixed decoding and encoding of structures that have object
+          references as fields.
 
 Sat Sep 12 16:07:21 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* TAO-INSTALL.html: Updated the location of the MSVC project 
-	  file for IDL Cubit.
+        * TAO-INSTALL.html: Updated the location of the MSVC project
+          file for IDL Cubit.
 
 Fri Sep 11 22:28:26 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
-	* TAO/orbsvcs/tests/Simple_Naming/client.h
-	* TAO/orbsvcs/tests/Simple_Naming/client.cpp
-	* TAO/orbsvcs/tests/Simple_Naming/README
-	  Replaced simple test with a set of tests for Naming Service.
+        * TAO/orbsvcs/tests/Simple_Naming/client.h
+        * TAO/orbsvcs/tests/Simple_Naming/client.cpp
+        * TAO/orbsvcs/tests/Simple_Naming/README
+          Replaced simple test with a set of tests for Naming Service.
 
 Fri Sep 11 22:08:25 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit: Added my name to the authors in the
-	  header files and also added some comments.
+        * tests/Cubit/TAO/MT_Cubit: Added my name to the authors in the
+          header files and also added some comments.
 
 Fri Sep 11 17:49:31 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* tao/TypeCode.{h,cpp}:
-	* tao/Any.cpp;
-	  Added an equivalent() function to typecode, similar to equal(),
-	  but disregarding aliases. Changed the extraction operators in
-	  Any to use equivalent() instead of equal().
+        * tao/TypeCode.{h,cpp}:
+        * tao/Any.cpp;
+          Added an equivalent() function to typecode, similar to equal(),
+          but disregarding aliases. Changed the extraction operators in
+          Any to use equivalent() instead of equal().
 
 Fri Sep 11 17:29:11 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.{h,cpp} : Replaced the
-	  ACE_timer_t based global_jitter_array with ACE_Unbounded_Set.
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.{h,cpp} : Replaced the
+          ACE_timer_t based global_jitter_array with ACE_Unbounded_Set.
 
 1998-09-11  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* tests/Simple/chat: Added new test program.  This simple chat
-	  program was originally a test in ORBacus and should help ORBacus
-	  users to move to TAO and the POA.
+        * tests/Simple/chat: Added new test program.  This simple chat
+          program was originally a test in ORBacus and should help ORBacus
+          users to move to TAO and the POA.
 
 Fri Sep 11 12:14:03 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/server.cpp : Fixed a memory allocation
-	  error where ior array was allocated before parsing the arguments.
+        * tests/Cubit/TAO/MT_Cubit/server.cpp : Fixed a memory allocation
+          error where ior array was allocated before parsing the arguments.
 
 Thu Sep 10 15:22:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_predefined_type.h: 
-	* TAO_IDL/be/be_predefined_type.cpp: 
-	  The repository ID in the TypeCode of a structure containing a
-	  CORBA_Object was invalid.
+        * TAO_IDL/be_include/be_predefined_type.h:
+        * TAO_IDL/be/be_predefined_type.cpp:
+          The repository ID in the TypeCode of a structure containing a
+          CORBA_Object was invalid.
 
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp: 
-	  Use CORBA::Object::_duplicate() instead of foo->_duplicate() the
-	  first one is more readable.
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+          Use CORBA::Object::_duplicate() instead of foo->_duplicate() the
+          first one is more readable.
 
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp: 
-	  An object was stored in a T_var and then as the field of a
-	  structure, resulting in a double delete.
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+          An object was stored in a T_var and then as the field of a
+          structure, resulting in a double delete.
 
 Tue Sep 08 14:05:56 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/POA/On_Demand_Activation/run_test.pl: Added a perl script
- 	  that makes it easier to run this test.
+        * tests/POA/On_Demand_Activation/run_test.pl: Added a perl script
+          that makes it easier to run this test.
 
-	* tests/POA/On_Demand_Activation/svc.conf:  Removed this file.
-	
-	* tests/POA/On_Demand_Activation/server.cpp: Added the ability to
- 	  write IORs to files.
-	
-	* TAO_IDL/be/be_decl.cpp (compute_repoID): Add the "/" only if
- 	  there is a prefix.
+        * tests/POA/On_Demand_Activation/svc.conf:  Removed this file.
+
+        * tests/POA/On_Demand_Activation/server.cpp: Added the ability to
+          write IORs to files.
+
+        * TAO_IDL/be/be_decl.cpp (compute_repoID): Add the "/" only if
+          there is a prefix.
 
 Wed Sep 10 13:14:30 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java:
-          cleaned up a couple more inconsistencies with the new 
+        * orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java:
+          cleaned up a couple more inconsistencies with the new
           RtecEventComm::Event interface.
 
 Wed Sep 10 11:48:34 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* orbsvcs/tests/Simulator/DOVEMIB/DOVEMIB.cpp
-	  orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier.cpp
-	  orbsvcs/tests/Simulator/Event_Supplier/Event_Con.cpp:
+        * orbsvcs/tests/Simulator/DOVEMIB/DOVEMIB.cpp
+          orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier.cpp
+          orbsvcs/tests/Simulator/Event_Supplier/Event_Con.cpp:
           cleaned up remaining inconsistencies with new RtecEventComm::Event
           interface.
 
