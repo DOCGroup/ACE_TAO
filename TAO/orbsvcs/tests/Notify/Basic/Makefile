@@ -32,7 +32,6 @@ endif # Naming
 endif # Notify
 
 PSRC=$(addsuffix .cpp,$(BIN)) Updates.cpp
-LDLIBS = -lTAO_NotifyTests -lTAO_CosNotification -lTAO_ETCL -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_DynamicAny -lTAO_IORTable -lTAO_PortableServer -lTAO
 CPPFLAGS += -I../lib -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
         $(foreach svc, $(TAO_ORBSVCS), -DTAO_ORBSVCS_HAS_$(svc))
 
@@ -47,6 +46,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include $(TAO_ROOT)/orbsvcs/tests/Notify/notify_tests.GNU
 
 # To build multiple executables in the same directory on AIX, it works
 # best to wipe out any previously-created tempinc directory.

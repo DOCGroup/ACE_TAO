@@ -12,8 +12,6 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS = -lTAO_CosNotification -lTAO_ETCL -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_DynamicAny -lTAO_PortableServer -lTAO
-
 LSRC = RedGreen_Test.cpp main.cpp
 
 RedGreen_Test_OBJS = $(LSRC:.cpp=.o)
@@ -40,6 +38,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
+include $(TAO_ROOT)/orbsvcs/tests/Notify/notify_tests.GNU
 
 #----------------------------------------------------------------------------
 #       Local targets

@@ -37,6 +37,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
+include $(TAO_ROOT)/orbsvcs/tests/Notify/notify_tests.GNU
 
 CPPFLAGS     += -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao -I$(ACE_ROOT)
 ifeq ($(static_libs),1)
@@ -47,8 +48,6 @@ endif
 
 
 LDFLAGS      += -L$(TAO_ROOT)/orbsvcs/tests/Notify/lib -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(ACE_ROOT)/ace
-
-LDLIBS = -lTAO_NotifyTests -lTAO_CosNotification -lTAO_ETCL -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_DynamicAny -lTAO_PortableServer -lTAO
 
 #----------------------------------------------------------------------------
 #       Local targets
