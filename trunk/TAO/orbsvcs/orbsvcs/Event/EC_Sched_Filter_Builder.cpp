@@ -151,7 +151,8 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
       //    application?
       char buf[64];
       ACE_OS::sprintf (buf, "TIMEOUT:%ul",
-                       ACE_CU64_TO_CU32 (e.header.creation_time / 10000));
+                       ACE_static_cast (u_int,
+                                        (e.header.creation_time / 10000)));
       ACE_CString name = buf;
 
       TAO_EC_QOS_Info qos_info;
@@ -290,7 +291,8 @@ TAO_EC_Sched_Filter_Builder:: recursive_name (
 
       char buf[64];
       ACE_OS::sprintf (buf, "TIMEOUT:%ul",
-                       ACE_CU64_TO_CU32 (e.header.creation_time / 10000));
+                       ACE_static_cast (u_int,
+                                        (e.header.creation_time / 10000)));
       name = buf;
 
       return;
