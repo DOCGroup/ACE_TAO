@@ -1,5 +1,7 @@
-#include "ace/ACE.h"
+// $Id$
+
 #include "cubit_impl.h"
+#include "ace/ACE.h"
 
 CORBA::Octet Cubit_Impl:: cube_octet (CORBA::Octet o, CORBA::Environment &IT_env) 
 {

@@ -22,7 +22,10 @@ the client or open a separate window for the client and server.
 server:
 -------
 
-./server <tpr | tpool> cool-tcp://<THIS_HOSTNAME>:<THIS_HOST_PORT> -v -cool-tcp -cool-iiop
+./server <tpr | tpool> 
+	 <cool-tcp://THIS_HOSTNAME:THIS_HOST_PORT | cool-chorus://:THIS_HOST_PORT>
+	 -v 
+	 <-cool-tcp -cool-iiop | -cool-chorus>
 
 tpr	: this indicates to the server to use the Thread Per Request concurrency model.
 
@@ -41,7 +44,15 @@ but it is not required by the client.
 client:
 -------
 
-./client [-n <LOOP_COUNT>] [-t <NUM_THREADS>] [-h SERVER_HOSTNAME] [-p <SERVER_PORT_NUM>] -cool-tcp -cool-iiop
+./client [-n <LOOP_COUNT>] 
+	 [-t <NUM_THREADS>] 
+	 [-h SERVER_HOSTNAME] 
+	 [-p <SERVER_PORT_NUM>] 
+	 [-cool-tcp -cool-iiop | -cool-chorus]
+	 [-I] 
+
+[-I] indicates to the client to use Chorus IPC as the underlying transport
+     instead of TCP
 
 <SERVER_HOSTNAME>: is the hostname of the server.
 
@@ -68,8 +79,11 @@ Results
 The client prints the latency observed by the high priority client,
 and the average latency observed by the low priority client.
 
-An Example
-----------
+Examples
+--------
+
+(1) An Example on a Sparc running SunOS 5.5.1 using TCP as the underlying transport
+
 
    On the host lambada.cs.wustl.edu :
       
@@ -107,43 +121,46 @@ An Example
    Low priority client latency : 15.995959 msec, jitter: 527.515277 msec
    utilization task performed 435 computations
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
+(2) An Example on a MVME177 backplane using 68k processors running ClassiX using 
+    Chorus IPC as the underlying transport
+
+
+   On the host tambora2.cs.wustl.edu :
+      
+   % rsh tambora2 arun /tests/Cubit/COOL/MT_Cubit/server tpool cool-chorus://:1023 -v -cool-chorus
+      
+   On the host tambora1.cs.wustl.edu :
+      
+   % rsh tambora1 arun /tests/Cubit/COOL/MT_Cubit/client -n 400 -I -t 2 -p 1023 -cool-chorus
+      
+   The output of the client program might look like this:
+
+   started aid = 12
+   COOL:0000000001000000010000001C00750AA60000000200750AA65555555500000001429A00000000000A(13) Thread created
+   (13) Im the high priority client, my id is 0.
+   Using ior = cool-chorus://:1023
+   Creating 1 clients with low priority of 125
+   (13) Binding succeeded
+   (13) Cb == 2c6144
+   Object Created at: '2908484l'connected to object 'COOL:0000000001000000010000001C00750AA60000000200750AA65555555500000001429A00000000000A'
+   COOL:0000000001000000010000001C00750AA60000000200750AA65555555500000001429A00000000000A
+   (13) Waiting for other threads to finish binding..
+   (12) Thread created
+   (12) Im a low priority client, my id is 1
+   Using ior = cool-chorus://:1023
+   (12) Binding succeeded
+   (12) Cb == 2c6164
+   Object Created at: '2908516l'connected to object 'COOL:0000000001000000010000001C00750AA60000000200750AA65555555500000001429A00000000000A'(12) Waiting for other threads to finish binding..
+   (13) Everyone's done, here I go!!
+   (12) Everyone's done, here I go!!
+   (12|13) cube average call ACE_OS::time	= 12835 usec, 	77 calls/second
+   (13) My latency was 12835
+   400 calls, 0 errors
+   (12|12) cube average call ACE_OS::time	= 12931 usec, 	77 calls/second
+   (12) My latency was 12931
+   Test done.
+   High priority client latency : 12835 usec
+   Low priority client latency : 12931 usec
+   400 calls, 0 errors
+   --->Output file for latency data is "cb12__2.txt"
+   (8) utilization task performed 0 computations

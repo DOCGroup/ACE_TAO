@@ -1,3 +1,5 @@
+// $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -11,14 +13,20 @@
 //
 // ============================================================================
 
+#include <corba/cool.H>
+#include "cubit.H"
+
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 
-#include "cubit.H"
 #include "Task_Client.h"
 #include "Util_Thread.h"
+
+#if defined (CHORUS)
+#include "pccTimer.h"
+#endif /* CHORUS */
 
 #if defined (VME_DRIVER)
 #include <hostLib.h>
