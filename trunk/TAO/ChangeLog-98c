@@ -1,64 +1,69 @@
+Sat Mar 14 19:29:00 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Cubit/TAO/IDL_Cubit/client.cpp (print_stats): added
+          support for ACE_LACKS_FLOATING_POINT.
+
 Sat Mar 14 16:40:05 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation.cpp: We were not generating the
-	"_get_" and "_set_" prefixes for operations corresponding to
-	attributes. This is now fixed.
+        * TAO_IDL/be/be_visitor_operation.cpp: We were not generating the
+        "_get_" and "_set_" prefixes for operations corresponding to
+        attributes. This is now fixed.
 
-	* TAO_IDL/be/be_visitor_enum.cpp: Typecode implementation of enum
-	class was not getting generated due to an incorrect "if"
-	condition. Thanks to Seth Widoff for noticing this.
+        * TAO_IDL/be/be_visitor_enum.cpp: Typecode implementation of enum
+        class was not getting generated due to an incorrect "if"
+        condition. Thanks to Seth Widoff for noticing this.
 
-	* TAO_IDL/be/be_visitor_union_branch.cpp: We had forgotten to
-	generate the "set" and "get" operation implementation for union
-	members that are sequences. Thanks to Seth Widoff for noticing
-	this.
+        * TAO_IDL/be/be_visitor_union_branch.cpp: We had forgotten to
+        generate the "set" and "get" operation implementation for union
+        members that are sequences. Thanks to Seth Widoff for noticing
+        this.
 
 Sat Mar 14 02:48:55 1998  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile (IDL_FILES): Added the SFP IDL files
-	and the AV/sfp.cpp to the rules.
+        * orbsvcs/orbsvcs/Makefile (IDL_FILES): Added the SFP IDL files
+        and the AV/sfp.cpp to the rules.
 
 Sat Mar 14 02:17:34 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/*.*:
-	I've hammered out a number of errors from the initial port:
-	the Trading Service compiles on Solaris.
+        * orbsvcs/orbsvcs/Trader/*.*:
+        I've hammered out a number of errors from the initial port:
+        the Trading Service compiles on Solaris.
 
-	* orbsvcs/orbsvcs/Makefile:
-	I've added all the necessary additions to the Makefile for the
-	Trading Service. The makefile will perform the compilation when
-	the 'trader' flag is set to 1 on the command line.
+        * orbsvcs/orbsvcs/Makefile:
+        I've added all the necessary additions to the Makefile for the
+        Trading Service. The makefile will perform the compilation when
+        the 'trader' flag is set to 1 on the command line.
 
-	* orbsvcs/Trading_Service/Makefile:
-	* orbsvcs/Trading_Service/trader.cpp:
-	trader.cpp instantiates a Trader object and registers its Lookup
-	interface with the bootstrapped Naming Service. All the Trader
-	interfaces are implicitly activated in the Trader class. In the
-	future we'll want to have the Trading Service bootstrappable
-	through the resolve_initial_references method.
+        * orbsvcs/Trading_Service/Makefile:
+        * orbsvcs/Trading_Service/trader.cpp:
+        trader.cpp instantiates a Trader object and registers its Lookup
+        interface with the bootstrapped Naming Service. All the Trader
+        interfaces are implicitly activated in the Trader class. In the
+        future we'll want to have the Trading Service bootstrappable
+        through the resolve_initial_references method.
 
 Sat Mar 14 00:36:30 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp (define_property):
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp (define_property):
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h (PropertyNamesIterator):
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.h (PropertyNamesIterator):
 
-	* orbsvcs/orbsvcs/Property/CosProperty_Hash.cpp (CosProperty_Hash_Value):
+        * orbsvcs/orbsvcs/Property/CosProperty_Hash.cpp (CosProperty_Hash_Value):
 
-	* orbsvcs/orbsvcs/Property/CosProperty_Hash.h:
-	The tao_idl compiler has been made to generate Any at some places
-	where it was generating Any_var. Hence, I had to modify this
-	implementaion to accomadate this change.
+        * orbsvcs/orbsvcs/Property/CosProperty_Hash.h:
+        The tao_idl compiler has been made to generate Any at some places
+        where it was generating Any_var. Hence, I had to modify this
+        implementaion to accomadate this change.
 
 Fri Mar 13 10:34:15 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation.cpp: For return types that are
-	object references, we were using the actual return type and
-	passing its address to the marshaling routine. However, the
-	marshaling routine needs the address of the base class i.e.,
-	CORBA::Object. Due to "public virtual" inheritance all kinds of
-	crazy things happen. So now we had to resort to declaring the
-	return value of type "CORBA::Object_ptr" and things worked fine.
+        * TAO_IDL/be/be_visitor_operation.cpp: For return types that are
+        object references, we were using the actual return type and
+        passing its address to the marshaling routine. However, the
+        marshaling routine needs the address of the base class i.e.,
+        CORBA::Object. Due to "public virtual" inheritance all kinds of
+        crazy things happen. So now we had to resort to declaring the
+        return value of type "CORBA::Object_ptr" and things worked fine.
 
 Fri Mar 13 09:57:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -68,59 +73,59 @@ Fri Mar 13 09:57:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Thu Mar 12 21:23:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/debug.cpp (_dmsg_x): Changed ex->id () to ex->_id ().
+        * tao/debug.cpp (_dmsg_x): Changed ex->id () to ex->_id ().
 
 Thu Mar 12 20:40:09 1998  Sergio Flores  <sergio@lambada.cs.wustl.edu>
 
-	* tests/Thruput/TAO/client.cpp:
-	* tests/Thruput/TAO/run_client:
-	* tests/Thruput/TAO/run_server:
-	* tests/Thruput/TAO/run_test: Minor fixes in the scripts and usage
- 	message.
+        * tests/Thruput/TAO/client.cpp:
+        * tests/Thruput/TAO/run_client:
+        * tests/Thruput/TAO/run_server:
+        * tests/Thruput/TAO/run_test: Minor fixes in the scripts and usage
+        message.
 
 Thu Mar 12 18:02:06 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* tao/request.cpp:
-	* tao/typecode.cpp:
-	The is_nil methods of typecode and CORBA had this:
-	(CORBA::Boolean) ptr == 0 to test for the nil condition, when we
-	really want this: (CORBA::Boolean) (ptr == 0). This way we cast
-	the result of the expression, and not the pointer, to
-	CORBA::Boolean.
+        * tao/request.cpp:
+        * tao/typecode.cpp:
+        The is_nil methods of typecode and CORBA had this:
+        (CORBA::Boolean) ptr == 0 to test for the nil condition, when we
+        really want this: (CORBA::Boolean) (ptr == 0). This way we cast
+        the result of the expression, and not the pointer, to
+        CORBA::Boolean.
 
 Thu Mar 12 17:49:45 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be_visitor_typedef.cpp: For typedefs of pseudo object
-	types, we had forgottten to generate a typedef to the _ptr type.
+        * TAO_IDL/be_visitor_typedef.cpp: For typedefs of pseudo object
+        types, we had forgottten to generate a typedef to the _ptr type.
 
 Thu Mar 12 17:21:32 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/sequence_T.cpp: Fixed a couple of weird bugs were freebuf
- 	  (MAX) was being called instead of freebuf (tmp).  Thanks to
- 	  Keith Nicewarner <knicewar@sanders.com> for reporting this.
+        * tao/sequence_T.cpp: Fixed a couple of weird bugs were freebuf
+          (MAX) was being called instead of freebuf (tmp).  Thanks to
+          Keith Nicewarner <knicewar@sanders.com> for reporting this.
 
 Thu Mar 12 15:53:44 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* tao/except.h: Changed the member functions "type ()" and "id ()"
-	on the CORBA::Exception class to "_type ()" and "_id ()". This
-	affected the following files:
-	tao/{except, object, poaC, svrrqst}.cpp
+        * tao/except.h: Changed the member functions "type ()" and "id ()"
+        on the CORBA::Exception class to "_type ()" and "_id ()". This
+        affected the following files:
+        tao/{except, object, poaC, svrrqst}.cpp
 
-	* TAO_IDL/be/be_visitor_exception.cpp: Made changes to use the
-	_type and _id methods. Thanks to Seth Widoff for noticing this in
-	his Trader application where a user defined exception had a member
-	called "type" which clashed with the base class operation "type".
+        * TAO_IDL/be/be_visitor_exception.cpp: Made changes to use the
+        _type and _id methods. Thanks to Seth Widoff for noticing this in
+        his Trader application where a user defined exception had a member
+        called "type" which clashed with the base class operation "type".
 
 Thu Mar 12 15:00:47 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_exception.cpp: In those cases where object
-	references or strings were assigned, the g++ compiler failed to do
-	implicit conversion to assign a _var to a _ptr type. This is now
-	fixed by using the _var.in () method.
+        * TAO_IDL/be/be_visitor_exception.cpp: In those cases where object
+        references or strings were assigned, the g++ compiler failed to do
+        implicit conversion to assign a _var to a _ptr type. This is now
+        fixed by using the _var.in () method.
 
-	* TAO_IDL/be/be_visitor_typedef.cpp: Fixed a bug that was
-	generating typecode information for data types that were imported
-	resulting in a multiply defined symbol error at link time.
+        * TAO_IDL/be/be_visitor_typedef.cpp: Fixed a bug that was
+        generating typecode information for data types that were imported
+        resulting in a multiply defined symbol error at link time.
 
 Thu Mar 12 09:01:43 1998  David L. Levine  <levine@cs.wustl.edu>
 
