@@ -1,5 +1,33 @@
-Tue Mar  1 08:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Mar  1 00:47:51 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
+	* tao/CORBALOC_Parser.cpp:
+
+	  Include "ace/os_include/os_netdb.h" to pull in MAXHOSTNAMELEN
+	  constant.
+
+	* tao/Invocation_Adapter.cpp (invoke_i):
+
+	* tao/TAO_Server_Request.cpp (tao_send_reply):
+	  (tao_send_reply_exception):
+
+	  Do not attempt to send a reply over the transport in the
+	  collocated case.  There is no transport in that case.
+
+	* tao/TAO_Server_Request.h (collocated):
+	* tao/TAO_Server_Request.i (collocated):
+
+	  New accessor that returns true if the current request is
+	  collocated.
+
+	* tao/PortableServer/Servant_Base.cpp
+	  (synchronous_upcall_dispatch):
+
+	  Re-throw the caught exception in the collocated case.  The
+	  exception must be directly reported to the collocated client
+	  since the exception will not be marshaled and sent back to the
+	  client side ORB.
+
+Tue Mar  1 08:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ObjRefTemplate/ORT_Adapter_Impl.{h,cpp}:
         * tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.{h,cpp}:

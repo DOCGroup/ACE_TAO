@@ -192,6 +192,13 @@ TAO_ServerRequest::argument_flag (CORBA::Boolean flag)
   this->argument_flag_ = flag;
 }
 
+ACE_INLINE bool
+TAO_ServerRequest::collocated (void) const
+{
+  return this->transport_ == 0;
+}
+
+
 #if TAO_HAS_INTERCEPTORS == 1
 ACE_INLINE size_t &
 TAO_ServerRequest::interceptor_count (void)
