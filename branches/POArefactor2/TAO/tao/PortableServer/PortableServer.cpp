@@ -28,8 +28,6 @@
 #include "LifespanPolicyValueTransient.h"
 #include "LifespanPolicyValuePersistent.h"
 
-#include "IdAssignmentPolicyValueSystem.h"
-#include "IdAssignmentPolicyValueUser.h"
 #include "IdAssignmentStrategySystem.h"
 #include "IdAssignmentStrategyUser.h"
 
@@ -159,14 +157,6 @@ TAO_POA_Initializer::init (void)
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_LifespanPolicyValuePersistent
-    );
-
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_IdAssignmentPolicyValueSystem
-    );
-
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_IdAssignmentPolicyValueUser
     );
 
   ACE_Service_Config::process_directive (

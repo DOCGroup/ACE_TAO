@@ -35,6 +35,7 @@
 
 #include "PolicyS.h"
 #include "Servant_Upcall.h"
+#include "ForwardRequestC.h"
 #include "Operation_Table.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Core.h"

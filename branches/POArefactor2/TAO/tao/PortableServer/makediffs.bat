@@ -24,6 +24,11 @@ diff -wub orig/ServantManagerC.cpp ServantManagerC.cpp >> diffs/ServantManager.d
 diff -wub orig/ServantManagerA.cpp ServantManagerA.cpp >> diffs/ServantManager.diff
 unix2dos diffs\ServantManager.diff
 
+diff -wub orig/ForwardRequestC.h ForwardRequestC.h > diffs/ForwardRequest.diff
+diff -wub orig/ForwardRequestC.cpp ForwardRequestC.cpp >> diffs/ForwardRequest.diff
+diff -wub orig/ForwardRequestA.cpp ForwardRequestA.cpp >> diffs/ForwardRequest.diff
+unix2dos diffs\ForwardRequest.diff
+
 diff -wub orig/ImplicitActivationPolicyC.h ImplicitActivationPolicyC.h > diffs/ImplicitActivationPolicy.diff
 diff -wub orig/ImplicitActivationPolicyC.cpp ImplicitActivationPolicyC.cpp >> diffs/ImplicitActivationPolicy.diff
 diff -wub orig/ImplicitActivationPolicyA.cpp ImplicitActivationPolicyA.cpp >> diffs/ImplicitActivationPolicy.diff

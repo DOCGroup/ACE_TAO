@@ -12,6 +12,7 @@ tao_idl.exe -o orig -Gp -Gd -Ge 1 -GT -Sc -GA -Ic:\ace\poarefactor\ace_wrappers\
 tao_idl.exe -o orig -Gp -Gd -Ge 1 -GT -Sc -GA -Ic:\ace\poarefactor\ace_wrappers\TAO -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" ServantActivator.pidl
 tao_idl.exe -o orig -Gp -Gd -Ge 1 -GT -Sc -GA -Ic:\ace\poarefactor\ace_wrappers\TAO -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" ServantLocator.pidl
 tao_idl.exe -o orig -Gp -Gd -Ge 1 -GT -Sc -GA -Ic:\ace\poarefactor\ace_wrappers\TAO -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" ServantManager.pidl
+tao_idl.exe -o orig -Gp -Gd -Ge 1 -GT -Sc -GA -Ic:\ace\poarefactor\ace_wrappers\TAO -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" ForwardRequest.pidl
 tao_idl.exe -o orig -Gp -Gd -Ge 1 -GT -Sc -GA -Ic:\ace\poarefactor\ace_wrappers\TAO -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" ServantRetentionPolicy.pidl
 tao_idl.exe -o orig -Gp -Gd -Ge 1 -GT -Sc -GA -Ic:\ace\poarefactor\ace_wrappers\TAO -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" ThreadPolicy.pidl
 tao_idl.exe -o orig -Gp -Gd -Ge 1 -GT -Sc -GA -Ic:\ace\poarefactor\ace_wrappers\TAO -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" ImplRepo.pidl
@@ -34,6 +35,7 @@ patch < diffs/RequestProcessingPolicy.diff
 patch < diffs/ServantActivator.diff
 patch < diffs/ServantLocator.diff
 patch < diffs/ServantManager.diff
+patch < diffs/ForwardRequest.diff
 patch < diffs/ServantRetentionPolicy.diff
 patch < diffs/ThreadPolicy.diff
 patch < diffs/PortableServer_include.diff

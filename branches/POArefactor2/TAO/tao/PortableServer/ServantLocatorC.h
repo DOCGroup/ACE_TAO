@@ -49,6 +49,7 @@
 
 #include "tao/PortableServer/PS_ForwardC.h"
 #include "tao/PortableServer/ServantManagerC.h"
+#include "tao/PortableServer/ForwardRequestC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

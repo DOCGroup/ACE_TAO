@@ -6,7 +6,7 @@
 #include "Default_Servant_Dispatcher.h"
 #include "Collocated_Object_Proxy_Broker.h"
 #include "Active_Object_Map_Entry.h"
-#include "ServantManagerC.h"
+#include "ForwardRequestC.h"
 
 // -- TAO Include --
 #include "tao/ORB.h"

@@ -172,62 +172,6 @@ namespace PortableServer
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServantManager;
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_exception/exception_ch.cpp:51
-
-#if !defined (_PORTABLESERVER_FORWARDREQUEST_CH_)
-#define _PORTABLESERVER_FORWARDREQUEST_CH_
-  
-  class TAO_PortableServer_Export ForwardRequest : public CORBA::UserException
-  {
-  public:
-    
-    CORBA::Object_var forward_reference;
-    ForwardRequest (void);
-    ForwardRequest (const ForwardRequest &);
-    ~ForwardRequest (void);
-
-    ForwardRequest &operator= (const ForwardRequest &);
-    
-    static void _tao_any_destructor (void *);
-    
-    static ForwardRequest *_downcast (CORBA::Exception *);
-    static CORBA::Exception *_alloc (void);
-
-    virtual CORBA::Exception *_tao_duplicate (void) const;
-
-    virtual void _raise (void) const;
-
-    virtual void _tao_encode (
-        TAO_OutputCDR &
-        ACE_ENV_ARG_DECL
-      ) const;
-    
-    virtual void _tao_decode (
-        TAO_InputCDR &
-        ACE_ENV_ARG_DECL
-      );
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_exception/exception_ctor.cpp:66
-    
-    ForwardRequest (
-        const CORBA::Object_ptr  _tao_forward_reference
-      );
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_exception/exception_ch.cpp:125
-    
-    virtual CORBA::TypeCode_ptr _type (void) const;
-  };
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ForwardRequest;
-
-#endif /* end #if !defined */
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -269,20 +213,6 @@ namespace TAO
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ServantManager_ptr); // copying
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ServantManager_ptr *); // non-copying
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ServantManager_ptr &);
-
-// TAO_IDL - Generated from
-// be\be_visitor_exception/any_op_ch.cpp:52
-
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, const PortableServer::ForwardRequest &); // copying version
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ForwardRequest*); // noncopying version
-TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ForwardRequest *&); // deprecated
-TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableServer::ForwardRequest *&);
-
-// TAO_IDL - Generated from
-// be\be_visitor_exception/cdr_op_ch.cpp:52
-
-TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ForwardRequest &);
-TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::ForwardRequest &);
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 

@@ -1,11 +1,7 @@
 #include "IdAssignmentPolicy.h"
-#include "IdAssignmentPolicyValue.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Config.h"
-
-#define TAO_PORTABLESERVER_SAFE_INCLUDE
-#include "PortableServerC.h"
-#undef TAO_PORTABLESERVER_SAFE_INCLUDE
+#include "PortableServer.h"
 
 ACE_RCSID (PortableServer,
            IdAssignmentPolicy,
@@ -15,8 +11,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    IdAssignmentPolicy::IdAssignmentPolicy () :
-      value_ (0)
+    IdAssignmentPolicy::IdAssignmentPolicy ()
     {
     }
 
@@ -36,42 +31,7 @@ namespace TAO
     IdAssignmentPolicy::init (
       ::PortableServer::IdAssignmentPolicyValue value)
     {
-      switch (value)
-        {
-        case ::PortableServer::USER_ID :
-          {
-            this->value_ =
-              ACE_Dynamic_Service<IdAssignmentPolicyValue>::instance ("IdAssignmentPolicyValueUser");
-
-            if (this->value_ == 0)
-              {
-                ACE_Service_Config::process_directive (
-                  ACE_TEXT("dynamic IdAssignmentPolicyValueUser Service_Object *")
-                  ACE_TEXT("TAO_PortableServer:_make_IdAssignmentPolicyValueUser()"));
-
-                this->value_ =
-                  ACE_Dynamic_Service<IdAssignmentPolicyValue>::instance ("IdAssignmentPolicyValueUser");
-              }
-            break;
-          }
-        case ::PortableServer::SYSTEM_ID :
-          {
-            this->value_ =
-              ACE_Dynamic_Service<IdAssignmentPolicyValue>::instance ("IdAssignmentPolicyValueSystem");
-
-            if (this->value_ == 0)
-              {
-                ACE_Service_Config::process_directive (
-                  ACE_TEXT("dynamic IdAssignmentPolicyValueSystem Service_Object *")
-                  ACE_TEXT("TAO_PortableServer:_make_IdAssignmentPolicyValueSystem()"));
-
-                this->value_ =
-                  ACE_Dynamic_Service<IdAssignmentPolicyValue>::instance ("IdAssignmentPolicyValueSystem");
-              }
-
-            break;
-          }
-        }
+      value_ = value;
     }
 
     CORBA::Policy_ptr
@@ -84,7 +44,7 @@ namespace TAO
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-      (void) copy->init (this->value_->policy_type ());
+      (void) copy->init (this->value_);
 
       return copy;
     }
@@ -99,7 +59,7 @@ namespace TAO
     IdAssignmentPolicy::value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
-      return value_->policy_type ();
+      return value_;
     }
 
     CORBA::PolicyType
