@@ -1,3 +1,12 @@
+Thu May 02 15:54:48 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Select_Reactor_T.cpp (work_pending):
+
+	  Check if any timers are pending.  If so, override any timeout
+	  from the select() call.  Corrects a problem where the decision
+	  that no work was pending despite the fact that timers were
+	  pending.
+
 Thu May 02 15:53:39 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Dev_Poll_Reactor_Test.cpp:
