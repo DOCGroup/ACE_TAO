@@ -1,10 +1,7 @@
-Tue Sep  2 14:42:52 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+Tue Sep  2 18:26:22 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-chorus.h (ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR):
-	  Added this directive for Chorus uses g++.  Thanks to David
-	  Levine for pointing this out. 
-
-Tue Sep  2 09:51:35 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+	* ChangeLog-97b: Emptied out the ChangeLog-97b file until
+	  we move the ChangeLog to this file...
 
 	* ace/OS.h: Moved the <ACE_CLEANUP_FUNC> typedef from the
  	  ACE_Object_Manager into global scope so that it can also be used
@@ -32,6 +29,12 @@ Tue Sep  2 09:51:35 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  of the Task file and into the Thread_Manager file.  This will
  	  both simplify and generalize the behavior of cleanups on thread
  	  exit.
+
+Tue Sep  2 14:42:52 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/config-chorus.h (ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR):
+	  Added this directive for Chorus uses g++.  Thanks to David
+	  Levine for pointing this out. 
 
 Mon Sep 01 21:31:25 1997  David L. Levine  <levine@cs.wustl.edu>
 
