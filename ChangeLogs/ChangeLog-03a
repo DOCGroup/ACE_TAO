@@ -1,3 +1,12 @@
+Wed Aug 29 12:15:01 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp:  Added Bound_Ptr.* to the projects.
+
+	* tests/tests.dsw:
+	* tests/Bound_Ptr_Test.dsp: Added a new project for
+	  Bound_Ptr_Test.
+
 Wed Aug 29 11:01:22 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/MEM_Stream_Test.cpp: Fixed a cut/paste error and now runs the
@@ -6,7 +15,7 @@ Wed Aug 29 11:01:22 2001  Steve Huston  <shuston@riverace.com>
 
 Wed Aug 29 07:08:23 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tests/run_tests.lst: 
+	* tests/run_tests.lst:
 	* tests/Makefile
 	* tests/Makefile.bor
 	* ace/Makefile
@@ -29,7 +38,7 @@ Tue Aug 28 16:48:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  token unless we own it. This simple mistake just took 3 days to
 	  figure out. An 'if' condition was mixing and have added
 	  it. Shows how a small problem at lower levels can take days to
-	  fix. 
+	  fix.
 
 Tue Aug 28 17:45:22 2001  Steve Huston  <shuston@riverace.com>
 
