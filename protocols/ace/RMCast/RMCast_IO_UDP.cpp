@@ -84,9 +84,7 @@ ACE_RMCast_IO_UDP::handle_events (ACE_Time_Value *tv)
 int
 ACE_RMCast_IO_UDP::handle_input (ACE_HANDLE)
 {
-  // @@ We should use a system constant instead of this literal
-  const int max_udp_packet_size = 65536;
-  char buffer[max_udp_packet_size];
+  char buffer[ACE_MAX_UDP_PACKET_SIZE];
 
   ACE_INET_Addr from_address;
   ssize_t r =
