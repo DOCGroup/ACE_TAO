@@ -1,8 +1,10 @@
-// @(#)giop.cpp	1.10 95/09/21
+// $Id$
+//
+// @(#)giop.cpp 1.10 95/09/21
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //
-// GIOP:	Utility routines for sending, receiving GIOP messages
+// GIOP:        Utility routines for sending, receiving GIOP messages
 //
 // Note that the Internet IOP is just the TCP-specific mapping of the
 // General IOP.  Areas where other protocols may map differently
@@ -58,8 +60,8 @@ static const char *names [] =
 
 static void
 dump_msg (const char *label,
-	  const u_char *ptr,
-	  size_t len)
+          const u_char *ptr,
+          size_t len)
 {
   if (TAO_debug_level >= 2)
     {
@@ -109,23 +111,23 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *&handler,
   while (buflen > 0)
     {
       if (buflen > stream.length)
-	{
-	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) ?? writebuf, buflen %u > length %u\n",
+        {
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) ?? writebuf, buflen %u > length %u\n",
                       buflen, stream.length));
-	  ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
-	  return CORBA::B_FALSE;
-	}
+          ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
+          return CORBA::B_FALSE;
+        }
 
       ssize_t writelen = peer.send_n ((char _FAR *) buf, buflen);
 
 #if defined (DEBUG)
       //      dmsg_filter (6, "wrote %d bytes to connection %d",
-      //	   writelen, connection);
+      //           writelen, connection);
       dmsg_filter (6, "wrote %d bytes", writelen);
-#endif	/* DEBUG */
+#endif  /* DEBUG */
 
       assert ((writelen >= 0
-	       && ((size_t)writelen) <= buflen) || writelen == -1);
+               && ((size_t)writelen) <= buflen) || writelen == -1);
 
       // On error or EOF, report the fault, close the connection, and
       // mark it as unusable/defunct.
@@ -137,28 +139,28 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *&handler,
       // we should cause (full) rebinding to take place.
 
       if (writelen == -1)
-	{
-	  ACE_DEBUG ((LM_ERROR,
-		      "(%P|%t) %p\n", "OutgoingMessage::writebuf ()"));
-	  ACE_DEBUG ((LM_DEBUG,
-		      "(%P|%t) closing conn %d after fault\n", peer.get_handle ()));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "(%P|%t) %p\n", "OutgoingMessage::writebuf ()"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) closing conn %d after fault\n", peer.get_handle ()));
           handler->close ();
           handler = 0;
-	  ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
-	  return CORBA::B_FALSE;
-	}
+          ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
+          return CORBA::B_FALSE;
+        }
       else if (writelen == 0)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "(%P|%t) OutgoingMessage::writebuf () ... EOF, closing conn %d\n",
-		      peer.get_handle ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) OutgoingMessage::writebuf () ... EOF, closing conn %d\n",
+                      peer.get_handle ()));
           handler->close ();
           handler = 0;
-	  ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
-	  return CORBA::B_FALSE;
-	}
+          ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
+          return CORBA::B_FALSE;
+        }
       if ((buflen -= writelen) != 0)
-	buf += writelen;
+        buf += writelen;
 
 #if defined (DEBUG)
       //
@@ -166,7 +168,7 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *&handler,
       // it's been seen with UNIX domain sockets.
       //
       if (buflen)
-	dmsg_filter (8, "%u more bytes to write...\n", buflen);
+        dmsg_filter (8, "%u more bytes to write...\n", buflen);
 #endif /* DEBUG */
     }
   ACE_TIMEPROBE ("  -> GIOP::send_request - done");
@@ -216,7 +218,7 @@ TAO_GIOP::close_connection (TAO_Client_Connection_Handler *&handler,
   handler->close ();
   handler = 0;
   ACE_DEBUG ((LM_DEBUG,
-	      "(%P|%t) shut down socket %d\n", which));
+              "(%P|%t) shut down socket %d\n", which));
 }
 
 
@@ -258,8 +260,8 @@ send_error (TAO_Client_Connection_Handler *&handler)
 
 static int
 read_buffer (ACE_SOCK_Stream &peer,
-	     char *buf,
-	     size_t len)
+             char *buf,
+             size_t len)
 {
   int bytes_read = 0;
   bytes_read = peer.recv_n (buf, len);
@@ -272,7 +274,7 @@ read_buffer (ACE_SOCK_Stream &peer,
       bytes_read = 0;
       errno = 0;
     }
-  
+
   return bytes_read;
 }
 
@@ -301,7 +303,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
                         CORBA::Environment &env)
 {
   ACE_TIMEPROBE ("  -> GIOP::recv_request - start");
-  TAO_GIOP_MsgType	retval;
+  TAO_GIOP_MsgType      retval;
   CORBA::ULong message_size;
   ACE_SOCK_Stream &connection = handler->peer ();
 
@@ -364,11 +366,11 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
   // First make sure it's a GIOP message of any version.
 
   if (!(msg.buffer [0] == 'G'
-	&& msg.buffer [1] == 'I'
-	&& msg.buffer [2] == 'O'
-	&& msg.buffer [3] == 'P'))
+        && msg.buffer [1] == 'I'
+        && msg.buffer [2] == 'O'
+        && msg.buffer [3] == 'P'))
     {
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));	// header
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));      // header
       ACE_DEBUG ((LM_DEBUG, "bad header, magic word\n"));
       ACE_TIMEPROBE ("  -> GIOP::recv_request - fail");
       return TAO_GIOP_MessageError;
@@ -379,7 +381,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
 
   if (!(msg.buffer [4] == MY_MAJOR && msg.buffer [5] <= MY_MINOR))
     {
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));	// header
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));      // header
       ACE_DEBUG ((LM_DEBUG, "bad header, version\n"));
       ACE_TIMEPROBE ("  -> GIOP::recv_request - fail");
       return TAO_GIOP_MessageError;
@@ -439,7 +441,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
         }
 
       // clean up, and ...
-      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));	// body
+      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE)); // body
       ACE_DEBUG ((LM_DEBUG, "couldn't read rest of message\n"));
       ACE_TIMEPROBE ("  -> GIOP::recv_request - fail");
       return TAO_GIOP_MessageError;
@@ -507,10 +509,10 @@ TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 // existence.
 
 static const CORBA::Long _oc_opaque [] =
-{	// CDR typecode octets
-  TAO_ENCAP_BYTE_ORDER,				// native endian + padding; "tricky"
-  10,				// ... (sequence of) octets
-  0				// ... unbounded
+{       // CDR typecode octets
+  TAO_ENCAP_BYTE_ORDER,                         // native endian + padding; "tricky"
+  10,                           // ... (sequence of) octets
+  0                             // ... unbounded
 };
 
 CORBA::TypeCode
@@ -562,7 +564,7 @@ static const CORBA::Long _oc_svc_ctx_list [] =
   // level of nested encapuslation here.
 
   1, 0, // name omitted:  "context_data"
-  CORBA::tk_sequence,	// sequence typecode
+  CORBA::tk_sequence,   // sequence typecode
   16, // length of encapsulation 2
 
   // START bytes of encapsulation 2 (sequence params)
@@ -710,7 +712,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
   // this message, then patched shortly before it's sent).
 
   static CORBA::Principal_ptr anybody = 0;
-  static TAO_GIOP_ServiceContextList svc_ctx;	// all zeroes
+  static TAO_GIOP_ServiceContextList svc_ctx;   // all zeroes
 
   if (this->stream_.encode (&TC_ServiceContextList, 0, &svc_ctx, env)
       != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -761,12 +763,12 @@ TAO_GIOP_message_name (TAO_GIOP_MsgType which)
 
   int i = (int)which;
   i++; // Add one since EndOfFile is -1
-  if (i > sizeof(msgnames)/sizeof(msgnames[0]))
+  if (i > (int) (sizeof(msgnames)/sizeof(msgnames[0])))
     return "<Bad Value!>";
   else
     return msgnames[i];
 }
-  
+
 TAO_GIOP_ReplyStatusType
 TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
                              CORBA::Environment &env)
@@ -854,15 +856,15 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
       // false error reports to applications.
       {
 #if 0 /* @@ don't delete this, chris */
-	ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, data_->fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION));
+        ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, data_->fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION));
 #endif
 
         IIOP::Profile *old = data_->fwd_profile_i (0);
-	delete old;
+        delete old;
 
         this->handler_->close ();
         this->handler_ = 0;
-	return TAO_GIOP_LOCATION_FORWARD;
+        return TAO_GIOP_LOCATION_FORWARD;
       }
 
     case TAO_GIOP_Request:
@@ -913,7 +915,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
   TAO_GIOP_ServiceContextList reply_ctx;
   CORBA::ULong request_id;
-  CORBA::ULong reply_status;		// TAO_GIOP_ReplyStatusType
+  CORBA::ULong reply_status;            // TAO_GIOP_ReplyStatusType
 
   if (this->stream_.decode (&TC_ServiceContextList, &reply_ctx, 0, env)
       != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -957,155 +959,155 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
     case TAO_GIOP_USER_EXCEPTION:
     case TAO_GIOP_SYSTEM_EXCEPTION:
       {
-	CORBA::String exception_id;
+        CORBA::String exception_id;
 
-	// Pull the exception ID out of the marshaling buffer.
-	{
-	  CORBA::ULong len;
+        // Pull the exception ID out of the marshaling buffer.
+        {
+          CORBA::ULong len;
 
-	  //
-	  // Read "length" field of string, so "next" points
-	  // right at the null-terminated ID.  Then get the ID.
-	  //
-	  if (this->stream_.get_ulong (len) != CORBA::B_TRUE
-	      || len > this->stream_.remaining)
-	    {
-	      send_error (this->handler_);
-	      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_YES));
-	      return TAO_GIOP_SYSTEM_EXCEPTION;
-	    }
-	  exception_id = (CORBA::String) this->stream_.next;
-	  this->stream_.skip_bytes (len);
-	}
+          //
+          // Read "length" field of string, so "next" points
+          // right at the null-terminated ID.  Then get the ID.
+          //
+          if (this->stream_.get_ulong (len) != CORBA::B_TRUE
+              || len > this->stream_.remaining)
+            {
+              send_error (this->handler_);
+              env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_YES));
+              return TAO_GIOP_SYSTEM_EXCEPTION;
+            }
+          exception_id = (CORBA::String) this->stream_.next;
+          this->stream_.skip_bytes (len);
+        }
 
-	// User and system exceptions differ only in what table of
-	// exception typecodes is searched.
-	CORBA::ExceptionList *xlist;
+        // User and system exceptions differ only in what table of
+        // exception typecodes is searched.
+        CORBA::ExceptionList *xlist;
 
-	if (reply_status == TAO_GIOP_USER_EXCEPTION)
-	  xlist = &exceptions;
-	else
-	  xlist = &__system_exceptions;
+        if (reply_status == TAO_GIOP_USER_EXCEPTION)
+          xlist = &exceptions;
+        else
+          xlist = &__system_exceptions;
 
-	// Find it in the operation description and then use that to get
-	// the typecode.  Use it to unmarshal the exception's value; if
-	// that exception is not allowed by this operation, fail (next).
+        // Find it in the operation description and then use that to get
+        // the typecode.  Use it to unmarshal the exception's value; if
+        // that exception is not allowed by this operation, fail (next).
 
-	u_int i;
-	CORBA::TypeCode_ptr *tcp;
+        u_int i;
+        CORBA::TypeCode_ptr *tcp;
 
-	for (i = 0, tcp = xlist->buffer;
-	     i < xlist->length;
-	     i++, tcp++)
-	  {
-	    const char *xid;
+        for (i = 0, tcp = xlist->buffer;
+             i < xlist->length;
+             i++, tcp++)
+          {
+            const char *xid;
 
-	    xid = (*tcp)->id (env);
-	    if (env.exception () != 0)
-	      {
-		dexc (env, "invoke (), get exception ID");
-		send_error (this->handler_);
-		return TAO_GIOP_SYSTEM_EXCEPTION;
-	      }
+            xid = (*tcp)->id (env);
+            if (env.exception () != 0)
+              {
+                dexc (env, "invoke (), get exception ID");
+                send_error (this->handler_);
+                return TAO_GIOP_SYSTEM_EXCEPTION;
+              }
 
-	    if (ACE_OS::strcmp ((char *)exception_id, (char *)xid) == 0)
-	      {
-		size_t size;
-		CORBA::Exception *exception;
+            if (ACE_OS::strcmp ((char *)exception_id, (char *)xid) == 0)
+              {
+                size_t size;
+                CORBA::Exception *exception;
 
-		size = (*tcp)->size (env);
-		if (env.exception () != 0)
-		  {
-		    dexc (env, "invoke (), get exception size");
-		    send_error (this->handler_);
-		    return TAO_GIOP_SYSTEM_EXCEPTION;
-		  }
+                size = (*tcp)->size (env);
+                if (env.exception () != 0)
+                  {
+                    dexc (env, "invoke (), get exception size");
+                    send_error (this->handler_);
+                    return TAO_GIOP_SYSTEM_EXCEPTION;
+                  }
 
-		// Create the exception, fill in the generic parts
-		// such as vtable, typecode ptr, refcount ... we need
-		// to clean them all up together, in case of errors
-		// unmarshaling.
+                // Create the exception, fill in the generic parts
+                // such as vtable, typecode ptr, refcount ... we need
+                // to clean them all up together, in case of errors
+                // unmarshaling.
 
-		exception = new (new char [size]) CORBA::Exception (*tcp);
+                exception = new (new char [size]) CORBA::Exception (*tcp);
 
-		if (this->stream_.decode (*tcp, exception, 0, env)
-		    != CORBA::TypeCode::TRAVERSE_CONTINUE)
-		  {
-		    delete exception;
-		    ACE_DEBUG ((LM_ERROR, "(%P|%t) invoke, unmarshal %s exception %s\n",
-				(reply_status == TAO_GIOP_USER_EXCEPTION) ? "user" : "system",
+                if (this->stream_.decode (*tcp, exception, 0, env)
+                    != CORBA::TypeCode::TRAVERSE_CONTINUE)
+                  {
+                    delete exception;
+                    ACE_DEBUG ((LM_ERROR, "(%P|%t) invoke, unmarshal %s exception %s\n",
+                                (reply_status == TAO_GIOP_USER_EXCEPTION) ? "user" : "system",
                                exception_id));
-		    send_error (this->handler_);
-		    return TAO_GIOP_SYSTEM_EXCEPTION;
-		  }
-		env.exception (exception);
-		return (TAO_GIOP_ReplyStatusType) reply_status;
-	      }
-	  }
+                    send_error (this->handler_);
+                    return TAO_GIOP_SYSTEM_EXCEPTION;
+                  }
+                env.exception (exception);
+                return (TAO_GIOP_ReplyStatusType) reply_status;
+              }
+          }
 
-	// If we couldn't find this exception's typecode, report it as
-	// an OA error since the skeleton passed an exception that was
-	// not allowed by the operation's IDL definition.  In the case
-	// of a dynamic skeleton it's actually an implementation bug.
-	//
-	// It's known to be _very_ misleading to try reporting this as
-	// any kind of marshaling error (unless minor codes are made
-	// to be _very_ useful) ... folk try to find/fix ORB bugs that
-	// don't exist, not bugs in/near the implementation code.
+        // If we couldn't find this exception's typecode, report it as
+        // an OA error since the skeleton passed an exception that was
+        // not allowed by the operation's IDL definition.  In the case
+        // of a dynamic skeleton it's actually an implementation bug.
+        //
+        // It's known to be _very_ misleading to try reporting this as
+        // any kind of marshaling error (unless minor codes are made
+        // to be _very_ useful) ... folk try to find/fix ORB bugs that
+        // don't exist, not bugs in/near the implementation code.
 
-	if (reply_status == TAO_GIOP_USER_EXCEPTION)
-	  env.exception (new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_YES));
-	else
-	  env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_MAYBE));
-	return TAO_GIOP_SYSTEM_EXCEPTION;
+        if (reply_status == TAO_GIOP_USER_EXCEPTION)
+          env.exception (new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_YES));
+        else
+          env.exception (new CORBA::INTERNAL (CORBA::COMPLETED_MAYBE));
+        return TAO_GIOP_SYSTEM_EXCEPTION;
       }
     // NOTREACHED
 
     case TAO_GIOP_LOCATION_FORWARD:
       {
-	CORBA::Object_ptr obj;
-	IIOP_Object *obj2;
+        CORBA::Object_ptr obj;
+        IIOP_Object *obj2;
 
-	// Unmarshal the object we _should_ be calling.  We know that
-	// one of the facets of this object will be an IIOP invocation
-	// profile.
+        // Unmarshal the object we _should_ be calling.  We know that
+        // one of the facets of this object will be an IIOP invocation
+        // profile.
 
-	if (this->stream_.decode (CORBA::_tc_Object,
+        if (this->stream_.decode (CORBA::_tc_Object,
                                   &obj, 0,
                                   env) != CORBA::TypeCode::TRAVERSE_CONTINUE
-	    || obj->QueryInterface (IID_IIOP_Object,
+            || obj->QueryInterface (IID_IIOP_Object,
                                     (void **) &obj2) != TAO_NOERROR)
-	  {
-	    dexc (env, "invoke, location forward");
-	    send_error (this->handler_);
-	    return TAO_GIOP_SYSTEM_EXCEPTION;
-	  }
-	CORBA::release (obj);
+          {
+            dexc (env, "invoke, location forward");
+            send_error (this->handler_);
+            return TAO_GIOP_SYSTEM_EXCEPTION;
+          }
+        CORBA::release (obj);
 
-	// Make a copy of the IIOP profile in the forwarded objref,
-	// reusing memory where practical.  Then delete the forwarded
-	// objref, retaining only its profile.
-	//
-	// XXX add and use a "forward count", to prevent loss of data
-	// in forwarding chains during concurrent calls -- only a
-	// forward that's a response to the current fwd_profile should
-	// be recorded here. (This is just an optimization, and is not
-	// related to correctness.)
+        // Make a copy of the IIOP profile in the forwarded objref,
+        // reusing memory where practical.  Then delete the forwarded
+        // objref, retaining only its profile.
+        //
+        // XXX add and use a "forward count", to prevent loss of data
+        // in forwarding chains during concurrent calls -- only a
+        // forward that's a response to the current fwd_profile should
+        // be recorded here. (This is just an optimization, and is not
+        // related to correctness.)
 
 #if 0 /* @@ don't delete this, chris */
-	ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, data_->fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION);
+        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, data_->fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION);
 #endif
 
         IIOP::Profile *old = data_->fwd_profile_i (new IIOP::Profile (obj2->profile));
         delete old;
 
-	obj2->Release ();
+        obj2->Release ();
 
-	env.clear ();
+        env.clear ();
 
-	// Make sure a new connection is used next time.
-	this->handler_->close ();
-	this->handler_ = 0; // @@ not sure this is correct!
+        // Make sure a new connection is used next time.
+        this->handler_->close ();
+        this->handler_ = 0; // @@ not sure this is correct!
         // @@ We shouldn't need to do this b/c TAO_GIOP_Invocations
         // get created on a per-call basis.  Must check on this.
       }
@@ -1185,7 +1187,7 @@ TAO_GIOP_RequestHeader::init (CDR &msg,
 CORBA::Boolean
 TAO_GIOP::start_message (TAO_GIOP_MsgType type, CDR &msg)
 {
-  msg.next = msg.buffer;		// for reused streams
+  msg.next = msg.buffer;                // for reused streams
   msg.remaining = msg.length;
 
   if (msg.bytes_remaining () < TAO_GIOP_HEADER_LEN)
