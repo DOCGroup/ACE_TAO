@@ -187,7 +187,6 @@ typedef class CORBA_Request *CORBA_Request_ptr;
 class CORBA_ORB_RequestSeq;
 class CORBA_ORB_RequestSeq_var;
 class CORBA_ORB_RequestSeq_out;
-typedef class CORBA_ORB_RequestSeq *CORBA_ORB_RequestSeq_ptr;
 
 class CORBA_NamedValue;
 class CORBA_NamedValue_var;
@@ -218,7 +217,6 @@ typedef class CORBA_ConstructionPolicy *CORBA_ConstructionPolicy_ptr;
 class CORBA_AnySeq;
 class CORBA_AnySeq_var;
 class CORBA_AnySeq_out;
-typedef class CORBA_AnySeq *CORBA_AnySeq_ptr;
 
 // Forward declarations.
 class CORBA_NameValuePairSeq;
@@ -316,7 +314,6 @@ typedef CORBA_Policy *CORBA_Policy_ptr;
 class CORBA_PolicyList;
 class CORBA_PolicyList_var;
 class CORBA_PolicyList_out;
-typedef CORBA_PolicyList *CORBA_PolicyList_ptr;
 
 class CORBA_DomainManager;
 class CORBA_DomainManager_var;
@@ -737,7 +734,6 @@ TAO_NAMESPACE CORBA
   typedef Environment *Environment_ptr;
 
   typedef CORBA_Exception Exception;
-  typedef Exception *Exception_ptr;
   typedef CORBA_SystemException SystemException;
   typedef CORBA_UserException  UserException;
 
@@ -1418,7 +1414,6 @@ TAO_NAMESPACE CORBA
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_WrongTransaction;
 
   typedef CORBA_AnySeq AnySeq;
-  typedef CORBA_AnySeq *AnySeq_ptr;
   typedef CORBA_AnySeq_var AnySeq_var;
   typedef CORBA_AnySeq_out AnySeq_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_AnySeq;
@@ -1820,7 +1815,6 @@ operator>> (TAO_InputCDR&, TAO_opaque&);
 class TAO_ObjectKey;
 class TAO_ObjectKey_var;
 class TAO_ObjectKey_out;
-typedef TAO_ObjectKey *TAO_ObjectKey_ptr;
 
 #if defined (__ACE_INLINE__)
 # include "tao/corbafwd.i"

@@ -328,6 +328,25 @@ SOURCE=.\Asynch_Invocation.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\BoundsC.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Buffering_Constraint_Policy.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
@@ -3672,6 +3691,10 @@ SOURCE=.\any.i
 # Begin Source File
 
 SOURCE=.\Asynch_Invocation.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\BoundsC.i
 # End Source File
 # Begin Source File
 

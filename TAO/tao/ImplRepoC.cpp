@@ -1024,11 +1024,11 @@ ImplementationRepository::Administration::AlreadyRegistered::operator= (const ::
 }
 
 // narrow
-ImplementationRepository::Administration::AlreadyRegistered_ptr 
+ImplementationRepository::Administration::AlreadyRegistered *
 ImplementationRepository::Administration::AlreadyRegistered::_narrow (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:ImplementationRepository/Administration/AlreadyRegistered:1.0", exc->_id ())) // same type
-    return ACE_dynamic_cast (AlreadyRegistered_ptr, exc);
+    return ACE_dynamic_cast (AlreadyRegistered *, exc);
   else
     return 0;
 }
@@ -1112,11 +1112,11 @@ ImplementationRepository::Administration::CannotActivate::operator= (const ::Imp
 }
 
 // narrow
-ImplementationRepository::Administration::CannotActivate_ptr 
+ImplementationRepository::Administration::CannotActivate *
 ImplementationRepository::Administration::CannotActivate::_narrow (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:ImplementationRepository/Administration/CannotActivate:1.0", exc->_id ())) // same type
-    return ACE_dynamic_cast (CannotActivate_ptr, exc);
+    return ACE_dynamic_cast (CannotActivate *, exc);
   else
     return 0;
 }
@@ -1209,11 +1209,11 @@ ImplementationRepository::Administration::NotFound::operator= (const ::Implement
 }
 
 // narrow
-ImplementationRepository::Administration::NotFound_ptr 
+ImplementationRepository::Administration::NotFound *
 ImplementationRepository::Administration::NotFound::_narrow (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:ImplementationRepository/Administration/NotFound:1.0", exc->_id ())) // same type
-    return ACE_dynamic_cast (NotFound_ptr, exc);
+    return ACE_dynamic_cast (NotFound *, exc);
   else
     return 0;
 }

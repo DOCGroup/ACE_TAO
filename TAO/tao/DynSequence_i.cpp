@@ -136,7 +136,7 @@ TAO_DynSequence_i::length (CORBA::ULong length,
   this->da_members_.size (length);
 }
 
-CORBA_AnySeq_ptr
+CORBA_AnySeq *
 TAO_DynSequence_i::get_elements (CORBA::Environment& ACE_TRY_ENV)
 {
   CORBA::ULong length = this->da_members_.size ();
@@ -144,7 +144,7 @@ TAO_DynSequence_i::get_elements (CORBA::Environment& ACE_TRY_ENV)
   if (length == 0)
     return 0;
 
-  CORBA_AnySeq_ptr elements;
+  CORBA_AnySeq *elements;
   ACE_NEW_THROW_EX (elements,
                     CORBA_AnySeq (length),
                     CORBA::NO_MEMORY ());

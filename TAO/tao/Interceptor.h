@@ -97,7 +97,7 @@ public:
                            CORBA::Object_ptr,
                            const char *,
                            //IOP::ServiceContextList &,
-                           //CORBA::Exception_ptr &,
+                           //CORBA::Exception *&,
                            PortableInterceptor::Cookies &,
                            CORBA::Environment &);
 
@@ -151,7 +151,7 @@ public:
                            CORBA::Object_ptr,
                            const char *,
                            //IOP::ServiceContextList &,
-                           //CORBA::Exception_ptr &,
+                           //CORBA::Exception *&,
                            PortableInterceptor::Cookies &,
                            CORBA::Environment &);
 

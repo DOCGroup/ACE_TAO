@@ -242,7 +242,6 @@ TAO_NAMESPACE  IOP
 #endif /* TAO_NO_COPY_OCTET_SEQUENCE */
 
     };
-    typedef _tao_seq_Octet *_tao_seq_Octet_ptr;
 
     _tao_seq_Octet component_data;
   };
@@ -444,7 +443,6 @@ TAO_NAMESPACE  IOP
 #endif /* TAO_NO_COPY_OCTET_SEQUENCE */
 
     };
-    typedef _tao_seq_Octet *_tao_seq_Octet_ptr;
 
     _tao_seq_Octet context_data;
   };

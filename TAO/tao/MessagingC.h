@@ -1454,7 +1454,6 @@ TAO_NAMESPACE  Messaging
 #endif /* TAO_NO_COPY_OCTET_SEQUENCE */
 
     };
-    typedef _tao_seq_Octet *_tao_seq_Octet_ptr;
     static CORBA::TypeCode_ptr _tc__tao_seq_Octet;
 
     _tao_seq_Octet pvalue;
@@ -1699,7 +1698,6 @@ TAO_NAMESPACE  Messaging
     // *************************************************************
     class _tao_seq_Octet;
     class _tao_seq_Octet_var;
-    typedef _tao_seq_Octet* _tao_seq_Octet_ptr;
 
     class TAO_Export _tao_seq_Octet : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -1721,7 +1719,6 @@ TAO_NAMESPACE  Messaging
       ~_tao_seq_Octet (void); // dtor
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef _tao_seq_Octet_ptr _ptr_type;
     typedef _tao_seq_Octet_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 

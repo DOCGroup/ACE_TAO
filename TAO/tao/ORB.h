@@ -410,7 +410,6 @@ public:
   // which is an argument of send_multiple_requests_*().
   // See Request.{h,i,cpp} for definitions.
   typedef CORBA_ORB_RequestSeq RequestSeq;
-  typedef CORBA_ORB_RequestSeq_ptr RequestSeq_ptr;
   typedef CORBA_ORB_RequestSeq_var RequestSeq_var;
   typedef CORBA_ORB_RequestSeq_out RequestSeq_out;
 

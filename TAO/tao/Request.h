@@ -285,7 +285,6 @@ class CORBA_ORB_RequestSeq : public TAO_Unbounded_Pseudo_Sequence<CORBA_Request,
 public:
 // Helpful with template programming.
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-  typedef CORBA_ORB_RequestSeq_ptr _ptr_type;
   typedef CORBA_ORB_RequestSeq_var _var_type;
 #endif /* __GNUC__ */
 
