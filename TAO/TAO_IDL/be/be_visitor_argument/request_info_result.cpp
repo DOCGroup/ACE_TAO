@@ -79,11 +79,11 @@ int be_visitor_args_request_info_result::visit_argument (be_argument *node)
       }
       
     case AST_Decl::NT_string:
-      *os << "from_string (this->result_);" ;
+      *os << "CORBA::Any::_string (this->result_);" ;
       break;
       
     case AST_Decl::NT_wstring:
-      *os << "from_wstring (this->result_);" ;
+      *os << "CORBA::Any::_wstring (this->result_);" ;
       break;
       
    default:
@@ -105,16 +105,16 @@ be_visitor_args_request_info_result::visit_predefined_type (be_predefined_type *
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_boolean:
-      *os << "from_boolean (this->";
+      *os << "CORBA::Any::_boolean (this->";
       break;
     case AST_PredefinedType::PT_char:
-      *os << "from_char (this->";
+      *os << "CORBA::Any::_char (this->";
       break;
     case AST_PredefinedType::PT_wchar:
-      *os << "from_wchar (this->";
+      *os << "CORBA::Any::_wchar (this->";
       break;
     case AST_PredefinedType::PT_octet:
-      *os << "from_octet (this->";
+      *os << "CORBA::Any::_octet (this->";
       break;
             
     default:
