@@ -99,7 +99,6 @@ ACE_RMCast_Fragment_Tester::svc (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Mismatched big_blob data\n")),
                           -1);
-        return -1;
       }
 
   }
@@ -142,7 +141,6 @@ ACE_RMCast_Fragment_Tester::svc (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Mismatched small chain data\n")),
                           -1);
-        return -1;
       }
 
   }
@@ -191,7 +189,6 @@ ACE_RMCast_Fragment_Tester::svc (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Mismatched small chain data\n")),
                           -1);
-        return -1;
       }
 
   }
