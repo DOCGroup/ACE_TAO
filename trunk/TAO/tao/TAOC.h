@@ -11,6 +11,7 @@
 #define _TAO_IDL_TAOC_H_
 
 #include "tao/orbconf.h"
+#include "tao/varout.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -20,11 +21,6 @@
 
 #include "tao/PolicyC.h"
 #include "tao/TimeBaseC.h"
-
-// This file inclusion should be moved outside the
-// TAO_HAS_CORBA_MESSAGING scope once more classes have been added to
-// the TAO module.
-#include "tao/varout.h"
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
@@ -400,6 +396,18 @@ class TAO_Export BufferingConstraintPolicy: public virtual CORBA::Policy
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
+  // It seems easier to have copies of these here than to use
+  // #if defined (TAO_HAS_CORBA_MESSAGING) everywhere or to
+  // define a new class TAO_GIOP_Reliable_Oneway_Invocation
+  typedef CORBA::Short SyncScope;
+
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_NONE;
+
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_WITH_TRANSPORT;
+
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_WITH_SERVER;
+
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_WITH_TARGET;
 }
 TAO_NAMESPACE_CLOSE // module TAO
 

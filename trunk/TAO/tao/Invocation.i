@@ -41,20 +41,16 @@ TAO_GIOP_Twoway_Invocation::inp_stream (void)
 
 // ****************************************************************
 
-ACE_INLINE
-TAO_GIOP_Oneway_Invocation::
-TAO_GIOP_Oneway_Invocation (TAO_Stub *stub,
-                            const char *operation,
-                            TAO_ORB_Core *orb_core)
-  : TAO_GIOP_Invocation (stub, operation, orb_core)
+ACE_INLINE TAO::SyncScope
+TAO_GIOP_Oneway_Invocation::sync_scope (void)
 {
+  return this->sync_scope_;
 }
 
-ACE_INLINE int
-TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+ACE_INLINE TAO_InputCDR &
+TAO_GIOP_Oneway_Invocation::inp_stream (void)
 {
-  return TAO_GIOP_Invocation::invoke (0, ACE_TRY_ENV);
+  return this->rd_.reply_cdr ();
 }
 
 // *********************************************************************
@@ -73,3 +69,4 @@ TAO_GIOP_Locate_Request_Invocation::inp_stream (void)
 {
   return this->rd_.reply_cdr ();
 }
+

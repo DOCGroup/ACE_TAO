@@ -198,14 +198,20 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       << "ACE_CHECK;" << be_uidt_nl << "}\n" << be_uidt_nl
       << "ACE_TRY" << be_idt_nl
       << "{" << be_idt_nl
-      << "_tao_vfr.preinvoke (_tao_server_request.request_id (), ";
+      << "_tao_vfr.preinvoke (" << be_idt << be_idt_nl
+      << "_tao_server_request.request_id ()," << be_nl;
+
   if (node->flags () == AST_Operation::OP_oneway)
     *os << "0";
   else
     *os << "1";
-  *os << ", _tao_objref.in (), " << this->compute_operation_name (node)
-      << ", _tao_server_request.service_info (), _tao_interceptor_args.inout (), "
-      << "_tao_cookies, ACE_TRY_ENV);" << be_nl
+
+  *os << "," << be_nl << "_tao_objref.in ()," << be_nl
+      << this->compute_operation_name (node) << ","
+      << be_nl << "_tao_server_request.service_info ()," << be_nl
+      << "_tao_interceptor_args.inout ()," << be_nl
+      << "_tao_cookies," << be_nl << "ACE_TRY_ENV" << be_uidt_nl
+      << ");" << be_uidt_nl
       << "TAO_INTERCEPTOR_CHECK;\n";
   if (node->flags () == AST_Operation::OP_oneway
       && !this->has_param_type (node, AST_Argument::dir_IN))
@@ -264,26 +270,36 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   // do postinvoke, and check for exception.
   *os << "#if defined (TAO_HAS_INTERCEPTORS)" << be_nl
-      << "_tao_vfr.postinvoke (_tao_server_request.request_id (), ";
+      << "_tao_vfr.postinvoke (" << be_idt << be_idt_nl
+      << "_tao_server_request.request_id ()," << be_nl;
+
   if (node->flags () == AST_Operation::OP_oneway)
     *os << "0";
   else
     *os << "1";
-  *os << ", _tao_objref.in (), " << this->compute_operation_name (node)
-      << ", _tao_server_request.service_info (), _tao_interceptor_args.inout (), "
-      << "_tao_cookies, ACE_TRY_ENV);" << be_nl
+
+  *os << "," << be_nl << "_tao_objref.in ()," << be_nl
+      << this->compute_operation_name (node) << ","
+      << be_nl << "_tao_server_request.service_info ()," << be_nl
+      << "_tao_interceptor_args.inout ()," << be_nl
+      << "_tao_cookies," << be_nl << "ACE_TRY_ENV" << be_uidt_nl
+      << ");" << be_uidt_nl
       << "TAO_INTERCEPTOR_CHECK;" << be_uidt_nl
       << "}" << be_uidt_nl
       << "ACE_CATCHANY" << be_idt_nl
       << "{" << be_idt_nl
-      << "_tao_vfr.exception_occurred (_tao_server_request.request_id (), ";
+      << "_tao_vfr.exception_occurred (" << be_idt << be_idt_nl
+      << "_tao_server_request.request_id ()," << be_nl;
+
   if (node->flags () == AST_Operation::OP_oneway)
     *os << "0";
   else
     *os << "1";
-  *os << ", _tao_objref.in (), " << this->compute_operation_name (node)
-      << ", "// _tao_server_request.service_info (), "
-      << "_tao_cookies, ACE_TRY_ENV);" << be_nl
+
+  *os << "," << be_nl << "_tao_objref.in ()," << be_nl
+      << this->compute_operation_name (node) << "," << be_nl
+      << "_tao_cookies," << be_nl << "ACE_TRY_ENV" << be_uidt_nl
+      << ");" << be_uidt_nl
       << "ACE_RETHROW;" << be_uidt_nl
       << "}" << be_uidt_nl
       << "ACE_ENDTRY;" << be_nl
@@ -308,8 +324,14 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   if (node->flags () == AST_Operation::OP_oneway)
     {
       // we are done. Nothing else to do, except closing the function body.
-      os->decr_indent ();
-      *os << "}\n\n";
+      os->indent ();
+      *os << "if (_tao_server_request.response_expected ()" << be_idt << be_idt_nl
+          << "&& !_tao_server_request.sync_with_server ())" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "_tao_server_request.init_reply (ACE_TRY_ENV);" << be_nl
+          << "ACE_CHECK;" << be_uidt_nl
+          << "}" << be_uidt << be_uidt_nl
+          << "}\n\n";
       return 0;
     }
 
@@ -812,7 +834,8 @@ be_compiled_visitor_operation_ss::gen_marshal_params (be_operation *node,
   // We will be here only if we are 2way
   // first initialize a reply message
   os->indent ();
-  *os << "_tao_server_request.init_reply (ACE_TRY_ENV);\n";
+  *os << "_tao_server_request.init_reply (ACE_TRY_ENV);" << be_nl
+      << "ACE_CHECK;\n";
 
   // We still need the following check because we maybe 2way and yet have no
   // parameters and a void return type
