@@ -2998,14 +2998,16 @@ ACE::count_interfaces (ACE_HANDLE handle,
                        size_t &how_many)
 {
 #if defined (sparc) && defined (SIOCGIFNUM)
+  int tmp_how_many; // For 64 bit Solaris
   if (ACE_OS::ioctl (handle,
                      SIOCGIFNUM,
-                     (caddr_t) &how_many) == -1)
+                     (caddr_t) &tmp_how_many) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("ACE::get_ip_interfaces:")
                        ASYS_TEXT ("ioctl - SIOCGIFNUM failed")),
                       -1);
-   return 0;
+  how_many = (size_t) tmp_how_many;
+  return 0;
 #elif defined (__unix) || defined (__Lynx__) || defined (_AIX)
    // Note: DEC CXX doesn't define "unix".  BSD compatible OS: HP UX,
    // AIX, SunOS 4.x perform some ioctls to retrieve ifconf list of
