@@ -1079,7 +1079,7 @@ ACE_Thread_Manager::wait_grp (int grp_id)
 	 iter.advance ())
       // If threads are created as THR_DETACHED or THR_DAEMON, we
       // can't help much.
-      if (iter.next ()->task_ == this->task () &&
+      if (iter.next ()->grp_id_ == grp_id &&
 	  (ACE_BIT_DISABLED (iter.next ()->flags_, (THR_DETACHED | THR_DAEMON))
 	   || ACE_BIT_ENABLED (iter.next ()->flags_, THR_JOINABLE)))
 	copy_table[copy_count++] = *iter.next ();
