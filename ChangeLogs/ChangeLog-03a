@@ -1,3 +1,12 @@
+Thu Jun 28 07:08:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/TP_Reactor.cpp: Added a sanity check. The check involves
+	  invalidating the handle when the handler is removed from the
+	  repository in notify_handle (). We also check for an invalid
+	  handle before we go ahead and resume the handle. Thanks to
+	  Alexander Libman <alexander.libman@baltimore.com> for suggesting
+	  this check.
+
 Wed Jun 27 14:07:43 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
 	* ace/CDR_Stream.{cpp,h}:
