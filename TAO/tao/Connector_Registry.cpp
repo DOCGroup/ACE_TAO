@@ -157,14 +157,19 @@ TAO_Connector_Registry::preprocess_preconnects (TAO_ORB_Core *orb_core,
   //   uiop:///tmp/soup
   //   iiop://1.1@mopbucket
   //
-  // will be merged to create the following endpoints:
+  // will be merged to create the following preconnects:
   //
   //   uiop://1.1@/tmp/foobar,/tmp/chicken,/tmp/soup
   //   iiop://1.0@localhost,1.1@mopbucket
   //
   // The four elements in the preconnect set will be squeezed into two 
   // elements, in this case. This is done to simplify the preconnect
-  // parsing code in each protocol specific connector.
+  // parsing code in each protocol specific connector and to make sure 
+  // that all preconnections are established during the first
+  // attempt.  Otherwise, secondary attempts to establish
+  // preconnections will not be successful since all preconnections
+  // will have been idled after during the first attempt, hence the
+  // need to pass all preconnects during the first attempt.
 
   const size_t num_protocols =
     orb_core->protocol_factories ()->size ();
@@ -201,13 +206,11 @@ TAO_Connector_Registry::preprocess_preconnects (TAO_ORB_Core *orb_core,
 
           ACE_CString protocol_name = i->substring (0, slot);
 
-          if ((*factory)->factory ()->match_prefix (protocol_name.c_str ()))
+          if (slot != ACE_CString::npos &&
+              slot != (i->length () - 3) &&
+              (*factory)->factory ()->match_prefix (protocol_name.c_str ()))
             {
-              if (slot != ACE_CString::npos)
-                (*tmp) += i->substring (slot + 3); // +3 due to "://"
-              else
-                (*tmp) += i->substring (3);
-
+              (*tmp) += i->substring (slot + 3); // +3 due to "://"
               (*tmp) += ACE_CString (',');
             }
         }
@@ -217,16 +220,27 @@ TAO_Connector_Registry::preprocess_preconnects (TAO_ORB_Core *orb_core,
         (*tmp) = tmp->substring (0, tmp->length () - 1);
     }
 
+  // Empty the preconnect container.
   preconnects.reset ();
 
   // Now enqueue the re-formed preconnect strings.
   for (size_t n = 0; n < num_protocols; ++n)
     {
-      if (preconnects.enqueue_tail (processed[n]) != 0)
+      // If no preconnects for the given protocol exist then don't
+      // enqueue the empty preconnect list for that protocol.
+      // Such an empty preconnect string should be of the form
+      //
+      //     protocol://
+      //
+      // so check for the forward slash '/' at the end of the string.
+      if (processed[n][processed[n].length () - 1] != '/')
         {
-          delete [] processed;
+          if (preconnects.enqueue_tail (processed[n]) != 0)
+            {
+              delete [] processed;
 
-          return -1;
+              return -1;
+            }
         }
     }
 
