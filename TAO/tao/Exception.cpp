@@ -88,8 +88,6 @@ CORBA_Exception::~CORBA_Exception (void)
 {
   assert (this->refcount_ == 0);
   assert (this->type_ != 0);
-
-  assert (1 == 2);
 }
 
 CORBA_Exception &
