@@ -1,3 +1,11 @@
+Thu Feb 13 17:53:44 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/IIOP_Endpoint.h (TAO_IIOP_Endpoint): 
+	* tao/IIOP_Profile.h:
+	* tao/Strategies/DIOP_Endpoint.h:
+	* tao/Strategies/SHMIOP_Endpoint.h: Cosmetic changes like removing
+	  ORB.h  inclusion etc.
+
 Wed Feb 12 18:15:24 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* Merged in changes from the main trunk.
