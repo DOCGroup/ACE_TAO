@@ -14,6 +14,9 @@
  *          -Wb,pre_include="ace/pre.h"
  *          -Wb,post_include="ace/post.h"
  *          UShortSeq.pidl
+ *
+ * Patches for changes to the generated code are available in the
+ * `diffs' directory.
  */
 // ================================================================
 
