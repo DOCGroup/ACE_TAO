@@ -1,4 +1,5 @@
 %{
+// $Id$
 #define ACE_BUILD_DLL
 #include "ace/ARGV.h"
 #include "ace/Svc_Conf.h"
@@ -8,9 +9,9 @@
 static ACE_Module_Type *get_module (ACE_Static_Node *str_rec, ACE_Static_Node *svc_type);
 static ACE_Module_Type *get_module (ACE_Static_Node *str_rec, const char *svc_name);
 
-#define YYDEBUG_LEXER_TEXT (yytext[yyleng] = '\0', yytext) 
+#define YYDEBUG_LEXER_TEXT (yytext[yyleng] = '\0', yytext)
 // Force the pretty debugging code to compile.
-#define YYDEBUG 1 
+#define YYDEBUG 1
 
 // Efficient memory allocation technique.
 ACE_Obstack *ace_obstack;
@@ -23,10 +24,10 @@ ACE_Obstack *ace_obstack;
 
 %start svc_config_entries
 
-%type <ident_> ACE_IDENT ACE_STRING ACE_PATHNAME pathname parameters_opt 
+%type <ident_> ACE_IDENT ACE_STRING ACE_PATHNAME pathname parameters_opt
 %type <type_> type status
 %type <parse_node_> dynamic static suspend resume remove module_list stream
-%type <parse_node_> stream_modules module svc_config_entry 
+%type <parse_node_> stream_modules module svc_config_entry
 %type <static_node_> stream_ops
 %type <svc_record_> svc_location
 %type <location_node_> svc_initializer
@@ -34,69 +35,69 @@ ACE_Obstack *ace_obstack;
 %%
 
 svc_config_entries
-  : svc_config_entries svc_config_entry 
+  : svc_config_entries svc_config_entry
     {
       if ($2 != 0)
       {
-	$2->apply (); delete $2;
+        $2->apply (); delete $2;
       }
-      ace_obstack->release (); 
+      ace_obstack->release ();
     }
-  | svc_config_entries error 
-    { 
-      ace_obstack->release (); 
+  | svc_config_entries error
+    {
+      ace_obstack->release ();
     }
   | /* EMPTY */
   ;
 
-svc_config_entry 
-  : dynamic 
-  | static  
-  | suspend 
-  | resume  
-  | remove  
+svc_config_entry
+  : dynamic
+  | static
+  | suspend
+  | resume
+  | remove
   | stream
   ;
 
-dynamic 
+dynamic
   : ACE_DYNAMIC svc_location parameters_opt
-    { 
+    {
       if ($2 != 0)
-	$$ = new ACE_Dynamic_Node ($2, $3);
+        $$ = new ACE_Dynamic_Node ($2, $3);
       else
-	$$ = 0;
+        $$ = 0;
     }
   ;
 
-static 
-  : ACE_STATIC ACE_IDENT parameters_opt 
-    { 
+static
+  : ACE_STATIC ACE_IDENT parameters_opt
+    {
       $$ = new ACE_Static_Node ($2, $3);
     }
   ;
 
 suspend
-  : ACE_SUSPEND ACE_IDENT 
-    { 
+  : ACE_SUSPEND ACE_IDENT
+    {
       $$ = new ACE_Suspend_Node ($2);
     }
   ;
 
-resume 
-  : ACE_RESUME ACE_IDENT 
-    { 
+resume
+  : ACE_RESUME ACE_IDENT
+    {
       $$ = new ACE_Resume_Node ($2);
     }
   ;
 
-remove 
-  : ACE_REMOVE ACE_IDENT 
-    { 
+remove
+  : ACE_REMOVE ACE_IDENT
+    {
       $$ = new ACE_Remove_Node ($2);
     }
   ;
 
-stream 
+stream
   : ACE_USTREAM stream_ops stream_modules
     {
       $$ = new ACE_Stream_Node ($2, $3);
@@ -110,18 +111,18 @@ stream
 stream_ops
   : dynamic
     {
-    }	
+    }
   | static
     {
-    }	
+    }
   ;
 
 stream_modules
-  : ACE_LBRACE 
-    { 
+  : ACE_LBRACE
+    {
       // Initialize left context...
-      $<static_node_>$ = $<static_node_>0; 
-    } 
+      $<static_node_>$ = $<static_node_>0;
+    }
    module_list ACE_RBRACE
     {
       $$ = $3;
@@ -129,20 +130,20 @@ stream_modules
   | /* EMPTY */ { $$ = 0; }
   ;
 
-module_list 
-  : module_list module 
-    { 
+module_list
+  : module_list module
+    {
       if ($2 != 0)
         {
           $2->link ($1);
-          $$ = $2; 
+          $$ = $2;
         }
     }
   | /* EMPTY */ { $$ = 0; }
   ;
 
-module 
-  : dynamic 
+module
+  : dynamic
     {
       if ($<static_node_>1 != 0)
         {
@@ -158,57 +159,57 @@ module
             }
         }
     }
-  | static  
-    { 
+  | static
+    {
       ACE_Module_Type *mt = get_module ($<static_node_>-1, $<static_node_>1->name ());
 
       if (((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->push (mt) == -1)
-	yyerrno++;
+        yyerrno++;
     }
-  | suspend 
-    { 
-      ACE_Module_Type *mt = get_module ($<static_node_>-1, $<static_node_>1->name ());
-      if (mt != 0)
-	mt->suspend ();
-    }
-  | resume  
+  | suspend
     {
       ACE_Module_Type *mt = get_module ($<static_node_>-1, $<static_node_>1->name ());
       if (mt != 0)
-	mt->resume ();
+        mt->suspend ();
     }
-  | remove  
-    { 
+  | resume
+    {
       ACE_Module_Type *mt = get_module ($<static_node_>-1, $<static_node_>1->name ());
-      if (mt != 0 
-	  && ((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->remove (mt) == -1)
-	{
-	  ACE_ERROR ((LM_ERROR, "cannot remove Module_Type %s from STREAM_Type %s\n",
-		     $<static_node_>1->name (), ($<static_node_>-1)->name ()));
-	  yyerrno++;
-	}
+      if (mt != 0)
+        mt->resume ();
+    }
+  | remove
+    {
+      ACE_Module_Type *mt = get_module ($<static_node_>-1, $<static_node_>1->name ());
+      if (mt != 0
+          && ((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->remove (mt) == -1)
+        {
+          ACE_ERROR ((LM_ERROR, "cannot remove Module_Type %s from STREAM_Type %s\n",
+                     $<static_node_>1->name (), ($<static_node_>-1)->name ()));
+          yyerrno++;
+        }
     }
   ;
 
 svc_location
   : ACE_IDENT type svc_initializer status
     {
-      u_int flags 
-	= ACE_Service_Type::DELETE_THIS 
-	| ($3->dispose () == 0 ? 0 : ACE_Service_Type::DELETE_OBJ);
+      u_int flags
+        = ACE_Service_Type::DELETE_THIS
+        | ($3->dispose () == 0 ? 0 : ACE_Service_Type::DELETE_OBJ);
       void *sym = $3->symbol ();
 
       if (sym != 0)
-	{
-	  ACE_Service_Type_Impl *stp = ace_create_service_type ($1, $2, sym, flags);
-	  $$ = new ACE_Service_Type ($1, stp, $3->handle (), $4);
-	}
+        {
+          ACE_Service_Type_Impl *stp = ace_create_service_type ($1, $2, sym, flags);
+          $$ = new ACE_Service_Type ($1, stp, $3->handle (), $4);
+        }
       else
-	{
-	  ++yyerrno;
-	  delete $3;
-	  $$ = 0;
-	}
+        {
+          ++yyerrno;
+          $$ = 0;
+        }
+      delete $3;
     }
   ;
 
@@ -216,15 +217,15 @@ status
   : ACE_ACTIVE
     {
       $$ = 1;
-    }  
+    }
   | ACE_INACTIVE
     {
       $$ = 0;
-    }  
+    }
   | /* EMPTY */
     {
       $$ = 1;
-    }  
+    }
   ;
 
 svc_initializer
@@ -246,20 +247,20 @@ type
   : ACE_MODULE_T ACE_STAR
     {
       $$ = ACE_MODULE_T;
-    }    
+    }
   | ACE_SVC_OBJ_T ACE_STAR
     {
       $$ = ACE_SVC_OBJ_T;
-    }    
+    }
   | ACE_STREAM_T ACE_STAR
     {
       $$ = ACE_STREAM_T;
-    }    
+    }
   ;
 
 parameters_opt
   : ACE_STRING
-  | /* EMPTY */ { $$ = 0; } 
+  | /* EMPTY */ { $$ = 0; }
   ;
 
 pathname
@@ -274,8 +275,8 @@ pathname
 void
 yyerror (char *s)
 {
-  ACE_ERROR ((LM_ERROR, "[error %d] on line %d: %s\n", 
-	      ++yyerrno, yylineno, s));
+  ACE_ERROR ((LM_ERROR, "[error %d] on line %d: %s\n",
+              ++yyerrno, yylineno, s));
 }
 
 // Note that SRC_REC represents left context, which is the STREAM *
@@ -292,7 +293,7 @@ get_module (ACE_Static_Node *str_rec, const char *svc_name)
   if (sr == 0 || st == 0 || mt == 0)
     {
       ACE_ERROR ((LM_ERROR, "cannot locate Module_Type %s in STREAM_Type %s\n",
-		 svc_name, str_rec->name ()));
+                 svc_name, str_rec->name ()));
       yyerrno++;
     }
 
@@ -312,7 +313,7 @@ get_module (ACE_Static_Node *str_rec, ACE_Static_Node *svc_type)
   if (sr == 0 || st == 0 || mt == 0)
     {
       ACE_ERROR ((LM_ERROR, "cannot locate Module_Type %s or STREAM_Type %s\n",
-		  svc_type->name (), str_rec->name ()));
+                  svc_type->name (), str_rec->name ()));
       yyerrno++;
     }
 
@@ -324,8 +325,8 @@ get_module (ACE_Static_Node *str_rec, ACE_Static_Node *svc_type)
   if (ACE_OS::strcmp (mp->name (), module_type_name) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "warning: assigning Module_Type name %s to Module %s since names differ\n",
-		  module_type_name, mp->name ()));
+                  "warning: assigning Module_Type name %s to Module %s since names differ\n",
+                  module_type_name, mp->name ()));
       mp->name (module_type_name);
     }
 
@@ -333,10 +334,10 @@ get_module (ACE_Static_Node *str_rec, ACE_Static_Node *svc_type)
 }
 
 ACE_Service_Type_Impl *
-ace_create_service_type (const char *name, 
-			 int type, 
-			 void *symbol, 
-			 u_int flags)
+ace_create_service_type (const char *name,
+                         int type,
+                         void *symbol,
+                         u_int flags)
 {
   ACE_Service_Type_Impl *stp = 0;
 
@@ -348,18 +349,18 @@ ace_create_service_type (const char *name,
     {
     case ACE_SVC_OBJ_T:
       ACE_NEW_RETURN (stp,
-		      ACE_Service_Object_Type ((ACE_Service_Object *) symbol, name, flags), 
-		      0);
+                      ACE_Service_Object_Type ((ACE_Service_Object *) symbol, name, flags),
+                      0);
       break;
     case ACE_MODULE_T:
       ACE_NEW_RETURN (stp,
-		      ACE_Module_Type (symbol, name, flags), 
-		      0);
+                      ACE_Module_Type (symbol, name, flags),
+                      0);
       break;
     case ACE_STREAM_T:
       ACE_NEW_RETURN (stp,
-		      ACE_Stream_Type (symbol, name, flags), 
-		      0);
+                      ACE_Stream_Type (symbol, name, flags),
+                      0);
       break;
     default:
       ACE_ERROR ((LM_ERROR, "unknown case\n"));
@@ -376,11 +377,11 @@ int yylineno = 1;
 // Name given on the command-line to envoke the program.
 char *program_name;
 
-// Main driver program. 
+// Main driver program.
 
-int 
+int
 main (int argc, char *argv[])
-{ 
+{
   yyin = stdin;
   ace_obstack = new ACE_Obstack;
 
