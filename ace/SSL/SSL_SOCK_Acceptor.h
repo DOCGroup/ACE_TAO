@@ -17,7 +17,7 @@
 #ifndef ACE_SSL_SOCK_ACCEPTOR_H
 #define ACE_SSL_SOCK_ACCEPTOR_H
 
-#include "ace/SSL_SOCK_Stream.h"
+#include "SSL_SOCK_Stream.h"
 #include "ace/SOCK_Acceptor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -149,7 +149,7 @@ private:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SSL_SOCK_Acceptor.i"
+#include "SSL_SOCK_Acceptor.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #endif /* ACE_SSL_SOCK_ACCEPTOR_H */

@@ -4,7 +4,7 @@
 #define ACE_BUILD_DLL
 
 #include "SSL_SOCK_Stream.h"
-#include "Handle_Set.h"
+#include "ace/Handle_Set.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "SSL_SOCK_Stream.i"
