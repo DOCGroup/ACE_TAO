@@ -1,3 +1,14 @@
+Sun Dec 29 11:29:20 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* examples/AMH/Sink_Server/AMH_Sink_Server.dsw:
+	* examples/AMH/Sink_Server/client.dsp:
+	* examples/AMH/Sink_Server/st_server.dsp:
+	* examples/AMH/Sink_Server/mt_server.dsp:
+	* tests/AMH_Exceptions/AMH_Exceptions.dsw:
+	* tests/AMH_Exceptions/server.dsp:
+	* tests/AMH_Exceptions/client.dsp: Added the above files. No need
+	  to explain why they need to be added ;).
+
 Sun Dec 29 08:44:06 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* TAO_IDL/ast/ast_array.cpp:
