@@ -1,3 +1,17 @@
+Tue Oct  7 02:51:55 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* tests/TSS_Test.cpp (main): 
+	* tests/Task_Test.cpp (main): 
+	* tests/Barrier_Test.cpp (main): Removed thread_handles[] since we don't
+	  need to join the thread explicitly anymore.
+
+	* ace/Thread_Manager.{h,cpp}:  Added an ACE_Unbounded_Quque to
+	  collect terminated threads so that we can later join the threads
+ 	  automatically by issuing a ACE_Thread_Manager::wait().  Some
+	  typos are also fixed.  Next step will be to replace current
+	  thr_table_ with a hash table and store an index to this table
+	  in TSS.
+
 Mon Oct  6 22:16:45 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Thread_Manager: Added a new task() method to
