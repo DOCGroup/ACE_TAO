@@ -1,5 +1,6 @@
 //$Id$
 #include "Current.h"
+#include "ORB_Core.h"
 
 void
 TAO_RTScheduler_Current::begin_scheduling_segment(const char * name,
@@ -142,12 +143,22 @@ TAO_RTScheduler_Current::current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_DE
 TAO_RTScheduler_Current_i*
 TAO_RTScheduler_Current::implementation (void)
 {
-  return 0;
+  return ACE_static_cast (TAO_RTScheduler_Current_i *,
+                          TAO_TSS_RESOURCES::instance ()->rtscheduler_current_impl_);
 }
 
-void
-TAO_RTScheduler_Current::implementation (TAO_RTScheduler_Current_i*)
+
+TAO_RTScheduler_Current_i*
+TAO_RTScheduler_Current::implementation (TAO_RTScheduler_Current_i* new_current)
 {
+  TAO_TSS_Resources *tss =
+    TAO_TSS_RESOURCES::instance ();
+  
+  TAO_RTScheduler_Current_i *old =
+    ACE_static_cast (TAO_RTScheduler_Current_i *,
+                     tss->rtscheduler_current_impl_);
+  tss->rtscheduler_current_impl_ = new_current;
+  return old;
 }
 
 void

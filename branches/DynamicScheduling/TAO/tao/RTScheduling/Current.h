@@ -76,7 +76,7 @@ public RTScheduling::Current,
 
   TAO_RTScheduler_Current_i* implementation (void);
 
-  void implementation (TAO_RTScheduler_Current_i*);
+  TAO_RTScheduler_Current_i* implementation (TAO_RTScheduler_Current_i*);
   
 };
 
