@@ -9,11 +9,11 @@
 //      Reactor_Notify_Test.cpp
 //
 // = DESCRIPTION
-//      This is a test that illustrates how the <ACE_Reactor>'s <notify>
-//      method works under various <max_notify_iterations> settings.
-//      It also tests that the <disable_notify_pipe> option works
-//      correctly.  Moreover, if the $ACE_ROOT/ace/config.h file has
-//      the ACE_HAS_REACTOR_NOTIFICATION_QUEUE option enabled this
+//      This is a test that illustrates how the <ACE_Reactor>'s
+//      <notify> method works under various <max_notify_iterations>
+//      settings.  It also tests that the <disable_notify_pipe> option
+//      works correctly.  Moreover, if the $ACE_ROOT/ace/config.h file
+//      has the ACE_HAS_REACTOR_NOTIFICATION_QUEUE option enabled this
 //      test will also exercise this feature.
 //
 // = AUTHOR
@@ -352,17 +352,19 @@ run_test (int disable_notify_pipe,
 
 #endif /* ACE_HAS_THREADS */
 
-// run_notify_purge_test tests the reactor's purge_pending_notifications
-// function. It does 2 notifications, and explicitly cancels one, and
-// deletes the other's event handler, which should cause it to be cancelled
-// as well.
 class Purged_Notify : public ACE_Event_Handler
 {
-  virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE)
+  // = TITLE
+  //   <run_notify_purge_test> tests the reactor's
+  //   purge_pending_notifications function. It does 2 notifications,
+  //   and explicitly cancels one, and deletes the other's event
+  //   handler, which should cause it to be cancelled as well.
+
+  virtual int handle_exception (ACE_HANDLE = ACE_INVALID_HANDLE)
   {
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Got a notify that should have been purged!\n")));
-    return 0;
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Got a notify that should have been purged!\n")),
+                      0);
   }
 };
 
@@ -370,20 +372,26 @@ static int
 run_notify_purge_test (void)
 {
   ACE_Reactor *r = ACE_Reactor::instance ();
-  Purged_Notify n1;
-  Purged_Notify *n2 = new Purged_Notify;
-  r->notify (&n1);
-  r->notify (n2);
-  int status = r->purge_pending_notifications (&n1);
-  if (status == -1 && errno == ENOTSUP)
-    return 0;         // Select Reactor w/o ACE_HAS_REACTOR_NOTIFICATION_QUEUE
-  if (status != 1)
-    {
+  {
+    Purged_Notify n1;
+    Purged_Notify *n2;
+
+    ACE_NEW_RETURN (n2, Purged_Notify, -1);
+    auto_ptr<Purged_Notify> ap (n2);
+
+    r->notify (&n1);
+    r->notify (n2);
+
+    int status = r->purge_pending_notifications (&n1);
+    if (status == -1 && errno == ENOTSUP)
+      return 0;         // Select Reactor w/o ACE_HAS_REACTOR_NOTIFICATION_QUEUE
+    if (status != 1)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Purged %d notifies; expected 1\n"),
                   status));
-    }
-  delete n2;   // Should cause n2's notify to be cancelled
+    // <ap> destructor should cause n2's notify to be cancelled.
+  }
+  
   ACE_Time_Value t (1);
   status = r->handle_events (t);  // Should be nothing to do, and time out
   return status < 0 ? 1 : 0;     // Return 0 for all ok, else error
@@ -435,13 +443,15 @@ main (int, ACE_TCHAR *[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class auto_ptr<Purged_Notify>;
 template class auto_ptr<ACE_Reactor>;
 template class auto_ptr<ACE_Select_Reactor>;
 template class ACE_Auto_Basic_Ptr<ACE_Reactor>;
 template class ACE_Auto_Basic_Ptr<ACE_Select_Reactor>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate auto_ptr <ACE_Reactor>
-#pragma instantiate auto_ptr <ACE_Select_Reactor>
+#pragma instantiate auto_ptr<Purged_Notify>
+#pragma instantiate auto_ptr<ACE_Reactor>
+#pragma instantiate auto_ptr<ACE_Select_Reactor>
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Reactor>
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Select_Reactor>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
