@@ -10,6 +10,8 @@
 #include "tao/Muxed_TMS.h"
 #include "tao/ORB_Constants.h"
 #include "tao/debug.h"
+#include "tao/ORB_Core.h"
+#include "tao/Thread_Lane_Resources.h"
 
 #if !defined (__ACE_INLINE__)
 #include "Asynch_Invocation_Adapter.inl"
@@ -63,18 +65,40 @@ namespace TAO
     // dispatcher.
     if (!CORBA::is_nil (reply_handler_ptr))
       {
-        // New reply dispatcher on the heap, because
+        // New reply dispatcher on the heap or allocator, because
         // we will go out of scope and hand over the reply dispatcher
         // to the ORB.
 
         TAO_Asynch_Reply_Dispatcher *rd = 0;
 
-        // @@ Need to use memory pool here..
-        ACE_NEW_THROW_EX (rd,
-                          TAO_Asynch_Reply_Dispatcher (reply_handler_skel,
-                                                       reply_handler_ptr,
-                                                       stub->orb_core ()),
-                          CORBA::NO_MEMORY ());
+        // Get the allocator we could use.
+        ACE_Allocator* ami_allocator =
+          stub->orb_core ()->lane_resources().ami_response_handler_allocator();
+
+        // If we have an allocator, use it, else use the heap.
+        if (ami_allocator)
+          {
+            ACE_NEW_MALLOC (rd,
+                            ACE_static_cast (TAO_Asynch_Reply_Dispatcher *,
+                              ami_allocator->malloc (sizeof (TAO_Asynch_Reply_Dispatcher))),
+                            TAO_Asynch_Reply_Dispatcher (reply_handler_skel,
+                                                         reply_handler_ptr,
+                                                         stub->orb_core (),
+                                                         ami_allocator));
+          }
+        else
+          {
+            ACE_NEW (rd,
+                     TAO_Asynch_Reply_Dispatcher (reply_handler_skel,
+                                                  reply_handler_ptr,
+                                                  stub->orb_core (),
+                                                  0));
+          }
+
+        if (rd == 0)
+          {
+            ACE_THROW (CORBA::NO_MEMORY ());
+          }
 
         this->safe_rd_.reset (rd);
       }
