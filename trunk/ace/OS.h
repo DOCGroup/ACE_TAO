@@ -3129,7 +3129,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 // To resume any of these warning: #pragma warning(default: 4xxx)
 // which should be placed after these defines
 
-#   if !defined (ALL_WARNINGS) && !defined(ghs) && !defined(__MINGW32__)
+#   if !defined (ALL_WARNINGS) && defined(_MSC_VER) && !defined(ghs) && !defined(__MINGW32__)
 // #pragma warning(disable: 4101)  // unreferenced local variable
 #     pragma warning(disable: 4127)  /* constant expression for TRACE/ASSERT */
 #     pragma warning(disable: 4134)  /* message map member fxn casts */
@@ -3146,7 +3146,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 #     pragma warning(disable: 4251)  /* using non-exported as public in exported */
 #     pragma warning(disable: 4786)  /* identifier was truncated to '255' characters in the browser information */
 #     pragma warning(disable: 4097)  /* typedef-name used as synonym for class-name */
-#   endif /*!ALL_WARNINGS */
+#   endif /* !ALL_WARNINGS && _MSV_VER && !ghs && !__MINGW32__ */
 
 // STRICT type checking in WINDOWS.H enhances type safety for Windows
 // programs by using distinct types to represent all the different
