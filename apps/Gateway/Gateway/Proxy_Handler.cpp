@@ -118,8 +118,9 @@ Proxy_Handler::handle_timeout (const ACE_Time_Value &,
              this->id (), this->timeout_));
 
   // Delegate the re-connection attempt to the Event Channel.
-  return this->event_channel_->initiate_proxy_connection 
-    (this, ACE_Synch_Options::asynch);
+  this->event_channel_->initiate_proxy_connection (this);
+  
+  return 0;
 }
 
 // Handle shutdown of the Proxy_Handler object.

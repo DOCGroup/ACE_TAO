@@ -201,9 +201,15 @@ ACE_Event_Channel::svc (void)
 }
 
 int
-ACE_Event_Channel::initiate_proxy_connection (Proxy_Handler *proxy_handler,
-					      ACE_Synch_Options &synch_options)
+ACE_Event_Channel::initiate_proxy_connection (Proxy_Handler *proxy_handler)
 {
+  ACE_Synch_Options synch_options;
+  
+  if (this->options ().blocking_semantics_ == ACE_NONBLOCK)
+    synch_options = ACE_Synch_Options::asynch;
+  else 
+    synch_options = ACE_Synch_Options::synch;
+
   return this->connector_.initiate_connection (proxy_handler, 
 					       synch_options);
 }
@@ -248,28 +254,24 @@ ACE_Event_Channel::complete_proxy_connection (Proxy_Handler *proxy_handler)
 int
 ACE_Event_Channel::reinitiate_proxy_connection (Proxy_Handler *proxy_handler)
 {
-  int result = this->proxy_map_.unbind (proxy_handler->id ());
-  if (result != 0)
-    ACE_ERROR ((LM_ERROR, "Could not remove proxy from map, potential trouble\n"));
-  
   // Skip over proxies with deactivated handles.
   if (proxy_handler->get_handle () != ACE_INVALID_HANDLE)
     {
       // Make sure to close down peer to reclaim descriptor.
       proxy_handler->peer ().close ();
+    }
 
-      if (proxy_handler->state () != Proxy_Handler::DISCONNECTING)
-	{
-	  ACE_DEBUG ((LM_DEBUG, 
-		      "(%t) scheduling reinitiation of Proxy_Handler %d\n",
-		      proxy_handler->id ()));
-
-	  // Reschedule ourselves to try and connect again.
-	  if (ACE_Service_Config::reactor ()->schedule_timer 
-	      (proxy_handler, 0, proxy_handler->timeout ()) == -1)
-	    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", 
-			       "schedule_timer"), -1);
-	}
+  if (proxy_handler->state () != Proxy_Handler::DISCONNECTING)
+    {
+      ACE_DEBUG ((LM_DEBUG, 
+		  "(%t) scheduling reinitiation of Proxy_Handler %d\n",
+		  proxy_handler->id ()));
+      
+      // Reschedule ourselves to try and connect again.
+      if (ACE_Service_Config::reactor ()->schedule_timer 
+	  (proxy_handler, 0, proxy_handler->timeout ()) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", 
+			   "schedule_timer"), -1);
     }
   return 0;
 }
@@ -281,13 +283,6 @@ ACE_Event_Channel::initiate_connector (void)
 {
   PROXY_MAP_ITERATOR cmi (this->proxy_map_);
 				
-  ACE_Synch_Options synch_options;
-  
-  if (this->options ().blocking_semantics_ == ACE_NONBLOCK)
-    synch_options = ACE_Synch_Options::asynch;
-  else 
-    synch_options = ACE_Synch_Options::synch;
-
   // Iterate through the Consumer Map connecting all the
   // Proxy_Handlers.
 
@@ -297,8 +292,7 @@ ACE_Event_Channel::initiate_connector (void)
     {
       Proxy_Handler *proxy_handler = me->int_id_;
 
-      if (this->initiate_proxy_connection 
-	  (proxy_handler, synch_options) == -1)
+      if (this->initiate_proxy_connection (proxy_handler) == -1)
 	continue; // Failures are handled elsewhere...
     }
 }
@@ -328,26 +322,47 @@ ACE_Event_Channel::close (u_long)
       ACE_DEBUG ((LM_DEBUG, "(%t) suspending all threads\n"));
     }
 
-  PROXY_MAP_ITERATOR cmi (this->proxy_map_);
+  // Tell everyone that the spaceship is here
+  {
+    PROXY_MAP_ITERATOR cmi (this->proxy_map_);
+    
+    // Iterate over all the handlers and shut them down.
+    
+    for (PROXY_MAP_ENTRY *me;
+	 cmi.next (me) != 0; 
+	 cmi.advance ())
+      {
+	Proxy_Handler *proxy_handler = me->int_id_;
+	
+	ACE_DEBUG ((LM_DEBUG, "(%t) closing down connection %d\n",
+		    proxy_handler->id ()));
+	
+	// Mark Proxy_Handler as DISCONNECTING so we don't try to
+	// reconnect...
+	proxy_handler->state (Proxy_Handler::DISCONNECTING);	
+      }
+  }
 
-  // Iterate over all the handlers and shut them down.
+  // Close down the connector
+  connector_.close ();
 
-  for (PROXY_MAP_ENTRY *me;
-       cmi.next (me) != 0; 
-       cmi.advance ())
-    {
-      Proxy_Handler *proxy_handler = me->int_id_;
+  // Close down the acceptor
+  acceptor_.close ();
 
-      ACE_DEBUG ((LM_DEBUG, "(%t) closing down connection %d\n",
-		 proxy_handler->id ()));
+  // Tell everyone that it is now time to commit suicide
+  {
+    PROXY_MAP_ITERATOR cmi (this->proxy_map_);
+    
+    for (PROXY_MAP_ENTRY *me;
+	 cmi.next (me) != 0; 
+	 cmi.advance ())
+      {
+	Proxy_Handler *proxy_handler = me->int_id_;
 
-      // Mark Proxy_Handler as DISCONNECTING so we don't try to
-      // reconnect...
-      proxy_handler->state (Proxy_Handler::DISCONNECTING);
-
-      // Deallocate Proxy_Handler resources.
-      proxy_handler->destroy (); // Will trigger a delete.
-    }
+	// Deallocate Proxy_Handler resources.
+	proxy_handler->destroy (); // Will trigger a delete.
+      }
+  }
 
   return 0;
 }

@@ -34,8 +34,8 @@
 # Proxy Host         Remote  Proxy  Max Retry  Local  Priority 
 # ID		     Port    Role   Timeout    Port   
 # ----  --------     ------  ------ ---------- -----  --------
-   1    merengue.cs  10010   S	    32	       0      1
-   2    flamenco.cs  10010   C	    32	       0      1
+   1    localhost    10002   S	    32	       0      1
+   2    localhost    10003   C	    32	       0      1
 #  3    mambo.cs     10002   C	    32	       0      1
 #  4    lambada.cs   10002   C	    32	       0      1
 #  5    lambada.cs   10002   C	    32	       0      1
