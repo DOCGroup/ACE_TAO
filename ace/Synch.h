@@ -1701,6 +1701,7 @@ public:
   // = Initialization and termination methods.
   ACE_Guard (ACE_Null_Mutex &) {}
   ACE_Guard (ACE_Null_Mutex &, int) {}
+  ACE_Guard (ACE_Null_Mutex &, int, int) {}
 #if defined (ACE_WIN32)
   ~ACE_Guard (void) {}
 #endif /* ACE_WIN32 */
@@ -1708,6 +1709,7 @@ public:
   int acquire (void) { return 0; }
   int tryacquire (void) { return 0; }
   int release (void) { return 0; }
+  void disown (void) {}
   int locked (void) { return 1; }
   int remove (void) { return 0; }
   void dump (void) const {}
