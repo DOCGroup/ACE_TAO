@@ -1,6 +1,7 @@
 /* -*-C++-*- */
-#ifndef _COUNTER
-#define _COUNTER
+// $Id$
+#ifndef COUNTER_
+#define COUNTER_
 // ============================================================================
 //
 // = LIBRARY
@@ -75,4 +76,4 @@ class ACE_Export Counter32: public SnmpUInt32
      // otherwise, behave like an unsigned long int
 };
 
-#endif // _COUNTER
+#endif // COUNTER_
