@@ -4,7 +4,8 @@ Tue Sep 14 10:38:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/fe/y.tab.h:
 	* TAO_IDL/fe/y.tab.cpp:
 	  Now outputs an error if param name is missing
-	  after param type - used to crash.
+	  after param type - used to crash. This fix closes
+	  out [BUGID:239]
 
 Tue Sep 14 08:35:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
