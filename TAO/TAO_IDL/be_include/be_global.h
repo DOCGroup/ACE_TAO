@@ -399,10 +399,6 @@ public:
   void ccmobject (be_interface *val);
   // Accessors for the member.
 
-  idl_bool valuetype_seen (void) const;
-  void valuetype_seen (idl_bool val);
-  // Accessors for the member.
-
 private:
   size_t changing_standard_include_files_;
   // To switch between changing or non-changing standard include
@@ -525,9 +521,6 @@ private:
 
   be_interface *ccmobject_;
   // Reference holder for component skeleton visitors.
-
-  idl_bool valuetype_seen_;
-  // Is there a valuetype in this file?
 };
 
 #endif /* _BE_GLOBAL_H */

@@ -48,7 +48,6 @@ be_valuetype::be_valuetype (void)
 
   // Always the case.
   this->has_constructor (I_TRUE);
-  be_global->valuetype_seen (I_TRUE);
 }
 
 // Constructor used to build the AST.
@@ -120,9 +119,11 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
         }
     }
 
-  if (! idl_global->imported ())
+  // Set the flag that says we have a valuetype in this IDL file.
+  if (this->is_defined ())
     {
-      be_global->valuetype_seen (I_TRUE);
+      ACE_SET_BITS (idl_global->decls_seen_info_,
+                    idl_global->decls_seen_masks.valuetype_seen_);
     }
 }
 

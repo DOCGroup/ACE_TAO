@@ -263,6 +263,19 @@ public:
     , PS_PragmaPrefixSyntax     // Could not parse the #pragma prefix
   };
 
+  // 64-bit vector of flags for types of declarations seen while parsing.
+  ACE_UINT64 decls_seen_info_;
+
+  // Holds the masks to set and get in the above bit vector.
+  struct dsf
+  {
+    dsf (void);
+
+    ACE_UINT64 valuetype_seen_;
+    ACE_UINT64 abstract_iface_seen_;
+    ACE_UINT64 iface_seq_seen_;
+  } decls_seen_masks;
+
   // Constructor
   IDL_GlobalData (void);
   // Destructor

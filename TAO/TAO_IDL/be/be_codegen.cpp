@@ -192,6 +192,36 @@ TAO_CodeGen::start_client_header (const char *fname)
           // Include Messaging skeleton file.
           this->gen_standard_include (this->client_header_,
                                       "tao/Messaging/Messaging.h");
+
+          // Turn on generation of files from the Valuetype library.
+          ACE_SET_BITS (idl_global->decls_seen_info_,
+                        idl_global->decls_seen_masks.valuetype_seen_);
+        }
+
+      idl_global->root ();
+
+      if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                           idl_global->decls_seen_masks.abstract_iface_seen_))
+        {
+          // Include the AbstractBase file from the Valuetype library.
+          this->gen_standard_include (this->client_header_,
+                                      "tao/Valuetype/AbstractBase.h");
+
+          // Turn on generation of the rest of the Valuetype library files.
+          ACE_SET_BITS (idl_global->decls_seen_info_,
+                        idl_global->decls_seen_masks.valuetype_seen_);
+        }
+
+      if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                           idl_global->decls_seen_masks.valuetype_seen_))
+        {
+          // Include files from the Valuetype library.
+          this->gen_standard_include (this->client_header_,
+                                      "tao/Valuetype/ValueBase.h");
+          this->gen_standard_include (this->client_header_,
+                                      "tao/Valuetype/ValueFactory.h");
+          this->gen_standard_include (this->client_header_,
+                                      "tao/Valuetype/Valuetype_Adapter_Impl.h");
         }
 
       // Include the smart proxy base class if smart proxies are enabled.
@@ -199,16 +229,6 @@ TAO_CodeGen::start_client_header (const char *fname)
         {
           this->gen_standard_include (this->client_header_,
                                       "tao/SmartProxies/Smart_Proxies.h");
-        }
-
-      if (be_global->valuetype_seen ())
-        {
-          this->gen_standard_include (this->client_header_,
-                                      "tao/Valuetype/ValueBase.h");
-          this->gen_standard_include (this->client_header_,
-                                      "tao/Valuetype/ValueFactory.h");
-          this->gen_standard_include (this->client_header_,
-                                      "tao/Valuetype/Valuetype_Adapter_Impl.h");
         }
 
       size_t nfiles = idl_global->n_included_idl_files ();

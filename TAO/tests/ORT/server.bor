@@ -23,11 +23,17 @@ CFLAGS = \
 	$(ACE_CFLAGS) \
 	$(TAO_CFLAGS) \
 	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_ORT_CFLAGS) \
+	$(TAO_IORINTERCEPTOR_CFLAGS) \
+	$(TAO_VALUETYPE_CFLAGS)
 
 LIBFILES = \
 	$(ACE_LIB) \
 	$(TAO_LIB) \
 	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_ORT_LIB) \
+	$(TAO_IORINTERCEPTOR_LIB) \
+	$(TAO_VALUETYPE_LIB)
 
 IDLFILES = \
         $(IDLDIR)\ORT_test.idl \
@@ -47,4 +53,4 @@ $(IDLDIR)\ORT_testS.cpp $(IDLDIR)\ORT_testC.cpp: $(IDLDIR)\ORT_test.idl
 	$(TAO_IDL) $**
 
 $(IDLDIR)\ObjectReferenceFactoryC.cpp: $(IDLDIR)\ObjectReferenceFactory.idl
-        $(TAO_IDL) -Gv -DCORBA3 -I..\.. $**
+        $(TAO_IDL) -DCORBA3 -I..\.. $**

@@ -16,8 +16,6 @@
 #define AMH_SERVANT_H
 
 #include "ace/pre.h"
-#include "tao/corba.h"
-#include "ace/Reactor.h"
 #include "tao/ORB_Core.h"
 
 #include "TestS.h"

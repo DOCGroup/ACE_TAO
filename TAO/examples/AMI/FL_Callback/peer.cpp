@@ -4,9 +4,10 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/Sched_Params.h"
-#include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(FL_Callback, peer, "$Id$")
+ACE_RCSID (FL_Callback, 
+           peer, 
+           "$Id$")
 
 const char *ior = "file://progress.ior";
 int nthreads = 4;
