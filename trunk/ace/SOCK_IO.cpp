@@ -6,7 +6,7 @@
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SOCK_IO.i"
-#endif
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_IO)
 

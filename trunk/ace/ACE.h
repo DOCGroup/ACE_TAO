@@ -150,6 +150,20 @@ public:
   // <recv_n> return <len> (i.e., the number of bytes requested to be
   // read).
 
+  static ssize_t recv_n (ACE_HANDLE handle, 
+                         void *buf, 
+                         size_t len, 
+                         const ACE_Time_Value *timeout);
+  // Try to recv exactly <len> bytes into <buf> from <handle> (uses
+  // the <ACE_OS::recv> call).  The <timeout> indicates how long to
+  // blocking trying to receive.  If <timeout> == 0, the caller will
+  // block until action is possible, else will wait until the relative
+  // time specified in *<timeout> elapses).  If <recv> blocks for
+  // longer than <timeout> the number of bytes actually read is
+  // returned with <errno == ETIME>.  If a timeout does not occur,
+  // <recv_n> return <len> (i.e., the number of bytes requested to be
+  // read).
+
   // = Send operations that factor out differences between Win32 and UNIX.
   static ssize_t send (ACE_HANDLE handle, 
                        const void *buf, 
@@ -240,6 +254,20 @@ public:
                          const void *buf, 
                          size_t len, 
                          int flags,
+                         const ACE_Time_Value *timeout);
+  // Try to send exactly <len> bytes into <buf> from <handle> (uses
+  // the <ACE_OS::send> call).  The <timeout> indicates how long to
+  // blocking trying to send.  If <timeout> == 0, the caller will
+  // block until action is possible, else will wait until the relative
+  // time specified in *<timeout> elapses).  If <send> blocks for
+  // longer than <timeout> the number of bytes actually sent is
+  // returned with <errno == ETIME>.  If a timeout does not occur,
+  // <send_n> return <len> (i.e., the number of bytes requested to be
+  // sent).
+
+  static ssize_t send_n (ACE_HANDLE handle, 
+                         const void *buf, 
+                         size_t len, 
                          const ACE_Time_Value *timeout);
   // Try to send exactly <len> bytes into <buf> from <handle> (uses
   // the <ACE_OS::send> call).  The <timeout> indicates how long to

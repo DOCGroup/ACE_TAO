@@ -301,7 +301,7 @@ Options::oneway_client_test (void *)
                         options->quit_string (),
                         ACE_OS::strlen (options->quit_string ())) == 0)
       break;
-    else if (cli_stream.send (buf, r_bytes, 0) == -1)
+    else if (cli_stream.send (buf, r_bytes) == -1)
       {
         ACE_ERROR ((LM_ERROR,
                     "(%P|%t) %p\n",
@@ -377,7 +377,7 @@ Options::twoway_client_test (void *)
                         options->quit_string (),
                         ACE_OS::strlen (options->quit_string ())) == 0)
       break;
-    else if (cli_stream.send (buf, r_bytes, 0) == -1)
+    else if (cli_stream.send (buf, r_bytes) == -1)
       {
         ACE_ERROR ((LM_ERROR,
                     "(%P|%t) %p\n",

@@ -1,5 +1,19 @@
 Sat Jun 20 16:51:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp: Removed the trailing
+ 	  0 to the send() operation to (1) avoid overload ambiguity and
+ 	  (2) to use write() rather than send()!  Thanks to Chris Healey
+ 	  for reporting this.
+
+	* ace/ACE: The default condition in the select switch in the
+ 	  enter_*_timed_wait functions assumed that all values returned
+ 	  from select if not 0 or 1 will be -1.  This is true in those
+ 	  functions due to only 1 file descriptor flag being set.  Thanks
+ 	  to Chris Healey for generalizing this a bit...
+
+	* ace/SOCK_IO: Added the wrappers for the "non-flags" version of
+ 	  timed send()/recv().  Thanks to Chris Healey for this.
+
 	* ace/FILE_Addr.cpp: Cleaned up the code a bit to be more
  	  consistent.  Thanks to Chris Healey for suggesting this.
 
