@@ -26,10 +26,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (ACE_HAS_TOKENS_LIBRARY)
+
 #include "ace/Map_Manager.h"
 #include "ace/Local_Tokens.h"
+#include "ace/Null_Mutex.h"
 
-#if defined (ACE_HAS_TOKENS_LIBRARY)
 
 /**
  * @class ACE_Mutex_Invariants
