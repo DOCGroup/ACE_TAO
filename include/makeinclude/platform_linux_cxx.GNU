@@ -17,13 +17,7 @@ CFLAGS          +=
     WARNING_FLAGS += -msg_display_number -msg_display_tag
   endif # VERBOSE_WARNING
 
-  ifneq (,$(optimize))
-    #### See ace/config-cxx-common.h for the meaning of this warning.
-    #### It's not necessary on DU 5.0.
-    WARNING_FLAGS += -msg_disable 1016
-  endif # optimize
-
-CCFLAGS         += $(CFLAGS) $(WARNING_FLAGS)
+CCFLAGS         += $(CFLAGS) -D__USE_STD_IOSTREAM $(WARNING_FLAGS)
 ifeq ($(rtti),)
   CCFLAGS += -nortti
 endif # rtti
