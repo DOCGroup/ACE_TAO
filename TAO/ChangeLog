@@ -1,3 +1,19 @@
+Sun Aug  1 21:05:59 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* TAO_IDL/Makefile.am:
+	  Add _LDFLAGS definitions with -version-number flag for FE and BE
+	  libraries.
+
+	* tao/Makefile.am:
+	  Update, with a little help from MPC.
+
+	* Makefile.am:
+	  Update.
+
+	* configure.ac:
+	  Added.  First cut at a new configure script with bits taken from
+	  ACE's configure.ac and the old TAO configure.in in the CVS Attic.
+
 Sun Aug  1 20:57:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/tao_idl.cpp:
@@ -12,17 +28,17 @@ Sun Aug  1 20:57:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/include/utl_scope.h:
         * TAO_IDL/util/utl_global.cpp:
         * TAO_IDL/util/utl_scope.cpp:
-        
+
           - Fixed bugs in cleanup between iterations in processing eacj IDL
             file in the list passed on the command line.
-            
+
           - Fixed bug in checking for recursive types.
-          
+
           - Fixed bug in eager calculation of the version segment of the
             repository ID.
-            
+
           - Fixed bug in checking number of interfaces supported by a home.
-          
+
           - Added markers in existing bit vector to keep track of which
             sequences of basic types have been referenced, and code to
             update the markers.
