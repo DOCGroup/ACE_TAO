@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS     =   -lorbsvcs -lTAO $(MATHLIB)
+LDLIBS     = -lTAO $(MATHLIB)
 
 IDL_SRC	= cubitC.cpp cubitS.cpp
 PROG_SRCS = server.cpp \
@@ -69,8 +69,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # Local modifications to variables imported by includes above.
 CPPFLAGS += -DDEBUG
 
-LDFLAGS += -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs
-CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
+LDFLAGS += -L$(TAO_ROOT)/tao
+CPPFLAGS += -I$(TAO_ROOT) 
 
 # pccTimer will eventually get integrated into ACE.  It is specific for ClassiX on VME
 ifdef CHORUS

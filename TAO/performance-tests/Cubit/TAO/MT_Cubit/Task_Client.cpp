@@ -628,21 +628,6 @@ Client::get_cubit (void)
         ? this->ts_->one_ior_
         : this->ts_->iors_[this->id_];
 
-              // If we are running the "1 to n" test make sure all low
-              // priority clients use only 1 low priority servant.
-      if (this->id_ > 0
-          && this->ts_->one_to_n_test_ == 1)
-        my_ior = this->ts_->iors_[1];
-
-      if (my_ior == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Must specify valid factory ior key with -k option,"
-                           " naming service, or ior filename\n"),
-                          -1);
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) The ior I'm using is: \"%s\"\n",
-                  my_ior));
-
       // If we are running the "1 to n" test make sure all low
       // priority clients use only 1 low priority servant.
       if (this->id_ > 0
@@ -654,6 +639,11 @@ Client::get_cubit (void)
                            "Must specify valid factory ior key with -k option,"
                            " naming service, or ior filename\n"),
                           -1);
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) The ior I'm using is: \"%s\"\n",
+                  my_ior));
+
       objref = this->orb_->string_to_object (my_ior,
                                              TAO_TRY_ENV);
       ACE_DEBUG ((LM_DEBUG,
