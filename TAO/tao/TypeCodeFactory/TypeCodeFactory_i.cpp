@@ -6,6 +6,7 @@
 #include "tao/Marshal.h"
 #include "tao/ORB_Constants.h"
 #include "tao/CDR.h"
+#include "tao/Any_Impl.h"
 
 #include "ace/Containers_T.h"
 #include "ace/Hash_Map_Manager_T.h"
@@ -263,12 +264,8 @@ TAO_TypeCodeFactory_i::create_union_tc (
         }
       else
         {
-          CORBA::Boolean good_label =
-            this->insert_label_value (kind,
-                                      members[index].label,
-                                      cdr
-                                      ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+          CORBA::Boolean good_label = 
+            members[index].label.impl ()->marshal_value (cdr);
 
           if (good_label == 0)
             {
@@ -697,13 +694,16 @@ TAO_TypeCodeFactory_i::compute_default_label (
         {
           // This is the one we're trying to find a legal value for.
           if (i == skip_slot)
-            continue;
+            {
+              continue;
+            }
 
           // If there's a collision, we increment the default value.
           switch (kind)
           {
             case CORBA::tk_char:
               members[i].label >>= CORBA::Any::to_char (u.char_val);
+              
               if (u.char_val == dv.char_val)
                 {
                   dv.char_val++;
@@ -712,6 +712,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
               break;
             case CORBA::tk_boolean:
               members[i].label >>= CORBA::Any::to_boolean (u.bool_val);
+              
               if (u.bool_val == dv.bool_val)
                 {
                   dv.bool_val++;
@@ -720,6 +721,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
               break;
             case CORBA::tk_short:
               members[i].label >>= u.short_val;
+              
               if (u.short_val == dv.short_val)
                 {
                   dv.short_val++;
@@ -728,6 +730,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
               break;
             case CORBA::tk_ushort:
               members[i].label >>= u.ushort_val;
+              
               if (u.ushort_val == dv.ushort_val)
                 {
                   dv.ushort_val++;
@@ -736,6 +739,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
               break;
             case CORBA::tk_long:
               members[i].label >>= u.long_val;
+              
               if (u.long_val == dv.long_val)
                 {
                   dv.long_val++;
@@ -744,6 +748,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
               break;
             case CORBA::tk_ulong:
               members[i].label >>= u.ulong_val;
+              
               if (u.ulong_val == dv.ulong_val)
                 {
                   dv.ulong_val++;
@@ -753,6 +758,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
 #if !defined (ACE_LACKS_LONGLONG_T)
             case CORBA::tk_ulonglong:
               members[i].label >>= u.ulonglong_val;
+              
               if (u.ulonglong_val == dv.ulonglong_val)
                 {
                   dv.ulonglong_val++;
@@ -765,6 +771,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
               TAO_InputCDR cdr (members[i].label._tao_get_cdr (),
                                 members[i].label._tao_byte_order ());
               cdr.read_ulong (u.enum_val);
+              
               if (u.enum_val == dv.enum_val)
                 {
                   dv.enum_val++;
@@ -778,7 +785,9 @@ TAO_TypeCodeFactory_i::compute_default_label (
 
           // If there's been a collision, we should start over right away.
           if (success == 0)
-            break;
+            {
+              break;
+            }
         }
     }
 
@@ -813,60 +822,6 @@ TAO_TypeCodeFactory_i::compute_default_label (
       break;
     default:
       break;
-  }
-}
-
-CORBA::Boolean
-TAO_TypeCodeFactory_i::insert_label_value (
-    CORBA::TCKind kind,
-    const CORBA::Any &any,
-    TAO_OutputCDR &cdr
-    ACE_ENV_ARG_DECL
-  )
-{
-  void *value = ACE_const_cast (void *,
-                                any.value ());
-  CORBA::TypeCode_ptr disc_tc = any._tao_get_typecode ();
-
-  switch (kind)
-  {
-    case CORBA::tk_char:
-      return cdr << CORBA::Any::from_char (*ACE_reinterpret_cast (
-                                                char *,
-                                                value
-                                              ));
-    case CORBA::tk_boolean:
-      return cdr << CORBA::Any::from_boolean (*ACE_reinterpret_cast (
-                                                   CORBA::Boolean *,
-                                                   value
-                                                 ));
-    case CORBA::tk_short:
-      return cdr << *ACE_reinterpret_cast (CORBA::Short *, value);
-    case CORBA::tk_ushort:
-      return cdr << *ACE_reinterpret_cast (CORBA::UShort *, value);
-    case CORBA::tk_long:
-      return cdr << *ACE_reinterpret_cast (CORBA::Long *, value);
-    case CORBA::tk_ulong:
-      return cdr << *ACE_reinterpret_cast (CORBA::ULong *, value);
-#if !defined (ACE_LACKS_LONGLONG_T)
-    case CORBA::tk_ulonglong:
-      return cdr << *ACE_reinterpret_cast (CORBA::ULongLong *, value);
-#endif /* ACE_LACKS_LONGLONG_T */
-    case CORBA::tk_enum:
-      {
-        TAO_InputCDR in (any._tao_get_cdr (),
-                         any._tao_byte_order ());
-
-        TAO::traverse_status ts =
-          TAO_Marshal_Object::perform_append (disc_tc,
-                                              &in,
-                                              &cdr
-                                              ACE_ENV_ARG_PARAMETER);
-
-        return (ts == TAO::TRAVERSE_CONTINUE);
-      }
-    default:
-      return 0;
   }
 }
 
