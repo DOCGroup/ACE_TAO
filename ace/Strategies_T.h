@@ -886,9 +886,11 @@ protected:
   /// Add to cache (non-locking version).
   virtual int cache_i (const void *recycling_act);
 
-  /// Get/Set <recycle_state> (non-locking version).
+  /// Set <recycle_state> (non-locking version).
   virtual int recycle_state_i (const void *recycling_act,
                                ACE_Recyclable_State new_state);
+
+  /// Get <recycle_state> (non-locking version).
   virtual ACE_Recyclable_State recycle_state_i (const void *recycling_act) const;
 
   /// Cleanup hint and reset <*act_holder> to zero if <act_holder != 0>.
