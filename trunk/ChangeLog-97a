@@ -1,5 +1,7 @@
 Tue Apr 29 19:57:52 1997    <irfan@TWOSTEP>
 
+	* tests/Process_Strategy_Test.cpp: Fixed #define typo.
+
 	* ace/Event_Handler: Removed the old Proactor callback methods. 
 
 Tue Apr 29 17:39:40 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>

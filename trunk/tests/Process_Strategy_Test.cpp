@@ -254,11 +254,11 @@ Options::parse_args (int argc, char *argv[])
       break;
     }
 
-#if !defined (ACE_WIN32) || !defined (VXWORKS)
+#if !defined (ACE_WIN32) && !defined (VXWORKS)
   // Register to handle <SIGCHLD> when a child exits.
   if (ACE_Service_Config::reactor ()->register_handler (SIGCHLD, this) == -1)
     return -1;
-#endif /* !defined (ACE_WIN32) || !defined (VXWORKS) */
+#endif /* !defined (ACE_WIN32) && !defined (VXWORKS) */
   if (ACE_Service_Config::reactor ()->register_handler (SIGINT, this) == -1)
     return -1;
   return 0;
