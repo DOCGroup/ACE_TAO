@@ -57,13 +57,14 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << "const " << node->name () << " &_tao_elem" << be_uidt_nl
       << ") // copying" << be_uidt_nl
       << "{" << be_idt_nl
-      << node->name () << " *_tao_any_val = new " << node->name ()
-      << " (_tao_elem);" << be_nl
+      << node->name () << " *_tao_any_val;" << be_nl 
+      << "ACE_NEW (_tao_any_val, " << node->name () 
+      << " (_tao_elem));" << be_nl
       << "if (!_tao_any_val) return;" << be_nl
       << "TAO_TRY" << be_nl
       << "{" << be_idt_nl
-      << "_tao_any.replace (" << node->tc_name () << ", new "
-      << node->name () << "(_tao_elem), 1, TAO_TRY_ENV);"
+      << "_tao_any.replace (" << node->tc_name () 
+      << ", _tao_any_val, 1, TAO_TRY_ENV);"
       << " // copy the value" << be_nl
       << "TAO_CHECK_ENV; " << be_uidt_nl
       << "}" << be_nl
