@@ -70,6 +70,10 @@ public:
   int incr_refcount (void);
   void decr_refcount (void);
 
+  /// The event handler calls, here so that other objects who hold a
+  /// reference to this object can call the event handler methods.
+  virtual int handle_input (ACE_HANDLE fd) = 0;
+
 protected:
 
   /// Return our TAO_ORB_Core pointer

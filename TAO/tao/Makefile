@@ -101,6 +101,7 @@ PLUGGABLE_PROTOCOLS_FILES = \
   Transport_Connector \
   Transport \
   Incoming_Message_Queue \
+  Notify_Handler \
   Resume_Handle \
   Profile \
   Endpoint \

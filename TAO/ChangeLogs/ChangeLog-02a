@@ -1,3 +1,42 @@
+Tue Jul  2 15:46:14 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	This checkin is to prevent a problem that occurs unders ceratin
+        circumstances as described in [Bug 1230]
+        http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1241
+
+	The methodology used to solve the problem is pretty much similar
+        to that described in the bug report.
+	
+	* tao/Connection_Handler.h: Added a pure virtual call handle_input
+	  ().
+	  
+	* tao/Transport.h: 
+	* tao/Transport.cpp: Added a new pure virtual method
+	  connection_handler_i (). Trying to use an reinterpret_cast of
+	  the event_handler didnt seem to work right. Hence this method.
+
+	  Further, added a method called notify_reactor () which creates a
+	  an instance of the TAO_Notify_Handler and use that to send a
+	  notify () call to the Reactor.
+
+	* tao/Notify_Handler.h:
+	* tao/Notify_Handler.cpp: A new handler that takes care of
+	  handling notify () calls to the reactor.
+
+	* tao/IIOP_Transport.h:
+	* tao/IIOP_Transport.cpp:
+	* tao/Strategies/DIOP_Transport.cpp:
+	* tao/Strategies/DIOP_Transport.h:
+	* tao/Strategies/SHMIOP_Transport.cpp:
+	* tao/Strategies/SHMIOP_Transport.h:
+	* tao/Strategies/UIOP_Transport.cpp:
+	* tao/Strategies/UIOP_Transport.h: Added an implementation of
+	  connection_handler_i (). 
+
+	* tao/ORB_Core.cpp: Delete transport_buffer and cdr_msgblock
+	  allocators during shutdown. This should prevent some leaks in
+	  the ORB during shutdown.
+
 Tue Jul  2 14:57:27 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/append.cpp:
