@@ -1,3 +1,9 @@
+Sat Nov 22 20:44:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/Simple/grid/Makefile:
+
+	  Added TAO_Messaging to the link line. 
+
 Sat Nov 22 20:39:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/ORT/ORT.mpc:
