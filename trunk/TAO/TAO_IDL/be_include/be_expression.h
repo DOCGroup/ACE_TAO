@@ -43,7 +43,7 @@ public:
   be_expression (unsigned long l);
   be_expression (UTL_String *s);
   be_expression (char c);
-  be_expression (ACE_OutputCER::from_wchar wc);
+  be_expression (ACE_OutputCDR::from_wchar wc);
   be_expression (double d);
 
   // Visiting
