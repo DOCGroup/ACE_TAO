@@ -371,7 +371,9 @@ TAO_ServerRequestInfo::target_most_derived_interface (
 {
   // Implemented in the generated skeleton.
 
-  ACE_THROW_RETURN (CORBA::NO_RESOURCES (1, CORBA::COMPLETED_NO), 0);
+  ACE_THROW_RETURN (CORBA::NO_RESOURCES (TAO_OMG_VMCID | 1,
+                                         CORBA::COMPLETED_NO),
+                    0);
 }
 
 CORBA::Policy_ptr
