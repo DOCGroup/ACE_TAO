@@ -1,3 +1,7 @@
+Thu Nov 14 16:35:45 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Makefile: Added new tests to the daily builds.
+
 Thu Nov 14 16:28:13 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Bug_1269_Regression/run_test.pl:
