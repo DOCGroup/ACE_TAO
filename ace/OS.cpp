@@ -1712,7 +1712,9 @@ ACE_Thread_Adapter::invoke (void)
   // Extract the arguments.
   ACE_THR_FUNC func = this->user_func_;
   void *arg = this->arg_;
+# if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
   ACE_Thread_Descriptor *thr_desc = this->thr_desc_;
+# endif /* ACE_WIN32 && ACE_HAS_MFC && (ACE_HAS_MFC != 0) */
 
   // Delete ourselves since we don't need <this> anymore.  Make sure
   // not to access <this> anywhere below this point.
@@ -1720,15 +1722,15 @@ ACE_Thread_Adapter::invoke (void)
 
   void *status = 0;
 
-  ACE_SEH_TRY 
+  ACE_SEH_TRY
     {
-      ACE_SEH_TRY 
+      ACE_SEH_TRY
         {
           // Call thread entry point.
-          status = (void*) (*func) (arg);  
+          status = (void*) (*func) (arg);
         }
 
-      ACE_SEH_FINALLY 
+      ACE_SEH_FINALLY
         {
           // Call the <Task->close> hook.
           if (func == (ACE_THR_FUNC) ACE_Task_Base::svc_run)
@@ -1792,7 +1794,7 @@ ACE_Thread_Adapter::invoke (void)
         }
     }
 #if defined (ACE_WIN32)
-  ACE_SEH_EXCEPT (this->rethrow_w32_structural_exception ()) 
+  ACE_SEH_EXCEPT (this->rethrow_w32_structural_exception ())
     {
       // Here's where we might want to provide a hook to report
       // this...  As it stands now, we just rethrow all Win32
