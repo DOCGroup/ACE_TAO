@@ -615,6 +615,13 @@ ACE_OS::rand_r (ACE_RANDR_TYPE seed)
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE)
 #if defined (DIGITAL_UNIX)
   ACE_OSCALL_RETURN (::_Prand_r (seed), int, -1);
+#elif defined (HPUX_10)
+  // rand() is thread-safe on HP-UX 10.  rand_r's signature is not consistent
+  // with latest POSIX and will change in a future HP-UX release so that it
+  // is consistent.  At that point, this #elif section can be changed or
+  // removed, and just call rand_r.
+  seed = seed;
+  ACE_OSCALL_RETURN (::rand(), int, -1);
 #else
   ACE_OSCALL_RETURN (::rand_r (seed), int, -1);
 #endif /* DIGITAL_UNIX */
@@ -2796,7 +2803,7 @@ ACE_OS::select (int width,
 				 (ACE_FD_SET_TYPE *) rfds, 
 				 (ACE_FD_SET_TYPE *) wfds, 
 				 (ACE_FD_SET_TYPE *) efds, 
-				 (timeval *) &___ACE_TIMEOUT) , int, -1);
+				 ___ACE_TIMEOUT) , int, -1);
 #undef ___ACE_TIMEOUT
 }
 
@@ -2873,7 +2880,7 @@ ACE_OS::getprotobyname_r (const char *name,
 #if defined (VXWORKS)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE)
-#if defined (AIX) || defined (DIGITAL_UNIX)
+#if defined (AIX) || defined (DIGITAL_UNIX) || defined (HPUX_10)
   if (::getprotobyname_r (name, result, (struct protoent_data *) buffer) == 0)
     return result;
   else
@@ -2920,7 +2927,7 @@ ACE_OS::getprotobynumber_r (int proto,
 #if defined (VXWORKS)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE)
-#if defined (AIX) || defined (DIGITAL_UNIX)
+#if defined (AIX) || defined (DIGITAL_UNIX) || defined (HPUX_10)
   if (::getprotobynumber_r (proto, result, (struct protoent_data *) buffer) == 0)
     return result;
   else
@@ -3168,7 +3175,7 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
   ::getpwnam_r (name, pwent, buffer, buflen, &result);
 #endif /* (DIGITAL_UNIX) */
   return result;
-#elif defined (AIX)
+#elif defined (AIX) || defined (HPUX_10)
   if (::getpwnam_r (name, pwent, buffer, buflen) == -1)
     return 0;
   else
@@ -3210,7 +3217,7 @@ ACE_OS::gethostbyaddr_r (const char *addr, int length, int type,
 #if defined (VXWORKS)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE)
-#if defined (AIX) || defined (DIGITAL_UNIX)
+#if defined (AIX) || defined (DIGITAL_UNIX) || defined (HPUX_10)
   ::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
   if (::gethostbyaddr_r ((char *) addr, length, type, result,
@@ -3260,7 +3267,7 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
 #if defined (DIGITAL_UNIX)
   // gethostbyname returns thread-specific storage on Digital Unix
   ACE_SOCKCALL_RETURN (::gethostbyname (name), struct hostent *, 0);
-#elif defined (AIX)
+#elif defined (AIX) || defined (HPUX_10)
   ::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
   if (::gethostbyname_r (name, result, (struct hostent_data *) buffer) == 0)
@@ -3309,7 +3316,7 @@ ACE_OS::getservbyname_r (const char *svc, const char *proto,
 #if defined (ACE_LACKS_GETSERVBYNAME)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE)
-#if defined (AIX) || defined (DIGITAL_UNIX)
+#if defined (AIX) || defined (DIGITAL_UNIX) || defined (HPUX_10)
   ::memset (buf, 0, sizeof (ACE_SERVENT_DATA));
 
   if (::getservbyname_r (svc, proto, result, (struct servent_data *) buf) == 0)
@@ -3794,6 +3801,19 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
 #if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getprio (thr_id, &prio), ace_result_), int, -1);
 #elif (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_LACKS_SETSCHED)
+
+# if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+  int result;
+  result = ::pthread_getprio(thr_id);
+  if (result != -1) {
+    prio = result;
+    return 0;
+}
+  else {
+    return -1;
+}
+# else
+
   struct sched_param param;
   int result;
   int policy = 0;
@@ -3803,6 +3823,7 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
 	      -1, result);
   prio = param.sched_priority;
   return result;
+# endif /* ACE_HAS_DCE_DRAFT4_THREADS */
 #elif defined (ACE_HAS_WTHREADS)
   ACE_UNUSED_ARG (prio);
   // why is the thread prio not dropped into prio ?
@@ -4362,6 +4383,12 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
 				       ace_result_), 
 		     int, -1);
 #elif (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_LACKS_SETSCHED)
+
+# if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+  int result;
+  result = ::pthread_setprio(thr_id, prio);
+  return (result == -1 ? -1 : 0);
+# else
   struct sched_param param;
   int policy = 0;
   int result;
@@ -4375,6 +4402,7 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id, policy, &param), 
                                        result),
                      int, -1);
+# endif /* ACE_HAS_DCE_DRAFT4_THREADS */
 #elif defined (ACE_HAS_WTHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::SetThreadPriority (thr_id, prio), 
 				       ace_result_), 
@@ -5748,7 +5776,13 @@ ACE_OS::ctime_r (const time_t *t, char *buf, int buflen)
   ::strncpy (buf, result, buflen);
   return buf;
 #else
+
+# if defined (ACE_CTIME_R_RETURNS_INT)
+  return (::ctime_r(t, buf, buflen) == -1 ? 0 : buf);
+# else
   ACE_OSCALL_RETURN (::ctime_r (t, buf, buflen), char *, 0);
+# endif /* ACE_CTIME_R_RETURNS_INT */
+
 #endif /* defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R) */
 #else
   char *result;
@@ -5772,6 +5806,8 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE)
 #if defined (DIGITAL_UNIX)
   ACE_OSCALL_RETURN (::_Plocaltime_r(t, res), struct tm *, 0);
+#elif defined (HPUX_10)
+  return (::localtime_r(t, res) == 0 ? res : (struct tm *)0);
 #else
   ACE_OSCALL_RETURN (::localtime_r (t, res), struct tm *, 0);
 #endif /* DIGITAL_UNIX */
@@ -5796,6 +5832,8 @@ ACE_OS::gmtime_r (const time_t *t, struct tm *res)
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE)
 #if defined (DIGITAL_UNIX)
   ACE_OSCALL_RETURN (::_Pgmtime_r(t, res), struct tm *, 0);
+#elif defined (HPUX_10)
+  return (::gmtime_r(t, res) == 0 ? res : (struct tm *)0);
 #else
   ACE_OSCALL_RETURN (::gmtime_r (t, res), struct tm *, 0);
 #endif /* DIGITAL_UNIX */
@@ -5828,6 +5866,9 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
   ::strncpy (buf, result, buflen);
   return buf;
 #else
+#if defined (HPUX_10)
+  return (::asctime_r(t, buf, buflen) == 0 ? buf : (char *)0);
+#endif /* HPUX_10 */
   ACE_OSCALL_RETURN (::asctime_r (t, buf, buflen), char *, 0);
 #endif /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
 #else
