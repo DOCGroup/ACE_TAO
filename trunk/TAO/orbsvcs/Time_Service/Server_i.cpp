@@ -161,11 +161,11 @@ Server_i::register_server (void)
       server_context_name[0].id = CORBA::string_dup ("ServerContext");
 
       ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      ACE_TRY_EX(bind_new_context)
         {
           CosNaming::NamingContext_var server_context = 
 	    this->naming_client_->bind_new_context(server_context_name);
-          ACE_TRY_CHECK;
+          ACE_TRY_CHECK_EX(bind_new_context);
         }
       ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
         {
