@@ -42,6 +42,11 @@ Wed May 13 09:26:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * many *.{h,i,cpp,idl} files:  inserted RCS keyword string.
 
+Wed May 13 00:35:25 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace: Added ACE_Export to a bunch of class in ACE.  Thanks to
+ 	  Gonzalo A. Diethelm (gonzo@ing.puc.cl) for pointing this out.
+
 Tue May 12 15:16:04 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-WinCE.h:
