@@ -24,13 +24,6 @@ pace_clearerr (FILE * stream)
 }
 
 PACE_INLINE
-char *
-pace_ctermid (char * s)
-{
-  return ctermid (s);
-}
-
-PACE_INLINE
 int
 pace_fclose (FILE * stream)
 {
@@ -79,6 +72,14 @@ int
 pace_fgetc (FILE * stream)
 {
   return fgetc (stream);
+}
+
+PACE_INLINE
+int
+pace_fgetpos(PACE_FILE * stream,
+             pace_fpos_t * pos)
+{
+  return fgetpos (stream, pos);
 }
 
 PACE_INLINE
@@ -179,6 +180,13 @@ pace_fseek (FILE * stream,
 }
 
 PACE_INLINE
+int
+pace_fsetpos(PACE_FILE *stream, const pace_fpos_t *pos)
+{
+  return fsetpos (stream, pos);
+}
+
+PACE_INLINE
 long
 pace_ftell (FILE * stream)
 {
@@ -208,6 +216,15 @@ pace_funlockfile (FILE * file)
   PACE_ERRNO_NO_SUPPORT ();
 #endif /* ! PACE_HAS_REENTRANT */
   return;
+}
+
+PACE_INLINE
+pace_size_t
+pace_fwrite(const void * ptr,
+            pace_size_t size, pace_size_t nmemb,
+            PACE_FILE * stream)
+{
+  return fwrite (ptr, size, nmemb, stream);
 }
 
 PACE_INLINE
@@ -353,6 +370,14 @@ pace_setbuf (FILE * stream, char * buf)
   return;
 }
 
+PACE_INLINE
+int
+pace_setvbuf(PACE_FILE * stream,
+             char * buf,
+             int mode, pace_size_t size)
+{
+  return setvbuf (stream, buf, mode, size);
+}
 int
 pace_sprintf (char* s, const char* format, ...)
 {
@@ -383,4 +408,41 @@ int
 pace_ungetc (int c, FILE * stream)
 {
  return ungetc (c, stream);
+}
+
+PACE_INLINE
+int
+pace_vfprintf (PACE_FILE * stream,
+               const char * format,
+               va_list arg)
+{
+  /*  return vfprintf (stream, format, arg); */
+  PACE_UNUSED_ARG (stream);
+  PACE_UNUSED_ARG (format);
+  PACE_UNUSED_ARG (arg);
+  return -1;
+}
+
+PACE_INLINE
+int
+pace_vprintf (const char * format,
+              va_list arg)
+{
+  /*  return vfprintf (format, arg); */
+  PACE_UNUSED_ARG (format);
+  PACE_UNUSED_ARG (arg);
+  return -1;
+}
+
+PACE_INLINE
+int
+pace_vsprintf (char * s,
+               const char * format,
+               va_list arg)
+{
+  /*  return vsprintf (s, format, arg);*/
+  PACE_UNUSED_ARG (s);
+  PACE_UNUSED_ARG (format);
+  PACE_UNUSED_ARG (arg);
+  return -1;
 }

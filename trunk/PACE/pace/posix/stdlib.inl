@@ -16,6 +16,13 @@
 #include <stdlib.h>
 
 PACE_INLINE
+void
+pace_abort (void)
+{
+  abort ();
+}
+
+PACE_INLINE
 int
 pace_abs (int val)
 {
@@ -72,7 +79,7 @@ void
 pace_qsort (void * base, size_t nel, size_t width,
             int (*compar)(const void *, const void *))
 {
-  return qsort (base, nel, width, compar);
+  qsort (base, nel, width, compar);
 }
 
 PACE_INLINE
