@@ -1,3 +1,12 @@
+Tue Nov 18 01:37:42 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/{be_operation.cpp,be_state_operation}.cpp: We now
+	properly handle the declaration and assigining to the return
+	value.
+
+	* TAO_IDL/be/be_state_argument.cpp: Removed a spurious ()
+	appearing after a function call.
+
 Mon Nov 17 23:33:38 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/{be_structure,be_union}.cpp: Carlos had removed the
@@ -60,9 +69,9 @@ Mon Nov 17 20:05:40 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 Mon Nov 17 20:05:16 1997  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* arg_shifter.cpp: 
-	fixed a bug where in new, gcc used the address of an integer 
-	reference rather than its value. weird. 
+	* arg_shifter.cpp:
+	fixed a bug where in new, gcc used the address of an integer
+	reference rather than its value. weird.
 
 	* tao/orb_core.cpp:
 	  Modified the init routine to "consume" command line arguments it
