@@ -73,6 +73,14 @@ public:
   virtual int close (void);
   virtual int create_mprofile (const TAO_ObjectKey &object_key,
                                TAO_MProfile &mprofile);
+
+  virtual int create_endpoint_for_mprofile (const TAO_ObjectKey &object_key,
+                                            TAO_MProfile &mprofile);
+  // Rather than creating a separate profile for each endpoint, this
+  // version of <create_mprofile> method adds all endpoints to a
+  // single SSLIOP profile, i.e., <mprofile> will not contain more than
+  // one SSLIOP_Profile, no matter how many acceptors there are.
+
   virtual int is_collocated (const TAO_Endpoint* endpoint);
 
 private:
@@ -82,12 +90,6 @@ private:
   int parse_options (const char *options);
   // Parse protocol specific options.
 
-  int create_rt_mprofile (const TAO_ObjectKey &object_key,
-                          TAO_MProfile &mprofile);
-  // Rather than creating a separate profile for each endpoint, this
-  // version of <create_mprofile> method adds all endpoints to a
-  // single SSLIOP profile, i.e., <mprofile> will not contain more than
-  // one SSLIOP_Profile, no matter how many acceptors there are.
 
   int verify_secure_configuration (TAO_ORB_Core *orb_core,
                                    int major,

@@ -81,7 +81,6 @@ TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor (void)
 
 // TODO =
 //    2) For V1.[1,2] there are tagged components
-
 int
 TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                                     TAO_MProfile &mprofile)
@@ -89,17 +88,6 @@ TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
   // Sanity check.
   if (this->endpoint_count_ == 0)
     return -1;
-
-  // If RT_CORBA is enabled, only one IIOP profile is created per
-  // <mprofile>, and all IIOP endpoints are added into that profile.
-  // If RT_CORBA is not enabled, we create a separate profile for each
-  // acceptor endpoint.
-
-#if (TAO_HAS_RT_CORBA == 1)
-
-  return create_rt_mprofile (object_key, mprofile);
-
-#else  /* TAO_HAS_RT_CORBA == 1 */
 
   // Adding this->endpoint_count_ to the TAO_MProfile.
   int count = mprofile.profile_count ();
@@ -141,13 +129,11 @@ TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
     }
 
   return 0;
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
 }
 
 int
-TAO_IIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
-                                       TAO_MProfile &mprofile)
+TAO_IIOP_Acceptor::create_endpoint_for_mprofile (const TAO_ObjectKey &object_key,
+                                                 TAO_MProfile &mprofile)
 {
   size_t index = 0;
   TAO_Profile *pfile = 0;
@@ -829,10 +815,10 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("TAO (%P|%t) Invalid IIOP endpoint ")
                                    ACE_TEXT ("portspan: <%s>\n")
-                                   ACE_TEXT ("Valid range 1 -- %d\n"), 
+                                   ACE_TEXT ("Valid range 1 -- %d\n"),
                                    value.c_str (), ACE_MAX_DEFAULT_PORT),
                                   -1);
-              
+
               this->port_span_ = ACE_static_cast (u_short, range);
             }
           else

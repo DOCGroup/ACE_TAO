@@ -28,8 +28,6 @@
 
 class TAO_GIOP_Invocation;
 
-#if (TAO_HAS_RT_CORBA == 1)
-
 /**
  * @class TAO_Endpoint_Selection_State
  *
@@ -61,10 +59,10 @@ public:
   // RTCORBA policies that affect profile/endpoint selection.
   // Effective overrides of the RTCORBA policies that affect
   // profile/endpoint selection.
-  CORBA::Policy *priority_model_policy_;
-  CORBA::Policy *client_protocol_policy_;
-  CORBA::Policy *private_connection_;
-  CORBA::Policy *bands_policy_;
+  //    CORBA::Policy *priority_model_policy_;
+  //    CORBA::Policy *client_protocol_policy_;
+  //    CORBA::Policy *private_connection_;
+  //    CORBA::Policy *bands_policy_;
 
   /**
    * Index into the RTCORBA::ProtocolList of the
@@ -73,26 +71,24 @@ public:
    * TAO_Client_Priority_Policy_Selector uses this data member to keep
    * track of the profile index to try next.
    */
-  CORBA::ULong client_protocol_index_;
 
   /// Flag indicating whether at least one endpoint satisfying all the
   /// policies was found during the lifetime of this object.
-  int valid_endpoint_found_;
+  //    int valid_endpoint_found_;
 
   /// If using RTCORBA::CLIENT_PROPAGATED priority model, cache our
   /// client priority here.
-  CORBA::Short client_priority_;
+  //    CORBA::Short client_priority_;
 
   /**
    * If we need to select endpoint based on a range of priorities,
    * e.g., as in TAO_Bands_Endpoint_Selector, cache the target range
    * here.
    */
-  CORBA::Short min_priority_;
-  CORBA::Short max_priority_;
+  //    CORBA::Short min_priority_;
+  //    CORBA::Short max_priority_;
 
 };
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
 // ****************************************************************
 
@@ -130,9 +126,9 @@ public:
    * This method performs the necessary state updates, so that next
    * <select_endpoint> call picks a new endpoint.
    */
-  virtual void next (TAO_GIOP_Invocation *invocation,
-                     CORBA::Environment &ACE_TRY_ENV =
-                     TAO_default_environment ()) = 0;
+    virtual void next (TAO_GIOP_Invocation *invocation,
+                   CORBA::Environment &ACE_TRY_ENV =
+                    TAO_default_environment ()) = 0;
 
   /**
    * This method must be called if the invocation attempt on a

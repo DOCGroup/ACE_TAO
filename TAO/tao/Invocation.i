@@ -94,6 +94,56 @@ TAO_GIOP_Invocation::location_forward_i (TAO_Stub *stubobj,
   this->restart_flag_ = 1;
 }
 
+ACE_INLINE TAO_Stub *
+TAO_GIOP_Invocation::stub (void)
+{
+  return this->stub_;
+}
+
+ACE_INLINE TAO_Endpoint *
+TAO_GIOP_Invocation::endpoint (void)
+{
+  return this->endpoint_;
+}
+
+ACE_INLINE void
+TAO_GIOP_Invocation::endpoint (TAO_Endpoint *ep)
+{
+  this->endpoint_ = ep;
+}
+
+
+ACE_INLINE TAO_Profile *
+TAO_GIOP_Invocation::profile (void)
+{
+  return this->profile_;
+}
+
+
+ACE_INLINE void
+TAO_GIOP_Invocation::profile (TAO_Profile *p)
+{
+  this->profile_ = p;
+}
+
+ACE_INLINE TAO_ORB_Core *
+TAO_GIOP_Invocation::orb_core (void)
+{
+  return this->orb_core_;
+}
+
+ACE_INLINE CORBA::PolicyList_var&
+TAO_GIOP_Invocation::inconsistent_policies (void)
+{
+  return this->inconsistent_policies_;
+}
+
+ACE_INLINE CORBA::ULong&
+TAO_GIOP_Invocation::profile_index (void)
+{
+  return this->profile_index_;
+}
+
 // ****************************************************************
 
 ACE_INLINE

@@ -144,15 +144,23 @@ TAO_DIOP_Profile::decode (TAO_InputCDR& cdr)
                 cdr.length (),
                 encap_len));
 
-#if (TAO_HAS_RT_CORBA == 1)
+  // @@ RTCORBA_SUBSETTING:
+  // The original version pre-subsetting was as below. We moved this
+  // code out because it is not in the critical path, does not interfere
+  // with the correctness of the method.
+
+  if (this->decode_endpoints () == -1)
+    return -1;
+
+  //#if (TAO_HAS_RT_CORBA == 1)
   // This protection is here not for correctness but for efficiency.
   // Currently there are > 1 endpoint per profile only with RTCORBA.
 
   // Decode endpoints, if any.
-  if (this->decode_endpoints () == -1)
-    return -1;
+  //  if (this->decode_endpoints () == -1)
+  //    return -1;
 
-#endif  /* TAO_HAS_RT_CORBA == 1 */
+  // #endif  /* TAO_HAS_RT_CORBA == 1 */
 
   if (cdr.good_bit ())
     {

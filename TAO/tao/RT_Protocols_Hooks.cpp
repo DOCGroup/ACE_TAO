@@ -7,6 +7,7 @@
 #include "Stub.h"
 #include "MProfile.h"
 #include "Priority_Mapping_Manager.h"
+#include "RT_Stub.h"
 
 #include "ace/Dynamic_Service.h"
 
@@ -139,11 +140,55 @@ TAO_RT_Protocols_Hooks::validate_policy_type (CORBA::ULong type,
 }
 
 void
-TAO_RT_Protocols_Hooks::add_rt_service_context_hook (
-                           TAO_GIOP_Invocation *invocation,
-                           CORBA::Policy *model_policy,
-                           CORBA::Short &client_priority,
-                           CORBA::Environment &ACE_TRY_ENV)
+TAO_RT_Protocols_Hooks::rt_service_context (TAO_Stub *stub,
+                                            TAO_Service_Context &service_context,
+                                            CORBA::Boolean restart,
+                                            CORBA::Environment &ACE_TRY_ENV)
+{
+  // If the restart flag is true, then this call for a
+  // reinvocation. We need not prepare the Service Context List once
+  // again. We can use the already existing one.
+  if (!restart)
+    {
+      TAO_RT_Stub *rt_stub = ACE_dynamic_cast (TAO_RT_Stub *,
+                                               stub);
+      CORBA::Policy *priority_model_policy =
+        rt_stub->exposed_priority_model (ACE_TRY_ENV);
+      ACE_CHECK;
+      if (priority_model_policy)
+        {
+
+          CORBA::Policy *priority_model_policy =
+            rt_stub->exposed_priority_model (ACE_TRY_ENV);
+          ACE_CHECK;
+
+          CORBA::Short client_priority;
+          int status = this->get_thread_priority (rt_stub->orb_core (),
+                                                  client_priority,
+                                                  ACE_TRY_ENV);
+          if (status == -1)
+            ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
+
+
+          this->add_rt_service_context_hook (service_context,
+                                             priority_model_policy,
+                                             client_priority,
+                                             ACE_TRY_ENV);
+          ACE_CHECK;
+        }
+      else
+        {
+          // The Object does not contain PriorityModel policy in its IOR.
+          // We must be talking to a non-RT ORB.  Do nothing.
+        }
+    }
+}
+
+void
+TAO_RT_Protocols_Hooks::add_rt_service_context_hook (TAO_Service_Context &service_context,
+                                                     CORBA::Policy *model_policy,
+                                                     CORBA::Short &client_priority,
+                                                     CORBA::Environment &ACE_TRY_ENV)
 {
 
   RTCORBA::PriorityModelPolicy_var model_policy_ptr =
@@ -166,7 +211,6 @@ TAO_RT_Protocols_Hooks::add_rt_service_context_hook (
           == 0)
         ACE_THROW (CORBA::MARSHAL ());
 
-      TAO_Service_Context &service_context = invocation->request_service_context ();
       service_context.set_context (IOP::RTCorbaPriority, cdr);
     }
 }
