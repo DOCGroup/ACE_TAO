@@ -1,3 +1,14 @@
+Mon Jun  5 15:48:35 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/tests/ImplRepo/NameService/Makefile: (added)
+        * orbsvcs/tests/ImplRepo/NameService/run_test.pl: (added)
+        * orbsvcs/tests/ImplRepo/NameService/test.cpp: (added)
+        * orbsvcs/tests/ImplRepo/NameService/test.dsp: (added)
+        * orbsvcs/tests/ImplRepo/NameService/test.dsw: (added)
+
+          Added a new test for starting the Naming Service
+          via the implementation Repository.
+
 Mon Jun  5 17:39:16 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/tests/Notify/lib/Notify_Test_Client.{h, cpp}:
