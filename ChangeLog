@@ -1,3 +1,23 @@
+Thu Mar  4 13:19:06 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/DependencyGenerator/DependencyEditor.pm:
+        * bin/DependencyGenerator/DependencyGenerator.pm:
+        * bin/DependencyGenerator/Preprocessor.pm:
+        * bin/depgen.pl:
+
+          Added an option to exclude dependency information from user
+          specified files.
+
+        * include/makeinclude/rules.local.GNU:
+
+          Added the option to exclude dependencies found from config.h to
+          avoid pulling in files such as config-linux.h, config-sunos5.6.h,
+          etc.
+
+        * bin/g++dep:
+
+          Added an option to be compatible with depgen.pl.
+
 Thu Mar  4 11:17:27 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/AutomakeProjectCreator.pm:

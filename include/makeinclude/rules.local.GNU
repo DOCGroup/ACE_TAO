@@ -381,16 +381,14 @@ depend.local: $(DEPENDENCY_FILE)
 -include $(DEPENDENCY_FILE)
 endif
 
-ifndef DEPGEN
-  DEPGEN = $(ACE_ROOT)/bin/g++dep
-endif
+DEPGEN ?= $(ACE_ROOT)/bin/g++dep
 
 depend.local: $(MAKEFILE) idl_stubs.local
 	@$(RM) $(DEPENDENCY_FILE).old
 	@cp $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old
 	ACE_PLATFORM_CONFIG=$(ACE_PLATFORM_CONFIG) OBJEXT=$(OBJEXT) SOEXT=$(SOEXT) \
 	VDIR=$(VDIR) VSHDIR=$(VSHDIR) ACE_DEPEND_SED_CMD="$(ACE_DEPEND_SED_CMD)" \
-	$(DEPGEN) -A $(DEPEND_CMD_ARGS) -f $(DEPENDENCY_FILE) $(CPPFLAGS) \
+	$(DEPGEN) -A $(DEPEND_CMD_ARGS) -e config.h -f $(DEPENDENCY_FILE) $(CPPFLAGS) \
 	-DMAKEDEPEND $(LSRC) $(SRC) $(PSRC)
 	@if cmp -s $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old ;\
 	then echo "Makefile dependencies unchanged." ;\
