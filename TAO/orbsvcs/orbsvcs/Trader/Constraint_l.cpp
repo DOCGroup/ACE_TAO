@@ -36,15 +36,6 @@
 #endif	/* __STDC__ */
 #endif	/* ! __cplusplus */
 
-#ifdef __TURBOC__
- #pragma warn -rch
- #pragma warn -use
-#include <io.h>
-#include <stdlib.h>
-#define YY_USE_CONST
-#define YY_USE_PROTOS
-#endif
-
 #ifdef YY_USE_CONST
 #define yyconst const
 #else
@@ -427,7 +418,7 @@ char *yytext;
 //
 // ========================================================================
 
-#include "Constraint.h"
+#include "Constraint_Interpreter.h"
 #include "Constraint_Nodes.h"
 #include "Constraint_Tokens.h"
 
@@ -436,7 +427,7 @@ static TAO_Literal_Constraint* extract_string(const char*);
 #define TAO_YY_LEX_DEBUG
 
 #ifdef TAO_CONSTRAINT_DEBUG
-#define TAO_YY_LEX_DEBUG TAO_OS::fprintf(stderr, "%s\n", yytext)
+#define TAO_YY_LEX_DEBUG ACE_OS::fprintf(stderr, "%s\n", yytext)
 #endif /* TAO_CONSTRAINT_DEBUG */
 
 

@@ -19,16 +19,7 @@
 #define TAO_TRADER_C
 
 #include "Trader_T.h"
-
-#if defined(_MSC_VER)
-#pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
-#include "Lookup.h"
-#include "Register.h"
-#include "Link.h"
-#include "Proxy.h"
-#include "Admin.h"
+#include "Trader_Interfaces.h" 
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> 
 TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::
@@ -105,10 +96,10 @@ TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::~TAO_Trader (void)
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
-TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::Service_Type_Map&
-TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::service_type_map (void) 
+TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::Offer_Database&
+TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::offer_database (void) 
 {
-  return this->service_type_map_;
+  return this->offer_database_;
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> ACE_Lock &

@@ -17,7 +17,7 @@
 #ifndef TAO_CONSTRAINT_NODES_H
 #define TAO_CONSTRAINT_NODES_H
 
-#include "Constraint_Visitor.h"
+//#include "Constraint_Visitors.h"
 #include "Constraint_Tokens.h"
 
 #include "orbsvcs/CosTradingC.h"
@@ -27,6 +27,7 @@
 #pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
+class TAO_Constraint_Visitor;
 typedef unsigned short TAO_Expression_Type;
 
 class TAO_Constraint
@@ -44,27 +45,27 @@ class TAO_Constraint
 {
 public:
 
-  virtual int accept(TAO_Constraint_Visitor* visitor) = 0;
+  virtual int accept (TAO_Constraint_Visitor* visitor) = 0;
   // Implementing the pattern of double dispatching, each subclass of
   // TAO_Constraint will call back on an InterpreterVisitor the
   // method to handle a node of its ExpressionType.
   
-  virtual TAO_Expression_Type expr_type(void) const = 0;
+  virtual TAO_Expression_Type expr_type (void) const = 0;
   // Return the expression type represented by this node.
   
-  virtual ~TAO_Constraint(void) {}  
+  virtual ~TAO_Constraint (void) {}  
 };
 
 class TAO_Noop_Constraint : public TAO_Constraint
 {
 public:
 
-  TAO_Noop_Constraint(TAO_Expression_Type type)
+  TAO_Noop_Constraint (TAO_Expression_Type type)
     : type_ (type) {}
   
-  virtual int accept(TAO_Constraint_Visitor* visitor);
+  virtual int accept (TAO_Constraint_Visitor* visitor);
 
-  virtual TAO_Expression_Type expr_type(void) const
+  virtual TAO_Expression_Type expr_type (void) const
     { return this->type_; }
 
 private:
@@ -80,41 +81,41 @@ class TAO_Binary_Constraint : public TAO_Constraint
 {
 public:
   
-  TAO_Binary_Constraint(TAO_Expression_Type op_type,
-				  TAO_Constraint* left,
-				  TAO_Constraint* right);
+  TAO_Binary_Constraint (TAO_Expression_Type op_type,
+			 TAO_Constraint* left,
+			 TAO_Constraint* right);
 
-  virtual int accept(TAO_Constraint_Visitor* visitor);
+  virtual int accept (TAO_Constraint_Visitor* visitor);
 
-  virtual ~TAO_Binary_Constraint(void);
+  virtual ~TAO_Binary_Constraint (void);
 
-  virtual TAO_Expression_Type expr_type(void) const
+  virtual TAO_Expression_Type expr_type (void) const
     { return this->op_; }
   
-  TAO_Constraint* left_operand(void);
+  TAO_Constraint* left_operand (void) const;
   // Return the left operand of the binary expression
   
-  TAO_Constraint* right_operand(void);
+  TAO_Constraint* right_operand (void) const;
   // Return the right operand of the binary expression
 
   // Allow double dispatching without creating an inundation of
   // classes by using a dispatch table of static method pointers to
   // invoke the correct visitor method as efficiently as a virtual
   // method invocation.
-  static int visit_or(TAO_Constraint_Visitor*, TAO_Binary_Constraint*);
-  static int visit_and(TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
-  static int visit_less_than(TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
-  static int visit_less_than_equal(TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
-  static int visit_greater_than(TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
-  static int visit_greater_than_equal(TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
-  static int visit_equal(TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
-  static int visit_not_equal(TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
-  static int visit_add(TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
-  static int visit_sub(TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
-  static int visit_mult(TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
-  static int visit_div(TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
-  static int visit_twiddle(TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
-  static int visit_in(TAO_Constraint_Visitor* , TAO_Binary_Constraint*);  
+  static int visit_or (TAO_Constraint_Visitor*, TAO_Binary_Constraint*);
+  static int visit_and (TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
+  static int visit_less_than (TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
+  static int visit_less_than_equal (TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
+  static int visit_greater_than (TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
+  static int visit_greater_than_equal (TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
+  static int visit_equal (TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
+  static int visit_not_equal (TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
+  static int visit_add (TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
+  static int visit_sub (TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
+  static int visit_mult (TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
+  static int visit_div (TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
+  static int visit_twiddle (TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
+  static int visit_in (TAO_Constraint_Visitor* , TAO_Binary_Constraint*);  
   
 private:
   
@@ -134,17 +135,17 @@ class TAO_Unary_Constraint : public TAO_Constraint
 {
 public:
   
-  TAO_Unary_Constraint(TAO_Expression_Type op_type,
+  TAO_Unary_Constraint (TAO_Expression_Type op_type,
 				 TAO_Constraint* operand);
   
-  virtual ~TAO_Unary_Constraint(void);
+  virtual ~TAO_Unary_Constraint (void);
   
-  virtual int accept(TAO_Constraint_Visitor* visitor);
+  virtual int accept (TAO_Constraint_Visitor* visitor);
 
-  virtual TAO_Expression_Type expr_type(void) const
+  virtual TAO_Expression_Type expr_type (void) const
     { return this->op_; }
   
-  TAO_Constraint* operand(void);
+  TAO_Constraint* operand (void);
   
 private:
 
@@ -163,16 +164,16 @@ class TAO_Property_Constraint : public TAO_Constraint
 {
 public:
   
-  TAO_Property_Constraint(const char* name);
+  TAO_Property_Constraint (const char* name);
 
-  virtual ~TAO_Property_Constraint(void);
+  virtual ~TAO_Property_Constraint (void);
   
-  virtual int accept(TAO_Constraint_Visitor* visitor);
+  virtual int accept (TAO_Constraint_Visitor* visitor);
 
-  virtual TAO_Expression_Type expr_type(void) const
+  virtual TAO_Expression_Type expr_type (void) const
     { return TAO_IDENT; }
   
-  const char* name(void) const;
+  const char* name (void) const;
   // Returns the name of the property.
   
 private:
@@ -189,39 +190,39 @@ class TAO_Literal_Constraint : public TAO_Constraint
 {
  public:
 
-  TAO_Literal_Constraint(void)
+  TAO_Literal_Constraint (void)
     : type_ (TAO_UNKNOWN) {}
 
   // = Constructors for each of the various types of literals.
   
-  TAO_Literal_Constraint(CORBA::Any* any);
+  TAO_Literal_Constraint (CORBA::Any* any);
   
-  TAO_Literal_Constraint(CORBA::ULong uinteger);
+  TAO_Literal_Constraint (CORBA::ULong uinteger);
 
-  TAO_Literal_Constraint(CORBA::Long integer);
+  TAO_Literal_Constraint (CORBA::Long integer);
 
-  TAO_Literal_Constraint(CORBA::Boolean boolean);
+  TAO_Literal_Constraint (CORBA::Boolean boolean);
 
-  TAO_Literal_Constraint(CORBA::Double doub);
+  TAO_Literal_Constraint (CORBA::Double doub);
   
-  TAO_Literal_Constraint(const char* str);
+  TAO_Literal_Constraint (const char* str);
 
   TAO_Literal_Constraint (const TAO_Literal_Constraint& lit);
   
   ~TAO_Literal_Constraint(void);
   
-  virtual int accept(TAO_Constraint_Visitor* visitor);
+  virtual int accept (TAO_Constraint_Visitor* visitor);
   
-  virtual TAO_Expression_Type expr_type(void) const
+  virtual TAO_Expression_Type expr_type (void) const
     { return type_; }
 
   void operator= (const TAO_Literal_Constraint& co);
   
   // Conversion routines.
-  operator CORBA::Boolean(void) const;
-  operator CORBA::ULong(void) const;
-  operator CORBA::Long(void) const; 
-  operator CORBA::Double(void) const;
+  operator CORBA::Boolean (void) const;
+  operator CORBA::ULong (void) const;
+  operator CORBA::Long (void) const; 
+  operator CORBA::Double (void) const;
   operator const char* (void) const;
   operator const CORBA::Any* (void) const; 
   
