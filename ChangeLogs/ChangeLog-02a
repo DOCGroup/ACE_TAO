@@ -6,7 +6,7 @@ Sat May 11 13:04:49 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 Sun May 12 09:45:37 2002   Edan Ayal <edanayal@yahoo.com>
 
-	* ace/WIN32_Asynch_IO.cpp (send): Fixed check for ACE_IOV_MAX
+	* ace/WIN32_Asynch_IO.cpp: Fixed check for ACE_IOV_MAX
 	  limitation in the following methods:  
 	  - ACE_WIN32_Asynch_Read_Dgram::recv
 	  - ACE_WIN32_Asynch_Write_Dgram::send
