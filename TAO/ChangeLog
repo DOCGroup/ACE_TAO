@@ -1,3 +1,14 @@
+Tue Feb  1 11:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicAny/DynamicAnyC.{h,cpp,i,inl}:
+          Regenerated and replace .i with .inl file
+
+        * tao/Makefile.am:
+          Updated because of change above
+
+        * tao/DynamicAny/diffs/DynamicAny.diff:
+          Updated
+
 Tue Feb  1 10:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ObjRefTemplate/ObjectReferenceTemplateA.cpp:
