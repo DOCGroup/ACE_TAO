@@ -1128,7 +1128,7 @@ ACE_Thread_Manager::cancel_thr (ACE_Thread_Descriptor *td, int async_cancel)
     // Note that this call only does something relevant if the OS
     // platform supports asynchronous thread cancellation.  Otherwise,
     // it's a no-op.
-    ACE_Thread::cancel (td->thr_id_);
+    return ACE_Thread::cancel (td->thr_id_);
 
   return 0;
 }
