@@ -1,3 +1,8 @@
+Fri Jul 09 00:11:35 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Connector_Registry.cpp (preprocess_preconnects): Added a
+	  static cast to a ssize_t value to avoid MSVC warnings.
+
 Thu Jul  8 23:34:42 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Persistent_Grid/README:
@@ -21,8 +26,8 @@ Thu Jul  8 23:34:42 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* examples/Persistent_Grid/Persistent_Grid_Client_Second_Files.dsp:
 	  A new example added to show the persistence nature of the
 	  server. Please refer to the README file in that directory for
-	  info on how to build and run the tests. 
-	
+	  info on how to build and run the tests.
+
 Thu Jul 08 23:29:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Servant_Base.{h,cpp}: Removed the _create_collocated_objref method.
