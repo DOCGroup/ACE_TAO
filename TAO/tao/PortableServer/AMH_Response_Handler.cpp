@@ -10,14 +10,11 @@
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/debug.h"
-//#include "tao/Exception.h"
-//#include "tao/corbafwd.h"
 
 TAO_AMH_Response_Handler::
 TAO_AMH_Response_Handler (TAO_ServerRequest &server_request)
   : mesg_base_ (server_request.mesg_base_)
   , request_id_ (server_request.request_id_)
-  //  , response_expected_ (server_request.response_expected_)
   , transport_ (TAO_Transport::_duplicate (server_request.transport ()))
   , orb_core_ (server_request.orb_core ())
   , argument_flag_ (1)
@@ -29,7 +26,7 @@ TAO_AMH_Response_Handler (TAO_ServerRequest &server_request)
 TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler (void)
 {
   // Since we are destroying the object we put a huge lock around the
-  // whole destruction process.
+  // whole destruction process (just paranoid).
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
@@ -49,6 +46,8 @@ TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler (void)
                                             CORBA::COMPLETED_NO);
             this->_tao_rh_send_exception (ex ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
+
+            TAO_Transport::release (transport_);
           }
         ACE_CATCHALL
           {
@@ -56,13 +55,13 @@ TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler (void)
           }
         ACE_ENDTRY;
       }
-    TAO_Transport::release (transport_);
+    else
+      {
+        TAO_Transport::release (transport_);
+      }
   }
 }
 
-// @@ Mayur: change the signature of this function to use
-// ACE_ENV_SINGLE_ARG_DECL... and then change the generated code in
-// the IDL compiler too!
 void
 TAO_AMH_Response_Handler::_tao_rh_init_reply (ACE_ENV_SINGLE_ARG_DECL)
 {
@@ -77,8 +76,8 @@ TAO_AMH_Response_Handler::_tao_rh_init_reply (ACE_ENV_SINGLE_ARG_DECL)
         // request and is now trying to send back the reply.  Hence we
         // say that the operation has completed but let the server
         // anyway that it is not doing something right.
-        ACE_THROW (CORBA::BAD_INV_ORDER 
-                          (CORBA::SystemException::_tao_minor_code 
+        ACE_THROW (CORBA::BAD_INV_ORDER
+                          (CORBA::SystemException::_tao_minor_code
                                   (TAO_AMH_REPLY_LOCATION_CODE,
                                    EEXIST),
                            CORBA::COMPLETED_YES));
@@ -102,7 +101,7 @@ TAO_AMH_Response_Handler::_tao_rh_init_reply (ACE_ENV_SINGLE_ARG_DECL)
 
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-    
+
     this->mesg_base_->generate_reply_header (this->_tao_out,
                                              reply_params);
 
@@ -118,8 +117,8 @@ TAO_AMH_Response_Handler::_tao_rh_send_reply (ACE_ENV_SINGLE_ARG_DECL)
 
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-    
-    // If the reply has not been initialised, raise an exception to the 
+
+    // If the reply has not been initialised, raise an exception to the
     // server-app saying it is not doing something right.
     if (this->reply_status_ != TAO_RS_INITIALIZED)
       {
@@ -144,7 +143,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_reply (ACE_ENV_SINGLE_ARG_DECL)
           ACE_ERROR ((
                       LM_ERROR,
                       ACE_TEXT ("TAO: (%P|%t) %p: cannot send NO_EXCEPTION reply\n"),
-                      ACE_TEXT ("TAO_GIOP_ServerRequest::send_no_exception_reply")
+                      ACE_TEXT ("TAO_AMH_Response_Handler::_tao_rh_send_reply")
                       ));
         }
     }
@@ -190,15 +189,15 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (CORBA::Exception &ex
     {
       ACE_THROW (CORBA::INTERNAL ());
     }
-  
+
   // Send the Exception
   if (this->transport_->send_message (this->_tao_out) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO: (%P|%t|%N|%l):  ")
-                  ACE_TEXT ("could not send exception reply\n")));
+                  ACE_TEXT ("TAO_AMH_Response_Handler: could not send exception reply\n")));
     }
-  
+
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     this->reply_status_ = TAO_RS_SENT;
