@@ -1,7 +1,0 @@
-#
-# Makefile for building the IFR Service executable and library
-#
-
-MAKEFILES = TypeCodeFactory_DLL.bor IFR_Service.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

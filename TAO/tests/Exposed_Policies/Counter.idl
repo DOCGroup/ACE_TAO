@@ -1,8 +1,0 @@
-//$Id$
-
-interface Counter
-{
-  void increment ();
-  long get_count ();
-  oneway void shutdown ();
-};
