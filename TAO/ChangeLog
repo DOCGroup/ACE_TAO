@@ -1,3 +1,9 @@
+Wed Nov 26 10:20:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Servant_To_Reference_Test/server.cpp:
+
+	  Fixed a warning in g++ builds.
+
 Wed Nov 26 15:20:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAOACE.dsw:
