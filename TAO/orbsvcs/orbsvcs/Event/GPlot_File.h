@@ -1,14 +1,13 @@
-// $Id$
-//
-// ============================================================================
-//
-// = FILENAME
-//    GPlot_File.h
-//
-// = AUTHOR
-//    Tim Harrison
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    GPlot_File.h
+ *
+ *  $Id$
+ *
+ *  @author Tim Harrison
+ */
+//=============================================================================
+
 
 #ifndef ACE_GPlot_File_H
 #define ACE_GPlot_File_H
@@ -23,62 +22,66 @@
 
 #include "ace/Synch.h"
 
+/**
+ * @class ACE_GPlot_File
+ *
+ * @brief Reads and writes files in GPlot format.
+ *
+ * Gplot formats are as follows:
+ * entry   value
+ * entry   value
+ * entry   value
+ * ...
+ * They represent x,y pairs to be graphed by GPlot.  entry's are
+ * type long.  value's are type long or float.
+ */
 class TAO_RTOLDEvent_Export ACE_GPlot_File
-// = TITLE
-//    Reads and writes files in GPlot format.
-//
-// = DESCRIPTION
-//    Gplot formats are as follows:
-//      entry   value
-//      entry   value
-//      entry   value
-//        ...
-//    They represent x,y pairs to be graphed by GPlot.  entry's are
-//    type long.  value's are type long or float.
 {
 public:
+  /// Construction.
   ACE_GPlot_File (void);
-  // Construction.
 
+  /// Destruction.  Calls this->close.
   ~ACE_GPlot_File (void);
-  // Destruction.  Calls this->close.
 
+  /**
+   * If the file does not exist, create it. If the file exists open
+   * the file and read all the entries into map_.  Returns 0 on
+   * success, -1 on failure.
+   */
   int open (const char *filename);
-  // If the file does not exist, create it. If the file exists open
-  // the file and read all the entries into map_.  Returns 0 on
-  // success, -1 on failure.
 
+  /// Close the file and sync all the contents.
   void close (void);
-  // Close the file and sync all the contents.
 
+  /// Get the entry at this value.  Returns 0 if a value was found.
+  /// Returns -1 if no value has been set for <entry>.
   int get (long entry, long &value);
-  // Get the entry at this value.  Returns 0 if a value was found.
-  // Returns -1 if no value has been set for <entry>.
 
+  /// Get the entry at this value.  Returns 0 if a value was found.
+  /// Returns -1 if no value has been set for <entry>.
   int get (long entry, float &value);
-  // Get the entry at this value.  Returns 0 if a value was found.
-  // Returns -1 if no value has been set for <entry>.
 
+  /// Set the entry at this value.
   void set (long entry, long value);
-  // Set the entry at this value.
 
+  /// Set the entry at this value.
   void set (long entry, float value);
-  // Set the entry at this value.
 
+  /// Compare <value> with the value at <entry>.  Store the largest.
   void set_greatest (long entry, long value);
-  // Compare <value> with the value at <entry>.  Store the largest.
 
+  /// Compare <value> with the value at <entry>.  Store the largest.
   void set_greatest (long entry, float value);
-  // Compare <value> with the value at <entry>.  Store the largest.
 
+  /// Compare <value> with the value at <entry>.  Store the smallest.
   void set_least (long entry, long value);
-  // Compare <value> with the value at <entry>.  Store the smallest.
 
+  /// Compare <value> with the value at <entry>.  Store the smallest.
   void set_least (long entry, float value);
-  // Compare <value> with the value at <entry>.  Store the smallest.
 
+  /// Dump state of the object.
   void dump (void);
-  // Dump state of the object.
 
 private:
   // = map_ stores all values.  It is sync'ed to file when this->close
@@ -92,8 +95,8 @@ private:
   char filename_[BUFSIZ];
   FILE *write_file_;
 
+  /// Only close once.
   int closed_;
-  // Only close once.
 };
 
 #if defined (__ACE_INLINE__)

@@ -1,24 +1,21 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    ORB Services
-//
-// = FILENAME
-//    Local_ESTypes.h
-//
-// = AUTHOR
-//    Tim Harrison (harrison@cs.wustl.edu)
-//
-// = DESCRIPTION
-//    Manual types that would otherwise be defined/implemented via an
-//    IDL compiler.
-//    NOTE: the file is obsolecent, we have TAO now, but we keep it
-//    to speed up the porting.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Local_ESTypes.h
+ *
+ *  $Id$
+ *
+ *  @author Tim Harrison (harrison@cs.wustl.edu)
+ *
+ *  Manual types that would otherwise be defined/implemented via an
+ *  IDL compiler.
+ *  NOTE: the file is obsolecent, we have TAO now, but we keep it
+ *  to speed up the porting.
+ *
+ *
+ */
+//=============================================================================
+
 
 #ifndef ACE_LOCAL_ESTYPES_H
 #define ACE_LOCAL_ESTYPES_H
