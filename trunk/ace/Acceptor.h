@@ -52,7 +52,7 @@ public:
   // "Do-nothing" constructor.
 
   ACE_Acceptor (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-		ACE_Reactor * = ACE_Reactor::instance(),
+		ACE_Reactor * = ACE_Reactor::instance (),
 		int flags = 0);
   // Initialize and register <this> with the Reactor and listen for
   // connection requests at the designated <local_addr>.  <flags>

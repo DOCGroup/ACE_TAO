@@ -42,13 +42,13 @@ class ACE_Export ACE
   
 public:
   // = ACE version information.
-  static u_int major_version ();
+  static u_int major_version (void);
   // E.g., the "4" in ACE 4.3.19.
 
-  static u_int minor_version ();
+  static u_int minor_version (void);
   // E.g., the "3" in ACE 4.3.19.
 
-  static u_int beta_version ();
+  static u_int beta_version (void);
   // E.g., the "19" in ACE 4.3.19.  Returns 0 for "stable" (non-beta) releases.
 
   // = Recv operations that factor out differences between Win32 and UNIX.
@@ -413,15 +413,18 @@ public:
   // otherwise returns a dynamically allocated buffer containing
   // "<pathname>.exe".  Always returns <pathname> on UNIX.
 
-  static const char *basename (const char *pathname, char delim);
+  static const char *basename (const char *pathname,
+			       char delim);
   // Returns the "basename" of a <pathname>.
 
 #if defined (ACE_HAS_UNICODE)
-  static const wchar_t *basename (const wchar_t *pathname, wchar_t delim);
+  static const wchar_t *basename (const wchar_t *pathname,
+				  wchar_t delim);
   // Returns the "basename" of a <pathname>.
 #endif /* ACE_HAS_UNICODE */
 
-  static char *timestamp (char date_and_time[], int time_len);
+  static char *timestamp (char date_and_time[],
+			  int time_len);
   // Returns the current timestamp in the form
   // "hour:minute:second:microsecond."  The month, day, and year are
   // also stored in the beginning of the date_and_time array.  Returns
@@ -446,7 +449,8 @@ public:
   // apply the appropriate prefix (e.g., "lib" on UNIX and "" on
   // Win32) if the <filename> doesn't match directly.
 
-  static FILE *ldopen (const char *filename, const char *type);
+  static FILE *ldopen (const char *filename,
+		       const char *type);
   // Uses <ldopen> to locate and open the appropriate <filename> and
   // returns a pointer to the file, else it returns a NULL
   // pointer. <type> specifies how the file should be open.

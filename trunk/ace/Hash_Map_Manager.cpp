@@ -149,8 +149,9 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close_i (void)
               hold_ptr->ACE_Hash_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Map_Entry ();
               this->allocator_->free (hold_ptr);
             }
-          // Now deal with the sentinal
-          // Explicitly call the destructor.
+
+          // Now deal with the sentinel by explicitly calling the
+          // destructor.
           table_[i].ACE_Hash_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Map_Entry ();
         }
 

@@ -347,7 +347,9 @@ ACE::crc32 (const char *string)
 
   u_long len = 0;
 
-  for (const char *p = string; *p != 0; ++p)
+  for (const char *p = string;
+       *p != 0;
+       ++p)
     {
       COMPUTE (crc, *p);
       ++len;
@@ -360,8 +362,6 @@ ACE::crc32 (const char *string)
 
   return ~crc;
 }
-
-//****************************************************************
 
 size_t
 ACE::strrepl (char *s, char search, char replace)
@@ -741,11 +741,14 @@ ACE::send_n (ACE_HANDLE handle,
   size_t bytes_written;
   ssize_t n = 0;
 
-  for (bytes_written = 0; bytes_written < len; bytes_written += n)
+  for (bytes_written = 0;
+       bytes_written < len;
+       bytes_written += n)
     {
-      n = ACE_OS::send (handle, (const char *) buf + bytes_written,
-                        len - bytes_written, flags);
-
+      n = ACE_OS::send (handle,
+                        (const char *) buf + bytes_written,
+                        len - bytes_written,
+                        flags);
       if (n == -1)
         {
           if (errno != EWOULDBLOCK)

@@ -27,7 +27,8 @@ class ACE_Export ACE_Addr
 public:
   // = Initialization method.
 
-  ACE_Addr (int type = -1, int size = -1);
+  ACE_Addr (int type = -1,
+            int size = -1);
   // Initializes instance variables. 
 
   // = Get/set the size of the address. 
@@ -49,7 +50,8 @@ public:
   virtual void *get_addr (void) const;
   // Return a pointer to the address.
 
-  virtual void set_addr (void *, int len);
+  virtual void set_addr (void *,
+                         int len);
   // Set a pointer to the address.
 
   // = Equality/inequality tests
@@ -59,11 +61,12 @@ public:
   int operator != (const ACE_Addr &sap) const;
   // Check for address inequality.
 
-  void base_set (int type, int size);
+  void base_set (int type,
+                 int size);
   // Initializes instance variables.
 
 #if defined (ACE_HAS_BROKEN_SAP_ANY)
-  static const ACE_Addr sap_any (void);
+  static const ACE_Addr &sap_any (void);
   // Wild-card address.
 
   // This #define works around broken C++ compilers...

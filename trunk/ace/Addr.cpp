@@ -10,7 +10,8 @@
 // This is a static class variable.
 const ACE_Addr ace_sap_any (AF_ANY, -1);
 
-const ACE_Addr ACE_Addr::sap_any (void)
+const ACE_Addr &
+ACE_Addr::sap_any (void)
 {
   return ace_sap_any;
 }

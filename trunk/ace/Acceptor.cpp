@@ -183,7 +183,8 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE,
       // accept_strategy_...
 
       this->reactor_->remove_handler
-        (handle, ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL);
+        (handle,
+         ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL);
 
       // Shut down the listen socket to recycle the handles.
       if (this->peer_acceptor_.close () == -1)
@@ -294,7 +295,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
   // Default is "timeout (0, 0)," which means "poll."
   ACE_Time_Value timeout;
 
-  // Accept connections from clients (note that a loop is used for two
+  // Accept connections from clients.  Note that a loop is used for two
   // reasons:
   //
   // 1. It allows us to accept all pending connections without an
@@ -302,7 +303,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
   //    non-blocking I/O...
   //
   // 2. It allows the TLI_SAP::ACE_Acceptor class to work correctly (don't
-  //    ask -- TLI is *horrible*...)).
+  //    ask -- TLI is *horrible*...).
 
   // @@ What should we do if any of the substrategies fail?  Right
   // now, we just log an error message and return 0 (which means that
@@ -646,6 +647,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (char **strp,
                                                                size_t length) const
 {
   ACE_TRACE ("ACE_Strategy_Acceptor::info");
+
   char buf[BUFSIZ];
   char service_addr_str[BUFSIZ];
   ACE_PEER_ACCEPTOR_ADDR addr;
