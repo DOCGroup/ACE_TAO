@@ -67,8 +67,6 @@ public:
   CORBA::ValueFactoryBase *operator-> (void) const;
 
   /// in, inout, out, _retn
-  operator const CORBA::ValueFactoryBase *&() const;
-  operator CORBA::ValueFactoryBase *&();
   CORBA::ValueFactoryBase *in (void) const;
   CORBA::ValueFactoryBase *&inout (void);
   CORBA::ValueFactoryBase *&out (void);

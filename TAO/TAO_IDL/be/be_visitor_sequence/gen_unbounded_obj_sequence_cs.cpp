@@ -136,8 +136,16 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
 
   if (pt->node_type () == AST_Decl::NT_valuetype)
     {
-      *os << "tao_" << pt->flat_name () << "_add_ref (old[i]);" << be_nl
-          << "tmp[i] = old[i];";
+      if (bt_is_defined)
+        {
+          *os << "CORBA::add_ref (old[i]);";
+        }
+      else
+        {
+          *os << "tao_" << pt->flat_name () << "_add_ref (old[i]);";
+        }
+
+      *os << be_nl << "tmp[i] = old[i];";
     }
   else
     {
@@ -191,8 +199,16 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
 
   if (pt->node_type () == AST_Decl::NT_valuetype)
     {
-      *os << "tao_" << pt->flat_name () << "_remove_ref (tmp[i]);" << be_nl
-          << "tmp[i] = 0;";
+      if (bt_is_defined)
+        {
+          *os << "CORBA::remove_ref (tmp[i]);";
+        }
+      else
+        {
+          *os << "tao_" << pt->flat_name () << "_remove_ref (tmp[i]);";
+        }
+
+      *os << be_nl << "tmp[i] = 0;";
     }
   else if (bt_is_defined)
     {
@@ -242,8 +258,16 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
 
   if (pt->node_type () == AST_Decl::NT_valuetype)
     {
-      *os << "tao_" << pt->flat_name () << "_remove_ref (tmp[i]);" << be_nl
-          << "tmp[i] = 0;";
+      if (bt_is_defined)
+        {
+          *os << "CORBA::remove_ref (tmp[i]);";
+        }
+      else
+        {
+          *os << "tao_" << pt->flat_name () << "_remove_ref (tmp[i]);";
+        }
+
+      *os << be_nl << "tmp[i] = 0;";
     }
   else if (bt_is_defined)
     {

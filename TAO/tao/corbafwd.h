@@ -1068,18 +1068,8 @@ TAO_NAMESPACE CORBA
         dk_ValueBox,
         dk_ValueMember,
         dk_Native,
-
-        // CORBA 2.x version.
         dk_AbstractInterface,
         dk_LocalInterface,
-
-        // CCM version. These do not have the
-        // correct values (position in the enum)
-        // but are included so we can compile
-        // as much of the IFR CCM implementation
-        // as possible. When the two OMG versions
-        // of Interface.idl come into line, this
-        // enum will change to reflect that.
         dk_Component,
         dk_Home,
         dk_Factory,
@@ -1089,7 +1079,8 @@ TAO_NAMESPACE CORBA
         dk_Publishes,
         dk_Consumes,
         dk_Provides,
-        dk_Uses
+        dk_Uses,
+        dk_Event
     };
 
   typedef DefinitionKind &DefinitionKind_out;

@@ -180,34 +180,6 @@ AST_Module::fe_add_module (AST_Module *t)
                                       d);
           return 0;
         }
-        // If our platform supports namespaces, we allow reopening
-        // modules. However, if namespace support is not available, this is
-        // flagged as an error.
-
-#ifndef ACE_HAS_USING_KEYWORD
-      if (this->referenced (d, t->local_name ())
-          && !d->imported ()
-          && !ACE_BIT_ENABLED (idl_global->compile_flags (),
-                               IDL_CF_NOWARNINGS))
-        {
-          UTL_String *s = t->file_name ();
-          long lineno = t->line ();
-
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              ACE_TEXT ("%s:warning: %s:%d: %s%s"),
-              ACE_TEXT (idl_global->prog_name ()),
-              ACE_TEXT ((idl_global->read_from_stdin ()
-                           ? "standard input"
-                           : s->get_string ())),
-              lineno,
-              ACE_TEXT ("Reopening module but platform does not support\n"),
-              ACE_TEXT (" namespaces, generated code may not compile\n")
-            ),
-            0
-          );
-        }
-#endif /* ACE_HAS_USING_KEYWORD */
 
       m = AST_Module::narrow_from_decl (d);
 
@@ -219,6 +191,32 @@ AST_Module::fe_add_module (AST_Module *t)
               idl_global->err ()->redefinition_in_scope (t,
                                                          d);
               return 0;
+            }
+        }
+
+      const char *prev_prefix = d->prefix ();
+      const char *this_prefix = this->prefix ();
+
+      if (ACE_OS::strcmp (this_prefix, "") == 0)
+        {
+          this->prefix (ACE_const_cast (char *, prev_prefix));
+        }
+      else
+        {
+          if (ACE_OS::strcmp (prev_prefix, "") == 0)
+            {
+              d->prefix (ACE_const_cast (char *, this_prefix));
+            }
+          else
+            {
+              if (ACE_OS::strcmp (this_prefix, prev_prefix) != 0)
+                {
+                  idl_global->err ()->error2 (UTL_Error::EIDL_PREFIX_CONFLICT,
+                                              this,
+                                              d);
+
+                  return 0;
+                }
             }
         }
     }
