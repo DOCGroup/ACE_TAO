@@ -1,3 +1,14 @@
+Tue Jul 18 11:33:16 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/setjmp.h:
+	* pace/win32/setjmp.inl:
+
+	  Eliminated support sig(setjmp/longjmp).
+
+	* docs/PACE_POSIX_support.txt:
+
+	  Updated.
+
 Mon Jul 17 18:29:27 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/semaphore.h:
