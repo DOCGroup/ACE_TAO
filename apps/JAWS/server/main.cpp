@@ -33,7 +33,7 @@ main (int argc, char *argv[])
 
   // SigAction not needed since the handler will shutdown the server.
   ACE_OS::signal (SIGINT, (ACE_SignalHandler) handler);
-  ACE_OS::signal (SIGUSR1, (ACE_SignalHandler) handler);
+  ACE_OS::signal (SIGUSR2, (ACE_SignalHandler) handler);
 
   if (daemon.open (argc, argv) != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 1);
