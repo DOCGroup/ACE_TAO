@@ -16,20 +16,21 @@ IDLFILES = \
 
 OBJFILES = \
 	$(OBJDIR)\IIOP_SSL_Acceptor.obj \
-	$(OBJDIR)\IIOP_SSL_Connect.obj \
+	$(OBJDIR)\IIOP_SSL_Connection_Handler.obj \
 	$(OBJDIR)\IIOP_SSL_Connector.obj \
-	$(OBJDIR)\SSLIOP_Current.obj \
-	$(OBJDIR)\SSLIOP_Current_Impl.obj \
-	$(OBJDIR)\SSLIOP_Invocation_Interceptor.obj \
-	$(OBJDIR)\SSLIOP_ORBInitializer.obj \
         $(OBJDIR)\ssl_endpoints.obj \
-	$(OBJDIR)\SSLIOP_Factory.obj \
-	$(OBJDIR)\SSLIOP_Profile.obj \
-	$(OBJDIR)\SSLIOP_Transport.obj \
-	$(OBJDIR)\SSLIOP_Connector.obj \
 	$(OBJDIR)\SSLIOP_Acceptor.obj \
 	$(OBJDIR)\SSLIOP_Connect.obj \
+	$(OBJDIR)\SSLIOP_Connection_Handler.obj \
+	$(OBJDIR)\SSLIOP_Connector.obj \
+	$(OBJDIR)\SSLIOP_Current.obj \
+	$(OBJDIR)\SSLIOP_Current_Impl.obj \
         $(OBJDIR)\SSLIOP_Endpoint.obj \
+	$(OBJDIR)\SSLIOP_Factory.obj \
+	$(OBJDIR)\SSLIOP_Invocation_Interceptor.obj \
+	$(OBJDIR)\SSLIOP_ORBInitializer.obj \
+	$(OBJDIR)\SSLIOP_Profile.obj \
+	$(OBJDIR)\SSLIOP_Transport.obj \
         $(OBJDIR)\SSLIOPC.obj \
 	$(OBJDIR)\SSLIOPS.obj
 

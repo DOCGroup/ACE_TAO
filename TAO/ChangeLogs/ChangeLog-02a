@@ -1,3 +1,11 @@
+Sat Dec  9 23:17:36 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/orbsvcs/SSLIOP.bor:
+        * tao/TAO_Static.dsp:
+
+          Recent changes to projects weren't making it to all the
+          project/makefiles.
+
 Fri Dec  9 21:00:42 2000  Angelo Corsaro  <angelo@cs.wustl.edu>
 
 	* docs/releasenotes/RTCorba.html (RTCORBA): 

@@ -1615,10 +1615,6 @@ SOURCE=.\IIOP_Acceptor.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_Connect.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\IIOP_Connection_Handler.cpp
 # End Source File
 # Begin Source File
