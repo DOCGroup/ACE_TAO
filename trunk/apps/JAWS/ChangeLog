@@ -1,8 +1,8 @@
 Wed Aug 18 16:00:46 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * server/Makefile: don't build if ACE_COMPONENTS is FOR_TAO,
-          because we now exclude Filecache from the ACE library in
-          that case.
+        * server/Makefile,client/Caching/Makefile: don't build if
+          ACE_COMPONENTS is FOR_TAO, because we now exclude Filecache
+          from the ACE library in that case.
 
 Thu Jul 29 16:05:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
