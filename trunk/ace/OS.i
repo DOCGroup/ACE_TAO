@@ -4925,6 +4925,7 @@ ACE_OS::event_timedwait (ACE_event_t *event,
 #else
   ACE_UNUSED_ARG (event);
   ACE_UNUSED_ARG (timeout);
+  ACE_UNUSED_ARG (use_absolute_time);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }
