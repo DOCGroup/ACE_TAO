@@ -1,49 +1,18 @@
 #----------------------------------------------------------------------------
 #	$Id$
 #
-#	Top-level Makefile for the AVStreams demo of the TAO ORB
+#	Top-level Makefile for the CosPropertyService Demo.
 #
 #----------------------------------------------------------------------------
-
-#---------------
-#   STL (start)
-#---------------
-
-include $(STL_ROOT)/config/local.cfg
-
-CC_INCLUDES += -I$(STD)
-CC_INCLUDES += -pta
-
-CPPFLAGS += \
-	-I$(TOOLKIT) \
-	$(CC_INCLUDES) \
-	$(CC_FLAGS) \
-	$(CC_DEFINES) \
-	$(CC_EH) \
-	$(CC_MT)
-
-ifndef exceptions
-CPPFLAGS += -DOS_NO_EXCEPTION_SPECIFIER
-else
-CPPFLAGS += -DOS_STL_ASSERT
-endif
-
-LDFLAGS += -L$(STL_ROOT)/lib
-
-#---------------
-#   STL (end)
-#---------------
 
 #----------------------------------------------------------------------------
 #	Local macros
 #----------------------------------------------------------------------------
 
-LDLIBS     = -lorbsvcs -lospace -lTAO -lrpcsvc
+LDLIBS     = -lorbsvcs -lTAO
 
-AVStreams_SERVER_OBJS = server.o
-AVStreams_CLIENT_OBJS = client.o
-
-COSPROPERTY_OBJS = main.o
+CosProperty_SERVER_OBJS = server.o
+CosProperty_CLIENT_OBJS = client.o
 
 BIN = server client
 BUILD = $(BIN)
@@ -57,7 +26,7 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-#include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 ifndef TAO_ROOT
@@ -65,12 +34,12 @@ TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
-CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
+CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)
 
-server:$(addprefix $(VDIR),$(AVStreams_SERVER_OBJS))
+server:$(addprefix $(VDIR),$(CosProperty_SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-client:$(addprefix $(VDIR),$(AVStreams_CLIENT_OBJS))
+client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
@@ -83,9 +52,3 @@ realclean: clean
 
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
-
-
-
-
-
-
