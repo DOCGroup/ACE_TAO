@@ -9,6 +9,7 @@
 #include "tao/Stub.h"
 #include "tao/Servant_Base.h"
 #include "tao/Request.h"
+#include "tao/varout.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Object.i"
