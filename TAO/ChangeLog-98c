@@ -1,44 +1,50 @@
+Sun Oct 04 08:40:12 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp,client.cpp,
+          server.cpp,run_tests.pl: used IIOP instead of URL style obj
+          refs for maximum performance.
+
 Sat Oct  3 20:20:14 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface.cpp (gen_gperf_lookup_methods): Added
-	code to handle Binary Search operation lookup strategy. Not yet
-	tested with GPERF. 
+        * TAO_IDL/be/be_interface.cpp (gen_gperf_lookup_methods): Added
+        code to handle Binary Search operation lookup strategy. Not yet
+        tested with GPERF.
 
-	* tao/Operation_Table.cpp: Added class for Binary Search operation
-	lookup strategy. s
+        * tao/Operation_Table.cpp: Added class for Binary Search operation
+        lookup strategy. s
 
-	* TAO_IDL/be_include/be_codegen.h: New LOOKUP_STRATEGY enum for
-	Binary search. 
+        * TAO_IDL/be_include/be_codegen.h: New LOOKUP_STRATEGY enum for
+        Binary search.
 
-	* tao/Operation_Table.h (TAO_Active_Demux_OpTable): Added class
-	for Binary Search operation lookup strategy. 
+        * tao/Operation_Table.h (TAO_Active_Demux_OpTable): Added class
+        for Binary Search operation lookup strategy.
 
-	* TAO_IDL/be_include/be_interface.h (be_type): Added private
-	methods to generate code for binary searh and linear search. Not
-	yet tested with GPERF. Doesnt harm using the old operation lookup
-	strategies. 
+        * TAO_IDL/be_include/be_interface.h (be_type): Added private
+        methods to generate code for binary searh and linear search. Not
+        yet tested with GPERF. Doesnt harm using the old operation lookup
+        strategies.
 
-	* TAO_IDL/include/idl_global.h (class IDL_GlobalData): Renamed
-	perfect_hasher by gperf_path. gperf is going to be used for binary
-	search and linear search as well. So it is not specific to perfect
-	hashing. 
+        * TAO_IDL/include/idl_global.h (class IDL_GlobalData): Renamed
+        perfect_hasher by gperf_path. gperf is going to be used for binary
+        search and linear search as well. So it is not specific to perfect
+        hashing.
 
-	* TAO_IDL/driver/drv_args.cpp (DRV_parse_args): Changed the option
-	<-H dynamic> to <-H dynamic_hash>. Added options 
-	<-H perfect_hash>, <-H binary_search> and <-H linear_search>. Do
-	NOT try these *_search options yet. It is yet to be tested with
-	GPERF. Also extended testing for GPERF's existance in the case of
-	Binary Search strategy also.
+        * TAO_IDL/driver/drv_args.cpp (DRV_parse_args): Changed the option
+        <-H dynamic> to <-H dynamic_hash>. Added options
+        <-H perfect_hash>, <-H binary_search> and <-H linear_search>. Do
+        NOT try these *_search options yet. It is yet to be tested with
+        GPERF. Also extended testing for GPERF's existance in the case of
+        Binary Search strategy also.
 
 Sat Oct  3 19:35:05 1998  Balachandra Natarajan <bala@lambada.cs.wustl.edu>
-        * Any.cpp 
+        * Any.cpp
         Fix for memeory leaks in extraction.
 Sat Oct  3 15:16:05 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
-	* orbsvcs/tests/Simple_Naming/client.cpp
-	* orbsvcs/tests/Simple_Naming/README
-	* orbsvcs/tests/Simple_Naming/run_test.pl
-	Added destroy test to the set of tests already there.
+        * orbsvcs/tests/Simple_Naming/client.cpp
+        * orbsvcs/tests/Simple_Naming/README
+        * orbsvcs/tests/Simple_Naming/run_test.pl
+        Added destroy test to the set of tests already there.
 
 Sat Oct 03 09:54:14 1998  David L. Levine  <levine@cs.wustl.edu>
 
