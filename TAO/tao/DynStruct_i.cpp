@@ -999,11 +999,3 @@ TAO_DynStruct_i::get_any (CORBA::Environment &env)
 }
 
 //**********************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Array_Base<CORBA_DynAny_var>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Array_Base<CORBA_DynAny_var>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
