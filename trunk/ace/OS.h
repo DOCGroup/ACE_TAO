@@ -4842,6 +4842,11 @@ public:
 # if !defined (ACE_HAS_WINCE)
   static time_t mktime (struct tm *timeptr);
 # endif /* !ACE_HAS_WINCE */
+  
+  // wrapper for time zone information.
+  static void tzset (void);
+  static long timezone (void); 
+    
   static double difftime (time_t t1,
                           time_t t0);
   static time_t time (time_t *tloc = 0);
