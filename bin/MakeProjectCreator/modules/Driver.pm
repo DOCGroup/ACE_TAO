@@ -344,15 +344,18 @@ sub run {
   ## Set up a hash that we can use to keep track of what
   ## has been 'required'
   my(%loaded) = ();
+
+  ## Save the original directory outside of the loop
+  ## to avoid calling it multiple times.
+  my($orig_dir) = Cwd::getcwd();
+
   ## Generate the files
   foreach my $file (@input) {
     ## To correctly reference any pathnames in the input file, chdir to
     ## its directory if there's any directory component to the specified path.
-    my $orig_dir = Cwd::getcwd();
-    my $dir = dirname($file);
-    my $base = basename($file);
+    my($base) = basename($file);
     if ($base ne $file) {
-      chdir($dir);
+      chdir(dirname($file));
       $file = $base;
     }
     foreach my $name (@generators) {
