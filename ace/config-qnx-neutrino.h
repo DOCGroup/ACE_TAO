@@ -21,6 +21,15 @@
 # endif /* ! __ACE_INLINE__ */
 #endif
 
+#if defined(__OPTIMIZE__)
+# if defined(__X86__)
+    // string.h can't be used by ACE with __OPTIMIZE__.
+#   undef __OPTIMIZE__
+#   include <string.h>
+#   define __OPTIMIZE__
+# endif /* __X86__ */
+#endif /* __OPTIMIZE__ */
+
 #include "ace/config-g++-common.h"
 
 // The following defines the Neutrino compiler.
