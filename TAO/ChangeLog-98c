@@ -1,3 +1,8 @@
+Mon Oct 19 14:28:30 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* examples/POA/NewPOA/run_test.pl: Runs the test. Not exactly a
+	  difficult task, since there's one executable with no arguments.
+
 Mon Oct 19 11:24:40 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/Simple_Naming/client.cpp (already_bound_test,
