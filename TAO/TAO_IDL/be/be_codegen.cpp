@@ -1709,6 +1709,11 @@ TAO_CodeGen::gen_any_file_includes (void)
       if (be_global->gen_anyop_files ())
         {
           stream = this->anyop_source_;
+
+          this->gen_standard_include (stream,
+                                      "tao/CDR.h");
+          this->gen_standard_include (stream,
+                                      "tao/Any.h");
         }
 
       this->gen_cond_file_include (
