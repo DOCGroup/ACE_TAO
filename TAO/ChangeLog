@@ -1,3 +1,12 @@
+Sat Sep  6 08:08:19 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/GIOPC.h:
+	* tao/target_specification.h:
+
+          #undef "IOR" (for HPUX) after all headers have been included to
+          make sure it isn't indirectly redefined by other headers.
+          Addresses TAO HPUX build failures.
+
 Fri Sep  5 20:31:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/tmplinst.cpp:
@@ -522,7 +531,7 @@ Wed Aug 27 14:48:17 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
         * tao/ClientRequestInfo_i.h:
 
-          No need to included "tao/StringSeqC.h".
+          No need to include "tao/StringSeqC.h".
 
         * tao/DLL_ORB.h:
 
@@ -2866,7 +2875,7 @@ Thu Aug  4 21:59:32 2003  Ossama Othman <ossama@dre.vanderbilt.edu>
           Updated documentation.
 
         * tao/PortableServer/Object_Adapter.h (upcall_cleanup):
-        * tao/PortableServer/Object_Adapter.cpp (~Servant_Upcall)
+        * tao/PortableServer/Object_Adapter.cpp (~Servant_Upcall):
           (upcall_cleanup):
 
           Moved Servant_Upcall cleanup code from ~Servant_Upcall()
