@@ -121,6 +121,18 @@ TAO_Resource_Factory::init_protocol_factories (void)
   return -1;
 }
 
+int
+TAO_Resource_Factory::get_connection_caching_strategy_type (void) const
+{
+  return 0;
+}
+
+double 
+TAO_Resource_Factory::get_purge_percentage (void) const
+{
+  return 20;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Dynamic_Service<TAO_Resource_Factory>;
