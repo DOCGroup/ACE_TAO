@@ -1,3 +1,52 @@
+Thu Jul  1 15:54:15 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/Config_Handlers/Domain_Handler.cpp:
+        * DAnCE/Config_Handlers/Domain_Handler.h:
+        * DAnCE/Config_Handlers/ERE_Handler.cpp:
+        * DAnCE/Config_Handlers/ERE_Handler.h:
+        * DDAnCE/Config_Handlers/IAD_Handler.h
+        * DAnCE/Config_Handlers/IAD_Handler.cpp:
+        * DAnCE/Config_Handlers/ID_Handler.cpp:
+        * DAnCE/Config_Handlers/ID_Handler.h:
+        * DAnCE/Config_Handlers/IR_Handler.cpp:
+        * DAnCE/Config_Handlers/IR_Handler.h:
+        * DAnCE/Config_Handlers/MID_Handler.cpp:
+        * DAnCE/Config_Handlers/MID_Handler.h:
+        * DAnCE/Config_Handlers/NIA_Handler.cpp:
+        * DAnCE/Config_Handlers/NIA_Handler.h:
+        * DAnCE/Config_Handlers/PCI_Handler.cpp:
+        * DAnCE/Config_Handlers/PCI_Handler.h:
+        * DAnCE/Config_Handlers/PC_Handler.cpp:
+        * DAnCE/Config_Handlers/PC_Handler.h:
+        * DAnCE/Config_Handlers/Plan_Handler.cpp:
+        * DAnCE/Config_Handlers/Plan_Handler.h:
+        * DAnCE/Config_Handlers/Process_Element.cpp:
+        * DAnCE/Config_Handlers/Process_Element.h:
+        * DAnCE/Config_Handlers/Process_Element_T.cpp:
+        * DAnCE/Config_Handlers/Process_Element_T.h:
+        * DAnCE/Config_Handlers/Property_Handler.cpp:
+        * DAnCE/Config_Handlers/Property_Handler.h:
+        * DAnCE/Config_Handlers/RS_Handler.cpp:
+        * DAnCE/Config_Handlers/RS_Handler.h:
+        * DAnCE/Config_Handlers/RUK_Handler.cpp:
+        * DAnCE/Config_Handlers/RUK_Handler.h:
+        * DAnCE/Config_Handlers/Requirement_Handler.cpp:
+        * DAnCE/Config_Handlers/Requirement_Handler.h:
+        * DAnCE/Config_Handlers/SPK_Handler.cpp:
+        * DAnCE/Config_Handlers/SPK_Handler.h:
+        * DAnCE/Config_Handlers/SP_Handler.cpp:
+        * DAnCE/Config_Handlers/SP_Handler.h:
+        * DAnCE/Config_Handlers/TPD_Handler.cpp:
+        * DAnCE/Config_Handlers/TPD_Handler.h:
+        * DAnCE/Config_Handlers/Utils.cpp:
+        * DAnCE/Config_Handlers/Utils.h:
+        * DAnCE/Config_Handlers/XercesString.cpp:
+        * DAnCE/Config_Handlers/XercesString.h:
+
+          First cut check-in for XML handlers.
+
+
+
 Thu Jul  1 15:51:14 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
