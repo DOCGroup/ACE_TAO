@@ -112,10 +112,21 @@
 	<a href="#compile">Reducing Compilation Time</a>
 	<ul>
 	  <li>
-	    <a href="#compile_optimization">Optimization</a>
+	    <a href="#compile_optimization">Compilation Optimization</a>
 	  </li>
 	  <li>
-	    <a href="#compile_inlinling">Inlining</a>
+	    <a href="#compile_inlinling">Compilation Inlining</a>
+	  </li>
+	</ul>
+      </li>
+      <li>
+	<a href="#footprint">Reducing Memory Footprint</a>
+	<ul>
+	  <li>
+	    <a href="#compile_footprint">Compile-time Footprint</a>
+	  </li>
+	  <li>
+	    <a href="#runtime_footprint">Run-time Footprint</a>
 	  </li>
 	</ul>
       </li>
@@ -559,7 +570,7 @@
     <h3>Reducing Compilation Time</h3>
 
     <a name="compile_optimization"></a>
-    <h4>Optimization</h4>
+    <h4>Compilation Optimization</h4>
 
 When developing software that uses ACE+TAO you can reduce the time it
 takes to compile your software by not enabling you compiler's optimizer
@@ -570,7 +581,7 @@ time performance, so you should normally only do this during
 development, keeping your test and release build optimized. <P>
 
     <a name="compile_inlinling"></a>
-    <h4>Inlining</h4>
+    <h4>Compilation Inlining</h4>
 
 When compiler optimization is disabled, it is frequently the case that
 no inlining will be performed. In this case the ACE inlining will be
@@ -587,11 +598,27 @@ libraries, one with inlining and one without. You can then use your
 ACE_ROOT and TAO_ROOT variables to point at the appropriate
 installation.<P>
 
+    <p><hr><p>
+    <a name="footprint"></a>
+    <h3>Reducing Memory Footprint</h3>
+
+    <a name="compile_footprint"></a>
+    <h4>Compile-time Footprint</h4>
+
+It has also been observed recently that using -xO3 with -xspace on SUN
+CC 5.3 compiler gives a big footprint reduction of the order of 40%.
+
+    <a name="runtime_footprint"></a>
+    <h4>Run-time Footprint</h4>
+
+<!-- Doug, put information about how to reduce the size of the -->
+<!-- connection blocks, etc. -->
+
     <hr><P>
     <address><a href="mailto:ossama@uci.edu">Ossama Othman</a></address>
 <!-- Created: Mon Nov 26 13:22:00 PST 2001 -->
 <!-- hhmts start -->
-Last modified: Thu Dec 12 10:10:49 CST 2002
+Last modified: Wed Dec 25 06:23:55 CST 2002
 <!-- hhmts end -->
   </body>
 </html>
