@@ -8,9 +8,6 @@
  */
 //==================================================================
 
-#ifndef CAP_HANDLER_C
-#define CAP_HANDLER_C
-
 #include "Cap_Handler.h"
 #include "SP_Handler.h"
 #include "tao/Exception.h"
@@ -93,5 +90,3 @@ process_Capability (DOMNodeIterator * iter,
   // Copy the sequence to return structure
   ret_struct.property = property_seq;
 }
-
-#endif /* CAP_HANDLER_C */

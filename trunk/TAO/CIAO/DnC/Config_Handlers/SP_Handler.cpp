@@ -1,8 +1,5 @@
 //$Id$
 
-#ifndef SP_HANDLER_C
-#define SP_HANDLER_C
-
 #include "SP_Handler.h"
 #include "Any_Handler.h"
 #include "SPK_Handler.h"
@@ -47,5 +44,3 @@ process_SatisfierProperty (DOMNodeIterator * iter,
             }
     }
 }
-
-#endif /* RS_HANDLER_C */

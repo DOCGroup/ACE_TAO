@@ -1,8 +1,5 @@
 // $Id$
 
-#ifndef APM_HANDLER_C
-#define APM_HANDLER_C
-
 #include "APM_Handler.h"
 #include "tao/Exception.h"
 #include "ace/Auto_Ptr.h"
@@ -101,6 +98,3 @@ namespace CIAO
     }
   }
 }
-
-#endif /* APM_HANDLER_C */
-

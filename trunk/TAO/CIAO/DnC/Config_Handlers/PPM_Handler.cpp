@@ -1,8 +1,5 @@
 // $Id$
 
-#ifndef PPM_HANDLER_C
-#define PPM_HANDLER_C
-
 #include "tao/Exception.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
@@ -131,6 +128,3 @@ namespace CIAO
 
   }
 }
-
-#endif /* PPM_HANDLER_C */
-

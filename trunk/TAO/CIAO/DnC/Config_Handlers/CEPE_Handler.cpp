@@ -1,8 +1,5 @@
 //$Id$
 
-#ifndef CEPE_HANDLER_C
-#define CEPE_HANDLER_C
-
 #include "CEPE_Handler.h"
 #include "tao/Exception.h"
 #include "Utils.h"
@@ -29,5 +26,3 @@ process_ComponentExternalPortEndpoint (DOMNodeIterator * iter,
   // Populate the structure
   ret_struct.portName = Utils::parse_string (iter);
 }
-
-#endif /* CEPE_HANDLER_C */

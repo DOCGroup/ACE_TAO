@@ -1,8 +1,5 @@
 //$Id$
 
-#ifndef RS_HANDLER_C
-#define RS_HANDLER_C
-
 #include "RS_Handler.h"
 #include "SP_Handler.h"
 #include "tao/Exception.h"
@@ -86,5 +83,3 @@ process_RequirementSatisfier (DOMNodeIterator * iter,
         }
     }
 }
-
-#endif /* RS_HANDLER_C */
