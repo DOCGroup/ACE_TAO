@@ -1,3 +1,22 @@
+Sun Jan 27 12:08:45 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* XML/common/Transcode.h (ACEXML_Transcoder): Improved the
+	  documentation.
+
+	  The followings fixed the Tru64 warnings/errors.
+
+	* XML/common/AttributesImpl.i (operator):
+	* XML/common/Env.i: Reordered inline functions.
+
+	* XML/tests/Transcoder_Test.cpp: Removed an unused argument.
+
+	* XML/common/Attributes_Def_Builder.h: Added inclusion of
+	  "ace/Auto_Ptr.h".
+
+	* XML/examples/SAXPrint/SAXPrint_Handler.cpp:
+	* XML/examples/SAXPrint/Print_Handler.cpp: Added inclusion of
+	  "ace/Log_Msg.h".
+
 Sun Jan 27 15:03:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * Makefile.bor:
