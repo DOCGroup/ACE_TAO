@@ -73,7 +73,7 @@ main (int argc, char **argv)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class TAO_AV_Child_Process<Video_Server_StreamEndPoint, TAO_VDev, Video_Control_i>;
 template class TAO_AV_Child_Process_B<Video_Server_StreamEndPoint, TAO_VDev, Video_Control_i>;
-#elif defined ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate TAO_AV_Child_Process<Video_Server_StreamEndPoint, TAO_VDev, Video_Control_i>
 #pragma instantiate TAO_AV_Child_Process_B<Video_Server_StreamEndPoint, TAO_VDev, Video_Control_i>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
