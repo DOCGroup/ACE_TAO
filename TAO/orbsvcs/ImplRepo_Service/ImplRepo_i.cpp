@@ -484,7 +484,7 @@ ImplRepo_i::server_is_running (const char *server,
 
   char *pos = ACE_OS::strstr (new_location, "://");
 
-  pos = ACE_OS::strchr (pos + 3, profile->get_object_key_delimiter ());
+  pos = ACE_OS::strchr (pos + 3, profile->object_key_delimiter ());
 
   if (pos)
     *(pos + 1) = 0;  // Crop the string
