@@ -1,3 +1,9 @@
+Mon Jun  9 12:33:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Strategies/SCIOP_Endpoint.cpp: 
+	* tao/Strategies/SCIOP_Endpoint.h:
+	* tao/Strategies/SCIOP_Endpoint.i: Cosmetic changes.
+
 Mon Jun  9 11:30:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_union/union_cs.cpp:
