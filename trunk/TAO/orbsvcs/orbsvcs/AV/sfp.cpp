@@ -26,6 +26,7 @@ SFP_Encoder::SFP_Encoder ()
       return;
     }
   TAO_ENDTRY;
+  // new the encoder which we will use
   ACE_NEW (encoder_,
            TAO_OutputCDR ());
   
@@ -201,6 +202,7 @@ SFP_Encoder::create_message_block (void)
 // ----------------------------------------------------------------------
 
 SFP_Decoder::SFP_Decoder ()
+  : decoder_ (0)
 {
 }
 
@@ -217,7 +219,7 @@ SFP_Decoder::decode_start_message (ACE_Message_Block *message)
       this->create_cdr_buffer (message->rd_ptr (),
                                message->length ());
 
-      decoder_.decode (SFP::_tc_start_message,
+      decoder_->decode (SFP::_tc_start_message,
 			&start,
 			0,
 			TAO_TRY_ENV);
@@ -261,10 +263,10 @@ SFP_Decoder::decode_simple_frame (ACE_Message_Block *message)
       this->create_cdr_buffer (message->rd_ptr (),
                                TAO_SFP_FRAME_HEADER_LEN);
 
-      decoder_.decode (SFP::_tc_frame_header,
-			&header,
-			0,
-			TAO_TRY_ENV);
+      decoder_->decode (SFP::_tc_frame_header,
+                        &header,
+                        0,
+                        TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
     }
@@ -304,7 +306,7 @@ SFP_Decoder::decode_start_reply_message (ACE_Message_Block *message)
       this->create_cdr_buffer (message->rd_ptr (),
                                message->length ());
       
-      decoder_.decode (SFP::_tc_start_reply,
+      decoder_->decode (SFP::_tc_start_reply,
                        &start_reply_message,
                        0,
                        TAO_TRY_ENV);
@@ -332,21 +334,25 @@ int
 SFP_Decoder::create_cdr_buffer (char *message,
                                 size_t length)
 {
+  if (this->decoder_)
+    delete this->decoder_;
 
-  this->decoder_->grow (length);
+  ACE_NEW_RETURN (this->decoder_,
+                  TAO_InputCDR (message,
+                                length),
+                  -1);
   
-  char *bufptr = this->decoder_->buffer ();
+  ACE_OS::memcpy (this->decoder_->rd_ptr (), 
+                  message, 
+                  length);
   
-   ACE_OS::memcpy (bufptr, 
-                   message, 
-                   length);
-   
-   return 0;
+  return 0;
 }
   
 
 
 SFP_Decoder::~SFP_Decoder ()
 {
-
+  if (this->decoder_)
+    delete this->decoder_;
 }
