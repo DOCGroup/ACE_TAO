@@ -297,7 +297,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << "_tao_vfr.receive_request (&ri, ACE_TRY_ENV);" << be_nl
       << "ACE_TRY_CHECK;" << be_nl;
 
-  *os << "\n#endif /* TAO_HAS_INTERCEPTORS */";
+  *os << "\n#endif /* TAO_HAS_INTERCEPTORS */\n";
 
   // Make the upcall and assign to the return val.
   ctx = *this->ctx_;
@@ -315,7 +315,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
   // Make the upcall.
-  *os << "\n" << be_nl
+  *os << be_nl
       << "_tao_impl->" << node->local_name () << " (" << be_idt << be_idt_nl;
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS);
@@ -373,7 +373,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
       visitor = tao_cg->make_visitor (&ctx);
 
-      os->indent ();
+//      os->indent ();
 
       if ((!visitor) || (bt->accept (visitor) == -1))
         {
