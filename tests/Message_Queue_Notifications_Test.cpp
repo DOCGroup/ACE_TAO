@@ -6,11 +6,11 @@
 //    tests
 //
 // = FILENAME
-//    MsgQueue_Notification_Test.cpp
+//    Message_Queue_Notification_Test.cpp
 //
 // = DESCRIPTION
-//      There are two tests that test 2 different notification mechanisms
-//      in Message Queue.
+//      There are two tests that test 2 different notification
+//      mechanisms in Message Queue.
 //
 //      The first test illustrates the notification mechanisms in
 //      Message_Queue and its integration with Reactor.
@@ -73,20 +73,23 @@ private:
 class Watermark_Test : public ACE_Task<ACE_SYNCH>
 {
 public:
-  Watermark_Test ();
+  Watermark_Test (void);
 
-  virtual int svc ();
+  virtual int svc (void);
 
-  int consumer ();
-  int producer ();
+  int consumer (void);
+  int producer (void);
   int put_message (ACE_Time_Value* timeout = 0);
   int get_message (void);
   void print_producer_debug_message (void);
 
 private:
-  const size_t len_, hwm_, lwm_;
+  const size_t len_;
+  const size_t hwm_;
+  const size_t lwm_;
   ACE_Atomic_Op <ACE_SYNCH_MUTEX, int> role_;
-  ACE_Barrier mq_full_, mq_low_water_mark_hit_;
+  ACE_Barrier mq_full_;
+  ACE_Barrier mq_low_water_mark_hit_;
 };
 
 Message_Handler::Message_Handler (ACE_Reactor &reactor)
@@ -102,7 +105,8 @@ Message_Handler::Message_Handler (ACE_Reactor &reactor)
 int
 Message_Handler::handle_input (ACE_HANDLE)
 {
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Message_Handler::handle_input\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("Message_Handler::handle_input\n")));
 
   // Next time handle_output will be called
   this->notification_strategy_.mask (ACE_Event_Handler::WRITE_MASK);
@@ -113,7 +117,8 @@ Message_Handler::handle_input (ACE_HANDLE)
 int
 Message_Handler::handle_output (ACE_HANDLE fd)
 {
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Message_Handler::handle_output\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("Message_Handler::handle_output\n")));
   ACE_UNUSED_ARG (fd);
 
   // Next time handle_exception will be called
@@ -125,13 +130,14 @@ Message_Handler::handle_output (ACE_HANDLE fd)
 int
 Message_Handler::handle_exception (ACE_HANDLE fd)
 {
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Message_Handler::handle_exception\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("Message_Handler::handle_exception\n")));
   ACE_UNUSED_ARG (fd);
 
   // Next time handle_input will be called
   this->notification_strategy_.mask (ACE_Event_Handler::READ_MASK);
 
-  return process_message ();
+  return this->process_message ();
 }
 
 int
@@ -139,11 +145,17 @@ Message_Handler::process_message (void)
 {
   ACE_Message_Block *mb;
 
-  if (this->getq (mb, (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("dequeue_head")), -1);
+  if (this->getq (mb,
+                  (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"),
+                       ASYS_TEXT ("dequeue_head")),
+                      -1);
   else
     {
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("message received = %s\n"), mb->rd_ptr ()));
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("message received = %s\n"),
+                  mb->rd_ptr ()));
       delete mb;
     }
 
@@ -156,14 +168,17 @@ Message_Handler::make_message (void)
 {
   if (--iterations > 0)
     {
-      ACE_Message_Block *mb = new ACE_Message_Block ((char *) ASYS_TEXT ("hello"));
+      ACE_Message_Block *mb;
+      ACE_NEW (mb,
+               ACE_Message_Block ((char *) ASYS_TEXT ("hello")));
 
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("sending message\n")));
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("sending message\n")));
       this->putq (mb);
     }
 }
 
-Watermark_Test::Watermark_Test ()
+Watermark_Test::Watermark_Test (void)
   : len_ (ACE_OS::strlen (default_message) + 1),
     hwm_ (this->len_ * default_high_water_mark),
     lwm_ (this->len_ * default_low_water_mark),
@@ -180,22 +195,26 @@ Watermark_Test::Watermark_Test ()
 int
 Watermark_Test::producer (void)
 {
-  int i, hwm;
-
-  for (hwm = this->hwm_, i = watermark_iterations;
+  int i = watermark_iterations;
+  
+  for (int hwm = this->hwm_;
        hwm >= 0 ;
-       hwm -= this->len_, i--)
+       hwm -= this->len_)
     {
       this->put_message ();
       this->print_producer_debug_message ();
+      i--;
     }
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Producer: High water mark hit ---- \n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) Producer: High water mark hit ---- \n"));
   this->mq_full_.wait ();
 
   // The following put_message should block until the message queue
   // has dropped under the lwm.
   this->put_message ();
+
   ACE_ASSERT (this->msg_queue ()-> message_bytes () <= this->lwm_ + this->len_);
+
   this->print_producer_debug_message ();
 
   for (i--; i >= 0 ; i--)
@@ -203,6 +222,7 @@ Watermark_Test::producer (void)
       this->put_message ();
       this->print_producer_debug_message ();
     }
+
   return 0;
 }
 
@@ -211,6 +231,7 @@ Watermark_Test::consumer (void)
 {
   this->mq_full_.wait ();
   ACE_OS::sleep (1);
+
   // Let producer proceed and block in putq.
 
   for (int i = watermark_iterations; i >= 0; i--)
@@ -218,6 +239,7 @@ Watermark_Test::consumer (void)
       this->get_message ();
       ACE_OS::sleep (0);
     }
+
   return 0;
 }
 
@@ -227,7 +249,10 @@ Watermark_Test::get_message (void)
   ACE_Message_Block *mb;
 
   if (this->getq (mb) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("dequeue_head")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"),
+                       ASYS_TEXT ("dequeue_head")),
+                      -1);
   else
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -237,6 +262,7 @@ Watermark_Test::get_message (void)
                   this->msg_queue ()-> message_count ()));
       delete mb;
     }
+
   return 0;
 }
 
@@ -244,8 +270,10 @@ int
 Watermark_Test::put_message (ACE_Time_Value *timeout)
 {
   ACE_Message_Block *mb;
+
   ACE_NEW_RETURN (mb,
-                  ACE_Message_Block (default_message, this->len_),
+                  ACE_Message_Block (default_message,
+                                     this->len_),
                   -1);
 
   return this->putq (mb, timeout);
@@ -286,7 +314,9 @@ main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Message_Queue_Notifications_Test.cpp"));
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Starting message queue reactive notification test...\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("Starting message queue reactive notification test...\n")));
+
   ACE_Reactor reactor;
   Message_Handler mh (reactor);
 
@@ -294,18 +324,22 @@ main (int, ASYS_TCHAR *[])
     reactor.handle_events ();
 
 #if defined (ACE_HAS_THREADS)
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Starting message queue watermark test...\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("Starting message queue watermark test...\n")));
   Watermark_Test watermark_test;
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("High water mark is %d\n")
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("High water mark is %d\n")
               ASYS_TEXT ("Low water mark is %d\n"),
               default_high_water_mark,
               default_low_water_mark));
 
-  watermark_test.activate (THR_NEW_LWP, worker_threads);
+  watermark_test.activate (THR_NEW_LWP,
+                           worker_threads);
 
   ACE_Thread_Manager::instance ()->wait ();
 #else
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Message queue watermark test not performed because threads are not supported\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("Message queue watermark test not performed because threads are not supported\n")));
 #endif /* ACE_HAS_THREADS */
 
   ACE_END_TEST;
