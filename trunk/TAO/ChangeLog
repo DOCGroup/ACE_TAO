@@ -1,10 +1,18 @@
+Sat Jan 10 23:09:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/MT_Client/client.global.conf:
+	* tests/MT_Client/client.tss.conf:
+
+	  These configuration files are old and the options aren't
+	  supported any more. Nor are they used any more.
+
 Sat Jan 10 22:56:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* performance-tests/Latency/Thread_Per_Connection/Roundtrip.cpp:
 	* tests/MT_Client/test_i.cpp:
 
 	  The best fix for the problem outlined is "Sat Jan 10 21:17:10
-	  2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>", is to
+	  2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>" to
 	  wait for all threads exit () before finishing shutting down the
 	  ORB_Core. I was trying to avoid this with earlier checkins. 
 
