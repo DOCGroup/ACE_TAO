@@ -1,3 +1,8 @@
+Fri Jul 06 21:53:26 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * ace/config-win32-borland.h:
+          Reverted addition of ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION.
+
 Fri Jul  6 19:55:23 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* examples/Reactor/Multicast: Adding the support for UNIX Syslog
