@@ -1,3 +1,12 @@
+Fri Sep  5 11:45:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp (start_server_header): Removed
+	  includes of ThruPOA_Proxy_Impl.h and DirectPOA_Proxy_Impl.h from
+	  the skeleton header files.
+
+	* ta/Messaging/MessagingS.h: Hand edited the generated code to
+	  remove the above headers.
+
 Fri Sep  5 11:38:25 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny/DynAny_i.cpp:

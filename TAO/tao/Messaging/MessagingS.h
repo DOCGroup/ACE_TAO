@@ -41,8 +41,6 @@
 #include "tao/Collocation_Proxy_Broker.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
-#include "tao/PortableServer/ThruPOA_Object_Proxy_Impl.h"
-#include "tao/PortableServer/Direct_Object_Proxy_Impl.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -190,7 +188,6 @@ namespace POA_Messaging
 // be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
 
 class TAO_Messaging_Export _TAO_ReplyHandler_ThruPOA_Proxy_Impl
-  : public virtual TAO_ThruPOA_Object_Proxy_Impl
 {
 public:
   _TAO_ReplyHandler_ThruPOA_Proxy_Impl (void);
@@ -210,7 +207,6 @@ public:
 //
 
 class TAO_Messaging_Export _TAO_ReplyHandler_Direct_Proxy_Impl
-  : public virtual TAO_Direct_Object_Proxy_Impl
 {
 public:
   _TAO_ReplyHandler_Direct_Proxy_Impl (void);
