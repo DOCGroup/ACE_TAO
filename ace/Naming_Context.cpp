@@ -10,8 +10,8 @@
 
 // Make life easier later on...
 
-typedef ACE_Local_Name_Space <ACE_MMAP_Memory_Pool, ACE_RW_Process_Mutex> LOCAL_NAME_SPACE;
-typedef ACE_Local_Name_Space <ACE_Lite_MMAP_Memory_Pool, ACE_RW_Process_Mutex> LIGHT_LOCAL_NAME_SPACE;
+typedef ACE_Local_Name_Space <ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> LOCAL_NAME_SPACE;
+typedef ACE_Local_Name_Space <ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> LIGHT_LOCAL_NAME_SPACE;
 
 // The following Factory is used by the ACE_Service_Config and
 // svc.conf file to dynamically initialize the state of the Name
@@ -520,7 +520,7 @@ ACE_Name_Options::parse_args (int argc, char *argv[])
 	this->database (get_opt.optarg);
 	break;
       case 'b':
-	this->base_address (ACE_OS::atoi (get_opt.optarg));
+	this->base_address ((char *) ACE_OS::atoi (get_opt.optarg));
 	break;
       case 'T':
 	if (ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0)
@@ -548,10 +548,10 @@ ACE_Name_Options::parse_args (int argc, char *argv[])
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Local_Name_Space <ACE_MMAP_Memory_Pool, ACE_RW_Process_Mutex>;
-template class ACE_Local_Name_Space <ACE_Lite_MMAP_Memory_Pool, ACE_RW_Process_Mutex>;
-template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_Memory_Pool, ACE_RW_Process_Mutex> >;
-template class ACE_Allocator_Adapter<ACE_Malloc<ACE_Lite_MMAP_Memory_Pool, ACE_RW_Process_Mutex> >;
-ACE_Name_Space_Map <ACE_Allocator_Adapter <ACE_Malloc <ACE_MMAP_Memory_Pool, ACE_RW_Process_Mutex> > >;
-ACE_Name_Space_Map <ACE_Allocator_Adapter <ACE_Malloc <ACE_Lite_MMAP_Memory_Pool, ACE_RW_Process_Mutex> > >;
+template class ACE_Local_Name_Space <ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex>;
+template class ACE_Local_Name_Space <ACE_Lite_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex>;
+template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> >;
+template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> >;
+ACE_Name_Space_Map <ACE_Allocator_Adapter <ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> > >;
+ACE_Name_Space_Map <ACE_Allocator_Adapter <ACE_Malloc <ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> > >;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

@@ -167,6 +167,7 @@
 
 // Handle ACE_*_Memory_Pool.
 #define ACE_MMAP_MEMORY_POOL ACE_MMAP_Memory_Pool
+#define ACE_LITE_MMAP_MEMORY_POOL ACE_Lite_MMAP_Memory_Pool
 #define ACE_SBRK_MEMORY_POOL ACE_Sbrk_Memory_Pool
 #define ACE_SHARED_MEMORY_POOL ACE_Shared_Memory_Pool
 #define ACE_LOCAL_MEMORY_POOL ACE_Local_Memory_Pool
@@ -213,6 +214,7 @@
 
 // Handle ACE_*_Memory_Pool.
 #define ACE_MMAP_MEMORY_POOL ACE_MMAP_Memory_Pool, ACE_MMAP_Memory_Pool_Options
+#define ACE_LITE_MMAP_MEMORY_POOL ACE_Lite_MMAP_Memory_Pool, ACE_MMAP_Memory_Pool_Options
 #define ACE_SBRK_MEMORY_POOL ACE_Sbrk_Memory_Pool, ACE_Sbrk_Memory_Pool_Options
 #define ACE_SHARED_MEMORY_POOL ACE_Shared_Memory_Pool, ACE_Shared_Memory_Pool_Options
 #define ACE_LOCAL_MEMORY_POOL ACE_Local_Memory_Pool, ACE_Local_Memory_Pool_Options

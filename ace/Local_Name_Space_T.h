@@ -85,7 +85,7 @@ private:
 #endif /* ACE_WIN32 */
 };
 
-template <class MEM_POOL, class LOCK>
+template <ACE_MEM_POOL_1, class LOCK>
 class ACE_Local_Name_Space : public ACE_Name_Space
   // = TITLE
   //     Maintaining accesses Local Name Server Database.  Allows to
@@ -187,7 +187,7 @@ private:
   // key/value binding.
 
   // = I just know this is going to cause problems on some platform...
-  typedef ACE_Allocator_Adapter <ACE_Malloc <MEM_POOL, LOCK> > ALLOCATOR;
+  typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_MEM_POOL_2, LOCK> > ALLOCATOR;
 
   ALLOCATOR *allocator_;
   // Pointer to the allocator

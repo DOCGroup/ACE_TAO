@@ -109,7 +109,7 @@ ACE_MMAP_Memory_Pool::protect (void *addr, size_t len, int prot)
 }
 
 ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const char *pool_name)
-  : base_addr_ (ACE_DEFAULT_BACKING_STORE),
+  : base_addr_ (ACE_DEFAULT_BASE_ADDR),
     flags_ (MAP_SHARED | MAP_FIXED),
     write_each_page_ (1)
 {
