@@ -1,3 +1,10 @@
+Wed Feb 25 18:49:06 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Service_Config.cpp (open): Tightened up the comparison of
+ 	  the key with the ACE_DEFAULT_LOGGER_KEY to use string equality
+ 	  rather than pointer equality.  Thanks to Stephen Coy
+ 	  <stevec@magna.com.au> for reporting this.
+
 Wed Feb 25 10:50:17 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_osf1_4.0.GNU: added suppression of
