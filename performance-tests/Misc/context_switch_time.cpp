@@ -78,17 +78,17 @@ static const char usage [] = "[-? |\n"
 #define DEBUG 0
 #endif /* DEBUG */
 
-#if defined (__sun)
-/* Solaris priority values range from low to high with increasing priority */
-static const unsigned int LOW_PRIORITY = 1;
-static const unsigned int HIGH_PRIORITY = 2;
+#if defined (__sun) || defined (ACE_WIN32)
+  // Solaris and Win32 priority values range from low to high with
+  // increasing priority
+  static const unsigned int LOW_PRIORITY = 1;
+  static const unsigned int HIGH_PRIORITY = 2;
 #else
-/* VxWorks and Win32 priority values range from high to low with
-   increasing priority */
-static const unsigned int LOW_PRIORITY = 2;
-static const unsigned int HIGH_PRIORITY = 1;
+  // VxWorks priority values range from high to low with
+  // increasing priority
+  static const unsigned int LOW_PRIORITY = 2;
+  static const unsigned int HIGH_PRIORITY = 1;
 #endif
-
 
 // global test configuration parameters
 static unsigned long count = 1;
@@ -584,6 +584,7 @@ Yield_Test::svc ()
 // function get_options
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
+
 static
 unsigned int
 get_options (int argc, char *argv [])
@@ -647,6 +648,7 @@ get_options (int argc, char *argv [])
 // function main
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
+
 int
 main (int argc, char *argv [])
 {
