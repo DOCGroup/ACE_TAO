@@ -1,3 +1,9 @@
+Mon Jan 24 07:49:21 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/OS_NS_sys_socket.inl (setsockopt): Fixed a mistake in the
+	  comment, where it should say "Windows always set
+ 	  SO_REUSEADDR=1."  Thanks to xjaguar@126.com for reporting this.
+
 Mon Jan 24 11:23:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
 	* tests/CDR_Test.cpp:
