@@ -101,7 +101,6 @@ TAO_DynAny_i::TAO_DynAny_i (const CORBA_Any& any)
             break;
           default:
             ACE_THROW (CORBA_DynAny::Invalid ());
-            break;
         }
     }
   ACE_CATCHANY
