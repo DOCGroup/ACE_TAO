@@ -37,8 +37,6 @@ Cubit_Client::func (u_int i)
 int
 Cubit_Client::read_ior (char *filename)
 {
-  struct stat f_stat;
-
   // Open the file for reading.
   this->f_handle_ = ACE_OS::open (filename,0);
 
