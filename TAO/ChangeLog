@@ -1,3 +1,9 @@
+Tue Dec 23 20:44:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/TAO.dsp:
+
+	  New files from the last change.
+
 Tue Dec 23 20:35:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Buffering_Constraint_Policy.cpp:
@@ -22,7 +28,8 @@ Tue Dec 23 20:35:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/WrongTransactionC.h:
 	* tao/WrongTransactionC.i:
 
-	  Regenerated all these files. 
+	  Regenerated all these files and added TAOA* and
+	  WrongTransactionA*. 
 	
 	* tao/Makefile.tao:
 	* tao/Makefile.bor:
