@@ -1964,7 +1964,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       *thr_handle = (void *) ::_beginthreadex 
 	(NULL,
 	 stacksize,
-	 ACE_THR_C_FUNC (&ACE_THREAD_FUNCTION),
+	 (unsigned (__stdcall *) (void *)) ACE_THREAD_FUNCTION,
 	 ACE_THREAD_ARGUMENT,
 	 flags,
 	 (unsigned int *) thr_id);
@@ -1983,7 +1983,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #    if 0
   *thr_handle = ::CreateThread 
     (NULL, stacksize,
-     LPTHREAD_START_ROUTINE (ACE_THR_C_FUNC (ACE_THREAD_FUNCTION)),
+     LPTHREAD_START_ROUTINE (ACE_THREAD_FUNCTION),
      ACE_THREAD_ARGUMENT, flags, thr_id);
 #    endif /* 0 */
 
