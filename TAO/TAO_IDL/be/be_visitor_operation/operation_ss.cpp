@@ -160,27 +160,9 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
 
   // Do we have any arguments in the operation that needs marshalling.
-  UTL_ScopeActiveIterator si (node,
-                              UTL_Scope::IK_decls);
-  AST_Decl *d = 0;
-  AST_Argument *arg = 0;
-  int flag = 0;
-
-  while (!si.is_done ())
-  {
-    d = si.item ();
-    arg = AST_Argument::narrow_from_decl (d);
-
-    if (arg->direction () == AST_Argument::dir_INOUT ||
-        arg->direction () == AST_Argument::dir_OUT)
-      {
-        // There are return type that needs to get marshalled.
-        flag = 1;
-        break;
-      }
-
-    si.next ();
-  }
+  int flag =
+    node->count_arguments_with_direction (AST_Argument::dir_INOUT |
+                                          AST_Argument::dir_OUT);
 
   // Check if the flag is zero and for the return type.
   if (flag == 0 && node->void_return_type () == 1)

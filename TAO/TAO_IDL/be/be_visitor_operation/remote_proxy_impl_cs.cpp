@@ -337,26 +337,9 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
   size_t ext = this->ctx_->attribute () ? 5 : 0;
 
   // Do we have any arguments in the operation that needs marshalling
-  UTL_ScopeActiveIterator si (node,
-                              UTL_Scope::IK_decls);
-  AST_Decl *d = 0;
-  AST_Argument *arg = 0;
-  int flag = 0;
-
-  while (!si.is_done ())
-  {
-    d = si.item ();
-    arg = AST_Argument::narrow_from_decl (d);
-
-    if (arg->direction () == AST_Argument::dir_IN ||
-        arg->direction () == AST_Argument::dir_INOUT)
-      {
-        // There is something that needs marshalling
-        flag = 1;
-        break;
-      }
-    si.next ();
-  }
+  int flag =
+    node->count_arguments_with_direction (AST_Argument::dir_IN
+                                          | AST_Argument::dir_INOUT);
 
   *os << "(" << be_idt << be_idt_nl
       << "istub," << be_nl

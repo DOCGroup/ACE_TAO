@@ -104,15 +104,6 @@ AST_Module *
 be_generator::create_module (UTL_Scope *s,
                              UTL_ScopedName *n)
 {
-  AST_Decl *d = 0;
-  AST_Module *m = 0;
-
-  UTL_ScopeActiveIterator *iter = 0;
-  ACE_NEW_RETURN (iter,
-                  UTL_ScopeActiveIterator (s,
-                                           UTL_Scope::IK_decls),
-                  0);
-
   // We create this first so if we find a module with the
   // same name from an included file, we can add its
   // members to the new module's scope.
@@ -123,9 +114,11 @@ be_generator::create_module (UTL_Scope *s,
 
 
   // Check for another module of the same name in this scope.
-  while (!iter->is_done ())
+  for (UTL_ScopeActiveIterator iter (s, UTL_Scope::IK_decls);
+       !iter.is_done ();
+       iter.next ())
     {
-      d = iter->item ();
+      AST_Decl *d = iter.item ();
 
       if (d->node_type () == AST_Decl::NT_module)
         {
@@ -133,28 +126,24 @@ be_generator::create_module (UTL_Scope *s,
           // supposed to create.
           if (d->local_name ()->compare (n->last_component ()))
             {
-              m = AST_Module::narrow_from_decl (d);
+              AST_Module *m = AST_Module::narrow_from_decl (d);
 
               // Get m's previous_ member, plus all it's decls,
               // into the new modules's previous_ member.
               retval->add_to_previous (m);
             }
         }
-
-      iter->next ();
     }
-
-  delete iter;
 
   // If this scope is itself a module, and has been previously
   // opened, the previous opening may contain a previous opening
   // of the module we're creating.
-  d = ScopeAsDecl (s);
+  AST_Decl *d = ScopeAsDecl (s);
   AST_Decl::NodeType nt = d->node_type ();
 
   if (nt == AST_Decl::NT_module || nt == AST_Decl::NT_root)
     {
-      m = AST_Module::narrow_from_decl (d);
+      AST_Module *m = AST_Module::narrow_from_decl (d);
 
       // AST_Module::previous_ is a set, so it contains each
       // entry only once, but previous_ will contain the decls

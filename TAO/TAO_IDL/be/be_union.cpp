@@ -676,44 +676,27 @@ be_union::gen_out_impl (char *,
 int
 be_union::compute_size_type (void)
 {
-  UTL_ScopeActiveIterator *si = 0;
-  AST_Decl *d = 0;
-  be_decl *bd = 0;
-
-  if (this->nmembers () > 0)
+  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      // If there are elements in this scope,
-      // instantiate a scope iterator.
-
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (this,
-                                               UTL_Scope::IK_decls),
-                      -1);
-
-      while (!si->is_done ())
+      // Get the next AST decl node.
+      AST_Decl *d = si.item ();
+      be_decl *bd = be_decl::narrow_from_decl (d);
+      if (bd != 0)
         {
-          // Get the next AST decl node.
-          d = si->item ();
-          bd = be_decl::narrow_from_decl (d);
-          if (bd != 0)
-            {
-              // Our sizetype depends on the sizetype of our members. Although
-              // previous value of sizetype may get overwritten, we are
-              // guaranteed by the "size_type" call that once the value reached
-              // be_decl::VARIABLE, nothing else can overwrite it.
-              this->size_type (bd->size_type ());
-            }
-          else
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "WARNING (%N:%l) be_union::compute_size_type - "
-                          "narrow_from_decl returned 0\n"));
-            }
-
-          si->next ();
+          // Our sizetype depends on the sizetype of our members. Although
+          // previous value of sizetype may get overwritten, we are
+          // guaranteed by the "size_type" call that once the value reached
+          // be_decl::VARIABLE, nothing else can overwrite it.
+          this->size_type (bd->size_type ());
         }
-
-      delete si;
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "WARNING (%N:%l) be_union::compute_size_type - "
+                      "narrow_from_decl returned 0\n"));
+        }
     }
 
   return 0;
@@ -722,25 +705,18 @@ be_union::compute_size_type (void)
 idl_bool
 be_union::has_duplicate_case_labels (void)
 {
-  // Instantiate a scope iterator.
-  UTL_ScopeActiveIterator *si = 0;
-  ACE_NEW_RETURN (si,
-                  UTL_ScopeActiveIterator (this,
-                                           UTL_Scope::IK_decls),
-                  0);
-
-  while (!si->is_done ())
+  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      AST_Decl *d = si->item ();
-      AST_UnionBranch *ub = AST_UnionBranch::narrow_from_decl (d);
+      AST_Decl *d = si.item ();
+      AST_UnionBranch *ub =
+        AST_UnionBranch::narrow_from_decl (d);
 
       if (ub->label_list_length () > 1)
         {
-          delete si;
           return I_TRUE;
         }
-
-      si->next ();
     }
 
   return I_FALSE;

@@ -46,54 +46,41 @@ be_visitor_valuetype_marshal_ch::~be_visitor_valuetype_marshal_ch (void)
 int
 be_visitor_valuetype_marshal_ch::visit_valuetype (be_valuetype *node)
 {
-  // Proceed if the number of members in our scope is greater than 0.
-  if (node->nmembers () > 0)
+  this->elem_number_ = 0;
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next())
     {
-      // Initialize an iterator to iterate thru our scope
-      UTL_ScopeActiveIterator *si;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (node,
-                                               UTL_Scope::IK_decls),
-                      -1);
-      this->elem_number_ = 0;
+      AST_Decl *d = si.item ();
 
-      // Continue until each field is visited.
-      for (;!si->is_done ();si->next())
+      if (!d)
         {
-          AST_Decl *d = si->item ();
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_scope::visit_scope - "
+                             "bad node in this scope\n"),
+                            -1);
 
-          if (!d)
-            {
-              delete si;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_scope::visit_scope - "
-                                 "bad node in this scope\n"),
-                                -1);
-
-            }
-
-          be_field *field = be_field::narrow_from_decl (d);
-
-          if (field)
-            {
-              be_visitor_context* new_ctx =
-                new be_visitor_context (*this->ctx_);
-              be_visitor_valuetype_field_cdr_ch visitor (new_ctx);
-              visitor.pre_ = node->field_pd_prefix ();
-              visitor.post_ = node->field_pd_postfix ();
-
-              if (visitor.visit_field (field) == -1)
-                {
-                  ACE_ERROR_RETURN ((LM_ERROR,
-                                     "(%N:%l) be_visitor_valuetype_marshal_ch::"
-                                     "visit_valuetype - "
-                                     "codegen for scope failed\n"),
-                                    -1);
-                }
-            }
         }
 
-      delete si;
+      be_field *field = be_field::narrow_from_decl (d);
+
+      if (field)
+        {
+          be_visitor_context* new_ctx =
+            new be_visitor_context (*this->ctx_);
+          be_visitor_valuetype_field_cdr_ch visitor (new_ctx);
+          visitor.pre_ = node->field_pd_prefix ();
+          visitor.post_ = node->field_pd_postfix ();
+
+          if (visitor.visit_field (field) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_valuetype_marshal_ch::"
+                                 "visit_valuetype - "
+                                 "codegen for scope failed\n"),
+                                -1);
+            }
+        }
     }
 
   return 0;

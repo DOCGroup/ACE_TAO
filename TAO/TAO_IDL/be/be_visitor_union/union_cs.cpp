@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_union.h"
 
@@ -116,25 +116,22 @@ int be_visitor_union_cs::visit_union (be_union *node)
       // to the first case label value found in the union declaration
       // so that, if the uninitialized union is inserted into an Any,
       // the Any destructor's call to deep_free() will work properly.
-      UTL_ScopeActiveIterator *si;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (node,
-                                               UTL_Scope::IK_decls),
-                      -1);
+      UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+
+      // @@ What if there is no first element?!
 
       // Just get the union's first member.
-      AST_Decl *d = si->item ();
-      delete si;
+      AST_Decl *d = si.item ();
 
       be_union_branch *ub = be_union_branch::narrow_from_decl (d);
 
       // Get the first label in its list.
       AST_UnionLabel *ul = ub->label (0);
 
-			if (ul->label_kind () == AST_UnionLabel::UL_label)
-				{
+      if (ul->label_kind () == AST_UnionLabel::UL_label)
+        {
           ub->gen_label_value (os);
-				}
+        }
       else
         {
           ub->gen_default_label_value (os, node);
