@@ -5,13 +5,13 @@ CIAO::NodeApplication_Callback_Impl::
 NodeApplication_Callback_Impl  (CORBA::ORB_ptr o,
                                 PortableServer::POA_ptr p,
                                 Deployment::NodeApplicationManager_ptr s,
-                                const Deployment::Properties &properties
-                                ACE_ENV_ARG_DECL)
+                                const Deployment::Properties &properties)
     ACE_THROW_SPEC ((CORBA::SystemException))
   : orb_ (CORBA::ORB::_duplicate (o)),
     poa_ (PortableServer::POA::_duplicate (p)),
     nam_ (Deployment::NodeApplicationManager::_duplicate (s))
 {
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
   {
     //@@ Note: this properties is useless unless
