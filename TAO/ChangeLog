@@ -1,6 +1,11 @@
+Sat Sep 14 08:42:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator.bor:
+          Added missing NT_Service.
+
 Fri Sep 13 15:35:53 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* tao/Acceptor_Registry.cpp: Put errno value in the 
+	* tao/Acceptor_Registry.cpp: Put errno value in the
 	  constructor of the CORBA exception which is created when
 	  when opening the acceptor in TAO_Acceptor_Registry::open_i() fails.
 
