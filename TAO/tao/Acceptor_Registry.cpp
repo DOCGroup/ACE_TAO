@@ -113,7 +113,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
       int slot = iop.find ("://", 0);
       if (slot == iop.npos)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) Invalid endpoint epecification: "
+                           "(%P|%t) Invalid endpoint specification: "
                            "<%s>.\n",
                            iop.c_str ()),
                           -1);
@@ -146,12 +146,8 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
               if (slot == ACE_static_cast (int, iop.length () - 3))
                 {
                   // Protocol was specified without an endpoint.
-                  // According to the "iioploc" spec, this is valid.
-                  // As such, we extend this feature to all pluggable
-                  // protocols.  All TAO pluggable protocols are
-                  // expected to have the ability to create a default
-                  // endpoint.
-
+                  // All TAO pluggable protocols are expected to have
+                  // the ability to create a default endpoint.
                   if (this->open_default (orb_core, factory) == 0)
                     continue;
                   else
@@ -351,6 +347,7 @@ TAO_Acceptor_Registry::close_all (void)
     }
 
   this->acceptors_.reset ();
+
   return 0;
 }
 
