@@ -14,7 +14,7 @@
 <P>
 <HR WIDTH="100%">
 <P>
-Now we come to main().  In the previous task-chain tutorial
+Now we come to main ().  In the previous task-chain tutorial
     every thread pool had to have the same number of threads.  This
     time around, we leverage the construction method of ACE_Stream
     and ACE_Module to customize the thread-pool size in each
@@ -25,14 +25,14 @@ Remember EndTask from the previous page?  We create one here and push
     Technically, we could have replaced the default Tail task
     created by the ACE framework but it seems to make more sense to
     just push our "tail" onto the stream like the other tasks.  The
-    caveat to this method is that you must be sure you don't push()
+    caveat to this method is that you must be sure you don't push ()
     any other Modules behind the EndTask!
 <P>
 Once the stream of modules containing tasks is all setup then we can
-    put() some data into the stream for processing.  The clever use
-    of Task::close() makes shutting downt the stream easier than
+    put () some data into the stream for processing.  The clever use
+    of Task::close () makes shutting downt the stream easier than
     ever.  No messing with hangup messages at the application level,
-    just close() when you're done!  What could be simpler?
+    just close () when you're done!  What could be simpler?
 <P>
 <HR WIDTH="100%">
 <PRE>
@@ -62,9 +62,10 @@ typedef ACE_Stream&lt;ACE_MT_SYNCH> Stream;
 <font color=red>// Just to avoid a lot of typing, typedefs</font>
 <font color=red>// are generally a good idea.</font>
 
-int main(int argc, char *argv[])
+int main (int argc, char *argv[])
 {
-  int numberOfMessages = argc > 1 ? <font color=#008888>ACE_OS::atoi</font>(argv[1]) : 3;
+  int numberOfMessages = argc > 1 ? <font
+color=#008888>ACE_OS::atoi</font> (argv[1]) : 3;
   <font color=red>// unless otherwise specified, just send three messages</font>
   <font color=red>// down the stream.</font>
 
@@ -87,15 +88,15 @@ int main(int argc, char *argv[])
   <font color=red>// Out Task's take two arguments: a name, and the number</font>
   <font color=red>// of threads to dedicate to the task.</font>
 
-  taskOne = new Task("<font color=green>Task No. 1</font>", 1);
-  taskTwo = new Task("<font color=green>Task No. 2</font>", 3);
-  taskThree = new Task("<font color=green>Task No. 3</font>", 7);
-  taskFour = new Task("<font color=green>Task No. 4</font>", 1);
+  taskOne = new Task ("<font color=green>Task No. 1</font>", 1);
+  taskTwo = new Task ("<font color=green>Task No. 2</font>", 3);
+  taskThree = new Task ("<font color=green>Task No. 3</font>", 7);
+  taskFour = new Task ("<font color=green>Task No. 4</font>", 1);
 
   <font color=red>// Our EndTask only takes 1 argument, as it actually</font>
   <font color=red>// doesn't spawn any threads for processing.</font>
 
-  taskEnd = new EndTask("<font color=green>End Task</font>");
+  taskEnd = new EndTask ("<font color=green>End Task</font>");
 
   Module *moduleOne;
   Module *moduleTwo;
@@ -112,49 +113,49 @@ int main(int argc, char *argv[])
   <font color=red>// so we'll only actually install a Task into the write</font>
   <font color=red>// side of the module, effectively downstream.</font>
 
-  moduleOne = new Module("<font color=green>Module No. 1</font>", taskOne);
-  moduleTwo = new Module("<font color=green>Module No. 2</font>", taskTwo);
-  moduleThree = new Module("<font color=green>Module No. 3</font>", taskThree);
-  moduleFour = new Module("<font color=green>Module No. 4</font>", taskFour);
-  moduleEnd = new Module("<font color=green>Module End</font>", taskEnd);
+  moduleOne = new Module ("<font color=green>Module No. 1</font>", taskOne);
+  moduleTwo = new Module ("<font color=green>Module No. 2</font>", taskTwo);
+  moduleThree = new Module ("<font color=green>Module No. 3</font>", taskThree);
+  moduleFour = new Module ("<font color=green>Module No. 4</font>", taskFour);
+  moduleEnd = new Module ("<font color=green>Module End</font>", taskEnd);
 
   <font color=red>// Now we push the Modules onto the Stream.</font>
   <font color=red>// Pushing adds the module to the head, or</font>
   <font color=red>// otherwise prepends it to whatever modules</font>
   <font color=red>// are already installed.</font>
 
-  <font color=red>// So, you need to push() the modules on -backwards-</font>
+  <font color=red>// So, you need to push () the modules on -backwards-</font>
   <font color=red>// from our viewpoint.</font>
 
-  if (theStream.push(moduleEnd) == -1) {
+  if (theStream.push (moduleEnd) == -1) {
            ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>push</font>"), -1);
   }
 
-  if (theStream.push(moduleFour) == -1) {
+  if (theStream.push (moduleFour) == -1) {
         ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>push</font>"), -1);
   }
 
   <font color=red>// As we push a Module onto the Stream, it gets opened.</font>
-  <font color=red>// When a Module open()s, it opens the Tasks that it contains.</font>
+  <font color=red>// When a Module open ()s, it opens the Tasks that it contains.</font>
   <font color=red>//</font>
   <font color=red>// Since we cannot provide an argument to this embedded</font>
-  <font color=red>// call to open(), we supplied specified the number of</font>
+  <font color=red>// call to open (), we supplied specified the number of</font>
   <font color=red>// threads in the constructor of our Tasks.</font>
 
-  if (theStream.push(moduleThree) == -1) {
+  if (theStream.push (moduleThree) == -1) {
         ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>push</font>"), -1);
   }
 
-  if (theStream.push(moduleTwo) == -1) {
+  if (theStream.push (moduleTwo) == -1) {
         ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>push</font>"), -1);
   }
 
-  if (theStream.push(moduleOne) == -1) {
+  if (theStream.push (moduleOne) == -1) {
         ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>push</font>"), -1);
   }
 
   <font color=red>// Now that the Modules are open, the Tasks threads should</font>
-  <font color=red>// be launching and entering their svc() loop, so we send</font>
+  <font color=red>// be launching and entering their svc () loop, so we send</font>
   <font color=red>// some messages down the Stream.</font>
 
   int sent = 1;
@@ -163,30 +164,37 @@ int main(int argc, char *argv[])
 
   while (sent &lt;= numberOfMessages) {
 
-    <font color=red>// First, create ourselves a Message_Block.</font>
-    <font color=red>// see Tutorials 10-13 for more information</font>
-    <font color=red>// about Message_Blocks and Message_Queues.</font>
-
-    message = new ACE_Message_Block(128);
+    <font color=red>// First, create ourselves a Message_Block.  See Tutorials 10-13</font>
+    <font color=red>// for more information about Message_Blocks and Message_Queues.</font>
+    <font color=red>// Note the use of the lock_adapter () to ensure proper</font>
+    <font color=red>// serialization.</font>
+    ACE_NEW_RETURN (message,
+                    ACE_Message_Block (128,
+                                       ACE_Message_Block::MB_DATA,
+                                       0,
+                                       0,
+                                       0,
+                                       Task::lock_adapter ()),
+                    -1);
 
     <font color=red>// Now, we grab the write-pointer from the Block,</font>
-    <font color=red>// and sprintf() our text into it.</font>
+    <font color=red>// and sprintf () our text into it.</font>
 
-    <font color=#008888>ACE_OS::sprintf</font>(message->wr_ptr(), "<font color=green>Message No. %d</font>", sent);
+    <font color=#008888>ACE_OS::sprintf</font> (message->wr_ptr (), "<font color=green>Message No. %d</font>", sent);
 
     <font color=red>// All we have to do now is drop the Message_Block</font>
     <font color=red>// into the Stream.</font>
 
-    <font color=red>// It is always a good idea to duplicate() a Message_Block</font>
+    <font color=red>// It is always a good idea to duplicate () a Message_Block</font>
     <font color=red>// when you put it into any Message_Queue, as then</font>
-    <font color=red>// you can always be allowed to release() your copy</font>
+    <font color=red>// you can always be allowed to release () your copy</font>
     <font color=red>// without worry.</font>
 
-    if (theStream.put(message->duplicate(), 0) == -1) {
+    if (theStream.put (message->duplicate (), 0) == -1) {
       ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>put</font>"), -1);
     }
 
-    message->release();
+    message->release ();
     ++sent;
   }
 
@@ -200,7 +208,7 @@ int main(int argc, char *argv[])
   <font color=red>// Task class) until all Message_Blocks have cleared the</font>
   <font color=red>// entire Stream, and all associated threads have exited.</font>
 
-  theStream.close();
+  theStream.close ();
 
   return 0;
 }

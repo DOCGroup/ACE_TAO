@@ -47,6 +47,9 @@ public:
   const char *nameOfTask (void) const;
   // Returns the name of this Task.
 
+  static ACE_Lock_Adapter<ACE_SYNCH_MUTEX> *lock_adapter (void);
+  // Returns a pointer to the lock adapter.
+
 private:
   int d_numberOfThreads;
   char d_nameOfTask[64];
@@ -54,6 +57,10 @@ private:
   ACE_Barrier d_barrier;
   // Simple Barrier to make sure all of our service threads have
   // entered their loop before accepting any messages.
+
+  static ACE_Lock_Adapter<ACE_SYNCH_MUTEX> lock_adapter_;
+  // This Lock_Adapter is used to synchronize operations
+  // on the ACE_Message_Block objects
 };
 
 #endif /* TASK_H */

@@ -1,5 +1,24 @@
 Mon Dec 24 08:08:40 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+ 	* ace/Logging_Strategy.cpp
+ 	* ace/Naming_Context.cpp
+ 	* ace/Service_Manager.cpp: Removed the explicit template instantiations 
+	  for ACE_Array_Base<> to avoid problems with multiply defined
+ 	  symbols.	
+  
+	* ace/Service_Config.cpp: Added explicit template instantiations
+	  for template class ACE_Array<ACE_Get_Opt::ACE_Get_Opt_Long_Option *>.
+
+	* docs/tutorials/014/page02.html,
+  	* docs/tutorials/014/page03.html,
+  	* docs/tutorials/014/page04.html,
+  	* docs/tutorials/014/page05.html,
+  	* docs/tutorials/014/stream.cpp,
+  	* docs/tutorials/014/Task.{h,cpp}: Fixed the tutorial so that it
+	  uses the correct synchronization mechanism for the message
+ 	  blocks.  Thanks to Ulrich Voigt <Ulrich.Voigt@ddg.de> for
+ 	  reporting this.
+
 	* ace/Log_Msg.cpp: Moved the call to ACE_Log_Msg_Manager::close()
 	  to first in the ACE_Log_Msg::close() method to avoid memory
  	  leaks.  Fixes BugId 1103.  Thanks to Ahmed Riza
@@ -27,7 +46,7 @@ Sun Dec 23 12:25:55 2001  Don Hinton  <dhinton@gmx.net>
 
  	* ace/Logging_Strategy.cpp
  	* ace/Naming_Context.cpp
- 	* ace/Sercive_Config.cpp
+ 	* ace/Service_Config.cpp
  	* ace/Service_Manager.cpp
  	* ace/Get_Opt{h,i,cpp}:
 

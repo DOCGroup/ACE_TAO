@@ -48,7 +48,7 @@ Read on...
 <font color=red>// your first module, and a Stream_Tail behind your</font>
 <font color=red>// last module.</font>
 <font color=red>//</font>
-<font color=red>// If your put() a message to the Stream Tail, it</font>
+<font color=red>// If your put () a message to the Stream Tail, it</font>
 <font color=red>// assumes you did so in error. This simple EndTask</font>
 <font color=red>// class allows you to push a message to it and just</font>
 <font color=red>// have it safely Go Away.</font>
@@ -63,11 +63,11 @@ public:
 
   EndTask (const char *nameOfTask): inherited (nameOfTask, 0)
   {
-    <font color=red>// when we get open()'d, it with 0 threads since there is actually</font>
+    <font color=red>// when we get open ()'d, it with 0 threads since there is actually</font>
     <font color=red>// no processing to do.</font>
 
     ACE_DEBUG ((LM_INFO,
-                "<font color=green>(%P|%t) Line: %d, File: %s\n</font>",
+                "<font color=green> (%P|%t) Line: %d, File: %s\n</font>",
                 __LINE__,
                 __FILE__));
   }
@@ -75,7 +75,7 @@ public:
   virtual int open (void *)
   {
     ACE_DEBUG ((LM_INFO,
-                "<font color=green>(%P|%t) Line: %d, File: %s\n</font>",
+                "<font color=green> (%P|%t) Line: %d, File: %s\n</font>",
                 __LINE__,
                 __FILE__));
     return 0;
@@ -84,13 +84,13 @@ public:
   virtual int open (void)
   {
     ACE_DEBUG ((LM_INFO,
-                "<font color=green>(%P|%t) Line: %d, File: %s\n</font>",
+                "<font color=green> (%P|%t) Line: %d, File: %s\n</font>",
                 __LINE__,
                 __FILE__));
     return 0;
   }
 
-  virtual ~EndTask(void)
+  virtual ~EndTask (void)
   {
   }
 
@@ -98,14 +98,15 @@ public:
                    ACE_Time_Value *timeout)
   {
     ACE_DEBUG ((LM_INFO,
-                "<font color=green>(%P|%t) Line: %d, File: %s\n</font>",
+                "<font color=green> (%P|%t) Line: %d, File: %s\n</font>",
                 __LINE__,
                 __FILE__));
     ACE_UNUSED_ARG (timeout);
 
-    <font color=red>// we don't have anything to do, so release() the message.</font>
+    <font color=red>// we don't have anything to do, so release () the message.</font>
     ACE_DEBUG ((LM_DEBUG,
-                "<font color=green>(%P|%t) %s <font color=#008888>EndTask::put</font>() -- releasing Message_Block\n</font>",
+                "<font color=green> (%P|%t) %s <font
+color=#008888>EndTask::put</font> () -- releasing Message_Block\n</font>",
                 this->nameOfTask ()));
     message->release ();
     return 0;
