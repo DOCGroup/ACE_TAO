@@ -10,7 +10,9 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
 
 - (Ossama) Typecode refactoring fixes
 
-- (Ossama/JTC) autoconf support for TAO
+- (Ossama) Remainder of CSIv2 code that didn't make it into TAO 1.4.2
+
+- (JTC/Ossama) autoconf support for TAO
 
 - (OCI) Naming Service implementation fixes
 
