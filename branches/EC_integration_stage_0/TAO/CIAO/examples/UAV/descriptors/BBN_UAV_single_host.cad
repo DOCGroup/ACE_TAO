@@ -34,16 +34,6 @@
 
   <partitioning>
 
-      <homeplacement id="a_SatelliteHome">
-        <componentfileref idref="com-Satellite"/>
-          <componentinstantiation id="a_Satellite">
-          <registercomponent>
-            <!-- writeiortofile is a non-standard CIAO extension.  -->
-            <writeiortofile name="sat.ior"/>
-          </registercomponent>
-        </componentinstantiation>
-      </homeplacement>
-
       <homeplacement id="a_CAOCHome">
         <componentfileref idref="com-CAOC"/>
           <componentinstantiation id="a_CAOC">
@@ -109,6 +99,20 @@
           <componentinstantiation id="c_UCAV">
         </componentinstantiation>
       </homeplacement>            
+      
+      
+    <processcollocation>      
+      <homeplacement id="a_SatelliteHome">
+        <componentfileref idref="com-Satellite"/>
+          <componentinstantiation id="a_Satellite">
+          <registercomponent>
+            <!-- writeiortofile is a non-standard CIAO extension.  -->
+            <writeiortofile name="sat.ior"/>
+          </registercomponent>
+        </componentinstantiation>
+      </homeplacement>      
+     <destination>SatelliteHost</destination>
+    </processcollocation>      
   <!-- A plain vanilla partition.  We don't even need the processcollocation tag here. -->
 
   </partitioning>
