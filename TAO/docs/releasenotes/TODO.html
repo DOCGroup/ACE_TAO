@@ -412,19 +412,29 @@ class Foo {
 	</UL>
       <P></LI>
 
+      <LI><P>Check how does the IDL compiler handles a union with an
+	  octet for a discriminator</P>
+      </LI>
+
+      <LI><P>The methods on the server side <B>must</B> have a throw
+	  spec, check CORBA 2.2, 20.35</P>
+      </LI>
+
+      <LI><P>According to Vinoski and Henning the
+	  <CODE>CORBA::Policy</CODE> objects are also locality
+	  constrained.
+	  I could not find a references in the spec.</P>
+      </LI>
+
+      
+      <LI><P>The ORB does not have an interface repository</P>
+      </LI>
 
       <LI>The current scheme for Typecode (keeping a CDR buffer with
 	their representation) is broken; we should use classes for
 	each variant of a TypeCode; but initialization would be
 	complicated then.
       <P></LI>
-
-      <LI><P>The ORB does not have an interface repository</P>
-      </LI>
-
-      <LI><P>Check how does the IDL compiler handles a union with an
-	  octet for a discriminator</P>
-      </LI>
 
       <LI><P>The CORBAlite RFP is very interesting IMHO we just need to
 	remove features from TAO to make it a CORBAlite
