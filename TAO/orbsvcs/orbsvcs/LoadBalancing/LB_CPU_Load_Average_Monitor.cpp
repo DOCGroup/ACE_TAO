@@ -4,8 +4,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
-#include "ace/os_include/os_pstat.h"
-#include "ace/os_include/os_loadavg.h"
+#include "ace/os_include/sys/os_pstat.h"
+#include "ace/os_include/sys/os_loadavg.h"
 
 ACE_RCSID (LoadBalancing,
            LB_CPU_Load_Average_Monitor,
