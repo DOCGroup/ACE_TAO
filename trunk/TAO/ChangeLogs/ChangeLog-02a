@@ -1,6 +1,22 @@
+Mon Apr 29 15:00:59 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/orbconf.h: Added a proprietary policy type for managing
+	  connection timeouts.
+
+	* tao/Messaging/TAO_Ext.pidl:
+	* tao/Messaging/TAO_ExtC.h:
+	* tao/Messaging/TAO_ExtC.i:
+	* tao/Messaging/TAO_ExtC.cpp: An extension to the TAO's
+	  proprietary messaging policy. We define the new policy for
+	  connection timeouts here. 
+
+	* tao/Messaging/Makefile: Added the new file to the makefile. 
+	* tao/Messaging/diffs/TAO_Ext.diff: The diffs between the
+	  generated code and code that is being checked in.
+
 Mon Apr 29 14:42:07 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Muxed_GIOP_Versions/serevr.cpp: Fixed a compile error in
+	* tests/Muxed_GIOP_Versions/server.cpp: Fixed a compile error in
 	  single threaded builds.
 
 Mon Apr 29 11:28:59 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
