@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ===================================================================
-//
-// = LIBRARY
-//    TAO_DynamicAny
-//
-// = FILENAME
-//    DynArray_i.h
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ===================================================================
+//=============================================================================
+/**
+ *  @file    DynArray_i.h
+ *
+ *  $Id$
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_DYNARRAY_I_H
 #define TAO_DYNARRAY_I_H
@@ -34,31 +31,30 @@
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
+/**
+ * @class TAO_DynArray_i
+ *
+ * Implementation of Dynamic Any type for arrays
+ */
 class TAO_DynamicAny_Export TAO_DynArray_i
   : public virtual DynamicAny::DynArray,
     public virtual TAO_DynCommon,
     public virtual TAO_Local_RefCounted_Object
 {
-  // = TITLE
-  //    TAO_DynArray_i
-  //
-  // = DESCRIPTION
-  //    Implementation of Dynamic Any type for arrays
-  //
 public:
+  /// Constructor.
   TAO_DynArray_i (void);
-  // Constructor.
 
+  /// Destructor.
   ~TAO_DynArray_i (void);
-  // Destructor.
 
+  /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc
              ACE_ENV_ARG_DECL);
-  // Initialize using just a TypeCode.
 
+  /// Initialize using an Any.
   void init (const CORBA::Any& any
              ACE_ENV_ARG_DECL);
-  // Initialize using an Any.
 
   // = LocalObject methods
   static TAO_DynArray_i *_narrow (
@@ -146,14 +142,14 @@ public:
       ));
 
 private:
-  // Returns the type of elements contained in the array.
+  /// Returns the type of elements contained in the array.
   CORBA::TypeCode_ptr get_element_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
-  // Gets the length of the array from the typecode.
+  /// Gets the length of the array from the typecode.
   CORBA::ULong get_tc_length (CORBA::TypeCode_ptr tc
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  // Called by both versions of init().
+  /// Called by both versions of init().
   void init_common (void);
 
   // Use copy() or assign() instead of these.
@@ -161,8 +157,8 @@ private:
   TAO_DynArray_i &operator= (const TAO_DynArray_i &src);
 
 private:
+  /// Each component is also a DynAny.
   ACE_Array_Base<DynamicAny::DynAny_var> da_members_;
-  // Each component is also a DynAny.
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
