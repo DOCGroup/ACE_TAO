@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
-//
+
 // ============================================================================
 //
 // = LIBRARY
@@ -13,7 +13,9 @@
 //   Pradeep Gore <pradeep@cs.wustl.edu>
 //
 // = DESCRIPTION
-//   This has the implementation of the CosEventChannelAdmin::ProxyPushConsumer interface.
+//   This has the implementation of the
+//   CosEventChannelAdmin::ProxyPushConsumer interface.
+//
 // ======================================================================================
 
 #if !defined (_PROXYPUSHCONSUMER_H)
@@ -24,20 +26,24 @@
 
 class PushSupplierWrapper;
 
-class ProxyPushConsumer_i : public
-POA_CosEventChannelAdmin::ProxyPushConsumer
+class ProxyPushConsumer_i : public POA_CosEventChannelAdmin::ProxyPushConsumer
 {
   // = TITLE
-  //   class ProxyPushConsumer_i implements the ProxyPushConsumer interface.
+  //   class ProxyPushConsumer_i implements the ProxyPushConsumer
+  //   interface.
+  //
   // = DESCRIPTION
-  //   This implementation of the ProxyPushConsumer uses the RtecEventChannelAdmin::ProxyPushConsumer.
+  //   This implementation of the ProxyPushConsumer uses the
+  //   RtecEventChannelAdmin::ProxyPushConsumer.
   //
 public:
   // = Initialization and termination methods.
-  ProxyPushConsumer_i(const RtecEventChannelAdmin::SupplierQOS &qos,
-                     RtecEventChannelAdmin::ProxyPushConsumer_ptr ppc);
+  ProxyPushConsumer_i (const RtecEventChannelAdmin::SupplierQOS &qos,
+                       RtecEventChannelAdmin::ProxyPushConsumer_ptr ppc);
+  // Constructor.
 
-  ~ProxyPushConsumer_i ();
+  ~ProxyPushConsumer_i (void);
+  // Destructor.
 
   virtual void push (const CORBA::Any &data,
                      CORBA::Environment &TAO_TRY_ENV);
@@ -49,11 +55,11 @@ public:
   virtual void connect_push_supplier(CosEventComm::PushSupplier_ptr push_supplier,
                                      CORBA::Environment &TAO_TRY_ENV);
   // Connects a push supplier.
-private:
 
+private:
   int connected (void);
-  // Returns 0 if a push_supplier is already connected to this ProxyPushConsumer,
-  // otherwise it returns a 1.
+  // Returns 0 if a push_supplier is already connected to this
+  // ProxyPushConsumer, otherwise it returns a 1.
 
   const RtecEventChannelAdmin::SupplierQOS &qos_;
   // The SupplierQOS specified by the user of this class.
@@ -65,4 +71,6 @@ private:
   // The Rtec PushSupplier wrapper used by the Rtec proxyPushConsumer.
 };
 
+// @@ Pradeep, please don't use // here, but use /* ... */ instead.
+// Please fix all uses of this in your code since it's not portable.
 #endif // _PROXYPUSHCONSUMER_H
