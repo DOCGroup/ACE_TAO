@@ -34,3 +34,11 @@ TAO_CEC_ProxyPushConsumer::supplier (CosEventComm::PushSupplier_ptr supplier)
 
   this->supplier_i (supplier);
 }
+
+// ****************************************************************
+
+ACE_INLINE int
+TAO_CEC_ProxyPushConsumer_Guard::locked (void) const
+{
+  return this->locked_;
+}

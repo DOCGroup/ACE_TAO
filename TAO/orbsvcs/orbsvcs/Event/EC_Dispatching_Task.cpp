@@ -100,7 +100,6 @@ TAO_EC_Shutdown_Task_Command::execute (CORBA::Environment&)
 
 // ****************************************************************
 
-ACE_INLINE
 TAO_EC_Push_Command::~TAO_EC_Push_Command (void)
 {
   this->proxy_->_decr_refcnt ();

@@ -1008,9 +1008,10 @@ TAO_ECG_UDP_EH::TAO_ECG_UDP_EH (TAO_ECG_UDP_Receiver *recv)
 }
 
 int
-TAO_ECG_UDP_EH::open (const ACE_INET_Addr& ipaddr)
+TAO_ECG_UDP_EH::open (const ACE_INET_Addr& ipaddr,
+                      int reuse_addr)
 {
-  if (this->dgram_.open (ipaddr) == -1)
+  if (this->dgram_.open (ipaddr, PF_INET, 0, reuse_addr) == -1)
     return -1;
   return this->reactor ()->register_handler (this,
                                              ACE_Event_Handler::READ_MASK);

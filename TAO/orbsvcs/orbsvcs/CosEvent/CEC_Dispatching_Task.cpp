@@ -1,7 +1,6 @@
 // $Id$
 
 #include "CEC_Dispatching_Task.h"
-#include "CEC_ProxyPushSupplier.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "CEC_Dispatching_Task.i"
@@ -89,6 +88,11 @@ TAO_CEC_Shutdown_Task_Command::execute (CORBA::Environment&)
 }
 
 // ****************************************************************
+
+TAO_CEC_Push_Command::~TAO_CEC_Push_Command (void)
+{
+  this->proxy_->_decr_refcnt ();
+}
 
 int
 TAO_CEC_Push_Command::execute (CORBA::Environment& ACE_TRY_ENV)

@@ -524,7 +524,8 @@ class TAO_RTEvent_Export TAO_ECG_UDP_EH : public ACE_Event_Handler
 public:
   TAO_ECG_UDP_EH (TAO_ECG_UDP_Receiver *recv);
 
-  int open (const ACE_INET_Addr& ipaddr);
+  int open (const ACE_INET_Addr& ipaddr,
+            int reuse_addr = 0);
   // Open the datagram and register with this->reactor()
 
   int close (void);

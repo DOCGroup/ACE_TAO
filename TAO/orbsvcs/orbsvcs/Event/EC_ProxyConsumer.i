@@ -49,3 +49,18 @@ TAO_EC_ProxyPushConsumer::publications_i (void) const
 {
   return this->qos_;
 }
+
+ACE_INLINE TAO_EC_Supplier_Filter *
+TAO_EC_ProxyPushConsumer::filter_i (void) const
+{
+  return this->filter_;
+}
+
+// ****************************************************************
+
+ACE_INLINE int
+TAO_EC_ProxyPushConsumer_Guard::locked (void) const
+{
+  return this->locked_;
+}
+

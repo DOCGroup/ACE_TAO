@@ -24,12 +24,16 @@ TAO_EC_ProxyPushConsumer::
 
   this->default_POA_ =
     this->event_channel_->consumer_poa ();
+
+  this->qos_.is_gateway = 0;
 }
 
 TAO_EC_ProxyPushConsumer::~TAO_EC_ProxyPushConsumer (void)
 {
   this->event_channel_->destroy_consumer_lock (this->lock_);
+  this->cleanup_i ();
 }
+
 
 CORBA::Boolean
 TAO_EC_ProxyPushConsumer::supplier_non_existent (
@@ -60,91 +64,42 @@ void
 TAO_EC_ProxyPushConsumer::connected (TAO_EC_ProxyPushSupplier* supplier,
                                      CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_EC_Supplier_Filter* filter = 0;
-  {
-    ACE_GUARD_THROW_EX (
-        ACE_Lock, ace_mon, *this->lock_,
-        CORBA::INTERNAL ());
-    // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
+  TAO_EC_ProxyPushConsumer_Guard ace_mon (this->lock_,
+                                          this->refcount_,
+                                          this->event_channel_,
+                                          this);
+  if (!ace_mon.locked ())
+    return;
 
-    if (this->is_connected_i () == 0)
-      return;
-
-    filter = this->filter_;
-    filter->_incr_refcnt ();
-  }
-
-  filter->connected (supplier, ACE_TRY_ENV);
-
-  {
-    ACE_GUARD_THROW_EX (
-        ACE_Lock, ace_mon, *this->lock_,
-        CORBA::INTERNAL ());
-    // @@  RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
-    filter->_decr_refcnt ();
-  }
+  ace_mon.filter->connected (supplier, ACE_TRY_ENV);
 }
 
 void
 TAO_EC_ProxyPushConsumer::reconnected (TAO_EC_ProxyPushSupplier* supplier,
                                        CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_EC_Supplier_Filter* filter = 0;
-  {
-    ACE_GUARD_THROW_EX (
-        ACE_Lock, ace_mon, *this->lock_,
-        CORBA::INTERNAL ());
-    // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
+  TAO_EC_ProxyPushConsumer_Guard ace_mon (this->lock_,
+                                          this->refcount_,
+                                          this->event_channel_,
+                                          this);
+  if (!ace_mon.locked ())
+    return;
 
-    if (this->is_connected_i () == 0)
-      return;
-
-    filter = this->filter_;
-    filter->_incr_refcnt ();
-  }
-
-  filter->reconnected (supplier, ACE_TRY_ENV);
-
-  {
-    ACE_GUARD_THROW_EX (
-        ACE_Lock, ace_mon, *this->lock_,
-        CORBA::INTERNAL ());
-    // @@  RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
-    filter->_decr_refcnt ();
-  }
+  ace_mon.filter->reconnected (supplier, ACE_TRY_ENV);
 }
 
 void
 TAO_EC_ProxyPushConsumer::disconnected (TAO_EC_ProxyPushSupplier* supplier,
                                         CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_EC_Supplier_Filter* filter = 0;
-  {
-    ACE_GUARD_THROW_EX (
-        ACE_Lock, ace_mon, *this->lock_,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
+  TAO_EC_ProxyPushConsumer_Guard ace_mon (this->lock_,
+                                          this->refcount_,
+                                          this->event_channel_,
+                                          this);
+  if (!ace_mon.locked ())
+    return;
 
-    if (this->is_connected_i () == 0)
-      return;
-
-    filter = this->filter_;
-    filter->_incr_refcnt ();
-  }
-
-  filter->disconnected (supplier, ACE_TRY_ENV);
-
-  {
-    ACE_GUARD_THROW_EX (
-        ACE_Lock, ace_mon, *this->lock_,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
-    filter->_decr_refcnt ();
-  }
+  ace_mon.filter->disconnected (supplier, ACE_TRY_ENV);
 }
 
 void
@@ -176,19 +131,22 @@ TAO_EC_ProxyPushConsumer::shutdown (CORBA::Environment &ACE_TRY_ENV)
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
-    if (this->is_connected_i () == 0)
-      return;
-
     supplier = this->supplier_._retn ();
 
-    this->filter_->shutdown (ACE_TRY_ENV);
-    ACE_CHECK;
+    if (this->filter_ != 0)
+      {
+        this->filter_->shutdown (ACE_TRY_ENV);
+        ACE_CHECK;
 
-    this->cleanup_i ();
+        this->cleanup_i ();
+      }
   }
 
   this->deactivate (ACE_TRY_ENV);
   ACE_CHECK;
+
+  if (CORBA::is_nil (supplier.in ()))
+    return;
 
   ACE_TRY
     {
@@ -209,9 +167,12 @@ TAO_EC_ProxyPushConsumer::cleanup_i (void)
   this->supplier_ =
     RtecEventComm::PushSupplier::_nil ();
 
-  this->filter_->unbind (this);
-  this->filter_->_decr_refcnt ();
-  this->filter_ = 0;
+  if (this->filter_ != 0)
+    {
+      this->filter_->unbind (this);
+      this->filter_->_decr_refcnt ();
+      this->filter_ = 0;
+    }
 }
 
 RtecEventChannelAdmin::ProxyPushConsumer_ptr
@@ -273,7 +234,7 @@ TAO_EC_ProxyPushConsumer::_decr_refcnt (void)
       return this->refcount_;
   }
 
-  // Notify the event channel
+  // Use the event channel
   this->event_channel_->destroy_proxy (this);
   return 0;
 }
@@ -346,44 +307,17 @@ TAO_EC_ProxyPushConsumer::push (const RtecEventComm::EventSet& event,
                                 CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ The following code is not exception safe, must fix, but the
-  // canonical tricks don't work: the destroy_push_consumer () method
-  // must be invoked only once the mutex is released, but after the
-  // refcount get to zero, seems hard...
-
-  TAO_EC_Supplier_Filter* filter = 0;
-  {
-    ACE_GUARD_THROW_EX (
-        ACE_Lock, ace_mon, *this->lock_,
-        CORBA::INTERNAL ());
-    // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
-
-    if (this->is_connected_i () == 0)
-      return; // @@ THROW something???
-
-    filter = this->filter_;
-    filter->_incr_refcnt ();
-
-    this->refcount_++;
-  }
+  TAO_EC_ProxyPushConsumer_Guard ace_mon (this->lock_,
+                                          this->refcount_,
+                                          this->event_channel_,
+                                          this);
+  if (!ace_mon.locked ())
+    return;
 
   // No need to keep the lock, the filter_ class is supposed to be
   // thread safe....
-  filter->push (event, ACE_TRY_ENV);
-
-  {
-    ACE_GUARD_THROW_EX (
-        ACE_Lock, ace_mon, *this->lock_,
-        CORBA::INTERNAL ());
-    // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
-    filter->_decr_refcnt ();
-    this->refcount_--;
-    if (this->refcount_ != 0)
-      return;
-  }
-  this->event_channel_->destroy_proxy (this);
+  ace_mon.filter->push (event, ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 void
@@ -407,9 +341,6 @@ TAO_EC_ProxyPushConsumer::disconnect_push_consumer (
     if (connected)
       this->cleanup_i ();
   }
-
-  this->deactivate (ACE_TRY_ENV);
-  ACE_CHECK;
 
   // Notify the event channel...
   this->event_channel_->disconnected (this, ACE_TRY_ENV);
@@ -453,3 +384,66 @@ TAO_EC_ProxyPushConsumer::_remove_ref (CORBA::Environment &)
 {
   this->_decr_refcnt ();
 }
+
+// ****************************************************************
+
+TAO_EC_ProxyPushConsumer_Guard::
+    TAO_EC_ProxyPushConsumer_Guard (ACE_Lock *lock,
+                                    CORBA::ULong &refcount,
+                                    TAO_EC_Event_Channel *ec,
+                                    TAO_EC_ProxyPushConsumer *proxy)
+ :   lock_ (lock),
+     refcount_ (refcount),
+     event_channel_ (ec),
+     proxy_ (proxy),
+     locked_ (0)
+{
+  ACE_Guard<ACE_Lock> ace_mon (*this->lock_);
+  // If the guard fails there is not much we can do, raising an
+  // exception is wrong, the client has *no* way to handle that kind
+  // of error.  Even worse, there is no exception to raise in that
+  // case.
+  // @@ Returning something won't work either, the error should be
+  // logged though!
+
+  if (proxy->is_connected_i () == 0)
+    return;
+
+  this->filter = this->proxy_->filter_i ();
+  this->filter->_incr_refcnt ();
+
+  this->locked_ = 1;
+  this->refcount_++;
+}
+
+TAO_EC_ProxyPushConsumer_Guard::
+    ~TAO_EC_ProxyPushConsumer_Guard (void)
+{
+  // This access is safe because guard objects are created on the
+  // stack, only one thread has access to them
+  if (!this->locked_)
+    return;
+
+  {
+    ACE_Guard<ACE_Lock> ace_mon (*this->lock_);
+    // If the guard fails there is not much we can do, raising an
+    // exception is wrong, the client has *no* way to handle that kind
+    // of error.  Even worse, there is no exception to raise in that
+    // case.
+    // @@ Returning something won't work either, the error should be
+    // logged though!
+
+    this->filter->_decr_refcnt ();
+
+    this->refcount_--;
+    if (this->refcount_ != 0)
+      return;
+  }
+  this->event_channel_->destroy_proxy (this->proxy_);
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -110,16 +110,14 @@ TAO_CEC_ProxyPushConsumer::shutdown (CORBA::Environment &ACE_TRY_ENV)
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
-    if (this->is_connected_i () == 0)
-      return;
-
     supplier = this->supplier_._retn ();
-
-    this->cleanup_i ();
   }
 
   this->deactivate (ACE_TRY_ENV);
   ACE_CHECK;
+
+  if (CORBA::is_nil (supplier.in ()))
+    return;
 
   ACE_TRY
     {
@@ -218,39 +216,16 @@ TAO_CEC_ProxyPushConsumer::push (const CORBA::Any& event,
                                  CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ The following code is not exception safe, must fix, but the
-  // canonical tricks don't work: the destroy_push_consumer () method
-  // must be invoked only once the mutex is released, but after the
-  // refcount get to zero, seems hard...
-
-  {
-    ACE_GUARD_THROW_EX (
-        ACE_Lock, ace_mon, *this->lock_,
-        CORBA::INTERNAL ());
-    // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
-
-    if (this->is_connected_i () == 0)
-      return; // @@ THROW something???
-
-    this->refcount_++;
-  }
+  TAO_CEC_ProxyPushConsumer_Guard ace_mon (this->lock_,
+                                           this->refcount_,
+                                           this->event_channel_,
+                                           this);
+  if (!ace_mon.locked ())
+    return;
 
   this->event_channel_->consumer_admin ()->push (event,
                                                  ACE_TRY_ENV);
   ACE_CHECK;
-
-  {
-    ACE_GUARD_THROW_EX (
-        ACE_Lock, ace_mon, *this->lock_,
-        CORBA::INTERNAL ());
-    // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
-    this->refcount_--;
-    if (this->refcount_ != 0)
-      return;
-  }
-  this->event_channel_->destroy_proxy (this);
 }
 
 void
@@ -315,3 +290,61 @@ TAO_CEC_ProxyPushConsumer::_remove_ref (CORBA::Environment &)
 {
   this->_decr_refcnt ();
 }
+
+// ****************************************************************
+
+TAO_CEC_ProxyPushConsumer_Guard::
+    TAO_CEC_ProxyPushConsumer_Guard (ACE_Lock *lock,
+                                     CORBA::ULong &refcount,
+                                     TAO_CEC_EventChannel *ec,
+                                     TAO_CEC_ProxyPushConsumer *proxy)
+ :   lock_ (lock),
+     refcount_ (refcount),
+     event_channel_ (ec),
+     proxy_ (proxy),
+     locked_ (0)
+{
+  ACE_Guard<ACE_Lock> ace_mon (*this->lock_);
+  // If the guard fails there is not much we can do, raising an
+  // exception is wrong, the client has *no* way to handle that kind
+  // of error.  Even worse, there is no exception to raise in that
+  // case.
+  // @@ Returning something won't work either, the error should be
+  // logged though!
+
+  if (proxy->is_connected_i () == 0)
+    return;
+
+  this->locked_ = 1;
+  this->refcount_++;
+}
+
+TAO_CEC_ProxyPushConsumer_Guard::
+    ~TAO_CEC_ProxyPushConsumer_Guard (void)
+{
+  // This access is safe because guard objects are created on the
+  // stack, only one thread has access to them
+  if (!this->locked_)
+    return;
+
+  {
+    ACE_Guard<ACE_Lock> ace_mon (*this->lock_);
+    // If the guard fails there is not much we can do, raising an
+    // exception is wrong, the client has *no* way to handle that kind
+    // of error.  Even worse, there is no exception to raise in that
+    // case.
+    // @@ Returning something won't work either, the error should be
+    // logged though!
+
+    this->refcount_--;
+    if (this->refcount_ != 0)
+      return;
+  }
+  this->event_channel_->destroy_proxy (this->proxy_);
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

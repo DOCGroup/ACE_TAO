@@ -26,9 +26,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosEvent/event_export.h"
-#include "tao/corba.h"
-
-class TAO_CEC_ProxyPushSupplier;
+#include "CEC_ProxyPushSupplier.h"
 
 class TAO_Event_Export TAO_CEC_Dispatching_Task : public ACE_Task<ACE_SYNCH>
 {
@@ -98,6 +96,9 @@ public:
                         ACE_Data_Block* data_block,
                         ACE_Allocator *mb_allocator);
   // Constructor
+
+  virtual ~TAO_CEC_Push_Command (void);
+  // Destructor
 
   virtual int execute (CORBA::Environment&);
   // Command callback
