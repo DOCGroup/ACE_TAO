@@ -218,7 +218,7 @@ ifneq ($(MKLIST),)
   else  # ! Windows
 	@for m in $(MKLIST); do \
 	echo $$m; \
-        $(MAKE) -f $$m MAKEFILE=$$m $(@:.nested=); \
+        $(MAKE) -f $$m MAKEFILE=$$m $(@:.nested=) || exit 1; \
         done
   endif # ! Windows
 endif # MKLIST
