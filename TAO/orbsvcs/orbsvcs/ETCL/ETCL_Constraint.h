@@ -36,6 +36,7 @@ class TAO_String_Manager;
 class TAO_ETCL_Export TAO_ETCL_Constraint
 {
 public:
+  TAO_ETCL_Constraint (void);
   virtual ~TAO_ETCL_Constraint (void);
   // Constructor and destructor
 
