@@ -1,3 +1,57 @@
+Fri Nov 28 14:09:56 2003  Tao Lu  <lu@dre.vanderbilt.edu>
+
+        * examples/Hello/README:
+        * examples/Hello/Makefile:
+        * examples/Hello/Hello_Base/Hello_Base_stub_export.h:
+        * examples/Hello/Hello_Base/Makefile.Hello_Base_stub:
+        * examples/Hello/Hello_Base/Hello_Base.idl:
+        * examples/Hello/Hello_Base/Hello_Base_svnt_export.h:
+        * examples/Hello/Hello_Base/Makefile.Hello_Base_svnt:
+        * examples/Hello/Hello_Base/Hello_Base.mpc:
+        * examples/Hello/Hello_Base/Makefile:
+        * examples/Hello/Sender/Sender.cidl:
+        * examples/Hello/Sender/Sender_exec.h:
+        * examples/Hello/Sender/Makefile:
+        * examples/Hello/Sender/Sender.idl:
+        * examples/Hello/Sender/Sender_exec_export.h:
+        * examples/Hello/Sender/Makefile.Hello_Base_Sender_exec:
+        * examples/Hello/Sender/Sender.mpc:
+        * examples/Hello/Sender/Sender_stub_export.h:
+        * examples/Hello/Sender/Makefile.Hello_Base_Sender_stub
+        * examples/Hello/Sender/SenderEI.idl:
+        * examples/Hello/Sender/Sender_svnt.h:
+        * examples/Hello/Sender/Makefile.Hello_Base_Sender_svnt:
+        * examples/Hello/Sender/Sender_exec.cpp:
+        * examples/Hello/Sender/Sender_svnt_export.h:
+        * examples/Hello/Receiver/ReceiverEI.idl:
+        * examples/Hello/Receiver/Makefile:
+        * examples/Hello/Receiver/Receiver_Impl.ccd:
+        * examples/Hello/Receiver/Makefile.Hello_Base_Receiver_exec:
+        * examples/Hello/Receiver/Receiver_exec.cpp:
+        * examples/Hello/Receiver/Makefile.Hello_Base_Receiver_stub:
+        * examples/Hello/Receiver/Receiver_exec.h:
+        * examples/Hello/Receiver/Makefile.Hello_Base_Receiver_svnt:
+        * examples/Hello/Receiver/Receiver_exec_export.h:
+        * examples/Hello/Receiver/Receiver.cidl:
+        * examples/Hello/Receiver/Receiver_stub_export.h:
+        * examples/Hello/Receiver/Receiver.idl:
+        * examples/Hello/Receiver/Receiver_svnt.h:
+        * examples/Hello/Receiver/Receiver.mpc:
+        * examples/Hello/Receiver/Receiver_svnt_export.h:
+        * examples/Hello/starter/Makefile:
+        * examples/Hello/starter/Makefile.Hello_Starter:
+        * examples/Hello/starter/starter.cpp:
+        * examples/Hello/starter/starter.mpc:
+        * examples/Hello/descriptors/CIAO_Installation_Data.ini:
+        * examples/Hello/descriptors/Receiver.ssd:
+        * examples/Hello/descriptors/default.cad:
+        * examples/Hello/descriptors/test.dat:
+        * examples/Hello/descriptors/Sender.csd:
+        * examples/Hello/descriptors/Receiver.csd:
+        * examples/Hello/descriptors/Sender.ssd:
+
+        Added the files for Hello example.
+
 Fri Nov 28 13:58:58 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
         * examples/Hello:
