@@ -12,10 +12,10 @@
  */
 //=============================================================================
 
-#ifndef TAO_ORV_CONSTANTS_H
-#define TAO_ORV_CONSTANTS_H
+#ifndef TAO_OBV_CONSTANTS_H
+#define TAO_OBV_CONSTANTS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Basic_Types.h"
 
@@ -27,21 +27,16 @@
 
 namespace CORBA
 {
-  class TypeCode;
-  typedef TypeCode *TypeCode_ptr;
-
   typedef CORBA::Short Visibility;
   typedef CORBA::Short_out Visibility_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_Visibility;
 
   extern TAO_Export const CORBA::Short PRIVATE_MEMBER;
   extern TAO_Export const CORBA::Short PUBLIC_MEMBER;
 
   typedef CORBA::Short ValueModifier;
   typedef CORBA::Short_out ValueModifier_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ValueModifier;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
-#endif  /* TAO_ORBCONF_H */
+#endif  /* TAO_OBV_CONSTANTS_H */

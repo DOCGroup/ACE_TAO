@@ -40,29 +40,12 @@
 class TAO_ORB_Core;
 class TAO_ORBInitInfo;
 typedef TAO_ORBInitInfo *TAO_ORBInitInfo_ptr;
-struct tao_TAO_ORBInitInfo_life;
 
 typedef TAO_Objref_Var_T<TAO_ORBInitInfo>
-                          TAO_ORBInitInfo_var;
+                         TAO_ORBInitInfo_var;
 
 typedef TAO_Objref_Out_T<TAO_ORBInitInfo>
-                          TAO_ORBInitInfo_out;
-
-struct TAO_Export tao_TAO_ORBInitInfo_life
-{
-  static TAO_ORBInitInfo_ptr tao_duplicate (TAO_ORBInitInfo_ptr);
-  static void tao_release (TAO_ORBInitInfo_ptr);
-  static TAO_ORBInitInfo_ptr tao_nil (void);
-  static CORBA::Boolean tao_marshal (TAO_ORBInitInfo_ptr,
-                                     TAO_OutputCDR &);
-};
-
-struct TAO_Export tao_TAO_ORBInitInfo_cast
-{
-  static TAO_ORBInitInfo_ptr tao_narrow (CORBA::Object_ptr
-                                         ACE_ENV_ARG_DECL);
-  static CORBA::Object_ptr tao_upcast (void *);
-};
+                         TAO_ORBInitInfo_out;
 
 /**
  * @class TAO_ORBInitInfo
@@ -246,12 +229,7 @@ public:
       return (TAO_ORBInitInfo_ptr)0;
     }
 
-  virtual void *_tao_QueryInterface (ptrdiff_t type);
-
   virtual const char* _interface_repository_id (void) const;
-
-  static int _tao_class_id; // Used when narrowing.
-  //@}
 
 protected:
 
@@ -293,6 +271,26 @@ private:
 
 };
 
+// Traits specializations.
+namespace TAO
+{
+  // Hand crafted. Not forward declared, but used by PortableServer.
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_Export Objref_Traits<TAO_ORBInitInfo>
+  {
+    static TAO_ORBInitInfo_ptr tao_duplicate (
+        TAO_ORBInitInfo_ptr
+      );
+    static void tao_release (
+        TAO_ORBInitInfo_ptr
+      );
+    static TAO_ORBInitInfo_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        TAO_ORBInitInfo_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+}
 
 #if defined (__ACE_INLINE__)
 #include "ORBInitInfo.inl"
