@@ -202,7 +202,8 @@
   // Platform supports POSIX pthreads *and* Solaris threads, by
   // default!  If you only want to use POSIX pthreads, add
   // -D_POSIX_PTHREAD_SEMANTICS to your CFLAGS.  Or, #define it right
-  // here.
+  // here.  See the Intro (3) man page for information on
+  // -D_POSIX_PTHREAD_SEMANTICS.
 # if !defined (_POSIX_PTHREAD_SEMANTICS)
 #   define ACE_HAS_STHREADS
 # endif /* ! _POSIX_PTHREAD_SEMANTICS */
