@@ -2228,7 +2228,7 @@ public:
   /// Current owner of the lock.
   ACE_thread_t owner_id_;
 };
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_RECURSIVE_MUTEXES */
 
 # else /* !ACE_HAS_THREADS, i.e., the OS/platform doesn't support threading. */
 
