@@ -32,9 +32,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACEXML_Char* url = 0;
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("sf:lu:"));
-  ACEXML_Char c;
+  int c;
 
-  while ((c = (ACEXML_Char)get_opt ()) != (ACEXML_Char)-1)
+  while ((c = get_opt ()) != EOF)
     {
       switch (c)
         {
