@@ -26,15 +26,15 @@ ACE_Date_Time::ACE_Date_Time(long day,
 // set/get portions of ACE_Date_Time, no check for validy
 
 // get day
-ASYS_INLINE long 
-ACE_Date_Time::day (void)
+ASYS_INLINE long
+ACE_Date_Time::day (void) const
 {
   ACE_TRACE ("ACE_Date_Time::day");
   return day_;
 }
 
 // set day
-ASYS_INLINE void 
+ASYS_INLINE void
 ACE_Date_Time::day (long day)
 {
   ACE_TRACE ("ACE_Date_Time::day");
@@ -42,15 +42,15 @@ ACE_Date_Time::day (long day)
 }
 
 // get month
-ASYS_INLINE long 
-ACE_Date_Time::month (void)
+ASYS_INLINE long
+ACE_Date_Time::month (void) const
 {
   ACE_TRACE ("ACE_Date_Time::month");
   return month_;
 }
 
 // set month
-ASYS_INLINE void 
+ASYS_INLINE void
 ACE_Date_Time::month (long month)
 {
   ACE_TRACE ("ACE_Date_Time::month");
@@ -58,15 +58,15 @@ ACE_Date_Time::month (long month)
 }
 
 // get year
-ASYS_INLINE long 
-ACE_Date_Time::year (void)
+ASYS_INLINE long
+ACE_Date_Time::year (void) const
 {
   ACE_TRACE ("ACE_Date_Time::year");
   return year_;
 }
 
 // set year
-ASYS_INLINE void 
+ASYS_INLINE void
 ACE_Date_Time::year (long year)
 {
   ACE_TRACE ("ACE_Date_Time::year");
@@ -74,15 +74,15 @@ ACE_Date_Time::year (long year)
 }
 
 // get hour
-ASYS_INLINE long 
-ACE_Date_Time::hour (void)
+ASYS_INLINE long
+ACE_Date_Time::hour (void) const
 {
   ACE_TRACE ("ACE_Date_Time::hour");
   return hour_;
 }
 
 // set hour
-ASYS_INLINE void 
+ASYS_INLINE void
 ACE_Date_Time::hour (long hour)
 {
   ACE_TRACE ("ACE_Date_Time::hour");
@@ -90,15 +90,15 @@ ACE_Date_Time::hour (long hour)
 }
 
 // get minute
-ASYS_INLINE long 
-ACE_Date_Time::minute (void)
+ASYS_INLINE long
+ACE_Date_Time::minute (void) const
 {
   ACE_TRACE ("ACE_Date_Time::minute");
   return minute_;
 }
 
 // set minute
-ASYS_INLINE void 
+ASYS_INLINE void
 ACE_Date_Time::minute (long minute)
 {
   ACE_TRACE ("ACE_Date_Time::minute");
@@ -106,15 +106,15 @@ ACE_Date_Time::minute (long minute)
 }
 
 // get second
-ASYS_INLINE long 
-ACE_Date_Time::second (void)
+ASYS_INLINE long
+ACE_Date_Time::second (void) const
 {
   ACE_TRACE ("ACE_Date_Time::second");
   return second_;
 }
 
 // set second
-ASYS_INLINE void 
+ASYS_INLINE void
 ACE_Date_Time::second (long second)
 {
   ACE_TRACE ("ACE_Date_Time::second");
@@ -122,19 +122,17 @@ ACE_Date_Time::second (long second)
 }
 
 // get microsec
-ASYS_INLINE long 
-ACE_Date_Time::microsec (void)
+ASYS_INLINE long
+ACE_Date_Time::microsec (void) const
 {
   ACE_TRACE ("ACE_Date_Time::microsec");
   return microsec_;
 }
 
 // set microsec
-ASYS_INLINE void 
+ASYS_INLINE void
 ACE_Date_Time::microsec (long microsec)
 {
   ACE_TRACE ("ACE_Date_Time::microsec");
   microsec_ = microsec;
 }
-
-
