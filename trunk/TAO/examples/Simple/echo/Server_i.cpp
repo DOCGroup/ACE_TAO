@@ -24,23 +24,17 @@ Server_i::~Server_i (void)
 int
 Server_i::thru_naming_service (CORBA::Environment& env)
 {
-
-     CORBA::ORB_var orb;
-     PortableServer::POA_var child_poa;
-
-  // @@ I think you should probably use a TAO_TRY block here in case
-  // we enable C++ exception handling.  Please check with Carlos to
-  // make sure the right programming style.
-
   TAO_TRY
     {
-      orb = this->orb_manager_.orb ();
+      CORBA::ORB_var orb = this->orb_manager_.orb ();
 
-      child_poa = this->orb_manager_.child_poa ();
+      PortableServer::POA_var child_poa
+	= this->orb_manager_.child_poa ();
 
-     TAO_debug_level = 1; // ******
-       int return_val = this->naming_srvr_.init (orb.in (),
-						 child_poa.in ());
+      TAO_debug_level = 1; // ******
+      int return_val =
+	this->naming_server_.init (orb.in (),
+				   child_poa.in ());
       if (return_val == -1)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   "Failed to initialize TAO_Naming_Server\n"),
@@ -62,23 +56,23 @@ Server_i::thru_naming_service (CORBA::Environment& env)
 
       // Get the context attached to the server.
       this->naming_context_ =
-	this->naming_srvr_->bind_new_context (naming_context_name,
-					      env);
-      TAO_CHECK_ENV_RETURN (env,-1);
+	this->naming_server_->bind_new_context (naming_context_name,
+						env);
+      TAO_CHECK_ENV_RETURN (env, -1);
 
       // Now, attach the object name to the context.
       this->naming_context_->bind (echo_obj_name,
-				   echo_obj.in(),
+				   echo_obj.in (),
 				   env);
-      TAO_CHECK_ENV_RETURN (env,-1);
+      TAO_CHECK_ENV_RETURN (env, -1);
 
     }
-   TAO_CATCHANY
-     {
-       //  TAO_TRY_ENV.print_execption ("Server_i::thru_naming_service\n");
-       return -1;
-     }
-   TAO_ENDTRY;
+  TAO_CATCHANY
+    {
+      //  TAO_TRY_ENV.print_execption ("Server_i::thru_naming_service\n");
+      return -1;
+    }
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -136,21 +130,12 @@ Server_i::init (int argc,
 		char *argv[],
 		CORBA::Environment &env)
 {
-  // Allocate an Echo_i object.
-
-  ACE_NEW_RETURN (this->servant_,
-		  Echo_i,
-		  -1);
-
-  // @@ Please use the init() method instead of init_child_poa() method since you don't really need it.
-
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create the child poa under the root POA.
   if (this->orb_manager_.init_child_poa (argc,
-                               argv,
-			       "child_poa",
-                               env) == -1)
-
+					 argv,
+					 "child_poa",
+					 env) == -1)
    ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init_child_poa"),
@@ -169,13 +154,13 @@ Server_i::init (int argc,
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
   // Stash our ORB pointer for later reference.
-  this->servant_->orb (orb.in ());
+  this->servant_.orb (orb.in ());
 
   // @@ Please change this, as well!
   // Activate the servant in the POA.
   CORBA::String_var str  =
     this->orb_manager_.activate_under_child_poa ("echo",
-						 this->servant_,
+						 &this->servant_,
 						 env);
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",

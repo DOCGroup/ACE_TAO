@@ -10,17 +10,8 @@ interface Echo
   // Defines an interface that encapsulates operations that
   // return the mesg string to be displayed and shuts down the server.
 
-//  exception NullPointerException
-//
-//  {
-    // @@ Please remove this exception and use the CORBA system
-    // exception NO_MEMORY.  no-members
- // };
-
   string echo (in string mesg);
   // This operation returns the message and displays it on the screen.
- 
-// raises (NullPointerException);
 
   oneway void shutdown ();
   // This operation will shutdown the server.

@@ -52,9 +52,6 @@ Client_i::parse_args (void)
 {
     ACE_Get_Opt get_opts (argc_, argv_, "dn:f:xk:xs");
 
-  // @@ Please use the same convention as for the IDL_Cubit test.
-
-
   int c;
   int result;
 
@@ -102,7 +99,6 @@ Client_i::parse_args (void)
                            "\n",
                            this->argv_ [0]),
                           -1);
-
       }
 
   // Indicates successful parsing of command line.
@@ -127,16 +123,8 @@ Client_i::echo (const char *message)
     }
   TAO_CATCHANY
     {
-      // @@ This can all go away once you use the NO_MEMORY system
-      // exception.
-
-      // env.
-      //Echo::NullPointerException *except =
-      //	Echo::NullPointerException::_narrow
-      //	(TAO_TRY_ENV.exception ());
-
       ACE_DEBUG ((LM_DEBUG,
-		  "Exception: No memory!\n"));
+		  "Exception raised!\n"));
     }
   TAO_ENDTRY;
 }
@@ -163,7 +151,7 @@ Client_i::run (void)
       this->echo (buf);
     }
 
-  // end of the job, so tata! ;)
+  // End of the job, so tata! ;)
 
   if (this->shutdown_)
     this->server_->shutdown (this->env_);
@@ -180,7 +168,7 @@ int
 Client_i::via_naming_service(void)
 {
   TAO_TRY
-    {
+   {
       // Initialization of the naming service.
       if (naming_srvs_client_.init (orb_.in (), argc_, argv_) != 0)
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -192,26 +180,25 @@ Client_i::via_naming_service(void)
       echo_ref_name[0].id = CORBA::string_dup ("EchoInterface");
       echo_ref_name[1].id = CORBA::string_dup ("Echo");
 
-      CORBA::Object_var echo_obj=
+      CORBA::Object_var echo_obj =
 	this->naming_srvs_client_->resolve (echo_ref_name,
-				     TAO_TRY_ENV);
-
+					    TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // The CORBA::Object_var object is downcasted to Echo_var
-      // using the _narrow method.
+      // The CORBA::Object_var object is downcast to Echo_var using
+      // the <_narrow> method.
       this->server_ =
         Echo::_narrow (echo_obj.in (),
 		       TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-    }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("Echo::via_naming_service\n");
-      return -1;
-    }
-  TAO_ENDTRY;
+       }
+      TAO_CATCHANY
+       {
+        TAO_TRY_ENV.print_exception ("Echo::via_naming_service\n");
+          return -1;
+       }
+      TAO_ENDTRY;
 
   return 0;
 }
@@ -239,7 +226,7 @@ Client_i::init (int argc, char **argv)
       TAO_debug_level = 1; //****
 
        if (this->use_naming_srv_)
-        return via_naming_service();
+        return via_naming_service ();
 
       if (this->ior_ == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -258,9 +245,8 @@ Client_i::init (int argc, char **argv)
                            this->ior_),
                           -1);
 
-      // @@ Please add a comment here.
-      // the downcasting from CORBA::Object_var to Echo_var
-      // is done using the _narrow method.
+      // The downcasting from CORBA::Object_var to Echo_var is done
+      // using the <_narrow> method.
       this->server_ = Echo::_narrow (server_object.in (),
                                      TAO_TRY_ENV);
       TAO_CHECK_ENV;

@@ -43,15 +43,13 @@ Echo_i::echo (const char *mesg,
   // @@ If you raise an exception for whatever reason, you need to
   // return 0.
 
-
   CORBA::String_var str = CORBA::string_dup (mesg);
 
   // if CORBA::string_dup() returns a 0 pointer, an exception is
   // raised.
 
   if (str == 0)
-       env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
-
+    env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 
   // @@ Make sure that you test out an version of this test where you
   // intentionally raise an exception to make sure that your client
@@ -78,7 +76,7 @@ void Echo_i::shutdown (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n%s\n",
-              "The echo server(Echo_i) is shutting down"));
+              "The echo server is shutting down"));
 
   // Instruct the ORB to shutdown.
   this->orb_->shutdown ();
