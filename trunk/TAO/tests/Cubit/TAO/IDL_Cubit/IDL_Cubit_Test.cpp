@@ -41,9 +41,14 @@ main (int, char *[])
   ACE_Process server;
 
   if (server.spawn (server_options) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "%n %p.\n", "Server fork failed"), 0);
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       "%n %p.\n",
+                       "Server fork failed"),
+                      0);
   else
-    ACE_DEBUG ((LM_DEBUG, "Server forked with pid = %d.\n", server.getpid ()));
+    ACE_DEBUG ((LM_DEBUG,
+                "Server forked with pid = %d.\n",
+                server.getpid ()));
 
   ACE_OS::sleep (5);
 
@@ -52,18 +57,27 @@ main (int, char *[])
   ACE_Process clerk;
 
   if (clerk.spawn (clerk_options) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "%p.\n", "Client spawn failed"), 0);
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       "%p.\n",
+                       "Client spawn failed"),
+                      0);
   else
-    ACE_DEBUG ((LM_DEBUG, "Client forked with pid = %d.\n", clerk.getpid ()));
+    ACE_DEBUG ((LM_DEBUG,
+                "Client forked with pid = %d.\n",
+                clerk.getpid ()));
 
   ACE_DEBUG ((LM_DEBUG, "Sleeping...\n"));
   ACE_OS::sleep (10);
 
   if (clerk.terminate () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "Terminate failed for clerk.\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Terminate failed for clerk.\n"),
+                      -1);
 
   if (server.terminate () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "Terminate failed for server.\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Terminate failed for server.\n"),
+                      -1);
 
   // Since we kill the clerk process, on Win32 it may not do a
   // graceful shutdown and the backing store file is left behind.
