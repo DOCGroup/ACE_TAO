@@ -10,7 +10,7 @@ int ACE_TMAIN (int, ACE_TCHAR *argv[])
   // Output to default destination (stderr)
   ACE_LOG_MSG->open (argv[0]);
 
-  ACE_TRACE (ACE_TEXT ("main"));
+  ACE_TRACE ("main");
 
   ACE_OSTREAM_TYPE *output =
         (ACE_OSTREAM_TYPE *) new std::ofstream ("ostream.output.test");

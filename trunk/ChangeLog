@@ -1,3 +1,39 @@
+Wed Oct  6 12:25:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Logging/Change_Mask.cpp:
+	* examples/APG/Logging/Howto_Syslog.cpp:
+	* examples/APG/Logging/Simple1.cpp:
+	* examples/APG/Logging/Simple2.cpp:
+	* examples/APG/Logging/Trace_Return.cpp:
+	* examples/APG/Logging/Use_Callback.cpp:
+	* examples/APG/Logging/Use_Callback2.cpp:
+	* examples/APG/Logging/Use_Logger.cpp:
+	* examples/APG/Logging/Use_Logging_Server.cpp:
+	* examples/APG/Logging/Use_Logging_Strategy.cpp:
+	* examples/APG/Logging/Use_LogManager.cpp:
+	* examples/APG/Logging/Use_Multiple_Sinks.cpp:
+	* examples/APG/Logging/Use_Ostream.cpp:
+	* examples/APG/Logging/Use_Stderr.cpp:
+	* examples/APG/Logging/Use_Syslog.cpp:
+	* examples/APG/Logging/Wrap_Macros.cpp:
+	* examples/APG/Logging/Wrap_Macros_Alt.cpp:
+	* examples/APG/Processes/Spawn.cpp:
+	* examples/APG/Reactor/Client.cpp:
+	* examples/APG/Shared_Memory/Hash_Map.cpp:
+	* examples/APG/Shared_Memory/Pool_Growth.cpp:
+	* examples/APG/Streams/RecordingDevice_Text.cpp:
+	  ACE_TRACE string gets ACE_LIB_TEXT applied - don't wrap it in
+	  ACE_TEXT.
+
+	* examples/ASX/UPIPE_Event_Server/event_server.cpp:
+	* examples/ASX/UPIPE_Event_Server/Options.{cpp i h}:
+	* examples/ASX/UPIPE_Event_Server/Consumer_Router.{cpp h}:
+	* examples/ASX/UPIPE_Event_Server/Peer_Router.{cpp h}:
+	* examples/ASX/UPIPE_Event_Server/Event_Analyzer.{cpp h}:
+	* examples/ASX/UPIPE_Event_Server/Supplier_Router.{cpp h}:
+	* examples/C++NPv2/Service_Reporter.cpp:
+	  Corrected narrow/wide-char issues.
+
 Wed Oct  6 15:10:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Test_Output.cpp:
