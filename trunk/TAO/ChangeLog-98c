@@ -1,3 +1,8 @@
+Wed Jul  1 10:28:07 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_interface.h (be_type): Fixed the warnings
+	in g++.
+
 Wed Jul  1 06:36:11 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp: For the copying
