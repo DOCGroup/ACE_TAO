@@ -178,7 +178,7 @@ private:
   static ACE_Future_Rep<T> *attach (ACE_Future_Rep<T> *&rep);
 
   /**
-   * Decreases the reference count and and deletes rep if there are no
+   * Decreases the reference count and deletes rep if there are no
    * more references to rep.
    *
    * Precondition (rep != 0)
@@ -186,7 +186,7 @@ private:
   static void detach (ACE_Future_Rep<T> *&rep);
 
   /**
-   * Decreases the rep's reference count and and deletes rep if there
+   * Decreases the rep's reference count and deletes rep if there
    * are no more references to rep. Then assigns new_rep to rep.
    *
    * Precondition (rep != 0 && new_rep != 0)
