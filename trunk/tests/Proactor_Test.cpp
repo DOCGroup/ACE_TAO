@@ -64,7 +64,7 @@ static int max_aio_operations = 0;
 static int both = 0;
 
 // Host that we're connecting to.
-static ACE_TCHAR *host = 0;
+static const ACE_TCHAR *host = 0;
 
 // number of Senders instances
 static int senders = 1;
@@ -1114,8 +1114,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
     {
       both = 1;               // client and server simultaneosly
       duplex = 1;             // full duplex is on
-      host= ACE_TEXT ("localhost");      // server to connect
-      port= ACE_DEFAULT_SERVER_PORT; // port to connect/listen
+      host = ACE_TEXT ("localhost");      // server to connect
+      port = ACE_DEFAULT_SERVER_PORT; // port to connect/listen
       max_aio_operations = 512;      // POSIX Proactor params
 #if defined (sun)
       proactor_type = 3;             // Proactor type for SunOS
