@@ -399,10 +399,10 @@ win32_spawn_environment_process (void)
 
   // Normally, this would be just GetEnvironmentStrings, but it
   // doesn't follow the same rules as the rest of the Win32 API
-  char *existing_environment = ACE_OS::getenvstrings ();
-  char environment[10240];
+  ACE_TCHAR *existing_environment = ACE_OS::getenvstrings ();
+  ACE_TCHAR environment[10240];
   ACE_OS::sprintf (environment,
-                   "ACE_PROCESS_TEST=%s",
+                   ACE_TEXT("ACE_PROCESS_TEST=%s"),
                    environment_string);
 
   int size = 0;
