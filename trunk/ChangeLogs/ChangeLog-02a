@@ -1,3 +1,9 @@
+Thu Jul 20 08:04:13 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i: Rearranged some code so that the operator *=
+	  comes in the right order...  Thanks to David for
+	  reporting this.
+
 Wed Jul 19 22:51:42 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.i (ACE_OS::cond_timedwait): For pSOS, convert absolute
