@@ -12,6 +12,7 @@ CXX		= g++
 CFLAGS		+= -b elf -w -O2
 CCFLAGS		+= -b elf -fpic -Xpg4plus -O2 -fno-implicit-templates -I ${MIT_PTHREADS_DIR}/include -I /usr/progressive/lib/g++-include
 DLD             = $(CXX)
+LD              = $(CXX)
 LIBS            = -L${MIT_PTHREADS_DIR} -lnsl -lpthread
 PIC             = -fpic
 AR              = ar
