@@ -26,8 +26,10 @@ Connection_Handler_Connector::initiate_connection (Connection_Handler *connectio
 
   // Try to connect to the Peer.
 
-  if (this->connect (connection_handler, connection_handler->remote_addr (),
-		     synch_options, connection_handler->local_addr ()) == -1)
+  if (this->connect (connection_handler,
+                     connection_handler->remote_addr (),
+		     synch_options,
+                     connection_handler->local_addr ()) == -1)
     {
       if (errno != EWOULDBLOCK)
 	{

@@ -47,9 +47,6 @@ protected:
 
   Connection_Handler_Factory connection_handler_factory_;
   // Creates the appropriate type of <Connection_Handlers>.
-
-  int debug_;
-  // Are we debugging?
 };
 
 int
@@ -120,6 +117,7 @@ Gateway::init (int argc, char *argv[])
 		   Options::instance ()->performance_window ()));
     }
 
+  // Are we running as a connector?
   if (Options::instance ()->enabled 
       (Options::CONSUMER_CONNECTOR | Options::SUPPLIER_CONNECTOR))
     {
@@ -208,14 +206,11 @@ Gateway::parse_connection_config_file (void)
       pci.event_channel_ = &this->event_channel_;
 
       // Create the appropriate type of Proxy.
-      Connection_Handler *connection_handler =
-	this->connection_handler_factory_.make_connection_handler (pci);
+      Connection_Handler *connection_handler;
 
-      if (connection_handler == 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "make_connection_handler"),
-                          -1);
+      ACE_ALLOCATOR_RETURN (connection_handler,
+                            this->connection_handler_factory_.make_connection_handler (pci),
+                            -1);
 
       // Bind the new Connection_Handler to the connection ID.
       this->event_channel_.bind_proxy (connection_handler);
@@ -242,8 +237,8 @@ Gateway::parse_consumer_config_file (void)
                       -1);
 
   // Read config file line at a time.
-  for (Consumer_Config_Info cci;
-       consumer_file.read_entry (cci, line_number) != FP::EOFILE;
+  for (Consumer_Config_Info cci_entry;
+       consumer_file.read_entry (cci_entry, line_number) != FP::EOFILE;
        )
     {
       file_empty = 0;
@@ -253,36 +248,38 @@ Gateway::parse_consumer_config_file (void)
 	  ACE_DEBUG ((LM_DEBUG,
                       "(%t) connection id = %d, payload = %d, "
 		      "number of consumers = %d\n",
-		      cci.connection_id_,
-		      cci.type_,
-		      cci.total_consumers_));
+		      cci_entry.connection_id_,
+		      cci_entry.type_,
+		      cci_entry.total_consumers_));
 
-	  for (int i = 0; i < cci.total_consumers_; i++)
+	  for (int i = 0; i < cci_entry.total_consumers_; i++)
 	    ACE_DEBUG ((LM_DEBUG,
                         "(%t) destination[%d] = %d\n",
                         i,
-                        cci.consumers_[i]));
+                        cci_entry.consumers_[i]));
 	}
 
       Consumer_Dispatch_Set *dispatch_set;
       ACE_NEW_RETURN (dispatch_set, Consumer_Dispatch_Set, -1);
 
-      Event_Key event_addr (cci.connection_id_,
-			    cci.type_);
+      Event_Key event_addr (cci_entry.connection_id_,
+			    cci_entry.type_);
 
       // Add the Consumers to the Dispatch_Set.
-      for (int i = 0; i < cci.total_consumers_; i++)
+      for (int i = 0; i < cci_entry.total_consumers_; i++)
 	{
 	  Connection_Handler *connection_handler = 0;
 
 	  // Lookup destination and add to Consumer_Dispatch_Set set
 	  // if found.
-	  if (this->event_channel_.find_proxy (cci.consumers_[i],
+	  if (this->event_channel_.find_proxy (cci_entry.consumers_[i],
 					       connection_handler) != -1)
 	    dispatch_set->insert (connection_handler);
 	  else
-	    ACE_ERROR ((LM_ERROR, "(%t) not found: destination[%d] = %d\n",
-		       i, cci.consumers_[i]));
+	    ACE_ERROR ((LM_ERROR,
+                        "(%t) not found: destination[%d] = %d\n",
+                        i,
+                        cci_entry.consumers_[i]));
 	}
 
       this->event_channel_.subscribe (event_addr, dispatch_set);

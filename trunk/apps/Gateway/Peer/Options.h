@@ -21,7 +21,7 @@
 
 class ACE_Svc_Export Options
   // = TITLE
-  //     Options Singleton for a peerd.
+  //     Singleton that consolidates all Options for a peerd.
 {
 public:
   // = Options that can be enabled/disabled.

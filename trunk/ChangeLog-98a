@@ -1,5 +1,13 @@
 Sun Jan  4 10:11:53 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* apps/Gateway/Gateway/Event_Channel.cpp (put): Uncommented the
+ 	  code that sets the appropriate locking strategy for the Message
+ 	  Blocks.
+
+	* apps/Gateway/Gateway/Connection_Handler.h: Made the
+ 	  remote_addr() and local_addr() accessor methods return
+ 	  const-correct values.
+
 	* build/SunOS5.5/ace/OS: Revised a bunch of #ifdefs so that we can
  	  selectively enable the ACE rwlock emulation, even if we're
  	  compiling with ACE_HAS_STHREADS in order to get the native

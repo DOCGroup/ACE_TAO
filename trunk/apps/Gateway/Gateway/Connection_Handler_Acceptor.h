@@ -34,8 +34,8 @@ public:
   Connection_Handler_Acceptor (Event_Channel &, 
                           char connection_role);
 
-    virtual int make_svc_handler (Connection_Handler *&ph);
-    // Hook method for creating an appropriate <Connection_Handler>.
+  virtual int make_svc_handler (Connection_Handler *&ph);
+  // Hook method for creating an appropriate <Connection_Handler>.
 
 protected:  
   Event_Channel &event_channel_;

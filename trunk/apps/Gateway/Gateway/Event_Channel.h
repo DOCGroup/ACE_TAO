@@ -30,6 +30,9 @@ class ACE_Svc_Export Event_Channel : public ACE_Event_Handler
   //    Define a generic Event_Channel.
   //
   // = DESCRIPTION
+  //    The inspiration for this class is derived from the CORBA COS
+  //    Event Channel, though the design is simplified.
+  //
   //    We inherit from <ACE_Event_Handler> so that we can be
   //    registered with an <ACE_Reactor> to handle timeouts.
 public:
@@ -103,18 +106,18 @@ private:
   // Used to establish connections passively and create Consumers.
 
   // = Make life easier by defining typedefs.
-  typedef ACE_Map_Manager<ACE_INT32, Connection_Handler *, MAP_MUTEX> 
+  typedef ACE_Map_Manager<CONNECTION_ID, Connection_Handler *, MAP_MUTEX> 
   CONNECTION_MAP;
-  typedef ACE_Map_Iterator<ACE_INT32, Connection_Handler *, MAP_MUTEX> 
+  typedef ACE_Map_Iterator<CONNECTION_ID, Connection_Handler *, MAP_MUTEX> 
   CONNECTION_MAP_ITERATOR;
-  typedef ACE_Map_Entry<ACE_INT32, Connection_Handler *> 
+  typedef ACE_Map_Entry<CONNECTION_ID, Connection_Handler *> 
   CONNECTION_MAP_ENTRY;
 
   CONNECTION_MAP connection_map_;
-  // Table that maps Connection IDs to Connection_Handler *'s.
+  // Table that maps <CONNECTION_ID>s to <Connection_Handler> *'s.
 
   Event_Forwarding_Discriminator efd_;
-  // Map that associates an event to a set of Consumer_Handler *'s.
+  // Map that associates an event to a set of <Consumer_Handler> *'s.
 };
 
 #endif /* ACE_EVENT_CHANNEL */
