@@ -103,86 +103,61 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *db)
   JAWS_Dispatch_Policy *policy;  // Contains task policies
   JAWS_IO_Handler *handler;      // Keeps the state of the task
   JAWS_Pipeline_Handler *task;   // The task itself
+  JAWS_Data_Block *mb;     // The task message block
 
   // Thread specific message block and data block
-  JAWS_Data_Block *ts_db = new JAWS_Data_Block;
+  JAWS_Data_Block *ts_db = new JAWS_Data_Block (*db);
   if (ts_db == 0)
     {
       ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Concurrency_Base::svc_hook"));
       return -1;
     }
 
-  ts_db->task (db->task ());
-  ts_db->policy  (db->policy ());
-
-  // ACE_DEBUG ((LM_DEBUG, "yo"));
-
   policy = db->policy ();
-
-  // Each time we iterate, we create a handler to maintain
-  // our state for us.
-  JAWS_IO_Handler *ts_handler;
-  ts_handler = policy->ioh_factory ()->create_io_handler ();
-  if (ts_handler == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "JAWS_Server::open, can't create handler\n"));
-      ts_db->release ();
-      return -1;
-    }
-  handler = ts_handler;
-
-  // Set the initial task in the handler
-  handler->task (db->task ());
-  handler->message_block (ts_db);
-  ts_db->io_handler (handler);
+  task = db->task ();
 
   // Get the waiter index
   JAWS_Waiter *waiter = JAWS_Waiter_Singleton::instance ();
   int waiter_index = waiter->index ();
 
+  mb = ts_db;
   do
     {
       JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, looping");
-
-      //  handler maintains the state of the protocol
-      task = handler->task ();
-      ts_db = handler->message_block ();
 
       // Use a NULL task to make the thread recycle now
       if (task == 0)
         {
           JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, recycling");
-          if (handler != ts_handler)
-            policy->ioh_factory ()->destroy_io_handler (handler);
           break;
         }
 
       // the task should set the handler to the appropriate next step
-      result = task->put (ts_db);
+      result = task->put (mb);
 
-      if (result == 1 || result == 2)
+      switch (result) {
+      case 0:
+        {
+          JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, synched");
+          handler = mb->io_handler ();
+        }
+        break;
+      case 1:
+      case 2:
         {
           JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, waiting");
           // need to wait for an asynchronous event
 
-          // In the case of asynchronous accepts, the handler we just
-          // created was useless.  This is ok, because we know that it
-          // will not be used by another thread.  Just save the
-          // reference so that it can be destroyed later.
+          // We need a way to destroy all the handlers created by the
+          // Asynch_Acceptor.  Figure this out later.
 
-          // This means we need a way to destroy all the handlers
-          // created by the Asynch_Acceptor.  Figure this out later.
-
-          JAWS_IO_Handler *h;
-          h = waiter->wait_for_completion (waiter_index);
-          if (h == 0)
-            result = -1;
-          else
-            {
-              handler = h;
-              result = 0;
-            }
+          handler = waiter->wait_for_completion (waiter_index);
+          result = (handler == 0) ? -1 : 0;
         }
+        break;
+      default:
+        break;
+      }
 
       if (result == -1)
         {
@@ -192,11 +167,17 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *db)
           break;
         }
 
+      mb = handler->message_block ();
+      task = handler->task ();
     }
   while (result == 0);
 
-  policy->ioh_factory ()->destroy_io_handler (ts_handler);
-  delete ts_db;
+  if (handler != 0)
+    {
+      handler->message_block ()->release ();
+      handler->factory ()->destroy_io_handler (handler);
+    }
+  ts_db->release ();
 
   return result;
 }

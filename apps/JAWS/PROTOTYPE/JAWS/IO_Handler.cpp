@@ -21,14 +21,35 @@ JAWS_IO_Handler_Factory::~JAWS_IO_Handler_Factory (void)
 {
 }
 
+JAWS_IO_Handler *
+JAWS_IO_Handler_Factory::create_io_handler (void)
+{
+  JAWS_TRACE ("JAWS_IO_Handler_Factory::create");
+
+  JAWS_Asynch_IO_Handler *handler;
+  handler = new JAWS_Asynch_IO_Handler (this);
+
+  return handler;
+}
+
+void
+JAWS_IO_Handler_Factory::destroy_io_handler (JAWS_IO_Handler *handler)
+{
+  JAWS_TRACE ("JAWS_IO_Handler_Factory::destroy");
+  if (handler != 0)
+    delete handler;
+}
+
 JAWS_IO_Handler::JAWS_IO_Handler (JAWS_IO_Handler_Factory *factory)
   : status_ (0),
     mb_ (0),
     handle_ (ACE_INVALID_HANDLE),
     task_ (0),
     factory_ (factory)
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+  , handler_ (this)
+#endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS) */
 {
-  // this->io_->handler (this);
 }
 
 JAWS_IO_Handler::~JAWS_IO_Handler (void)
@@ -175,41 +196,13 @@ JAWS_IO_Handler::status (void)
   return this->status_;
 }
 
-JAWS_Synch_IO_Handler::JAWS_Synch_IO_Handler (JAWS_IO_Handler_Factory *factory)
-  : JAWS_IO_Handler (factory)
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+
+ACE_Handler *
+JAWS_IO_Handler::handler (void)
 {
-  // this->io_->handler (this);
+  return &this->handler_;
 }
-
-JAWS_Synch_IO_Handler::~JAWS_Synch_IO_Handler (void)
-{
-}
-
-JAWS_IO_Handler *
-JAWS_Synch_IO_Handler_Factory::create_io_handler (void)
-{
-  JAWS_TRACE ("JAWS_Synch_IO_Handler_Factory::create");
-
-  JAWS_Synch_IO *io;
-  JAWS_Synch_IO_Handler *handler;
-
-  io = new JAWS_Synch_IO;
-  if (io == 0) return 0;
-
-  handler = new JAWS_Synch_IO_Handler (this);
-  if (handler == 0) delete io;
-
-  return handler;
-}
-
-void
-JAWS_Synch_IO_Handler_Factory::destroy_io_handler (JAWS_IO_Handler *handler)
-{
-  JAWS_TRACE ("JAWS_Synch_IO_Handler_Factory::destroy");
-  delete handler;
-}
-
-#if defined (ACE_WIN32)
 
 JAWS_Asynch_Handler::JAWS_Asynch_Handler (JAWS_IO_Handler *ioh)
   : ioh_ (ioh)
@@ -349,90 +342,13 @@ JAWS_Asynch_Handler::handler (void)
   return this->ioh_;
 }
 
-JAWS_Asynch_IO_Handler::JAWS_Asynch_IO_Handler (JAWS_IO_Handler_Factory
-                                                *factory)
-  : JAWS_IO_Handler (factory),
-    handler_ (this)
-{
-  // this->io_->handler (this);
-}
-
-JAWS_Asynch_IO_Handler::~JAWS_Asynch_IO_Handler (void)
-{
-}
-
-void
-JAWS_Asynch_IO_Handler::accept_complete (ACE_HANDLE handle)
-{
-  // callback into pipeline task, notify that the accept has completed
-  this->handle_ = handle;
-  this->status_ = ACCEPT_OK;
-
-  JAWS_Dispatch_Policy *policy = this->mb_->policy ();
-
-  // Irfan says at this point issue another accept
-  JAWS_Asynch_IO_Singleton::instance ()->accept (this);
-
-  // Do this so that Thread Per Request can spawn a new thread
-  policy->concurrency ()->activate_hook ();
-}
-
-ACE_Handler *
-JAWS_Asynch_IO_Handler::handler (void)
-{
-  return &this->handler_;
-}
-
-void
-JAWS_Asynch_IO_Handler::accept_called_already (int called)
-{
-  this->accept_called_already_ = called;
-}
-
-int
-JAWS_Asynch_IO_Handler::accept_called_already (void)
-{
-  return this->accept_called_already_;
-}
-
-
-JAWS_IO_Handler *
-JAWS_Asynch_IO_Handler_Factory::create_io_handler (void)
-{
-  JAWS_TRACE ("JAWS_Asynch_IO_Handler_Factory::create");
-
-  JAWS_Asynch_IO *io;
-  JAWS_Asynch_IO_Handler *handler;
-
-  io = new JAWS_Asynch_IO;
-  if (io == 0) return 0;
-
-  handler = new JAWS_Asynch_IO_Handler (this);
-  if (handler == 0) delete io;
-
-  return handler;
-}
-
-void
-JAWS_Asynch_IO_Handler_Factory::destroy_io_handler (JAWS_IO_Handler *handler)
-{
-  JAWS_TRACE ("JAWS_Asynch_IO_Handler_Factory::destroy");
-  delete handler;
-}
-
 #endif /* ACE_WIN32 */
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<JAWS_Synch_IO_Handler_Factory, ACE_SYNCH_MUTEX>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate  ACE_Singleton<JAWS_Synch_IO_Handler_Factory, ACE_SYNCH_MUTEX>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#if defined (ACE_WIN32)
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<JAWS_Asynch_IO_Handler_Factory, ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate  ACE_Singleton<JAWS_Synch_IO_Handler_Factory, ACE_SYNCH_MUTEX>
 #pragma instantiate  ACE_Singleton<JAWS_Asynch_IO_Handler_Factory, ACE_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-#endif /* ACE_WIN32 */

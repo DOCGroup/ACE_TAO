@@ -6,11 +6,28 @@
 ACE_RCSID(JAWS, Data_Block, "$Id$")
 
 JAWS_Data_Block::JAWS_Data_Block (void)
-  : ACE_Message_Block (JAWS_DATA_BLOCK_SIZE),
+  : ACE_Message_Block (JAWS_DATA_BLOCK_SIZE
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+                       + 2 * (sizeof (sockaddr_in) + sizeof (sockaddr))
+#endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
+                       ),
     io_handler_ (0),
     policy_ (0),
     task_ (0),
     payload_ (0)
+{
+}
+
+JAWS_Data_Block::JAWS_Data_Block (JAWS_Data_Block &db)
+  : ACE_Message_Block (JAWS_DATA_BLOCK_SIZE
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+                       + 2 * (sizeof (sockaddr_in) + sizeof (sockaddr))
+#endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
+                       ),
+    io_handler_ (db.io_handler_),
+    policy_ (db.policy_),
+    task_ (db.task_),
+    payload_ (db.payload_)
 {
 }
 
