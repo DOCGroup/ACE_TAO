@@ -1,3 +1,8 @@
+Sun Jun  8 10:10:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ORB_Core.cpp (get_protocols_hooks): Fixed a small problem in
+	  logic that lead to crashes in the daily builds.
+
 Sun Jun  8 10:20:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRServiceComponentContainer_i.cpp:

@@ -1033,8 +1033,13 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
     this->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  int status = tph->set_default_policies (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int status = 0;
+
+  if (tph)
+    {
+      status = tph->set_default_policies (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+    }
 
   if (status != 0)
     ACE_THROW_RETURN (CORBA::INITIALIZE (
@@ -1043,7 +1048,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                           0),
                         CORBA::COMPLETED_NO),
                       -1);
-
 
   // Look for BiDirectional library here. If the user has svc.conf
   // file, load the library at this point.
@@ -1337,7 +1341,7 @@ TAO_Protocols_Hooks *
 TAO_ORB_Core::get_protocols_hooks (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Check if there is a cached reference.
-  if (this->protocols_hooks_ != 0 &&
+  if (this->protocols_hooks_ == 0 &&
       this->protocols_hooks_checked_ == false)
     {
       // We need synchronization here since this is called in the
@@ -1353,10 +1357,13 @@ TAO_ORB_Core::get_protocols_hooks (ACE_ENV_SINGLE_ARG_DECL)
         ACE_Dynamic_Service<TAO_Protocols_Hooks>::instance
         (TAO_ORB_Core_Static_Resources::instance ()->protocols_hooks_name_.c_str());
 
-      // Initialize the protocols hooks instance.
-      this->protocols_hooks_->init_hooks (this
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      if (this->protocols_hooks_)
+        {
+          // Initialize the protocols hooks instance.
+          this->protocols_hooks_->init_hooks (this
+                                              ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (0);
+        }
 
       this->protocols_hooks_checked_ = true;
     }
