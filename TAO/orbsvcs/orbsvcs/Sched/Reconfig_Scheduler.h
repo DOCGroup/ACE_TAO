@@ -17,6 +17,11 @@
 #ifndef TAO_RECONFIG_SCHEDULER_H
 #define TAO_RECONFIG_SCHEDULER_H
 
+// The templatized method parameters needed by this file are
+// hopelessly broken on pre-2.8 versions of g++
+#if (! defined (__GNUC__)) || (__GNUC__ > 2) || \
+(__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
+
 #include "ace/Hash_Map_Manager.h"
 #include "ace/RB_Tree.h"
 #include "orbsvcs/Scheduler_Factory.h"
@@ -404,5 +409,7 @@ protected:
 #if defined (__ACE_INLINE__)
 #include "Reconfig_Scheduler.i"
 #endif /* __ACE_INLINE__ */
+
+#endif /* __GNUC__ */
 
 #endif /* TAO_RECONFIG_SCHEDULER_H */

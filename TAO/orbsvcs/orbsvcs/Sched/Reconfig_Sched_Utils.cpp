@@ -9,6 +9,11 @@
 
 ACE_RCSID(orbsvcs, Reconfig_Scheduler, "$Id$")
 
+// The templatized method parameters needed by this file are
+// hopelessly broken on pre-2.8 versions of g++
+#if (! defined (__GNUC__)) || (__GNUC__ > 2) || \
+(__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
+
 
 ////////////////////////////////////////
 // class TAO_Reconfig_Scheduler_Entry //
@@ -1305,3 +1310,5 @@ TAO_MUF_Reconfig_Sched_Strategy::is_critical (TAO_Reconfig_Scheduler_Entry &rse)
           rse.actual_rt_info ()->criticality == RtecScheduler::VERY_HIGH_CRITICALITY)
          ? 1 : 0;
 }
+
+#endif /* __GNUC__ */
