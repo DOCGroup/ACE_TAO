@@ -42,12 +42,12 @@ public:
    * @todo part of the RT_Info is hardcoded, we need to make it
    * parametric.
    */
-  void init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
-             RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
-             RtecScheduler::Scheduler_ptr rmt_sched,
-             RtecScheduler::Scheduler_ptr lcl_sched,
-             const char* lcl_name,
-             const char* rmt_name
+  void init (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
+             RtecEventChannelAdmin::EventChannel_ptr consumer_ec,
+             RtecScheduler::Scheduler_ptr supplier_sched,
+             RtecScheduler::Scheduler_ptr consumer_sched,
+             const char* consumer_name,
+             const char* supplier_name
              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 };
 
