@@ -84,3 +84,13 @@ AMI_Test_i::yadda (CORBA::Long yadda
               "%N:%l:(%P:%t):AMI_Test_i::(set_)yadda\n"));
   yadda_ = yadda;
 }
+
+void
+AMI_Test_i::inout_arg_test (char *&
+                            ACE_ENV_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // No action, this operation is to test code generation for INOUT
+  // args in AMI operations.
+}
+

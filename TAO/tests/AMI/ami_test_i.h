@@ -51,6 +51,10 @@ public:
   void yadda (CORBA::Long yadda
               ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
+      
+  void inout_arg_test (char *& str
+                       ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;
