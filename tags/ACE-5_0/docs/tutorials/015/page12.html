@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 015</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 015</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Building a protocol stream</FONT></B></CENTER>
+
+<P>
+<HR WIDTH="100%">
+A quick look at the Protocol_Task header...
+<HR>
+<PRE>
+<font color=red>// $Id$</font>
+
+<font color=blue>#ifndef</font> <font color=purple>PROTOCOL_TASK_H</font>
+<font color=blue>#define</font> <font color=purple>PROTOCOL_TASK_H</font>
+
+<font color=blue>#include</font> "<A HREF="../../../ace/Task.h">ace/Task.h</A>"
+
+<font color=blue>#if !defined</font> (<font color=purple>ACE_LACKS_PRAGMA_ONCE</font>)
+<font color=blue># pragma</font> <font color=purple>once</font>
+<font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
+
+<font color=red>/* A typical ACE_Task&lt;> derivative that adds a few things appropriate
+   to protocol stacks.  To keep things a little simpler, we prevent
+   activation of the task and just borrow the thread of control from
+   the calling method in all cases.
+*/</font>
+class Protocol_Task : public ACE_Task&lt;ACE_MT_SYNCH>
+{
+public:
+  typedef ACE_Task&lt;ACE_MT_SYNCH> inherited;
+
+  Protocol_Task (void);
+
+  ~Protocol_Task (void);
+
+  <font color=red>// open() is invoked when the task is inserted into the stream.</font>
+  virtual int open (void *arg);
+
+  <font color=red>// close() is invoked when the stream is closed (flags will be set</font>
+  <font color=red>// to '1') and when the svc() method exits (flags will be '0').</font>
+  virtual int close (u_long flags);
+
+  <font color=red>// As data travels through the stream, the put() method of each task</font>
+  <font color=red>// is invoked to keep the data moving along.</font>
+  virtual int put (ACE_Message_Block *message,
+                   ACE_Time_Value *timeout);
+
+  <font color=red>// We're obligated to provide this signature even though we won't be </font>
+  <font color=red>// allowing this object to be activated.</font>
+  virtual int svc (void);
+
+protected:
+
+  <font color=red>// Called by put() or svc() as necessary to process a block of data.</font>
+  int process (ACE_Message_Block *message,
+               ACE_Time_Value *timeout);
+
+  <font color=red>// Tasks on the writer (downstream) side of the stream are called</font>
+  <font color=red>// upon to send() data that will ultimately go to the peer.</font>
+  virtual int send (ACE_Message_Block *message,
+                    ACE_Time_Value *timeout);
+
+  <font color=red>// Tasks on the reader (upstream) side will be receiving data that</font>
+  <font color=red>// came from the peer.</font>
+  virtual int recv (ACE_Message_Block *message,
+                    ACE_Time_Value *timeout);
+
+};
+
+<font color=blue>#endif</font> <font color=red>/* PROTOCOL_TASK_H */</font>
+</PRE>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page13.html">Continue This Tutorial</A>]</CENTER>
