@@ -71,7 +71,8 @@ TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (ACE_Thre
   : TAO_UIOP_Handler_Base (t),
     transport_ (this, 0),
     orb_core_ (0),
-    tss_resources_ (0)
+    tss_resources_ (0),
+    refcount_ (1)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -85,7 +86,8 @@ TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (TAO_ORB_
   : TAO_UIOP_Handler_Base (orb_core),
     transport_ (this, orb_core),
     orb_core_ (orb_core),
-    tss_resources_ (orb_core->get_tss_resources ())
+    tss_resources_ (orb_core->get_tss_resources ()),
+    refcount_ (1)
 {
 }
 
@@ -179,7 +181,11 @@ TAO_UIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
                  handle,
                  rm));
 
-  return TAO_UIOP_SVC_HANDLER::handle_close (handle, rm);
+  --this->refcount_;
+  if (this->refcount_ == 0)
+    return TAO_UIOP_SVC_HANDLER::handle_close (handle, rm);
+
+  return 0;
 }
 
 int
@@ -214,6 +220,8 @@ TAO_UIOP_Server_Connection_Handler::svc (void)
 int
 TAO_UIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
 {
+  this->refcount_++;
+
   int result = TAO_GIOP::handle_input (this->transport (),
                                        this->orb_core_,
                                        this->transport_.message_state_);
@@ -227,14 +235,19 @@ TAO_UIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
     }
 
   if (result == 0 || result == -1)
-    return result;
+    {
+      --this->refcount_;
+      if (this->refcount_ == 0)
+        this->TAO_UIOP_SVC_HANDLER::handle_close ();
+      return result;
+    }
 
   //
   // Take out all the information from the <message_state> and reset
   // it so that nested upcall on the same transport can be handled.
   //
 
-  // Notice that the message_state is only modified in one thread at a 
+  // Notice that the message_state is only modified in one thread at a
   // time because the reactor does not call handle_input() for the
   // same Event_Handler in two threads at the same time.
 
@@ -257,6 +270,10 @@ TAO_UIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
                                              giop_version);
   if (result != -1)
     result = 0;
+
+  --this->refcount_;
+  if (this->refcount_ == 0)
+    this->TAO_UIOP_SVC_HANDLER::handle_close ();
 
   return result;
 }
