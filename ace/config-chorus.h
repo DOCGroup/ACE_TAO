@@ -2,7 +2,7 @@
 // $Id$
 
 // The following configuration file is designed to work for Chorus
-// platforms using the MIT threads package and one of these compilers:
+// platforms using one of these compilers:
 // * GNU g++
 // * GreenHills
 
@@ -31,7 +31,7 @@
 # define ACE_LACKS_ACE_IOSTREAM  /* MVME lacks signed and unsigned char */
 # define ACE_LACKS_FLOATING_POINT
 #else  /* ! __GNUG__ && ! ghs */
-# error unsupported compiler on VxWorks
+# error unsupported compiler for ACE on Chorus
 #endif /* ! __GNUG__ && ! ghs */
 
 // OS-specific configuration
