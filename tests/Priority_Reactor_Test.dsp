@@ -38,7 +38,7 @@ CFG=Priority_Reactor_Test - Win32 Debug
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
+# PROP Output_Dir "."
 # PROP Intermediate_Dir ".\DLL\Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
@@ -201,7 +201,6 @@ DEP_CPP_PRIOR=\
 	"..\ace\SOCK_Stream.i"\
 	"..\ace\SString.h"\
 	"..\ace\SString.i"\
-	"..\ace\stdcpp.h"\
 	"..\ace\Strategies.h"\
 	"..\ace\Strategies_T.cpp"\
 	"..\ace\Strategies_T.h"\
@@ -245,6 +244,9 @@ DEP_CPP_PRIOR=\
 	"..\ace\ws2tcpip.h"\
 	".\Priority_Reactor_Test.h"\
 	".\test_config.h"\
+	
+NODEP_CPP_PRIOR=\
+	"..\ace\stdcpp.h"\
 	
 
 !ENDIF 

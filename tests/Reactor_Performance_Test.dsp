@@ -38,7 +38,7 @@ CFG=Reactor_Performance_Test - Win32 Debug
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
+# PROP Output_Dir "."
 # PROP Intermediate_Dir ".\DLL\Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
@@ -203,7 +203,6 @@ DEP_CPP_REACT=\
 	"..\ace\SOCK_Stream.i"\
 	"..\ace\SString.h"\
 	"..\ace\SString.i"\
-	"..\ace\stdcpp.h"\
 	"..\ace\Strategies.h"\
 	"..\ace\Strategies_T.cpp"\
 	"..\ace\Strategies_T.h"\
@@ -246,6 +245,9 @@ DEP_CPP_REACT=\
 	"..\ace\WFMO_Reactor.i"\
 	"..\ace\ws2tcpip.h"\
 	".\test_config.h"\
+	
+NODEP_CPP_REACT=\
+	"..\ace\stdcpp.h"\
 	
 
 !ENDIF 
