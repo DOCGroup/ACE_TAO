@@ -60,21 +60,6 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
         }
     }
 
-// May not need variable 'pt' at all.
-#if 0
-  // generate the class name
-  be_type  *pt; // base types
-
-  if (bt->node_type () == AST_Decl::NT_typedef)
-  {
-    // get the primitive base type of this typedef node
-    be_typedef *t = be_typedef::narrow_from_decl (bt);
-    pt = t->primitive_base_type ();
-  }
-  else
-    pt = bt;
-#endif /* 0 */
-
   const char * class_name = node->instance_name ();
 
 
@@ -88,7 +73,7 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
 
   os->gen_ifdef_macro (class_name);
 
-  *os << "class " << class_name << be_idt_nl
+  *os << "class TAO_EXPORT_MACRO " << class_name << be_idt_nl
       << ": public TAO_Bounded_Base_Sequence" << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
