@@ -102,38 +102,9 @@ twoway_latency (Test_ptr servant,
                       now - latency_base);
     }
 
-  latency.dump_results ("Twoway", gsf);
-}
-
-static void 
-twoway_throughput (Test_ptr servant,
-                   ACE_UINT32 gsf,
-                   CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_hrtime_t begin = ACE_OS::gethrtime ();
-
-  for (CORBA::ULong i = 0; i != iterations; ++i)
-    {
-      servant->twoway_op (i,
-                          ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_hrtime_t end = ACE_OS::gethrtime ();
-
-  ACE_UINT64 raw = end - begin;
-
-  double et = ACE_CU64_TO_CU32 (raw) / gsf;
-
-  double latency = et / iterations;
-
-  double throughput = 1000000.0 / latency;
-
   print_params ();
 
-  ACE_DEBUG ((LM_DEBUG,
-              "\ntwoway throughput: %.2f calls/sec\n\n",
-              throughput));
+  latency.dump_results ("Twoway", gsf);
 }
 
 static void 
@@ -160,38 +131,9 @@ oneway_latency (Test_ptr servant,
                       now - latency_base);
     }
 
-  latency.dump_results ("Oneway", gsf);
-}
-
-static void 
-oneway_throughput (Test_ptr servant,
-                   ACE_UINT32 gsf,
-                   CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_hrtime_t begin = ACE_OS::gethrtime ();
-
-  for (CORBA::ULong i = 0; i != iterations; ++i)
-    {
-      servant->oneway_op (i,
-                          ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-
-  ACE_hrtime_t end = ACE_OS::gethrtime ();
-
-  ACE_UINT64 raw = end - begin;
-
-  double et = ACE_CU64_TO_CU32 (raw) / gsf;
-
-  double latency = et / iterations;
-
-  double throughput = 1000000.0 / latency;
-
   print_params ();
 
-  ACE_DEBUG ((LM_DEBUG,
-              "\noneway throughput: %.2f calls/sec\n\n",
-              throughput));
+  latency.dump_results ("Oneway", gsf);
 }
 
 void flush_queue (Test_var &server,
@@ -398,17 +340,10 @@ main (int argc, char *argv[])
         }
 
       // Run the test.
-
       if (test_twoway)
         {
           // Establish the connection
           server->twoway_op (0,
-                             ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          // Get the throughput and latency data.
-          twoway_throughput (server.in (),
-                             gsf,
                              ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -507,23 +442,7 @@ main (int argc, char *argv[])
               ACE_TRY_CHECK;
             }
 
-          // Get the throughput and latency data.
-          oneway_throughput (server.in (),
-                             gsf,
-                             ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          // If we are buffering oneways requests, we need to make
-          // sure the queue is flushed before getting another benchmark.
-          if (sync_scope == Messaging::SYNC_NONE)
-            {
-              flush_queue (server,
-                           orb,
-                           obj,
-                           ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-            }
-
+          // Run the oneway test.
           oneway_latency (server.in (),
                           gsf,
                           ACE_TRY_ENV);
