@@ -113,10 +113,19 @@ else  # ! 4.2
     #### If compat=4 is desired, set up for that. There are syntactic diffs
     #### in the compatibility modes, but here all we need to be concerned with
     #### is turning on -compat=4, and not trying to enable the new libraries.
-    #### RTTI may work, but has not been tested. To try it, cut/paste the
-    #### rtti conditions from the 4.2 section, above.
     ifeq ($(compat4),1)
-      CCFLAGS += -compat=4 -DACE_LACKS_RTTI -instances=explicit
+      CCFLAGS += -compat=4 -instances=explicit
+
+      #### RTTI can coexist with ACE, but it doesn't use it.  To enable,
+      #### add rtti=1 to your make invocation.  Sun C++ 4.2, only, supports
+      #### this option.
+      ifeq (1,$(rtti))
+        CCFLAGS += -features=rtti
+      else  # ! rtti
+        #### ACE_LACKS_RTTI is necessary with -features=castop, but
+        #### without -features=rtti, to convert dynamic_cast to static_cast.
+        CCFLAGS += -DACE_LACKS_RTTI
+      endif # ! rtti
     else
       #### Support RTTI by default.  And, use explicit template instantiation
       #### because automatic instantiation appears to be broken, at least
@@ -172,13 +181,6 @@ ifeq ($(distrib),0)
   LDFLAGS       += -R $(ACE_ROOT)/ace -R./
 endif
   LIBS          += -lsocket -ldl -lnsl -lgen -lposix4
-
-ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
-        ifeq ($(compat4),1)
-               COMPAT_LIBDIR=/opt/SUNWspro/lib/CC4
-               LIBS    += -L$(COMPAT_LIBDIR) -lC
-        endif
-endif
 
 LDFLAGS         += -xildoff
 
