@@ -31,6 +31,7 @@ sub new {
   my($template) = shift;
   my($ti)       = shift;
   my($relative) = shift;
+  my($progress) = shift;
   my($type)     = shift;
   my($self)     = Parser::new($class);
 
@@ -43,6 +44,7 @@ sub new {
   $self->{'global_read'}   = 0;
   $self->{'include_path'}  = $inc;
   $self->{'current_input'} = "";
+  $self->{'progress'}      = $progress;
 
   return $self;
 }
@@ -308,6 +310,12 @@ sub transform_file_name {
 sub get_current_input {
   my($self) = shift;
   return $self->{'current_input'};
+}
+
+
+sub get_progress_callback {
+  my($self) = shift;
+  return $self->{'progress'};
 }
 
 
