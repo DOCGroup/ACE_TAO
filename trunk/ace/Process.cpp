@@ -191,7 +191,7 @@ EXIT_LABEL:
 
 // ************************************************************
 
-ACE_ProcessEx::ACE_ProcessEx (void)
+ACE_Process::ACE_Process (void)
 #if !defined (ACE_WIN32)
   : child_id_ (0)
 #endif /* !defined (ACE_WIN32) */
@@ -202,7 +202,7 @@ ACE_ProcessEx::ACE_ProcessEx (void)
 #endif /* ACE_WIN32 */
 }
 
-ACE_ProcessEx::~ACE_ProcessEx (void)
+ACE_Process::~ACE_Process (void)
 {
 #if defined (ACE_WIN32)
   // Free resources allocated in kernel.
@@ -212,7 +212,7 @@ ACE_ProcessEx::~ACE_ProcessEx (void)
 }
 
 pid_t
-ACE_ProcessEx::start (ACE_Process_Options &options)
+ACE_Process::start (ACE_Process_Options &options)
 {
 #if defined (ACE_WIN32)
   BOOL fork_result = 
@@ -286,7 +286,7 @@ ACE_ProcessEx::start (ACE_Process_Options &options)
 }
 
 int
-ACE_ProcessEx::wait (void)
+ACE_Process::wait (void)
 {
 #if defined (ACE_WIN32)
   return ::WaitForSingleObject (process_info_.hProcess, INFINITE);
@@ -296,7 +296,7 @@ ACE_ProcessEx::wait (void)
 }
 
 int
-ACE_ProcessEx::wait (const ACE_Time_Value &tv)
+ACE_Process::wait (const ACE_Time_Value &tv)
 {
 #if defined (ACE_WIN32)
   return ::WaitForSingleObject (process_info_.hProcess, tv.msec ());
@@ -309,7 +309,7 @@ ACE_ProcessEx::wait (const ACE_Time_Value &tv)
 // ************************************************************
 
 int
-ACE_Process::wait (void)
+ACE_Process_Old::wait (void)
 {
 #if defined (ACE_WIN32)
   return ::WaitForSingleObject (process_info_.hProcess, INFINITE);
@@ -318,7 +318,7 @@ ACE_Process::wait (void)
 #endif /* ACE_WIN32 */
 }
 
-ACE_Process::ACE_Process (void)
+ACE_Process_Old::ACE_Process_Old (void)
 #if defined (ACE_WIN32)
   : set_handles_called_ (0)
 #else /* ACE_WIN32 */
@@ -338,7 +338,7 @@ ACE_Process::ACE_Process (void)
   this->cwd_[0] = '\0';
 }
 
-ACE_Process::~ACE_Process (void)
+ACE_Process_Old::~ACE_Process_Old (void)
 {
 #if defined (ACE_WIN32)
   // Just in case <start> wasn't called.
@@ -357,7 +357,7 @@ ACE_Process::~ACE_Process (void)
 }
 
 int
-ACE_Process::set_handles (ACE_HANDLE std_in,
+ACE_Process_Old::set_handles (ACE_HANDLE std_in,
 			  ACE_HANDLE std_out,
 			  ACE_HANDLE std_err)
 {
@@ -410,7 +410,7 @@ ACE_Process::set_handles (ACE_HANDLE std_in,
 }
 
 int
-ACE_Process::set_cwd (const TCHAR *cwd)
+ACE_Process_Old::set_cwd (const TCHAR *cwd)
 {
   ACE_OS::strncpy (this->cwd_, cwd, MAXPATHLEN);
   // This is for paranoia...
@@ -419,7 +419,7 @@ ACE_Process::set_cwd (const TCHAR *cwd)
 }
 
 pid_t
-ACE_Process::start (char *argv[], char *envp[])
+ACE_Process_Old::start (char *argv[], char *envp[])
 {
 #if defined (ACE_WIN32)
   ACE_ARGV argv_buf (argv);
@@ -504,7 +504,7 @@ ACE_Process::start (char *argv[], char *envp[])
 #endif /* ACE_WIN32 */
 }
 
-ACE_Process::ACE_Process (char *argv[],
+ACE_Process_Old::ACE_Process_Old (char *argv[],
 			  ACE_HANDLE std_in,
 			  ACE_HANDLE std_out,
 			  ACE_HANDLE std_err,

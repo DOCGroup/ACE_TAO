@@ -220,7 +220,7 @@ protected:
 
 // ************************************************************
 
-class ACE_Export ACE_ProcessEx
+class ACE_Export ACE_Process
 // = TITLE
 //     Process
 //
@@ -228,10 +228,10 @@ class ACE_Export ACE_ProcessEx
 //     A Portable encapsulation for creating new processes.
 {
 public:
-  ACE_ProcessEx (void);
+  ACE_Process (void);
   // Default construction.  Must use ACE_Process::start.
 
-  ~ACE_ProcessEx (void);
+  ~ACE_Process (void);
   // Destructor.
 
   pid_t start (ACE_Process_Options &options);
@@ -265,14 +265,14 @@ protected:
 
 // ************************************************************
 
-class ACE_Export ACE_Process
+class ACE_Export ACE_Process_Old
 // = TITLE
 //     A Portable encapsulation for creating new processes and
 //     allows assignment of STDIN, STDOUT, and STDERR of the new
 //     process. 
 //
 // = DESCRIPTION
-//     On UNIX, ACE_Process uses fork and exec.  On Win32, it uses
+//     On UNIX, ACE_Process_Old uses fork and exec.  On Win32, it uses
 //     CreateProcess.  Since we can set the standard handles, we can
 //     mimic UNIX pipes on Win32 by building chains of processes.
 //     This class should be used instead ACE_OS::fork_exec.  I'm
@@ -282,10 +282,10 @@ class ACE_Export ACE_Process
 //     send us the updates.  We'll put it in ACE.
 {
 public:
-  ACE_Process (void);
+  ACE_Process_Old (void);
   // Default construction.
 
-  ACE_Process (char *argv[],
+  ACE_Process_Old (char *argv[],
 		      ACE_HANDLE std_in,
 		      ACE_HANDLE std_out = ACE_INVALID_HANDLE,
 		      ACE_HANDLE std_err = ACE_INVALID_HANDLE,
@@ -301,7 +301,7 @@ public:
   // affect a subset of the handles, make sure to set the others to
   // ACE_INVALID_HANDLE.
 
-  ~ACE_Process (void);
+  ~ACE_Process_Old (void);
   // Destructor.
 
   int set_handles (ACE_HANDLE std_in,

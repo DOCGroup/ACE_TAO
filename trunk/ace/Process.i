@@ -3,30 +3,12 @@
 
 #if defined (ACE_WIN32)
 ACE_INLINE PROCESS_INFORMATION 
-ACE_ProcessEx::process_info (void)
+ACE_Process::process_info (void)
 {
   return process_info_;
 }
 #endif /* ACE_WIN32 */
 
-
-ACE_INLINE pid_t
-ACE_ProcessEx::getpid (void)
-{
-#if defined (ACE_WIN32)
-  return process_info_.dwProcessId;
-#else /* ACE_WIN32 */
-  return child_id_;
-#endif /* ACE_WIN32 */
-}
-
-ACE_INLINE int
-ACE_ProcessEx::kill (int signum)
-{
-  return ACE_OS::kill (this->getpid (), signum);
-}
-
-// ************************************************************
 
 ACE_INLINE pid_t
 ACE_Process::getpid (void)
@@ -40,6 +22,24 @@ ACE_Process::getpid (void)
 
 ACE_INLINE int
 ACE_Process::kill (int signum)
+{
+  return ACE_OS::kill (this->getpid (), signum);
+}
+
+// ************************************************************
+
+ACE_INLINE pid_t
+ACE_Process_Old::getpid (void)
+{
+#if defined (ACE_WIN32)
+  return process_info_.dwProcessId;
+#else /* ACE_WIN32 */
+  return child_id_;
+#endif /* ACE_WIN32 */
+}
+
+ACE_INLINE int
+ACE_Process_Old::kill (int signum)
 {
   return ACE_OS::kill (this->getpid (), signum);
 }
