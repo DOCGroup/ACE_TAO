@@ -1,0 +1,7 @@
+// $Id$
+#ifndef ACE_DSUI_CONFIG_H_
+#define ACE_DSUI_CONFIG_H_
+
+#define CONFIG_DSTREAM_MSG_QUEUE 1
+
+#endif // ACE_DSUI_CONFIG_H_
