@@ -1,3 +1,9 @@
+Mon Oct 27 00:20:13 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/config-hpux-10.x-hpc++.h: Added directive
+	  ACE_HAS_TEMPLATE_SPECIALIZATION.  Thanks to Stephen Coy
+	  <stevec@wsa.com.au> for reporting this.
+
 Sun Oct 26 22:17:57 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.29, released Sun Oct 26 22:17:57 1997.
