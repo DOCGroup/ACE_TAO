@@ -97,9 +97,7 @@ TAO_Transport_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
   // are holding our lock
   this->purging_strategy_->update_item (int_id.transport ());
 
-  // When it comes for bind we know the transport is going to be busy
-  // and is marked for a partcular thread. So, mark it busy
-  int_id.recycle_state (ACE_RECYCLABLE_BUSY);
+
 
   int retval = this->cache_map_.bind (ext_id,
                                       int_id,
@@ -299,6 +297,21 @@ TAO_Transport_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
 
 
 int
+TAO_Transport_Cache_Manager::update_entry (HASH_MAP_ENTRY *&entry)
+{
+  if(entry == 0)
+    return -1;
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                            guard,
+                            *this->cache_lock_, -1));
+
+  (void) this->purging_strategy_->update_item (entry->int_id_.transport ());
+
+  return 0;
+}
+
+int
 TAO_Transport_Cache_Manager::close_i (ACE_Handle_Set &reactor_registered,
                                       TAO_EventHandlerSet &unregistered)
 {
@@ -387,6 +400,13 @@ TAO_Transport_Cache_Manager::get_last_index_bind (TAO_Cache_ExtId &key,
 int
 TAO_Transport_Cache_Manager::is_entry_idle (HASH_MAP_ENTRY *&entry)
 {
+  if (TAO_debug_level)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Transport_Cache_Manager::is_entry_idle_i, "
+                  "state is [%d]\n",
+                  entry->int_id_.recycle_state ()));
+    }
   if (entry->int_id_.recycle_state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
       entry->int_id_.recycle_state () == ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE)
     {

@@ -89,6 +89,9 @@ public:
     LFS_FAILURE,
     /// The event has timed out
     LFS_TIMEOUT,
+    /// The event is waiting for connection closure. This is a
+    /// temporary state
+    LFS_CONNECTION_CLOSE_WAIT,
     /// The connection was closed.
     LFS_CONNECTION_CLOSED
   };

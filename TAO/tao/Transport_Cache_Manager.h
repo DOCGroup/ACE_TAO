@@ -79,10 +79,21 @@ public:
   /// Destructor
   virtual ~TAO_Transport_Cache_Manager (void);
 
-  /// Add the transport to the cache. The transport has the property
-  /// definition based on which caching can be done
+  /// Add the transport to the cache.
+
+  /**
+   * The transport has the property definition based on which caching
+   * can be done. This method marks the transport
+   * <CODE>ACE_RECYCLABLE_BUSY </CODE> which helps the threads
+   * opening up connections to use the  transport immediately.
+   */
   int cache_transport (TAO_Transport_Descriptor_Interface *prop,
                        TAO_Transport *transport);
+
+  /// Similar to the one above, but the transport is left in <CODE>
+  /// ACE_RECYCLABLE_IDLE_AND_PURGABLE</CODE> state.
+  int cache_idle_transport (TAO_Transport_Descriptor_Interface *prop,
+                            TAO_Transport *transport);
 
   /// Check the Transport Cache to check whether the connection exists
   /// in the Cache and return the connection
@@ -100,6 +111,10 @@ public:
 
   /// Make the entry idle and ready for use.
   int make_idle (HASH_MAP_ENTRY *&entry);
+
+  /// Mark the entry as touched. This call updates the purging
+  /// strategy policy information.
+  int update_entry (HASH_MAP_ENTRY *&entry);
 
   /// Close the underlying hash map manager and return the handle set
   /// that have been registered with the reactor

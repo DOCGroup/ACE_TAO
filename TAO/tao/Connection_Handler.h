@@ -72,6 +72,10 @@ public:
   long incr_refcount (void);
   long decr_refcount (void);
 
+  /// Set the handler in <CODE>LF_EVENT_CONNECTION_CLOSE_WAIT </CODE>
+  /// state
+  void connection_close_wait (void);
+
   /// Close the underlying connection.
   /**
    * Used by the ORB to actively close connections that are idle,

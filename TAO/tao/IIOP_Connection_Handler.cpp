@@ -243,9 +243,12 @@ TAO_IIOP_Connection_Handler::add_transport_to_cache (void)
   // Construct a property object
   TAO_Base_Transport_Property prop (&endpoint);
 
-  // Add the handler to Cache
-  return this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&prop,
-                                                                                  this->transport ());
+  TAO_Transport_Cache_Manager &cache =
+    this->orb_core ()->lane_resources ().transport_cache ();
+
+  // Idle the transport..
+  return cache.cache_idle_transport (&prop,
+                                     this->transport ());
 }
 
 int
