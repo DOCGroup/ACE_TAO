@@ -45,6 +45,9 @@ using CIAO::Utility::write_IOR;
  * 1. There is only 1 container for all components/homes associating
  *    with 1 NodeApplication
  * 2. Now the implementation is not thread safe.
+ *
+ * @@ I've added get_event_service () operation to the NodeApplication 
+ *    interface to support event channel integration. -- Gan Deng.
  **/
 
 namespace CIAO
@@ -90,6 +93,10 @@ namespace CIAO
     start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StartError));
+
+    virtual CIAO::ContainerEventService_ptr
+    get_event_service (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /*-------------  CIAO specific helper operations (idl)--------
      *
