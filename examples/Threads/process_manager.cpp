@@ -4,6 +4,7 @@
 
 #include "ace/Service_Config.h"
 #include "ace/Process_Manager.h"
+#include "ace/Get_Opt.h"
 
 #if !defined (ACE_WIN32) && defined (ACE_HAS_THREADS)
 
@@ -86,8 +87,38 @@ exithook (void)
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) later...\n"));
 }
 
-static const int DEFAULT_THREADS = ACE_DEFAULT_THREADS;
-static const int DEFAULT_ITERATIONS = 100000;
+static int n_processes = ACE_DEFAULT_THREADS;
+static int n_iterations = 100000;
+static int child = 0;
+
+// Parse the command-line arguments and set options.
+static void
+parse_args (int argc, char *argv[])
+{
+  ACE_Get_Opt get_opt (argc, argv, "t:i:cu");
+
+  int c; 
+
+  while ((c = get_opt ()) != -1)
+    switch (c)
+    {
+    case 't':
+      n_processes = ACE_OS::atoi (get_opt.optarg);
+      break;
+    case 'i':
+      n_iterations = ACE_OS::atoi (get_opt.optarg);
+      break;
+    case 'c':
+      child = 1;
+      break;
+    case 'u':
+    default:
+      ACE_DEBUG ((LM_DEBUG, "usage:\n"
+		  "-t <threads/processes>\n"
+		  "-i <iterations>\n"));
+      break;
+  }
+}
 
 int
 main (int argc, char *argv[])
@@ -98,6 +129,8 @@ main (int argc, char *argv[])
 
   ::atexit (exithook);
 
+  ::parse_args (argc, argv);
+
   ACE_Sig_Set sigset (1); // Block all signals.
 
   if (ACE_OS::thr_sigsetmask (SIG_BLOCK, sigset, 0) == -1)
@@ -105,23 +138,20 @@ main (int argc, char *argv[])
   else if (ACE_Service_Config::thr_mgr ()->spawn (sig_handler, 0, THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 1);
 
-  int n_processes = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_THREADS;
-  ACE_UNUSED_ARG (n_processes);
-  int n_iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_ITERATIONS;
-
-  ACE_Process_Options options (0);
-  pid_t pid = proc_mgr.start (options);
-
-  switch (pid)
+  if (child)
     {
-    case -1:
-      ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "start_n"), 1);
-      /* NOTREACHED */
-    case 0:
-      worker (n_iterations);
-      break;
-      /* NOTREACHED */
-    default:
+      ::worker (n_iterations);
+      return 0;
+    }
+
+  ACE_Process_Options options;
+  options.command_line ("%s -c", argv[0]);
+  pid_t pid = proc_mgr.spawn (options);
+
+  if (pid == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "start_n"), 1);
+  else
+    {
       // Give the child a chance to start running.
       ACE_OS::sleep (1);
 
