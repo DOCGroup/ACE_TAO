@@ -1,3 +1,11 @@
+Fri Feb 28 13:18:17 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/VC7WorkspaceCreator.pm:
+
+          Fixed a problem with project dependencies.  If the project
+          dependency is not a project within the generated solution, then
+          omit it.
+
 Fri Feb 28 07:49:00 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Creator.pm:
