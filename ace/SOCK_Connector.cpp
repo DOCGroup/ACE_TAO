@@ -34,7 +34,8 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
   // Only open a new socket if we don't already have a valid handle.
   if (new_stream.get_handle () == ACE_INVALID_HANDLE)
     {
-      if (ACE_SOCK::open (SOCK_STREAM, protocol_family, protocol) == -1)
+      if (ACE_SOCK::open (SOCK_STREAM, protocol_family, 
+			  protocol, reuse_addr) == -1)
 	return -1;
     }
   else // Borrow the handle from the NEW_STREAM. 
@@ -45,18 +46,10 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
 
   if (&local_sap != &ACE_Addr::sap_any)
     {
-      // Bind the local endpoint to a specific addr.
+      sockaddr *laddr = (sockaddr *) local_sap.get_addr ();
+      size_t size = local_sap.get_size ();
+      result = ACE_OS::bind (this->get_handle (), laddr, size);
 
-      int one = 1;
-      if (reuse_addr && this->set_option (SOL_SOCKET, SO_REUSEADDR,
-					  &one, sizeof one) == -1)
-	result = -1;
-      else
-	{
-	  sockaddr *laddr = (sockaddr *) local_sap.get_addr ();
-	  size_t size = local_sap.get_size ();
-	  result = ACE_OS::bind (this->get_handle (), laddr, size);
-	}
       if (result == -1)
 	{
 	  this->close ();

@@ -84,8 +84,9 @@ ACE_SOCK_Dgram::shared_open (const ACE_Addr &local, int protocol_family)
 
 ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local, 
 				int protocol_family, 
-				int protocol)
-  : ACE_SOCK (SOCK_DGRAM, protocol_family, protocol)
+				int protocol,
+				int reuse_addr)
+  : ACE_SOCK (SOCK_DGRAM, protocol_family, protocol, reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK_Dgram::ACE_SOCK_Dgram");
   if (this->shared_open (local, protocol_family) == -1)
@@ -97,11 +98,12 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
 int
 ACE_SOCK_Dgram::open (const ACE_Addr &local, 
 		      int protocol_family, 
-		      int protocol)
+		      int protocol,
+		      int reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK_Dgram::open");
   if (ACE_SOCK::open (SOCK_DGRAM, protocol_family, 
-		      protocol) == -1)
+		      protocol, reuse_addr) == -1)
     return -1;
   else
     return this->shared_open (local, protocol_family);

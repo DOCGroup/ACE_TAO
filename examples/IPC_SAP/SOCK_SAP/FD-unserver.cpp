@@ -8,6 +8,40 @@
 
 // ACE_LSOCK Server
 
+void
+handle_client (ACE_LSOCK_Stream &stream)
+{
+  char buf[BUFSIZ];
+  ACE_HANDLE handle;
+
+  // Retrieve the socket descriptor passed from the client.
+
+  if (stream.recv_handle (handle) == -1)
+    ACE_ERROR ((LM_ERROR, "%p", "recv_handle"));
+      
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) ----------------------------------------\n"));
+      
+  // Read data from client (correctly handles incomplete reads due to
+  // flow control).
+      
+  for (ssize_t n; 
+       (n = ACE_OS::read (handle, buf, sizeof buf)) > 0; 
+       )
+    ACE_DEBUG ((LM_DEBUG, "%*s", n, buf));
+      
+  ::sprintf (buf, "%d", ACE_OS::getpid ());
+  
+  ACE_DEBUG ((LM_DEBUG, "(%s, %d) ----------------------------------------\n", buf, ACE_OS::strlen (buf)));
+      
+  // Tell the client to shut down.
+  if (stream.send_n (buf, ACE_OS::strlen (buf)) == -1)
+    ACE_ERROR ((LM_ERROR, "%p", "send"));
+      
+  // Close new endpoint (listening endpoint stays open).
+  if (stream.close () == -1) 
+    ACE_ERROR ((LM_ERROR, "%p", "close"));
+}
+
 int 
 main (int argc, char *argv[])
 {                                                                
@@ -16,38 +50,35 @@ main (int argc, char *argv[])
   ACE_OS::unlink (rendezvous);
   ACE_UNIX_Addr addr (rendezvous);
   ACE_LSOCK_Acceptor peer_acceptor (addr);
-  ACE_LSOCK_Stream new_stream;
+  ACE_LSOCK_Stream stream;
   
-  // Performs the iterative server activities.
+  // Performs the concurrent server activities.
   
   for (;;) 
     {
-      char buf[BUFSIZ];
-      ACE_HANDLE handle;
-      
       // Create a new ACE_SOCK_Stream endpoint.
-      if (peer_acceptor.accept (new_stream) == -1)
-        ACE_OS::perror ("accept");                                       
+      if (peer_acceptor.accept (stream) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "accept"), -1);
+
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) accepted new connection\n"));
       
-      // Read data from client (correctly handles incomplete reads due
-      // to flow control).
-      
-      if (new_stream.recv_handle (handle) == -1)
-	ACE_OS::perror ("recv_handle"), ACE_OS::exit (1);
-      
-      ACE_OS::puts ("----------------------------------------");
-      
-      for (int n; (n = ACE_OS::read (handle, buf, sizeof buf)) > 0; )
-	ACE_OS::write (ACE_STDOUT, buf, n);
-      
-      ACE_OS::puts ("----------------------------------------");
-      
-      if (new_stream.send ("yow", 3) == -1)
-	ACE_OS::perror ("send"), ACE_OS::exit (1);
-      
-      // Close new endpoint (listening endpoint stays open).
-      if (new_stream.close () == -1) 
-        ACE_OS::perror ("close");
+#if defined (VXWORKS)
+      handle_client (stream);
+#else
+      switch (ACE_OS::fork (argv[0]))
+	{
+	case -1:
+	  ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "fork"), -1);
+	  /* NOTREACHED */
+	case 0:
+	  ACE_LOG_MSG->sync (argv[0]);
+	  handle_client (stream);
+	  ACE_OS::exit (0);
+	  /* NOTREACHED */
+	default:
+	  stream.close ();
+	}
+#endif /* VXWORKS */
     }
   /* NOTREACHED */
   return 0;

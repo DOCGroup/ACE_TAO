@@ -9,11 +9,8 @@
 int 
 main (int argc, char *argv[])                       
 {                                                       
-  char *file_name = argc > 1 ? argv[1] : "./local_data";
-  char *rendezvous = argc > 2 ? argv[2] : ACE_DEFAULT_RENDEZVOUS;
-  ACE_HANDLE handle;
-  int n;
-  char buf[BUFSIZ];
+  const char *file_name = argc > 1 ? argv[1] : "./local_data";
+  const char *rendezvous = argc > 2 ? argv[2] : ACE_DEFAULT_RENDEZVOUS;
 
   ACE_LSOCK_Stream cli_stream;
   ACE_UNIX_Addr addr (rendezvous);
@@ -22,23 +19,30 @@ main (int argc, char *argv[])
   ACE_LSOCK_Connector connector;
 
   if (connector.connect (cli_stream, addr) == -1)
-    ACE_OS::perror ("connect"), ACE_OS::exit (1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p", "connect"), -1);
 
-  if ((handle = ACE_OS::open (file_name, O_RDONLY)) == -1)
-    ACE_OS::perror ("open"), ACE_OS::exit (1);
+  ACE_HANDLE handle = ACE_OS::open (file_name, O_RDONLY);
+
+  if (handle == ACE_INVALID_HANDLE)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p", "open"), -1);
 
   // Send handle to server (correctly handles incomplete writes).
   if (cli_stream.send_handle (handle) == -1) 
-    ACE_OS::perror ("send"), ACE_OS::exit (1);                          
+    ACE_ERROR_RETURN ((LM_ERROR, "%p", "send"), -1);
 
-  if ((n = cli_stream.recv_n (buf, sizeof buf)) == -1)
-    ACE_OS::perror ("recv"), ACE_OS::exit (1);
-  else
-    ACE_OS::write (ACE_STDOUT, buf, n);
+  char buf[BUFSIZ];
+  ssize_t n = cli_stream.recv (buf, sizeof buf);
+
+  if (n == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p", "recv"), -1);
+  else if (n == 0)
+    ACE_DEBUG ((LM_DEBUG, "server shutdown (bug in kernel?)\n"));
+  else    
+    ACE_DEBUG ((LM_DEBUG, "server %*s shutdown\n", n, buf));
 
   // Explicitly close the connection.
   if (cli_stream.close () == -1) 
-    ACE_OS::perror ("close"), ACE_OS::exit (1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p", "close"), -1);
 
   return 0;
 }                                                       
