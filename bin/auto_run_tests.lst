@@ -51,6 +51,7 @@ TAO/tests/RTCORBA/ORB_init/run_test.pl: !MINIMUM
 TAO/tests/Hello/run_test.pl
 TAO/tests/Muxing/run_test.pl: !ST
 TAO/tests/MT_Client/run_test.pl: !ST
+TAO/tests/File_IO/run_test.pl: !ST
 TAO/tests/MT_Server/run_test.pl: !ST
 # DISABLED TAO/tests/Client_Leaks/run_test.pl: !ST !Tru64
 TAO/tests/Server_Leaks/run_test.pl
