@@ -759,7 +759,7 @@ sub sort_dependencies {
         if ($project ne $full) {
           ## See if the dependency is listed after this project
           for(my $j = $i; $j <= $#list; $j++) {
-            if ($list[$j] eq $full) {
+            if ($list[$j] eq $full && $i != $j) {
               ## If so, move it in front of the current project
               splice(@list, $i, 0, $full);
               splice(@list, $j + 1, 1);
