@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    align.h
 //
@@ -19,27 +19,27 @@
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems, Inc.
-// 
+//
 // ============================================================================
 
 #if !defined (TAO_ALIGN_H)
-#define	TAO_ALIGN_H
+#define TAO_ALIGN_H
 
 // Type for doing arithmetic on pointers ... as elsewhere, we assume
 // that "unsigned" versions of a type are the same size as the
 // "signed" version of the same type.
 
-#if	SIZEOF_VOID_P == SIZEOF_INT
+#if     ACE_SIZEOF_VOID_P == ACE_SIZEOF_INT
 typedef u_int ptr_arith_t;
 
-#elif	SIZEOF_VOID_P == SIZEOF_LONG
+#elif   ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG
 typedef u_long ptr_arith_t;
 
-#elif	SIZEOF_VOID_P == SIZEOF_LONG_LONG
+#elif   ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG_LONG
 typedef u_long long ptr_arith_t;
 
 #else
-#	error "Can't find a suitable type for doing pointer arithmetic."
+#       error "Can't find a suitable type for doing pointer arithmetic."
 #endif /* error */
 
 // Efficiently align "value" up to "alignment", knowing that all such
@@ -49,7 +49,7 @@ typedef u_long long ptr_arith_t;
 #if 0
 static inline ptr_arith_t
 align_binary (const ptr_arith_t value,
-	      size_t alignment)
+              size_t alignment)
 {
   ptr_arith_t temp = alignment - 1;
 
@@ -68,8 +68,8 @@ align_binary (const ptr_arith_t value,
 
 #if 0
 static inline u_char *
-ptr_align_binary (const u_char *ptr, 
-		  size_t alignment)
+ptr_align_binary (const u_char *ptr,
+                  size_t alignment)
 {
   return (u_char *) align_binary ((ptr_arith_t) ptr, alignment);
 }

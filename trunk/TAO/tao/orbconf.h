@@ -62,7 +62,8 @@
 #if ACE_SIZEOF_LONG > 4
 # define TAO_ALIGNMENT_MAGIC_NUMBER 128
 #else  /* ACE_SIZEOF_LONG <= 4 */
-# define TAO_ALIGNMENT_MAGIC_NUMBER 64
+# define TAO_ALIGNMENT_MAGIC_NUMBER 128
+// # define TAO_ALIGNMENT_MAGIC_NUMBER 64
 #endif /* ACE_SIZEOF_LONG <= 4 */
 
 // BC++ seems to have a different convention for detecting Win32 than
@@ -85,46 +86,6 @@
 #  define TAO_ENCAP_BYTE_ORDER 0  /* big endian encapsulation byte order has
                                      the value = 1 */
 #endif
-
-#if UINT_MAX == 65535UL
-# define SIZEOF_INT 2
-#elif UINT_MAX == 4294967295UL
-# define SIZEOF_INT 4
-#elif UINT_MAX == 18446744073709551615UL
-# define SIZEOF_INT 8
-#else
-# error: unsupported int size, must be updated for this platform!
-#endif /* UINT_MAX */
-
-#if ULONG_MAX == 65535UL
-# define SIZEOF_LONG 2
-#elif ULONG_MAX == 4294967295UL
-# define SIZEOF_LONG 4
-#elif ULONG_MAX == 18446744073709551615UL
-# define SIZEOF_LONG 8
-#else
-# error: unsupported long size, must be updated for this platform!
-#endif /* ULONG_MAX */
-
-// The number of bytes in a void *.
-#define SIZEOF_VOID_P SIZEOF_LONG
-
-// The number of bytes in a long long.
-#if !defined (_WIN32) && !defined (VXWORKS)
-#define SIZEOF_LONG_LONG 8
-#endif /* !defined (_WIN32) && !defined (VXWORKS) */
-
-// The number of bytes in a long double.
-#if defined (linux) || defined (ACE_NETBSD) || defined (__FreeBSD__) || defined(CHORUS)
-#  define SIZEOF_LONG_DOUBLE 12
-#elif defined (_WIN32) || defined (VXWORKS) || defined (M_UNIX)
-#  define SIZEOF_LONG_DOUBLE 8
-#else
-#  define SIZEOF_LONG_DOUBLE 16
-#endif /* linux */
-
-// The number of bytes in a bool.
-#define SIZEOF_BOOL 0
 
 // Define as the return type of signal handlers (int or void).
 #define RETSIGTYPE void
@@ -153,20 +114,9 @@
 
 // Assume DOS/Windows if "configure" didn't get run.
 
-#if !defined (SIZEOF_LONG) || defined (_WIN32)
-//#     if defined (_WIN32) || defined (linux)
-//#             define  SIZEOF_INT      4
-//#     else    // Win16
-//#             define  SIZEOF_INT      2
-//#     endif   // Win32/Win16
-
-#  if !defined (linux) && !defined (_WIN32)
-typedef unsigned long pid_t;
-#  endif /* !defined (linux) && !defined (_WIN32) */
-
+#if defined (_WIN32)
 // "C4355: 'this' : used in base member initializer list"
 #  pragma warning (disable:4355) /* disable C4355 warning */
-
-#endif /* !defined (SIZEOF_LONG) || defined (_WIN32) */
+#endif /* defined (_WIN32) */
 
 #endif  /* TAO_ORB_CONFIG_H */

@@ -143,7 +143,7 @@ class TAO_ServantBase;
 // enum values defined in nvlist.h, bitwise ORed.
 typedef u_int CORBA_Flags;
 
-#  if SIZEOF_BOOL != 0
+#  if defined (ACE_HAS_BOOL)
   typedef bool CORBA_Boolean;
 #  else /* "bool" not builtin to this compiler */
   typedef int CORBA_Boolean;
@@ -159,14 +159,14 @@ struct CORBA_SEQUENCE
   //
   // = DESCRIPTION
 {
-#if SIZEOF_LONG == 4
+#if ACE_SIZEOF_LONG == 4
   u_long maximum;
   u_long length;
 #else
   // = Just assume "int" is four bytes long ...
   u_int maximum;
   u_int length;
-#endif /* SIZEOF_LONG */
+#endif /* ACE_SIZEOF_LONG */
   T *buffer;
   CORBA_Boolean release; // Only here to make it compliant with IDL-generated layout
 
@@ -174,7 +174,7 @@ struct CORBA_SEQUENCE
     : maximum (0),
       length (0),
       buffer (0),
-#  if SIZEOF_BOOL != 0
+#  if defined (ACE_HAS_BOOL)
       release (false) { }
 #  else /* "bool" not builtin to this compiler */
       // The following hard-codes the definition of CORBA::B_FALSE here, but
@@ -198,7 +198,7 @@ public:
   // typedef void Status; // g++ doesn't like this
   // return status of operations in a number of standard CORBA classes.
 
-#  if SIZEOF_BOOL != 0
+#  if defined (ACE_HAS_BOOL)
 #    define B_FALSE false
 #    define B_TRUE true
 #  else /* "bool" not builtin to this compiler */
@@ -234,9 +234,9 @@ public:
   typedef ACE_UINT64 ULongLong;
 # if defined (_MSC_VER) && _MSC_VER >= 900
     typedef __int64 LongLong;
-# elif SIZEOF_LONG == 8
+# elif ACE_SIZEOF_LONG == 8
     typedef long LongLong;
-# elif SIZEOF_LONG_LONG == 8 && !defined (ACE_LACKS_LONGLONG_T)
+# elif ACE_SIZEOF_LONG_LONG == 8 && !defined (ACE_LACKS_LONGLONG_T)
 #   if defined (sun)
       // sun #defines u_longlong_t, maybe other platforms do also.
       // Use it, at least with g++, so that its -pedantic doesn't
@@ -275,7 +275,7 @@ public:
   //
   // NOTE:  that is an IDL extension, not yet standard.
 
-#  if   SIZEOF_LONG_DOUBLE == 16
+#  if   ACE_SIZEOF_LONG_DOUBLE == 16
   typedef long double LongDouble;
 #  else
 #    define     NONNATIVE_LONGDOUBLE
@@ -283,7 +283,7 @@ public:
   {
     char ld[16];
   };
-#  endif /* SIZEOF_LONG_DOUBLE != 16 */
+#  endif /* ACE_SIZEOF_LONG_DOUBLE != 16 */
 
   typedef LongDouble &LongDouble_out; // out type for long doubles
 
