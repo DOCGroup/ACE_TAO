@@ -20,6 +20,7 @@
 
 #if defined (TAO_HAS_RT_CORBA)
 
+#include "tao/Exception.h"
 #include "tao/CurrentC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
