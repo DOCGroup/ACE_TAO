@@ -1,3 +1,14 @@
+Fri Mar 12 12:53:17 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-sunos5.5.h: with CC 5.0, replaced ACE_LACKS_ACE_IOSTREAMS
+          with ACE_USES_OLD_IOSTREAMS.
+
+        * include/makeinclude/platform_sunos5.5_sunc++.GNU: with CC 5.0,
+          added -library=iostream,no%Cstd to CCFLAGS.
+
+        Thanks to Diethard Ohrt <Diethard.Ohrt@siemens.at> for the
+        above two updates to support CC 5.0.
+
 Fri Mar 12 12:09:14 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: fixed comment after #endif to match its #ifdef.
