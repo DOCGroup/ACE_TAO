@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:629
 
 #ifndef _TAO_IDL_IMR_LOCATORS_CPP_
@@ -66,7 +66,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "ImR_LocatorS.i"
+#include "ImR_LocatorS.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
@@ -78,7 +78,7 @@ namespace TAO
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT__ARG_TRAITS_SS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::ServerObject>
     : public
@@ -92,13 +92,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:618
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__ARG_TRAITS_SS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::StartupOptions>
     : public
@@ -111,13 +111,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:618
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__ARG_TRAITS_SS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::ServerInformation>
     : public
@@ -130,13 +130,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:379
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__ARG_TRAITS_SS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::ServerInformationList>
     : public
@@ -152,7 +152,7 @@ namespace TAO
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__ARG_TRAITS_SS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::ServerInformationIterator>
     : public
@@ -169,7 +169,7 @@ namespace TAO
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION__ARG_TRAITS_SS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::Administration>
     : public
@@ -183,13 +183,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:379
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_LOCATOR_SERVERNAMELIST__ARG_TRAITS_SS_)
 #define _IMPLEMENTATIONREPOSITORY_LOCATOR_SERVERNAMELIST__ARG_TRAITS_SS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::Locator::ServerNameList>
     : public

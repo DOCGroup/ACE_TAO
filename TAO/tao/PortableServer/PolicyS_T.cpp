@@ -25,7 +25,7 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // C:\ACE\BCB6dd\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:720
 
 #ifndef _TAO_IDL_ORIG_POLICYS_T_CPP_
@@ -34,7 +34,7 @@
 #include "PolicyS_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "PolicyS_T.i"
+#include "PolicyS_T.inl"
 #endif /* !defined INLINE */
 
 

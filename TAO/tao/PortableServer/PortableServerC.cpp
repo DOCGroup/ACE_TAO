@@ -42,7 +42,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "PortableServerC.i"
+#include "PortableServerC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
