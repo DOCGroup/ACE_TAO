@@ -73,19 +73,19 @@ static void TestInteger32()
 #if !defined (ACE_WIN32)
    // constructors
    SnmpInt32 i1;
-   ACE_ASSERT(i1 == ACE_static_cast (long, def));
+   ACE_ASSERT(i1 == static_cast<long> (def));
    SnmpInt32 i2(l);
    ACE_ASSERT(i2 == l);
    SnmpInt32 i3(nl);
    ACE_ASSERT(i3 == nl);
    SnmpInt32 i4(ul);
-   ACE_ASSERT(i4 == ACE_static_cast (long, ul));
+   ACE_ASSERT(i4 == static_cast<long> (ul));
    SnmpInt32 i5(i);
    ACE_ASSERT(i5 == i);
    SnmpInt32 i6(ni);
    ACE_ASSERT(i6 == ni);
    SnmpInt32 i7(ui);
-   ACE_ASSERT(i7 == ui);
+   ACE_ASSERT(i7 == static_cast<long> (ui));
    SnmpInt32 *i8 = new SnmpInt32(i5);
    ACE_ASSERT(i8 != 0);
    delete i8;
@@ -111,11 +111,11 @@ static void TestInteger32()
   i1 = i1; // self
   ACE_ASSERT(i1 == i1);
   i1 = def; // unsigned long
-  ACE_ASSERT(i1 == def);
+  ACE_ASSERT(i1 == static_cast<long> (def));
   i1 = us; // unsigned short
-  ACE_ASSERT(i1 == ACE_static_cast (long, us));
+  ACE_ASSERT(i1 == static_cast<long> (us));
   i1 = si; // unsigned short
-  ACE_ASSERT(i1 == ACE_static_cast (long, si));
+  ACE_ASSERT(i1 == static_cast<long> (si));
  #endif /*ACE_WIN32*/
 }
 
@@ -140,15 +140,15 @@ static void TestUnsignedInteger32()
    SnmpUInt32 u1;
    ACE_ASSERT(u1 == def);
    SnmpUInt32 u2(l);
-   ACE_ASSERT(u2 == ACE_static_cast (unsigned long, l));
+   ACE_ASSERT(u2 == static_cast<unsigned long> (l));
    SnmpUInt32 u3(nl);
-   ACE_ASSERT(u3 == ACE_static_cast (unsigned long, nl));
+   ACE_ASSERT(u3 == static_cast<unsigned long> (nl));
    SnmpUInt32 u4(ul);
    ACE_ASSERT(u4 == ul);
    SnmpUInt32 u5(i);
-   ACE_ASSERT(u5 == ACE_static_cast (unsigned long, i));
+   ACE_ASSERT(u5 == static_cast<unsigned long> (i));
    SnmpUInt32 u6(ni);
-   ACE_ASSERT(u6 == ACE_static_cast (unsigned long, ni));
+   ACE_ASSERT(u6 == static_cast<unsigned long> (ni));
    SnmpUInt32 u7(ui);
    ACE_ASSERT(u7 == ui);
    SnmpUInt32 *u8 = new SnmpUInt32(u5);
