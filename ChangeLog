@@ -1,3 +1,8 @@
+Sun Mar 11 07:32:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Logging_Strategy_Test.cpp (order): Fixed a warning in g++
+	  builds.  
+
 Sat Mar 10 23:15:10 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* bin/auto_run_tests.lst:

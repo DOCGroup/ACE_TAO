@@ -72,7 +72,7 @@ static int interval_time = 0;
 static int order_state = 0;
 static int num_files = 0;
 
-void 
+void
 run_reactor (void *)
 {
   ACE_Reactor::instance ()->owner (ACE_Thread_Manager::instance ()->thr_self ());
@@ -81,7 +81,7 @@ run_reactor (void *)
 
 // Initiate the cycle of messages.
 
-static 
+static
 void print_till_death (void)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -107,7 +107,7 @@ void print_till_death (void)
 }
 
 // count the generated files
-void 
+void
 count_files (void)
 {
   int i = 0;
@@ -138,7 +138,7 @@ count_files (void)
           ACE_OS::fclose (stream);
         }
 
-    } 
+    }
   while (error != 1);
 
   num_files = i;
@@ -157,7 +157,7 @@ count_files (void)
                     num_files));
     }
   else
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("      The number of files generated is: %d"),
                 num_files));
 
@@ -166,7 +166,7 @@ count_files (void)
 }
 
 // get the file statistics
-static int 
+static int
 get_statistic (char *f_name)
 {
   struct stat buf;
@@ -180,7 +180,7 @@ get_statistic (char *f_name)
     ACE_OS::perror ("\nProblem getting information");
   else
     {
-      // Output some of the statistics: 
+      // Output some of the statistics:
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("      File name     : %s\n"),
                   f_name));
@@ -195,7 +195,7 @@ get_statistic (char *f_name)
 }
 
 // analyse the file order
-static void 
+static void
 order (void)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -257,7 +257,7 @@ order (void)
 }
 
 // remove log_files
-static void 
+static void
 remove_files (void)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -279,14 +279,14 @@ remove_files (void)
       if (test != 0)
         error = 1;
 
-    } 
+    }
   while (error != 1);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("-< removing existent files finished... \n\n")));
 }
 
-static int 
+static int
 parse_args (int argc, char *argv[])
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -386,7 +386,7 @@ int main (int argc, char *argv[])
     }
 
   ACE_TCHAR arg_str[250];
-  sprintf (arg_str, 
+  sprintf (arg_str,
            "dynamic Logger Service_Object *ACE:_make_ACE_Logging_Strategy() \"");
 
   for (int i = 1; i < argc; i++)
@@ -395,10 +395,10 @@ int main (int argc, char *argv[])
       ACE_OS_String::strcat (arg_str, " ");
     }
 
-  ACE_OS_String::ACE_OS_String::strcat (arg_str, "\"");
+  ACE_OS_String::strcat (arg_str, "\"");
 
   if (ACE_Service_Config::process_directive (arg_str) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        "Error opening _make_ACE_Log_Strategy object.\n"),
                       1);
 
