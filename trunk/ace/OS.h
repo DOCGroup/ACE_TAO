@@ -3563,6 +3563,20 @@ private:
      if (POINTER == 0) { errno = ENOMEM; return; } \
    } while (0)
 
+// Some more useful abstration for expressions involving 
+// ACE_Allocator.malloc ().  The difference between these macro with
+// ACE_ALLOCATOR is that we provide construction also.
+#define ACE_NEW_MALLOC_RETURN(POINTER,ALLOCATOR,CONSTRUCTOR,RET_VAL) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return RET_VAL;} \
+     else { new (POINTER) CONSTRUCTOR; } \
+   } while (0)
+#define ACE_NEW_MALLOC(POINTER,ALLOCATOR,CONSTRUCTOR) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return;} \
+     else { new (POINTER) CONSTRUCTOR; } \
+   } while (0)
+
 #if defined (ACE_HAS_SIGNAL_SAFE_OS_CALLS)
 // The following two macros ensure that system calls are properly
 // restarted (if necessary) when interrupts occur.
