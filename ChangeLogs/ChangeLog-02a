@@ -1,3 +1,10 @@
+Sun Nov 04 11:18:31 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp (fopen): Changed to forward call to fopen instead of
+	  _fopen on non-borland compilers when not using UNICODE.  This
+	  change allows the code to compile on Win98.  Thanks to Jstwo
+	  <jstwo@writeme.com> for submitting the fix.
+
 Thu Nov  1 16:21:51 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* bin/auto_run_tests.pl: Added snippet of code that puts the
@@ -7,8 +14,8 @@ Thu Nov  1 16:21:51 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 Thu Nov 1 15:49:04  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* include/makeinclude/platform_osf1_4.x_cxx.GNU: Moved the
-	  CXX_VERSION definition to the global scope. 
-	
+	  CXX_VERSION definition to the global scope.
+
 	* include/makeinclude/platform_tru64_cxx.GNU: Added
 	  -D_PTHREAD_ENV_DECCXX flag to the CPPFLAGS. This is done only
 	  for v5.1, 1885. The pthreads.h in 1885 is messed up. The
@@ -16,7 +23,7 @@ Thu Nov 1 15:49:04  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  v1885. Hence the change. We need to do this to protect ACE and
 	  TAO applications on this platform and compiler
 	  combinations. Thanks to  Don Hinton <dhinton@gmx.net> for
-	  reporting the problem. 
+	  reporting the problem.
 
 Thu Nov  1 14:25:52 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -50,14 +57,14 @@ Thu Nov  1 06:38:30 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 	* ace/config-win32.h: Include the config-cygwin32.h file when
 	  __CYGWIN32__ is enabled.  Thanks to Johnny Willemsen for
  	  reporting this.
-  
+
 	* ace/Synch.i (remove): Added some casts to make certain compilers
 	  happy?  Thanks to Guillaume Renaud <guillaume.renaud@valtech.fr>
  	  for reporting this.
 
 	* ace/OS.i: Updated the Win32 version of ACE_OS::llseek().  Thanks to
-	  Doron Rajwan <doron@BANDWIZ.COM> for reporting this.  
-	  
+	  Doron Rajwan <doron@BANDWIZ.COM> for reporting this.
+
 Wed Oct 31 11:25:40 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/OS.h: The ACE_OS::llseek() method must be static!  Thanks to
@@ -116,7 +123,7 @@ Mon Oct 29 20:04:40 2001  Ossama Othman  <ossama@uci.edu>
 Mon Oct 29 17:49:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/TP_Reactor.cpp: Added some error checks at places where
-	  token where acquired. 
+	  token where acquired.
 
 Mon Oct 29 16:59:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -178,7 +185,7 @@ Sun Oct 28 13:15:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 	  ACE_NEW_RETURN (Exceptions is Dump_T.h).  In one case in
 	  Stream.cpp the semantics changed slightly if  operator new would
 	  have been overloaded, see the "@@ Michael" comment.
-    
+
           When new got used with placement most of the usages  got
 	  replaced with ACE_NEW_MALLOC_RETURN. In some cases as in
 	  Malloc_T.cpp, Map_Manager.cpp, PI_Malloc.i, Array_Base.cpp
@@ -188,12 +195,12 @@ Sun Oct 28 13:15:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 Fri Oct 26 07:37:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Quoter example will not run in
-	  minimum_corba builds.  
+	  minimum_corba builds.
 
 Wed Oct 24 08:04:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Reactor.h: Improved the documentation of the
-	  end_reactor_event_loop (). 
+	  end_reactor_event_loop ().
 
 Tue Oct 23 10:04:25 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -254,12 +261,12 @@ Fri Oct 19 06:44:17 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* examples/Reactor/WFMO_Reactor/test_window_messages.cpp:
 	  Don't use a global Event_Handler object since this violates the
- 	  design rules for the ACE_Reactor.	
-  
+ 	  design rules for the ACE_Reactor.
+
 Sun Oct 21 13:39:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Added the Quoter example in
-	  $TAO_ROOT/examples to the list of tests in the daily builds. 
+	  $TAO_ROOT/examples to the list of tests in the daily builds.
 
 Thu Oct 18 20:56:53 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -271,7 +278,7 @@ Thu Oct 18 20:56:53 2001  Ossama Othman  <ossama@uci.edu>
 Thu Oct 18 22:46:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/TP_Reactor.h:
-	* ace/TP_Reactor.cpp: Fixed warnings in Sun CC and TRU 64 builds. 
+	* ace/TP_Reactor.cpp: Fixed warnings in Sun CC and TRU 64 builds.
 
 Thu Oct 18 20:42:55 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -285,8 +292,8 @@ Thu Oct 18 19:52:44 2001  Craig Rodrigues <crodrigu@bbn.com>
            so that constant strings are not passed in its constructor.
 
 	* examples/OS/Process/process.cpp: do not pass constant strings
-	   to ACE_Tokenize constructor.  Thanks to 
-	   Werner Buchert <w.buchert@medat.de> and 
+	   to ACE_Tokenize constructor.  Thanks to
+	   Werner Buchert <w.buchert@medat.de> and
 	   Don Hinton <dhinton@swan.fr>.
 
 Wed Oct 17 23:56:45 2001  Ossama Othman  <ossama@uci.edu>
@@ -310,7 +317,7 @@ Wed Oct 17 18:59:53 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Wed Oct 17 09:15:10 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/config-linux-common.h: Clarified that this file should 
+	* ace/config-linux-common.h: Clarified that this file should
 	  not be included directly!  Thanks to Suresh N
  	  <suresh.n@vergiltech.com> for reporting this.
 
@@ -327,7 +334,7 @@ Wed Oct 17 15:49:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  implementation has a problem. It tries to call handle_close ()
 	  (an upcall) as one of the calls after holding the token. This
 	  was asking for trouble. This could lead to deadlocks as
-	  mentioned in [BUG ID 1055]. 
+	  mentioned in [BUG ID 1055].
 
 	  The method in the TP_Reactor now calls remove_handler () on the
 	  Select_Reactor (its base class) with a DONT_CALL flag. Then it
@@ -335,10 +342,10 @@ Wed Oct 17 15:49:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  pass in the DONT_CALL mask. This two step process would get
 	  around the problem that was mentioned before. Thanks to Graeme
 	  Clark <gclark@opentext.com> for reporting the problem and
-	  testing this fix. 
+	  testing this fix.
 
 	  This should close [BUG ID 1055].
-	  
+
 Wed Oct 17 10:40:17 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
@@ -364,7 +371,7 @@ Wed Oct 17 12:15:15 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	  Thanks to Dave Arndt <darndt@oresis.com>, Tad Hetke
 	  <thetke@oresis.com>, and Erik Johannes <ejohannes@oresis.com>
-	  for tracking down and providing this fix. 
+	  for tracking down and providing this fix.
 
 Tue Oct 16 23:08:27 2001  Ossama Othman  <ossama@uci.edu>
 
