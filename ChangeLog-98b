@@ -1,3 +1,7 @@
+Fri Sep 04 01:01:58 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Timeprobe.h: Disable warning of using Microsoft Extensions.
+
 Fri Sep 04 02:12:03 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.37 released.
@@ -6,12 +10,6 @@ Fri Sep  4 00:07:18 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp (open): Added
  	  template instantiations to make GCC happy.  Thanks to David
- 	  Levine for reporting this.
-
-Thu Sep  3 23:59:40 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* examples/IPC_SAP/SOCK_SAP/CPP-in{client,server,server-fancy}.cpp:
- 	  Fixed various minor warnings and memory leaks.  Thanks to David
  	  Levine for reporting this.
 
 Thu Sep 03 19:15:52 1998 Fred Kuhns <fredk@arl.wustl.edu>

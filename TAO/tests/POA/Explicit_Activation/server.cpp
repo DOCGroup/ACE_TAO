@@ -26,6 +26,86 @@
 
 ACE_RCSID(Explicit_Activation, server, "$Id$")
 
+static char *ior_output_file = 0;
+
+static int
+parse_args (int argc, char **argv)
+{
+  ACE_Get_Opt get_opts (argc, argv, "f:");
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'f':
+        ior_output_file = get_opts.optarg;
+        break;
+
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "[-f ior_output_file]"
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+
+  // Indicates successful parsing of command line.
+  return 0;
+}
+
+static int
+write_iors_to_file (const char *first_ior,
+                    const char *second_ior,
+                    const char *third_ior)
+{
+  if (ior_output_file == 0)
+    // No filename was specified; simply return
+    return 0;
+
+  char ior_output_file_1[BUFSIZ];
+  char ior_output_file_2[BUFSIZ];
+  char ior_output_file_3[BUFSIZ];
+
+  ACE_OS::sprintf (ior_output_file_1, "%s_1", ior_output_file);
+  ACE_OS::sprintf (ior_output_file_2, "%s_2", ior_output_file);
+  ACE_OS::sprintf (ior_output_file_3, "%s_3", ior_output_file);
+
+  FILE *output_file_1 = ACE_OS::fopen (ior_output_file_1, "w");
+  FILE *output_file_2 = ACE_OS::fopen (ior_output_file_2, "w");
+  FILE *output_file_3 = ACE_OS::fopen (ior_output_file_3, "w");
+  
+  if (output_file_1 == 0 || 
+      output_file_2 == 0 || 
+      output_file_3 == 0)
+    ACE_ERROR_RETURN ((LM_DEBUG, "Cannot open output files for writing IORs: %s, %s %s", 
+                       ior_output_file_1,
+                       ior_output_file_2,
+                       ior_output_file_3), 
+                      -1);
+
+  int result = 0;
+
+  result = ACE_OS::fprintf (output_file_1,
+                            "%s", 
+                            first_ior);
+
+  result = ACE_OS::fprintf (output_file_2,
+                            "%s", 
+                            second_ior);
+
+  result = ACE_OS::fprintf (output_file_3,
+                            "%s", 
+                            third_ior);
+
+  ACE_OS::fclose (output_file_1);
+  ACE_OS::fclose (output_file_2);
+  ACE_OS::fclose (output_file_3);
+
+  return 0;
+}
+
 int
 main (int argc, char **argv)
 {
@@ -40,6 +120,10 @@ main (int argc, char **argv)
       return -1;
     }
 
+  int result = parse_args (argc, argv);
+  if (result != 0)
+    return result;
+  
   // Obtain the RootPOA.
   CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
 
@@ -237,6 +321,10 @@ main (int argc, char **argv)
               first_ior.in (),
               second_ior.in (),
               third_ior.in ()));
+
+  write_iors_to_file (first_ior.in (),
+                      second_ior.in (),
+                      third_ior.in ());
 
   // Activate thirdPOA using its ObjectID.
   MyFooServant third_foo_impl (orb.in (), second_poa.in (), 29);
