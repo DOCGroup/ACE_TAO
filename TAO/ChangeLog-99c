@@ -1,3 +1,13 @@
+Thu Oct 14 22:19:42 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile.bor (OBJFILES): Added several more files
+	  so that Borland C++ Builder will link TAO.  Thanks to Mogens
+ 	  Hansen <mogens_h@dk-online.dk> for reporting this.
+
+	* TAO_IDL/Makefile.bor (OBJFILES): Added
+ 	  $(OBJDIR)\be_operation_strategy.obj.  Thanks to Mogens Hansen
+ 	  <mogens_h@dk-online.dk> for reporting this.
+
 Thu Oct 14 18:31:02 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Active_Object_Map.cpp: In
