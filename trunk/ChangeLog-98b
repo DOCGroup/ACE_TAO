@@ -1,7 +1,13 @@
+Mon Dec 07 09:27:04 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Stats.cpp (std_dev): added comments to not reformat
+          some code.  It compiles with the Diab compiler for pSoS
+          the way it is.
+
 Sun Dec 06 23:59:29 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* config-sunos5.5.h: Added back ACE_HAS_TIMER_SKEW.  It is really
- 	  required. See me for an example that illustrates this need.
+        * config-sunos5.5.h: Added back ACE_HAS_TIMER_SKEW.  It is really
+          required. See me for an example that illustrates this need.
 
 Sun Dec 06 16:05:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
