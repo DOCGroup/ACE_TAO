@@ -347,12 +347,12 @@ protocols, e.g., replacements for GIOP. Each of these steps is outlined
 below:
 <ul>
 <li>
-<b>Basic pluggable transport protocols framework</b>: We're currently adding
+<b>Basic pluggable transport protocols framework</b>: We have added
 several Bridge classes that decouple the transport-specific details from
 the rest of TAO's ORB Core. This allows us to isolate the details of how
 messages are communicated at the transport layer in a few classes. This
-design has led us to restructure how TAO's ORB Core sends and receives
-requests. For instance, there is now the concept of communication layers:
+design resulted in the restructuring of the ORB Core and how requests are
+handled.  For instance, there is now the concept of communication layers:
 Objects (e.g., references, method invocations, etc.), ORB Messaging, Transport,
 and Network. The Object layer is just the usual stubs and skeletons.</li>
 
@@ -449,6 +449,13 @@ and <tt>EC_Throughput</tt> were run successfully.</li><P>
 </li><P>
 
 <li>
+
+The service configurator is now used to load protocol factories.
+
+</li><P>
+
+<li>
+
 	    The <code>-ORBHost</code> and <code>-ORBPort</code>
             options are deprecated. The new <code>-ORBEndpoint</code>
             option supercedes them. If the deprecated options are
@@ -559,8 +566,6 @@ Known Issues:
 
 <ul>
 <li>
-The ORB Core's resource factory needs to be enhanced to support the dynamic
-allocation of resources for different transport protocols.</li><p>
 </ul>
 Critical Work:
 
