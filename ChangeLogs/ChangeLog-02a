@@ -1,3 +1,10 @@
+Wed May 31 10:13:10 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * examples/Export/export_dll.dsp:
+        * examples/Export/test.dsp:
+
+          Fixed the relative paths for ace includes and libraries.
+
 Wed May 31 11:25:34 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/Reactor/WFMO_Reactor/test_handle_close.cpp: Fixed
