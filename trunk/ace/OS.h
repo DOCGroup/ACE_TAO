@@ -375,7 +375,7 @@ typedef int key_t;
 
 #if defined (ACE_HAS_RENAMED_MAIN)
 // Rename "main ()" to "ace_main ()".
-#define main(ARGC,ARGV) ace_main(ARGC, ARGV)
+#define main ace_main
 #endif /* ACE_HAS_RENAMED_MAIN */
 
 #if defined (ACE_HAS_CHARPTR_SPRINTF)
@@ -2397,7 +2397,8 @@ typedef short ACE_pri_t;
       u_long lo_;
     };
 
-    typedef ACE_U_LongLong ACE_hrtime_t;
+    // Not ready yet: typedef ACE_U_LongLong ACE_hrtime_t;
+    typedef u_long ACE_hrtime_t;
   #endif /* ACE_HAS_LONGLONG_T */
 #endif /* ACE_HAS_HI_RES_TIMER */
 
