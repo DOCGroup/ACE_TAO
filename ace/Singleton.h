@@ -113,7 +113,7 @@ protected:
   ACE_TSS_Singleton (void);
   // Default constructor.
 
-  ACE_TSS<TYPE> instance_;
+  ACE_TSS_TYPE (TYPE) instance_;
   // Contained instance.
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
