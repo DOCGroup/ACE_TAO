@@ -272,8 +272,7 @@ Driver::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr channel,
       ACE_NEW (this->consumers_[i],
                Test_Consumer (this, this->consumers_ + i));
 
-      this->consumers_[i]->connect (buf,
-                                    this->event_a_,
+      this->consumers_[i]->connect (this->event_a_,
                                     this->event_b_,
                                     channel,
                                     TAO_IN_ENV);
@@ -368,13 +367,11 @@ Test_Consumer::Test_Consumer (Driver *driver, void *cookie)
 }
 
 void
-Test_Consumer::connect (const char* name,
-                        int event_a,
+Test_Consumer::connect (int event_a,
                         int event_b,
                         RtecEventChannelAdmin::EventChannel_ptr ec,
                         CORBA::Environment& ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (name);
   ACE_ConsumerQOS_Factory qos;
   qos.start_disjunction_group ();
   qos.insert_type (ACE_ES_EVENT_SHUTDOWN, 0);

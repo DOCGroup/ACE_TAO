@@ -297,7 +297,6 @@ ECMS_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr channel,
       this->suppliers_[i]->connect (buf,
                                     this->event_a_,
                                     this->event_b_,
-                                    this->event_period_,
                                     channel,
                                     TAO_IN_ENV);
       if (TAO_IN_ENV.exception () != 0) return;
@@ -424,11 +423,9 @@ void
 Test_Supplier::connect (const char* name,
                         int event_a,
                         int event_b,
-                        int event_period,
                         RtecEventChannelAdmin::EventChannel_ptr ec,
                         CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (event_period);
   this->supplier_id_ = ACE::crc32 (name);
   ACE_DEBUG ((LM_DEBUG,
               "ID for <%s> is %04.4x\n",
