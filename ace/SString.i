@@ -515,19 +515,19 @@ ACE_INLINE ACE_WSTRING_TYPE *
 ACE_WString::rep (void) const
 {
   ACE_TRACE ("ACE_WString::rep");
-  if (this->len_ <= 0)
-    return 0;
-  else
-    {
-      ACE_WSTRING_TYPE *t;
-      ACE_NEW_RETURN (t, ACE_WSTRING_TYPE[this->len_ + 1], 0);
-      ACE_OS::memcpy (t, this->rep_, this->len_ * sizeof (ACE_WSTRING_TYPE));
 
-      // 0 terminate
-      t[this->len_] = 0;
+  ACE_WSTRING_TYPE *t;
+  ACE_NEW_RETURN (t, 
+                  ACE_WSTRING_TYPE[this->len_ + 1], 
+                  0);
+  ACE_OS::memcpy (t, 
+                  this->rep_, 
+                  this->len_ * sizeof (ACE_WSTRING_TYPE));
 
-      return t;
-    }
+  // 0 terminate
+  t[this->len_] = 0;
+
+  return t;
 }
 
 // Get at the underlying representation directly!
