@@ -313,6 +313,177 @@ test_subkey_path (ACE_Configuration* config)
 static int
 run_tests (void)
 {
+  int status;
+
+  {
+    // Test import of a legit INI format from a previously-existing file.
+    ACE_Configuration_Heap cf;
+    if ((status = cf.open ()) != 0)
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("ACE_Configuration_Heap::open returned %d\n"),
+                  status));
+    ACE_Ini_ImpExp import (cf);
+    // This one should work...
+    status = import.import_config (ACE_TEXT ("Config_Test_Import_1.ini"));
+    if (status != 0) {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Config_Test_Import_1.ini failed, %d\n"),
+                  status));
+    }
+    else {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Config_Test_Import_1.ini imported\n")));
+
+      // Imported clean; verify content.  See ini file for expected content.
+      // Verify the expected sections are there, but no others. Verify the
+      // expected keys are there, but no others.
+      int section1_seen = 0, section2_seen = 0;
+      int somekey_seen = 0, someotherkey_seen = 0;
+      int index;
+      ACE_TString sect_name;
+      const ACE_Configuration_Section_Key &root = cf.root_section ();
+      for (index = 0;
+           (status = cf.enumerate_sections (root, index, sect_name)) == 0;
+           ++index) {
+        if (index > 1)   // There are only two sections.
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Enumerated %d sections; expected 2\n"),
+                      index + 1));
+        else {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Enumerated to section %s\n"),
+                      sect_name.c_str ()));
+          if (sect_name == ACE_TEXT ("SectionOne")) {
+            if (section1_seen)
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Saw %s multiple times!\n"),
+                          sect_name.c_str ()));
+            section1_seen = 1;
+            // Check for values in this section.
+            ACE_Configuration_Section_Key sect1;
+            if (cf.open_section (root, sect_name.c_str (), 0, sect1) != 0)
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Failed to open section: %s\n"),
+                          sect_name.c_str ()));
+            else {
+              int val_index = 0, val_status;
+              ACE_TString val_name, value;
+              ACE_Configuration::VALUETYPE val_type;
+              while ((val_status =
+                      cf.enumerate_values
+                      (sect1, val_index, val_name, val_type)) == 0) {
+                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Enumerated %s, type %d\n"),
+                            val_name.c_str (), val_type));
+                if (val_type != ACE_Configuration::STRING)
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("Expected %s to be STRING, but %d\n"),
+                              val_name.c_str (), val_type));
+                if (val_name == ACE_TEXT ("SomeKey")) {
+                  if (somekey_seen)
+                    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Saw %s more than once\n"),
+                                val_name.c_str ()));
+                  somekey_seen = 1;
+                }
+                else
+                  ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected key %s\n"),
+                              val_name.c_str ()));
+                if ((val_status = cf.get_string_value
+                                     (sect1, val_name.c_str (), value)) != 0)
+                  ACE_ERROR ((LM_ERROR, ACE_TEXT ("Can't get value of %s\n"),
+                              val_name.c_str ()));
+                else {
+                  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s value: %s\n"),
+                              val_name.c_str (), value.c_str ()));
+                  if (value != ACE_TEXT ("SomeValue")) {
+                    ACE_ERROR ((LM_ERROR,
+                                ACE_TEXT ("SomeKey: %s; expected SomeValue\n")));
+                  }
+                }
+                ++val_index;
+              }
+              if (val_status == 1) {
+                if (val_index != 1)     // Should have only seen 1
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("Expected 1 value; saw %d\n"),
+                              index));
+              }
+              else
+                ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("Error enumerating %s; status %d\n"),
+                            sect_name.c_str (), val_status));
+            }
+          }
+          else if (sect_name == ACE_TEXT ("SectionTwo")) {
+            if (section2_seen)
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Saw %s multiple times!\n"),
+                          sect_name.c_str ()));
+            section2_seen = 1;
+            // Check for values in this section.
+            ACE_Configuration_Section_Key sect2;
+            if (cf.open_section (root, sect_name.c_str (), 0, sect2) != 0)
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Failed to open section: %s\n"),
+                          sect_name.c_str ()));
+            else {
+              int val_index = 0, val_status;
+              ACE_TString val_name, value;
+              ACE_Configuration::VALUETYPE val_type;
+              while ((val_status =
+                      cf.enumerate_values
+                      (sect2, val_index, val_name, val_type)) == 0) {
+                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Enumerated %s, type %d\n"),
+                            val_name.c_str (), val_type));
+                if (val_type != ACE_Configuration::STRING)
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("Expected %s to be STRING, but %d\n"),
+                              val_name.c_str (), val_type));
+                if (val_name == ACE_TEXT ("SomeOtherKey")) {
+                  if (someotherkey_seen)
+                    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Saw %s more than once\n"),
+                                val_name.c_str ()));
+                  someotherkey_seen = 1;
+                }
+                else
+                  ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected key %s\n"),
+                              val_name.c_str ()));
+                if ((val_status = cf.get_string_value
+                                     (sect2, val_name.c_str (), value)) != 0)
+                  ACE_ERROR ((LM_ERROR, ACE_TEXT ("Can't get value of %s\n"),
+                              val_name.c_str ()));
+                else {
+                  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s value: %s\n"),
+                              val_name.c_str (), value.c_str ()));
+                  if (value != ACE_TEXT ("SomeOtherValue")) {
+                    ACE_ERROR ((LM_ERROR,
+                                ACE_TEXT ("SomeOtherKey: %s; expected SomeOtherValue\n")));
+                  }
+                }
+                ++val_index;
+              }
+              if (val_status == 1) {
+                if (val_index != 1)     // Should have only seen 1
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("Expected 1 value; saw %d\n"),
+                              index));
+              }
+              else
+                ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("Error enumerating %s; status %d\n"),
+                            sect_name.c_str (), val_status));
+            }
+          }
+          else {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Saw unexpected section: %s\n"),
+                        sect_name.c_str ()));
+          }
+        }
+      }
+      if (status == 1) {    // Ran out of sections
+        if (index != 2)
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Saw %d sections; expected 2\n"),
+                      index));
+      }
+      else
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Error enumerating sections; status %d\n"),
+                    status));
+    }
+  }
+
 #if defined (ACE_WIN32)
   {
     ACE_Configuration_Win32Registry RegConfig (HKEY_LOCAL_MACHINE);
