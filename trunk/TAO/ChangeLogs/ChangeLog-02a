@@ -1,3 +1,15 @@
+Mon Oct 23 14:46:57 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/DomainC.cpp:
+	* tao/corba.h:
+
+	  Always include `tao/PortableInterceptor.h' to pull in the
+	  "TAO_INTERCEPTOR" macros.  The classes in that header are
+	  protectected within a "TAO_HAS_INTERCEPTORS" block so there
+	  should be no problem in always including this header.  This
+	  fixes a minimum CORBA build.  Thanks to Priyanka for pointing
+	  this out.
+
 Mon Oct 23 12:58:27 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/DomainS.cpp:

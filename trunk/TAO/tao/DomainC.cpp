@@ -18,9 +18,7 @@
 #include "DomainC.i"
 #endif /* !defined INLINE */
 
-#if TAO_HAS_INTERCEPTORS == 1
 #include "PortableInterceptor.h"
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 // default constructor
 CORBA_DomainManager::CORBA_DomainManager (void)
