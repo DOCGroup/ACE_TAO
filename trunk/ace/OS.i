@@ -1888,10 +1888,11 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
 #  if defined (ACE_HAS_DCE_DRAFT4_THREADS)
-  ACE_OSCALL (timeout == 0
-              ? ::pthread_cond_wait (cv, external_mutex)
-              : ::pthread_cond_timedwait (cv, external_mutex,
-                                          (ACE_TIMESPEC_PTR) &ts),
+
+  ACE_OSCALL ((timeout == 0
+               ? ::pthread_cond_wait (cv, external_mutex)
+               : ::pthread_cond_timedwait (cv, external_mutex,
+                                           (ACE_TIMESPEC_PTR) &ts)),
               int, -1, result);
 #  else
   ACE_OSCALL (ACE_ADAPT_RETVAL (timeout == 0
