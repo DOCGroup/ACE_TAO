@@ -15,8 +15,8 @@ ACE_Get_Opt::opt_arg (void) const
   return this->opt_arg_; 
 }
 
-ACE_INLINE int
-ACE_Get_Opt::opt_ind (void) const
+ACE_INLINE int &
+ACE_Get_Opt::opt_ind (void)
 { 
   return this->opt_ind_; 
 }

@@ -204,7 +204,7 @@ public:
    * Otherwise, <opt_ind()> communicates from one call to the next how
    * much of <argv> has been scanned so far.
    */
-  int opt_ind (void) const;
+  int &opt_ind (void);
   
   // Adds a long option with no corresponding short option.
   int long_option (const ACE_TCHAR *name,
