@@ -1,3 +1,15 @@
+Tue Apr 29 12:56:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/PredefinedType_Seq_Tmplinst.cpp:
+
+          New file containing explicit instantiations of the template
+          unbounded sequence classes whose element types are the CORBA 
+          predefined types, i.e., the basic IDL types plus Object,
+          ValueBase, AbstractBase, Any, and TypeCode. This eliminates
+          the need for the IDL compiler to generate explicit instantiations 
+          each time one of these sequences is used as a base class 
+          in generated code.
+
 Tue Apr 29 10:58:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
