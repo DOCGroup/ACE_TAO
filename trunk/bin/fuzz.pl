@@ -1109,16 +1109,16 @@ sub check_for_include ()
                     $disable = 0;
                 }
                 if ($disable == 0) {
-                    if (/^\s*#\s*include\s*<ace\/.*>/) {
-                        print_error ("<ace\/..> is used in $file.\n");
+                    if (/^\s*#\s*include\s*<[(ace)|(TAO)|(CIAO)]\/.*>/) {
+                        #print_error ("<ace\/..> is used in $file.\n");
                         ++$bad_occurance;
                     }
 		    if (/^\s*#\s*include\s*<tao\/.*>/) {
-                        print_error ("<tao\/..> is used in $file.\n");
+                        #print_error ("<tao\/..> is used in $file.\n");
                         ++$bad_occurance;
                     }
 		    if (/^\s*#\s*include\s*<ciao\/.*>/) {
-                        print_error ("<ciao\/..> is used in $file.\n");
+                        #print_error ("<ciao\/..> is used in $file.\n");
                         ++$bad_occurance;
                     }
                 }
@@ -1126,7 +1126,7 @@ sub check_for_include ()
             close (FILE);
 
             if ($disable == 0 && $bad_occurance > 0 ) {
-                print_error ("found #include <> usage of ace\/tao $file.\n");
+                print_error ("found #include <> usage of ace\/tao\/ciao $file.");
             }
         }
         else {
