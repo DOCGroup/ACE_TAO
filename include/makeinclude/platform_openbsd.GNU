@@ -2,9 +2,6 @@
 
 # platform_openbsd.GNU
 
-# ***** Notice: This file is still under testing. *****
-# To be used on an OpenBSD platform without pthread support.
-
 versioned_so = 1
 
 ifndef exceptions
@@ -17,6 +14,10 @@ endif
 
 ifeq (,$(optimize))
   optimize = 1
+endif
+
+ifeq (,$(threads))
+  threads = 1
 endif
 
 CC              = gcc
@@ -35,7 +36,7 @@ DCFLAGS         += -g
 LDFLAGS		+= -Wl,-rpath $(ACE_ROOT)/ace
 DLD             = $(CXX)
 LD		= $(CXX)
-LIBS            += -lstdc++
+LIBS            +=
 OCFLAGS         += -O2
 PIC             = -fpic
 AR              = ar
@@ -46,3 +47,8 @@ RANLIB          = ranlib
 SOFLAGS += $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so  $<
 PRELIB = @echo
+
+ifeq ($(threads),1)
+LDFLAGS         += -pthread
+CFLAGS          += -D_THREAD_SAFE -DACE_HAS_THREADS
+endif # threads
