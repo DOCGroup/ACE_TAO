@@ -49,7 +49,7 @@ public:
   // Stop incremental timing.
 
 #if defined (ACE_HAS_POSIX_TIME)
-  timespec_t &elapsed_time (void);
+  const timespec_t &elapsed_time (void);
   // returns the elapsed (stop - start) time in a timespec_t (sec, nsec)
 #endif /* ACE_HAS_POSIX_TIME */
 
