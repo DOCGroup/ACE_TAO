@@ -218,6 +218,28 @@ ACE_Task_Base::activate (long flags,
 // Note that this routine often does not return since the thread that
 // is executing it will do an ACE_Thread::exit() first!
 
+// The ACE_Task_Exit - ACE_Task_Base::svc_run () interaction works
+// like this, with ACE_HAS_THREAD_SPECIFIC_STORAGE:
+// o Every thread in an ACE task is run via
+//   ACE_Task_Base::svc_run ().
+// o ACE_Task_Base::svc_run () retrieves the singleton
+//   ACE_Task_Exit instance from ACE_Task_Exit::instance ().
+//   The singleton gets created in thread specific storage
+//   in the first call to that function for an ACE_Task.
+//   The key point is that the instance is in thread specific
+//   storage.
+// o The ACE_Task is destroyed, usually by the application
+//   following a call to Thread_Manager::wait (), which waits for
+//   all of the task's threads to finish.  Alternatively, all of
+//   the threads can exit on their own.
+// o If you follow this so far, now it gets really fun . . .
+//   When the thread specific storage (for the ACE_Task that
+//   is being destroyed) is cleaned up, the threads package is
+//   supposed to destroy any objects that are in thread specific
+//   storage.  It has a list of 'em, and just walks down the
+//   list and destroys each one.
+// o That's where the ACE_Task_Exit destructor gets called.
+
 void *
 ACE_Task_Base::svc_run (void *args)
 {
