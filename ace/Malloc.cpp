@@ -50,10 +50,7 @@ ACE_Name_Node::ACE_Name_Node (const char *name,
 {
   ACE_TRACE ("ACE_Name_Node::ACE_Name_Node");
   char *n = ACE_POINTER_CAST (this->name_);
-  ACE_DEBUG ((LM_DEBUG,
-              "****** this->name_ = %x\n", n));
   ACE_OS::strcpy (n, name);
-  this->dump ();
 }
 
 ACE_Name_Node::ACE_Name_Node (const ACE_Name_Node &)
@@ -65,7 +62,6 @@ ACE_Name_Node::ACE_Name_Node (const ACE_Name_Node &)
 const char *
 ACE_Name_Node::name (void) const
 {
-  this->dump ();
   return ACE_POINTER_CAST (this->name_);
 }
 
