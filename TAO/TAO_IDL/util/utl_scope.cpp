@@ -1289,14 +1289,14 @@ UTL_Scope::add_to_scope (AST_Decl *e,
             {
               idl_global->err ()->name_case_error (decl_string,
                                                    ref_string);
+
+              return;
             }
           else
             {
               idl_global->err ()->name_case_warning (decl_string,
                                                      ref_string);
             }
-
-          return;
         }
     }
 
