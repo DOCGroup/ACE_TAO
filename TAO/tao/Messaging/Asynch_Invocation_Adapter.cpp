@@ -118,7 +118,7 @@ namespace TAO
             this->rd_->schedule_timer (op.request_id (),
                                        *max_wait_time
                                        ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK;
+            ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
             safe_rd.release ();
           }
