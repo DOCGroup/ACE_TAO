@@ -220,8 +220,7 @@ realclean:
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/test.o .obj/test.so .shobj/test.o .shobj/test.so: test.cpp \
- $(ACE_ROOT)/ace/OS.h \
+.obj/test.o .obj/test.so .shobj/test.o .shobj/test.so: test.cpp $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -245,23 +244,5 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i
-
-.obj/cinset.o .obj/cinset.so .shobj/cinset.o .shobj/cinset.so: cinset.cpp
-
-.obj/c++inset.o .obj/inset.so .shobj/inset.o .shobj/inset.so: c++inset.cpp
-
-.obj/iinset.o .obj/iinset.so .shobj/iinset.o .shobj/iinset.so: iinset.cpp
-
-.obj/iinset2.o .obj/iinset2.so .shobj/iinset2.o .shobj/iinset2.so: iinset2.cpp
-
-.obj/tinset.o .obj/tinset.so .shobj/tinset.o .shobj/tinset.so: tinset.cpp
-
-.obj/pinset.o .obj/pinset.so .shobj/pinset.o .shobj/pinset.so: pinset.cpp
-
-.obj/m3inset.o .obj/m3inset.so .shobj/m3inset.o .shobj/m3inset.so: m3inset.cpp
-
-.obj/adainset.o .obj/adainset.so .shobj/adainset.o .shobj/adainset.so: adainset.cpp
-
-.obj/preinset.o .obj/preinset.so .shobj/preinset.o .shobj/preinset.so: preinset.cpp
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
