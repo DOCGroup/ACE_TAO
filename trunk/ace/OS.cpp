@@ -67,7 +67,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Time_Value)
 
 // Initializes the ACE_Time_Value object from a timeval.
 
-#if defined(ACE_WIN32)
+#if defined (ACE_WIN32)
 //  Initializes the ACE_Time_Value object from a Win32 FILETIME
 
 // Static constant to remove time skew between FILETIME and POSIX
@@ -111,7 +111,7 @@ ACE_Time_Value::operator FILETIME () const
   return file_time;
 }
 
-#endif
+#endif /* ACE_WIN32 */
 
 ACE_Cleanup_Info::ACE_Cleanup_Info (void)
   : object_ (0),
