@@ -1,3 +1,9 @@
+Wed Mar 17 19:00:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/MT_Cubit/Globals.h: FreeBSD also
+	  needs to get SCHED_PRIORITY at runtime.  Thanks to Russell
+	  L. Carter <rcarter@consys.com> for reporting this.
+
 Wed Mar 17 14:47:32 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * TAO/docs/releasenotes/orbcore.html: Added an entry about the new
@@ -68,7 +74,7 @@ Wed Mar 17 02:06:47 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Mar 17 01:01:57 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-        * tao/Object.cpp (_non_existent): 
+        * tao/Object.cpp (_non_existent):
         * TAO_IDL/be/be_visitor_operation/operation_cs.cpp
           (gen_marshal_and_invoke): <_invoke_status> should be set before
           use (at least according to g++).
@@ -1825,7 +1831,7 @@ Mon Feb 22 10:32:09 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
         * examples/Quoter/Generic_Factory.cpp
         * examples/Quoter/Generic_Factory_i.cpp
         * examples/Quoter/Quoter.cpp: Changed the TAO_TRY macros to
-	  ACE_TRY macros. 
+	  ACE_TRY macros.
 
 Mon Feb 22 09:38:29 1999  Ossama Othman  <othman@cs.wustl.edu>
 
@@ -2706,16 +2712,16 @@ Mon Feb  8 15:25:00 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
         * examples/Simple/echo/client.cpp,
         * examples/Simple/echo/server.cpp,
         * examples/Simple/echo/Echo_i.cpp: Replaced old TAO_TRY macros
-	  with ACE_TRY macros 
+	  with ACE_TRY macros
         * examples/Simple/echo/Echo_Client_i.cpp,
         * examples/Simple/echo/Echo_Client_i.h: New files after removing
-	  Server_i.* and Client_i.* 
+	  Server_i.* and Client_i.*
 
 Mon Feb  8 14:26:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/DynAnyC.cpp,
         * tao/Object.cpp: Added missing #include for template
-	  instantiations. 
+	  instantiations.
 
         * tao/ORB.cpp,
         * tao/ORB_Core.cpp: Re-ordered includes, otherwise
