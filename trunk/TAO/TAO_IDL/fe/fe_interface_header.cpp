@@ -83,7 +83,8 @@ ACE_RCSID(fe, fe_interface_header, "$Id$")
  * Constructor(s) and destructor
  */
 
-FE_InterfaceHeader::FE_InterfaceHeader(UTL_ScopedName *n, UTL_NameList *nl,
+FE_InterfaceHeader::FE_InterfaceHeader(UTL_ScopedName *n, 
+                                       UTL_NameList *nl,
                                        UTL_NameList *supports,
                                        idl_bool compile_now)
                   : pd_interface_name(n)
