@@ -1,3 +1,27 @@
+Mon May 17 15:17:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Event/Makefile:
+	* tests/Event/Performance/Connect.cpp:
+	* tests/Event/Performance/Connect.h:
+	* tests/Event/Performance/Makefile:
+	* tests/Event/Performance/Throughput.cpp:
+	* tests/Event/Performance/Throughput.h:
+	* tests/Event/Performance/ec.mt.conf:
+	* tests/Event/Performance/ec.st.conf:
+	* tests/Event/lib/Consumer.h:
+	* tests/Event/lib/Driver.cpp:
+	* tests/Event/lib/Driver.h:
+	* tests/Event/lib/Supplier.h:
+	  Added new test to measure the throughput/latency of the EC and
+	  the time it takes to connect/disconnect from it.
+
+	* orbsvcs/orbsvcs/Event_Service_Constants.h:
+	* orbsvcs/Event/Event_Channel.cpp:
+	  In some applications we need to use recursive mutexes in the
+	  Event Channel otherwise it dead-locks. Thanks to Mike Mazurek
+	  <mmazurek@std.saic.com> for finding this bug and providing the
+	  fixes.
+
 Mon May 17 14:40:09 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (init): Removed extra call to
