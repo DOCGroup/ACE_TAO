@@ -2,8 +2,8 @@
 // $Id$
 //
 
-ACE_RCSID (be_visitor_interface, 
-           direct_proxy_impl_sh, 
+ACE_RCSID (be_visitor_interface,
+           direct_proxy_impl_sh,
            "$Id$")
 
 be_visitor_interface_direct_proxy_impl_sh::
@@ -26,12 +26,12 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   *os << be_nl << be_nl
-      << "///////////////////////////////////////////////////////////////////////" 
+      << "///////////////////////////////////////////////////////////////////////"
       << be_nl
       << "//                    Direct  Impl. Declaration" << be_nl
       << "//" << be_nl << be_nl;
@@ -42,8 +42,6 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
 
   if (node->n_inherits () > 0)
     {
-      *os << "," << be_nl;
-
       for (int i = 0; i < node->n_inherits (); i++)
         {
           be_interface *inherited =
@@ -61,9 +59,10 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
         }
     }
 
+#if 0
   if (node->node_type () == AST_Decl::NT_component)
     {
-      AST_Component *base = 
+      AST_Component *base =
         AST_Component::narrow_from_decl (node)->base_component ();
 
       if (base != 0)
@@ -76,6 +75,7 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
               << "::" << inherited->full_direct_proxy_impl_name ();
         }
     }
+#endif /*if 0*/
 
   *os << be_uidt << be_uidt_nl;
 
@@ -92,15 +92,15 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) direct_proxy_impl_sh::"
                          "visit_interface - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
-  // Generate static collocated operations for operations of our base 
+  // Generate static collocated operations for operations of our base
   // classes.
   int status =
     node->traverse_inheritance_graph (
-              be_interface::gen_colloc_op_decl_helper, 
+              be_interface::gen_colloc_op_decl_helper,
               os
             );
 
@@ -113,7 +113,7 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
                         -1);
     }
 
-  *os << be_uidt << be_uidt_nl 
+  *os << be_uidt << be_uidt_nl
       << "};" << be_nl << be_nl
       << "//" << be_nl
       << "//                Direct  Proxy Impl. Declaration" << be_nl
@@ -123,7 +123,7 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
   return 0;
 }
 
-int 
+int
 be_visitor_interface_direct_proxy_impl_sh::gen_abstract_ops_helper (
     be_interface *node,
     be_interface *base,
@@ -182,4 +182,3 @@ int be_visitor_interface_direct_proxy_impl_sh::visit_component (
 {
   return this->visit_interface (node);
 }
-
