@@ -36,6 +36,8 @@ endif # ! versioned_so
 
 shared_libs =
 static_libs = 1
+# VxWorks doesn't have rwho
+rwho = 0
 
 # I (kitty) don't want to touch this file with regard to template
 # instantiation. If somebody has access to the platforms specified here,

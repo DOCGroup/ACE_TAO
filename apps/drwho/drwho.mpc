@@ -1,4 +1,5 @@
-project(*-client) : aceexe, nobuild {
+project(*-client) : aceexe {
+  requires += rwho
   Source_Files {
     Protocol_Manager.cpp
     Drwho_Node.cpp
@@ -40,7 +41,8 @@ project(*-client) : aceexe, nobuild {
   }
 }
 
-project(*-server) : aceexe, nobuild {
+project(*-server) : aceexe {
+  requires += rwho
   Source_Files {
     Protocol_Manager.cpp
     Drwho_Node.cpp
