@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from 
-// be/be_codegen.cpp:731
+// be/be_codegen.cpp:827
 
 #ifndef _TAO_IDL_AMI_TESTS_T_CPP_
 #define _TAO_IDL_AMI_TESTS_T_CPP_

@@ -26,19 +26,19 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:390
+// be/be_codegen.cpp:487
 
 #ifndef _TAO_IDL_AMI_TESTS_H_
 #define _TAO_IDL_AMI_TESTS_H_
 
 
+#include "tao/Messaging/MessagingS.h"
 #include "ami_testC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Collocation_Proxy_Broker.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/PortableServer/Collocated_Object.h"
@@ -59,147 +59,147 @@
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_sh.cpp:49
 
-namespace POA_A
+TAO_NAMESPACE  POA_A
 {
-  
-  
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_sh.cpp:87
-  
+  // be/be_visitor_interface/interface_sh.cpp:86
+
   class AMI_Test;
   typedef AMI_Test *AMI_Test_ptr;
-  
+
   class _TAO_AMI_Test_ThruPOA_Proxy_Impl;
   class _TAO_AMI_Test_Strategized_Proxy_Broker;
-  
+
   class  AMI_Test
     : public virtual PortableServer::ServantBase
   {
   protected:
     AMI_Test (void);
-  
+
   public:
     // Useful for template programming.
     typedef ::A::AMI_Test _stub_type;
     typedef ::A::AMI_Test_ptr _stub_ptr_type;
     typedef ::A::AMI_Test_var _stub_var_type;
-    
+
     AMI_Test (const AMI_Test& rhs);
     virtual ~AMI_Test (void);
-    
+
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual void* _downcast (
         const char* logical_type_id
       );
-    
+
     static void _is_a_skel (
         TAO_ServerRequest &req,
         void *servant,
         void *servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _non_existent_skel (
         TAO_ServerRequest &req,
         void *servant,
         void *servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _interface_skel (
         TAO_ServerRequest &req,
         void *servant,
         void *servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _component_skel (
         TAO_ServerRequest &req,
         void *obj,
         void *servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     virtual void _dispatch (
         TAO_ServerRequest &req,
         void *_servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     ::A::AMI_Test *_this (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual const char* _interface_repository_id (void) const;
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual CORBA::Long foo (
         CORBA::Long_out out_l,
         CORBA::Long in_l,
         const char * in_str
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
         , A::DidTheRightThing
       )) = 0;
-    
+
     static void foo_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual CORBA::Long yadda (
-        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     static void _get_yadda_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual void yadda (
         CORBA::Long yadda
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     static void _set_yadda_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual void shutdown (
-        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     static void shutdown_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
@@ -207,140 +207,194 @@ namespace POA_A
         ACE_ENV_ARG_DECL
       );
   };
-  
-  ///////////////////////////////////////////////////////////////////////
-  //               Strategized Proxy Broker Declaration 
-  //
-  
-  // TAO_IDL - Generated from
-  // be/be_visitor_interface/strategized_proxy_broker_sh.cpp:37
-  
-  class  _TAO_AMI_Test_Strategized_Proxy_Broker
-    : public virtual TAO::Collocation_Proxy_Broker
+
+  class AMI_AMI_TestHandler;
+  typedef AMI_AMI_TestHandler *AMI_AMI_TestHandler_ptr;
+
+  class _TAO_AMI_AMI_TestHandler_ThruPOA_Proxy_Impl;
+  class _TAO_AMI_AMI_TestHandler_Strategized_Proxy_Broker;
+
+  class  AMI_AMI_TestHandler
+    : public virtual POA_Messaging::ReplyHandler
   {
-  public: 
-    _TAO_AMI_Test_Strategized_Proxy_Broker (void);
-    
-    virtual ~_TAO_AMI_Test_Strategized_Proxy_Broker (void);
-    
-    TAO::Collocation_Strategy
-    get_strategy (
-        CORBA::Object_ptr obj
+  protected:
+    AMI_AMI_TestHandler (void);
+
+  public:
+    // Useful for template programming.
+    typedef ::A::AMI_AMI_TestHandler _stub_type;
+    typedef ::A::AMI_AMI_TestHandler_ptr _stub_ptr_type;
+    typedef ::A::AMI_AMI_TestHandler_var _stub_var_type;
+
+    AMI_AMI_TestHandler (const AMI_AMI_TestHandler& rhs);
+    virtual ~AMI_AMI_TestHandler (void);
+
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
+
+    static void _is_a_skel (
+        TAO_ServerRequest &req,
+        void *servant,
+        void *servant_upcall
         ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((CORBA::SystemException));
-    
-    void
-    dispatch (
-        CORBA::Object_ptr obj,
-        CORBA::Object_out forward_obj,
-        TAO::Argument ** args,
-        int num_args,
-        const char * op,
-        size_t op_len,
-        TAO::Collocation_Strategy strategy
+      );
+
+    static void _non_existent_skel (
+        TAO_ServerRequest &req,
+        void *servant,
+        void *servant_upcall
         ACE_ENV_ARG_DECL
+      );
+
+    static void _interface_skel (
+        TAO_ServerRequest &req,
+        void *servant,
+        void *servant_upcall
+        ACE_ENV_ARG_DECL
+      );
+
+    static void _component_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall
+        ACE_ENV_ARG_DECL
+      );
+
+    virtual void _dispatch (
+        TAO_ServerRequest &req,
+        void *_servant_upcall
+        ACE_ENV_ARG_DECL
+      );
+
+    ::A::AMI_AMI_TestHandler *_this (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      );
+
+    virtual const char* _interface_repository_id (void) const;
+
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_sh.cpp:45
+
+    virtual void foo (
+        CORBA::Long ami_return_val,
+        CORBA::Long out_l
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
-      ACE_THROW_SPEC ((CORBA::Exception));
-  
-  static
-  _TAO_AMI_Test_Strategized_Proxy_Broker *
-  the_TAO_AMI_Test_Strategized_Proxy_Broker (void);
-};
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
-//
-//            End Strategized Proxy Broker Declaration 
-///////////////////////////////////////////////////////////////////////
+    static void foo_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_servant,
+        void *_tao_servant_upcall
+        ACE_ENV_ARG_DECL
+      );
 
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_sh.cpp:45
 
-///////////////////////////////////////////////////////////////////////
-//                    ThruPOA Proxy Impl. Declaration
-//
+    virtual void foo_excep (
+        A::AMI_AMI_TestExceptionHolder * excep_holder
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
-// TAO_IDL - Generated from
-// be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+    static void foo_excep_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_servant,
+        void *_tao_servant_upcall
+        ACE_ENV_ARG_DECL
+      );
 
-class  _TAO_AMI_Test_ThruPOA_Proxy_Impl
-  : public virtual TAO_ThruPOA_Object_Proxy_Impl
-{
-public:
-  _TAO_AMI_Test_ThruPOA_Proxy_Impl (void);
-  
-  virtual ~_TAO_AMI_Test_ThruPOA_Proxy_Impl (void) {}
-  
-  // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
-  
-  static void
-  foo (
-      CORBA::Object_ptr obj,
-      CORBA::Object_out obj_forward,
-      TAO::Argument ** args,
-      int num_args
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-      , A::DidTheRightThing
-    ));
-  
-  // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
-  
-  static void
-  _get_yadda (
-      CORBA::Object_ptr obj,
-      CORBA::Object_out obj_forward,
-      TAO::Argument ** args,
-      int num_args
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-  
-  // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
-  
-  static void
-  _set_yadda (
-      CORBA::Object_ptr obj,
-      CORBA::Object_out obj_forward,
-      TAO::Argument ** args,
-      int num_args
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-  
-  // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
-  
-  static void
-  shutdown (
-      CORBA::Object_ptr obj,
-      CORBA::Object_out obj_forward,
-      TAO::Argument ** args,
-      int num_args
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-};
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_sh.cpp:45
 
-//
-//                ThruPOA  Proxy Impl. Declaration
-///////////////////////////////////////////////////////////////////////
+    virtual void get_yadda (
+        CORBA::Long ami_return_val
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+
+    static void get_yadda_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_servant,
+        void *_tao_servant_upcall
+        ACE_ENV_ARG_DECL
+      );
+
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_sh.cpp:45
+
+    virtual void get_yadda_excep (
+        A::AMI_AMI_TestExceptionHolder * excep_holder
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+
+    static void get_yadda_excep_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_servant,
+        void *_tao_servant_upcall
+        ACE_ENV_ARG_DECL
+      );
+
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_sh.cpp:45
+
+    virtual void set_yadda (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+
+    static void set_yadda_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_servant,
+        void *_tao_servant_upcall
+        ACE_ENV_ARG_DECL
+      );
+
+    // TAO_IDL - Generated from
+    // be/be_visitor_operation/operation_sh.cpp:45
+
+    virtual void set_yadda_excep (
+        A::AMI_AMI_TestExceptionHolder * excep_holder
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+
+    static void set_yadda_excep_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_servant,
+        void *_tao_servant_upcall
+        ACE_ENV_ARG_DECL
+      );
+  };
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_sh.cpp:80
 
-} // module A
+}
+TAO_NAMESPACE_CLOSE // module A
 
-// TAO_IDL - Generated from 
-// be/be_codegen.cpp:998
+// TAO_IDL - Generated from
+// be/be_codegen.cpp:1094
 
 #include "ami_testS_T.h"
 
