@@ -1,3 +1,8 @@
+Sun Oct 18 15:59:36 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* tests/Param_Test/param_test_i.cpp: Changed use of "TRUE" to 1
+	  for a Boolean value. Thanks David!
+
 Sun Oct 18 14:20:35 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
         * tao/DynAny_i.h:

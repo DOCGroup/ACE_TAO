@@ -330,7 +330,7 @@ Param_Test::PathSpec * Param_Test_i::test_unbounded_struct_sequence (
   
   rPathSpec[(unsigned long)0].name.id = CORBA::string_dup("staff");
   rPathSpec[(unsigned long)0].name.kind = CORBA::string_dup("staff");
-  rPathSpec[(unsigned long)0].process = TRUE;
+  rPathSpec[(unsigned long)0].process = 1;
   
   rPathSpec[(unsigned long)1].name.id = CORBA::string_dup("john");
   rPathSpec[(unsigned long)1].name.kind = CORBA::string_dup("john");
