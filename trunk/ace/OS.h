@@ -6036,7 +6036,7 @@ private:
 # define ACE_DES_FREE(POINTER,DEALLOCATOR,CLASS) \
    do { POINTER->~CLASS (); DEALLOCATOR (POINTER); } while (0)
 
-# if defined (ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR)
+# if defined (ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR)
 #   define ACE_DES_NOFREE_TEMPLATE (POINTER,T_CLASS,T_PARAMETER) \
      POINTER->~ T_CLASS ()
 #   define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
@@ -6047,7 +6047,7 @@ private:
   do { POINTER->~ T_CLASS (); \
        DEALLOCATOR (POINTER); \
      } while (0)
-# else /* ! ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR */
+# else /* ! ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR */
 #   define ACE_DES_NOFREE_TEMPLATE (POINTER,T_CLASS,T_PARAMETER) \
      POINTER -> T_CLASS T_PARAMETER ::~ T_CLASS ()
 
@@ -6065,7 +6065,7 @@ private:
          DEALLOCATOR (POINTER); \
        } while (0)
 #   endif /* defined (__Lynx__) && __LYNXOS_SDK_VERSION == 199701L */
-# endif /* defined ! ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR */
+# endif /* defined ! ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR */
 
 # if defined (ACE_HAS_SIGNAL_SAFE_OS_CALLS)
 // The following two macros ensure that system calls are properly
