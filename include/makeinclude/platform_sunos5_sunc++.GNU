@@ -15,8 +15,10 @@
 #    outer scope".  A useful warning, perhaps, but not really a problem.
 # There should be no other warnings from Sun C++ when building ACE.
 #
-CC		= cc
-CXX		= CC +w -mt -pta -noex
+CC              = cc
+CXX             = CC
+CFLAGS          += +w -mt
+CCFLAGS         += $(CFLAGS) -noex -pta
 DLD		= $(CXX) 
 LD		= $(CXX)
 LDFLAGS		+= -R $(WRAPPER_ROOT)/ace 

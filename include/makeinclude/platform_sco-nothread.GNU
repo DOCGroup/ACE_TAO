@@ -1,13 +1,15 @@
 # According to Bryon G. Rigg <bgrigg@opus.bcbnet.com>, this file
 # should allow ACE to be built on Linux.
 
-CC              = gcc -w
+CC              = gcc
 # for threads
 # for no threads
-CXX		= g++ -fno-implicit-templates -w -I. -fno-strict-prototypes
+CXX		= g++
+CFLAGS		+= -w
+CCFLAGS		+= $(CFLAGS) -fno-implicit-templates -fno-strict-prototypes
 DLD             = $(CXX)
 LD		= $(CXX)
-LIBS            = -lstdc++ -lsocket
+LIBS            = -lsocket
 PIC             =
 AR              = ar
 ARFLAGS         = ruv

@@ -1,14 +1,15 @@
 # According to Bryon G. Rigg <bgrigg@opus.bcbnet.com>, this file
 # should allow ACE to be built on Linux.
 
-#CC              = gcc -w
-CC              = gcc  -b elf -w
+CC              = gcc
 # for threads
 # for no threads
-#CXX		= gcc -fno-implicit-templates -w -I. -fno-strict-prototypes -D__ACE_INLINE__
-CXX		= gcc -b elf -Xpg4plus -fno-implicit-templates -I ${MITOSYS_DIR}/socketrpc/netsel -I ${MITOSYS_DIR}/socketrpc -I ${MITOSYS_DIR}/librerias/include -I/usr/local/lib/g++-include -I. -D__ACE_INLINE__
+#CXX		= gcc -fno-implicit-templates -w -fno-strict-prototypes
+CXX		= g++
+CFLAGS		+= -b elf -w
+CCFLAGS		+= -b elf -Xpg4plus -fno-implicit-templates -I ${MITOSYS_DIR}/socketrpc/netsel -I ${MITOSYS_DIR}/socketrpc -I ${MITOSYS_DIR}/librerias/include -I/usr/local/lib/g++-include
 DLD             = $(CXX)
-LIBS            = -lstdc++ -lsocket
+LIBS            = -lsocket
 PIC             = -fpic -shared
 AR              = ar
 ARFLAGS         = ruv

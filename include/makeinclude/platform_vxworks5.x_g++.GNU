@@ -14,7 +14,6 @@ CCFLAGS		+= -B$(GCCLIB_DIR)/ -DCPU=PPC604 -DVXWORKS
 INCLDIRS	+= -I$(TARGET_DIR)/h
 LD		= $(BIN_DIR)/ldppc
 LDFLAGS		+= -r -L$(LIB_DIR) -L$(GCCLIB_DIR)
-LIBS		+= -lstdc++ -lgcc
 PIC		=
 AR		= arppc
 ARFLAGS		= rv

@@ -1,6 +1,8 @@
 # SunOS 5.x (Solaris 2.x) with Centerline C++
 CC		= cc
-CXX		= CC -mt
+CXX		= CC
+CFLAGS          += -mt
+CCFLAGS         += $(CFLAGS)
 DLD		= $(CXX) -mt
 LD		= $(CXX) -mt
 LIBS		+= -lsocket -ldl -lnsl -lgen

@@ -5,7 +5,6 @@ CXX             = g++
 DLD             = $(CXX)
 LD		= $(CXX) 
 LDFLAGS         += -L$(WRAPPER_ROOT)/ace
-LIBS            += -lstdc++
 PIC             = -fpic
 RANLIB          = echo
 SOFLAGS         = -shared $(CPPFLAGS)
