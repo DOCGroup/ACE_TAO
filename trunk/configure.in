@@ -3885,6 +3885,56 @@ AC_CHECK_FUNC(getppid, dnl
   ,
   AC_DEFINE(ACE_LACKS_GETPPID))
 
+AC_CHECK_FUNC(setregid, dnl
+  [
+   dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
+   dnl needed to make the setregid() prototype visible.
+   ACE_CACHE_CHECK(for setregid prototype,
+     ace_cv_lib_has_setregid_prototype,
+     [
+      save_CPPFLAGS="$CPPFLAGS"
+      ace_no_xopen="-U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
+      CPPFLAGS="$CPPFLAGS $ace_no_xopen"
+      AC_EGREP_HEADER([[^_]+setregid], time.h,
+        [
+         ace_cv_lib_has_setregid_prototype=yes
+        ],
+        [
+         ace_cv_lib_has_setregid_prototype=no
+        ])
+      dnl Reset the compiler flags
+      CPPFLAGS="$save_CPPFLAGS"
+     ],, AC_DEFINE(ACE_LACKS_SETREGID_PROTO))
+  ],
+  [
+   AC_DEFINE(ACE_LACKS_SETREGID)
+  ])
+
+AC_CHECK_FUNC(setreuid, dnl
+  [
+   dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
+   dnl needed to make the setreuid() prototype visible.
+   ACE_CACHE_CHECK(for setreuid prototype,
+     ace_cv_lib_has_setreuid_prototype,
+     [
+      save_CPPFLAGS="$CPPFLAGS"
+      ace_no_xopen="-U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
+      CPPFLAGS="$CPPFLAGS $ace_no_xopen"
+      AC_EGREP_HEADER([[^_]+setreuid], time.h,
+        [
+         ace_cv_lib_has_setreuid_prototype=yes
+        ],
+        [
+         ace_cv_lib_has_setreuid_prototype=no
+        ])
+      dnl Reset the compiler flags
+      CPPFLAGS="$save_CPPFLAGS"
+     ],, AC_DEFINE(ACE_LACKS_SETREUID_PROTO))
+  ],
+  [
+   AC_DEFINE(ACE_LACKS_SETREUID)
+  ])
+
 AC_CHECK_FUNC(getpagesize, dnl
   AC_DEFINE(ACE_HAS_GETPAGESIZE),
   AC_DEFINE(ACE_PAGE_SIZE, 4096))
