@@ -1,14 +1,42 @@
+Thu Jan 15 11:12:45 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/ciao_servant.mpb:
+        * bin/MakeProjectCreator/config/qt-min_moc.mpb:
+        * bin/MakeProjectCreator/config/qt_moc.mpb:
+
+          Removed the command options from the command setting and put them
+          into the commandflags settings.
+
+        * bin/MakeProjectCreator/templates/cbx.mpd:
+
+          Added the initial support for custom build types.
+
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+
+          Fixed a bug in this template where the !ENDIF for custom build
+          types would be missing.
+
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+
+          Added user dependencies for custom build types.
+
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+
+          Fixed the user dependencies for custom build types such that it is
+          not hard coded to be the CIAO IDL compiler for all custom build
+          types.
+
 Thu Jan 15 16:47:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/MakeProjectCreator/config/rtcorbacommon.mpb:
-	  The rtcorbacommon library needs portableserver and doesn't build
-	  when minimum_corba is set
+        * bin/MakeProjectCreator/config/rtcorbacommon.mpb:
+          The rtcorbacommon library needs portableserver and doesn't build
+          when minimum_corba is set
 
 Thu Jan 15 08:02:23 2004  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* ace/INET_Addr.cpp (get_port_number_from_name): Changed
-	  initial value of port_number from 0 to -1.  Thanks to
-	  Stephen Moon <stephenm@sychron.com> for this fix.
+        * ace/INET_Addr.cpp (get_port_number_from_name): Changed
+          initial value of port_number from 0 to -1.  Thanks to
+          Stephen Moon <stephenm@sychron.com> for this fix.
 
 Thu Jan 15 16:06:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
