@@ -74,7 +74,7 @@ Logging_Handler::handle_input (ACE_HANDLE)
 	if (lp.length () == n)
 	  {
 	    ACE_DEBUG ((LM_DEBUG, "(%P|%t) "));
-	    lp.print (this->host_name_, 1, cerr);
+	    lp.print (this->host_name_, 1);
 	  }
 	else
 	  ACE_ERROR ((LM_ERROR, "(%P|%t) error, lp.length = %d, n = %d\n",
