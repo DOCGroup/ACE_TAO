@@ -28,8 +28,8 @@ Callback_i::shutdown (CORBA::Boolean is_clean
 #endif
       return;
     }
-  ACE_DEBUG ((LM_DEBUG, "Performing clean shutdown\n"));
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  ACE_DEBUG ((LM_DEBUG, "Shutdown: Performed clean shutdown\n"));
 }
 
 // ****************************************************************
@@ -69,7 +69,7 @@ Simple_Server_i::shutdown_now (CORBA::Boolean is_clean
       return;
     }
 
-  ACE_DEBUG ((LM_DEBUG, "Performing clean shutdown\n"));
+  ACE_DEBUG ((LM_DEBUG, "shutdown_now:Performing clean shutdown\n"));
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
 
