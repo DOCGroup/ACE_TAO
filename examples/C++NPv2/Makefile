@@ -26,17 +26,17 @@ EXAMPLES = Reactor_Logging_Server \
 all:
 	@for ex in $(EXAMPLES); \
 	do \
-		$(MAKE) -f $$ex.mak; \
+		$(MAKE) -f Makefile.$$ex; \
 	done
 
 clean:
 	@for ex in $(EXAMPLES); \
 	do \
-		$(MAKE) -f $$ex.mak clean; \
+		$(MAKE) -f Makefile.$$ex clean; \
 	done
 
 realclean:
 	@for ex in $(EXAMPLES); \
 	do \
-		$(MAKE) -f $$ex.mak realclean; \
+		$(MAKE) -f Makefile.$$ex realclean; \
 	done
