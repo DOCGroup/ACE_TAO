@@ -969,13 +969,19 @@ CORBA_ORB::resolve_service (MCAST_SERVICEID mcast_service_id,
  // Check to see if the user has an environment variable.
  ACE_CString service_ior = ACE_OS::getenv (env_service_ior[mcast_service_id]);
 
- return_value =
-   this->string_to_object (service_ior.c_str (),
-                           ACE_TRY_ENV);
- ACE_CHECK_RETURN (CORBA_Object::_nil ());
+ if (ACE_OS::strcmp (service_ior.c_str (), "") != 0)
+   {
+     return_value =
+       this->string_to_object (service_ior.c_str (),
+                               ACE_TRY_ENV);
+     ACE_CHECK_RETURN (CORBA_Object::_nil ());
+     
+     // Return ior.
+     return return_value._retn ();
+   }
+ else
+   return CORBA::Object::_nil ();
 
- // Return ior.
- return return_value._retn ();
 }
 
 CORBA_Object_ptr
@@ -1036,33 +1042,57 @@ CORBA_ORB::resolve_initial_references (const char *name,
 
   // -----------------------------------------------------------------
 
+  // May be trying the explicitly specified services and the well
+  // known services should be tried first before falling on to default
+  // services.
+
+  // Did not find it in the InitRef table .. Try the hard-coded ways
+  // to find the basic services...
+  if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
+    {
+      result = this->resolve_service (NAMESERVICE, timeout, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      
+      if (!CORBA::is_nil (result.in ()))
+        return result._retn ();
+    }
+  else if (ACE_OS::strcmp (name, TAO_OBJID_TRADINGSERVICE) == 0)
+    {
+      result = this->resolve_service (TRADINGSERVICE, timeout, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      
+      if (!CORBA::is_nil (result.in ()))
+        return result._retn ();
+    }
+  else if (ACE_OS::strcmp (name, TAO_OBJID_IMPLREPOSERVICE) == 0)
+    {
+      result = this->resolve_service (IMPLREPOSERVICE, timeout, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      
+      if (!CORBA::is_nil (result.in ()))
+        return result._retn ();
+    }
+  else if (ACE_OS::strcmp (name, TAO_OBJID_INTERFACEREP) == 0)
+    {
+      result = this->resolve_service (INTERFACEREPOSERVICE, timeout, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      
+      if (!CORBA::is_nil (result.in ()))
+        return result._retn ();
+    }
+
   // Is not one of the well known services, try to find it in the
-  // InitRef table....
+  // InitRef table....check the defaultinitref values also.
+
   result = this->orb_core ()->resolve_rir (name, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   if (!CORBA::is_nil (result.in ()))
     return result._retn ();
-
   // -----------------------------------------------------------------
-
-  // Did not find it in the InitRef table, or in the DefaultInitRef
-  // entry.... Try the hard-coded ways to find the basic services...
-
-  if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
-    return this->resolve_service (NAMESERVICE, timeout, ACE_TRY_ENV);
-
-  else if (ACE_OS::strcmp (name, TAO_OBJID_TRADINGSERVICE) == 0)
-    return this->resolve_service (TRADINGSERVICE, timeout, ACE_TRY_ENV);
-
-  else if (ACE_OS::strcmp (name, TAO_OBJID_IMPLREPOSERVICE) == 0)
-    return this->resolve_service (IMPLREPOSERVICE, timeout, ACE_TRY_ENV);
-
-  else if (ACE_OS::strcmp (name, TAO_OBJID_INTERFACEREP) == 0)
-    return this->resolve_service (INTERFACEREPOSERVICE, timeout, ACE_TRY_ENV);
-
-  else
-    ACE_THROW_RETURN (CORBA::ORB::InvalidName (), CORBA::Object::_nil ());
+  
+  
+  ACE_THROW_RETURN (CORBA::ORB::InvalidName (), CORBA::Object::_nil ());
 
 }
 
