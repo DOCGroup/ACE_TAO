@@ -133,6 +133,7 @@ template class Peer_Router<Supplier_Handler, SUPPLIER_KEY>;
 template class ACE_Map_Entry<SUPPLIER_KEY, Supplier_Handler *>;
 template class ACE_Map_Iterator_Base<SUPPLIER_KEY, Supplier_Handler *, ACE_RW_Mutex>;
 template class ACE_Map_Iterator<SUPPLIER_KEY, Supplier_Handler *, ACE_RW_Mutex>;
+template class ACE_Map_Reverse_Iterator<SUPPLIER_KEY, Supplier_Handler *, ACE_RW_Mutex>;
 template class ACE_Map_Manager<SUPPLIER_KEY, Supplier_Handler *, ACE_RW_Mutex>;
 template class ACE_Read_Guard<ACE_RW_Mutex>;
 template class ACE_Write_Guard<ACE_RW_Mutex>;
@@ -146,6 +147,7 @@ template class ACE_Guard<ACE_RW_Mutex>;
 #pragma instantiate ACE_Map_Entry<SUPPLIER_KEY, Supplier_Handler *>
 #pragma instantiate ACE_Map_Iterator_Base<SUPPLIER_KEY, Supplier_Handler *, ACE_RW_Mutex>
 #pragma instantiate ACE_Map_Iterator<SUPPLIER_KEY, Supplier_Handler *, ACE_RW_Mutex>
+#pragma instantiate ACE_Map_Reverse_Iterator<SUPPLIER_KEY, Supplier_Handler *, ACE_RW_Mutex>
 #pragma instantiate ACE_Map_Manager<SUPPLIER_KEY, Supplier_Handler *, ACE_RW_Mutex>
 #pragma instantiate ACE_Read_Guard<ACE_RW_Mutex>
 #pragma instantiate ACE_Write_Guard<ACE_RW_Mutex>
