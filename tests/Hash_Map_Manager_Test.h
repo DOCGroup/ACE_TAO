@@ -14,8 +14,8 @@
 // 
 // ============================================================================
 
-#ifndef HASH_MAP_MANAGER_H
-#define HASH_MAP_MANAGER_H
+#ifndef HASH_MAP_MANAGER_TEST_H
+#define HASH_MAP_MANAGER_TEST_H
 
 class Dumb_String
   // = DESCRIPTION
