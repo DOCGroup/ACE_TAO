@@ -1,0 +1,305 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "AV"=.\AV.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosProperty
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosTrading
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosConcurrency"=.\CosConcurrency.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "CosEvent"=.\CosEvent.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RTEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTSched
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosLifeCycle"=.\CosLifeCycle.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosNaming"=.\CosNaming.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Svc Utils
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosNotification"=.\CosNotification.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosTrading
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosProperty"=.\CosProperty.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "CosTime"=.\CosTime.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosTrading"=.\CosTrading.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "DsLogAdmin"=.\DsLogAdmin.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosTrading
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc Utils
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Fault Tolerance"=.\Fault_Tolerance.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNotification
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc Utils
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "LoadBalancing"=.\LoadBalancing.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RTEvent"=.\RTEvent.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Svc Utils
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTSched
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTOLDEvent"=.\RTOLDEvent.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RTEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTSched
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTSched"=.\RTSched.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc Utils
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTSchedEvent"=.\RTSchedEvent.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RTEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTSched
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "SSLIOP"=.\SSLIOP.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Svc Utils"=.\Svc_Utils.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

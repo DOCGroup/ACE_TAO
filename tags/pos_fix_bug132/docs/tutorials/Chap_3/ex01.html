@@ -1,0 +1,108 @@
+<HTML>
+<!-- $Id$ -->
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Ambreen Ilyas">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
+   <TITLE>Example 1</TITLE>
+</HEAD>
+<BODY>
+<FONT COLOR="#CC0000">/////////////////////////////////////////////////////////////////////////////////////////////////////////////////</FONT>
+<BR><FONT COLOR="#CC0000">//// This example is from the ACE Programmers
+Guide.</FONT>
+<BR><FONT COLOR="#CC0000">////&nbsp; Chapter:&nbsp; "Memory Management"</FONT>
+<BR><FONT COLOR="#CC0000">//// For details please see the guide at</FONT>
+<BR><FONT COLOR="#CC0000">//// http://www.cs.wustl.edu/~schmidt/ACE.html</FONT>
+<BR><FONT COLOR="#CC0000">////&nbsp; AUTHOR: Umar Syyid (usyyid@hns.com)</FONT>
+<BR><FONT COLOR="#CC0000">//// and Ambreen Ilyas (ambreen@bitsmart.com)</FONT>
+<BR><FONT COLOR="#CC0000">/////////////////////////////////////////////////////////////////////////////////////////////////////////////</FONT>
+
+<P><FONT COLOR="#CC0000">//Example 1&nbsp;</FONT>
+<BR><FONT COLOR="#000099">#include</FONT> <FONT COLOR="#006600">"ace/Malloc.h"</FONT>
+<BR><FONT COLOR="#FF0000">//A chunk of size 1K is created</FONT>
+<BR><FONT COLOR="#000099">typedef</FONT> <FONT COLOR="#993300">char</FONT><FONT COLOR="#666600">
+MEMORY_BLOCK[1024];</FONT>
+<BR>&nbsp;
+<BR>&nbsp;
+
+<P><FONT COLOR="#FF0000">//Create an ACE_Cached_Allocator which is passed
+in the type of the</FONT>
+<BR><FONT COLOR="#FF0000">//chunk&nbsp; that it must pre-allocate and assign
+on the free</FONT>
+<BR><FONT COLOR="#FF0000">//list</FONT>
+<BR><FONT COLOR="#000000">typedef ACE_Cached_Allocator&lt;MEMORY_BLOCK,ACE_SYNCH_MUTEX>
+Allocator;</FONT>
+<BR>&nbsp;
+<BR>class MessageManager{
+<BR>public:
+<BR><FONT COLOR="#FF0000">//The constructor is passed the number of chunks
+that the allocator should pre-allocate //and maintain on its free list.</FONT>
+<BR>MessageManager(int n_blocks):
+<BR>&nbsp;allocator_(n_blocks),message_count_(0){}
+
+<P><FONT COLOR="#FF0000">//Allocate memory for a message using the Allocator</FONT>
+<BR>void allocate_msg(const char *msg){
+<BR>&nbsp;mesg_array_[message_count_]=
+<BR>&nbsp;&nbsp;&nbsp; (char*)allocator_.malloc(ACE_OS::strlen(msg));
+<BR>&nbsp;ACE_OS::strcpy(mesg_array_[message_count_],msg);
+<BR>&nbsp;message_count_++;
+<BR>&nbsp;}
+
+<P><FONT COLOR="#FF0000">//Free all memory allocated. This will cause the
+chunks to be returned</FONT>
+<BR><FONT COLOR="#FF0000">//to the allocators internal free list and NOT
+to the OS.</FONT>
+<BR>void free_all_msg(){
+<BR>&nbsp;for(int i=0;i&lt;message_count_;i++)
+<BR>&nbsp; allocator_.free(mesg_array_[i]);
+<BR>&nbsp;message_count_=0;
+<BR>&nbsp;}
+<BR>void display_all_msg(){
+<BR>&nbsp;for(int i=0;i&lt;message_count_;i++)
+<BR>&nbsp; ACE_OS::printf("%s\n",mesg_array_[i]);
+<BR>&nbsp;}
+<BR>&nbsp;
+<BR>private:
+<BR>&nbsp;char *mesg_array_[20];
+<BR>&nbsp;Allocator allocator_;
+<BR>&nbsp;int message_count_;
+<BR>};
+<BR>&nbsp;
+
+<P>int main(int argc, char* argv[]){
+
+<P>if(argc&lt;2){
+<BR>&nbsp;ACE_OS::printf("Usage: egXX &lt;Number of blocks>\n");
+<BR>&nbsp;exit(1);
+<BR>&nbsp;}
+<BR>&nbsp;
+<BR><FONT COLOR="#FF0000">//Instatiate the Memory Manager class</FONT>
+<BR>int n_blocks=ACE_OS::atoi(argv[1]);
+<BR>MessageManager mm(n_blocks);
+<BR>&nbsp;
+
+<P><FONT COLOR="#FF0000">//Use the Memory Manager class to assign messages
+and free them.</FONT> <FONT COLOR="#FF0000">Run this in your</FONT>
+<BR><FONT COLOR="#FF0000">//debug environment and you will notice that
+//the</FONT> <FONT COLOR="#FF0000">amount of memory your program uses</FONT>
+<BR><FONT COLOR="#FF0000">//after Memory Manager has been</FONT> <FONT COLOR="#FF0000">instantiated
+remains the same. That means the</FONT>
+<BR><FONT COLOR="#FF0000">//Cached Allocator</FONT> <FONT COLOR="#FF0000">controls
+or manages all the memory for the application.</FONT>
+
+<P><FONT COLOR="#FF0000">//Do forever.</FONT>
+<BR>while(1){
+<BR>&nbsp; <FONT COLOR="#FF0000">//allocate the messages somewhere</FONT>
+<BR>&nbsp;for(int i=0; i&lt;n_blocks;i++)
+<BR>&nbsp; mm.allocate_msg("Hi there");
+<BR>&nbsp;<FONT COLOR="#FF0000">//show the messages</FONT>
+<BR>&nbsp;mm.display_all_msg();
+<BR>&nbsp;
+<BR>&nbsp;for( i=0;i&lt;n_blocks;i++)
+<BR>&nbsp; mm.free_all_msg();
+<BR>&nbsp;}
+<BR>}
+
+<P>&nbsp;<A HREF="ex02.html">Next Example</A>
+</BODY>
+</HTML>
