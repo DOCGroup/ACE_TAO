@@ -71,6 +71,7 @@ ACE_TTY_IO::control (Control_Mode cmd,
         case 19200:
           c_cflag |= B19200;
           break;
+#if 0
         case 38400:
           c_cflag |= B38400;
           break;
@@ -89,6 +90,7 @@ ACE_TTY_IO::control (Control_Mode cmd,
         case 256000:
           c_cflag |= B256000;
           break;
+#endif /* 0 */
         default:
           return -1;
         }
@@ -122,7 +124,7 @@ ACE_TTY_IO::control (Control_Mode cmd,
       if (arg->parityenb)
         {
           c_cflag |= PARENB;
-          if (ACE_OS::strcmp ((char *) arg->paritymode, "ODD") == 0 
+          if (ACE_OS::strcmp ((char *) arg->paritymode, "ODD") == 0
               || ACE_OS::strcmp ((char *) arg->paritymode, "odd") == 0)
             c_cflag |= PARODD;
         }
