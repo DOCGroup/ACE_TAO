@@ -1,3 +1,12 @@
+Sun Jul 29 11:58:51 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Leader_Follower.cpp:
+          If an error is detected while waiting as a follower the loop
+          should return -1.
+
+        * tao/Transport.cpp:
+          Merged in some bug fixes from the main trunk.
+
 Sun Jul 29 09:00:57 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/LF_Event.cpp:

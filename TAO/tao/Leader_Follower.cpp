@@ -321,6 +321,9 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
         if (event->successful ())
           return 0;
 
+        if (event->error_detected ())
+          return -1;
+
         // FALLTHROUGH
         // We only get here if we woke up but the reply is not
         // complete yet, time to assume the leader role....
