@@ -90,7 +90,7 @@ public:
     MB_USER     = 0x200 // User-defined control messages
   };
 
-  typedef u_long ACE_Message_Type;
+  typedef ACE_UINT32 ACE_Message_Type;
   typedef u_long Message_Flags;
 
   enum
