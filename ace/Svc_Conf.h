@@ -181,13 +181,7 @@ ACE_YY_DECL;
 extern FILE *ace_yyin;
 
 /// Error handling routine required by YACC or BISON
-void ace_yyerror (const ACE_TCHAR *);
-
-/// Keeps track of the current line number for error-handling routine
-extern int ace_yylineno;
-
-/// Keeps track of the number of errors encountered so far
-extern int ace_yyerrno;
+void ace_yyerror (int yyerrno, int yylineno, const ACE_TCHAR *);
 
 /// Holds the lexeme for the current token
 extern ACE_TCHAR *ace_yytext;

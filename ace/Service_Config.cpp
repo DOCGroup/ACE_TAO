@@ -361,20 +361,13 @@ ACE_Service_Config::process_directives_i (ACE_Svc_Conf_Param *param)
   // here which will be reported as a memory leak for some reason.
   ACE_NO_HEAP_CHECK
 
-  // The fact that these are global variables means that we really
-  // can't track the number of errors in multiple threads
-  // simultaneously.
-  ace_yyerrno = 0;
-  ace_yylineno = 1;
+  ::ace_yyparse (param);
 
-  ace_yyparse (param);
-
-  if (param->yyerrno > 0 || ace_yyerrno > 0)
+  if (param->yyerrno > 0)
     {
       // This is a hack, better errors should be provided...
       errno = EINVAL;
-      return param->yyerrno + ace_yyerrno;  // @@ Ugly.  ace_yyerrno
-                                            //    is global!
+      return param->yyerrno;
     }
   else
     return 0;

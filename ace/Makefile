@@ -562,6 +562,7 @@ Svc_Conf_y.cpp: Svc_Conf.y
 	    -e "s/fprintf/ACE_OS::fprintf/g" \
             -e "s/yy/ace_yy/g" \
             -e "s/->ace_yyerrno/->yyerrno/g" \
+            -e "s/->ace_yylineno/->yylineno/g" \
 	    -e "s/YY/ACE_YY/g" \
             -e "s/Svc_Conf\.tab\.c/Svc_Conf_y.cpp/g" < Svc_Conf.tab.c > /tmp/$@; \
 	cp /tmp/$@ $@; \
@@ -575,12 +576,14 @@ Svc_Conf_l.cpp: Svc_Conf.l
 	sed -e "s/unistd/stdio/g" \
 	    -e "s/yy/ace_yy/g" \
             -e "s/YY/ACE_YY/g" \
+            -e "s/->ace_yyerrno/->yyerrno/g" \
+            -e "s/->ace_yylineno/->yylineno/g" \
             -e "s/free( ptr );/free( ACE_MALLOC_T (ptr) );/g" \
             -e "s/exit( 1 );/ACE_OS::exit( 1 );/g" \
             -e "s/isatty( fileno(file)/ACE_OS::isatty( fileno (file)/g" \
             -e "s/int isatty/int nop_isatty/g" \
             -e "s/realloc( ptr, size );/realloc( ACE_MALLOC_T (ptr), size );/g" \
-            -e "s@#include <stdio\.h>@#include \"ace/OS.h\"@" \
+            -e "s@#include <stdio\.h>@#include /**/ \"ace/OS.h\"@" \
             -e "s@#include <@#include /**/ <@" \
             -e "s@ECHO@ACE_SVC_CONF_ECHO@" < $@ > /tmp/$@; \
 	cp /tmp/$@ $@; \
