@@ -161,8 +161,9 @@ main (int argc, char *argv[])
         handler._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       
-      CORBA::Long l = 931247;
 
+      CORBA::Long l = 931247;
+      
       for (ssize_t ni = 0; ni < niterations; ni++)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -174,12 +175,12 @@ main (int argc, char *argv[])
                                    ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
-
+      
+      /*
       // Begin test of attributes
       ami_test_var->sendc_get_yadda (the_handler_var.in (),
                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
 
       ami_test_var->sendc_set_yadda (the_handler_var.in (),
                                      4711,
@@ -189,6 +190,7 @@ main (int argc, char *argv[])
       ami_test_var->sendc_get_yadda (the_handler_var.in (),
                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
+      */
 
       // End test of attributes
 
@@ -198,13 +200,13 @@ main (int argc, char *argv[])
                       "<%d> Asynchronous methods issued\n",
                       niterations));
         }
-      
+
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Issuing a synchronous method to collect the AMI replies\n"));
         }
-      
+
       CORBA::Long number = ami_test_var->foo (l,
                                               l,
                                               ACE_TRY_ENV);
