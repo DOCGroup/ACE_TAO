@@ -330,7 +330,7 @@
       ACE_TRY_ENV = ACE_CAUGHT_ENV; \
       goto ACE_TRY_LABEL; \
     } while (0)
-# define ACE_RE_THROW_EX (LABEL) \
+# define ACE_RE_THROW_EX(LABEL) \
     do {\
       ACE_TRY_ENV = ACE_CAUGHT_ENV; \
       goto ACE_TRY_LABEL ## LABEL; \

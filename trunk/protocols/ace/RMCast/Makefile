@@ -9,7 +9,8 @@ LIB      = libACE_RMCast.a
 SHLIB    = libACE_RMCast.$(SOEXT)
 
 FILES= \
-	RMCast_Partial_Message
+	RMCast_Partial_Message \
+	RMCast_Header_Size
 TEMPLATE_FILES = \
 	RMCast_Fragment \
 	RMCast_Reassembly
