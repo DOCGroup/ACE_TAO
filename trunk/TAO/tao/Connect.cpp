@@ -228,8 +228,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   // @@ TODO This should take its memory from a specialized
   // allocator. It is better to use a message block than a on stack
   // buffer because we cannot minimize memory copies in that case.
-  ACE_Message_Block reqbuf (CDR::DEFAULT_BUFSIZE);
-  TAO_InputCDR input (&reqbuf);
+  TAO_InputCDR input (CDR::DEFAULT_BUFSIZE);
 
   char repbuf[CDR::DEFAULT_BUFSIZE];
 #if defined(ACE_PURIFY)

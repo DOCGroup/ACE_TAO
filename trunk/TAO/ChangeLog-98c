@@ -1,3 +1,11 @@
+Mon May 25 15:54:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Timeprobe.h: 
+	  Protected the file against multiple inclusion.
+
+	* tao/Makefile: 
+	  Updated dependencies.
+
 Sat Apr 18 01:27:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Timeprobe.h: Added more timeprobes to POA, ORB, and GIOP.
