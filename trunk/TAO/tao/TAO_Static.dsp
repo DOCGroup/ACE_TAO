@@ -238,11 +238,35 @@ SOURCE=.\Forwarding_Servant.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP.cpp
+SOURCE=.\GIOP_Assorted_Headers.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Accept_State.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Acceptors.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Base.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Connectors.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Lite.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\GIOP_Server_Request.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Utils.cpp
 # End Source File
 # Begin Source File
 
@@ -263,6 +287,10 @@ SOURCE=.\IIOP_Connector.cpp
 # Begin Source File
 
 SOURCE=.\IIOP_Factory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Lite_Factory.cpp
 # End Source File
 # Begin Source File
 
@@ -390,6 +418,10 @@ SOURCE=.\ObjectIDList.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\operation_details.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Operation_Table.cpp
 # End Source File
 # Begin Source File
@@ -407,6 +439,14 @@ SOURCE=.\params.cpp
 # Begin Source File
 
 SOURCE=.\Pluggable.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Pluggable_Messaging.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Pluggable_Messaging_Utils.cpp
 # End Source File
 # Begin Source File
 
@@ -574,6 +614,10 @@ SOURCE=.\TAOS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\target_identifier.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\TimeBaseC.cpp
 # End Source File
 # Begin Source File
@@ -607,6 +651,10 @@ SOURCE=.\UIOP_Connector.cpp
 # Begin Source File
 
 SOURCE=.\UIOP_Factory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\UIOP_Lite_Factory.cpp
 # End Source File
 # Begin Source File
 
