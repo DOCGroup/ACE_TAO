@@ -3,7 +3,7 @@
 
 project(FTORB_Utils) : orbsvcslib, core, iormanip, portableserver {
   sharedname   = TAO_FTORB_Utils
-  idlflags    += -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=FaultTolerance/FT_ORB_Utils_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h
+  idlflags    += -Wb,skel_export_include=tao/PortableServer/PolicyS.h
   dynamicflags = TAO_FT_ORB_UTILS_BUILD_DLL
   tagchecks   += FTORB_Utils
   // Add this include path for precompiled headers
@@ -11,7 +11,12 @@ project(FTORB_Utils) : orbsvcslib, core, iormanip, portableserver {
   avoids      += minimum_corba
 
   IDL_Files {
-    FT_CORBA_ORB.idl PortableGroup_Simple_DS.idl
+    PortableGroup_Simple_DS.idl
+  }
+
+  IDL_Files {
+  idlflags    += -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=FaultTolerance/FT_ORB_Utils_export.h
+  FT_CORBA_ORB.idl 
   }
 
   Source_Files(ORBSVCS_COMPONENTS) {
@@ -26,7 +31,7 @@ project(FTORB_Utils) : orbsvcslib, core, iormanip, portableserver {
 
 project(FT_ClientORB) : orbsvcslib, ftorbutils, core, iormanip, messaging, portablegroup{
   sharedname   = TAO_FT_ClientORB
-  idlflags    += -Wb,export_macro=TAO_FT_ClientORB_Export -Wb,export_include=FaultTolerance/FT_ClientORB_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h
+  idlflags    += -Wb,export_macro=TAO_FT_ServerORB_Export -Wb,export_include=FaultTolerance/FT_ServerORB_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h
   dynamicflags = TAO_FT_CLIENTORB_BUILD_DLL
   tagchecks   += FT_ClientORB
   libs        += TAO_FTORB_Utils
@@ -46,6 +51,7 @@ project(FT_ClientORB) : orbsvcslib, ftorbutils, core, iormanip, messaging, porta
        FaultTolerance/FT_ClientService_Activate.cpp
        FaultTolerance/FT_Endpoint_Selector_Factory.cpp
        FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp
+       PortableGroup_Simple_DSC.cpp
        FaultTolerance/FT_Service_Callbacks.cpp
     }
   }
@@ -70,6 +76,7 @@ project(FT_ServerORB) : orbsvcslib, ftorbutils, core, iormanip, messaging, porta
        FaultTolerance/FT_ServerPolicyFactory.cpp
        FaultTolerance/FT_ServerPolicy_i.cpp
        FaultTolerance/FT_ServerRequest_Interceptor.cpp
+       PortableGroup_Simple_DSC.cpp
        FaultTolerance/FT_ServerService_Activate.cpp
     }
   }
