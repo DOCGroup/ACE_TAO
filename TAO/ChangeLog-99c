@@ -1,3 +1,8 @@
+Sat Aug 21 17:18:07 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/ORB.{h,i}: Added a CORBA_String_out constructor which takes
+	  const char* (we were missing this one from the spec).
+
 Sat Aug 21 14:16:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * TAO version 1.0.2 released.

@@ -108,6 +108,13 @@ CORBA_String_out::operator= (char *s)
   return *this;
 }
 
+ACE_INLINE CORBA_String_out &
+CORBA_String_out::operator= (const char *s)
+{
+  this->ptr_ = CORBA::string_dup (s);
+  return *this;
+}
+
 ACE_INLINE
 CORBA_String_out::operator char *&()
 {
