@@ -1,3 +1,12 @@
+Wed Aug 26 07:54:49 1998  J. Russell Noseworthy <rnosewor@objectsciences.com>
+
+        * ace/OS.{i,cpp} (rwlock_init): use native ::rwlock_init on Solaris,
+          even if ACE_HAS_STHREADS isn't defined.  This avoids a nasty
+          bug on startup with only ACE_HAS_PTHREADS defined on Solaris.
+          The ACE_Object_Manager fails to initialize its first
+          preallocated object, and core dumps when trying to use
+          the ACE_Log_Msg lock, which hasn't been initialized yet.
+
 Tue Aug 25 21:26:29 1998  James CE Johnson <jcej@lads.com>
 
         * include/makeinclude/platform_linux_lxpthread.GNU:
