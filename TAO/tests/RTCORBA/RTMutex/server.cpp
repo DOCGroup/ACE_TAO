@@ -485,6 +485,8 @@ test_mutex_try_lock (RTCORBA::RTORB_ptr rt_orb)
       // Wait for the threads to exit.
       ACE_Thread_Manager::instance ()->wait ();
 
+      mutex->unlock ();
+
       CORBA::release (mutex);
 
     }
