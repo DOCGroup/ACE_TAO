@@ -56,28 +56,28 @@ X11BASE         = /usr/openwin
 X11INCDIR       = $(X11BASE)/include
 X11LIBDIR       = $(X11BASE)/lib
 
-C++             = CC
-C++FLAGS        = -I$(ORBIX_INCDIR) -I. -mt -D_REENTRANT
-C++SUFFIX       = cpp
+# C++             = CC
+# C++FLAGS        = -I$(ORBIX_INCDIR) -I. -mt -D_REENTRANT
+# C++SUFFIX       = cpp
 
 # ------------------------------------------------------------
 # ITCLT, IRCLT and ITSRV can be either statically or dynamically linked
 # Use -Bdynamic or -Bstatic as appropriate.
 # ------------------------------------------------------------
 
-ITCLT 		= -Bdynamic -lorbixmt
-IRCLT 		= -Bdynamic -lIRcltmt
-ITSRV 		= -Bdynamic -lorbixmt
-ITIIOP          = -Bdynamic -liiopmt
-ITDSI           = -Bdynamic -lDSImt
-ITIFR		= -Bdynamic -lifrmt
+ITCLT 		= -Bstatic -lorbixmt
+IRCLT 		= -Bstatic -lIRcltmt
+ITSRV 		= -Bstatic -lorbixmt
+ITIIOP          = -Bstatic -liiopmt
+ITDSI           = -Bstatic -lDSImt
+ITIFR		= -Bstatic -lifrmt
 
 # ------------------------------------------------------------
 # SYSLIBS must be dynamically linked; otherwise you can expect to
 # get linkage errors for symbols in the nsl library
 # ------------------------------------------------------------
 
-LDFLAGS         = -L$(ORBIX_LIBDIR)
+LDFLAGS         += -L$(ORBIX_LIBDIR)
 SYSLIBS         = -Bdynamic -lnsl -lsocket
 
 IDL             = $(ORBIX_BINDIR)/idl 
