@@ -103,13 +103,19 @@ TAO_RTScheduler_Current::lookup(const RTScheduling::Current::IdType & id
 				ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_RTScheduler_Current_i *impl = this->implementation ();
+  CORBA::Object_ptr DT_obj;
+  this->dt_hash_.find (id,
+		       DT_obj);
   
-  if (impl == 0)
-    ACE_THROW (CORBA::NO_IMPLEMENT ());
+  RTScheduling::DistributableThread_var DT = RTScheduling::DistributableThread::_narrow (DT_obj
+											 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
   
-  return impl->lookup (id
-		       ACE_ENV_ARG_PARAMETER);
+  if (!CORBA::is_nil (DT.in ()))
+    return RTScheduling::DistributableThread::_duplicate (DT.in());
+  
+  return 0;
+  
 }
 
 // returns a null reference if
@@ -475,24 +481,6 @@ TAO_RTScheduler_Current_i::end_scheduling_segment (const char * name
 		   "No matching begin_scheduling_segment\n"));
 }
 
-RTScheduling::DistributableThread_ptr 
-TAO_RTScheduler_Current_i::lookup(const RTScheduling::Current::IdType & id
-				ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  CORBA::Object_ptr DT_obj;
-  this->dt_hash_->find (id,
-			DT_obj);
-  
-  RTScheduling::DistributableThread_var DT = RTScheduling::DistributableThread::_narrow (DT_obj
-											 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  
-  if (!CORBA::is_nil (DT.in ()))
-    return RTScheduling::DistributableThread::_duplicate (DT.in());
-  
-  return 0;
-}
 
 // returns a null reference if
 // the distributable thread is

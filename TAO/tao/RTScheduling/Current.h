@@ -175,15 +175,6 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   
-  virtual RTScheduling::DistributableThread_ptr 
-    lookup(const RTScheduling::Current::IdType & id
-	   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  // returns a null reference if
-  // the distributable thread is
-  // not known to the local scheduler
-
   virtual RTScheduling::Current::IdType * 
     id (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
