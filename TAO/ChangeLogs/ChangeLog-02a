@@ -1,3 +1,11 @@
+Mon Jul  2 19:32:09 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tests/Queued_Message_Test/Queued_Message_Test.cpp:
+
+          Changed use of ACE_OS::rand_r(seed) to ACE_OS::srand(seed)
+          and ACE_OS::rand(). ACE_OS::rand_r(seed) is not supported
+          on Win32 platforms, and was causing the test to hang.
+
 Mon Jul  2 17:06:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp: Initialization of the transport_cache ()
