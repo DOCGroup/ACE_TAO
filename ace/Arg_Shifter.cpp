@@ -64,12 +64,13 @@ ACE_Arg_Shifter::get_current_parameter (int offset)
   if (this->is_anything_left())
     {
       unsigned int margin = 0;
+
       if (offset < 0)
 	{
-	  unsigned int difference = 0;
-	  if ((difference = ACE_OS::strlen(this->temp_[current_index_])
-	       + offset) < 0)
-	    {
+	  unsigned int difference = ACE_OS::strlen(this->temp_[current_index_]);
+                                                   
+          if ((difference + offset) <= 0)
+            {
 	      return 0;
 	    }
 	  else
@@ -79,9 +80,9 @@ ACE_Arg_Shifter::get_current_parameter (int offset)
 	}
       else if (offset > 0)
 	{
-	  unsigned int difference = 0;
-	  if ((difference = ACE_OS::strlen(this->temp_[current_index_])
-	       - offset) < 0)
+	  unsigned int difference = ACE_OS::strlen(this->temp_[current_index_]);
+          
+	  if ((difference - offset) <= 0)
 	    {
 	      return 0;
 	    }
@@ -93,6 +94,7 @@ ACE_Arg_Shifter::get_current_parameter (int offset)
       else
 	{
 	  this->consume_arg ();
+
 	  if (!this->is_parameter_next())
 	    {
 	      return 0;
@@ -100,7 +102,7 @@ ACE_Arg_Shifter::get_current_parameter (int offset)
 	}
       return this->temp_[current_index_] + margin;
     }
-
+  
   return 0;
 }
 
