@@ -1,7 +1,7 @@
 Tue May 18 11:05:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * TAO_IDL/Makefile: removed DU cxx warning suppressions
-          because they're no longer necessary (at least with
+        * TAO_IDL/Makefile: removed DU cxx and Green Hills gcx warning
+          suppressions because they're no longer necessary (at least with
           cxx 6.2-020).
 
 Mon May 17 19:41:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
