@@ -964,17 +964,25 @@ Param_Test_i::test_exception (CORBA::ULong s1,
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Param_Test::Ooops))
 {
-  CORBA::ULong d = s1 % 3;
+  CORBA::ULong d = s1 % 4;
 
+  // No exceptions to throw.
   if (d == 0)
     {
       s2 = s1 * 2;
       s3 = s1 * 3;
       return s1 * 4;
     }
+  // Throw a known user exceptio type to test the user exception.
   else if (d == 1)
     {
-      ACE_THROW_RETURN (Param_Test::Ooops (" % 3 == 1", d), 0);
+      ACE_THROW_RETURN (Param_Test::Ooops (" % 4 == 1", d), 0);
+    }
+  // Throw a CORBA::SystemException type CORBA::NO_MEMORY to test
+  // the system exception.
+  else if (d == 2)
+    {
+      ACE_THROW_RETURN (CORBA::NO_MEMORY (), 0);
     }
 
   // This will avoid the compiler
