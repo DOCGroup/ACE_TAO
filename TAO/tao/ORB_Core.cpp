@@ -20,6 +20,8 @@
 #include "tao/Connector_Registry.h"
 #include "tao/Acceptor_Registry.h"
 
+#include "tao/POA.h"
+
 #include "ace/Env_Value_T.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
@@ -687,7 +689,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
                        current_arg));
           arg_shifter.consume_arg ();
         }
-      else 
+      else
         // Any arguments that don't match are ignored so that the
         // caller can still use them.
         arg_shifter.ignore_arg ();
