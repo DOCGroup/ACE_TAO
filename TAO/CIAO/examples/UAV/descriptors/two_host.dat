@@ -1,0 +1,2 @@
+CAOCHost corbaloc:iiop:pc115.emulab.net:20000/ServerActivator
+SatelliteHost corbaloc:iiop:pc113.emulab.net:20000/ServerActivator
