@@ -1,3 +1,13 @@
+Mon Nov 10 16:59:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/Buffered_AMI/server.cpp:
+	* examples/OBV/Simple_util.cpp:
+	* examples/POA/On_Demand_Loading/Server_Manager.cpp:
+	* tests/AMH_Exceptions/server.cpp:
+	* tests/AMH_Oneway/server.cpp:
+	  Added #include ace/OS_NS_stdio.h to get ACE_OS::fclose/fopen/fprintf.
+	  This fixes compile problems with the BCB6 compiler
+
 Mon Nov 10 16:49:45 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/Time_Service/Clerk_i.cpp:
