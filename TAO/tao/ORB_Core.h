@@ -317,6 +317,10 @@ public:
 
   POA_Messaging::RelativeRoundtripTimeoutPolicy*
       default_relative_roundtrip_timeout (void) const;
+
+  POA_TAO::ClientPriorityPolicy*
+      default_client_priority (void) const;
+
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
 #if defined (TAO_HAS_RT_CORBA)

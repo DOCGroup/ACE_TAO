@@ -125,7 +125,7 @@
 // The default timeout receiving the location request to the TAO
 // Naming, Trading and other servicesService.
 #if !defined (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
-#define TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT 4
+#define TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT 10
 #endif /* TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT */
 
 // The default starting port number for TAO servers.
@@ -417,6 +417,7 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 
 // Define the policy types as literals, so they can be used in switch
 // statements
+#define TAO_CLIENT_PRIORITY_POLICY_TYPE 0x54410000
 #define TAO_MESSAGING_REBIND_POLICY_TYPE 23
 #define TAO_MESSAGING_SYNC_SCOPE_POLICY_TYPE 24
 #define TAO_MESSAGING_REQUEST_PRIORITY_POLICY_TYPE 25

@@ -187,12 +187,12 @@ TAO_ORB_Manager::activate (PortableServer::Servant servant,
                                  ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  CORBA::String str =
+  CORBA::String_var str =
     this->orb_->object_to_string (obj.in (),
                                   ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  return str;
+  return str._retn ();
 }
 
 void

@@ -820,10 +820,6 @@ TAO_Stub::get_policy (
     CORBA::PolicyType type,
     CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
-                    this->refcount_lock_,
-                    CORBA::Policy::_nil ());
-
   if (this->policies_ == 0)
     return CORBA::Policy::_nil ();
 
@@ -835,10 +831,6 @@ TAO_Stub::get_client_policy (
     CORBA::PolicyType type,
     CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
-                    this->refcount_lock_,
-                    CORBA::Policy::_nil ());
-
   CORBA::Policy_var result;
   if (this->policies_ != 0)
     {
@@ -871,6 +863,41 @@ TAO_Stub::get_client_policy (
     }
 
   return result._retn ();
+}
+
+POA_TAO::ClientPriorityPolicy*
+TAO_Stub::client_priority (void)
+{
+  // No need to lock, the stub only changes its policies at
+  // construction time...
+
+  POA_TAO::ClientPriorityPolicy* result = 0;
+  if (this->policies_ != 0)
+    result = this->policies_->client_priority ();
+
+  // No need to lock, the object is in TSS storage....
+  if (result == 0)
+    {
+      TAO_Policy_Current &policy_current =
+        this->orb_core_->policy_current ();
+      result = policy_current.client_priority ();
+    }
+
+  // @@ Must lock, but is is harder to implement than just modifying
+  //    this call: the ORB does take a lock to modify the policy
+  //    manager
+  if (result == 0)
+    {
+      TAO_Policy_Manager *policy_manager =
+        this->orb_core_->policy_manager ();
+      if (policy_manager != 0)
+        result = policy_manager->client_priority ();
+    }
+
+  if (result == 0)
+    result = this->orb_core_->default_client_priority ();
+
+  return result;
 }
 
 POA_Messaging::RelativeRoundtripTimeoutPolicy*
@@ -930,7 +957,7 @@ TAO_Stub::set_policy_overrides (
                                             CORBA::SET_OVERRIDE,
                                             ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
-    }
+     }
   else
     {
       *policy_manager = *this->policies_;

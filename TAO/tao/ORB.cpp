@@ -43,6 +43,7 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
 #include "tao/Messaging_Policy_i.h"
+#include "tao/Client_Priority_Policy.h"
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
 #if defined (ACE_HAS_EXCEPTIONS)
@@ -2134,6 +2135,11 @@ CORBA_ORB::create_policy (CORBA::PolicyType type,
 
   switch (type)
     {
+    case TAO_CLIENT_PRIORITY_POLICY_TYPE:
+      return TAO_Client_Priority_Policy::create (root_poa.in (),
+                                                 val,
+                                                 ACE_TRY_ENV);
+
     case TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE:
       return TAO_RelativeRoundtripTimeoutPolicy_i::create (root_poa.in (),
                                                            val,
