@@ -1,3 +1,10 @@
+Mon Aug 23 21:33:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/UIOP_Connector.cpp:
+	* tao/IIOP_Connector.cpp:
+	  Use ACE_Auto_Basic_Array_Ptr<> for the arrays and fixed template 
+	  instantiations too.
+
 Mon Aug 23 18:57:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/IDL_Test/reopened_modules.idl:
