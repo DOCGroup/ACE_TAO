@@ -170,6 +170,30 @@ public:
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+
+  virtual CORBA::TypeCode_ptr create_component_tc (
+      const char *id,
+      const char *name
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+
+  virtual CORBA::TypeCode_ptr create_home_tc (
+      const char *id,
+      const char *name
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+
+  virtual CORBA::TypeCode_ptr create_event_tc (
+      const char *id,
+      const char *name,
+      CORBA::ValueModifier type_modifier,
+      CORBA::TypeCode_ptr concrete_base,
+      const CORBA::ValueMemberSeq &members
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 
 #include /**/ "ace/post.h"
