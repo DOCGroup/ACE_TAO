@@ -1,3 +1,15 @@
+Mo Jun 1  10:16:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+        * orbsvcs/LifeCycle_Service: Created the LifeCycle Service.
+
+	* orbsvcs/Makefile: Added the LifeCycle Service to the list
+	  of directories.
+
+	* orbsvcs/orbsvcs/Makefile: Added the LifeCycleService* files.
+
+	* orbsvcs/orbsvcs/LifeCycleService.idl: Created an IDL
+	  file describing the interface of the LifeCycle Service.
+
 Fri May 29 17:58:16 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.1.25 released.
