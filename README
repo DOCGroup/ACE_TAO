@@ -698,7 +698,7 @@ Tom Ziomek <tomz@cc.comm.mot.com>
 Hamish Friedlander <hamishf@usa.net>
 Mark De Jong <mdj@intervu.net>
 Knut Johannessen <knutj@funcom.com>
-Leif Jakobsmeier" <leif@informatik.uni-frankfurt.de>
+Leif Jakobsmeier <leif@informatik.uni-frankfurt.de>
 Jon Lindgren <jlindgren@SLK.com>
 Steve Vinoski <vinoski@iona.com>
 Christian Mueffling <cvm@aiss.de>
@@ -733,6 +733,8 @@ Peter Weat <weatp@syntron.com>
 Magnus Karlsson <magnus.karlsson@syncom.se>
 Andreas Tobler <toa@pop.agri.ch>
 John Aughey <jha@FreeBSD.ORG>
+Knut-Havard Aksnes <knut@orion.no> 
+Eric Mitchell <emitchell@altaira.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson and is now at ObjectSpace.  Paul devised the recursive

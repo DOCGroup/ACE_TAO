@@ -201,7 +201,7 @@ public:
   // exception is raised.
   // END SPEC
 
-private:
+public:
 
   struct Type_Info
   {
