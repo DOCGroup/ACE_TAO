@@ -16,7 +16,6 @@
 #ifndef PACE_PTHREAD_H_WIN32
 #define PACE_PTHREAD_H_WIN32
 
-#include <pthread.h>
 #include "pace/sys/types.h"
 #include "pace/signal.h"
 
@@ -43,6 +42,36 @@ extern "C" {
 #define PACE_PTHREAD_PROCESS_SHARED PTHREAD_PROCESS_SHARED
 #define PACE_PTHREAD_SCOPE_PROCESS PTHREAD_SCOPE_PROCESS
 #define PACE_PTHREAD_SCOPE_SYSTEM PTHREAD_SCOPE_SYSTEM
+
+#ifndef PACE_SCHED_PARAM
+#define PACE_SCHED_PARAM
+  typedef struct sched_param pace_sched_param;
+#endif /* PACE_SCHED_PARAM */
+
+#if defined (PACE_HAS_CPLUSPLUS)
+
+# ifndef PACE_ATFORK_PF
+# define PACE_ATFORK_PF
+  typedef void (*pace_atfork_pf) (void);
+# endif /* PACE_ATFORK_PF */
+
+# ifndef PACE_KEYCREATE_PF
+# define PACE_KEYCREATE_PF
+  typedef void (*pace_keycreate_pf) (void*);
+# endif /* PACE_KEYCREATE_PF */
+
+# ifndef PACE_ONCE_PF
+# define PACE_ONCE_PF
+  typedef void (*pace_once_pf) (void);
+# endif /* PACE_ONCE_PF */
+
+# ifndef PACE_CREATE_PF
+# define PACE_CREATE_PF
+  typedef void* (*pace_create_pf) (void*);
+# endif /* PACE_CREATE_PF */
+
+#endif /* PACE_HAS_CPLUPLUS */
+
 
 #if defined (PACE_HAS_CPLUSPLUS)
 }
