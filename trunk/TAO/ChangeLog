@@ -1,3 +1,10 @@
+Tue Aug 31 13:25:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/ORT/run_test.pl:
+          New perl script that is usefull to automatically run this example,
+          the example itself it still broken, working on it but the script
+          saves a lot of test time
+
 Tue Aug 31 11:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Big_Oneways/server.cpp:
