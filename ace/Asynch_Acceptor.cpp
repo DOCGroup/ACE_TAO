@@ -27,7 +27,7 @@ ACE_Asynch_Acceptor<HANDLER>::ACE_Asynch_Acceptor (void)
     bytes_to_read_ (0)
 {
 }
- 
+
 template <class HANDLER>
 ACE_Asynch_Acceptor<HANDLER>::~ACE_Asynch_Acceptor (void)
 {
@@ -35,8 +35,8 @@ ACE_Asynch_Acceptor<HANDLER>::~ACE_Asynch_Acceptor (void)
   if (this->listen_handle_ != ACE_INVALID_HANDLE)
     ACE_OS::closesocket (this->listen_handle_);
 }
- 
-template <class HANDLER> int 
+
+template <class HANDLER> int
 ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
 				    size_t bytes_to_read,
 				    int pass_addresses,
@@ -57,22 +57,22 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
   this->listen_handle_ = ACE_OS::socket (PF_INET, SOCK_STREAM, 0);
   if (this->listen_handle_ == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_OS::socket")), -1);
-  
+
   // Initialize the ACE_Asynch_Accept
   if (this->asynch_accept_.open (*this,
 				 this->listen_handle_,
 				 0,
 				 this->proactor ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Asynch_Accept::open")), -1);
-  
+
   if (reuse_addr)
     {
       // Reuse the address
       int one = 1;
-      if (ACE_OS::setsockopt (this->listen_handle_, 
-			      SOL_SOCKET, 
-			      SO_REUSEADDR, 
-			      (const char*) &one, 
+      if (ACE_OS::setsockopt (this->listen_handle_,
+			      SOL_SOCKET,
+			      SO_REUSEADDR,
+			      (const char*) &one,
 			      sizeof one) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_OS::setsockopt")), -1);
     }
@@ -84,7 +84,7 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
     ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE::bind_port")), -1);
 
   // Bind to the specified port.
-  if (ACE_OS::bind (this->listen_handle_, 
+  if (ACE_OS::bind (this->listen_handle_,
 		    ACE_reinterpret_cast (sockaddr *,
                                           address.get_addr ()),
 		    address.get_size ()) == -1)
@@ -92,7 +92,7 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
                        "%p\n",
                        "ACE_OS::bind"),
                       -1);
-  
+
   // Start listening.
   if (ACE_OS::listen (this->listen_handle_, backlog) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -109,10 +109,10 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
                          "ACE_Asynch_Acceptor::accept"),
-                        -1);	
+                        -1);
   return 0;
 }
- 
+
 template <class HANDLER> void
 ACE_Asynch_Acceptor<HANDLER>::set_handle (ACE_HANDLE listen_handle)
 {
@@ -126,13 +126,13 @@ ACE_Asynch_Acceptor<HANDLER>::set_handle (ACE_HANDLE listen_handle)
 				 this->proactor ()) == -1)
     ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Asynch_Accept::open")));
 }
- 
-template <class HANDLER> ACE_HANDLE 
+
+template <class HANDLER> ACE_HANDLE
 ACE_Asynch_Acceptor<HANDLER>::get_handle (void) const
 {
   return this->listen_handle_;
 }
- 
+
 template <class HANDLER> int
 ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read, const void *act)
 {
@@ -155,20 +155,20 @@ ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read, const void *act)
   return 0;
 }
 
-template <class HANDLER> void 
+template <class HANDLER> void
 ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &result)
 {
 #if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || defined (ACE_HAS_AIO_CALLS)
   // @@ Just debugging.
   ACE_DEBUG ((LM_DEBUG, "%N:%l:handle_accept\n"));
-  
-  // Variable for error tracking 
+
+  // Variable for error tracking
   int error = 0;
-  
+
   // If the asynchronous accept fails.
   if (!error &&
       !result.success ())
-    {      
+    {
       error = 1;
       ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("AcceptEx")));
     }
@@ -180,17 +180,17 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
   // socket so that other Windows Sockets routines to access the
   // socket correctly.
   if (!error &&
-      ACE_OS::setsockopt (result.accept_handle (),  
-                          SOL_SOCKET, 
-                          SO_UPDATE_ACCEPT_CONTEXT, 
-                          (char *) &this->listen_handle_, 
+      ACE_OS::setsockopt (result.accept_handle (),
+                          SOL_SOCKET,
+                          SO_UPDATE_ACCEPT_CONTEXT,
+                          (char *) &this->listen_handle_,
                           sizeof (this->listen_handle_)) == -1)
     {
       error = 1;
       ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p"),  ASYS_TEXT ("ACE_OS::setsockopt")));
     }
 #endif /* ACE_HAS_AIO_CALLS */
-  
+
   // Parse address.
   ACE_INET_Addr local_address, remote_address;
   if (!error &&
@@ -198,7 +198,7 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
     {
       // Parse the addresses.
       this->parse_address (result,
-                           remote_address, 
+                           remote_address,
                            local_address);
     }
 
@@ -206,21 +206,21 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
   if (!error &&
       this->validate_new_connection_ &&
       this->validate_new_connection (remote_address) == -1)
-    {      
+    {
       error = 1;
       ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("Address validation failed")));
     }
-  
+
   HANDLER *new_handler = 0;
   if (!error)
     {
       // The Template method
       new_handler = this->make_handler ();
       if (new_handler == 0)
-        {      
+        {
           error = 1;
           ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("Making of new handler failed")));
-        }      
+        }
     }
 
   // If no errors
@@ -242,16 +242,16 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
         }
 
       // Initiate the handler
-      new_handler->open (result.accept_handle (), 
+      new_handler->open (result.accept_handle (),
                          result.message_block ());
     }
 
-  // On failure, no choice but to close the socket 
+  // On failure, no choice but to close the socket
   if (error)
     {
       ACE_OS::closesocket (result.accept_handle ());
     }
-     
+
   // Delete the dynamically allocated message_block
   result.message_block ().release ();
 
@@ -267,9 +267,9 @@ template <class HANDLER> int
 ACE_Asynch_Acceptor<HANDLER>::validate_new_connection (const ACE_INET_Addr &remote_address)
 {
   ACE_UNUSED_ARG (remote_address);
-  
+
   // Default implemenation always validates the remote address.
-  return 0; 
+  return 0;
 }
 
 template <class HANDLER> int
@@ -290,16 +290,15 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (const ACE_Asynch_Accept::Result &re
 					     ACE_INET_Addr &remote_address,
 					     ACE_INET_Addr &local_address)
 {
-  ACE_Message_Block &message_block = result.message_block ();
 #if defined (ACE_HAS_AIO_CALLS)
   // Getting the addresses.
   sockaddr_in local_addr;
   sockaddr_in remote_addr;
-  
+
   // Get the length.
   int local_size = sizeof (local_addr);
   int remote_size = sizeof (remote_addr);
-  
+
   // Get the local address.
   if (ACE_OS::getsockname (result.accept_handle (),
                            ACE_reinterpret_cast (sockaddr *,
@@ -321,7 +320,7 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (const ACE_Asynch_Accept::Result &re
   // Set the addresses.
   local_address.set_addr  (&local_addr,  local_size);
   remote_address.set_addr (&remote_addr, remote_size);
-  
+
   // @@ Just debugging.
   char local_address_buf  [BUFSIZ];
   char remote_address_buf [BUFSIZ];
@@ -329,18 +328,21 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (const ACE_Asynch_Accept::Result &re
     ACE_ERROR ((LM_ERROR,  "Error:%p:can't obtain local_address's address string"));
   ACE_DEBUG ((LM_DEBUG,
               "ACE_Asynch_Acceptor<HANDLER>::parse_address : Local address %s\n",
-              local_address_buf)); 
+              local_address_buf));
   if (remote_address.addr_to_string (remote_address_buf, sizeof remote_address_buf) == -1)
     ACE_ERROR ((LM_ERROR,  "Error:%p:can't obtain remote_address's address string"));
   ACE_DEBUG ((LM_DEBUG,
               "ACE_Asynch_Acceptor<HANDLER>::parse_address : Remote address %s\n",
-              remote_address_buf)); 
+              remote_address_buf));
 #elif (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
+
+  ACE_Message_Block &message_block = result.message_block ();
+
   sockaddr *local_addr = 0;
   sockaddr *remote_addr = 0;
   int local_size = 0;
   int remote_size = 0;
-  
+
   ::GetAcceptExSockaddrs (message_block.rd_ptr (),
 			  message_block.size () - 2 * this->address_size (),
 			  this->address_size (),
@@ -362,14 +364,14 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (const ACE_Asynch_Accept::Result &re
 #endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) */
 }
 
-template <class HANDLER> ACE_HANDLE 
+template <class HANDLER> ACE_HANDLE
 ACE_Asynch_Acceptor<HANDLER>::handle (void) const
 {
   return this->listen_handle_;
 }
 
 template <class HANDLER> HANDLER *
-ACE_Asynch_Acceptor<HANDLER>::make_handler (void) 
+ACE_Asynch_Acceptor<HANDLER>::make_handler (void)
 {
   // Default behavior
   HANDLER *handler = 0;
@@ -384,7 +386,7 @@ ACE_Asynch_Acceptor<HANDLER>::address_size (void)
   return sizeof (sockaddr) + sizeof (sockaddr_in);
 }
 
-template <class HANDLER> int 
+template <class HANDLER> int
 ACE_Asynch_Acceptor<HANDLER>::pass_addresses (void) const
 {
   return this->pass_addresses_;
@@ -396,7 +398,7 @@ ACE_Asynch_Acceptor<HANDLER>::pass_addresses (int new_value)
   this->pass_addresses_ = new_value;
 }
 
-template <class HANDLER> int 
+template <class HANDLER> int
 ACE_Asynch_Acceptor<HANDLER>::validate_new_connection (void) const
 {
   return this->validate_new_connection_;
@@ -408,7 +410,7 @@ ACE_Asynch_Acceptor<HANDLER>::validate_new_connection (int new_value)
   this->validate_new_connection_ = new_value;
 }
 
-template <class HANDLER> int 
+template <class HANDLER> int
 ACE_Asynch_Acceptor<HANDLER>::reissue_accept (void) const
 {
   return this->reissue_accept_;
@@ -420,7 +422,7 @@ ACE_Asynch_Acceptor<HANDLER>::reissue_accept (int new_value)
   this->reissue_accept_ = new_value;
 }
 
-template <class HANDLER> int 
+template <class HANDLER> int
 ACE_Asynch_Acceptor<HANDLER>::bytes_to_read (void) const
 {
   return this->bytes_to_read_;
@@ -432,8 +434,8 @@ ACE_Asynch_Acceptor<HANDLER>::bytes_to_read (int new_value)
   this->bytes_to_read_ = new_value;
 }
 
-template <class HANDLER> int 
-ACE_Asynch_Acceptor<HANDLER>::should_reissue_accept (void) 
+template <class HANDLER> int
+ACE_Asynch_Acceptor<HANDLER>::should_reissue_accept (void)
 {
   return this->reissue_accept_;
 }
