@@ -1,0 +1,12 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  staticflags += TAO_AS_STATIC_LIBS
+  includes    += $(TAO_ROOT)
+  libpaths    += $(ACE_ROOT)/lib
+
+  specific(automake) {
+	includes += $(TAO_BUILDDIR)
+  }
+}
