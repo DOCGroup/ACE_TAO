@@ -488,6 +488,10 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
   if (bt->node_type () != AST_Decl::NT_typedef
       && bt->is_child (bu))
     {
+      be_field *member_node = 
+        be_field::narrow_from_decl (this->ctx_->node ());
+      node->field_node (member_node);
+
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
       be_visitor_sequence_ch visitor (&ctx);
