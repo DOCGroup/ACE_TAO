@@ -974,7 +974,7 @@ Param_Test_i::test_exception (CORBA::ULong s1,
     }
   else if (d == 1)
     {
-      ACE_THROW_RETURN (Param_Test::Ooops (" % 3 == 1", s1), 0);
+      ACE_THROW_RETURN (Param_Test::Ooops (" % 3 == 1", d), 0);
     }
 
   // This will avoid the compiler
