@@ -24,16 +24,15 @@
 #include "ace/Service_Config.h"
 #include "ace/Svc_Handler.h"
 
-class Read_Handler : public ACE_Svc_Handler<ACE_SOCK_Stream, ACE_INET_Addr, ACE_SYNCH>
-// = TITLE
-//   A Svc_Handler with a priority twist.
-//
-// = DESCRIPTION
-//   This Svc_Handler receives the data sent by the childs or writer
-//   threads; each one sets it own priority to a new level, in a
-//   cyclic manner.
-//   The main point is test and exercise the priority dispatching
-//   features of ACE_Priority_Reactor.
+class Read_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
+  // = TITLE
+  //   A Svc_Handler with a priority twist.
+  //
+  // = DESCRIPTION
+  //   This Svc_Handler receives the data sent by the childs or writer
+  //   threads; each one sets it own priority to a new level, in a
+  //   cyclic manner.  The main point is test and exercise the
+  //   priority dispatching features of ACE_Priority_Reactor.
 {
 public:
   static void set_countdown (int nchildren);
@@ -52,14 +51,13 @@ private:
   // How many readers have started.
 };
 
-class Write_Handler : public ACE_Svc_Handler<ACE_SOCK_Stream, ACE_INET_Addr, ACE_SYNCH>
-// = TITLE
-//   A simple writer.
-//
-// = DESCRIPTION
-//   This Svc_Handler simply connects to a server and sends some
-//   output to it.
-//   Its purpose is to feed the test.
+class Write_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
+  // = TITLE
+  //   A simple writer.
+  //
+  // = DESCRIPTION
+  //   This Svc_Handler simply connects to a server and sends some
+  //   output to it.  Its purpose is to feed the test.
 {
 public:
   virtual int open (void *);
