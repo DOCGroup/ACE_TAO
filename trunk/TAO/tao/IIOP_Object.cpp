@@ -477,6 +477,16 @@ IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
               // parameters from the response message body.
 
               va_start (argp, info);
+
+#if defined (sparc)  &&  \
+    defined (__GNUG__)  &&  (__GNUC__ == 2 && __GNUC_MINOR__ < 8)
+              // g++ 2.7.x, but not egcs, on sparc.
+
+              // Skip the first arg, due to an apparent bug in g++
+              // 2.7.2.3 on sparc.
+              va_arg (argp, void *);
+#endif /* g++ < 2.8 on sparc */
+
               const TAO_Param_Data *pdp = info->params;
               for (u_int i = 0;
                    i < info->param_count;
@@ -598,6 +608,15 @@ IIOP_Object::put_params (CORBA::Environment &env,
   // policies ... the indirection only shows up here when it's
   // needed later for allocating "out" memory, otherwise there's
   // just one indirection.
+
+#if defined (sparc)  &&  \
+    defined (__GNUG__)  &&  (__GNUC__ == 2 && __GNUC_MINOR__ < 8)
+  // g++ 2.7.x, but not egcs, on sparc.
+
+  // Skip the first arg, due to an apparent bug in g++ 2.7.2.3 on
+  // sparc.
+  va_arg (argp, void *);
+#endif /* g++ < 2.8 on sparc */
 
   const TAO_Param_Data *pdp = info->params;
   for (u_int i = 0;
@@ -875,4 +894,3 @@ IIOP_Object::put_params (TAO_GIOP_Invocation &call,
         }
     }
 }
-
