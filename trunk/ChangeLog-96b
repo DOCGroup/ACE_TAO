@@ -1,5 +1,24 @@
 Tue Dec 10 00:33:08 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.i (inet_aton): We need to cast -1 to (ACE_UINT32).
+
+	* tests/Process_Mutex_Test.cpp (main): Added a minor change to
+ 	  make gcc happy by moving the definition of int i *outside* the
+ 	  loop.  Thanks to Thilo Kielmann
+ 	  <kielmann@informatik.uni-siegen.de> for reporting this.
+
+	* ace/OS.h: gcc complains about memcmp, memcpy, strcmp, and strcpy
+ 	  (from ACE_OS::) being used before defined inline.  This is due
+ 	  to the include of SString.h at the end of OS.h.  So I reordered
+ 	  things in accordance to the changes from Thilo Kielmann
+ 	  <kielmann@informatik.uni-siegen.de>.
+
+	* build/SunOS5.5/examples/Shared_Malloc/test_multiple_mallocs.cpp:
+ 	  Changed the definition of char *base_addr to void *base_addr.
+
+	* ace/Memory_Pool.cpp (ACE_MMAP_Memory_Pool_Options): Changed the
+ 	  definition of char *base_addr to void *base_addr.
+
 	* Put out what is hopefully the final beta release of 4.0.33.
 
 	* ace/Message_Queue: Added the enqueue() method again to maintain

@@ -85,7 +85,6 @@ Thread_Pool::svc (void)
   // Note that the ACE_Task::svc_run () method automatically adds us to
   // the Thread_Manager when the thread begins.
 
-  int result = 0;
   int count = 1;
 
   // Keep looping, reading a message out of the queue, until we get a
@@ -190,14 +189,13 @@ produce (Thread_Pool &thread_pool)
 #endif /* ACE_HAS_THREADS */
 
 int 
-main (int argc, char *[])
+main (int, char *[])
 {
   ACE_START_TEST ("Thread_Pool_Test");
 #if defined (ACE_HAS_THREADS)
   int n_threads = ACE_MAX_THREADS;
   
-  ACE_DEBUG ((LM_DEBUG, "(%t) argc = %d, threads = %d\n", 
-	      argc, n_threads));
+  ACE_DEBUG ((LM_DEBUG, "(%t) threads = %d\n", n_threads));
 
   // Create the worker tasks.
   Thread_Pool thread_pool (ACE_Service_Config::thr_mgr (), 
