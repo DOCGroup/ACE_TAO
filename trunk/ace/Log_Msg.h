@@ -224,15 +224,21 @@ public:
   void clr_flags (u_long f);
   u_long flags (void);
 
-  // = Allow apps to acquire and release internal synchronization lock.
+  /** @name Allow apps to acquire and release internal synchronization
+   *        lock
+   *
+   * This lock is used internally by the <ACE_Log_Msg>
+   * implementation. By exporting the lock, applications can hold the
+   * lock atomically over a number of calls to <ACE_Log_Msg>.
+   */
+  //@{
 
-  // This lock is used internally by the <ACE_Log_Msg> implementation.
-  // By exporting the lock, applications can hold the lock atomically
-  // over a number of calls to <ACE_Log_Msg>.
   /// Acquire the internal lock.
-  /// Release the internal lock.
   int acquire (void);
+
+  /// Release the internal lock.
   int release (void);
+  //@}
 
   /// Call after doing a <fork> to resynchronize the process id and
   /// <program_name> variables.
