@@ -29,7 +29,7 @@ ACE_MEM_Connector::ACE_MEM_Connector (void)
 
 // Establish a connection.
 ACE_MEM_Connector::ACE_MEM_Connector (ACE_MEM_Stream &new_stream,
-                                      const ACE_MEM_Addr &remote_sap,
+                                      const ACE_INET_Addr &remote_sap,
                                       ACE_Time_Value *timeout,
                                       const ACE_Addr &local_sap,
                                       int reuse_addr,
@@ -52,7 +52,7 @@ ACE_MEM_Connector::ACE_MEM_Connector (ACE_MEM_Stream &new_stream,
 
 int
 ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
-                            const ACE_MEM_Addr &remote_sap,
+                            const ACE_INET_Addr &remote_sap,
                             ACE_Time_Value *timeout,
                             const ACE_Addr &local_sap,
                             int reuse_addr,
@@ -62,9 +62,16 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
 {
   ACE_TRACE ("ACE_MEM_Connector::connect");
 
+  if (!this->address_.same_host (remote_sap))
+    return -1;
+  else
+    this->address_.set_port_number (remote_sap.get_port_number ());
+
+
   ACE_SOCK_Stream temp_stream;
 
-  if (ACE_SOCK_Connector::connect (temp_stream, remote_sap.get_local_addr (),
+  if (ACE_SOCK_Connector::connect (temp_stream,
+                                   this->address_.get_local_addr (),
                                    timeout, local_sap,
                                    reuse_addr, flags, perms,
                                    PF_INET, protocol) == -1)

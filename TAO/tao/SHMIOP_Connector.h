@@ -128,7 +128,7 @@ public:
   typedef ACE_Pair<TAO_SHMIOP_Client_Connection_Handler *,
                    TAO_ATTRIBUTES>
           TAO_CACHED_HANDLER;
-  typedef ACE_Refcounted_Hash_Recyclable<ACE_MEM_Addr>
+  typedef ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
           TAO_IADDR;
   typedef ACE_Hash<TAO_IADDR> TAO_HASH_KEY;
   typedef ACE_Equal_To<TAO_IADDR> TAO_COMPARE_KEYS;

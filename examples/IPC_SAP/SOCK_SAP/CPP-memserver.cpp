@@ -18,10 +18,10 @@ run_event_loop (u_short port)
   // Create the acceptors.
   ACE_MEM_Acceptor acceptor;
 
-  ACE_INET_Addr server_addr;
+  ACE_MEM_Addr server_addr (port);
 
   // Create acceptors, reuse the address.
-  if (acceptor.open (port, 1) == -1)
+  if (acceptor.open (server_addr, 1) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "open"),
