@@ -1,3 +1,8 @@
+Wed Mar 24 14:36:12 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/OS.cpp (ACE_OS_PREALLOCATE_OBJECT): Initialized obj_p to zero
+	  to make egcs happy.
+
 Wed Mar 24 13:23:36 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: removed note about building netsvcs before
