@@ -9,6 +9,7 @@
 
 #include "ace/config-linux-common.h"
 
+#define ACE_HAS_THREADS
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 #if !defined (ACE_MT_SAFE)
 # define ACE_MT_SAFE 1
