@@ -13,7 +13,6 @@
 #define CIAO_CONFIG_HANDLERS_RDD_Handler_H
 #include /**/ "ace/pre.h"
 
-#include "Base_Handler.h"
 #include "Config_Handlers_export.h"
 #include "ace/config-lite.h"
 
