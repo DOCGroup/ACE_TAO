@@ -2,7 +2,8 @@ Tue Apr 13 09:05:25 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Sched_Params.i (ACE_Sched_Priority_Iterator): removed
           ACE_TRACE's, because Sched_Param is in the ACE_OS (lowest)
-          component.
+          component.  Thanks to Erik Ivanenko <erik.ivanenko@utoronto.ca>
+          for reporting this.
 
 Tue Apr 13 08:21:41 1999  Steve Huston  <shuston@riverace.com>
 
