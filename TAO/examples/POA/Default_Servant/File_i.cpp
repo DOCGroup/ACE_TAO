@@ -20,9 +20,9 @@ ACE_RCSID(Default_Servant, File_i, "$Id$")
 
 // IDL File::System constructor
 FileImpl::System::System (PortableServer::POA_ptr poa)
- : poa_ (PortableServer::POA::_duplicate (poa)),
-   // Create the Default Descriptor Servant
-   fd_servant_ (poa)
+  : poa_ (PortableServer::POA::_duplicate (poa)),
+    // Create the Default Descriptor Servant
+    fd_servant_ (poa)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   // set the default servant of the POA

@@ -81,29 +81,27 @@ main (int argc, char **argv)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
-  char str[256];
   ACE_TRY
     {
-      ACE_OS::strcpy (str,"CORBA::ORB_init");
       // Initialize the ORB
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
 
       int result = parse_args (argc, argv);
       if (result != 0)
         return result;
 
-      // Get the Root POA object reference
-      CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
+      // Obtain the RootPOA.
+      CORBA::Object_var obj =
+        orb->resolve_initial_references ("RootPOA",
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-      ACE_OS::strcpy (str,"PortableServer::POA::_narrow");
       // Narrow the object reference to a POA reference
       PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in (),
                                                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_OS::strcpy (str, "PortableServer::POA::the_POAManager");
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -111,38 +109,32 @@ main (int argc, char **argv)
       CORBA::PolicyList policies (5);
       policies.length (5);
 
-      ACE_OS::strcpy (str, "PortableServer::POA::create_id_assignment_policy");
       // ID Assignment Policy
       policies[0] =
         root_poa->create_id_assignment_policy (PortableServer::USER_ID, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_OS::strcpy (str,"PortableServer::POA::create_lifespan_policy");
       // Lifespan Policy
       policies[1] =
         root_poa->create_lifespan_policy (PortableServer::PERSISTENT,
                                           ACE_TRY_ENV);
 
-      ACE_OS::strcpy (str,"PortableServer::POA::create_request_processing_policy");
       // Request Processing Policy
       policies[2] =
         root_poa->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT,
                                                     ACE_TRY_ENV);
 
-      ACE_OS::strcpy (str,"PortableServer::POA::create_servant_retention_policy");
       // Servant Retention Policy
       policies[3] =
         root_poa->create_servant_retention_policy (PortableServer::RETAIN, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_OS::strcpy (str,"PortableServer::POA::create_id_uniqueness_policy");
       // Id Uniqueness Policy
       policies[4] =
         root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID, ACE_TRY_ENV);
 
       ACE_TRY_CHECK;
 
-      ACE_OS::strcpy (str,"PortableServer::POA::create_POA");
       ACE_CString name = "firstPOA";
       PortableServer::POA_var first_poa = root_poa->create_POA (name.c_str (),
                                                                 poa_manager.in (),
@@ -150,7 +142,6 @@ main (int argc, char **argv)
                                                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_OS::strcpy (str, "PortableServer::POA::create_POA");
       for (CORBA::ULong i = 0;
            i < policies.length ();
            ++i)
@@ -169,18 +160,14 @@ main (int argc, char **argv)
       PortableServer::ObjectId_var database_agent_oid =
         PortableServer::string_to_ObjectId ("DatabaseAgent");
 
-      ACE_OS::strcpy (str, "PortableServer::POA::activate_object_with_id");
       first_poa->activate_object_with_id (database_agent_oid.in (),
                                           &database_agent_impl,
                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_OS::strcpy (str, "PortableServer::POA::id_to_reference");
       CORBA::Object_var database_agent =
         first_poa->id_to_reference (database_agent_oid.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      ACE_OS::strcpy (str, "CORBA::ORB::object_to_string");
 
       // Get the IOR for the "DatabaseAgent" object
       CORBA::String_var database_agent_ior =
@@ -194,7 +181,6 @@ main (int argc, char **argv)
       if (write_result != 0)
         return write_result;
 
-      ACE_OS::strcpy (str, "PortableServer::POAManager::activate");
       // set the state of the poa_manager to active i.e ready to process requests
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -205,11 +191,11 @@ main (int argc, char **argv)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, str);
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
       return -1;
     }
   ACE_ENDTRY;
- ACE_CHECK_RETURN (-1);
+  ACE_CHECK_RETURN (-1);
 
- return 0;
+  return 0;
 }
