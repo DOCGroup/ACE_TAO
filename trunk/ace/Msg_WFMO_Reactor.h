@@ -32,7 +32,7 @@ class ACE_Export ACE_Msg_WFMO_Reactor : public ACE_WFMO_Reactor
   // = TITLE
   //
   //     An object oriented event demultiplexor and event handler
-  //     Msg_WFMO_Reactor for Win32 MsgWaitForMultipleObjects.
+  //     dispatcher for Win32 MsgWaitForMultipleObjects.
   //
   // = DESCRIPTION
   //
