@@ -790,7 +790,11 @@ ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::forward_i (vo
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::forward_i");
 
-  node_ = tree_->RB_tree_successor (node_);
+  if (node_)
+    {
+      node_ = tree_->RB_tree_successor (node_);
+    }
+
   return node_ ? 1 : 0;
 }
 
@@ -804,7 +808,11 @@ ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::reverse_i (vo
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::reverse_i");
 
-  node_ = tree_->RB_tree_predecessor (node_);
+  if (node_)
+    {
+      node_ = tree_->RB_tree_predecessor (node_);
+    }
+
   return node_ ? 1 : 0;
 }
 

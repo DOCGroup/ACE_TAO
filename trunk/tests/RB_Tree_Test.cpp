@@ -486,6 +486,13 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_insertion_it
       ++deprecated_rev_iter_;
     }
 
+  // Advance each iterator again - should be a no-op.
+  ++stable_fwd_iter_;
+  ++stable_rev_iter_;
+  ++deprecated_fwd_iter_;
+  ++deprecated_rev_iter_;
+
+
   // Make sure each item in each tree has been visited
   ACE_ASSERT (stable_fwd_iter_.done () == 1);
   ACE_ASSERT (stable_rev_iter_.done () == 1);
