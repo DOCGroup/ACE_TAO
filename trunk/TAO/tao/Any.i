@@ -327,3 +327,9 @@ CORBA_Any::any_owns_data (void) const
 {
   return this->any_owns_data_;
 }
+
+ACE_INLINE ACE_Message_Block*
+CORBA_Any::_tao_get_cdr (void) const
+{
+  return this->cdr_;
+}

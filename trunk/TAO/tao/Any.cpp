@@ -97,6 +97,16 @@ CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr tc,
     }
 }
 
+// Constructor using a message block.
+CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr type,
+                      const ACE_Message_Block* mb)
+  : type_ (CORBA::TypeCode::_duplicate (type)),
+    value_ (ACE_Message_Block::duplicate (mb)),
+    cdr_ (ACE_Message_Block::duplicate (mb)),
+    any_owns_data_ (CORBA::B_TRUE)
+{
+}
+
 // Copy constructor for "Any".
 CORBA_Any::CORBA_Any (const CORBA_Any &src)
   : value_ (0),
