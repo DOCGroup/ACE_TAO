@@ -4,7 +4,6 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 #include "FtRtEvent_Test.h"
-#include <vector>
 #include <fstream>
 #include "orbsvcs/FtRtEvent/Utils/Log.h"
 
@@ -13,9 +12,6 @@ ACE_RCSID (FtRtEvent,
            PushConsumer,
            "$Id$")
 
-namespace {
-  std::vector<int> run_times;
-}
 
 PushConsumer_impl::PushConsumer_impl()
 {
@@ -27,7 +23,7 @@ int PushConsumer_impl::init(CORBA::ORB_ptr orb,
 {
   orb_ = orb;
   num_iterations_ = options.num_iterations;
-  run_times.assign(options.num_iterations, -1);
+  run_times_.assign(options.num_iterations, -1);
 
   RtecEventChannelAdmin::ConsumerQOS qos;
   qos.is_gateway = 1;
@@ -77,12 +73,12 @@ PushConsumer_impl::push (const RtecEventComm::EventSet & event
     TimeBase::TimeT elaps =
       time_val.sec () * 10000000 + time_val.usec ()* 10 - event[0].header.ec_send_time;
     event[0].data.any_value >>= x;
-    run_times[x] = static_cast<int>(elaps/10);
-    
-    TAO_FTRTEC::Log(3, "received event %d\n", x);
 
-
-    if ( num_iterations_ == static_cast<int>(x) ) {
+    if ( num_iterations_ > static_cast<int>(x) ) {
+      run_times_[x] = static_cast<int>(elaps/10);
+      TAO_FTRTEC::Log(3, "received event %d\n", x);
+    }
+    else {
       supplier_->disconnect_push_supplier();
       orb_->shutdown();
       output_result();
@@ -116,9 +112,9 @@ PushConsumer_impl::output_result()
 {
   int lost = 0;
   for (int i =0; i < num_iterations_; ++i)
-    if (run_times[i] == -1) lost++;
+    if (run_times_[i] == -1) lost++;
     else
-      ACE_DEBUG((LM_DEBUG, "%5d received, elapsed time = %d\n",i, run_times[i]));
+      ACE_DEBUG((LM_DEBUG, "%5d received, elapsed time = %d\n",i, run_times_[i]));
   ACE_DEBUG((LM_DEBUG, "%d events lost out of %d events\n", lost, num_iterations_));;
 }
 

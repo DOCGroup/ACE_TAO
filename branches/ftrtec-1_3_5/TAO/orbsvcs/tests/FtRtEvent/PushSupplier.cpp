@@ -119,21 +119,24 @@ int PushSupplier_impl::handle_timeout (const ACE_Time_Value &current_time,
   ACE_UNUSED_ARG(act);
   ACE_UNUSED_ARG(current_time);
 
+  FTRTEC_TRACE("PushSupplier_impl::handle_timeout");
+
+  RtecEventComm::EventSet event (1);
+  event.length (1);
+  event[0].header.type   = ACE_ES_EVENT_UNDEFINED;
+  event[0].header.source = 1;
+  event[0].header.ttl    = 1;
+
+  ACE_Time_Value time_val = ACE_OS::gettimeofday ();
+  TAO_FTRTEC::Log(1, "sending data %d\n", seq_no_);
+
+  event[0].header.ec_send_time = time_val.sec () * 10000000 + time_val.usec ()* 10;
+  event[0].data.any_value <<= seq_no_;
+  bool final = (num_iterations_ <= (int) seq_no_++);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY {
-    RtecEventComm::EventSet event (1);
-    event.length (1);
-    event[0].header.type   = ACE_ES_EVENT_UNDEFINED;
-    event[0].header.source = 1;
-    event[0].header.ttl    = 1;
-
-    ACE_Time_Value time_val = ACE_OS::gettimeofday ();
-   TAO_FTRTEC::Log(1, "sending data %d\n", seq_no_);
-
-    event[0].header.ec_send_time = time_val.sec () * 10000000 + time_val.usec ()* 10;
-    event[0].data.any_value <<= seq_no_;
-
-    if (num_iterations_ > (int) seq_no_++) {
+    if (!final) {
       consumer_->push(event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -147,19 +150,21 @@ int PushSupplier_impl::handle_timeout (const ACE_Time_Value &current_time,
       ACE_OS::sleep(1);
       consumer->push(event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      ACE_DEBUG((LM_DEBUG, "shutdown orb\n"));
-      this->reactor()->cancel_timer(this);
-      this->reactor()->end_reactor_event_loop();
-      this->reactor(0);
-      orb_->shutdown();
     }
-
   }
   ACE_CATCHANY
   {
     ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "A CORBA Exception occurred.");
   }
   ACE_ENDTRY;
+
+  if (final) {
+    ACE_DEBUG((LM_DEBUG, "shutdown orb\n"));
+    this->reactor()->cancel_timer(this);
+    this->reactor()->end_reactor_event_loop();
+    this->reactor(0);
+    orb_->shutdown();
+  }
+
   return 0;
 }

@@ -13,6 +13,7 @@
 #define PUSHCONSUMERIMPL_H
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventCommS.h"
+#include <vector>
 
 struct Options;
 
@@ -46,6 +47,8 @@ private:
   CORBA::ORB_var orb_;
   int num_iterations_;
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_;
+  std::vector<int> run_times_;
+
   PushConsumer_impl(const PushConsumer_impl&);
   void operator==(const PushConsumer_impl&);
 };
