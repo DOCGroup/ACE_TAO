@@ -84,7 +84,7 @@ ACE_Process_Mutex::~ACE_Process_Mutex (void)
 
 ACE_RW_Process_Mutex::ACE_RW_Process_Mutex (LPCTSTR name,
                                             void *arg)
-  : lock_ (name, arg)
+  : lock_ (name, int (arg))
 {
 // ACE_TRACE ("ACE_RW_Process_Mutex::ACE_RW_Process_Mutex");
 }
