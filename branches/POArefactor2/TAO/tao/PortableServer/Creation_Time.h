@@ -17,12 +17,12 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/Time_Value.h"
+#include "tao/Basic_Types.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Time_Value.h"
-#include "tao/Basic_Types.h"
 
 namespace TAO
 {
