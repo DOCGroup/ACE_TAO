@@ -30,16 +30,14 @@ Object_Factory_i::create_object (const char *interface_repository_id,
     ACE_reinterpret_cast (const PortableInterceptor::ObjectId *,
                           &id.in ());
 
-  TAO_POA *poa = ACE_dynamic_cast (TAO_POA *,
-                                   this->gateway_poa_);
+  TAO_POA *poa = dynamic_cast <TAO_POA *> (this->gateway_poa_);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   PortableInterceptor::ObjectReferenceTemplate *ort_template =
     poa->get_adapter_template();
 
   TAO_ObjectReferenceTemplate *ort =
-    ACE_dynamic_cast (TAO_ObjectReferenceTemplate *,
-                      ort_template);
+    dynamic_cast <TAO_ObjectReferenceTemplate *> (ort_template);
 
   CORBA::Object_ptr object_ptr =
     ort->make_object (interface_repository_id,
