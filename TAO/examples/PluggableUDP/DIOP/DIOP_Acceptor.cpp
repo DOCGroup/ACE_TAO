@@ -68,7 +68,7 @@ TAO_DIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
   // This method should not be called anymore
   return -1;
 
-#endif  /* TAO_HAS_RT_CORBA == 1 */
+#else /* TAO_HAS_RT_CORBA == 1 */
 
   // Adding this->endpoint_count_ to the TAO_MProfile.
   int count = mprofile.profile_count ();
@@ -110,6 +110,7 @@ TAO_DIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
     }
 
   return 0;
+#endif  /* TAO_HAS_RT_CORBA == 1 */
 }
 
 int
