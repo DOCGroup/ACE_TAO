@@ -346,7 +346,7 @@ SmiUINT32 Vb::get_syntax()
 }
 
 // return the printabel value
-char  *Vb::to_string_value()
+const char  *Vb::to_string_value()
 {
   if (iv_vb_value_)
     return iv_vb_value_->to_string();
@@ -355,18 +355,16 @@ char  *Vb::to_string_value()
 }
 
 // return the printable oid
-char  *Vb::to_string_oid()
+const char  *Vb::to_string_oid()
 {
   return iv_vb_oid_.to_string();
 }
 
 // generate string with name/ value format
-char  *Vb::to_string()
+const char  *Vb::to_string()
 {
   int len = ACE_OS::strlen(iv_vb_oid_.to_string());
-  char *ptr = "";
-  if (iv_vb_value_)
-      ptr = iv_vb_value_->to_string();
+  const char *ptr = iv_vb_value_ ? iv_vb_value_->to_string() : "";
   len += ACE_OS::strlen(ptr) + 3 + 1; // " / " + null
   ACE_NEW_RETURN(output_, char[len], "");
   ACE_OS::sprintf(output_, "%s / %s", iv_vb_oid_.to_string(), ptr);

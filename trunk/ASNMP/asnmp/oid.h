@@ -134,7 +134,7 @@ public:
   int valid() const;
   // is the Oid object valid
 
-  char *to_string();
+  const char *to_string();
   // return dotted string value from the right
   // where the user specifies how many positions to print
 

@@ -46,6 +46,7 @@ SnmpUInt32::SnmpUInt32 (const u_long i)
 
 // copy constructor
 SnmpUInt32::SnmpUInt32( const SnmpUInt32 &c)
+  : SnmpSyntax (c)
 {
   smival.value.uNumber=c.smival.value.uNumber;
   smival.syntax = sNMP_SYNTAX_UINT32;
@@ -142,6 +143,7 @@ SnmpInt32::SnmpInt32 (const long i)
 
 // constructor with value
 SnmpInt32::SnmpInt32 (const SnmpInt32 &c)
+  : SnmpSyntax (c)
 {
   smival.value.sNumber=c.smival.value.sNumber;
   smival.syntax = sNMP_SYNTAX_INT32;

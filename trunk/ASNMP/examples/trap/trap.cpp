@@ -162,18 +162,17 @@ int trapapp::run()
        " TRAP GENERATOR SAMPLE PROGRAM \nOID: " << oid_.to_string() << "\n";
    target_.get_address(address_); // target updates port used
    int rc;
-   char *name = address_.resolve_hostname(rc);
-   if (rc)
-      name = "<< did not resolve via gethostbyname() >>";
+   const char *name = address_.resolve_hostname(rc);
 
-   cout << "Device: " << address_ << " " << name << "\n"; 
+   cout << "Device: " << address_ << " ";
+   cout << (rc ? "<< did not resolve via gethostbyname() >>" : name) << "\n"; 
    cout << "[ Community=" <<  community_.to_string() << " ]"<< endl;
 
    if (snmp_.trap( pdu_, target_) == SNMP_CLASS_SUCCESS) {
      cout << "Trap was written to network...\n";
    }
    else {
-    char *ptr = snmp_.error_string();
+    const char *ptr = snmp_.error_string();
     cout << "ASNMP:ERROR: trap command failed reason: " << ptr << endl;
   }
 

@@ -36,7 +36,8 @@ int snmp_agent::set_args(int argc, char *argv[])
 {
   ACE_TRACE("snmp_agent::set_args");
   unsigned short port = SNMP_AGENT_PORT;
-  char *rd = RD_COM, *wr = WR_COM;
+  char *rd = const_cast <char*> RD_COM;
+  char *wr = const_cast <char*> WR_COM;
 
   ACE_Get_Opt get_opt (argc, argv, "p:w:r:hv");
   for (int c; (c = get_opt ()) != -1; ) {

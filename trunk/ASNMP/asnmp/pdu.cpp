@@ -152,7 +152,7 @@ Pdu& Pdu::operator+=( Vb &vb)
 }
 
 // return fomatted version of this object
-char * Pdu::to_string()
+const char * Pdu::to_string()
 {
   // determine how big a buffer and allocate it
   const int HEADER_STR = 100;
@@ -293,7 +293,7 @@ int Pdu::get_error_status() const
    return error_status_;
 }
 
-char *Pdu::agent_error_reason()
+const char *Pdu::agent_error_reason()
 {
     int pdu_err = get_error_status();
     if (pdu_err == 0) // any real error?
@@ -302,9 +302,9 @@ char *Pdu::agent_error_reason()
     int n_vbs = get_vb_count();
     Vb bad;
     get_vb(bad, get_error_index() -1); // not zero based??
-    char *pmsg =   Snmp::error_string(get_error_status());
-    char *id =   bad.to_string_oid();
-    char *val =  bad.to_string_value();
+    const char *pmsg =   Snmp::error_string(get_error_status());
+    const char *id =   bad.to_string_oid();
+    const char *val =  bad.to_string_value();
     const int HDR_SZ = 100;
 
     if (!output_) {

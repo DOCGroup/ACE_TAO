@@ -129,10 +129,10 @@ public:
   SmiBYTE *data() const;
   // returns pointer to internal data
 
-  char *to_string();
+  const char *to_string();
   // get a printable ASCII value
 
-  char *to_string_hex();
+  const char *to_string_hex();
   // get an ASCII formattted hex dump of the contents
 
   SnmpSyntax  *clone() const;

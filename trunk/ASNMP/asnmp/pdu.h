@@ -86,7 +86,7 @@ public:
   int get_error_status() const;
   // return the error status
 
-  char *agent_error_reason();
+  const char *agent_error_reason();
   // return the complete error info from this pdu
 
   friend void set_error_status( Pdu *pdu, const int status);
@@ -146,7 +146,7 @@ public:
   void get_notify_enterprise( Oid & enterprise) const;
   // get the notify enterprise
 
-  char *to_string();
+  const char *to_string();
   // return fomatted version of this object
 
 
