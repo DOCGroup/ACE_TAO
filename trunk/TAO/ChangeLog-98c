@@ -1,3 +1,15 @@
+1998-10-11  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosNaming_i.{h,cpp}:
+	Removed several memory allocations (in <get_context>, and
+	<resolve>).
+	Factored some common code out into <populate_binding> function.
+	Cleaned up some code and got rid of <bind_new_context_helper>.
+	Changed TAO_NamingContext to contain a pointer to the hash map
+	rather than actual object to allow command line option of choosing
+	the size of hash map allocated upon creation (rather than using
+	the default size).
+
 Sun Oct 11 17:59:32 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Callback_Quoter/Client_i.cpp (CLient_i::run ()):
