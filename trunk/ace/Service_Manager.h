@@ -40,7 +40,7 @@
  *   simply treat the incoming string as a process directive and pass
  *   it along to <ACE_Service_Config::process_directive>.  This allows
  *   remote configuration via command-line instructions like 
- *   $echo suspend Remote_Brdcast | telnet hostname 3911
+ *   % echo suspend My_Remote_Service | telnet hostname 3911
  *
  * Each request is associated with a new connection, which is closed
  * when the request is processed.  In addition, you must be using the
@@ -60,7 +60,8 @@ public:
 protected:
   // = Perform the various meta-services.
 
-  /// Trigger a remote reconfiguration of the Service Configurator.
+  /// Trigger a reconfiguration of the Service Configurator by
+  //re-reading its local <svc.conf> file.
   virtual int reconfigure_services (void);
 
   /// Determine all the services offered by this daemon and return the
