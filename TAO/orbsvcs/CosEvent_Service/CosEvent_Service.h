@@ -64,7 +64,7 @@ protected:
   virtual void deactivate_rtec (CORBA::Environment &ACE_TRY_ENV);
   // Deactivates the rtec.
 
-  void init_ORB (int argc, char *argv [],
+  void init_ORB (int& argc, char *argv [],
                  CORBA::Environment &ACE_TRY_ENV);
   // initialize the ORB.
 
