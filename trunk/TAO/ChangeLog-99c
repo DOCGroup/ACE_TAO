@@ -1,10 +1,20 @@
+Mon Sep 13 15:31:40 1999  Luther J Baker  <ljb1@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (init): Update method to use the new
+	  ACE_Arg_Shifter.get_the_parameter (). This encapsulates
+	  much of the tedious work of the ORB_init method and allows
+	  the method to correctly parse the command line arguments.
+	  ie: -foobar Value == -FooBar value == -foobarValue
+	  In all of the above examples, 'value' is correctly found.
+
+
 Mon Sep 13 15:01:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_scope.cpp:
 	  Another tweak to the lookup_by_name() function. It
 	  was failing in a certain case of looking up the
 	  parent(s) of an interface when they are declared
-	  after the colon. Thanks to 
+	  after the colon. Thanks to
 	  Andreas Terstegge <Andreas.Terstegge@nokia.com>
 	  for sending in the example the showed the problem.
 
