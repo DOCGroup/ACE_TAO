@@ -25,11 +25,11 @@ TAO_CosEC_SupplierAdmin_i::init (const RtecEventChannelAdmin::SupplierQOS &suppl
 }
 
 CosEventChannelAdmin::ProxyPushConsumer_ptr
-TAO_CosEC_SupplierAdmin_i::obtain_push_consumer (CORBA::Environment &TAO_TRY_ENV)
+TAO_CosEC_SupplierAdmin_i::obtain_push_consumer (CORBA::Environment &TAO_IN_ENV)
 {
   RtecEventChannelAdmin::ProxyPushConsumer_var rtecproxypushconsumer =
-    this->rtec_supplieradmin_->obtain_push_consumer (TAO_TRY_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, 0);
+    this->rtec_supplieradmin_->obtain_push_consumer (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);
 
   TAO_CosEC_ProxyPushConsumer_i *ppc;
 
@@ -37,11 +37,11 @@ TAO_CosEC_SupplierAdmin_i::obtain_push_consumer (CORBA::Environment &TAO_TRY_ENV
                   TAO_CosEC_ProxyPushConsumer_i (this->qos_,
                                                  rtecproxypushconsumer.in ()),
                   CosEventChannelAdmin::ProxyPushConsumer::_nil ());
-  return ppc->_this (TAO_TRY_ENV);
+  return ppc->_this (TAO_IN_ENV);
 }
 
 CosEventChannelAdmin::ProxyPullConsumer_ptr
-TAO_CosEC_SupplierAdmin_i::obtain_pull_consumer (CORBA::Environment &TAO_TRY_ENV)
+TAO_CosEC_SupplierAdmin_i::obtain_pull_consumer (CORBA::Environment &TAO_IN_ENV)
 {
   // TODO: implement this.
   return CosEventChannelAdmin::ProxyPullConsumer::_nil ();

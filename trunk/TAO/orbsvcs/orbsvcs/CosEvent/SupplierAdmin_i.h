@@ -47,11 +47,11 @@ public:
   // error.
 
   virtual CosEventChannelAdmin::ProxyPushConsumer_ptr
-  obtain_push_consumer (CORBA::Environment &TAO_TRY_ENV);
+  obtain_push_consumer (CORBA::Environment &TAO_IN_ENV);
   // Returns a new ProxyPushConsumer_ptr.
 
   virtual CosEventChannelAdmin::ProxyPullConsumer_ptr
-  obtain_pull_consumer(CORBA::Environment &TAO_TRY_ENV);
+  obtain_pull_consumer(CORBA::Environment &TAO_IN_ENV);
   // Returns a new ProxyPullConsumer_ptr.
 
 private:

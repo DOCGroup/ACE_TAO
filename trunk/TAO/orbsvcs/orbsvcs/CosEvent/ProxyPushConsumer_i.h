@@ -51,14 +51,14 @@ public:
   // Destructor.
 
   virtual void push (const CORBA::Any &data,
-                     CORBA::Environment &TAO_TRY_ENV);
+                     CORBA::Environment &TAO_IN_ENV);
   // Suppliers call this method to pass data to connected consumers.
 
-  virtual void disconnect_push_consumer (CORBA::Environment &TAO_TRY_ENV);
+  virtual void disconnect_push_consumer (CORBA::Environment &TAO_IN_ENV);
   // Disconnects the supplier from the event communication.
 
   virtual void connect_push_supplier(CosEventComm::PushSupplier_ptr push_supplier,
-                                     CORBA::Environment &TAO_TRY_ENV);
+                                     CORBA::Environment &TAO_IN_ENV);
   // Connects a push supplier.
 
 private:

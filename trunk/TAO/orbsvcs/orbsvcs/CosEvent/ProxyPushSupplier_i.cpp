@@ -25,10 +25,10 @@ public:
   // Destructor.
 
   virtual void push (const RtecEventComm::EventSet & data,
-                     CORBA::Environment &TAO_TRY_ENV);
+                     CORBA::Environment &TAO_IN_ENV);
   // This method is called by the RTEvent Channel to supply data.
 
-  virtual void disconnect_push_consumer (CORBA::Environment &TAO_TRY_ENV);
+  virtual void disconnect_push_consumer (CORBA::Environment &TAO_IN_ENV);
   // Disconnects the consumer from the event channel.
 
 private:
@@ -60,23 +60,23 @@ TAO_CosEC_PushConsumerWrapper::push (const RtecEventComm::EventSet& set,
 }
 
 void
-TAO_CosEC_PushConsumerWrapper::disconnect_push_consumer (CORBA::Environment &TAO_TRY_ENV)
+TAO_CosEC_PushConsumerWrapper::disconnect_push_consumer (CORBA::Environment &TAO_IN_ENV)
 {
   // Deactivate the supplier proxy.
-  this->consumer_->disconnect_push_consumer (TAO_TRY_ENV);
+  this->consumer_->disconnect_push_consumer (TAO_IN_ENV);
 
   PortableServer::POA_var poa =
-    this->_default_POA (TAO_TRY_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
+    this->_default_POA (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   PortableServer::ObjectId_var id =
     poa->servant_to_id (this,
-                        TAO_TRY_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
+                        TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   poa->deactivate_object (id.in (),
-                          TAO_TRY_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
+                          TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   // @@ If we keep a list remember to remove this object from the
   // list.
@@ -98,23 +98,23 @@ TAO_CosEC_ProxyPushSupplier_i::~TAO_CosEC_ProxyPushSupplier_i (void)
 }
 
 void
-TAO_CosEC_ProxyPushSupplier_i::disconnect_push_supplier (CORBA::Environment &TAO_TRY_ENV)
+TAO_CosEC_ProxyPushSupplier_i::disconnect_push_supplier (CORBA::Environment &TAO_IN_ENV)
 {
-  this->pps_->disconnect_push_supplier (TAO_TRY_ENV);
+  this->pps_->disconnect_push_supplier (TAO_IN_ENV);
 
   // Deactivate the supplier proxy
   PortableServer::POA_var poa =
-    this->_default_POA (TAO_TRY_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
+    this->_default_POA (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   PortableServer::ObjectId_var id =
     poa->servant_to_id (this,
-                        TAO_TRY_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
+                        TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   poa->deactivate_object (id.in (),
-                          TAO_TRY_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
+                          TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   // @@ If we keep a list remember to remove this object from the
   // list.
@@ -122,27 +122,23 @@ TAO_CosEC_ProxyPushSupplier_i::disconnect_push_supplier (CORBA::Environment &TAO
 }
 
 void TAO_CosEC_ProxyPushSupplier_i::connect_push_consumer (CosEventComm::PushConsumer_ptr push_consumer,
-                                                           CORBA::Environment &TAO_TRY_ENV)
+                                                           CORBA::Environment &TAO_IN_ENV)
 {
   if (this->connected ())
     TAO_THROW_ENV (CosEventChannelAdmin::AlreadyConnected (),
-                   TAO_TRY_ENV);
+                   TAO_IN_ENV);
 
   if (push_consumer == CosEventComm::PushConsumer::_nil())
     TAO_THROW_ENV (CORBA::BAD_PARAM (CORBA::COMPLETED_NO),
-                   TAO_TRY_ENV);
-
-  CORBA::Environment &TAO_IN_ENV = TAO_TRY_ENV;
-  // @@ The ACE_NEW_THROW macro uses TAO_THROW which assumes an TAO_IN_ENV declared.
-  // what i need here is an ACE_NEW_THROW_ENV macro.
+                   TAO_IN_ENV);
 
   ACE_NEW_THROW (this->wrapper_,
                  TAO_CosEC_PushConsumerWrapper (push_consumer),
                  CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 
-  this->pps_->connect_push_consumer (this->wrapper_->_this (TAO_TRY_ENV),
-                                     this->qos_,
-                                     TAO_TRY_ENV);
+  this->pps_->connect_push_consumer (this->wrapper_->_this (TAO_IN_ENV),
+                                       this->qos_,
+                                       TAO_IN_ENV);
 }
 
 int

@@ -43,11 +43,11 @@ public:
   ~TAO_CosEC_ProxyPushSupplier_i (void);
   // Destructor.
 
-  virtual void disconnect_push_supplier (CORBA::Environment &TAO_TRY_ENV);
+  virtual void disconnect_push_supplier (CORBA::Environment &TAO_IN_ENV);
   // Ends the event communication and disposes this object.
 
   virtual void connect_push_consumer(CosEventComm::PushConsumer_ptr push_consumer,
-                                     CORBA::Environment &TAO_TRY_ENV);
+                                     CORBA::Environment &TAO_IN_ENV);
   // Connects the <push_consumer> to the Event Channel.
 
 private:
