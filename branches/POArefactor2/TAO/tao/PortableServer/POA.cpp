@@ -2648,6 +2648,13 @@ TAO_POA::allow_implicit_activation (void) const
     allow_implicit_activation ();
 }
 
+bool
+TAO_POA::allow_multiple_activations (void) const
+{
+  return this->active_policy_strategies_.id_uniqueness_strategy ()->
+    allow_multiple_activations ();
+}
+
 void
 TAO_POA::set_servant (PortableServer::Servant servant
                       ACE_ENV_ARG_DECL)

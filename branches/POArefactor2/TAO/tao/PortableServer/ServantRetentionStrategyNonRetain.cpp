@@ -47,12 +47,10 @@ namespace TAO
     void
     Non_Retain_Servant_Retention_Strategy::strategy_init (
       TAO_POA *poa,
-      IdUniquenessStrategy* id_uniqueness_strategy,
       IdAssignmentStrategy* id_assignment_strategy,
       RequestProcessingStrategy* request_processing_strategy
       ACE_ENV_ARG_DECL_NOT_USED)
     {
-      ACE_UNUSED_ARG (id_uniqueness_strategy);
       ACE_UNUSED_ARG (id_assignment_strategy);
       poa_ = poa;
       request_processing_strategy_ = request_processing_strategy;

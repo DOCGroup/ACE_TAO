@@ -1,6 +1,17 @@
+Mon Nov 15 18:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp}:
+        * tao/PortableServer/ServantRetentionStrategy*.{h,cpp}:
+        * tao/PortableServer/Active_Policy_Strategies.cpp:
+          Added allow_multiple_activations to the POA, use this in the servant
+          retention strategy. The id uniqueness policy is now not needed
+          directly anymore in the servant retention strategy, so zapped it
+          there
+
 Mon Nov 15 18:32:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{h,cpp}:
+        * tao/PortableServer/ServantRetentionStrategy*.{h,cpp}:
           Added allow_implicit_activation to the POA which calls the implicit
           activation policy. In the servant retention strategy use this
           method, this way the servant retention strategy is not dependen on

@@ -479,6 +479,8 @@ public:
 
   bool allow_implicit_activation (void) const;
 
+  bool allow_multiple_activations (void) const;
+
 protected:
 
   /// Template method for creating new POA's of this type.
