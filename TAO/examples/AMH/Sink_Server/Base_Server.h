@@ -85,6 +85,9 @@ private:
   int write_ior_to_file (const char * ior);
 };
 
-#include "ace/post.h"
+#if defined (__ACE_INLINE__)
+# include "Base_Server.inl"
+#endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* BASE_SERVER_H */
