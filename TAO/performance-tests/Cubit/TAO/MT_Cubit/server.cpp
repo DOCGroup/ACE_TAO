@@ -160,34 +160,34 @@ Cubit_Task::initialize_orb (void)
       TAO_CHECK_ENV;
 
       if (use_name_service == 0)
-	return 0;
+        return 0;
 
       CORBA::Object_var naming_obj =
-	this->orb_->resolve_initial_references ("NameService");
+        this->orb_->resolve_initial_references ("NameService");
       if (CORBA::is_nil (naming_obj.in ()))
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to resolve the Name Service.\n"),
-			  1);
-	  
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to resolve the Name Service.\n"),
+                          1);
+
       this->naming_context_ =
-	CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
+        CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
 
       // Check the environment and return 1 if exception occurred or nil pointer.
       if (TAO_TRY_ENV.exception () != 0 ||
-	  CORBA::is_nil (this->naming_context_.in ())==CORBA::B_TRUE )
-	{
-	  return 1;
-	}
-	  
+          CORBA::is_nil (this->naming_context_.in ())==CORBA::B_TRUE )
+        {
+          return 1;
+        }
+
       // Register the servant with the Naming Context....
       CosNaming::Name cubit_context_name (1);
       cubit_context_name.length (1);
       cubit_context_name[0].id = CORBA::string_dup ("MT_Cubit");
-	  
+
       TAO_TRY_ENV.clear ();
       CORBA::Object_var objref =
-	this->naming_context_->bind_new_context (cubit_context_name, TAO_TRY_ENV);
-	  
+        this->naming_context_->bind_new_context (cubit_context_name, TAO_TRY_ENV);
+
       if (TAO_TRY_ENV.exception() != 0)
         {
 #if 0  // un comment when Andy fixes exception marshalling bug.
@@ -572,7 +572,7 @@ initialize (int argc, char **argv)
    if (hostname == 0 || base_port == 0)
      ACE_ERROR_RETURN ((LM_ERROR,
                         "usage:  %s"
-			" [-s Means NOT to use the name service] "
+                        " [-s Means NOT to use the name service] "
                         " [-p port]"
                         " [-h my_hostname]"
                         " [-t num_objects]"
@@ -694,16 +694,17 @@ start_servants ()
   for (i = 0; i < num_of_objs-1; ++i)
     cubits[i+1] = low_priority_task[i]->get_servant_ior (0);
 
+  FILE *iorFile = 0;
   if (ior_file != 0)
-      FILE *iorFile = fopen (ior_file, "w"); 
+      iorFile = fopen (ior_file, "w");
 
   for (i = 0; i < num_of_objs; ++i)
     {
       if (ior_file != 0)
-	{
-	  fputs (cubits[i], iorFile); 
-	  fputs ("\n", iorFile);
-	}
+        {
+          fputs (cubits[i], iorFile);
+          fputs ("\n", iorFile);
+        }
       printf ("cubits[%d] ior = %s\n", i, cubits[i]);
     }
 
