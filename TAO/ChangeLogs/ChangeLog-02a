@@ -1,3 +1,9 @@
+Tue Jan 29 09:10:17 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+	* tao/Messaging.h:
+          Removed TAO_Export from namespace definitions because namespaces
+          aren't exported. BCB compiler complains about this
+
 Tue Jan 29 08:14:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * orbsvs/tests/Makefile.bor:
