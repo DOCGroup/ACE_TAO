@@ -1,41 +1,47 @@
+Sat Apr  7 19:35:34 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/IIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
+          Removed template instantiations that were no longer used.
+
 Sat Apr  7 11:58:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/BiDirectional/client.dsp:
-	* tests/BiDirectional/server.dsp: Fixed a link error.
+        * tests/BiDirectional/client.dsp:
+        * tests/BiDirectional/server.dsp: Fixed a link error.
 
 Fri Apr  6 18:05:50 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* tao/Leader_Follower.i:
-	  Reordered the function is_empty() to satisfy stupid VxWorks
-	  compiler.
+        * tao/Leader_Follower.i:
+          Reordered the function is_empty() to satisfy stupid VxWorks
+          compiler.
 
 Fri Apr  6 16:41:42 2001  Angelo Corsaro  <angelo@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (collocation_strategy):
-	  In the case in which the POA had set the NON RETAIN policy the
-	  collocation optimization was not taking place, the problem was
-	  caused by the fact that we were testing for a non null servant.
-	  This bug has been now fixed, and collocation will work as
-	  expected even if the POA has the NON RETAIN policy set.
-	  Thanks to Peter Phillips<pphillip@home.com> for traking
-	  down the problem.
+        * tao/ORB_Core.cpp (collocation_strategy):
+          In the case in which the POA had set the NON RETAIN policy the
+          collocation optimization was not taking place, the problem was
+          caused by the fact that we were testing for a non null servant.
+          This bug has been now fixed, and collocation will work as
+          expected even if the POA has the NON RETAIN policy set.
+          Thanks to Peter Phillips<pphillip@home.com> for traking
+          down the problem.
 
 Fri Apr  6 17:08:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Single_Read/run_test.pl: Added this file to the
-	  repository. Strangely this file had missed our eyes for quite
-	  sometime.
+        * tests/Single_Read/run_test.pl: Added this file to the
+          repository. Strangely this file had missed our eyes for quite
+          sometime.
 
 
 Fri Apr  6 16:43:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Handler.cpp:
-	* tao/GIOP_Message_Base.cpp: Cleaned up the code. The code was
-	  fixed when we observed problems with  BCB compiler. The code has
-	  now been cleaned so that it is now easier to read what is
-	  happening. One of the important things that was done during
-	  cleanup was to make sure that memory allocations came of the
-	  allocator and not from the heap.
+        * tao/GIOP_Message_Handler.cpp:
+        * tao/GIOP_Message_Base.cpp: Cleaned up the code. The code was
+          fixed when we observed problems with  BCB compiler. The code has
+          now been cleaned so that it is now easier to read what is
+          happening. One of the important things that was done during
+          cleanup was to make sure that memory allocations came of the
+          allocator and not from the heap.
 
 Fri Apr  6 15:08:47 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -87,8 +93,8 @@ Fri Apr  6 10:43:19 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Fri Apr  6 10:30:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h: Missed in my last
-	  commit.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h: Missed in my last
+          commit.
 
 Fri Apr  6 10:12:10 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -108,8 +114,8 @@ Fri Apr  6 08:29:44 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Fri Apr  6 06:42:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Fixed stupid
-	  compile errors. My bad :(
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Fixed stupid
+          compile errors. My bad :(
 
 Fri Apr  6 04:15:27 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -121,8 +127,8 @@ Fri Apr  6 04:15:27 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Thu Apr  5 21:42:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Fixed a compile
-	  problem. The origin was a cut and paste error.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Fixed a compile
+          problem. The origin was a cut and paste error.
 
 Thu Apr  5 21:38:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -143,9 +149,9 @@ Thu Apr  5 21:38:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Apr  5 18:35:23 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* examples/Simple/*/README: Changed the README files to
-	  replace the use of "client -o" to "client -f".  Thanks to Gautam
- 	  Thaker <gthaker@atl.lmco.com> for reporting this.
+        * examples/Simple/*/README: Changed the README files to
+          replace the use of "client -o" to "client -f".  Thanks to Gautam
+          Thaker <gthaker@atl.lmco.com> for reporting this.
 
 Thu Apr  5 14:49:17 2001  Carlos O'Ryan  <coryan@uci.edu>
 

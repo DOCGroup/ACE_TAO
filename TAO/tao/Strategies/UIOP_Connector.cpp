@@ -21,10 +21,7 @@ ACE_RCSID(Strategies, UIOP_Connector, "$Id$")
 
 template class ACE_Node<ACE_UNIX_Addr>;
 template class ACE_Unbounded_Stack<ACE_UNIX_Addr>;
-template class ACE_Refcounted_Hash_Recyclable<ACE_UNIX_Addr>;
 template class ACE_Auto_Basic_Array_Ptr<ACE_UNIX_Addr>;
-template class ACE_Hash<ARHR<ACE_UNIX_Addr> >;
-template class ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_UNIX_Addr> >;
 
 template class TAO_Connect_Concurrency_Strategy<TAO_UIOP_Connection_Handler>;
 template class TAO_Connect_Creation_Strategy<TAO_UIOP_Connection_Handler>;
@@ -44,10 +41,7 @@ template class ACE_Auto_Basic_Array_Ptr<TAO_UIOP_Connection_Handler*>;
 
 #pragma instantiate ACE_Node<ACE_UNIX_Addr>
 #pragma instantiate ACE_Unbounded_Stack<ACE_UNIX_Addr>
-#pragma instantiate ACE_Refcounted_Hash_Recyclable<ACE_UNIX_Addr>
-#pragma instantiate ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_UNIX_Addr> >
 #pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_UNIX_Addr>
-#pragma instantiate ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_UNIX_Addr> >
 
 #pragma instantiate TAO_Connect_Concurrency_Strategy<TAO_UIOP_Connection_Handler>
 #pragma instantiate TAO_Connect_Creation_Strategy<TAO_UIOP_Connection_Handler>
