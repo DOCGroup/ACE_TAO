@@ -1,3 +1,11 @@
+Wed Jul 01 08:51:33 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/Service_Types.cpp
+          tests/Dynamic_Priority_Test.cpp: Moved explicit template
+          instantiations for ACE_Dynamic_Message_Queue and 
+          ACE_Message_Queue_Factory from the test into the ACE library
+          (next to where the ACE_Message_Queue instantiations resided).
+
 Wed Jul 01 07:08:40 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Message_Queue.i,cpp (VxWorks only): removed args from a
