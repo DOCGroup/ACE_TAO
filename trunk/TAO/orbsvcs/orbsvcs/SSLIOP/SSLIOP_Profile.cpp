@@ -17,7 +17,7 @@ ACE_RCSID (TAO_SSLIOP,
 
 TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const ACE_INET_Addr &addr,
                                         const TAO_ObjectKey &object_key,
-                                        const TAO_GIOP_Version &version,
+                                        const TAO_GIOP_Message_Version &version,
                                         TAO_ORB_Core *orb_core,
                                         const SSLIOP::SSL *ssl_component)
   : TAO_IIOP_Profile (addr,
@@ -33,7 +33,7 @@ TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const char* host,
                                         CORBA::UShort port,
                                         const TAO_ObjectKey &object_key,
                                         const ACE_INET_Addr &addr,
-                                        const TAO_GIOP_Version &version,
+                                        const TAO_GIOP_Message_Version &version,
                                         TAO_ORB_Core *orb_core,
                                         const SSLIOP::SSL *ssl_component)
   : TAO_IIOP_Profile (host,

@@ -1,4 +1,16 @@
-Mon May 28 12:02:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+Mon May 28 13:09:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+	* examples/PluggableUDP/DIOP/DIOP_Acceptor.h:
+	* examples/PluggableUDP/DIOP/DIOP_Profile.cpp:
+	* examples/PluggableUDP/DIOP/DIOP_Profile.h:
+	* examples/PluggableUDP/DIOP/Makefile: Changed references of
+	  TAO_GIOP_Version to TAO_GIOP_Message_Version. Changed the
+	  inclusion to GIOP_Message_Version.h.
+
+Mon May 28 01:10:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	Modules that used TAO_GIOP_Version were forced to include the file 
 	GIOP_Message_State.h. This header file also had another class that

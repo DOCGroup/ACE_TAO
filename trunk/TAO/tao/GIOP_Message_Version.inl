@@ -56,3 +56,4 @@ TAO_GIOP_Message_Version::operator!= (
 {
   return !(*this == src);
 }
+
