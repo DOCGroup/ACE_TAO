@@ -189,17 +189,18 @@ int
 AudioBuffer::handle_input (ACE_HANDLE fd)
 {
   //  ACE_DEBUG ((LM_DEBUG,"handle_input:mode = %d\n",this->mode_));
+  ACE_UNUSED_ARG (fd);
   int len;
   switch (this->mode_)
     {
     case READ_HEADER:
       {
-        int len;
+
         if (conn_tag >= 0) 
           {
             //            ACE_DEBUG ((LM_DEBUG,"non discard mode: "));
             if (bytes < 0)
-              bytes = sizeof(*packet);
+              bytes = (int)sizeof(*packet);
             len = ACE_OS::read (dataSocket, (char *)temp, bytes);
           }
         else
@@ -236,12 +237,12 @@ AudioBuffer::handle_input (ACE_HANDLE fd)
                 // header reading is done.
                 this->mode_ = READ_DATA;
                 bytes = -1;
-                len = sizeof (*packet);
+                len = (int)sizeof (*packet);
               }
             else
               return 0;
           }
-        if (len < sizeof (*packet))
+        if (len < (int)sizeof (*packet))
           {
             fprintf(stderr, "Warn: AB discard len = %d bytes of supposed header.\n", len);
             return 0;
@@ -313,7 +314,7 @@ AudioBuffer::handle_input (ACE_HANDLE fd)
         /*
           if (packet->firstSample % 10240 && !packet->resend) continue;
         */
-        if (packet->samples * abuf->bps > PACKET_SIZE - sizeof(*packet)) {
+        if (packet->samples * abuf->bps > PACKET_SIZE - (int)sizeof(*packet)) {
           fprintf(stderr, "Fatal error: AB has too small packet buffer, %d out of %d\n",
                   PACKET_SIZE, packet->samples * abuf->bps + sizeof(*packet));
           ACE_Reactor::instance ()->end_event_loop (); return -1;
@@ -382,7 +383,7 @@ AudioBuffer::handle_input (ACE_HANDLE fd)
                       packet->firstSample, packet->samples);
             }
             else if (part1 > 0) {
-              int res;
+            
               AudioFeedBackPara para;
               Fprintf(stderr, "AB found gap %d(%d)\n", dstart, part1);
               para.cmdsn = htonl(shared->cmdsn);
@@ -410,6 +411,7 @@ AudioBuffer::handle_input (ACE_HANDLE fd)
 int
 AudioBuffer::handle_output (ACE_HANDLE fd)
 {
+  ACE_UNUSED_ARG(fd);
   ACE_DEBUG ((LM_DEBUG,"handle_output:mode = %d\n",this->mode_));
   int res;
   if ((this->mode_ == WRITE_FEEDBACK1) || (this->mode_ == WRITE_FEEDBACK2))
@@ -530,7 +532,7 @@ AudioBuffer::feedback (void)
       fbstate = 0;
       break;
     }
-    if (get_usec() >= waketime) {
+    if (get_usec() >= (int)waketime) {
       fbstate = 2;
     }
     break;
@@ -544,7 +546,7 @@ AudioBuffer::feedback (void)
       {
         /* feedback action needed */
         AudioFeedBackPara para;
-        int res;
+        
         para.data.fb.addsps = 0;
         para.data.fb.addSamples = (abuf->size >> 2) - abuf->samples;
 	
