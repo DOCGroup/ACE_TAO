@@ -1,3 +1,9 @@
+Wed Mar 25 09:08:44 1998  Torben Worm  <tworm@cumbia.cs.wustl.edu>
+
+	* docs/releasenotes/index.html: Added comment to the concurrency
+	control service section. The implementation of the concurrency
+	control service is discontinued due to unclear specs.
+
 Wed Mar 25 02:36:06 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/NestedUpcall/server.cpp: Renamed tao_util.h to TAO.h.
