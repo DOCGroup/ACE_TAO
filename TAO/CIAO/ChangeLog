@@ -1,8 +1,13 @@
+Wed Aug 06 17:00:05 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/XML/ciao_rt_cad_ext.dtd: Added DTD for RT extension to cad
+	  file.
+
 2003-08-06  Arvind S. Krishna  <arvindk@equus.dre.vanderbilt.edu>
 
 	* performance-tests/Benchmark/RoundTrip/RoundTrip_exec.cpp:
 	* performance-tests/Benchmark/RoundTrip/run_test.pl:
-	Fixed problems relating to parsing arguments when the number of iterations 
+	Fixed problems relating to parsing arguments when the number of iterations
 	is specified from the command line.
 
 Tue Aug 05 17:25:45 2003  George Edwards <g.edwards@vanderbilt.edu>
@@ -46,7 +51,7 @@ Tue Aug 05 13:23:12 2003  George Edwards <g.edwards@vanderbilt.edu>
 	* performance-tests/Benchmark/RountTripClient/RoundTripClient_exec.cpp:
 	* performance-tests/Benchmark/RountTrip/RoundTrip_exec.cpp:
 	Fixed errors in the perl file for running the example. Corrected the way
-	in which throughput is measured within the client component. Also added 
+	in which throughput is measured within the client component. Also added
 	code to enable tests to be run in the super user mode.
 
 2003-08-04  Diego Sevilla  <dsevilla@ditec.um.es>
