@@ -1,6 +1,7 @@
 Fri Apr 05 21:17:44 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/CDR_Stream.cpp: Initialized a null wstring properly. 
+	
 	* tests/CDR_Test.cpp (test_get): Added a test case for a
 	  marshalling and unmarshalling a zero length wstring. 
 
