@@ -1,3 +1,19 @@
+Sun Dec 12 19:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI_Forward.pidl:
+          Don't use -GA, the generated C.cpp don't contain anything when
+          this option is used, so just no need
+
+        * tao/PI_ForwardC.{h,cpp,inl}:
+          Regenerated
+
+        * tao/PI_ForwardA.cpp:
+          Removed
+
+        * tao/tao.mpc:
+        * tao/Makefile.am:
+          Updated
+
 Sun Dec 12 18:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IFR_Service/IFR_BaseA.cpp:
