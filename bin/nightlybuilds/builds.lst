@@ -54,6 +54,11 @@ TYPE = TIMEONLY
 LIST = http://ringil.ece.uci.edu/bugzilla/legacy/
 WEB  = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?legacy
 
+[WinCE_All]
+TYPE = TIMEONLY
+LIST = http://ringil.ece.uci.edu/bugzilla/wince/
+WEB  = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?wince
+
 [Debian_KCC]
 TYPE = TIMEONLY
 LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/doc_KCC/
