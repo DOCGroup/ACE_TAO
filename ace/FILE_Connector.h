@@ -25,6 +25,13 @@
  * @class ACE_FILE_Connector
  *
  * @brief Defines an active connection factory for the ACE_FILE wrappers.
+ *
+ * Note that the O_APPEND flag is only partly supported on Win32. If
+ * you specify O_APPEND, then the file pointer will be positioned at
+ * the end of the file initially during open, but it is not
+ * re-positioned at the end prior to each write, as specified by
+ * POSIX.  This is generally good enough for typical situations, but
+ * it is ``not quite right'' in its semantics.  
  */
 class ACE_Export ACE_FILE_Connector
 {
