@@ -7,6 +7,13 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#if defined (__GNUG__)
+# include "ace/config-g++-common.h"
+  // This config file has not been tested with ACE_HAS_TEMPLATE_SPECIALIZATION.
+  // Maybe it will work?
+# undef ACE_HAS_TEMPLATE_SPECIALIZATION
+#endif /* __GNUG__ */
+
 // Compiling for SCO.
 #if !defined (SCO)
 #define SCO
@@ -25,10 +32,6 @@
 #endif /* SCO */
 
 #define ACE_HAS_SIG_MACROS
-#define ACE_TEMPLATES_REQUIRE_SOURCE
-#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
-
 #define ACE_LACKS_UNIX_DOMAIN_SOCKETS
 #define ACE_LACKS_SYSCALL
 #define ACE_LACKS_STRRECVFD
@@ -44,11 +47,8 @@
 #define ACE_LACKS_RECVMSG
 #define ACE_LACKS_SENDMSG
 
-// Compiler doesn't support static data member templates.
-//#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
-
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
-#define ACE_HAS_SYSV_IPC			
+#define ACE_HAS_SYSV_IPC
 
 // Platform supports recvmsg and sendmsg.
 //#define ACE_HAS_MSG

@@ -47,6 +47,9 @@
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+#if defined (__GNUG__)
+# include "ace/config-g++-common.h"
+#endif /* __GNUG__ */
 
 #define ACE_HAS_IP_MULTICAST
 
@@ -89,7 +92,7 @@
 
 #if !defined (ACE_MT_SAFE)
 # define ACE_MT_SAFE 1
-#endif                      
+#endif
 
 #define ACE_DEFAULT_THREAD_KEYS 256
 
@@ -100,7 +103,7 @@
 
 */
 
-#define ACE_HAS_TSS_EMULATION 
+#define ACE_HAS_TSS_EMULATION
 
 
 ////////////////////////////////////////////////////////////////
@@ -213,16 +216,6 @@
 // #define ACE_NEEDS_SYSTIME_H
 
 #define ACE_PAGE_SIZE 4096
-
-#define ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR
-
-#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-
-#define ACE_HAS_TEMPLATE_SPECIALIZATION
-
-#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
-
-#define ACE_TEMPLATES_REQUIRE_SOURCE
 
 #if !defined (ACE_NTRACE)
 # define ACE_NTRACE 1
