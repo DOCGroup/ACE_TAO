@@ -1,3 +1,30 @@
+Mon Jun 14 18:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
+        * examples/C++NPv1/Reactive_Logging_Server.h:
+        * examples/C++NPv1/Reactive_Logging_Server_Ex.h:
+        * examples/Connection/blocking/SPIPE-connector.cpp:
+        * examples/IPC_SAP/SOCK_SAP/FD-unclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp:
+        * examples/Mem_Map/IO-tests/test_io.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_stream_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_pipe_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_CODgram.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Dgram.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Stream.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.i:
+        * examples/Shared_Malloc/test_malloc.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/MQ_Client.cpp:
+        * examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp:
+        * examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp:
+        * examples/Threads/future1.cpp:
+        * examples/Threads/future2.cpp:
+        * netsvcs/lib/Client_Logging_Handler.cpp:
+        * netsvcs/lib/clients/Logger/direct_logging.cpp:
+          Added missing include for non-inlined builds.
+
 Mon Jun 14 17:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/ThreadPool/TP_Reactor.cpp:
