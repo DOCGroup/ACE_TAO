@@ -1,0 +1,12 @@
+#
+# $Id$
+#
+
+MAKEFILES = \
+	Throughput.bor \
+	Connect.bor \
+	Inversion.bor \
+	Latency.bor \
+	Latency_Server.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
