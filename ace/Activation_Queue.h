@@ -37,6 +37,14 @@ public:
   virtual ~ACE_Activation_Queue (void);
 
   // = Queue operations.
+
+  // For the following two methods if <timeout> == 0, the caller will
+  // block until action is possible, else will wait until the absolute
+  // time specified in *<timeout> elapses).  These calls will return,
+  // however, when queue is closed, deactivated, when a signal occurs,
+  // or if the time specified in timeout elapses, (in which case errno
+  // = EWOULDBLOCK).
+
   ACE_Method_Object *dequeue (ACE_Time_Value *tv = 0);
   // Dequeue the next available <Method_Object>.
 
