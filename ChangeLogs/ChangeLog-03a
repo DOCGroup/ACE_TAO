@@ -1,4 +1,11 @@
-Thu Jun  6 18:10:45  Steve Huston  <shuston@riverace.com>
+Thu Jun  6 18:35:49 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Acceptor.h (ACE_Strategy_Acceptor): Made open() virtual
+          since its parent class (ACE_Acceptor) ope() is also virtual.
+          Resolves warning from Forte 6 that open() hides its parent
+          class's open().
+
+Thu Jun  6 18:10:45 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/README: Removed ACE_HAS_OPTIMIZED_MESSAGE_QUEUE. No configs
           use it, and it's functionality doesn't really support the
