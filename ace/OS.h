@@ -1495,9 +1495,6 @@ struct utsname
 #pragma warning(disable: 4786)  /* identifier was truncated to '255' characters in the browser information */
 #pragma warning(disable: 4097)  /* typedef-name used as synonym for class-name */
 #endif /*!ALL_WARNINGS */
-// We're on WinNT or Win95
-#define ACE_PLATFORM "Win32"
-#define ACE_PLATFORM_EXE_SUFFIX ".exe"
 
 // STRICT type checking in WINDOWS.H enhances type safety for Windows
 // programs by using distinct types to represent all the different
@@ -1519,6 +1516,12 @@ struct utsname
 #define ACE_DEFAULT_LOCALNAME_W L"\\localnames"
 #define ACE_DEFAULT_GLOBALNAME_A "\\globalnames"
 #define ACE_DEFAULT_GLOBALNAME_W L"\\globalnames"
+
+// We're on WinNT or Win95
+#define ACE_PLATFORM_A "Win32"
+#define ACE_PLATFORM_EXE_SUFFIX_A ".exe"
+#define ACE_PLATFORM_W L"Win32"
+#define ACE_PLATFORM_EXE_SUFFIX_W L".exe"
 
 // Used for ACE_MMAP_Memory_Pool
 #define ACE_DEFAULT_BACKING_STORE __TEXT ("C:\\temp\\ace-malloc-XXXXXX")
@@ -1718,10 +1721,6 @@ typedef int ACE_pri_t;
 
 #else /* !defined (ACE_WIN32) */
 
-// We're some kind of UNIX...
-#define ACE_PLATFORM "UNIX"
-#define ACE_PLATFORM_EXE_SUFFIX ""
-
 typedef const char *LPCTSTR;
 typedef char *LPTSTR;
 typedef char TCHAR;
@@ -1743,13 +1742,23 @@ typedef char TCHAR;
 // Define the pathname separator characters for UNIX.
 #define ACE_DIRECTORY_SEPARATOR_STR_A "/"
 #define ACE_DIRECTORY_SEPARATOR_CHAR_A '/'
+
+// We're some kind of UNIX...
+#define ACE_PLATFORM_A "UNIX"
+#define ACE_PLATFORM_EXE_SUFFIX_A ""
+
 #if defined (ACE_HAS_UNICODE)
 #define ACE_DIRECTORY_SEPARATOR_STR_W L"/"
 #define ACE_DIRECTORY_SEPARATOR_CHAR_W L'/'
+#define ACE_PLATFORM_W L"UNIX"
+#define ACE_PLATFORM_EXE_SUFFIX_W L""
 #else
 #define ACE_DIRECTORY_SEPARATOR_STR_W "/"
 #define ACE_DIRECTORY_SEPARATOR_CHAR_W '/'
+#define ACE_PLATFORM_W "UNIX"
+#define ACE_PLATFORM_EXE_SUFFIX_W ""
 #endif /* ACE_HAS_UNICODE */
+
 #define ACE_LD_SEARCH_PATH "LD_LIBRARY_PATH"
 #define ACE_LD_SEARCH_PATH_SEPARATOR_STR ":"
 #define ACE_LOGGER_KEY "/tmp/server_daemon"
@@ -2652,7 +2661,8 @@ public:
   static int puts (const char *s);
   static void rewind (FILE *fp);
   static int sprintf (char *buf, const char *format, ...);
-
+  static int vsprintf (char *buffer, const char *format, va_list argptr); 
+  
   // = A set of wrappers for file locks.
   static int flock_init (ACE_OS::ace_flock_t *lock, int flags = 0, 
                          LPCTSTR name = 0, mode_t perms = 0);
@@ -2995,6 +3005,8 @@ public:
   static wchar_t *strstr (const wchar_t *s, const wchar_t *t);
   static wchar_t *strdup (const wchar_t *s);
   static int sprintf (wchar_t *buf, const wchar_t *format, ...);
+  static int sprintf (wchar_t *buf, const char *format, ...);
+  static int vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr);
 
   static int access (const wchar_t *path, int amode);
   static FILE *fopen (const wchar_t *filename, const wchar_t *mode);
@@ -3193,6 +3205,8 @@ private:
 #define ACE_DEFAULT_GLOBALNAME ACE_DEFAULT_GLOBALNAME_W
 #define ACE_DIRECTORY_SEPARATOR_STR ACE_DIRECTORY_SEPARATOR_STR_W
 #define ACE_DIRECTORY_SEPARATOR_CHAR ACE_DIRECTORY_SEPARATOR_CHAR_W
+#define ACE_PLATFORM ACE_PLATFORM_W
+#define ACE_PLATFORM_EXE_SUFFIX ACE_PLATFORM_EXE_SUFFIX_W
 
 #define ACE_DEFAULT_MUTEX_W L"ACE_MUTEX"
 #define ACE_DEFAULT_MUTEX ACE_DEFAULT_MUTEX_W
@@ -3204,6 +3218,8 @@ private:
 #define ACE_DEFAULT_GLOBALNAME ACE_DEFAULT_GLOBALNAME_A
 #define ACE_DIRECTORY_SEPARATOR_STR ACE_DIRECTORY_SEPARATOR_STR_A
 #define ACE_DIRECTORY_SEPARATOR_CHAR ACE_DIRECTORY_SEPARATOR_CHAR_A
+#define ACE_PLATFORM ACE_PLATFORM_A
+#define ACE_PLATFORM_EXE_SUFFIX ACE_PLATFORM_EXE_SUFFIX_A
 
 #define ACE_DEFAULT_MUTEX_W "ACE_MUTEX"
 #define ACE_DEFAULT_MUTEX ACE_DEFAULT_MUTEX_A
