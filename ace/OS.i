@@ -638,12 +638,12 @@ ACE_OS::strcasecmp (const char *s, const char *t)
   // indicates equal (ignoring case) by return value == 0, else not
   // equal.
   int result = 0;
-  
+
   while (*s != '\0' && *t != '\0') 
     {
       if (tolower (*s) != tolower (*t)) 
 	{
-	  result = 1;
+	  result = ((tolower (*s) < tolower (*t)) ? -1 : 1);
 	  break;
 	}
 
@@ -5738,6 +5738,13 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
   ::strncpy (buf, result, buflen);
   return buf;
 #endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) */
+}
+
+ACE_INLINE size_t
+ACE_OS::strftime (const char *s, size_t maxsize, const char *format,
+                  const struct tm *timeptr)
+{
+  return ::strftime (s, maxsize, format, timeptr);
 }
 
 ACE_INLINE int 
