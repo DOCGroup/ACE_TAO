@@ -1,3 +1,11 @@
+Fri May 23 03:04:01 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Configuration.h:
+          Fixed many instances of "t_name" that had either never been set
+          or had been changed back to "name".  This is needed to support
+          default or unnamed values in the Registry or ini files.  This
+          fixes several errors on Windows, especially in WCHAR builds.
+
 Fri May 23 02:44:23 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/config-win32-common.h:
