@@ -1,3 +1,14 @@
+Thu Apr 24 09:33:53 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Timer_Heap.cpp (copy): added cast of max_size_ to int to avoid
+	  signed/unsigned comparison.
+
+	* ace/config-sunos5.4-g++.h: removed
+	  ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES because it caused compile
+	  warnings about conversion from `(int)' to `(...)' at Signal.i:113.
+	  (And the other sunos5.4 config files don't have it.)
+	  Thanks to Joey Zhu <joey.zhu@wcom.com> for reporting this.
+
 Thu Apr 24 07:24:19 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Process_Strategy_Test.cpp (handle_input): We were
