@@ -718,8 +718,10 @@ ACE_OS_String::wcslen_emulation (const ACE_WCHAR_T *string)
 {
   const ACE_WCHAR_T *s;
 
-  for (s = string; *s; ++s);
-    return s - string;
+  for (s = string; *s; ++s)
+    continue;
+
+  return s - string;
 }
 #endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSLEN */
 
