@@ -19,6 +19,7 @@
 #include "CC_test_utils.h"
 #include "CC_naming_service.h"
 #include "ace/ACE.h"
+#include "ace/OS.h"
 #include "ace/Process.h"
 #include "orbsvcs/CosConcurrencyControlC.h"
 #include <stdio.h>
@@ -46,7 +47,7 @@ CC_Command::GetLockSet(char *lock_set_name, CORBA::Environment &TAO_IN_ENV)
       if(ACE_OS::strcmp(lock_set_name, "")!=0)
         {
           CORBA::Object_var ccls_obj =
-            CC_naming_service::Instance()->get_obj_from_name ("", lock_set_name,
+            CC_naming_service::Instance()->get_obj_from_name (ACE_const_cast (char *, ""), lock_set_name,
                                                               TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
@@ -563,7 +564,7 @@ CC_Lookup_Cmd::execute(void)
       TAO_TRY
         {
           CORBA::Object_var ccls_obj =
-            CC_naming_service::Instance()->get_obj_from_name ("", name_,
+            CC_naming_service::Instance()->get_obj_from_name (ACE_const_cast (char *, ""), name_,
                                                               TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
