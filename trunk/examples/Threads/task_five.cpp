@@ -17,6 +17,9 @@ static size_t stack_size =      // Default stack size
     8192;
 #endif
 
+  u_int loop_count = 0;
+  u_int error_count = 0;
+
 class Test_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
@@ -78,67 +81,65 @@ Test_Task::synch (void)
   return thr_mgr_->wait_grp (grp_id_);
 }
 
+void work (ACE_Thread_Manager *thr_mgr, int n_tasks, size_t stack_size)
+{
+  int i;
+  Test_Task *task_array = new Test_Task[n_tasks];
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Opening Tasks, loop count = %d, error count = %d\n",
+              loop_count,
+              error_count));
+
+  for (i = 0; i < n_tasks; i++)
+    task_array[i].open ();
+
+  ACE_OS::sleep (1);
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Cancelling Tasks, loop count = %d, error count = %d\n",
+              loop_count,
+              error_count));
+
+  for (i = 0; i < n_tasks; i++)
+    task_array[i].shutdown ();
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Synching Tasks, loop count = %d, error count = %d\n",
+              loop_count,
+              error_count));
+
+  for (i = 0; i < n_tasks; i++)
+    if (-1 == task_array[i].synch ())
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "Error in synch! loop count = %d, error count = %d\n",
+                    loop_count,
+                    error_count));
+        error_count++;
+      }
+
+  ACE_DEBUG ((LM_DEBUG,
+              "thr_mgr->wait ();! loop count = %d, error count = %d\n",
+              loop_count,
+              error_count));
+
+  // Wait for all the threads to finish.
+  thr_mgr->wait ();
+
+  delete [] task_array;
+  loop_count++;
+}
+
 int
 main (int argc, char *argv[])
 {
   size_t stack_size = argc > 1 ? ACE_OS::atoi (argv[1]) : stack_size;
   const int n_tasks = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_TASKS;
-  u_int loop_count = 0;
-  u_int error_count = 0;
 
   ACE_Thread_Manager *thr_mgr = ACE_Service_Config::thr_mgr ();
 
-  Test_Task *task_array;
-
-  for (;;)
-    {
-      int i;
-      task_array = new Test_Task[n_tasks];
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "Opening Tasks, loop count = %d, error count = %d\n",
-                  loop_count,
-                  error_count));
-
-      for (i = 0; i < n_tasks; i++)
-        task_array[i].open ();
-
-      ACE_OS::sleep (1);
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "Cancelling Tasks, loop count = %d, error count = %d\n",
-                  loop_count,
-                  error_count));
-
-      for (i = 0; i < n_tasks; i++)
-        task_array[i].shutdown ();
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "Synching Tasks, loop count = %d, error count = %d\n",
-                  loop_count,
-                  error_count));
-
-      for (i = 0; i < n_tasks; i++)
-        if (-1 == task_array[i].synch ())
-          {
-            ACE_ERROR ((LM_ERROR,
-                        "Error in synch! loop count = %d, error count = %d\n",
-                        loop_count,
-                        error_count));
-            error_count++;
-          }
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "thr_mgr->wait ();! loop count = %d, error count = %d\n",
-                  loop_count,
-                  error_count));
-
-      // Wait for all the threads to finish.
-      thr_mgr->wait ();
-
-      delete [] task_array;
-      loop_count++;
-    }
-
+  for (size_t cntr = 0; cntr < 2; cntr++)
+    work (thr_mgr, n_tasks, stack_size);
   ACE_NOTREACHED (return 0);
 }
