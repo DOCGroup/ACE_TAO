@@ -12,7 +12,7 @@ ACE_INLINE void
 TAO_POA_Manager::activate (CORBA_Environment &ACE_TRY_ENV)
 {
   // Lock access to the POAManager for the duration of this transaction
-  TAO_POA_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
+  TAO_POA_GUARD (ACE_Lock, monitor, this->lock ());
 
   this->activate_i (ACE_TRY_ENV);
 }
@@ -24,7 +24,7 @@ TAO_POA_Manager::hold_requests (CORBA::Boolean wait_for_completion,
                                 CORBA_Environment &ACE_TRY_ENV)
 {
   // Lock access to the POAManager for the duration of this transaction
-  TAO_POA_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
+  TAO_POA_GUARD (ACE_Lock, monitor, this->lock ());
 
   this->hold_requests_i (wait_for_completion, ACE_TRY_ENV);
 }
@@ -34,7 +34,7 @@ TAO_POA_Manager::discard_requests (CORBA::Boolean wait_for_completion,
                                    CORBA_Environment &ACE_TRY_ENV)
 {
   // Lock access to the POAManager for the duration of this transaction
-  TAO_POA_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
+  TAO_POA_GUARD (ACE_Lock, monitor, this->lock ());
 
   this->discard_requests_i (wait_for_completion, ACE_TRY_ENV);
 }
@@ -45,7 +45,7 @@ TAO_POA_Manager::deactivate (CORBA::Boolean etherealize_objects,
                              CORBA_Environment &ACE_TRY_ENV)
 {
   // Lock access to the POAManager for the duration of this transaction
-  TAO_POA_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
+  TAO_POA_GUARD (ACE_Lock, monitor, this->lock ());
 
   this->deactivate_i (etherealize_objects,
                       wait_for_completion,
@@ -64,7 +64,7 @@ ACE_INLINE PortableServer::POAManager::State
 TAO_POA_Manager::get_state (CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access to the POAManager for the duration of this transaction
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), this->state_, ACE_TRY_ENV);
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), this->state_);
 
   return this->get_state_i ();
 }

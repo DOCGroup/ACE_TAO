@@ -279,7 +279,7 @@ TAO_POA::find_POA (const char *adapter_name,
                    CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0);
 
   // A recursive thread lock without using a recursive thread
   // lock.  Non_Servant_Upcall has a magic constructor and
@@ -1311,7 +1311,7 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
         }
 
       // Lock access for the duration of this transaction.
-      TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
+      TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0);
 
       // Find user id from system id.
       PortableServer::ObjectId user_id;
@@ -1363,7 +1363,7 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
   if (this->policies ().request_processing () == PortableServer::USE_DEFAULT_SERVANT)
     {
       // Lock access for the duration of this transaction.
-      TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
+      TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0);
 
       PortableServer::Servant result = this->default_servant_.in ();
       if (result != 0)
@@ -1439,7 +1439,7 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference,
     }
 
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0);
 
   // The object denoted by the reference does not have to be active
   // for this operation to succeed.
