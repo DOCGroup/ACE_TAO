@@ -101,6 +101,9 @@ href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <a href="#notify">Notification Service</a></li>
 
 <li>
+<a href="#rt_notify">Real-Time Notification Service</a></li>
+
+<li>
 <a href="#security">Security Service</a></li>
 
 <li>
@@ -181,8 +184,8 @@ shutdown in a safe manner.  The following illustrates an example of
 how this mechanism works: <p>
 
 <ul>
-<li> When a handler is created, it reference count is one. 
-	  
+<li> When a handler is created, it reference count is one.
+
 <li> After the handler is registered with the Reactor, it reference
 count becomes two.
 
@@ -1577,8 +1580,6 @@ Service </a> prototype was updated in TAO 1.3.
 Point of contact: <a href="mailto:pradeep@oomworks.com">Pradeep Gore</a>
 <p>
 
-<h4><u> CORBA Notification Service </u></h4>
-
 TAO's CORBA <a href="ftp://ftp.omg.org/pub/docs/telecom/99-07-01.pdf">
 Notification Service </a> implementation consists of the following
 (see the associated README's for more information):
@@ -1616,16 +1617,31 @@ The various options of the Notify_Service are described <a href="notify.html#not
 <i>Note that this implementation does not support Pull interfaces and
 Typed Event style communication.</i>
 <p>
-<h4> <u>Real-Time Notification Service </u></h4>
-This is an extension to TAO's CORBA Notification Service with
-Real-Time CORBA support.
+
+<hr WIDTH="100%">
+<h3><a NAME="rt_notify"></a>Real-Time Notification Service </h3>
+
+<h4> Last updated:Thu Jul 24 11:57:53 2003 </h4>
+Point of contact: <a href="mailto:pradeep@oomworks.com">Pradeep Gore</a>
+<p>
+
+This is an extension to TAO's CORBA Notification Service with Real-Time CORBA support.
 <p>
 <b>IDL Extensions:</b>
 <ul>
-<li> <b>Interface Extensions:</b>The <a href ="../../orbsvcs/orbsvcs/NotifyExt.idl"> $TAO_ROOT/orbsvcs/orbsvcs/NotifyExt.idl</a> extends the ConsumerAdmin
-and SupplierAdmin interfaces. The <tt> obtain_notification_push_supplier_with_qos <tt> <tt> and <tt> obtain_notification_push_consumer_with_qos <tt> methods can be used to specify QoS parameters.</li>
 
-<li><b>QoS Definitions:</b>
+<li>
+
+<b>Interface Extensions:</b>
+The <a href ="../../orbsvcs/orbsvcs/NotifyExt.idl"> $TAO_ROOT/orbsvcs/orbsvcs/NotifyExt.idl</a> extends the ConsumerAdmin
+and SupplierAdmin interfaces. The <tt> obtain_notification_push_supplier_with_qos <tt> <tt> and <tt> obtain_notification_push_consumer_with_qos <tt> methods can be used to specify QoS parameters.
+
+</li>
+
+<li>
+
+<b>QoS Definitions:</b>
+
 <ul>
 
 <li>ThreadPoolParams: This specifies the parameters for creating a
@@ -1635,46 +1651,67 @@ threadpool in an RT POA.
 <li>ThreadPoolLanesParams: This specifies the parameters for creating a
 threadpool with lanes in an RT POA.
 </li>
+
 </ul>
 
 </li>
+
 </ul>
 
 <b>Tests and Examples:</b>
+
 <ul>
+
 <li>
+
 The <a href = "../../orbsvcs/examples/Notify/Lanes" > <tt>$TAO_ROOT/orbsvcs/examples/Notify/Lanes </tt></a> example shows how to use RTCORBA
 Lanes in RT Notification.
+
 </li>
 
 <li>
+
 The <a href ="../../orbsvcs/examples/Notify/ThreadPool"> <tt>$TAO_ROOT/orbsvcs/examples/Notify/ThreadPool</a></tt> example shows how to
 use RTCORBA ThreadPools in RT Notification.
+
 </li>
+
 </ul>
 
 The performance tests for RT Notification measure the throughput,
 latency and jitter for various test configurations using Periodic Suppliers:
+
 <ul>
+
 <li>
 <a href = "../../orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes" ><tt>$TAO_ROOT/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes</tt></a> <br>
 This configuration measures performance for a single data path when
 the load is increased. The Supplier sends events in a single burst.
+
 </li>
+
 <li>
+
 <a href = "../../orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes" ><tt>$TAO_ROOT/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes</tt></a> <br>
 This configuration measures performance for 3 data paths of high,
 ,medium and low priorities when the Load is increased. The Suppliers send events at 100Hz.
+
  </li>
+
 <li>
+
 <a href = "../../orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput"> <tt>$TAO_ROOT/tests/Notify/performance-tests/scripts/Paths_vs_Throughput </tt></a><br>
 This configuration has 1 high priority path ans several low priority
 paths. we measure the performance of the high priority path as a
 function of the number of low priority paths.
+
 </li>
+
 <li>
+
 <a href = "../../orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput"> <tt>$TAO_ROOT/tests/Notify/performance-tests/scripts/Max_Throughput</tt></a> <br>
 This Configuration measures the performance obtained for a data path using a Structured Event payload:
+
 <ul>
 <li>directly between a Supplier and Consumer in seperate processes.</li>
 <li>directly between a colocated Supplier and Consumer.</li>
@@ -1682,9 +1719,13 @@ This Configuration measures the performance obtained for a data path using a Str
 intermidiary.</li>
 <li>between a a Supplier and Consumer using the Notification Service.</li>
 </ul>
+
 </li>
+
 </ul>
+
 <b>Test Framework:</b><br>
+
 The <a href = "../../orbsvcs/tests/Notify/lib"><tt>$TAO_ROOT/orbsvcs/tests/Notify/lib</a></tt> contains a scripting based test
 framework which can be used to quickly create test cases.
 The framemork and its options are described <a href="notify.html#test_framework">here. </a>
