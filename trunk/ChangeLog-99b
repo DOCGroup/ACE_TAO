@@ -1,6 +1,16 @@
+Fri Mar 26 17:57:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-freebsd-pthread.h: Defined cuserid as an extern "C"
+	  function.
+
+	* ace/OS.h: <sched.h> should only be included when !defined
+	  (ACE_LACKS_SCHED_H).
+
+	  Thanks to Eric Eide <eeide@cs.utah.edu> for sending the patch.
+
 Fri Mar 26 17:12:21 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-        * ace/Profile_Timer.{h,i,cpp}: On Win32 platforms that 
+        * ace/Profile_Timer.{h,i,cpp}: On Win32 platforms that
           support RUsage, Profile_Timer will use both that and
           High Resolution Timers for measurements.  Depending
           on the method, one or the other will be used.
@@ -17,10 +27,10 @@ Fri Mar 26 17:02:00 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  Improved ACE_HAS_ONLY_SCHED_OTHER by checking for run time errors
 	  when a thread scheduling policy other than SCHED_OTHER is set.
 	  Thanks to David for suggesting this modification.
-	
+
 	* m4/acinclude.m4:
 	  Added support for converting warnings to errors for Sun C++.
-	
+
 	* m4/threads.m4:
 	  Added test to check if `-Kthread' compiler flag enables thread
 	  support.  SCO UnixWare 7 uses this flag.
