@@ -161,7 +161,7 @@ struct counter64 {
 };
 
 // CMU Interface class for ASN.1 routines
-class ACE_Export asn1
+class ASNMP_Export asn1
   // = TITLE
   //     Defines the member functions for the asn1 concrete interface class
   //     CMU routines for performing ASN.1 data marshalling / representation
@@ -271,7 +271,7 @@ static unsigned char * build_unsigned_int64( unsigned char *data,
 
 
 // CMU Interface class for SNMPv1, SNMPv2c routines
-class ACE_Export cmu_snmp
+class ASNMP_Export cmu_snmp
   // = TITLE
   //    Defines the static functions for the cmu_snmp concrete class.
   //    These routine create cmu pdu's that can be sent/received on/from agents

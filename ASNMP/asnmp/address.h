@@ -99,7 +99,7 @@ class SIPAddress; // aka ipv6
 //--------------------------------------------------------------------
 //----[ Address class ]-----------------------------------------------
 //--------------------------------------------------------------------
-class  ACE_Export Address: public  SnmpSyntax
+class  ASNMP_Export Address: public  SnmpSyntax
   // = TITLE
   //     Defines the member functions for the abstract base class
   //     Address. An Address is a unique network endpoint.
@@ -198,7 +198,7 @@ protected:
 //-----------------------------------------------------------------------
 //---------[ IPv4 Address Class ]----------------------------------------
 //-----------------------------------------------------------------------
-class ACE_Export IpAddress : public Address
+class ASNMP_Export IpAddress : public Address
   // = TITLE
   //     Defines the member functions for the concrete class IpAddress
   //     An IP Version 4 Address is 4 bytes long and consists of a
@@ -301,7 +301,7 @@ protected:
 //--------------[ DNS Iterator Class ]------------------------------------
 //------------------------------------------------------------------------
 
-class ACE_Export Address_Iter
+class ASNMP_Export Address_Iter
   // = TITLE
   //     Defines routines to obtain information on a hostname/FQDN
   //     such as multiple addresses
@@ -331,7 +331,7 @@ private:
 //------------------------------------------------------------------------
 //---------[ UDP/IPv4 Address Class ]-------------------------------------
 //------------------------------------------------------------------------
-class  ACE_Export UdpAddress : public IpAddress
+class  ASNMP_Export UdpAddress : public IpAddress
   // = TITLE
   //     Defines the member functions for the concrete class UdpAddress
   //     A Udp Address consists of an IP Version 4 Address (IpAddress)
@@ -399,7 +399,7 @@ protected:
 //-------------------------------------------------------------------------
 //---------[ 802.3 MAC Address Class ]-------------------------------------
 //-------------------------------------------------------------------------
-class  ACE_Export MacAddress : public Address
+class  ASNMP_Export MacAddress : public Address
   // = TITLE
   //     Defines the member functions for the concrete class MacAddress.
   //     A Media Access Control Address consists of 48 bits as defined
@@ -459,7 +459,7 @@ protected:
 //------------------------------------------------------------------------
 //---------[ Netbios Address Class ]--------------------------------------
 //------------------------------------------------------------------------
-class  ACE_Export NetbiosAddress : public Address
+class  ASNMP_Export NetbiosAddress : public Address
   // = TITLE
   //     Defines the member functions for the concrete class NetbiosAddress.
   //     The IBM/Microsoft address for NETBIOS, NETBEUI protocol transport.
@@ -518,7 +518,7 @@ protected:
 //------------------------------------------------------------------------
 //---------[ DecNet Address Class ]---------------------------------------
 //------------------------------------------------------------------------
-class  ACE_Export DecNetAddress : public Address
+class  ASNMP_Export DecNetAddress : public Address
   // = TITLE
   //     Defines the member functions for the concrete class DecNetAddress.
   //     DecNet Phase ? address consists of two octets (CISCO-TC.my)
@@ -564,7 +564,7 @@ class  ACE_Export DecNetAddress : public Address
 //------------------------------------------------------------------------
 //---------[ AppleTalk Address Class ]------------------------------------
 //------------------------------------------------------------------------
-class  ACE_Export AppleTalkAddress :  public Address
+class  ASNMP_Export AppleTalkAddress :  public Address
   // = TITLE
   //     Defines the member functions for the concrete class DecNetAddress.
   //     DecNet Phase ? address consists of two octets (CISCO-TC.my)
@@ -622,7 +622,7 @@ class  ACE_Export AppleTalkAddress :  public Address
 //------------------------------------------------------------------------
 //---------[ IPX Address Class ]------------------------------------------
 //------------------------------------------------------------------------
-class ACE_Export IpxAddress : public Address
+class ASNMP_Export IpxAddress : public Address
   // = TITLE
   //     Defines the member functions for the concrete class IpxAddress.
   //     Novell's IPX (version ?) network protocol endpoint
@@ -687,7 +687,7 @@ protected:
 //------------------------------------------------------------------------
 //---------[ IpxSock Address Class ]--------------------------------------
 //------------------------------------------------------------------------
-class ACE_Export IpxSockAddress : public IpxAddress
+class ASNMP_Export IpxSockAddress : public IpxAddress
   // = TITLE
   //     Defines the member functions for the concrete class IpxAddress.
   //     Novell's IPX (version ?) network protocol endpoint
@@ -751,7 +751,7 @@ protected:
 //-------------------------------------------------------------------------
 //--------[ Generic Address ]----------------------------------------------
 //-------------------------------------------------------------------------
-class ACE_Export GenAddress : public Address
+class ASNMP_Export GenAddress : public Address
   // = TITLE
   //     Defines the member functions for the concrete class GenAddress.
   //     This class attempts to determine an address type given a char string.

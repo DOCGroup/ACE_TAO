@@ -47,7 +47,7 @@
 
 #include "asnmp/smival.h"                // derived class for all values
 
-class ACE_Export Oid: public  SnmpSyntax
+class ASNMP_Export Oid: public  SnmpSyntax
   // = TITLE
   //      Implement RFC 1155 Object Identifier (OID) datatype
 {
