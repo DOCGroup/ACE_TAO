@@ -102,17 +102,18 @@ spawn (void)
 	  ACE_OS::sprintf (iterations, "%d", Options::instance ()->iteration_count ());
 	  ACE_OS::sprintf (msg_size, "%d", Options::instance ()->max_msg_size ());
 
-	  const char *argv[8];
-	  argv[0] = (char *) Options::instance ()->slave_name ();
-	  argv[1] = "-p";
-	  argv[2] = "-n";
-	  argv[3] = iterations;
-	  argv[4] = "-L";
-	  argv[5] = msg_size;
-	  argv[6] = Options::instance ()->debug () ? "-d" : "";
-	  argv[7] = (char *) 0;
+	  const char *const argv[] = {
+            Options::instance ()->slave_name (),
+            "-p",
+            "-n",
+            iterations,
+            "-L",
+            msg_size,
+            Options::instance ()->debug () ? "-d" : "",
+            (const char *) 0 };
 
-	  if (ACE_OS::execv (Options::instance ()->program_name (), argv) == -1)
+	  if (ACE_OS::execv (Options::instance ()->program_name (),
+                             (char *const *) argv) == -1)
 	    ACE_ERROR ((LM_ERROR, "%p\n", "exec failed"));
 	  ACE_OS::_exit (1);
 	}
