@@ -230,16 +230,16 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs/Scheduler_Factory.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs/Event_Service_Constants.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs/Time_Utilities.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs/Event_Utilities.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.h \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(TAO_ROOT)/tao/Timeprobe.i \
