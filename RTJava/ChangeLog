@@ -1,5 +1,11 @@
 Fri Feb 02 00:59:59 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
+	* benchmarks/RawSpeed:
+	  Added subdirectory for rt-jvm raw speed measurement.
+
+	* benchmarks/RawSpeed/Fir:
+	  Added directory containing a FIR filter implementation.
+
 	* benchmarks/RawSpeed/Fir/Fir.java:
 	* benchmarks/RawSpeed/Fir/CachedIOFirTester.java:
 	* benchmarks/RawSpeed/Fir/Fir.java:
@@ -24,16 +30,6 @@ Fri Feb 02 00:59:59 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* benchmarks/RawSpeed/Fir/README:
 	  Reame for the example.
-
-Fri Feb 02 00:48:31 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
-
-	* benchmarks/RawSpeed:
-	  Added subdirectory for rt-jvm raw speed measurement.
-
-	* benchmarks/RawSpeed/Fir:
-	  Added directory containing a FIR filter implementation.
-
-	*
 
 Thu Feb 01 19:07:42 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
