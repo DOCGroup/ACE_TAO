@@ -1,3 +1,12 @@
+Fri Jun  4 13:04:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_global.cpp:
+	  Since the one 'official' IDL file that gave us 
+	  problems has been fixed, the default behavior of
+	  the IDL compiler for case-only spelling differences
+	  in identifiers sharing the same scope has been
+	  reverted to error output, as the spec requires.
+
 Fri Jun  4 12:01:34 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* tao/GIOP.cpp (process_server_locate): Added the INS
