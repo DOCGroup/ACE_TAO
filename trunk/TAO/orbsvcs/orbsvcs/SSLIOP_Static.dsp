@@ -353,7 +353,7 @@ InputPath=.\SSLIOP.idl
 InputName=SSLIOP
 
 BuildCmds= \
-	..\..\..\bin\tao_idl_static -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_SSLIOP_Export -Wb,export_include=SSLIOP\SSLIOP_Export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -Ge 1 -I../..  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_SSLIOP_Export -Wb,export_include=SSLIOP\SSLIOP_Export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -391,7 +391,7 @@ InputPath=.\SSLIOP.idl
 InputName=SSLIOP
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl_static -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_SSLIOP_Export -Wb,export_include=SSLIOP\SSLIOP_Export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -Ge 1 -I../..  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_SSLIOP_Export -Wb,export_include=SSLIOP\SSLIOP_Export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
