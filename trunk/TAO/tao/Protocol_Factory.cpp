@@ -5,6 +5,8 @@
 
 ACE_RCSID(tao, Protocol_Factory, "$Id$")
 
+static const char prefix_[] = "\0";
+
 TAO_Protocol_Factory::TAO_Protocol_Factory (void)
 {
 }
@@ -37,6 +39,13 @@ TAO_Protocol_Factory::match_prefix (const ACE_CString & /* prefix */)
 {
   return 0;
 }
+
+const char *
+TAO_Protocol_Factory::prefix (void) const
+{
+  return ::prefix_;
+}
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
