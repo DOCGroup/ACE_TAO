@@ -19,8 +19,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/ORB.h"
+#include "ace/Synch.h"
 #include "ace/Synch_Traits.h"
-#include "Object_Set_T.h"
 #include "Container_Base.h"
 #include "Deployment_CoreS.h"
 
@@ -36,26 +37,11 @@
  * Assumptions:
  * 1. There is only 1 container for all components/homes associating
  *    with 1 NodeApplication
+ * 2. Now the implementation is not thread safe.
  **/
 
 namespace CIAO
 {
-  struct home_installation_info
-  {
-    CORBA::String_var executor_dll_;
-
-    //@@ I added executer_entrypt_ to do install home in a single step. --Tao
-    CORBA::String_var executor_entrypt_;
-
-    CORBA::String_var servant_dll_;
-
-    //This is a bit awkward here, since the entrypt of the servant dll is
-    //already defined in the CIDL generated code. Supposebably we can derive
-    //this name from the executor name if we can follow some naming agreement.
-    //                 --Tao
-    CORBA::String_var servant_entrypt_;
-  };
-
   class CIAO_SERVER_Export NodeApplication_Impl
     : public virtual POA_Deployment::NodeApplication
   {
@@ -101,13 +87,26 @@ namespace CIAO
     /*-------------  CIAO specific helper operations (idl)--------
      *
      *-----------------------------------------------------------*/
+
+    // Initialize the NodeApplication
+    virtual CORBA::Long init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    // Start install homes and components.
+    virtual void install (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+		       ::Deployment::UnknownImplId,
+		       ::Deployment::ImplEntryPointNotFound,
+		       ::Deployment::InstallationFailure,
+		       ::Components::InvalidConfiguration));
+
     // Access the readonly attribute.
     virtual ::Deployment::Properties *
     properties (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Components::CCMHome_ptr
-    install_home (const ::Deployment::Properties  & properties
+    install_home (const ::Deployment::ImplementationInfo & impl_info
 		  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::UnknownImplId,
@@ -115,7 +114,8 @@ namespace CIAO
                        Deployment::InstallationFailure,
                        Components::InvalidConfiguration));
 
-    virtual void remove_home (Components::CCMHome_ptr href
+    // Should I also remove the components here? Any way thats one todo!
+    virtual void remove_home (const char * comp_ins_name
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::RemoveFailure));
@@ -124,17 +124,19 @@ namespace CIAO
     get_homes (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    // Remove everything inside including all components and homes.
+    // User must be sure that no connection is active before calling this!!
     virtual void remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::RemoveFailure));
 
     //@@ This interface is supposed to be used by NodeApplicationManager
     //   to set objref of NAM. Some pre-configuration might happen as well.
-    virtual CORBA::Long init (const ::Deployment::Properties & properties
+    /*virtual CORBA::Long init (const ::Deployment::Properties & properties
 			      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                       Components::InvalidConfiguration));
-
+    */
 
     /*-------------  CIAO specific helper functions (C++)---------
      *
@@ -151,14 +153,36 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     protected:
-    /// parse The Properties
-    void parse_config_values (const ::Deployment::Properties & properties,
-                              struct home_installation_info &component_install_info
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+
+    // This is a helper method to clean up components
+    // should only be called when we are sure that there is no
+    // active connection on this component.
+    virtual void remove_components (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::UnknownImplId,
-                       Deployment::ImplEntryPointNotFound,
-                       Components::InvalidConfiguration));
+                       Components::RemoveFailure));
+
+    virtual void remove_component (const char * comp_ins_name
+				   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+		       Components::RemoveFailure));
+
+    // To store all created CCMHome object
+    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                    Components::CCMHome_ptr,
+                                    ACE_Hash<ACE_CString>,
+                                    ACE_Equal_To<ACE_CString>,
+                                    ACE_Null_Mutex> CCMHome_Map;
+    typedef CCMHome_Map::iterator Home_Iterator;
+    CCMHome_Map home_map_;
+
+    // To sotre all created Component object.
+    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                    Components::CCMObject_ptr,
+                                    ACE_Hash<ACE_CString>,
+                                    ACE_Equal_To<ACE_CString>,
+                                    ACE_Null_Mutex> CCMComponent_Map;
+    typedef CCMComponent_Map::iterator Component_Iterator;
+    CCMComponent_Map component_map_;
 
     // Keep a pointer to the managing ORB serving this servant.
     CORBA::ORB_var orb_;
@@ -175,15 +199,31 @@ namespace CIAO
     // And a reference to the NodeApplicationManager that created us.
     ::CORBA::Object_var node_app_manager_;
 
+    // Synchronize access to the object set.
+    // This will be needed in the case when component/home run in different thread
+    // TAO_SYNCH_MUTEX lock_;
+
+    //============Not Implemented==========================================
+
     // Note: only the NodeApplication really holds the home/component
     //       -->No duplicated() when returning these.
 
     // Keep a list of managed CCMHome.
-    Object_Set<Components::CCMHome, Components::CCMHome_var> home_set_;
+
+    //@@ As I have stated in the idl we are not going to use properties for now.
+    // parse The Properties
+    /*void parse_config_values (const ::Deployment::Properties & properties,
+                              struct home_installation_info &component_install_info
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::UnknownImplId,
+                       Deployment::ImplEntryPointNotFound,
+                       Components::InvalidConfiguration));
+    */
 
     // Synchronize access to the object set.
     // This will be needed in the case when component/home run in different thread
-    TAO_SYNCH_MUTEX lock_;
+    // TAO_SYNCH_MUTEX lock_;
 
     // Keep a list of managed CCMComponent.
     // Object_Set<Components::CCMComponent, Components::CCMComponent_var> compoene_set_;
