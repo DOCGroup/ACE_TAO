@@ -1,5 +1,11 @@
 Wed Oct 29 16:07:20 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
+	* tao/giop.*: Changed most methods that took ACE_SOCK_Stream&
+ 	parameters to take TAO_Client_Connection_Handler*& parameters.
+  	This makes it easier to clean up properly after errors.  Also
+ 	#ifdef'd out seemingly unused code (TAO_GIOP::incoming_message).
+  	Fixed call to ACE_Svc_Handler::idle() to not contain an argument.
+
 	* docs/Options.html: Updated the documentation to reflect recent
  	changes.
 

@@ -337,23 +337,25 @@ class TAO_GIOP
 {
 public:
   // = Close a connection, first sending GIOP::CloseConnection
-  static void close_connection (ACE_SOCK_Stream &fd, void *ctx);
+  static void close_connection (TAO_Client_Connection_Handler *&handle, void *ctx);
 
   static CORBA::Boolean start_message (TAO_GIOP_MsgType t, CDR &msg);
   // Build the header for a message of type <t> into stream <msg>.
   
+#if 0
   static int incoming_message (ACE_SOCK_Stream &peer,
                                TAO_GIOP_ForwardFunc check_forward,
                                TAO_GIOP_RequestHandler handle_request,
                                void *context,
                                CORBA::Environment &env);
+#endif  
 
   static CORBA::Boolean send_message (CDR &stream, 
-                                      ACE_SOCK_Stream &peer);
+                                      TAO_Client_Connection_Handler *&handler);
 
   // = Reads message, returns message type from header.
 
-  static TAO_GIOP_MsgType read_message (ACE_SOCK_Stream &peer, 
+  static TAO_GIOP_MsgType read_message (TAO_Client_Connection_Handler *&handler, 
                                         CDR &msg, 
                                         CORBA::Environment &env);
 
