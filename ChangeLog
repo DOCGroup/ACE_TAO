@@ -1,3 +1,10 @@
+Sat Nov 10 23:25:50 2001  Ossama Othman  <ossama@uci.edu>
+
+	* bin/auto_run_tests.lst:
+
+	  Added new SSLIOP "Big_Request" test to the list of regression
+	  tests to automatically run during the nightly builds.
+
 Sat Nov 10 22:13:54 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/Svc_Conf_l.cpp:
