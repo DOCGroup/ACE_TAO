@@ -80,7 +80,6 @@ Fri Jul  9 21:23:13 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
  	  <brian.j.waltersdorf@boeing.com> for reporting this and
  	  suggesting a fix.
 
->>>>>>> 4.7217
 Thu Jul  8 16:00:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/Timer_Queue_Adapters.h: If ACE_HAS_DEFERRED_TIMER_COMMANDS is
