@@ -1,3 +1,11 @@
+Tue Dec 28 02:03:11 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Container_T.i (remove): Changed to call the <remove> method
+	  using the <list_> in ACE_DLList[_Reverse]_Iterator, otherwise,
+	  the <remove> in the ACE_Double_Linked_List got called which
+	  incurred memory leaks.  Thanks to Lorin Hochstein
+	  <lmh@xiphos.ca> for reporting the bug.
+
 Mon Dec 27 21:29:25 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Log_Msg_Test.cpp (test_ostream): removed local
