@@ -53,6 +53,10 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   , codeset_manager_ (0)
   , resource_usage_strategy_ (TAO_Resource_Factory::TAO_EAGER)
 {
+#if TAO_USE_LAZY_RESOURCE_USAGE_STRATEGY == 1
+  this->resource_usage_strategy_ =
+    TAO_Resource_Factory::TAO_LAZY;
+#endif /*TAO_USE_LAZY_RESOURCE_USAGE_STRATEGY*/
 }
 
 TAO_Default_Resource_Factory::~TAO_Default_Resource_Factory (void)
