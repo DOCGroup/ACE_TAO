@@ -38,13 +38,13 @@ public:
   // Destructor.
 
   virtual void message (const char *msg,
-                        CORBA::Environment &TAO_TRY_ENV)
+                        CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
   // Receives a message string.
 
-  virtual void shutdown (CORBA::Environment &TAO_TRY_ENV)
+  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
