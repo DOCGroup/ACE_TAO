@@ -10,7 +10,7 @@
 //    Pair_T.h
 //
 // = AUTHOR
-//    Irfan Pyarali
+//    Irfan Pyarali <irfan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -22,8 +22,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-////////////////////////////////////////////////////////////////////////////////
 
 template <class T1, class T2>
 class ACE_Pair
@@ -61,8 +59,6 @@ protected:
   T2 second_;
 };
 
-////////////////////////////////////////////////////////////////////////////////
-
 template <class T1, class T2>
 class ACE_Reference_Pair
 {
@@ -94,8 +90,6 @@ protected:
   T1 &first_;
   T2 &second_;
 };
-
-////////////////////////////////////////////////////////////////////////////////
 
 #if defined (__ACE_INLINE__)
 #include "ace/Pair_T.i"
