@@ -116,7 +116,10 @@ $(OUTPUT_DIRECTORY):
 
 <%if(sharedname || staticname || exename)%>
 <%if(libs && libpaths)%>
-LIBCHECK = $(shell for lib in <%libs%>; do for libpath in <%libpaths%>; do full="`echo $$libpath/lib$$lib.* $$libpath/$$lib.lib | tr ' ' '\012' | grep -v \* | head -1`"; if [ -r "$$full" ]; then break; else full=; fi; done; if [ -z "$$full" ]; then echo $$lib; exit; fi; done; echo 1)
+LIBCHECK = $(filter-out $(foreach lib,<%libs%>,$(findstring $(lib),$(foreach $libpath,<%libpaths%>,$(wildcard $(libpath)/lib$(lib).* $(libpath)/$(lib).lib)))),<%libs%>)
+ifeq ($(LIBCHECK),)
+  LIBCHECK = 1
+endif
 <%else%>
 LIBCHECK = 1
 <%endif%>
