@@ -1,3 +1,28 @@
+Wed Aug 13 16:50:56 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tao/RTScheduling/RTScheduler_Manager.h: 
+	* tao/RTScheduling/RTScheduler_Manager.cpp: 	
+	* tao/RTScheduling/Current.h: 	
+	* tao/RTScheduling/Current.cpp: 		
+
+	  Replaced ptr_arith_t with ptrdiff_t.
+
+	* tao/RTScheduling/RTScheduler_Manager.h: 
+
+	  Added missing #pragma (pop).
+
+	* tests/RTScheduling/Scheduler.cpp: 
+	* tests/RTScheduling/Current/Thread_Task.cpp: 
+	* tests/RTScheduling/DT_Spawn/test.cpp: 
+	* tests/RTScheduling/Scheduling_Interceptor/test_server.cpp: 
+	* tests/RTScheduling/Scheduling_Interceptor/test_client.cpp: 
+	* tests/RTScheduling/Thread_Cancel/Thread_Task.cpp: 
+	* tests/RTScheduling/Thread_Cancel/test.cpp: 
+
+	Added missing environment variable in resolve_initial_reference() calls.
+
+	The above fixes should take care of errors on Fuzz build.
+	
 Wed Aug 13 17:16:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
