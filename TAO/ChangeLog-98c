@@ -1,9 +1,9 @@
 Mon Mar 23 13:20:12 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/DOVEBrowser/WeaponsVisComp.java:
-	  Found some uninitialized variables and fixed the problem.
-	  This component should now be more stable.
-	
+          Found some uninitialized variables and fixed the problem.
+          This component should now be more stable.
+
 Mon Mar 23 10:42:12 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/DynSched.{cpp,h,i}
@@ -13,7 +13,7 @@ Mon Mar 23 10:42:12 1998  Chris Gill  <cdgill@cs.wustl.edu>
           Merged in the final round of timeline fixes from the
           files in the old scheduler directory into the ones
           in the new directory.
-          
+
         * orbsvcs/tests/Sched/DynSched_Test.cpp
 
           Added directory orbsvcs/tests/Sched and checked in a
@@ -27,7 +27,8 @@ Mon Mar 23 09:18:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/Dump_Schedule/Makefile,orbsvcs/Event_Service/Makefile,
           orbsvcs/Scheduling_Service/Makefile,
-          orbsvcs/tests/Event_Latency/Makefile:
+          orbsvcs/tests/Event_Latency/Makefile,
+          orbsvcs/tests/EC_Multiple:
           replaced orbsvcs/orbsvcs/orbsvcs with orbsvcs/orbsvcs in some
           dependencies.
 
@@ -41,198 +42,198 @@ Mon Mar 23 09:18:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Mar 23 03:20:47 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* TAO version 0.1.10, released Mon Mar 23 03:20:47 1998.
+        * TAO version 0.1.10, released Mon Mar 23 03:20:47 1998.
 
 Mon Mar 23 01:19:19 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (init): It is ok not to have a svc.conf file,
- 	  therefore check should be:
+        * tao/ORB_Core.cpp (init): It is ok not to have a svc.conf file,
+          therefore check should be:
 
-	  if (result != 0 && errno != ENOENT)
+          if (result != 0 && errno != ENOENT)
 
 Mon Mar 23 01:17:18 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* tao/corba.h: Moved Request.i up a notch in the corba.h file so
- 	  that it will be defined correctly!  This obviates the need for
- 	  Nanbor's fix below!
+        * tao/corba.h: Moved Request.i up a notch in the corba.h file so
+          that it will be defined correctly!  This obviates the need for
+          Nanbor's fix below!
 
 Sun Mar 22 23:19:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Request.cpp: Include Request.i conditionally.
+        * tao/Request.cpp: Include Request.i conditionally.
 
-	* tao/Object.h: Added macro TAO_Export to class CORBA_Object_var
- 	  and class CORBA_Object_ptr.
+        * tao/Object.h: Added macro TAO_Export to class CORBA_Object_var
+          and class CORBA_Object_ptr.
 
 Sun Mar 22 21:54:57 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface: Made full_coll_name() a NON-const
- 	  method to work around a bug with GCC...
+        * TAO_IDL/be/be_interface: Made full_coll_name() a NON-const
+          method to work around a bug with GCC...
 
-	* TAO/tao: Moved a bunch of inline methods from *.i files into
- 	  *.cpp files to avoid warnings from G++.  I don't know why it
- 	  complains but not inlining this code shouldn't matter unless we
- 	  find that these functions get called a lot via profiling...
-  	  Thanks to David Levine for pointing this out.
+        * TAO/tao: Moved a bunch of inline methods from *.i files into
+          *.cpp files to avoid warnings from G++.  I don't know why it
+          complains but not inlining this code shouldn't matter unless we
+          find that these functions get called a lot via profiling...
+          Thanks to David Levine for pointing this out.
 
 Sun Mar 22 14:04:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/tao.{dsp,dsw}: Updated Project files.
+        * tao/tao.{dsp,dsw}: Updated Project files.
 
-	* tao/Exception.{i,cpp}: Conditionally include its inline file.
-	  Added codes for copy ctor and assignment operator for
-	  CORBA_UserException and CORBA_SystemException.
+        * tao/Exception.{i,cpp}: Conditionally include its inline file.
+          Added codes for copy ctor and assignment operator for
+          CORBA_UserException and CORBA_SystemException.
 
 Sun Mar 22 13:05:15 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* tao: Added comments, made some modifications, and refined some
-	class definitions. Changes were made to a large number of files.
+        * tao: Added comments, made some modifications, and refined some
+        class definitions. Changes were made to a large number of files.
 
 Sun Mar 22 08:00:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* Naming_Service.h: Renamed tao_util.h to TAO.h.
+        * Naming_Service.h: Renamed tao_util.h to TAO.h.
 
-	* tao: Removed the CORBA_Cls.* files (since they conflict with the
- 	  overall naming scheme) and merged them into the ORB.h class.
+        * tao: Removed the CORBA_Cls.* files (since they conflict with the
+          overall naming scheme) and merged them into the ORB.h class.
 
 Sun Mar 22 03:52:39 1998  Sergio Flores  <sergio@lambada.cs.wustl.edu>
 
-	* tao/TAO_Internal.cpp (open_services): "this" may only be used
- 	inside a nonstatic member function.
+        * tao/TAO_Internal.cpp (open_services): "this" may only be used
+        inside a nonstatic member function.
 
 Sun Mar 22 02:58:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Makefile:
-	* tao/corba.h:
-	* tao/CORBA_Cls.{h,i,cpp}: Rename CORBA.{h,i,cpp} to
-	  CORBA_Cls.{h,i,cpp} because NT doesn't like the coexistance of
-	  corba.h and CORBA.h.
+        * tao/Makefile:
+        * tao/corba.h:
+        * tao/CORBA_Cls.{h,i,cpp}: Rename CORBA.{h,i,cpp} to
+          CORBA_Cls.{h,i,cpp} because NT doesn't like the coexistance of
+          corba.h and CORBA.h.
 
 Sun Mar 22 02:39:54 1998  Sergio Flores  <sergio@lambada.cs.wustl.edu>
 
-	* tao/CORBA.cpp (ORB_init): made change to check for the return
- 	value when initializing the ORB Core instance.  Also, changed the
- 	TAO_Marshal::initialize() to be called before the initialization
- 	of standard exceptions, where we need the marshal factory for CDR
- 	streams.
-	* tao/ORB_Core.cpp (TAO_ORB_Core::init): made change to check for
- 	the return value when initializing service configurator.
-	* tao/ORB_Core.cpp (TAO_Resource_Factory::parse_args): changes to
- 	correctly parse the options for "-ORBresources" and "-ORBpoa"
+        * tao/CORBA.cpp (ORB_init): made change to check for the return
+        value when initializing the ORB Core instance.  Also, changed the
+        TAO_Marshal::initialize() to be called before the initialization
+        of standard exceptions, where we need the marshal factory for CDR
+        streams.
+        * tao/ORB_Core.cpp (TAO_ORB_Core::init): made change to check for
+        the return value when initializing service configurator.
+        * tao/ORB_Core.cpp (TAO_Resource_Factory::parse_args): changes to
+        correctly parse the options for "-ORBresources" and "-ORBpoa"
 
 Sun Mar 22 01:52:01 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/CORBA.cpp: Moved TAO_Exceptions::init_standard_exceptions()
- 	  to the beginning of ORB_init() so that we can use exceptions
- 	  later within that function.  Thanks to Sergio for reporting
- 	  this.
+        * tao/CORBA.cpp: Moved TAO_Exceptions::init_standard_exceptions()
+          to the beginning of ORB_init() so that we can use exceptions
+          later within that function.  Thanks to Sergio for reporting
+          this.
 
 Sat Mar 21 11:00:40 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* tao: Renamed a bunch of files so that the names and
- 	  capitalization matches precisely.
+        * tao: Renamed a bunch of files so that the names and
+          capitalization matches precisely.
 
-	* tao/Request.i: Created this file and moved a bunch of inline
- 	  methods into here.
+        * tao/Request.i: Created this file and moved a bunch of inline
+          methods into here.
 
-	* tao: Renamed the corbacom.* files (since we don't support COM
- 	  anyhow) into CORBA.h and the new CORBA.i and CORBA.cpp files.
+        * tao: Renamed the corbacom.* files (since we don't support COM
+          anyhow) into CORBA.h and the new CORBA.i and CORBA.cpp files.
 
-	* tao/corbacom.h: Moved the CORBA_SEQUENCE stuff back into the
- 	  header file since it wasn't linking correctly...
+        * tao/corbacom.h: Moved the CORBA_SEQUENCE stuff back into the
+          header file since it wasn't linking correctly...
 
-	* tao/TAO_IDL: Changed all uses of do_call() to do_static_call().
+        * tao/TAO_IDL: Changed all uses of do_call() to do_static_call().
 
         * tao: Made lots of minor enhancements to formatting and style.
 
-	* tao: Removed the invoke.cpp file and moved its functionality
- 	  back into iiopobj.cpp, where it belongs.
+        * tao: Removed the invoke.cpp file and moved its functionality
+          back into iiopobj.cpp, where it belongs.
 
-	* tao/sequence_T.i (replace): Added a cast to (T *) so compilers
- 	  wouldn't complain!  Thanks to Sergio for pointing this out.
+        * tao/sequence_T.i (replace): Added a cast to (T *) so compilers
+          wouldn't complain!  Thanks to Sergio for pointing this out.
 
-	* tao: Renamed IIOP_Object::do_call() to
- 	  IIOP_Object::do_static_call() to be symmetrical with
- 	  do_dynamic_call()...
+        * tao: Renamed IIOP_Object::do_call() to
+          IIOP_Object::do_static_call() to be symmetrical with
+          do_dynamic_call()...
 
-	* tao/typecode.cpp: Due to the new reorganization of the code in
- 	  interp.cpp we're now able to put all the CORBA_TypeCode methods
- 	  back into typecode.cpp, where they belong...
+        * tao/typecode.cpp: Due to the new reorganization of the code in
+          interp.cpp we're now able to put all the CORBA_TypeCode methods
+          back into typecode.cpp, where they belong...
 
-	* tao: Added a new interp.h file and moved the TypeCode table
-	  intialization function into that file.
+        * tao: Added a new interp.h file and moved the TypeCode table
+          intialization function into that file.
 
-	* tao/orbobj.cpp: Removed the friggin' global functions
+        * tao/orbobj.cpp: Removed the friggin' global functions
 
-	  extern void __TC_init_table (void);
-	  extern void __TC_init_standard_exceptions (CORBA::Environment &env);
+          extern void __TC_init_table (void);
+          extern void __TC_init_standard_exceptions (CORBA::Environment &env);
 
-	  and put them inside of classes, where they belong...
+          and put them inside of classes, where they belong...
 
-	* tao/corbacom.cpp: Moved CORBA::ORB_init() from orbobj.cpp
-	  (what was it doing there) to corbacom.cpp, which is where it
- 	  belongs!
+        * tao/corbacom.cpp: Moved CORBA::ORB_init() from orbobj.cpp
+          (what was it doing there) to corbacom.cpp, which is where it
+          belongs!
 
-	* tao/giop.cpp: Moved the TAO_GIOP_MsgType enum into the TAO_GIOP
- 	  class namespace and renamed all the enums accordingly.
+        * tao/giop.cpp: Moved the TAO_GIOP_MsgType enum into the TAO_GIOP
+          class namespace and renamed all the enums accordingly.
 
-	* tao/except.cpp: Added except.i file to split off inlines into
-	  their own file.
+        * tao/except.cpp: Added except.i file to split off inlines into
+          their own file.
 
-	* tao/sequence_T.i (replace): Fixed some typos in the template
- 	  code.  Thanks to Ben Eng <ben@jetpen.com> for reporting these.
+        * tao/sequence_T.i (replace): Fixed some typos in the template
+          code.  Thanks to Ben Eng <ben@jetpen.com> for reporting these.
 
 Sat Mar 21 20:34:39 1998  Sergio Flores  <sergio@lambada.cs.wustl.edu>
 
-	* tao/connect.cpp (open): fixed a bug due to wrong parens
- 	location.
+        * tao/connect.cpp (open): fixed a bug due to wrong parens
+        location.
 
-	* tests/Cubit/TAO/MT_Cubit/server.cpp:
-	* tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.h:
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: added option to
- 	disable use of the name service.  hacked the code for platforms
- 	that don't support floating point math.  Added Quantify start/stop
- 	primitives around CORBA calls.
+        * tests/Cubit/TAO/MT_Cubit/server.cpp:
+        * tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: added option to
+        disable use of the name service.  hacked the code for platforms
+        that don't support floating point math.  Added Quantify start/stop
+        primitives around CORBA calls.
 
 Sat Mar 21 17:55:40 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* orbsvcs/test/Simulator/NavWeap.idl: removed typo
+        * orbsvcs/test/Simulator/NavWeap.idl: removed typo
 
-	* orbsvcs/test/Simulator/DOVEBrowser: New Demo using Java Beans
-	  as visualization components added. This will replace the old
-	  demo under orbsvcs/test/Simulator/Sim_Display. See the readme
-	  file under orbsvcs/test/Simulator for further details.
+        * orbsvcs/test/Simulator/DOVEBrowser: New Demo using Java Beans
+          as visualization components added. This will replace the old
+          demo under orbsvcs/test/Simulator/Sim_Display. See the readme
+          file under orbsvcs/test/Simulator for further details.
 
 Fri Mar 20 23:25:28 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orbsvcs/tests/Trading_Service/Makefile:
-	* orbsvcs/tests/Trading_Service/export_tests.cpp:
-	* orbsvcs/tests/Trading_Service/import_tests.cpp:
-	* orbsvcs/tests/Trading_Service/Offer_Exporter.{h,cpp}:
-	* orbsvcs/tests/Trading_Service/Offer_Importer.{h,cpp}:
-	* orbsvcs/tests/Trading_Service/Service_Type_Exporter.{h,cpp}:
-	* orbsvcs/tests/Trading_Service/TT_Info.{h,cpp}:
-	* orbsvcs/tests/Trading_Service/TTest.idl:
-	I've added the rough draft of tests that pound the Trading Service
-	with a variety of method invocations.
+        * orbsvcs/tests/Trading_Service/Makefile:
+        * orbsvcs/tests/Trading_Service/export_tests.cpp:
+        * orbsvcs/tests/Trading_Service/import_tests.cpp:
+        * orbsvcs/tests/Trading_Service/Offer_Exporter.{h,cpp}:
+        * orbsvcs/tests/Trading_Service/Offer_Importer.{h,cpp}:
+        * orbsvcs/tests/Trading_Service/Service_Type_Exporter.{h,cpp}:
+        * orbsvcs/tests/Trading_Service/TT_Info.{h,cpp}:
+        * orbsvcs/tests/Trading_Service/TTest.idl:
+        I've added the rough draft of tests that pound the Trading Service
+        with a variety of method invocations.
 
-	* orbsvcs/Trading_Service/trader.cpp:
-	* orbsvcs/Trading_Service/Makefile:
-	The trader now responds to resolve_intial_references multicast
-	requests with the IOR of its Lookup interface, as per the
-	specification.
+        * orbsvcs/Trading_Service/trader.cpp:
+        * orbsvcs/Trading_Service/Makefile:
+        The trader now responds to resolve_intial_references multicast
+        requests with the IOR of its Lookup interface, as per the
+        specification.
 
 Fri Mar 20 21:48:47 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* TAO version 0.1.9, released Fri Mar 20 21:48:47 1998.
+        * TAO version 0.1.9, released Fri Mar 20 21:48:47 1998.
 
 Fri Mar 20 19:46:43 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* tao/sequence_T: Added the full complement of get_buffer(),
- 	  replace(), and release() calls to TAO's sequences.
+        * tao/sequence_T: Added the full complement of get_buffer(),
+          replace(), and release() calls to TAO's sequences.
 
-	* docs/releasenotes/index.html (href): Reformatted the DOVE
-	  demo section of the release notes a bit.
+        * docs/releasenotes/index.html (href): Reformatted the DOVE
+          demo section of the release notes a bit.
 
 Thu Mar 20 17:05:42 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
@@ -241,30 +242,30 @@ Thu Mar 20 17:05:42 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
 Fri Mar 20 16:21:28 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/POA/Generic_Servant/MyFooServant.h: No need to include
- 	  generic_servant_export.h.
+        * tests/POA/Generic_Servant/MyFooServant.h: No need to include
+          generic_servant_export.h.
 
-	* tests/POA/Generic_Servant/Makefile: Added flags to the idl
- 	  compiler so that the server library can be made as a dynamic
- 	  library.
+        * tests/POA/Generic_Servant/Makefile: Added flags to the idl
+          compiler so that the server library can be made as a dynamic
+          library.
 
 Thu Mar 20 16:12:42 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * $TAO_ROOT/orbsvcs/tests/Simulator/Event_Supplier:
-	  New Project and Workspace files for NT
+          New Project and Workspace files for NT
 
 Fri Mar 20 11:53:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/NestedUpcall/client.cpp: Use EventHandler_vare.in() to
-	  pass in a pointer.  Added explicit template instantiation
-	  codes.
+        * tests/NestedUpcall/client.cpp: Use EventHandler_vare.in() to
+          pass in a pointer.  Added explicit template instantiation
+          codes.
 
 Fri Mar 20 09:46:50 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Memory_Pools.h:
-	* orbsvcs/orbsvcs/Event/Memory_Pools.cpp:
-	  Locks are needed for the memory pool singletons; thanks to
-	  Thomas Venturella <tventurell@mdc.com> for detecting this.
+        * orbsvcs/orbsvcs/Event/Memory_Pools.h:
+        * orbsvcs/orbsvcs/Event/Memory_Pools.cpp:
+          Locks are needed for the memory pool singletons; thanks to
+          Thomas Venturella <tventurell@mdc.com> for detecting this.
 
 Fri Mar 20 09:26:28 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -279,84 +280,84 @@ Fri Mar 20 09:26:28 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Mar 20 02:47:22 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/default_server.cpp
-	  (create_servant_lock,create_poa_lock,create_poa_mgr_lock):
-	  Don't return 0 but an ACE_Null_Mutex as default.
+        * tao/default_server.cpp
+          (create_servant_lock,create_poa_lock,create_poa_mgr_lock):
+          Don't return 0 but an ACE_Null_Mutex as default.
 
 Fri Mar 20 00:36:16 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/poa.cpp (dispatch_servant_i): The POA Current was not being
- 	  setup correctly.  It was used before it was created. Fix was to
- 	  change the order of things in dispatch_servant_i() and restored
- 	  pre_invoke() to its original state.
+        * tao/poa.cpp (dispatch_servant_i): The POA Current was not being
+          setup correctly.  It was used before it was created. Fix was to
+          change the order of things in dispatch_servant_i() and restored
+          pre_invoke() to its original state.
 
-	* tests/POA/Generic_Servant/client.cpp (main): Make sure the
- 	  client does not crash if the user does not provide an IOR.
+        * tests/POA/Generic_Servant/client.cpp (main): Make sure the
+          client does not crash if the user does not provide an IOR.
 
-	* tests/POA/Generic_Servant/MyFooServant.h (MyFooServant): Added
- 	  export macro so that the class gets properly included in the
- 	  DLL.
+        * tests/POA/Generic_Servant/MyFooServant.h (MyFooServant): Added
+          export macro so that the class gets properly included in the
+          DLL.
 
-	* TAO_IDL/GenExportH.BAT: Changed %1% to %1.
+        * TAO_IDL/GenExportH.BAT: Changed %1% to %1.
 
-	* tests/POA/Generic_Servant/generic_servant_export.h: The server
- 	  lib will now be created as a DLL instead of as a static library.
-  	  New file was added to get the exports right.
+        * tests/POA/Generic_Servant/generic_servant_export.h: The server
+          lib will now be created as a DLL instead of as a static library.
+          New file was added to get the exports right.
 
 Thu Mar 19 18:42:20 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_attribute.cpp (visit_attribute): Undefined
-	  variable bt to removed a compilation warning.
+        * TAO_IDL/be/be_visitor_attribute.cpp (visit_attribute): Undefined
+          variable bt to removed a compilation warning.
 
-	* tao/server_factory.cpp (create_servant_lock):
-	* tao/default_server.{h,cpp} (create_servant_lock): Added new
-	  method which creates a servant lock according to various
-	  strategies used.
+        * tao/server_factory.cpp (create_servant_lock):
+        * tao/default_server.{h,cpp} (create_servant_lock): Added new
+          method which creates a servant lock according to various
+          strategies used.
 
 Thu Mar 19 18:45:13 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/client.h:
-	* orbsvcs/tests/AVStreams/client.cpp:
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
-	* orbsvcs/orbsvcs/AVStreams.idl (interface MMDevice):
-	PropertyService's PropertySet methods have been tested in the
-	AVStreams' test application. Tested using the MMDevice interface
-	of the AVStreams.
+        * orbsvcs/tests/AVStreams/client.h:
+        * orbsvcs/tests/AVStreams/client.cpp:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+        * orbsvcs/orbsvcs/AVStreams.idl (interface MMDevice):
+        PropertyService's PropertySet methods have been tested in the
+        AVStreams' test application. Tested using the MMDevice interface
+        of the AVStreams.
 
 Thu Mar 19 18:20:42 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * $TAO_ROOT/orbsvcs/tests/Simulator/README: New notes about this release
 
         * $TAO_ROOT/orbsvcs/tests/Simulator/NavWeap.idl: New, simpler Weapons struct
-	  because of a Visibroker for Java 3.2 bug.
+          because of a Visibroker for Java 3.2 bug.
 
         * $TAO_ROOT/orbsvcs/tests/Simulator/Event_Supplier: Using the new
-  	  Weapons struct.
+          Weapons struct.
 
-	* $TAO_ROOT/orbsvcs/tests/Simulator/Sim_Display/NS_Resolve.java: Complying
-	  with the new Name Service lookup protocol (4 bytes instead of 2)
+        * $TAO_ROOT/orbsvcs/tests/Simulator/Sim_Display/NS_Resolve.java: Complying
+          with the new Name Service lookup protocol (4 bytes instead of 2)
 
         * $TAO_ROOT/orbsvcs/tests/Simulator/Sim_Display/Display_Weapons.java:
           Using the new Weapons struct.
 
         * $TAO_ROOT/orbsvcs/tests/Simulator/Sim_Display/Display_Push_Consumer.java:
-	  Complying with the naming conventions for the skeleton code of VB 3.2.
+          Complying with the naming conventions for the skeleton code of VB 3.2.
 
 Thu Mar 19 10:51:22 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* docs/releasenotes/index.html: Updated entry for the property service.
+        * docs/releasenotes/index.html: Updated entry for the property service.
 
 Thu Mar 19 09:55:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/CDR/README:
-	* tests/CDR/basic_types.cpp:
-	* tests/CDR/tc.cpp:
-	  Added basic documentation on the purpose of the tests.
+        * tests/CDR/README:
+        * tests/CDR/basic_types.cpp:
+        * tests/CDR/tc.cpp:
+          Added basic documentation on the purpose of the tests.
 
 Thu Mar 19 09:26:25 1998  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
-	* docs/releasenotes/index.html: Added an entry for the Concurrency
-	  Control Service
+        * docs/releasenotes/index.html: Added an entry for the Concurrency
+          Control Service
 
 Thu Mar 19 08:41:27 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -375,20 +376,20 @@ Thu Mar 19 08:41:27 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Thu Mar 19 05:26:10 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* tao/typecode.cpp: In private_member_name, the return value of
-	"skip_typecode ()" was incorrectly compared with TRAVERSE_CONTINUE
-	rather than with a boolean value. This is now fixed.
+        * tao/typecode.cpp: In private_member_name, the return value of
+        "skip_typecode ()" was incorrectly compared with TRAVERSE_CONTINUE
+        rather than with a boolean value. This is now fixed.
 
 Wed Mar 18 21:43:46 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* tao/typecode.cpp: private_equal method had a big error. I had
-	forgotten break statements after every case in the switch
-	statement. So no matter what, the last result which returned
-	"TRUE" used to be returned. This is now fixed.
+        * tao/typecode.cpp: private_equal method had a big error. I had
+        forgotten break statements after every case in the switch
+        statement. So no matter what, the last result which returned
+        "TRUE" used to be returned. This is now fixed.
 
 Wed Mar 18 21:32:24 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* TAO version 0.1.8, released Wed Mar 18 21:32:24 1998.
+        * TAO version 0.1.8, released Wed Mar 18 21:32:24 1998.
 
 Wed Mar 18 21:26:29 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -397,78 +398,78 @@ Wed Mar 18 21:26:29 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Mar 18 20:36:46 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/CDR/basic_types.cpp: Rearranged this test file a bit to
- 	  make it more structured.
+        * tests/CDR/basic_types.cpp: Rearranged this test file a bit to
+          make it more structured.
 
 Wed Mar 18 18:52:12 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* tao/object.{h, cpp}: Changed the name of the method "key ()" to
- 	"_key ()" since this was clashing with names used by users in
- 	their IDl files. As such "key" is not a standard method defined by
- 	OMG on the class Object. Hence we must use a _ before it.
+        * tao/object.{h, cpp}: Changed the name of the method "key ()" to
+        "_key ()" since this was clashing with names used by users in
+        their IDl files. As such "key" is not a standard method defined by
+        OMG on the class Object. Hence we must use a _ before it.
 
-	* tao/{poa, servant_base}.cpp: Used _key instead of key as
-	explained above.
+        * tao/{poa, servant_base}.cpp: Used _key instead of key as
+        explained above.
 
 Wed Mar 18 18:41:34 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* orbsvcs/tests/CosPropertyService/main.cpp (main): Added testcode
-	for NamesIterator.
+        * orbsvcs/tests/CosPropertyService/main.cpp (main): Added testcode
+        for NamesIterator.
 
 Wed Mar 18 18:33:08 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* tao/any.cpp: There was a bug in the assignment operator whereby
-	a Release was causing the Any object itself getting deleted.
+        * tao/any.cpp: There was a bug in the assignment operator whereby
+        a Release was causing the Any object itself getting deleted.
 
-	* tao/poa.cpp: Changed occurrences of "buffer ()" used on the
-	object key (which is a sequence) to use "get_buffer" according to
-	the latest C++ mapping.
+        * tao/poa.cpp: Changed occurrences of "buffer ()" used on the
+        object key (which is a sequence) to use "get_buffer" according to
+        the latest C++ mapping.
 
 Wed Mar 18 18:32:04 1998  Sergio Flores  <sergio@mambo.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp:
-	* orbsvcs/orbsvcs/Naming/CosNaming_i.h: Fixed some allocation
- 	errors and added synchronization mechanism for static internal
- 	data structures.  Also fixed an undefined symbol due to templates
- 	not being instantiated.
+        * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp:
+        * orbsvcs/orbsvcs/Naming/CosNaming_i.h: Fixed some allocation
+        errors and added synchronization mechanism for static internal
+        data structures.  Also fixed an undefined symbol due to templates
+        not being instantiated.
 
 Wed Mar 18 17:22:40 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/sequence_T.h: Renamed buffer() to get_buffer() to confrom to
- 	  orbos/98-01-11.
+        * tao/sequence_T.h: Renamed buffer() to get_buffer() to confrom to
+          orbos/98-01-11.
 
-	* tao/sequence[_T].*: Added the get_buffer(), release(), and
- 	  replace() methods defined by the proposed orbos/98-01-11
- 	  specification.
+        * tao/sequence[_T].*: Added the get_buffer(), release(), and
+          replace() methods defined by the proposed orbos/98-01-11
+          specification.
 
 Wed Mar 18 16:54:33 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (next_n): Changed ACE_NEW
- 	  to ACE_NEW_RETURN.
+        * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (next_n): Changed ACE_NEW
+          to ACE_NEW_RETURN.
 
 Wed Mar 18 16:39:40 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* tao/orbobj.{h,cpp}: * tao/params.{h,cpp}: * tao/orbcore.cpp:
-  	  Expanded the resolve initial references protocol to include
- 	  bootstrappable services other than the Naming Service. Now, the
- 	  multicast message includes a field identifying the target
- 	  service. The values for this field are defined in orbobj.h --
- 	  currently there are only TAO_SERVICEID_NAMESERVICE, and
- 	  TAO_SERVICEID_TRADINGSERVICE. For completeness I've added for
- 	  the -ORBtradingserviceior and -ORBtradingserviceport command
- 	  line parameters.
+        * tao/orbobj.{h,cpp}: * tao/params.{h,cpp}: * tao/orbcore.cpp:
+          Expanded the resolve initial references protocol to include
+          bootstrappable services other than the Naming Service. Now, the
+          multicast message includes a field identifying the target
+          service. The values for this field are defined in orbobj.h --
+          currently there are only TAO_SERVICEID_NAMESERVICE, and
+          TAO_SERVICEID_TRADINGSERVICE. For completeness I've added for
+          the -ORBtradingserviceior and -ORBtradingserviceport command
+          line parameters.
 
-	* orbsvcs/Naming/Naming_Utils.cpp:
-	* orbsvcs/Naming/Ior_Multicast.cpp:
-  	  Now, on the receiving end, the bootstrappable service compares
- 	  the service_id it receives in the multicast message with its own
- 	  before responding to it.
+        * orbsvcs/Naming/Naming_Utils.cpp:
+        * orbsvcs/Naming/Ior_Multicast.cpp:
+          Now, on the receiving end, the bootstrappable service compares
+          the service_id it receives in the multicast message with its own
+          before responding to it.
 
 Wed Mar 18 16:04:38 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosPropertyService.idl (CosPropertyService):
-	  Uncommented sequence of typecodes. It passed the tao_idl
- 	  compiler.
+        * orbsvcs/orbsvcs/CosPropertyService.idl (CosPropertyService):
+          Uncommented sequence of typecodes. It passed the tao_idl
+          compiler.
 
 Wed Mar 18 07:18:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -494,14 +495,14 @@ Wed Mar 18 07:18:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Mar 18 02:08:55 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Param_Test/client.cpp (~Param_Test_Client): Removed
-	  releasing of the Param_Test pointer.  It is owned by the Driver
-	  class.
+        * tests/Param_Test/client.cpp (~Param_Test_Client): Removed
+          releasing of the Param_Test pointer.  It is owned by the Driver
+          class.
 
 Tue Mar 17 23:28:59 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/poa.h (POA): Changed the LOCATION_RESULT enum from protected
- 	  to private.
+        * tao/poa.h (POA): Changed the LOCATION_RESULT enum from protected
+          to private.
 
 Tue Mar 17 13:20:05 1998  David L. Levine  <levine@cs.wustl.edu>
 
