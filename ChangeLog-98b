@@ -13,6 +13,9 @@ Wed Dec 09 07:02:06 1998  David L. Levine  <levine@cs.wustl.edu>
           Ivan Pascal <pascal@info.tsu.ru> for reporting that
           getpid () is supported on those platforms.
 
+        * ace/config-linux-common.h: restored ACE_LACKS_GETPGID,
+          because ::getpgid () isn't found on Alpha with glibc 2.0.7.
+
 1998-12-09  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tests/Collection_Test.cpp: Added new test for ACE collections.
