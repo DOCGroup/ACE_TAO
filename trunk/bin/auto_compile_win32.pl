@@ -433,7 +433,7 @@ TAO/tests/NestedUpcall/Triangle_Test/Triangle_Test.dsw, Nested Upcall Triangle I
 TAO/tests/NestedUpcall/MT_Client_Test/MT_Client_Test.dsw, Nested Upcall MT_Client Server:
 TAO/tests/NestedUpcall/MT_Client_Test/MT_Client_Test.dsw, Nested Upcall MT_Client Client:
 TAO/tests/Multiple_Inheritance/Multiple_Inheritance.dsw, Multiple Inheritance Server:
-TAO/tests/Multiple_Inheritance/Multiple_Inheritance.dsw, Multiple Inheritance Slient:
+TAO/tests/Multiple_Inheritance/Multiple_Inheritance.dsw, Multiple Inheritance Client:
 TAO/tests/MT_Client/MT_Client.dsw, MT_Client ORB Creation:
 TAO/tests/MT_Client/MT_Client.dsw, MT_Client Server:
 TAO/tests/MT_Client/MT_Client.dsw, MT_Client Simple Client:
