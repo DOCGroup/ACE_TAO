@@ -1,3 +1,9 @@
+Thu Jul 10 20:01:43 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao\Transport_Cache_Manager.cpp: 
+
+	  Fixed template instantiation goofs.
+
 Thu Jul 10 19:01:54 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao\ORB_Core.cpp (lane_resources): 
