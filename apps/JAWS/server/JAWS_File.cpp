@@ -332,13 +332,24 @@ JAWS_File::JAWS_File (const char * filename)
       return;
     }
 
-  char buf[4096];
-  int count = ACE_OS::read (original, buf, sizeof (buf));
-  while (count > 0)
+  ACE_Mem_Map original_map (original);
+  ACE_Mem_Map copy_map (copy, this->size_, PROT_WRITE, MAP_SHARED);
+  void *src = original_map.addr ();
+  void *dst = copy_map.addr ();
+  
+  if (src == MAP_FAILED || dst == MAP_FAILED)
     {
-      ACE_OS::write (copy, buf, count);
-      count = ACE_OS::read (original, buf, sizeof (buf));
+      this->error (JAWS_File::MEMMAP_FAILED);
+      copy_map.remove ();
     }
+  else
+    {
+      ACE_OS::memcpy (dst, src, this->size_);
+
+      if (original_map.unmap () == -1 || copy_map.unmap () == -1)
+	this->error (JAWS_File::MEMMAP_FAILED);
+    }
+
   ACE_OS::close (original);
   ACE_OS::close (copy);
 }
