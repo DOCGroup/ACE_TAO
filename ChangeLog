@@ -1,3 +1,11 @@
+Fri Apr 23 20:25:05 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* Kokyu/Kokyu_defs.h:
+	* Kokyu/Kokyu_defs.i:
+
+	  Changed return types for equality operators to "bool", as is the
+	  norm for modern C++.
+
 Fri Apr 23 12:50:34 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Config_Test.cpp (iniCompare):

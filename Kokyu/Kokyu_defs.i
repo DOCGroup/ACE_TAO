@@ -6,13 +6,13 @@ namespace Kokyu
 
 ACE_INLINE
 void Dispatcher_Attributes::sched_policy(int policy)
-{       
+{
   sched_policy_ = policy;
 }
 
 ACE_INLINE
 void Dispatcher_Attributes::sched_scope(int scope)
-{       
+{
   sched_scope_ = scope;
 }
 
@@ -28,7 +28,7 @@ Reordering_Queue_Attributes::Reordering_Queue_Attributes ()
   //pending offset = 15/16th of the dynamic prio range
   //which means that the LATE population will be in the
   //1/16th part of the range.
-  
+
   //For the Laxity and Deadline strategies these are the
   //defaults defined in Message_Block.h
   //static_bit_field_mask (0x3FFUL), // 2^(10) - 1
@@ -38,7 +38,7 @@ Reordering_Queue_Attributes::Reordering_Queue_Attributes ()
 }
 
 ACE_INLINE
-Dispatch_Command::Dispatch_Command (int dont_delete, 
+Dispatch_Command::Dispatch_Command (int dont_delete,
         ACE_Allocator *allocator)
         :dont_delete_ (dont_delete),
         allocator_ (allocator)
@@ -61,10 +61,10 @@ void Dispatch_Command::destroy (void)
   else
   {
     delete this;
-  } 
+  }
 }
 
-ACE_INLINE 
+ACE_INLINE
 ConfigInfo::ConfigInfo ()
   :preemption_priority_ (0),
    thread_priority_ (0),
@@ -77,8 +77,8 @@ ConfigInfo::ConfigInfo ()
 
 //to satisfy ACE_Array<ConfigInfo>
 ACE_INLINE
-int operator != (const Kokyu::ConfigInfo& lhs, 
-                 const Kokyu::ConfigInfo& rhs)
+bool operator != (const Kokyu::ConfigInfo& lhs,
+                  const Kokyu::ConfigInfo& rhs)
 {
   return (lhs.preemption_priority_ != rhs.preemption_priority_ ||
           lhs.thread_priority_ != rhs.thread_priority_ ||
