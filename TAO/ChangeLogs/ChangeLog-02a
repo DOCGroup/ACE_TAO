@@ -1,4 +1,17 @@
-Wed Jun 20 11:46:40 2001  Jeff Parsons <parsons@cs.wustl.edu>
+Wed Jun 20 14:22:47 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be_include/pre_invoke_cs.h:
+        * TAO_IDL/be/pre_invoke_cs.cpp:
+
+          When allocating memory for an out parameter in an operation, 
+          fixed the generated ACE_NEW_RETURN macro to return something 
+          other than 0 for operation return types of fixed size structs.
+          The other case for which this applies is an operation return
+          type of enum, which was fixed some time ago. Thanks to
+          Jody Hagins <jody@atdesk.com> for sending in the IDL file that
+          uncovered this bug.
+
+Wed Jun 20:46:40 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/DynAny_Test/test_dynarray.cpp:
         * tests/DynAny_Test/test_dynsequence.cpp:
