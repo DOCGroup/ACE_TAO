@@ -4,6 +4,7 @@
 #include "Kokyu_qosC.h"
 #include "utils.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
+#include "tao/ORB_Constants.h"
 
 EDF_Scheduling::SchedulingParameter
 EDF_Sched_Param_Policy::value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -291,7 +292,7 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 
       sc.context_data =
         ACE_reinterpret_cast(IOP::ServiceContext::
-                             _tao_seq_Octet_context_data &,
+                             _tao_seq_CORBA_Octet_ &,
                              *codec_->encode (sc_qos_as_any));
       
 #ifdef KOKYU_DSRT_LOGGING
@@ -352,7 +353,7 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
   // Ignore the "_is_a" operation since it may have been invoked
   // locally on the server side as a side effect of another call,
   // meaning that the client hasn't added the service context yet.
-  if (ACE_OS_String::strcmp ("_is_a", operation.in ()) == 0)
+  if (ACE_OS::strcmp ("_is_a", operation.in ()) == 0)
     return;
 
   IOP::ServiceContext_var sc =
@@ -495,7 +496,7 @@ EDF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
 
       sc.context_data = ACE_reinterpret_cast(
                                              IOP::ServiceContext::
-                                             _tao_seq_Octet_context_data &,
+                                             _tao_seq_CORBA_Octet_ &,
                                              *codec_->encode (sc_qos_as_any));
 
       // Add this context to the service context list.

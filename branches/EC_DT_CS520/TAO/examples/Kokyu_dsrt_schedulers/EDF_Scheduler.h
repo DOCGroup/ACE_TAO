@@ -1,4 +1,4 @@
-// $Id$
+//$Id$
 
 #ifndef EDF_SCHEDULER_H
 #define EDF_SCHEDULER_H
@@ -7,6 +7,7 @@
 #include "EDF_SchedulingC.h"
 #include "Kokyu_dsrt.h"
 #include "Kokyu_dsrt_schedulers_export.h"
+#include "tao/LocalObject.h"
 
 struct EDF_Scheduler_Traits
 {

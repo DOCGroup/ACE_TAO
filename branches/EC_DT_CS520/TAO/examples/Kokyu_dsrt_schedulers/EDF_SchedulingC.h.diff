@@ -1,8 +1,8 @@
---- EDF_SchedulingC.h.orig	Thu Oct 30 23:11:00 2003
-+++ EDF_SchedulingC.h	Thu Oct 30 23:12:13 2003
-@@ -41,8 +41,8 @@
- 
- #include "Kokyu_dsrt_schedulers_export.h"
+--- EDF_SchedulingC.h.orig	2003-11-11 11:20:37.000000000 -0600
++++ EDF_SchedulingC.h	2003-11-11 11:22:34.000000000 -0600
+@@ -44,8 +44,8 @@
+ #include "tao/Objref_VarOut_T.h"
+ #include "tao/VarOut_T.h"
  
 -#include "tao/RTScheduling/RTSchedulerC.h"
 -#include "tao/RTCORBA/RTCORBAC.h"
