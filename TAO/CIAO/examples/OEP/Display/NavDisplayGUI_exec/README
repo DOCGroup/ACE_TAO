@@ -1,7 +1,0 @@
-This example is the Qt-based GUI implementation of NavDisplay component.
-
-It is NOT necessary to compile ACE/TAO/CIAO with Qt support,
-i.e. ACE_HAS_QT since this example does not relyes on Qt Reactor and
-communicates with GUI part using QApplication::postMessage() and
-simple Command Pattern based framework.  But be sure that QTDIR
-environment variable is pointed to your Qt installation directory.

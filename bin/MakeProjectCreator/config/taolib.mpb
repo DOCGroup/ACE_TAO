@@ -1,6 +1,0 @@
-project : acelib, taoversion {
-  depends  += tao
-  includes += $(TAO_ROOT) $(TAO_ROOT)/tao
-  libpaths += $(TAO_ROOT)/tao
-  libflags += TAO_AS_STATIC_LIBS
-}
