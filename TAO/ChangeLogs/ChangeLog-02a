@@ -1,3 +1,13 @@
+Sun Mar  4 11:06:25 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* examples/PluggableUDP/README:
+	* examples/PluggableUDP/DIOP/README:
+	  Added infomation about DIOP and PluggableUDP directories.
+
+	* examples/PluggableUDP/tests/README:
+	  Moved some information about the implementation of DIOP into the
+	  ../DIOP/README file.
+
 Sun Mar  4 10:03:59 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* examples/PluggableUDP/tests/server.cpp:
