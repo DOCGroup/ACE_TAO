@@ -19,6 +19,7 @@
 
 #include "ace/SOCK_Dgram.h"
 #include "orbsvcs/sfpC.h"
+#include "orbsvcs/orbsvcs_export.h"
 
 #define MAGIC_NUMBER_LEN 5
 #define TAO_WRITEV_MAX 128
@@ -97,8 +98,10 @@ public:
   int last_received_;
   int num_fragments_;
   ACE_Ordered_MultiSet<TAO_SFP_Fragment_Node> fragment_set_;
-  typedef ACE_Ordered_MultiSet_Iterator<TAO_SFP_Fragment_Node> FRAGMENT_SET_ITERATOR;
+
 };
+
+typedef ACE_Ordered_MultiSet_Iterator<TAO_SFP_Fragment_Node> FRAGMENT_SET_ITERATOR;
 
 class TAO_ORBSVCS_Export TAO_SFP :public virtual ACE_Event_Handler
   // = TITLE
