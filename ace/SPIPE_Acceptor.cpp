@@ -54,20 +54,23 @@ int
 ACE_SPIPE_Acceptor::create_new_instance (int perms)
 {
 #if defined (ACE_HAS_STREAM_PIPES)
-  ACE_HANDLE handle;
   ACE_HANDLE spipe[2];
-  
-  handle = ACE_OS::creat (this->local_addr_.get_path_name (), perms);
+  char module[] = "connld";
 
+  ACE_HANDLE handle = ACE_OS::creat (this->local_addr_.get_path_name (),
+                                     perms);
   if (handle == ACE_INVALID_HANDLE)
     return -1;
   else if (ACE_OS::close (handle) == -1)
     return -1;
   else if (ACE_OS::pipe (spipe) == -1)
     return -1;
-  else if (ACE_OS::ioctl (spipe[0], I_PUSH, "connld") == -1)
+  else if (ACE_OS::ioctl (spipe[0],
+                          I_PUSH,
+                          module) == -1)
     return -1;
-  else if (ACE_OS::fattach (spipe[0], this->local_addr_.get_path_name ()) == -1)
+  else if (ACE_OS::fattach (spipe[0],
+                            this->local_addr_.get_path_name ()) == -1)
     return -1;
 
   this->set_handle (spipe[1]);

@@ -1,5 +1,13 @@
 Sun Jun  6 22:02:43 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.i (t_error): Fixed the broken t_error() usage on SunOS
+ 	  5.5 and 5.6...
+
+	* ace/README: Added a new macro called ACE_HAS_BROKEN_T_ERROR to
+ 	  workaround the frigging broken prototype for t_error() on
+ 	  Solaris 2.5.  Note that this macro is required for SunOS 2.5 and
+ 	  2.6, but not SunOS 2.7 (thank goodness).
+
 	* Fixed gazillions of incorrect usages of char * (which should
  	  have been const char *) throughout ACE.
 
