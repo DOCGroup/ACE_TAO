@@ -4,6 +4,12 @@ Thu Mar 27 11:25:38 1997  David L. Levine  <levine@cs.wustl.edu>
 	  built, because it wasn't needed.  Thanks to Sandro Doro
 	  <alex@aureus.sublink.org> for this fix.
 
+	* include/makeinclude/platform_sunos5_g++.GNU,
+	                      platform_sunos5_x86_g++.GNU,
+	                      platform_unixware_g++.GNU:
+	  removed "-L$(WRAPPER_ROOT)/ace -L./" from LDFLAGS because it
+	  is added to LDFLAGS in include/makeinclude/wrapper_macros.GNU.
+
 	* apps/Gateway/Gateway/{Event_Channel.cpp,Gateway.cpp,
 	                        Proxy_Handler.cpp,Proxy_Handler_Acceptor.cpp,
 	                        Proxy_Handler_Connector.cpp,
