@@ -1,3 +1,18 @@
+Mon May 22 17:48:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_args.cpp:
+	  Added two missing options to the 'usage' ouput -
+	  -H perfect_hash	(force perfect hashing. Even 
+				 though it's the default, I
+				 guess someone might want to
+				 use it just to remind themselves)
+	  -d			(output a dump of the AST)
+
+	* docs/compiler.html:
+	  Added -d option mentioned above and removed -Gi option
+	  (interpretive marshaling - no longer used in IDL compiler).
+	  Thanks to Ossama for pointing these out.
+
 Mon May 22 13:57:45 2000  Ossama Othman  <ossama@uci.edu>
 
 	These changes were necessary to get the CORBA Security Service IDL
