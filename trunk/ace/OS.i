@@ -2442,8 +2442,9 @@ ACE_OS::sema_init (ACE_sema_t *s,
   ACE_UNUSED_ARG (max);
   ACE_UNUSED_ARG (sa);
 
-#   if defined (ACE_LACKS_NAMED_POSIX_SEM)
   s->name_ = 0;
+
+#   if defined (ACE_LACKS_NAMED_POSIX_SEM)
   if (type == USYNC_PROCESS)
     {
       // Let's see if it already exists.
