@@ -522,51 +522,12 @@ CORBA_ORB::resolve_policy_current (CORBA::Environment& ACE_TRY_ENV)
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_commandline_ref (const char *& init_ref)
-{
-  // @@ Vishal: this method should take a CORBA::Environment as
-  // argument!
-
-  // @@ Where are the exceptions caught ??
-  CORBA::Environment env;
-
-  // Initialize our return ptr.
-  CORBA_Object_ptr return_value = CORBA_Object::_nil ();
-
-  // Get the commandline initial reference.
-  init_ref = this->orb_core_->orb_params ()->init_ref ();
-
-  // Parse the IOR from the given commandline mapping
-  // <ObjectId>=<IOR>.
-  const char* ior_location = init_ref + ACE_OS::strcspn (init_ref,"=") + 1;
-  char *ior = CORBA::string_dup (ior_location);
-
-  // Convert the given IOR to object. Note the IOR could be of the form
-  // IOR: ...    / iiop: ...    / iioploc: ...    / iiopname: ...
-
-  return_value = this->string_to_object (ior, env);
-
-  // check for errors
-  if (env.exception () != 0)
-    return_value = CORBA_Object::_nil ();
-
-  // @@EXC@@ Use an auto_ptr or a String_var
-  CORBA::string_free (ior);
-
-  // @@ Vishal: Why do we duplicate this value?
-  return CORBA_Object::_duplicate (return_value);
-}
-
-
-CORBA_Object_ptr
 CORBA_ORB::resolve_service (CORBA::String service_name,
-                            ACE_Time_Value *timeout)
+                            ACE_Time_Value *timeout,
+                            CORBA::Environment& ACE_TRY_ENV)
 {
-  // @@ Vishal: this method should take a CORBA::Environment as
-  // argument!
-  CORBA::Environment env;
   CORBA_Object_ptr return_value = CORBA_Object::_nil ();
-
+  
   // First check to see if we've already initialized this.
   if (this->name_service_ != CORBA_Object::_nil ())
     {
@@ -583,14 +544,15 @@ CORBA_ORB::resolve_service (CORBA::String service_name,
       if (name_service_ior.length () == 0)
         // Third, check to see if the user has an environment variable.
         name_service_ior = ACE_OS::getenv ("NameServiceIOR");
-
+      
       if (name_service_ior.length () != 0)
         {
           this->name_service_ =
-            this->string_to_object (name_service_ior.c_str (), env);
-
+            this->string_to_object (name_service_ior.c_str (),
+                                    ACE_TRY_ENV);
+          
           // check for errors
-          if (env.exception () != 0)
+          if (ACE_TRY_ENV.exception () != 0)
             this->name_service_ = CORBA_Object::_nil ();
         }
       else
@@ -598,13 +560,13 @@ CORBA_ORB::resolve_service (CORBA::String service_name,
           // First, determine if the port was supplied on the command line
           u_short port =
             this->orb_core_->orb_params ()->name_service_port ();
-
+          
           if (port == 0)
             {
               // Look for the port among our environment variables.
               const char *port_number =
                 ACE_OS::getenv ("NameServicePort");
-
+              
               if (port_number != 0)
                 port = ACE_OS::atoi (port_number);
               else
@@ -614,23 +576,22 @@ CORBA_ORB::resolve_service (CORBA::String service_name,
           this->name_service_ =
             this->multicast_to_service (service_name,
                                         port,
-                                        timeout);
+                                        timeout,
+                                        ACE_TRY_ENV);
         }
     }
-
+  
   // Return ior.
   return_value = this->name_service_;
   return CORBA_Object::_duplicate (return_value);
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout)
+CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout,
+                                    CORBA::Environment& ACE_TRY_ENV)
 {
-  // @@ Vishal: this method should take a CORBA::Environment as
-  // argument!
-  CORBA::Environment env;
   CORBA_Object_ptr return_value = CORBA_Object::_nil ();
-
+  
   // First check to see if we've already initialized this.
   if (this->trading_service_ != CORBA_Object::_nil ())
     {
@@ -647,14 +608,14 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout)
       if (trading_service_ior.length () == 0)
         // Third, check to see if the user has an environment variable.
         trading_service_ior = ACE_OS::getenv ("TradingServiceIOR");
-
+      
       if (trading_service_ior.length () != 0)
         {
           this->trading_service_ =
-            this->string_to_object (trading_service_ior.c_str (), env);
-
+            this->string_to_object (trading_service_ior.c_str (), ACE_TRY_ENV);
+          
           // check for errors
-          if (env.exception () != 0)
+          if (ACE_TRY_ENV.exception () != 0)
             this->trading_service_ = CORBA_Object::_nil ();
         }
       else
@@ -663,25 +624,26 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout)
           // @@ FRED: need a generic rep for this!
           u_short port =
             this->orb_core_->orb_params ()->trading_service_port ();
-
+          
           if (port == 0)
             {
               // Look for the port among our environment variables.
               const char *port_number = ACE_OS::getenv ("TradingServicePort");
-
+              
               if (port_number != 0)
                 port = ACE_OS::atoi (port_number);
               else
                 port = TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT;
             }
-
+          
           this->trading_service_ =
             this->multicast_to_service ("TradingService",
                                         port,
-                                        timeout);
+                                        timeout,
+                                        ACE_TRY_ENV);
         }
     }
-
+  
   return_value = this->trading_service_;
   return CORBA_Object::_duplicate (return_value);
 }
@@ -826,33 +788,32 @@ CORBA_ORB::multicast_query (char *buf,
 CORBA_Object_ptr
 CORBA_ORB::multicast_to_service (const char * service_name,
                                  u_short port,
-                                 ACE_Time_Value *timeout)
+                                 ACE_Time_Value *timeout,
+                                 CORBA::Environment& ACE_TRY_ENV)
 {
-  // @@ Vishal: this method should take a CORBA::Environment as
-  // argument!
   char buf[BUFSIZ + 1];
-
+  
   // Use UDP multicast to locate the  service.
   CORBA_Object_ptr return_value =
     CORBA_Object::_nil ();
-
+  
   if (this->multicast_query (buf,
                              service_name,
                              port,
                              timeout) == 0)
     {
-      CORBA::Environment env;
-
+      //CORBA::Environment env;
+      
       // Convert IOR to an object reference.
       CORBA_Object_ptr objectified_ior =
         this->string_to_object ((CORBA::String) buf,
-                                env);
-
+                                ACE_TRY_ENV);
+      
       // Check for errors.
-      if (env.exception () == 0)
+      if (ACE_TRY_ENV.exception () == 0)
         return_value = objectified_ior;
     }
-
+  
   // Return ior.
   return return_value;
 }
@@ -875,10 +836,10 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
   // -ORBInitRef.
   TAO_IOR_LookupTable *table =
     this->orb_core_->orb_params ()->ior_lookup_table ();
-
+  
   ACE_CString ior;
   ACE_CString object_id ((const char *) name);
-
+  
   // Is the service name in the IOR Table.
   if (table->find_ior (object_id, ior) == 0)
     return this->string_to_object (ior.c_str (), ACE_TRY_ENV);
@@ -888,12 +849,12 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
       // -ORBDefaultInitRef.
       char * default_init_ref =
         this->orb_core_->orb_params ()->default_init_ref ();
-
+      
       // Check if a DefaultInitRef was specified.
       if (ACE_OS::strlen (default_init_ref) != 0)
         {
           ACE_CString list_of_profiles;
-
+          
           // Used by the strtok_r.
           char *lasts = 0;
 
@@ -912,7 +873,7 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
               list_of_profiles += object_id;
               list_of_profiles += ACE_CString (",");
             }
-
+          
           // Clean up.
           delete [] default_init_ref;
 
@@ -922,32 +883,30 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
           return this->string_to_object (list_of_profiles.c_str (),
                                          ACE_TRY_ENV);
         }
-
+      
       delete default_init_ref;
     }
 
-  if (ACE_OS::strcmp (name,
-                      TAO_OBJID_NAMESERVICE) == 0)
-    return this->resolve_service ("NameService",
-                                  timeout);
-  else if (ACE_OS::strcmp (name,
-                           TAO_OBJID_TRADINGSERVICE) == 0)
-    return this->resolve_trading_service (timeout);
-  else if (ACE_OS::strcmp (name,
-                           TAO_OBJID_ROOTPOA) == 0)
+  if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
+    return this->resolve_service ("NameService", timeout, ACE_TRY_ENV);
+
+  else if (ACE_OS::strcmp (name, TAO_OBJID_TRADINGSERVICE) == 0)
+    return this->resolve_trading_service (timeout, ACE_TRY_ENV);
+
+  else if (ACE_OS::strcmp (name, TAO_OBJID_ROOTPOA) == 0)
     return this->resolve_root_poa ();
-  else if (ACE_OS::strcmp (name,
-                           TAO_OBJID_POACURRENT) == 0)
+
+  else if (ACE_OS::strcmp (name, TAO_OBJID_POACURRENT) == 0)
     return this->resolve_poa_current ();
-  else if (ACE_OS::strcmp (name,
-                           TAO_OBJID_POLICYMANAGER) == 0)
+
+  else if (ACE_OS::strcmp (name, TAO_OBJID_POLICYMANAGER) == 0)
     return this->resolve_policy_manager (ACE_TRY_ENV);
-  else if (ACE_OS::strcmp (name,
-                           TAO_OBJID_POLICYCURRENT) == 0)
+
+  else if (ACE_OS::strcmp (name, TAO_OBJID_POLICYCURRENT) == 0)
     return this->resolve_policy_current (ACE_TRY_ENV);
+
   else
-    return this->resolve_service (name,
-                                  timeout);
+    return this->resolve_service (name, timeout, ACE_TRY_ENV);
 }
 
 TAO_Stub *
