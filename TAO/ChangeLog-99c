@@ -1,3 +1,21 @@
+Tue Jul 27 21:11:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.yy:
+	* TAO_IDL/fe/y.tab.cpp:
+	* TAO_IDL/fe/y.tab.cpp.diff
+	  The IDL compiler was losing its list of pragma prefixes upon
+	  declaration of a typedef. Upon fixing this, and further checking
+	  I found that it was also losing them upon declaration of a
+	  contant, enum, exception and a forward interface delcaration.
+	  Had to add code to reset the list (accessing it sets it to NULL)
+	  in several places, and in some cases extract the list when it
+	  wasn't already assigned to a local variable. Thanks to
+	  Alex Hornby <alex@anvil.co.uk> for sending in the original
+	  example.
+
+	* TAO/tests/Param_Test/param_test_i.cpp:
+	  Fixed all the MSVC level 4 warnings in this file.
+
 Tue Jul 27 17:45:26 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tao/ORB.{i, h} (CORBA_ORB_out): Added the "const" to the formal
