@@ -194,7 +194,7 @@ Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
 	* tests\RTCORBA\MT_Client_Protocol_Priority\client.cpp: 
 	* tests\RTCORBA\Profile_And_Endpoint_Selection\client.cpp: 
 	* examples\RTCORBA\Activity\Activity.cpp: 
-	* orbsvcs\orbsvcs\Notify\CosNotify_Service.cpp:
+	* orbsvcs\orbsvcs\Notify\ThreadPool_Task.cpp:
 
 	  Use thread_creation_flags() to create invocation threads.
 
@@ -251,7 +251,8 @@ Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	  - Simplified call to activate().
 
-	* orbsvcs\orbsvcs\Notify\CosNotify_Service.cpp:
+	* orbsvcs\orbsvcs\Notify\CosNotify_Service:
+	* orbsvcs\orbsvcs\Notify\Properties:
 
 	  - init_main_thread() was removed since it was not needed or
 	  used.

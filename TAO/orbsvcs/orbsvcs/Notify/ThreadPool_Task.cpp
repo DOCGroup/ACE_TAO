@@ -9,6 +9,7 @@
 ACE_RCSID(Notify, TAO_NS_ThreadPool_Task, "$Id$")
 
 #include "tao/debug.h"
+#include "tao/ORB_Core.h"
 #include "Properties.h"
 #include "Timer_Queue.h"
 
