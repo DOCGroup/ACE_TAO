@@ -292,50 +292,6 @@ CORBA_TypeCode::~CORBA_TypeCode (void)
     }
 }
 
-// Returns true if the two unaliased typecodes are equal.
-CORBA::Boolean
-CORBA_TypeCode::equivalent (CORBA::TypeCode_ptr tc,
-                            CORBA::Environment &ACE_TRY_ENV) const
-{
-  CORBA::TypeCode_var rcvr = CORBA::TypeCode::_duplicate (ACE_const_cast(CORBA_TypeCode *, this));
-  CORBA::Boolean status = 0;
-
-  if (this->kind_ == CORBA::tk_alias)
-    {
-      rcvr = this->content_type (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
-
-      status = (rcvr->kind (ACE_TRY_ENV) == CORBA::tk_alias);
-      ACE_CHECK_RETURN (0);
-
-      while (status)
-        {
-          rcvr = rcvr->content_type (ACE_TRY_ENV);
-          ACE_CHECK_RETURN (0);
-
-          status = (rcvr->kind (ACE_TRY_ENV) == CORBA::tk_alias);
-          ACE_CHECK_RETURN (0);
-        }
-    }
-
-  status = (tc->kind (ACE_TRY_ENV) == CORBA::tk_alias);
-  ACE_CHECK_RETURN (0);
-
-  // Added by Bala to check for leaks as content_type duplicates the
-  // pointers
-  CORBA::TypeCode_var tcvar = CORBA::TypeCode::_duplicate (tc);
-
-  while (status)
-    {
-      tcvar = tcvar->content_type (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
-
-      status = (tcvar->kind (ACE_TRY_ENV) == CORBA::tk_alias);
-      ACE_CHECK_RETURN (0);
-    }
-
-  return rcvr->equal (tcvar.in (), ACE_TRY_ENV);
-}
 
 // Return the i-th member typecode if it exists, else raise an
 // exception. Possible exceptions are BadKind and Bounds.
@@ -692,11 +648,79 @@ TC_Private_State::~TC_Private_State (void)
     }
 }
 
+// Point of recursion for equal() and equivalent().
+CORBA::Boolean 
+CORBA_TypeCode::equ_common (const CORBA::TypeCode_ptr tc,
+                            CORBA::Boolean equiv_only,
+                            CORBA::Environment &ACE_TRY_ENV) const
+{
+  // Are the two pointers the same?
+  if (this == tc)
+    return 1;
+
+  if (equiv_only)
+    {
+      CORBA::TypeCode_var rcvr = 
+        CORBA::TypeCode::_duplicate (ACE_const_cast (CORBA_TypeCode *, 
+                                                     this));
+
+      CORBA::Boolean status = (this->kind_ == CORBA::tk_alias);
+
+      while (status)
+        {
+          rcvr = rcvr->content_type (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+          status = (rcvr->kind (ACE_TRY_ENV) == CORBA::tk_alias);
+          ACE_CHECK_RETURN (0);
+        }
+
+      status = (tc->kind (ACE_TRY_ENV) == CORBA::tk_alias);
+      ACE_CHECK_RETURN (0);
+
+      // Added by Bala to check for leaks as content_type duplicates the
+      // pointers
+      CORBA::TypeCode_var tcvar = 
+        CORBA::TypeCode::_duplicate (ACE_const_cast (CORBA_TypeCode *, 
+                                                     tc));
+
+      while (status)
+        {
+          tcvar = tcvar->content_type (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+          status = (tcvar->kind (ACE_TRY_ENV) == CORBA::tk_alias);
+          ACE_CHECK_RETURN (0);
+        }
+
+      if (rcvr->kind (ACE_TRY_ENV) != tcvar->kind (ACE_TRY_ENV))
+        // simple case
+        return 0;
+      else
+        // typecode kinds are same
+        return rcvr->private_equal (tcvar.in (),
+                                    equiv_only,
+                                    ACE_TRY_ENV);
+    }
+  else
+    {
+      if (this->kind_ != tc->kind (ACE_TRY_ENV))
+        // simple case
+        return 0;
+      else
+        // typecode kinds are same
+        return this->private_equal (tc, 
+                                    equiv_only,
+				                            ACE_TRY_ENV);
+    }
+}
+
 // check if typecodes are equal. Equality is based on a mix of structural and
 // name equivalence i.e., if names are provided, we also check for name
 // equivalence, else resort simply to structural equivalence.
 CORBA::Boolean
 CORBA_TypeCode::private_equal (CORBA::TypeCode_ptr tc,
+                               CORBA::Boolean equiv_only,
                                CORBA::Environment &ACE_TRY_ENV) const
 {
   // We come in here only if the typecode kinds of both are same
@@ -725,25 +749,45 @@ CORBA_TypeCode::private_equal (CORBA::TypeCode_ptr tc,
       // the kind_ field
       return 1;
     case CORBA::tk_objref:
-      return this->private_equal_objref (tc, ACE_TRY_ENV);
+      return this->private_equal_objref (tc, 
+                                         equiv_only, 
+                                         ACE_TRY_ENV);
     case CORBA::tk_struct:
-      return this->private_equal_struct (tc, ACE_TRY_ENV);
+      return this->private_equal_struct (tc, 
+                                         equiv_only, 
+                                         ACE_TRY_ENV);
     case CORBA::tk_union:
-      return this->private_equal_union (tc, ACE_TRY_ENV);
+      return this->private_equal_union (tc, 
+                                        equiv_only, 
+                                        ACE_TRY_ENV);
     case CORBA::tk_enum:
-      return this->private_equal_enum (tc, ACE_TRY_ENV);
+      return this->private_equal_enum (tc, 
+                                       equiv_only, 
+                                       ACE_TRY_ENV);
     case CORBA::tk_string:
-      return this->private_equal_string (tc, ACE_TRY_ENV);
+      return this->private_equal_string (tc, 
+                                         equiv_only, 
+                                         ACE_TRY_ENV);
     case CORBA::tk_wstring:
-      return this->private_equal_wstring (tc, ACE_TRY_ENV);
+      return this->private_equal_wstring (tc, 
+                                          equiv_only, 
+                                          ACE_TRY_ENV);
     case CORBA::tk_sequence:
-      return this->private_equal_sequence (tc, ACE_TRY_ENV);
+      return this->private_equal_sequence (tc, 
+                                           equiv_only, 
+                                           ACE_TRY_ENV);
     case CORBA::tk_array:
-      return this->private_equal_array (tc, ACE_TRY_ENV);
+      return this->private_equal_array (tc, 
+                                        equiv_only, 
+                                        ACE_TRY_ENV);
     case CORBA::tk_alias:
-      return this->private_equal_alias (tc, ACE_TRY_ENV);
+      return this->private_equal_alias (tc, 
+                                        equiv_only, 
+                                        ACE_TRY_ENV);
     case CORBA::tk_except:
-      return this->private_equal_except (tc, ACE_TRY_ENV);
+      return this->private_equal_except (tc, 
+                                         equiv_only, 
+                                         ACE_TRY_ENV);
     case ~0u: // indirection
       {
         // indirection offset must be same
@@ -757,6 +801,7 @@ CORBA_TypeCode::private_equal (CORBA::TypeCode_ptr tc,
 
 CORBA::Boolean
 CORBA_TypeCode::private_equal_objref (CORBA::TypeCode_ptr tc,
+                                      CORBA::Boolean equiv_only,
                                       CORBA::Environment &ACE_TRY_ENV) const
 {
   // compare the repoID and name, of which the name is optional as per GIOP
@@ -769,32 +814,42 @@ CORBA_TypeCode::private_equal_objref (CORBA::TypeCode_ptr tc,
 
   if (!ACE_OS::strcmp (my_id, tc_id))
     {
-      // same repository IDs. Now check their names
-      const char *myname = this->name (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
-
-      const char *tcname = tc->name (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
-
-      if ((ACE_OS::strlen (myname) > 1) &&
-          (ACE_OS::strlen (tcname) > 1))
+      // Equality of repoIDs is sufficient for equivalence.
+      if (equiv_only)
         {
-          // both of them specify names, compare them
-          if (!ACE_OS::strcmp (myname, tcname))
-            return 1; // success
-          else
-            return 0; // failed
+          return 1;
         }
-      return 1; // equal (success)
+      // Name check is skipped by equivalent().
+      else
+        {
+          // same repository IDs. Now check their names
+          const char *myname = this->name (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+          const char *tcname = tc->name (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+          if ((ACE_OS::strlen (myname) > 1) &&
+              (ACE_OS::strlen (tcname) > 1))
+            {
+              // both of them specify names, compare them
+              if (!ACE_OS::strcmp (myname, tcname))
+                return 1; // success
+              else
+                return 0; // failed
+            }
+          return 1; // success
+        }
     }
   return 0; // failed
 }
 
 CORBA::Boolean
 CORBA_TypeCode::private_equal_struct (CORBA::TypeCode_ptr tc,
+                                      CORBA::Boolean equiv_only,
                                       CORBA::Environment &ACE_TRY_ENV) const
 {
-  // for structs the repoID and names are optional. However, if provided, we
+  // For structs the repoID and names are optional. However, if provided, we
   // must compare them
   const char *my_id = this->id (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
@@ -802,23 +857,36 @@ CORBA_TypeCode::private_equal_struct (CORBA::TypeCode_ptr tc,
   const char *tc_id = tc->id (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  const char *my_name = this->name (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
-  const char *tc_name = tc->name (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
   // compare repoIDs if they exist
-  if (ACE_OS::strlen (my_id) > 1
-      && ACE_OS::strlen (tc_id) > 1
-      && ACE_OS::strcmp (my_id, tc_id)) // not same
-    return 0;
+  if (ACE_OS::strlen (my_id) > 1 && ACE_OS::strlen (tc_id) > 1)
+    {
+      if (ACE_OS::strcmp (my_id, tc_id)) // not same
+        {
+          return 0;
+        }
+      else
+        {
+          // Equality of repoIDs is sufficient for equivalence.
+          if (equiv_only)
+            return 1;
+        }
+    }
 
-  // Compare names if they exist.
-  if (ACE_OS::strlen (my_name) > 1
-      && ACE_OS::strlen (tc_name) > 1
-      && ACE_OS::strcmp (my_name, tc_name)) // not same
-    return 0;
+  // Skipped by equivalent().
+  if (!equiv_only)
+    {
+      const char *my_name = this->name (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      const char *tc_name = tc->name (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      // Compare names if they exist.
+      if (ACE_OS::strlen (my_name) > 1
+          && ACE_OS::strlen (tc_name) > 1
+          && ACE_OS::strcmp (my_name, tc_name)) // not same
+        return 0;
+    }
 
   // Check if the member count is same.
   CORBA::ULong my_count = this->member_count (ACE_TRY_ENV);
@@ -830,7 +898,7 @@ CORBA_TypeCode::private_equal_struct (CORBA::TypeCode_ptr tc,
   if (my_count != tc_count)
     return 0; // number of members don't match
 
-  // The checks below indicate that we have a recursive struct.
+  // The checks below tell if we have a recursive struct.
   CORBA::TypeCode_ptr par = this->parent_;
   if (par != 0)
     {
@@ -852,24 +920,31 @@ CORBA_TypeCode::private_equal_struct (CORBA::TypeCode_ptr tc,
 
   for (CORBA::ULong i = 0; i < my_count; i++)
     {
-      const char *my_member_name =
-        this->member_name (i, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
+      // Skipped by equivalent().
+      if (!equiv_only)
+        {
+          const char *my_member_name =
+            this->member_name (i, ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
 
-      const char *tc_member_name =
-        tc->member_name (i, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
+          const char *tc_member_name =
+            tc->member_name (i, ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
 
-      if (ACE_OS::strlen (my_member_name) > 1
-          && ACE_OS::strlen (tc_member_name) > 1
-          && ACE_OS::strcmp (my_member_name, tc_member_name)) // not same
-        return 0;
+          if (ACE_OS::strlen (my_member_name) > 1
+              && ACE_OS::strlen (tc_member_name) > 1
+              && ACE_OS::strcmp (my_member_name, 
+                                 tc_member_name)) // not same
+            return 0;
+        }
 
       // now compare the typecodes of the members
-      CORBA::TypeCode_var my_member_tc = this->member_type (i, ACE_TRY_ENV);
+      CORBA::TypeCode_var my_member_tc = this->member_type (i, 
+                                                            ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
-      CORBA::TypeCode_var tc_member_tc = tc->member_type (i, ACE_TRY_ENV);
+      CORBA::TypeCode_var tc_member_tc = tc->member_type (i, 
+                                                          ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
       // One of our members may be recursive, but not through us.
@@ -880,44 +955,62 @@ CORBA_TypeCode::private_equal_struct (CORBA::TypeCode_ptr tc,
         continue;
 
       CORBA::Boolean flag =
-        my_member_tc->equal (tc_member_tc.in (), ACE_TRY_ENV);
+        my_member_tc->equ_common (tc_member_tc.in (), 
+                                  equiv_only,
+                                  ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
+
       if (!flag)
         return 0;
     }
 
-  return 1; // success (equal)
+  return 1; // success
 }
 
 CORBA::Boolean
 CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
+                                     CORBA::Boolean equiv_only,
                                      CORBA::Environment &ACE_TRY_ENV) const
 {
-  // For unions the repoID and names are optional. However, if
-  // provided, we must compare them.
+  // For unions the repoID and names are optional. However, if provided, we
+  // must compare them
   const char *my_id = this->id (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   const char *tc_id = tc->id (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  const char *my_name = this->name (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
-  const char *tc_name = tc->name (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
   // compare repoIDs if they exist
-  if (ACE_OS::strlen (my_id) > 1
-      && ACE_OS::strlen (tc_id) > 1
-      && ACE_OS::strcmp (my_id, tc_id)) // not same
-    return 0;
+  if (ACE_OS::strlen (my_id) > 1 && ACE_OS::strlen (tc_id) > 1)
+    {
+      if (ACE_OS::strcmp (my_id, tc_id)) // not same
+        {
+          return 0;
+        }
+      else
+        {
+          // Equality of repoIDs is sufficient for equivalence.
+          if (equiv_only)
+            return 1;
+        }
+    }
 
-  // compare names if they exist
-  if (ACE_OS::strlen (my_name) > 1
-      && ACE_OS::strlen (tc_name) > 1
-      && ACE_OS::strcmp (my_name, tc_name)) // not same
-    return 0;
+  // Skipped by equivalent().
+  if (!equiv_only)
+    {
+      const char *my_name = this->name (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      const char *tc_name = tc->name (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      // Compare names if they exist.
+      if (ACE_OS::strlen (my_name) > 1
+          && ACE_OS::strlen (tc_name) > 1
+          && ACE_OS::strcmp (my_name, 
+                             tc_name)) // not same
+        return 0;
+    }
 
   // check if the discriminant type is same
   CORBA::TypeCode_var my_discrim = this->discriminator_type (ACE_TRY_ENV);
@@ -926,8 +1019,11 @@ CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
   CORBA::TypeCode_var tc_discrim = tc->discriminator_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  int status = my_discrim->equal (tc_discrim.in (), ACE_TRY_ENV);
+  CORBA::Boolean status = my_discrim->equ_common (tc_discrim.in (), 
+                                                  equiv_only,
+                                                  ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
+
   if (!status)
     return 0;
 
@@ -975,24 +1071,31 @@ CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
     {
       // First check if labels are same.
 
-      // check if member names are same
-      const char *my_member_name = this->member_name (i, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
+      // Check if member names are same - skipped by equivalent().
+      if (!equiv_only)
+        {
+          const char *my_member_name = this->member_name (i, 
+                                                          ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
 
-      const char *tc_member_name = tc->member_name (i, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
+          const char *tc_member_name = tc->member_name (i, 
+                                                        ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
 
-      if (ACE_OS::strlen (my_member_name) > 1 && ACE_OS::strlen
-          (tc_member_name) > 1)
-        // both specify member names
-        if (ACE_OS::strcmp (my_member_name, tc_member_name)) // not same
-          return 0;
+          if (ACE_OS::strlen (my_member_name) > 1 
+              && ACE_OS::strlen (tc_member_name) > 1
+              && ACE_OS::strcmp (my_member_name, 
+                                 tc_member_name)) // not same
+            return 0;
+        }
 
       // now compare the typecodes of the members
-      CORBA::TypeCode_var my_member_tc = this->member_type (i, ACE_TRY_ENV);
+      CORBA::TypeCode_var my_member_tc = this->member_type (i, 
+                                                            ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
-      CORBA::TypeCode_var tc_member_tc = tc->member_type (i, ACE_TRY_ENV);
+      CORBA::TypeCode_var tc_member_tc = tc->member_type (i, 
+                                                          ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
       // One of our members may be recursive, but not through us.
@@ -1002,20 +1105,24 @@ CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
           && my_member_tc->root_tc_base_ == tc_member_tc->root_tc_base_)
         continue;
 
-      CORBA::Boolean flag = my_member_tc->equal (tc_member_tc.in (), ACE_TRY_ENV);
+      CORBA::Boolean flag = my_member_tc->equ_common (tc_member_tc.in (), 
+                                                      equiv_only,
+                                                      ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
+
       if (!flag)
         return 0;
     }
 
-  return 1; // success (equal)
+  return 1; // success
 }
 
 CORBA::Boolean
 CORBA_TypeCode::private_equal_enum (CORBA::TypeCode_ptr tc,
+                                    CORBA::Boolean equiv_only,
                                     CORBA::Environment &ACE_TRY_ENV) const
 {
-  // for enum the repoID and names are optional. However, if provided, we
+  // For enums the repoID and names are optional. However, if provided, we
   // must compare them
   const char *my_id = this->id (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
@@ -1023,21 +1130,37 @@ CORBA_TypeCode::private_equal_enum (CORBA::TypeCode_ptr tc,
   const char *tc_id = tc->id (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  const char *my_name = this->name (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
-  const char *tc_name = tc->name (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
   // compare repoIDs if they exist
   if (ACE_OS::strlen (my_id) > 1 && ACE_OS::strlen (tc_id) > 1)
-    if (ACE_OS::strcmp (my_id, tc_id)) // not same
-      return 0;
+    {
+      if (ACE_OS::strcmp (my_id, tc_id)) // not same
+        {
+          return 0;
+        }
+      else
+        {
+          // Equality of repoIDs is sufficient for equivalence.
+          if (equiv_only)
+            return 1;
+        }
+    }
 
-  // compare names if they exist
-  if (ACE_OS::strlen (my_name) > 1 && ACE_OS::strlen (tc_name) > 1)
-    if (ACE_OS::strcmp (my_name, tc_name)) // not same
-      return 0;
+  // Skipped by equivalent().
+  if (!equiv_only)
+    {
+      const char *my_name = this->name (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      const char *tc_name = tc->name (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      // Compare names if they exist.
+      if (ACE_OS::strlen (my_name) > 1
+          && ACE_OS::strlen (tc_name) > 1
+          && ACE_OS::strcmp (my_name, 
+                             tc_name)) // not same
+        return 0;
+    }
 
   // check if the member count is same
   CORBA::ULong my_count = this->member_count (ACE_TRY_ENV);
@@ -1051,25 +1174,31 @@ CORBA_TypeCode::private_equal_enum (CORBA::TypeCode_ptr tc,
 
   for (CORBA::ULong i=0; i < my_count; i++)
     {
-      // now check if the member names are same
-      const char *my_member_name = this->member_name (i, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
+      // Check if member names are same - skipped by equivalent().
+      if (!equiv_only)
+        {
+          const char *my_member_name = this->member_name (i, 
+                                                          ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
 
-      const char *tc_member_name = tc->member_name (i, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
+          const char *tc_member_name = tc->member_name (i, 
+                                                        ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
 
-      if (ACE_OS::strlen (my_member_name) > 1 && ACE_OS::strlen
-          (tc_member_name) > 1)
-        // both specify member names
-        if (ACE_OS::strcmp (my_member_name, tc_member_name)) // not same
-          return 0;
+          if (ACE_OS::strlen (my_member_name) > 1 
+              && ACE_OS::strlen (tc_member_name) > 1
+              && ACE_OS::strcmp (my_member_name, 
+                                 tc_member_name)) // not same
+            return 0;
+        }
     }
 
-  return 1; // success (equal)
+  return 1; // success
 }
 
 CORBA::Boolean
 CORBA_TypeCode::private_equal_string (CORBA::TypeCode_ptr tc,
+                                      CORBA::Boolean /* equiv_only */,
                                       CORBA::Environment &ACE_TRY_ENV) const
 {
   // compare the lengths
@@ -1084,6 +1213,7 @@ CORBA_TypeCode::private_equal_string (CORBA::TypeCode_ptr tc,
 
 CORBA::Boolean
 CORBA_TypeCode::private_equal_wstring (CORBA::TypeCode_ptr tc,
+                                       CORBA::Boolean /* equiv_only */,
                                        CORBA::Environment &ACE_TRY_ENV) const
 {
   // compare the lengths
@@ -1098,6 +1228,7 @@ CORBA_TypeCode::private_equal_wstring (CORBA::TypeCode_ptr tc,
 
 CORBA::Boolean
 CORBA_TypeCode::private_equal_sequence (CORBA::TypeCode_ptr tc,
+                                        CORBA::Boolean equiv_only,
                                         CORBA::Environment &ACE_TRY_ENV) const
 {
   // this involves comparing the typecodes of the element type as well as the
@@ -1108,8 +1239,11 @@ CORBA_TypeCode::private_equal_sequence (CORBA::TypeCode_ptr tc,
   CORBA::TypeCode_var tc_elem = tc->content_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  int status = my_elem->equal (tc_elem.in (), ACE_TRY_ENV);
+  CORBA::Boolean status = my_elem->equ_common (tc_elem.in (), 
+                                               equiv_only,
+                                               ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
+
   if (!status)
     return 0;
 
@@ -1125,14 +1259,18 @@ CORBA_TypeCode::private_equal_sequence (CORBA::TypeCode_ptr tc,
 
 CORBA::Boolean
 CORBA_TypeCode::private_equal_array (CORBA::TypeCode_ptr tc,
+                                     CORBA::Boolean equiv_only,
                                      CORBA::Environment &ACE_TRY_ENV) const
 {
   // exactly like sequence
-  return this->private_equal_sequence (tc, ACE_TRY_ENV);
+  return this->private_equal_sequence (tc, 
+                                       equiv_only,
+                                       ACE_TRY_ENV);
 }
 
 CORBA::Boolean
 CORBA_TypeCode::private_equal_alias (CORBA::TypeCode_ptr tc,
+                                     CORBA::Boolean equiv_only,
                                      CORBA::Environment &ACE_TRY_ENV) const
 {
   // for structs the repoID and names are optional. However, if provided, we
@@ -1166,11 +1304,14 @@ CORBA_TypeCode::private_equal_alias (CORBA::TypeCode_ptr tc,
   CORBA::TypeCode_var tc_elem = tc->content_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  return my_elem->equal (tc_elem.in (), ACE_TRY_ENV);
+  return my_elem->equ_common (tc_elem.in (), 
+                              equiv_only,
+                              ACE_TRY_ENV);
 }
 
 CORBA::Boolean
 CORBA_TypeCode::private_equal_except (CORBA::TypeCode_ptr tc,
+                                      CORBA::Boolean equiv_only,
                                       CORBA::Environment &ACE_TRY_ENV) const
 {
   // exactly similar to structs, except that the repository ID is mandatory
@@ -1182,19 +1323,32 @@ CORBA_TypeCode::private_equal_except (CORBA::TypeCode_ptr tc,
   ACE_CHECK_RETURN (0);
 
   if (ACE_OS::strcmp (my_id, tc_id))
-    return 0; // failed
+    {
+      return 0; // failed
+    }
+  else
+    {
+      // Equality of repoIDs is sufficient for equivalence.
+      if (equiv_only)
+        return 1;
+    }
 
-  // now compare names. They may be optional
-  const char *my_name = this->name (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  // Now compare names. They may be optional - skipped by equivalent().
+  if (!equiv_only)
+    {
+      const char *my_name = this->name (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
 
-  const char *tc_name = tc->name (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+      const char *tc_name = tc->name (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
 
-  // compare names if they exist
-  if (ACE_OS::strlen (my_name) > 1 && ACE_OS::strlen (tc_name) > 1)
-    if (ACE_OS::strcmp (my_name, tc_name)) // not same
-      return 0;
+      // Compare names if they exist.
+      if (ACE_OS::strlen (my_name) > 1
+          && ACE_OS::strlen (tc_name) > 1
+          && ACE_OS::strcmp (my_name, 
+                             tc_name)) // not same
+        return 0;
+    }
 
   // check if the member count is same
   CORBA::ULong my_count = this->member_count (ACE_TRY_ENV);
@@ -1208,17 +1362,23 @@ CORBA_TypeCode::private_equal_except (CORBA::TypeCode_ptr tc,
 
   for (CORBA::ULong i=0; i < my_count; i++)
     {
-      const char *my_member_name = this->member_name (i, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
+      // Check if member names are same - skipped by equivalent().
+      if (!equiv_only)
+        {
+          const char *my_member_name = this->member_name (i, 
+                                                          ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
 
-      const char *tc_member_name = tc->member_name (i, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
+          const char *tc_member_name = tc->member_name (i, 
+                                                        ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
 
-      if (ACE_OS::strlen (my_member_name) > 1 && ACE_OS::strlen
-          (tc_member_name) > 1)
-        // both specify member names
-        if (ACE_OS::strcmp (my_member_name, tc_member_name)) // not same
-          return 0;
+          if (ACE_OS::strlen (my_member_name) > 1 
+              && ACE_OS::strlen (tc_member_name) > 1
+              && ACE_OS::strcmp (my_member_name, 
+                                 tc_member_name)) // not same
+            return 0;
+        }
 
       // now compare the typecodes of the members
       CORBA::TypeCode_var my_member_tc = this->member_type (i, ACE_TRY_ENV);
@@ -1227,13 +1387,16 @@ CORBA_TypeCode::private_equal_except (CORBA::TypeCode_ptr tc,
       CORBA::TypeCode_var tc_member_tc = tc->member_type (i, ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
-      CORBA::Boolean flag = my_member_tc->equal (tc_member_tc.in (), ACE_TRY_ENV);
+      CORBA::Boolean flag = my_member_tc->equ_common (tc_member_tc.in (), 
+                                                      equiv_only,
+                                                      ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
+
       if (!flag)
         return 0;
     }
 
-  return 1; // success (equal)
+  return 1; // success
 }
 
 // Return the type ID (RepositoryId) for the TypeCode; it may be empty.
