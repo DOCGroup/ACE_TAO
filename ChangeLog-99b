@@ -10,10 +10,12 @@ Thu Aug 05 15:44:39 1999  David L. Levine  <levine@cs.wustl.edu>
 
 Thu Aug 05 15:35:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-        * ace/ace_lib.dsp:
-        * ace/ace_dll.dsp: Changed the default configuration to Win32
-          Debug so if anyone doesn't know what he is doing, he'll most
-          likely to success.
+	* apps/gperf/src/gperf.dsp:
+	* apps/gperf/src/gperf_lib.dsp:
+	* ace/ace_lib.dsp:
+	* ace/ace_dll.dsp: Changed the default configuration to Win32
+	  Debug so if anyone doesn't know what he is doing, he'll most
+	  likely to success.
 
 Thu Aug 05 15:30:32 1999  David L. Levine  <levine@cs.wustl.edu>
 
