@@ -1,7 +1,12 @@
+Wed Mar  2 20:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CORBALOC_Parser.h:
+          Fixed fuzz errors
+
 Wed Mar  2 13:29:50 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/tao.mpc:
-        
+
           Added 2 missing files - Dynamic_Adapter.cpp and NVList.cpp.
           Thanks to Don Busch <busch_d@ociweb.com> for pointing out
           the mistake.
