@@ -6586,6 +6586,10 @@ private:
    do { POINTER = ALLOCATOR; \
      if (POINTER == 0) { errno = ENOMEM; return; } \
    } while (0)
+# define ACE_ALLOCATOR_NORETURN(POINTER,ALLOCATOR) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; } \
+   } while (0)
 
 # define ACE_NEW_MALLOC_RETURN(POINTER,ALLOCATOR,CONSTRUCTOR,RET_VAL) \
    do { POINTER = ALLOCATOR; \
@@ -6595,6 +6599,11 @@ private:
 # define ACE_NEW_MALLOC(POINTER,ALLOCATOR,CONSTRUCTOR) \
    do { POINTER = ALLOCATOR; \
      if (POINTER == 0) { errno = ENOMEM; return;} \
+     else { new (POINTER) CONSTRUCTOR; } \
+   } while (0)
+# define ACE_NEW_MALLOC_NORETURN(POINTER,ALLOCATOR,CONSTRUCTOR) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM;} \
      else { new (POINTER) CONSTRUCTOR; } \
    } while (0)
 

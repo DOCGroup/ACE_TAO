@@ -250,6 +250,9 @@ public:
                              void *param);
 #endif /* 0 */
 
+  /// Unique identifiers for preallocated objects.  Please see
+  /// ace/Managed_Object.h for information on accessing preallocated
+  /// objects.
   enum Preallocated_Object
     {
       ACE_FILECACHE_LOCK,
@@ -275,26 +278,23 @@ public:
 
       ACE_PREALLOCATED_OBJECTS  // This enum value must be last!
     };
-  // Unique identifiers for preallocated objects.  Please see
-  // ace/Managed_Object.h for information on accessing preallocated
-  // objects.
 
+  /// Unique identifiers for preallocated arrays.  Please see
+  /// ace/Managed_Object.h for information on accessing preallocated
+  /// arrays.
   enum Preallocated_Array
     {
-      // There currently are no preallocated arrays in the ACE
-      // library.  If the application doesn't have any, make sure
-      // the the preallocated_array size is at least one by declaring
-      // this dummy . . .
+      /// There currently are no preallocated arrays in the ACE
+      /// library.  If the application doesn't have any, make sure
+      /// the the preallocated_array size is at least one by declaring
+      /// this dummy . . .
       ACE_EMPTY_PREALLOCATED_ARRAY,
 
-      // Hook for preallocated arrays provided by application.
+      /// Hook for preallocated arrays provided by application.
       ACE_APPLICATION_PREALLOCATED_ARRAY_DECLARATIONS
 
       ACE_PREALLOCATED_ARRAYS  // This enum value must be last!
     };
-  // Unique identifiers for preallocated arrays.  Please see
-  // ace/Managed_Object.h for information on accessing preallocated
-  // arrays.
 
   /**
    * @deprecated Accesses a default signal set used, for example,

@@ -95,10 +95,10 @@ public:
   virtual int trybind (const char *name, void *&pointer) = 0;
 
   /// Locate <name> and pass out parameter via pointer.  If found,
-  /// return 0, Returns -1 if failure occurs.
+  /// return 0, returns -1 if failure occurs.
   virtual int find (const char *name, void *&pointer) = 0;
 
-  /// returns 0 if the name is in the mapping. -1, otherwise.
+  /// Returns 0 if the name is in the mapping. -1, otherwise.
   virtual int find (const char *name) = 0;
 
   /// Unbind (remove) the name from the map.  Don't return the pointer

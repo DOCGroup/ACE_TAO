@@ -1,3 +1,29 @@
+Tue Apr 23 07:35:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Base_Thread_Adapter.h:
+        * ace/Naming_Context.h:
+        * ace/Malloc.h:
+        * ace/Malloc_Base.h:
+        * ace/Malloc_T.h:
+        * ace/NT_Service.h:
+        * ace/Notification_Strategy.h:
+        * ace/Object_Manager.h:
+        * ace/OS_Thread_Adapter.h:
+        * ace/WIN32_Asynch_IO.h:
+          Doxygen-ized some of the comments
+
+        * ace/OS.h:
+          Added ACE_ALLOCATOR_NORETURN and ACE_NEW_MALLOC_NORETURN, these
+          macro's set errno to ENOMEM incase of an memory error but don't
+          call return but guarantee that the pointer is 0.
+
+        * ace/QoS/QoS_Manager.h:
+        * ace/QoS/QoS_Session_Impl.h:
+          Doxygen-ized some of the comments
+
+        * ace/config-doxygen.h:
+          Added define ACE_YY_USES_PROTOS to parse ace/Svc_Conf_l.cpp correctly
+
 Mon Apr 22 20:40:41 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/Logging_Event_Handler.{cpp h}:
@@ -19,21 +45,21 @@ Mon Apr 22 18:33:20 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Added new test script.
 
-	* examples/Reactor/WFMO_Reactor/test_handle_close.cpp: 
+	* examples/Reactor/WFMO_Reactor/test_handle_close.cpp:
 	* examples/Reactor/WFMO_Reactor/test_multithreading.cpp:
-	* examples/Reactor/WFMO_Reactor/test_network_events.cpp: 
+	* examples/Reactor/WFMO_Reactor/test_network_events.cpp:
 	  Fixed several memory management and shutdown issues.
 
-	* examples/Reactor/WFMO_Reactor/WFMO_Reactor.dsw: 
+	* examples/Reactor/WFMO_Reactor/WFMO_Reactor.dsw:
 	  Changed "Abondoned" to "Abandoned"
 
 	* examples/Reactor/WFMO_Reactor/test_window_messages.cpp:
 	  Fixed debug message formatting.
 
-	* examples/Reactor/WFMO_Reactor/test_network_events.cpp: 
+	* examples/Reactor/WFMO_Reactor/test_network_events.cpp:
 	  Fixed documentation to says that ACE_DEFAULT_SERVER_PORT
 	  defaults to 10002; correct value is 20002.
-	
+
 Mon Apr 22 17:24:39 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/Reactor_Logging_Server.mak:

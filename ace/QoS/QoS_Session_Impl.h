@@ -78,8 +78,10 @@ public:
    */
   virtual int update_qos (void);
 
-  /// Get/Set methods for the flags_.
+  /// Get methods for the flags_.
   virtual ACE_End_Point_Type flags (void) const;
+
+  /// Set methods for the flags_.
   virtual void flags (const ACE_End_Point_Type flags);
 
   /// Get the RAPI session id.
@@ -91,11 +93,11 @@ public:
   /// Get the RAPI file descriptor for RSVP events.
   virtual ACE_HANDLE rsvp_events_handle (void);
 
-   virtual void  rsvp_event_type (RSVP_Event_Type event_type);
   ///Set the RAPI event that last occured
+  virtual void  rsvp_event_type (RSVP_Event_Type event_type);
 
-  virtual RSVP_Event_Type rsvp_event_type (void);
   ///Get the RAPI event that last occured
+  virtual RSVP_Event_Type rsvp_event_type (void);
 
   /// Get the destination address for this RAPI session.
   virtual ACE_INET_Addr dest_addr (void) const;
@@ -216,7 +218,7 @@ public:
 
   virtual void  rsvp_event_type (RSVP_Event_Type event_type);
   ///Set the RAPI event that last occured
-  
+
   virtual RSVP_Event_Type rsvp_event_type (void);
   ///Get the RAPI event that last occured
 

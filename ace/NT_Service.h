@@ -351,8 +351,8 @@ protected:
 
 protected:
   /// Estimate of init time needed
-  /// Service handle - doesn't need close.
   DWORD start_time_;
+  /// Service handle - doesn't need close.
   SERVICE_STATUS_HANDLE svc_handle_;
   SERVICE_STATUS svc_status_;
 
