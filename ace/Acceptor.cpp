@@ -57,7 +57,8 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
   (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
    ACE_Reactor *reactor,
    int flags,
-   int use_select)
+   int use_select,
+   int reuse_addr)
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open");
   this->flags_ = flags;
@@ -71,10 +72,11 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
       return -1;
     }
 
-  if (this->peer_acceptor_.open (local_addr, 1) == -1)
+  if (this->peer_acceptor_.open (local_addr, reuse_addr) == -1)
     return -1;
 
-  int result = reactor->register_handler (this, ACE_Event_Handler::ACCEPT_MASK);
+  int result = reactor->register_handler (this,
+                                          ACE_Event_Handler::ACCEPT_MASK);
   if (result == 0)
     this->reactor (reactor);
   
@@ -98,11 +100,12 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Acceptor
   (const ACE_PEER_ACCEPTOR_ADDR &addr,
    ACE_Reactor *reactor,
    int flags,
-   int use_select)
+   int use_select,
+   int reuse_addr)
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Acceptor");
 
-  if (this->open (addr, reactor, flags, use_select) == -1)
+  if (this->open (addr, reactor, flags, use_select, reuse_addr) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("ACE_Acceptor::ACE_Acceptor")));
