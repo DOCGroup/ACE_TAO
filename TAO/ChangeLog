@@ -1,3 +1,9 @@
+Mon Oct 13 12:49:16 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp: 
+	* examples/Kokyu_dsrt_schedulers/MIF_Scheduler.cpp:
+	  Added ACE_ENV_ARG_PARAMETER to clear Fuzz errors.
+
 Mon Oct 13 11:58:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/PSS/Makefile.parser: Removed the new line which caused
