@@ -169,9 +169,7 @@ void CORBA_BOA::dispatch(CORBA_OctetSeq &key,
   if (this->find(key, obj) != -1)
     {
       opname = req.op_name();
-      skel = obj->lookup(opname);
-
-      if (skel != 0)
+      if (obj->find(opname, skel) != -1)
 	{
 	  skel(req, obj, env); // really should be scheduled .
 	}
