@@ -13,8 +13,8 @@
 // 
 // ============================================================================
 
-#if !defined (LOCK_SOCK_ACCEPTOR_H)
-#define LOCK_SOCK_ACCEPTOR_H
+#if !defined (ACE_LOCK_SOCK_ACCEPTOR_H)
+#define ACE_LOCK_SOCK_ACCEPTOR_H
 
 #include "ace/SOCK_Acceptor.h"
 
@@ -54,4 +54,4 @@ protected:
 #pragma implementation ("LOCK_SOCK_Acceptor.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#endif /* LOCK_SOCK_ACCEPTOR_H */
+#endif /* ACE_LOCK_SOCK_ACCEPTOR_H */
