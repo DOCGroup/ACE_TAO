@@ -1,3 +1,8 @@
+Thu Apr 01 20:46:55 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Filecache.cpp (ACE_Filecache_Object): Fixed typo: <lock_>
+	  should be <lock>.
+
 Thu Apr  1 19:41:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/IPC_SAP.h (ACE_IPC_SAP):
