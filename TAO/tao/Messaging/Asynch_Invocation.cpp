@@ -25,7 +25,7 @@ namespace TAO
       CORBA::Object_ptr otarget,
       Profile_Transport_Resolver &resolver,
       TAO_Operation_Details &detail,
-      TAO_Asynch_Reply_Dispatcher *rd,
+      TAO_Asynch_Reply_Dispatcher_Base *rd,
       bool response_expected)
     : Synch_Twoway_Invocation (otarget,
                                resolver,
