@@ -68,7 +68,7 @@ public:
 
   virtual CORBA::Policy_ptr service_create_policy (
       CORBA::PolicyType policy,
-      CORBA::Any &val,
+      const CORBA::Any &val,
       CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Create a CORBA::Policy from CORBA::Policy
