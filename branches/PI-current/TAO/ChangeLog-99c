@@ -1,19 +1,26 @@
 Thu Aug 26 01:49:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/GIOP_Server_Request.h:
-	* tao/GIOP_Server_Request.i:
-	* tao/Interceptor.pidl:
-	* tao/InterceptorC.cpp:
-	* tao/InterceptorC.h:
-	* tao/InterceptorS.h:
 	* tao/Invocation.h:
 	* tao/Invocation.i:
-	* tao/ORB.h:
-	* tao/ORB.i:
-	* tao/POA.h:
 	* tao/Reply_Dispatcher.h:
 	* tao/Reply_Dispatcher.i:
 	* tao/Server_Request.h:
+	* tao/GIOP_Server_Request.h:
+	* tao/GIOP_Server_Request.i: Allow full access to the underlying
+	  ServiceContextList for both request and reply service info.
+	  (Removed constness.)
+
+	* tao/Interceptor.pidl: No change.
+
+	* tao/InterceptorC.cpp: Added include "Any.h".
+
+	* tao/InterceptorC.h: Removed include "corba.h" and added include "IOPC.h".
+
+	* tao/InterceptorS.h: Added include "Servant_Base.h".
+
+	* tao/ORB.h:
+	* tao/ORB.i: Added a naive Interceptor registration interface for
+	  testing.
 
 Wed Aug 25 23:38:32 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
