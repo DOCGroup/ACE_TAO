@@ -167,7 +167,7 @@ libDLL_Test.$(SOEXT): DLL_Test.cpp
 ifdef TEMPINCDIR
 	$(RM) .obj/DLL_Test.o
 endif
-	@$(MAKE) -f Makefile.DLL
+	@$(MAKE) -f Makefile.DLL_Test
 
 realclean: clean
 	-$(RM) libDLL_Test.$(SOEXT) log/compilations.log*
