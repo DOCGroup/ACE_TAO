@@ -1,3 +1,19 @@
+Wed Sep 05 11:52:39 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix5.1.h: New config file for AIX 5L, version 5.1,
+          using Visual Age C++ 5.
+
+        * ace/config-aix-4.1.x.h:
+        * ace/config-aix-4.2.x.h:
+        * ace/config-aix-4.3.x.h:
+        * ace/config-aix-4.x.h: Use ACE_AIX_VERS (which has both major and
+          minor version) rather than ACE_AIX_MAJOR_VERS and ACE_AIX_MINOR_VERS.
+
+        * include/makeinclude/platform_aix_ibm.GNU: Rather than making
+          separate major/minor OS version variables, use one that incorporates
+          both to make it easier for config.h files to set upwardly-compatible
+          feature flags.
+
 Wed Sep  5 06:55:44 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Log_Msg_Test.cpp:
