@@ -1,3 +1,15 @@
+Thu Mar 11 13:59:00 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/bmake.mpd:
+
+          Changed the custom rules to be more compact.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Made custom output files dependent upon the command that generates
+          them.  Additionally, fixed a bug where generated source files
+          would always be regenerated if idl files existed in the project.
+
 Thu Mar 11 12:18:59 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
