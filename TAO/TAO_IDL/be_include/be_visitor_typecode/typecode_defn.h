@@ -1,7 +1,6 @@
-/* -*- c++ -*- */
+// -*- C++ -*-
 //
 // $Id$
-//
 
 // ============================================================================
 //
@@ -49,10 +48,10 @@ public:
   ~be_visitor_typecode_defn (void);
   // destructor
 
-  virtual int visit_members (AST_Structure *node);
+  //virtual int visit_members (AST_Structure *node);
   // for use with structs, exceptions, and unions.
 
-  virtual int visit_members (be_valuetype *node);
+//   virtual int visit_members (be_valuetype *node);
   // for use with valuetypes.
 
   virtual int visit_type (be_type *node);
@@ -63,13 +62,13 @@ public:
   virtual int visit_array (be_array *node);
   // visit a array
 
-  virtual int visit_enum (be_enum *node);
+//   virtual int visit_enum (be_enum *node);
   // visit an enum
 
   virtual int visit_exception (be_exception *node);
   // visit an enum
 
-  virtual int visit_interface (be_interface *node);
+//   virtual int visit_interface (be_interface *node);
   // visit interface
 
   virtual int visit_interface_fwd (be_interface_fwd *node);
@@ -87,26 +86,23 @@ public:
   virtual int visit_string (be_string *node);
   // visit a structure
 
-  virtual int visit_structure (be_structure *node);
+//   virtual int visit_structure (be_structure *node);
   // visit a structure
 
-  virtual int visit_typedef (be_typedef *node);
-  // visit a typedef
-
-  virtual int visit_union (be_union *node);
+//   virtual int visit_union (be_union *node);
   // visit a union
 
-  virtual int visit_valuetype (be_valuetype *node);
-  // visit a valuetype
-  
-  virtual int visit_eventtype (be_eventtype *node);
-  // visit a valuetype
+//   virtual int visit_valuetype (be_valuetype *node);
+//   // visit a valuetype
+
+//   virtual int visit_eventtype (be_eventtype *node);
+//   // visit a valuetype
 
 
   // = visit methods for the scope elements
 
-  virtual int visit_enum_val (be_enum_val *node);
-  // visit the enumeration values
+//   virtual int visit_enum_val (be_enum_val *node);
+//   // visit the enumeration values
 
   virtual int visit_field (be_field *node);
   // visit the field (struct and exception member)
@@ -126,11 +122,11 @@ public:
 
   int gen_typecode (be_array *node);
 
-  int gen_typecode (be_enum *node);
+//   int gen_typecode (be_enum *node);
 
   int gen_typecode (be_exception *node);
 
-  int gen_typecode (be_interface *node);
+//   int gen_typecode (be_interface *node);
 
   int gen_typecode (be_interface_fwd *node);
 
@@ -140,27 +136,27 @@ public:
 
   int gen_typecode (be_string *node);
 
-  int gen_typecode (be_structure *node);
+//   int gen_typecode (be_structure *node);
 
-  int gen_typecode (be_typedef *node);
+//   int gen_typecode (be_typedef *node);
 
   int gen_typecode (be_union *node);
 
-  int gen_typecode (be_valuetype *node);
+//   int gen_typecode (be_valuetype *node);
 
   // = methods to generate encapsulations for typecodes
 
   int gen_encapsulation (be_array *node);
 
-  int gen_encapsulation (be_enum *node);
+//   int gen_encapsulation (be_enum *node);
 
-  int gen_encapsulation (be_enum_val *node);
+//   int gen_encapsulation (be_enum_val *node);
 
   int gen_encapsulation (be_exception *node);
 
   int gen_encapsulation (be_field *node);
 
-  int gen_encapsulation (be_interface *node);
+//   int gen_encapsulation (be_interface *node);
 
   int gen_encapsulation (be_interface_fwd *node);
 
@@ -170,7 +166,7 @@ public:
 
   int gen_encapsulation (be_string *node);
 
-  int gen_encapsulation (be_structure *node);
+//   int gen_encapsulation (be_structure *node);
 
   int gen_encapsulation (be_typedef *node);
 
@@ -178,17 +174,17 @@ public:
 
   int gen_encapsulation (be_union_branch *node);
 
-  int gen_encapsulation (be_valuetype *node);
+//   int gen_encapsulation (be_valuetype *node);
 
   // = methods for computing typecode sizes
 
   ACE_CDR::Long compute_tc_size (be_array *node);
 
-  ACE_CDR::Long compute_tc_size (be_enum *node);
+//   ACE_CDR::Long compute_tc_size (be_enum *node);
 
   ACE_CDR::Long compute_tc_size (be_exception *node);
 
-  ACE_CDR::Long compute_tc_size (be_interface *node);
+//   ACE_CDR::Long compute_tc_size (be_interface *node);
 
   ACE_CDR::Long compute_tc_size (be_interface_fwd *node);
 
@@ -198,27 +194,27 @@ public:
 
   ACE_CDR::Long compute_tc_size (be_string *node);
 
-  ACE_CDR::Long compute_tc_size (be_structure *node);
+//   ACE_CDR::Long compute_tc_size (be_structure *node);
 
   ACE_CDR::Long compute_tc_size (be_typedef *node);
 
   ACE_CDR::Long compute_tc_size (be_union *node);
 
-  ACE_CDR::Long compute_tc_size (be_valuetype *node);
+//   ACE_CDR::Long compute_tc_size (be_valuetype *node);
 
   // methods for computing the encapsulation length
 
   ACE_CDR::Long compute_encap_length (be_array *node);
 
-  ACE_CDR::Long compute_encap_length (be_enum *node);
+//   ACE_CDR::Long compute_encap_length (be_enum *node);
 
-  ACE_CDR::Long compute_encap_length (be_enum_val *node);
+//   ACE_CDR::Long compute_encap_length (be_enum_val *node);
 
   ACE_CDR::Long compute_encap_length (be_exception *node);
 
   ACE_CDR::Long compute_encap_length (be_field *node);
 
-  ACE_CDR::Long compute_encap_length (be_interface *node);
+//   ACE_CDR::Long compute_encap_length (be_interface *node);
 
   ACE_CDR::Long compute_encap_length (be_interface_fwd *node);
 
@@ -228,7 +224,7 @@ public:
 
   ACE_CDR::Long compute_encap_length (be_string *node);
 
-  ACE_CDR::Long compute_encap_length (be_structure *node);
+//   ACE_CDR::Long compute_encap_length (be_structure *node);
 
   ACE_CDR::Long compute_encap_length (be_typedef *node);
 
@@ -236,7 +232,7 @@ public:
 
   ACE_CDR::Long compute_encap_length (be_union_branch *node);
 
-  ACE_CDR::Long compute_encap_length (be_valuetype *node);
+//   ACE_CDR::Long compute_encap_length (be_valuetype *node);
 
   // helpers to generate the repoID and name
 
@@ -269,6 +265,15 @@ public:
     be_type *node;
     ACE_CDR::Long offset;
   };
+
+protected:
+
+  /// Generate the TypeCode_ptr.
+  /**
+   * Generate actual TypeCode instance/definition, not the supporting
+   * code, e.g.  "static CORBA::TypeCode_ptr const Foo_ptr = ...".
+   */
+  int gen_typecode_ptr (be_type * node);
 
 private:
 

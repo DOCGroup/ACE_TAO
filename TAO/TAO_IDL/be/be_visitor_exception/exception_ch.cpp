@@ -129,7 +129,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
   if (be_global->tc_support ())
     {
       *os << be_nl << be_nl
-          << "virtual CORBA::TypeCode_ptr _type (void) const;";
+          << "virtual CORBA::TypeCode_ptr _tao_type (void) const;";
     }
 
   *os << be_uidt_nl << "};";
