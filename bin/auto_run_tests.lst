@@ -20,6 +20,7 @@ TAO/tests/OctetSeq/run_test.pl
 TAO/tests/Leader_Followers/run_test.pl: ST
 TAO/tests/Multiple_Inheritance/run_test.pl
 TAO/tests/RTCORBA/Client_Propagated/run_test.pl: MINIMUM linux Exceptions
+TAO/tests/RTCORBA/Server_Declared/run_test.pl: MINIMUM linux Exceptions
 TAO/tests/RTCORBA/Server_Protocol/run_test.pl: MINIMUM
 TAO/tests/RTCORBA/Client_Protocol/run_test.pl: MINIMUM
 TAO/tests/MT_Client/run_test.pl: ST
