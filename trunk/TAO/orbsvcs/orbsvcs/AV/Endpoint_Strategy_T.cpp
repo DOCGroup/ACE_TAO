@@ -447,7 +447,7 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
 TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_vdev (CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::Object_ptr vdev_obj;
+  CORBA::Object_ptr vdev_obj = CORBA::Object::_nil ();
   ACE_TRY
     {
       char vdev_name [BUFSIZ];
