@@ -22,7 +22,6 @@
 #endif /* !ACE_HAS_INLINED_OSCALLS */
 
 #include "ace/Thread_Manager.h"
-#include "ace/Synch_T.h"
 #include "ace/OS.h"
 
 #if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
