@@ -68,10 +68,10 @@ const u_long ACE_Scheduler_MAX_SUB_PRIORITY =
 const u_long ACE_Scheduler_MIN_SUB_PRIORITY =
       ACE_Message_Block::MB_NORMAL;
 
-typedef ACE_Thread_Mutex ACE_ES_MUTEX;
+typedef ACE_SYNCH_MUTEX ACE_ES_MUTEX;
 typedef ACE_Guard<ACE_ES_MUTEX> ACE_ES_GUARD;
 
-typedef ACE_RW_Thread_Mutex ACE_ES_RW_LOCK;
+typedef ACE_SYNCH_RW_MUTEX ACE_ES_RW_LOCK;
 typedef ACE_Write_Guard<ACE_ES_RW_LOCK> ACE_ES_WGUARD;
 typedef ACE_Read_Guard<ACE_ES_RW_LOCK> ACE_ES_RGUARD;
 
