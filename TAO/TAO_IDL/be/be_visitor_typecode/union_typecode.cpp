@@ -35,8 +35,20 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
   std::string const fields_name (std::string ("_tao_cases_")
                                  + node->flat_name ());
 
-  // Generate array containing union case characteristics.
-  os << "static TAO::TypeCode::Case<char const *> const "
+
+  be_type * const discriminant_type =
+    be_type::narrow_from_decl (node->disc_type ());
+
+  ACE_ASSERT (discriminant_type != 0);
+
+  std::string const case_array_type (
+    std::string ("TAO::TypeCode::Non_Default_Case<")
+    + std::string (discriminant_type->full_name ())
+    + std::string (", char const *>"));
+
+  // Generate array containing union non-default case
+  // characteristics.
+  os << "static " << case_array_type.c_str () << " const "
      << fields_name.c_str ()
      << "[] =" << be_idt_nl
      << "{" << be_idt_nl;
@@ -50,18 +62,18 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
   // Generate the TypeCode instantiation.
   os
     << "static TAO::TypeCode::Union<char const *," << be_nl
-    << "                            TAO::TypeCode::Union_Field<char const *> const *," << be_nl
-    << "                             TAO::Null_RefCount_Policy> const"
+    << "                            " << case_array_type.c_str () << " const *," << be_nl
+    << "                            TAO::Null_RefCount_Policy> const"
     << be_idt_nl
     << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
     << "\"" << node->repoID () << "\"," << be_nl
     << "\"" << node->original_local_name () << "\"," << be_nl
-    << node->disc_type ()->tc_name () << "," << be_nl
+    << discriminant_type->tc_name () << "," << be_nl
     << "_tao_cases_" << node->flat_name () << "," << be_nl
     << node->nfields () << ","
-    << node->default_index () "," << be_nl
-    << default_member_name,
-    << default_member_type
+    << node->default_index () << "," << be_nl
+//     << default_member_name,
+//     << default_member_type
     << ");" << be_uidt_nl
     << be_uidt_nl;
 

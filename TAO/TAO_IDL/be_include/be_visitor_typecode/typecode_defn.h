@@ -89,7 +89,7 @@ public:
 //   virtual int visit_structure (be_structure *node);
   // visit a structure
 
-  virtual int visit_union (be_union *node);
+//   virtual int visit_union (be_union *node);
   // visit a union
 
 //   virtual int visit_valuetype (be_valuetype *node);
