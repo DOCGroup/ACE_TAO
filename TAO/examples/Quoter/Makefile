@@ -13,7 +13,7 @@ ifdef trader
   CPPFLAGS += -DTRADER_AVAILABLE
 endif # trader
 
-LDLIBS = -lTAO_CosLifeCycle -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_CosLifeCycle -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
 
 IDL_FILES = Quoter
 IDL_SRC = QuoterC.cpp QuoterS.cpp
