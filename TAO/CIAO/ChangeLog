@@ -1,3 +1,12 @@
+Thu Feb 12 17:40:33 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* CIDLC/CIDLC.mwc:
+	* CIDLC/CIDLC.mpc:
+
+	  Updated these two files.
+	  Note: Only linux with boost/utility installed as package/rpm is
+	  tested.
+
 Thu Feb 12 11:00:39 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* CIAO-INSTALL.html
