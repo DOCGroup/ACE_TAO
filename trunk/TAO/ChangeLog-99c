@@ -1,3 +1,8 @@
+Wed Jun 30 18:17:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynEnum_i.cpp:
+	  Added an ACE_UNUSED_ARG macro to get_longlong().
+
 Wed Jun 30 18:14:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/ImplRepo_Service/Repository.cpp:
