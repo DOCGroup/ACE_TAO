@@ -62,6 +62,9 @@
 #   include /**/ <stdlib.h>         /* For mbstowcs, etc. */
 #   include /**/ <string.h>         /* For strlen */
 #   define wint_t unsigned int      /* VxWorks has wchar_t but not wint_t */
+# elif defined (ACE_OPENVMS)
+#   include /**/ <wchar.h>
+#   include /**/ <wctype.h>
 # elif defined (ACE_HAS_STANDARD_CPP_LIBRARY) && \
     (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 #   include /**/ <cwchar>
