@@ -5,6 +5,7 @@ project(*Consumer):  orbsvcsexe, ftrteventclient {
   }
   Source_Files {
     consumer.cpp
+    FtRtEvent_Test.cpp
     PushConsumer.cpp
   }
 
@@ -21,6 +22,7 @@ project(*Supplier):  orbsvcsexe, ftrteventclient {
   }
   Source_Files {
     supplier.cpp
+    FtRtEvent_Test.cpp
     PushSupplier.cpp
   }
 
