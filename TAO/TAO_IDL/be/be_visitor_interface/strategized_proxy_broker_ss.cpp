@@ -138,7 +138,12 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << "ACE_RE_THROW;" << be_uidt_nl
       << "}" << be_uidt
       << "\n#endif /* TAO_HAS_MINIMUM_CORBA */" << be_nl
-      << "ACE_ENDTRY;" << be_uidt_nl
+      << "ACE_ENDTRY;" << be_nl
+      << "ACE_UNUSED_ARG (obj);" << be_nl
+      << "ACE_UNUSED_ARG (forward_obj);" << be_nl
+      << "ACE_UNUSED_ARG (args);" << be_nl
+      << "ACE_UNUSED_ARG (num_args);" << be_nl
+      << "ACE_UNUSED_ARG (op);" <<  be_uidt_nl
       << "}";
 
   *os << be_nl << be_nl
