@@ -169,6 +169,8 @@ run Enum_Interfaces_Test                # uses ACE::get_ip_interfaces()
 
 run Upgradable_RW_Test                  # uses RW locks
 
+run Svc_Handler_Test			    
+
 echo "Tests complete..."
 
 /bin/rm -f ace_pipe_name pattern $tmp/ace_temp_file $tmp/ace_temp_file2 $tmp/ace_test_file $tmp/Naming_Test*
