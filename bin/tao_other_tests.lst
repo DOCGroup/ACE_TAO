@@ -87,6 +87,8 @@ TAO/orbsvcs/tests/Notify/Structured_Filter/run_test.pl: !ST
 TAO/orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl: !ST
 TAO/orbsvcs/tests/Notify/Lanes/run_test.pl: !ST !MINIMUM
 TAO/orbsvcs/tests/Notify/ThreadPool/run_test.pl: !ST !MINIMUM
+TAO/orbsvcs/examples/Notify/Lanes/run_test.pl: !ST !MINIMUM
+TAO/orbsvcs/examples/Notify/ThreadPool/run_test.pl: !ST !MINIMUM
 # BREAKS !linux 'TAO/orbsvcs/tests/EC_Mcast/run_test.pl
 # FAILS 'TAO/orbsvcs/tests/EC_Multiple/run_test.pl
 # NO REDIRECTION TAO/examples/Simple/echo/run_test.pl < Echo.idl

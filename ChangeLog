@@ -1,3 +1,11 @@
+Thu Jul 24 17:32:51 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* bin/tao_other_tests.lst:
+
+	Added:
+	$TAO_ROOT/orbsvcs/examples/Notify/Lanes/run_test.pl: !ST !MINIMUM
+	$TAO_ROOT/orbsvcs/examples/Notify/ThreadPool/run_test.pl: !ST !MINIMUM
+
 Thu Jul 24 16:23:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/generate_performance_chart.sh: Changed the scale to which
