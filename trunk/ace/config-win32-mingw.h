@@ -18,6 +18,8 @@
 #define ACE_CC_PREPROCESSOR "cpp"
 #define ACE_CC_PREPROCESOR_ARGS ""
 
+#define ACE_HAS_BROKEN_SAP_ANY
+
 // Why all this is not in config-g++-common.h?
 #define ACE_CC_MAJOR_VERSION __GNUC__
 #define ACE_CC_MINOR_VERSION __GNUC_MINOR__

@@ -114,8 +114,7 @@ single_thread_performance_test (void)
 
   for (i = 0; i < max_messages; ++i)
     ACE_NEW_RETURN (send_block[i],
-                    User_Class (test_message,
-                               MAX_MESSAGE_SIZE),
+                    User_Class (test_message),
                     -1);
 
   UserBlock **receive_block_p = 0;
@@ -251,8 +250,7 @@ performance_test (void)
 
   for (i = 0; i < max_messages; ++i)
     ACE_NEW_RETURN (send_block[i],
-                    User_Class (test_message,
-                                       MAX_MESSAGE_SIZE),
+                    User_Class (test_message),
                     -1);
 
   queue_wrapper.send_block_ = send_block;
@@ -321,7 +319,7 @@ main (int argc, ACE_TCHAR *argv[])
   }
   else {
     User_Class *b;
-    ACE_Time_Value tv (ACE_OS::gettimeofday());   // Now
+    ACE_Time_Value tv (ACE_OS::gettimeofday ());   // Now
     if (q1.dequeue_head (b, &tv) != -1) {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Dequeued from empty queue!\n")));
       status = 1;
@@ -339,11 +337,9 @@ main (int argc, ACE_TCHAR *argv[])
 
 #if !defined (VXWORKS)
 #endif /* ! VXWORKS */
-
   ACE_NEW_RETURN (timer,
                   ACE_High_Res_Timer,
                   -1);
-
 #if defined (ACE_HAS_THREADS)
   if (status == 0)
     single_thread_performance_test ();

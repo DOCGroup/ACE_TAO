@@ -1,3 +1,18 @@
+Sat Dec 15 09:30:31 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tests/Message_Queue_Test_Ex.cpp (main): Fixed a minor bug
+	  by removing the size-hint from the call to User_Class.  Thanks
+ 	  to Venkita Subramonian <venkita@cs.wustl.edu> for reporting
+ 	  this.
+
+	* ace/config-win32-mingw.h.  Added #define ACE_HAS_BROKEN_SAP_ANY
+	  so that it'll compile on MinGW32.  Thanks to Ben Flight
+ 	  <ben.flight@wanadoo.fr> for reporting this.
+
+	* tests/Logging_Strategy_Test.cpp: include ace/Logging_Strategy.h
+	  rather than ace/Logging_Strategy.cpp.  Thanks to Mike Connors
+ 	  <mike.connors@ghs.com> for reporting this.
+  
 Sat Dec 15 16:20:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/ace_os_dll.vcp: Added the files OS_QoS.{h,cpp}.
