@@ -301,7 +301,7 @@ TAO_Link_Attributes<IF>::max_link_follow_policy (CORBA::Environment &env)
   // *************************************************************
 
 template <class OPERAND_TYPE> CORBA::Boolean
-TAO_find (const Any& sequence, const OPERAND_TYPE element)
+TAO_find (const CORBA::Any& sequence, const OPERAND_TYPE& element)
 {
   CORBA::Boolean return_value = 0;
   TAO_Element_Equal<OPERAND_TYPE> functor;
