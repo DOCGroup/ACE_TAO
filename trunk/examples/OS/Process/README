@@ -41,7 +41,6 @@ ACE_PROCESS_TEST =  here's a large number 4294967295.
 ACE_PROCESS_TEST2 = ophilli.
 total 600
 drwxr-xr-x   5 harrison doc          512 May 11 15:06 .
--rw-r--r--   1 harrison doc         9330 May  7 23:54 .#process.cpp.4.3
 drwxr-xr-x   4 harrison doc          512 Apr 21 15:32 ..
 drwx------   2 harrison doc          512 May  8 22:33 .obj
 drwx------   2 harrison doc          512 May  8 22:33 .shobj
