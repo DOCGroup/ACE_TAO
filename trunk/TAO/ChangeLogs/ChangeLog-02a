@@ -1,3 +1,9 @@
+Wed Apr 11 07:38:45 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tao/examples/POA/Generic_Servant/client.bor
+        * tao/examples/POA/Generic_Servant/generic_servant.bor
+          Added BCB makefiles which I forgot to commit yesterday
+
 Tue Apr 10 22:35:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Wait_Strategy.inl: Fixed a fuzz error.
@@ -8,7 +14,7 @@ Tue Apr 10 22:27:49 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           Added a check before sending an exception reply, the same as
           the check made before sending the regular reply. The Reliable
-          Oneways test showed that an exception thrown in the 
+          Oneways test showed that an exception thrown in the
           implementation was bypassing the SYNC_WITH_SERVER and other
           oneway logic that was in place for regular replies.
 
