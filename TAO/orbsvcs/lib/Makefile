@@ -24,7 +24,6 @@ FILES= $(IDL_FILES) \
 	Scheduler_Factory \
 	Runtime_Scheduler \
 	Scheduler_Utilities \
-	Timeprobe \
 
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
@@ -2034,19 +2033,5 @@ realclean: clean
  $(TAO_ROOT)/tao/connect.i \
  $(TAO_ROOT)/tao/singletons.h \
  RtecSchedulerC.i Scheduler_Utilities.i
-.obj/Timeprobe.o .shobj/Timeprobe.so: Timeprobe.cpp \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Version.h \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- Timeprobe.h Timeprobe.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

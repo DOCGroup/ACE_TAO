@@ -48,7 +48,8 @@ OTHERS_SRCS = \
 	params \
 	server_factory \
 	tao_internals \
-	tc_const
+	tc_const \
+	Timeprobe \
 
 FILES	 = $(OTHERS_SRCS) $(CORBA_SRCS)
 
@@ -95,6 +96,10 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 ifdef CHORUS
   CPPFLAGS += -DTAO_PLATFORM_SVC_CONF_FILE_NOTSUP
 endif
+
+ifeq ($(probe),1)
+    CCFLAGS += -DACE_ENABLE_TIMEPROBES
+endif # probe
 
 #RLDFLAGS := $(subst -L,-Wl\,-rpath ,$(LDFLAGS))
 #CPPFLAGS += -D__IIOP_BUILD -I$(COMPATDIR) -DDEBUG
@@ -5885,5 +5890,18 @@ copy:	$(INSTALL)
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/connect.i \
  $(TAO_ROOT)/tao/singletons.h
+.obj/Timeprobe.o .shobj/Timeprobe.so: Timeprobe.cpp \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ Timeprobe.h Timeprobe.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

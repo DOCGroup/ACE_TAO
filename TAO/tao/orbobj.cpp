@@ -14,6 +14,7 @@
 #include "ace/Service_Repository.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "tao/tao_internals.h"
+#include "tao/Timeprobe.h"
 
 extern void __TC_init_table (void);
 extern void __TC_init_standard_exceptions (CORBA::Environment &env);
@@ -249,20 +250,23 @@ CORBA_ORB::run (ACE_Time_Value *tv)
   // Loop "forever" handling client requests.
 
   while (this->should_shutdown_ == 0)
-    switch (r->handle_events (tv))
-      {
-      case 0: // Timed out, so we return to caller.
-	return 0;
-	/* NOTREACHED */
-      case -1: // Something else has gone wrong, so return to caller.
-	return -1;
-	/* NOTREACHED */
-      default: // Some handlers were dispatched, so keep on processing
-	       // requests until we're told to shutdown .
-	break;
-	/* NOTREACHED */
-      }
-
+    {
+      ACE_TIMEPROBE ("  -> CORBA_ORB::run handling events");
+      switch (r->handle_events (tv))
+	{
+	case 0: // Timed out, so we return to caller.
+	  return 0;
+	  /* NOTREACHED */
+	case -1: // Something else has gone wrong, so return to caller.
+	  return -1;
+	  /* NOTREACHED */
+	default: // Some handlers were dispatched, so keep on processing
+	         // requests until we're told to shutdown .
+	  ACE_TIMEPROBE ("  -> CORBA_ORB::run events handled");
+	  break;
+	  /* NOTREACHED */
+	}
+    }
   /* NOTREACHED */
   return 0;
 }

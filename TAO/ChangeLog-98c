@@ -1,3 +1,35 @@
+Mon Dec  8 13:11:46 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* tao/Makefile: 
+	* tao/connect.cpp: 
+	* tao/giop.cpp: 
+	* tao/orbobj.cpp: 
+	* tao/Timeprobe.i: 
+	* tao/Timeprobe.h: 
+	* tao/Timeprobe.cpp: 
+	  Added a instrumentation class to measure time interval, also
+	  instrumented some code, as part of the ongoing effort to
+	  optimize the EC, unfortunately the problems are not in TAO ;-)
+	  The code is only instrumented if compiled using probe=1, no
+	  overhead is introduced in normal compiles.
+
+	* tests/Cubit/TAO/IDL_Cubit/cubit.idl: 
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/clnt.h: 
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.h: 
+	  Addded code to test sequences (as input and output parameters)
+	  they don't work (yet).
+
+	* orbsvcs/lib/Makefile: 
+	* orbsvcs/lib/Timeprobe.h: 
+	* orbsvcs/lib/Timeprobe.i: 
+	* orbsvcs/lib/Timeprobe.cpp: 
+	  The file was moved to $TAO_ROOT/tao.
+
+	* orbsvcs/lib/Scheduler_Factory.cpp: 
+	  Fixed default dump file, it was using stdout!
+
 Sat Dec 06 15:42:25 1997    <nw1@DINGO>
 
 	* tests/Cubit/TAO/IDL_Cubit/{server,client}.dsp: Updated link time
