@@ -276,7 +276,7 @@ CORBA_Any::operator<<= (CORBA::TypeCode_ptr tc)
 
 // insertion of CORBA object
 void
-CORBA::Any::operator<<= (CORBA::Object_ptr obj)
+CORBA::Any::operator<<= (const CORBA::Object_ptr obj)
 {
   CORBA::Object_ptr objptr = CORBA::Object::_duplicate (obj);
   (*this) <<= &objptr;
