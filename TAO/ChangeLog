@@ -1,3 +1,8 @@
+Sun Jun  8 12:49:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/RtEC/MCast/MCast.cpp:
+          Added missing include because of file restructering in the RTEC
+
 Sat Jun  7 18:01:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ChangeLogs/ChangeLog-03a: Moved entries till Mar 31 to this file
@@ -18,33 +23,33 @@ Sat Jun  7 14:14:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  that will keep track whether the get_protocol_hooks () has been
 	  called or not. If called, the method wold be more or like a
 	  no-op. Sad that we cannot inline this method to squeeze things
-	  out a bit more. 
+	  out a bit more.
 
 	* tao/Protocols_Hooks.h: Changed the signatures of the methods
 	  update_client_protocol_properties () and
 	  update_server_protocol_properties (). These methods will now use
 	  a transport instead of the connection handler. Please see below
 	  for the actual reason.
-	  
+
 	* tao/Default_Protocols_Hooks.h:
 	* tao/Default_Protocols_Hooks.cpp: Changes necessitated by the
-	  above change. 
-	
+	  above change.
+
 	* tao/IIOP_Transport.cpp:
 	* tao/IIOP_Transport.h: Added a methoid update_protocol_properties
 	  () which would serve as a bridge for a similar call on the
 	  connection handler. This method holds the transport lock and
 	  checks for the sanity of the connection handler before it calls
-	  update_protocol_properties () on the connection handler. 
-	
-	* tao/Stub.cpp: Removed a call to reset_hint () on the endpoint. 
+	  update_protocol_properties () on the connection handler.
+
+	* tao/Stub.cpp: Removed a call to reset_hint () on the endpoint.
 
 	* tao/RTCORBA/RT_Protocols_Hooks.cpp
 	* tao/RTCORBA/RT_Protocols_Hooks.h: Changed the signatures of
 	  update_client_protocol_properties () and
 	  update_server_protocol_properties () to be in sync with the
-	  above change. 
-	
+	  above change.
+
 	* tao/RTPortableServer/RT_Servant_Dispatcher.cpp: The nucleus of
 	  the problem was here. The object adapter during the invocation
 	  path makes a call to pre_invoke_remote_request (). Since the
@@ -64,11 +69,11 @@ Sat Jun  7 14:14:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  Thanks to Andrew <andrewv@melbpc.org.au> for reporting the
 	  problem and providing lots of stack traces that pointed out the
 	  source of the problem.
-	
+
 Sat Jun  7 13:45:38 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tao/PortableServer/Operation_Table.cpp: 
-	* TAO_IDL/be/be_tmplinst.cpp: HP/UX and GCC do some weird things, 
+	* tao/PortableServer/Operation_Table.cpp:
+	* TAO_IDL/be/be_tmplinst.cpp: HP/UX and GCC do some weird things,
 	  so it's necessary to explicitly instantiate all static template
  	  singletons, even when using automatic template instantiation!
   	  Thanks to Stan Sosnovsky <sosnovsky_stan@emc.com> for reporting
@@ -88,34 +93,34 @@ Sat Jun 07 09:10:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Sat Jun 07 08:50:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Endpoint.h: Removed the reset_hint () method.
-	
+
 	* tao/IIOP_Endpoint.h: Removed the reset_hint () method since it
 	  is not used anymore. Added an extra argument to the constructor
 	  to pass the priority of the endpoint.
-	
-	* tao/IIOP_Endpoint.cpp: 
+
+	* tao/IIOP_Endpoint.cpp:
 	* tao/IIOP_Endpoint.i: Moved the object_addr () method from the
 	  inlined file to the cpp file. It was too big to be inlined in
-	  the first place. 
+	  the first place.
 
 	  The implementation of the duplicate () method now passes the
 	  priority of the endpoint when it creates a new endpoint
 	  object.
 
 	  Removed the implementation of the reset_hint () method.
-	
-	* tao/Strategies/SHMIOP_Endpoint.cpp: 
+
+	* tao/Strategies/SHMIOP_Endpoint.cpp:
 	* tao/Strategies/SHMIOP_Endpoint.h:
 	* tao/Strategies/SHMIOP_Endpoint.i:
 	* tao/Strategies/UIOP_Endpoint.h:
-	* tao/Strategies/UIOP_Endpoint.cpp: 
+	* tao/Strategies/UIOP_Endpoint.cpp:
 	* tao/Strategies/DIOP_Endpoint.h:
-	* tao/Strategies/DIOP_Endpoint.i:	
+	* tao/Strategies/DIOP_Endpoint.i:
 	* tao/Strategies/DIOP_Endpoint.cpp:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i: Religiously replicated
-	  the above changes. 
+	  the above changes.
 
 	* orbsvcs/ImplRepo_Service/ImR_Activator.dsp: Added TAO_Strategies
 	  library to the link line.
