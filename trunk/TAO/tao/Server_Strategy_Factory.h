@@ -102,9 +102,6 @@ public:
   virtual int server_connection_thread_count (void);
   // The thread activation parameters
 
-  virtual ACE_Lock *create_servant_lock (void);
-  // Creates and returns a lock for servants.
-
   virtual ACE_Lock *create_event_loop_lock (void);
   // Creates and returns a lock for the event loop.
 

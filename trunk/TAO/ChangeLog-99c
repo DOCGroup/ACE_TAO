@@ -1,10 +1,18 @@
+Mon Jun 14 16:55:26 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Server_Strategy_Factory.cpp (create_servant_lock):
+	* tao/default_server.cpp (create_servant_lock):
+
+	  Removed create_servant_lock(). It is not used and is *very* TAO
+	  specific and difficult to get right in the new architecture.
+
 Mon Jun 14 16:07:47 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tao/default_client.cpp: Creating Exclusive TMS always, since
-	Muxed TMS is not available yet.  
+	Muxed TMS is not available yet.
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h: 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: 
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
 	Added ACE_THROW_SPEC to the relevant methods.
 
 
