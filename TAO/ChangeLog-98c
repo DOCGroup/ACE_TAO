@@ -1,6 +1,11 @@
+Thu Nov 26 11:37:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Invocation.cpp (invoke): Variable <tcp> must be
+	  initialized to avoid g++ warnings.
+
 Thu Nov 26 01:08:00 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-        * orbsvcs/ImplRepo_Service/ImplRepo.idl: All methods are now 
+        * orbsvcs/ImplRepo_Service/ImplRepo.idl: All methods are now
           available.
 
         * orbsvcs/ImplRepo_Service/Repository.{h,cpp}: Only stores the
@@ -10,10 +15,10 @@ Thu Nov 26 01:08:00 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
         * orbsvcs/ImplRepo_Service/ImplRepo_i.{h,cpp}: Support for all
           methods and made switch to host/port instead of ior.
 
-        * orbsvcs/tests/ImplRepo/Repository_Test.cpp: Tests with 
+        * orbsvcs/tests/ImplRepo/Repository_Test.cpp: Tests with
           host/port instead of IOR now.
 
-        * orbsvcs/ImplRepo_Service/ImplRepo.{dsp,dsw}: Updated the 
+        * orbsvcs/ImplRepo_Service/ImplRepo.{dsp,dsw}: Updated the
           MSVC project files.  Mainly cosmetic changes.
 
         * orbsvcs/tests/ImplRepo/svc.conf:
@@ -21,7 +26,7 @@ Thu Nov 26 01:08:00 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
           Split the conf files up since IR needs -ORBpoalock null and
           thread-per-connection, but the tests don't necessarily need it.
 
-        * orbsvcs/tests/ImplRepo/IR_Helper.{h,cpp}: New helper class 
+        * orbsvcs/tests/ImplRepo/IR_Helper.{h,cpp}: New helper class
           that contains the logic for using the IR from a server.
 
         * orbsvcs/tests/ImplRepo/Airplane.idl:
@@ -35,20 +40,20 @@ Thu Nov 26 01:08:00 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
         * orbsvcs/tests/ImplRepo/airplane_server.dsp:
         * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
         * orbsvcs/tests/ImplRepo/airplane_server_i.h:
-          New Paper Airplane Server!  The purpose is to show off the 
+          New Paper Airplane Server!  The purpose is to show off the
           IR_Helper class use and to have a different server to test
           the IR with.
 
-        * orbsvcs/tests/ImplRepo/ImplRepo_Test.dsw: Now includes the 
+        * orbsvcs/tests/ImplRepo/ImplRepo_Test.dsw: Now includes the
           Paper Airplane Server.
 
-        * orbsvcs/tests/ImplRepo/run_test.pl: Updated to perform different 
+        * orbsvcs/tests/ImplRepo/run_test.pl: Updated to perform different
           types of tests.
-        
-        * orbsvcs/tests/ImplRepo/server.dsp: Removed server.h, a file that 
+
+        * orbsvcs/tests/ImplRepo/server.dsp: Removed server.h, a file that
           doesn't exist anymore.
-        
-        * orbsvcs/tests/ImplRepo/server_impl.cpp: Cleaned up a bit. 
+
+        * orbsvcs/tests/ImplRepo/server_impl.cpp: Cleaned up a bit.
           Removed unnecessary code.
 
 Wed Nov 25 20:50:55 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
@@ -65,7 +70,7 @@ Wed Nov 25 20:50:55 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	  COMM_FAILURE exception indicates that a failure happened while
  	  the client and server were in the middle of some communication.
- 	
+
 	  Thanks to Christa Schwanninger
  	  <christa.schwanninger@mchp.siemens.de> for pointing out this
  	  problem, and to Carlos for helping sort the exceptions.
@@ -73,7 +78,7 @@ Wed Nov 25 20:50:55 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 Mon Nov 23 17:45:16 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/IIOP_Object.cpp (do_static_call): <status> cannot be
-	  initialized to zero.  
+	  initialized to zero.
 
 Wed Nov 25 18:20:55 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -100,8 +105,8 @@ Wed Nov 25 00:47:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* tao/Invocation.cpp (invoke): Reordered error handling so
 	  handle_close (of client side connection) happens in the right
 	  places.
-	
-	* tao/GIOP.cpp (send_error): 
+
+	* tao/GIOP.cpp (send_error):
 	* tao/Connect.cpp (handle_input): Prevent handle_close from being
 	  called in here.  Simply return -1 should do the trick.
 	  Otherwise, servers may crash when communication errors occur.
