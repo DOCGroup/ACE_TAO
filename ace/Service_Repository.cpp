@@ -1,3 +1,5 @@
+// $Id$
+
 #include "ace/Service_Repository.h"
 
 #if !defined (__ACE_INLINE__)
@@ -8,6 +10,7 @@
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
+#include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
 
 ACE_RCSID (ace,
@@ -287,6 +290,7 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
       return 0;
     }
 
+  ACE_OS::last_error (ENOSPC);
   return -1;
 }
 
@@ -331,7 +335,7 @@ ACE_Service_Repository::suspend (const ACE_TCHAR name[],
 // the array and decrement the <current_size> by 1.
 
 int
-ACE_Service_Repository::remove (const ACE_TCHAR name[])
+ACE_Service_Repository::remove (const ACE_TCHAR name[], ACE_Service_Type **ps)
 {
   ACE_TRACE ("ACE_Service_Repository::remove");
   ACE_Service_Type *s = 0;
@@ -350,7 +354,10 @@ ACE_Service_Repository::remove (const ACE_TCHAR name[])
       this->service_vector_[i]
         = this->service_vector_[this->current_size_];
   }
-  delete s;
+  if (ps != 0)
+    *ps = s;
+  else
+    delete s;
   return 0;
 }
 

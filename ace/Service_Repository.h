@@ -103,8 +103,12 @@ public:
             const ACE_Service_Type **srp = 0,
             int ignore_suspended = 1);
 
-  /// Remove an existing service record.
-  int remove (const ACE_TCHAR[]);
+  /// Remove an existing service record. If @a sr == 0, the service record
+  /// is deleted before control is returned to the caller. If @a sr != 0,
+  /// the service's record is removed from the repository, but not deleted;
+  /// *sr receives the service record pointer and the caller is responsible
+  /// for properly disposing of it.
+  int remove (const ACE_TCHAR[], ACE_Service_Type **sr = 0);
 
   // = Liveness control
   /// Resume a service record.
