@@ -3674,7 +3674,7 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "IMR-ified IOR = \n%s\n", ior.c_str ()));
 
-      return this->orb_core_.orb ()->string_to_object (ior.c_str (), ACE_TRY_ENV);
+      obj = this->orb_core_.orb ()->string_to_object (ior.c_str (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (obj);
 
       return obj;
