@@ -176,6 +176,20 @@ else
 <%endfor%>
 endif
 <%endif%>
+<%else%>
+<%foreach(requires)%>
+ifeq ($(<%require%>),1)
+<%endfor%>
+<%foreach(avoids)%>
+ifneq ($(<%avoid%>),1)
+<%endfor%>
+<%foreach(comps)%>
+ifeq (<%comp%>, $(findstring <%comp%>, $(CURRENT_COMPONENTS)))
+<%endfor%>
+  <%build%>
+<%foreach(comps avoids requires)%>
+endif
+<%endfor%>
 <%endif%>
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
