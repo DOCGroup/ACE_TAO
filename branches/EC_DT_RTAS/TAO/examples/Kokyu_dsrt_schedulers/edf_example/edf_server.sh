@@ -1,4 +1,4 @@
 #!/bin/bash
 
-source /home/ron/$1/setenv.sh
+source ~/.linux.csh
 ./dt_two_prio_server 

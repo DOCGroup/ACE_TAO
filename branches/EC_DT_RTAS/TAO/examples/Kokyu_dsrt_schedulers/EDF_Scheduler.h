@@ -26,7 +26,10 @@ struct EDF_Scheduler_Traits
     Importance_t importance_;
     Time_t deadline_;
     Time_t period_;
-    int task_id_;
+    unsigned int task_id_;
+    unsigned int id;
+    unsigned int pid;
+    long long tid;
   };
 
   typedef _QoSDescriptor_t QoSDescriptor_t;

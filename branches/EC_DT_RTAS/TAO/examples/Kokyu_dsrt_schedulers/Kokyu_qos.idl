@@ -54,6 +54,9 @@ module Kokyu
     TimeBase::TimeT estimated_initial_execution_time;
     TimeBase::TimeT period;
     long task_id;
+    long id;
+    long pid;
+    long long tid;
 //    And deadline info in QoS is a subdeadline for a subtask or a task deadline.
   };
 };

@@ -100,7 +100,12 @@ EDF_Scheduler::create_scheduling_parameter (const EDF_Scheduling::SchedulingPara
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   /* MEASURE: Time to create scheduling parameter */
-  DSUI_EVENT_LOG (EDF_SCHED_FAM, CREATE_SCHED_PARAM_START, 0, 0, NULL);
+  Object_ID oid;
+  oid.task_id=value.id;
+  oid.id=value.id;
+  oid.pid=value.pid;
+  oid.tid=value.tid;
+  DSUI_EVENT_LOG (EDF_SCHED_FAM, CREATE_SCHED_PARAM_START, 0, sizeof(Object_ID), (char*)&oid);
 
   EDF_Scheduling::SchedulingParameterPolicy_ptr sched_param_policy;
   ACE_NEW_THROW_EX (sched_param_policy,
@@ -113,7 +118,7 @@ EDF_Scheduler::create_scheduling_parameter (const EDF_Scheduling::SchedulingPara
 
   sched_param_policy->value (value);
 
-  DSUI_EVENT_LOG (EDF_SCHED_FAM, CREATE_SCHED_PARAM_END, 0, 0, NULL);
+  DSUI_EVENT_LOG (EDF_SCHED_FAM, CREATE_SCHED_PARAM_END, 0, sizeof(Object_ID), (char*)&oid);
   return sched_param_policy;
 }
 
@@ -140,14 +145,19 @@ EDF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
   // ACE_DEBUG ((LM_DEBUG, "(%t|%T): guid is %d\n", int_guid));
   //#endif
 
-  Object_ID tmp;
-  tmp.guid = int_guid;
-  DSUI_EVENT_LOG (EDF_SCHED_FAM, START_NEW_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&tmp);
   EDF_Scheduler_Traits::QoSDescriptor_t qos;
   EDF_Scheduling::SchedulingParameterPolicy_var sched_param_policy =
     EDF_Scheduling::SchedulingParameterPolicy::_narrow (sched_policy);
 
   EDF_Scheduling::SchedulingParameter_var sched_param = sched_param_policy->value ();
+
+  Object_ID tmp;
+  tmp.guid = int_guid;
+  tmp.id = sched_param->id;
+  tmp.pid = sched_param->pid;
+  tmp.tid = sched_param->tid;
+  tmp.task_id = sched_param->task_id;
+  DSUI_EVENT_LOG (EDF_SCHED_FAM, START_NEW_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&tmp);
 
   qos.deadline_ = sched_param->deadline;
   qos.importance_ = sched_param->importance;
@@ -178,6 +188,7 @@ EDF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdT
 
   Object_ID tmp;
   tmp.guid = int_guid;
+
   DSUI_EVENT_LOG (EDF_SCHED_FAM, START_NESTED_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&tmp);
   this->begin_new_scheduling_segment (guid,
                                       name,
@@ -205,9 +216,6 @@ EDF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType& g
                   guid.get_buffer (),
                   guid.length ());
 
-  Object_ID tmp;
-  tmp.guid = int_guid;
-  DSUI_EVENT_LOG (EDF_SCHED_FAM, START_UPDATE_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&tmp);
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, "(%t|%T): update_sched_seg::guid is %d\n", int_guid));
 #endif
@@ -217,6 +225,15 @@ EDF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType& g
 
   EDF_Scheduling::SchedulingParameter_var sched_param = sched_param_policy->value ();
   EDF_Scheduler_Traits::QoSDescriptor_t qos;
+
+  Object_ID tmp;
+  tmp.guid = int_guid;
+  tmp.id = sched_param->id;
+  tmp.pid = sched_param->pid;
+  tmp.tid = sched_param->tid;
+  tmp.task_id = sched_param->task_id;
+
+  DSUI_EVENT_LOG (EDF_SCHED_FAM, START_UPDATE_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&tmp);
 
   qos.deadline_ = sched_param->deadline;
   qos.importance_ = sched_param->importance;
@@ -404,6 +421,7 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
   Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr;
   RTScheduling::Current::IdType guid;
   int int_guid;
+  Object_ID tmp =  ACE_OBJECT_COUNTER->increment();
 
   DSUI_EVENT_LOG (EDF_SCHED_FAM, ENTER_SERVER_SCHED_TIME, 0, 0, NULL);
 
@@ -493,6 +511,9 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
       sched_param.deadline = deadline;
       sched_param.period = period;
       sched_param.task_id = task_id;
+      sched_param.id = tmp.id;
+      sched_param.tid = tmp.tid;
+      sched_param.pid = tmp.pid;
       sched_param_out = this->create_scheduling_parameter (sched_param);
     }
 
@@ -501,8 +522,10 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
   qos.deadline_ = deadline;
   qos.period_ = period;
   qos.task_id_ = task_id;
+  qos.id = tmp.id;
+  qos.tid = tmp.tid;
+  qos.pid = tmp.pid;
 
-  Object_ID tmp;
   tmp.guid = int_guid;
   DSUI_EVENT_LOG (EDF_SCHED_FAM, ENTER_SERVER_DISPATCH_SCHED, 0, sizeof(Object_ID), (char*)&tmp);
 

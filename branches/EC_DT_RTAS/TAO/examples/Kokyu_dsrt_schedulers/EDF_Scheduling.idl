@@ -48,6 +48,9 @@ module EDF_Scheduling
     TimeBase::TimeT period; 
     TimeBase::TimeT remain_exe;
     long task_id;
+    long id;
+    long pid;
+    long long tid;
   };
 
   local interface SchedulingParameterPolicy
