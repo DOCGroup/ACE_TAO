@@ -1,3 +1,48 @@
+Tue Sep  7 10:44:10 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/CIDLC.mpc:
+        * CIDLC/CIDLC.vcproj:
+        * CIDLC/RepositoryIdGenerator.cpp:
+        * CIDLC/RepositoryIdGenerator.hpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        * CIDLC/cidlc.cpp:
+        
+          - Updated the RepositoryIdGenerator and re-added the source
+            and header files to the build. This generator creates
+            repository ids for interfaces and eventtypes, and stores
+            them internally in a context variable for later access
+            in code generation. It also handles modifications to the
+            repository ids stemming from 'typeprefix' or 'typeid'
+            declarations.
+            
+          - Added generation of 'provide_<facet name>_i' and
+            'get_consumer_<event consumer name>_i' methods in the servant,
+            which create dummy object references and store them in the
+            appropriate port table in the servant base class.
+            
+          - Re-implemented the generated 'provide_<facet name>' and
+            'get_consumer_<event consumer name>' methods. They now
+            use the container's POA to activate the dummy objects
+            created by the corresponding _i methods described above.
+            The activation takes place upon the first outside access
+            of these objects. If an object has already been activated,
+            it will simply be found in its port table and returned.
+            Thanks to Bala for the prototype code for this feature.
+            
+        * ciao/Container_Base.cpp:
+        * ciao/Container_Base.h:
+        
+          Added 'generate_reference' utility method called by the
+          '_i' methods described above.
+          
+        * ciao/Servant_Impl_Base.cpp:
+        * ciao/Servant_Impl_Base.h:
+        
+          Added 'lookup_facet' and 'lookup_consumer' methods used in
+          generated servant code to determine if a desired object has
+          been activated already (and added to a port table) or not.
+
 Mon Aug 30 12:52:28 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* performance-tests/Benchmark/Benchmark.mpc:

@@ -115,10 +115,11 @@ namespace CIAO
   class CIAO_SERVER_Export Session_Container : public Container
   {
   public:
-    Session_Container (CORBA::ORB_ptr o,
-                       int static_config_flag =0,
-                       const Static_Config_EntryPoints_Maps* static_entrypts_maps =0
-                       );
+    Session_Container (
+        CORBA::ORB_ptr o,
+        int static_config_flag = 0,
+        const Static_Config_EntryPoints_Maps* static_entrypts_maps = 0
+      );
 
     virtual ~Session_Container (void);
 
@@ -187,6 +188,12 @@ namespace CIAO
                               PortableServer::ObjectId_out oid
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
+     
+    // Analog of the POA method that creates an object reference from
+    // an object id string.  
+    CORBA::Object_ptr generate_reference (const char *obj_id,
+                                          const char *repo_id
+                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   protected:
     long number_;

@@ -132,7 +132,7 @@ namespace
     virtual void
     post (Type&)
     {
-      os << ";" << endl << endl;
+      os << ";" << endl;
     }
 
     virtual void
@@ -1189,6 +1189,72 @@ namespace
       Traversal::Belongs belongs_;
     };
 
+    struct PortsEmitterPrivate : Traversal::EmitterData,
+                                 Traversal::SingleUserData,
+                                 Traversal::MultiUserData,
+                                 Traversal::PublisherData,
+                                 Traversal::ConsumerData,
+                                 Traversal::ProviderData,
+                                 EmitterBase
+    {
+      PortsEmitterPrivate (Context& c)
+        : EmitterBase (c),
+          type_name_emitter_ (c.os ()),
+          simple_type_name_emitter_ (c.os ()),
+          stripped_type_name_emitter_ (c.os ())
+      {
+        belongs_.node_traverser (type_name_emitter_);
+        simple_belongs_.node_traverser (simple_type_name_emitter_);
+        stripped_belongs_.node_traverser (stripped_type_name_emitter_);
+      }
+
+      virtual void
+      traverse (SemanticGraph::Provider& p)
+      {
+        os << "::CORBA::Object_ptr" << endl
+           << "provide_" << p.name () << "_i (" << endl
+           << STRS[ENV_SNGL_HDR] << ")" << endl
+           << STRS[EXCP_SNGL] << ";" << endl << endl;
+      }
+
+      virtual void
+      traverse (SemanticGraph::SingleUser& u)
+      {
+      }
+
+      virtual void
+      traverse (SemanticGraph::MultiUser& u)
+      {
+      }
+
+      virtual void
+      traverse (SemanticGraph::Consumer& c)
+      {
+        os << "::Components::EventConsumerBase_ptr" << endl
+           << "get_consumer_" << c.name () << "_i (" << endl
+           << STRS[ENV_SNGL_HDR] << ")" << endl
+           << STRS[EXCP_SNGL] << ";" << endl << endl;
+      }
+
+      virtual void
+      traverse (SemanticGraph::Emitter& e)
+      {
+      }
+
+      virtual void
+      traverse (SemanticGraph::Publisher& p)
+      {
+      }
+
+    private:
+      TypeNameEmitter type_name_emitter_;
+      SimpleTypeNameEmitter simple_type_name_emitter_;
+      StrippedTypeNameEmitter stripped_type_name_emitter_;
+      Traversal::Belongs belongs_;
+      Traversal::Belongs simple_belongs_;
+      Traversal::Belongs stripped_belongs_;
+    };
+
   public:
     virtual void
     pre (Type& t)
@@ -1216,13 +1282,13 @@ namespace
 
       os << "/// Hack for VC6 the most sucky compiler" << endl
 	       << "typedef CIAO::Servant_Impl<" << endl
-	       <<  "POA_" << stripped << "," << endl
-         << "      " << t.scoped_name ().scope_name () << "::CCM_"
+	       << "    POA_" << stripped << "," << endl
+         << "    " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "," << endl
-         << "      " << t.scoped_name ().scope_name () << "::CCM_"
+         << "    " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "_var," << endl
-         << "      " << t.name () << "_Context" << endl
-         << "    > our_base;" << endl;
+         << "    " << t.name () << "_Context" << endl
+         << "  > our_base;" << endl << endl;
 
       os << t.name () << "_Servant (" << endl
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
@@ -1578,9 +1644,27 @@ namespace
       }
           
       os << "private:" << endl << endl
-         << "void populate_port_tables (" << endl
+         << "void" << endl
+         << "populate_port_tables (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
          << STRS[EXCP_SNGL] << ";" << endl << endl;
+
+      // Generate private operations for ports.
+      {
+        Traversal::Component component_emitter;
+
+        Traversal::Inherits component_inherits;
+        component_inherits.node_traverser (component_emitter);
+
+        Traversal::Defines defines;
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (component_inherits);
+
+        PortsEmitterPrivate ports_emitter (ctx);
+        defines.node_traverser (ports_emitter);
+
+        component_emitter.traverse (t);
+      }
     }
 
     virtual void
