@@ -14,7 +14,7 @@
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_MT_SAFE) && defined (ACE_HAS_THREADS)
-ACE_Thread_Mutex *ACE_Static_Object_Lock::mutex_ = 0;
+ACE_Recursive_Thread_Mutex *ACE_Static_Object_Lock::mutex_ = 0;
 #endif
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Null_Mutex)
@@ -927,13 +927,14 @@ ACE_Static_Object_Lock::atexit (void)
   delete ACE_Static_Object_Lock::mutex_;
 }
 
-ACE_Thread_Mutex *
+ACE_Recursive_Thread_Mutex *
 ACE_Static_Object_Lock::instance (void)
 {
   // We assume things before main are single threaded.
   if (ACE_Static_Object_Lock::mutex_ == 0)
     {
-      ACE_NEW_RETURN (ACE_Static_Object_Lock::mutex_, ACE_Thread_Mutex, 0);
+      ACE_NEW_RETURN (ACE_Static_Object_Lock::mutex_,
+		      ACE_Recursive_Thread_Mutex, 0);
 #if defined (ACE_HAS_SIG_C_FUNC)
       ::atexit (ace_static_object_lock_atexit);
 #else
