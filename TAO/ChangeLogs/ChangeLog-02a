@@ -1,3 +1,28 @@
+Wed Sep 19 14:15:59 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	* tao/BiDir_GIOP/TAO_BiDir_GIOP.dsp:
+	* tao/DynamicAny/TAO_DynamicAny.dsp:
+	* tao/IFR_Client/TAO_IFR_Client.dsp:
+	* tao/IFR_Client/TAO_IFR_Client_Static.dsp:
+	* tao/IORManipulation/TAO_IORManip.dsp:
+	* tao/IORManipulation/TAO_IORManip_Static.dsp:
+	* tao/IORTable/TAO_IORTable.dsp:
+	* tao/IORTable/TAO_IORTable_Static.dsp:
+	* tao/PortableServer/TAO_PortableServer.dsp:
+	* tao/PortableServer/TAO_PortableServer_Static.dsp:
+	* tao/RTCORBA/TAO_RTCORBA.dsp:
+	* tao/RTCORBA/TAO_RTCORBA_Static.dsp:
+	* tao/RTPortableServer/TAO_RTPortableServer.dsp:
+	* tao/RTPortableServer/TAO_RTPortableServer_Static.dsp:
+	* tao/SmartProxies/SmartProxies.dsp:
+	* tao/Strategies/TAO_Strategies.dsp:
+	* tao/Strategies/TAO_Strategies_Static.dsp:
+	* tao/TypeCodeFactory/TypeCodeFactory.dsp: Enabled generation of
+	  debug info even for release configurations.  Thanks to Jonathan
+	  Reis <reis@stentor.com> for suggesting this.
+
 Wed Sep 19 12:06:04 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * examples/Simple/time-date/time-date.bor:

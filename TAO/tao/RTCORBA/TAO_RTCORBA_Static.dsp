@@ -40,10 +40,10 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release\RTCORBA"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "_WINDOWS" /D "_CONSOLE" /D "NDEBUG" /D "WIN32" /D "TAO_AS_STATIC_LIBS" /D "ACE_AS_STATIC_LIBS" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /Zi /O2 /I "../" /I "../../" /I "../../../" /D "_WINDOWS" /D "_CONSOLE" /D "NDEBUG" /D "WIN32" /D "TAO_AS_STATIC_LIBS" /D "ACE_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -66,8 +66,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug\RTCORBA"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_WINDOWS" /D "_CONSOLE" /D "_DEBUG" /D "WIN32" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -107,10 +107,6 @@ SOURCE=.\Linear_Priority_Mapping.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\RT_Thread_Lane_Resources_Manager.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Priority_Mapping.i
 # End Source File
 # Begin Source File
@@ -147,6 +143,10 @@ SOURCE=.\RT_Protocols_Hooks.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_Thread_Lane_Resources_Manager.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\RTCORBAC.i
 # End Source File
 # Begin Source File
@@ -168,10 +168,6 @@ SOURCE=.\Direct_Priority_Mapping.h
 # Begin Source File
 
 SOURCE=.\Linear_Priority_Mapping.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Thread_Lane_Resources_Manager.h
 # End Source File
 # Begin Source File
 
@@ -239,6 +235,10 @@ SOURCE=.\RT_Stub_Factory.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_Thread_Lane_Resources_Manager.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RTCORBA.h
 # End Source File
 # Begin Source File
@@ -268,10 +268,6 @@ SOURCE=.\Direct_Priority_Mapping.cpp
 # Begin Source File
 
 SOURCE=.\Linear_Priority_Mapping.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Thread_Lane_Resources_Manager.cpp
 # End Source File
 # Begin Source File
 
@@ -336,6 +332,10 @@ SOURCE=.\RT_Stub.cpp
 # Begin Source File
 
 SOURCE=.\RT_Stub_Factory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Thread_Lane_Resources_Manager.cpp
 # End Source File
 # Begin Source File
 

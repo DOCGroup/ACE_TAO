@@ -7,21 +7,21 @@
 CFG=SmartProxies - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "SmartProxies.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "SmartProxies.mak" CFG="SmartProxies - Win32 Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "SmartProxies - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "SmartProxies - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "SmartProxies - Win32 MFC Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "SmartProxies - Win32 MFC Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -45,7 +45,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "SMARTPROXIES_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D "TAO_SMARTPROXIES_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MDd /W3 /GX /Zi /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D "TAO_SMARTPROXIES_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -56,7 +56,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 TAO.lib ace.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_SmartProxies.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO.lib ace.lib /nologo /dll /map /debug /machine:I386 /out:"..\..\..\bin\TAO_SmartProxies.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "SmartProxies - Win32 Debug"
 
@@ -71,8 +71,8 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Debug\SmartProxies"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "SMARTPROXIES_EXPORTS" /YX /FD   /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "TAO_SMARTPROXIES_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD   /c
+# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "SMARTPROXIES_EXPORTS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "TAO_SMARTPROXIES_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -99,15 +99,12 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Debug\SmartProxiesMFC"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-CPP=cl.exe
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "SMARTPROXIES_EXPORTS" /FD /c
 # SUBTRACT BASE CPP /YX
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D ACE_HAS_MFC=1 /D "TAO_SMARTPROXIES_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
-MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
-RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -131,15 +128,12 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Release\SmartProxiesMFC"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-CPP=cl.exe
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "SmartProxies_EXPORTS" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D ACE_HAS_MFC=1 /D "TAO_SMARTPROXIES_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /Zi /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D ACE_HAS_MFC=1 /D "TAO_SMARTPROXIES_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
-MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
-RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -147,16 +141,16 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 acemfc.lib TAOmfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_SmartProxiesmfc.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 acemfc.lib TAOmfc.lib /nologo /dll /map /debug /machine:I386 /out:"..\..\..\bin\TAO_SmartProxiesmfc.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
 # Name "SmartProxies - Win32 Release"
 # Name "SmartProxies - Win32 Debug"
-# Name "SmartProxies - Win32 MFC Release"
 # Name "SmartProxies - Win32 MFC Debug"
+# Name "SmartProxies - Win32 MFC Release"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
