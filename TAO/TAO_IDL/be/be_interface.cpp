@@ -876,6 +876,12 @@ be_interface::gen_operation_table (void)
 
       break;
 
+    case TAO_CodeGen::TAO_LINEAR_SEARCH:
+      // For generating linear search also, we are calling GPERF
+      // only. 
+    case TAO_CodeGen::TAO_BINARY_SEARCH:
+      // For generating binary search also, we are calling GPERF
+      // only. 
     case TAO_CodeGen::TAO_PERFECT_HASH:
       // For each interface in the IDL, have a new temp file to
       // collect the input for the gperf program.
@@ -947,7 +953,7 @@ be_interface::gen_operation_table (void)
         // Input to the gperf is ready. Run gperf and get things
         // done. This method also unlinks the temp file that we used
         // for the gperf.
-        gen_perfect_hash_optable ();
+        gen_gperf_things ();
       }
       break;
 
@@ -1051,6 +1057,9 @@ be_interface::gen_optable_entries (be_interface *derived)
         }
       break;
 
+    case TAO_CodeGen::TAO_LINEAR_SEARCH:
+    case TAO_CodeGen::TAO_BINARY_SEARCH:
+      // For this also, we call GPERF only.
     case TAO_CodeGen::TAO_PERFECT_HASH:
       // Init the outstream.
       ss = cg->gperf_input_stream ();
@@ -1273,20 +1282,74 @@ be_interface::gen_optable_helper (be_interface *derived,
   return 0;
 }
 
-// The main optable generator for the perfect hashing strategy.
+// Run GPERF and get the correct lookup and other operations
+// depending on which strategy we are using. Returns 0 on sucess, -1
+// on error. 
 int
-be_interface::gen_perfect_hash_optable (void)
+be_interface::gen_gperf_things (void)
 {
-  // Output a class definition deriving from
-  // TAO_Perfect_Hash_OpTable.
-  gen_perfect_hash_class_definition ();
+  // GPERF can give Binary search, Linear search and Perfect Hash
+  // methods. Generate the class defintion according to that.
 
-  // Call GPERF and get the methods defined.
-  if (gen_perfect_hash_methods () == -1)
-    return -1;
+  // Codegen singleton.
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
-  // Create an instance of this perfect hash table.
-  gen_perfect_hash_instance ();
+  // Generate the correct class definition for the operation lookup
+  // strategy. Then, get the lookup method from GPERF. And then,
+  // instantiate the correct class for the operation lookup strategy
+  // we are following.
+  switch (cg->lookup_strategy ())
+    {
+    case TAO_CodeGen::TAO_PERFECT_HASH:
+      // Output a class definition deriving from
+      // TAO_Perfect_Hash_OpTable.        
+      gen_perfect_hash_class_definition ();
+      
+      // Call GPERF and get the methods defined.
+      if (gen_gperf_lookup_methods () == -1)
+        return -1;
+
+      // Create an instance of the correct class corresponding the
+      // operation lookup strategy we are following.
+      gen_perfect_hash_instance ();
+      
+      break;
+      
+    case TAO_CodeGen::TAO_BINARY_SEARCH:
+      // Output a class definition deriving from
+      // TAO_Binary_Search_OpTable.
+      this->gen_binary_search_class_definition ();
+      
+      // Call GPERF and get the methods defined.
+      if (gen_gperf_lookup_methods () == -1)
+        return -1;
+
+      // Create an instance of the correct class corresponding the
+      // operation lookup strategy we are following.
+      gen_binary_search_instance ();
+
+      break;
+     
+    case TAO_CodeGen::TAO_LINEAR_SEARCH:
+      // Output a class definition deriving from
+      // TAO_Linear_Search_OpTable.
+      gen_linear_search_class_definition ();
+      
+      // Call GPERF and get the methods defined.
+      if (gen_gperf_lookup_methods () == -1)
+        return -1;
+
+      // Create an instance of the correct class corresponding the
+      // operation lookup strategy we are following.
+      gen_linear_search_instance ();
+
+      break;
+      
+    default:
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "tao_idl:ERROR:%N:%l:Unknown Operation Lookup Strategy\n"),
+                        -1);
+    }
 
   return 0;
 }
@@ -1320,13 +1383,61 @@ be_interface::gen_perfect_hash_class_definition (void)
       << "\n";
 }
 
+// Outputs the class definition for the binary searching. This class
+// will inherit from the TAO_Binary_Seach_OpTable. 
+void
+be_interface::gen_binary_search_class_definition (void)
+{
+  // Codegen singleton.
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  // Outstream.
+  TAO_OutStream *ss = cg->server_skeletons ();
+
+  *ss << "class " << "TAO_" << this->flatname () << "_Binary_Search_OpTable"
+      << " : public TAO_Binary_Search_OpTable"
+      << be_nl
+      << "{"
+      << be_nl
+      << "public:"
+      << be_nl
+      << " const TAO_operation_db_entry * lookup (const char *str, unsigned int len);"
+      << be_nl
+      << "};"
+      << "\n";
+}
+
+// Outputs the class definition for the linear search. This class
+// will inherit from the TAO_Linear_Search_OpTable.
+void
+be_interface::gen_linear_search_class_definition (void)
+{
+  // Codegen singleton.
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  
+  // Outstream.
+  TAO_OutStream *ss = cg->server_skeletons ();
+
+  *ss << "class " << "TAO_" << this->flatname () << "_Linear_Search_OpTable"
+      << " : public TAO_Linear_Search_OpTable"
+      << be_nl
+      << "{"
+      << be_nl
+      << "public:"
+      << be_nl
+      << " const TAO_operation_db_entry * lookup (const char *str, unsigned int len);"
+      << be_nl
+      << "};"
+      << "\n";
+}
+
 // We have collected the input (Operations and the corresponding
 // skeleton pointers) for the gperf program. Now let us execute gperf
 // and get things done.
 // GPERF reads from our temp file and write to the Server Skeleton
 // file.
 int
-be_interface::gen_perfect_hash_methods (void)
+be_interface::gen_gperf_lookup_methods (void)
 {
   // Using ACE_Process.
   ACE_Process process_manager;
@@ -1373,23 +1484,56 @@ be_interface::gen_perfect_hash_methods (void)
   // Set the handles now in the process options.
   process_options.set_handles (input, output);
 
-  // Set the command line for the gperf program.
+  // Set the command line for the gperf program. Give the right
+  // arguments for the operation lookup strategy that we are using. 
+  switch (cg->lookup_strategy ())
+    {
+      // Perfect Hashing.
+    case TAO_CodeGen::TAO_PERFECT_HASH:
+      process_options.command_line ("%s"
+                                    " "
+                                    "-m -M -J -c -C"
+                                    " "
+                                    "-D -E -T -f 0"
+                                    " "
+                                    "-a -o -t -p -K"
+                                    " "
+                                    "opname_ -L C++"
+                                    " "
+                                    "-Z TAO_%s_Perfect_Hash_OpTable"
+                                    " "
+                                    "-N lookup",
+                                    idl_global->gperf_path (),
+                                    this->flatname ());
+      break;
+        
+      // Binary search methods from GPERF. Everythis and the -B flag. 
+    case TAO_CodeGen::TAO_BINARY_SEARCH:
+      process_options.command_line ("%s"
+                                    " "
+                                    "-B"
+                                    "  "
+                                    "-m -M -J -c -C"
+                                    " "
+                                    "-D -E -T -f 0"
+                                    " "
+                                    "-a -o -t -p -K"
+                                    " "
+                                    "opname_ -L C++"
+                                    " "
+                                    "-Z TAO_%s_Binary_Search_OpTable"
+                                    " "
+                                    "-N lookup",
+                                    idl_global->gperf_path (),
+                                    this->flatname ());
+      break;
+      
+    default:
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "tao_idl:ERROR:%N:%l:Unknown Operation Lookup Strategy\n"),
+                        -1);
+    }      
 
-  process_options.command_line ("%s"
-                                " "
-                                "-m -M -J -c -C"
-                                " "
-                                "-D -E -T -f 0"
-                                " "
-                                "-a -o -t -p -K"
-                                " "
-                                "opname_ -L C++"
-                                " "
-                                "-Z TAO_%s_Perfect_Hash_OpTable"
-                                " "
-                                "-N lookup",
-                                idl_global->perfect_hasher (),
-                                this->flatname ());
 
   // Spawn a process for gperf.
   if (process_manager.spawn (process_options) == -1)
@@ -1426,35 +1570,39 @@ be_interface::gen_perfect_hash_instance ()
       << be_nl;
 }
 
-#if 0
-// Delete the stream and filename for this temp file and also remove
-// the temperary gperf's input file.
+// Create an instance of the binary search optable.
 void
-be_interface::cleanup_gperf_temp_file (void)
+be_interface::gen_binary_search_instance ()
 {
   // Codegen singleton.
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
-#if !defined (linux)
-  // tao_idl core dumps on Linux if ss is deleted.
-  // Delete the stream ptr.
-  TAO_OutStream *ss = cg->gperf_input_stream ();
-  delete ss;
-#endif /* ! linux */
+  // Outstream.
+  TAO_OutStream *ss = cg->server_skeletons ();
 
-  // Delete the temp file.
-  ACE_OS::unlink (cg->gperf_input_filename ());
-
-  // Delete the filename ptr.
-  // @@ Alex: this looks like very bad style for me, IMHO you should
-  // add a method to the TAO_CodeGen class that cleanups this name,
-  // notice that after this code executes the state of <cg> is
-  // corrupted, its pointer to the <gperf_input_filename> is now
-  // invalid...
-  char *fname = cg->gperf_input_filename ();
-  delete[] fname;
+  *ss << "TAO_" << this->flatname () << "_Binary_Search_OpTable"
+      << " "
+      << "tao_" << this->flatname () << "_optable"
+      << ";"
+      << be_nl;
 }
-#endif /* 0 */
+
+// Create an instance of this perfect hash table.
+void
+be_interface::gen_linear_search_instance ()
+{
+  // Codegen singleton.
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  // Outstream.
+  TAO_OutStream *ss = cg->server_skeletons ();
+
+  *ss << "TAO_" << this->flatname () << "_Linear_Search_OpTable"
+      << " "
+      << "tao_" << this->flatname () << "_optable"
+      << ";"
+      << be_nl;
+}
 
 int
 be_interface::is_a_helper (be_interface * /*derived*/,
