@@ -29,19 +29,15 @@
     </CENTER>
 
     <UL>
-      <LI>The do_static_call() and do_dynamic_call() methods should
-	use an array of void* (in the first case static and generated
-	by the IDL compiler);
-	this will remove the problems with g++ and probably work
-	faster.
-      </LI>
-
       <LI>Object references inside structures or sequences are not
 	decoded properly, the problem starts because the interpreter
 	expects a CORBA::Object_ptr, but the real type is a T_var;
 	virtual inheritance adds the last ingredient to the poison.
 	<BR>[STATUS] A possible solution is to use a T_manager_var that
 	has two fields a Object_ptr and a T_ptr....
+      </LI>
+
+      <LI>Use active demuxing in the POA
       </LI>
 
       <LI>Optimize twoways by delaying memory allocation for the
@@ -64,9 +60,6 @@
 	<BR>[STATUS] Andy is working on this.
       </LI>
       
-      <LI>Use active demuxing in the POA
-      </LI>
-
       <LI>The data blocks and their buffers could be allocated in a
 	single operation, using the beginning of a buffer to contain
 	the data block and the rest of it to contain the actual buffer
@@ -77,7 +70,9 @@
 	efficient enough allocator we could make its size configurable
 	via the svc.conf file. In any case the *second* (and
 	subsequent) buffers come out of the allocator, so their sizes
-	could be configured in the already mentioned file
+	could be configured in the already mentioned file.
+	<BR>[NOTE] We have to be able to do this while minimizing the
+	number of calls to ORB_Core_instance()
       </LI>
  
       <LI>We need some TAO_TRY_* macro to encapsulate a common use of
@@ -93,9 +88,6 @@
       <LI>IDL compiler front-end should be case insensitive (actually
 	it should flag identifiers that only differ by case as a
 	conflict).
-      </LI>
-
-      <LI>Support for 64bit longs in the IDL compiler
       </LI>
 
       <LI>The operation tables do not need to be statics, they could
@@ -390,6 +382,19 @@
     </CENTER>
 
     <UL>
+      <LI>Support for 64bit longs in the IDL compiler
+	<BR>[DONE] They were supported already, but we had to test
+	them, I added a test to Param_Test.
+      </LI>
+
+      <LI>The do_static_call() and do_dynamic_call() methods should
+	use an array of void* (in the first case static and generated
+	by the IDL compiler);
+	this will remove the problems with g++ and probably work
+	faster.
+	<BR>[DONE]
+      </LI>
+
       <LI>The IDL compiler gets confused with paths in NT, this may be
 	due to my changes to report errors correctly (coryan).
 	<BR>[STATUS] Creating a Win32 workspace to try it.
