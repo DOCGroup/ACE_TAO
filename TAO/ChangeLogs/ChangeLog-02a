@@ -1,3 +1,11 @@
+Tue Mar 27 20:11:31 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile:
+        * orbsvcs/tests/AVStreams/Component_Switching/Makefile:
+          Updated dependencies
+
 Tue Mar 27 23:00:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * tests/AMI/client.cpp:
@@ -15,8 +23,8 @@ Tue Mar 27 19:37:58 2001  Carlos O'Ryan  <coryan@uci.edu>
           default IDL compiler rules altogether, letting application
           developers define their own.
 
-	  Thanks to Jody Hagins <jody@atdesk.com> for all these
-	  improvements. 
+          Thanks to Jody Hagins <jody@atdesk.com> for all these
+          improvements.
 
 Tue Mar 27 19:33:57 2001  Carlos O'Ryan  <coryan@uci.edu>
 
