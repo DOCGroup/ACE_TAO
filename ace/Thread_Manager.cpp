@@ -113,7 +113,7 @@ void
 ACE_Thread_Descriptor::do_at_exit ()
 
 {
-  ACE_TRACE ("ACE_Thread_Descriptor::at_exit");
+  ACE_TRACE ("ACE_Thread_Descriptor::do_at_exit");
   while (at_exit_list_!=0)
     this->at_pop ();
 }
@@ -2146,7 +2146,7 @@ ACE_Thread_Manager::hthread_grp_list (int grp_id,
                                       ACE_hthread_t hthread_list[],
                                       size_t n)
 {
-  ACE_TRACE ("ACE_Thread_Manager::hthread_list");
+  ACE_TRACE ("ACE_Thread_Manager::hthread_grp_list");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   size_t hthread_count = 0;

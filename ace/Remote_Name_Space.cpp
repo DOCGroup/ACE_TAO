@@ -216,7 +216,7 @@ int
 ACE_Remote_Name_Space::list_name_entries (ACE_BINDING_SET &set,
                                           const ACE_WString &pattern)
 {
-  ACE_TRACE ("ACE_Remote_Name_Space::list_names");
+  ACE_TRACE ("ACE_Remote_Name_Space::list_name_entries");
   ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> pattern_urep (pattern.ushort_rep ());
   ACE_Name_Request request (ACE_Name_Request::LIST_NAME_ENTRIES,
                             pattern_urep.get (),
@@ -255,7 +255,7 @@ int
 ACE_Remote_Name_Space::list_value_entries (ACE_BINDING_SET &set,
                                            const ACE_WString &pattern)
 {
-  ACE_TRACE ("ACE_Remote_Name_Space::list_values");
+  ACE_TRACE ("ACE_Remote_Name_Space::list_value_entries");
   ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> pattern_urep (pattern.ushort_rep ());
   ACE_Name_Request request (ACE_Name_Request::LIST_VALUE_ENTRIES,
                             pattern_urep.get (),
@@ -294,7 +294,7 @@ int
 ACE_Remote_Name_Space::list_type_entries (ACE_BINDING_SET &set,
                                           const ACE_WString &pattern)
 {
-  ACE_TRACE ("ACE_Remote_Name_Space::list_types");
+  ACE_TRACE ("ACE_Remote_Name_Space::list_type_entries");
   ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> pattern_urep (pattern.ushort_rep ());
   ACE_Name_Request request (ACE_Name_Request::LIST_TYPE_ENTRIES,
                             pattern_urep.get (),

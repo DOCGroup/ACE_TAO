@@ -384,7 +384,7 @@ ACE_Remote_Token_Proxy::owner_id (void)
 void
 ACE_Remote_Token_Proxy::dump (void) const
 {
-  ACE_TRACE ("ACE_Remote_Token_Proxy::owner_id");
+  ACE_TRACE ("ACE_Remote_Token_Proxy::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_Tokens::dump:\n")
               ACE_LIB_TEXT (" ignore_shadow_deadlock_ = %d\n"),

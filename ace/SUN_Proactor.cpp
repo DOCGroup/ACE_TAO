@@ -282,7 +282,7 @@ ACE_SUN_Proactor::start_aio (ACE_POSIX_Asynch_Result *result)
 int
 ACE_SUN_Proactor::cancel_aiocb (ACE_POSIX_Asynch_Result *result)
 {
-  ACE_TRACE ("ACE_POSIX_AIOCB_Proactor::cancel_aiocb");
+  ACE_TRACE ("ACE_SUN_Proactor::cancel_aiocb");
   int rc = ::aiocancel (& result->aio_resultp);
   
   if (rc == 0)    //  AIO_CANCELED
@@ -294,7 +294,7 @@ ACE_SUN_Proactor::cancel_aiocb (ACE_POSIX_Asynch_Result *result)
 int
 ACE_SUN_Proactor::cancel_aio (ACE_HANDLE handle)
 {
-  ACE_TRACE ("ACE_POSIX_AIOCB_Proactor::cancel_aio");
+  ACE_TRACE ("ACE_SUN_Proactor::cancel_aio");
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->mutex_, -1));
         

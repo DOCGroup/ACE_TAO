@@ -31,9 +31,9 @@ ACE_Handle_Set::reset (void)
 
 #if defined (ACE_HAS_BIG_FD_SET)
 ACE_INLINE ACE_Handle_Set &
-ACE_Handle_Set::operator= (const ACE_Handle_Set &rhs)
+ACE_Handle_Set::operator = (const ACE_Handle_Set &rhs)
 {
-  ACE_TRACE ("ACE_Handle_Set::reset");
+  ACE_TRACE ("ACE_Handle_Set::operator =");
 
   if (rhs.size_ > 0)
     {
@@ -147,7 +147,7 @@ ACE_Handle_Set::num_set (void) const
 ACE_INLINE
 ACE_Handle_Set::operator fd_set *()
 {
-  ACE_TRACE ("ACE_Handle_Set::operator ACE_FD_SET_TYPE *");
+  ACE_TRACE ("ACE_Handle_Set::operator fd_set *");
 
   if (this->size_ > 0)
     return (fd_set *) &this->mask_;
@@ -160,7 +160,7 @@ ACE_Handle_Set::operator fd_set *()
 ACE_INLINE fd_set *
 ACE_Handle_Set::fdset (void)
 {
-  ACE_TRACE ("ACE_Handle_Set::operator ACE_FD_SET_TYPE *");
+  ACE_TRACE ("ACE_Handle_Set::fdset");
 
   if (this->size_ > 0)
     return (fd_set *) &this->mask_;

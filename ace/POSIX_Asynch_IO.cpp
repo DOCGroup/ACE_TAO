@@ -1771,7 +1771,7 @@ ACE_POSIX_Asynch_Accept_Handler::ACE_POSIX_Asynch_Accept_Handler (ACE_Reactor* r
 
 ACE_POSIX_Asynch_Accept_Handler::~ACE_POSIX_Asynch_Accept_Handler (void)
 {
-  ACE_TRACE ("ACE_POSIX_Asynch_Accept_Handler::dtor");
+  ACE_TRACE ("ACE_POSIX_Asynch_Accept_Handler::~ACE_POSIX_Asynch_Accept_Handler");
 }
 
 int

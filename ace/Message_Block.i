@@ -73,7 +73,7 @@ ACE_Data_Block::flags (void) const
 ACE_INLINE ACE_Allocator*
 ACE_Data_Block::data_block_allocator (void) const
 {
-  ACE_TRACE ("ACE_Message_Block::data_block_allocator");
+  ACE_TRACE ("ACE_Data_Block::data_block_allocator");
   return this->data_block_allocator_;
 }
 

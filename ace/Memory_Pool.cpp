@@ -674,7 +674,7 @@ int
 ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
                                                    off_t &offset)
 {
-  ACE_TRACE ("ACE_Shared_Memory_Pool::update");
+  ACE_TRACE ("ACE_Shared_Memory_Pool::commit_backing_store_name");
 
   size_t counter;
   SHM_TABLE *st = ACE_reinterpret_cast (SHM_TABLE *,

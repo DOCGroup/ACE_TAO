@@ -294,7 +294,7 @@ ACE_TkReactor::remove_handler_i (ACE_HANDLE handle,
 void
 ACE_TkReactor::remove_TkFileHandler (ACE_HANDLE handle)
 {
-  ACE_TRACE ("ACE_TkReactor::remove_TkInput");
+  ACE_TRACE ("ACE_TkReactor::remove_TkFileHandler");
 
   ACE_TkReactorID *TkID = this->ids_;
 

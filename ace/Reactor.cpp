@@ -242,7 +242,7 @@ ACE_Reactor::reactor_event_loop_done (void)
 void
 ACE_Reactor::reset_reactor_event_loop (void)
 {
-  ACE_TRACE ("ACE_Reactor::reset_event_loop");
+  ACE_TRACE ("ACE_Reactor::reset_reactor_event_loop");
 
   this->implementation_->deactivate (0);
 }

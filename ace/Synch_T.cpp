@@ -43,7 +43,7 @@ ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::~ACE_Reverse_Lock (void)
 template <class ACE_LOCK, class TYPE> ACE_LOCK &
 ACE_Atomic_Op<ACE_LOCK, TYPE>::mutex (void)
 {
-// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::lock");
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::mutex");
   return this->mutex_;
 }
 
@@ -676,7 +676,7 @@ ACE_TSS_Guard<ACE_LOCK>::~ACE_TSS_Guard (void)
 template <class ACE_LOCK> void
 ACE_TSS_Guard<ACE_LOCK>::cleanup (void *ptr)
 {
-// ACE_TRACE ("ACE_TSS_Guard<ACE_LOCK>::dump");
+// ACE_TRACE ("ACE_TSS_Guard<ACE_LOCK>::cleanup");
 
   // Destructor releases lock.
   delete (ACE_Guard<ACE_LOCK> *) ptr;

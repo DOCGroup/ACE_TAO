@@ -80,7 +80,7 @@ ACE_Name_Space_Map<ALLOCATOR>::find (const ACE_NS_String &ext_id,
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::remap (EXCEPTION_POINTERS *ep)
 {
-  ACE_TRACE ("ACE_Name_Space_Map::remap");
+  ACE_TRACE ("ACE_Local_Name_Space::remap");
 
   void *addr = (void *) ep->ExceptionRecord->ExceptionInformation[1];
 
@@ -131,7 +131,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (const ACE_WString
                                                            int rebind)
 {
 
-  ACE_TRACE ("ACE_Local_Name_Space::shared_bind");
+  ACE_TRACE ("ACE_Local_Name_Space::shared_bind_i");
   size_t name_len = (name.length () + 1) * sizeof (ACE_USHORT16);
   size_t value_len = (value.length () + 1) * sizeof (ACE_USHORT16);
   size_t type_len = ACE_OS::strlen (type) + 1;
@@ -223,7 +223,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind (const ACE_WString &name)
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind_i (const ACE_WString &name)
 {
-  ACE_TRACE ("ACE_Local_Name_Space::unbind");
+  ACE_TRACE ("ACE_Local_Name_Space::unbind_i");
 
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
   ACE_NS_String ns_name (name);
@@ -288,7 +288,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (const ACE_WString &na
                                                            ACE_WString &value,
                                                            char *&type)
 {
-  ACE_TRACE ("ACE_Local_Name_Space::resolve");
+  ACE_TRACE ("ACE_Local_Name_Space::resolve_i");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
   ACE_NS_String ns_name (name);
@@ -383,7 +383,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager (void)
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
 {
-  ACE_TRACE ("ACE_Local_Name_Space::create_manager");
+  ACE_TRACE ("ACE_Local_Name_Space::create_manager_i");
   // Get directory name
   const ACE_TCHAR *dir = this->name_options_->namespace_dir ();
   const ACE_TCHAR *database = this->name_options_->database ();
@@ -511,7 +511,7 @@ template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_names_i (ACE_PWSTRING_SET &set,
                                                               const ACE_WString &pattern)
 {
-  ACE_TRACE ("ACE_Local_Name_Space::list_names");
+  ACE_TRACE ("ACE_Local_Name_Space::list_names_i");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
   MAP_ITERATOR map_iterator (*this->name_space_map_);
@@ -544,7 +544,7 @@ template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_values_i (ACE_PWSTRING_SET &set,
                                                            const ACE_WString &pattern)
 {
-  ACE_TRACE ("ACE_Local_Name_Space::list_values");
+  ACE_TRACE ("ACE_Local_Name_Space::list_values_i");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
   MAP_ITERATOR map_iterator (*this->name_space_map_);
@@ -577,7 +577,7 @@ template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (ACE_PWSTRING_SET &set,
                                                           const ACE_WString &pattern)
 {
-  ACE_TRACE ("ACE_Local_Name_Space::list_types");
+  ACE_TRACE ("ACE_Local_Name_Space::list_types_i");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
   MAP_ITERATOR map_iterator (*this->name_space_map_);
@@ -647,7 +647,7 @@ template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space <ACE_MEM_POOL_2, ACE_LOCK>::list_name_entries_i (ACE_BINDING_SET &set,
                                                                       const ACE_WString &pattern)
 {
-  ACE_TRACE ("ACE_Local_Name_Space::list_name_entries");
+  ACE_TRACE ("ACE_Local_Name_Space::list_name_entries_i");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
   MAP_ITERATOR map_iterator (*this->name_space_map_);
@@ -675,7 +675,7 @@ template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_value_entries_i (ACE_BINDING_SET &set,
                                                                   const ACE_WString &pattern)
 {
-  ACE_TRACE ("ACE_Local_Name_Space::list_value_entries");
+  ACE_TRACE ("ACE_Local_Name_Space::list_value_entries_i");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
   MAP_ITERATOR map_iterator (*this->name_space_map_);
@@ -702,7 +702,7 @@ template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (ACE_BINDING_SET &set,
                                                                  const ACE_WString &pattern)
 {
-  ACE_TRACE ("ACE_Local_Name_Space::list_type_entries");
+  ACE_TRACE ("ACE_Local_Name_Space::list_type_entries_i");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
   MAP_ITERATOR map_iterator (*this->name_space_map_);
@@ -756,7 +756,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (ACE_BINDING
 template <ACE_MEM_POOL_1, class ACE_LOCK> void
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump_i (void) const
 {
-  ACE_TRACE ("ACE_Local_Name_Space::dump");
+  ACE_TRACE ("ACE_Local_Name_Space::dump_i");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 

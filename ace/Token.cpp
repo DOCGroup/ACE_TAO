@@ -88,7 +88,7 @@ ACE_Token::ACE_Token_Queue::ACE_Token_Queue (void)
 void
 ACE_Token::ACE_Token_Queue::remove_entry (ACE_Token::ACE_Token_Queue_Entry *entry)
 {
-  ACE_TRACE ("ACE_Token::remove_entry");
+  ACE_TRACE ("ACE_Token::ACE_Token_Queue::remove_entry");
   ACE_Token_Queue_Entry *curr = 0;
   ACE_Token_Queue_Entry *prev = 0;
 

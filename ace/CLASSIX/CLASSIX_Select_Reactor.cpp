@@ -150,7 +150,7 @@ ACE_CLASSIX_Select_Reactor::handle_error_ (int thePort)
 int
 ACE_CLASSIX_Select_Reactor::check_handles_ (int thePort)
 {
-    ACE_TRACE ("ACE_Select_Reactor::check_handles");
+    ACE_TRACE ("ACE_CLASSIX_Select_Reactor::check_handles_");
     if (thePort == K_ANYENABLED)
 	return -1;
     else
@@ -220,7 +220,7 @@ ACE_CLASSIX_Select_Reactor_Notify::dispatch_notifications (
     int & number_of_active_handles,
     const ACE_Handle_Set &rd_mask)
 {
-  ACE_TRACE ("(%t) ACE_Select_Reactor_Notify::handle_notification");
+  ACE_TRACE ("(%t) ACE_CLASSIX_Select_Reactor_Notify::dispatch_notifications");
 
   ACE_HANDLE read_handle =
       this->notification_sap_.get_handle ();

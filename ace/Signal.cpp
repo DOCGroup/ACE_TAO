@@ -18,7 +18,7 @@ ACE_RCSID(ace, Signal, "$Id$")
 extern "C" void
 ace_sig_handler_dispatch (int signum, siginfo_t *info, ucontext_t *context)
 {
-  ACE_TRACE ("ace_signal_handler_dispatch");
+  ACE_TRACE ("ace_sig_handler_dispatch");
   ACE_Sig_Handler::dispatch (signum, info, context);
 }
 
@@ -28,7 +28,7 @@ ace_sig_handler_dispatch (int signum, siginfo_t *info, ucontext_t *context)
 extern "C" void
 ace_sig_handlers_dispatch (int signum, siginfo_t *info, ucontext_t *context)
 {
-  ACE_TRACE ("ace_signal_handlers_dispatch");
+  ACE_TRACE ("ace_sig_handlers_dispatch");
   ACE_Sig_Handlers::dispatch (signum, info, context);
 }
 

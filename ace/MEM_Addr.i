@@ -24,7 +24,7 @@ ACE_MEM_Addr::set_port_number (u_short port_number,
 ACE_INLINE int
 ACE_MEM_Addr::set (u_short port_number, int encode)
 {
-  ACE_TRACE ("ACE_INET_Addr::set");
+  ACE_TRACE ("ACE_MEM_Addr::set");
   this->set_port_number (port_number, encode);
   return 0;
 }

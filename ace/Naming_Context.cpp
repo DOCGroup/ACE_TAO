@@ -511,7 +511,7 @@ ACE_Name_Options::database (const ACE_TCHAR *db)
 char *
 ACE_Name_Options::base_address (void)
 {
-  ACE_TRACE ("ACE_Name_Options::database");
+  ACE_TRACE ("ACE_Name_Options::base_address");
   return this->base_address_;
 }
 

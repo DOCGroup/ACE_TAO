@@ -147,7 +147,7 @@ ACE_Time_Value::operator timeval () const
 ACE_INLINE
 ACE_Time_Value::operator const timeval * () const
 {
-  ACE_OS_TRACE ("ACE_Time_Value::operator timeval");
+  ACE_OS_TRACE ("ACE_Time_Value::operator const timeval *");
   return (const timeval *) &this->tv_;
 }
 
@@ -2575,7 +2575,7 @@ ACE_OS::cond_init (ACE_cond_t *cv, short type, const wchar_t *name, void *arg)
 ACE_INLINE int
 ACE_OS::cond_signal (ACE_cond_t *cv)
 {
-ACE_OS_TRACE ("ACE_OS::cond_signal");
+  ACE_OS_TRACE ("ACE_OS::cond_signal");
 #if defined (ACE_HAS_PACE)
   ACE_OSCALL_RETURN (::pace_pthread_cond_signal (cv), int, -1);
 # elif defined (ACE_HAS_THREADS)
@@ -2601,7 +2601,7 @@ ACE_OS_TRACE ("ACE_OS::cond_signal");
 ACE_INLINE int
 ACE_OS::cond_broadcast (ACE_cond_t *cv)
 {
-ACE_OS_TRACE ("ACE_OS::cond_broadcast");
+  ACE_OS_TRACE ("ACE_OS::cond_broadcast");
 #if defined (ACE_HAS_PACE)
   ACE_OSCALL_RETURN (::pace_pthread_cond_broadcast (cv), int, -1);
 # elif defined (ACE_HAS_THREADS)
@@ -3019,7 +3019,7 @@ ACE_OS::recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m)
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
   return ACE_OS::thread_mutex_unlock (m);
 #else
-ACE_OS_TRACE ("ACE_Recursive_Thread_Mutex::release");
+  ACE_OS_TRACE ("ACE_OS::recursive_mutex_unlock");
 #if !defined (ACE_NDEBUG)
   ACE_thread_t t_id = ACE_OS::thr_self ();
 #endif /* ACE_NDEBUG */
@@ -4429,7 +4429,7 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
 ACE_INLINE int
 ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
 {
-  ACE_OS_TRACE ("ACE_OS::rw_wrlock");
+  ACE_OS_TRACE ("ACE_OS::rw_trywrlock_upgrade");
 #if defined (ACE_HAS_THREADS)
 # if !defined (ACE_LACKS_RWLOCK_T)
   // Some native rwlocks, such as those on Solaris and HP-UX 11, don't
@@ -8680,7 +8680,7 @@ ACE_OS::filesize (const ACE_TCHAR *filename)
 ACE_INLINE int
 ACE_OS::closesocket (ACE_HANDLE handle)
 {
-  ACE_OS_TRACE ("ACE_OS::close");
+  ACE_OS_TRACE ("ACE_OS::closesocket");
 #if defined (ACE_WIN32)
   ACE_SOCKCALL_RETURN (::closesocket ((SOCKET) handle), int, -1);
 #elif defined (ACE_PSOS_DIAB_PPC)
