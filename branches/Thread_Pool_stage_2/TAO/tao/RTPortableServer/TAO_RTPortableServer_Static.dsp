@@ -123,10 +123,6 @@ SOURCE=.\RT_POA.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\RT_POA_Initializer.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\RT_Policy_Validator.h
 # End Source File
 # Begin Source File
@@ -160,10 +156,6 @@ SOURCE=.\RT_Object_Adapter_Factory.cpp
 # Begin Source File
 
 SOURCE=.\RT_POA.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_POA_Initializer.cpp
 # End Source File
 # Begin Source File
 

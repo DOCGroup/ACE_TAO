@@ -20,7 +20,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "RTCORBA.h"
+#define TAO_RTCORBA_SAFE_INCLUDE
+#include "RTCORBAC.h"
+#undef TAO_RTCORBA_SAFE_INCLUDE
+
 #include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)

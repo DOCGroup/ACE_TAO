@@ -1317,7 +1317,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
- $(TAO_ROOT)/tao/POA_Extension_Initializer.h \
  $(TAO_ROOT)/tao/Thread_Lane_Resources_Manager.h \
  $(TAO_ROOT)/tao/Thread_Lane_Resources_Manager.i \
  $(TAO_ROOT)/tao/Thread_Lane_Resources.h \

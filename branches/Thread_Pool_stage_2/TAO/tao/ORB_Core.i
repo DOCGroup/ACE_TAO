@@ -55,12 +55,6 @@ TAO_ORB_Core::flushing_strategy (void)
   return this->flushing_strategy_;
 }
 
-ACE_INLINE TAO_POA_Extension_Initializer *
-TAO_ORB_Core::poa_extension_initializer (void)
-{
-  return this->poa_extension_initializer_;
-}
-
 ACE_INLINE CORBA::Boolean
 TAO_ORB_Core::service_profile_selection (TAO_MProfile &mprofile,
                                          TAO_Profile  *&profile)

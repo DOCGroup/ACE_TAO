@@ -20,7 +20,6 @@
 #include "tao/MProfile.h"
 #include "tao/debug.h"
 #include "tao/PortableInterceptor.h"
-#include "tao/POA_Extension_Initializer.h"
 #include "tao/Thread_Lane_Resources_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 
@@ -555,15 +554,6 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
   this->init_default_policies (this->default_poa_policies (),
                                ACE_TRY_ENV);
   ACE_CHECK;
-
-  // Call the POA Extension initializers so that they can register their hooks.
-  TAO_POA_Extension_Initializer *extensions =
-      this->orb_core_.poa_extension_initializer ();
-  if (extensions != 0)
-    {
-      extensions->register_hooks (*this, ACE_TRY_ENV);
-      ACE_CHECK;
-    }
 
   // If a POA extension hasn't changed the servant dispatcher, initialize the
   // default one.

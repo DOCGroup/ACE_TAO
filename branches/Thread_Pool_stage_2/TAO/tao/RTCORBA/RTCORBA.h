@@ -32,6 +32,8 @@ public:
   TAO_RTCORBA_Initializer (void);
 };
 
+static TAO_RTCORBA_Initializer TAO_RTCORBA_initializer;
+
 #define TAO_RTCORBA_SAFE_INCLUDE
 #include "RTCORBAC.h"
 #undef TAO_RTCORBA_SAFE_INCLUDE

@@ -35,8 +35,6 @@
 
 #include "Flushing_Strategy.h"
 
-#include "POA_Extension_Initializer.h"
-
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 # include "Buffering_Constraint_Policy.h"
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
@@ -93,8 +91,7 @@ const char * TAO_ORB_Core::poa_factory_directive_ =
   "dynamic TAO_POA Service_Object * TAO_PortableServer:_make_TAO_Object_Adapter_Factory()";
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
-  : poa_extension_initializer_ (0),
-    protocols_hooks_ (0),
+  : protocols_hooks_ (0),
     lock_ (),
     connector_registry_ (0),
     thread_lane_resources_manager_ (0),
@@ -116,17 +113,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     message_block_dblock_allocator_ (0),
     message_block_buffer_allocator_ (0),
     message_block_msgblock_allocator_ (0),
-    resource_factory_from_service_config_ (0),
-    // @@ This is not needed since the default resource factory, fredk
-    //    is statically added to the service configurator.
     client_factory_ (0),
-    client_factory_from_service_config_ (0),
-    // @@ This is not needed since the default client factory, fredk
-    //    is statically added to the service configurator.
     server_factory_ (0),
-    server_factory_from_service_config_ (0),
-    // @@ This is not needed since the default server factory, fredk
-    //    is statically added to the service configurator.
     opt_for_collocation_ (1),
     use_global_collocation_ (1),
     collocation_strategy_ (THRU_POA),
@@ -238,8 +226,6 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   delete this->transport_sync_strategy_;
-
-  delete this->poa_extension_initializer_;
 
   delete this->corba_priority_normalizer_;
 }
@@ -1145,21 +1131,6 @@ TAO_ORB_Core::fini (void)
     this->message_block_msgblock_allocator_->remove ();
   delete this->message_block_msgblock_allocator_;
 
-  // @@ This is not needed since the default resource factory
-  //    is statically added to the service configurator, fredk
-  if (!this->resource_factory_from_service_config_)
-    delete resource_factory_;
-
-  // @@ This is not needed since the default client factory
-  //    is statically added to the service configurator, fredk
-  if (!this->client_factory_from_service_config_)
-    delete client_factory_;
-
-  // @@ This is not needed since the default server factory
-  //    is statically added to the service configurator, fredk
-  if (!this->server_factory_from_service_config_)
-    delete server_factory_;
-
   delete this;
 
   return 0;
@@ -1248,43 +1219,14 @@ TAO_ORB_Core::typecodefactory_adapter_name (void)
 TAO_Resource_Factory *
 TAO_ORB_Core::resource_factory (void)
 {
-  if (this->resource_factory_ == 0)
-    {
-      // Look in the service repository for an instance.
-      this->resource_factory_ =
-        ACE_Dynamic_Service<TAO_Resource_Factory>::instance
-        (TAO_ORB_Core::resource_factory_name_);
-      // @@ Not needed!
-      this->resource_factory_from_service_config_ = 1;
-    }
+  // Check if there is a cached reference.
+  if (this->resource_factory_ != 0)
+    return this->resource_factory_;
 
-  //@@ None of this stuff is needed since the default resource factory
-  //   is statically adde to the Service Configurator!
-  if (this->resource_factory_ == 0)
-    {
-      // Still don't have one, so let's allocate the default.  This
-      // will throw an exception if it fails on exception-throwing
-      // platforms.
-      if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_WARNING,
-                    ACE_TEXT ("(%P|%t) WARNING - No Resource Factory found ")
-                    ACE_TEXT ("in Service Repository.\n")
-                    ACE_TEXT ("  Using default instance with GLOBAL resource ")
-                    ACE_TEXT ("source specifier.\n")));
-
-      TAO_Default_Resource_Factory *default_factory;
-      ACE_NEW_RETURN (default_factory,
-                      TAO_Default_Resource_Factory,
-                      0);
-
-      // @@ Not needed.
-      this->resource_factory_from_service_config_ = 0;
-      this->resource_factory_ = default_factory;
-
-      // @@ At this point we need to register this with the
-      // Service_Repository in order to get it cleaned up properly.
-      // But, for now we let it leak.
-    }
+  // Look in the service repository for an instance.
+  this->resource_factory_ =
+    ACE_Dynamic_Service<TAO_Resource_Factory>::instance
+    (TAO_ORB_Core::resource_factory_name_);
 
   return this->resource_factory_;
 }
@@ -1319,38 +1261,12 @@ TAO_ORB_Core::stub_factory (void)
     ACE_Dynamic_Service<TAO_Stub_Factory>::instance
     (TAO_ORB_Core::stub_factory_name_);
 
-  // If there still isn't a reference, allocate the default.
-  if (this->stub_factory_ == 0)
-    {
-      if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_WARNING,
-                    ACE_TEXT ("(%P|%t) WARNING - No Stub Factory found ")
-                    ACE_TEXT ("in Service Repository.\n")
-                    ACE_TEXT ("  Using default instance with GLOBAL resource ")
-                    ACE_TEXT ("source specifier.\n")));
-
-      // @@ RTCORBA Subsetting: The following comment probably should say
-      //    this if this doesn't work, a segmentation fault will be quickly
-      //    generated...
-
-      // This will throw an exception if it fails on exception-throwing
-      // platforms.
-      TAO_Stub_Factory *stub_factory;
-      ACE_NEW_RETURN (stub_factory,
-                      TAO_Default_Stub_Factory,
-                      0);
-
-      // Store a copy for later use.
-      this->stub_factory_ = stub_factory;
-    }
-
   return this->stub_factory_;
 }
 
 void
-TAO_ORB_Core::set_poa_factory (
-                    const char *poa_factory_name,
-                    const char *poa_factory_directive)
+TAO_ORB_Core::set_poa_factory (const char *poa_factory_name,
+                               const char *poa_factory_directive)
 {
   TAO_ORB_Core::poa_factory_name_ = poa_factory_name;
   TAO_ORB_Core::poa_factory_directive_ = poa_factory_directive;
@@ -1358,8 +1274,7 @@ TAO_ORB_Core::set_poa_factory (
 
 
 void
-TAO_ORB_Core::set_endpoint_selector_factory (
-                    const char *endpoint_selector_factory_name)
+TAO_ORB_Core::set_endpoint_selector_factory (const char *endpoint_selector_factory_name)
 {
   TAO_ORB_Core::endpoint_selector_factory_name_ =
     endpoint_selector_factory_name;
@@ -1376,31 +1291,6 @@ TAO_ORB_Core::endpoint_selector_factory (void)
   this->endpoint_selector_factory_ =
     ACE_Dynamic_Service<TAO_Endpoint_Selector_Factory>::instance
     (TAO_ORB_Core::endpoint_selector_factory_name_);
-
-  // If there still isn't a reference, allocate the default.
-  if (this->endpoint_selector_factory_ == 0)
-    {
-      if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_WARNING,
-                    ACE_TEXT ("(%P|%t) WARNING - No Endpoint Selector Factory found ")
-                    ACE_TEXT ("in Service Repository.\n")
-                    ACE_TEXT ("  Using default instance with GLOBAL resource ")
-                    ACE_TEXT ("source specifier.\n")));
-
-      // @@ RTCORBA Subsetting: The following comment probably should say
-      //    this if this doesn't work, a segmentation fault will be quickly
-      //    generated...
-
-      // This will throw an exception if it fails on exception-throwing
-      // platforms.
-      TAO_Endpoint_Selector_Factory *selector_factory;
-      ACE_NEW_RETURN (selector_factory,
-                      TAO_Default_Endpoint_Selector_Factory,
-                      0);
-
-      // Store a copy for later use.
-      this->endpoint_selector_factory_ = selector_factory;
-    }
 
   return this->endpoint_selector_factory_;
 }
@@ -1423,28 +1313,6 @@ TAO_ORB_Core::get_protocols_hooks (CORBA::Environment &ACE_TRY_ENV)
     ACE_Dynamic_Service<TAO_Protocols_Hooks>::instance
     (TAO_ORB_Core::protocols_hooks_name_);
 
-  //@@ None of this stuff is needed since the default client factory
-  //   is statically added to the Service Configurator, fredk
-  // If there still isn't a reference, allocate the default.
-  if (this->protocols_hooks_ == 0)
-    {
-      if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_WARNING,
-                    ACE_TEXT ("(%P|%t) WARNING - No Protocols Hooks found ")
-                    ACE_TEXT ("in Service Repository.\n")
-                    ACE_TEXT ("  Using default instance with GLOBAL resource ")
-                    ACE_TEXT ("source specifier.\n")));
-
-      TAO_Protocols_Hooks *protocols_hooks;
-      ACE_NEW_THROW_EX (protocols_hooks,
-                        TAO_Default_Protocols_Hooks,
-                        CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (0);
-
-      // Store a copy for later use.
-      this->protocols_hooks_ = protocols_hooks;
-    }
-
   // Initialize the protocols hooks instance.
   this->protocols_hooks_->init_hooks (this,
                                       ACE_TRY_ENV);
@@ -1458,14 +1326,14 @@ TAO_ORB_Core::bidirectional_giop_init (CORBA::Environment &ACE_TRY_ENV)
   if (this->bidir_adapter_ == 0)
     {
       this->bidir_adapter_ =
-      ACE_Dynamic_Service<TAO_BiDir_Adapter>::instance ("BiDirGIOP_Loader");
+        ACE_Dynamic_Service<TAO_BiDir_Adapter>::instance ("BiDirGIOP_Loader");
     }
 
   if (this->bidir_adapter_)
-      return this->bidir_adapter_->activate (this->orb_.in (),
-                                             0,
-                                             0,
-                                             ACE_TRY_ENV);
+    return this->bidir_adapter_->activate (this->orb_.in (),
+                                           0,
+                                           0,
+                                           ACE_TRY_ENV);
   else
     return 0;
 }
@@ -1576,34 +1444,9 @@ TAO_ORB_Core::client_factory (void)
     {
       // Look in the service repository for an instance.
       this->client_factory_ =
-        ACE_Dynamic_Service<TAO_Client_Strategy_Factory>::instance (
-                                                                    "Client_Strategy_Factory");
-      // @@ Not needed!
-      this->client_factory_from_service_config_ = 1;
+        ACE_Dynamic_Service<TAO_Client_Strategy_Factory>::instance ("Client_Strategy_Factory");
     }
 
-  //@@ None of this stuff is needed since the default client factory
-  //   is statically added to the Service Configurator, fredk
-  if (this->client_factory_ == 0)
-    {
-      // Still don't have one, so let's allocate the default.  This
-      // will throw an exception if it fails on exception-throwing
-      // platforms.
-      if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_WARNING,
-                    ACE_TEXT ("(%P|%t) WARNING - No Client Strategy Factory found ")
-                    ACE_TEXT ("in Service Repository.\n")
-                    ACE_TEXT ("  Using default instance.\n")));
-
-      ACE_NEW_RETURN (this->client_factory_,
-                      TAO_Default_Client_Strategy_Factory,
-                      0);
-
-      this->client_factory_from_service_config_ = 0;
-      // At this point we need to register this with the
-      // Service_Repository in order to get it cleaned up properly.
-      // But, for now we let it leak.
-    }
   return this->client_factory_;
 }
 
@@ -1614,35 +1457,7 @@ TAO_ORB_Core::server_factory (void)
     {
       // Look in the service repository for an instance.
       this->server_factory_ =
-        ACE_Dynamic_Service<TAO_Server_Strategy_Factory>::instance (
-                                                                    "Server_Strategy_Factory");
-      // @@ Not needed!
-      this->server_factory_from_service_config_ = 1;
-    }
-
-  //@@ None of this stuff is needed since the default server factory
-  //   is statically added to the Service Configurator, fredk
-
-  // If the <server_factory_> isn't found it's usually because the ORB
-  // hasn't been intialized correctly...
-  if (this->server_factory_ == 0)
-    {
-      // Still don't have one, so let's allocate the default.
-      if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_WARNING,
-                    ACE_TEXT ("(%P|%t) WARNING - No %s found in Service Repository.")
-                    ACE_TEXT ("  Using default instance.\n"),
-                    ACE_TEXT ("Server Strategy Factory")));
-
-      ACE_NEW_RETURN (this->server_factory_,
-                      TAO_Default_Server_Strategy_Factory,
-                      0);
-
-      // @@ Not needed!
-      this->server_factory_from_service_config_ = 0;
-      // At this point we need to register this with the
-      // <Service_Repository> to get it cleaned up properly.  But, for
-      // now we let it leak.
+        ACE_Dynamic_Service<TAO_Server_Strategy_Factory>::instance ("Server_Strategy_Factory");
     }
 
   return this->server_factory_;
@@ -2908,16 +2723,6 @@ TAO_ORB_Core::get_cached_policy (TAO_Cached_Policy_Type type)
 }
 
 #endif /* (TAO_HAS_CORBA_MESSAGING == 1) */
-
-void
-TAO_ORB_Core::add_poa_extension_initializer (TAO_POA_Extension_Initializer *initializer)
-{
-  if (this->poa_extension_initializer_)
-    this->poa_extension_initializer_->add_initializer (initializer);
-  else
-    this->poa_extension_initializer_ = initializer;
-}
-
 
 // ****************************************************************
 
