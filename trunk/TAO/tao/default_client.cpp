@@ -13,11 +13,8 @@
 //     $Id$
 // ============================================================================
 
-#if 0
 #include "tao/default_client.h"
-#endif /* 0 */
-
-#include "tao/corba.h"
+#include "tao/Orb_Core.h"
 
 TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
 {
@@ -31,7 +28,7 @@ TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
   //    I think it's clear now that we'll have one Reactor "per-ORB"
   //    and we may have multiple ORBs per process (e.g., consider the 
   //    "real-time rate-based ORB" we discussed the other day).
-  connector_.open (ACE_Reactor::instance (),
+  connector_.open (TAO_ORB_CORE::instance ()->reactor (),
 		   &null_creation_strategy_,
 		   &caching_connect_strategy_,
 #if defined (TAO_HAS_CLIENT_CONCURRENCY)

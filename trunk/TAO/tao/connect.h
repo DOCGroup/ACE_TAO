@@ -27,6 +27,9 @@
 // Forward Decls
 class TAO_OA_Parameters;
 
+// @@ Is this really an *OA* connection handler anymore?  Seems like
+// connections are really associated with ORBs in the POA-based
+// architecture.
 class TAO_OA_Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
   // = TITLE
   //    Handles requests on a single connection in a server.

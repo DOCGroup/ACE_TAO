@@ -101,10 +101,6 @@ private:
 #endif /* 0 */
 };
 
-// Create a type for the singleton factory
-typedef ACE_Singleton<TAO_Marshal_Factory, ACE_SYNCH_MUTEX> 
-	TAO_MARSHAL_FACTORY;
-
 class TAO_Marshal
 // = TITLE
 //    Namespace in which to put otherwise "global" methods like
@@ -177,10 +173,6 @@ public:
                                                   CORBA::Environment &env);
 };
 
-// Create a type for the singleton
-typedef ACE_Singleton<TAO_Marshal_Primitive, ACE_SYNCH_MUTEX>
-	TAO_MARSHAL_PRIMITIVE;
-
 class TAO_Marshal_Any: public TAO_Marshal_Object
 {
   // = TITLE
@@ -209,10 +201,6 @@ public:
                                                   const void *,
                                                   CORBA::Environment &env);
 };
-
-// Create a type for the singleton
-typedef ACE_Singleton<TAO_Marshal_Any, ACE_SYNCH_MUTEX> 
-	TAO_MARSHAL_ANY;
 
 class TAO_Marshal_TypeCode: public TAO_Marshal_Object
 {
@@ -243,10 +231,6 @@ public:
                                                   CORBA::Environment &env);
 };
 
-// Create a type for the singleton
-typedef ACE_Singleton<TAO_Marshal_TypeCode, ACE_SYNCH_MUTEX> 
-	TAO_MARSHAL_TYPECODE;
-
 class TAO_Marshal_Principal: public TAO_Marshal_Object
 {
   // = TITLE
@@ -275,10 +259,6 @@ public:
                                                   const void *,
                                                   CORBA::Environment &env);
 };
-
-// Create a type for the singleton
-typedef ACE_Singleton<TAO_Marshal_Principal, ACE_SYNCH_MUTEX> 
-	TAO_MARSHAL_PRINCIPAL;
 
 class TAO_Marshal_ObjRef: public TAO_Marshal_Object
 {
@@ -309,10 +289,6 @@ public:
                                                   CORBA::Environment &env);
 };
 
-// Create a type for the singleton
-typedef ACE_Singleton<TAO_Marshal_ObjRef, ACE_SYNCH_MUTEX> 
-	TAO_MARSHAL_OBJREF;
-
 class TAO_Marshal_Struct: public TAO_Marshal_Object
 {
   // = TITLE
@@ -341,10 +317,6 @@ public:
                                                   const void *,
                                                   CORBA::Environment &env);
 };
-
-// Create a type for the singleton
-typedef ACE_Singleton<TAO_Marshal_Struct, ACE_SYNCH_MUTEX> 
-	TAO_MARSHAL_STRUCT;
 
 class TAO_Marshal_Union: public TAO_Marshal_Object
 {
@@ -375,10 +347,6 @@ public:
                                                   CORBA::Environment &env);
 };
 
-// Create a type for the singleton
-typedef ACE_Singleton<TAO_Marshal_Union, ACE_SYNCH_MUTEX>
-	TAO_MARSHAL_UNION;
-
 class TAO_Marshal_String: public TAO_Marshal_Object
 {
   // = TITLE
@@ -407,10 +375,6 @@ public:
                                                   const void *,
                                                   CORBA::Environment &env);
 };
-
-// Create a type for the singleton
-typedef ACE_Singleton<TAO_Marshal_String, ACE_SYNCH_MUTEX> 
-	TAO_MARSHAL_STRING;
 
 class TAO_Marshal_Sequence: public TAO_Marshal_Object
 {
@@ -441,10 +405,6 @@ public:
                                                   CORBA::Environment &env);
 };
 
-// Create a type for the singleton
-typedef ACE_Singleton<TAO_Marshal_Sequence, ACE_SYNCH_MUTEX> 
-	TAO_MARSHAL_SEQUENCE;
-
 class TAO_Marshal_Array: public TAO_Marshal_Object
 {
   // = TITLE
@@ -473,10 +433,6 @@ public:
                                                   const void *,
                                                   CORBA::Environment &env);
 };
-
-// Create a type for the singleton
-typedef ACE_Singleton<TAO_Marshal_Array, ACE_SYNCH_MUTEX> 
-	TAO_MARSHAL_ARRAY;
 
 class TAO_Marshal_Alias: public TAO_Marshal_Object
 {
@@ -507,10 +463,6 @@ public:
                                                   CORBA::Environment &env);
 };
 
-// Create a type for the singleton
-typedef ACE_Singleton<TAO_Marshal_Alias, ACE_SYNCH_MUTEX> 
-	TAO_MARSHAL_ALIAS;
-
 class TAO_Marshal_Except: public TAO_Marshal_Object
 {
   // = TITLE
@@ -539,10 +491,6 @@ public:
                                                   CORBA::Environment &env);
 };
 
-// Create a type for the singleton
-typedef ACE_Singleton<TAO_Marshal_Except, ACE_SYNCH_MUTEX> 
-	TAO_MARSHAL_EXCEPT;
-
 class TAO_Marshal_WString : public TAO_Marshal_Object
 {
   // = TITLE
@@ -570,9 +518,5 @@ public:
                                                   const void *,
                                                   CORBA::Environment &env);
 };
-
-// Create a type for the singleton
-typedef ACE_Singleton<TAO_Marshal_WString, ACE_SYNCH_MUTEX> 
-	TAO_MARSHAL_WSTRING;
 
 #endif /* TAO_MARSHAL_H */

@@ -338,7 +338,10 @@ CORBA::ORB_init (int &argc,
 #endif
 
   // Inititalize the "ORB" pseudo-object now.
-  IIOP_ORB_ptr the_orb = TAO_ORB::instance ();
+  IIOP_ORB_ptr the_orb = (IIOP_ORB_ptr)TAO_ORB_CORE::instance()->orb();
+  // @@ Seems like the following should happen inside the ORB Core,
+  // not at this level.  Do we really need this stuff?  What is the
+  // alternative format (other than IOR)?  --cjc
   the_orb->use_omg_ior_format (CORBA::Boolean (use_ior));
   
   return the_orb;
@@ -368,11 +371,13 @@ CORBA_ORB::create_list (CORBA::Long count,
 //
 // XXX it's server-side so should be OA-specific and not in this module
 
+#if 0
 CORBA::ORB_ptr
 _orb (void)
 {
   return TAO_ORB::instance ();
 }
+#endif
 
 CORBA::BOA_ptr 
 CORBA_ORB::BOA_init (int &argc,
@@ -383,7 +388,8 @@ CORBA_ORB::BOA_init (int &argc,
   // processing these options, move all these to the end of the argv
   // list and decrement argc appropriately.
 
-  TAO_OA_Parameters *params = TAO_OA_PARAMS::instance ();  //should have been BOA_Parameters
+  TAO_ORB_Core *oc = TAO_ORB_CORE::instance();
+  TAO_OA_Parameters *params = TAO_ORB_CORE::instance()->oa_params();
   CORBA::BOA_ptr rp;
   CORBA::String_var id = boa_identifier;
   CORBA::String_var host = CORBA::string_dup ("");
@@ -468,25 +474,30 @@ CORBA_ORB::BOA_init (int &argc,
   
   //    ACE_MT (ACE_GUARD (ACE_Thread_Mutex, roa_mon, lock_));
 
-  if (params->root_poa ())
+  if (oc->root_poa ())
     {
       env.exception (new CORBA::INITIALIZE (CORBA::COMPLETED_NO));
       return 0;
     }
 
   // set all parameters
+#if 0
+  // subsumed by abstract factory impls?
   params->using_threads (use_threads);
   params->demux_strategy (demux);
+  // Moved to different place (on the ORB now)
   params->addr (rendezvous);
+  // Doesn't exist any longer
   params->upcall (CORBA::BOA::dispatch);
   params->tablesize (tablesize);
+#endif /* 0 */
 
 #if defined (ROA_NEEDS_REQ_KEY)
   (void) ACE_Thread::keycreate (&req_key_);
 #endif /* ROA_NEEDS_REQ_KEY */
     
   ACE_NEW_RETURN (rp, ROA (this, env), 0);
-  params->root_poa (rp);
+  oc->root_poa (rp);
 
   return rp;
 }

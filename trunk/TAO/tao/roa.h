@@ -26,6 +26,8 @@
 #  include "tao/connect.h"
 #endif
 
+#include "tao/corba.h"
+
 class ACE_Svc_Export ROA;
 typedef ROA* ROA_ptr;
 

@@ -12,10 +12,10 @@
 #include "tao/connect.h"
 #include "tao/giop.h"
 #include "tao/params.h"
-#include "tao/factories.h"
 #include "tao/orbobj.h"
 #include "tao/nvlist.h"
 #include "tao/debug.h"
+#include "tao/Orb_Core.h"
 #endif
 
 #include "tao/corba.h"
@@ -37,7 +37,7 @@ ROA::init (CORBA::ORB_ptr parent,
 	   CORBA::Environment &env)
 {
   env.clear ();
-  TAO_OA_Parameters *p = TAO_OA_PARAMS::instance ();
+  TAO_ORB_Core *p = TAO_ORB_CORE::instance();
 
   //    ACE_MT (ACE_GUARD (ACE_Thread_Mutex, roa_mon, lock_));
 
@@ -65,13 +65,13 @@ ROA::ROA (CORBA::ORB_ptr owning_orb,
     call_count_ (0),
     skeleton_ (0)
 {
-  TAO_OA_Parameters *p = TAO_OA_PARAMS::instance ();
+  TAO_ORB_Core *p = TAO_ORB_CORE::instance();
   TAO_Server_Strategy_Factory *f = owning_orb->server_factory ();
 
   ACE_ASSERT (p->root_poa () == 0);
 
   // Initialize the endpoint ... or try!
-  if (client_acceptor_.open (p->addr (),
+  if (client_acceptor_.open (p->orb()->params()->addr (),
 			     ACE_Reactor::instance (),
 			     f->creation_strategy (),
 			     f->accept_strategy (),
@@ -298,9 +298,9 @@ request_dispatcher (TAO_GIOP_RequestHeader &req,
 		    TAO_Dispatch_Context *helper,
 		    CORBA::Environment &env)
 {
-  TAO_OA_Parameters *p = TAO_OA_PARAMS::instance ();
+  TAO_ORB_Core *p = TAO_ORB_CORE::instance();
   IIOP_ServerRequest svr_req (&request_body,
-			      p->root_poa ()->orb (),
+			      p->orb (),
 			      p->root_poa ());
 
   // ServerRequest is what does the unmarshaling, driven by typecodes
@@ -312,7 +312,7 @@ request_dispatcher (TAO_GIOP_RequestHeader &req,
   svr_req._opname = req.operation;
 
 #if defined (ROA_NEEDS_REQ_KEY)
- (void) ACE_Thread::setspecific (p->oa ().req_key_, &req);
+ (void) ACE_Thread::setspecific (p->root_poa ().req_key_, &req);
 #endif /* ROA_NEEDS_REQ_KEY */
 
   CORBA::BOA_ptr oa = p->root_poa ();

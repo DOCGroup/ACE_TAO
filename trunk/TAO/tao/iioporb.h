@@ -22,6 +22,8 @@
 #  include "orbobj.h"
 #endif
 
+#include "tao/corba.h"
+
 typedef class IIOP_ORB *IIOP_ORB_ptr;
 
 // ORB pseudo-objref
@@ -69,9 +71,5 @@ private:
 };
 
 typedef IIOP_ORB *IIOP_ORB_ptr;
-
-// Create a type for the singleton. 
-typedef ACE_Singleton<IIOP_ORB, ACE_SYNCH_MUTEX> 
-	TAO_ORB; 
 
 #endif	/* TAO_IIOPORB_H */
