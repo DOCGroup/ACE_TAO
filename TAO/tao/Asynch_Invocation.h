@@ -26,12 +26,15 @@
 #  pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_AMI_CALLBACK == 1) \
-     || (TAO_HAS_AMI_POLLER == 1) \
-     || (TAO_HAS_MINIMUM_CORBA == 0)
-
-#include "tao/MessagingC.h"
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 #include "tao/Asynch_Reply_Dispatcher.h"
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+#include "tao/MessagingC.h"
+#endif /* (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1) == 0 */
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 class TAO_Export TAO_GIOP_Asynch_Invocation
   : public TAO_GIOP_Invocation
@@ -69,6 +72,10 @@ protected:
   // Reply dispatcher for the current asynchronous invocation.
 };
 
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+
 class TAO_Export TAO_GIOP_Twoway_Asynch_Invocation
   : public TAO_GIOP_Asynch_Invocation
 {
@@ -100,13 +107,11 @@ protected:
   // send/reply code and the system exceptions.
 };
 
+#endif /* (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1) == 0 */
+
 #if defined (__ACE_INLINE__)
 #  include "tao/Asynch_Invocation.i"
 #endif /* __ACE_INLINE__ */
-
-#endif /* TAO_HAS_AMI_CALLBACK == 1
-          || TAO_HAS_AMI_POLLER == 1
-          || TAO_HAS_MINIMUM_CORBA == 0 */
 
 #include "ace/post.h"
 #endif /* TAO_ASYNCH_INVOCATION_H */

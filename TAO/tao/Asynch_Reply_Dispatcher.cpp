@@ -14,9 +14,7 @@ ACE_RCSID(tao, Asynch_Reply_Dispatcher, "$Id$")
 #include "tao/Asynch_Reply_Dispatcher.i"
 #endif /* __ACE_INLINE__ */
 
-#if (TAO_HAS_AMI_CALLBACK == 1) \
-     || (TAO_HAS_AMI_POLLER == 1) \
-     || (TAO_HAS_MINIMUM_CORBA == 0)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 // Constructor.
 TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (void)
@@ -62,9 +60,7 @@ TAO_Asynch_Reply_Dispatcher_Base::connection_closed (void)
 {
 }
 
-#endif /* (TAO_HAS_AMI_CALLBACK == 1) \
-           || (TAO_HAS_AMI_POLLER == 1) \
-           || (TAO_HAS_MINIMUM_CORBA == 0) */
+#endif /* (TAO_HAS_MINIMUM_CORBA == 0) */
 
 // ************************************************************************
 

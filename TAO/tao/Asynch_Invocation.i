@@ -3,6 +3,8 @@
 // $Id$
 //
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
 ACE_INLINE
 TAO_GIOP_Asynch_Invocation::TAO_GIOP_Asynch_Invocation (
     TAO_Stub *stub,
@@ -20,7 +22,11 @@ TAO_GIOP_Asynch_Invocation::TAO_GIOP_Asynch_Invocation (
 {
 }
 
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+
 // ********************************************************************
+
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
 ACE_INLINE
 TAO_GIOP_Twoway_Asynch_Invocation::TAO_GIOP_Twoway_Asynch_Invocation (
@@ -47,3 +53,5 @@ TAO_GIOP_Twoway_Asynch_Invocation::TAO_GIOP_Twoway_Asynch_Invocation (
 	   TAO_Asynch_Reply_Dispatcher (reply_handler_skel,
 					reply_handler_ptr));
 }
+
+#endif /* (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1) == 0 */
