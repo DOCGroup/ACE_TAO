@@ -267,7 +267,8 @@ ifeq ($(LYNXTARGET),ppc)
 #### POA.cpp raises internal compiler error with LynxOS 3.0.0 g++, but
 #### only when optimization is enabled.  Disable it . . .
 $(VDIR)POA.o: POA.cpp
-	$(subst $(OCFLAGS),-O,$(COMPILE.cc)) -o $@ $<
+	@echo NOTE: compiling POA.cpp with -O instead of -O2, see Makefile.
+	$(subst $(OCFLAGS) ,-O ,$(COMPILE.cc)) -o $@ $<
 endif # LYNXTARGET == ppc
 
 #RLDFLAGS := $(subst -L,-Wl\,-rpath ,$(LDFLAGS))
