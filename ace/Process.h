@@ -42,7 +42,8 @@ public:
   ACE_Process (char *argv[],
 	       ACE_HANDLE std_in,
 	       ACE_HANDLE std_out = ACE_INVALID_HANDLE,
-	       ACE_HANDLE std_err = ACE_INVALID_HANDLE);
+	       ACE_HANDLE std_err = ACE_INVALID_HANDLE,
+	       char *envp[] = 0);
   // Set the standard handles of the new process to the respective
   // handles and start the new process.  <argv> must be specified.  It
   // should be of the following form: argv = {
@@ -65,7 +66,7 @@ public:
   int set_cwd (const TCHAR *cwd);
   // Set the working directory for the process.
 
-  int start (char *argv[], char *envp[]);
+  int start (char *argv[], char *envp[] = 0);
   // Start the new process.  <argv> must be specified.  It should be
   // of the following form: argv = { "c:\full\path\to\foo.exe", "-a",
   // "arg1", "etc", 0 }.  If <envp> is specified, it is passed as the

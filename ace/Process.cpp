@@ -185,7 +185,7 @@ ACE_Process::start (char *argv[], char *envp[])
       if (envp == 0)
 	result = ACE_OS::execv (argv[0], argv);
       else
-	result = ACE_OS::execv (argv[0], argv, envp);
+	result = ACE_OS::execve (argv[0], argv, envp);
 
       if (result == -1)
 	// If the execv fails, this child needs to exit.
@@ -200,7 +200,8 @@ ACE_Process::start (char *argv[], char *envp[])
 ACE_Process::ACE_Process (char *argv[],
 			  ACE_HANDLE std_in,
 			  ACE_HANDLE std_out,
-			  ACE_HANDLE std_err)
+			  ACE_HANDLE std_err,
+			  char *envp[])
 #if defined (ACE_WIN32)
   : set_handles_called_ (0)
 #else /* ACE_WIN32 */
@@ -222,6 +223,6 @@ ACE_Process::ACE_Process (char *argv[],
 
   if (this->set_handles (std_in, std_out, std_err) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "set_handles"));
-  else if (this->start (argv) == -1)
+  else if (this->start (argv, envp) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "start"));
 }
