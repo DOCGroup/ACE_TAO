@@ -25,7 +25,7 @@
 // Compiler-specific configuration.
 #if defined (__GNUG__)
 # include "ace/config-g++-common.h"
-
+# undef ACE_HAS_TEMPLATE_SPECIALIZATION
 // We have to explicitly instantiate static template members
 # define ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION
 
@@ -91,6 +91,9 @@
 # define ACE_LACKS_ACE_IOSTREAM
 
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 0
+
+# define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
+# define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 
 #else  /* ! __GNUG__ && ! ghs && !__DCC__ */
 # error unsupported compiler on VxWorks
@@ -248,6 +251,10 @@
 #if !defined (ACE_NEEDS_HUGE_THREAD_STACKSIZE)
 # define ACE_NEEDS_HUGE_THREAD_STACKSIZE 65536
 #endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
+
+#if !defined (ACE_NTRACE)
+# define ACE_NTRACE 1
+#endif /* ACE_NTRACE */
 
 // By default, don't include RCS Id strings in object code.
 #if !defined (ACE_USE_RCSID)
