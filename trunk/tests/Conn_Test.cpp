@@ -131,11 +131,13 @@ server (void *arg)
 					 options)) != -1)
 	{
 	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) client %s connected from %d\n", 
-		      cli_addr.get_host_name (), cli_addr.get_port_number ()));
+		      cli_addr.get_host_name (), 
+		      cli_addr.get_port_number ()));
 	  
 	  // Enable non-blocking I/O.
 	  if (svc_handler->peer ().enable (ACE_NONBLOCK) == -1)
-	    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "enable"), 0);
+	    ACE_ERROR_RETURN ((LM_ERROR, 
+			       "(%P|%t) %p\n", "enable"), 0);
 	  
 	  ACE_SOCK_Stream &new_stream = svc_handler->peer ();
 
@@ -149,7 +151,8 @@ server (void *arg)
 	      if (ACE_OS::select (int (new_stream.get_handle ()) + 1,
 				  handle_set,
 				  0, 0, 0) == -1)
-		ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "select"), 0);
+		ACE_ERROR_RETURN ((LM_ERROR, 
+				   "(%P|%t) %p\n", "select"), 0);
 	      
 	      while ((r_bytes = new_stream.recv (buf, 1)) > 0)
 		{
@@ -174,7 +177,8 @@ server (void *arg)
 	      else if (r_bytes == -1)
 		{
 		  if (errno == EWOULDBLOCK)
-		    ACE_DEBUG ((LM_DEBUG, "(%P|%t) no input available, going back to reading\n"));
+		    ACE_DEBUG ((LM_DEBUG, 
+				"(%P|%t) no input available, going back to reading\n"));
 		  else
 		    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "recv_n"), 0);
 		}
@@ -184,7 +188,8 @@ server (void *arg)
       if (result == -1)
 	{
 	  if (errno == ETIMEDOUT)
-	    ACE_ERROR_RETURN ((LM_DEBUG, "(%P|%t) accept timedout, shutting down\n"), 0);
+	    ACE_ERROR_RETURN ((LM_DEBUG, 
+			       "(%P|%t) accept timedout, shutting down\n"), 0);
 	  else
 	    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "accept"));
 	}
@@ -224,17 +229,22 @@ spawn (void)
 	}
 #elif defined (ACE_HAS_THREADS)
       if (ACE_Service_Config::thr_mgr ()->spawn 
-	  (ACE_THR_FUNC (server), (void *) &acceptor, THR_NEW_LWP | THR_DETACHED) == -1)
+	  (ACE_THR_FUNC (server), 
+	   (void *) &acceptor, 
+	   THR_NEW_LWP | THR_DETACHED) == -1)
 	ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
 
       if (ACE_Service_Config::thr_mgr ()->spawn 
-	  (ACE_THR_FUNC (client), (void *) &server_addr, THR_NEW_LWP | THR_DETACHED) == -1)
+	  (ACE_THR_FUNC (client), 
+	   (void *) &server_addr, 
+	   THR_NEW_LWP | THR_DETACHED) == -1)
 	ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
 
       // Wait for the threads to exit.
       ACE_Service_Config::thr_mgr ()->wait ();
 #else
-      ACE_ERROR ((LM_ERROR, "(%P|%t) only one thread may be run in a process on this platform\n%a", 1));
+      ACE_ERROR ((LM_ERROR, 
+      "(%P|%t) only one thread may be run in a process on this platform\n%a", 1));
 #endif /* ACE_HAS_THREADS */	
     }
 }
@@ -249,3 +259,10 @@ main (int, char *[])
   ACE_END_TEST;
   return 0;
 }
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+template class ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Message_Queue<ACE_NULL_SYNCH>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
