@@ -1,3 +1,34 @@
+Tue Apr 18 14:32:08 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/CurrentC.cpp:
+	* tao/CurrentC.h:
+	* tao/DomainC.cpp:
+	* tao/DomainC.h:
+	* tao/DynAnyC.cpp:
+	* tao/DynAnyC.h:
+	* tao/IORC.cpp:
+	* tao/IORC.h:
+	* tao/ImplRepoC.cpp:
+	* tao/ImplRepoC.h:
+	* tao/InterceptorC.cpp:
+	* tao/InterceptorC.h:
+	* tao/InterfaceC.cpp:
+	* tao/InterfaceC.h:
+	* tao/MessagingC.cpp:
+	* tao/MessagingC.h:
+	* tao/POAC.cpp:
+	* tao/POAC.h:
+	* tao/POA_CORBA.h:
+	* tao/PolicyC.cpp:
+	* tao/PollableC.cpp:
+	* tao/PollableC.h:
+	* tao/RT_Current.cpp:
+	* tao/RT_Current.h:
+	* tao/TAOC.cpp:
+	* tao/TAOC.h: Renamed method <_interface_repository_id> to
+	  <_remote_interface_repository_id>.
+
+
 Tue Apr 18 03:17:37 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/corba.h: Included "tao/LocalObject" in this file.

@@ -258,7 +258,7 @@ CORBA::Boolean CORBA_IRObject::_is_a (const CORBA::Char *value, CORBA_Environmen
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_IRObject::_interface_repository_id (void) const
+const char* CORBA_IRObject::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/IRObject:1.0";
 }
@@ -1051,7 +1051,7 @@ CORBA::Boolean CORBA_Contained::_is_a (const CORBA::Char *value, CORBA_Environme
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_Contained::_interface_repository_id (void) const
+const char* CORBA_Contained::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/Contained:1.0";
 }
@@ -3388,7 +3388,7 @@ CORBA::Boolean CORBA_Container::_is_a (const CORBA::Char *value, CORBA_Environme
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_Container::_interface_repository_id (void) const
+const char* CORBA_Container::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/Container:1.0";
 }
@@ -3521,7 +3521,7 @@ CORBA::Boolean CORBA_IDLType::_is_a (const CORBA::Char *value, CORBA_Environment
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_IDLType::_interface_repository_id (void) const
+const char* CORBA_IDLType::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/IDLType:1.0";
 }
@@ -4097,7 +4097,7 @@ CORBA::Boolean CORBA_Repository::_is_a (const CORBA::Char *value, CORBA_Environm
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_Repository::_interface_repository_id (void) const
+const char* CORBA_Repository::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/Repository:1.0";
 }
@@ -4173,7 +4173,7 @@ CORBA::Boolean CORBA_ModuleDef::_is_a (const CORBA::Char *value, CORBA_Environme
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_ModuleDef::_interface_repository_id (void) const
+const char* CORBA_ModuleDef::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/ModuleDef:1.0";
 }
@@ -4596,7 +4596,7 @@ CORBA::Boolean CORBA_ConstantDef::_is_a (const CORBA::Char *value, CORBA_Environ
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_ConstantDef::_interface_repository_id (void) const
+const char* CORBA_ConstantDef::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/ConstantDef:1.0";
 }
@@ -4726,7 +4726,7 @@ CORBA::Boolean CORBA_TypedefDef::_is_a (const CORBA::Char *value, CORBA_Environm
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_TypedefDef::_interface_repository_id (void) const
+const char* CORBA_TypedefDef::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/TypedefDef:1.0";
 }
@@ -4976,7 +4976,7 @@ CORBA::Boolean CORBA_StructDef::_is_a (const CORBA::Char *value, CORBA_Environme
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_StructDef::_interface_repository_id (void) const
+const char* CORBA_StructDef::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/StructDef:1.0";
 }
@@ -5354,7 +5354,7 @@ CORBA::Boolean CORBA_UnionDef::_is_a (const CORBA::Char *value, CORBA_Environmen
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_UnionDef::_interface_repository_id (void) const
+const char* CORBA_UnionDef::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/UnionDef:1.0";
 }
@@ -5552,7 +5552,7 @@ CORBA::Boolean CORBA_EnumDef::_is_a (const CORBA::Char *value, CORBA_Environment
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_EnumDef::_interface_repository_id (void) const
+const char* CORBA_EnumDef::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/EnumDef:1.0";
 }
@@ -5749,7 +5749,7 @@ CORBA::Boolean CORBA_AliasDef::_is_a (const CORBA::Char *value, CORBA_Environmen
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_AliasDef::_interface_repository_id (void) const
+const char* CORBA_AliasDef::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/AliasDef:1.0";
 }
@@ -5883,7 +5883,7 @@ CORBA::Boolean CORBA_PrimitiveDef::_is_a (const CORBA::Char *value, CORBA_Enviro
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_PrimitiveDef::_interface_repository_id (void) const
+const char* CORBA_PrimitiveDef::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/PrimitiveDef:1.0";
 }
@@ -6078,7 +6078,7 @@ CORBA::Boolean CORBA_StringDef::_is_a (const CORBA::Char *value, CORBA_Environme
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_StringDef::_interface_repository_id (void) const
+const char* CORBA_StringDef::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/StringDef:1.0";
 }
@@ -6273,7 +6273,7 @@ CORBA::Boolean CORBA_WstringDef::_is_a (const CORBA::Char *value, CORBA_Environm
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_WstringDef::_interface_repository_id (void) const
+const char* CORBA_WstringDef::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/WstringDef:1.0";
 }
@@ -6588,7 +6588,7 @@ CORBA::Boolean CORBA_FixedDef::_is_a (const CORBA::Char *value, CORBA_Environmen
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_FixedDef::_interface_repository_id (void) const
+const char* CORBA_FixedDef::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/FixedDef:1.0";
 }
@@ -6962,7 +6962,7 @@ CORBA::Boolean CORBA_SequenceDef::_is_a (const CORBA::Char *value, CORBA_Environ
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_SequenceDef::_interface_repository_id (void) const
+const char* CORBA_SequenceDef::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/SequenceDef:1.0";
 }
@@ -7335,7 +7335,7 @@ CORBA::Boolean CORBA_ArrayDef::_is_a (const CORBA::Char *value, CORBA_Environmen
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_ArrayDef::_interface_repository_id (void) const
+const char* CORBA_ArrayDef::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/ArrayDef:1.0";
 }
@@ -7591,7 +7591,7 @@ CORBA::Boolean CORBA_ExceptionDef::_is_a (const CORBA::Char *value, CORBA_Enviro
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_ExceptionDef::_interface_repository_id (void) const
+const char* CORBA_ExceptionDef::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/ExceptionDef:1.0";
 }
@@ -8030,7 +8030,7 @@ CORBA::Boolean CORBA_AttributeDef::_is_a (const CORBA::Char *value, CORBA_Enviro
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_AttributeDef::_interface_repository_id (void) const
+const char* CORBA_AttributeDef::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/AttributeDef:1.0";
 }
@@ -9435,7 +9435,7 @@ CORBA::Boolean CORBA_OperationDef::_is_a (const CORBA::Char *value, CORBA_Enviro
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_OperationDef::_interface_repository_id (void) const
+const char* CORBA_OperationDef::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/OperationDef:1.0";
 }
@@ -10973,7 +10973,7 @@ CORBA::Boolean CORBA_InterfaceDef::_is_a (const CORBA::Char *value, CORBA_Enviro
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_InterfaceDef::_interface_repository_id (void) const
+const char* CORBA_InterfaceDef::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/InterfaceDef:1.0";
 }
@@ -11675,7 +11675,7 @@ CORBA::Boolean CORBA_ValueMemberDef::_is_a (const CORBA::Char *value, CORBA_Envi
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_ValueMemberDef::_interface_repository_id (void) const
+const char* CORBA_ValueMemberDef::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/ValueMemberDef:1.0";
 }
@@ -13454,7 +13454,7 @@ CORBA::Boolean CORBA_ValueDef::_is_a (const CORBA::Char *value, CORBA_Environmen
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_ValueDef::_interface_repository_id (void) const
+const char* CORBA_ValueDef::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/ValueDef:1.0";
 }
@@ -13744,7 +13744,7 @@ CORBA::Boolean CORBA_ValueBoxDef::_is_a (const CORBA::Char *value, CORBA_Environ
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_ValueBoxDef::_interface_repository_id (void) const
+const char* CORBA_ValueBoxDef::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/ValueBoxDef:1.0";
 }

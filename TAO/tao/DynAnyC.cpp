@@ -750,7 +750,7 @@ CORBA::Boolean CORBA_DynAny::_is_a (const CORBA::Char *value,
                                       env); // remote call
 }
 
-const char* CORBA_DynAny::_interface_repository_id (void) const
+const char* CORBA_DynAny::_remote_interface_repository_id (void) const
 {
   return "IDL:/CORBA_DynAny:1.0";
 }
@@ -859,7 +859,7 @@ CORBA::Boolean CORBA_DynEnum::_is_a (const CORBA::Char *value,
                                       env); // remote call
 }
 
-const char* CORBA_DynEnum::_interface_repository_id (void) const
+const char* CORBA_DynEnum::_remote_interface_repository_id (void) const
 {
   return "IDL:/CORBA_DynEnum:1.0";
 }
@@ -1068,7 +1068,7 @@ CORBA::Boolean CORBA_DynStruct::_is_a (const CORBA::Char *value,
                                       env); // remote call
 }
 
-const char* CORBA_DynStruct::_interface_repository_id (void) const
+const char* CORBA_DynStruct::_remote_interface_repository_id (void) const
 {
   return "IDL:/CORBA_DynStruct:1.0";
 }
@@ -1205,7 +1205,7 @@ CORBA::Boolean CORBA_DynUnion::_is_a (const CORBA::Char *value,
                                       env); // remote call
 }
 
-const char* CORBA_DynUnion::_interface_repository_id (void) const
+const char* CORBA_DynUnion::_remote_interface_repository_id (void) const
 {
   return "IDL:/CORBA_DynUnion:1.0";
 }
@@ -1371,7 +1371,7 @@ CORBA::Boolean CORBA_DynSequence::_is_a (const CORBA::Char *value,
                                       env); // remote call
 }
 
-const char* CORBA_DynSequence::_interface_repository_id (void) const
+const char* CORBA_DynSequence::_remote_interface_repository_id (void) const
 {
   return "IDL:/CORBA_DynSequence:1.0";
 }
@@ -1472,7 +1472,7 @@ CORBA::Boolean CORBA_DynArray::_is_a (const CORBA::Char *value,
     return this->CORBA_Object::_is_a (value, env); // remote call
 }
 
-const char* CORBA_DynArray::_interface_repository_id (void) const
+const char* CORBA_DynArray::_remote_interface_repository_id (void) const
 {
   return "IDL:/CORBA_DynArray:1.0";
 }

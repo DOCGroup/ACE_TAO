@@ -164,7 +164,7 @@ CORBA::Boolean CORBA_DomainManager::_is_a (const CORBA::Char *value, CORBA::Envi
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA_DomainManager::_interface_repository_id (void) const
+const char* CORBA_DomainManager::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/DomainManager:1.0";
 }
@@ -304,7 +304,7 @@ CORBA::Boolean CORBA::ConstructionPolicy::_is_a (const CORBA::Char *value, CORBA
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* CORBA::ConstructionPolicy::_interface_repository_id (void) const
+const char* CORBA::ConstructionPolicy::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/ConstructionPolicy:1.0";
 }

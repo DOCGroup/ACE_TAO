@@ -132,7 +132,7 @@ class  CORBA_Current : public virtual CORBA_Object
                                 CORBA_Environment &ACE_TRY_ENV =
                                     TAO_default_environment ()
                                 );
-  virtual const char* _interface_repository_id (void) const;
+  virtual const char* _remote_interface_repository_id (void) const;
  protected:
   CORBA_Current (void); // default constructor
   CORBA_Current (TAO_Stub *objref,

@@ -436,7 +436,7 @@ CORBA::Boolean PortableServer::ThreadPolicy::_is_a (const CORBA::Char *value, CO
     return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
-const char* PortableServer::ThreadPolicy::_interface_repository_id (void) const
+const char* PortableServer::ThreadPolicy::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/PortableServer/ThreadPolicy:1.0";
 }
@@ -602,7 +602,7 @@ CORBA::Boolean PortableServer::LifespanPolicy::_is_a (const CORBA::Char *value, 
     return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
-const char* PortableServer::LifespanPolicy::_interface_repository_id (void) const
+const char* PortableServer::LifespanPolicy::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/PortableServer/LifespanPolicy:1.0";
 }
@@ -766,7 +766,7 @@ CORBA::Boolean PortableServer::IdUniquenessPolicy::_is_a (const CORBA::Char *val
     return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
-const char* PortableServer::IdUniquenessPolicy::_interface_repository_id (void) const
+const char* PortableServer::IdUniquenessPolicy::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/PortableServer/IdUniquenessPolicy:1.0";
 }
@@ -929,7 +929,7 @@ CORBA::Boolean PortableServer::IdAssignmentPolicy::_is_a (const CORBA::Char *val
     return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
-const char* PortableServer::IdAssignmentPolicy::_interface_repository_id (void) const
+const char* PortableServer::IdAssignmentPolicy::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/PortableServer/IdAssignmentPolicy:1.0";
 }
@@ -1095,7 +1095,7 @@ CORBA::Boolean PortableServer::ImplicitActivationPolicy::_is_a (const CORBA::Cha
     return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
-const char* PortableServer::ImplicitActivationPolicy::_interface_repository_id (void) const
+const char* PortableServer::ImplicitActivationPolicy::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/PortableServer/ImplicitActivationPolicy:1.0";
 }
@@ -1259,7 +1259,7 @@ CORBA::Boolean PortableServer::ServantRetentionPolicy::_is_a (const CORBA::Char 
     return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
-const char* PortableServer::ServantRetentionPolicy::_interface_repository_id (void) const
+const char* PortableServer::ServantRetentionPolicy::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/PortableServer/ServantRetentionPolicy:1.0";
 }
@@ -1423,7 +1423,7 @@ CORBA::Boolean PortableServer::RequestProcessingPolicy::_is_a (const CORBA::Char
     return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
-const char* PortableServer::RequestProcessingPolicy::_interface_repository_id (void) const
+const char* PortableServer::RequestProcessingPolicy::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/PortableServer/RequestProcessingPolicy:1.0";
 }
@@ -1594,7 +1594,7 @@ CORBA::Boolean PortableServer::POAManager::_is_a (const CORBA::Char *value, CORB
     return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
-const char* PortableServer::POAManager::_interface_repository_id (void) const
+const char* PortableServer::POAManager::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/PortableServer/POAManager:1.0";
 }
@@ -1669,7 +1669,7 @@ CORBA::Boolean PortableServer::AdapterActivator::_is_a (const CORBA::Char *value
     return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
-const char* PortableServer::AdapterActivator::_interface_repository_id (void) const
+const char* PortableServer::AdapterActivator::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/PortableServer/AdapterActivator:1.0";
 }
@@ -1742,7 +1742,7 @@ CORBA::Boolean PortableServer::ServantManager::_is_a (const CORBA::Char *value, 
     return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
-const char* PortableServer::ServantManager::_interface_repository_id (void) const
+const char* PortableServer::ServantManager::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/PortableServer/ServantManager:1.0";
 }
@@ -1816,7 +1816,7 @@ CORBA::Boolean PortableServer::ServantActivator::_is_a (const CORBA::Char *value
     return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
-const char* PortableServer::ServantActivator::_interface_repository_id (void) const
+const char* PortableServer::ServantActivator::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/PortableServer/ServantActivator:1.0";
 }
@@ -1890,7 +1890,7 @@ CORBA::Boolean PortableServer::ServantLocator::_is_a (const CORBA::Char *value, 
     return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
-const char* PortableServer::ServantLocator::_interface_repository_id (void) const
+const char* PortableServer::ServantLocator::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/PortableServer/ServantLocator:1.0";
 }
@@ -2878,7 +2878,7 @@ CORBA::Boolean PortableServer::POA::_is_a (const CORBA::Char *value, CORBA::Envi
     return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
-const char* PortableServer::POA::_interface_repository_id (void) const
+const char* PortableServer::POA::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/PortableServer/POA:1.0";
 }
@@ -3098,7 +3098,7 @@ CORBA::Boolean PortableServer::Current::_is_a (const CORBA::Char *value, CORBA::
     return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
-const char* PortableServer::Current::_interface_repository_id (void) const
+const char* PortableServer::Current::_remote_interface_repository_id (void) const
 {
   return "IDL:omg.org/PortableServer/Current:1.0";
 }

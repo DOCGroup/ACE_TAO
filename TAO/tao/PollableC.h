@@ -172,7 +172,7 @@ class TAO_Export CORBA_Pollable : public virtual CORBA_Object
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
-  virtual const char* _interface_repository_id (void) const;
+  virtual const char* _remote_interface_repository_id (void) const;
 protected:
   CORBA_Pollable (void); // default constructor
   CORBA_Pollable (TAO_Stub *objref,
@@ -258,7 +258,7 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
-  virtual const char* _interface_repository_id (void) const;
+  virtual const char* _remote_interface_repository_id (void) const;
 protected:
   CORBA_DIIPollable (void); // default constructor
   CORBA_DIIPollable (TAO_Stub *objref,
@@ -397,7 +397,7 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
-  virtual const char* _interface_repository_id (void) const;
+  virtual const char* _remote_interface_repository_id (void) const;
 protected:
   CORBA_PollableSet (void); // default constructor
   CORBA_PollableSet (TAO_Stub *objref,

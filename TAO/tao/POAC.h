@@ -352,7 +352,7 @@ TAO_NAMESPACE PortableServer{
     virtual ThreadPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     ThreadPolicy (TAO_Stub *objref = 0,
                   TAO_ServantBase *servant = 0,
@@ -462,7 +462,7 @@ TAO_NAMESPACE PortableServer{
     virtual LifespanPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     LifespanPolicy (
                     TAO_Stub *objref = 0,
@@ -572,7 +572,7 @@ TAO_NAMESPACE PortableServer{
     virtual IdUniquenessPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     IdUniquenessPolicy (
                         TAO_Stub *objref = 0,
@@ -682,7 +682,7 @@ TAO_NAMESPACE PortableServer{
     virtual IdAssignmentPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     IdAssignmentPolicy (
                         TAO_Stub *objref = 0,
@@ -795,7 +795,7 @@ TAO_NAMESPACE PortableServer{
     virtual ImplicitActivationPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     ImplicitActivationPolicy (
                               TAO_Stub *objref = 0,
@@ -910,7 +910,7 @@ TAO_NAMESPACE PortableServer{
     virtual ServantRetentionPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     ServantRetentionPolicy (
                             TAO_Stub *objref = 0,
@@ -1026,7 +1026,7 @@ TAO_NAMESPACE PortableServer{
     virtual RequestProcessingPolicyValue value (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     RequestProcessingPolicy (
                              TAO_Stub *objref = 0,
@@ -1175,7 +1175,7 @@ TAO_NAMESPACE PortableServer{
 
     virtual State get_state (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     POAManager (
                 TAO_Stub *objref = 0,
@@ -1274,7 +1274,7 @@ TAO_NAMESPACE PortableServer{
 
     virtual CORBA::Boolean  unknown_adapter (POA_ptr parent, const char *name, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     AdapterActivator (
                       TAO_Stub *objref = 0,
@@ -1372,7 +1372,7 @@ TAO_NAMESPACE PortableServer{
     static void _tao_any_destructor (void*);
 
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     ServantManager (
                     TAO_Stub *objref = 0,
@@ -1471,7 +1471,7 @@ TAO_NAMESPACE PortableServer{
     virtual Servant  incarnate (const ObjectId &oid, POA_ptr adapter, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
     virtual void  etherealize (const ObjectId &oid, POA_ptr adapter, Servant serv, CORBA::Boolean cleanup_in_progress, CORBA::Boolean remaining_activations, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     ServantActivator (
                       TAO_Stub *objref = 0,
@@ -1573,7 +1573,7 @@ TAO_NAMESPACE PortableServer{
     virtual Servant  preinvoke (const ObjectId &oid, POA_ptr adapter, const char *operation, Cookie & the_cookie, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
     virtual void  postinvoke (const ObjectId &oid, POA_ptr adapter, const char *operation, Cookie the_cookie, Servant the_servant, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     ServantLocator (
                     TAO_Stub *objref = 0,
@@ -2093,7 +2093,7 @@ TAO_NAMESPACE PortableServer{
     virtual Servant  id_to_servant (const ObjectId &oid, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
     virtual CORBA::Object_ptr  id_to_reference (const ObjectId &oid, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     POA (
          TAO_Stub *objref = 0,
@@ -2225,7 +2225,7 @@ TAO_NAMESPACE PortableServer{
     virtual POA_ptr  get_POA (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
     virtual ObjectId * get_object_id (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     Current (
              TAO_Stub *objref = 0,

@@ -201,7 +201,7 @@ TAO_NAMESPACE  Messaging
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     RebindPolicy (void); // default constructor
     RebindPolicy (TAO_Stub *objref,
@@ -299,7 +299,7 @@ TAO_NAMESPACE  Messaging
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     SyncScopePolicy (void); // default constructor
     SyncScopePolicy (TAO_Stub *objref,
@@ -436,7 +436,7 @@ TAO_NAMESPACE  Messaging
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     RequestPriorityPolicy (void); // default constructor
     RequestPriorityPolicy (TAO_Stub *objref,
@@ -530,7 +530,7 @@ TAO_NAMESPACE  Messaging
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     ReplyPriorityPolicy (void); // default constructor
     ReplyPriorityPolicy (TAO_Stub *objref,
@@ -628,7 +628,7 @@ TAO_NAMESPACE  Messaging
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     RequestStartTimePolicy (void); // default constructor
     RequestStartTimePolicy (TAO_Stub *objref,
@@ -726,7 +726,7 @@ TAO_NAMESPACE  Messaging
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     RequestEndTimePolicy (void); // default constructor
     RequestEndTimePolicy (TAO_Stub *objref,
@@ -824,7 +824,7 @@ TAO_NAMESPACE  Messaging
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     ReplyStartTimePolicy (void); // default constructor
     ReplyStartTimePolicy (TAO_Stub *objref,
@@ -922,7 +922,7 @@ TAO_NAMESPACE  Messaging
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     ReplyEndTimePolicy (void); // default constructor
     ReplyEndTimePolicy (TAO_Stub *objref,
@@ -1020,7 +1020,7 @@ TAO_NAMESPACE  Messaging
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     RelativeRequestTimeoutPolicy (void); // default constructor
     RelativeRequestTimeoutPolicy (TAO_Stub *objref,
@@ -1118,7 +1118,7 @@ TAO_NAMESPACE  Messaging
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     RelativeRoundtripTimeoutPolicy (void); // default constructor
     RelativeRoundtripTimeoutPolicy (TAO_Stub *objref,
@@ -1255,7 +1255,7 @@ TAO_NAMESPACE  Messaging
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     RoutingPolicy (void); // default constructor
     RoutingPolicy (TAO_Stub *objref,
@@ -1353,7 +1353,7 @@ TAO_NAMESPACE  Messaging
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     MaxHopsPolicy (void); // default constructor
     MaxHopsPolicy (TAO_Stub *objref,
@@ -1451,7 +1451,7 @@ TAO_NAMESPACE  Messaging
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     QueueOrderPolicy (void); // default constructor
     QueueOrderPolicy (TAO_Stub *objref,
@@ -1948,7 +1948,7 @@ TAO_NAMESPACE  Messaging
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     ReplyHandler (void); // default constructor
     ReplyHandler (TAO_Stub *objref,
@@ -2069,7 +2069,7 @@ TAO_NAMESPACE  Messaging
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
   protected:
     Poller (void); // default constructor
     Poller (TAO_Stub *objref,

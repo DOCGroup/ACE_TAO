@@ -444,7 +444,7 @@ CORBA::Boolean TAO_IOP::TAO_IOR_Manipulation::_is_a (const CORBA::Char *value, C
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
-const char* TAO_IOP::TAO_IOR_Manipulation::_interface_repository_id (void) const
+const char* TAO_IOP::TAO_IOR_Manipulation::_remote_interface_repository_id (void) const
 {
   return "IDL:TAO_IOP/TAO_IOR_Manipulation:1.0";
 }

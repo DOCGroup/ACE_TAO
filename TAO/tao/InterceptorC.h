@@ -139,7 +139,7 @@ class TAO_Export Cookie : public virtual ACE_CORBA_1 (Object)
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
 
   protected:
     Cookie (void);
@@ -401,7 +401,7 @@ class TAO_Export Interceptor : public virtual ACE_CORBA_1 (Object)
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
 
   protected:
     Interceptor (void);
@@ -549,7 +549,7 @@ class TAO_Export ServerRequestInterceptor: public virtual Interceptor
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
 
   protected:
     ServerRequestInterceptor (void);
@@ -697,7 +697,7 @@ class TAO_Export ClientRequestInterceptor: public virtual Interceptor
         CORBA::Environment &env =
           TAO_default_environment ()
       );
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _remote_interface_repository_id (void) const;
 
   protected:
     ClientRequestInterceptor (void);
