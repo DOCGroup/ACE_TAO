@@ -1,3 +1,9 @@
+Thu Apr 30 20:18:44 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
+
+	* orbsvcs/tests/CosPropertyService/client.{h, cpp}, server.{h,
+	cpp}: The client and server programs exclusively for testing
+	CosPropertyService. 
+
 Thu Apr 30 15:35:45 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/tests/Cubit/TAO/MT_Cubit/Task_Client.*,Util_Thread.*,
