@@ -267,7 +267,7 @@ TAO_DynEnum_i::equal (DynamicAny::DynAny_ptr rhs
       return 0;
     }
 
-  CORBA_Any_ptr any = rhs->to_any (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA_Any_var any = rhs->to_any (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   ACE_Message_Block *mb = any->_tao_get_cdr ();
