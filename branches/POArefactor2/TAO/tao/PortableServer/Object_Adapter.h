@@ -22,7 +22,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Key_Adapters.h"
-#include "poa_macros.h"
 
 // Active Object Table
 #include "Active_Object_Map.h"

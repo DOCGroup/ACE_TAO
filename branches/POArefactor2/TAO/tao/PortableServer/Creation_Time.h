@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  Header file for CORBA's ORB type.
+ *  Header file for Creation_Time and Temporary_Creation_Time
  *
  *  @author  Irfan Pyarali <irfan@cs.wustl.edu>
  */

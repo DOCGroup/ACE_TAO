@@ -15,8 +15,8 @@
 #define TAO_DEFAULT_POLICY_VALIDATOR_H_
 
 #include /**/ "ace/pre.h"
-#include "portableserver_export.h"
 
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -9,7 +9,8 @@
  *   Default strategy for populating mprofile
  *
  *
- *  @author  Marina Spivak <marina@cs.wustl.edu>  Carlos O'Ryan <coryan@uci.edu>
+ *  @author  Marina Spivak <marina@cs.wustl.edu>
+ *  @author  Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
 
