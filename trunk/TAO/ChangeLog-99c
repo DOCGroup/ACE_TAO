@@ -1,3 +1,8 @@
+Sun Jun 06 11:44:56 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Message_Policy_i.i (TAO_RelativeRoundtripTimeoutPolicy_i):
+          dereferenced rhs.poa_ with .in () to please old g++.
+
 Sun Jun 06 09:08:48 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * PROBLEM-REPORT-FORM: added requests to not send
