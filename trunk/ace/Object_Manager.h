@@ -63,7 +63,7 @@ class ACE_Export ACE_Object_Manager
   //     non-template class definitions appear in separate files.
   //     Please see ace/Managed_Object.h for a description of that
   //     part of the API.  In summary, Managed_Object provides two
-  //     adapters, the ACE_Managed_Cleanup and ACE_Managed_Object
+  //     adapters, the ACE_Cleanup_Adapter and ACE_Managed_Object
   //     template classes for adapting objects of any type to be
   //     easily managed by the ACE_Object_Manager.  There are several
   //     mechanisms for adapting objects and arrays for cleanup at
@@ -159,13 +159,13 @@ public:
 
   enum Preallocated_Object
     {
+      ACE_FILECACHE_LOCK,
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
       ACE_LOG_MSG_INSTANCE_LOCK,
       ACE_MT_CORBA_HANDLER_LOCK,
       ACE_DUMP_LOCK,
+      ACE_SIG_HANDLER_LOCK,
       ACE_TSS_CLEANUP_LOCK,
-#else
-      ACE_NO_PREALLOCATED_OBJECTS,  // To avoid an empty array.
 #endif /* ACE_MT_SAFE */
 
       // Hook for preallocated objects provided by application.
@@ -179,8 +179,8 @@ public:
 
   enum Preallocated_Array
     {
-      ACE_FILECACHE_HASH_LOCK,
       ACE_FILECACHE_FILE_LOCK,
+      ACE_FILECACHE_HASH_LOCK,
 
       // Hook for preallocated arrays provided by application.
       ACE_APPLICATION_PREALLOCATED_ARRAY_DECLARATIONS

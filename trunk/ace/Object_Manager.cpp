@@ -6,6 +6,7 @@
 #include "ace/Containers.h"
 #include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
+#include "ace/Filecache.h"
 #include "ace/Synch.h"
 
 #if !defined (__ACE_INLINE__)
@@ -47,33 +48,33 @@ void *ACE_Object_Manager::preallocated_array[
 #if defined (ACE_HAS_STATIC_PREALLOCATION)
 # define ACE_PREALLOCATE_OBJECT(TYPE, ID)\
     {\
-      static ACE_Managed_Cleanup<TYPE> obj;\
+      static ACE_Cleanup_Adapter<TYPE> obj;\
       preallocated_object[ID] = &obj;\
     }
 # define ACE_PREALLOCATE_ARRAY(TYPE, ID, COUNT)\
     {\
-      static ACE_Managed_Cleanup<TYPE> obj[COUNT];\
+      static ACE_Cleanup_Adapter<TYPE> obj[COUNT];\
       preallocated_array[ID] = &obj;\
     }
 #else
 # define ACE_PREALLOCATE_OBJECT(TYPE, ID)\
     {\
-      ACE_Managed_Cleanup<TYPE> *obj_p;\
-      ACE_NEW (obj_p, ACE_Managed_Cleanup<TYPE>);\
+      ACE_Cleanup_Adapter<TYPE> *obj_p;\
+      ACE_NEW (obj_p, ACE_Cleanup_Adapter<TYPE>);\
       preallocated_object[ID] = obj_p;\
     }
 # define ACE_PREALLOCATE_ARRAY(TYPE, ID, COUNT)\
     {\
-      ACE_Managed_Cleanup<TYPE> *obj_p;\
-      ACE_NEW (obj_p, ACE_Managed_Cleanup<TYPE>[COUNT]);\
-      preallocated_array[ID] = obj_p;\
+      ACE_Cleanup_Adapter<TYPE> *array_p;\
+      ACE_NEW (array_p, ACE_Cleanup_Adapter<TYPE>[COUNT]);\
+      preallocated_array[ID] = array_p;\
     }
 # define ACE_DELETE_PREALLOCATED_OBJECT(TYPE, ID)\
     ace_cleanup_destroyer (\
-      (ACE_Managed_Cleanup<TYPE> *) preallocated_object[ID], 0);\
+      (ACE_Cleanup_Adapter<TYPE> *) preallocated_object[ID], 0);\
     preallocated_object[ID] = 0;
 # define ACE_DELETE_PREALLOCATED_ARRAY(TYPE, ID)\
-    delete [] (ACE_Managed_Cleanup<TYPE> *) preallocated_array[ID];\
+    delete [] (ACE_Cleanup_Adapter<TYPE> *) preallocated_array[ID];\
     preallocated_array[ID] = 0;
 #endif /* ACE_HAS_STATIC_PREALLOCATION */
 
@@ -95,15 +96,19 @@ ACE_Object_Manager::ACE_Object_Manager (void)
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
   // Allocate the preallocated (hard-coded) object instances.
+  ACE_PREALLOCATE_OBJECT (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_LOCK)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_LOG_MSG_INSTANCE_LOCK)
   ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_MT_CORBA_HANDLER_LOCK)
   ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_DUMP_LOCK)
+  ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex, ACE_SIG_HANDLER_LOCK)
   ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_TSS_CLEANUP_LOCK)
 # endif /* ACE_MT_SAFE */
 
-  // Allocate the preallocated (hard-coded) arrays.
-  // (None, yet.)
+  ACE_PREALLOCATE_ARRAY (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_FILE_LOCK,
+                         ACE_Filecache::DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE)
+  ACE_PREALLOCATE_ARRAY (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_HASH_LOCK,
+                         ACE_Filecache::DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE)
 
   // Hooks for preallocated objects and arrays provided by application.
   ACE_APPLICATION_PREALLOCATED_OBJECT_DEFINITIONS
@@ -175,16 +180,20 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   ACE_APPLICATION_PREALLOCATED_ARRAY_DELETIONS
   ACE_APPLICATION_PREALLOCATED_OBJECT_DELETIONS
 
+  // Cleanup the dynamically preallocated arrays.
+  ACE_DELETE_PREALLOCATED_ARRAY (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_FILE_LOCK)
+  ACE_DELETE_PREALLOCATED_ARRAY (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_HASH_LOCK)
+
   // Cleanup the dynamically preallocated objects.
+  ACE_DELETE_PREALLOCATED_OBJECT (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_LOCK)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_LOG_MSG_INSTANCE_LOCK)
   ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_MT_CORBA_HANDLER_LOCK)
   ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_DUMP_LOCK)
+  ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
+                                  ACE_SIG_HANDLER_LOCK)
   ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_TSS_CLEANUP_LOCK)
 # endif /* ACE_MT_SAFE */
-
-  // Cleanup the dynamically preallocated arrays.
-  // (None, yet.)
 #endif /* ! ACE_HAS_STATIC_PREALLOCATION */
 }
 
@@ -237,19 +246,63 @@ ACE_Object_Manager::at_exit_i (void *object,
   return registered_objects_->enqueue_head (new_info);
 }
 
+#if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
+class ACE_Export ACE_Object_Manager_Destroyer
+  // = TITLE
+  //    Ensure that the <ACE_Object_Manager> gets initialized before any
+  //    application threads have been spawned.  
+  //
+  // = DESCRIPTION
+  //    The <ACE_Object_Manager_Destroyer> class is placed in this
+  //    file, rather than Object_Manager.cpp, to be sure that the
+  //    static Object_Manager gets linked into applications that
+  //    statically link libACE.a.
+{
+public:
+  ACE_Object_Manager_Destroyer (void);
+  ~ACE_Object_Manager_Destroyer (void);
+};
+
+ACE_Object_Manager_Destroyer::ACE_Object_Manager_Destroyer (void)
+{
+  // Ensure that the Object_Manager gets initialized before any
+  // application threads have been spawned.  Because this will be called
+  // during construction of static objects, that should always be the
+  // case.
+  ACE_Object_Manager &object_manager = *ACE_Object_Manager::instance ();
+  ACE_UNUSED_ARG (object_manager);
+}
+
+ACE_Object_Manager_Destroyer::~ACE_Object_Manager_Destroyer (void)
+{
+  delete ACE_Object_Manager::instance_;
+  ACE_Object_Manager::instance_ = 0;
+}
+
+static ACE_Object_Manager_Destroyer ACE_Object_Manager_Destroyer_internal;
+#endif /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER */
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-    template class ACE_Managed_Object <ACE_Thread_Mutex>;
-    template class ACE_Managed_Cleanup<ACE_Thread_Mutex>;
+    template class ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>;
+    template class ACE_Cleanup_Adapter<ACE_Thread_Mutex>;
+    template class ACE_Managed_Object<ACE_Recursive_Thread_Mutex>;
+    template class ACE_Managed_Object<ACE_Thread_Mutex>;
 # endif /* ACE_MT_SAFE */
+template class ACE_Cleanup_Adapter<ACE_SYNCH_RW_MUTEX>;
+template class ACE_Managed_Object<ACE_SYNCH_RW_MUTEX>;
 template class ACE_Unbounded_Queue<ACE_Cleanup_Info>;
 template class ACE_Unbounded_Queue_Iterator<ACE_Cleanup_Info>;
 template class ACE_Node<ACE_Cleanup_Info>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-#   pragma instantiate ACE_Managed_Object <ACE_Thread_Mutex>
-#   pragma instantiate ACE_Managed_Cleanup<ACE_Thread_Mutex>
+#   pragma instantiate ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>
+#   pragma instantiate ACE_Cleanup_Adapter<ACE_Thread_Mutex>
+#   pragma instantiate ACE_Managed_Object<ACE_Recursive_Thread_Mutex>
+#   pragma instantiate ACE_Managed_Object<ACE_Thread_Mutex>
 # endif /* ACE_MT_SAFE */
+#pragma instantiate ACE_Cleanup_Adapter<ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Managed_Object<ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Unbounded_Queue<ACE_Cleanup_Info>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Cleanup_Info>
 #pragma instantiate ACE_Node<ACE_Cleanup_Info>
