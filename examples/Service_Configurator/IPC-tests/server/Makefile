@@ -13,7 +13,7 @@ LIB   	= libServer.a
 SHLIB 	= libServer.so
 
 FILES	= Handle_L_Dgram \
-       	  Handle_L_CODgram \
+	  Handle_L_CODgram \
 	  Handle_L_FIFO \
 	  Handle_L_Pipe \
 	  Handle_L_Stream \
@@ -33,8 +33,6 @@ LIBS	= -lACE
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BUILD	= $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN) 
-
-ESO	= YES
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
