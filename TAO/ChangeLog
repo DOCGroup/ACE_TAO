@@ -1,3 +1,11 @@
+Thu Sep 11 15:41:47 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+	* tests/OBV/Supports/Supports_Test_impl.cpp:
+	* tests/OBV/Supports/Supports_Test_impl.h:
+	* tests/Portable_Interceptors/Bug_1559/interceptors.cpp:
+
+	  Fixed compile errors due to missing ACE_ENV_ARG_DECL.
+
 Thu Sep 11 14:01:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/tmplinst.cpp:
