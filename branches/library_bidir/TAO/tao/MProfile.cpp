@@ -216,7 +216,9 @@ TAO_MProfile::hash (CORBA::ULong max, CORBA::Environment &ACE_TRY_ENV)
 
   // The above hash function return an ULong between 0 and max here we
   // simply take the average value and round.
-  return hashval / this->last_;
+  //return hashval / this->last_;
+  // Changed to a mod value instead of an average.
+  return hashval % max;
 }
 
 void
@@ -245,7 +247,7 @@ TAO_MProfile::policy_list (CORBA::Environment &ACE_TRY_ENV)
       if (this->policy_list_ == 0)
         {
           this->create_policy_list (ACE_TRY_ENV);
-	  ACE_CHECK_RETURN (0);
+          ACE_CHECK_RETURN (0);
 
           this->init_policy_list (ACE_TRY_ENV);
           ACE_CHECK_RETURN (0);

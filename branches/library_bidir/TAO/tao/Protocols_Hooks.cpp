@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Protocols_Hooks.h"
+#include "PolicyC.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID(tao, Protocols_Hooks, "$Id$")

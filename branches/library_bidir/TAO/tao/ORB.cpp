@@ -1,4 +1,9 @@
+<<<<<<< ORB.cpp
 // $Id$
+=======
+// $Id$
+>>>>>>> 1.376.2.1
+
 
 #include "ORB.h"
 #include "ORB_Table.h"
@@ -73,6 +78,11 @@ using std::set_unexpected;
 
 
 ACE_RCSID(tao, ORB, "$Id$")
+
+<<<<<<< ORB.cpp
+=======
+ACE_RCSID(tao, ORB, "$Id$")
+>>>>>>> 1.376.2.1
 
 
 static const char ior_prefix [] = "IOR:";
@@ -509,7 +519,7 @@ CORBA_ORB::resolve_rt_orb (CORBA::Environment &ACE_TRY_ENV)
 #if (TAO_HAS_RT_CORBA == 1)
   return this->orb_core_->rt_orb (ACE_TRY_ENV);
 #else
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
   return CORBA_Object::_nil ();
 #endif /* TAO_HAS_RT_CORBA == 1 */
 

@@ -142,6 +142,9 @@ TAO_IIOP_Connection_Handler::activate (long flags,
                  flags,
                  THR_BOUND));
 
+  // Set the id in the transport now that we're active.
+  this->transport ()->id ((int) this->get_handle ());
+
   return TAO_IIOP_SVC_HANDLER::activate (flags,
                                          n_threads,
                                          force_active,
@@ -189,16 +192,18 @@ TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                  rm));
 
   --this->pending_upcalls_;
-  if (this->pending_upcalls_ == 0 &&
-      this->is_registered ())
+  if (this->pending_upcalls_ == 0)
     {
-      // Make sure there are no timers.
-      this->reactor ()->cancel_timer (this);
+      if (this->is_registered ())
+        {
+          // Make sure there are no timers.
+          this->reactor ()->cancel_timer (this);
 
-      // Set the flag to indicate that it is no longer registered with
-      // the reactor, so that it isn't included in the set that is
-      // passed to the reactor on ORB destruction.
-      this->is_registered (0);
+          // Set the flag to indicate that it is no longer registered with
+          // the reactor, so that it isn't included in the set that is
+          // passed to the reactor on ORB destruction.
+          this->is_registered (0);
+        }
 
       // Close the handle..
       if (this->get_handle () != ACE_INVALID_HANDLE)
@@ -220,7 +225,6 @@ TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
       // Follow usual Reactor-style lifecycle semantics and commit
       // suicide.
       delete this;
-
     }
 
   return 0;
@@ -314,6 +318,7 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
 
 int
 TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE h)
+
 {
   return this->handle_input_i (h);
 }
@@ -343,7 +348,7 @@ TAO_IIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
   if (result == -1)
     return result;
   else if (result == 0)
-    // Requires another call to handle_input ()
+    // Requires another call to handle_input  ()
     return 1;
 
   return 0;

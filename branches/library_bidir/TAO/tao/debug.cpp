@@ -11,11 +11,10 @@
 // part of process initialization.  They are treated as immutable
 // values through all of this debuging package.
 //
-// XXX on Windows, make it always use OutputDebugString () instead of stdio. 
+// XXX on Windows, make it always use OutputDebugString () instead of stdio.
 
 #include "tao/debug.h"
 
 ACE_RCSID(tao, debug, "$Id$")
 
 TAO_Export u_int TAO_debug_level = 0;
-TAO_Export u_int TAO_orbdebug = 0;

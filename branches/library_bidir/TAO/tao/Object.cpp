@@ -487,7 +487,7 @@ CORBA_Object::_validate_connection (CORBA::PolicyList_out inconsistent_policies,
 
 #if (TAO_HAS_MINIMUM_CORBA == 1)
 
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
 
 #else
 

@@ -56,8 +56,7 @@ CPPFLAGS += -I$(TAO_ROOT)
 
 
 .obj/IORC.o .obj/IORC.so .shobj/IORC.o .shobj/IORC.so: IORC.cpp IORManip_Loader.h \
- $(ACE_ROOT)/ace/pre.h \
- ior_manip_export.h \
+ $(ACE_ROOT)/ace/pre.h ior_manip_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -131,11 +130,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
@@ -143,6 +137,11 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Unbounded_Set.h \
+ $(ACE_ROOT)/ace/Node.h \
+ $(ACE_ROOT)/ace/Node.cpp \
+ $(ACE_ROOT)/ace/Unbounded_Set.inl \
+ $(ACE_ROOT)/ace/Unbounded_Set.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
@@ -164,6 +163,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -177,8 +179,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- IORC.h $(TAO_ROOT)/tao/Object.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h IORC.h \
+ $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
@@ -213,8 +215,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/ORB.i
 
 .obj/IORManip_Loader.o .obj/IORManip_Loader.so .shobj/IORManip_Loader.o .shobj/IORManip_Loader.so: IORManip_Loader.cpp IORManip_Loader.h \
- $(ACE_ROOT)/ace/pre.h \
- ior_manip_export.h \
+ $(ACE_ROOT)/ace/pre.h ior_manip_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -288,11 +289,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
@@ -300,6 +296,11 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Unbounded_Set.h \
+ $(ACE_ROOT)/ace/Node.h \
+ $(ACE_ROOT)/ace/Node.cpp \
+ $(ACE_ROOT)/ace/Unbounded_Set.inl \
+ $(ACE_ROOT)/ace/Unbounded_Set.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
@@ -321,6 +322,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -334,8 +338,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- IORC.h $(TAO_ROOT)/tao/Object.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h IORC.h \
+ $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
@@ -352,8 +356,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- $(TAO_ROOT)/tao/CDR.i IORC.i \
- IORManipulation.h \
+ $(TAO_ROOT)/tao/CDR.i IORC.i IORManipulation.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i
 
@@ -431,11 +434,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
@@ -443,6 +441,11 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Unbounded_Set.h \
+ $(ACE_ROOT)/ace/Node.h \
+ $(ACE_ROOT)/ace/Node.cpp \
+ $(ACE_ROOT)/ace/Unbounded_Set.inl \
+ $(ACE_ROOT)/ace/Unbounded_Set.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
@@ -460,9 +463,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/LocalObject.i \
- IORManip_Loader.h ior_manip_export.h \
- $(TAO_ROOT)/tao/Object_Loader.h \
+ $(TAO_ROOT)/tao/LocalObject.i IORManip_Loader.h \
+ ior_manip_export.h $(TAO_ROOT)/tao/Object_Loader.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
@@ -473,6 +475,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -486,8 +491,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- IORC.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h IORC.h \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -536,6 +540,14 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Array_Base.h \
+ $(ACE_ROOT)/ace/Array_Base.inl \
+ $(ACE_ROOT)/ace/Array_Base.cpp \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \

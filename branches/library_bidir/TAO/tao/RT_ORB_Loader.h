@@ -17,13 +17,14 @@
 #define TAO_RT_ORB_LOADER_H
 #include "ace/pre.h"
 
-#include "tao/ORB_Core.h"
 #include "tao/Object_Loader.h"
 #include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+class TAO_ORB_Core;
 
 class TAO_Export TAO_RT_ORB_Loader : public TAO_Object_Loader
 {

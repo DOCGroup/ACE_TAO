@@ -28,7 +28,6 @@
 #include "tao/ORB_Table.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/Connector_Registry.h"
-#include "tao/debug.h"
 #include "ace/Object_Manager.h"
 
 #if !defined(__ACE_INLINE__)
