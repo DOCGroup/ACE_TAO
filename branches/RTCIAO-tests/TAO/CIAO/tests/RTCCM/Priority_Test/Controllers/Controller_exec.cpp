@@ -18,18 +18,21 @@ MyImpl::Controller_exec_i::~Controller_exec_i ()
 
 // Operations from Priority_Test::Controller
 void
-MyImpl::Controller_exec_i::perform_test (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::Controller_exec_i::start (CORBA::Long arg
+                                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // This simply performs some measurements and print out the result.
 
   ACE_DEBUG ((LM_DEBUG, "PERFORM TEST\n"));
 
+  ACE_UNUSED_ARG (arg);
+
   Priority_Test::Common_Ops_var device =
     this->context_->get_connection_worker (ACE_ENV_SINGLE_ARG_PARAMETER);
 
-  const int niterations = 200;
-  const CORBA::Long work = 80;
+  const int niterations = 1000;
+  const CORBA::Long work = arg;
   ACE_Sample_History history (niterations);
 
   ACE_hrtime_t test_start = ACE_OS::gethrtime ();
@@ -47,6 +50,11 @@ MyImpl::Controller_exec_i::perform_test (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_DEBUG ((LM_DEBUG, "test finished\n"));
 
+  const int len = 1024;
+  char title [len];
+
+  ACE_OS::snprintf (title, len, "Total (work=%4d)", work);
+
   ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "done\n"));
@@ -56,13 +64,21 @@ MyImpl::Controller_exec_i::perform_test (ACE_ENV_SINGLE_ARG_DECL)
 //       history.dump_samples ("HISTORY", gsf);
 //     }
 
+
+
   ACE_Basic_Stats stats;
   history.collect_basic_stats (stats);
-  stats.dump_results ("Total", gsf);
+  stats.dump_results (title, gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+  ACE_Throughput_Stats::dump_throughput (title, gsf,
                                          test_end - test_start,
                                          stats.samples_count ());
+}
+
+void
+MyImpl::Controller_exec_i::stop (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
 }
 
 // Operations from Components::SessionComponent

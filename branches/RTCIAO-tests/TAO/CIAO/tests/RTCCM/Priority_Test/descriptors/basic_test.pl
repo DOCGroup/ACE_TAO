@@ -81,13 +81,19 @@ if (PerlACE::waitforfile_timed ($controller_ior, 15) == -1) {
     exit 1;
 }
 
+for ($work = 20; $work < 400; $work += 20)
+{
+    printf "Test work: $work\n";
+
 #Start the client to send the trigger message
-$CL = new PerlACE::Process ("../Controllers/client", "-k file://$controller_ior");
-$CL->SpawnWaitKill(60);
+    $CL = new PerlACE::Process ("../Controllers/client",
+                                "-k file://$controller_ior -w $work");
+    $CL->SpawnWaitKill(60);
 
 ## Now wait for the test to complete.  Need to figure out a way to
 ## detect this.
-sleep (60);
+    sleep (3);
+}
 
 ## Now teardown the application
 $AD = new PerlACE::Process("$CIAO_ROOT/tools/Assembly_Deployer/Assembly_Deployer",

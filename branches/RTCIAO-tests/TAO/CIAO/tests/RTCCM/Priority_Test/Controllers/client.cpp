@@ -10,11 +10,12 @@
 #include "ace/streams.h"
 
 char *controller_ior_ = 0;
+long work = 80;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:r:of");
+  ACE_Get_Opt get_opts (argc, argv, "k:w:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -25,11 +26,16 @@ parse_args (int argc, char *argv[])
         controller_ior_ = get_opts.opt_arg ();
         break;
 
+      case 'w':
+        work = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
+
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s\n"
                            "-k <Controller IOR>\n"
+                           "-w <work amount>\n"
                            "\n",
                            argv [0]),
                           -1);
@@ -67,7 +73,8 @@ main (int argc, char *argv[])
       if (CORBA::is_nil (ctrlr.in ()))
         ACE_ERROR_RETURN ((LM_ERROR, "Unable to acquire 'Controller' objref\n"), -1);
 
-      ctrlr->perform_test (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ctrlr->start (work
+                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
