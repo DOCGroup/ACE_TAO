@@ -64,6 +64,7 @@ namespace CIAO
      * POA. Look at the const qualifier in the method.
      */
     PortableServer::POA_ptr the_POA (void) const;
+    PortableServer::POA_ptr the_facet_cons_POA (void) const;
 
     /// Get a reference to the underlying ORB.
     CORBA::ORB_ptr the_ORB (void) const;

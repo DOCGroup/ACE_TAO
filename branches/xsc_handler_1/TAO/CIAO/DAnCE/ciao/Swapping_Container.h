@@ -82,8 +82,6 @@ namespace CIAO
 
     PortableServer::POA_ptr the_home_servant_POA (void) const;
 
-    PortableServer::POA_ptr the_facet_cons_POA (void) const;
-
   private:
 
     /// Create POA  for the component.

@@ -30,6 +30,7 @@
 #include "CCM_ComponentS.h"
 #include "CCM_ContainerS.h"
 #include "Home_Servant_Impl_Base.h"
+#include "Servant_Activator.h"
 
 namespace CIAO
 {
