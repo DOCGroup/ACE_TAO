@@ -1,17 +1,18 @@
 package imaging.filters;
 
+import java.awt.Color;
 import java.awt.image.*;
 import java.util.*;
 
 public class SharpenFilter extends SpatialFilter
 {
-  double percentage_ = 75.0;
+  float percentage_ = (float)75.0;
   
   public SharpenFilter()
     {
     }
   
-  public SharpenFilter(double percentage)
+  public SharpenFilter(float percentage)
     {
       percentage_ = percentage;
     }
@@ -32,99 +33,121 @@ public class SharpenFilter extends SpatialFilter
 	  System.out.println("Image Error"); 
 	  return; 
 	}
+
+      System.gc();
       
-      HSV hsv;
-      RGB rgb;
-      int pixel, alpha;
-      int[] pixels = new int[columns_];
-      double fact, ifact, hue,sat,val, vsum;
-      double[] line0 = new double[columns_], 
-	linep1 = new double[columns_],
-	linem1 = new double[columns_],
+      float[] hsv = new float[3];
+      int rgb, red, green, blue;
+      int pixel, alpha, lcv, lcv2, lcv3;
+      int[] pixels = new int[columns_*rows_];
+      float fact, ifact, hue, sat, val, vsum;
+      float[] line0 = new float[columns_], 
+	linep1 = new float[columns_],
+	linem1 = new float[columns_],
 	tmpptr;
-
-      fact = percentage_/100.0;
-      ifact = 1.0 - fact;
       
-      for (int x = 0; x < columns_; x++)
-	{
-	  pixel = raster_[x];
-	  hsv = getHSV(((pixel >> 16) & 0xff), ((pixel >> 8) & 0xff), (pixel & 0xff));
-	  line0[x] = hsv.val_;
-	}
+      profile_timer_.start();
       
-      for (int x = columns_, index = 0; x < 2*columns_; x++, index++)
-	{
-	  pixel = raster_[x];
-	  hsv = getHSV(((pixel >> 16) & 0xff), ((pixel >> 8) & 0xff), (pixel & 0xff));
-	  linep1[index] = hsv.val_;
-	}
-
-      for (int y = 1; y < rows_ - 1; y++)
-	{
-	  tmpptr = linem1;
-	  linem1 = line0;
-	  line0 = linep1;
-	  linep1 = tmpptr;
-
-	  for (int x = columns_*(y+1), index= 0; x < columns_*(y+2); x++, index++)
+      for (int z = 0; z < SpatialFilter.iterations_; z++)
+	{          
+	  fact = percentage_/(float)100.0;
+	  ifact = (float)1.0 - fact;
+	  
+	  for (int x = 0; x < columns_; x++)
 	    {
 	      pixel = raster_[x];
-	      hsv = getHSV(((pixel >> 16) & 0xff), ((pixel >> 8) & 0xff), (pixel & 0xff));
-	      linep1[index] = hsv.val_;			   
-	    }
-
-	  for (int x = 1; x < columns_ - 1; x++)
-	    {
-	      vsum = 0.0;
-	      vsum = linem1[x-1] + linem1[x] + linem1[x+1] +
-		line0[x-1] + line0[x] + line0[x + 1] + 
-		linep1[x-1] + linep1[x] + linep1[x + 1];
-
-	      pixel = raster_[y*columns_ + x];
-	      alpha = (pixel >> 24) & 0xff;
-	      hsv = getHSV(((pixel >> 16) & 0xff), ((pixel >> 8) & 0xff), (pixel & 0xff));
-	      hsv.val_ = ((hsv.val_ - (fact * vsum) / 9) / ifact);
-	      if (hsv.val_ < 1.0)
-		{
-		  if (hsv.val_ < 0.0)
-		    hsv.val_ = 0.0;
-		}
-	      else
-		hsv.val_ = 1.0;
-
-	      rgb = getRGB(hsv.hue_, hsv.sat_, hsv.val_);
-
-	      if (rgb.red_ < 0) rgb.red_ = 0;
-	      if (rgb.green_ < 0) rgb.green_ = 0;
-	      if (rgb.blue_ < 0) rgb.blue_ = 0 ;
-	      
-	      if (rgb.red_ > 255) rgb.red_ = 255;
-	      if (rgb.green_ > 255) rgb.green_ = 255;
-	      if (rgb.blue_ > 255) rgb.blue_ = 255;
-
-	      pixels[x] =
-		(alpha << 24) | (rgb.red_ << 16) | (rgb.green_ << 8) | rgb.blue_;
+	      hsv = getHSV(((pixel >> 16) & 0xff), ((pixel >> 8) & 0xff), (pixel & 0xff),hsv);
+	      line0[x] = hsv[2];
 	    }
 	  
-	  consumer.setPixels(0, y, columns_, 1, defaultRGB_, pixels, 0, columns_); 	  
+	  lcv = columns_ << 1;
+	  for (int x = columns_, index = 0; x < lcv; x++, index++)
+	    {
+	      pixel = raster_[x];
+	      hsv = getHSV(((pixel >> 16) & 0xff), ((pixel >> 8) & 0xff), (pixel & 0xff),hsv);
+	      linep1[index] = hsv[2];
+	    }
+	  
+	  lcv = columns_ - 1;
+	  lcv2 = rows_ - 1;
+	  for (int y = 1, i = columns_; y < lcv2; y++)
+	    {
+	      tmpptr = linem1;
+	      linem1 = line0;
+	      line0 = linep1;
+	      linep1 = tmpptr;
+	      
+	      lcv3 = columns_*(y+2);
+	      for (int x = columns_*(y+1), index= 0; x < lcv; x++, index++)
+		{
+		  pixel = raster_[x];
+		  // Note hsv is only instantiated once
+		  hsv = getHSV(((pixel >> 16) & 0xff), ((pixel >> 8) & 0xff), (pixel & 0xff), hsv);
+		  linep1[index] = hsv[2];			   
+		}
+	      
+	      i++;
+	      for (int x = 1; x < lcv; x++, i++)
+		{
+		  vsum = (float)0.0;
+		  vsum = linem1[x-1] + linem1[x] + linem1[x+1] +
+		    line0[x-1] + line0[x] + line0[x + 1] + 
+		    linep1[x-1] + linep1[x] + linep1[x + 1];
+		  
+		  pixel = raster_[i];
+		  alpha = (pixel >> 24) & 0xff;
+		  hsv = getHSV(((pixel >> 16) & 0xff), ((pixel >> 8) & 0xff), (pixel & 0xff), hsv);
+		  
+		  val = ((hsv[2] - (fact * vsum) / 9) / ifact);	      
+		  if (val < 1.0)
+		    {
+		      if (val < 0.0)
+			val = (float)0.0;
+		    }
+		  else
+		    val = (float)1.0;
+		  
+		  hsv[2] = val;
+		  rgb = getRGB(hsv[0], hsv[1], hsv[2]);
+		  
+		  red = (rgb >> 16) & 0xff;
+		  green = (rgb >> 8) & 0xff;
+		  blue = rgb & 0xff;
+		  
+		  if (red < 0) red = 0;
+		  if (green < 0) green = 0;
+		  if (blue < 0) blue = 0 ;
+		  
+		  if (red > 255) red = 255;
+		  if (green > 255) green = 255;
+		  if (blue > 255) blue = 255;
+		  
+		  pixels[i] =
+		    (alpha << 24) | (red << 16) | (green << 8) | blue;
+		}
+	      i++;
+	    }
 	}
-     
-  
+      
+      profile_timer_.stop();
+
+      consumer.setPixels(0, 0, columns_, rows_, defaultRGB_, pixels, 0, columns_);
+      
       System.out.println("Finished altering image");
       consumer.imageComplete(status);
     }
   
   
-  static private HSV getHSV(int red, int green, int blue)
+  static private float[] getHSV(int red, int green, int blue, float[] hsv)
     {
-      double rd, gd, bd, max, min, del, rc, gc, bc; 
-      HSV hsv = new HSV(); 
+      float rd, gd, bd, max, min, del, rc, gc, bc, hue, sat;
+      if (hsv == null)
+	hsv = new float[3];
       
       /* convert RGB to HSV */ 
-      rd = red / 255.0;            /* rd,gd,bd range 0-1 instead of 0-255 */
-      gd = green / 255.0; 
-      bd = blue / 255.0; 
+      rd = red / (float)255.0;            /* rd,gd,bd range 0-1 instead of 0-255 */
+      gd = green / (float)255.0; 
+      bd = blue / (float)255.0; 
 
       /* compute maximum of rd,gd,bd */
       if (rd >= gd)
@@ -159,44 +182,45 @@ public class SharpenFilter extends SpatialFilter
 	}
 
       del = max - min;
-      hsv.val_ = max;
+      hsv[2] = max;
 
       if (max != 0.0)
-	hsv.sat_ = (del) / max;
+	sat = (del) / max;
       else
-	hsv.sat_ = 0.0;
+	sat = (float)0.0;
       
-      hsv.hue_ = -1;
+      hue = -1;
       
-      if (hsv.sat_ != 0.0)
+      if (sat != 0.0)
 	{
 	  rc = (max - rd) / del;
 	  gc = (max - gd) / del;
 	  bc = (max - bd) / del;
 
 	  if (rd == max)
-	    hsv.hue_ = bc - gc;
+	    hue = bc - gc;
 	  else
 	    if (gd == max)
-	      hsv.hue_ = 2 + rc - bc;
+	      hue = 2 + rc - bc;
 	    else
 	      if (bd == max)
-		hsv.hue_ = 4 + gc - rc;
+		hue = 4 + gc - rc;
 
-	  hsv.hue_ *= 60;
-	  if (hsv.hue_<0)
-	    hsv.hue_ += 360;
+	  hue *= 60;
+	  if (hue<0)
+	    hue += 360;
 	}
-      
+
+      hsv[0] = hue;
+      hsv[1] = sat;
       return hsv;
     }
 
-  static private RGB getRGB(double hue, double sat, double val)
+  static private int getRGB(float hue, float sat, float val)
     {
-      int    j;
-      double rd, gd, bd;
-      double f, p, q, t;
-      RGB rgb = new RGB();
+      int    j, r, g, b;
+      float rd, gd, bd;
+      float f, p, q, t;
       
       /* convert HSV back to RGB */
       if (hue == -1 || sat == 0.0)
@@ -205,13 +229,13 @@ public class SharpenFilter extends SpatialFilter
 	}
       else
 	{
-	  if (hue==360.0) hue = 0.0;
-	  hue = hue / 60.0;
-	  j = (int) Math.floor(hue);
+	  if (hue==(float)360.0) hue = (float)0.0;
+	  hue = hue / (float)60.0;
+	  j = (int) hue;
 	  if (j<0) j=0;          /* either hue or floor seem to go neg on some sys */
 	  f = hue - j;
-	  p = val * (1-sat);
-	  q = val * (1 - (sat*f));
+	  p = val * (1-sat); // val - sat* val
+	  q = val * (1 - (sat*f)); // val - val*sat*f
 	  t = val * (1 - (sat*(1 - f)));
 	  
 	  switch (j) {
@@ -224,29 +248,15 @@ public class SharpenFilter extends SpatialFilter
 	  default: rd = val;  gd = t;  bd = p;  break;  /* never happen */
 	  }
 	}
+      r = (int)(rd * 255.0 + 0.5);
+      g = (int)(gd * 255.0 + 0.5);
+      b = (int)(bd * 255.0 + 0.5);
       
-      rgb.red_ = (int) Math.floor((rd * 255.0) + 0.5);
-      rgb.green_ = (int) Math.floor((gd * 255.0) + 0.5);
-      rgb.blue_ = (int) Math.floor((bd * 255.0) + 0.5);
-
-      
-      return rgb;
+      return 0xff000000 | (r << 16) | (g << 8) | b;
     }
 }  
 
-class HSV
-{
-  public double hue_;
-  public double sat_;
-  public double val_;
-}
 
-class RGB
-{
-  public int red_;
-  public int green_;
-  public int blue_;
-}
 
 
 

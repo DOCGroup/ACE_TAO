@@ -1,6 +1,7 @@
 package imaging.filters;
 
 import java.awt.image.*;
+import JACE.Timers.ProfileTimer;
 
 public class SpatialFilter extends ImageFilter implements MedFilter
 {
@@ -33,6 +34,16 @@ public class SpatialFilter extends ImageFilter implements MedFilter
     return "Base Filter class. Doesn't do much";
   }
 
+  public long filterTime()
+    {
+      return profile_timer_.elapsedTime();
+    }
+
+  public static void setTimer(int internal_iterations)
+    {
+      iterations_ = internal_iterations;
+    }
+  
   public void setDimensions(int width, int height)
   {
     rows_ = height;
@@ -186,16 +197,17 @@ public class SpatialFilter extends ImageFilter implements MedFilter
     return new_raster;
   }
 
-  protected int intensity(int rd, int gn, int bl)
+  protected static final int intensity(int rd, int gn, int bl)
     {
       return (((int)(rd)*11 + (int)(gn)*16 + (int)(bl)*5) >> 5);
     }
 
-  protected static ColorModel defaultRGB_ = ColorModel.getRGBdefault();
+  protected static int iterations_ = 1;
+  protected static final  ColorModel defaultRGB_ = ColorModel.getRGBdefault();
   protected int[][] matrix_;
   protected int[] raster_;
   protected int rows_ = 0, columns_ = 0;
   protected int div_factor_ = 1, offset_, degree_;
   protected int raster_offset_ = 0;
-
+  protected final ProfileTimer profile_timer_ = new ProfileTimer();
 }
