@@ -23,6 +23,8 @@
 
 #include "orbsvcs/LB_ORTC.h"
 
+#include "ace/Service_Object.h"
+#include "ace/Service_Config.h"
 
 /**
  * @class TAO_LB_Component

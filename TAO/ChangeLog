@@ -1,3 +1,14 @@
+Mon Aug 12 18:48:34 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Component.h:
+
+	  Include "ace/Service_Config.h" on Windows to pull in some
+	  necessary types.  Corrects build errors on Windows.
+
+	* orbsvcs/LoadBalancer/LoadManager.cpp:
+
+	  Fixed a syntax error.  Neglected to commit this change earlier.
+
 Mon Aug 12 17:53:08 2002  Ossama Othman  <ossama@uci.edu>
 
 	* TAOACE.dsw:
