@@ -3,6 +3,11 @@ Sat May 09 12:01:37 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/orbsvcs/Makefile: removed Log from clean target,
           because it's now a directory that we need to keep.
 
+        * orbsvcs/tests/Concurrency/NS_client.cpp (CosNaming_Client ctor):
+          reordered initializers to match declaration order.
+          (list_contents): changed loop index type to CORBA::ULong to avoid
+          signed/unsigned comparison.
+
 Fri May  8 16:32:55 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
         * TAO_IDL/be/be_exception.cpp: In the typecode generation, we were
