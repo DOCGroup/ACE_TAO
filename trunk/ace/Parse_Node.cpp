@@ -270,7 +270,7 @@ ACE_Static_Node::record (void) const
   ACE_Service_Type *sr;
 
   if (ACE_Service_Repository::instance()->find
-      (ACE_WIDE_STRING (this->name ()), (const ACE_Service_Type **) &sr) == -1)
+      (ASYS_WIDE_STRING (this->name ()), (const ACE_Service_Type **) &sr) == -1)
     return 0;
   else
     return sr;
@@ -375,7 +375,7 @@ ACE_Location_Node::open_handle (void)
 
   // Transform the pathname into the appropriate dynamic link library
   // by searching the ACE_LD_SEARCH_PATH.
-  ACE::ldfind (ACE_WIDE_STRING (this->pathname ()),
+  ACE::ldfind (ASYS_WIDE_STRING (this->pathname ()),
                dl_pathname,
                (sizeof dl_pathname / sizeof (ASYS_TCHAR)));
 
