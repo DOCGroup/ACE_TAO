@@ -20,6 +20,7 @@ MAKEFILES = \
 	CosLifeCycle.bor \
 	CosTime.bor \
 	DsLogAdmin.bor \
-	LoadBalancing.bor
+	LoadBalancing.bor \
+	FaultTolerance.bor
 
 !include <$(ACE_ROOT)/include/makeinclude/recurse.bor>
