@@ -1,3 +1,9 @@
+Fri Jun  4 15:23:18 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/Cached_Connect_Strategy_T.{h,i,cpp}: Removed common code by
+	  making Cached_Connect_Strategy_Ex derive from
+	  Cached_Connect_Strategy class.
+	
 Fri Jun 04 09:59:58 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* docs/tutorials/tutorials.dsw: Fixed "_" to "-". Thanks to Tom
