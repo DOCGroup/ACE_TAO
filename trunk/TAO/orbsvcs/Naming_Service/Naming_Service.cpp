@@ -49,7 +49,9 @@ Naming_Service::parse_args (int argc,
     switch (c)
       {
       case 'o': // outputs the naming service ior to a file.
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
+        this->ior_output_file_ =
+          ACE_OS::fopen (get_opts.optarg, "w");
+
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
@@ -97,7 +99,7 @@ Naming_Service::init (int argc,
                                              argc,
                                              argv);
       TAO_CHECK_ENV;
-      if (result < 0)
+      if (result == -1)
         return result;
     }
   TAO_CATCHANY
