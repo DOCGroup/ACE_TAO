@@ -98,7 +98,10 @@ TAO_ComponentContainer_i::create_component_i (
       ACE_CHECK_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
           
       // Store the id for this - that's what ComponentDescription takes.
-      const char *base_id = base_component->_interface_repository_id ();
+      ACE_TString base_id;
+      this->repo_->config ()->get_string_value (TAO_IFR_Service_Utils::tmp_key_,
+                                                "id",
+                                                base_id);
       this->repo_->config ()->set_string_value (new_key,
                                                 "base_component",
                                                 base_id);
