@@ -602,8 +602,10 @@ TAO_IIOP_Profile::encode_endpoints (void)
 
   // Encode the data structure.
   TAO_OutputCDR out_cdr;
-  out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
-  out_cdr << endpoints;
+  if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
+       == 0)
+      || (out_cdr << endpoints) == 0)
+    return -1;
   CORBA::ULong length = out_cdr.total_length ();
 
   IOP::TaggedComponent tagged_component;
@@ -626,7 +628,7 @@ TAO_IIOP_Profile::encode_endpoints (void)
   // TaggedComponents.
   tagged_components_.set_component (tagged_component);
 
-  return  1;
+  return  0;
 }
 
 int

@@ -47,7 +47,8 @@ fill_mprofile (const TAO_ObjectKey &object_key,
        ++i)
     {
       TAO_Profile *profile = mprofile.get_profile (i);
-      profile->encode_endpoints ();
+      if (profile->encode_endpoints () == -1)
+        return -1;
     }
 
   return 0;
