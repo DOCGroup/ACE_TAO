@@ -28,6 +28,8 @@
 #endif
 
 #if (HPUX_VERS < 1020)			// 10.10
+#  define ACE_HAS_BROKEN_MMAP_H
+#  define ACE_LACKS_T_ERRNO
 #  define ACE_LACKS_TIMESPEC_T
 #elif (HPUX_VERS < 1030)		// 10.20
 
@@ -186,8 +188,8 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 	#define ACE_MT_SAFE 1
 #  endif
 #  define ACE_HAS_THREADS
-#  define ACE_HAS_DCETHREADS
-#  define ACE_HAS_DCE_DRAFT4_THREADS
+#  define ACE_HAS_PTHREADS
+#  define ACE_HAS_PTHREADS_DRAFT4
 // POSIX real-time semaphore definitions are in the header files, and it
 // will compile and link with this in place, but will not run.  HP says 
 // the functions are not implemented.
