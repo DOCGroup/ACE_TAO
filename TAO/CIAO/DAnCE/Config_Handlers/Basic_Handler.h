@@ -11,7 +11,7 @@
 #ifndef BASIC_HANDLER_H
 #define BASIC_HANDLER_H
 
-#include "Deployment.h"
+#include "Config.h"
 
 #include "ace/SString.h"
 #include "ace/Null_Mutex.h"
