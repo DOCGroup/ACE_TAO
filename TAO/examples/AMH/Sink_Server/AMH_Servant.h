@@ -35,16 +35,16 @@ class AMH_Servant
 
     // = The skeleton methods
     virtual void start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh
-                             TAO_ENV_ARG_DECL_NOT_USED)
+                             ACE_ENV_ARG_DECL_NOT_USED)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void end_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh
-                           TAO_ENV_ARG_DECL_NOT_USED)
+                           ACE_ENV_ARG_DECL_NOT_USED)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
                               Test::Timestamp send_time
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
  protected:
