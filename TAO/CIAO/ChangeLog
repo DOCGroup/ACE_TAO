@@ -1,9 +1,15 @@
+Mon Jan  5 18:27:12 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/Config.rules:
+
+	  Added default values to the paths.
+
 Mon Jan  5 15:47:04 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CIDLC/README:
 
 	  Updated build instructions.
-	
+
 Mon Jan  5 14:32:17 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/Documentation/Build.html:

@@ -4,5 +4,5 @@
 
 # Please provide correct values for your site:
 #
-BOOST_ROOT   ?=
-UTILITY_ROOT ?=
+BOOST_ROOT   ?=/usr/local/boost
+UTILITY_ROOT ?=/usr/local/Utility
