@@ -56,15 +56,6 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1090
-
-#include "ComponentsS_T.h"
-
-#if defined (__ACE_INLINE__)
-#include "ComponentsS.i"
-#endif /* defined INLINE */
-
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
