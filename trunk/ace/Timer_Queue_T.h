@@ -387,12 +387,15 @@ public:
   // Access the underlying <TIMER_QUEUE>.
 
 private:
+  virtual int schedule_ualarm (void);
+  // Perform the logic to compute the new ualarm(2) setting.
+
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
   // Called back by <SIGALRM> handler.
 
   ACE_Sig_Handler sig_handler_;
   // Handler for the <SIGALRM> signal, so that we can access our state
-  // without requiring global variables.
+  // without requiring any global variables.
 
   TQ timer_queue_;
   // Implementation of the timer queue (e.g., <ACE_Timer_List>,

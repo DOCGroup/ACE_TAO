@@ -52,6 +52,11 @@ Timer_Handler::handle_timeout (const ACE_Time_Value &tv,
 class Async_Timer_Queue 
   // = TITLE
   //     Asynchronous Timer Queue Singleton.
+  //
+  // = DESCRIPTION
+  //     We use this class to avoid global variables and to
+  //     consolidate all the Timer Queue processing in one central 
+  //     place. 
 {
 public:
   static Async_Timer_Queue *instance (void);
@@ -89,8 +94,8 @@ Async_Timer_Queue::instance (void)
       // Initialize with all signals enabled.
       ACE_Sig_Set ss (1);
 
-      // But, don't block out SIGQUIT since we always want to be able
-      // to interrupt the program with that signal.
+      // But, don't block out SIGQUIT since we always want that
+      // signal to interrupt the program.
       ss.sig_del (SIGQUIT);
 
       ACE_NEW_RETURN (Async_Timer_Queue::instance_,
@@ -137,7 +142,9 @@ Async_Timer_Queue::schedule (u_int microsecs)
 
   // Schedule the timer to run in the future.
   long tid = this->tq_.schedule
-    (eh, 0, ACE_OS::gettimeofday () + tv);
+    (eh, 
+     0, // Note that our "magic cookie" ACT is always NULL.
+     ACE_OS::gettimeofday () + tv);
 
   if (tid == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "schedule_timer"));
@@ -205,7 +212,7 @@ signal_handler (int signum)
       /* NOTREACHED */
 
     case SIGQUIT:
-      ACE_DEBUG ((LM_DEBUG, "shutting down on SIGQUIT%a\n", 1));
+      ACE_ERROR ((LM_ERROR, "shutting down on SIGQUIT%a\n", 1));
       /* NOTREACHED */
       break;
     }
