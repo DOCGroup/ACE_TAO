@@ -103,13 +103,13 @@ TAO_SSLIOP_Server_Transport::~TAO_SSLIOP_Server_Transport (void)
 }
 
 int
-TAO_IIOP_Server_Transport::idle (void)
+TAO_SSLIOP_Server_Transport::idle (void)
 {
   return this->handler_->make_idle ();
 }
 
-TAO_IIOP_SVC_HANDLER *
-TAO_IIOP_Server_Transport::service_handler (void)
+TAO_SSL_SVC_HANDLER *
+TAO_SSLIOP_Server_Transport::service_handler (void)
 {
   return this->handler_;
 }
@@ -133,7 +133,7 @@ TAO_SSLIOP_Client_Transport::~TAO_SSLIOP_Client_Transport (void)
 }
 
 int
-TAO_IIOP_Client_Transport::idle (void)
+TAO_SSLIOP_Client_Transport::idle (void)
 {
   return this->handler_->make_idle ();
 }
