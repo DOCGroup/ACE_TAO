@@ -2,6 +2,9 @@ Wed Jun 30 14:39:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/Logging/Logging_Test_i.cpp:
 	* examples/Logging/Logging_Service_i.cpp:
+	* examples/Event_Comm/Consumer_Handler.cpp:
+	* examples/Event_Comm/Consumer_Input_Handler.cpp:
+	* examples/Event_Comm/Supplier_Input_Handler.cpp:
 	  Fixed exception handling stuff, thanks to Matt for providing the 
 	  fixes.
 
