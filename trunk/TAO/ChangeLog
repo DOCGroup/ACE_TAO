@@ -1,3 +1,10 @@
+Wed Aug 13 10:08:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.{h,cpp}:
+          Always store the updated consumer QoS and added a new method with
+          which the gateway can be requested to reconnect itself to the
+          consumer ec with the consumer QoS that is stored.
+
 Wed Aug 13 09:44:51 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Event_Service/Event_Service.{h,cpp}:
