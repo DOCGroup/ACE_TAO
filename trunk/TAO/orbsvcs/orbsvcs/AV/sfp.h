@@ -4,13 +4,13 @@
 // ============================================================================
 //
 // = LIBRARY
-//    AVStreams.
+//   ORBSVCS AVStreams.
 //
 // = FILENAME
 //   sfp.h
 //
 // = AUTHOR
-//    Nagarajan Surendran <naga@cs.wustl.edu>
+//   Nagarajan Surendran <naga@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -22,41 +22,17 @@
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 
-#define MAGIC_NUMBER_LEN 5
-#define MESSAGE_TYPE_OFFSET 5
-#define TAO_WRITEV_MAX 128
+#include "Policy.h"
+#include "MCast.h"
+#include "AVStreams_i.h"
+#include "UDP.h"
 
+#define TAO_SFP_MAGIC_NUMBER_LEN 4
+#define TAO_SFP_MESSAGE_TYPE_OFFSET 5
+#define TAO_SFP_WRITEV_MAX 128
 
-#define SFP_MAX_PACKET_SIZE ACE_MAX_DGRAM_SIZE
-//#define SFP_MAX_PACKET_SIZE 100
-
-
-// various message class for SFP.
-
-class TAO_ORBSVCS_Export SFP_Callback
-  // =TITLE
-  //    Callback interface for SFP.
-  //
-  // =Description
-  //    Application should create a callback object which they
-  //    register with the SFP. The SFP implementation notifies the
-  //    applicationn of any changes in the stream status like stream
-  //    established, stream ended.
-{
-public:
-  virtual int start_failed (void) = 0;
-  // This is called for both active and passive start.
-
-  virtual int stream_established (void) = 0;
-  // This is a callback for both active and passive stream
-  // establshment.
-
-  virtual int receive_frame (ACE_Message_Block *frame) =0;
-  // upcall to the application to receive a frame.
-
-  virtual void end_stream (void) = 0;
-  // called when the EndofStream message is received.
-};
+#define TAO_SFP_MAX_PACKET_SIZE ACE_MAX_DGRAM_SIZE
+//#define TAO_SFP_MAX_PACKET_SIZE 132
 
 class TAO_SFP_Fragment_Node
 {
@@ -79,19 +55,38 @@ public:
     {}
   int last_received_;
   size_t num_fragments_;
+  TAO_AV_frame_info frame_info;
   ACE_Ordered_MultiSet<TAO_SFP_Fragment_Node> fragment_set_;
 };
 
 typedef ACE_Ordered_MultiSet_Iterator<TAO_SFP_Fragment_Node> FRAGMENT_SET_ITERATOR;
+typedef ACE_Hash_Map_Manager<CORBA::ULong,TAO_SFP_Fragment_Table_Entry*,ACE_Null_Mutex> TAO_SFP_Fragment_Table;
+typedef ACE_Hash_Map_Manager<CORBA::ULong,TAO_SFP_Fragment_Table*,ACE_Null_Mutex> TAO_SFP_Fragment_Table_Map;
 
-class TAO_ORBSVCS_Export TAO_SFP :public virtual ACE_Event_Handler
-  // = TITLE
-  //     SFP implementation on UDP.
-  //
-  // = Description
-  //     This implements the methods to send and receive data octet
-  //     streams using the Simple Flow Protocol.
+class TAO_ORBSVCS_Export TAO_SFP_Frame_State
+{
+public:
+  TAO_SFP_Frame_State (void);
+  CORBA::Boolean is_complete (void);
 
+  int reset (void);
+
+  TAO_InputCDR cdr;
+  // This is the InputCDR that will be used to decode the message.
+  flowProtocol::frameHeader frame_header_;
+  flowProtocol::fragment fragment_;
+  flowProtocol::frame frame_;
+  CORBA::Boolean more_fragments_;
+  ACE_Message_Block *frame_block_;
+  // boolean flags indicating that there are more fragments.
+  ACE_Message_Block static_frame_;
+  TAO_SFP_Fragment_Table_Map fragment_table_map_;
+};
+
+class TAO_AV_Transport;
+class TAO_AV_Core;
+
+class TAO_ORBSVCS_Export TAO_SFP_Base
 {
 public:
   // default arguments to pass to use for the ORB
@@ -108,8 +103,16 @@ public:
   static const unsigned char TAO_SFP_MAJOR_VERSION;
   static const unsigned char TAO_SFP_MINOR_VERSION;
 
-// lengths of various SFP headers
+  // lengths of various SFP headers
   static const unsigned char TAO_SFP_FRAME_HEADER_LEN;
+  static const unsigned char TAO_SFP_MESSAGE_SIZE_OFFSET;
+  static const unsigned char TAO_SFP_FRAGMENT_SIZE_OFFSET;
+  static u_int frame_header_len;
+  static u_int start_reply_len;
+  static u_int start_len;
+  static u_int credit_len;
+  static u_int fragment_len;
+
   enum State
   {
     ACTIVE_START,
@@ -120,143 +123,145 @@ public:
     START_RECEIVED
   };
 
-  TAO_SFP (CORBA::ORB_ptr orb,
-           ACE_Reactor* reactor,
-           ACE_Time_Value timeout1,
-           ACE_Time_Value timeout2,
-           SFP_Callback *callback);
-  // constructor.
+  TAO_SFP_Base (void);
+  static CORBA::Boolean start_frame (CORBA::Octet flags,
+                                     flowProtocol::MsgType type,
+                                     TAO_OutputCDR &msg);
 
-  virtual int start_stream (const char *receiver_addr);
-  // Actively start the stream by trying to connect to the UDP
-  // receiver_addr in host:port format.
+  static CORBA::Boolean write_start_message (TAO_OutputCDR &msg);
+  static CORBA::Boolean write_start_reply_message (TAO_OutputCDR &msg);
+  static CORBA::Boolean write_credit_message (CORBA::ULong cred_num,
+                                              TAO_OutputCDR &msg);
+  static CORBA::Boolean write_fragment_message (CORBA::Octet flags,
+                                                CORBA::ULong fragment_number,
+                                                CORBA::ULong sequence_number,
+                                                CORBA::ULong source_id,
+                                                TAO_OutputCDR &msg);
 
-  virtual int start_stream (const char *local_addr,int credit_);
-  // Passive start.
+  static CORBA::Boolean write_frame_message (CORBA::ULong timestamp,
+                                             CORBA::ULong synchSource,
+                                             flowProtocol::my_seq_ulong source_ids,
+                                             CORBA::ULong sequence_num,
+                                             TAO_OutputCDR &msg);
 
-  virtual int send_frame (ACE_Message_Block *frame);
-  // sends a single frame over UDP.
+  static int send_message (TAO_AV_Transport *transport,
+                           TAO_OutputCDR &stream,
+                           ACE_Message_Block *mb = 0);
+  static int peek_message_type (TAO_AV_Transport *transport,
+                                flowProtocol::MsgType &type);
+  static int read_start_message (TAO_AV_Transport *transport,
+                                 flowProtocol::Start &start,
+                                 TAO_InputCDR &cdr);
+  static int read_start_reply_message (TAO_AV_Transport *transport,
+                                       flowProtocol::StartReply &start_reply,
+                                       TAO_InputCDR &cdr);
+  static int read_credit_message (TAO_AV_Transport *transport,
+                                  flowProtocol::credit &credit,
+                                  TAO_InputCDR &cdr);
+  static int read_endofstream_message (TAO_AV_Transport *transport,
+                                       flowProtocol::frameHeader &endofstream,
+                                       TAO_InputCDR &cdr);
 
-  virtual int end_stream (void);
-  // terminates the stream.
+  static int read_frame (TAO_AV_Transport *transport,
+                         flowProtocol::frameHeader &frame_header,
+                         TAO_SFP_Frame_State &state,
+                         TAO_AV_frame_info *&frame_info);
 
-  virtual int handle_input (ACE_HANDLE fd);
-  // Callback when event happens on the dgram socket.
+  static int read_fragment (TAO_AV_Transport *transport,
+                            flowProtocol::fragment &fragment,
+                            TAO_SFP_Frame_State &state,
+                            TAO_AV_frame_info *&frame_info);
 
-  virtual int handle_timeout (const ACE_Time_Value&, const void*);
-  // Used for timeout for the number of tries for starting a stream.
+  static int peek_frame_header (TAO_AV_Transport *transport,
+                                flowProtocol::frameHeader &header,
+                                TAO_InputCDR &cdr);
 
-  virtual ACE_HANDLE get_handle (void) const;
-private:
+  static int peek_fragment_header (TAO_AV_Transport *transport,
+                                   flowProtocol::fragment &fragment,
+                                   TAO_InputCDR &cdr);
 
-  ACE_Message_Block* read_simple_frame (void);
-  // receives a single frame from the network.
+  static int handle_input (TAO_AV_Transport *transport,
+                           TAO_SFP_Frame_State &state,
+                           TAO_AV_frame_info *&frame_info);
 
-  int read_frame_header (flowProtocol::frameHeader &frame_header);
-  // reads the frame header from the peek buffer in the datagram.
+  static ACE_Message_Block* check_all_fragments (TAO_SFP_Fragment_Table_Entry *fragment_entry);
 
-  ACE_Message_Block* read_fragment (void);
-  // reads a fragment from the wire.
-
-  void create_local_dgram (void);
-  // Create the local dgram endpoint.
-
-  int connect_to_receiver (const char *receiver_addr);
-  // Creates a connected dgram with the receiver addr.
-
-  int send_start (void);
-  // sends the start message to the receiver.
-
-  int send_startReply (void);
-  // sends the StartReply message to the receiver.
-
-  int send_cdr_buffer (TAO_OutputCDR &cdr,
-                       ACE_Message_Block *mb);
-  // sends the cdr buffer using iovecs.
-
-  int register_dgram_handler (void);
-  // registers the dgram socket with the reactor.
-
-  ACE_Message_Block *check_all_fragments (TAO_SFP_Fragment_Table_Entry *fragment_entry);
-  // checks if all the fragments for this entry has been received and returns the
-  // head of the chain of message blocks for that frame.
-
-  void dump_buf (char *buf,int n);
+protected:
+  static void dump_buf (char *buf,int n);
   // dumps the buffer to the screen.
-
-  CORBA::ORB_ptr orb_;
-  // ORB reference.
-
-  ACE_Reactor* reactor_;
-  // Used for registering the dgram handler.
-
-  TAO_OutputCDR output_cdr_;
-  // Use the TAO CDR decoder to decode everything
-
-  //  TAO_InputCDR input_cdr_;
-  // Use the TAO CDR encoder to encode everything
-
-  ACE_SOCK_Dgram dgram_;
-  // Connection Oriented Dgram.
-
-  int start_tries_;
-  // Number of tries to send a Start message.
-
-  int startReply_tries_;
-  // Number of tries to send a StartReply message.
-
-  ACE_Time_Value timeout1_;
-  // Timeout used for Start on Sender side and also for Credit on
-  // receiver side.
-
-  ACE_Time_Value timeout2_;
-  // Timeout used for StartReply on the receiver side and also for
-  // CREDIT on the sender side.
-
-  State state_;
-  // State variable.
-
-  const char *receiver_addr_;
-  // The address of the receiver to which we're connected to.
-
-  ACE_INET_Addr receiver_inet_addr_;
-  // INET addr of the receiver.
-
-  SFP_Callback *callback_;
-  // Application Callback Object.
-
-  int sequence_num_;
-  // sequence number of the packet.
-
-  flowProtocol::frameHeader frame_header_;
-  ssize_t frame_header_len_;
-  // frame header to be sent with all frames.
-  // length of the frame header.
-
-  flowProtocol::fragment fragment_;
-  ssize_t fragment_len_;
-  // fragment header for each fragment.
-
-  flowProtocol::Start start_;
-  ssize_t start_len_;
-  // Start message and its length.
-
-  flowProtocol::StartReply start_reply_;
-  ssize_t start_reply_len_;
-  // StartReply message and its length.
-
-  flowProtocol::credit credit_;
-  ssize_t credit_len_;
-  CORBA::ULong credit_num_;
-  // Credit message and its  length.
-
-  char magic_number_[MAGIC_NUMBER_LEN];
-  // used for peeking the magic_number.
-  const size_t magic_number_len_;
-  u_int more_fragments_;
-  // boolean flags indicating that there are more fragments.
-  ACE_Hash_Map_Manager<CORBA::ULong,TAO_SFP_Fragment_Table_Entry*,ACE_Null_Mutex> fragment_table_;
-  // chain of fragments of the current frame.
 };
 
-#endif /* !defined (TAO_SFP_H) */
+// Beware the SFP_Base code relies on the Singleton being initialized.
+typedef ACE_Singleton <TAO_SFP_Base,ACE_SYNCH_MUTEX> TAO_SFP_BASE;
+
+class TAO_ORBSVCS_Export TAO_SFP_Object  : public TAO_AV_Protocol_Object
+{
+public:
+  TAO_SFP_Object (TAO_AV_Callback *callback,
+                  TAO_AV_Transport *transport);
+  // We should add a sfp options parameter.
+
+  virtual ~TAO_SFP_Object (void);
+  // Dtor
+
+  virtual int handle_input (void) = 0;
+  virtual int send_frame (ACE_Message_Block *frame,
+                          TAO_AV_frame_info *frame_info = 0);
+
+  virtual int send_frame (const iovec *iov,
+                          int iovcnt,
+                          TAO_AV_frame_info *frame_info = 0);
+
+  virtual int destroy (void);
+  virtual int set_policies (const TAO_AV_PolicyList &policies);
+
+protected:
+  ACE_Message_Block *get_fragment (ACE_Message_Block *&frame,
+                                   size_t initial_len,
+                                   size_t &last_mb_orig_len,
+                                   size_t &last_mb_current_len);
+  CORBA::ULong sequence_num_;
+  CORBA::ULong source_id_;
+  CORBA::Long max_credit_;
+  CORBA::Long current_credit_;
+  TAO_SFP_Frame_State state_;
+};
+
+class TAO_ORBSVCS_Export TAO_SFP_Producer_Object : public TAO_SFP_Object
+{
+public:
+  TAO_SFP_Producer_Object (TAO_AV_Callback *callback,
+                           TAO_AV_Transport *transport,
+                           char *&flow_options);
+  virtual int handle_input (void);
+protected:
+  CORBA::ULong credit_sequence_num_;
+};
+
+class TAO_ORBSVCS_Export TAO_SFP_Consumer_Object : public TAO_SFP_Object
+{
+public:
+  TAO_SFP_Consumer_Object (TAO_AV_Callback *callback,
+                           TAO_AV_Transport *transport,
+                           char *&flow_options);
+  virtual int handle_input (void);
+};
+
+class TAO_ORBSVCS_Export TAO_AV_SFP_Factory : public TAO_AV_Flow_Protocol_Factory
+{
+public:
+  TAO_AV_SFP_Factory (void);
+  virtual ~TAO_AV_SFP_Factory (void);
+  virtual int init (int argc, char *argv[]);
+  // Initialization hook.
+  virtual int match_protocol (const char *flow_string);
+  virtual TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
+                                                        TAO_Base_StreamEndPoint *endpoint,
+                                                        TAO_AV_Flow_Handler *handler,
+                                                        TAO_AV_Transport *transport);
+};
+
+ACE_STATIC_SVC_DECLARE (TAO_AV_SFP_Flow_Factory)
+ACE_FACTORY_DECLARE (TAO_ORBSVCS, TAO_AV_SFP_Flow_Factory)
+
+#endif /* TAO_SFP_H */
