@@ -1505,7 +1505,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 #endif /* ACE_HAS_DCETHREADS */
       result = 0;
   else
-    result = -1;	// ACE_ADAPT_RETVAL used it for intermediate status
+    result = -1;        // ACE_ADAPT_RETVAL used it for intermediate status
 
 #if !defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP)
   ACE_UNUSED_ARG (type);
@@ -2001,12 +2001,12 @@ ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
 #endif /* ACE_HAS_DCETHREADS */
 #if !defined (ACE_LACKS_CONDATTR_PSHARED)
       && ACE_ADAPT_RETVAL(::pthread_condattr_setpshared (&attributes, type),
-			  result) == 0
+                          result) == 0
 #endif /* ACE_LACKS_CONDATTR_PSHARED */
       )
      result = 0;
   else
-     result = -1;	// ACE_ADAPT_RETVAL used it for intermediate status
+     result = -1;       // ACE_ADAPT_RETVAL used it for intermediate status
 #if defined (ACE_HAS_DCETHREADS)
   ::pthread_condattr_delete (&attributes);
 #else
@@ -8276,7 +8276,15 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
 #elif defined (ACE_HAS_POLL) && !defined (ACE_POLL_IS_BROKEN)
   ACE_OSCALL_RETURN (::poll (0, 0, tv.msec ()), int, -1);
 #else
+#if defined (linux)
+  // Copy the timeval, because Linux modifies it!  It's strange that
+  // the compiler doesn't warn about passing the address of a const as
+  // a non-const argument.
+  timeval tv_copy = tv;
+  ACE_OSCALL_RETURN (::select (0, 0, 0, 0, &tv_copy), int, -1);
+#else  /* ! linux */
   ACE_OSCALL_RETURN (::select (0, 0, 0, 0, (timeval *) &tv), int, -1);
+#endif /* ! linux */
 #endif /* ACE_WIN32 */
 }
 
