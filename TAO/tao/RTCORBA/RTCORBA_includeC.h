@@ -86,10 +86,6 @@ namespace TAO
 // TAO_IDL - Generated from
 // .\be\be_codegen.cpp:1050
 
-#if defined (__ACE_INLINE__)
-#include "RTCORBA_includeC.i"
-#endif /* defined INLINE */
-
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
