@@ -31,6 +31,8 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
 
+  CORBA::Environment _env;
+
   TAO_TRY
     {
       // The string could read contains \n\0 hence using ACE_OS::read
@@ -48,16 +50,19 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE)
 	case 'r':
 	  {
 	    register_consumer ();
+            TAO_CHECK_ENV;
 	    break;
 	  }
 	case 'u':
 	  {
 	    unregister_consumer ();
+            TAO_CHECK_ENV;
 	    break;
 	  }
         case 'q':
 	  {
 	    quit_consumer_process ();
+            TAO_CHECK_ENV;
             break;
 	  }
 	}
