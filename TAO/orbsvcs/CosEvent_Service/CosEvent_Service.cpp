@@ -11,13 +11,17 @@
 CosEvent_Service::CosEvent_Service (void)
   : service_name ("CosEventService"),
     rt_service_name ("EventService"),
+    schedule_name_ ("ScheduleService"),
     ec_impl_ (0,
               ACE_DEFAULT_EVENT_CHANNEL_TYPE,
               &module_factory_),
-    rtec_ ( RtecEventChannelAdmin::EventChannel::_nil ()),
+    rtec_ (RtecEventChannelAdmin::EventChannel::_nil ()),
     scheduler_ (RtecScheduler::Scheduler::_nil ()),
-    cos_ec_ (CosEventChannelAdmin::EventChannel::_nil ())
+    cos_ec_ (CosEventChannelAdmin::EventChannel::_nil ()),
+    global_scheduler_ (0),
+    remote_Rtec_ (1)
 {
+  // No-Op.
 }
 
 CosEvent_Service::~CosEvent_Service (void)
@@ -69,7 +73,7 @@ CosEvent_Service::init_ORB  (int argc, char *argv [])
 int
 CosEvent_Service::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "r:n:");
+  ACE_Get_Opt get_opt (argc, argv, "r:n:s:l");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -84,13 +88,39 @@ CosEvent_Service::parse_args (int argc, char *argv [])
           this->rt_service_name = get_opt.optarg;
           break;
 
+        case 's':
+          if (ACE_OS::strcasecmp (get_opt.optarg, "global") == 0)
+            {
+              this->global_scheduler_ = 1;
+            }
+          else if (ACE_OS::strcasecmp (get_opt.optarg, "local") == 0)
+            {
+              this->global_scheduler_ = 0;
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Unknown scheduling type <%s> "
+                          "defaulting to local\n",
+                          get_opt.optarg));
+              this->global_scheduler_ = 0;
+              return -1;
+            }
+          break;
+
+        case 'l':
+          this->remote_Rtec_ = 0;
+          break;
+
         case '?':
         default:
           ACE_DEBUG ((LM_DEBUG,
                       "Usage: %s "
-                      "-n COS Event Service name"
-                      "-r RealTime Event Service name"
-                      "\n",
+                      " -n <COS Event Service name>"
+                      " -r <RealTime Event Service name>"
+                      " -s <global|local>"
+                      " -l" // creates the RtEC locally.
+                      " \n",
                       argv[0]));
           return -1;
         }
@@ -158,22 +188,51 @@ CosEvent_Service::start_Scheduler (void)
 {
   TAO_TRY
     {
-      this->scheduler_ =
-        this->scheduler_impl_._this (TAO_TRY_ENV);
-      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+       CosNaming::Name schedule_name (1);
+       schedule_name.length (1);
+       schedule_name[0].id = CORBA::string_dup (this->schedule_name_);
 
-      CORBA::String_var str =
-        this->orb_->object_to_string (this->scheduler_.in (),
-                                      TAO_TRY_ENV);
-      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+      if (this->global_scheduler_ == 0)
+        {
+          this->scheduler_ =
+            this->scheduler_impl_._this (TAO_TRY_ENV);
+          TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "CosEvent_Service: The (local) scheduler IOR is <%s>\n",
-                  str.in ()));
+          CORBA::String_var str =
+            this->orb_->object_to_string (this->scheduler_.in (),
+                                          TAO_TRY_ENV);
+          TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
-      if (ACE_Scheduler_Factory::server (this->scheduler_.in ()) == -1)
-        return -1;
+          ACE_DEBUG ((LM_DEBUG,
+                      "CosEvent_Service: The (local) scheduler IOR is <%s>\n",
+                      str.in ()));
 
+          // Register the servant with the Naming Context....
+	  this->naming_client_->rebind (schedule_name,
+                                        this->scheduler_.in (),
+                                        TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+
+          if (ACE_Scheduler_Factory::server (this->scheduler_.in ()) == -1)
+            return -1;
+        }
+      else // get the global scheduler
+        {
+          CORBA::Object_var sched_obj =
+            this->naming_client_->resolve (schedule_name,
+                                           TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+
+          // The CORBA::Object_var object is downcast to
+          // RtecEventChannelAdmin::EventChannel
+          // using the <_narrow> method.
+          this->scheduler_ =
+            RtecScheduler::Scheduler::_narrow (sched_obj.in (),
+                                               TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+        }
+
+      ACE_Scheduler_Factory::use_config (this->naming_client_.get_context());
       return 0;
     }
   TAO_CATCHANY
@@ -191,8 +250,9 @@ CosEvent_Service::create_local_RtecService (void)
       this->rtec_ = this->ec_impl_._this (TAO_TRY_ENV);
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
-       CORBA::String_var str = this->orb_->object_to_string (this->rtec_.in (),
-                                          TAO_TRY_ENV);
+
+      CORBA::String_var str = this->orb_->object_to_string (this->rtec_.in (),
+                                                            TAO_TRY_ENV);
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
       ACE_DEBUG ((LM_DEBUG,
@@ -270,8 +330,8 @@ CosEvent_Service::create_CosEC (void)
 int
 CosEvent_Service::register_CosEC (void)
 {
- TAO_TRY
-    {
+  TAO_TRY
+   {
       // Name the object.
       CosNaming::Name ec_obj_name (1);
       ec_obj_name.length (1);
@@ -279,9 +339,9 @@ CosEvent_Service::register_CosEC (void)
 	CORBA::string_dup (this->service_name);
 
       // Now, attach the object name to the context.
-      this->naming_client_->bind (ec_obj_name,
-				  this->cos_ec_,
-				  TAO_TRY_ENV);
+      this->naming_client_->rebind (ec_obj_name,
+                                    this->cos_ec_,
+                                    TAO_TRY_ENV);
       TAO_CHECK_ENV;
       return 0;
     }
@@ -308,24 +368,35 @@ CosEvent_Service::startup (int argc, char *argv[])
   if (this->init_NamingService () == -1)
     return -1;
 
-  // get hold of the Rtec Service via the Naming Service.
-  if (this->get_Rtec_viaNamingService () == -1)
+  // see if the user wants a local Rtec..
+  if (this->remote_Rtec_ == 0 && this->create_local_RtecService () == -1)
     {
-      ACE_DEBUG ((LM_ERROR, "Could not locate the Real Time Event service <%s> via the Naming Service, trying to create a local copy..\n", this->rt_service_name));
-
-      // Rtec was not active.. try creating a local copy.
-      if (this->create_local_RtecService () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Failed to create a local RtEC.\n"),
-                          -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         " (%P|%t) Failed to create a local RtEC.\n"),
+                        -1);
     }
+  else
+    // get hold of the Rtec Service via the Naming Service.
+    if (this->get_Rtec_viaNamingService () == -1)
+      {
+        ACE_DEBUG ((LM_ERROR, "Could not locate the Real Time Event service <%s> via the Naming Service, trying to create a local copy..\n", this->rt_service_name));
+
+        // Rtec was not active.. try creating a local copy.
+        if (this->create_local_RtecService () == -1)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Failed to create a local RtEC.\n"),
+                            -1);
+      }
 
   // start the scheduler
   if (this->start_Scheduler ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) Failed to start the scheduler\n"),
-                      -1);
-
+    {
+      // scheduler startup failed..cleanup
+      this->shutdown ();
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) Failed to start the scheduler\n"),
+                        -1);
+    }
   // now try to create the COS EC.
   if (this->create_CosEC () == -1)
     {
@@ -339,7 +410,7 @@ CosEvent_Service::startup (int argc, char *argv[])
   // finally, register it with the naming service.
   if (this->register_CosEC () == -1)
     {
-      // CosEC creation failed.. cleanup
+      // CosEC registration failed.. cleanup
       this->shutdown ();
       ACE_ERROR_RETURN ((LM_ERROR,
                          " (%P|%t) Failed to register the CosEC with the naming service.\n"),
@@ -364,20 +435,41 @@ CosEvent_Service::shutdown (void)
 {
  TAO_TRY
     {
-      // unbind the cosEC from the naming service.
-      CosNaming::Name ec_obj_name (1);
-      ec_obj_name.length (1);
-      ec_obj_name[0].id =
-	CORBA::string_dup (this->service_name);
-      this->naming_client_->unbind (ec_obj_name,
-				    TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      if (this->global_scheduler_ == 0 &&
+          this->scheduler_ != RtecScheduler::Scheduler::_nil ())
+	{
+          CosNaming::Name schedule_name (1);
+          schedule_name.length (1);
+          schedule_name[0].id = CORBA::string_dup (this->schedule_name_);
+
+	  this->naming_client_->unbind (schedule_name, TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+	}
 
       if (this->cos_ec_ != CosEventChannelAdmin::EventChannel::_nil ())
-        this->cos_ec_->destroy (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        {
+          // unbind the cosEC from the naming service.
+          CosNaming::Name ec_obj_name (1);
+          ec_obj_name.length (1);
+          ec_obj_name[0].id =
+            CORBA::string_dup (this->service_name);
+          this->naming_client_->unbind (ec_obj_name,
+                                        TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
-      this->ec_impl_.shutdown ();
+          this->cos_ec_->destroy (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+        }
+
+      if (TAO_ORB_Core_instance ()->orb () != CORBA::ORB::_nil ())
+        this->ec_impl_.shutdown ();
+      // The Rtec shutdown method tries to use the orb , which might not
+      // exist at that point so this check avoids that crash.
+
+      // shutdown the ORB.
+      if (this->orb_ != CORBA::ORB::_nil ())
+        this->orb_->shutdown ();
+
       return 0;
     }
   TAO_CATCHANY
@@ -394,11 +486,20 @@ main (int argc, char *argv[])
   CosEvent_Service service;
 
   if (service.startup (argc, argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Failed to setup the Cos Event Channel.\n"),
-                      -1);
+    {
+      service.shutdown ();
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Failed to setup the Cos Event Channel.\n"),
+                        1);
+    }
+
   if (service.run () == -1)
-    ACE_ERROR((LM_ERROR,
-                       "Failed to run the Cos Event Channel.\n"));
+    {
+      service.shutdown ();
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Failed to run the Cos Event Channel.\n"),
+                        1);
+    }
+
   service.shutdown ();
 }
