@@ -109,7 +109,8 @@ int
 be_visitor_array::visit_string (be_string *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << "CORBA::String_var";
+  //  *os << "CORBA::String_var";
+  *os << "TAO_String_Manager";
   return 0;
 }
 

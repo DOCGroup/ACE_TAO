@@ -10,7 +10,7 @@
 //    sequence.i
 //
 // = AUTHOR
-//    Aniruddha Gokhale and Carlos O'Ryan
+//    Carlos O'Ryan and Aniruddha Gokhale
 //
 // ============================================================================
 
@@ -170,54 +170,6 @@ TAO_Bounded_Base_Sequence::length (CORBA::ULong length)
 
 // ****************************************************************
 
-ACE_INLINE
-TAO_String_Manager::TAO_String_Manager (char **buffer,
-                                        CORBA::Boolean release)
-  :  ptr_ (buffer),
-     release_ (release)
-{
-}
-
-ACE_INLINE
-TAO_String_Manager::TAO_String_Manager(const TAO_String_Manager &rhs)
-  :  ptr_ (rhs.ptr_),
-     release_ (rhs.release_)
-{
-}
-
-ACE_INLINE
-TAO_String_Manager::~TAO_String_Manager (void)
-{
-}
-
-ACE_INLINE
-TAO_String_Manager::operator const char* (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE const char *
-TAO_String_Manager::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE char *&
-TAO_String_Manager::inout (void)
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE char *
-TAO_String_Manager::_retn (void)
-{
-  char *temp = *this->ptr_;
-  *this->ptr_ = 0;
-  return temp;
-}
-
-// ****************************************************************
-
 //default constructor
 ACE_INLINE
 TAO_Unbounded_String_Sequence::TAO_Unbounded_String_Sequence (void)
@@ -234,13 +186,13 @@ TAO_Unbounded_String_Sequence (CORBA::ULong maximum,
 {
 }
 
-ACE_INLINE TAO_String_Manager
+ACE_INLINE TAO_SeqElem_String_Manager
 TAO_Unbounded_String_Sequence::operator[] (CORBA::ULong index) const
 {
   ACE_ASSERT (index < this->maximum_);
   char **const tmp =
     ACE_reinterpret_cast (char **ACE_CAST_CONST, this->buffer_);
-  return TAO_String_Manager (tmp + index, this->release_);
+  return TAO_SeqElem_String_Manager (tmp + index, this->release_);
 }
 
 // ****************************************************************

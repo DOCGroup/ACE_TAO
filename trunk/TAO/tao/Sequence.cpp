@@ -53,54 +53,6 @@ TAO_Bounded_Base_Sequence::~TAO_Bounded_Base_Sequence (void)
 }
 
 // *************************************************************
-// Operations for class TAO_String_Manager
-// *************************************************************
-
-// assignment
-TAO_String_Manager&
-TAO_String_Manager::operator=(const TAO_String_Manager &rhs)
-{
-  if (this == &rhs)
-    return *this;
-
-  if (this->release_)
-    {
-      CORBA::string_free (*this->ptr_);
-      *this->ptr_ = CORBA::string_dup (*rhs.ptr_);
-    }
-  else
-    {
-      *this->ptr_ = *rhs.ptr_;
-    }
-  return *this;
-}
-
-// assignment from char*
-TAO_String_Manager &
-TAO_String_Manager::operator= (const char * p)
-{
-  if (this->release_)
-    {
-      CORBA::string_free (*this->ptr_);
-      *this->ptr_ = CORBA::string_dup (p);
-    }
-  else
-    {
-      // @@ TODO find out why was this cast needed.
-      *this->ptr_ = ACE_const_cast(char*,p);
-    }
-  return *this;
-}
-
-char *&
-TAO_String_Manager::out (void)
-{
-  CORBA::string_free (*this->ptr_);
-  *this->ptr_ = 0;
-  return *this->ptr_;
-}
-
-// *************************************************************
 
 // constructor for unbounded seq
 TAO_Unbounded_String_Sequence::

@@ -1,3 +1,50 @@
+Sun Jan  3 19:27:01 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* tao/Managed_Types.{h,i,cpp}:
+	 
+	  Three new files added. These define and implement the various
+	  manager classes such as TAO_String_Manager,
+	  TAO_SeqElem_String_Manager that are required by the IDL to C++
+	  mapping for struct members that are strings and sequences of
+	  strings, respectively. We had to resort to two different
+	  managers because the managed type for sequence of strings must
+	  obey the value of the release data member of the sequence
+	  class. Other than this, the semantics are the same.
+
+	* tao/ORB.h:
+
+	  Included the newly added Managed_Types.h file.
+
+	* tao/{Sequence, Sequence_T}.{h,i,cpp}:
+
+	  Moved the TAO_String_Manager to the Managed_Types.* files. In
+	  addition, we now use TAO_SeqElem_String_Manager for the return
+	  type of the [] operator.
+
+	* TAO_IDL/be/be_visitor_array/array.cpp (visit_string):
+
+	  Arrays of strings now use the TAO_String_Manager as its element
+	  type instead of CORBA::String_var. This was required to conform
+	  to the IDL->C++ mapping.
+
+	* TAO_IDL/be/be_visitor_field/field_ch.cpp (visit_string):
+
+	  Struct memebrs that are strings now use the TAO_String_Manager
+	  as its type instead of CORBA::String_var. This was required to conform
+	  to the IDL->C++ mapping.
+
+	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp
+	  TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ch.cpp
+	  TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp
+
+	  The generated code now produces TAO_SeqElem_String_Manager
+	  instead of TAO_String_Manager for the [] operator.
+
+	* docs/releasenotes/index.html:
+
+	  Updated to reflect latest status. Also, removed some old
+	  comments that are no longer applicable.
+
 Sun Jan  3 17:32:27 1999  Jeff Parsons <jp4@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Time/TAO_UTO.cpp:

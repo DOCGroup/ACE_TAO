@@ -195,74 +195,6 @@ protected:
   // Assume ownership and set length to 0.
 };
 
-/****************************************************************/
-
-class TAO_Export TAO_String_Manager
-{
-  // = TITLE
-  //   Manager for strings.
-  //
-  // = DESCRIPTION
-  //   Similar to the mapping for sequences of objects (and other
-  //   pseudo objects) the mapping for sequences of strings requires
-  //   an auxiliar class or <Manager> to handle the allocation and
-  //   deallocation of the string.  The main difference with respect
-  //   to String_var classes is that automatic release is not
-  //   controlled on a per-item basis, but for the sequence as a
-  //   whole.  The difference wrt Object_Manager is that strings are
-  //   duplicated using CORBA::string_copy() as opposed to
-  //   T::_duplicate(), and released using CORBA::string_free()
-  //   instead of CORBA::release()
-  //
-  //   This class implements the generic string manager and is used to
-  //   instantiate the proper sequence types.
-  //
-public:
-  friend class TAO_Unbounded_String_Sequence;
-
-  // @@ Giving friendship to a template is not implemented on several
-  // compilers:
-  // friend template<CORBA::ULong MAX>
-  //   class TAO_Bounded_String_Sequence<TAO_String_Manager,MAX>;
-
-  TAO_String_Manager (const TAO_String_Manager &);
-  // copy constructor
-
-  TAO_String_Manager (char **buffer, CORBA::Boolean release);
-  // constructor from address of an element
-
-  ~TAO_String_Manager (void);
-  // destructor
-
-  TAO_String_Manager &operator= (const TAO_String_Manager&);
-  // assignment from another managed type
-
-  TAO_String_Manager &operator= (const char *);
-  // assignment from a constant char*
-
-  operator const char*() const;
-  // cast  (read-only)
-
-  const char *in (void) const;
-  // for in parameter.
-
-  char *&inout (void);
-  // for inout parameter.
-
-  char *&out (void);
-  // for out parameter.
-
-  char *_retn (void);
-  // for string of return type.
-
-private:
-  char **ptr_;
-  // Address of string element from the parent's buffer.
-
-  CORBA::Boolean release_;
-  // control memory managment semantics.
-};
-
 // ****************************************************************
 
 class TAO_Export TAO_Unbounded_String_Sequence : public TAO_Unbounded_Base_Sequence
@@ -352,7 +284,7 @@ public:
   // reallocation is performed. After reallocation, the release flag
   // is always set to TRUE.
 
-  TAO_String_Manager operator[] (CORBA::ULong index) const;
+  TAO_SeqElem_String_Manager operator[] (CORBA::ULong index) const;
   // read-write accessor
 
   static char* *allocbuf (CORBA::ULong);
