@@ -51,6 +51,8 @@ OBJFILES = \
 	$(OBJDIR)\Client_Strategy_Factory.obj \
 	$(OBJDIR)\CodecFactory.obj \
 	$(OBJDIR)\CodecFactory_ORBInitializer.obj \
+        $(OBJDIR)\Codeset_Managaer.obj \
+        $(OBJDIR)\Codeset_Translator_Factory.obj \
 	$(OBJDIR)\Collocation_Resolver.obj \
 	$(OBJDIR)\Connect_Strategy.obj \
 	$(OBJDIR)\Default_Collocation_Resolver.obj \
