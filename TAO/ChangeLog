@@ -1,3 +1,25 @@
+Mon Nov 11 20:31:18 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/LoadBalancer/LoadManager.cpp (TAO_LB_run_load_manager):
+	* orbsvcs/LoadBalancer/LoadMonitor.cpp (TAO_LB_run_load_monitor):
+
+	  New global function that is run when the Load{Manager,Monitor}'s
+	  ORB thread is run.  It is only used on Linux when multi-thread
+	  support is enabled.  This is part of a work-around for the
+	  problem where signals can only be handled in the main() thread
+	  on Linux.
+
+	  (ACE_TMAIN):
+
+	  Spawn a new thread to run the LoadManager's ORB, and handle
+	  signals in this (main()) thread.  This is the second part of a
+	  work-around for the problem where signals can only be handled in
+	  the main() thread on Linux.
+
+	  Moved signal handler activation to just before the point where
+	  the ORB is run.  There is no need to activate the signal handler
+	  earlier than there.
+
 Mon Nov 11 19:22:05 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.h:
