@@ -36,9 +36,14 @@ CIAO::Container::_ciao_the_ORB ()
 ACE_Atomic_Op <ACE_SYNCH_MUTEX, long>
 CIAO::Session_Container::serial_number_ (0);
 
-CIAO::Session_Container::Session_Container (CORBA::ORB_ptr o)
+CIAO::Session_Container::Session_Container (CORBA::ORB_ptr o,
+                                            int static_config_flag,
+                                            const Static_Config_EntryPoints_Maps* maps
+                                            )
   : Container (o),
-    number_ (0)
+    number_ (0),
+    static_config_flag_ (static_config_flag),
+    static_entrypts_maps_ (maps)
 {
 }
 
@@ -152,28 +157,49 @@ CIAO::Session_Container::ciao_install_home (const char *exe_dll_name,
                    Components::Deployment::InstallationFailure))
 {
   ACE_DLL executor_dll, servant_dll;
+  HomeFactory hcreator=0;
+  ServantFactory screator=0;
 
-  if (exe_dll_name == 0 || sv_dll_name == 0)
-    ACE_THROW_RETURN (Components::Deployment::UnknownImplId (), 0);
-
-  if (executor_dll.open (exe_dll_name,
-                         ACE_DEFAULT_SHLIB_MODE,
-                         0) != 0)
-    ACE_THROW_RETURN (Components::Deployment::UnknownImplId (), 0);
-
-  if (servant_dll.open (sv_dll_name,
-                        ACE_DEFAULT_SHLIB_MODE,
-                        0) != 0)
+  ACE_DEBUG ((LM_DEBUG, "static config flag = %d\n", this->static_config_flag_));
+  if (this->static_config_flag_ == 0)
     {
-      executor_dll.close ();
-      ACE_THROW_RETURN (Components::Deployment::UnknownImplId (), 0);
+      if (exe_dll_name == 0 || sv_dll_name == 0)
+        ACE_THROW_RETURN (Components::Deployment::UnknownImplId (), 0);
+      
+      if (executor_dll.open (exe_dll_name,
+                             ACE_DEFAULT_SHLIB_MODE,
+                             0) != 0)
+        ACE_THROW_RETURN (Components::Deployment::UnknownImplId (), 0);
+      
+      if (servant_dll.open (sv_dll_name,
+                            ACE_DEFAULT_SHLIB_MODE,
+                            0) != 0)
+        {
+          executor_dll.close ();
+          ACE_THROW_RETURN (Components::Deployment::UnknownImplId (), 0);
+        }
+
+      if (exe_entrypt == 0 || sv_entrypt == 0)
+        ACE_THROW_RETURN (Components::Deployment::ImplEntryPointNotFound (), 0);
+      
+      hcreator = (HomeFactory) executor_dll.symbol (exe_entrypt);
+      screator = (ServantFactory) servant_dll.symbol (sv_entrypt);
     }
+  else
+    {
+      if ( static_entrypts_maps_ == 0 ||
+           static_entrypts_maps_->home_creator_funcptr_map_ == 0 ||
+           static_entrypts_maps_->home_servant_creator_funcptr_map_ == 0)
+        ACE_THROW_RETURN (Components::Deployment::ImplEntryPointNotFound (), 0);
 
-  if (exe_entrypt == 0 || sv_entrypt == 0)
-    ACE_THROW_RETURN (Components::Deployment::ImplEntryPointNotFound (), 0);
+      ACE_CString exe_entrypt_str (exe_entrypt);
+      static_entrypts_maps_->home_creator_funcptr_map_->
+        find (exe_entrypt_str, hcreator);
 
-  HomeFactory hcreator = (HomeFactory) executor_dll.symbol (exe_entrypt);
-  ServantFactory screator = (ServantFactory) servant_dll.symbol (sv_entrypt);
+      ACE_CString sv_entrypt_str (sv_entrypt);
+      static_entrypts_maps_->home_servant_creator_funcptr_map_->
+        find (sv_entrypt_str, screator);
+    }
 
   if (hcreator == 0 || screator == 0)
     ACE_THROW_RETURN (Components::Deployment::ImplEntryPointNotFound (), 0);
