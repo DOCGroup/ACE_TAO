@@ -89,36 +89,6 @@ TAO_ORB_Core::object_is_nil (CORBA::Object_ptr obj)
   return retval;
 }
 
-ACE_INLINE CORBA::Policy_ptr
-TAO_ORB_Core::service_create_policy (CORBA::PolicyType policy,
-                                     const CORBA::Any& val,
-                                     CORBA::Environment &ACE_TRY_ENV)
-{
-  // @@ This method should go away in favor of the policy factory
-  //    registration support provided by the Portable Interceptor
-  //    spec.
-  //        -Ossama
-
-  CORBA::Policy_ptr ret_policy = CORBA::Policy::_nil ();
-
-  // @@ We look at the services if they are loaded. But if more
-  // services offer this feature we may want to keep expanding the
-  // 'if' conditions with a check for whether a service returned a
-  // valid Policy object.
-  if (this->ft_service_.service_callback ())
-    {
-      ret_policy =
-        this->ft_service_.service_callback ()->service_create_policy (policy,
-                                                                      val,
-                                                                      ACE_TRY_ENV);
-    }
-  if (ret_policy)
-    return ret_policy;
-
-  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY),
-                    CORBA::Policy::_nil ());
-}
-
 ACE_INLINE void
 TAO_ORB_Core::service_context_list (
     TAO_Stub *&stub,

@@ -65,14 +65,6 @@ public:
   virtual CORBA::Boolean object_is_nil (CORBA::Object_ptr obj);
   // Check whether <obj> is nil or not.
 
-  virtual CORBA::Policy_ptr service_create_policy (
-      CORBA::PolicyType policy,
-      const CORBA::Any &val,
-      CORBA::Environment &ACE_TRY_ENV);
-  // Create a CORBA::Policy object
-  // @@ This method should go away in favor of the policy factory
-  //    registration support provided by the Portable Interceptor
-  //    spec.
 
   virtual void service_context_list (TAO_Stub *&stub,
                                      IOP::ServiceContextList &service_list,

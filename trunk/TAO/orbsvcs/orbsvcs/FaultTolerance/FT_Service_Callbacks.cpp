@@ -192,26 +192,6 @@ TAO_FT_Service_Callbacks::object_is_nil (CORBA::Object_ptr obj)
 }
 
 
-CORBA::Policy_ptr
-TAO_FT_Service_Callbacks::service_create_policy (
-    CORBA::PolicyType type,
-    const CORBA::Any &val,
-    CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-
-  if (type ==  FT::REQUEST_DURATION_POLICY)
-    return  TAO_FT_Request_Duration_Policy::create (val,
-                                                    ACE_TRY_ENV);
-  else if (type == FT::HEARTBEAT_POLICY)
-    return TAO_FT_Heart_Beat_Policy::create (val,
-                                             ACE_TRY_ENV);
-  else if (type == FT::HEARTBEAT_ENABLED_POLICY)
-    return TAO_FT_Heart_Beat_Enabled_Policy::create (val,
-                                                     ACE_TRY_ENV);
-  return  CORBA::Policy::_nil ();
-}
-
 void
 TAO_FT_Service_Callbacks::service_context_list (
     TAO_Stub *&stub,

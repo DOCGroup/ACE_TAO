@@ -638,18 +638,6 @@ public:
   // actually nill or not. This would be useful to accomodate new
   // enhanced definitions as defined by the service specification.
 
-  CORBA::Policy_ptr service_create_policy (CORBA::PolicyType policy,
-                                           const CORBA::Any &val,
-                                           CORBA::Environment &ACE_TRY_ENV);
-  // The create_policy () method that is delegated to the service
-  // layer. This method would call the loaded services to check
-  // whether they can create the policy object requested by the
-  // application.
-  // @@ This method should go away in favor of the policy factory
-  //    registration support provided by the Portable Interceptor
-  //    spec.
-
-
   void service_context_list (TAO_Stub *&stub,
                              IOP::ServiceContextList &service_list,
                              CORBA::Boolean retstart,

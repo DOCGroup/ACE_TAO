@@ -1,3 +1,27 @@
+Tue Nov 14 18:21:29 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ORBInitializer.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ORBInitializer.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_PolicyFactory.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_PolicyFactory.cpp: Changed the
+	  way FT policies were created. The procedure adopted now is in
+	  conformance with the PotableInteceptor spec. The model closely
+	  follows the creation of policies for RT CORBA and Messaging in
+	  TAO. 
+	
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	* tao/ORB_Core.cpp:
+	* tao/PolicyFactory_Registry.h:
+	* tao/PolicyFactory_Registry.cpp:
+	* tao/Service_Callbacks.h:
+	* tao/Service_Callbacks.cpp: Removed the hooks that were there for
+	  the creation of FT policies. 
+
 Tue Nov 14 15:41:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/Strategies/TAO_Strategies_Static.dsp:
