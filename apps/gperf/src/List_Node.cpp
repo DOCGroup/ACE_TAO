@@ -29,10 +29,6 @@ ACE_RCSID(src, List_Node, "$Id$")
 
 #include "Vectors.h"
 
-// Defined as a macro in string.h on some systems, which causes
-// conflicts.
-#undef index
-
 // Sorts the key set alphabetically to speed up subsequent operation
 // Uses insertion sort since the set is probably quite small.
 
@@ -74,7 +70,7 @@ List_Node::List_Node (char *k, int len)
     key (k),
     rest (option[TYPE] ? k + len + 1 : ACE_const_cast(char*, "")),
     length (len),
-    index (0)
+    slot (0)
 {
   char *ptr = new char[(option[ALLCHARS] ? len : option.max_keysig_size ()) + 1];
   keysig = ptr;

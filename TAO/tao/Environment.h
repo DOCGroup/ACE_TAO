@@ -10,15 +10,14 @@
 //   Environment.h
 //
 // = DESCRIPTION
-//   Declare the CORBA_Environment class.
-//   Note that this header file only requires a few forward
-//   declarations of CORBA classes, this is *very* important because
-//   even the ORB needs to know about it; make your changes with care.
-//   It is also a good idea trying to minimize cross dependencies
-//   between header files.
+//   Declare the CORBA_Environment class.  Note that this header file
+//   only requires a few forward declarations of CORBA classes, this
+//   is *very* important because even the ORB needs to know about it;
+//   make your changes with care.  It is also a good idea trying to
+//   minimize cross dependencies between header files.
 //
 // = AUTHOR
-//   Carlos O'Ryan
+//   Carlos O'Ryan <coryan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -39,7 +38,6 @@ class TAO_Export CORBA_Environment
   //   CORBA_Environment
   //
   // = DESCRIPTION
-  //
   //   A CORBA_Environment is a way to automagically ensure that
   //   exception data is freed -- the "var" class for Exceptions.  It
   //   adds just a bit of convenience function support, helping
@@ -51,34 +49,31 @@ class TAO_Export CORBA_Environment
   //   if the user creates a new environment the old one is "pushed"
   //   (actually the new one remembers it), eventually the new
   //   environment destructor pops itself from the stack and we
-  //   recover the old environment.
-  //   This means that if the user create a new environment and
-  //   somebody calls a function using the default one the exception
-  //   will still be received in the environment created by the user.
-  //   The only drawback is that environments life time must nest
-  //   properly, this shouldn't be a problem because environments are
-  //   usually created on the stack, but, the spec allows their
-  //   creation on the heap and/or as class members; we need to
-  //   investigate the tradeoffs and take a decision.
-  //
+  //   recover the old environment.  This means that if the user
+  //   create a new environment and somebody calls a function using
+  //   the default one the exception will still be received in the
+  //   environment created by the user.  The only drawback is that
+  //   environments life time must nest properly, this shouldn't be a
+  //   problem because environments are usually created on the stack,
+  //   but, the spec allows their creation on the heap and/or as class
+  //   members; we need to investigate the tradeoffs and take a
+  //   decision.
 public:
   // = Initialization and termination methods.
-
   CORBA_Environment (void);
-  // The default constructor, the environment will hold no
-  // exceptions.
+  // The default constructor, the environment will hold no exceptions.
 
   CORBA_Environment (const CORBA_Environment &env);
-  // Copy constructor
+  // Copy constructor.
 
   CORBA_Environment &operator=(const CORBA_Environment &env);
-  // Assingment
+  // Assingment.
 
   ~CORBA_Environment (void);
   // Destructor, release the exception.
 
   CORBA_Exception* exception (void) const;
-  // Return the exception.  Caller must call _incr_refcnf() in order
+  // Return the exception.  Caller must call <_incr_refcnf> in order
   // to keep the ptr.
 
   void exception (CORBA_Exception *ex);
@@ -88,7 +83,7 @@ public:
   // Return if the exception is a user exception or a system
   // exception.
 
-  const char* exception_id (void) const;
+  const char *exception_id (void) const;
   // return the repository ID for the exception.
 
   void clear (void);
@@ -96,8 +91,8 @@ public:
 
   void print_exception (const char *info,
                         FILE *f=stdout) const;
-  // Print the exception to output determined by f.
-  // This function is not CORBA compliant.
+  // Print the exception to output determined by f.  This function is
+  // not CORBA compliant.
 
   // = Obtain a default environment to use with TAO.
   static CORBA_Environment &default_environment (void);
@@ -119,17 +114,17 @@ private:
   // Initialize using a well known ORB Core; this is intended for the
   // bootstraping of the ORB_Core, not for general consumption.
 
-  CORBA_Exception* exception_;
+  CORBA_Exception *exception_;
   // Pointer to the exception object contained in the environment.
 
-  CORBA_Environment* previous_;
+  CORBA_Environment *previous_;
   // The previous environment on the "default environment stack".
 
   CORBA::ULong refcount_;
-  // reference counting
+  // Reference counting.
 
   ACE_SYNCH_MUTEX refcount_lock_;
-  // protect the reference count
+  // Protect the reference count.
 };
 
 class TAO_Export CORBA_Environment_var
@@ -141,10 +136,13 @@ class TAO_Export CORBA_Environment_var
   //   Provide for automatic storage deallocation on going out of
   //   scope.
 public:
-  CORBA_Environment_var (void); // default constructor
+  CORBA_Environment_var (void); 
+  // default constructor
   CORBA_Environment_var (CORBA_Environment_ptr);
-  CORBA_Environment_var (const CORBA_Environment_var &); // copy constructor
-  ~CORBA_Environment_var (void); // destructor
+  CORBA_Environment_var (const CORBA_Environment_var &); 
+  // copy constructor
+  ~CORBA_Environment_var (void); 
+  // destructor
 
   CORBA_Environment_var &operator= (CORBA_Environment_ptr);
   CORBA_Environment_var &operator= (const CORBA_Environment_var &);

@@ -6,6 +6,9 @@ TAO_Active_Object_Map::is_servant_in_map (PortableServer::Servant servant)
   return this->id_uniqueness_strategy_->is_servant_in_map (servant);
 }
 
+// @@ Irfan, a lot of these methods are rather large -- should we
+// really be trying to inline them all?!
+
 ACE_INLINE int
 TAO_Active_Object_Map::is_user_id_in_map (const PortableServer::ObjectId &user_id)
 {
@@ -15,18 +18,12 @@ TAO_Active_Object_Map::is_user_id_in_map (const PortableServer::ObjectId &user_i
   if (result == 0)
     {
       if (entry->servant_ == 0)
-        {
-          result = 0;
-        }
+        result = 0;
       else
-        {
-          result = 1;
-        }
+        result = 1;
     }
   else
-    {
-      result = 0;
-    }
+    result = 0;
 
   return result;
 }
@@ -41,11 +38,8 @@ TAO_Active_Object_Map::bind_using_system_id_returning_system_id (PortableServer:
                                                                     entry);
 
   if (result == 0)
-    {
-      result = this->id_hint_strategy_->system_id (system_id,
-                                                   *entry);
-    }
-
+    result = this->id_hint_strategy_->system_id (system_id,
+                                                 *entry);
   return result;
 }
 
@@ -57,14 +51,10 @@ TAO_Active_Object_Map::bind_using_system_id_returning_user_id (PortableServer::S
 
   int result = this->id_assignment_strategy_->bind_using_system_id (servant,
                                                                     entry);
-
   if (result == 0)
-    {
-      ACE_NEW_RETURN (user_id,
-                      PortableServer::ObjectId (entry->user_id_),
-                      -1);
-    }
-
+    ACE_NEW_RETURN (user_id,
+                    PortableServer::ObjectId (entry->user_id_),
+                    -1);
   return result;
 }
 
@@ -87,11 +77,8 @@ TAO_Active_Object_Map::find_system_id_using_user_id (const PortableServer::Objec
                                                                   user_id,
                                                                   entry);
   if (result == 0)
-    {
-      result = this->id_hint_strategy_->system_id (system_id,
-                                                   *entry);
-    }
-
+    result = this->id_hint_strategy_->system_id (system_id,
+                                                 *entry);
   return result;
 }
 
@@ -140,17 +127,11 @@ TAO_Active_Object_Map::find_servant_using_user_id (const PortableServer::ObjectI
   if (result == 0)
     {
       if (entry->deactivated_)
-        {
-          result = -1;
-        }
+        result = -1;
       else if (entry->servant_ == 0)
-        {
-          result = -1;
-        }
+        result = -1;
       else
-        {
-          servant = entry->servant_;
-        }
+        servant = entry->servant_;
     }
 
   return result;
@@ -180,13 +161,9 @@ TAO_Active_Object_Map::find_servant_and_system_id_using_user_id (const PortableS
   if (result == 0)
     {
       if (entry->deactivated_)
-        {
-          result = -1;
-        }
+        result = -1;
       else if (entry->servant_ == 0)
-        {
-          result = -1;
-        }
+        result = -1;
       else
         {
           servant = entry->servant_;
@@ -213,14 +190,10 @@ TAO_Active_Object_Map::find_user_id_using_system_id (const PortableServer::Objec
   PortableServer::ObjectId id;
   int result = this->id_hint_strategy_->recover_key (system_id,
                                                      id);
-
   if (result == 0)
-    {
-      ACE_NEW_RETURN (user_id,
-                      PortableServer::ObjectId (id),
-                      -1);
-    }
-
+    ACE_NEW_RETURN (user_id,
+                    PortableServer::ObjectId (id),
+                    -1);
   return 0;
 }
 

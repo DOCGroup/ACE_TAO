@@ -118,13 +118,13 @@ public:
   // Returns member_count (), raises (BadKind). Useful for tk_struct,
   // tk_union, tk_enum, tk_alias, and tk_except.
 
-  const char *member_name (CORBA::ULong index,
+  const char *member_name (CORBA::ULong slot,
                            CORBA_Environment &TAO_IN_ENV =
                              TAO_default_environment ()) const;
   // Returns member_name (...), raises (BadKind, Bounds); Useful for
   // tk_struct, tk_union, tk_enum, tk_alias, and tk_except.
 
-  CORBA::TypeCode_ptr member_type (CORBA::ULong index,
+  CORBA::TypeCode_ptr member_type (CORBA::ULong slot,
                                    CORBA_Environment &TAO_IN_ENV =
                                      TAO_default_environment ()) const;
   // Returns member_type (...), raises (BadKind, Bounds); Useful for
@@ -141,7 +141,7 @@ public:
 
   CORBA::Long default_index (CORBA_Environment &TAO_IN_ENV =
                                TAO_default_environment ()) const;
-  // Returns the default index for the tk_union. Raises (BadKind).
+  // Returns the default slot for the tk_union. Raises (BadKind).
 
   CORBA::ULong length (CORBA_Environment &TAO_IN_ENV =
                          TAO_default_environment ()) const;
@@ -217,7 +217,7 @@ public:
   // here as no-ops so legacy apps won't completely break. They
   // throw CORBA::NO_IMPLEMENT.
 
-  CORBA::Any_ptr parameter (const CORBA::Long index,
+  CORBA::Any_ptr parameter (const CORBA::Long slot,
                             CORBA_Environment &TAO_IN_ENV =
                               TAO_default_environment ());
   // Deprecated in the CORBA 2.2 spec and
@@ -294,13 +294,13 @@ private:
   // returns member_count (), raises (BadKind). Useful for tk_struct,
   // tk_union, tk_enum, tk_alias, and tk_except.
 
-  CORBA::TypeCode_ptr private_member_type (CORBA::ULong index,
+  CORBA::TypeCode_ptr private_member_type (CORBA::ULong slot,
                                            CORBA_Environment &TAO_IN_ENV =
                                              TAO_default_environment ()) const;
   // returns member_type (...), raises (BadKind, Bounds); Useful for
   // tk_struct, tk_union, and tk_except
 
-  const char *private_member_name (CORBA::ULong index,
+  const char *private_member_name (CORBA::ULong slot,
                                    CORBA_Environment &TAO_IN_ENV =
                                      TAO_default_environment ()) const;
   // returns member_name (...), raises (BadKind, Bounds); Useful for tk_union,
@@ -317,7 +317,7 @@ private:
 
   CORBA::Long private_default_index (CORBA_Environment &TAO_IN_ENV =
                                        TAO_default_environment ()) const;
-  // returns the default index for the tk_union. Raises (BadKind);
+  // returns the default slot for the tk_union. Raises (BadKind);
 
   CORBA::Long private_length (CORBA_Environment &TAO_IN_ENV =
                                 TAO_default_environment ()) const;

@@ -72,13 +72,13 @@ Bool_Array::open (u_long s)
 }
 
 int
-Bool_Array::find (u_long index)
+Bool_Array::find (u_long slot)
 {
-  if (storage_array_[index] == generation_number_)
+  if (storage_array_[slot] == generation_number_)
     return 1;
   else
     {
-      storage_array_[index] = generation_number_;
+      storage_array_[slot] = generation_number_;
       return 0;
     }
 }

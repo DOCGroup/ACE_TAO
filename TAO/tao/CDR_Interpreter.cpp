@@ -270,10 +270,10 @@ TAO_CDR_Interpreter::skip_long (TAO_InputCDR *stream)
 
 size_t
 TAO_CDR_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
-                                                        TAO_InputCDR *stream,
-                                                        CORBA::TCKind kind,
-                                                        size_t &alignment,
-                                                        CORBA::Environment &env)
+                                                       TAO_InputCDR *stream,
+                                                       CORBA::TCKind kind,
+                                                       size_t &alignment,
+                                                       CORBA::Environment &env)
 {
   CORBA::ULong temp;
   // Just a temporary to retrieve CORBA::TCKind variables as ULong's
@@ -333,9 +333,7 @@ TAO_CDR_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
                                                               alignment,
                                                               env);
       if (env.exception () != 0)
-        {
-          return 0;
-        }
+        return 0;
 
       // Check for garbage at end of parameter lists, or other cases
       // where parameters and the size allocated to them don't jive.
@@ -411,9 +409,9 @@ TAO_CDR_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
 
 size_t
 TAO_CDR_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
-                                            TAO_InputCDR *stream,
-                                            size_t &alignment,
-                                            CORBA::Environment &env)
+                                                     TAO_InputCDR *stream,
+                                                     size_t &alignment,
+                                                     CORBA::Environment &env)
 {
   // Get the "kind" ... if this is an indirection, this is a guess
   // which will soon be updated.
@@ -502,9 +500,9 @@ TAO_CDR_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
 
 size_t
 TAO_CDR_Interpreter::calc_struct_and_except_attributes (TAO_InputCDR *stream,
-                                               size_t &alignment,
-                                               CORBA::Boolean is_exception,
-                                               CORBA::Environment &env)
+                                                        size_t &alignment,
+                                                        CORBA::Boolean is_exception,
+                                                        CORBA::Environment &env)
 {
   CORBA::ULong  members;
   size_t size;
@@ -541,43 +539,44 @@ TAO_CDR_Interpreter::calc_struct_and_except_attributes (TAO_InputCDR *stream,
       return 0;
     }
 
-  // iterate over all the members, skipping their names and looking
+  // Iterate over all the members, skipping their names and looking
   // only at type data.
 
-  for ( ; members != 0; members--) {
-    size_t member_size;
-    size_t member_alignment;
+  for ( ; members != 0; members--) 
+    {
+      size_t member_size;
+      size_t member_alignment;
 
-    // Skip name of the member.
-    if (!stream->skip_string ())
-      {
-        env.exception (new CORBA::BAD_TYPECODE ());
+      // Skip name of the member.
+      if (!stream->skip_string ())
+        {
+          env.exception (new CORBA::BAD_TYPECODE ());
+          return 0;
+        }
+
+      // Get size and alignment of the member, accounting for
+      // indirection and the various kinds of parameter encoding.
+
+      member_size = calc_nested_size_and_alignment (0,
+                                                    stream,
+                                                    member_alignment,
+                                                    env);
+      if (env.exception () != 0)
         return 0;
-      }
 
-    // Get size and alignment of the member, accounting for
-    // indirection and the various kinds of parameter encoding.
+      // Round up the struct size to handle member alignment (by
+      // adding internal padding), then update the current size to
+      // handle the member's size.
 
-    member_size = calc_nested_size_and_alignment (0,
-                                                  stream,
-                                                  member_alignment,
-                                                  env);
-    if (env.exception () != 0)
-      return 0;
+      size = (size_t) align_binary (size, member_alignment);
+      size += member_size;
 
-    // Round up the struct size to handle member alignment (by adding
-    // internal padding), then update the current size to handle the
-    // member's size.
+      // Finally update the overall structure alignment requirement,
+      // if this element must be more strongly aligned.
 
-    size = (size_t) align_binary (size, member_alignment);
-    size += member_size;
-
-    // Finally update the overall structure alignment requirement, if
-    // this element must be more strongly aligned.
-
-    if (member_alignment > alignment)
-      alignment = member_alignment;
-  };
+      if (member_alignment > alignment)
+        alignment = member_alignment;
+    };
 
   // Round up the structure size to match its overall alignment.  This
   // adds tail padding, if needed.
@@ -588,8 +587,8 @@ TAO_CDR_Interpreter::calc_struct_and_except_attributes (TAO_InputCDR *stream,
 
 size_t
 TAO_CDR_Interpreter::calc_struct_attributes (TAO_InputCDR *stream,
-                                    size_t &alignment,
-                                    CORBA::Environment &env)
+                                             size_t &alignment,
+                                             CORBA::Environment &env)
 {
   return calc_struct_and_except_attributes (stream,
                                             alignment,
@@ -601,8 +600,8 @@ TAO_CDR_Interpreter::calc_struct_attributes (TAO_InputCDR *stream,
 
 size_t
 TAO_CDR_Interpreter::calc_exception_attributes (TAO_InputCDR *stream,
-                                       size_t &alignment,
-                                       CORBA::Environment &env)
+                                                size_t &alignment,
+                                                CORBA::Environment &env)
 {
   return calc_struct_and_except_attributes (stream,
                                             alignment,
@@ -619,9 +618,9 @@ TAO_CDR_Interpreter::calc_exception_attributes (TAO_InputCDR *stream,
 
 size_t
 TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
-                                                 size_t &overall_alignment,
-                                                 size_t &discrim_size_with_pad,
-                                                 CORBA::Environment &env)
+                                                size_t &overall_alignment,
+                                                size_t &discrim_size_with_pad,
+                                                CORBA::Environment &env)
 {
   CORBA::ULong members;
   CORBA::ULong temp;
@@ -629,7 +628,8 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
   size_t discrim_and_base_size_with_pad;
   size_t value_alignment;
   size_t value_size;
-  // define a dummy structure to compute alignment of pointer type
+
+  // Define a dummy structure to compute alignment of pointer type
   struct align_ptr
   {
     void *one;
@@ -638,9 +638,11 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
   };
   align_ptr ap;
 
-  // the first member of the union internal representation is the VPTR
+  // The first member of the union internal representation is the VPTR
   // since every union inherits from TAO_Base_Union
-  overall_alignment = (char *) &ap.two - (char *) &ap.one
+  overall_alignment =
+    (char *) &ap.two
+    - (char *) &ap.one
     - TAO_MAXIMUM_NATIVE_TYPE_SIZE;
 
   value_alignment = 1;
@@ -687,8 +689,10 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
   // requirement for the union part of the construct.
 
   value_alignment = 1;
+
   for ( ; members != 0; members--) {
-    size_t member_size, member_alignment;
+    size_t member_size;
+    size_t member_alignment;
 
     // Skip member label; its size varies with discriminant type, but
     // here we don't care about its content.  This is where illegal
@@ -774,14 +778,11 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
         (void) CORBA::TypeCode::skip_typecode (*stream);
       }
     else
-      {
-        // proceed with the normal way of computing the size and alignment
-        member_size = calc_nested_size_and_alignment (0,
-                                                      stream,
-                                                      member_alignment,
-                                                      env);
-      }
-
+      // Proceed with the normal way of computing the size and alignment
+      member_size = calc_nested_size_and_alignment (0,
+                                                    stream,
+                                                    member_alignment,
+                                                    env);
     if (env.exception () != 0)
       return 0;
 
@@ -790,6 +791,7 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
     // alignment restriction on SPARC, x86, and some m68k platforms.
     if (member_size > value_size)
       value_size = member_size;
+
     if (member_alignment > value_alignment)
       value_alignment = member_alignment;
   }
@@ -798,8 +800,10 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
   // order to be followed by the value.
   discrim_and_base_size_with_pad =
     (size_t) align_binary (discrim_and_base_size, value_alignment);
+
   discrim_size_with_pad = discrim_and_base_size_with_pad -
     sizeof (TAO_Base_Union);
+
   // Now calculate the overall size of the structure, which is the
   // discriminator, inter-element padding, value, and tail padding.
   // We know all of those except tail padding, which is a function of
@@ -823,20 +827,23 @@ TAO_CDR_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
 
 size_t
 TAO_CDR_Interpreter::calc_union_attributes (TAO_InputCDR *stream,
-                                   size_t &alignment,
-                                   CORBA::Environment &env)
+                                            size_t &alignment,
+                                            CORBA::Environment &env)
 {
   size_t scratch;
 
-  return calc_key_union_attributes (stream, alignment, scratch, env);
+  return calc_key_union_attributes (stream,
+                                    alignment,
+                                    scratch,
+                                    env);
 }
 
 // Calculate size and alignment for a typedeffed type.
 
 size_t
 TAO_CDR_Interpreter::calc_alias_attributes (TAO_InputCDR *stream,
-                                   size_t &alignment,
-                                   CORBA::Environment &env)
+                                            size_t &alignment,
+                                            CORBA::Environment &env)
 {
   // Skip type ID and name in the parameter stream
 
@@ -858,15 +865,18 @@ TAO_CDR_Interpreter::calc_alias_attributes (TAO_InputCDR *stream,
 
 size_t
 TAO_CDR_Interpreter::calc_array_attributes (TAO_InputCDR *stream,
-                                   size_t &alignment,
-                                   CORBA::Environment &env)
+                                            size_t &alignment,
+                                            CORBA::Environment &env)
 {
   size_t member_size;
   CORBA::ULong member_count;
 
   // get size and alignment of the array member
 
-  member_size = calc_nested_size_and_alignment (0, stream, alignment, env);
+  member_size = calc_nested_size_and_alignment (0,
+                                                stream,
+                                                alignment,
+                                                env);
   if (env.exception () != 0)
     return 0;
 
@@ -890,14 +900,15 @@ TAO_CDR_Interpreter::calc_array_attributes (TAO_InputCDR *stream,
 
 size_t
 TAO_CDR_Interpreter::calc_seq_attributes (TAO_InputCDR *stream,
-                                           size_t &alignment,
-                                           CORBA::Environment &env)
+                                          size_t &alignment,
+                                          CORBA::Environment &env)
 {
   CORBA::TCKind kind;
 
   // Get the "kind" ... if this is an indirection, this is a guess
   // which will soon be updated.
   CORBA::ULong temp;
+
   if (stream->read_ulong (temp) == 0)
     {
       env.exception (new CORBA::BAD_TYPECODE ());
@@ -916,12 +927,13 @@ TAO_CDR_Interpreter::calc_seq_attributes (TAO_InputCDR *stream,
         }
 
       // Notice how we change the sign of the offset to estimate the
-      // maximum size.
-      // Also note that the offset is computed starting from the offset
-      // field. However, by this time, we have already read the offset field i.e.,
-      // we have already moved ahead by 4 bytes (size of CORBA::Long). So we should
-      // increase our offset by this amount.
-      ACE_Message_Block *mb = (ACE_Message_Block *) stream->start ();
+      // maximum size.  Also note that the offset is computed starting
+      // from the offset field. However, by this time, we have already
+      // read the offset field i.e., we have already moved ahead by 4
+      // bytes (size of CORBA::Long). So we should increase our offset
+      // by this amount.
+      ACE_Message_Block *mb =
+        (ACE_Message_Block *) stream->start ();
 
       TAO_InputCDR indirected_stream (mb->rd_ptr () + offset - 4,
                                       -1 * (offset - 4));
@@ -934,7 +946,7 @@ TAO_CDR_Interpreter::calc_seq_attributes (TAO_InputCDR *stream,
         }
     }
 
-  kind = ACE_static_cast(CORBA::TCKind, temp);
+  kind = ACE_static_cast (CORBA::TCKind, temp);
 
   // Skip the rest of the stream because we don't use it.
   if (stream->skip_bytes (stream->length ()) == 0)
@@ -953,21 +965,26 @@ TAO_CDR_Interpreter::calc_seq_attributes (TAO_InputCDR *stream,
       alignment = 1;
 #else
       alignment =
-        (char*)&align.two - (char*)&align.one - TAO_MAXIMUM_NATIVE_TYPE_SIZE;
+        (char *) &align.two
+        - (char *) &align.one 
+        - TAO_MAXIMUM_NATIVE_TYPE_SIZE;
 #endif /* TAO_HAS_FIXED_BYTE_ALIGNMENT */
     }
   else
     {
-      // Note: GHS can't handle TAO_Unbounded_Sequence<CORBA::Long> below.
-      // Instead, use TAO_Unbounded_String_Sequence.
-      declare_entry (TAO_Unbounded_String_Sequence, tk_sequence);
+      // Note: GHS can't handle TAO_Unbounded_Sequence<CORBA::Long>
+      // below.  Instead, use TAO_Unbounded_String_Sequence.
+      declare_entry (TAO_Unbounded_String_Sequence,
+                     tk_sequence);
       size = sizeof (TAO_Unbounded_String_Sequence);
       align_struct_tk_sequence align;
 #if defined (TAO_HAS_FIXED_BYTE_ALIGNMENT)
       alignment = 1;
 #else
       alignment =
-        (char*)&align.two - (char*)&align.one - TAO_MAXIMUM_NATIVE_TYPE_SIZE;
+        (char *) &align.two 
+        - (char *) &align.one 
+        - TAO_MAXIMUM_NATIVE_TYPE_SIZE;
 #endif /* TAO_HAS_FIXED_BYTE_ALIGNMENT */
     }
   return size;
@@ -978,9 +995,9 @@ TAO_CDR_Interpreter::calc_seq_attributes (TAO_InputCDR *stream,
 
 CORBA::Boolean
 TAO_CDR_Interpreter::match_value (CORBA::TCKind kind,
-                         TAO_InputCDR *tc_stream,
-                         const void *value,
-                         CORBA::Environment &env)
+                                  TAO_InputCDR *tc_stream,
+                                  const void *value,
+                                  CORBA::Environment &env)
 {
   CORBA::Boolean retval = 0;
 
@@ -1062,9 +1079,9 @@ TAO_CDR_Interpreter::match_value (CORBA::TCKind kind,
 }
 
 int
-TAO_CDR_Interpreter
-::calc_union_attr_is_var_sized_member (TAO_InputCDR *stream,
-                                       CORBA::Boolean &flag)
+TAO_CDR_Interpreter::calc_union_attr_is_var_sized_member 
+  (TAO_InputCDR *stream,
+   CORBA::Boolean &flag)
 {
   CORBA::Environment env;
   CORBA::ULong temp;
@@ -1072,10 +1089,8 @@ TAO_CDR_Interpreter
 
   // Get the tk_ "kind"  field
   if (stream->read_ulong (temp) == 0)
-    {
-      // error
-      return -1;
-    }
+    // Error.
+    return -1;
 
   env.clear ();
 
@@ -1123,28 +1138,23 @@ TAO_CDR_Interpreter
 
         // Pull encapsulation length out of the stream.
         if (stream->read_ulong (encap) == 0)
-          {
-            return -1;
-          }
+          return -1;
 
         assert (encap <= UINT_MAX);
 
         TAO_InputCDR nested (*stream, temp);
 
         if (nested.good_bit () == 0)
-          {
-            return -1;
-          }
+          return -1;
 
         // Skip type ID and name in the parameter stream
         if (!nested.skip_string ()                   // type ID
             || !nested.skip_string ())               // typedef name
-          {
-            return -1;
-          }
+          return -1;
 
         //        stream->skip_bytes (encap);
-        return calc_union_attr_is_var_sized_member (&nested, flag);
+        return calc_union_attr_is_var_sized_member (&nested,
+                                                    flag);
       }
       ACE_NOTREACHED (break);
     case CORBA::tk_struct:
@@ -1154,52 +1164,45 @@ TAO_CDR_Interpreter
 
         // Pull encapsulation length out of the stream.
         if (stream->read_ulong (encap) == 0)
-          {
-            return -1;
-          }
+          return -1;
 
         assert (encap <= UINT_MAX);
 
         TAO_InputCDR nested (*stream, temp);
 
         if (nested.good_bit () == 0)
-          {
-            return -1;
-          }
+          return -1;
 
         //        stream.skip_bytes (encap);
         // Skip type ID and name in the parameter stream
         if (!nested.skip_string ()                   // type ID
             || !nested.skip_string ())               // typedef name
-          {
-            return -1;
-          }
+          return -1;
 
         CORBA::ULong member_count;
         if (nested.read_ulong (member_count) == 0)
-          {
-            return -1;
-          }
+          return -1;
+
         for (CORBA::ULong i = 0; i < member_count && !flag; i++)
           {
-            // stop this loop the moment we discover that a member is variable
-            // in size
+            // Stop this loop the moment we discover that a member is
+            // variable in size.
 
             // skip the name
             if (nested.skip_string () == 0)
-              {
-                return -1;
-              }
+              return -1;
+
             TAO_InputCDR member_tc (nested);
-            if (calc_union_attr_is_var_sized_member (&member_tc, flag) == -1)
-              {
-                return -1;
-              }
+            if (calc_union_attr_is_var_sized_member (&member_tc,
+                                                     flag) == -1)
+              return -1;
+
             CORBA::TypeCode::skip_typecode (nested);
           }
+
+        return flag;
       }
-      return flag;
-      ACE_NOTREACHED (break);
+    ACE_NOTREACHED (break);
     case ~0:
       // TO-DO
       return 0;

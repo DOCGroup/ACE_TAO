@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "tao/Context.h"
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -129,9 +128,11 @@ CORBA_ContextList::~CORBA_ContextList (void)
 {
   for (CORBA::ULong i = 0; i < this->count (); ++i)
     {
-      char* *ctx;
+      char **ctx;
+
       if (this->ctx_list_.get (ctx, i) == -1)
         return;
+
       CORBA::string_free (*ctx);
     }
 }
@@ -149,17 +150,17 @@ CORBA_ContextList::add_consume (char *ctx)
 }
 
 char *
-CORBA_ContextList::item (CORBA::ULong index,
+CORBA_ContextList::item (CORBA::ULong slot,
                          CORBA::Environment &ACE_TRY_ENV)
 {
-  char* *ctx;
+  char **ctx;
   ACE_TRY_ENV.clear ();
-  if (this->ctx_list_.get (ctx, index) == -1)
+
+  if (this->ctx_list_.get (ctx,
+                           slot) == -1)
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
   else
-    {
-      return CORBA::string_dup (*ctx);
-    }
+    return CORBA::string_dup (*ctx);
 }
 
 void
@@ -181,6 +182,7 @@ void
 CORBA_ContextList::_destroy (void)
 {
   CORBA::ULong current = --this->ref_count_;
+
   if (current == 0)
     delete this;
 }

@@ -302,9 +302,9 @@ CORBA_PolicyList_var::operator CORBA_PolicyList &() const// cast
 }
 
 ACE_INLINE TAO_Object_Manager <CORBA_Policy >
-CORBA_PolicyList_var::operator[] (CORBA::ULong index)
+CORBA_PolicyList_var::operator[] (CORBA::ULong slot)
 {
-  return this->ptr_->operator[] (index);
+  return this->ptr_->operator[] (slot);
 }
 
 ACE_INLINE const CORBA_PolicyList &
@@ -399,9 +399,9 @@ CORBA_PolicyList_out::operator-> (void)
 }
 
 ACE_INLINE TAO_Object_Manager <CORBA_Policy >
-CORBA_PolicyList_out::operator[] (CORBA::ULong index)
+CORBA_PolicyList_out::operator[] (CORBA::ULong slot)
 {
-  return this->ptr_->operator[] (index);
+  return this->ptr_->operator[] (slot);
 }
 
 // *************************************************************
@@ -483,9 +483,9 @@ CORBA_PolicyTypeSeq_var::operator CORBA_PolicyTypeSeq &() const// cast
 }
 
 ACE_INLINE CORBA::PolicyType &
-CORBA_PolicyTypeSeq_var::operator[] (CORBA::ULong index)
+CORBA_PolicyTypeSeq_var::operator[] (CORBA::ULong slot)
 {
-  return this->ptr_->operator[] (index);
+  return this->ptr_->operator[] (slot);
 }
 
 ACE_INLINE const CORBA_PolicyTypeSeq &
@@ -580,9 +580,9 @@ CORBA_PolicyTypeSeq_out::operator-> (void)
 }
 
 ACE_INLINE CORBA::PolicyType &
-CORBA_PolicyTypeSeq_out::operator[] (CORBA::ULong index)
+CORBA_PolicyTypeSeq_out::operator[] (CORBA::ULong slot)
 {
-  return this->ptr_->operator[] (index);
+  return this->ptr_->operator[] (slot);
 }
 
 // ****************************************************************

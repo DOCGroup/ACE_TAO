@@ -126,9 +126,9 @@ TAO_ObjectKey_var::operator TAO_ObjectKey &() const// cast
 }
 
 ACE_INLINE CORBA::Octet &
-TAO_ObjectKey_var::operator[] (CORBA::ULong index)
+TAO_ObjectKey_var::operator[] (CORBA::ULong slot)
 {
-  return this->ptr_->operator[] (index);
+  return this->ptr_->operator[] (slot);
 }
 
 ACE_INLINE const TAO_ObjectKey &
@@ -223,8 +223,8 @@ TAO_ObjectKey_out::operator-> (void)
 }
 
 ACE_INLINE CORBA::Octet &
-TAO_ObjectKey_out::operator[] (CORBA::ULong index)
+TAO_ObjectKey_out::operator[] (CORBA::ULong slot)
 {
-  return this->ptr_->operator[] (index);
+  return this->ptr_->operator[] (slot);
 }
 

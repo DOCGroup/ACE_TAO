@@ -354,7 +354,7 @@ public:
   operator const CORBA_ORB_RequestSeq &() const;
   operator CORBA_ORB_RequestSeq &();
   operator CORBA_ORB_RequestSeq &() const;
-  CORBA::Octet &operator[] (CORBA::ULong index);
+  CORBA::Octet &operator[] (CORBA::ULong slot);
   // in, inout, out, _retn
   const CORBA_ORB_RequestSeq &in (void) const;
   CORBA_ORB_RequestSeq &inout (void);
@@ -377,7 +377,7 @@ public:
   operator CORBA_ORB_RequestSeq *&();
   CORBA_ORB_RequestSeq *&ptr (void);
   CORBA_ORB_RequestSeq *operator-> (void);
-  CORBA::Octet &operator[] (CORBA::ULong index);
+  CORBA::Octet &operator[] (CORBA::ULong slot);
 
 private:
   CORBA_ORB_RequestSeq *&ptr_;

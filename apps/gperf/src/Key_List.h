@@ -41,11 +41,11 @@ public:
   int hash_value;
   // Hash value for this particular duplicate set.
 
-  int index;
-  // Index into the main keyword storage array.
+  int slot;
+  // Slot into the main keyword storage array.
 
   int count;
-  // Number of consecutive duplicates at this index.
+  // Number of consecutive duplicates at this slot.
 };
 
 class Key_List
@@ -165,7 +165,7 @@ private:
   // hash value.
 
   static int determined_[Vectors::ALPHA_SIZE];
-  // Sets the index location for all keysig characters that are now
+  // Sets the slot location for all keysig characters that are now
   // determined.
 };
 

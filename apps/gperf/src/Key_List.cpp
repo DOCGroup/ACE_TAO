@@ -641,9 +641,9 @@ Key_List::output_switch (int use_keyword_table)
                                 temp->hash_value,
                                 links->key);
                       if (pointer_and_type_enabled)
-                        ACE_OS::printf ("                  resword = &wordlist[%d];\n", links->index);
+                        ACE_OS::printf ("                  resword = &wordlist[%d];\n", links->slot);
                       else if (use_keyword_table)
-                        ACE_OS::printf ("                  resword = wordlist[%d];\n", links->index);
+                        ACE_OS::printf ("                  resword = wordlist[%d];\n", links->slot);
                       else
                         ACE_OS::printf ("                  resword = \"%s\";\n", links->key);
                       ACE_OS::printf ("                  if (%s) return resword;\n", comp_buffer);
@@ -660,17 +660,17 @@ Key_List::output_switch (int use_keyword_table)
                         temp = temp->next)
                     {
                       if (pointer_and_type_enabled)
-                        ACE_OS::printf ("                  resword = &wordlist[%d];\n", temp->index);
+                        ACE_OS::printf ("                  resword = &wordlist[%d];\n", temp->slot);
                       else if (use_keyword_table)
-                        ACE_OS::printf ("                  resword = wordlist[%d];", temp->index);
+                        ACE_OS::printf ("                  resword = wordlist[%d];", temp->slot);
                       else
                         ACE_OS::printf ("                  resword = \"%s\";\n", temp->key);
                       ACE_OS::printf ("                  if (%s) return resword;\n", comp_buffer);
                     }
                   if (pointer_and_type_enabled)
-                    ACE_OS::printf ("                  resword = &wordlist[%d];\n", temp->index);
+                    ACE_OS::printf ("                  resword = &wordlist[%d];\n", temp->slot);
                   else if (use_keyword_table)
-                    ACE_OS::printf ("                  resword = wordlist[%d];", temp->index);
+                    ACE_OS::printf ("                  resword = wordlist[%d];", temp->slot);
                   else
                     ACE_OS::printf ("                  resword = \"%s\";\n", temp->key);
                   ACE_OS::printf ("                  return %s ? resword : 0;\n", comp_buffer);
@@ -680,9 +680,9 @@ Key_List::output_switch (int use_keyword_table)
               else
                 {
                   if (pointer_and_type_enabled)
-                    ACE_OS::printf ("                  resword = &wordlist[%d];", temp->index);
+                    ACE_OS::printf ("                  resword = &wordlist[%d];", temp->slot);
                   else if (use_keyword_table)
-                    ACE_OS::printf ("                  resword = wordlist[%d];", temp->index);
+                    ACE_OS::printf ("                  resword = wordlist[%d];", temp->slot);
                   else
                     ACE_OS::printf ("                  resword = \"%s\";", temp->key);
                   if (option[LENTABLE] && !option[DUP])
@@ -744,7 +744,7 @@ void
 Key_List::output_keylength_table (void)
 {
   const int max_column = 15;
-  int index = 0;
+  int slot = 0;
   int column = 0;
   char *indent = option[GLOBAL] ? "" : "  ";
   List_Node *temp;
@@ -756,11 +756,11 @@ Key_List::output_keylength_table (void)
               max_key_len <= UCHAR_MAX ? "char" : (max_key_len <= USHRT_MAX ? "short" : "long"),
               indent, indent);
 
-      for (temp = head; temp; temp = temp->next, index++)
+      for (temp = head; temp; temp = temp->next, slot++)
         {
 
-          if (index < temp->hash_value)
-            for ( ; index < temp->hash_value; index++)
+          if (slot < temp->hash_value)
+            for ( ; slot < temp->hash_value; slot++)
               ACE_OS::printf ("%3d,%s", 0, ++column % (max_column - 1) ? "" : "\n    ");
 
           ACE_OS::printf ("%3d,%s", temp->length, ++column % (max_column - 1 ) ? "" : "\n    ");
@@ -779,7 +779,7 @@ Key_List::output_keyword_table (void)
   char *l_brace = *head->rest ? "{" : "";
   char *r_brace = *head->rest ? "}," : "";
   char *indent = option[GLOBAL] ? "" : "  ";
-  int index = 0;
+  int slot = 0;
   List_Node *temp;
 
   ACE_OS::printf ("%sstatic %s%swordlist[] =\n%s%s{\n",
@@ -797,14 +797,14 @@ Key_List::output_keyword_table (void)
 
   int column;
 
-  for (column = 1; index < head->hash_value; column++)
+  for (column = 1; slot < head->hash_value; column++)
     {
       ACE_OS::printf ("%s\"\"%s,%s %s",
                       l_brace,
                       option.fill_default (),
                       r_brace,
                       column % 9 ? "" : "\n      ");
-      index++;
+      slot++;
     }
 
   if (0 < head->hash_value && column % 10)
@@ -812,17 +812,17 @@ Key_List::output_keyword_table (void)
 
   // Generate an array of reserved words at appropriate locations.
 
-  for (temp = head ; temp; temp = temp->next, index++)
+  for (temp = head ; temp; temp = temp->next, slot++)
     {
-      temp->index = index;
+      temp->slot = slot;
 
-      if (!option[SWITCH] && (total_duplicates == 0 || !option[DUP]) && index < temp->hash_value)
+      if (!option[SWITCH] && (total_duplicates == 0 || !option[DUP]) && slot < temp->hash_value)
         {
           int column;
 
           ACE_OS::printf ("      ");
 
-          for (column = 1; index < temp->hash_value; index++, column++)
+          for (column = 1; slot < temp->hash_value; slot++, column++)
             ACE_OS::printf ("%s\"\",%s %s", l_brace, r_brace, column % 9 ? "" : "\n      ");
 
           if (column % 10)
@@ -831,9 +831,9 @@ Key_List::output_keyword_table (void)
             {
               ACE_OS::printf ("%s\"%s\", %s%s", l_brace, temp->key, temp->rest, r_brace);
               if (option[DEBUG])
-                ACE_OS::printf (" /* hash value = %d, index = %d */",
+                ACE_OS::printf (" /* hash value = %d, slot = %d */",
                         temp->hash_value,
-                        temp->index);
+                        temp->slot);
               putchar ('\n');
               continue;
             }
@@ -841,21 +841,21 @@ Key_List::output_keyword_table (void)
 
       ACE_OS::printf ("      %s\"%s\", %s%s", l_brace, temp->key, temp->rest, r_brace);
       if (option[DEBUG])
-        ACE_OS::printf (" /* hash value = %d, index = %d */",
+        ACE_OS::printf (" /* hash value = %d, slot = %d */",
                 temp->hash_value,
-                temp->index);
+                temp->slot);
       putchar ('\n');
 
       // Deal with links specially.
       if (temp->link)
         for (List_Node *links = temp->link; links; links = links->link)
           {
-            links->index = ++index;
+            links->slot = ++slot;
             ACE_OS::printf ("      %s\"%s\", %s%s", l_brace, links->key, links->rest, r_brace);
             if (option[DEBUG])
-              ACE_OS::printf (" /* hash value = %d, index = %d */",
+              ACE_OS::printf (" /* hash value = %d, slot = %d */",
                       links->hash_value,
-                      links->index);
+                      links->slot);
             putchar ('\n');
           }
 
@@ -1189,10 +1189,10 @@ Key_List::count_duplicates (List_Node *link,
 
       if (option[DEBUG])
         ACE_DEBUG ((LM_DEBUG,
-                    "%s linked keyword = %s, index = %d, hash_value = %d\n",
+                    "%s linked keyword = %s, slot = %d, hash_value = %d\n",
                     type,
                     ptr->key,
-                    ptr->index,
+                    ptr->slot,
                     ptr->hash_value));
     }
 
@@ -1206,7 +1206,7 @@ Key_List::update_lookup_array (int lookup_array[],
                                Duplicate_Entry *dup_ptr,
                                int value)
 {
-  lookup_array[i1] = -dup_ptr->index;
+  lookup_array[i1] = -dup_ptr->slot;
   lookup_array[i2] = -dup_ptr->count;
   lookup_array[dup_ptr->hash_value] = value;
 }
@@ -1243,17 +1243,17 @@ Key_List::output_lookup_array (void)
       for (List_Node *temp = head; temp; temp = temp->next)
         {
           int hash_value = temp->hash_value;
-          // Store the keyword's index location into the
+          // Store the keyword's slot location into the
           // <lookup_array> at the <hash_value>.  If this is a
           // non-duplicate, then this value will point directly to the
           // keyword.
-          lookup_array[hash_value] = temp->index;
+          lookup_array[hash_value] = temp->slot;
 
           if (option[DEBUG])
             ACE_DEBUG ((LM_DEBUG,
-                        "keyword = %s, index = %d, hash_value = %d, lookup_array[hash_value] = %d\n",
+                        "keyword = %s, slot = %d, hash_value = %d, lookup_array[hash_value] = %d\n",
                         temp->key,
-                        temp->index,
+                        temp->slot,
                         temp->hash_value,
                         lookup_array[temp->hash_value]));
 
@@ -1266,7 +1266,7 @@ Key_List::output_lookup_array (void)
             {
               // We'll handle the duplicates here.
               dup_ptr->hash_value = hash_value;
-              dup_ptr->index = temp->index;
+              dup_ptr->slot = temp->slot;
               dup_ptr->count = 1;
 
               // Count the number of "static" duplicates, i.e.,
@@ -1292,10 +1292,10 @@ Key_List::output_lookup_array (void)
         {
           if (option[DEBUG])
             ACE_DEBUG ((LM_DEBUG,
-                        "dup_ptr[%d]: hash_value = %d, index = %d, count = %d\n",
+                        "dup_ptr[%d]: hash_value = %d, slot = %d, count = %d\n",
                         dup_ptr - duplicates,
                         dup_ptr->hash_value,
-                        dup_ptr->index,
+                        dup_ptr->slot,
                         dup_ptr->count));
           int i;
 
@@ -1397,14 +1397,14 @@ Key_List::output_lookup_function (void)
 
   if (option[DUP] && total_duplicates > 0)
     {
-      ACE_OS::printf ("          int index = lookup[key];\n\n"
-              "          if (index >= 0 && index < MAX_HASH_VALUE)\n");
+      ACE_OS::printf ("          int slot = lookup[key];\n\n"
+              "          if (slot >= 0 && slot < MAX_HASH_VALUE)\n");
       if (option[OPTIMIZE])
-        ACE_OS::printf ("            return %swordlist[index];\n", option[TYPE] && option[POINTER] ? "&" : "");
+        ACE_OS::printf ("            return %swordlist[slot];\n", option[TYPE] && option[POINTER] ? "&" : "");
       else
         {
           ACE_OS::printf ("            {\n"
-                  "              %schar *s = wordlist[index]", option[CONSTANT] ? "const " : "");
+                  "              %schar *s = wordlist[slot]", option[CONSTANT] ? "const " : "");
           if (array_type_ != Key_List::default_array_type)
             ACE_OS::printf (".%s", option.key_name ());
 
@@ -1413,12 +1413,12 @@ Key_List::output_lookup_function (void)
                   option[STRCASECMP] ? "charmap[*str]" : "*str",
                   option[COMP] ? (option[STRCASECMP] ? "strncasecmp (str + 1, s + 1, len - 1)" : "strncmp (str + 1, s + 1, len - 1)")
                   : (option[STRCASECMP] ? "strcasecmp (str + 1, s + 1)" : "strcmp (str + 1, s + 1)"),
-                  option[TYPE] && option[POINTER] ? "&wordlist[index]" : "s");
-          ACE_OS::printf ("          else if (index < 0 && index >= -MAX_HASH_VALUE)\n"
+                  option[TYPE] && option[POINTER] ? "&wordlist[slot]" : "s");
+          ACE_OS::printf ("          else if (slot < 0 && slot >= -MAX_HASH_VALUE)\n"
                   "            return 0;\n");
         }
       ACE_OS::printf ("          else\n            {\n"
-              "              unsigned int offset = key + index + (index > 0 ? -MAX_HASH_VALUE : MAX_HASH_VALUE);\n"
+              "              unsigned int offset = key + slot + (slot > 0 ? -MAX_HASH_VALUE : MAX_HASH_VALUE);\n"
               "              %s%s*base = &wordlist[-lookup[offset]];\n"
               "              %s%s*ptr = base + -lookup[offset + 1];\n\n"
               "              while (--ptr >= base)\n                ",
@@ -1755,7 +1755,7 @@ Key_List::dump (void)
     : ACE_OS::strlen ("keysig");
 
   ACE_DEBUG ((LM_DEBUG,
-              "\nList contents are:\n(hash value, key length, index, %*s, %*s, duplicates):\n",
+              "\nList contents are:\n(hash value, key length, slot, %*s, %*s, duplicates):\n",
               keysig_width,
               "keysig",
               keyword_width,
@@ -1767,7 +1767,7 @@ Key_List::dump (void)
                   "%11d,%11d,%6d, %*s, %*s",
                   ptr->hash_value,
                   ptr->length,
-                  ptr->index,
+                  ptr->slot,
                   keysig_width,
                   ptr->keysig,
                   keyword_width,

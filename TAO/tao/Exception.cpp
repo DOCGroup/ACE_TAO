@@ -1,10 +1,5 @@
 // $Id$
 
-// Copyright 1994-1995 by Sun Microsystems Inc.
-// All Rights Reserved
-//
-// ORB:         Exception handling support
-//
 // THREADING NOTE:  calling thread handles mutual exclusion policy
 // on all of these data structures.
 
@@ -726,12 +721,12 @@ CORBA_ExceptionList::add_consume (CORBA::TypeCode_ptr tc)
 }
 
 CORBA::TypeCode_ptr
-CORBA_ExceptionList::item (CORBA::ULong index,
+CORBA_ExceptionList::item (CORBA::ULong slot,
                            CORBA::Environment &TAO_IN_ENV)
 {
   CORBA::TypeCode_ptr *tc;
   TAO_IN_ENV.clear ();
-  if (this->tc_list_.get (tc, index) == -1)
+  if (this->tc_list_.get (tc, slot) == -1)
     TAO_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
   else
     {

@@ -1005,7 +1005,7 @@ public:
         ) = 0;
 
   virtual CORBA::Boolean seek (
-      CORBA::Long index,
+      CORBA::Long slot,
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
         ) = 0;
@@ -1227,7 +1227,7 @@ public:
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::Boolean seek (
-      CORBA::Long index,
+      CORBA::Long slot,
       CORBA::Environment &TAO_IN_ENV =
         CORBA::Environment::default_environment ()
      );

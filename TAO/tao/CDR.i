@@ -6,8 +6,6 @@ TAO_OutputCDR::~TAO_OutputCDR (void)
 {
 }
 
-// ****************************************************************
-
 ACE_INLINE
 TAO_InputCDR::TAO_InputCDR (const char *buf,
                             size_t bufsiz,
@@ -100,61 +98,61 @@ TAO_InputCDR::orb_core (void) const
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       CORBA::Short x)
 {
-  return ACE_static_cast(ACE_OutputCDR&,os) << x;
+  return ACE_static_cast (ACE_OutputCDR &, os) << x;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       CORBA::UShort x)
 {
-  return ACE_static_cast(ACE_OutputCDR&,os) << x;
+  return ACE_static_cast (ACE_OutputCDR &, os) << x;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       CORBA::Long x)
 {
-  return ACE_static_cast(ACE_OutputCDR&,os) << x;
+  return ACE_static_cast (ACE_OutputCDR &, os) << x;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       CORBA::ULong x)
 {
-  return ACE_static_cast(ACE_OutputCDR&,os) << x;
+  return ACE_static_cast (ACE_OutputCDR &, os) << x;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       CORBA::LongLong x)
 {
-  return ACE_static_cast(ACE_OutputCDR&,os) << x;
+  return ACE_static_cast (ACE_OutputCDR &, os) << x;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       CORBA::ULongLong x)
 {
-  return ACE_static_cast(ACE_OutputCDR&,os) << x;
+  return ACE_static_cast (ACE_OutputCDR &, os) << x;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR& os,
                                       CORBA::LongDouble x)
 {
-  return ACE_static_cast(ACE_OutputCDR&,os) << x;
+  return ACE_static_cast (ACE_OutputCDR &, os) << x;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       CORBA::Float x)
 {
-  return ACE_static_cast(ACE_OutputCDR&,os) << x;
+  return ACE_static_cast (ACE_OutputCDR &, os) << x;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       CORBA::Double x)
 {
-  return ACE_static_cast(ACE_OutputCDR&,os) << x;
+  return ACE_static_cast (ACE_OutputCDR &, os) << x;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       const CORBA::Char* x)
 {
-  return ACE_static_cast(ACE_OutputCDR&,os) << x;
+  return ACE_static_cast (ACE_OutputCDR &, os) << x;
 }
 
 // ****************************************************************
@@ -162,13 +160,13 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::Short &x)
 {
-  return ACE_static_cast(ACE_InputCDR&,is) >> x;
+  return ACE_static_cast (ACE_InputCDR &, is) >> x;
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::UShort &x)
 {
-  return ACE_static_cast(ACE_InputCDR&,is) >> x;
+  return ACE_static_cast (ACE_InputCDR &, is) >> x;
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
@@ -180,41 +178,41 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::ULong &x)
 {
-  return ACE_static_cast(ACE_InputCDR&,is) >> x;
+  return ACE_static_cast (ACE_InputCDR &, is) >> x;
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::LongLong &x)
 {
-  return ACE_static_cast(ACE_InputCDR&,is) >> x;
+  return ACE_static_cast (ACE_InputCDR &, is) >> x;
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::ULongLong &x)
 {
-  return ACE_static_cast(ACE_InputCDR&,is) >> x;
+  return ACE_static_cast (ACE_InputCDR &, is) >> x;
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::LongDouble &x)
 {
-  return ACE_static_cast(ACE_InputCDR&,is) >> x;
+  return ACE_static_cast (ACE_InputCDR &, is) >> x;
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::Float &x)
 {
-  return ACE_static_cast(ACE_InputCDR&,is) >> x;
+  return ACE_static_cast (ACE_InputCDR &, is) >> x;
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::Double &x)
 {
-  return ACE_static_cast(ACE_InputCDR&,is) >> x;
+  return ACE_static_cast (ACE_InputCDR &, is) >> x;
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::Char* &x)
 {
-  return ACE_static_cast(ACE_InputCDR&,is) >> x;
+  return ACE_static_cast (ACE_InputCDR &, is) >> x;
 }

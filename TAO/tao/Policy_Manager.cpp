@@ -52,10 +52,10 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
       if (CORBA::is_nil (policy))
         continue;
 
-      CORBA::ULong index = policy->policy_type (ACE_TRY_ENV);
+      CORBA::ULong slot = policy->policy_type (ACE_TRY_ENV);
       ACE_CHECK;
 
-      switch (index)
+      switch (slot)
         {
         case TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE:
           {
@@ -111,7 +111,7 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
                   this->other_policies_[j]->policy_type (ACE_TRY_ENV);
                 ACE_CHECK;
 
-                if (current == index)
+                if (current == slot)
                   {
                     this->other_policies_[j]->destroy (ACE_TRY_ENV);
                     ACE_CHECK;
@@ -168,9 +168,9 @@ TAO_Policy_Manager_Impl::get_policy_overrides (
     {
       for (CORBA::ULong j = 0; j < types.length ();  ++j)
         {
-          CORBA::ULong index = types[j];
+          CORBA::ULong slot = types[j];
 
-          switch (index)
+          switch (slot)
             {
             case TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE:
               if (this->relative_roundtrip_timeout_ != 0)
@@ -204,7 +204,7 @@ TAO_Policy_Manager_Impl::get_policy_overrides (
                       this->other_policies_[i]->policy_type (ACE_TRY_ENV);
                     ACE_CHECK_RETURN (0);
 
-                    if (current != index)
+                    if (current != slot)
                       continue;
 
                     policy_list[n++] =

@@ -354,54 +354,54 @@ CORBA_TypeCode::equivalent (CORBA::TypeCode_ptr tc,
 // Applicable only to struct, union, and except
 
 CORBA::TypeCode_ptr
-CORBA_TypeCode::member_type (CORBA::ULong index,
+CORBA_TypeCode::member_type (CORBA::ULong slot,
                              CORBA::Environment &env) const
 {
   if (this->private_state_->tc_member_count_known_
       && this->private_state_->tc_member_type_list_known_)
     {
-      if (index < this->private_state_->tc_member_count_)
-        return this->private_state_->tc_member_type_list_[index];
+      if (slot < this->private_state_->tc_member_count_)
+        return this->private_state_->tc_member_type_list_[slot];
       else
         TAO_THROW_ENV_RETURN (CORBA::TypeCode::Bounds (), env, 0);
     }
   else
-    return this->private_member_type (index, env);
+    return this->private_member_type (slot, env);
 }
 
 // Applicable only to struct, union, and except
 
 const char *
-CORBA_TypeCode::member_name (CORBA::ULong index,
+CORBA_TypeCode::member_name (CORBA::ULong slot,
                              CORBA::Environment &env) const
 {
   if (this->private_state_->tc_member_count_known_
       && this->private_state_->tc_member_name_list_known_)
     {
-      if (index < this->private_state_->tc_member_count_)
-        return this->private_state_->tc_member_name_list_[index];
+      if (slot < this->private_state_->tc_member_count_)
+        return this->private_state_->tc_member_name_list_[slot];
       else
         TAO_THROW_ENV_RETURN (CORBA::TypeCode::Bounds (), env, 0);
     }
   else
-    return this->private_member_name (index, env);
+    return this->private_member_name (slot, env);
 }
 
 // Return the label of the i-th member.  Applicable only to CORBA::tk_union
 CORBA::Any_ptr
-CORBA_TypeCode::member_label (CORBA::ULong index,
+CORBA_TypeCode::member_label (CORBA::ULong slot,
                               CORBA::Environment &env) const
 {
   if (this->private_state_->tc_member_count_known_
       && this->private_state_->tc_member_label_list_known_)
     {
-      if (index < this->private_state_->tc_member_count_)
-        return this->private_state_->tc_member_label_list_[index];
+      if (slot < this->private_state_->tc_member_count_)
+        return this->private_state_->tc_member_label_list_[slot];
       else
         TAO_THROW_ENV_RETURN (CORBA::TypeCode::Bounds (), env, 0);
     }
   else
-    return this->private_member_label (index, env);
+    return this->private_member_label (slot, env);
 }
 
 // only applicable to CORBA::tk_unions
@@ -1373,7 +1373,7 @@ CORBA_TypeCode::private_member_count (CORBA::Environment &env) const
 //
 
 CORBA::TypeCode_ptr
-CORBA_TypeCode::private_member_type (CORBA::ULong index,
+CORBA_TypeCode::private_member_type (CORBA::ULong slot,
                                      CORBA::Environment &env) const
 {
   CORBA::ULong temp, mcount;
@@ -1399,8 +1399,8 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
                           this->private_state_->mutex_, 0);
         if (this->private_state_->tc_member_type_list_known_)
-          if (index < mcount)
-            return  this->private_state_->tc_member_type_list_[index];
+          if (slot < mcount)
+            return  this->private_state_->tc_member_type_list_[slot];
           else
             TAO_THROW_ENV_RETURN (CORBA::TypeCode::Bounds (), env, CORBA::TypeCode::_nil ());
 
@@ -1451,8 +1451,8 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
 
         this->private_state_->tc_member_type_list_known_ = 1;
 
-        if (index < mcount)
-          return this->private_state_->tc_member_type_list_[index];
+        if (slot < mcount)
+          return this->private_state_->tc_member_type_list_[slot];
         else
           TAO_THROW_ENV_RETURN (CORBA::TypeCode::Bounds (), env, (CORBA::TypeCode_ptr)0);
       }
@@ -1469,8 +1469,8 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
                           this->private_state_->mutex_, 0);
         if (this->private_state_->tc_member_type_list_known_)
-          if (index < mcount)
-            return  this->private_state_->tc_member_type_list_[index];
+          if (slot < mcount)
+            return  this->private_state_->tc_member_type_list_[slot];
           else
             TAO_THROW_ENV_RETURN (CORBA::TypeCode::Bounds (), env, CORBA::TypeCode::_nil ());
 
@@ -1522,8 +1522,8 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
           }
         this->private_state_->tc_member_type_list_known_ = 1;
 
-        if (index < mcount)
-          return this->private_state_->tc_member_type_list_[index];
+        if (slot < mcount)
+          return this->private_state_->tc_member_type_list_[slot];
         else
           TAO_THROW_ENV_RETURN (CORBA::TypeCode::Bounds (), env, (CORBA::TypeCode_ptr)0);
       }
@@ -1539,7 +1539,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
 // Applicable only to CORBA::tk_struct, CORBA::tk_union, CORBA::tk_enum, and
 // CORBA::tk_except
 const char *
-CORBA_TypeCode::private_member_name (CORBA::ULong index,
+CORBA_TypeCode::private_member_name (CORBA::ULong slot,
                                      CORBA::Environment &env) const
 {
   CORBA::ULong temp, mcount;
@@ -1564,8 +1564,8 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
                           this->private_state_->mutex_, 0);
         if (this->private_state_->tc_member_name_list_known_)
-          if (index < mcount)
-            return this->private_state_->tc_member_name_list_[index];
+          if (slot < mcount)
+            return this->private_state_->tc_member_name_list_[slot];
           else
             TAO_THROW_ENV_RETURN (CORBA::TypeCode::Bounds (), env, 0);
 
@@ -1592,8 +1592,8 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
 
         this->private_state_->tc_member_name_list_known_ = 1;
 
-        if (index < mcount)
-          return this->private_state_->tc_member_name_list_[index];
+        if (slot < mcount)
+          return this->private_state_->tc_member_name_list_[slot];
         else
           TAO_THROW_ENV_RETURN (CORBA::TypeCode::Bounds (), env, (char *)0);
       }
@@ -1611,8 +1611,8 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
                           this->private_state_->mutex_, 0);
         if (this->private_state_->tc_member_name_list_known_)
-          if (index < mcount)
-            return this->private_state_->tc_member_name_list_[index];
+          if (slot < mcount)
+            return this->private_state_->tc_member_name_list_[slot];
           else
             TAO_THROW_ENV_RETURN (CORBA::TypeCode::Bounds (), env, 0);
 
@@ -1639,8 +1639,8 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
 
         this->private_state_->tc_member_name_list_known_ = 1;
 
-        if (index < mcount)
-          return this->private_state_->tc_member_name_list_[index];
+        if (slot < mcount)
+          return this->private_state_->tc_member_name_list_[slot];
         else
           TAO_THROW_ENV_RETURN (CORBA::TypeCode::Bounds (), env, (char *)0);
       }
@@ -1657,8 +1657,8 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
                           this->private_state_->mutex_, 0);
         if (this->private_state_->tc_member_name_list_known_)
-          if (index < mcount)
-            return this->private_state_->tc_member_name_list_[index];
+          if (slot < mcount)
+            return this->private_state_->tc_member_name_list_[slot];
           else
             TAO_THROW_ENV_RETURN (CORBA::TypeCode::Bounds (), env, 0);
 
@@ -1708,8 +1708,8 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
 
             this->private_state_->tc_member_name_list_known_ = 1;
 
-            if (index < mcount)
-              return this->private_state_->tc_member_name_list_[index];
+            if (slot < mcount)
+              return this->private_state_->tc_member_name_list_[slot];
             else
               TAO_THROW_ENV_RETURN (CORBA::TypeCode::Bounds (), env, (char *)0);
           }
@@ -2124,7 +2124,7 @@ CORBA_TypeCode::param_count (CORBA::Environment &env) const
 }
 
 CORBA::Any_ptr
-CORBA_TypeCode::parameter (const CORBA::Long index,
+CORBA_TypeCode::parameter (const CORBA::Long slot,
                            CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,

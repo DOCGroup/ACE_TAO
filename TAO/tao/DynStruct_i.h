@@ -45,21 +45,21 @@ public:
   ~TAO_DynStruct_i (void);
   // destructor
 
-  // Functions specific to DynStruct
+  // = Functions specific to DynStruct
 
   CORBA::FieldName current_member_name (CORBA::Environment &ACE_TRY_ENV);
   // FieldName is IDL typedef for string
 
   CORBA::TCKind current_member_kind (CORBA::Environment &ACE_TRY_ENV);
 
-  // Assign and dump elements using IDL defined type NameValuePairSeq
-
-  CORBA::NameValuePairSeq* get_members (CORBA::Environment &ACE_TRY_ENV);
+  CORBA::NameValuePairSeq *get_members (CORBA::Environment &ACE_TRY_ENV);
+  // Get elements using IDL defined type NameValuePairSeq.
 
   void set_members (const CORBA::NameValuePairSeq& value,
                     CORBA::Environment &ACE_TRY_ENV);
+  // Set elements using IDL defined type NameValuePairSeq.
 
-  // Functions common to all Dynamic Any types
+  // = Functions common to all Dynamic Any types
 
   void assign (CORBA_DynAny_ptr dyn_any,
                CORBA::Environment &ACE_TRY_ENV);
@@ -87,14 +87,14 @@ public:
   CORBA::Boolean next (CORBA::Environment &ACE_TRY_ENV);
   // Returns next component
 
-  CORBA::Boolean seek (CORBA::Long index,
+  CORBA::Boolean seek (CORBA::Long slot,
                        CORBA::Environment &ACE_TRY_ENV);
-  // Jump to component at <index>
+  // Jump to component at <slot>
 
   void rewind (CORBA::Environment &ACE_TRY_ENV);
   // Makes first component the current one
 
-  // Insert and get functions
+  // = Insert and get functions
 
   void insert_boolean (CORBA::Boolean value,
                        CORBA::Environment &ACE_TRY_ENV);
@@ -129,35 +129,20 @@ public:
   void insert_any (const CORBA::Any& value,
                    CORBA::Environment &ACE_TRY_ENV);
   CORBA::Boolean get_boolean (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Octet get_octet (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Char get_char (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Short get_short (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::UShort get_ushort (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Long get_long (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::ULong get_ulong (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Float get_float (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Double get_double (CORBA::Environment &ACE_TRY_ENV);
-
-  char * get_string (CORBA::Environment &ACE_TRY_ENV);
-
+  char *get_string (CORBA::Environment &ACE_TRY_ENV);
   CORBA::Object_ptr get_reference (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::TypeCode_ptr get_typecode (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::LongLong get_longlong (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::ULongLong get_ulonglong (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::WChar get_wchar (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Any_ptr get_any (CORBA::Environment &ACE_TRY_ENV);
 
 private:
@@ -173,7 +158,7 @@ private:
   TAO_DynStruct_i (void);
   // Must be instantiated with at least a typecode
 
-  // Use copy() or assign() instead of these
+  // = Use copy() or assign() instead of these
   TAO_DynStruct_i (const TAO_DynStruct_i &src);
   TAO_DynStruct_i &operator= (const TAO_DynStruct_i &src);
 };

@@ -29,8 +29,7 @@ class TAO_Export TAO_DynUnion_i : public POA_CORBA::DynUnion
   //    TAO_DynUnion_i
   //
   // = DESCRIPTION
-  //    Implementation of Dynamic Any type for Unions
-  //
+  //    Implementation of Dynamic Any type for Unions.
 public:
   TAO_DynUnion_i (const CORBA_Any& any);
   // constructor taking an Any argument
@@ -41,7 +40,7 @@ public:
   ~TAO_DynUnion_i (void);
   // destructor
 
-  // Functions specific to DynUnion
+  // = Functions specific to DynUnion
 
   CORBA::Boolean set_as_default (CORBA::Environment &ACE_TRY_ENV);
   // Does union have a default member?
@@ -59,10 +58,9 @@ public:
   CORBA_DynAny_ptr member (CORBA::Environment &ACE_TRY_ENV);
   // Returns active member
 
-  // Get and set for member name
+  // = Get and set for member name
 
-  char* member_name (CORBA::Environment &ACE_TRY_ENV);
-
+  char *member_name (CORBA::Environment &ACE_TRY_ENV);
   void member_name (const char* member_name,
                     CORBA::Environment &ACE_TRY_ENV);
 
@@ -97,9 +95,9 @@ public:
   CORBA::Boolean next (CORBA::Environment &ACE_TRY_ENV);
   // Returns next component
 
-  CORBA::Boolean seek (CORBA::Long index,
+  CORBA::Boolean seek (CORBA::Long slot,
                        CORBA::Environment &ACE_TRY_ENV);
-  // Jump to component at <index>
+  // Jump to component at <slot>
 
   void rewind (CORBA::Environment &ACE_TRY_ENV);
   // Makes first component the current one
@@ -139,35 +137,20 @@ public:
   void insert_any (const CORBA::Any& value,
                    CORBA::Environment &ACE_TRY_ENV);
   CORBA::Boolean get_boolean (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Octet get_octet (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Char get_char (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Short get_short (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::UShort get_ushort (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Long get_long (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::ULong get_ulong (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Float get_float (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Double get_double (CORBA::Environment &ACE_TRY_ENV);
-
-  char * get_string (CORBA::Environment &ACE_TRY_ENV);
-
+  char *get_string (CORBA::Environment &ACE_TRY_ENV);
   CORBA::Object_ptr get_reference (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::TypeCode_ptr get_typecode (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::LongLong get_longlong (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::ULongLong get_ulonglong (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::WChar get_wchar (CORBA::Environment &ACE_TRY_ENV);
-
   CORBA::Any_ptr get_any (CORBA::Environment &ACE_TRY_ENV);
 
 private:
@@ -215,8 +198,8 @@ private:
                                     CORBA::Environment &ACE_TRY_ENV);
   // Returns a pointer to the correct extractor class.
 
-  void set_from_any(const CORBA_Any& any,
-                    CORBA::Environment &ACE_TRY_ENV);
+  void set_from_any (const CORBA_Any& any,
+                     CORBA::Environment &ACE_TRY_ENV);
   // Code common to the constructor from an Any arg and the member
   // function from_any().
 };

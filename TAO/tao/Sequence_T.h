@@ -401,7 +401,7 @@ public:
   // the reallocation is performed. After reallocation, the release
   // flag is always set to TRUE.
 
-  TAO_Object_Manager<T> operator[] (CORBA::ULong index) const;
+  TAO_Object_Manager<T> operator[] (CORBA::ULong slot) const;
   // read-write accessor
 
   static T **allocbuf (CORBA::ULong);
@@ -471,7 +471,7 @@ public:
   TAO_Bounded_Object_Sequence &operator= (const TAO_Bounded_Object_Sequence<T,MAX> &);
   // Assignment from another Bounded sequence.
 
-  TAO_Object_Manager<T> operator[] (CORBA::ULong index) const;
+  TAO_Object_Manager<T> operator[] (CORBA::ULong slot) const;
   // Read-write accessor.
 
   static T **allocbuf (CORBA::ULong length);
@@ -537,7 +537,7 @@ public:
   // members and frees all string members, and then performs a
   // deepcopy to create a new structure.
 
-  TAO_Object_Manager<T> operator[] (CORBA::ULong index) const;
+  TAO_Object_Manager<T> operator[] (CORBA::ULong slot) const;
   // read-write accessor
 
   static T **allocbuf (CORBA::ULong);
@@ -585,7 +585,7 @@ public:
   TAO_Bounded_Pseudo_Sequence &operator= (const TAO_Bounded_Pseudo_Sequence<T,MAX> &);
   // Assignment from another Bounded sequence.
 
-  TAO_Object_Manager<T> operator[] (CORBA::ULong index) const;
+  TAO_Object_Manager<T> operator[] (CORBA::ULong slot) const;
   // Read-write accessor.
 
   static T **allocbuf (CORBA::ULong length);
@@ -659,7 +659,7 @@ public:
   // If release=TRUE, the destructor destroys each of the current
   // elements (items zero through length-1).
 
-  TAO_SeqElem_String_Manager operator[] (CORBA::ULong index) const;
+  TAO_SeqElem_String_Manager operator[] (CORBA::ULong slot) const;
   // read-write accessor
 
   static char **allocbuf (CORBA::ULong length);

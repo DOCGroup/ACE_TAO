@@ -1,4 +1,3 @@
-//
 // $Id$
 //
 // ================================================================
@@ -19,8 +18,6 @@
 
 #if !defined POLICY_DOMAIN_IDL
 #define POLICY_DOMAIN_IDL
-
-
 
 #pragma prefix "omg.org"
 

@@ -1,3 +1,8 @@
+Sat Jun  5 23:48:23 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
+
+	* tao: Replaced all uses of "index" with "slot" since "index" is
+ 	  defined as a macro by some broken C++ compilers...
+
 Sun Jun  6 00:23:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/sfp.cpp:
@@ -15,8 +20,9 @@ Sun Jun  6 00:06:26 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 Sat Jun  5 23:06:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* Sun/CC 5.0 works with TAO now! Partly because we don't use the
-	  same templates than before and partly because we found work
-	  arounds the other compiler bugs.
+ 	  same templates than before and partly because we found work
+ 	  arounds the other SunC++ compiler bugs, e.g., incorrect code
+ 	  generation for certain types of default constructors.
 
 	* tao/Object_Adapter.h:
 	* tao/Object_Adapter.i:

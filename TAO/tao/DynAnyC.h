@@ -402,7 +402,7 @@ public:
         CORBA::Environment::default_environment ()
      );
   virtual CORBA::Boolean seek (
-      CORBA::Long index,
+      CORBA::Long slot,
       CORBA::Environment &_tao_environment =
         CORBA::Environment::default_environment ()
      );
@@ -797,7 +797,7 @@ public:
   operator const CORBA_NameValuePairSeq &() const;
   operator CORBA_NameValuePairSeq &();
   operator CORBA_NameValuePairSeq &() const;
-  CORBA_NameValuePair &operator[] (CORBA::ULong index);
+  CORBA_NameValuePair &operator[] (CORBA::ULong slot);
   // in, inout, out, _retn
   const CORBA_NameValuePairSeq &in (void) const;
   CORBA_NameValuePairSeq &inout (void);
@@ -820,7 +820,7 @@ public:
   operator CORBA_NameValuePairSeq *&();
   CORBA_NameValuePairSeq *&ptr (void);
   CORBA_NameValuePairSeq *operator-> (void);
-  CORBA_NameValuePair &operator[] (CORBA::ULong index);
+  CORBA_NameValuePair &operator[] (CORBA::ULong slot);
 
 private:
   CORBA_NameValuePairSeq *&ptr_;
@@ -1280,7 +1280,7 @@ public:
   operator const CORBA_AnySeq &() const;
   operator CORBA_AnySeq &();
   operator CORBA_AnySeq &() const;
-  CORBA::Any &operator[] (CORBA::ULong index);
+  CORBA::Any &operator[] (CORBA::ULong slot);
   // in, inout, out, _retn
   const CORBA_AnySeq &in (void) const;
   CORBA_AnySeq &inout (void);
@@ -1303,7 +1303,7 @@ public:
   operator CORBA_AnySeq *&();
   CORBA_AnySeq *&ptr (void);
   CORBA_AnySeq *operator-> (void);
-  CORBA::Any &operator[] (CORBA::ULong index);
+  CORBA::Any &operator[] (CORBA::ULong slot);
 
 private:
   CORBA_AnySeq *&ptr_;

@@ -41,12 +41,12 @@ TAO_Acceptor_Impl<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open (TAO_ORB_Core* orb_cor
                               int reuse_addr)
 {
   this->orb_core_ = orb_core;
-  return this->ACE_Acceptor<SVC_HANDLER,ACE_PEER_ACCEPTOR_2>::open (
-       local_address,
-       this->orb_core_->reactor (),
-       flags,
-       use_select,
-       reuse_addr);
+  return this->ACE_Acceptor<SVC_HANDLER,ACE_PEER_ACCEPTOR_2>::open 
+    (local_address,
+     this->orb_core_->reactor (),
+     flags,
+     use_select,
+     reuse_addr);
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
@@ -70,13 +70,15 @@ TAO_Acceptor_Impl<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::activate_svc_handler (SVC_H
   if (this->ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::activate_svc_handler (sh) == -1)
     return -1;
 
-  TAO_Server_Strategy_Factory *f = this->orb_core_->server_factory ();
+  TAO_Server_Strategy_Factory *f =
+    this->orb_core_->server_factory ();
 
   if (f->activate_server_connections ())
     return sh->activate (f->server_connection_thread_flags (),
                          f->server_connection_thread_count ());
 
-  return this->reactor ()->register_handler (sh, ACE_Event_Handler::READ_MASK);
+  return this->reactor ()->register_handler 
+    (sh, ACE_Event_Handler::READ_MASK);
 }
 
 #endif /* TAO_ACCEPTOR_IMPL_C */

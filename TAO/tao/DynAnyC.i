@@ -660,9 +660,9 @@ CORBA_NameValuePairSeq_var::operator CORBA_NameValuePairSeq &() const// cast
 }
 
 ACE_INLINE CORBA_NameValuePair &
-CORBA_NameValuePairSeq_var::operator[] (CORBA::ULong index)
+CORBA_NameValuePairSeq_var::operator[] (CORBA::ULong slot)
 {
-  return this->ptr_->operator[] (index);
+  return this->ptr_->operator[] (slot);
 }
 
 ACE_INLINE const CORBA_NameValuePairSeq &
@@ -757,9 +757,9 @@ CORBA_NameValuePairSeq_out::operator-> (void)
 }
 
 ACE_INLINE CORBA_NameValuePair &
-CORBA_NameValuePairSeq_out::operator[] (CORBA::ULong index)
+CORBA_NameValuePairSeq_out::operator[] (CORBA::ULong slot)
 {
-  return this->ptr_->operator[] (index);
+  return this->ptr_->operator[] (slot);
 }
 
 ACE_INLINE
@@ -1215,9 +1215,9 @@ CORBA_AnySeq_var::operator CORBA_AnySeq &() const// cast
 }
 
 ACE_INLINE CORBA::Any &
-CORBA_AnySeq_var::operator[] (CORBA::ULong index)
+CORBA_AnySeq_var::operator[] (CORBA::ULong slot)
 {
-  return this->ptr_->operator[] (index);
+  return this->ptr_->operator[] (slot);
 }
 
 ACE_INLINE const CORBA_AnySeq &
@@ -1312,9 +1312,9 @@ CORBA_AnySeq_out::operator-> (void)
 }
 
 ACE_INLINE CORBA::Any &
-CORBA_AnySeq_out::operator[] (CORBA::ULong index)
+CORBA_AnySeq_out::operator[] (CORBA::ULong slot)
 {
-  return this->ptr_->operator[] (index);
+  return this->ptr_->operator[] (slot);
 }
 
 ACE_INLINE

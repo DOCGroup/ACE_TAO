@@ -19,11 +19,11 @@
 #include "tao/DynUnion_i_T.h"
 
 // Method of template class that serves as a functor for all that
-// compares Anys constructed from all legal discriminator
-// types - some are specifically defined in DynUnion_i.cpp.
+// compares Anys constructed from all legal discriminator types - some
+// are specifically defined in DynUnion_i.cpp.
 
 template <class Type>
-DU_Extractor<Type>::~DU_Extractor ()
+DU_Extractor<Type>::~DU_Extractor (void)
 {
 }
 

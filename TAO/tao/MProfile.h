@@ -106,12 +106,12 @@ public:
   // return the maximum number of profiles that can be stored in this
   // container, (size_+1)
 
-  const TAO_Profile* get_profile (CORBA::ULong index) const;
-  // Return the profile at position <index>.
-  // If <index> is out of range it returns 0.
+  const TAO_Profile* get_profile (CORBA::ULong slot) const;
+  // Return the profile at position <slot>.  If <slot> is out of range
+  // it returns 0.
 
   void rewind (void);
-  // Sets the current index back to 0.
+  // Sets the current slot back to 0.
 
   int add_profile (TAO_Profile_ptr pfile);
   // Return the index of this entry or -1 if it can not be added.

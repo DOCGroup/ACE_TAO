@@ -447,9 +447,9 @@ CORBA_DomainManagerList_var::operator CORBA_DomainManagerList &() const// cast
 }
 
 ACE_INLINE TAO_Object_Manager<CORBA_DomainManager> 
-CORBA_DomainManagerList_var::operator[] (CORBA::ULong index)
+CORBA_DomainManagerList_var::operator[] (CORBA::ULong slot)
 {
-  return this->ptr_->operator[] (index);
+  return this->ptr_->operator[] (slot);
 }
 
 ACE_INLINE const CORBA_DomainManagerList &
@@ -544,9 +544,9 @@ CORBA_DomainManagerList_out::operator-> (void)
 }
 
 ACE_INLINE TAO_Object_Manager<CORBA_DomainManager> 
-CORBA_DomainManagerList_out::operator[] (CORBA::ULong index)
+CORBA_DomainManagerList_out::operator[] (CORBA::ULong slot)
 {
-  return this->ptr_->operator[] (index);
+  return this->ptr_->operator[] (slot);
 }
 
 ACE_INLINE CORBA::Boolean

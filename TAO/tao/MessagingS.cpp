@@ -1443,22 +1443,22 @@ TAO_Messaging_Poller_Perfect_Hash_OpTable::lookup (const char *str, unsigned int
 
       if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
         {
-          int index = lookup[key];
+          int slot = lookup[key];
 
-          if (index >= 0 && index < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < MAX_HASH_VALUE)
             {
-              const char *s = wordlist[index].opname_;
+              const char *s = wordlist[slot].opname_;
 
               if (*str == *s && !strncmp (str + 1, s + 1, len - 1))
-                return &wordlist[index];
+                return &wordlist[slot];
             }
-          else if (index < 0 && index >= -MAX_HASH_VALUE)
+          else if (slot < 0 && slot >= -MAX_HASH_VALUE)
             return 0;
           else
             {
-              unsigned int offset = key + index + (index > 0 ? -MAX_HASH_VALUE : MAX_HASH_VALUE);
-              const class TAO_operation_db_entry  *base = &wordlist[-lookup[offset]];
-              const class TAO_operation_db_entry  *ptr = base + -lookup[offset + 1];
+              u_int offset = key + slot + (slot > 0 ? -MAX_HASH_VALUE : MAX_HASH_VALUE);
+              const TAO_operation_db_entry *base = &wordlist[-lookup[offset]];
+              const TAO_operation_db_entry *ptr = base + -lookup[offset + 1];
 
               while (--ptr >= base)
                 if (*str == *ptr->opname_ && !strncmp (str + 1, ptr->opname_ + 1, len - 1))

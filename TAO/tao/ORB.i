@@ -18,17 +18,17 @@ CORBA_String_var::CORBA_String_var (const char *p)
 }
 
 ACE_INLINE CORBA::Char &
-CORBA_String_var::operator[] (CORBA::ULong index)
+CORBA_String_var::operator[] (CORBA::ULong slot)
 {
   // We need to verify bounds else raise some exception.
-  return this->ptr_[index];
+  return this->ptr_[slot];
 }
 
 ACE_INLINE CORBA::Char
-CORBA_String_var::operator[] (CORBA::ULong index) const
+CORBA_String_var::operator[] (CORBA::ULong slot) const
 {
   // We need to verify bounds else raise some exception.
-  return this->ptr_[index];
+  return this->ptr_[slot];
 }
 
 ACE_INLINE
@@ -139,17 +139,17 @@ CORBA_WString_var::CORBA_WString_var (const CORBA::WChar *p)
 }
 
 ACE_INLINE CORBA::WChar &
-CORBA_WString_var::operator[] (CORBA::ULong index)
+CORBA_WString_var::operator[] (CORBA::ULong slot)
 {
   // We need to verify bounds else raise some exception.
-  return this->ptr_[index];
+  return this->ptr_[slot];
 }
 
 ACE_INLINE CORBA::WChar
-CORBA_WString_var::operator[] (CORBA::ULong index) const
+CORBA_WString_var::operator[] (CORBA::ULong slot) const
 {
   // We need to verify bounds else raise some exception.
-  return this->ptr_[index];
+  return this->ptr_[slot];
 }
 
 ACE_INLINE

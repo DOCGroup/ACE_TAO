@@ -9,9 +9,6 @@
 // = FILENAME
 //   Acceptor_Impl.h
 //
-// = DESCRIPTION
-//
-//
 // = AUTHOR
 //   Carlos O'Ryan <coryan@cs.wustl.edu>
 //   Ossama Othman <othman@cs.wustl.edu>
@@ -29,9 +26,17 @@
 
 template<class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> class TAO_Acceptor_Impl : public ACE_Acceptor<SVC_HANDLER,ACE_PEER_ACCEPTOR_2>
 {
+  // = TITLE
+  //   @@ Carlos, please fill in here.
+  //
+  // = DESCRIPTION
+  //   @@ Carlos, please fill in here.
 public:
+  // = Initialization and termination methods.
   TAO_Acceptor_Impl (ACE_Reactor * = 0,
                      int use_select = 1);
+  // Constructor.
+
   TAO_Acceptor_Impl (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
                      ACE_Reactor * = ACE_Reactor::instance (),
                      int flags = 0,
@@ -39,20 +44,21 @@ public:
                      int reuse_addr = 1);
   // The constructors, just delegate to the base class.
 
-  // Initialize the ORB_Core...
   int open (TAO_ORB_Core* orb_core,
             const ACE_PEER_ACCEPTOR_ADDR &,
             int flags = 0,
             int use_select = 1,
             int reuse_addr = 1);
+  // Initialize the ORB_Core.
 
 protected:
-  // = Check the documentation in Acceptor.h
+  // = See $ACE_ROOT/ace/Acceptor.h for the documentation.
   virtual int make_svc_handler (SVC_HANDLER *&sh);
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler);
 
 private:
-  TAO_ORB_Core* orb_core_;
+  TAO_ORB_Core *orb_core_;
+  // Pointer to the ORB Core.
 };
 
 #if defined(__ACE_INLINE__)

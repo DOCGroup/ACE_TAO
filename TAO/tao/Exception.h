@@ -357,11 +357,11 @@ public:
   void add_consume (CORBA::TypeCode_ptr tc);
   // add and consume a TypeCode to the list
 
-  CORBA::TypeCode_ptr item (CORBA::ULong index, CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
-  // return the typecode at index i. Raises the "Bounds" exception
+  CORBA::TypeCode_ptr item (CORBA::ULong slot, CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
+  // return the typecode at slot i. Raises the "Bounds" exception
 
-  void remove (CORBA::ULong index, CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
-  // remove the typecode at index i. Raises the "Bounds" exception
+  void remove (CORBA::ULong slot, CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
+  // remove the typecode at slot i. Raises the "Bounds" exception
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA::ExceptionList_ptr _ptr_type;

@@ -294,7 +294,7 @@ public:
   // reallocation is performed. After reallocation, the release flag
   // is always set to TRUE.
 
-  TAO_SeqElem_String_Manager operator[] (CORBA::ULong index) const;
+  TAO_SeqElem_String_Manager operator[] (CORBA::ULong slot) const;
   // read-write accessor
 
   static char* *allocbuf (CORBA::ULong);

@@ -883,12 +883,13 @@ TAO_Bounded_String_Sequence<MAX>::operator=
 }
 
 template<CORBA::ULong MAX> TAO_SeqElem_String_Manager
-TAO_Bounded_String_Sequence<MAX>::operator[] (CORBA::ULong index) const
+TAO_Bounded_String_Sequence<MAX>::operator[] (CORBA::ULong slot) const
 {
-  ACE_ASSERT (index < this->maximum_);
-  char **const tmp = ACE_reinterpret_cast (char ** ACE_CAST_CONST,
+  ACE_ASSERT (slot < this->maximum_);
+  char **const tmp = ACE_reinterpret_cast (char **ACE_CAST_CONST,
                                            this->buffer_);
-  return TAO_SeqElem_String_Manager (tmp + index, this->release_);
+  return TAO_SeqElem_String_Manager (tmp + slot,
+                                     this->release_);
 }
 
 template<CORBA::ULong MAX> char **

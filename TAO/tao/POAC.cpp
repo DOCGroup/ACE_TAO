@@ -2047,7 +2047,7 @@ PortableServer::POA::InvalidPolicy::~InvalidPolicy (void)
 PortableServer::POA::InvalidPolicy::InvalidPolicy (const PortableServer::POA::InvalidPolicy &_tao_excp)
   : CORBA_UserException (_tao_excp._type ())
 {
-  this->index = _tao_excp.index;
+  this->slot = _tao_excp.slot;
 }
 
 // assignment operator
@@ -2055,7 +2055,7 @@ PortableServer::POA::InvalidPolicy&
 PortableServer::POA::InvalidPolicy::operator= (const PortableServer::POA::InvalidPolicy &_tao_excp)
 {
   this->CORBA_UserException::operator= (_tao_excp);
-  this->index = _tao_excp.index;
+  this->slot = _tao_excp.slot;
   return *this;
 }
 
@@ -2063,7 +2063,7 @@ PortableServer::POA::InvalidPolicy::InvalidPolicy(
                                                   CORBA::UShort _tao_index)
   : CORBA_UserException  (PortableServer::POA::_tc_InvalidPolicy)
 {
-  this->index = _tao_index;
+  this->slot = _tao_index;
 }
 
 void PortableServer::POA::InvalidPolicy::_raise (void)
