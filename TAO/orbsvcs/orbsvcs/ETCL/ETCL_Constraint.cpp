@@ -277,7 +277,7 @@ TAO_ETCL_Literal_Constraint::operator const char* (void) const
       return this->op_.str_;
     case TAO_ETCL_COMPONENT:
       {
-        char *retval = 0;
+        const char *retval = 0;
         *this->op_.any_ >>= retval;
         return retval;
       }
