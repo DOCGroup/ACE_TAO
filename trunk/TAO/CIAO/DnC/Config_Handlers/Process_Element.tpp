@@ -12,7 +12,9 @@
 #include "Utils.h"
 #include <iostream>
 #include <memory>
-
+#if !defined (__ACE_INLINE__)
+#include "Process_Element.i"
+#endif /* __ACE_INLINE__ */
 BEGIN_DEPLOYMENT_NAMESPACE
 
 template <typename VALUE, typename DATA>
@@ -89,6 +91,37 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
           href_iter->nextNode ();
           (*func) (href_doc, href_iter, data);
         }
+    }
+}
+
+template <typename SEQUENCE, typename DATA>
+void
+process_sequential_element (DOMNode* node,
+                            DOMDocument* doc,
+                            DOMNodeIterator* iter,
+                            SEQUENCE& seq,
+                            Process_Function <DATA>* func,
+                            REF_MAP& id_map)
+{
+  if (node->hasAttributes ())
+    {
+      // the size of the sequence
+      CORBA::ULong i = seq.length ();
+
+      // add 1 to the size of the sequence
+      seq.length (i + 1);
+
+      // fetch attributes
+      DOMNamedNodeMap* named_node_map = node->getAttributes ();
+
+      // the number of attributes the element have
+      int length = named_node_map->getLength();
+      // if there is no other attribute but 'version'
+
+      if (length == 1) // call directly the static process_ method
+        (*func) (doc, iter, seq[i]);
+      else             // Check the xmi::id & href attributes
+        process_element_attributes(named_node_map, doc, iter, i, seq[i], func, id_map);
     }
 }
 
