@@ -1,3 +1,13 @@
+Sun Sep 29 08:19:09 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACEXML/examples/SAXPrint/Makefile: Removed inclusion of
+	  rules.lib.GNU to allow mingw compilation to proceed.  Thanks to
+	  Vince Mounts <vince@mounts.cc> for reporting this.
+
+	* ace/SString.h: Moved the ACE_INLINE before ACE_Export in
+	  declaration of operator+ to resolved a mingw warning.  Thanks to
+	  Vince Mounts <vince@mounts.cc> for reporting this.
+
 Fri Sep 27 12:49:33 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/rules.lib.GNU:
