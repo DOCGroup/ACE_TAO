@@ -2596,13 +2596,13 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
 #     if !defined (ACE_LACKS_THREAD_STACK_SIZE)      // JCEJ 12/17/96
 #       if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
-#         if !defined (ACE_HAS_PTHREAD_SETSTACK)
-      if (::pthread_attr_setstack (&attr, stack, size) != 0)
-#         else
       if (::pthread_attr_setstacksize (&attr, size) != 0)
-#         endif /* ACE_HAS_PTHREAD_SETSTACK */
 #       else
+#         if defined (ACE_HAS_PTHREAD_SETSTACK)
+        if (ACE_ADAPT_RETVAL(pthread_attr_setstack (&attr, stack, size), result) == -1)
+#         else
         if (ACE_ADAPT_RETVAL(pthread_attr_setstacksize (&attr, size), result) == -1)
+#         endif /* ACE_HAS_PTHREAD_SETSTACK */
 #       endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
           {
 #       if defined (ACE_HAS_PTHREADS_DRAFT4)
