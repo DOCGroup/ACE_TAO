@@ -1,3 +1,11 @@
+Wed Aug 23 16:56:28 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/Naming/Naming_Loader.h
+	* orbsvcs/Naming/Naming_Loader.cpp:
+
+	  Updated Export and service config macros so that Naming Service
+	  compiles on NT.
+
 Wed Aug 23 16:20:52 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/POA.h:
