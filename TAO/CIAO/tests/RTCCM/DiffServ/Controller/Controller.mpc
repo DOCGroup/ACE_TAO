@@ -1,8 +1,0 @@
-// $Id$
-
-project (*) : ciao_client, rtcorba {
-  includes += ../Sender
-  includes += ../Receiver
-  libs += Sender_stub
-  libs += Receiver_stub
-}

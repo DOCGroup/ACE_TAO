@@ -1,5 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(kokyu_dsrt_scheduler_server) : taoserver, kokyu_dsrt_schedulers {
-}

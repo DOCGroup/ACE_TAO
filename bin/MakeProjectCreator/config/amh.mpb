@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project: taoidldefaults {
-  requires += ami // There is no separate 
-  idlflags += -GH
-}
