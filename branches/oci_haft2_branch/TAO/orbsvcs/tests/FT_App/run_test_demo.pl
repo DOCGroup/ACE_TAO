@@ -6,11 +6,19 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 # Purpose:
-#       To test the FactoryRegistry as a component of ReplicationManager
+#   Integration test for all FT services.
 #
+# Command line options:
+#   --debug_build  use exes from this directory
+#        if not specified use exes from ./release
+#   --no_simulate
+#        use real IOGR-based recovery.
+#   -v  display test progress messages (repeating option increases verbosity
 # Process being tested:
-#       FT_ReplicationManager
-#           implements PortableGroup::FactoryRegistry interface.
+#   FT_ReplicationManager
+#   Fault_Detector
+#   Fault_Notifier
+#
 # Processes used in test:
 #       FT_Replica * 3
 #           implements GenericFactory interface to create TestReplicas
@@ -22,69 +30,55 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #       Object Group Creator
 #           Creates groups of objects.
 #
-# Test Scenario (***Test: marks behavior being tested):
+# Test Scenario
 #
-#   First the test starts The ReplicationManager,
-#   Then starts three factories.  Each factory exists at a separate location.
-#   The locations are named shire, bree, and rivendell.  In a "real" system
-#   these locations would be on separate computers.
-#
-#   The factory at the shire location knows how to create hobbits.
-#   The factory at the bree location knows how to create hobbits, elves, and humans.
-#   The factory at rivendell can create elves.
-#   Hobbits, elves, and humans are roles for TestReplica objects.  A creation parameter
-#   included as part of the registration information specifies which role they are playing.
-#
-#   ***Test: The factories register themselves with the factory registry in the ReplicationManager.
-#   Registration information includes:
-#     the role,
-#     the type of object created,
-#     the location,
-#     an object reference to the factory and
-#     a set of parameters to be passed to the factory's create_object method.
-#
-#   An object group creator is started and asked to create three object groups:
-#   a group of hobbits, a group of elves; and another group of hobbits.
-#
-#   ***Test: the object group creator asks the ReplicationManager::FactoryRegistry
-#   for the set of factories that can create objects for the desired role.
-#   Then it uses the create_object method for each factory to create the actual object.
-#
-#   [temporary until IOGR's are working:  The object group creator writes the
-#   IOR's of the create objects to files -- using a file naming convention to
-#   distinguish members of the group.  It will be enhanced to assemble these
-#   IORs into an IOGR and either write the IOGR to a file or register it with
-#   the Naming Service.]
-#
-#   The object group creator is also told to unregister all factories that create humans.
-#   ***Test: It does so using the unregister_factory_by_role method.
-#
-#   Three clients are started, one at a time.  Each client is given a reference
-#   to an object group
-#
-#   [temporary until IOGRs and transparent reinvocaton work:  each client is
-#   given references to the members of the group and manages its own recovery
-#   (client mediated fault tolerance)]
-#
-#   Each client sends a few requests to first member of the object group.  Eventually
-#   this member fails and the requests are then rerouted to the second (and last)
-#   member of the group.
-#
-#   When a clients job is done, it exits and asks the remaining group member to
-#   exit, too.
-#
-#   The factories are run with the quit-on-idle option so when the last object
-#   created at that location goes away, the factory exits.
-#
-#   ***Test: As it exits the factory unregisters itself with the ReplicationManager::FactoryRegistry.
-#   ***Test: A command line option determines whether it uses a single
-#   unregister_factory_by_location call, or separate unregister_factory calles for
-#   each type of object created.  In this test, the shire location uses unregister_factory,
-#   and bree and rivendell use unregister_factory_by_location.
-#
-#   The factory registry is also run with the quit-on-idle option so when the last
-#   factory unregisters itself.
-#   The ReplicationManager is killed because it doesn't have a quit-on-idle option.
+#   1)        Start the ReplicationManager (RM),
+#   2)        Start the Fault Notification Server(FN)
+#   2.1)      FN registers with RM.
+#   2.2)      RM registers as consumer with FN
+#   3)        Start FaultDetectorFactory at location shire (FD@shire)
+#   3.1)      FD@shire registers with RM
+#   4)        Start FaultDetectorFactory at location bree (FD@bree)
+#   4.1)      FD@bree registers with RM
+#   5)        Start Replica Factory at location shire (RF@shire) that can create hobbits
+#   5.1)      RF@shire registers with RM to create hobbit@shire
+#   6)        Start Replica Factory at location bree (RF@bree) that can create hobbits and elves.
+#   6.1)      RF@bree registers with RM to create hobbit@bree
+#   6.1)      RF@bree registers with RM to create elf@bree
+#   6)        Start Replica Factory at location rivendell (RF@rivendell) that can create elves.
+#   6.1)      RF@bree registers with RM to create elf@rivendell
+#   7)        Start ObjectGroupCreator (OGC)
+#   7.1)      OGC calls RM to create group of hobbits (IOGR1)
+#   7.1.1)    OGC calls RF@shire to create hobbit@shire[1]
+#   7.1.1.1)  OGC calls FD@shire to create FaultDetector for hobbit@shire[1]
+#   7.1.1.2)  OGC adds hobbit@shire[1] to IOGR1.
+#   7.1.2)    OGC calls RF@bree to craate hobbit@bree[1]
+#   7.1.2.1)  OGC calls FD@bree to create FaultDetector for hobbit@bree[1]
+#   7.1.2.2)  OGC adds hobbit@bree[1] to IOGR1.
+#   7.2)      OGC calls RM to create group of elves (IOGR2)
+#   7.2.1)    OGC calls RF@bree to create elf@bree[2]
+#   7.2.1.1)  OGC calls FD@bree to create FaultDetector for elf@bree[2]
+#   7.2.1.2)  OGC adds elf@bree[2] to IOGR2.
+#   7.2.2)    OGC calls RF@rivendell to create elf@rivendell[1]
+#   7.2.2.1)  OGC calls FD@shire to create FaultDetector for elf@rivendell[1]
+#   7.2.2.2)  OGC adds elf@rivendell[1] to IOGR2.
+#   7.3)      OGC calls RM to create group of hobbits (IOGR3)
+#   7.3.1)    OGC calls RF@shire to create hobbit@shire[2]
+#   7.3.1.1)  OGC calls FD@shire to create FaultDetector for hobbit@shire[2]
+#   7.3.1.2)  OGC adds hobbit@shire[2] to IOGR2.
+#   7.3.2)    OGC calls RF@bree to craate hobbit@bree[3]
+#   7.3.2.1)  OGC calls FD@bree to create FaultDetector for hobbit@bree[3]
+#   7.3.2.2)  OGC adds hobbit@bree[3] to IOGR3.
+#   8)        Start client1 with IOGR1
+#   8.1)      Hobbit@shire[1] fails. FD sends notification FN.
+#   8.1.1)    FN sends notification to RM.
+#   8.1.2)    RM removes hobbit@shire[1] from IOGR1.
+#   8.2)      Client1 terminates itself and hobbit@bree[1].
+#   9)        Start Cient2 with IOGR2.
+#   9.1)      Repeat 8.1 & 8.2 using IOGR3.
+#   10)       Start Cient3 with IOGR3.
+#   10.1)     Repeat 8.1 & 8.2 using IOGR3.
+#   11)       System manages to shut itself down.
 
 use lib '../../../../bin';
 #use lib '$ENV{ACE_ROOT}/bin';

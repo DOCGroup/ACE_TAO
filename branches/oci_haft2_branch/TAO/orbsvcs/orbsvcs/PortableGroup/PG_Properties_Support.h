@@ -72,7 +72,6 @@ namespace TAO
           const PortableGroup::Value & value
           ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException));
-          ;
 
     /**
      * Update the default property set.
