@@ -1,3 +1,21 @@
+Sun Oct  3 12:47:35 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/MM_Shared_Memory_Test.cpp: Added an ACE_Process_Semaphore
+	  so we no longer need to sleep in order to wait for the server to
+ 	  be initialized.
+
+	* tests/Process_Strategy_Test.cpp (main): Switched the processes
+	  in which the client and server are run so that the server is now
+ 	  run in the parent and the client is run in the child.  This made
+ 	  it possible to remove the ACE_OS::sleep(1) call because the
+ 	  acceptor is created before the fork, so the client should always
+ 	  be able to connect to the server, even if the server isn't
+ 	  scheduled to run again before the client.  
+
+	* tests/Process_Mutex_Test.cpp,
+  	* tests/SV_Shared_Memory_Test.cpp:
+	  Fixed some improper style problems with these tests.
+  
 Sun Oct 03 10:34:19 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/SV_Shared_Memory_Test.cpp (main): only delete

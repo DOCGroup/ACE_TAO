@@ -32,7 +32,8 @@
 //     % Process_Strategy_Test -c PROCESS
 //
 // = AUTHOR
-//    Doug Schmidt and Kevin Boyle <kboyle@sanwafp.com>
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu> 
+//    and Kevin Boyle <kboyle@sanwafp.com>
 //
 // ============================================================================
 
@@ -326,8 +327,7 @@ Counting_Service::Counting_Service (ACE_Thread_Manager *)
 int
 Counting_Service::read (void)
 {
-  ACE_READ_GUARD_RETURN (ACE_File_Lock, ace_mon,
-                         OPTIONS::instance ()->file_lock (), -1);
+  ACE_READ_GUARD_RETURN (ACE_File_Lock, ace_mon, OPTIONS::instance ()->file_lock (), -1);
 
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%P|%t) reading on handle %d.\n"),
@@ -409,12 +409,10 @@ Counting_Service::handle_input (ACE_HANDLE)
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%P|%t) reading from peer on %d\n"),
               this->peer ().get_handle ()));
-
   size_t len;
   // Read the PDU length first.
   ssize_t bytes = this->peer ().recv ((void *) &len,
                                       sizeof len);
-
   if (bytes <= 0)
     return -1;
 
@@ -430,7 +428,6 @@ Counting_Service::handle_input (ACE_HANDLE)
                   this->peer ().get_handle (),
                   bytes,
                   buf));
-
       // Read and return the current value in the file.
       if (ACE_OS::strncmp (buf,
                            "read",
@@ -506,7 +503,9 @@ Counting_Service::open (void *)
 static void *
 client (void *arg)
 {
-  ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
+  ACE_INET_Addr *remote_addr =
+    ACE_reinterpret_cast (ACE_INET_Addr *,
+                          arg);
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
                              ACE_DEFAULT_SERVER_HOST);
   ACE_SOCK_Stream stream;
@@ -522,7 +521,8 @@ client (void *arg)
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%P|%t) client iteration %d\n"),
                   i));
-      if (connector.connect (stream, server_addr) == -1)
+      if (connector.connect (stream,
+                             server_addr) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ASYS_TEXT ("%p\n"),
                            ASYS_TEXT ("open")),
@@ -674,12 +674,11 @@ main (int argc, ASYS_TCHAR *argv[])
           exit (-1);
           /* NOTREACHED */
         case 0:
-          server (0);
+          client (&server_addr);
           break;
           /* NOTREACHED */
         default:
-          ACE_OS::sleep (1);
-          client (&server_addr);
+          server (0);
           break;
           /* NOTREACHED */
         }

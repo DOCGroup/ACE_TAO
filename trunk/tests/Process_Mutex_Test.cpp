@@ -9,10 +9,10 @@
 //    Process_Mutex_Test.cpp
 //
 // = DESCRIPTION
-//    Tests a Process Mutex shared between multiple processes
+//    Tests an <ACE_Process_Mutex> shared between multiple child processes.
 //
 // = AUTHOR
-//    Irfan Pyarali
+//    Irfan Pyarali <irfan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -44,7 +44,7 @@ print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("usage: %n [-d (don't release mutex)] ")
-              ASYS_TEXT ("[-c (child process)] [-n mutex name] \n")));
+              ASYS_TEXT ("[-c (child process)] [-n mutex name]\n")));
   ACE_OS::exit (1);
 }
 
@@ -90,8 +90,10 @@ acquire_release (void)
               mutex_name));
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%P) Working....\n")));
-  // work
+
+  // Do some "work", i.e., just sleep for a couple of seconds.
   ACE_OS::sleep (2);
+
   // Check if we need to release the mutex
   if (release_mutex == 1)
     {
@@ -118,7 +120,7 @@ main (int argc, ASYS_TCHAR *argv[])
 
   parse_args (argc, argv);
 
-  // Child process code
+  // Child process code.
   if (child_process)
     {
       ACE_APPEND_LOG ("Process_Mutex_Test-children");
@@ -134,7 +136,7 @@ main (int argc, ASYS_TCHAR *argv[])
       if (release_mutex == 0)
         options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
                               ACE_TEXT ("Process_Mutex_Test")
-                                ACE_PLATFORM_EXE_SUFFIX
+                              ACE_PLATFORM_EXE_SUFFIX
                               ACE_TEXT (" -c -n %s -d"),
                               ACE_WIDE_STRING (mutex_name));
       else
@@ -144,28 +146,32 @@ main (int argc, ASYS_TCHAR *argv[])
                               ACE_TEXT (" -c -n %s"),
                               ACE_WIDE_STRING (mutex_name));
 
-      // Spawn processes that will contend for the lock.
-      ACE_Process servers[n_processes];
+      // Spawn child processes that will contend for the lock.
+      ACE_Process children[n_processes];
       size_t i;
 
-      for (i = 0; i < n_processes; i++)
+      for (i = 0;
+           i < n_processes;
+           i++)
         {
-          ACE_ASSERT (servers[i].spawn (options) != -1);
+          // Spawn the child process.
+          int result = children[i].spawn (options);
+          ACE_ASSERT (result != -1);
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("Server forked with pid = %d.\n"),
-                      servers[i].getpid ()));
+                      ASYS_TEXT ("Server spawned child process with pid = %d.\n"),
+                      children[i].getpid ()));
 
-          // Give the server a chance to start . . .
+          // Give the child process a chance to start...
           ACE_OS::sleep (1);
         }
 
       for (i = 0; i < n_processes; i++)
         {
-          // Wait for the process we created to exit.
-          ACE_ASSERT (servers[i].wait () != -1);
+          // Wait for the child processes we created to exit.
+          ACE_ASSERT (children[i].wait () != -1);
           ACE_DEBUG ((LM_DEBUG,
                       ASYS_TEXT ("Server %d finished\n"),
-                      servers[i].getpid ()));
+                      children[i].getpid ()));
         }
 
       ACE_END_TEST;
