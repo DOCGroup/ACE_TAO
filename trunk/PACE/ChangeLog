@@ -1,3 +1,7 @@
+Fri Aug 18 12:30:51 2000  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/rules.common.GNU: Added section for AIX.
+
 Wed Aug 16 17:31:43 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/pthread.h:
