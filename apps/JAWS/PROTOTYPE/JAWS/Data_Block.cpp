@@ -38,9 +38,3 @@ JAWS_Data_Block::policy (JAWS_Dispatch_Policy *policyp)
 {
   this->policy_ = policyp;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class JAWS_Pipeline_Abstract_Handler<JAWS_Data_Block>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate JAWS_Pipeline_Abstract_Handler<JAWS_Data_Block>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
