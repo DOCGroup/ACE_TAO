@@ -110,7 +110,7 @@ error_string(UTL_Error::ErrorCode c)
   case UTL_Error::EIDL_ILLEGAL_USE:
     return GTDEVEL("illegal type used in expression, ");
   case UTL_Error::EIDL_ILLEGAL_RAISES:
-    return GTDEVEL("error in raises(..) clause, ");
+    return GTDEVEL("error in or illegal use of raises(..) clause, ");
   case UTL_Error::EIDL_ILLEGAL_CONTEXT:
     return GTDEVEL("error in context(..) clause, ");
   case UTL_Error::EIDL_CANT_INHERIT:

@@ -1354,7 +1354,8 @@ switch_type_spec :
 	}
 	| octet_type
 	{
-	  $$ = idl_global->scopes()->bottom()->lookup_primitive_type($1);
+          // octets are not allowed
+          idl_global->err ()->error0 (UTL_Error::EIDL_DISC_TYPE);
 	}
 	| boolean_type
 	{
@@ -1393,9 +1394,14 @@ switch_type_spec :
 		  case AST_PredefinedType::PT_short:
 		  case AST_PredefinedType::PT_char:
 		  case AST_PredefinedType::PT_wchar:
-		  case AST_PredefinedType::PT_octet:
 		  case AST_PredefinedType::PT_boolean:
 		    $$ = p;
+		    found = I_TRUE;
+		    break;
+		  case AST_PredefinedType::PT_octet:
+                    // octets are not allowed
+                    idl_global->err ()->error0 (UTL_Error::EIDL_DISC_TYPE);
+                    $$ = NULL;
 		    found = I_TRUE;
 		    break;
 		  default:
@@ -1403,7 +1409,11 @@ switch_type_spec :
 		    found = I_TRUE;
 		    break;
 		  }
-		}
+		} else
+                {
+		    $$ = NULL;
+		    found = I_TRUE;
+                }
 		break;
 	      case AST_Decl::NT_typedef:
 		t = AST_Typedef::narrow_from_decl(d);

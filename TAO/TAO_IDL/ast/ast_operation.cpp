@@ -174,6 +174,9 @@ AST_Operation::fe_add_exceptions(UTL_NameList *t)
       return NULL;
     }
     fe = AST_Exception::narrow_from_decl(d);
+    if ((this->flags () == AST_Operation::OP_oneway) && fe)
+      idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES, this);
+
     if (fe == NULL) {
       idl_global->err()->error1(UTL_Error::EIDL_ILLEGAL_RAISES, this);
       return NULL;
