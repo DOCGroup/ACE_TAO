@@ -1,3 +1,14 @@
+Mon Nov 20 15:49:50 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+		* performance-tests/Cubit/TAO/IDL_Cubit/server.dsp
+		* performance-tests/Cubit/TAO/IDL_Cubit/client.dsp
+		  Updated setings.
+
+ 		* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf
+
+		  Updated to use the right resource factory keeping in view 
+		  the advanced resource factory arguments passed to it.
+
 Mon Nov 20 15:55:38 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IIOP_Connector.cpp (TAO_IIOP_Connector):
