@@ -118,8 +118,7 @@ ACE_Buffered_Task<PEER_STREAM, class SYNCH>::ACE_Buffered_Task (PEER_STREAM stre
 {
 }
 
-int 
-template <class PEER_STREAM, class SYNCH>
+template <class PEER_STREAM, class SYNCH> int
 ACE_Buffered_Task<PEER_STREAM, SYNCH>::put (ACE_Message_Block *mb,
                                             ACE_Time_Value *tv)
 {
@@ -143,8 +142,7 @@ ACE_Buffered_Task<PEER_STREAM, SYNCH>::put (ACE_Message_Block *mb,
 
 // Flush the buffer.
 
-int
-template <class PEER_STREAM, class SYNCH>
+template <class PEER_STREAM, class SYNCH> int
 ACE_Buffered_Task<PEER_STREAM, SYNCH>::flush (void)
 {
 #if 0
