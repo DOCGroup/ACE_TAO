@@ -1,3 +1,10 @@
+Wed Feb 18 12:22:48 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Buffer_Stream_Test.cpp (Consumer::svc): added a
+          thr_yield so that the test magically works on LynxOS.
+          It looks like pthread_cond_{,timed}wait is busted on
+          LynxOS, we're investigating it.
+
 Wed Feb 18 11:53:00 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* bin/auto_compile: 
