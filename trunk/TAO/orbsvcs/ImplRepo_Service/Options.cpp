@@ -605,12 +605,12 @@ Options::startup_timeout (void) const
 
 
 /**
- * @return The file where the IOR will be stored.
+ * @return The amount of time to wait between pings
  */
 const ACE_Time_Value &
 Options::ping_interval (void) const
 {
-  return this->startup_timeout_;
+  return this->ping_interval_;
 }
 
 /**
