@@ -5,7 +5,7 @@ project(RoundTrip_stub): ciao_client {
   after += Benchmark_stub
   sharedname = RoundTrip_stub
 
-  libs     += RoundTrip_stub
+  libs     += Benchmark_stub
 
   idlflags += -Wb,stub_export_macro=ROUNDTRIP_STUB_Export 
   idlflags += -Wb,stub_export_include=RoundTrip_stub_export.h 
