@@ -315,14 +315,17 @@ TAO_GIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
 
 void
 TAO_GIOP_ServerRequest::set_result (const CORBA::Any &value,
-                                CORBA::Environment &ACE_TRY_ENV)
+                                    CORBA::Environment &ACE_TRY_ENV)
 {
   // setting a result when another result already exists or if an exception
   // exists is an error
   if (this->retval_ || this->exception_)
     ACE_THROW (CORBA::BAD_INV_ORDER ());
 
-  this->retval_ = new CORBA::Any (value);
+  ACE_NEW_THROW_EX (this->retval_,
+                    CORBA::Any (value),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK;
 }
 
 // Store the exception value.
@@ -362,8 +365,10 @@ TAO_GIOP_ServerRequest::set_exception (const CORBA::Any &value,
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
       {
-        this->exception_ = new CORBA::Any (value);
-
+        ACE_NEW_THROW_EX (this->exception_,
+                          CORBA::Any (value),
+                          CORBA::NO_MEMORY ());
+        ACE_CHECK;
         this->exception_type_ = TAO_GIOP_USER_EXCEPTION;
 
         if (value.value ())

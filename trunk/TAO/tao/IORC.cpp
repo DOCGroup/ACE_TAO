@@ -454,7 +454,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO_IOP::TAO_IOR_Manipul
 
 void operator<<= (CORBA::Any &_tao_any, const TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList &_tao_elem) // copying
 {
-  TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList *_tao_any_val = new TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList (_tao_elem);
+  TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val,
+           TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList (_tao_elem));
+
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -520,7 +523,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO_IOP::TAO_IOR_Manipul
 
 void operator<<= (CORBA::Any &_tao_any, const TAO_IOP::TAO_IOR_Manipulation::NotFound &_tao_elem) // copying
 {
-  TAO_IOP::TAO_IOR_Manipulation::NotFound *_tao_any_val = new TAO_IOP::TAO_IOR_Manipulation::NotFound (_tao_elem);
+  TAO_IOP::TAO_IOR_Manipulation::NotFound *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val,
+           TAO_IOP::TAO_IOR_Manipulation::NotFound (_tao_elem));
+
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -586,7 +592,9 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO_IOP::TAO_IOR_Manipul
 
 void operator<<= (CORBA::Any &_tao_any, const TAO_IOP::TAO_IOR_Manipulation::Duplicate &_tao_elem) // copying
 {
-  TAO_IOP::TAO_IOR_Manipulation::Duplicate *_tao_any_val = new TAO_IOP::TAO_IOR_Manipulation::Duplicate (_tao_elem);
+  TAO_IOP::TAO_IOR_Manipulation::Duplicate *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val,
+           TAO_IOP::TAO_IOR_Manipulation::Duplicate (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -652,7 +660,9 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO_IOP::TAO_IOR_Manipul
 
 void operator<<= (CORBA::Any &_tao_any, const TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR &_tao_elem) // copying
 {
-  TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR *_tao_any_val = new TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (_tao_elem);
+  TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val,
+           TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {

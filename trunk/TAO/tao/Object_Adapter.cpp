@@ -1095,8 +1095,13 @@ TAO_POA_Current_Impl::get_POA (CORBA::Environment &ACE_TRY_ENV)
 PortableServer::ObjectId *
 TAO_POA_Current_Impl::get_object_id (CORBA::Environment &)
 {
+  PortableServer::ObjectId *objid = 0;
+  
   // Create a new one and pass it back
-  return new PortableServer::ObjectId (this->object_id_);
+  ACE_NEW_RETURN (objid,
+                  PortableServer::ObjectId (this->object_id_),
+                  0);
+  return objid;
 }
 
 TAO_ORB_Core &

@@ -1,3 +1,16 @@
+Wed Mar  1 12:47:41 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Policy_Manager.cpp (get_policy_overrides): 
+	* tao/GIOP_Server_Request.cpp:
+	* tao/POA.cpp:
+	* tao/decode.cpp:
+	* tao/Object_Adapter.cpp:
+	* tao/ORB.cpp:
+	* tao/IORC.cpp:Removed the naked "new" operators. This is for bug
+	  #259. The bug refers only to ORB_Core, but other things were
+	  also added to make things cleaner. BTW, it was also observed
+	  that there were no naked new operators in ORB_Core.cpp. 
+	  
 Wed Mar  1 08:29:42 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/default_resource.cpp:

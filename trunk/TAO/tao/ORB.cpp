@@ -142,7 +142,11 @@ CORBA_ORB::InvalidName::_raise (void)
 // TAO extension - the _alloc method
 CORBA::Exception *CORBA::ORB::InvalidName::_alloc (void)
 {
-  return new CORBA::ORB::InvalidName;
+  CORBA::ORB::InvalidName *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  CORBA::ORB::InvalidName,
+                  0);
+  return retval; 
 }
 
 CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
@@ -303,7 +307,12 @@ CORBA_ORB::create_list (CORBA::Long count,
 
       for (CORBA::Long i=0; i < count; i++)
         {
-          CORBA::NamedValue_ptr nv = new CORBA::NamedValue;
+          CORBA::NamedValue_ptr nv = 0;
+          ACE_NEW_THROW_EX (nv,
+                            CORBA::NamedValue,
+                            CORBA::NO_MEMORY ());
+          ACE_CHECK;
+
           new_list->values_.enqueue_tail (nv);
         }
     }
