@@ -2,6 +2,7 @@ Wed Jun 13 17:28:18 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tao/ORB_Core.h:
         * tao/Policy_Set.h:
+        * tao/Policy_Set.cpp:
           
           Fixed warnings detected by the Tru64 compiler.
           
