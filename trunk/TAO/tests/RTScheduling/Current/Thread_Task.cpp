@@ -111,7 +111,7 @@ Thread_Task::svc (void)
                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      int count ;
+      size_t count = 0;
       ACE_OS::memcpy (&count,
                       this->current_->id ()->get_buffer (),
                       this->current_->id ()->length ());

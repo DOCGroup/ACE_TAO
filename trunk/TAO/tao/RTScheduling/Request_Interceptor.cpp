@@ -50,12 +50,12 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
           RTScheduling::Current::IdType guid;
           guid.length (sizeof(long));
 
-          long temp = ++TAO_RTScheduler_Current::guid_counter;
+          size_t temp = ++TAO_RTScheduler_Current::guid_counter;
           ACE_OS::memcpy (guid.get_buffer (),
                           &temp,
-                          sizeof(long));
+                          sizeof(size_t));
 
-          int id;
+          size_t id;
           ACE_OS::memcpy (&id,
                           guid.get_buffer (),
                           guid.length ());
@@ -338,12 +338,12 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
       return;
     }
   RTScheduling::Current::IdType guid;
-  guid.length (sizeof (long));
+  guid.length (sizeof (size_t));
   ACE_OS::memcpy (guid.get_buffer (),
                   guid_var->get_buffer (),
-                  sizeof (long));
+                  sizeof (size_t));
 
-  int id;
+  size_t id;
   ACE_OS::memcpy (&id,
                   guid.get_buffer (),
                   guid.length ());

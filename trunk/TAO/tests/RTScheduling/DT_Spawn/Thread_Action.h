@@ -42,7 +42,7 @@ Test_Thread_Action::_cxx_do (CORBA::VoidData data
 	      "Test_Thread_Action::do %s\n",
 	      tmp->data));
 
-  int count ;
+  size_t count = 0;
   ACE_OS::memcpy (&count,
 		  tmp->current->id ()->get_buffer (),
 		  tmp->current->id ()->length ());
