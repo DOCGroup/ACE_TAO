@@ -1,3 +1,10 @@
+Wed Dec 10 22:38:08 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO/tests/Cubit/TAO/DII_Cubit: Fixed the  hand-crafted code to
+	make use of the many changes that were made to the dispatching
+	scheme as well as changes made to the signature of the skeletons
+	for operations of interfaces.
+
 Wed Dec 10 21:41:48 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 	* docs/releasenotes/index.html: Updated the release notes on the
@@ -5,7 +12,7 @@ Wed Dec 10 21:41:48 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 Wed Dec 10 20:13:57 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* Makefile: 
+	* Makefile:
 	  Added orbsvcs to the hierarchy.
 
 	* The orbsvcs directory was completely reorganized, in preparation
@@ -19,7 +26,7 @@ Wed Dec 10 20:13:57 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 	  - orbsvcs/Event_Service: TAO Real-Time Event Service.
 	  - orbsvcs/tests: test programs and examples.
 
-	* docs/releasenotes/index.html: 
+	* docs/releasenotes/index.html:
 	  Updated documentation on the Event Service and its friends.
 
 Wed Dec 10 19:57:07 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
@@ -32,13 +39,13 @@ Wed Dec 10 19:57:07 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 Wed Dec 10 14:23:24 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* TAO_IDL/be/be_state_structure.cpp: 
+	* TAO_IDL/be/be_state_structure.cpp:
 	  Fixed a bug when handling typedefs.
 	  It was generating code for imported types, we protected the
 	  generation with a !imported(), thank to Andy Gokhale
 	  <gokhale@cs.wustl.edu> for helping me on this.
 
-	* tao/connect.cpp: 
+	* tao/connect.cpp:
 	  Set the TCP_NODELAY option by default, otherwise oneway calls
 	  are considerably slower.  It should have no effect for twoway
 	  calls.  Anyway an option should be added to control this
