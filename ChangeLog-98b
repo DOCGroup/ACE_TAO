@@ -38,6 +38,10 @@ Tue Oct 20 16:28:12 1998  David L. Levine  <levine@cs.wustl.edu>
           Thanks to Susan Liebeskind <shl@janis.gtri.gatech.edu>
           for suggesting this.
 
+        * ACE-INSTALL.html: added AIX 4.2.1 xlC V3.1 patch info.
+          Thanks to Susan Liebeskind <shl@janis.gtri.gatech.edu>
+          for supplying it, in ready-to-use form.
+
         * tests/Thread_Manager._Test.cpp (main): changed debug messages
           for suspend_grp/resume_grp with Pthreads, which fail due to
           ENOTSUP.  The resume_grp message was wrong (copy and paste
