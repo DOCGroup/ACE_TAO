@@ -1,3 +1,14 @@
+Thu Sep 27 16:23:34 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/Smart_Proxies/SmartProxies_Static.dsp:
+
+          New project file.
+
+        * TAOACE_Static.dsw:
+
+          Added new project file to workspace. Thanks to Nicolas Vincent
+          <Vincent.Nicolas@Radiometer.dk> for sending in the files.
+
 Thu Sep 27 13:11:56 2001  Bala  <bala@cs.wustl.edu>
 
         * TAO version 1.1.21 released.
