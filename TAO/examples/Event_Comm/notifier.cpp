@@ -37,6 +37,7 @@ Notifier::Notifier (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       ns_.init (argc, argv, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
