@@ -33,7 +33,7 @@
 
 %Win32_DLL_Collections = ( "$Win32_Lists[0]" => <<EOD , # Debug
 ace/ace.dsw, ACE dynamic library:
-apps/gperf/src/gperf.dsw, ALL:
+apps/gperf/src/gperf.dsw, gperf:
 TAO/tao/TAO.dsw, TAO:
 TAO/TAO_IDL/tao_idl.dsw, TAO_IDL Compiler:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, orbsvcs:
@@ -56,7 +56,7 @@ netsvcs/servers/servers.dsw, NETSVCS Servers:
 EOD
                      "$Win32_Lists[1]" => <<EOD , # Release
 ace/ace.dsw, ACE dynamic library:
-apps/gperf/src/gperf.dsw, ALL:
+apps/gperf/src/gperf.dsw, gperf:
 TAO/tao/TAO.dsw, TAO:
 TAO/TAO_IDL/tao_idl.dsw, TAO_IDL Compiler:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, orbsvcs:
@@ -87,7 +87,7 @@ EOD
 
 %Alpha_DLL_Collections = ( "$Alpha_Lists[0]" => <<EOD , # Debug
 ace/ace.dsw, ACE dynamic library:
-apps/gperf/src/gperf.dsw, ALL:
+apps/gperf/src/gperf.dsw, gperf:
 TAO/tao/TAO.dsw, TAO:
 TAO/TAO_IDL/tao_idl.dsw, TAO_IDL Compiler:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, orbsvcs:
@@ -98,7 +98,7 @@ tests/tests.dsw, ALL:
 EOD
                      "$Alpha_Lists[1]" => <<EOD , # Release
 ace/ace.dsw, ACE dynamic library:
-apps/gperf/src/gperf.dsw, ALL:
+apps/gperf/src/gperf.dsw, gperf:
 TAO/tao/TAO.dsw, TAO:
 TAO/TAO_IDL/tao_idl.dsw, TAO_IDL Compiler:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, orbsvcs:
