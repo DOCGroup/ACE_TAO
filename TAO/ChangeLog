@@ -1,3 +1,10 @@
+Sat Feb 21 09:36:45 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* tao/Codeset_Manager.cpp (TAO_Codeset_Item): Replaced
+	  delete [] this->name_ with ACE_OS::free (this->name_) since
+ 	  this->name_ was allocated by ACE_OS::strdup().  Thanks to
+ 	  Olivier Brunet <o.brunet@free.fr> for reporting this.
+
 Sat Feb 21 08:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.h:
