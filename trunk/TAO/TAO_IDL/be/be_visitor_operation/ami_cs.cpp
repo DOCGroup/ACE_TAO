@@ -537,7 +537,7 @@ be_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node,
   // the connection retry loop must be restarted so do not rethrow the
   // caught exception.
   *os << be_nl
-      << "PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
+      << "const PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
       << "_tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl;
 
@@ -577,7 +577,7 @@ be_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node,
   // support code, so we must explicitly check the status in the
   // ClientRequestInfo object.
   *os << be_nl
-      << "PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
+      << "const PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
       << "_tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl;
 
   if (this->gen_check_exception (bt) == -1)

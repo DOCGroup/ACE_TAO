@@ -74,7 +74,7 @@ TAO_Default_Endpoint_Selector::forward (TAO_GIOP_Invocation *invocation,
   // get created on a per-call basis. For now we'll play it safe.
   if (invocation->stub ()->next_profile () == 0)
     ACE_THROW (CORBA::TRANSIENT (
-      CORBA_SystemException::_tao_minor_code (
+      CORBA::SystemException::_tao_minor_code (
         TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
         errno),
       CORBA::COMPLETED_NO));

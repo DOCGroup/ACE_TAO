@@ -51,7 +51,7 @@ TAO_Connector::make_mprofile (const char *string,
   if (!string || !*string)
     {
       ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                          CORBA_SystemException::_tao_minor_code (
+                          CORBA::SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
                             EINVAL),
                           CORBA::COMPLETED_NO),
@@ -128,7 +128,7 @@ TAO_Connector::make_mprofile (const char *string,
   if (mprofile.set (profile_count) != ACE_static_cast (int, profile_count))
     {
       ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                          CORBA_SystemException::_tao_minor_code (
+                          CORBA::SystemException::_tao_minor_code (
                             TAO_MPROFILE_CREATION_ERROR,
                             0),
                           CORBA::COMPLETED_NO),
@@ -188,7 +188,7 @@ TAO_Connector::make_mprofile (const char *string,
               profile->_decr_refcnt ();
 
               ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                                  CORBA_SystemException::_tao_minor_code (
+                                  CORBA::SystemException::_tao_minor_code (
                                      TAO_MPROFILE_CREATION_ERROR,
                                      0),
                                   CORBA::COMPLETED_NO),
@@ -234,8 +234,9 @@ TAO_Connector::connect (TAO_GIOP_Invocation *invocation,
   // If transport found, reference count is incremented on assignment
   // @@todo: We need to send the timeout value to the cache registry
   // too. That should be the next step!
-  if (this->orb_core ()->lane_resources ().transport_cache ().find_transport (desc,
-                                                                              base_transport) == 0)
+  if (this->orb_core ()->lane_resources ().transport_cache ().find_transport (
+        desc,
+        base_transport) == 0)
     {
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
@@ -250,7 +251,7 @@ TAO_Connector::connect (TAO_GIOP_Invocation *invocation,
       // base_transport.
       transport = base_transport;
 
-      // Successfull
+      // Successful
       return 0;
     }
 
@@ -270,7 +271,8 @@ TAO_Connector::create_connect_strategy (void)
   if (this->active_connect_strategy_ == 0)
     {
       this->active_connect_strategy_ =
-        this->orb_core_->client_factory ()->create_connect_strategy (this->orb_core_);
+        this->orb_core_->client_factory ()->create_connect_strategy (
+          this->orb_core_);
     }
 
   if (this->active_connect_strategy_ == 0)

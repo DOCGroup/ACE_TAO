@@ -562,7 +562,7 @@ operator<< (
   )
 {
   return
-    CORBA_ValueBase::_tao_marshal (
+    CORBA::ValueBase::_tao_marshal (
         strm,
         ACE_const_cast (
             TAO_Default_ORT::ObjectReferenceTemplate *,

@@ -41,7 +41,7 @@
 
 // Default constructor.
 IORTable::AlreadyBound::AlreadyBound (void)
-  : CORBA_UserException (
+  : CORBA::UserException (
         "IDL:IORTable/AlreadyBound:1.0",
         "AlreadyBound"
       )
@@ -55,7 +55,7 @@ IORTable::AlreadyBound::~AlreadyBound (void)
 
 // Copy constructor.
 IORTable::AlreadyBound::AlreadyBound (const ::IORTable::AlreadyBound &_tao_excp)
-  : CORBA_UserException (
+  : CORBA::UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -66,7 +66,7 @@ IORTable::AlreadyBound::AlreadyBound (const ::IORTable::AlreadyBound &_tao_excp)
 IORTable::AlreadyBound&
 IORTable::AlreadyBound::operator= (const ::IORTable::AlreadyBound &_tao_excp)
 {
-  this->CORBA_UserException::operator= (_tao_excp);
+  this->UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -141,7 +141,7 @@ void IORTable::AlreadyBound::_tao_decode (
 
 // Default constructor.
 IORTable::NotFound::NotFound (void)
-  : CORBA_UserException (
+  : CORBA::UserException (
         "IDL:IORTable/NotFound:1.0",
         "NotFound"
       )
@@ -155,7 +155,7 @@ IORTable::NotFound::~NotFound (void)
 
 // Copy constructor.
 IORTable::NotFound::NotFound (const ::IORTable::NotFound &_tao_excp)
-  : CORBA_UserException (
+  : CORBA::UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -166,7 +166,7 @@ IORTable::NotFound::NotFound (const ::IORTable::NotFound &_tao_excp)
 IORTable::NotFound&
 IORTable::NotFound::operator= (const ::IORTable::NotFound &_tao_excp)
 {
-  this->CORBA_UserException::operator= (_tao_excp);
+  this->UserException::operator= (_tao_excp);
   return *this;
 }
 

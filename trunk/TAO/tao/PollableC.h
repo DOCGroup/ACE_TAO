@@ -222,7 +222,7 @@ TAO_NAMESPACE  CORBA
 #define _CORBA_POLLABLE_CH_
   
   class TAO_Export Pollable
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -496,7 +496,7 @@ TAO_NAMESPACE  CORBA
 #define _CORBA_POLLABLESET_CH_
   
   class TAO_Export PollableSet
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)

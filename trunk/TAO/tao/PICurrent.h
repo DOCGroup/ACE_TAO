@@ -47,6 +47,7 @@
 /// Forward declarations.
 class TAO_ORB_Core;
 class TAO_PICurrent_Impl;
+class TAO_ServerRequest;
 
 /**
  * @class TAO_PICurrent

@@ -157,7 +157,7 @@ TAO_NAMESPACE  PortableInterceptor
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY_CH_
   
   class TAO_Export ObjectReferenceFactory
-    : public virtual CORBA_ValueBase
+    : public virtual CORBA::ValueBase
   {
   public:
     

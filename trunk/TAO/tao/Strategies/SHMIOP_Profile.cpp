@@ -181,7 +181,7 @@ TAO_SHMIOP_Profile::parse_string (const char *string
   if (!string || !*string)
     {
       ACE_THROW (CORBA::INV_OBJREF (
-                   CORBA_SystemException::_tao_minor_code (
+                   CORBA::SystemException::_tao_minor_code (
                      TAO_DEFAULT_MINOR_CODE,
                      EINVAL),
                    CORBA::COMPLETED_NO));
@@ -208,7 +208,7 @@ TAO_SHMIOP_Profile::parse_string (const char *string
       this->version_.minor >  TAO_DEF_GIOP_MINOR)
     {
       ACE_THROW (CORBA::INV_OBJREF (
-                   CORBA_SystemException::_tao_minor_code (
+                   CORBA::SystemException::_tao_minor_code (
                      TAO_DEFAULT_MINOR_CODE,
                      EINVAL),
                    CORBA::COMPLETED_NO));
@@ -225,7 +225,7 @@ TAO_SHMIOP_Profile::parse_string (const char *string
     {
       // No host/port delimiter!
       ACE_THROW (CORBA::INV_OBJREF (
-                   CORBA_SystemException::_tao_minor_code (
+                   CORBA::SystemException::_tao_minor_code (
                      TAO_DEFAULT_MINOR_CODE,
                      EINVAL),
                    CORBA::COMPLETED_NO));
@@ -237,7 +237,7 @@ TAO_SHMIOP_Profile::parse_string (const char *string
     {
       // No object key delimiter!
       ACE_THROW (CORBA::INV_OBJREF (
-                   CORBA_SystemException::_tao_minor_code (
+                   CORBA::SystemException::_tao_minor_code (
                      TAO_DEFAULT_MINOR_CODE,
                      EINVAL),
                    CORBA::COMPLETED_NO));
@@ -287,7 +287,7 @@ TAO_SHMIOP_Profile::parse_string (const char *string
 
             // @@ What's the right exception to throw here?
             ACE_THROW (CORBA::INV_OBJREF (
-                         CORBA_SystemException::_tao_minor_code (
+                         CORBA::SystemException::_tao_minor_code (
                            TAO_DEFAULT_MINOR_CODE,
                            EINVAL),
                          CORBA::COMPLETED_NO));
@@ -313,7 +313,7 @@ TAO_SHMIOP_Profile::parse_string (const char *string
 
       // @@ What's the right exception to throw here?
       ACE_THROW (CORBA::INV_OBJREF (
-                   CORBA_SystemException::_tao_minor_code (
+                   CORBA::SystemException::_tao_minor_code (
                      TAO_DEFAULT_MINOR_CODE,
                      EINVAL),
                    CORBA::COMPLETED_NO));

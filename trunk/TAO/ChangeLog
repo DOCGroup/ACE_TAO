@@ -1,3 +1,746 @@
+Thu Feb 20 09:07:56 2003  Ossama Othman  <ossama@uci.edu>
+
+	* TAO_IDL/be/be_interface.cpp (gen_stub_ctor):
+
+	  Generate code that correctly uses "CORBA::Object" instead of
+	  "CORBA_Object".
+
+	  (gen_var_defn):
+
+	  Made generated "_var" classes inherit privately from
+	  TAO_Base_var instead of publically.  Specifically, private
+	  inheritance from TAO_Base_var is done to emphasize that 
+  	  a given "_var" does not satisfy the IS-A relationship with
+	  TAO_Base_var.  "_var" classes are merely IMPLEMENTED-IN-TERMS-OF
+	  TAO_Base_var.  This also correctly invalidates assignments like:
+		Foo_var v;
+		TAO_Base_var * t = &v;
+
+	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp
+	  (visit_exception):
+
+	  Generate code that correctly uses "CORBA::UserException" instead
+	  of "CORBA_UserException".
+
+	* TAO_IDL/be/be_visitor_interface/amh_ch.cpp
+	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/arglist.cpp:
+
+	  Generate code that correctly uses "CORBA::Object" instead of
+	  "CORBA_Object".
+
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+
+	  Improved "const correctness" of generated interceptor related
+	  code.  One of the return values is really a constant.
+
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+
+	  Fixed generated transport retry code/loop.  The exception macros
+	  prevent statements like "continue" and "break" from being used
+	  as expected.  Worked around that deficiency by using if/else
+	  blocks instead.
+
+	  Improved "const correctness" of generated interceptor related
+	  code.  One of the return values is really a constant.
+
+	* TAO_IDL/be/be_visitor_valuetype/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_init_cs.cpp:
+
+	  Generate code that correctly uses "CORBA::ValueBase" instead of
+	  "CORBA_ValueBase".
+
+	* TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_init_ch.cpp:
+
+	  Generate code that correctly uses "CORBA::ValueFactoryBase"
+	  instead of "CORBA_ValueFactoryBase".
+
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+
+	  Generate code that correctly uses
+	  "CORBA::DefaultValueRefCountBase" instead of
+	  "CORBA_DefaultValueRefCountBase".
+
+	* orbsvcs/orbsvcs/PortableGroup.idl:
+
+	  Use the "typeprefix" keyword instead of "#pragma prefix".  The
+	  former is more modern.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp:
+
+	  Corrected comment.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlert.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlert.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlert.inl:
+
+	  Fixed race conditions in the TAO_LB_LoadAlert class.
+
+	* orbsvcs/orbsvcs/Notify/Service.h:
+
+	  Include "ace/Service_Object.h" to pull in ACE_Service_Object
+	  class declaration.  Necessitated by inter-header dependency
+	  reductions.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h
+	  (populate_object_group):
+
+	  No need to pass an integral type "const" by value.  Remove the
+	  "const" qualifier.
+
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Loader.h:
+
+	  No need to include "tao/corbafwd.h".
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Loader.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp:
+	* orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp:
+	* tao/CDR_Encaps_Codec.cpp:
+	* tao/CORBALOC_Parser.cpp:
+	* tao/CodecFactory.cpp:
+	* tao/Connector_Registry.cpp:
+	* tao/DLL_Parser.cpp:
+	* tao/IIOP_Profile.cpp:
+	* tao/Interceptor_List.cpp:
+	* tao/Invocation.cpp:
+	* tao/Invocation_Endpoint_Selectors.cpp:
+	* tao/ORBInitInfo.cpp:
+	* tao/PICurrent.cpp:
+	* tao/PolicyFactory_Registry.cpp:
+	* tao/Profile.cpp:
+	* tao/Service_Callbacks.cpp:
+	* tao/Transport_Connector.cpp:
+	* tao/BiDir_GIOP/BiDirGIOP.cpp:
+	* tao/BiDir_GIOP/BiDir_PolicyFactory.cpp:
+	* tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+	* tao/Messaging/Messaging.cpp:
+	* tao/Messaging/Messaging_Policy_i.cpp:
+	* tao/PortableServer/ObjectReferenceTemplate.cpp:
+	* tao/PortableServer/Object_Adapter.cpp:
+	* tao/PortableServer/ServerRequestInfo.cpp:
+	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+	* tao/RTCORBA/RT_PolicyFactory.cpp:
+	* tao/RTCORBA/Thread_Pool.cpp:
+	* tao/Strategies/DIOP_Profile.cpp:
+	* tao/Strategies/SHMIOP_Profile.cpp:
+	* tao/Strategies/UIOP_Profile.cpp:
+	* tests/ORT/ORT_test_IORInterceptor.cpp:
+
+	  Use CORBA::SystemException instead of CORBA_SystemException.
+	  The latter was an implementation detail, and part of a
+	  workaround for C++ compilers that didn't support namespaces.
+
+	* orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.h:
+	* tao/GIOP_Message_Generator_Parser.h:
+	* tao/GIOP_Message_Lite.h:
+	* tao/PICurrent.h:
+	* tao/Request_Dispatcher.h:
+
+	  Forward declare TAO_ServerRequest.  Necessitated by inter-header
+	  dependency reductions.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+
+	  Removed obsolete comment.
+
+	* tao/AbstractBase.cpp:
+	* tao/AbstractBase.h:
+	* tao/AbstractBase.inl:
+	* tao/CORBA_String.cpp:
+	* tao/CORBA_String.h:
+	* tao/CORBA_String.inl:
+	* tao/CurrentC.cpp:
+	* tao/CurrentC.h:
+	* tao/DomainC.cpp:
+	* tao/DomainC.h:
+	* tao/DomainC.i:
+	* tao/Environment.cpp:
+	* tao/Environment.h:
+	* tao/Environment.i:
+	* tao/Exception.cpp:
+	* tao/Exception.h:
+	* tao/Exception.i:
+	* tao/LocalObject.cpp:
+	* tao/LocalObject.h:
+	* tao/LocalObject.i:
+	* tao/NVList.cpp:
+	* tao/NVList.h:
+	* tao/NVList.i:
+	* tao/ORB.cpp:
+	* tao/ORB.h:
+	* tao/ORB.i:
+	* tao/OctetSeqC.cpp:
+	* tao/OctetSeqC.h:
+	* tao/OctetSeqC.i:
+	* tao/PolicyC.cpp:
+	* tao/PolicyC.h:
+	* tao/PolicyC.i:
+	* tao/Principal.cpp:
+	* tao/Principal.h:
+	* tao/Principal.i:
+	* tao/Services.cpp:
+	* tao/Services.h:
+	* tao/Services.i:
+	* tao/StringSeqC.cpp:
+	* tao/StringSeqC.h:
+	* tao/StringSeqC.i:
+	* tao/Typecode.cpp:
+	* tao/Typecode.h:
+	* tao/Typecode.i:
+	* tao/Typecode_Constants.cpp:
+	* tao/ValueBase.cpp:
+	* tao/ValueBase.h:
+	* tao/ValueBase.i:
+	* tao/ValueFactory.cpp:
+	* tao/ValueFactory.h:
+	* tao/ValueFactory.i:
+
+	  Moved all "CORBA_" classes into a true CORBA namespace, and
+	  dropped the "CORBA_" workaround for compilers that lacked
+	  C++ namespace support.
+
+	* tao/Abstract_Servant_Base.h:
+
+	  Moved "TAO_Skeleton" function typedef to this file.  This change
+	  is part of set of inter-header dependency reductions.
+
+	* tao/Acceptor_Filter.h:
+	* tao/Adapter.h:
+
+	  Forward declare TAO_ObjectKey.  Necessitated by inter-header
+	  dependency reductions.
+
+	* tao/Acceptor_Impl.cpp:
+
+	  Include "tao/Transport.h".  Necessitated by inter-header
+	  dependency reductions.
+
+	* tao/Acceptor_Impl.h:
+	* tao/CDR.h:
+
+	  Fixed doxygen documentation.
+
+	* tao/Asynch_Invocation.h:
+
+	  No need to include "tao/Asynch_Reply_Dispatcher_Base.h".
+	  Forward declaring "TAO_Asynch_Reply_Dispatcher_Base" is enough.
+
+	* tao/Asynch_Queued_Message.cpp:
+
+	  Include "ace/Message_Block.h".  Necessitated by inter-header
+	  dependency reductions.
+
+	* tao/Asynch_Reply_Dispatcher_Base.h:
+
+	  No need to include "tao/orbconf.h"  Including "tao/TAO_Export.h"
+	  is enough.
+
+	* tao/BoundsC.cpp:
+	* tao/IOPC.cpp:
+	* tao/PollableC.cpp:
+	* tao/PortableInterceptorC.cpp:
+	* tao/WrongTransactionC.cpp:
+	* tao/DynamicAny/DynamicAnyC.cpp
+	* tao/IORTable/IORTableC.cpp:
+	* tao/PortableServer/PortableServerC.cpp:
+	* tao/RTCORBA/RTCORBAC.cpp:
+
+	  Use CORBA::UserException instead of CORBA_UserException.
+	  The latter was an implementation detail, and part of a
+	  workaround for C++ compilers that didn't support namespaces.
+
+	* orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
+	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+	* orbsvcs/orbsvcs/Trader/Interpreter_Utils.cpp:
+	* orbsvcs/orbsvcs/Trader/Interpreter_Utils.h:
+	* tao/CDR.cpp:
+	* tao/Current.pidl:
+	* tao/Policy_ForwardC.cpp:
+	* tao/Policy_ForwardC.h:
+	* tao/ORB_Core.cpp:
+	* tao/ObjectReferenceTemplateC.cpp:
+	* tao/ObjectReferenceTemplateC.h:
+	* tao/PollableC.h:
+	* tao/PortableInterceptorC.h:
+	* tao/Sequence.cpp:
+	* tao/Sequence_T.cpp:
+	* tao/Sequence_T.h:
+	* tao/TAO_Server_Request.h:
+	* tao/TAO_Server_Request.i:
+	* tao/TypeCodeFactory_Adapter.h:
+	* tao/objectid.h:
+	* tao/DynamicAny/DynAnyFactory.cpp:
+	* tao/DynamicAny/DynAnyFactory.h:
+	* tao/DynamicAny/DynAny_i.cpp:
+	* tao/DynamicAny/DynAny_i.h:
+	* tao/DynamicAny/DynArray_i.cpp:
+	* tao/DynamicAny/DynArray_i.h:
+	* tao/DynamicAny/DynCommon.cpp:
+	* tao/DynamicAny/DynCommon.h:
+	* tao/DynamicAny/DynEnum_i.cpp:
+	* tao/DynamicAny/DynEnum_i.h:
+	* tao/DynamicAny/DynSequence_i.cpp:
+	* tao/DynamicAny/DynSequence_i.h:
+	* tao/DynamicAny/DynStruct_i.cpp:
+	* tao/DynamicAny/DynStruct_i.h:
+	* tao/DynamicAny/DynUnion_i.cpp:
+	* tao/DynamicAny/DynUnion_i.h:
+	* tao/DynamicAny/DynamicAnyC.h:
+	* tao/IORManipulation/IORC.cpp:
+	* tao/IORManipulation/IORC.h:
+	* tao/IORTable/IORTableC.h:
+	* tao/IORTable/Table_Adapter.cpp:
+	* tao/Messaging/MessagingC.cpp:
+	* tao/Messaging/MessagingC.h:
+	* tao/Messaging/MessagingC.i:
+	* tao/Messaging/MessagingS.cpp:
+	* tao/PortableServer/Collocated_Object.cpp:
+	* tao/PortableServer/Collocated_Object.i:
+	* tao/PortableServer/Default_ORTC.cpp:
+	* tao/PortableServer/Default_ORTC.h:
+	* tao/PortableServer/ImR_LocatorC.cpp:
+	* tao/PortableServer/ImR_LocatorC.h:
+	* tao/PortableServer/ImR_LocatorC.i:
+	* tao/PortableServer/ImR_LocatorS.cpp:
+	* tao/PortableServer/ImR_LocatorS.h:
+	* tao/PortableServer/ImplRepoC.cpp:
+	* tao/PortableServer/ImplRepoC.h:
+	* tao/PortableServer/ImplRepoC.i:
+	* tao/PortableServer/ImplRepoS.cpp:
+	* tao/PortableServer/ImplRepoS.h:
+	* tao/PortableServer/ORB_Manager.cpp:
+	* tao/PortableServer/POA.cpp:
+	* tao/PortableServer/PolicyS.cpp:
+	* tao/PortableServer/PolicyS.h:
+	* tao/PortableServer/PortableServerC.h:
+	* tao/PortableServer/Servant_Base.cpp:
+	* tao/PortableServer/Servant_Base.h:
+	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp:
+	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.h:
+	* tao/RTCORBA/RTCORBAC.h:
+
+	  "CORBA_" -> "CORBA::".
+
+	* tao/ClientInterceptorAdapter.cpp (receive_reply):
+	  (receive_exception, receive_other):
+	* tao/ClientRequestInfo_i.cpp:
+
+	  Improved "const-correctness" of code.
+
+	* tao/ClientRequestInfo_i.h:
+
+	  No need to include "Service_Context.h".  Forward declaring
+	  "TAO_Service_Context" is enough.
+
+	* tao/Collocation_Resolver.h:
+	* tao/Connector_Registry.h:
+	* tao/Endpoint_Selector_Factory.h:
+	* tao/Invocation_Endpoint_Selectors.h:
+	* tao/Object_Ref_Table.h:
+	* tao/Transport_Connector.h:
+
+	  Include "ace/CORBA_macros.h" to pull in emulated exception
+	  preprocessor macros.  Necessitated by inter-header dependency
+	  reductions.
+
+	* tao/Connection_Handler.h (~TAO_Connection_Handler):
+	* tao/IIOP_Transport.h (~TAO_IIOP_Transport):
+
+	  Made this destructor to enforce proper memory management through
+	  the reference counting mechanism.
+
+	* tao/Default_Thread_Lane_Resources_Manager.h:
+	* tao/Dynamic_Adapter.h:
+	* tao/Policy_Set.h:
+	* tao/DynamicInterface/Dynamic_Adapter_Impl.h:
+	* tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h:
+
+	  Do not supply default environment parameter.  It isn't needed in
+	  these cases.
+
+	* tao/Endpoint.h:
+
+	  Improved doxygen documentation.
+
+	  (addr_lookup_lock_)
+
+	  Improved "const-correctness" by making this member mutable.
+	  This allows concrete implementations of the
+	  TAO_Endpoint::object_addr() method to avoid using a hack where
+	  the constness is casted away.
+
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Lite.cpp:
+
+	  "CORBA_Exception" -> "CORBA::Exception".
+
+	* tao/GIOP_Message_Generator_Parser_10.cpp:
+
+	  "CORBA_OctetSeq" -> "CORBA::OctetSeq".
+
+	* tao/IFR_Client_Adapter.h:
+
+	  "CORBA_Interface" -> "CORBA::Interface".
+
+	* tao/IIOP_Connection_Handler.cpp:
+
+	  Include "tao/Wait_Strategy.h".  Necessitated by inter-header
+	  dependency reductions.
+
+	* tao/IIOP_Connection_Handler.h:
+
+	  No need to include "ace/Acceptor.h", "tao/Wait_Strategy.h",
+	  "tao/IIOP_Transport.h".
+
+	  Include "ace/SOCK_Stream.h" and "ace/Svc_Handler.h" to allow
+	  IIOP-specific Svc_Handler typedef to be made in this header.
+
+	* tao/IIOP_Connector.cpp:
+
+	  Include "Transport.h" and "Wait_Strategy.h".  Necessitated by
+	  inter-header dependency reductions.
+
+	* tao/IIOP_Endpoint.h (object_addr_, object_addr_set_):
+
+	  Improved "const-correctness" by making these members mutable.
+	  This allows the TAO_IIOP_Endpoint::object_addr() method to avoid
+	  using a hack where the constness is casted away.
+
+	* tao/IIOP_Endpoint.i (object_addr):
+
+	  No longer any need to use the hack where the constness is casted
+	  away since the appropriate class members are now mutable.
+
+	* tao/IIOP_Transport.cpp:
+
+	  Cosmetic changes.
+
+	* tao/IOPC.h (Codec, CodecFactory):
+
+	  Inherit from "CORBA::Object" instead of "CORBA_Object".
+
+	* tao/LF_Event_Loop_Thread_Helper.h:
+
+	  No need to include "tao/orbconf.h"
+
+	* tao/LF_Event_Loop_Thread_Helper.inl:
+
+	  Added Emacs C++ mode comment.
+
+	* tao/Leader_Follower.h:
+
+	  No need to forward declare "TAO_New_Leader_Generator".
+
+	* tao/MCAST_Parser.cpp:
+
+	  No need to include "ORB.h".
+
+	* tao/MCAST_Parser.h:
+
+	  No need to include "ORB_Core.h".
+
+	  Instead include "CORBA_String.h".   Necessitated by inter-header
+	  dependency reductions.
+
+	* tao/Marshal.h:
+
+	  No need to include "tao/Principal.h", "tao/Any.h", "tao/ORB.h".
+
+	* tao/ORBInitInfo.h:
+
+	  "CORBA_Environment" -> "CORBA::Environment".
+
+	* tao/ORBInitializer_Registry.h:
+
+	  Changed underlying template array parameter from
+	  "ORBInitializer_ptr" to "ORBInitializer_var" to improve memory
+	  management of registered ORBInitializers.
+
+	  (~TAO_ORBInitializer_Registry):
+	* tao/ORBInitializer_Registry.cpp (~TAO_ORBInitializer_Registry):
+
+	  Removed declaration for this destructor.  It is no longer
+	  necessary with the above change in place.
+
+	  (register_orb_initializer, pre_init, post_init):
+
+	  Improved const-correctness.
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	* tao/ORB_Core_Auto_Ptr.h:
+	* tao/ORB_Core_Auto_Ptr.inl:
+	* tao/ORB_Core_Auto_Ptr.cpp:
+
+	  Moved TAO_ORB_Core_Auto_Ptr class from ORB_Core.* to the new
+	  ORB_Core_Auto_Ptr.* files.
+
+	* tao/Object.h:
+
+	  Forward declare TAO_ObjectKey.  Necessitated by inter-header
+	  dependency reductions.
+
+	  "CORBA_Object" -> "CORBA::Object".
+
+	  Made CORBA::Object_var inherit privately from TAO_Base_var, and
+	  added appropriate private copy constructor and assignment
+	  operator to prevent invalid widening.
+
+	* tao/Object.i:
+	* tao/Object.cpp:
+
+	  "CORBA_Object" -> "CORBA::Object".
+
+	* tao/Object_KeyC.h:
+
+	  Forward declare TAO_Object_Key_var.  Necessitated by the
+	  "tao/corbafwd.h" cleanup.
+
+	* tao/Object_Proxy_Broker.h (TAO_Object_Proxy_Broker):
+	* tao/Object_Proxy_Broker.cpp (TAO_Object_Proxy_Broker):
+	* tao/Object_Proxy_Impl.cpp (TAO_Object_Proxy_Impl):
+
+	  Removed useless constructor.
+
+	* tao/Object_Proxy_Impl.h:
+
+	  Removed useless constructor.
+
+	  Added missing "#pragma once".
+
+	  "const CORBA::Char *" -> "const char *".
+
+	  "CORBA_" -> "CORBA::".
+
+	* tao/Profile.i:
+
+	  Corrected some comments.
+
+	* tao/Protocols_Hooks.h:
+
+	  Forward declare TAO_Stub.  Necessitated by inter-header
+	  dependency reductions.
+
+	* tao/Remote_Object_Proxy_Broker.cpp:
+	* tao/Remote_Object_Proxy_Broker.h:
+
+	  Removed useless constructor and destructor.
+
+	* tao/Remote_Object_Proxy_Impl.cpp:
+
+	  Removed useless constructor and destructor.
+
+	  Avoided inclusion of "tao/Any.h" by directly using the
+	  TAO_InputCDR::to_boolean() method instead of
+	  CORBA::Any::to_boolean().
+
+	  "CORBA_" -> "CORBA::".
+
+	  Fixed some emulated exception macro usage.
+
+	  (_get_component):
+
+	  Updated to better match current TAO_IDL generated stub code.
+
+	* tao/Remote_Object_Proxy_Impl.h:
+
+	  "CORBA::Char *" -> "char *".
+
+	  "CORBA_" -> "CORBA::".
+
+	* tao/Sequence.h:
+
+	  Include "ace/CORBA_macros.h" and "ace/Message_Block.h".
+	  Necessitated by inter-header dependency reduction.
+
+	  Removed now obsolete "CORBA_Object" and "CORBA_Environment"
+	  forward declarations.
+
+	  "CORBA_" -> "CORBA::".
+
+	* tao/Service_Callbacks.h:
+
+	  Corrected TAO_ServerRequest forward declaration,
+	   i.e. "TAO_Server_Request" to "TAO_ServerRequest".
+
+	* tao/Stub.h:
+
+	  Include new "ORB_Core_Auto_Ptr.h" header to pull in
+	  TAO_ORB_Core_Auto_Ptr declaration.
+
+	* tao/Stub_Factory.h:
+
+	  Forward declare TAO_Stub and include "ace/CORBA_macros.h".
+	  Necessitated by inter-header dependency reductions.
+
+	* tao/Synch_Queued_Message.cpp:
+
+	  Included "ace/Message_Block.h".  Necessitated by inter-header
+	  dependency reductions.
+
+	* tao/TAO.dsp:
+
+	  Added new ORB_Core_Auto_Ptr.* files to this project.
+
+	* tao/TAO_Internal.cpp:
+
+	  Include "tao/Adapter.h", "tao/ORB_Core.h" and
+	  "Dynamic_Service.h".  Necessitated by inter-header dependency
+	  reductions.
+
+	* tao/Tagged_Components.cpp:
+
+	  Cosmetic changes.
+
+	* tao/Thread_Lane_Resources.h:
+	* tao/Thread_Lane_Resources_Manager.h:
+
+	  No need to include "tao/corbafwd.h".
+
+	  Include "tao/TAO_Export.h" and "ace/CORBA_macros.h".
+	  Necessitated by inter-header dependency reductions.
+
+	* tao/Transport.cpp:
+
+	  Cosmetic changes.
+
+	* tao/Transport.h:
+
+	  No need to include "Transport_Descriptor_Interface.h".  A
+	  forward declaration is enough.
+
+	  (~TAO_Transport):
+
+	  Made destructor protected in order to enforce proper memory
+	  management through the reference counting mechanism.
+
+	* tao/ValueFactory_Map.cpp:
+
+	  Initialize the underlying map with the new
+	  "TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE" constant.
+
+	  "CORBA_" -> "CORBA::".
+
+	* tao/ValueFactory_Map.h:
+
+	  Include "Hash_Map_Manager_T.h" instead of "Hash_Map_Manager.h".
+	  The latter includes the former, and the former is the only one
+	  that is needed.
+
+	  "CORBA_" -> "CORBA::".
+
+	* tao/corba.h:
+
+	  Include "tao/varbase.h".  The TAO_IDL compiler no longer
+	  generates an include directive for that header in the stub
+	  headers.
+
+	* tao/corbafwd.cpp:
+
+	  Converted global constants in the CORBA namespace to be declared
+	  using straight C++ instead of the namespace macro workarounds.
+
+	* tao/corbafwd.h:
+
+	  No need to include "ace/CORBA_macros.h" and "tao/varbase.h".
+
+	  Removed workaround used for compilers that didn't support C++
+	  namespaces.  All classes and types that are in the CORBA IDL
+	  namespace are now in a true CORBA C++ namespace.
+
+	  Removed all "CORBA_" based typedefs.  They are no longer
+	  needed.
+
+	  Moved all non-CORBA namespace related typedefs and constants out
+	  this of file.  They don't belong there.
+
+	  The above changes greatly reduce the size of this file, which
+	  has been a bottleneck for compiles.
+
+	* tao/corbafwd.i (default_environment):
+
+	  Updated to conform to ACE/TAO coding conventions.
+
+	* tao/iiop_endpoints.h:
+
+	  No need to include "tao/Any.h".  Include "tao/CDR.h" instead.
+
+	* tao/orbconf.h:
+
+	  Added "TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE" global constant to
+	  be used as the default size of the ValueFactory map.
+	  Previously, the default table size was used which is too large
+	  (i.e. 1024).
+
+	* tao/varbase.h (TAO_Base_var):
+
+	  Added private copy constructor and assignment operator to
+	  improve prevention of invalid widening.
+
+	* tao/PortableServer/Collocated_Object.h:
+
+	  No need to include "tao/Servant_Base.h".
+
+	  "CORBA_" -> "CORBA::".
+
+	* tao/PortableServer/Direct_Object_Proxy_Impl.cpp
+	  (TAO_Direct_Object_Proxy_Impl):
+
+	  Removed useless constructor.
+
+	  (_get_interface, _getcomponent):
+
+	  Fixed emulated exception support.
+
+	* tao/PortableServer/Direct_Object_Proxy_Impl.h:
+	  (TAO_Direct_Object_Proxy_Impl):
+
+	  Removed useless constructor.
+
+	* tao/PortableServer/Object_Adapter.h:
+
+	  No need to include "Key_Adapters.h" and "Servant_Base.h".
+
+	* tao/PortableServer/Operation_Table.h:
+
+	  Include "tao/Abstract_Servant_Base.h".  Necessitated by
+	  inter-header dependency reductions.
+
+	* tao/PortableServer/POA.h:
+
+	  Include "tao/PortableInterceptorC.h".  Necessitated by
+	  inter-header dependency reductions.
+
+	  Changed map of POA children from ACE_Hash_Map_Manager to
+	  ACE_Hash_Map_Manager_Ex.  That save us three template
+	  instantiations.
+
+	* tao/PortableServer/ServerInterceptorAdapter.cpp (send_reply):
+	  (send_exception, send_other):
+
+	  Improved const-correctness.
+
+	* tao/RTCORBA/RT_ORB_Loader.cpp:
+
+	  No need to include "tao/ORB_Core.h" and
+	  "tao/ORBInitializer_Registry.h".
+
+	  "CORBA_" -> "CORBA::".
+
 Wed Feb 19 12:52:06 2003  Heather Drury  <oci@cs.wustl.edu>
 
         * TAO version 1.3.1 released.
@@ -17,10 +760,10 @@ Mon Feb 17 15:26:32 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 Mon Feb 17 09:09:54 2003  Heather Drury  <drury_h@ociweb.com>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h:
-        * orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.cpp: Fixed compile error
-          that was happening because the base class signature for 
-          establish_components() did not match the derived class method
-          signature.
+        * orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.cpp: Fixed
+	  compile error that was happening because the base class
+	  signature for establish_components() did not match the derived
+	  class method signature.
 
 Sat Feb 15 10:14:08 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -78,7 +821,7 @@ Fri Feb 14 18:39:01 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
           to print errno, then that is wrong and will crash.
 
           You need to do:
-          ACE_DEBUG((LM_DEBUG, "%p", "somestring ));
+          ACE_DEBUG((LM_DEBUG, "%p", "somestring"));
           I've changed things to be consistent:
           ACE_DEBUG((LM_DEBUG, "errno: %d %m", errno));
 

@@ -1008,12 +1008,12 @@ be_visitor_valuetype::gen_init_defn (be_valuetype *node)
 
   *os << "class " << be_global->stub_export_macro ()
       << " " << node->local_name ()
-      << "_init : public CORBA_ValueFactoryBase" << be_nl;
+      << "_init : public CORBA::ValueFactoryBase" << be_nl;
 
   // Generate the body.
   *os << "{" << be_nl
       << "public:" << be_idt_nl
-      << "virtual ~" << node->local_name () << "_init ();" << be_nl;
+      << "virtual ~" << node->local_name () << "_init (void);" << be_nl;
 
   *os << "virtual const char* tao_repository_id (void);\n" << be_nl;
   *os << "// create () goes here" << be_nl;

@@ -149,7 +149,7 @@ TAO_NAMESPACE  TAO_Default_ORT
 
   class  ObjectReferenceTemplate
     : public virtual PortableInterceptor::ObjectReferenceTemplate,
-      public virtual CORBA_ValueBase
+      public virtual CORBA::ValueBase
 
 {
 public:

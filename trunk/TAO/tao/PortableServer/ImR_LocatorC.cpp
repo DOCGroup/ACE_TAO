@@ -945,7 +945,7 @@ ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::_TAO_Locator_Remote_Pr
 // Remote Implementation of the IDL interface methods
 
 void ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::activate_server_in_location (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     const char * location
     ACE_ENV_ARG_DECL
@@ -1157,7 +1157,7 @@ void ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::activate_server_i
 }
 
 void ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::remove_server_in_location (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     const char * location
     ACE_ENV_ARG_DECL
@@ -1364,7 +1364,7 @@ void ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::remove_server_in_
 }
 
 void ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::shutdown_server_in_location (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     const char * location
     ACE_ENV_ARG_DECL
@@ -1571,7 +1571,7 @@ void ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::shutdown_server_i
 }
 
 void ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::server_is_shutting_down_in_location (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     const char * location
     ACE_ENV_ARG_DECL
@@ -1778,7 +1778,7 @@ void ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::server_is_shuttin
 }
 
 CORBA::ULong ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::register_activator (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * location,
     CORBA::Object_ptr object_ref
     ACE_ENV_ARG_DECL
@@ -2004,7 +2004,7 @@ CORBA::ULong ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::register_
 }
 
 CORBA::ULong ImplementationRepository::_TAO_Locator_Remote_Proxy_Impl::unregister_activator (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * location,
     CORBA::Object_ptr object_ref
     ACE_ENV_ARG_DECL
@@ -2447,7 +2447,7 @@ ImplementationRepository::Locator::_is_a (
     }
   else
     {
-      return this->CORBA_Object::_is_a (
+      return this->Object::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );

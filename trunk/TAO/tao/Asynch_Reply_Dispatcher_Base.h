@@ -14,7 +14,7 @@
 #define TAO_ASYNCH_REPLY_DISPATCHER_BASE_H
 #include "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

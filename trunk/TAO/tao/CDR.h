@@ -32,8 +32,9 @@
  *   concurrent access by their owning thread.
  *
  *
- *  @author  Copyright 1994-1995 by Sun Microsystems
- *  @author Inc.  Many enhancements added by Aniruddha Gokhale and Carlos O'Ryan.
+ *  @author  Copyright 1994-1995 by Sun Microsystems Inc.
+ *  @author  Aniruddha Gokhale
+ *  @author  Carlos O'Ryan
  */
 //=============================================================================
 

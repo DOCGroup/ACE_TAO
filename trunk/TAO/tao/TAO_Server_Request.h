@@ -184,10 +184,10 @@ public:
   /**
    * @note Deprecated in CORBA 2.4
    */
-  // void requesting_principal (CORBA_Principal_ptr principal);
+  // void requesting_principal (CORBA::Principal_ptr principal);
 
   /// Set the requesting principal
-  void requesting_principal (const CORBA_OctetSeq & principal);
+  void requesting_principal (const CORBA::OctetSeq & principal);
 
   /// Return the reference to the tagged profile
   TAO_Tagged_Profile &profile (void);
@@ -273,7 +273,7 @@ private:
   TAO_Tagged_Profile profile_;
 
   /// Identifies the requester.
-  CORBA_OctetSeq_var requesting_principal_;
+  CORBA::OctetSeq_var requesting_principal_;
 
   /// Did we get passed to a CORBA::ServerRequest?
   CORBA::Boolean is_dsi_;

@@ -742,9 +742,9 @@ public:
   virtual void _shrink_buffer (CORBA::ULong new_length,
                                CORBA::ULong old_length);
   virtual void _downcast (void* target,
-                          CORBA_Object* src
+                          CORBA::Object* src
                           ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  virtual CORBA_Object* _upcast (void* src) const;
+  virtual CORBA::Object* _upcast (void* src) const;
 };
 
 // *************************************************************
@@ -803,9 +803,9 @@ public:
   virtual void _shrink_buffer (CORBA::ULong new_length,
                                CORBA::ULong old_length);
   virtual void _downcast (void* target,
-                          CORBA_Object* src
+                          CORBA::Object* src
                           ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  virtual CORBA_Object* _upcast (void* src) const;
+  virtual CORBA::Object* _upcast (void* src) const;
 };
 
 // *************************************************************

@@ -1,3 +1,4 @@
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -10,7 +11,6 @@
  *  and make it possible to keep the reference to the servant in
  *  the CORBA::Object class.
  *
- *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  */
 //=============================================================================
@@ -19,15 +19,27 @@
 #ifndef TAO_ABSTRACT_SERVANT_BASE_H_
 #define TAO_ABSTRACT_SERVANT_BASE_H_
 
-// -- ACE Include --
 #include "ace/pre.h"
+
 #include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/CORBA_macros.h"
+
 class TAO_ServerRequest;
+class TAO_Stub;
+
+typedef void (*TAO_Skeleton)(
+    TAO_ServerRequest &,
+    void *,
+    void *
+#if !defined (TAO_HAS_EXCEPTIONS) || defined (ACE_ENV_BKWD_COMPAT)
+    , CORBA::Environment &
+#endif
+  );
 
 class TAO_Export TAO_Abstract_ServantBase
 {
@@ -40,18 +52,24 @@ public:
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
 
   /// Default <_non_existent>: always returns false.
-  virtual CORBA::Boolean _non_existent (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
+  virtual CORBA::Boolean _non_existent (
+    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
 
   /// Query the Interface Repository.
-  virtual CORBA_InterfaceDef_ptr _get_interface (
+  virtual CORBA::InterfaceDef_ptr _get_interface (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     ) = 0;
 
   /// Default <_get_component>: always returns nil.
-  virtual CORBA::Object_ptr _get_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
+  virtual CORBA::Object_ptr _get_component (
+    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
 
   //@{
-  /// @name Reference counting hooks: no-ops by default.
+  /**
+   * @name Reference Counting Hooks
+   *
+   * Reference counting hooks are no-ops by default.
+   */
   virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   //@}
@@ -63,6 +81,7 @@ public:
   virtual TAO_Stub *_create_stub (ACE_ENV_SINGLE_ARG_DECL) = 0;
 
 protected:
+
   /// Default constructor, only derived classes can be created.
   TAO_Abstract_ServantBase (void);
 
@@ -99,7 +118,10 @@ protected:
 
   /// Get this interface's repository id (TAO specific).
   virtual const char *_interface_repository_id (void) const = 0;
+
 };
 
+
 #include "ace/post.h"
+
 #endif /* TAO_ABSTRACT_SERVANT_BASE_H_ */

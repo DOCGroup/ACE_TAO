@@ -1,12 +1,11 @@
-/* -*- C++ -*- */
-// $Id$
-
 #include "DynEnum_i.h"
 #include "DynAnyFactory.h"
 
-ACE_RCSID(DynamicAny, DynEnum_i, "$Id$")
 
-// Constructors and destructor
+ACE_RCSID (DynamicAny,
+           DynEnum_i,
+           "$Id$")
+
 
 TAO_DynEnum_i::TAO_DynEnum_i (void)
 {
@@ -28,7 +27,7 @@ TAO_DynEnum_i::init_common (void)
 }
 
 void
-TAO_DynEnum_i::init (const CORBA_Any &any
+TAO_DynEnum_i::init (const CORBA::Any &any
                      ACE_ENV_ARG_DECL)
 {
   CORBA::TypeCode_var tc = any.type ();
@@ -56,7 +55,7 @@ TAO_DynEnum_i::init (const CORBA_Any &any
 }
 
 void
-TAO_DynEnum_i::init (CORBA_TypeCode_ptr tc
+TAO_DynEnum_i::init (CORBA::TypeCode_ptr tc
                      ACE_ENV_ARG_DECL)
 {
   CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc
@@ -198,7 +197,7 @@ TAO_DynEnum_i::set_as_ulong (CORBA::ULong value_as_ulong
 // ****************************************************************
 
 void
-TAO_DynEnum_i::from_any (const CORBA_Any& any
+TAO_DynEnum_i::from_any (const CORBA::Any& any
                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -237,9 +236,9 @@ TAO_DynEnum_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
 
   out_cdr.write_ulong (this->value_);
 
-  CORBA_Any *retval;
+  CORBA::Any *retval;
   ACE_NEW_THROW_EX (retval,
-                    CORBA_Any (this->type_.in (),
+                    CORBA::Any (this->type_.in (),
                                0,
                                TAO_ENCAP_BYTE_ORDER,
                                out_cdr.begin ()),
@@ -267,7 +266,7 @@ TAO_DynEnum_i::equal (DynamicAny::DynAny_ptr rhs
       return 0;
     }
 
-  CORBA_Any_var any = rhs->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Any_var any = rhs->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   ACE_Message_Block *mb = any->_tao_get_cdr ();

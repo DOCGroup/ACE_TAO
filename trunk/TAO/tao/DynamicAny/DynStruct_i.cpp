@@ -1,13 +1,12 @@
-/* -*- C++ -*- */
-// $Id$
-
 #include "DynStruct_i.h"
 #include "DynAnyFactory.h"
 #include "tao/Marshal.h"
 
-ACE_RCSID(DynamicAny, DynStruct_i, "$Id$")
 
-// Constructors and destructor.
+ACE_RCSID (DynamicAny,
+           DynStruct_i,
+           "$Id$")
+
 
 TAO_DynStruct_i::TAO_DynStruct_i (void)
 {
@@ -45,7 +44,7 @@ TAO_DynStruct_i::init_common (void)
 }
 
 void
-TAO_DynStruct_i::init (const CORBA_Any& any
+TAO_DynStruct_i::init (const CORBA::Any& any
                        ACE_ENV_ARG_DECL)
 {
   CORBA::TypeCode_var tc = any.type ();
@@ -95,7 +94,7 @@ TAO_DynStruct_i::init (const CORBA_Any& any
       ACE_CHECK;
 
       // This Any constructor is a TAO extension.
-      CORBA_Any field_any (field_tc.in (),
+      CORBA::Any field_any (field_tc.in (),
                            0,
                            cdr.byte_order (),
                            cdr.start ());
@@ -116,7 +115,7 @@ TAO_DynStruct_i::init (const CORBA_Any& any
 }
 
 void
-TAO_DynStruct_i::init (CORBA_TypeCode_ptr tc
+TAO_DynStruct_i::init (CORBA::TypeCode_ptr tc
                        ACE_ENV_ARG_DECL)
 {
   this->check_typecode (tc
@@ -475,7 +474,7 @@ TAO_DynStruct_i::set_members_as_dyn_any (
 // ****************************************************************
 
 void
-TAO_DynStruct_i::from_any (const CORBA_Any & any
+TAO_DynStruct_i::from_any (const CORBA::Any & any
                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -520,7 +519,7 @@ TAO_DynStruct_i::from_any (const CORBA_Any & any
           ACE_CHECK;
 
           // This Any constructor is a TAO extension.
-          CORBA_Any field_any (field_tc.in (),
+          CORBA::Any field_any (field_tc.in (),
                                0,
                                cdr.byte_order (),
                                cdr.start ());
@@ -574,11 +573,11 @@ TAO_DynStruct_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
 
   for (CORBA::ULong i = 0; i < this->component_count_; ++i)
     {
-      CORBA_TypeCode_var field_tc = this->da_members_[i]->type (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::TypeCode_var field_tc = this->da_members_[i]->type (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       // Recursive step.
-      CORBA_Any_var field_any = this->da_members_[i]->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Any_var field_any = this->da_members_[i]->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       ACE_Message_Block *field_mb = field_any->_tao_get_cdr ();
@@ -595,12 +594,12 @@ TAO_DynStruct_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
 
   TAO_InputCDR in_cdr (out_cdr);
 
-  CORBA_Any_ptr retval = 0;
+  CORBA::Any_ptr retval = 0;
   ACE_NEW_THROW_EX (retval,
-                    CORBA_Any (this->type_.in (),
-                               0,
-                               in_cdr.byte_order (),
-                               in_cdr.start ()),
+                    CORBA::Any (this->type_.in (),
+                                0,
+                                in_cdr.byte_order (),
+                                in_cdr.start ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 

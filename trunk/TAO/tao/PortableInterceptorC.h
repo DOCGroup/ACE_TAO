@@ -146,7 +146,7 @@ TAO_NAMESPACE  PortableInterceptor
 #define _PORTABLEINTERCEPTOR_INTERCEPTOR_CH_
 
   class TAO_Export Interceptor
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -549,7 +549,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
 #define _PORTABLEINTERCEPTOR_REQUESTINFO_CH_
 
   class TAO_Export RequestInfo
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1560,7 +1560,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
 #define _PORTABLEINTERCEPTOR_IORINFO_CH_
 
   class TAO_Export IORInfo
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1917,7 +1917,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
 #define _PORTABLEINTERCEPTOR_POLICYFACTORY_CH_
 
   class TAO_Export PolicyFactory
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -2065,7 +2065,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
 #define _PORTABLEINTERCEPTOR_ORBINITINFO_CH_
 
   class TAO_Export ORBInitInfo
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -2289,7 +2289,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
   /// table.
   TAO_NAMESPACE_STORAGE_CLASS void register_orb_initializer (
       ORBInitializer_ptr init
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 #endif /* end #if !defined */
 
@@ -2368,7 +2368,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
 #define _PORTABLEINTERCEPTOR_ORBINITIALIZER_CH_
 
   class TAO_Export ORBInitializer
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)

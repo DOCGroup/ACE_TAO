@@ -297,7 +297,7 @@ TAO_NAMESPACE  IORTable
 #define _IORTABLE_TABLE_CH_
   
   class TAO_IORTable_Export Table
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -462,7 +462,7 @@ TAO_NAMESPACE  IORTable
 #define _IORTABLE_LOCATOR_CH_
   
   class TAO_IORTable_Export Locator
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)

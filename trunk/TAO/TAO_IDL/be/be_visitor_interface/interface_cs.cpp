@@ -316,7 +316,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << "void" << be_nl
           << node->name () << "::_add_ref (void)" << be_nl
           << "{" << be_idt_nl
-          << "this->CORBA_Object::_add_ref ();" << be_uidt_nl
+          << "this->Object::_add_ref ();" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
 
@@ -538,7 +538,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
         }
       else
         {
-          *os << "return this->CORBA_Object::_is_a (" << be_idt << be_idt_nl
+          *os << "return this->Object::_is_a (" << be_idt << be_idt_nl
               << "value" << be_nl
               << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
               << ");" << be_uidt << be_uidt_nl;

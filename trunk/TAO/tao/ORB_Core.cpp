@@ -1378,7 +1378,7 @@ TAO_ORB_Core::service_raise_comm_failure (TAO_GIOP_Invocation *invoke,
   invoke->close_connection ();
 
   ACE_THROW_RETURN (CORBA::COMM_FAILURE (
-      CORBA_SystemException::_tao_minor_code (
+      CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
           errno),
       CORBA::COMPLETED_MAYBE),
@@ -1399,7 +1399,7 @@ TAO_ORB_Core::service_raise_transient_failure (TAO_GIOP_Invocation *invoke,
     }
 
   ACE_THROW_RETURN (CORBA::TRANSIENT (
-        CORBA_SystemException::_tao_minor_code (
+        CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_SEND_REQUEST_MINOR_CODE,
           errno),
         CORBA::COMPLETED_MAYBE),
@@ -1637,7 +1637,7 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
   // The constructor sets the proxy broker as the
   // Remote one.
   ACE_NEW_RETURN (x,
-                  CORBA_Object (stub, 0),
+                  CORBA::Object (stub, 0),
                   0);
   return x;
 }
@@ -2181,7 +2181,7 @@ TAO_ORB_Core::list_initial_references (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::ORB::ObjectIdList_ptr tmp = 0;
 
   ACE_NEW_THROW_EX (tmp,
-                    CORBA_ORB_ObjectIdList (total_size),
+                    CORBA::ORB::ObjectIdList (total_size),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 

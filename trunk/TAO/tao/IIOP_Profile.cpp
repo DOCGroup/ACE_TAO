@@ -168,7 +168,7 @@ TAO_IIOP_Profile::parse_string (const char *ior
   if (!ior || !*ior)
     {
       ACE_THROW (CORBA::INV_OBJREF (
-                   CORBA_SystemException::_tao_minor_code (
+                   CORBA::SystemException::_tao_minor_code (
                      TAO_DEFAULT_MINOR_CODE,
                      EINVAL),
                    CORBA::COMPLETED_NO));
@@ -200,7 +200,7 @@ TAO_IIOP_Profile::parse_string (const char *ior
       this->version_.minor >  TAO_DEF_GIOP_MINOR)
     {
       ACE_THROW (CORBA::INV_OBJREF (
-                   CORBA_SystemException::_tao_minor_code (
+                   CORBA::SystemException::_tao_minor_code (
                      TAO_DEFAULT_MINOR_CODE,
                      EINVAL),
                    CORBA::COMPLETED_NO));
@@ -215,7 +215,7 @@ TAO_IIOP_Profile::parse_string (const char *ior
     {
       // No object key delimiter or no hostname specified.
       ACE_THROW (CORBA::INV_OBJREF (
-                   CORBA_SystemException::_tao_minor_code (
+                   CORBA::SystemException::_tao_minor_code (
                      TAO_DEFAULT_MINOR_CODE,
                      EINVAL),
                    CORBA::COMPLETED_NO));
@@ -230,7 +230,7 @@ TAO_IIOP_Profile::parse_string (const char *ior
     {
       // No hostname specified!  It is required by the spec.
       ACE_THROW (CORBA::INV_OBJREF (
-                   CORBA_SystemException::_tao_minor_code (
+                   CORBA::SystemException::_tao_minor_code (
                      TAO_DEFAULT_MINOR_CODE,
                      EINVAL),
                    CORBA::COMPLETED_NO));
@@ -284,7 +284,7 @@ TAO_IIOP_Profile::parse_string (const char *ior
 
           // @@ What's the right exception to throw here?
           ACE_THROW (CORBA::INV_OBJREF (
-                       CORBA_SystemException::_tao_minor_code (
+                       CORBA::SystemException::_tao_minor_code (
                          TAO_DEFAULT_MINOR_CODE,
                          EINVAL),
                        CORBA::COMPLETED_NO));
@@ -331,7 +331,7 @@ CORBA::ULong
 TAO_IIOP_Profile::hash (CORBA::ULong max
                         ACE_ENV_ARG_DECL_NOT_USED)
 {
-  // Get the hashvalue for all endpoints.
+  // Get the hash value for all endpoints.
   CORBA::ULong hashval = 0;
   for (TAO_IIOP_Endpoint *endp = &this->endpoint_;
        endp != 0;
@@ -377,7 +377,7 @@ char *
 TAO_IIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   CORBA::String_var key;
-  TAO_ObjectKey::encode_sequence_to_string (key.inout(),
+  TAO_ObjectKey::encode_sequence_to_string (key.inout (),
                                             this->object_key_);
 
   u_int buflen = (8 /* "corbaloc" */ +

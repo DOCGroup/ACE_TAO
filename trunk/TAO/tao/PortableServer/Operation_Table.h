@@ -16,12 +16,12 @@
 #include "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Abstract_Servant_Base.h"
 #include "tao/TAO_Singleton.h"
 #include "ace/Synch.h"
 #include "ace/Hash_Map_Manager.h"
@@ -139,7 +139,8 @@ private:
  *
  * @brief Dynamic Hashing scheme for CORBA IDL operation name lookup.
  */
-class TAO_PortableServer_Export TAO_Dynamic_Hash_OpTable : public TAO_Operation_Table
+class TAO_PortableServer_Export TAO_Dynamic_Hash_OpTable
+  : public TAO_Operation_Table
 {
 public:
   // = Initialization and termination methods.
@@ -191,7 +192,8 @@ private:
  * @brief Operation table lookup strategy based on
  * linear search.  Not efficient, but it works.
  */
-class TAO_PortableServer_Export TAO_Linear_Search_OpTable : public TAO_Operation_Table
+class TAO_PortableServer_Export TAO_Linear_Search_OpTable
+  : public TAO_Operation_Table
 {
 public:
   // = Initialization and termination methods.
@@ -246,12 +248,14 @@ public:
  * @brief Implements the active demultiplexed lookup strategy. The key is
  * assumed to provide an index directly into the internal table.
  */
-class TAO_PortableServer_Export TAO_Active_Demux_OpTable : public TAO_Operation_Table
+class TAO_PortableServer_Export TAO_Active_Demux_OpTable
+  : public TAO_Operation_Table
 {
 public:
   // = Initialization and termination methods.
   /// Initializes the internal table with the database of operations
-  TAO_Active_Demux_OpTable (const TAO_operation_db_entry *db, CORBA::ULong dbsize);
+  TAO_Active_Demux_OpTable (const TAO_operation_db_entry *db,
+                            CORBA::ULong dbsize);
 
   /// Destructor.
   ~TAO_Active_Demux_OpTable (void);
@@ -293,7 +297,8 @@ private:
  * methods. Subclasses will define the lookup and hash
  * functions.
  */
-class TAO_PortableServer_Export TAO_Perfect_Hash_OpTable : public TAO_Operation_Table
+class TAO_PortableServer_Export TAO_Perfect_Hash_OpTable
+  : public TAO_Operation_Table
 {
 public:
   /// Do nothing constructor.
@@ -322,7 +327,8 @@ private:
 
   virtual unsigned int hash (const char *str, unsigned int len) = 0;
 
-  virtual const TAO_operation_db_entry* lookup (const char *str, unsigned int len) = 0;
+  virtual const TAO_operation_db_entry* lookup (const char *str,
+                                                unsigned int len) = 0;
 };
 
 /**
@@ -336,7 +342,8 @@ private:
  * used by 'bind ()' and 'find ()' methods. Subclasses will
  * define the lookup method.
  */
-class TAO_PortableServer_Export TAO_Binary_Search_OpTable : public TAO_Operation_Table
+class TAO_PortableServer_Export TAO_Binary_Search_OpTable
+  : public TAO_Operation_Table
 {
 public:
   /// Do nothing constructor.

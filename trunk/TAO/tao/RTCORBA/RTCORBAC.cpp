@@ -5337,8 +5337,8 @@ const char* RTCORBA::RTORB::_interface_repository_id (void) const
 
 // Default constructor.
 RTCORBA::RTORB::MutexNotFound::MutexNotFound (void)
-  : CORBA_UserException ("IDL:omg.org/RTCORBA/RTORB/MutexNotFound:1.0",
-                         "MutexNotFound")
+  : CORBA::UserException ("IDL:omg.org/RTCORBA/RTORB/MutexNotFound:1.0",
+                          "MutexNotFound")
 {
 }
 
@@ -5349,8 +5349,8 @@ RTCORBA::RTORB::MutexNotFound::~MutexNotFound (void)
 
 // Copy constructor.
 RTCORBA::RTORB::MutexNotFound::MutexNotFound (const ::RTCORBA::RTORB::MutexNotFound &_tao_excp)
-  : CORBA_UserException (_tao_excp._rep_id () ,
-                         _tao_excp._name ()
+  : CORBA::UserException (_tao_excp._rep_id () ,
+                          _tao_excp._name ()
 )
 {
 }
@@ -5359,7 +5359,7 @@ RTCORBA::RTORB::MutexNotFound::MutexNotFound (const ::RTCORBA::RTORB::MutexNotFo
 RTCORBA::RTORB::MutexNotFound&
 RTCORBA::RTORB::MutexNotFound::operator= (const ::RTCORBA::RTORB::MutexNotFound &_tao_excp)
 {
- this->CORBA_UserException::operator= (_tao_excp);
+ this->UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -5418,9 +5418,9 @@ void RTCORBA::RTORB::MutexNotFound::_tao_decode (
 
 // Default constructor.
 RTCORBA::RTORB::InvalidThreadpool::InvalidThreadpool (void)
-  : CORBA_UserException ("IDL:omg.org/RTCORBA/RTORB/InvalidThreadpool:1.0",
-                         "InvalidThreadpool"
-                         )
+  : CORBA::UserException ("IDL:omg.org/RTCORBA/RTORB/InvalidThreadpool:1.0",
+                          "InvalidThreadpool"
+                          )
 {
 }
 
@@ -5431,8 +5431,8 @@ RTCORBA::RTORB::InvalidThreadpool::~InvalidThreadpool (void)
 
 // Copy constructor.
 RTCORBA::RTORB::InvalidThreadpool::InvalidThreadpool (const ::RTCORBA::RTORB::InvalidThreadpool &_tao_excp)
-  : CORBA_UserException (_tao_excp._rep_id (),
-                         _tao_excp._name ()
+  : CORBA::UserException (_tao_excp._rep_id (),
+                          _tao_excp._name ()
                          )
 {
 }
@@ -5441,7 +5441,7 @@ RTCORBA::RTORB::InvalidThreadpool::InvalidThreadpool (const ::RTCORBA::RTORB::In
 RTCORBA::RTORB::InvalidThreadpool&
 RTCORBA::RTORB::InvalidThreadpool::operator= (const ::RTCORBA::RTORB::InvalidThreadpool &_tao_excp)
 {
-  this->CORBA_UserException::operator= (_tao_excp);
+  this->UserException::operator= (_tao_excp);
   return *this;
 }
 
