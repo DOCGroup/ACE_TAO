@@ -1,3 +1,23 @@
+Mon Jan 17 11:03:17 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/ciao/Deployment_Core.idl
+
+          Modified this file by adding container interface and
+          modifying NodeApplication interface.
+
+        * DAnCE/ciao/Container_Impl.h:
+        * DAnCE/ciao/Container_Impl.inl:
+        * DAnCE/ciao/Container_Impl.cpp:
+
+          Added these files which are the implementation of the container 
+          interface that was added to the Deployment_Core.idl file.
+
+        * DAnCE/ciao/CCM_Core.mpc
+          
+          Modified this mpc file to add the above implementation into 
+          the project.
+
+
 Thu Jan 13 14:59:17 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* DAnCE/Config_Handlers/Config_Handler_export.h:
