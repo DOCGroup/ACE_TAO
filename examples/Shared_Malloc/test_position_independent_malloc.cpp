@@ -11,6 +11,7 @@
 
 ACE_RCSID(Shared_Malloc, test_multiple_mallocs, "$Id$")
 
+#if 0
 typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC; 
 
 // Default address for memory-mapped files.
@@ -48,7 +49,9 @@ print (Dummy_Data *data)
               data->next_->i1_, 
               data->next_->i2_,
               data->next_->i3_));
-#endif 
+#else
+  ACE_UNUSED_ARG (data);
+#endif /* 0 */
 }
 
 static void *
@@ -74,9 +77,9 @@ initialize (MALLOC *allocator)
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Dummy_Data)),
                         0);
+#if 0
   Dummy_Data *data2 = new (ptr) Dummy_Data;
 
-#if 0
   data1->next_ = data2;
   data1->next_->i1_ = 111;
   data1->next_->i2_ = 222;
@@ -205,3 +208,12 @@ template class ACE_Based_Pointer_Basic<Dummy_Data>;
 #pragma instantiate ACE_Based_Pointer<Dummy_Data>
 #pragma instantiate ACE_Based_Pointer_Basic<Dummy_Data>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#else
+int 
+main (int argc, char *argv[])
+{
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "sorry, example not finished yet\n"),
+                    1);
+}
+#endif /* 0 */

@@ -1,3 +1,9 @@
+Tue Jul 20 11:46:09 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Shared_Malloc/test_position_independent_malloc.cpp: 
+	  Completely #ifdef'd this example out until we get it working.
+  	  Thanks to David Levine for reporting this.
+
 Tue Jul 20 11:15:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: updated memory requirements discussions.
