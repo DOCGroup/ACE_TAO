@@ -22,6 +22,7 @@ main (int argc, char *argv[])
   ACE_Process_Semaphore pm (1, name);
 
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  ACE_UNUSED_ARG (sa);
 
   for (int i = 0; i < 100 && !done; i++)
     {
