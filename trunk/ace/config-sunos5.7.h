@@ -20,6 +20,7 @@
   // The Solaris86 g++ 2.7.2.3 sys/types.h doesn't have these . . .
   typedef long          t_scalar_t;  /* historical versions */
   typedef unsigned long t_uscalar_t;
+  typedef void          *timeout_id_t;
 #endif /* __GNUG__ */
 
 #endif /* ACE_CONFIG_H */
