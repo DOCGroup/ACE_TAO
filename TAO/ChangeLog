@@ -1,13 +1,25 @@
+Mon Aug 30 07:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/AMH_Response_Handler.{h,cpp}:
+        * tao/Messaging/AMH_Response_Handler.{h,cpp}:
+          Moved the AMH Response Handler class from PortableServer to Messaging,
+          when using AMH we need Messaging because of the ExceptionHolder.
+          Moving this class doesn't change anything then when you use AMH, but
+          when not using AMH, the portableserver library will be smaller.
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Updated include path of AMH_Response_Handler.h
+
 Fri Aug 27 23:08:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* TAO_IDL/fe/idl.ll:
 
 	  Fix for BUG 1683. Jeff prepared this lex file. I just generated
-	  the code, and applied the patches. 
-	
+	  the code, and applied the patches.
+
 	* TAO_IDL/fe/lex.yy.cpp:
 
-	  Regenerated code for the new lex file. 
+	  Regenerated code for the new lex file.
 
 	* TAO_IDL/fe/lex.yy.cpp.diff:
 
@@ -94,7 +106,7 @@ Fri Aug 27 08:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
         removed. PortableServer doesn't use these libs anymore, but
 	IORInterceptor, ObjRefTemplate and Valuetype are now dependent on
         PortableServer. This will reduce the size of corba servers which
-        don't use IORInterceptor, ObjRefTemplate and Valuetype. 
+        don't use IORInterceptor, ObjRefTemplate and Valuetype.
 
         * tao/Makefile.am:
           Updated for changes below.
