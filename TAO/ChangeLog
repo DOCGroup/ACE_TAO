@@ -7,6 +7,7 @@ Wed Dec 24 13:28:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tao/IFR_Client_Adapter.h:
         * tao/Special_Basic_Argument_T.h:
         * tao/UB_String_Argument_T.h:
+        * tao/TypeCodeFactory_Adapter.h:
           Removed not needed ; after c++ namespace closure.
 
 Wed Dec 24 12:41:05 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
