@@ -37,6 +37,9 @@ public:
   Echo_i (void);
   // Constructor.
 
+  Echo_i (Echo_i &);
+  // Copy constructor for old gcc.
+
   ~Echo_i (void);
   // Destructor.
 
