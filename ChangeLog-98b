@@ -172,9 +172,9 @@ Fri Sep  4 18:56:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 Fri Sep 04 18:54:32 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/Select_Reactor_T.cpp (ACE_Select_Reactor_T): Made sure that
-          all references to Select_Reactor have the template argument in
-          them.  Thanks to "Gehr, Chuck R" <GehrCR@LOUISVILLE.STORTEK.COM>
-          for sending the patches.
+ 	  all references to Select_Reactor have the template argument in
+ 	  them.  Thanks to Chuck Gehr <GehrCR@LOUISVILLE.STORTEK.COM> for
+ 	  sending the patches.
 
 Fri Sep  4 18:29:29 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
@@ -234,8 +234,8 @@ Fri Sep 04 15:24:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
           list because they are in docs/ now.
 
         * tests/run_tests.bat: Removed trailing '.cpp' from
-          Message_Queue_Notifications_Test.  Thanks to Erickson, Jack
-          <JErickson@exchange.ml.com> for reporting this.
+ 	  Message_Queue_Notifications_Test.  Thanks to Jack Erickson
+ 	  <JErickson@exchange.ml.com> for reporting this.
 
         * ace/OS.i (signal): Added check for ACE_WIN32 to defeat the
           effect of !defined (ACE_LACKS_UNIX_SIGNALS).  Although Win32
@@ -468,10 +468,10 @@ Tue Sep 1 3:50:39 US/Central 1998  James CE Johnson <jcej@lads.com>
           etc/tutorials/007/page06.html
           etc/tutorials/007/page09.html
 
-          Added Client_Handler::close() that will be called when Client_Handler::svc()
-          exits in the thread-per-connection model.
-          Thread_Pool::svc() now calls the handler's handle_close() method to
-          properly shut down the handler if handle_input() fails.
+          Added Client_Handler::close() that will be called when
+ 	  Client_Handler::svc() exits in the thread-per-connection model.
+  	  Thread_Pool::svc() now calls the handler's handle_close() method
+ 	  to properly shut down the handler if handle_input() fails.
 
 Tue Sep 01 12:58:02 1998  Chris Gill <cdgill@cs.wustl.edu>
 
@@ -501,9 +501,9 @@ Tue Sep 01 12:58:02 1998  Chris Gill <cdgill@cs.wustl.edu>
           ace/config-psos-tm.h:
 
           pSOS port of ACE for the Diab 4.2 and Trimedia cross compilers.
-          Thanks to Jin Lu of Philips Research for completing the ACE pSOS port
-          on the Trimedia cross compiler and contributing the changes back to
-          the ACE distribution.
+  	  Thanks to Jin Lu of Philips Research for completing the ACE pSOS
+ 	  port on the Trimedia cross compiler and contributing the changes
+ 	  back to the ACE distribution.
 
 Tue Sep  1 10:43:24 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -512,9 +512,9 @@ Tue Sep  1 10:43:24 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           ace/config-sco-5.0.0.h,
           ace/README:
           ACE_HAS_LONG_FDMASK macro has been changed to
-          ACE_HAS_BIG_FD_SET.  Therefore, I updated these files.  Thanks
-          to Ossama Othman <othman@astrosun.tn.cornell.edu> for reporting
-          this.
+ 	  ACE_HAS_BIG_FD_SET.  Therefore, I updated these files.  Thanks
+ 	  to Ossama Othman <othman@astrosun.tn.cornell.edu> for reporting
+ 	  this.
 
         * TAO/utils/catior/catior.cpp: Replaced the use of
           CORBA::B_{TRUE,FALSE} with 1 and 0 to be compatible with the
@@ -539,8 +539,8 @@ Tue Sep 01 10:03:55 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 Tue Sep 01 03:46:21 1998  Steve Huston  <shuston@riverace.com>
 
         * ace/Asynch_Acceptor.{h cpp}: Enable the contents for platforms
-          with ACE_HAS_AIO_CALLS, not just ACE_WIN32.  Thanks to John Mulhern
-          for these fixes.
+ 	  with ACE_HAS_AIO_CALLS, not just ACE_WIN32.  Thanks to John
+ 	  Mulhern for these fixes.
 
         * examples/Reactor/Proactor/Makefile: Removed include of
           platform_macros.GNU. Thanks to John Mulhern for this one too.
