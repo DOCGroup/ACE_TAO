@@ -1,53 +1,57 @@
+Sun Sep 05 21:32:40 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Synch.cpp: removed unnecessary #include of ace/Object_Manager.h.
+
 1999-09-05  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	  Made the receiver of QOS test portable by removing
-	  Win32-isms from it. Files modified :
-	
-	* examples/QOS/QosEvent.h: 
-	* examples/QOS/server.cpp: 
+          Made the receiver of QOS test portable by removing
+          Win32-isms from it. Files modified :
+
+        * examples/QOS/QosEvent.h:
+        * examples/QOS/server.cpp:
 
 Sun Sep  5 13:40:18 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* ace/ACE.cpp: Made the status code to be of type 
-	  ACE_exitcode instead of int. This is necessary
-	  because of the change on waitpid ().
+        * ace/ACE.cpp: Made the status code to be of type
+          ACE_exitcode instead of int. This is necessary
+          because of the change on waitpid ().
 
 Sun Sep  5 10:59:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Process.i (wait): Removed the ACE_static_cast() Michael
-	  had added recently because the change below makes it
- 	  unnecessary.
+        * ace/Process.i (wait): Removed the ACE_static_cast() Michael
+          had added recently because the change below makes it
+          unnecessary.
 
-	* ace/OS.h (ACE_OS): Modified the 3-arg wait() and the waitpid()
-	  methods to take an ACE_exitcode* rather than int* so this will
- 	  work on Win32.
+        * ace/OS.h (ACE_OS): Modified the 3-arg wait() and the waitpid()
+          methods to take an ACE_exitcode* rather than int* so this will
+          work on Win32.
 
-	* ace/Log_Msg.cpp: Added a new explicit template instantiation
-	  for template class
-  
- 	  ACE_Guard<ACE_Reverse_Lock<ACE_Recursive_Thread_Mutex> >;
-  
+        * ace/Log_Msg.cpp: Added a new explicit template instantiation
+          for template class
+
+          ACE_Guard<ACE_Reverse_Lock<ACE_Recursive_Thread_Mutex> >;
+
           to fix compiler errors that showed up with EGCS.
-  
-	* tests/Signal_Test.cpp (run_test): Added ACE_UNUSED_ARG macros
-	  for several symbols that aren't used when the test is compiled
-	  single threaded.
+
+        * tests/Signal_Test.cpp (run_test): Added ACE_UNUSED_ARG macros
+          for several symbols that aren't used when the test is compiled
+          single threaded.
 
 Sat Sep 05 02:05:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* ace/OS.cpp: Fixed a missing "#else".
+        * ace/OS.cpp: Fixed a missing "#else".
 
-	* ace/Process.i,
-	  ace/Process_Manager.h,
-	  ace/Process_Manager.cpp:
-	  Fixed an "int" versus "ACE_exitcode" conversion
-	  problem.
+        * ace/Process.i,
+          ace/Process_Manager.h,
+          ace/Process_Manager.cpp:
+          Fixed an "int" versus "ACE_exitcode" conversion
+          problem.
 
 Sat Sep  4 23:37:29 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-win32-common.h: Missing a '&&' that was causing
-	  problems on Win32.  Thanks to Michael Kircher
- 	  <Michael.Kircher@mchp.siemens.de> for reporting this.
+        * ace/config-win32-common.h: Missing a '&&' that was causing
+          problems on Win32.  Thanks to Michael Kircher
+          <Michael.Kircher@mchp.siemens.de> for reporting this.
 
 Sat Sep 04 20:24:32 1999  David L. Levine  <levine@cs.wustl.edu>
 

@@ -1,4 +1,3 @@
-// Synch.cpp
 // $Id$
 
 #ifndef ACE_SYNCH_C
@@ -13,7 +12,6 @@
 
 #include "ace/Synch_T.h"
 #include "ace/Synch.h"
-#include "ace/Object_Manager.h"
 
 ACE_RCSID(ace, Synch, "$Id$")
 
