@@ -45,7 +45,7 @@ sub run
     $remove_exe_after_test = 1;
     system ("make BIN=$program >>$compilation_log 2>&1");
   }
-  
+
   print STDERR "Running $program\n";
   $P = Process::Create ($EXEPREFIX.$program.$EXE_EXT, "");
   $status = $P->TimedWait (300);
@@ -70,39 +70,39 @@ sub run
       $ending_matched = 0;
       $bad_matched = 0;
       while (<LOG>) {
-	chop;
-	if (m/starting/) {
-	  $starting_matched = 1;
-	}
-	if (m/Ending/) {
-	  $ending_matched = 1;
-	}
-	if (m/assertion failed|timeout|Bad file number/) {
-	  $bad_matched = 1;
-	}
-	# On Linux the /etc/hosts files contains IPV6 addresses that
-	# tend to confuse the heck out of this test
-	if (($program ne "SOCK_Connector_Test"
-	     || $^O ne "linux")
-	    && m/Invalid argument/) {
-	  $bad_matched = 1;
-	}
-	if ($program ne "Cached_Accept_Conn_Test"
-	    && m/No such file or directory/) {
-	  $bad_matched = 1;
-	}
-	if (m/not supported/) {
-	  print STDERR $_, "\n";
-	}
+        chop;
+        if (m/Starting/) {
+          $starting_matched = 1;
+        }
+        if (m/Ending/) {
+          $ending_matched = 1;
+        }
+        if (m/assertion failed|timeout|Bad file number/) {
+          $bad_matched = 1;
+        }
+        # On Linux the /etc/hosts files contains IPV6 addresses that
+        # tend to confuse the heck out of this test
+        if (($program ne "SOCK_Connector_Test"
+             || $^O ne "linux")
+            && m/Invalid argument/) {
+          $bad_matched = 1;
+        }
+        if ($program ne "Cached_Accept_Conn_Test"
+            && m/No such file or directory/) {
+          $bad_matched = 1;
+        }
+        if (m/not supported/) {
+          print STDERR $_, "\n";
+        }
       }
       if ($starting_matched == 0) {
-	print STDERR "Error in $program log: no line with 'starting'\n";
+        print STDERR "Error in $program log: no line with 'starting'\n";
       }
       if ($ending_matched == 0) {
-	print STDERR "Error in $program log: no line with 'Ending'\n";
+        print STDERR "Error in $program log: no line with 'Ending'\n";
       }
       if ($bad_matched == 1) {
-	print STDERR "Error in $program log: unexpected output\n";
+        print STDERR "Error in $program log: unexpected output\n";
       }
       close (LOG); # ignore errors
     }
