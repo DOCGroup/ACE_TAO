@@ -1,3 +1,9 @@
+Wed May 12 13:58:59 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/ORB.{h,cpp}:
+	  Added the dummy function list_initial_services().
+	  For now it just throws CORBA::NO_IMPLEMENT.
+
 Wed May 12 13:35:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/MProfile.h:
