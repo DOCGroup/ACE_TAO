@@ -1,3 +1,8 @@
+Wed Apr 19 14:09:29 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * etc/Svc_Conf_l.cpp.diff: Fixed the diff so it generates 
+          the correct Svc_Conf_l.cpp.
+
 Wed Apr 19 12:48:21 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/ACE.cpp: Added a missing pointer in the signature of
