@@ -44,7 +44,7 @@ ACE_High_Res_Timer::elapsed_time (ACE_Time_Value &tv)
 
 #if defined (ACE_HAS_POSIX_TIME)
 void
-ACE_High_Res_Timer::elapsed_time (timespec_t &elapsed_time)
+ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time)
 {
   if (scale_factor_ > 0) {
     elapsed_time.tv_sec = (this->end_ - this->start_) / (1000 * 1000 * 1000) /
