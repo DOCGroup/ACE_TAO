@@ -90,6 +90,12 @@ CORBA_String_out::CORBA_String_out (CORBA_String_var &s)
 }
 
 ACE_INLINE
+CORBA_String_out::CORBA_String_out (TAO_String_Manager &s)
+  : ptr_ (s.out ())
+{
+}
+
+ACE_INLINE
 CORBA_String_out::CORBA_String_out (const CORBA_String_out &s)
   : ptr_ (s.ptr_)
 {
