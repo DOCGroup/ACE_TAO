@@ -1,3 +1,10 @@
+Tue Dec 28 15:32:55 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Makefile: build libDLL_Test.so before building
+          any executables, so that it doesn't see the template
+          instantiations from all of the tests (after a make
+          realclean, anyways).
+
 Tue Dec 28 08:55:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_linux_cxx.GNU:

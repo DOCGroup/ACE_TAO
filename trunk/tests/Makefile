@@ -11,14 +11,14 @@
 
 BIN =   Aio_Platform_Test \
         Atomic_Op_Test \
-	Auto_IncDec_Test \
+        Auto_IncDec_Test \
         Barrier_Test \
         Basic_Types_Test \
         Buffer_Stream_Test \
         Cache_Map_Manager_Test \
         Cached_Accept_Conn_Test \
         Cached_Conn_Test \
-	Capabilities_Test \
+        Capabilities_Test \
         CDR_File_Test \
         CDR_Test \
         Collection_Test \
@@ -36,7 +36,7 @@ BIN =   Aio_Platform_Test \
         Hash_Map_Bucket_Iterator_Test \
         IOStream_Test \
         Lazy_Map_Manager_Test \
-	Log_Msg_Test \
+        Log_Msg_Test \
         Malloc_Test \
         Map_Test \
         Map_Manager_Test \
@@ -69,7 +69,7 @@ BIN =   Aio_Platform_Test \
         Reverse_Lock_Test \
         Semaphore_Test \
         Service_Config_Test \
-	Signal_Test \
+        Signal_Test \
         Sigset_Ops_Test \
         Simple_Message_Block_Test \
         SOCK_Test \
@@ -135,7 +135,9 @@ ifndef SOEXT
 endif
 ifdef shared_libs
   ifndef VXWORKS
-    BUILD += libDLL_Test.$(SOEXT)
+    #### Build libDLL_Test first, so that it doesn't see the
+    #### template instantiations from all of the tests.
+    BUILD := libDLL_Test.$(SOEXT) $(BUILD)
   endif # ! VXWORKS
 endif # shared_libs
 
