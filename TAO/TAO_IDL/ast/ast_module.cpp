@@ -273,7 +273,7 @@ AST_Module::fe_add_interface (AST_Interface *t)
 
           return 0;
         } 
-      else if (referenced (predef, t->local_name ())) 
+      else if (referenced (predef, t->local_name ()) && !t->is_defined ()) 
         {
           idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
                                       t, 

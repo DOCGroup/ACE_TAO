@@ -309,10 +309,10 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       << "{}" << be_nl
 
       << "void "
-      << node->name () << "::_tao_any_destructor (void *x)" << be_nl
+      << node->name () << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
       << "{" << be_idt_nl
       << node->local_name () << " *tmp = ACE_static_cast ("
-      << node->local_name () << "*,x);" << be_nl
+      << node->local_name () << "*, _tao_void_pointer);" << be_nl
       << "delete tmp;" << be_uidt_nl
       << "}\n\n";
 
