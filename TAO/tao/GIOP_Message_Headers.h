@@ -16,15 +16,11 @@
 //     Balachandran Natarajan <bala@cs.wustl.edu>
 //
 // ============================================================================
-#ifndef TAO_GIOP_ASSORTED_HEADERS_H
-#include "ace/pre.h"
-#define TAO_GIOP_ASSORTED_HEADERS_H
-#include "tao/GIOPC.h"
 
-// @@ Bala, please pick the names of your files better.
-//    First there is only one header here.  But GIOP_Headers is better
-//    (i.e. sounds more profesional) than 'assorted' (that sounds like
-//    a recipe for vegetable soup)
+#ifndef TAO_GIOP_MESSAGE_HEADERS_H
+#include "ace/pre.h"
+#define TAO_GIOP_MESSAGE_HEADERS_H
+#include "tao/GIOPC.h"
 
 class TAO_GIOP_Locate_Request_Header
 {
@@ -76,8 +72,8 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/GIOP_Assorted_Headers.i"
+# include "tao/GIOP_Message_Headers.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /*TAO_GIOP_ASSORTED_HEADERS_H*/
+#endif /*TAO_GIOP_MESSAGE_HEADERS_H*/
