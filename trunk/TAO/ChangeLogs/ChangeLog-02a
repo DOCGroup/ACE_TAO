@@ -1,3 +1,8 @@
+Sat Mar 11 14:32:34 2000  Pradeep Gore  <pradeep@siesta.cs.wustl.edu>
+
+	* Notify_SequenceProxyPushSupplier_i.cpp:
+	  Commented out unused parameters.
+
 Sat Mar 11 09:33:18 2000  Christopher Kohlhoff <chris@kohlhoff.com>
 
         * orbsvcs/orbsvcs/Makefile.bor: updated to reflect current
