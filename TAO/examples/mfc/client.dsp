@@ -2,7 +2,7 @@
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
-# TARGTYPE "Win32 MFC (x86) Console Application" 0x0103
+# TARGTYPE "Win32 (x86) Console Application" 0x0103
 
 CFG=client - Win32 MFC Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
@@ -17,8 +17,8 @@ CFG=client - Win32 MFC Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "client - Win32 MFC Release" (based on "Win32 MFC (x86) Console Application")
-!MESSAGE "client - Win32 MFC Debug" (based on "Win32 MFC (x86) Console Application")
+!MESSAGE "client - Win32 MFC Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "client - Win32 MFC Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -50,7 +50,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib acemfc.lib TAOmfc.lib TAO_CosNaming.lib /nologo /subsystem:console /machine:I386 /libpath:"../../../ace" /libpath:"../../tao" /libpath:"../../orbsvcs/orbsvcs"
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib acemfc.lib TAOmfc.lib TAO_CosNamingmfc.lib TAO_PortableServermfc.lib /nologo /subsystem:console /machine:I386 /libpath:"../../../ace" /libpath:"../../tao" /libpath:"../../orbsvcs/orbsvcs" /libpath:"../../tao/PortableServer"
 
 !ELSEIF  "$(CFG)" == "client - Win32 MFC Debug"
 
@@ -75,7 +75,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 acemfcd.lib TAOmfcd.lib TAO_CosNamingd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"../../../ace" /libpath:"../../tao" /libpath:"../../orbsvcs/orbsvcs"
+# ADD LINK32 acemfcd.lib TAOmfcd.lib TAO_CosNamingmfcd.lib TAO_PortableServermfcd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"../../../ace" /libpath:"../../tao" /libpath:"../../orbsvcs/orbsvcs" /libpath:"../../tao/PortableServer"
 
 !ENDIF 
 

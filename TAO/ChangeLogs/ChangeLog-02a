@@ -1,3 +1,13 @@
+Tue Sep 12 01:58:59 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/mfc/client.cpp: Included "tao/PortableServer/POA.h".
+
+	* examples/mfc/client.dsp:
+	* examples/mfc/server.dsp: Added TAO_PortableServermfc* linked
+	  libraries and changed TAO_CosNaming* link libraries to
+	  TAO_CosNamingmfc* libraries.  Thanks for Bennett R. Stabile
+	  <bstabile@home.com> for reporting the bug.
+
 Tue Sep 12 01:36:57 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tao/orbconf.h: Added macros TAO_ENV_SINGLE_ARG_DECL and friends
