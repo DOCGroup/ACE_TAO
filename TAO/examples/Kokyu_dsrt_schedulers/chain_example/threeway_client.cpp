@@ -198,8 +198,6 @@ main (int argc, char *argv[])
   non_dsui_timer.start();
 
   Object_ID oid = ACE_OBJECT_COUNTER->increment();
-  /* MEASURE: Program start time */
-  DSTRM_EVENT(MAIN_GROUP_FAM, START,0,sizeof(Object_ID), (char*)&oid);
 
   EDF_Scheduler* scheduler=0;
   RTScheduling::Current_var current;
@@ -247,14 +245,18 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG, "(%t|%T): main thread prio is %d\n", prio));
 
   CPULoad::calibrate(10);
-  ACE_DEBUG((LM_DEBUG,"TEST 4\n"));
+
+  //print out the start time of the program.
+  ACE_Time_Value start_time=ACE_OS::gettimeofday();
+  ACE_OS::printf ( ACE_TEXT ("The Start time: %u (sec), %u (usec)\n"), start_time.sec(), start_time.usec());
+  DSTRM_EVENT(MAIN_GROUP_FAM, START,0,sizeof(Object_ID), (char*)&oid);
+
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG((LM_DEBUG,"TEST 3\n"));
      if (parse_args (argc, argv) != 0)
         return 1;
 
@@ -274,7 +276,6 @@ main (int argc, char *argv[])
                             1);
         }
 
-      ACE_DEBUG((LM_DEBUG,"Test 2\n"));
       if (enable_dynamic_scheduling)
         {
           ACE_DEBUG ((LM_DEBUG, "Dyn Sched enabled\n"));
