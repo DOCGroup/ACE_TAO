@@ -185,6 +185,9 @@ const CORBA::ULong TAO_TAG_NSKFS_PROFILE = 0x00003039U;
 /// Tandem (HP) Pathsend Protocol
 const CORBA::ULong TAO_TAG_NSKPW_PROFILE = 0x0000303AU;
 
+// Default DiffServ CodePoint.
+const int IPDSFIELD_DSCP_DEFAULT = 0x00;
+
 /**
  * @name Minor Code Encoding
  *

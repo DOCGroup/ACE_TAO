@@ -35,7 +35,6 @@
 #include "tao/Resource_Factory.h"
 #include "tao/Connector_Impl.h"
 
-
 class TAO_UIOP_Endpoint;
 class TAO_Endpoint;
 
@@ -113,9 +112,6 @@ protected:
 
   virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL);
 
-  /// Obtains uiop properties that must be used by this connector, i.e.,
-  /// initializes <uiop_properties_>.
-  int init_uiop_properties (void);
   //@}
 
 private:
@@ -133,10 +129,6 @@ private:
 
   /// Do we need to use a GIOP_Lite for sending messages?
   const bool lite_flag_;
-
-  /// UIOP configuration properties for all connections established by
-  /// this connector.
-  TAO_UIOP_Properties uiop_properties_;
 };
 
 # endif  /* TAO_HAS_UIOP == 1 */

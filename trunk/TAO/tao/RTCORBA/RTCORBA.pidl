@@ -18,7 +18,7 @@
  *     3.  Added RT_ORB::create_tcp_protocol_properties which seems
  *         to come and go from the formal specification, but is needed.
  *
- *   This file was used to generate the code in RTCORBAC.{h,i,cpp}.
+ *   This file was used to generate the code in RTCORBAC.{h,inl,cpp}.
  *   The steps to regenerate the code are as follows:
  *
  *   1. Run the tao_idl compiler on the pidl file.  The command used for
@@ -43,7 +43,7 @@
  *
  * Note: The diffs were generated with these commands:
  *
- *   for i in RTCORBAC.{h,i,cpp}; do
+ *   for i in RTCORBAC.{h,inl,cpp}; do
  *     diff -wBbu orig/$i $i
  *   done > diffs/RTCORBA.diff
  *
@@ -166,9 +166,29 @@ module RTCORBA
   // Communication over Shared Memory.
   local interface SharedMemoryProtocolProperties : ProtocolProperties
   {
+    attribute long send_buffer_size;
+    attribute long recv_buffer_size;
+    attribute boolean keep_alive;
+    attribute boolean dont_route;
+    attribute boolean no_delay;
     attribute long preallocate_buffer_size;
     attribute string mmap_filename;
     attribute string mmap_lockname;
+  };
+
+  local interface UserDatagramProtocolProperties : ProtocolProperties
+  {
+    attribute boolean enable_network_priority;
+  };
+
+  local interface StreamControlProtocolProperties : ProtocolProperties
+  {
+    attribute long send_buffer_size;
+    attribute long recv_buffer_size;
+    attribute boolean keep_alive;
+    attribute boolean dont_route;
+    attribute boolean no_delay;
+    attribute boolean enable_network_priority;
   };
 
   // End of TAO-specific interfaces.
@@ -225,7 +245,32 @@ module RTCORBA
                                                      in boolean keep_alive,
                                                      in boolean dont_route,
                                                      in boolean no_delay,
-						     in boolean enable_network_priority);
+                                                     in boolean enable_network_priority);
+
+    UnixDomainProtocolProperties create_unix_domain_protocol_properties(
+                                                     in long send_buffer_size,
+                                                     in long recv_buffer_size);
+
+    SharedMemoryProtocolProperties create_shared_memory_protocol_properties(
+                                                     in long send_buffer_size,
+                                                     in long recv_buffer_size,
+                                                     in boolean keep_alive,
+                                                     in boolean dont_route,
+                                                     in boolean no_delay,
+                                                     in long preallocate_buffer_size,
+                                                     in string mmap_filename,
+                                                     in string mmap_lockname);
+
+    UserDatagramProtocolProperties create_user_datagram_protocol_properties(
+                                                     in boolean enable_network_priority);
+
+    StreamControlProtocolProperties create_stream_control_protocol_properties(
+                                                     in long send_buffer_size,
+                                                     in long recv_buffer_size,
+                                                     in boolean keep_alive,
+                                                     in boolean dont_route,
+                                                     in boolean no_delay,
+                                                     in boolean enable_network_priority);
 
     // Threadpool creation/destruction.
     exception InvalidThreadpool {};

@@ -1,3 +1,35 @@
+Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* ace/Basic_Stats.{h,inl,cpp}: 
+
+	  - Removed calculation of variation squared or deviation in the
+	  output from dump_results(). I don't think either was been
+	  calculated since the formula of (sum squared / samples_count) -
+	  (avg squared) isn't a meaningful statistical value.
+
+	  - Also simplified division in dump_results() and removed
+	  unnecessary conversions.
+
+	  - <sum2> is no longer needed.
+
+	  - Made some minor simplifications to the code.
+
+	  - Made the fields of ACE_Basic_Stats public.
+
+	  - <min_at_> and <max_at_> were not being assigned in accumulate().
+
+	* performance-tests/SCTP/SOCK_SEQPACK_srv.cpp:
+
+	  Fixed a for loop.  It should be 1 to n inclusive.
+
+	* ace/DLL_Manager.cpp: 
+
+	  Added additional debug statements.
+
+	* bin/tao_other_tests.lst: 
+
+	  TAO/performance-tests/Protocols/run_test.pl was added.
+
 Wed Sep 29 17:11:39 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/TMCast/LinkListener.hpp: Added #include "Protocol.hpp" to

@@ -179,7 +179,8 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
             char **endPtr =0;
             ncs = ACE_OS::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
                                   endPtr, 0);
-  }
+          }
+
         // Validate the CodesetId
         if (ACE_Codeset_Registry::get_max_bytes(ncs) == 0)
           {

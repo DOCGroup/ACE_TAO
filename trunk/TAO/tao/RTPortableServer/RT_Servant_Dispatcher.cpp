@@ -77,23 +77,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
 
   // Remember current thread's priority.
   TAO_Protocols_Hooks *tph =
-    poa.orb_core ().get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  if (req.transport ()->tag () == IOP::TAG_INTERNET_IOP)
-    {
-      CORBA::Policy_var policy = poa.server_protocol ();
-
-      int result =
-        tph->update_server_protocol_properties (
-          policy.in (),
-          req.transport (),
-          "iiop");
-
-      if (result != 0)
-        ACE_ERROR((LM_ERROR,
-                   "Error in getting the effective protocol properties\n"));
-    }
+    poa.orb_core ().get_protocols_hooks ();
 
   const char *priority_model;
   RTCORBA::Priority target_priority = TAO_INVALID_PRIORITY;
@@ -265,6 +249,20 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
             }
         }
     }
+
+  CORBA::Policy_var policy = 
+    poa.policies ().get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
+
+  CORBA::Boolean set_server_network_priority =
+    tph->set_server_network_priority (req.transport ()->tag (),
+                                      policy.in ()
+                                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+    
+  TAO_Connection_Handler *connection_handler =
+    req.transport ()->connection_handler ();
+  
+  connection_handler->set_dscp_codepoint (set_server_network_priority);
 }
 
 void
@@ -306,8 +304,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_collocated_request (TAO_POA &poa,
 
   // Remember current thread's priority.
   TAO_Protocols_Hooks *tph =
-    poa.orb_core ().get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    poa.orb_core ().get_protocols_hooks ();
 
   if (tph->get_thread_CORBA_and_native_priority (pre_invoke_state.original_CORBA_priority_,
                                                  pre_invoke_state.original_native_priority_
@@ -349,8 +346,7 @@ TAO_RT_Servant_Dispatcher::post_invoke (TAO_POA &poa,
           // Reset the priority of the current thread back to its original
           // value.
           TAO_Protocols_Hooks *tph =
-            poa.orb_core ().get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            poa.orb_core ().get_protocols_hooks ();
 
           if (tph->set_thread_native_priority (
                  pre_invoke_state.original_native_priority_

@@ -11,8 +11,8 @@
 
   <title>Receiver</title>
 
-  <idl id="IDL:Hello/Receiver:1.0"
-    homeid="IDL:Hello/ReceiverHome:1.0">
+  <idl id="IDL:DiffServ/Receiver:1.0"
+    homeid="IDL:DiffServ/ReceiverHome:1.0">
    <fileinarchive name="Receiver.idl"/>
   </idl>
 
@@ -31,7 +31,7 @@
    </dependency>
 
    <code type="DLL">
-     <fileinarchive name="Receiver_exec"/>
+     <fileinarchive name="DiffServ_Receiver_exec"/>
      <entrypoint>createReceiverHome_Impl</entrypoint>
    </code>
 

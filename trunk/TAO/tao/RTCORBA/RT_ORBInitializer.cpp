@@ -81,14 +81,6 @@ TAO_RT_ORBInitializer::pre_init (
   TAO_ORB_Core::set_poa_factory (rt_poa_factory_name,
                                  rt_poa_factory_directive);
 
-  // Sets the client_protocol policy.
-  TAO_RT_Protocols_Hooks::set_client_protocols_hook
-    (TAO_ClientProtocolPolicy::hook);
-
-  // Sets the server_protocol policy.
-  TAO_RT_Protocols_Hooks::set_server_protocols_hook
-    (TAO_ServerProtocolPolicy::hook);
-
   // Create the initial priority mapping instance.
   TAO_Priority_Mapping *pm;
   switch (this->priority_mapping_type_)

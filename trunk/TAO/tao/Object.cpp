@@ -503,15 +503,15 @@ CORBA::Object::_get_policy (
 }
 
 CORBA::Policy_ptr
-CORBA::Object::_get_client_policy (
-  CORBA::PolicyType type
+CORBA::Object::_get_cached_policy (
+  TAO_Cached_Policy_Type type
   ACE_ENV_ARG_DECL)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
   if (this->protocol_proxy_)
-    return this->_stubobj ()->get_client_policy (type
-                                                 ACE_ENV_ARG_PARAMETER);
+    return this->protocol_proxy_->get_cached_policy (type
+                                                     ACE_ENV_ARG_PARAMETER);
   else
     ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
 }

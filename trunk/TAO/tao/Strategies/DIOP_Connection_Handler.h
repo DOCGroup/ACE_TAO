@@ -39,27 +39,6 @@ class TAO_Pluggable_Messaging;
 // ****************************************************************
 
 /**
- * @class TAO_DIOP_Properties
- *
- * @brief TCP protocol properties specification for a set of
- *  connections.
- *
- */
-
-class TAO_Strategies_Export TAO_DIOP_Properties
-{
-
-public:
-  int send_buffer_size;
-  int recv_buffer_size;
-  int no_delay;
-};
-
-
-
-// ****************************************************************
-
-/**
  * @class TAO_DIOP_Connection_Handler
  *
  * @brief  Handles requests on a single connection.
@@ -78,12 +57,9 @@ public:
 
   TAO_DIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
 
-  /// Constructor. <arg> parameter is used by the Acceptor to pass the
-  /// protocol configuration properties for this connection.
+  /// Constructor. 
   TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core,
-                               CORBA::Boolean flag,
-                               void *arg);
-
+                               CORBA::Boolean flag);
 
   /// Destructor.
   ~TAO_DIOP_Connection_Handler (void);
@@ -151,6 +127,9 @@ public:
   //@}
   // DIOP Additions - End
 
+  /// Set Diff-Serv codepoint on outgoing packets.
+  int set_dscp_codepoint (CORBA::Boolean set_network_priority);
+  
 protected:
 
   //@{
@@ -177,8 +156,8 @@ protected:
   // DIOP Additions - End
 
 private:
-  /// TCP configuration for this connection.
-  TAO_DIOP_Properties *tcp_properties_;
+  /// Stores the type of service value.
+  int dscp_codepoint_;
 };
 
 #if defined (__ACE_INLINE__)

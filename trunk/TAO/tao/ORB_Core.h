@@ -428,7 +428,7 @@ public:
   static const ACE_CString &poa_factory_name (void);
 
   /// Gets the value of TAO_ORB_Core::protocols_hooks__
-  TAO_Protocols_Hooks * get_protocols_hooks (ACE_ENV_SINGLE_ARG_DECL);
+  TAO_Protocols_Hooks * get_protocols_hooks (void);
 
   /// Sets the value of TAO_ORB_Core::dynamic_adapter_name_.
   static void dynamic_adapter_name (const char *name);
@@ -542,9 +542,21 @@ public:
   /// Accessor method for the default_policies_
   TAO_Policy_Set *get_default_policies (void);
 
-  /// Get a cached policy.  First, check the ORB-level Policy
-  /// Manager, and then check the ORB defaults.
+  /// Get a policy.  First, check the ORB-level Policy Manager, then
+  /// check the ORB defaults.
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType type);
+
+  /// Get a policy.  First, check the thread current, then check the
+  /// ORB-level Policy Manager, then check the ORB defaults.
+  CORBA::Policy_ptr get_policy_including_current (CORBA::PolicyType type);
+
+  /// Get a cached policy.  First, check the ORB-level Policy Manager,
+  /// then check the ORB defaults.
   CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
+
+  /// Get a cached policy.  First, check the thread current, then
+  /// check the ORB-level Policy Manager, then check the ORB defaults.
+  CORBA::Policy_ptr get_cached_policy_including_current (TAO_Cached_Policy_Type type);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -604,12 +616,6 @@ public:
 
   static void set_timeout_hook (Timeout_Hook hook);
 
-
-  /// Access to the RoundtripTimeoutPolicy policy set on the thread or
-  /// on the ORB.  In this method, we do not consider the stub since
-  /// we do not have access to it.
-  CORBA::Policy_ptr stubless_relative_roundtrip_timeout (void);
-
   /// Invoke the timeout hook if present.
   /**
    * The timeout hook is used to determine if the timeout policy is
@@ -626,13 +632,6 @@ public:
   /// Define the Timeout_Hook signature
   static void connection_timeout_hook (Timeout_Hook hook);
 
-
-  /// Access to the connection timeout policy set on the thread or
-  /// on the ORB.  In this method, we do not consider the stub since
-  /// we do not have access to it.
-  CORBA::Policy_ptr stubless_connection_timeout (void);
-
-
   void call_sync_scope_hook (TAO_Stub *stub,
                              bool &has_synchronization,
                              Messaging::SyncScope &scope);
@@ -643,11 +642,8 @@ public:
                                    TAO_Stub *,
                                    bool &,
                                    Messaging::SyncScope &);
-  static void set_sync_scope_hook (Sync_Scope_Hook hook);
 
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-  CORBA::Policy_ptr stubless_sync_scope (void);
-#endif  /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+  static void set_sync_scope_hook (Sync_Scope_Hook hook);
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -666,10 +662,6 @@ public:
 
   /// Handle to the factory for protocols_hooks_..
   TAO_Protocols_Hooks *protocols_hooks_;
-
-  /// Flag to check whether the protocols hooks have been checked or
-  /// not.
-  bool protocols_hooks_checked_;
 
   /// Obtain the TSS resources of this orb.
   TAO_ORB_Core_TSS_Resources* get_tss_resources (void);

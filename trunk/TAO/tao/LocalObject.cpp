@@ -166,7 +166,7 @@ CORBA::LocalObject::_get_policy (CORBA::PolicyType
 }
 
 CORBA::Policy_ptr
-CORBA::LocalObject::_get_client_policy (CORBA::PolicyType
+CORBA::LocalObject::_get_cached_policy (TAO_Cached_Policy_Type
                                         ACE_ENV_ARG_DECL)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);

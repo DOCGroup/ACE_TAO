@@ -123,8 +123,6 @@ TAO_RT_Stub::exposed_client_protocol (CORBA::Policy_ptr policy)
   this->client_protocol_policy_ = CORBA::Policy::_duplicate (policy);
 }
 
-
-
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 CORBA::Policy_ptr
@@ -146,22 +144,23 @@ TAO_RT_Stub::get_policy (CORBA::PolicyType type
 }
 
 CORBA::Policy_ptr
-TAO_RT_Stub::get_client_policy (CORBA::PolicyType type
+TAO_RT_Stub::get_cached_policy (TAO_Cached_Policy_Type type
                                 ACE_ENV_ARG_DECL)
 {
   // If we are dealing with a client exposed policy, check if any
   // value came in the IOR/reconcile IOR value and overrides.
-  if (type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
+  if (type == TAO_CACHED_POLICY_PRIORITY_MODEL)
     return this->exposed_priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
 
-  if (type == RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE)
+  if (type == TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION)
     return this->effective_priority_banded_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
 
-  if (type == RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE)
+  if (type == TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL)
     return this->effective_client_protocol (ACE_ENV_SINGLE_ARG_PARAMETER);
 
-  return this->TAO_Stub::get_client_policy (type ACE_ENV_ARG_PARAMETER);
+  return this->TAO_Stub::get_cached_policy (type ACE_ENV_ARG_PARAMETER);
 }
+
 
 TAO_Stub *
 TAO_RT_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
@@ -194,117 +193,11 @@ TAO_RT_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
 CORBA::Policy *
-TAO_RT_Stub::private_connection (void)
-{
-  CORBA::Policy *result = 0;
-
-  // No need to lock, the stub only changes its policies at
-  // construction time...
-  if (this->policies_ != 0)
-    result = this->policies_->get_cached_policy (TAO_CACHED_POLICY_RT_PRIVATE_CONNECTION);
-
-  // No need to lock, the object is in TSS storage....
-  if (result == 0)
-    {
-      TAO_Policy_Current &policy_current =
-        this->orb_core_->policy_current ();
-      result = policy_current.get_cached_policy (TAO_CACHED_POLICY_RT_PRIVATE_CONNECTION);
-    }
-
-  // @@ Must lock, but is is harder to implement than just modifying
-  //    this call: the ORB does take a lock to modify the policy
-  //    manager
-  if (result == 0)
-    {
-      TAO_Policy_Manager *policy_manager =
-        this->orb_core_->policy_manager ();
-      if (policy_manager != 0)
-        result = policy_manager->get_cached_policy (TAO_CACHED_POLICY_RT_PRIVATE_CONNECTION);
-    }
-
-  if (result == 0)
-    result = this->orb_core_->get_default_policies ()->get_cached_policy (TAO_CACHED_POLICY_RT_PRIVATE_CONNECTION);
-
-  return result;
-}
-
-CORBA::Policy *
-TAO_RT_Stub::client_protocol (void)
-{
-  CORBA::Policy *result = 0;
-
-  // No need to lock, the stub only changes its policies at
-  // construction time...
-  if (this->policies_ != 0)
-    result = this->policies_->get_cached_policy (TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL);
-
-  // No need to lock, the object is in TSS storage....
-  if (result == 0)
-    {
-      TAO_Policy_Current &policy_current =
-        this->orb_core_->policy_current ();
-      result = policy_current.get_cached_policy (TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL);
-    }
-
-  // @@ Must lock, but is is harder to implement than just modifying
-  //    this call: the ORB does take a lock to modify the policy
-  //    manager
-  if (result == 0)
-    {
-      TAO_Policy_Manager *policy_manager =
-        this->orb_core_->policy_manager ();
-      if (policy_manager != 0)
-        result = policy_manager->get_cached_policy (TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL);
-    }
-
-  // No default is used for client priority policy (default creates
-  // conflict in case the policy is also set for the object on the
-  // server side).
-
-  return result;
-}
-
-CORBA::Policy *
-TAO_RT_Stub::priority_banded_connection (void)
-{
-  CORBA::Policy *result = 0;
-
-  // No need to lock, the stub only changes its policies at
-  // construction time...
-  if (this->policies_ != 0)
-    result = this->policies_->get_cached_policy (TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION);
-
-  // No need to lock, the object is in TSS storage....
-  if (result == 0)
-    {
-      TAO_Policy_Current &policy_current =
-        this->orb_core_->policy_current ();
-      result = policy_current.get_cached_policy (TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION);
-    }
-
-  // @@ Must lock, but is is harder to implement than just modifying
-  //    this call: the ORB does take a lock to modify the policy
-  //    manager
-  if (result == 0)
-    {
-      TAO_Policy_Manager *policy_manager =
-        this->orb_core_->policy_manager ();
-      if (policy_manager != 0)
-        result = policy_manager->get_cached_policy (TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION);
-    }
-
-  if (result == 0)
-    result = this->orb_core_->get_default_policies ()->get_cached_policy (TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION);
-
-  return result;
-}
-
-CORBA::Policy *
 TAO_RT_Stub::effective_priority_banded_connection (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Get effective override.
   CORBA::Policy_var override =
-    this->priority_banded_connection ();
+    this->TAO_Stub::get_cached_policy (TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION);
 
   // Get the value from the ior.
   CORBA::Policy_var exposed =
@@ -355,7 +248,7 @@ TAO_RT_Stub::effective_client_protocol (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Get effective override.
   CORBA::Policy_var override =
-    this->client_protocol ();
+    this->TAO_Stub::get_cached_policy (TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL);
 
   // Get the value from the ior.
   CORBA::Policy_var exposed =

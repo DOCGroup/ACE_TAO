@@ -133,9 +133,6 @@ private:
 
   /// Should we use GIOP lite??
   const bool lite_flag_;
-
-  /// Properties for all connections accepted by this acceptor.
-  TAO_UIOP_Properties uiop_properties_;
 };
 
 # endif /* TAO_HAS_UIOP == 1 */

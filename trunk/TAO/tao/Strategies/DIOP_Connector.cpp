@@ -134,8 +134,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       TAO_DIOP_Connection_Handler *svc_handler_i = 0;
       ACE_NEW_RETURN (svc_handler_i,
                       TAO_DIOP_Connection_Handler (this->orb_core (),
-                                                   this->lite_flag_,
-                                                   0 /* TAO_DIOP_Properties */),
+                                                   this->lite_flag_),
                       0);
 
       svc_handler_i->local_addr (ACE_sap_any_cast (ACE_INET_Addr &));
@@ -233,13 +232,6 @@ char
 TAO_DIOP_Connector::object_key_delimiter (void) const
 {
   return TAO_DIOP_Profile::object_key_delimiter_;
-}
-
-int
-TAO_DIOP_Connector::init_tcp_properties (void)
-{
-  // @@ Michael: We have not TCP, so we have no TCP properties.
-  return 0;
 }
 
 TAO_DIOP_Endpoint *

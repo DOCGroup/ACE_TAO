@@ -77,7 +77,6 @@ TAO_SHMIOP_Connector::open (TAO_ORB_Core *orb_core)
                   TAO_SHMIOP_CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
                        orb_core,
-                       0,
                        this->lite_flag_),
                   -1);
 

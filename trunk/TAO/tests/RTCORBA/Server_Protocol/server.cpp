@@ -128,8 +128,7 @@ check_default_server_protocol (CORBA::ORB_ptr orb
       if (protocol_type == IOP::TAG_INTERNET_IOP)
         {
           RTCORBA::TCPProtocolProperties_var tcp_properties =
-            RTCORBA::TCPProtocolProperties::_narrow (properties.in
-                                                     ()
+            RTCORBA::TCPProtocolProperties::_narrow (properties.in ()
                                                      ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
@@ -138,19 +137,23 @@ check_default_server_protocol (CORBA::ORB_ptr orb
                         "     Properties: \n"
                         "      send_buffer_size = %d\n"
                         "      receive_buffer_size = %d\n"
-                        "      no_delay = %d\n",
+                        "      keep_alive = %d\n"
+                        "      dont_route = %d\n"
+                        "      no_delay = %d\n"
+                        "      enable_network_priority = %d\n",
                         tcp_properties->send_buffer_size (),
                         tcp_properties->recv_buffer_size (),
-                        tcp_properties->no_delay ()));
+                        tcp_properties->keep_alive (),
+                        tcp_properties->dont_route (),                      
+                        tcp_properties->no_delay (),
+                        tcp_properties->enable_network_priority ()));
         }
       else if (protocol_type == TAO_TAG_UIOP_PROFILE)
         {
           RTCORBA::UnixDomainProtocolProperties_var uiop_properties =
-            RTCORBA::UnixDomainProtocolProperties::_narrow (properties.in
-                                                            ()
+            RTCORBA::UnixDomainProtocolProperties::_narrow (properties.in ()
                                                             ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
-
 
           if (!CORBA::is_nil (uiop_properties.in ()))
             ACE_DEBUG ((LM_DEBUG,
@@ -159,7 +162,69 @@ check_default_server_protocol (CORBA::ORB_ptr orb
                         "      receive_buffer_size = %d\n",
                         uiop_properties->send_buffer_size (),
                         uiop_properties->recv_buffer_size ()));
+        }
+      else if (protocol_type == TAO_TAG_SHMEM_PROFILE)
+        {
+          RTCORBA::SharedMemoryProtocolProperties_var shmem_properties =
+            RTCORBA::SharedMemoryProtocolProperties::_narrow (properties.in ()
+                                                              ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (-1);
+          
+          if (!CORBA::is_nil (shmem_properties.in ()))
+            ACE_DEBUG ((LM_DEBUG,
+                        "     Properties: \n"
+                        "      send_buffer_size = %d\n"
+                        "      receive_buffer_size = %d\n"
+                        "      keep_alive = %d\n"
+                        "      dont_route = %d\n"
+                        "      no_delay = %d\n"
+                        "      preallocate_buffer_size = %d\n"
+                        "      mmap_filename = %s\n"
+                        "      mmap_lockname = %s\n",
+                        shmem_properties->send_buffer_size (),
+                        shmem_properties->recv_buffer_size (),
+                        shmem_properties->keep_alive (),
+                        shmem_properties->dont_route (),                      
+                        shmem_properties->no_delay (),
+                        shmem_properties->preallocate_buffer_size (),
+                        shmem_properties->mmap_filename (),
+                        shmem_properties->mmap_lockname ()));
+        }
+      else if (protocol_type == TAO_TAG_UDP_PROFILE)
+        {
+          RTCORBA::UserDatagramProtocolProperties_var diop_properties =
+            RTCORBA::UserDatagramProtocolProperties::_narrow (properties.in ()
+                                                              ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (-1);
 
+          if (!CORBA::is_nil (diop_properties.in ()))
+            ACE_DEBUG ((LM_DEBUG,
+                        "     Properties: \n"
+                        "      enable_network_priority = %d\n",
+                        diop_properties->enable_network_priority ()));
+        }
+      else if (protocol_type == TAO_TAG_SCIOP_PROFILE)
+        {
+          RTCORBA::StreamControlProtocolProperties_var sciop_properties =
+            RTCORBA::StreamControlProtocolProperties::_narrow (properties.in ()
+                                                               ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (-1);
+
+          if (!CORBA::is_nil (sciop_properties.in ()))
+            ACE_DEBUG ((LM_DEBUG,
+                        "     Properties: \n"
+                        "      send_buffer_size = %d\n"
+                        "      receive_buffer_size = %d\n"
+                        "      keep_alive = %d\n"
+                        "      dont_route = %d\n"
+                        "      no_delay = %d\n"
+                        "      enable_network_priority = %d\n",
+                        sciop_properties->send_buffer_size (),
+                        sciop_properties->recv_buffer_size (),
+                        sciop_properties->keep_alive (),
+                        sciop_properties->dont_route (),                      
+                        sciop_properties->no_delay (),
+                        sciop_properties->enable_network_priority ()));
         }
     }
 
