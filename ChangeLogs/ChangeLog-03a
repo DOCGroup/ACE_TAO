@@ -1,3 +1,16 @@
+Sun Nov 19 08:05:08 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* ace/Makefile: 
+	  Updated.
+	
+	* ace/Dynamic_Service.cpp: 
+	* ace/Dynamic_Service.h: 
+	* ace/Dynamic_Service_Base.cpp: 
+	* ace/Dynamic_Service_Base.h: 
+	  Not all methods in Dynamic_Service were based on the SERVICE
+	  types. Moved those to the base class 'Dynamic_Service_Base' and
+	  the Dynamic_Service inherits from the base class.
+	
 Sat Nov 18 11:35:53 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/OS_Test.cpp:

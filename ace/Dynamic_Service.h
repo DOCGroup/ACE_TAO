@@ -18,6 +18,8 @@
 
 #include "ace/OS.h"
 
+#include "ace/Dynamic_Service_Base.h"
+
 /**
  * @class ACE_Dynamic_Service
  *
@@ -27,16 +29,17 @@
  * Uses "name" for lookup in the ACE service repository. Obtains
  * the object and returns it as the appropriate type.
  */
-template <class SERVICE>
-class ACE_Dynamic_Service
+template <class TYPE>
+class ACE_Dynamic_Service : public ACE_Dynamic_Service_Base
 {
 public:
   /// Return instance using <name> to search the Service_Repository.
-  static SERVICE *instance (const ACE_TCHAR *name);
-
-  /// Dump the current state of the object.
-  void dump (void) const;
+  static TYPE*instance (const ACE_TCHAR *name);
 };
+
+#if defined (__ACE_INLINE__)
+#include "ace/Dynamic_Service.i"
+#endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 # include "ace/Dynamic_Service.cpp"
