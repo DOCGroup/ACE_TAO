@@ -1,3 +1,7 @@
+Mon May 08 22:58:14 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * TAO version 1.1.2 released.
+
 Mon May  8 15:25:29 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Load_Balancing_persistent/Load_Balancer_i.cpp: Fixed a
