@@ -314,7 +314,9 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // The Root POA default name.
+#if !defined (TAO_DEFAULT_ROOTPOA_NAME)
 #define TAO_DEFAULT_ROOTPOA_NAME   ""
+#endif /* TAO_DEFAULT_ROOTPOA_NAME */
 
 // Minimum CORBA
 #if !defined (TAO_HAS_MINIMUM_CORBA)

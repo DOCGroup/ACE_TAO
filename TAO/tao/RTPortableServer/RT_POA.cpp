@@ -130,7 +130,7 @@ void
 TAO_RT_POA::validate_priority (RTCORBA::Priority priority
                                ACE_ENV_ARG_DECL)
 {
-  if (priority < RTCORBA::minPriority 
+  if (priority < RTCORBA::minPriority
            // The line below will always be false unless the value of
            // RTCORBA::maxPriority, which is now assigned the value of
            // 32767, is changed in RTCORBA.pidl.
@@ -926,9 +926,12 @@ TAO_RT_POA::server_protocol (void)
     {
       TAO_Policy_Manager *policy_manager =
         this->orb_core_.policy_manager ();
+
       if (policy_manager != 0)
-        result = policy_manager->get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
+        result =
+          policy_manager->get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
     }
+
   return result;
 }
 
