@@ -173,8 +173,13 @@ class ACE_Export ACE_Control_Block
   //    This class should be local to class ACE_Malloc, but some older
   //    C++ compilers don't like nested classes in templates...
 public:
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
   ACE_Based_Pointer<ACE_Name_Node> name_head_;
   // Head of the linked list of Name Nodes.
+#else
+  ACE_Name_Node *name_head_;
+  // Head of the linked list of Name Nodes.
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
   ACE_Malloc_Header::HEADER_PTR freep_;
   // Current head of the freelist.
