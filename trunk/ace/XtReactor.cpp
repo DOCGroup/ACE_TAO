@@ -121,7 +121,7 @@ ACE_XtReactor::InputCallbackProc (XtPointer closure,
   if (self->wait_set_.rd_mask_.is_set (*source))
     wait_set.rd_mask_.set_bit (*source);
   if (self->wait_set_.wr_mask_.is_set (*source))
-    wait_set.wr>_mask_.set_bit (*source);
+    wait_set.wr_mask_.set_bit (*source);
   if (self->wait_set_.ex_mask_.is_set (*source))
     wait_set.ex_mask_.set_bit (*source);
 
