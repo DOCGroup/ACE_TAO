@@ -17,6 +17,8 @@
 #ifndef CACHED_CONNECT_STRATEGY_T_H
 #define CACHED_CONNECT_STRATEGY_T_H
 
+#include "ace/OS.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -29,7 +31,7 @@
 #include "ace/Synch.h"
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX>
-class ACE_Cached_Connect_Strategy_Ex : public ACE_Cached_Connect_Strategy< SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>
+class ACE_Cached_Connect_Strategy_Ex : public ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>
 {
   // = TITLE
   //     A connection strategy which caches connections to peers
@@ -47,13 +49,12 @@ public:
   ACE_Cached_Connect_Strategy_Ex (ACE_Creation_Strategy<SVC_HANDLER> *cre_s = 0,
                                   ACE_Concurrency_Strategy<SVC_HANDLER> *con_s = 0,
                                   ACE_Recycling_Strategy<SVC_HANDLER> *rec_s = 0,
-                                  MUTEX *mutex = 0,
-                                  int delete_mutex = 0);
+                                  MUTEX *lock = 0,
+                                  int delete_lock = 0);
   // Constructor
 
   virtual ~ACE_Cached_Connect_Strategy_Ex (void);
   // Destructor
-
 
   virtual int open (ACE_Creation_Strategy<SVC_HANDLER> *cre_s,
                     ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
@@ -61,13 +62,13 @@ public:
   // This methods allow you to change the strategies used by the
   // cached connector.
 
-  virtual int connect (SVC_HANDLER *&sh,
-                       const ACE_PEER_CONNECTOR_ADDR &remote_addr,
-                       ACE_Time_Value *timeout,
-                       const ACE_PEER_CONNECTOR_ADDR &local_addr,
-                       int reuse_addr,
-                       int flags,
-                       int perms);
+  virtual int cached_connect (SVC_HANDLER *&sh,
+                              const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                              ACE_Time_Value *timeout,
+                              const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                              int reuse_addr,
+                              int flags,
+                              int perms);
   // Connection of the svc_handler with the remote host.
   // This method also encapsulates the connection done with
   // auto_purging under the hood. If the connect failed due to the
@@ -75,6 +76,9 @@ public:
   // some connections are done from the CONNECTION_CACHE. This frees
   // the descriptors which get used in the connect process and hence
   // the connect operation can succeed.
+
+  virtual int purge_connections (double percentage = 10);
+  // Explicit purging of connection entries from the connection cache.
 
   // = Typedefs for managing the map
   typedef ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>
@@ -94,6 +98,12 @@ public:
   typedef ACE_Svc_Cleanup_Strategy<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, ACE_Pair<SVC_HANDLER *, ATTRIBUTES>,ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, ACE_Pair<SVC_HANDLER *, ATTRIBUTES>, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, MUTEX> >
           SVC_CLEANUP_STRATEGY; 
 
+  typedef ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>
+          CCSBASE;
+
+  // = Accessor.
+  CACHING_STRATEGY &caching_strategy (void);
+
 protected:
 
   virtual int purge_i (const void *recycling_act);
@@ -110,7 +120,7 @@ protected:
 
   // = Helpers
 
-  int check_hint_i (SVC_HANDLER *&sh,
+  virtual int check_hint_i (SVC_HANDLER *&sh,
                     const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                     ACE_Time_Value *timeout,
                     const ACE_PEER_CONNECTOR_ADDR &local_addr,
@@ -121,7 +131,7 @@ protected:
                     int &found);
 
  
-  int find_or_create_svc_handler_i (SVC_HANDLER *&sh,
+  virtual int find_or_create_svc_handler_i (SVC_HANDLER *&sh,
                                     const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                                     ACE_Time_Value *timeout,
                                     const ACE_PEER_CONNECTOR_ADDR &local_addr,
@@ -131,7 +141,7 @@ protected:
                                     ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, ACE_Pair<SVC_HANDLER *, ATTRIBUTES> > *&entry,
                                     int &found);
 
-  int connect_svc_handler_i (SVC_HANDLER *&sh,
+  virtual int connect_svc_handler_i (SVC_HANDLER *&sh,
                              const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                              ACE_Time_Value *timeout,
                              const ACE_PEER_CONNECTOR_ADDR &local_addr,
@@ -151,6 +161,7 @@ protected:
   // The strategy which decides how and when entries are to be removed
   // from the connection_cache.
 
+
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
@@ -162,7 +173,7 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ace/Cached_Connect_Strategy_T.cpp")
+#pragma implementation ("Cached_Connect_Strategy_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* CACHED_CONNECT_STRATEGY_T_H */
