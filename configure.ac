@@ -3087,28 +3087,17 @@ esac
 
 ACE_CHECK_LACKS_FUNCS(access)
 
-dnl Temporarily select C as the test language to work around a bug in
-dnl some versions of Autoconf when C++ is selected as the test
-dnl language.
-AC_LANG_PUSH([C])
 ACE_CHECK_LACKS_FUNCS(bsearch)
-AC_LANG_POP([C])
 
 ACE_CHECK_HAS_FUNCS(clock_gettime)
 
-dnl Temporarily select C as the test language to work around a bug in
-dnl some versions of Autoconf when C++ is selected as the test
-dnl language.
-AC_LANG_PUSH([C])
 ACE_CHECK_LACKS_FUNCS(qsort)
-AC_LANG_POP([C])
 
 dnl ACE uses execv, execvp and execve, so we don't bother to check
 dnl for the others (e.g. execl, execlp, execle)
 AC_CHECK_FUNC(execv)
 AC_CHECK_FUNC(execvp)
 AC_CHECK_FUNC(execve)
-
 if test "$ac_cv_func_execv" != yes &&
    test "$ac_cv_func_execvp" != yes &&
    test "$ac_cv_func_execve" != yes; then
@@ -3458,12 +3447,7 @@ AC_CHECK_FUNC([getpagesize],
 
 ACE_CHECK_LACKS_FUNCS(msync mprotect mkfifo)
 
-dnl Temporarily select C as the test language to work around a bug in
-dnl some versions of Autoconf when C++ is selected as the test
-dnl language.
-AC_LANG_PUSH([C])
 ACE_CHECK_LACKS_FUNCS(mkstemp mktemp)
-AC_LANG_POP([C])
 
 ACE_CHECK_LACKS_FUNCS(madvise)
 
@@ -4193,12 +4177,7 @@ ACE_CHECK_HAS_FUNCS(sigwait)
 
 dnl Check for reentrant functions
 if test "$ace_user_enable_reentrant_funcs" = yes; then
-  dnl Temporarily select C as the test language to work around a bug in
-  dnl some versions of Autoconf when C++ is selected as the test
-  dnl language.
-  AC_LANG_PUSH([C])
-  AC_CHECK_FUNC([rand_r],,)
-  AC_LANG_POP([C])
+  AC_CHECK_FUNC([rand_r])
 
   AC_CHECK_FUNC([strtok_r],
     [
