@@ -37,9 +37,11 @@ main (int, char *[])
   // Auto ptr ensures that the driver memory is released
   // automatically.
   THREAD_BOUNDED_PACKET_RELAY_DRIVER *tbprd;
+
   ACE_NEW_RETURN (tbprd,
                   Thread_Bounded_Packet_Relay_Driver,
                   -1);
+
   auto_ptr <THREAD_BOUNDED_PACKET_RELAY_DRIVER> driver (tbprd);
 
   return driver->run ();
