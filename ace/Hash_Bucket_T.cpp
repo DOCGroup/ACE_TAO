@@ -5,8 +5,6 @@
 
 #include "ace/Hash_Bucket_T.h"
 
-ACE_RCSID(ace, Hash_Bucket_T, "$Id$")
-
 // -----------------
 // Hash_Bucket_Item
 // -----------------
@@ -96,7 +94,6 @@ push (const EXT_ID &ext_id, const INT_ID &int_id)
           this->head_->prev_ = item;
           this->tail_->next_ = item;
           this->head_ = item;
-          this->tail_ = item;
         }
     }
 
@@ -146,8 +143,12 @@ ACE_Hash_Bucket_DLCStack<EXT_ID, INT_ID>::remove (ACE_HASH_BUCKET_ITEM *item)
     {
       if (item->next_ != 0 && item->prev_ != 0)
         {
-          if (item->next_ != item->prev_)
+          if (item->next_ != item)
             {
+              if (this->head_ == item)
+                this->head_ = item->next_;
+              if (this->tail_ == item)
+                this->tail_ = item->prev_;
               item->next_->prev_ = item->prev_;
               item->prev_->next_ = item->next_;
             }
