@@ -94,6 +94,7 @@ CPP_SRCS += \
         Event/EC_Gateway_IIOP_Factory \
         Event/ECG_ConsumerEC_Control \
         Event/ECG_Reactive_ConsumerEC_Control \
+        Event/ECG_Reconnect_ConsumerEC_Control \
         Event/ECG_UDP_Out_Endpoint \
         Event/ECG_UDP_Sender \
         Event/EC_UDP_Admin \

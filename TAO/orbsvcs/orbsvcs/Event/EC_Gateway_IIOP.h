@@ -94,7 +94,7 @@ public:
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Let the gateway reconnect itself to the consumer ec given exisiting QoS
-  void reconnect_consumer_ec();
+  void reconnect_consumer_ec(ACE_ENV_SINGLE_ARG_DECL);
 
   /// Check whether the consumer event channel is non existent or not
   CORBA::Boolean consumer_ec_non_existent (CORBA::Boolean_out disconnected

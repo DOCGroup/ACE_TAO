@@ -1,52 +1,97 @@
 // $Id$
 
-#include "ECG_Reactive_ConsumerEC_Control.h"
+#include "ECG_Reconnect_ConsumerEC_Control.h"
 #include "EC_Gateway_IIOP.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/ORB_Core.h"
-
 #include "ace/Reactor.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "ECG_Reactive_ConsumerEC_Control.i"
-#endif /* __ACE_INLINE__ */
+ACE_RCSID(Event, ECG_Reconnect_ConsumerEventChannelControl, "$Id$")
 
-ACE_RCSID(Event, ECG_Reactive_ConsumerEventChannelControl, "$Id$")
-
-TAO_ECG_Reactive_ConsumerEC_Control::
-     TAO_ECG_Reactive_ConsumerEC_Control (const ACE_Time_Value &rate,
-                                          const ACE_Time_Value &timeout,
-                                          TAO_EC_Gateway_IIOP* gateway,
-                                          CORBA::ORB_ptr orb)
+TAO_ECG_Reconnect_ConsumerEC_Control::
+     TAO_ECG_Reconnect_ConsumerEC_Control (const ACE_Time_Value &rate,
+                                           const ACE_Time_Value &timeout,
+                                           TAO_EC_Gateway_IIOP* gateway,
+                                           CORBA::ORB_ptr orb)
   : rate_ (rate),
     timeout_ (timeout),
     adapter_ (this),
     gateway_ (gateway),
-    orb_ (CORBA::ORB::_duplicate (orb))
+    orb_ (CORBA::ORB::_duplicate (orb)),
+    is_consumer_ec_connected_ (1)
 {
   this->reactor_ =
     this->orb_->orb_core ()->reactor ();
 }
 
-TAO_ECG_Reactive_ConsumerEC_Control::~TAO_ECG_Reactive_ConsumerEC_Control (void)
+TAO_ECG_Reconnect_ConsumerEC_Control::~TAO_ECG_Reconnect_ConsumerEC_Control (void)
 {
 }
 
 void
-TAO_ECG_Reactive_ConsumerEC_Control::query_eventchannel (
+TAO_ECG_Reconnect_ConsumerEC_Control::try_reconnect (
       ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
       CORBA::Boolean disconnected;
       CORBA::Boolean non_existent =
-        gateway_->consumer_ec_non_existent (disconnected
-                                            ACE_ENV_ARG_PARAMETER);
+      gateway_->consumer_ec_non_existent (disconnected
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      if (non_existent && !disconnected)
+      if (!non_existent)
         {
-          this->event_channel_not_exist (gateway_ ACE_ENV_ARG_PARAMETER);
+          is_consumer_ec_connected_ = 1;
+          gateway_->reconnect_consumer_ec(ACE_ENV_SINGLE_ARG_PARAMETER);
+        }
+    }
+  ACE_CATCHANY
+    {
+      // Ignore all exceptions
+    }
+  ACE_ENDTRY;
+}
+
+void
+TAO_ECG_Reconnect_ConsumerEC_Control::reconnect (
+      ACE_ENV_SINGLE_ARG_DECL)
+{
+  ACE_TRY
+    {
+      is_consumer_ec_connected_ = 1;
+      gateway_->reconnect_consumer_ec(ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // Ignore all exceptions
+    }
+  ACE_ENDTRY;
+}
+
+void
+TAO_ECG_Reconnect_ConsumerEC_Control::query_eventchannel (
+      ACE_ENV_SINGLE_ARG_DECL)
+{
+  ACE_TRY
+    {
+      if (is_consumer_ec_connected_ == 1)
+        {
+          CORBA::Boolean disconnected;
+          CORBA::Boolean non_existent =
+            gateway_->consumer_ec_non_existent (disconnected
+                                                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
+          if (non_existent && !disconnected)
+            {
+              this->event_channel_not_exist (gateway_ ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
+        }
+      else
+        {
+           this->try_reconnect(ACE_ENV_SINGLE_ARG_PARAMETER);
+           ACE_TRY_CHECK;
         }
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
@@ -70,17 +115,16 @@ TAO_ECG_Reactive_ConsumerEC_Control::query_eventchannel (
 }
 
 void
-TAO_ECG_Reactive_ConsumerEC_Control::handle_timeout (
+TAO_ECG_Reconnect_ConsumerEC_Control::handle_timeout (
       const ACE_Time_Value &,
       const void *)
 {
   // NOTE, setting RELATIVE_RT_TIMEOUT_POLICY for the duration of
   // query_eventchannel () below has greater impact than desired.  For
-  // example, while we are pinging ec here, a nested upcall,
+  // example, while we are pinging consumers here, a nested upcall,
   // which requires making remote calls may come into the ORB.  Those
   // remote calls will be carried out with with
   // RELATIVE_RT_TIMEOUT_POLICY set here in effect.
-
   // @@ TODO: should use Guard to set and reset policies.
   ACE_TRY_NEW_ENV
     {
@@ -120,7 +164,7 @@ TAO_ECG_Reactive_ConsumerEC_Control::handle_timeout (
 }
 
 int
-TAO_ECG_Reactive_ConsumerEC_Control::activate (void)
+TAO_ECG_Reconnect_ConsumerEC_Control::activate (void)
 {
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   ACE_TRY_NEW_ENV
@@ -174,7 +218,7 @@ TAO_ECG_Reactive_ConsumerEC_Control::activate (void)
 }
 
 int
-TAO_ECG_Reactive_ConsumerEC_Control::shutdown (void)
+TAO_ECG_Reconnect_ConsumerEC_Control::shutdown (void)
 {
   int r =
     this->reactor_->remove_handler (&this->adapter_,
@@ -184,43 +228,52 @@ TAO_ECG_Reactive_ConsumerEC_Control::shutdown (void)
 }
 
 void
-TAO_ECG_Reactive_ConsumerEC_Control::event_channel_not_exist (
+TAO_ECG_Reconnect_ConsumerEC_Control::event_channel_not_exist (
       TAO_EC_Gateway_IIOP* gateway
       ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "EC_Reactive_ConsumerControl(%P|%t) - "
-                  "channel %x does not exists\n"));
-      gateway->cleanup_consumer_ec ();
-
+      //ACE_DEBUG ((LM_DEBUG,
+      //            "ECG_Reconnect_ConsumerControl(%P|%t) - "
+      //            "channel %x does not exists\n"));
+      is_consumer_ec_connected_ = 0;
       gateway->cleanup_consumer_proxies (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "TAO_EC_Reactive_ConsumerControl::event_channel_not_exist");
+                           "TAO_EC_Reconnect_ConsumerControl::event_channel_not_exist");
       // Ignore all exceptions..
     }
   ACE_ENDTRY;
 }
 
 void
-TAO_ECG_Reactive_ConsumerEC_Control::system_exception (
+TAO_ECG_Reconnect_ConsumerEC_Control::system_exception (
       TAO_EC_Gateway_IIOP* gateway,
       CORBA::SystemException & /* exception */
       ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
-      gateway->cleanup_consumer_ec ();
+      // The current implementation is very strict, and kicks out a
+      // client on the first system exception. We may
+      // want to be more lenient in the future, for example,
+      // this is TAO's minor code for a failed connection.
+      //
+      // if (CORBA::TRANSIENT::_narrow (&exception) != 0
+      //     && exception->minor () == 0x54410085)
+      //   return;
 
+      // Anything else is serious, including timeouts...
+      //ACE_DEBUG ((LM_DEBUG,
+      //            "ECG_Reconnect_ConsumerControl(%P|%t) - "
+      //            "channel %x does not exists system except\n"));
+      is_consumer_ec_connected_ = 0;
       gateway->cleanup_consumer_proxies (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
     }
   ACE_CATCHANY
     {
@@ -231,14 +284,14 @@ TAO_ECG_Reactive_ConsumerEC_Control::system_exception (
 
 // ****************************************************************
 
-TAO_ECG_Reactive_ConsumerEC_Control_Adapter::TAO_ECG_Reactive_ConsumerEC_Control_Adapter (
-      TAO_ECG_Reactive_ConsumerEC_Control *adaptee)
+TAO_ECG_Reconnect_ConsumerEC_Control_Adapter::TAO_ECG_Reconnect_ConsumerEC_Control_Adapter (
+      TAO_ECG_Reconnect_ConsumerEC_Control *adaptee)
   :  adaptee_ (adaptee)
 {
 }
 
 int
-TAO_ECG_Reactive_ConsumerEC_Control_Adapter::handle_timeout (
+TAO_ECG_Reconnect_ConsumerEC_Control_Adapter::handle_timeout (
       const ACE_Time_Value &tv,
       const void *arg)
 {
