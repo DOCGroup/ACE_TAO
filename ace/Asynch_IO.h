@@ -82,7 +82,7 @@ public:
 
   ACE_Asynch_Result (ACE_Handler &handler,
 		     const void* act,
-		     ACE_HANDLE event = 0,
+		     ACE_HANDLE event,
 		     u_long offset = 0,
 		     u_long offset_high = 0);
   // Constructor 
@@ -138,7 +138,8 @@ protected:
 public:
   int open (ACE_Handler &handler,
 	    ACE_HANDLE handle = ACE_INVALID_HANDLE,
-	    const void *completion_key = 0);
+	    const void *completion_key = 0,
+	    ACE_Proactor *proactor = 0);
   // Initializes the factory with information which will be used with
   // each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
   // <ACE_Handler::handle> will be called on the <handler> to get the
@@ -150,6 +151,9 @@ public:
   // operations issued by other threads.
 
 protected:
+  // Proactor that this Asynch IO will be registered with
+  ACE_Proactor *proactor_;
+  
   ACE_Handler *handler_;
   // Handler that will receive the callback.
 
@@ -228,7 +232,8 @@ public:
 	    ACE_HANDLE handle,
 	    ACE_Message_Block &message_block,
 	    u_long bytes_to_read,
-	    const void* act);	    
+	    const void* act,
+	    ACE_HANDLE event);
     // Constructor is protected since creation is limited to
     // ACE_Asynch_Read_Stream factory.
 
@@ -320,7 +325,8 @@ public:
 	    ACE_HANDLE handle,
 	    ACE_Message_Block &message_block,
 	    u_long bytes_to_write,
-	    const void* act);	    
+	    const void* act,
+	    ACE_HANDLE event);
     // Constructor is protected since creation is limited to
     // ACE_Asynch_Write_Stream factory.
 
@@ -403,7 +409,8 @@ public:
 	    u_long bytes_to_read,
 	    const void* act,
 	    u_long offset,
-	    u_long offset_high);	    
+	    u_long offset_high,
+	    ACE_HANDLE event);
     // Constructor is protected since creation is limited to
     // ACE_Asynch_Read_File factory.
 
@@ -476,7 +483,8 @@ public:
 	    u_long bytes_to_write,
 	    const void* act,
 	    u_long offset,
-	    u_long offset_high);	    
+	    u_long offset_high,
+	    ACE_HANDLE event);
     // Constructor is protected since creation is limited to
     // ACE_Asynch_Write_File factory.
 
@@ -560,7 +568,8 @@ public:
 	    ACE_HANDLE accept_handle,
 	    ACE_Message_Block &message_block,
 	    u_long bytes_to_read,
-	    const void* act);	    
+	    const void* act,
+	    ACE_HANDLE event);
     // Constructor is protected since creation is limited to
     // ACE_Asynch_Accept factory.
     
@@ -681,7 +690,8 @@ public:
 	    u_long offset_high,
 	    u_long bytes_per_send,
 	    u_long flags,
-	    const void *act);
+	    const void *act,
+	    ACE_HANDLE event);
     // Constructor is protected since creation is limited to
     // ACE_Asynch_Transmit_File factory.
 
@@ -819,8 +829,8 @@ public:
     virtual void handle_notify (const ACE_Asynch_Notify::Result &result);
   */
 
-  virtual void handle_timeout (const ACE_Time_Value &tv,
-			       const void *act = 0);
+  virtual void handle_time_out (const ACE_Time_Value &tv,
+				const void *act = 0);
   // Called when timer expires.
   // <tv> was the requested time value and
   // <act> is the ACT passed when scheduling the timer
