@@ -3,9 +3,9 @@ Wed Aug 25 11:24:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.cpp:
 
 	  Include <openssl/{x509,rsa,dsa,dh}.h to pull in OpenSSL function
-	  prototypes used in this file.  Fixes compile-time problems for
-	  that occur when using older versions of OpenSSL.  Thanks to
-	  Chris Cleeland for pointing this out.
+	  prototypes used in this file.  Fixes compile-time problems that
+	  occur when using older versions of OpenSSL.  Thanks to Chris
+	  Cleeland for pointing this out.
 
 Wed Aug 25 13:11:39 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
