@@ -1,3 +1,9 @@
+Mon Dec 28 13:13:03 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Simple/time/Server_i.cpp (parse_args): Fixed an
+ 	  incorrect return value.  Thanks to Barry Hoggard
+ 	  <hoggardb@panix.com> for reporting this.
+
 Mon Dec 28 11:49:04 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* */Makefile: 
