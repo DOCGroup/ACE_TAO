@@ -12,8 +12,9 @@ ACE_ROOT = $(top_srcdir)
 
 SUBDIRS = \
         . \
-        RMCast \
-        SSL
+        RMCast
+
+#	SSL
 
 noinst_PROGRAMS =
 ## Makefile.Test_Output.am 

@@ -8,17 +8,20 @@
 ## MPC Command:
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
 
+ACE_ROOT = $(top_srcdir)
+ACE_BUILDDIR = $(top_builddir)
+
 nobase_include_HEADERS =
 lib_LTLIBRARIES =
+
 ## Makefile.RMCast.am 
 
 if BUILD_RMCAST
 lib_LTLIBRARIES += libACE_RMCast.la
 
 libACE_RMCast_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir) \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
   -DACE_RMCAST_BUILD_DLL
 
 libACE_RMCast_la_SOURCES = \
@@ -49,7 +52,7 @@ libACE_RMCast_la_SOURCES = \
   RMCast_Worker.cpp
 
 libACE_RMCast_la_LIBADD = \
- $(top_srcdir)/ace/libACE.la
+ $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
   RMCast.h \

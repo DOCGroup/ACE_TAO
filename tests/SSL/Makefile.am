@@ -9,6 +9,7 @@
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
 
 ACE_ROOT = $(top_srcdir)
+ACE_BUILDDIR = $(top_builddir)
 
 noinst_PROGRAMS =
 ## Makefile.Thread_Pool_Reactor_SSL_Test.am 
@@ -17,9 +18,8 @@ if BUILD_SSL
 noinst_PROGRAMS += Thread_Pool_Reactor_SSL_Test
 
 Thread_Pool_Reactor_SSL_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir) \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
   -DACE_HAS_SSL=1
 
 Thread_Pool_Reactor_SSL_Test_SOURCES = \
@@ -28,7 +28,9 @@ Thread_Pool_Reactor_SSL_Test_SOURCES = \
   Thread_Pool_Reactor_SSL_Test.h
 
 Thread_Pool_Reactor_SSL_Test_LDADD = \
- $(top_builddir)/ace/SSL/libACE_SSL.la $(top_builddir)/tests/libTest_Output.la $(top_builddir)/ace/libACE.la
+ $(ACE_BUILDDIR)/ace/SSL/libACE_SSL.la \
+ $(ACE_BUILDDIR)/tests/libTest_Output.la \
+ $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_SSL
 

@@ -20,7 +20,11 @@ SUBDIRS = \
 ##        ASNMP \
 ##        websvcs
 
+man_MANS = ace-config.1
+
+bin_SCRIPTS = ace-config
 
 ACLOCAL = @ACLOCAL@
 ACLOCAL_AMFLAGS = -I m4
+AUTOMAKE_OPTIONS = foreign
 
