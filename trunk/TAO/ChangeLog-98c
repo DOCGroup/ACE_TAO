@@ -1,3 +1,8 @@
+Fri Dec  4 12:28:06 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/try_macros.h (TAO_TRY_VAR[_EX]): Fixed unreferenced variable
+	  warnings on platforms support native exceptions.
+
 Fri Dec 04 07:38:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/ORB.cpp (perform_work): copied const ACE_Time_Value
