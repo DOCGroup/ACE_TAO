@@ -1,3 +1,9 @@
+Wed Feb  3 09:30:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* websvcs/lib/URL_Addr.cpp: 
+	  Fixed some memory leaks.
+	  HTTP_Addr::create_relative_address supports the #label syntax.
+
 Wed Feb 03 07:02:49 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/CDR_Test.cpp: commented out ACE_Auto_Basic_Array_Ptr<CDR:Char>

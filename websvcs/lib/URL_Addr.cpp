@@ -1,4 +1,5 @@
 // $Id$
+
 #define ACE_WEBSVCS_BUILD_DLL
 #include "URL_Addr.h"
 
@@ -73,7 +74,7 @@ ACE_URL_Addr::string_to_addr (LPCTSTR address)
 int
 ACE_URL_Addr::addr_to_string (LPTSTR s,
                               size_t size,
-                              int ipaddr_format) const
+                              int) const
 {
   if (size < ACE_OS::strlen (this->url_))
     return -1;
@@ -306,6 +307,41 @@ ACE_HTTP_Addr::url_size (int flags) const
   return size;
 }
 
+inline int
+path_copy (LPCTSTR begin,
+           LPCTSTR /* end */,
+           LPTSTR& target,
+           LPCTSTR src)
+{
+  // Copy one character at a time, if we find a /../ we go back to the 
+  // previous '/'
+  for (; *src != 0; ++src)
+    {
+      ASYS_TCHAR c = *src;
+      switch (c)
+        {
+        case '/':
+          if (*(src + 1) == '.'
+              && (*src + 2) == '.'
+              && (*src + 3) == '/')
+            {
+              while (target != begin && *(--target) != '/');
+              src += 3;
+            }
+          else
+            {
+              *target = c;
+              ++target;
+            }
+          break;
+        default:
+          *target = c;
+          ++target;
+        }
+    }
+  return 0;
+}
+
 ACE_URL_Addr*
 ACE_HTTP_Addr::create_relative_address (LPCTSTR url) const
 {
@@ -323,18 +359,49 @@ ACE_HTTP_Addr::create_relative_address (LPCTSTR url) const
     }
   else
     {
-      LPTSTR buf;
-      ACE_NEW_RETURN (buf,
-                      ASYS_TCHAR [ACE_OS::strlen (url)
-                                 + ACE_OS::strlen (this->get_path ())
-                                 + 2],
-                      0);
       LPCTSTR path = this->get_path ();
-      int l = ACE_OS::strlen (path);
-      if (path[l-1] == '/')
-        ACE_OS::sprintf (buf, "%s%s", path, url);
+      LPTSTR buf;
+      size_t n = ACE_OS::strlen (url)
+        + ACE_OS::strlen (path)
+        + 2;
+      ACE_NEW_RETURN (buf,
+                      ASYS_TCHAR [n],
+                      0);
+
+      // We copy the contens of <path> into <buf>; but simplifying the 
+      // path, to avoid infinite loop like:
+      // "foo/../foo/../foo/../foo/../foo/index.html"
+      //
+      LPTSTR target = buf;
+
+      // Copy the path
+      path_copy (buf, buf + n, target, path);
+
+      if (url[0] == '#')
+        {
+          // Remove any # from the path
+          LPTSTR p = target;
+          while (p != buf && *(--p) != '#');
+          if (p != buf)
+            target = p;
+        }
       else
-        ACE_OS::sprintf (buf, "%s/%s", path, url);
+        {
+          // Go back to the last / to remove the basename.
+          while (target != buf && *(--target) != '/');
+          // Go back if we begin with '../'
+          while (url[0] == '.' && url[1] == '.' && url[2] == '/')
+            {
+              while (target != buf && *(--target) != '/');
+              url += 3;
+            }
+
+          *target = '/'; ++target;
+        }
+      // Copy the url
+      path_copy (buf, buf + n, target, url);
+      // null terminate.
+      *target = 0;
       ACE_NEW_RETURN (addr, ACE_HTTP_Addr (this->get_hostname (),
                                            buf,
                                            0,
@@ -369,10 +436,9 @@ ACE_HTTP_Addr::string_to_addr (LPCTSTR address)
   string += sizeof(separator)/sizeof(separator[0]) - 1;
 
   // Make a copy of the string to manipulate it.
-  ASYS_TCHAR *t;
-  ACE_ALLOCATOR_RETURN (t, ACE_OS::strdup (string), -1);
+  ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (string), -1);
 
-  ASYS_TCHAR *path_start = ACE_OS::strchr (t, '/');
+  ASYS_TCHAR *path_start = ACE_OS::strchr (this->hostname_, '/');
   if (path_start != 0)
     {
       // terminate the host:port substring
@@ -392,7 +458,7 @@ ACE_HTTP_Addr::string_to_addr (LPCTSTR address)
   
   // By now t is null terminated at the start of the path, find the
   // port (if present).
-  ASYS_TCHAR *port_start = ACE_OS::strchr(t, ':');
+  ASYS_TCHAR *port_start = ACE_OS::strchr(this->hostname_, ':');
   this->port_number_ = ACE_DEFAULT_HTTP_PORT;
   if (port_start != 0)
     {
@@ -401,7 +467,6 @@ ACE_HTTP_Addr::string_to_addr (LPCTSTR address)
       port_start++;
       this->port_number_ = ACE_OS::atoi (port_start);
     }
-  this->hostname_ = t;
 
   return 0;
 }
@@ -717,6 +782,7 @@ ACE_Mailto_Addr::ACE_Mailto_Addr (const ACE_Mailto_Addr &addr)
 
 ACE_Mailto_Addr::~ACE_Mailto_Addr (void)
 {
+  this->clear ();
 }
 
 int
@@ -772,7 +838,7 @@ ACE_Mailto_Addr::clear (void)
 }
 
 size_t
-ACE_Mailto_Addr::url_size (int flags) const
+ACE_Mailto_Addr::url_size (int) const
 {
   // Notice that we cannot hard-code the value because the size in
   // wchar's may be different.
@@ -850,6 +916,7 @@ ACE_Mailto_Addr::string_to_addr (LPCTSTR address)
     }
   else
     {
+      ACE_OS::free (t);
       return -1;
     }
   this->user_ = t;
