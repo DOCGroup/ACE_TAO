@@ -27,6 +27,7 @@ my(@statekeys) = ('global', 'include', 'template', 'ti',
                   'dynamic', 'static', 'relative', 'addtemp',
                   'addproj', 'progress', 'toplevel', 'baseprojs',
                   'feature_file', 'hierarchy', 'name_modifier',
+                  'apply_project',
                  );
 
 my(%all_written) = ();
@@ -52,6 +53,7 @@ sub new {
   my($feature)   = shift;
   my($hierarchy) = shift;
   my($nmodifier) = shift;
+  my($applypj)   = shift;
   my($type)      = shift;
   my($self)      = Parser::new($class, $inc);
 
@@ -77,6 +79,7 @@ sub new {
   $self->{'feature_file'}    = $feature;
   $self->{'hierarchy'}       = $hierarchy;
   $self->{'name_modifier'}   = $nmodifier;
+  $self->{'apply_project'}   = $applypj;
   $self->{'convert_slashes'} = $self->convert_slashes();
 
   return $self;
@@ -786,11 +789,17 @@ sub get_hierarchy {
   return $self->{'hierarchy'};
 }
 
+
 sub get_name_modifier {
   my($self) = shift;
   return $self->{'name_modifier'};
 }
 
+
+sub get_apply_project {
+  my($self) = shift;
+  return $self->{'apply_project'};
+}
 
 # ************************************************************
 # Virtual Methods To Be Overridden

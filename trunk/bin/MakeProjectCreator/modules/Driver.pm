@@ -103,6 +103,7 @@ sub optionError {
                $spaces . "[-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
                $spaces . "[-feature_file <file name>] [-make_coexistence]\n" .
                $spaces . "[-exclude <directories>] [-name_modifier <pattern>]\n" .
+               $spaces . "[-apply_project]\n" .
                $spaces . "[-type <";
 
   my(@keys) = sort keys %{$self->{'types'}};
@@ -149,6 +150,8 @@ sub optionError {
 "       -name_modifier  Modify output names.  The pattern passed to this\n" .
 "                       parameter will have the '*' portion replaced with the\n" .
 "                       actual output name.  Ex. *_Static\n" .
+"       -apply_project  When used in conjunction with -name_modifier, it applies\n" .
+"                       the name modifier to the project name also.\n" .
 "       -noreldefs      Do not try to generate default relative definitions.\n" .
 "       -notoplevel     Do not generate the top level target file.  Files\n" .
 "                       are still process, but no top level file is created.\n" .
@@ -345,7 +348,8 @@ sub run {
                                   $options->{'hierarchy'},
                                   $options->{'exclude'},
                                   $options->{'coexistence'},
-                                  $options->{'name_modifier'});
+                                  $options->{'name_modifier'},
+                                  $options->{'apply_project'});
       if ($base ne $file) {
         my($dir) = ($base eq '' ? $file : dirname($file));
         if (!$creator->cd($dir)) {

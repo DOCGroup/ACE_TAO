@@ -149,11 +149,13 @@ sub new {
   my($exclude)   = shift;
   my($makeco)    = shift;
   my($nmod)      = shift;
+  my($applypj)   = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $dynamic, $static,
                                 $relative, $addtemp, $addproj,
                                 $progress, $toplevel, $baseprojs,
-                                $feature, $hierarchy, $nmod, 'project');
+                                $feature, $hierarchy, $nmod, $applypj,
+                                'project');
 
   $self->{$self->{'type_check'}}   = 0;
   $self->{'feature_defined'}       = 0;
@@ -375,7 +377,7 @@ sub parse_line {
             my($def) = $self->get_default_project_name();
             $name = $self->fill_type_name($name, $def);
 
-            $self->process_assignment('project_name', $name);
+            $self->set_project_name($name);
           }
         }
         $self->{$typecheck} = 1;
@@ -1672,8 +1674,7 @@ sub generate_defaults {
 
   ## Generate default project name
   if (!defined $self->get_assignment('project_name')) {
-    $self->process_assignment('project_name',
-                              $self->get_default_project_name());
+    $self->set_project_name($self->get_default_project_name());
   }
 
   ## Generate the default pch file names (if needed)
@@ -1730,6 +1731,23 @@ sub generate_defaults {
 
   ## Generate default target names after all source files are added
   $self->generate_default_target_names();
+}
+
+
+sub set_project_name {
+  my($self) = shift;
+  my($name) = shift;
+
+  if ($self->get_apply_project()) {
+    my($nmod) = $self->get_name_modifier();
+
+    if (defined $nmod) {
+      $nmod =~ s/\*/$name/g;
+      $name = $nmod;
+    }
+  }
+
+  $self->process_assignment('project_name', $name);
 }
 
 
@@ -2403,7 +2421,7 @@ sub get_modified_project_file_name {
   my($ext)  = shift;
   my($nmod) = $self->get_name_modifier();
 
-  if (defined $nmod) {
+  if (defined $nmod && !$self->get_apply_project()) {
     $nmod =~ s/\*/$name/g;
     $name = $nmod;
   }
