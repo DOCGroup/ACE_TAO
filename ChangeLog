@@ -1,3 +1,9 @@
+Thu May 15 09:32:01 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Configuration_Import_Export.cpp (import_config): Fixed a memory
+	  leak where the "data" buffer wasn't being deleted.  Thanks to
+ 	  Roland Meub <Roland.Meub@tenovis.com> for reporting this.
+
 Thu May 15 10:41:32 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
@@ -2331,8 +2337,10 @@ Tue Apr 15 16:06:24 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
           Thanks to Paxton Mason <PMason@wolve.com> for reporting this.
 
         * ace/Timer_Wheel_T.cpp: Removed the use of a namespace since
-          this breaks certain compilers (e.g., GCC 2.7-97 on LynxOS).
-          Thanks to Olli Savia <ops@iki.fi> for reporting this problem.
+          this breaks certain compilers that don't support namespaces
+	  (e.g., GCC 2.7-97 on LynxOS and SunC++ with the compat4=1
+	  options).  Thanks to Olli Savia <ops@iki.fi> and 
+	  Craig Watcham <craigw@ananzi.co.za> for reporting this problem.
 
         * ace/OS.h: Make sure that things don't go awry on platforms
           where clearerr is defined as a macro.  Thanks to Olli Savia
