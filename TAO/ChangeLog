@@ -1,3 +1,10 @@
+Mon Jun  9 19:20:27 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
+
+          Additions toward valuetype support in IFR loader.
+
 Mon Jun  9 16:17:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/HomeDef_i.cpp:

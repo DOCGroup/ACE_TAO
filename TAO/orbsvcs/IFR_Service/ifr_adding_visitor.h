@@ -123,7 +123,11 @@ protected:
 
   int create_interface_def (AST_Interface *node
                             ACE_ENV_ARG_DECL);
-  // Common code factored out of visit_interface().
+  // Code encapsulated out of visit_interface().
+
+  int create_value_def (AST_ValueType *node
+                        ACE_ENV_ARG_DECL);
+  // Code encapsulated out of visit_valuetype().
 
   void get_referenced_type (AST_Type *node
                             ACE_ENV_ARG_DECL);
