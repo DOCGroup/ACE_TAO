@@ -10,8 +10,11 @@ class frame_handler: public ACE_Event_Handler
 {
   public:
 
-  frame_handler (ACE_Reactor* reactor,TAO_SFP *sfp)
-    :sfp_ (sfp)
+  frame_handler (TAO_SFP *sfp,
+                 CORBA_ORB_ptr orb,
+                 ACE_Reactor *reactor)
+    :sfp_ (sfp),
+     orb_ (orb)
     {
       reactor->schedule_timer (this,
                                0,
@@ -26,6 +29,7 @@ class frame_handler: public ACE_Event_Handler
        if (fragment)
          {
            size_t mb_len = SFP_MAX_PACKET_SIZE*2;
+           ACE_DEBUG ((LM_DEBUG,"message block size = %d\n",mb_len));
            ACE_Message_Block mb (mb_len);
            int i =0;
            char c = 'a';
@@ -50,11 +54,14 @@ class frame_handler: public ACE_Event_Handler
            else
              ACE_DEBUG ((LM_DEBUG,"simple_frame send failed\n"));
          }
+       this->sfp_->end_stream ();
+       this->orb_->shutdown ();
        return 0;
     }
 
 private:
   TAO_SFP *sfp_;
+  CORBA_ORB_ptr orb_;
 };
 
 int
@@ -82,8 +89,9 @@ main (int argc, char **argv)
   if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR,"sfp start failed\n"),1);
 
-  frame_handler handler (TAO_ORB_Core_instance ()->reactor (),
-                         &sfp);
+  frame_handler handler (&sfp,
+                         orb_manager.orb (),
+                         TAO_ORB_Core_instance ()->reactor ());
 
   result = orb_manager.run ();
   if (result == 0)
