@@ -1,3 +1,10 @@
+Wed Jul 25 18:53:18 2001  Ossama Othman  <ossama@uci.edu>
+
+	* html/index.html:
+
+	  Added CORBA Security Service main page link to the list of
+	  documentation.
+
 Wed Jul 25 17:41:43 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ltcf-c.sh:
