@@ -16,5 +16,8 @@ project (Config_Handlers) : taolib {
     ERE_Handler.cpp
     RS_Handler.cpp
     SP_Handler.cpp
+    SPK_Handler.cpp
+    Requirement_Handler.cpp
+    Property_Handler.cpp
   }
 }
