@@ -120,6 +120,9 @@ Sun Oct 12 03:35:37 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* examples/Timer_Queue: Added a new directory for testing of
 	  various usages of timer queue.
+
+	* tests/Async_Timer_Queue_Test: Moved to examples/Timer_Queue.
+	  It doesn't really belong to tests/ directory.
 	
 	* ace/ACE.cpp (register_stdin_handler): Must register the reactor
 	  we are using to the event handler.
