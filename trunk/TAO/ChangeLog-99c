@@ -1,3 +1,8 @@
+Mon Aug 30 12:25:48 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Advanced: Converted several of the examples to use
+	  ACE+TAO programming style.
+
 Mon Aug 30 12:05:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB.i: Fixed old g++ errors/warings.  Thanks to David for
