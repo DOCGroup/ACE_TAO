@@ -1,3 +1,14 @@
+Thu Sep 28 22:06:44 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_SOCK_Connector.h:
+	* ace/SSL/SSL_SOCK_Connector.cpp (ACE_SSL_SOCK_Connector,
+	  shared_connect_start, shared_connect_finish, connect, complete):
+
+	  Made ACE_Time_Value arguments const to match the changes
+	  detailed in:
+
+	  Thu Sep 28 15:02:36 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
 Fri Sep 29 00:23:59 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Log_Msg.h (ACE_RETURN): Fixed minor error.

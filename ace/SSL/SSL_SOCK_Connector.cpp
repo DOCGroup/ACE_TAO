@@ -20,7 +20,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Connector)
 
 int
 ACE_SSL_SOCK_Connector::shared_connect_start (ACE_SSL_SOCK_Stream &new_stream,
-                                              ACE_Time_Value *timeout,
+                                              const ACE_Time_Value *timeout,
                                               const ACE_Addr &local_sap)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::shared_connect_start");
@@ -51,7 +51,7 @@ ACE_SSL_SOCK_Connector::shared_connect_start (ACE_SSL_SOCK_Stream &new_stream,
 
 int
 ACE_SSL_SOCK_Connector::shared_connect_finish (ACE_SSL_SOCK_Stream &new_stream,
-                                               ACE_Time_Value *timeout,
+                                               const ACE_Time_Value *timeout,
                                                int result)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::shared_connect_finish");
@@ -133,7 +133,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream)
 int
 ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
                                  const ACE_Addr &remote_sap,
-                                 ACE_Time_Value *timeout,
+                                 const ACE_Time_Value *timeout,
                                  const ACE_Addr &local_sap,
                                  int reuse_addr,
                                  int flags,
@@ -163,7 +163,7 @@ int
 ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
                                  const ACE_Addr &remote_sap,
                                  ACE_QoS_Params qos_params,
-                                 ACE_Time_Value *timeout,
+                                 const ACE_Time_Value *timeout,
                                  const ACE_Addr &local_sap,
                                  ACE_Protocol_Info *protocolinfo,
                                  ACE_SOCK_GROUP g,
@@ -199,7 +199,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
 int
 ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
                                   ACE_Addr *remote_sap,
-                                  ACE_Time_Value *tv)
+                                  const ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::complete");
 
@@ -218,7 +218,7 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
 ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
                                         ACE_SSL_SOCK_Stream &new_stream,
 					const ACE_Addr &remote_sap,
-					ACE_Time_Value *timeout,
+					const ACE_Time_Value *timeout,
 					const ACE_Addr &local_sap,
 					int reuse_addr,
 					int flags,
@@ -249,7 +249,7 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
                                         ACE_SSL_SOCK_Stream &new_stream,
 					const ACE_Addr &remote_sap,
 					ACE_QoS_Params qos_params,
-					ACE_Time_Value *timeout,
+					const ACE_Time_Value *timeout,
 					const ACE_Addr &local_sap,
                                         ACE_Protocol_Info *protocolinfo,
                                         ACE_SOCK_GROUP g,
