@@ -132,6 +132,8 @@
 #  define ACE_Proper_Import_Flag
 #  define ACE_EXPORT_SINGLETON_DECLARATION(T)
 #  define ACE_IMPORT_SINGLETON_DECLARATION(T)
+#  define ACE_EXPORT_SINGLETON_DECLARE
+#  define ACE_IMPORT_SINGLETON_DECLARE
 #endif /* ACE_HAS_CUSTOM_EXPORT_MACROS */
 
 #include "ace/ACE_export.h"
