@@ -8,6 +8,9 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "../../../../../bin";
 use PerlACE::Run_Test;
 
+# ThreadPool Example
+#
+
 $experiment_timeout = 60;
 $startup_timeout = 60;
 $max_events = 10;
