@@ -16,7 +16,7 @@ Mon Jul 16 22:03:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Strategies/DIOP_Connection_Handler.cpp:
 	* tao/Strategies/UIOP_Connection_Handler.cpp:
 	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp: Fixed,
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Fixed,
  	  what looked like a subtle race condition. If a thread that calls
 	  handle_input () gets a -1 on read, we return -1 to the
 	  reactor. This makes the reactor close the handler and remove
