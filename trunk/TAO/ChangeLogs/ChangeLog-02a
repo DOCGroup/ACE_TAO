@@ -1,4 +1,8 @@
 Wed Jul 19 14:41:06 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+	* docs/releasenotes/index.html:
+	  updated #notify to reflect recent additions.
+	
+Wed Jul 19 14:41:06 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/CosNotification_Static.dsp:
 	  Added new Notify files, updated dependencies.
