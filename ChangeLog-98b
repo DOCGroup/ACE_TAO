@@ -1,12 +1,12 @@
 Sat Oct  3 13:11:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/auto_compile: 
-	  Removed some of the tests, they were crashing more often than
-	  not.
+        * bin/auto_compile:
+          Removed some of the tests, they were crashing more often than
+          not.
 
 Sat Oct  3 09:36:09 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* examples/Reactor/Proactor/test_proactor.cpp: Comments.
+        * examples/Reactor/Proactor/test_proactor.cpp: Comments.
 
 Sat Oct 03 09:24:45 1998  Susan Liebeskind <shl@cc.gatech.edu>
 
@@ -30,6 +30,10 @@ Sat Oct 03 09:04:44 1998  David L. Levine  <levine@cs.wustl.edu>
           this return statement.  DEC cxx (correctly) says that it's not
           reachable.  ACE_NOTREACHED won't work here, because it handles
           both platforms the same.
+
+        * include/makeinclude/wrapper_macros.GNU: with quantify=1
+          on sparcs, add -record-register-window-traps to $(PRELINK).
+          Thanks to Andy for discovering this Quantify option, for sparcs.
 
 Fri Oct  2 23:43:51 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
