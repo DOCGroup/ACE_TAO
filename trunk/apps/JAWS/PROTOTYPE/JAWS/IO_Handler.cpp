@@ -107,6 +107,18 @@ JAWS_Synch_IO_Handler::handle (void)
 }
 
 void
+JAWS_Synch_IO_Handler::task (JAWS_Pipeline_Handler *ph)
+{
+  this->task_ = ph;
+}
+
+JAWS_Pipeline_Handler *
+JAWS_Synch_IO_Handler::task (void)
+{
+  return this->task_;
+}
+
+void
 JAWS_Synch_IO_Handler::done (void)
 {
   this->factory ()->destroy_io_handler (this);
