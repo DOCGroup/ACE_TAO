@@ -27,7 +27,7 @@
   "-ORBtablesize", "128" }
 #endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
