@@ -70,9 +70,12 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
       if (be_global->any_support ())
         {
           *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-              << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+              << "// " << __FILE__ << ":" << __LINE__;
 
-          *os << "ACE_INLINE CORBA::Boolean" << be_nl
+          *os << be_nl << be_nl
+              << "template<>" << be_nl
+              << "ACE_INLINE" << be_nl
+              << "CORBA::Boolean" << be_nl
               << "TAO::Any_Array_Impl_T<" << node->name ()
               << "_slice, " << node->name () 
               << "_forany>::marshal_value (TAO_OutputCDR &)" << be_nl
@@ -81,7 +84,9 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
               << "}";
 
           *os << be_nl << be_nl
-              << "ACE_INLINE CORBA::Boolean" << be_nl
+              << "template<>" << be_nl
+              << "ACE_INLINE" << be_nl
+              << "CORBA::Boolean" << be_nl
               << "TAO::Any_Array_Impl_T<" << node->name ()
               << "_slice, " << node->name () 
               << "_forany>::demarshal_value (TAO_InputCDR &)" << be_nl

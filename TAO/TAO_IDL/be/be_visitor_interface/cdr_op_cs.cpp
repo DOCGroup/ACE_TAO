@@ -59,7 +59,8 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
           *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
               << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-          *os << "CORBA::Boolean" << be_nl
+          *os << "template<>" << be_nl
+              << "CORBA::Boolean" << be_nl
               << "TAO::Any_Impl_T<" << node->name ()
               << ">::marshal_value (TAO_OutputCDR &)" << be_nl
               << "{" << be_idt_nl
@@ -67,6 +68,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
               << "}";
 
           *os << be_nl << be_nl
+              << "template<>" << be_nl
               << "CORBA::Boolean" << be_nl
               << "TAO::Any_Impl_T<" << node->name () 
               << ">::demarshal_value (TAO_InputCDR &)" << be_nl

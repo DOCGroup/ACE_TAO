@@ -15,7 +15,6 @@ Wed Mar 12 22:25:46 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/CurrentC.cpp:
         * tao/DomainC.cpp:
         * tao/Exception.cpp:
-        * tao/IOPC.cpp:
         * tao/ObjectReferenceTemplateC.cpp:
         * tao/PolicyC.cpp:
         * tao/PortableInterceptorC.cpp:

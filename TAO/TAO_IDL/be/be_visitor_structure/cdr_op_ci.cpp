@@ -64,6 +64,7 @@ be_visitor_structure_cdr_op_ci::visit_structure (be_structure *node)
               << "// " << __FILE__ << ":" << __LINE__;
 
           *os << be_nl << be_nl
+              << "template<>" << be_nl
               << "ACE_INLINE" << be_nl
               << "CORBA::Boolean" << be_nl
               << "TAO::Any_Dual_Impl_T<" << node->name ()
@@ -73,6 +74,7 @@ be_visitor_structure_cdr_op_ci::visit_structure (be_structure *node)
               << "}";
 
           *os << be_nl << be_nl
+              << "template<>" << be_nl
               << "ACE_INLINE" << be_nl
               << "CORBA::Boolean" << be_nl
               << "TAO::Any_Dual_Impl_T<" << node->name ()
