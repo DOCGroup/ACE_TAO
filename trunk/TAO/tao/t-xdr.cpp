@@ -7,7 +7,6 @@
 //
 // It's suitable only for a simple performance test just now ...
 
-
 #include	"orb.h"
 
 #if defined(HAVE_WIDEC_H)

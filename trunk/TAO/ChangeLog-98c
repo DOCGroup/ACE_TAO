@@ -1,3 +1,17 @@
+Mon Jul  7 20:59:05 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/test1_{svr,clnt}.cpp (main): Added template
+ 	specialization code and updated the formatting.  Thanks to Arturo
+ 	Montes <mitosys@colomsat.net.co> for reporting this.
+
+	* tests/Cubit/TAO/test1_svr.cpp (main): Added the -i options to
+ 	  getopt().  Thanks to Arturo Montes <mitosys@colomsat.net.co> for
+ 	  reporting this.
+
+	* TAO/tao/orbconf.h (SIZEOF_LONG_DOUBLE): Added a 
+	  #define for M_UNIX.  Thanks to Arturo Montes
+	  <mitosys@colomsat.net.co> for reporting this.
+
 Sun Jul 06 02:37:24 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.5, released Sun Jul 06 02:37:24 1997.
