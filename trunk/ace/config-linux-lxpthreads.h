@@ -37,6 +37,8 @@
 #define ACE_HAS_THREADS
 // And they're even POSIX pthreads (MIT implementation)
 #define ACE_HAS_PTHREADS
+// ... and the final standard even!
+#define	ACE_HAS_PTHREADS_STD
 
 #define ACE_HAS_PTHREAD_SIGMASK			// JCEJ 12/19/96
 
@@ -50,7 +52,6 @@
 #else
 #  define PTHREAD_MAX_PRIORITY          32      // JCEJ 12/22/96	#3
 #endif
-#define	ACE_HAS_PTHREADS_1003_DOT_1C		// JCEJ 12/22/96	#4
 
 #define ACE_LACKS_THREAD_STACK_ADDR		// JCEJ 12/17/96
 #define ACE_LACKS_THREAD_STACK_SIZE		// JCEJ 12/17/96
