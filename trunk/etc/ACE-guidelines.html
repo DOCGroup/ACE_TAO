@@ -226,7 +226,8 @@ bgcolor="#ffffff">
     <li>Don't check for a pointer being 0 before deleting it.  It's
         always safe to delete a 0 pointer.  If the pointer is visible
         outside the local scope, it's often a good idea to 0 it
-        _after_ deleting it.<p>
+        _after_ deleting it.  Note, the same argument applies to
+        free().<p>
 
     <li>Always use <strong><code>ACE_NEW</code></strong> or
         <strong><code>ACE_NEW_RETURN</code></strong> to allocate memory,
