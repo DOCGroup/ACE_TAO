@@ -1,3 +1,14 @@
+Tue Mar 16 10:57:46 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Svc_Conf.l: Added a new method ace_yy_delete_parse_buffer()
+ 	  that frees up FLEX buffers when the program is done.  Thanks to
+ 	  Tom Arbuckle <arbuckle@uran.informatik.uni-bonn.de> for
+ 	  this fix.
+
+	* examples/ASX/Message_Queue/buffer_stream.cpp (main): Changed pm
+ 	  to cm and vice versa to be consistent.  Thanks to Rainer Blome
+ 	  <rainer_blome@de.ibm.com> for reporting this.
+
 Tue Mar 16 10:50:42 1999  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_aix4_cset++.GNU: New file to cover

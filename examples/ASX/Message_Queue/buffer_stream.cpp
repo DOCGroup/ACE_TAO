@@ -261,7 +261,7 @@ main (int, char *argv[])
   MT_Module *fm; 
   MT_Module *cm; 
 
-  ACE_NEW_RETURN (pm,
+  ACE_NEW_RETURN (cm,
                   MT_Module ("Consumer",
                              new Consumer),
                   -1);
@@ -269,15 +269,15 @@ main (int, char *argv[])
                   MT_Module ("Filter",
                              new Filter),
                   -1);
-  ACE_NEW_RETURN (cm,
+  ACE_NEW_RETURN (pm,
                   MT_Module ("Producer",
                              new Producer),
                   -1);
 
-  // Create Producer and Consumer Modules and push them onto the
-  // Stream.  All processing is performed in the Stream.
+  // Create Consumer, Filter, and Producer Modules and push them onto
+  // the Stream.  All processing is performed in the Stream.
 
-  if (stream.push (pm) == -1)
+  if (stream.push (cm) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "push"),
@@ -287,7 +287,7 @@ main (int, char *argv[])
                        "%p\n",
                        "push"),
                       1);
-  else if (stream.push (cm) == -1)
+  else if (stream.push (pm) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "push"),
