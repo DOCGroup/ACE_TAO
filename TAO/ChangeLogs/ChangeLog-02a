@@ -1,3 +1,11 @@
+Fri Mar  2 16:16:45 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Object.cpp (operator>>):
+
+	  Added "ERROR" to the error output so that our automated test
+	  suite will pick up the error message.  Previously it was not
+	  detected.  Clarified the error message a bit, as well.
+
 Fri Mar 02 15:39:28 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/orbconf.h: Since MEM_Stream is not supported if position
