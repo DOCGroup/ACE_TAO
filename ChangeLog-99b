@@ -1,75 +1,79 @@
+Mon Jun 14 07:17:23 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: fixed typo: exceptions.
+
 Sun Jun 13 14:22:54 1999  Douglas C. Schmidt  <schmidt@maxixe.cs.wustl.edu>
-	
-	* ace/LSOCK_Acceptor.cpp: Rewrote the accept() method to use the
-	  same new technique that's used in ACE_SOCK_Acceptor::accept().
-	  This is necessary since there's no longer a shared_accept().
-	
+
+        * ace/LSOCK_Acceptor.cpp: Rewrote the accept() method to use the
+          same new technique that's used in ACE_SOCK_Acceptor::accept().
+          This is necessary since there's no longer a shared_accept().
+
         * ace/SOCK_Acceptor: Removed shared_accept() since it's been split
-	  into two parts to make the QoS features easier to maintain.
+          into two parts to make the QoS features easier to maintain.
 
-	* ace/SOCK_Acceptor: Added the new ACE_Accept_QoS_Params parameter
-	  to the ACE_SOCK_Acceptor::accept().  Also created two new
-	  private methods, shared_accept_start() and
-	  shared_accept_finish(), that factor out common code.
+        * ace/SOCK_Acceptor: Added the new ACE_Accept_QoS_Params parameter
+          to the ACE_SOCK_Acceptor::accept().  Also created two new
+          private methods, shared_accept_start() and
+          shared_accept_finish(), that factor out common code.
 
-	* ace/SOCK_Connector: Added the new ACE_Connect_QoS_Params
-	  parameter to ACE_SOCK_Connector::connect().  Also created two
-	  new private methods, shared_connect_start() and
-	  shared_connect_finish(), that factor out common code.
+        * ace/SOCK_Connector: Added the new ACE_Connect_QoS_Params
+          parameter to ACE_SOCK_Connector::connect().  Also created two
+          new private methods, shared_connect_start() and
+          shared_connect_finish(), that factor out common code.
 
-	* ace/SOCK_Connector.cpp: Cleaned up the logic that checks for
-	  various types of errors and updated the code to use the new
-	  ACE_Errno_Guard features.
+        * ace/SOCK_Connector.cpp: Cleaned up the logic that checks for
+          various types of errors and updated the code to use the new
+          ACE_Errno_Guard features.
 
-	* ace/OS.h: Added an equality and in-equality operator for
-	  ACE_Errno_Guard and moved all the methods into OS.i rather than
-	  OS.h.  Also added an ACE_Export to the ACE_Errno_Guard class so
-	  that it can be used outside of the ACE library.
-	
-	* ace/OS.h: For Win32, added support for the WinSock2 QoS
-	  functions WSAAccept(), WSAConnect(), WSAJoinLeaf(), and
-	  WSAIoctl().
-	
-	* ace/OS.h: For Win32, added thin wrappers ACE_Flow_Spec and
-	  ACE_QoS that encapsulate the WinSock2 FLOWSPEC and QOS structs,
-	  respectively.
+        * ace/OS.h: Added an equality and in-equality operator for
+          ACE_Errno_Guard and moved all the methods into OS.i rather than
+          OS.h.  Also added an ACE_Export to the ACE_Errno_Guard class so
+          that it can be used outside of the ACE library.
 
-	* ace/OS.h: For Win32, added an implicit conversion operator from
-	  iovec to WSABUF since they are structurally equivalent.
+        * ace/OS.h: For Win32, added support for the WinSock2 QoS
+          functions WSAAccept(), WSAConnect(), WSAJoinLeaf(), and
+          WSAIoctl().
+
+        * ace/OS.h: For Win32, added thin wrappers ACE_Flow_Spec and
+          ACE_QoS that encapsulate the WinSock2 FLOWSPEC and QOS structs,
+          respectively.
+
+        * ace/OS.h: For Win32, added an implicit conversion operator from
+          iovec to WSABUF since they are structurally equivalent.
 
 Sun Jun 13 14:22:54 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* bin/README.html: Updated the information about the ACE
-	  documentation tools to be more helpful.
+        * bin/README.html: Updated the information about the ACE
+          documentation tools to be more helpful.
 
 Fri Jun 11 20:04:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/Process_Unix.pm:
-	  Fixed problems on TimedWait().
+        * bin/Process_Unix.pm:
+          Fixed problems on TimedWait().
 
 Fri Jun 11 15:28:44 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.h: Need to add #include <signal.h> before <pthread.h>
- 	  since pthread.h doesn't include signal.h on SunOS 5.7.  Thanks
- 	  to Rick Weisner <rick.weisner@east.sun.com> for reporting this.
+        * ace/OS.h: Need to add #include <signal.h> before <pthread.h>
+          since pthread.h doesn't include signal.h on SunOS 5.7.  Thanks
+          to Rick Weisner <rick.weisner@east.sun.com> for reporting this.
 
-	* ace/OS: ACE_OS::memchr() should return a const void * rather
- 	  than a void *.  Thanks to Rick Weisner
- 	  <rick.weisner@east.sun.com> for reporting this.
+        * ace/OS: ACE_OS::memchr() should return a const void * rather
+          than a void *.  Thanks to Rick Weisner
+          <rick.weisner@east.sun.com> for reporting this.
 
         * ace/Dirent.i: Don't call closedir() on a NULL dirp because some
- 	  platforms (such as SunOS 5.7) will segfault!  Thanks to Tom
- 	  Arbuckle <arbuckle@uran.informatik.uni-bonn.de> for pointing
- 	  this out.
+          platforms (such as SunOS 5.7) will segfault!  Thanks to Tom
+          Arbuckle <arbuckle@uran.informatik.uni-bonn.de> for pointing
+          this out.
 
 Fri Jun 11 14:47:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/auto_compile: Does not compile all the directories in TAO,
- 	  because it takes too much space (and time).  Run several more
- 	  tests in TAO that are stable.  Improve output.
+        * bin/auto_compile: Does not compile all the directories in TAO,
+          because it takes too much space (and time).  Run several more
+          tests in TAO that are stable.  Improve output.
 
         * ace/Log_Msg.cpp: Use ACE_HAS_THR_C_DEST for TSS "destructors",
- 	  not ACE_HAS_THR_C_FUNC.
+          not ACE_HAS_THR_C_FUNC.
 
         * bin/ACEutils.pm:
         * bin/Process_Unix.pm:
@@ -80,25 +84,25 @@ Fri Jun 11 14:47:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 Fri Jun 11 14:40:49 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/create_ace_build: run the directory mode value through eval,
- 	  to convert it from octal to decimal, if necessary.  Thanks to
- 	  Russ Noseworthy for providing the patch.
+          to convert it from octal to decimal, if necessary.  Thanks to
+          Russ Noseworthy for providing the patch.
 
         * include/makeinclude/platform_sunos5_sunc++.GNU: only set
- 	  TEMPLATE_REPOSITORY for Sun C++ 4.2.  5.0 doesn't need it.
-  	  Thanks to Dennis C. De Mars <demars@mminternet.com> for
- 	  reporting this.
+          TEMPLATE_REPOSITORY for Sun C++ 4.2.  5.0 doesn't need it.
+          Thanks to Dennis C. De Mars <demars@mminternet.com> for
+          reporting this.
 
         * tests/Reactor_Performance_Test.cpp (main): return error status
- 	  from run_event_loop () call.  And, added a few ACE_ERROR
- 	  printouts.  Thanks to Steve for mentioned this.
+          from run_event_loop () call.  And, added a few ACE_ERROR
+          printouts.  Thanks to Steve for mentioned this.
 
         * ace/config-sunos5.5.h: properly reverted all the changes of
- 	  today.  The comments are more helpful this way.
+          today.  The comments are more helpful this way.
 
         * include/makeinclude/platform_linux_lxpthread.GNU: changed
- 	  PLATFORM_AIO_SUPPORT to use := instead of =, so that it only
- 	  invokes the shell once.  Thanks to Lothar Werzinger
- 	  <lwerzinger@krones.de> for suggesting this.
+          PLATFORM_AIO_SUPPORT to use := instead of =, so that it only
+          invokes the shell once.  Thanks to Lothar Werzinger
+          <lwerzinger@krones.de> for suggesting this.
 
 Fri Jun 11 12:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -108,122 +112,122 @@ Fri Jun 11 12:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 Thu Jun 10 23:11:36 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
         * ace/Cache_Map_Manager_T.{h, i, cpp}: Added Iterator
- 	  implementations to the template parameters to be able to build
- 	  using the g++ compiler. Also removed unnecessary HASH_KEY and
- 	  COMPARE_KEYS from the template list.
+          implementations to the template parameters to be able to build
+          using the g++ compiler. Also removed unnecessary HASH_KEY and
+          COMPARE_KEYS from the template list.
 
         * ace/Hash_Cache_Map_Manager_T.{h, i, cpp}: Made appropriate
- 	  changes to support changes made to Cache_Map_Manager.
+          changes to support changes made to Cache_Map_Manager.
 
         * ace/Caching_Strategies_T.{h, i, cpp}: Added an overloaded
- 	  clear_cache method which allows the user to specify the total
- 	  number of entries in the cache. Also added the
- 	  Caching_Strategy_Utility parameter which decouples the actual
- 	  purging from the caching strategy.
+          clear_cache method which allows the user to specify the total
+          number of entries in the cache. Also added the
+          Caching_Strategy_Utility parameter which decouples the actual
+          purging from the caching strategy.
 
         * ace/Caching_Strategy_Utility.{h,i,cpp}: Added a Null version of
- 	  the utility to be used with the Null strategy.
+          the utility to be used with the Null strategy.
 
         * ace/Cleanup_Strategies_T.{h,i,cpp}: Added the ACE_UNSED_ARGS
- 	  macro to ward of g++ warnings.
+          macro to ward of g++ warnings.
 
         * tests/Map_Manager_Test.cpp: Added performance tests for the
- 	  Cache_Map_Manager and the Hash_Cache_Map_Manager.
+          Cache_Map_Manager and the Hash_Cache_Map_Manager.
 
 Thu Jun 10 20:29:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/RB_Tree.h: Made constructors for iterator base class
- 	  protected instead of protected, so the the base class can only
- 	  be constructed by the derived forward and reverse iterator
- 	  classes.  Thanks to Matt Braun for pointing this out.
+          protected instead of protected, so the the base class can only
+          be constructed by the derived forward and reverse iterator
+          classes.  Thanks to Matt Braun for pointing this out.
 
         * tests/RB_Tree_Test.cpp: Major overhaul of the test to use a test
- 	  class template that encapsulates the test details and makes the
- 	  code much more readable.  Then, the main program merely
- 	  instantiates a test for each of the four possible combinations
- 	  of key/item type parameterization over int and const char *, and
- 	  calls the run_test () method of each test instance.
+          class template that encapsulates the test details and makes the
+          code much more readable.  Then, the main program merely
+          instantiates a test for each of the four possible combinations
+          of key/item type parameterization over int and const char *, and
+          calls the run_test () method of each test instance.
 
 Thu Jun 10 12:44:22 1999  Steve Huston  <shuston@riverace.com>
 
         * tests/UPIPE_SAP_Test.cpp: Disable for Win32 if !ACE_HAS_WINNT4.
-  	  The test relies on ACE_SPIPE_Acceptor which requires NT4 to
- 	  work.
+          The test relies on ACE_SPIPE_Acceptor which requires NT4 to
+          work.
 
 Thu Jun 10 12:47:52 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-linux-lxpthreads.h: removed ACE_HAS_AIO_CALLS.  It's
- 	  now enabled in the platform_macros.GNU file:
+          now enabled in the platform_macros.GNU file:
 
         * include/makeinclude/platform_linux_lxpthread.GNU: added
- 	  automatic detection of AIO support, based on existence of
- 	  /usr/lib/librt.so.
+          automatic detection of AIO support, based on existence of
+          /usr/lib/librt.so.
 
         * include/makeinclude/platform_linux_lxpthread.GNU: add -lrt to
- 	  LIBS only if $(PLATFORM_AIO_SUPPORT) is equal to
- 	  -DACE_HAS_AIO_CALLS.
+          LIBS only if $(PLATFORM_AIO_SUPPORT) is equal to
+          -DACE_HAS_AIO_CALLS.
 
         Thanks to Jake Hamby <jehamby@anobject.com> for reporting that not
- 	all Linux platforms have AIO support.
+        all Linux platforms have AIO support.
 
 Thu Jun 10 10:17:08 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.5.h: with Sun C++ 5.0, #define
- 	  _RWSTD_NO_EXCEPTIONS 1 if exceptions are not enabled.  This
- 	  avoids a warning about throw expressions being ignored with
- 	  -noex.  See /opt/SUNWspro_5.0/SC5.0/include/CC/stdcomp.h for
- 	  more information.
+          _RWSTD_NO_EXCEPTIONS 1 if exceptions are not enabled.  This
+          avoids a warning about throw expressions being ignored with
+          -noex.  See /opt/SUNWspro_5.0/SC5.0/include/CC/stdcomp.h for
+          more information.
 
         * ace/os-patches/vxworks-5.1.txt,ACE-INSTALL.html: added these
- 	  notes for using ACE with VxWorks 5.1.
+          notes for using ACE with VxWorks 5.1.
 
         * docs/ACE-guidelines.html: avoid source code filenames that
- 	  include "Error".  Avoid #include <math.h>.
+          include "Error".  Avoid #include <math.h>.
 
 Wed Jun  9 21:45:24 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * tests/Svc_Handler_Test.cpp (main): Revised the test a bit to
- 	  make it more clear what's going on.
+          make it more clear what's going on.
 
         * ace/Svc_Handler.cpp: Fixed a typo in flush() -- we need to
- 	  update the temp pointer with temp->cont() *not* entry->cont().
+          update the temp pointer with temp->cont() *not* entry->cont().
 
         * ace/Svc_Handler.cpp (dump): Fixed a typo -- I wasn't comparing
- 	  the pointer to 0, I was comparing the ACE_Time_Value!
+          the pointer to 0, I was comparing the ACE_Time_Value!
 
 Wed Jun  9 21:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/config-psos-diab-ppc.h: added
- 	  ACE_HAS_NONCONST_SELECT_TIMEVAL
+          ACE_HAS_NONCONST_SELECT_TIMEVAL
 
         * tests/RB_Tree_Test.cpp: fixed constness issues revealed by
- 	  SunC++ 5.0, added return value assertions for insert calls,
- 	  added typedefs.
+          SunC++ 5.0, added return value assertions for insert calls,
+          added typedefs.
 
 Wed Jun  9 20:40:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ace/CDR_Stream.h:
         * ace/CDR_Stream.cpp: Added new methods to support message
- 	  reassembly in GIOP 1.1
+          reassembly in GIOP 1.1
 
 Wed Jun  9 15:32:37 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
         * ace/Message_Queue_T: Added a lock() accessor method so that
- 	  other components can access the lock used by a Message Queue.
+          other components can access the lock used by a Message Queue.
 
         * ace/Svc_Handler.cpp: Added better support for timeout handling
- 	  for the ACE_Buffered_Svc_Handler.
+          for the ACE_Buffered_Svc_Handler.
 
         * ace/Svc_Handler: Split the buffering portion of ACE_Svc_Handler
- 	  off into a separate class called ACE_Buffered_Svc_Handler to
- 	  avoid adding extra space and complexity to the existing
- 	  ACE_Svc_Handler.  Thanks to Irfan for suggesting this, as well
- 	  as also suggesting ways to improve the performance by caching
- 	  the current size of the buffer.
+          off into a separate class called ACE_Buffered_Svc_Handler to
+          avoid adding extra space and complexity to the existing
+          ACE_Svc_Handler.  Thanks to Irfan for suggesting this, as well
+          as also suggesting ways to improve the performance by caching
+          the current size of the buffer.
 
         * ace/OS.h: Added a patch to work around some problems with macros
- 	  for USYNCH_THREAD.  Thanks to David Levine and Russ Noseworthy
- 	  for this.
+          for USYNCH_THREAD.  Thanks to David Levine and Russ Noseworthy
+          for this.
 
         * examples/Threads/task_five.cpp (main): Improved the form and
           content of this example a bit.
