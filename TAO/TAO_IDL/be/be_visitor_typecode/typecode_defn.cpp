@@ -48,6 +48,70 @@ be_visitor_typecode_defn::~be_visitor_typecode_defn (void)
   this->queue_reset (this->compute_queue_);
 }
 
+int
+be_visitor_typecode_defn::visit_members (AST_Structure *node)
+{
+  this->elem_number_ = 0;
+
+  AST_Field **member_ptr = 0;
+  size_t count = node->nfields ();
+
+  // Set the scope node as "node" in which the code is being
+  // generated so that elements in the node's scope can use it
+  // for code generation.
+  this->ctx_->scope (be_decl::narrow_from_decl (node));
+
+  for (size_t i = 0; i < count; ++i)
+    {
+      node->field (member_ptr, i);
+
+      be_decl *bd = be_decl::narrow_from_decl (*member_ptr);
+
+      // Set the node to be visited.
+      this->ctx_->node (bd);
+      this->elem_number_++;
+
+      // Do any pre processing using the next item info. 
+      if (this->pre_process (bd) == -1)
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              "(%N:%l) be_visitor_typecode_defn::visit_members - "
+              "pre processing failed\n"
+            ), 
+            -1
+          );
+        }
+
+      // Send the visitor.
+      if (bd == 0 || bd->accept (this) == -1)
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              "(%N:%l) be_visitor_typecode_defn::visit_members - "
+              "codegen for scope failed\n"
+            ), 
+            -1
+          );
+
+        }
+
+      // Do any post processing using this item info.
+      if (this->post_process (bd) == -1)
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              "(%N:%l) be_visitor_typecode_defn::visit_members - "
+              "post processing failed\n"
+            ), 
+            -1
+          );
+        }
+    }
+
+  return 0;
+}
+
 // the following needs to be done to deal with the most bizarre behavior of
 // MSVC++ compiler
 int
@@ -368,7 +432,7 @@ be_visitor_typecode_defn::visit_exception (be_exception *node)
       return ((this->computed_encap_len_ > 0) ? 0 : -1);
     case TAO_CodeGen::TAO_TC_DEFN_SCOPE:
     case TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN:
-      return this->visit_scope (node);
+      return this->visit_members (node);
     default:
       // error
       break;
@@ -554,7 +618,7 @@ be_visitor_typecode_defn::visit_structure (be_structure *node)
       return ((this->computed_encap_len_ > 0) ? 0 : -1);
     case TAO_CodeGen::TAO_TC_DEFN_SCOPE:
     case TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN:
-      return this->visit_scope (node);
+      return this->visit_members (node);
     default:
       // error
       break;
@@ -617,7 +681,7 @@ be_visitor_typecode_defn::visit_union (be_union *node)
       return ((this->computed_encap_len_ > 0) ? 0 : -1);
     case TAO_CodeGen::TAO_TC_DEFN_SCOPE:
     case TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN:
-      return this->visit_scope (node);
+      return this->visit_members (node);
     default:
       // error
       break;
@@ -1009,7 +1073,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_exception *node)
 
   // generate the member count
   os->indent ();
-  *os << node->member_count () << ", // member count\n"; 
+  *os << node->nfields () << ", // member count\n"; 
   // size of the member count
   this->tc_offset_ += sizeof (ACE_CDR::ULong);
 
@@ -1553,7 +1617,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_structure *node)
 
   // generate the member count
   os->indent ();
-  *os << node->member_count () << ", // member count\n";
+  *os << node->nfields () << ", // member count\n";
   // size of the member count
   this->tc_offset_ += sizeof (ACE_CDR::ULong);
 
@@ -1797,7 +1861,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_union *node)
   this->tc_offset_ += sizeof (ACE_CDR::ULong);
 
   // generate the member count
-  *os << node->member_count () << ", // member count\n";
+  *os << node->nfields () << ", // member count\n";
   // size of the member count
   this->tc_offset_ += sizeof (ACE_CDR::ULong);
 
