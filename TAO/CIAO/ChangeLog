@@ -1,3 +1,19 @@
+Sun May 23 13:32:34 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/NodeManager/NodeDaemon.mpc:
+        * DnC/NodeManager/NodeApplicationManager_Impl.h:
+        * DnC/NodeManager/NodeApplicationManger_Impl.cpp:
+        * DnC/NodeManager/NodeDaemon_Impl.cpp:
+        * DnC/NodeManager/Node_Daemon.cpp:
+
+          Got the call-chain working, wherein, a preparePlan call to the
+          Daemon creates a NodeApplication Manager and passes along the
+          plan as well. Next, now the Daemon, depending on the command
+          line argument passed can also register with the Naming Service
+          using the node-name as the context. This enables multiple
+          NodeManagers to be activated on different hosts. An simple IOR
+          based scheme will not work in this case.
+
 Fri May 21 20:12:43 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/NodeManager/NodeDaemon.idl:

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "NodeDaemon_Impl.h"
+#include "NodeApplicationManager_Impl.h"
 
 CIAO::NodeDaemon_Impl::NodeDaemon_Impl (const char *name,
                                         CORBA::ORB_ptr orb,
@@ -104,16 +105,14 @@ CIAO::NodeDaemon_Impl::unbind (const char *id)
 
 ///////////////////////////////////////////////////////////////////////
 void
-CIAO::NodeDaemon_Impl::joinDomain (const Deployment::Domain & domain,
-                                   Deployment::TargetManager_ptr manager,
-                                   Deployment::Logger_ptr log
+CIAO::NodeDaemon_Impl::joinDomain (const Deployment::Domain & ,
+                                   Deployment::TargetManager_ptr ,
+                                   Deployment::Logger_ptr 
                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  //Implementation undefined.
+
 }
-
-
 
 void
 CIAO::NodeDaemon_Impl::leaveDomain (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -123,7 +122,7 @@ CIAO::NodeDaemon_Impl::leaveDomain (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 }
 
 
-::Deployment::NodeApplicationManager_ptr
+Deployment::NodeApplicationManager_ptr
 CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan & plan
                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -131,14 +130,25 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan & plan
                    Deployment::PlanError))
 {
   //Implementation undefined.
-  return ::Deployment::NodeApplicationManager::_nil ();
+  CIAO::NodeApplicationManager_Impl *app_mgr;
+  ACE_NEW_THROW_EX (app_mgr, 
+                    CIAO::NodeApplicationManager_Impl (plan, 
+                                                       this->orb_.in (), 
+                                                       this->poa_.in ()),
+                    CORBA::NO_MEMORY ());
+
+  // Activate the object in this POA
+  PortableServer::ObjectId_var id = this->poa_->activate_object (app_mgr);
+  
+  // Return the Application Manager
+  CORBA::Object_var obj_ref = this->poa_->id_to_reference (id.in ());
+  return Deployment::NodeApplicationManager::_narrow (obj_ref.in ());
 }
 
 
 void
-CIAO::NodeDaemon_Impl::destroyManager (Deployment::NodeApplicationManager_ptr appManager
+CIAO::NodeDaemon_Impl::destroyManager (Deployment::NodeApplicationManager_ptr 
                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException, Deployment::StopError))
 {
-  // Empty implementation
 }

@@ -3,9 +3,11 @@
 #include "NodeApplicationManager_Impl.h"
 
 CIAO::NodeApplicationManager_Impl::
-NodeApplicationManager_Impl (CORBA::ORB_ptr orb,
+NodeApplicationManager_Impl (const Deployment::DeploymentPlan &plan,
+                             CORBA::ORB_ptr orb,
                              PortableServer::POA_ptr poa)
-  : orb_ (CORBA::ORB::_duplicate (orb)),
+  : plan_ (plan),
+    orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa))
 {
 }
@@ -23,9 +25,9 @@ CIAO::NodeApplicationManager_Impl::_default_POA (void)
 }
 
 Deployment::Application_ptr
-CIAO::NodeApplicationManager_Impl::startLaunch (const Deployment::Properties & configProperty,
-                                                Deployment::Connections_out providedReference,
-                                                CORBA::Boolean start
+CIAO::NodeApplicationManager_Impl::startLaunch (const Deployment::Properties & ,
+                                                Deployment::Connections_out ,
+                                                CORBA::Boolean 
                                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   Deployment::ResourceNotAvailable,
@@ -39,11 +41,14 @@ CIAO::NodeApplicationManager_Impl::startLaunch (const Deployment::Properties & c
    *  4. Initialize the NodeApplication.
    *  5. get the provided connection endpoints back and return them.
    */
+
+   // Return a nil reference
+   return Deployment::Application::_nil ();
 }
 
 
 void
-CIAO::NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr app
+CIAO::NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr 
                                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException, Deployment::StopError))
 {

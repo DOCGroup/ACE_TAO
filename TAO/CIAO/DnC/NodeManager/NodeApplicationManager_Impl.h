@@ -37,8 +37,9 @@ namespace CIAO
   {
   public:
     /// Constructor
-    NodeApplicationManager_Impl (CORBA::ORB_ptr o,
-				 PortableServer::POA_ptr p);
+    NodeApplicationManager_Impl (const Deployment::DeploymentPlan &plan,
+                                 CORBA::ORB_ptr orb,
+				 PortableServer::POA_ptr poa);
 
     /// Destructor
     virtual ~NodeApplicationManager_Impl (void);
@@ -67,17 +68,14 @@ namespace CIAO
     virtual PortableServer::POA_ptr _default_POA (void);
 
   protected:
+    /// Deployment Plan for this Node Application Manager
+    Deployment::DeploymentPlan plan_;
+
     /// Keep a pointer to the managing ORB serving this servant.
     CORBA::ORB_var orb_;
 
     /// Keep a pointer to the managing POA.
     PortableServer::POA_var poa_;
-
-    /// Cache a object reference to this servant.
-    Deployment::NodeApplicationManager_var objref_;
-
-    /// Cache the ior of the previous reference
-    CORBA::String_var ior_;
 
     /// Synchronize access to the object set.
     TAO_SYNCH_MUTEX lock_;
