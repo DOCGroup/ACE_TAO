@@ -121,9 +121,11 @@ Control::join (Federated_Test::Peer_ptr peer
                                                  ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
 
-              disconnects[lcount].reset(
-                  new Loopback_Disconnect (loopbacks[lcount].in ())
-                  );
+              ACE_AUTO_PTR_RESET (disconnects[lcount],
+                                  new Loopback_Disconnect (
+                                        loopbacks[lcount].in ()),
+                                  Loopback_Disconnect
+                                 );
               lcount++;
             }
         }

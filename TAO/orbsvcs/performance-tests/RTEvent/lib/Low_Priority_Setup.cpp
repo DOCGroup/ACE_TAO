@@ -80,11 +80,11 @@ Low_Priority_Setup (int consumer_count,
                             this->clients_[j].supplier (),
                             barrier);
       this->tasks_[j].thr_mgr (&this->thr_mgr_);
-      this->stoppers_[j].reset(
-          new Send_Task_Stopper (thread_priority,
-                                 thread_sched_class,
-                                 &this->tasks_[j])
-          );
+      ACE_AUTO_PTR_RESET (this->stoppers_[j],
+                          new Send_Task_Stopper (thread_priority,
+                                                 thread_sched_class,
+                                                 &this->tasks_[j]),
+                          Send_Task_Stopper);
     }
 }
 
