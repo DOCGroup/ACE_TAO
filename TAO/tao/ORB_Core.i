@@ -150,6 +150,37 @@ TAO_ORB_Core::has_shutdown (void)
 }
 
 ACE_INLINE int
+TAO_ORB_Core::destroyed (void)
+{
+  return this->destroyed_;
+}
+
+ACE_INLINE void
+TAO_ORB_Core::check_shutdown (CORBA_Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  if (this->destroyed ())
+    {
+      // As defined by the CORBA 2.3 specification, throw a
+      // CORBA::OBJECT_NOT_EXIST exception with minor code 4 if the ORB
+      // has shutdown by the time an ORB function is called.
+
+      ACE_THROW (CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE,
+                                          CORBA::COMPLETED_NO));
+
+    }
+  else if (this->has_shutdown ())
+    {
+      // As defined by the CORBA 2.3 specification, throw a
+      // CORBA::BAD_INV_ORDER exception with minor code 4 if the ORB
+      // has shutdown by the time an ORB function is called.
+
+      ACE_THROW (CORBA::BAD_INV_ORDER (4, CORBA::COMPLETED_NO));
+    }
+}
+
+
+ACE_INLINE int
 TAO_ORB_Core::thread_per_connection_timeout (ACE_Time_Value &timeout) const
 {
   timeout = this->thread_per_connection_timeout_;
