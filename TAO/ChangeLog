@@ -1,3 +1,8 @@
+Fri Jun 13 13:11:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Makefile: Removed creation of a README for orbsvcs during the
+	  release since we have an html file in docs.
+
 Thu Jun 12 15:34:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Typecode.cpp: In lieu of the following "Thu Jun 12 15:20:37
