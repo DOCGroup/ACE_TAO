@@ -203,8 +203,6 @@ main (int, char *argv[])
   ACE_START_TEST ("Buffer_Stream_Test.cpp");
 
 #if defined (ACE_HAS_THREADS)
-  ACE_Service_Config daemon (argv[0]);
-
   // Control hierachically-related active objects
   MT_Stream stream;
   MT_Module *cm;

@@ -76,6 +76,9 @@ run Recursive_Mutex_Test	# uses Service_Config, Recursive_Thread_Mutex
 run Time_Service_Test		# uses libnet_svcs
 run Tokens_Test
 
+run Map_Manager_Test
+run Message_Queue_Test
+
 echo "Tests complete..."
 
 /bin/rm -f ace_pipe_name pattern $tmp/ace_temp_file $tmp/ace_temp_file2 $tmp/ace_test_file $tmp/Naming_Test
