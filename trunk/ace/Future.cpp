@@ -58,7 +58,7 @@ ACE_Future_Rep<T>::detach (ACE_Future_Rep<T>*& rep)
 
   if (rep->ref_count_-- == 0)
     {
-      r_mon.release ();
+      ACE_MT (r_mon.release ());
       // We do not need the lock when deleting the representation.
       // There should be no side effects from deleting rep and we don
       // not want to release a deleted mutex.
@@ -80,7 +80,7 @@ ACE_Future_Rep<T>::assign (ACE_Future_Rep<T>*& rep, ACE_Future_Rep<T>* new_rep)
   // detached old last for exception safety
   if (old->ref_count_-- == 0)
     {
-      r_mon.release ();
+      ACE_MT (r_mon.release ());
       // We do not need the lock when deleting the representation.
       // There should be no side effects from deleting rep and we don
       // not want to release a deleted mutex.
