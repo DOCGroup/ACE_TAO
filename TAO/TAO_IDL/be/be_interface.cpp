@@ -1967,15 +1967,14 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << ")" << be_uidt_nl
                       << "{" << be_idt_nl;
                   *os << ancestor->full_skel_name ()
-                      << "_ptr impl = ("
+                      << "_ptr impl = static_cast <"
                       << derived->full_skel_name ()
-                      << "_ptr) obj;" << be_nl;
+                      << "_ptr> (obj);" << be_nl;
                   *os << ancestor->full_skel_name ()
                       << "::" << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
                       << "req," << be_nl
-                      << "(" << ancestor->full_skel_name ()
-                      << "_ptr) impl," << be_nl
+                      << "impl," << be_nl
                       << "context" << be_nl
                       << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
                       << ");" << be_uidt << be_uidt_nl
@@ -2020,15 +2019,14 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << ")" << be_uidt_nl
                       << "{" << be_idt_nl
                       << ancestor->full_skel_name ()
-                      << "_ptr impl = ("
+                      << "_ptr impl = static_cast <"
                       << derived->full_skel_name ()
-                      << "_ptr) obj;" << be_nl;
+                      << "_ptr> (obj);" << be_nl;
                   *os << ancestor->full_skel_name ()
                       << "::_get_" << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
                       << "req," << be_nl
-                      << "(" << ancestor->full_skel_name ()
-                      << "_ptr) impl," << be_nl
+                      << "impl," << be_nl
                       << "context" << be_nl
                       << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
                       << ");" << be_uidt << be_uidt_nl
@@ -2068,15 +2066,14 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << ")" << be_uidt_nl
                           << "{" << be_idt_nl
                           << ancestor->full_skel_name ()
-                          << "_ptr impl = ("
+                          << "_ptr impl = static_cast <"
                           << derived->full_skel_name ()
-                          << "_ptr) obj;" << be_nl;
+                          << "_ptr> (obj);" << be_nl;
                       *os << ancestor->full_skel_name ()
                           << "::_set_" << d->local_name ()
                           << "_skel (" << be_idt << be_idt_nl
                           << "req," << be_nl
-                          << "(" << ancestor->full_skel_name ()
-                          << "_ptr) impl," << be_nl
+                          << "impl," << be_nl
                           << "context" << be_nl
                           << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
                           << ");" << be_uidt << be_uidt_nl
