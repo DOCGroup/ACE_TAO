@@ -6,7 +6,7 @@
 //    tao
 //
 // = FILENAME
-//   tao_util.cpp
+//   TAO.cpp
 //
 // = AUTHOR
 //    Sumedh Mungee <sumedh@cs.wustl.edu>
@@ -58,7 +58,9 @@ TAO_ORB_Manager::init (int &argc,
     {
       // Get the POA from the ORB.
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA);
+        this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA,
+                                                ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -204,8 +206,9 @@ TAO_ORB_Manager::deactivate (const char *id,
                                   ACE_TRY_ENV);
   ACE_CHECK;
 
-  PortableServer::ObjectId_var object_id = this->poa_->reference_to_id (object.in (),
-                                                                        ACE_TRY_ENV);
+  PortableServer::ObjectId_var object_id =
+    this->poa_->reference_to_id (object.in (),
+                                 ACE_TRY_ENV);
   ACE_CHECK;
 
   this->poa_->deactivate_object (object_id.in (),
