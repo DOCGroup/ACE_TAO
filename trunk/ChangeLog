@@ -1,3 +1,14 @@
+Fri Mar 26 14:15:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/idl_compiler.mpt:
+	* bin/MakeProjectCreator/config/idl_compiler_win32.mpt:
+	* bin/MakeProjectCreator/config/notify.mpb:
+	* bin/MakeProjectCreator/config/qt-min.mpb:
+	* bin/MakeProjectCreator/config/qt-min_moc.mpb:
+
+	  While playing around with ARMS repository, I accidentally added
+	  these files back into the repo. Removing them once again.
+
 Thu Mar 25 11:58:46 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/bmake.mpd:
