@@ -1,3 +1,9 @@
+Sun Jun 24 11:25:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* Created this file. Got the whole stuff in ace to a new branch by
+	  name bug_575_stage_1. This ChangeLog file will be in branch
+	  bug_575.
+
 Fri Jun 22 16:52:13 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
 	* ace/CDR_Stream.cpp: Changed the copy constructor for the
