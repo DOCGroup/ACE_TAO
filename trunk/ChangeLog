@@ -1,3 +1,15 @@
+Tue Jul 16 14:19:37 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/DLL_Manager.cpp:
+        * ace/Parse_Node.cpp: (also see Fri Jul 12 12:37:42 2002  Steve Huston)
+          Always use the ptrdiff_t trick to cast a void* to a func ptr.
+          Nanbor was right ;-)  Thanks to Carlos O'Ryan <coryan@atdesk.com>
+          for clarifying this issue, including C++ chapter and verse.
+          (It's in ISO C++ section 5.2.10 for those interested).
+
+        * tests/DLL_Test.cpp: Use ptrdiff_t as a mediary to cast a void *
+          to a func ptr, not a long.
+
 Mon Jul 15 21:23:47 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Message_Block.i (base): Fixed a warning in TRU 64 builds.
