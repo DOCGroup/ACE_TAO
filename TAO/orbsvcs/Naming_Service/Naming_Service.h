@@ -76,7 +76,7 @@ protected:
   // created under the given context will use the same size for their
   // initial hash table allocations.
 
-  LPCTSTR persistence_file_name_;
+  const ACE_TCHAR *persistence_file_name_;
   // Path to the file to be used to store/read in Naming Service
   // persistent state.
 

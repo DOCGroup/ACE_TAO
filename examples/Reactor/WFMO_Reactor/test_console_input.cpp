@@ -44,7 +44,7 @@ Event_Handler::Event_Handler (ACE_Reactor &reactor)
 int 
 Event_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
-  TCHAR buffer[BUFSIZ];
+  ACE_TCHAR buffer[BUFSIZ];
   int result = ACE_OS::read (ACE_STDIN, buffer, sizeof buffer);
   buffer[result] = '\0';
 

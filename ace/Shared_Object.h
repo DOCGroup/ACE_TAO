@@ -33,13 +33,13 @@ class ACE_Export ACE_Shared_Object
 public:
   ACE_Shared_Object (void);
 
-  virtual int init (int argc, ASYS_TCHAR *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   // Initializes object when dynamic linking occurs.
 
   virtual int fini (void);
   // Terminates object when dynamic unlinking occurs.
 
-  virtual int info (ASYS_TCHAR **info_string, size_t length = 0) const;
+  virtual int info (ACE_TCHAR **info_string, size_t length = 0) const;
   // Returns information on active object.
 
   virtual ~ACE_Shared_Object (void);

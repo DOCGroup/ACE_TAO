@@ -21,7 +21,7 @@
 #include "ace/SString.h"
 #include "ace/Malloc.h"
 
-typedef ASYS_TCHAR *ACE_STRING;
+typedef ACE_TCHAR *ACE_STRING;
 typedef ACE_DLList<ACE_STRING> STRLIST;
 typedef ACE_DLList_Iterator<ACE_STRING> STRLIST_ITERATOR;
 
@@ -44,12 +44,12 @@ static ACE_STRING string_table[] =
   // Note: all these casts are to appease SC 5.0 which is not pleased
   // with using string literals (i.e. const char *'s) as char
   // *'s. It's ugly, but necessary.
-  ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT ("hello")),
-  ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT ("guten Tag")),
-  ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT ("goodbye")),
-  ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT ("auf wiedersehen")),
-  ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT ("funny")),
-  ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT ("lustig")),
+  ACE_const_cast (ACE_TCHAR *, ACE_TEXT ("hello")),
+  ACE_const_cast (ACE_TCHAR *, ACE_TEXT ("guten Tag")),
+  ACE_const_cast (ACE_TCHAR *, ACE_TEXT ("goodbye")),
+  ACE_const_cast (ACE_TCHAR *, ACE_TEXT ("auf wiedersehen")),
+  ACE_const_cast (ACE_TCHAR *, ACE_TEXT ("funny")),
+  ACE_const_cast (ACE_TCHAR *, ACE_TEXT ("lustig")),
   0
 };
 
@@ -63,9 +63,9 @@ run_iterate (STRLIST &list)
        (entry = iter.next ()) != 0;
        iter.advance (), i++)
     {
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("iterating (%d): [%s]\n"),
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("iterating (%d): [%s]\n"),
                   i,
-                  (ASYS_TCHAR *) *entry));
+                  (ACE_TCHAR *) *entry));
     }
 }
 
@@ -83,14 +83,14 @@ run_test (void)
       if (ACE_EVEN (i)
           && list.insert_tail ((ACE_STRING *) &string_table[i]) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("%p failed for %s \n"),
-                           ASYS_TEXT ("insert"),
+                           ACE_TEXT ("%p failed for %s \n"),
+                           ACE_TEXT ("insert"),
                            string_table[i]),
                           -1);
       else if (list.insert_head ((ACE_STRING *) &string_table[i]) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("%p failed for %s \n"),
-                           ASYS_TEXT ("insert"),
+                           ACE_TEXT ("%p failed for %s \n"),
+                           ACE_TEXT ("insert"),
                            string_table[i]),
                           -1);
       run_iterate (list);
@@ -113,9 +113,9 @@ run_test (void)
 }
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("DLList_Test"));
+  ACE_START_TEST (ACE_TEXT ("DLList_Test"));
 
   run_test ();
 

@@ -110,11 +110,11 @@ child (char *shm)
   while ((result = mutex.tryacquire ()) == -1)
     if (errno == EAGAIN)
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%P) spinning in child!\n")));
+                  ACE_TEXT ("(%P) spinning in child!\n")));
     else
       {
         ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("(%P) child mutex.tryacquire")));
+                    ACE_TEXT ("(%P) child mutex.tryacquire")));
         ACE_ASSERT (result != -1);
       }
 
@@ -142,9 +142,9 @@ template class ACE_Read_Guard<ACE_SV_Semaphore_Simple>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #endif /* ACE_HAS_SYSV_IPC */
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("SV_Shared_Memory_Test"));
+  ACE_START_TEST (ACE_TEXT ("SV_Shared_Memory_Test"));
 
 #if defined (ACE_HAS_SYSV_IPC) && !defined (ACE_LACKS_FORK) && \
     !defined(ACE_LACKS_SYSV_SHMEM)
@@ -175,7 +175,7 @@ main (int, ASYS_TCHAR *[])
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%P) fork failed\n")),
+                         ACE_TEXT ("(%P) fork failed\n")),
                         -1);
       /* NOTREACHED */
     case 0:
@@ -189,8 +189,8 @@ main (int, ASYS_TCHAR *[])
     }
 #else
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("SYSV IPC, SYSV SHMEM, or fork ")
-              ASYS_TEXT ("are not supported on this platform\n")));
+              ACE_TEXT ("SYSV IPC, SYSV SHMEM, or fork ")
+              ACE_TEXT ("are not supported on this platform\n")));
 #endif /* ACE_HAS_SYSV_IPC */
   ACE_END_TEST;
   return 0;

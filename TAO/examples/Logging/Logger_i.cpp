@@ -150,7 +150,7 @@ Logger_i::logv (const Logger::Log_Record &log_rec,
 
   // Create a temporary buffer for manipulating the logging message,
   // adding additional space for formatting characters..
-  ASYS_TCHAR msgbuf [ACE_MAXLOGMSGLEN + 4];
+  ACE_TCHAR msgbuf [ACE_MAXLOGMSGLEN + 4];
 
   // Format the message for proper display.
   ACE_OS::strcpy (msgbuf, "::");
@@ -172,7 +172,7 @@ Logger_i::logv (const Logger::Log_Record &log_rec,
                                        addr));
 
   // Create a buffer and fill it with the host name of the logger
-  ASYS_TCHAR namebuf[MAXHOSTNAMELEN + 1];
+  ACE_TCHAR namebuf[MAXHOSTNAMELEN + 1];
 
   ACE_OS::strncpy (namebuf, addy.get_host_addr (), MAXHOSTNAMELEN);
 

@@ -84,7 +84,7 @@ public:
   int insert (const ACE_Service_Type *);
   // Insert a new service record.
 
-  int find (const ASYS_TCHAR name[],
+  int find (const ACE_TCHAR name[],
             const ACE_Service_Type **srp = 0,
             int ignore_suspended = 1);
   // Locate an entry with <name> in the table.  If <ignore_suspended>
@@ -94,14 +94,14 @@ public:
   // If <name> is found, but it is suspended and the caller wants to
   // ignore suspended services a -2 is returned.
 
-  int remove (const ASYS_TCHAR[]);
+  int remove (const ACE_TCHAR[]);
   // Remove an existing service record.
 
   // = Liveness control
-  int resume (const ASYS_TCHAR[], const ACE_Service_Type ** = 0);
+  int resume (const ACE_TCHAR[], const ACE_Service_Type ** = 0);
   // Resume a service record.
 
-  int suspend (const ASYS_TCHAR[], const ACE_Service_Type ** = 0);
+  int suspend (const ACE_TCHAR[], const ACE_Service_Type ** = 0);
   // Suspend a service record.
 
   int current_size (void);
@@ -117,7 +117,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  int find_i (const ASYS_TCHAR service_name[],
+  int find_i (const ACE_TCHAR service_name[],
               const ACE_Service_Type ** = 0,
               int ignore_suspended = 1);
   // Locates <service_name>.  Must be called without locks being

@@ -84,7 +84,7 @@ TAO_Exclusive_TMS::dispatch_reply (CORBA::ULong request_id,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO_Exclusive_TMS::dispatch_reply - <%d != %d>\n"),
+                    ACE_TEXT ("TAO_Exclusive_TMS::dispatch_reply - <%d != %d>\n"),
                     this->request_id_, request_id));
       return 0;
     }
@@ -203,8 +203,8 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%P | %t):TAO_Muxed_TMS::bind_dispatcher: ")
-                    ASYS_TEXT ("bind dispatcher failed: result = %d\n"),
+                    ACE_TEXT ("(%P | %t):TAO_Muxed_TMS::bind_dispatcher: ")
+                    ACE_TEXT ("bind dispatcher failed: result = %d\n"),
                     result));
 
       return -1;
@@ -236,8 +236,8 @@ TAO_Muxed_TMS::dispatch_reply (CORBA::ULong request_id,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%P | %t):TAO_Muxed_TMS::dispatch_reply: ")
-                    ASYS_TEXT ("unbind dispatcher failed: result = %d\n"),
+                    ACE_TEXT ("(%P | %t):TAO_Muxed_TMS::dispatch_reply: ")
+                    ACE_TEXT ("unbind dispatcher failed: result = %d\n"),
                     result));
 
       return -1;

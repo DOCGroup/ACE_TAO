@@ -14,6 +14,8 @@
 # error Please define WIN32 in your project settings.
 #endif
 
+#define ACE_WIN32
+
 // Define this if you're running NT 4.x
 //  Setting applies to  : building ACE
 //  Runtime restrictions: System must be Windows NT => 4.0
@@ -195,11 +197,11 @@
 #define ACE_LACKS_SYSV_SHMEM
 #define ACE_LACKS_UNISTD_H
 #define ACE_LACKS_RLIMIT
+#define ACE_LACKS_MKFIFO
 #define ACE_LACKS_TELLDIR
 #define ACE_LACKS_SEEKDIR
 #define ACE_LACKS_REWINDDIR
 #define ACE_LACKS_READDIR_R
-
 
 #define ACE_SIZEOF_LONG_LONG 8
 typedef unsigned __int64 ACE_UINT64;
@@ -207,8 +209,8 @@ typedef unsigned __int64 ACE_UINT64;
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
-// Win32 has UNICODE support
-#define ACE_HAS_UNICODE
+// Win32 has wchar_t support
+#define ACE_HAS_WCHAR 
 
 // Compiler/platform correctly calls init()/fini() for shared
 // libraries. - applied for DLLs ?
@@ -239,8 +241,6 @@ typedef unsigned __int64 ACE_UINT64;
 
 // Compiler/platform supports sys_siglist array.
 //define ACE_HAS_SYS_SIGLIST
-
-#define ACE_WIN32
 
 // Platform supports ACE_TLI timod STREAMS module.
 //define ACE_HAS_TIMOD_H
@@ -325,22 +325,6 @@ typedef unsigned __int64 ACE_UINT64;
 # define NOMINMAX
 #endif /* NOMINMAX */
 
-#if defined (ACE_HAS_MOSTLY_UNICODE_APIS) && !defined (UNICODE)
-# define UNICODE
-#endif /* ACE_HAS_MOSTLY_UNICODE_APIS && !UNICODE */
-
-#if defined (_UNICODE)
-# if !defined (UNICODE)
-#  define UNICODE         /* UNICODE is used by Windows headers */
-# endif /* UNICODE */
-#endif /* _UNICODE */
-
-#if defined (UNICODE)
-# if !defined (_UNICODE)
-#  define _UNICODE        /* _UNICODE is used by C-runtime/MFC headers */
-# endif /* _UNICODE */
-#endif /* UNICODE */
-
 #if !defined(_DEBUG)
 // If we are making a release, and the user has not specified
 // inline directives, we will default to inline
@@ -407,18 +391,6 @@ typedef unsigned __int64 ACE_UINT64;
 # if !defined (WIN32_LEAN_AND_MEAN)
 #  define WIN32_LEAN_AND_MEAN
 # endif /* WIN32_LEAN_AND_MEAN */
-
-# if defined (_UNICODE)
-#  if !defined (UNICODE)
-#   define UNICODE         /* UNICODE is used by Windows headers */
-#  endif /* UNICODE */
-# endif /* _UNICODE */
-
-# if defined (UNICODE)
-#  if !defined (_UNICODE)
-#   define _UNICODE        /* _UNICODE is used by C-runtime/MFC headers */
-#  endif /* _UNICODE */
-# endif /* UNICODE */
 
 #endif /* !defined (_INC_WINDOWS) */
 

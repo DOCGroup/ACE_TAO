@@ -46,7 +46,7 @@ class ACE_Static_Svc_Descriptor
   //   Holds the information necessary to describe a statically linked
   //   Svc.
 public:
-  const ASYS_TCHAR *name_;
+  const ACE_TCHAR *name_;
   // Name of the service.
 
   int type_;
@@ -80,9 +80,9 @@ typedef ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>
 
 // Maintain a queue of services to be configured from the
 // command-line.
-typedef ACE_Unbounded_Queue<ACE_CString>
+typedef ACE_Unbounded_Queue<ACE_TString>
         ACE_SVC_QUEUE;
-typedef ACE_Unbounded_Queue_Iterator<ACE_CString>
+typedef ACE_Unbounded_Queue_Iterator<ACE_TString>
         ACE_SVC_QUEUE_ITERATOR;
 
 class ACE_Export ACE_Service_Config
@@ -115,14 +115,14 @@ public:
                       int signum = SIGHUP);
   // Initialize the Service Repository.
 
-  ACE_Service_Config (const ASYS_TCHAR program_name[],
-                      LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY);
+  ACE_Service_Config (const ACE_TCHAR program_name[],
+                      const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY);
   // Performs an open without parsing command-line arguments.  The
   // <logger_key> indicates where to write the logging output, which
   // is typically either a STREAM pipe or a socket address.
 
-  static int open_i (const ASYS_TCHAR program_name[],
-                     LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY,
+  static int open_i (const ACE_TCHAR program_name[],
+                     const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY,
                      int ignore_default_svc_conf_file = 0,
                      int ignore_debug_flag = 0);
   // Performs an open without parsing command-line arguments.  The
@@ -134,8 +134,8 @@ public:
   // <ACE_Log_Msg::priority_mask> appropriately.  Returns number of
   // errors that occurred on failure and 0 otherwise.
 
-  static int open (const ASYS_TCHAR program_name[],
-                   LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY,
+  static int open (const ACE_TCHAR program_name[],
+                   const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY,
                    int ignore_static_svcs = 1,
                    int ignore_default_svc_conf_file = 0,
                    int ignore_debug_flag = 0);
@@ -153,8 +153,8 @@ public:
   // <ACE_Log_Msg::priority_mask> appropriately.
 
   static int open (int argc,
-                   ASYS_TCHAR *argv[],
-                   LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY,
+                   ACE_TCHAR *argv[],
+                   const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY,
                    int ignore_static_svcs = 1,
                    int ignore_default_svc_conf = 0,
                    int ignore_debug_flag = 0);
@@ -308,19 +308,19 @@ public:
 
   // = Utility methods.
   static int initialize (const ACE_Service_Type *,
-                         ASYS_TCHAR parameters[]);
+                         ACE_TCHAR parameters[]);
   // Dynamically link the shared object file and retrieve a pointer to
   // the designated shared object in this file.
 
-  static int initialize (const ASYS_TCHAR svc_name[],
-                         ASYS_TCHAR parameters[]);
+  static int initialize (const ACE_TCHAR svc_name[],
+                         ACE_TCHAR parameters[]);
   // Initialize and activate a statically <svc_name> service.
 
-  static int resume (const ASYS_TCHAR svc_name[]);
+  static int resume (const ACE_TCHAR svc_name[]);
   // Resume a <svc_name> that was previously suspended or has not yet
   // been resumed (e.g., a static service).
 
-  static int suspend (const ASYS_TCHAR svc_name[]);
+  static int suspend (const ACE_TCHAR svc_name[]);
   // Suspend <svc_name>.  Note that this will not unlink the service
   // from the daemon if it was dynamically linked, it will mark it as
   // being suspended in the Service Repository and call the <suspend>
@@ -328,7 +328,7 @@ public:
   // service can be resumed later on by calling the <RESUME> member
   // function...
 
-  static int remove (const ASYS_TCHAR svc_name[]);
+  static int remove (const ACE_TCHAR svc_name[]);
   // Totally remove <svc_name> from the daemon by removing it
   // from the ACE_Reactor, and unlinking it if necessary.
 
@@ -351,7 +351,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-  static int process_directive (const ASYS_TCHAR directive[]);
+  static int process_directive (const ACE_TCHAR directive[]);
   // Process one service configuration <directive>, which is passed as
   // a string.  Returns the number of errors that occurred.
 
@@ -373,7 +373,7 @@ protected:
   // <process_directive> both call.  Returns the number of errors that
   // occurred.
 
-  static int parse_args (int, ASYS_TCHAR *argv[]);
+  static int parse_args (int, ACE_TCHAR *argv[]);
   // Handle the command-line options intended for the
   // <ACE_Service_Config>.  Note that <argv[0]> is assumed to be the
   // program name.
@@ -398,7 +398,7 @@ protected:
   // <ACE_Service_Repository>.
 
 private:
-  static LPCTSTR logger_key_;
+  static const ACE_TCHAR *logger_key_;
   // Indicates where to write the logging output.  This is typically
   // either a STREAM pipe or a socket address.
 

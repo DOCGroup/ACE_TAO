@@ -49,16 +49,16 @@ ACE_Process::spawn (ACE_Process_Options &options)
     return ACE_INVALID_PID;
   
   BOOL fork_result =
-    ::CreateProcess (0,
-                     options.command_line_buf (), // command-line options
-                     options.get_process_attributes (),
-                     options.get_thread_attributes (),
-                     options.handle_inheritence (),
-                     options.creation_flags (),
-                     options.env_buf (), // environment variables
-                     options.working_directory (),
-                     options.startup_info (),
-                     &this->process_info_);
+    ACE_TEXT_CreateProcess (0,
+                            options.command_line_buf (), 
+                            options.get_process_attributes (),
+                            options.get_thread_attributes (),
+                            options.handle_inheritence (),
+                            options.creation_flags (),
+                            options.env_buf (), // environment variables
+                            options.working_directory (),
+                            options.startup_info (),
+                            &this->process_info_);
 
   if (fork_result) {
     parent (this->getpid ());
@@ -121,8 +121,8 @@ ACE_Process::spawn (ACE_Process_Options &options)
           && ACE_OS::setpgid (0,
                               options.getgroup ()) < 0)
         ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("%p.\n"),
-                    ASYS_TEXT ("ACE_Process::spawn: setpgid failed.")));
+                    ACE_TEXT ("%p.\n"),
+                    ACE_TEXT ("ACE_Process::spawn: setpgid failed.")));
   
 #if !defined (ACE_LACKS_SETREUID)
       // Set user and group id's.
@@ -131,8 +131,8 @@ ACE_Process::spawn (ACE_Process_Options &options)
         if (ACE_OS::setreuid (options.getruid (), 
                               options.geteuid ()) == -1)
           ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("%p.\n"),
-                      ASYS_TEXT ("ACE_Process::spawn: setreuid failed.")));
+                      ACE_TEXT ("%p.\n"),
+                      ACE_TEXT ("ACE_Process::spawn: setreuid failed.")));
 #endif /* ACE_LACKS_SETREUID */
 
 #if !defined (ACE_LACKS_SETREGID)
@@ -141,8 +141,8 @@ ACE_Process::spawn (ACE_Process_Options &options)
         if (ACE_OS::setregid (options.getrgid (),
                               options.getegid ()) == -1)
           ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("%p.\n"),
-                      ASYS_TEXT ("ACE_Process::spawn: setregid failed.")));
+                      ACE_TEXT ("%p.\n"),
+                      ACE_TEXT ("ACE_Process::spawn: setregid failed.")));
 #endif /* ACE_LACKS_SETREGID */
 
       this->child (ACE_OS::getppid ());
@@ -370,15 +370,15 @@ ACE_Process_Options::ACE_Process_Options (int ie,
     process_group_ (ACE_INVALID_PID)
 {
   ACE_NEW (command_line_buf_,
-           TCHAR[cobl]);
+           ACE_TCHAR[cobl]);
   command_line_buf_[0] = '\0';
 
 #if !defined (ACE_HAS_WINCE)
   working_directory_[0] = '\0';
   ACE_NEW (environment_buf_,
-           TCHAR[ebl]);
+           ACE_TCHAR[ebl]);
   ACE_NEW (environment_argv_,
-           LPTSTR[mea]);
+           ACE_TCHAR *[mea]);
   environment_buf_[0] = '\0';
   environment_argv_[0] = 0;
   process_name_[0] = '\0';
@@ -404,7 +404,7 @@ ACE_Process_Options::inherit_environment (void)
   environment_inherited_ = 1;
 
   // Get the existing environment.
-  LPTSTR existing_environment = ::GetEnvironmentStrings ();
+  ACE_TCHAR *existing_environment = ACE_TEXT_GetEnvironmentStrings ();
 
   int slot = 0;
 
@@ -416,8 +416,8 @@ ACE_Process_Options::inherit_environment (void)
       if (this->setenv_i (existing_environment + slot, len) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("%p.\n"),
-                      ASYS_TEXT ("ACE_Process_Options::ACE_Process_Options")));
+                      ACE_TEXT ("%p.\n"),
+                      ACE_TEXT ("ACE_Process_Options::ACE_Process_Options")));
           break;
         }
 
@@ -425,12 +425,12 @@ ACE_Process_Options::inherit_environment (void)
       slot += len + 1;
     }
 
-  ::FreeEnvironmentStrings (existing_environment);
+  ACE_TEXT_FreeEnvironmentStrings (existing_environment);
 }
 
 #else /* defined ACE_WIN32 */
 
-char * const *
+ACE_TCHAR * const *
 ACE_Process_Options::env_argv (void)
 {
   return environment_argv_;
@@ -439,7 +439,7 @@ ACE_Process_Options::env_argv (void)
 #endif /* ACE_WIN32 */
 
 int
-ACE_Process_Options::setenv (LPTSTR envp[])
+ACE_Process_Options::setenv (ACE_TCHAR *envp[])
 {
   int i = 0;
   while (envp[i])
@@ -459,9 +459,9 @@ ACE_Process_Options::setenv (LPTSTR envp[])
 }
 
 int
-ACE_Process_Options::setenv (LPCTSTR format, ...)
+ACE_Process_Options::setenv (const ACE_TCHAR *format, ...)
 {
-  TCHAR stack_buf[DEFAULT_COMMAND_LINE_BUF_LEN];
+  ACE_TCHAR stack_buf[DEFAULT_COMMAND_LINE_BUF_LEN];
 
   // Start varargs.
   va_list argp;
@@ -488,10 +488,10 @@ ACE_Process_Options::setenv (LPCTSTR format, ...)
 }
 
 int
-ACE_Process_Options::setenv (LPCTSTR variable_name,
-                             LPCTSTR format, ...)
+ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
+                             const ACE_TCHAR *format, ...)
 {
-  TCHAR newformat[DEFAULT_COMMAND_LINE_BUF_LEN];
+  ACE_TCHAR newformat[DEFAULT_COMMAND_LINE_BUF_LEN];
 
   // Add in the variable name.
   ACE_OS::sprintf (newformat,
@@ -499,7 +499,7 @@ ACE_Process_Options::setenv (LPCTSTR variable_name,
                    variable_name,
                    format);
 
-  TCHAR stack_buf[DEFAULT_COMMAND_LINE_BUF_LEN];
+  ACE_TCHAR stack_buf[DEFAULT_COMMAND_LINE_BUF_LEN];
 
   // Start varargs.
   va_list argp;
@@ -525,7 +525,7 @@ ACE_Process_Options::setenv (LPCTSTR variable_name,
 }
 
 int
-ACE_Process_Options::setenv_i (LPTSTR assignment,
+ACE_Process_Options::setenv_i (ACE_TCHAR *assignment,
                                int len)
 {
   // Add one for the null char.
@@ -540,7 +540,7 @@ ACE_Process_Options::setenv_i (LPTSTR assignment,
   // Copy the new environment string.
   ACE_OS::memcpy (environment_buf_ + environment_buf_index_,
                   assignment,
-                  len * sizeof (TCHAR));
+                  len * sizeof (ACE_TCHAR));
 
   // Update the argv array.
   environment_argv_[environment_argv_index_++] =
@@ -632,7 +632,7 @@ ACE_Process_Options::~ACE_Process_Options (void)
 }
 
 int
-ACE_Process_Options::command_line (LPCTSTR const argv[])
+ACE_Process_Options::command_line (const ACE_TCHAR *const argv[])
 {
   // @@ Factor out the code between this
   int i = 0;
@@ -653,7 +653,7 @@ ACE_Process_Options::command_line (LPCTSTR const argv[])
 }
 
 int
-ACE_Process_Options::command_line (LPCTSTR format, ...)
+ACE_Process_Options::command_line (const ACE_TCHAR *format, ...)
 {
   // Store all ... args in argp.
   va_list argp;
@@ -670,7 +670,7 @@ ACE_Process_Options::command_line (LPCTSTR format, ...)
   return 0;
 }
 
-LPTSTR
+ACE_TCHAR *
 ACE_Process_Options::env_buf (void)
 {
 #if !defined (ACE_HAS_WINCE)
@@ -683,7 +683,7 @@ ACE_Process_Options::env_buf (void)
 #endif /* !ACE_HAS_WINCE */
 }
 
-LPTSTR const *
+ACE_TCHAR * const *
 ACE_Process_Options::command_line_argv (void)
 {
   if (command_line_argv_calculated_ == 0)

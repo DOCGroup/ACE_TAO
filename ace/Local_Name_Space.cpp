@@ -7,6 +7,8 @@
 #include "ace/ACE.h"
 #include "ace/Local_Name_Space.h"
 
+#if defined (ACE_HAS_WCHAR)
+
 ACE_RCSID(ace, Local_Name_Space, "$Id$")
 
 ACE_USHORT16 *
@@ -208,5 +210,7 @@ template class ACE_Write_Guard<ACE_RW_Process_Mutex>;
 #pragma instantiate ACE_Read_Guard<ACE_RW_Process_Mutex>
 #pragma instantiate ACE_Write_Guard<ACE_RW_Process_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* ACE_HAS_WCHAR */
 
 #endif /* ACE_LOCAL_NAME_SPACE_C */

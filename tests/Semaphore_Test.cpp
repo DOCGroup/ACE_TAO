@@ -85,9 +85,9 @@ test_timeout (void)
   if (msecs_diff > ACE_ALLOWED_SLACK)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("Timed wait fails length test\n")));
+                  ACE_TEXT ("Timed wait fails length test\n")));
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("Value: %d ms, actual %d ms\n"),
+                  ACE_TEXT ("Value: %d ms, actual %d ms\n"),
                   msecs_expected,
                   msecs_waited));
       status = -1;
@@ -103,14 +103,14 @@ static void
 print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("usage: %n [-s n_release_count] [-w n_workers] [-n iteration_count]\n")));
+              ACE_TEXT ("usage: %n [-s n_release_count] [-w n_workers] [-n iteration_count]\n")));
   ACE_OS::exit (1);
 }
 
 static void
-parse_args (int argc, ASYS_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ASYS_TEXT ("s:w:n:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("s:w:n:"));
 
   int c;
 
@@ -156,9 +156,9 @@ worker (void *)
           if (diff.msec () > ACE_ALLOWED_SLACK)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("Acquire fails time reset test\n")));
+                          ACE_TEXT ("Acquire fails time reset test\n")));
               ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("Diff btw now and returned time: %d ms\n"),
+                          ACE_TEXT ("Diff btw now and returned time: %d ms\n"),
                           diff.msec ()));
               test_result = 1;
             }
@@ -184,9 +184,9 @@ worker (void *)
 
 // Test semaphore functionality.
 
-int main (int argc, ASYS_TCHAR *argv[])
+int main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Semaphore_Test"));
+  ACE_START_TEST (ACE_TEXT ("Semaphore_Test"));
 
 #if defined (ACE_HAS_THREADS)
   parse_args (argc, argv);
@@ -208,8 +208,8 @@ int main (int argc, ASYS_TCHAR *argv[])
        0,
        THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("spawn_n")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("spawn_n")),
                       1);
 
   ACE_Thread_Manager::instance ()->wait ();
@@ -218,16 +218,16 @@ int main (int argc, ASYS_TCHAR *argv[])
   size_t percent = (timeouts * 100) / (n_workers * n_iterations);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Worker threads timed out %d percent of the time\n"),
+              ACE_TEXT ("Worker threads timed out %d percent of the time\n"),
               percent));
 #  endif /* ACE_HAS_STHREADS && ACE_HAS_POSIX_SEM */
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Semaphore Test successful\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Semaphore Test successful\n")));
 #else
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("Threads not supported on this platform\n")));
+              ACE_TEXT ("Threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return test_result;

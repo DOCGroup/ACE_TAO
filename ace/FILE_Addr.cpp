@@ -30,8 +30,8 @@ ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
                              MAXPATHLEN - 15) == -1) // -15 for ace-file-XXXXXX
         {
           ACE_ERROR ((LM_ERROR, 
-                      "Temporary path too long, "
-                      "defaulting to current directory\n"));
+                      ACE_TEXT ("Temporary path too long, ")
+                      ACE_TEXT ("defaulting to current directory\n")));
           this->filename_[0] = 0;
         }
 
@@ -65,7 +65,7 @@ ACE_FILE_Addr::ACE_FILE_Addr (const ACE_FILE_Addr &sa)
 }
 
 int
-ACE_FILE_Addr::set (LPCTSTR filename)
+ACE_FILE_Addr::set (const ACE_TCHAR *filename)
 {
   this->ACE_Addr::base_set (AF_FILE,
                             ACE_OS::strlen (filename) + 1);
@@ -85,30 +85,17 @@ ACE_FILE_Addr::operator= (const ACE_FILE_Addr &sa)
 
 // Create a ACE_Addr from a ACE_FILE pathname.
 
-ACE_FILE_Addr::ACE_FILE_Addr (LPCTSTR filename)
+ACE_FILE_Addr::ACE_FILE_Addr (const ACE_TCHAR *filename)
 {
   this->set (filename);
 }
 
 int
-ACE_FILE_Addr::addr_to_string (char *s, size_t len) const
-{
-  ACE_OS::strncpy (s,
-                   ACE_MULTIBYTE_STRING (this->filename_),
-                   len);
-  return 0;
-}
-
-#if defined (UNICODE)
-// Transform the current address into string format.
-
-int
-ACE_FILE_Addr::addr_to_string (wchar_t * s, size_t len) const
+ACE_FILE_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
 {
   ACE_OS::strncpy (s, this->filename_, len);
   return 0;
 }
-#endif /* UNICODE */
 
 void
 ACE_FILE_Addr::dump (void) const
@@ -116,6 +103,6 @@ ACE_FILE_Addr::dump (void) const
   ACE_TRACE ("ACE_FILE_Addr::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("filename_ = %s"), this->filename_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("filename_ = %s"), this->filename_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }

@@ -56,11 +56,10 @@
 # define ACE_SIZEOF_CHAR 1
 
 // Unfortunately, there isn't a portable way to determine the size of a wchar.
-# if defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
-#   define ACE_SIZEOF_WCHAR 1
-# else
+// But we do not support the case where wchar == char, so this should work.
+# if defined (ACE_HAS_WCHAR)
 #   define ACE_SIZEOF_WCHAR sizeof (wchar_t)
-# endif /* ACE_HAS_WCHAR_TYPEDEFS_CHAR */
+# endif /* ACE_HAS_WCHAR */
 
 // The number of bytes in a short.
 # if !defined (ACE_SIZEOF_SHORT)
@@ -422,11 +421,11 @@ typedef ACE_UINT16 ACE_USHORT16;
 # endif /* ! ACE_WIN32  &&  ! ACE_LACKS_LONGLONG_T */
 
 #if !defined (ACE_UINT64_FORMAT_SPECIFIER)
-# define ACE_UINT64_FORMAT_SPECIFIER "%llu"
+# define ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT ("%llu")
 #endif /* ACE_UINT64_FORMAT_SPECIFIER */
 
 #if !defined (ACE_INT64_FORMAT_SPECIFIER)
-# define ACE_INT64_FORMAT_SPECIFIER "%lld"
+# define ACE_INT64_FORMAT_SPECIFIER ACE_TEXT ("%lld")
 #endif /* ACE_INT64_FORMAT_SPECIFIER */
 
 // Cast from UINT64 to a double requires an intermediate cast to INT64

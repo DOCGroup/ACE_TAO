@@ -57,8 +57,8 @@ ACE_LSOCK_Dgram::ACE_LSOCK_Dgram (const ACE_Addr &local,
                   protocol_family, 
 		  protocol) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_LSOCK_Dgram")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_LSOCK_Dgram")));
 }
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */

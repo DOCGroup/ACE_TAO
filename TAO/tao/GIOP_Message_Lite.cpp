@@ -119,8 +119,8 @@ TAO_GIOP_Message_Lite::
       if (retval == -1 && TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("TAO (%P|%t) - \n")
-                      ASYS_TEXT ("TAO_GIOP_Message_Lite::handle_input \n")));
+                      ACE_TEXT ("TAO (%P|%t) - \n")
+                      ACE_TEXT ("TAO_GIOP_Message_Lite::handle_input \n")));
           return -1;
         }
 
@@ -143,8 +143,8 @@ TAO_GIOP_Message_Lite::
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("TAO (%P|%t|%N|%l) - %p\n"),
-                        ASYS_TEXT ("ACE_CDR::grow")));
+                        ACE_TEXT ("TAO (%P|%t|%N|%l) - %p\n"),
+                        ACE_TEXT ("ACE_CDR::grow")));
           return -1;
         }
 
@@ -166,16 +166,16 @@ TAO_GIOP_Message_Lite::
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) - %p\n"),
-                    ASYS_TEXT ("TAO_GIOP_Message_Lite::handle_input, read_buffer[1]")));
+                    ACE_TEXT ("TAO (%P|%t) - %p\n"),
+                    ACE_TEXT ("TAO_GIOP_Message_Lite::handle_input, read_buffer[1]")));
       return -1;
     }
   else if (n == 0)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) - %p\n"),
-                    ASYS_TEXT ("TAO_GIOP_Message_Lite::handle_input, read_buffer[2]")));
+                    ACE_TEXT ("TAO (%P|%t) - %p\n"),
+                    ACE_TEXT ("TAO_GIOP_Message_Lite::handle_input, read_buffer[2]")));
       return -1;
     }
 
@@ -230,7 +230,7 @@ TAO_GIOP_Message_Lite::
     default:
       if (TAO_debug_level > 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("(%P|%t|%N|%l) Wrong header type \n")),
+                           ACE_TEXT ("(%P|%t|%N|%l) Wrong header type \n")),
                           0);
 
     }
@@ -308,8 +308,8 @@ TAO_GIOP_Message_Lite::
     case TAO_GIOP_REQUEST:
       // In GIOP 1.0 and GIOP 1.1 this is an error,
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("TAO (%P|%t) %N:%l TAO_GIOP_Message_Lite::parse_reply: ")
-                         ASYS_TEXT ("request.\n")),
+                         ACE_TEXT ("TAO (%P|%t) %N:%l TAO_GIOP_Message_Lite::parse_reply: ")
+                         ACE_TEXT ("request.\n")),
                         -1);
 
     case TAO_GIOP_CANCELREQUEST:
@@ -318,8 +318,8 @@ TAO_GIOP_Message_Lite::
     case TAO_GIOP_CLOSECONNECTION:
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("TAO (%P|%t) %N:%l parse_reply: ")
-                           ASYS_TEXT ("wrong message.\n")),
+                           ACE_TEXT ("TAO (%P|%t) %N:%l parse_reply: ")
+                           ACE_TEXT ("wrong message.\n")),
                           -1);
     case TAO_GIOP_LOCATEREPLY:
     case TAO_GIOP_REPLY:
@@ -334,8 +334,8 @@ TAO_GIOP_Message_Lite::
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t|%N|%l) : TAO_GIOP_Message_Lite::parse_reply, ")
-                    ASYS_TEXT ("extracting request id")));
+                    ACE_TEXT ("TAO (%P|%t|%N|%l) : TAO_GIOP_Message_Lite::parse_reply, ")
+                    ACE_TEXT ("extracting request id")));
       return -1;
     }
 
@@ -348,8 +348,8 @@ TAO_GIOP_Message_Lite::
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t|%N|%l) : TAO_GIOP_Message_Lite::parse_reply, ")
-                    ASYS_TEXT ("extracting reply status\n")));
+                    ACE_TEXT ("TAO (%P|%t|%N|%l) : TAO_GIOP_Message_Lite::parse_reply, ")
+                    ACE_TEXT ("extracting reply status\n")));
       return -1;
     }
 
@@ -376,7 +376,7 @@ TAO_GIOP_Message_Lite::
     default:
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%N|%l) Unknown reply status \n")));
+                    ACE_TEXT ("(%N|%l) Unknown reply status \n")));
     }
   return 0;
 }
@@ -413,7 +413,7 @@ TAO_GIOP_Message_Lite::
     default:
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) Illegal message received by server\n")));
+                    ACE_TEXT ("TAO (%P|%t) Illegal message received by server\n")));
       return this->send_error (transport);
     }
 
@@ -513,7 +513,7 @@ TAO_GIOP_Message_Lite::
     {
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%N |%l) Unable to handle this request \n")));
+                    ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
       return 0;
     }
 
@@ -545,7 +545,7 @@ TAO_GIOP_Message_Lite::
     {
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%N |%l) Unable to handle this request \n")));
+                    ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
       return 0;
     }
 
@@ -693,8 +693,8 @@ TAO_GIOP_Message_Lite::
             {
               if (TAO_debug_level > 0)
                 ACE_ERROR ((LM_ERROR,
-                            ASYS_TEXT ("TAO: (%P|%t|%N|%l) %p: cannot send exception\n"),
-                            ASYS_TEXT ("process_connector_request ()")));
+                            ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: cannot send exception\n"),
+                            ACE_TEXT ("process_connector_request ()")));
               ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                    "TAO: ");
             }
@@ -709,8 +709,8 @@ TAO_GIOP_Message_Lite::
           // down, since it really isn't the client's fault.
 
           ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("(%P|%t) exception thrown ")
-                      ASYS_TEXT ("but client is not waiting a response\n")));
+                      ACE_TEXT ("(%P|%t) exception thrown ")
+                      ACE_TEXT ("but client is not waiting a response\n")));
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                "TAO: ");
         }
@@ -743,8 +743,8 @@ TAO_GIOP_Message_Lite::
             {
               if (TAO_debug_level > 0)
                 ACE_ERROR ((LM_ERROR,
-                            ASYS_TEXT ("TAO: (%P|%t|%N|%l) %p: cannot send exception\n"),
-                            ASYS_TEXT ("process_connector_request ()")));
+                            ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: cannot send exception\n"),
+                            ACE_TEXT ("process_connector_request ()")));
               ACE_PRINT_EXCEPTION (exception, "TAO: ");
             }
         }
@@ -756,8 +756,8 @@ TAO_GIOP_Message_Lite::
           // However, in this case, we cannot close the connection
           // down, since it really isn't the client's fault.
           ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("(%P|%t|%N|%l) exception thrown ")
-                      ASYS_TEXT ("but client is not waiting a response\n")));
+                      ACE_TEXT ("(%P|%t|%N|%l) exception thrown ")
+                      ACE_TEXT ("but client is not waiting a response\n")));
         }
 
       return result;
@@ -782,8 +782,8 @@ TAO_GIOP_Message_Lite::
               // No exception but some kind of error, yet a response
               // is required.
               ACE_ERROR ((LM_ERROR,
-                          ASYS_TEXT ("TAO: (%P|%t|%N|%l) %p: cannot send reply\n"),
-                          ASYS_TEXT ("TAO_GIOP::process_server_message")));
+                          ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: cannot send reply\n"),
+                          ACE_TEXT ("TAO_GIOP::process_server_message")));
             }
         }
     }
@@ -841,7 +841,7 @@ TAO_GIOP_Message_Lite::
 
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("Simple Object key %s. Doing the Table Lookup ...\n"),
+                        ACE_TEXT ("Simple Object key %s. Doing the Table Lookup ...\n"),
                         object_id.c_str ()));
 
           CORBA::Object_ptr object_reference;
@@ -915,7 +915,7 @@ TAO_GIOP_Message_Lite::
           status_info.status = TAO_GIOP_OBJECT_HERE;
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("TAO: (%P|%t) handle_locate() : found\n")));
+                        ACE_TEXT ("TAO: (%P|%t) handle_locate() : found\n")));
         }
       else if (server_request.exception_type () != TAO_GIOP_NO_EXCEPTION)
         {
@@ -924,14 +924,14 @@ TAO_GIOP_Message_Lite::
             {
               status_info.status = TAO_GIOP_OBJECT_FORWARD;
               ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("handle_locate has been called: forwarding\n")));
+                          ACE_TEXT ("handle_locate has been called: forwarding\n")));
             }
           else
             {
               // Normal exception, so the object is not here
               status_info.status = TAO_GIOP_UNKNOWN_OBJECT;
               ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("handle_locate has been called: not here\n")));
+                          ACE_TEXT ("handle_locate has been called: not here\n")));
             }
         }
 
@@ -944,7 +944,7 @@ TAO_GIOP_Message_Lite::
       status_info.forward_location_var =
         forward_request.forward_reference;
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("handle_locate has been called: forwarding\n")));
+                  ACE_TEXT ("handle_locate has been called: forwarding\n")));
     }
 #endif /* TAO_HAS_MINIMUM_CORBA */
   ACE_CATCHANY
@@ -953,8 +953,8 @@ TAO_GIOP_Message_Lite::
       status_info.status = TAO_GIOP_UNKNOWN_OBJECT;
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) TAO_GIOP::process_server_locate - ")
-                    ASYS_TEXT ("CORBA exception raised\n")));
+                    ACE_TEXT ("TAO (%P|%t) TAO_GIOP::process_server_locate - ")
+                    ACE_TEXT ("CORBA exception raised\n")));
     }
 #if defined (TAO_HAS_EXCEPTIONS)
   ACE_CATCHALL
@@ -963,8 +963,8 @@ TAO_GIOP_Message_Lite::
       status_info.status = TAO_GIOP_UNKNOWN_OBJECT;
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) TAO_GIOP::process_server_locate - ")
-                    ASYS_TEXT ("C++ exception raised\n")));
+                    ACE_TEXT ("TAO (%P|%t) TAO_GIOP::process_server_locate - ")
+                    ACE_TEXT ("C++ exception raised\n")));
     }
 #endif /* TAO_HAS_EXCEPTIONS */
   ACE_ENDTRY;
@@ -1152,9 +1152,9 @@ TAO_GIOP_Message_Lite::
 
       // Close the handle.
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%P|%t|%N|%l) cannot marshal exception, handle = %d: %p\n"),
+                  ACE_TEXT ("(%P|%t|%N|%l) cannot marshal exception, handle = %d: %p\n"),
                   transport->handle (),
-                  ASYS_TEXT ("send_reply_exception ()")));
+                  ACE_TEXT ("send_reply_exception ()")));
       return -1;
     }
   ACE_ENDTRY;
@@ -1189,8 +1189,8 @@ TAO_GIOP_Message_Lite::
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("TAO (%P|%t|%N|%l) make_locate_reply-")
-                        ASYS_TEXT ("cannot marshal object reference\n")));
+                        ACE_TEXT ("TAO (%P|%t|%N|%l) make_locate_reply-")
+                        ACE_TEXT ("cannot marshal object reference\n")));
         }
     }
 
@@ -1206,8 +1206,8 @@ TAO_GIOP_Message_Lite::
       if (TAO_debug_level > 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("TAO: (%P|%t) %p: cannot send reply\n"),
-                      ASYS_TEXT ("TAO_GIOP::process_server_message")));
+                      ACE_TEXT ("TAO: (%P|%t) %p: cannot send reply\n"),
+                      ACE_TEXT ("TAO_GIOP::process_server_message")));
         }
     }
 
@@ -1243,7 +1243,7 @@ TAO_GIOP_Message_Lite::send_error (TAO_Transport *transport)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%N|%l|%P|%t) error sending error to %d\n"),
+                    ACE_TEXT ("TAO (%N|%l|%P|%t) error sending error to %d\n"),
                     which));
     }
 
@@ -1293,8 +1293,8 @@ TAO_GIOP_Message_Lite::dump_msg (const char *label,
 
       // Print.
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%P | %t):%s GIOP lite msg, ")
-                  ASYS_TEXT ("%d data bytes, %s endian, <%s = %d> \n"),
+                  ACE_TEXT ("(%P | %t):%s GIOP lite msg, ")
+                  ACE_TEXT ("%d data bytes, %s endian, <%s = %d> \n"),
                   label,
                   len - TAO_GIOP_LITE_HEADER_LEN,
                   (byte_order == TAO_ENCAP_BYTE_ORDER) ? "my" : "other",

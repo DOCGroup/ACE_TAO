@@ -113,8 +113,8 @@ ACE_Service_Repository::ACE_Service_Repository (int size)
 
   if (this->open (size) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_Service_Repository")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Service_Repository")));
 }
 
 // Finalize (call <fini> and possibly delete) all the services.
@@ -138,7 +138,7 @@ ACE_Service_Repository::fini (void)
         {
           if (ACE::debug ())
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("finalizing %s\n"),
+                        ACE_TEXT ("finalizing %s\n"),
                         this->service_vector_[i]->name ()));
           ACE_Service_Type *s =
             ACE_const_cast (ACE_Service_Type *,
@@ -195,7 +195,7 @@ ACE_Service_Repository::~ACE_Service_Repository (void)
 // services a -2 is returned.  Must be called with locks held.
 
 int
-ACE_Service_Repository::find_i (const ASYS_TCHAR name[],
+ACE_Service_Repository::find_i (const ACE_TCHAR name[],
                                 const ACE_Service_Type **srp,
                                 int ignore_suspended)
 {
@@ -228,7 +228,7 @@ ACE_Service_Repository::find_i (const ASYS_TCHAR name[],
 }
 
 int
-ACE_Service_Repository::find (const ASYS_TCHAR name[],
+ACE_Service_Repository::find (const ACE_TCHAR name[],
                               const ACE_Service_Type **srp,
                               int ignore_suspended)
 {
@@ -281,7 +281,7 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
 // Re-resume a service that was previously suspended.
 
 int
-ACE_Service_Repository::resume (const ASYS_TCHAR name[],
+ACE_Service_Repository::resume (const ACE_TCHAR name[],
                                 const ACE_Service_Type **srp)
 {
   ACE_TRACE ("ACE_Service_Repository::resume");
@@ -300,7 +300,7 @@ ACE_Service_Repository::resume (const ASYS_TCHAR name[],
 // most circumstances by other portions of the ACE_Service_Repository.
 
 int
-ACE_Service_Repository::suspend (const ASYS_TCHAR name[],
+ACE_Service_Repository::suspend (const ACE_TCHAR name[],
                                  const ACE_Service_Type **srp)
 {
   ACE_TRACE ("ACE_Service_Repository::suspend");
@@ -321,7 +321,7 @@ ACE_Service_Repository::suspend (const ASYS_TCHAR name[],
 // the array and decrement the <current_size> by 1.
 
 int
-ACE_Service_Repository::remove (const ASYS_TCHAR name[])
+ACE_Service_Repository::remove (const ACE_TCHAR name[])
 {
   ACE_TRACE ("ACE_Service_Repository::remove");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));

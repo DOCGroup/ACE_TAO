@@ -44,13 +44,13 @@ public:
   // If non-0 and the link is an HTML file then recursively check all
   // links that are embedded in the body of file.
 
-  LPCTSTR hostname (void) const;
+  const ACE_TCHAR *hostname (void) const;
   // Return the hostname of the initial Web server.
 
-  LPCTSTR path_name (void) const;
+  const ACE_TCHAR *path_name (void) const;
   // Return the initial URI.
 
-  LPCTSTR url_filter (void) const;
+  const ACE_TCHAR *url_filter (void) const;
   // String used to filter out which URLs to validate.
 
   int debug (void) const;
@@ -59,7 +59,7 @@ public:
   int verbose (void) const;
   // Are we being verbose?
 
-  LPCTSTR order (void) const;
+  const ACE_TCHAR *order (void) const;
   // Which order? LIFO|FIFO??
 
   int port_no (void) const;
@@ -83,10 +83,10 @@ private:
   int recurse_;
   // Are we recursving.
 
-  LPCTSTR hostname_;
+  const ACE_TCHAR *hostname_;
   // Initial Web server name.
 
-  LPCTSTR uri_;
+  const ACE_TCHAR *uri_;
   // Initial URI name.
 
   int debug_;
@@ -95,13 +95,13 @@ private:
   int verbose_;
   // Are we being verbose?
 
-  LPCTSTR order_;
+  const ACE_TCHAR *order_;
   // Whether the URLs are traversed in FIFO or LIFO order.
 
   ACE_Time_Value timeout_;
   // Timeout on <recv> and <connect> to broken Web servers.
 
-  LPCTSTR url_filter_;
+  const ACE_TCHAR *url_filter_;
   // String used to filter out which URLs to validate.
 
   Command_Processor *command_processor_;

@@ -297,8 +297,8 @@ ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
 		  backlog,
 		  protocol) == -1)
     ACE_ERROR ((LM_ERROR,
-		ASYS_TEXT ("%p\n"),
-		ASYS_TEXT ("ACE_SOCK_Acceptor")));
+		ACE_TEXT ("%p\n"),
+		ACE_TEXT ("ACE_SOCK_Acceptor")));
 }
 
 // General purpose routine for performing server ACE_SOCK creation.
@@ -338,6 +338,6 @@ ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
 		  backlog,
 		  protocol) == -1)
     ACE_ERROR ((LM_ERROR,
-		ASYS_TEXT ("%p\n"),
-		ASYS_TEXT ("ACE_SOCK_Acceptor")));
+		ACE_TEXT ("%p\n"),
+		ACE_TEXT ("ACE_SOCK_Acceptor")));
 }

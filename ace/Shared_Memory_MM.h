@@ -48,7 +48,7 @@ public:
                         off_t pos = 0);
   // Constructor.
 
-  ACE_Shared_Memory_MM (LPCTSTR file_name,
+  ACE_Shared_Memory_MM (const ACE_TCHAR *file_name,
                         int len = -1,
                         int flags = O_RDWR | O_CREAT,
                         int mode = ACE_DEFAULT_FILE_PERMS,
@@ -65,7 +65,7 @@ public:
             off_t pos = 0);
   // Open method.
 
-  int open (LPCTSTR file_name,
+  int open (const ACE_TCHAR *file_name,
             int len = -1,
             int flags = O_RDWR | O_CREAT,
             int mode = ACE_DEFAULT_FILE_PERMS,
@@ -75,7 +75,7 @@ public:
             off_t pos = 0);
   // Open method.
 
-  const TCHAR *filename (void) const;
+  const ACE_TCHAR *filename (void) const;
   // Return the name of file that is mapped (if any).
 
   virtual int close (void);

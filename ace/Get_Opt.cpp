@@ -45,8 +45,8 @@ ACE_RCSID(ace, Get_Opt, "$Id$")
 ACE_ALLOC_HOOK_DEFINE(ACE_Get_Opt)
 
 ACE_Get_Opt::ACE_Get_Opt (int argc,
-			  ASYS_TCHAR **argv,
-			  const ASYS_TCHAR *optstring,
+			  ACE_TCHAR **argv,
+			  const ACE_TCHAR *optstring,
 			  int skip,
 			  int report_errors)
   : optarg (0),
@@ -66,7 +66,7 @@ ACE_Get_Opt::dump (void) const
   ACE_TRACE ("ACE_Get_Opt::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -83,7 +83,7 @@ ACE_Get_Opt::operator () (void)
     }
 
   int opt; // Character checked for validity.
-  const ASYS_TCHAR *oli; // Option letter index.
+  const ACE_TCHAR *oli; // Option letter index.
 
   if (this->nextchar_ == 0 || *this->nextchar_ == '\0')
     {
@@ -92,7 +92,7 @@ ACE_Get_Opt::operator () (void)
       if (this->optind >= this->argc_
 	  || *(this->nextchar_ = this->argv_[this->optind]) != '-')
 	{
-	  this->nextchar_ = ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT (""));
+	  this->nextchar_ = ACE_const_cast (ACE_TCHAR *, ACE_TEXT (""));
 	  return EOF;
 	}
 
@@ -101,7 +101,7 @@ ACE_Get_Opt::operator () (void)
 	{
 	  // Found "--".
 	  ++this->optind;
-	  this->nextchar_ = ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT (""));
+	  this->nextchar_ = ACE_const_cast (ACE_TCHAR *, ACE_TEXT (""));
 	  return EOF;
 	}
     }
@@ -122,7 +122,7 @@ ACE_Get_Opt::operator () (void)
 
       if (this->opterr && *this->optstring_ != ':')
 	ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("%s: illegal option -- %c\n"),
+                    ACE_TEXT ("%s: illegal option -- %c\n"),
 		    this->argv_[0],
                     opt));
       return '?';
@@ -141,20 +141,20 @@ ACE_Get_Opt::operator () (void)
       else if (this->argc_ <= ++this->optind)
 	{
 	  // No arg.
-	  this->nextchar_ = ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT (""));
+	  this->nextchar_ = ACE_const_cast (ACE_TCHAR *, ACE_TEXT (""));
 
 	  if (*this->optstring_ == ':')
 	    return ':';
 	  if (this->opterr)
 	    ACE_ERROR ((LM_ERROR,
-			ASYS_TEXT ("%s: option requires an argument -- %c\n"),
+			ACE_TEXT ("%s: option requires an argument -- %c\n"),
 			this->argv_[0], opt));
 	  return '?';
 	}
       else // White space.
 	this->optarg = this->argv_[this->optind];
 
-      this->nextchar_ = ACE_const_cast (ASYS_TCHAR *, ASYS_TEXT (""));
+      this->nextchar_ = ACE_const_cast (ACE_TCHAR *, ACE_TEXT (""));
       ++this->optind;
     }
 

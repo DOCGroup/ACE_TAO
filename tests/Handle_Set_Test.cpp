@@ -107,13 +107,13 @@ test_boundaries (void)
       ACE_ASSERT (0 == SET_IS_EMPTY_SO_SHOULD_NOT_SEE_THIS);
 #else /* ! defined (ACE_PSOS_DIAB) */
       ACE_ASSERT (0 == 
-                  ASYS_TEXT ("this shouldn't get called since ")
-                  ASYS_TEXT ("the set is empty!\n"));
+                  ACE_TEXT ("this shouldn't get called since ")
+                  ACE_TEXT ("the set is empty!\n"));
 #endif /* defined (ACE_PSOS_DIAB) */
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("ACE_DEFAULT_SELECT_REACTOR_SIZE %d\n"),
+              ACE_TEXT ("ACE_DEFAULT_SELECT_REACTOR_SIZE %d\n"),
               ACE_DEFAULT_SELECT_REACTOR_SIZE));
 
   // Insert the vector of <ACE_HANDLE>s into the set.
@@ -136,7 +136,7 @@ test_boundaries (void)
        )
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("obtained handle %d\n"),
+                  ACE_TEXT ("obtained handle %d\n"),
                   handle));
       int done = set.remove (handle);
       ACE_ASSERT (done == 0);
@@ -180,32 +180,32 @@ test_performance (size_t max_handles,
 
 #if defined (ACE_LACKS_FLOATING_POINT)
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("real time = %u usecs\n"),
+              ACE_TEXT ("real time = %u usecs\n"),
               et.real_time));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("time per each of the %d calls = %u usecs\n"),
+              ACE_TEXT ("time per each of the %d calls = %u usecs\n"),
               count,
               et.real_time / count));
 #else  /* ! ACE_LACKS_FLOATING_POINT */
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("real time = %f secs, user time = %f secs, ")
-                ASYS_TEXT ("system time = %f secs\n"),
+              ACE_TEXT ("real time = %f secs, user time = %f secs, ")
+                ACE_TEXT ("system time = %f secs\n"),
               et.real_time,
               et.user_time,
               et.system_time));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("time per each of the %d calls = %f usecs\n"),
+              ACE_TEXT ("time per each of the %d calls = %f usecs\n"),
               count,
               et.real_time / double (count) * 1000000));
 #endif /* ! ACE_LACKS_FLOATING_POINT */
 }
 
 int
-main (int argc, ASYS_TCHAR *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Handle_Set_Test"));
+  ACE_START_TEST (ACE_TEXT ("Handle_Set_Test"));
 
   int count = argc > 1 
     ? ACE_OS::atoi (argv[1]) 

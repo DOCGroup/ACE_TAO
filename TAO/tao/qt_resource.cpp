@@ -30,7 +30,7 @@ TAO_QtResource_Factory::set_context (QApplication *qapp)
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_QtResource_Factory,
-                       ASYS_TEXT ("QtResource_Factory"),
+                       ACE_TEXT ("QtResource_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_QtResource_Factory),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,

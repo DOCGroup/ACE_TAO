@@ -25,8 +25,8 @@ ACE_SPIPE_Connector::ACE_SPIPE_Connector (ACE_SPIPE_Stream &new_io,
   if (this->connect (new_io, remote_sap, timeout, local_sap,
 		     reuse_addr, flags, perms) == -1
       && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("address %s, %p\n"),
-	       remote_sap.get_path_name (), ASYS_TEXT ("ACE_SPIPE_Connector")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("address %s, %p\n"),
+	       remote_sap.get_path_name (), ACE_TEXT ("ACE_SPIPE_Connector")));
 }
 
 void

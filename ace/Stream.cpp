@@ -27,18 +27,18 @@ template <ACE_SYNCH_DECL> void
 ACE_Stream<ACE_SYNCH_USE>::dump (void) const
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::dump");
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("-------- module links --------\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("-------- module links --------\n")));
 
   for (ACE_Module<ACE_SYNCH_USE> *mp = this->stream_head_;
        ;
        mp = mp->next ())
     {
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("module name = %s\n"), mp->name ()));
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("module name = %s\n"), mp->name ()));
       if (mp == this->stream_tail_)
         break;
     }
 
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("-------- writer links --------\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("-------- writer links --------\n")));
 
   ACE_Task<ACE_SYNCH_USE> *tp;
 
@@ -46,21 +46,21 @@ ACE_Stream<ACE_SYNCH_USE>::dump (void) const
        ;
        tp = tp->next ())
     {
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("writer queue name = %s\n"), tp->name ()));
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("writer queue name = %s\n"), tp->name ()));
       tp->dump ();
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("-------\n")));
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("-------\n")));
       if (tp == this->stream_tail_->writer ()
           || (this->linked_us_
               && tp == this->linked_us_->stream_head_->reader ()))
         break;
     }
 
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("-------- reader links --------\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("-------- reader links --------\n")));
   for (tp = this->stream_tail_->reader (); ; tp = tp->next ())
     {
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("reader queue name = %s\n"), tp->name ()));
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("reader queue name = %s\n"), tp->name ()));
       tp->dump ();
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("-------\n")));
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("-------\n")));
       if (tp == this->stream_head_->reader ()
           || (this->linked_us_
               && tp == this->linked_us_->stream_head_->writer ()))
@@ -145,7 +145,7 @@ ACE_Stream<ACE_SYNCH_USE>::pop (int flags)
 // ACE_Stream.
 
 template <ACE_SYNCH_DECL> int
-ACE_Stream<ACE_SYNCH_USE>::remove (const ASYS_TCHAR *name,
+ACE_Stream<ACE_SYNCH_USE>::remove (const ACE_TCHAR *name,
                                  int flags)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::remove");
@@ -178,7 +178,7 @@ ACE_Stream<ACE_SYNCH_USE>::remove (const ASYS_TCHAR *name,
 }
 
 template <ACE_SYNCH_DECL> ACE_Module<ACE_SYNCH_USE> *
-ACE_Stream<ACE_SYNCH_USE>::find (const ASYS_TCHAR *name)
+ACE_Stream<ACE_SYNCH_USE>::find (const ACE_TCHAR *name)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::find");
   for (ACE_Module<ACE_SYNCH_USE> *mod = this->stream_head_;
@@ -245,7 +245,7 @@ ACE_Stream<ACE_SYNCH_USE>::open (void *a,
     {
       h1 = new ACE_Stream_Head<ACE_SYNCH_USE>;
       h2 = new ACE_Stream_Head<ACE_SYNCH_USE>;
-      head = new ACE_Module<ACE_SYNCH_USE> (ASYS_TEXT ("ACE_Stream_Head"),
+      head = new ACE_Module<ACE_SYNCH_USE> (ACE_TEXT ("ACE_Stream_Head"),
                                             h1, h2,
                                             a,
                                             M_DELETE);
@@ -255,7 +255,7 @@ ACE_Stream<ACE_SYNCH_USE>::open (void *a,
     {
       t1 = new ACE_Stream_Tail<ACE_SYNCH_USE>;
       t2 = new ACE_Stream_Tail<ACE_SYNCH_USE>;
-      tail = new ACE_Module<ACE_SYNCH_USE> (ASYS_TEXT ("ACE_Stream_Tail"),
+      tail = new ACE_Module<ACE_SYNCH_USE> (ACE_TEXT ("ACE_Stream_Tail"),
                                             t1, t2,
                                             a,
                                             M_DELETE);
@@ -489,7 +489,7 @@ ACE_Stream<ACE_SYNCH_USE>::ACE_Stream (void * a,
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::ACE_Stream");
   if (this->open (a, head, tail) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("ACE_Stream<ACE_SYNCH_USE>::open (%s, %s)\n"),
+                ACE_TEXT ("ACE_Stream<ACE_SYNCH_USE>::open (%s, %s)\n"),
                head->name (), tail->name ()));
 }
 

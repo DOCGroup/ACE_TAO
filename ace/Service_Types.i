@@ -8,7 +8,7 @@ ACE_Service_Type_Impl::object (void) const
   return this->obj_;
 }
 
-ACE_INLINE const ASYS_TCHAR *
+ACE_INLINE const ACE_TCHAR *
 ACE_Service_Type_Impl::name (void) const
 {
   ACE_TRACE ("ACE_Service_Type_Impl::name");
@@ -16,11 +16,11 @@ ACE_Service_Type_Impl::name (void) const
 }
 
 ACE_INLINE void
-ACE_Service_Type_Impl::name (const ASYS_TCHAR *n)
+ACE_Service_Type_Impl::name (const ACE_TCHAR *n)
 {
   ACE_TRACE ("ACE_Service_Type_Impl::name");
 
-  delete [] (ASYS_TCHAR *) this->name_;
+  delete [] (ACE_TCHAR *) this->name_;
   this->name_ = ACE::strnew (n);
 }
 
@@ -45,7 +45,7 @@ ACE_Service_Object_Type::resume (void) const
 }
 
 ACE_INLINE int
-ACE_Service_Object_Type::info (ASYS_TCHAR **str, size_t len) const
+ACE_Service_Object_Type::info (ACE_TCHAR **str, size_t len) const
 {
   ACE_TRACE ("ACE_Service_Object_Type::info");
   return ((ACE_Service_Object *) this->object ())->info (str, len);

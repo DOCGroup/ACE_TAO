@@ -563,7 +563,7 @@ class TAO_RTEvent_Export TAO_ECG_Mcast_EH : public ACE_Event_Handler
   //
 public:
   TAO_ECG_Mcast_EH (TAO_ECG_UDP_Receiver *recv,
-                    const ASYS_TCHAR *net_if = 0);
+                    const ACE_TCHAR *net_if = 0);
   // Constructor, the messages received by this EH are forwarded to
   // the <recv>.
   // It is possible to select the NIC where the multicast messages are
@@ -640,7 +640,7 @@ private:
   // Control the multicast group subscriptions
 
 private:
-  ASYS_TCHAR *net_if_;
+  ACE_TCHAR *net_if_;
   // The NIC name used to subscribe for multicast traffic.
 
   ACE_SOCK_Dgram_Mcast dgram_;

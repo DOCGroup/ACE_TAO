@@ -47,7 +47,7 @@ recursive_worker (size_t nesting_level,
     {
       ACE_ASSERT (rm->acquire () == 0);
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%P|%t) = acquired, nesting = %d, thread id = %u\n"),
+                  ACE_TEXT ("(%P|%t) = acquired, nesting = %d, thread id = %u\n"),
                   rm->get_nesting_level (),
                   rm->get_thread_id ()));
 
@@ -56,7 +56,7 @@ recursive_worker (size_t nesting_level,
 
       ACE_ASSERT (rm->release () == 0);
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%P|%t) = released, nesting = %d, thread id = %u\n"),
+                  ACE_TEXT ("(%P|%t) = released, nesting = %d, thread id = %u\n"),
                   rm->get_nesting_level (),
                   rm->get_thread_id ()));
     }
@@ -75,9 +75,9 @@ worker (void *arg)
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Recursive_Mutex_Test"));
+  ACE_START_TEST (ACE_TEXT ("Recursive_Mutex_Test"));
 
 #if defined (ACE_HAS_THREADS)
   ACE_Recursive_Thread_Mutex rm;
@@ -88,7 +88,7 @@ main (int, ASYS_TCHAR *[])
   ACE_Thread_Manager::instance ()->wait ();
 #else
   ACE_ERROR ((LM_ERROR,
-              ASYS_TEXT ("ACE doesn't support recursive process mutexes on this platform\n")));
+              ACE_TEXT ("ACE doesn't support recursive process mutexes on this platform\n")));
 #endif /* ACE_WIN32 */
   ACE_END_TEST;
   return 0;

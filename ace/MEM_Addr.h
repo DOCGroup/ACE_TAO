@@ -43,7 +43,7 @@ public:
   // Creates an <ACE_INET_Addr> from a <port_number> and the remote
   // <host_name>.
 
-  ACE_MEM_Addr (const ASYS_TCHAR port_name[]);
+  ACE_MEM_Addr (const ACE_TCHAR port_name[]);
   // Creates an <ACE_INET_Addr> from a <port_name>.
 
   ~ACE_MEM_Addr (void);
@@ -66,7 +66,7 @@ public:
   // converted into network byte order, otherwise it is assumed to be
   // in network byte order already and are passed straight through.
 
-  int set (const ASYS_TCHAR port_name[]);
+  int set (const ACE_TCHAR port_name[]);
   // Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
   // <port_name>, the remote <host_name>, and the <protocol>.
 
@@ -76,13 +76,13 @@ public:
   virtual void set_addr (void *, int len);
   // Set a pointer to the address.
 
-  virtual int addr_to_string (ASYS_TCHAR buffer[],
+  virtual int addr_to_string (ACE_TCHAR buffer[],
                               size_t size,
                               int ipaddr_format = 1) const;
   // Transform the external <ACE_INET_Addr> address into string
   // format.
 
-  virtual int string_to_addr (const ASYS_TCHAR address[]);
+  virtual int string_to_addr (const ACE_TCHAR address[]);
   // Initializes the external <ACE_INET_Addr> from the <address>.
 
   void set_port_number (u_short,
@@ -92,16 +92,16 @@ public:
   u_short get_port_number (void) const;
   // Return the port number, converting it into host byte order.
 
-  int get_host_name (ASYS_TCHAR hostname[],
+  int get_host_name (ACE_TCHAR hostname[],
                      size_t hostnamelen) const;
   // Return the character representation of the hostname.
 
-  const ASYS_TCHAR *get_host_name (void) const;
+  const ACE_TCHAR *get_host_name (void) const;
   // Return the character representation of the hostname (this version
   // is non-reentrant since it returns a pointer to a static data
   // area).
 
-  const char *get_host_addr (void) const;
+  const ACE_TCHAR *get_host_addr (void) const;
   // Return the "dotted decimal" external address.
 
   ACE_UINT32 get_ip_address (void) const;

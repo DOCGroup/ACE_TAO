@@ -384,8 +384,8 @@ ACE_TLI_Acceptor::ACE_TLI_Acceptor (const ACE_Addr &remote_sap,
                   back,
                   dev) == ACE_INVALID_HANDLE)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_TLI_Acceptor::ACE_TLI_Acceptor")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_TLI_Acceptor::ACE_TLI_Acceptor")));
 }
 
 int

@@ -22,8 +22,8 @@ ACE_NT_Service::ACE_NT_Service (DWORD start_timeout,
 
 
 ACE_INLINE
-ACE_NT_Service::ACE_NT_Service (LPCTSTR name,
-                                LPCTSTR desc,
+ACE_NT_Service::ACE_NT_Service (const ACE_TCHAR *name,
+                                const ACE_TCHAR *desc,
                                 DWORD start_timeout,
                                 DWORD service_type,
                                 DWORD controls_mask) :
@@ -51,21 +51,21 @@ ACE_NT_Service::svc (void)
 
 
 ACE_INLINE
-LPCTSTR
+const ACE_TCHAR *
 ACE_NT_Service::name (void) const
 {
   return name_;
 }
 
 ACE_INLINE
-LPCTSTR
+const ACE_TCHAR *
 ACE_NT_Service::desc (void) const
 {
   return desc_;
 }
 
 ACE_INLINE
-LPCTSTR
+const ACE_TCHAR *
 ACE_NT_Service::host (void) const
 {
   return host_;

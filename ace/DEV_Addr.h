@@ -41,10 +41,10 @@ public:
   int set (const ACE_DEV_Addr &sa);
   // Acts like a copy constructor.
 
-  ACE_DEV_Addr (LPCTSTR devname);
+  ACE_DEV_Addr (const ACE_TCHAR *devname);
   // Create a ACE_DEV_Addr from a device name.
 
-  void set (LPCTSTR devname);
+  void set (const ACE_TCHAR *devname);
   // Create a ACE_Addr from a ACE_DEV pathname.
 
   ACE_DEV_Addr &operator= (const ACE_DEV_Addr &);
@@ -53,12 +53,7 @@ public:
   virtual void *get_addr (void) const;
   // Return a pointer to the address.
 
-#if defined (UNICODE)
-  virtual int addr_to_string (wchar_t *addr, size_t) const;
-  // Transform the current address into string format.
-#endif /* UNICODE */
-
-  virtual int addr_to_string (char *addr, size_t) const;
+  virtual int addr_to_string (ACE_TCHAR *addr, size_t) const;
   // Transform the current address into string format.
 
   int operator == (const ACE_DEV_Addr &SAP) const;
@@ -67,7 +62,7 @@ public:
   int operator != (const ACE_DEV_Addr &SAP) const;
   // Compare two addresses for inequality.
 
-  LPCTSTR get_path_name (void) const;
+  const ACE_TCHAR *get_path_name (void) const;
   // Return the path name used for the rendezvous point.
 
   void dump (void) const;
@@ -77,7 +72,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  TCHAR devname_[MAXNAMLEN + 1];
+  ACE_TCHAR devname_[MAXNAMLEN + 1];
   // Name of the device.
 };
 

@@ -279,9 +279,9 @@ be_visitor_typecode_defn::visit_array (be_array *node)
       break;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
-                     ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-                     ASYS_TEXT ("visit - bad sub state ")
-                     ASYS_TEXT ("in visitor context\n")),
+                     ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+                     ACE_TEXT ("visit - bad sub state ")
+                     ACE_TEXT ("in visitor context\n")),
                     -1);
 }
 
@@ -312,9 +312,9 @@ be_visitor_typecode_defn::visit_enum (be_enum *node)
       break;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
-                     ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-                     ASYS_TEXT ("visit - bad sub state ")
-                     ASYS_TEXT ("in visitor context\n")),
+                     ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+                     ACE_TEXT ("visit - bad sub state ")
+                     ACE_TEXT ("in visitor context\n")),
                     -1);
 }
 
@@ -333,9 +333,9 @@ be_visitor_typecode_defn::visit_enum_val (be_enum_val *node)
       break;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
-                     ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-                     ASYS_TEXT ("visit - bad sub state ")
-                     ASYS_TEXT ("in visitor context\n")),
+                     ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+                     ACE_TEXT ("visit - bad sub state ")
+                     ACE_TEXT ("in visitor context\n")),
                     -1);
 }
 
@@ -366,9 +366,9 @@ be_visitor_typecode_defn::visit_exception (be_exception *node)
       break;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
-                     ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-                     ASYS_TEXT ("visit - bad sub state ")
-                     ASYS_TEXT ("in visitor context\n")),
+                     ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+                     ACE_TEXT ("visit - bad sub state ")
+                     ACE_TEXT ("in visitor context\n")),
                     -1);
 }
 
@@ -387,9 +387,9 @@ be_visitor_typecode_defn::visit_field (be_field *node)
       break;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
-                     ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-                     ASYS_TEXT ("visit - bad sub state ")
-                     ASYS_TEXT ("in visitor context\n")),
+                     ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+                     ACE_TEXT ("visit - bad sub state ")
+                     ACE_TEXT ("in visitor context\n")),
                     -1);
 }
 
@@ -418,9 +418,9 @@ be_visitor_typecode_defn::visit_interface (be_interface *node)
       break;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
-                     ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-                     ASYS_TEXT ("visit - bad sub state ")
-                     ASYS_TEXT ("in visitor context\n")),
+                     ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+                     ACE_TEXT ("visit - bad sub state ")
+                     ACE_TEXT ("in visitor context\n")),
                     -1);
 }
 
@@ -457,9 +457,9 @@ be_visitor_typecode_defn::visit_predefined_type (be_predefined_type *node)
       break;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
-                     ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-                     ASYS_TEXT ("visit - bad sub state ")
-                     ASYS_TEXT ("in visitor context\n")),
+                     ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+                     ACE_TEXT ("visit - bad sub state ")
+                     ACE_TEXT ("in visitor context\n")),
                     -1);
 }
 
@@ -487,9 +487,9 @@ be_visitor_typecode_defn::visit_sequence (be_sequence *node)
       break;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
-                     ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-                     ASYS_TEXT ("visit - bad sub state ")
-                     ASYS_TEXT ("in visitor context\n")),
+                     ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+                     ACE_TEXT ("visit - bad sub state ")
+                     ACE_TEXT ("in visitor context\n")),
                     -1);
 }
 
@@ -519,9 +519,9 @@ be_visitor_typecode_defn::visit_string (be_string *node)
       break;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
-                     ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-                     ASYS_TEXT ("visit - bad sub state ")
-                     ASYS_TEXT ("in visitor context\n")),
+                     ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+                     ACE_TEXT ("visit - bad sub state ")
+                     ACE_TEXT ("in visitor context\n")),
                     -1);
 }
 
@@ -552,9 +552,9 @@ be_visitor_typecode_defn::visit_structure (be_structure *node)
       break;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
-                     ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-                     ASYS_TEXT ("visit - bad sub state ")
-                     ASYS_TEXT ("in visitor context\n")),
+                     ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+                     ACE_TEXT ("visit - bad sub state ")
+                     ACE_TEXT ("in visitor context\n")),
                     -1);
 }
 
@@ -582,9 +582,9 @@ be_visitor_typecode_defn::visit_typedef (be_typedef *node)
       break;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
-                     ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-                     ASYS_TEXT ("visit - bad sub state ")
-                     ASYS_TEXT ("in visitor context\n")),
+                     ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+                     ACE_TEXT ("visit - bad sub state ")
+                     ACE_TEXT ("in visitor context\n")),
                     -1);
 }
 
@@ -615,9 +615,9 @@ be_visitor_typecode_defn::visit_union (be_union *node)
       break;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
-                     ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-                     ASYS_TEXT ("visit - bad sub state ")
-                     ASYS_TEXT ("in visitor context\n")),
+                     ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+                     ACE_TEXT ("visit - bad sub state ")
+                     ACE_TEXT ("in visitor context\n")),
                     -1);
 }
 
@@ -637,9 +637,9 @@ be_visitor_typecode_defn::visit_union_branch (be_union_branch *node)
     }
 
   ACE_ERROR_RETURN ((LM_ERROR,
-                     ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-                     ASYS_TEXT ("visit - bad sub state ")
-                     ASYS_TEXT ("in visitor context\n")),
+                     ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+                     ACE_TEXT ("visit - bad sub state ")
+                     ACE_TEXT ("in visitor context\n")),
                     -1);
 }
 
@@ -664,9 +664,9 @@ be_visitor_typecode_defn::gen_typecode (be_array *node)
   if (node->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) - be_visitor_typecode_defn")
-                         ASYS_TEXT ("gen_typecode (array) - ")
-                         ASYS_TEXT ("Failed to get encap length\n")),
+                         ACE_TEXT ("(%N:%l) - be_visitor_typecode_defn")
+                         ACE_TEXT ("gen_typecode (array) - ")
+                         ACE_TEXT ("Failed to get encap length\n")),
                         -1);
     }
   *os << this->computed_encap_len_ << ", // encapsulation length" 
@@ -679,9 +679,9 @@ be_visitor_typecode_defn::gen_typecode (be_array *node)
   if (node->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-                         ASYS_TEXT ("gen_typecode - ")
-                         ASYS_TEXT ("gen_encapsulation failed for array\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
+                         ACE_TEXT ("gen_typecode - ")
+                         ACE_TEXT ("gen_encapsulation failed for array\n")),
                         -1);
     }
 
@@ -714,9 +714,9 @@ be_visitor_typecode_defn::gen_encapsulation (be_array *node)
   if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) - be_visitor_typecode_defn")
-                         ASYS_TEXT ("gen_encapsulation (array) - ")
-                         ASYS_TEXT ("Failed to get typecode size\n")),
+                         ACE_TEXT ("(%N:%l) - be_visitor_typecode_defn")
+                         ACE_TEXT ("gen_encapsulation (array) - ")
+                         ACE_TEXT ("Failed to get typecode size\n")),
                         -1);
     }
 
@@ -817,9 +817,9 @@ be_visitor_typecode_defn::gen_typecode (be_enum *node)
       if (node->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("(%N:%l) - be_visitor_typecode_defn")
-                             ASYS_TEXT ("gen_typecode (enum) - ")
-                             ASYS_TEXT ("Failed to get encap length\n")),
+                             ACE_TEXT ("(%N:%l) - be_visitor_typecode_defn")
+                             ACE_TEXT ("gen_typecode (enum) - ")
+                             ACE_TEXT ("Failed to get encap length\n")),
                             -1);
         }
       // reset the compute queue since we must not affect computation of other
@@ -836,9 +836,9 @@ be_visitor_typecode_defn::gen_typecode (be_enum *node)
       if (node->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                             ASYS_TEXT ("::gen_typecode (enum) - ")
-                             ASYS_TEXT ("failed to generate encapsulation\n")),
+                             ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                             ACE_TEXT ("::gen_typecode (enum) - ")
+                             ACE_TEXT ("failed to generate encapsulation\n")),
                             -1);
         }
 
@@ -878,9 +878,9 @@ be_visitor_typecode_defn::gen_encapsulation (be_enum *node)
   if (node->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, 
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::gen_encapsulation (enum) - ")
-                         ASYS_TEXT ("cannot generate typecode for members\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::gen_encapsulation (enum) - ")
+                         ACE_TEXT ("cannot generate typecode for members\n")),
                         -1);
     }
 
@@ -950,9 +950,9 @@ be_visitor_typecode_defn::gen_typecode (be_exception *node)
       if (node->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("(%N:%l) - be_visitor_typecode_defn")
-                             ASYS_TEXT ("gen_typecode (exception) - ")
-                             ASYS_TEXT ("Failed to get encap length\n")),
+                             ACE_TEXT ("(%N:%l) - be_visitor_typecode_defn")
+                             ACE_TEXT ("gen_typecode (exception) - ")
+                             ACE_TEXT ("Failed to get encap length\n")),
                             -1);
         }
       // reset the compute queue since we must not affect computation of other
@@ -969,9 +969,9 @@ be_visitor_typecode_defn::gen_typecode (be_exception *node)
       if (node->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                             ASYS_TEXT ("::gen_typecode (exception) - ")
-                             ASYS_TEXT ("failed to generate encapsulation\n")),
+                             ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                             ACE_TEXT ("::gen_typecode (exception) - ")
+                             ACE_TEXT ("failed to generate encapsulation\n")),
                             -1);
         }
 
@@ -1010,9 +1010,9 @@ be_visitor_typecode_defn::gen_encapsulation (be_exception *node)
   if (node->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, 
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::gen_encapsulation (exception) - ")
-                         ASYS_TEXT ("cannot generate typecode for members\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::gen_encapsulation (exception) - ")
+                         ACE_TEXT ("cannot generate typecode for members\n")),
                         -1);
     }
 
@@ -1036,9 +1036,9 @@ be_visitor_typecode_defn::gen_encapsulation (be_field *node)
   if (!bt || bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::gen_encapsulation (field) - ")
-                         ASYS_TEXT ("failed to generate typecode\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::gen_encapsulation (field) - ")
+                         ACE_TEXT ("failed to generate typecode\n")),
                         -1);
     }
   // revert the state to what it was before because we may be dealing with
@@ -1098,9 +1098,9 @@ be_visitor_typecode_defn::gen_typecode (be_interface *node)
       if (node->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("(%N:%l) - be_visitor_typecode_defn")
-                             ASYS_TEXT ("gen_typecode (interface) - ")
-                             ASYS_TEXT ("Failed to get encap length\n")),
+                             ACE_TEXT ("(%N:%l) - be_visitor_typecode_defn")
+                             ACE_TEXT ("gen_typecode (interface) - ")
+                             ACE_TEXT ("Failed to get encap length\n")),
                             -1);
         }
       // reset the compute queue since we must not affect computation of other
@@ -1117,9 +1117,9 @@ be_visitor_typecode_defn::gen_typecode (be_interface *node)
       if (node->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                             ASYS_TEXT ("::gen_typecode (interface) - ")
-                             ASYS_TEXT ("failed to generate encapsulation\n")),
+                             ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                             ACE_TEXT ("::gen_typecode (interface) - ")
+                             ACE_TEXT ("failed to generate encapsulation\n")),
                             -1);
         }
       *os << be_uidt << "\n";
@@ -1267,9 +1267,9 @@ be_visitor_typecode_defn::gen_typecode (be_predefined_type *node)
                   if (node->accept (this) == -1)
                     {
                       ACE_ERROR_RETURN ((LM_ERROR,
-                                         ASYS_TEXT ("(%N:%l) - be_visitor_typecode_defn")
-                                         ASYS_TEXT ("gen_typecode (predefined) - ")
-                                         ASYS_TEXT ("Failed to get encap length\n")),
+                                         ACE_TEXT ("(%N:%l) - be_visitor_typecode_defn")
+                                         ACE_TEXT ("gen_typecode (predefined) - ")
+                                         ACE_TEXT ("Failed to get encap length\n")),
                                         -1);
                     }
                   // reset the compute queue since we must not affect
@@ -1286,9 +1286,9 @@ be_visitor_typecode_defn::gen_typecode (be_predefined_type *node)
                   if (node->accept (this) == -1)
                     {
                       ACE_ERROR_RETURN ((LM_ERROR,
-                                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                                         ASYS_TEXT ("::gen_typecode (predefined objref) - ")
-                                         ASYS_TEXT ("failed to generate encapsulation\n")),
+                                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                                         ACE_TEXT ("::gen_typecode (predefined objref) - ")
+                                         ACE_TEXT ("failed to generate encapsulation\n")),
                                         -1);
                     }
                   *os << be_uidt << "\n";
@@ -1347,9 +1347,9 @@ be_visitor_typecode_defn::gen_typecode (be_sequence *node)
   if (node->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) - be_visitor_typecode_defn")
-                         ASYS_TEXT ("gen_typecode (sequence) - ")
-                         ASYS_TEXT ("Failed to get encap length\n")),
+                         ACE_TEXT ("(%N:%l) - be_visitor_typecode_defn")
+                         ACE_TEXT ("gen_typecode (sequence) - ")
+                         ACE_TEXT ("Failed to get encap length\n")),
                         -1);
     }
   // reset the compute queue since we must not affect computation of other
@@ -1366,9 +1366,9 @@ be_visitor_typecode_defn::gen_typecode (be_sequence *node)
   if (node->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::gen_typecode (sequence) - ")
-                         ASYS_TEXT ("failed to generate encapsulation\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::gen_typecode (sequence) - ")
+                         ACE_TEXT ("failed to generate encapsulation\n")),
                         -1);
     }
   *os << be_uidt << "\n";
@@ -1394,9 +1394,9 @@ be_visitor_typecode_defn::gen_encapsulation (be_sequence *node)
   if (!bt || bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::gen_encapsulation (sequence) - ")
-                         ASYS_TEXT ("failed to generate typecode\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::gen_encapsulation (sequence) - ")
+                         ACE_TEXT ("failed to generate typecode\n")),
                         -1);
     }
 
@@ -1495,9 +1495,9 @@ be_visitor_typecode_defn::gen_typecode (be_structure *node)
       if (node->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("(%N:%l) - be_visitor_typecode_defn")
-                             ASYS_TEXT ("gen_typecode (struct) - ")
-                             ASYS_TEXT ("Failed to get encap length\n")),
+                             ACE_TEXT ("(%N:%l) - be_visitor_typecode_defn")
+                             ACE_TEXT ("gen_typecode (struct) - ")
+                             ACE_TEXT ("Failed to get encap length\n")),
                             -1);
         }
       // reset the compute queue since we must not affect computation of other
@@ -1514,9 +1514,9 @@ be_visitor_typecode_defn::gen_typecode (be_structure *node)
       if (node->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                             ASYS_TEXT ("::gen_typecode (structure) - ")
-                             ASYS_TEXT ("failed to generate encapsulation\n")),
+                             ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                             ACE_TEXT ("::gen_typecode (structure) - ")
+                             ACE_TEXT ("failed to generate encapsulation\n")),
                             -1);
         }
       *os << be_uidt << "\n";
@@ -1610,9 +1610,9 @@ be_visitor_typecode_defn::gen_typecode (be_typedef *node)
       if (node->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("(%N:%l) - be_visitor_typecode_defn")
-                             ASYS_TEXT ("gen_typecode (typedef) - ")
-                             ASYS_TEXT ("Failed to get encap length\n")),
+                             ACE_TEXT ("(%N:%l) - be_visitor_typecode_defn")
+                             ACE_TEXT ("gen_typecode (typedef) - ")
+                             ACE_TEXT ("Failed to get encap length\n")),
                             -1);
         }
       // reset the compute queue since we must not affect computation of other
@@ -1629,9 +1629,9 @@ be_visitor_typecode_defn::gen_typecode (be_typedef *node)
       if (node->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                             ASYS_TEXT ("::gen_typecode (typedef) - ")
-                             ASYS_TEXT ("failed to generate encapsulation\n")),
+                             ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                             ACE_TEXT ("::gen_typecode (typedef) - ")
+                             ACE_TEXT ("failed to generate encapsulation\n")),
                             -1);
         }
 
@@ -1666,9 +1666,9 @@ be_visitor_typecode_defn::gen_encapsulation (be_typedef *node)
   if (!bt || bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::gen_encapsulation (typedef) - ")
-                         ASYS_TEXT ("failed to generate typecode\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::gen_encapsulation (typedef) - ")
+                         ACE_TEXT ("failed to generate typecode\n")),
                         -1);
     }
   return 0;
@@ -1724,9 +1724,9 @@ be_visitor_typecode_defn::gen_typecode (be_union *node)
       if (node->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("(%N:%l) - be_visitor_typecode_defn")
-                             ASYS_TEXT ("gen_typecode (union) - ")
-                             ASYS_TEXT ("Failed to get encap length\n")),
+                             ACE_TEXT ("(%N:%l) - be_visitor_typecode_defn")
+                             ACE_TEXT ("gen_typecode (union) - ")
+                             ACE_TEXT ("Failed to get encap length\n")),
                             -1);
         }
       // reset the compute queue since we must not affect computation of other
@@ -1743,9 +1743,9 @@ be_visitor_typecode_defn::gen_typecode (be_union *node)
       if (node->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                             ASYS_TEXT ("::gen_typecode (union) - ")
-                             ASYS_TEXT ("failed to generate encapsulation\n")),
+                             ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                             ACE_TEXT ("::gen_typecode (union) - ")
+                             ACE_TEXT ("failed to generate encapsulation\n")),
                             -1);
         }
       *os << be_uidt << "\n";
@@ -1979,9 +1979,9 @@ be_visitor_typecode_defn::gen_encapsulation (be_union_branch *node)
   if (!bt || bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-          ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-          ASYS_TEXT ("::gen_encapsulation (union_branch) - ")
-          ASYS_TEXT ("failed to generate typecode\n")
+          ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+          ACE_TEXT ("::gen_encapsulation (union_branch) - ")
+          ACE_TEXT ("failed to generate typecode\n")
         ),
        -1);
     }
@@ -2004,9 +2004,9 @@ be_visitor_typecode_defn::compute_tc_size (be_array *node)
   if (node->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, 
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::compute_tc_size (array) - ")
-                         ASYS_TEXT ("cannot compute encap len\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::compute_tc_size (array) - ")
+                         ACE_TEXT ("cannot compute encap len\n")),
                         -1);
     }
       
@@ -2039,9 +2039,9 @@ be_visitor_typecode_defn::compute_encap_length (be_array *node)
   if (!bt || bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, 
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::compute_encap_len (array) - ")
-                         ASYS_TEXT ("cannot compute tc size for base\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::compute_encap_len (array) - ")
+                         ACE_TEXT ("cannot compute tc size for base\n")),
                         -1);
     }
       
@@ -2087,9 +2087,9 @@ be_visitor_typecode_defn::compute_tc_size (be_enum *node)
       if (node->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR, 
-                             ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                             ASYS_TEXT ("::compute_tc_size (enum) - ")
-                             ASYS_TEXT ("cannot compute encap len\n")),
+                             ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                             ACE_TEXT ("::compute_tc_size (enum) - ")
+                             ACE_TEXT ("cannot compute encap len\n")),
                             -1);
         }
       
@@ -2117,9 +2117,9 @@ be_visitor_typecode_defn::compute_encap_length (be_enum *node)
   if (this->push (this->computed_scope_encap_len_) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::compute_encap_len (enum) - ")
-                         ASYS_TEXT ("push failed\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::compute_encap_len (enum) - ")
+                         ACE_TEXT ("push failed\n")),
                         -1);
     }
   this->computed_scope_encap_len_ = 0;
@@ -2129,9 +2129,9 @@ be_visitor_typecode_defn::compute_encap_length (be_enum *node)
   if (node->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, 
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::compute_encap_len (enum) - ")
-                         ASYS_TEXT ("cannot compute scope tc size\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::compute_encap_len (enum) - ")
+                         ACE_TEXT ("cannot compute scope tc size\n")),
                         -1);
     }
       
@@ -2141,9 +2141,9 @@ be_visitor_typecode_defn::compute_encap_length (be_enum *node)
   if (this->pop (this->computed_scope_encap_len_) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::compute_encap_len (enum) - ")
-                         ASYS_TEXT ("pop failed\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::compute_encap_len (enum) - ")
+                         ACE_TEXT ("pop failed\n")),
                         -1);
     }
 
@@ -2194,9 +2194,9 @@ be_visitor_typecode_defn::compute_tc_size (be_exception *node)
       if (node->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR, 
-                             ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                             ASYS_TEXT ("::compute_tc_size (array) - ")
-                             ASYS_TEXT ("cannot compute encap len\n")),
+                             ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                             ACE_TEXT ("::compute_tc_size (array) - ")
+                             ACE_TEXT ("cannot compute encap len\n")),
                             -1);
         }
       this->computed_tc_size_ = 4 + 4 + this->computed_encap_len_;
@@ -2222,9 +2222,9 @@ be_visitor_typecode_defn::compute_encap_length (be_exception *node)
   if (this->push (this->computed_scope_encap_len_) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::compute_encap_len (exception) - ")
-                         ASYS_TEXT ("push failed\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::compute_encap_len (exception) - ")
+                         ACE_TEXT ("push failed\n")),
                         -1);
     }
   this->computed_scope_encap_len_ = 0;
@@ -2234,9 +2234,9 @@ be_visitor_typecode_defn::compute_encap_length (be_exception *node)
   if (node->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, 
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::compute_encap_len (exception) - ")
-                         ASYS_TEXT ("cannot compute scope tc size\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::compute_encap_len (exception) - ")
+                         ACE_TEXT ("cannot compute scope tc size\n")),
                         -1);
     }
 
@@ -2246,9 +2246,9 @@ be_visitor_typecode_defn::compute_encap_length (be_exception *node)
   if (this->pop (this->computed_scope_encap_len_) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::compute_encap_len (exception) - ")
-                         ASYS_TEXT ("pop failed\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::compute_encap_len (exception) - ")
+                         ACE_TEXT ("pop failed\n")),
                         -1);
     }
 
@@ -2271,9 +2271,9 @@ be_visitor_typecode_defn::compute_encap_length (be_field *node)
   if (!bt || bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, 
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::compute_encap_len (array) - ")
-                         ASYS_TEXT ("cannot compute tc size\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::compute_encap_len (array) - ")
+                         ACE_TEXT ("cannot compute tc size\n")),
                         -1);
     }
       
@@ -2321,9 +2321,9 @@ be_visitor_typecode_defn::compute_tc_size (be_interface *node)
       if (node->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR, 
-                             ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                             ASYS_TEXT ("::compute_tc_size (interface) - ")
-                             ASYS_TEXT ("cannot compute encap len\n")),
+                             ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                             ACE_TEXT ("::compute_tc_size (interface) - ")
+                             ACE_TEXT ("cannot compute encap len\n")),
                             -1);
         }
       
@@ -2400,9 +2400,9 @@ be_visitor_typecode_defn::compute_tc_size (be_predefined_type *node)
           if (node->accept (this) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR, 
-                                 ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                                 ASYS_TEXT ("::compute_tc_size (predefined objref) - ")
-                                 ASYS_TEXT ("cannot compute encap len\n")),
+                                 ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                                 ACE_TEXT ("::compute_tc_size (predefined objref) - ")
+                                 ACE_TEXT ("cannot compute encap len\n")),
                                 -1);
             }
           
@@ -2444,9 +2444,9 @@ be_visitor_typecode_defn::compute_tc_size (be_sequence *node)
   if (node->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, 
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::compute_tc_size (sequence) - ")
-                         ASYS_TEXT ("cannot compute encap len\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::compute_tc_size (sequence) - ")
+                         ACE_TEXT ("cannot compute encap len\n")),
                         -1);
     }
   
@@ -2468,9 +2468,9 @@ be_visitor_typecode_defn::compute_encap_length (be_sequence *node)
   if (!bt || bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, 
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::compute_encap_len (sequence) - ")
-                         ASYS_TEXT ("cannot compute tc size\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::compute_encap_len (sequence) - ")
+                         ACE_TEXT ("cannot compute tc size\n")),
                         -1);
     }
       
@@ -2533,9 +2533,9 @@ be_visitor_typecode_defn::compute_tc_size (be_structure *node)
       if (node->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR, 
-                             ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                             ASYS_TEXT ("::compute_tc_size (structure) - ")
-                             ASYS_TEXT ("cannot compute encap len\n")),
+                             ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                             ACE_TEXT ("::compute_tc_size (structure) - ")
+                             ACE_TEXT ("cannot compute encap len\n")),
                             -1);
         }
       
@@ -2562,9 +2562,9 @@ be_visitor_typecode_defn::compute_encap_length (be_structure *node)
   if (this->push (this->computed_scope_encap_len_) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::compute_encap_len (struct) - ")
-                         ASYS_TEXT ("push failed\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::compute_encap_len (struct) - ")
+                         ACE_TEXT ("push failed\n")),
                         -1);
     }
   this->computed_scope_encap_len_ = 0;
@@ -2574,9 +2574,9 @@ be_visitor_typecode_defn::compute_encap_length (be_structure *node)
   if (node->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, 
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::compute_encap_len (structure) - ")
-                         ASYS_TEXT ("cannot compute scope tc size\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::compute_encap_len (structure) - ")
+                         ACE_TEXT ("cannot compute scope tc size\n")),
                         -1);
     }
 
@@ -2586,9 +2586,9 @@ be_visitor_typecode_defn::compute_encap_length (be_structure *node)
   if (this->pop (this->computed_scope_encap_len_) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::compute_encap_len (struct) - ")
-                         ASYS_TEXT ("pop failed\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::compute_encap_len (struct) - ")
+                         ACE_TEXT ("pop failed\n")),
                         -1);
     }
 
@@ -2632,9 +2632,9 @@ be_visitor_typecode_defn::compute_tc_size (be_typedef *node)
       if (node->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR, 
-                             ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                             ASYS_TEXT ("::compute_tc_size (array) - ")
-                             ASYS_TEXT ("cannot compute encap len\n")),
+                             ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                             ACE_TEXT ("::compute_tc_size (array) - ")
+                             ACE_TEXT ("cannot compute encap len\n")),
                             -1);
         }
       
@@ -2663,9 +2663,9 @@ be_visitor_typecode_defn::compute_encap_length (be_typedef *node)
   if (!bt || bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, 
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::compute_encap_len (typedef) - ")
-                         ASYS_TEXT ("cannot compute tc size\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::compute_encap_len (typedef) - ")
+                         ACE_TEXT ("cannot compute tc size\n")),
                         -1);
     }
       
@@ -2710,9 +2710,9 @@ be_visitor_typecode_defn::compute_tc_size (be_union *node)
       if (node->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR, 
-                             ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                             ASYS_TEXT ("::compute_tc_size (union) - ")
-                             ASYS_TEXT ("cannot compute encap len\n")),
+                             ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                             ACE_TEXT ("::compute_tc_size (union) - ")
+                             ACE_TEXT ("cannot compute encap len\n")),
                             -1);
         }
       
@@ -2740,9 +2740,9 @@ be_visitor_typecode_defn::compute_encap_length (be_union *node)
   if (!discrim || discrim->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, 
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::compute_encap_len (union) - ")
-                         ASYS_TEXT ("cannot compute tc size\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::compute_encap_len (union) - ")
+                         ACE_TEXT ("cannot compute tc size\n")),
                         -1);
     }
       
@@ -2756,9 +2756,9 @@ be_visitor_typecode_defn::compute_encap_length (be_union *node)
   if (this->push (this->computed_scope_encap_len_) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::compute_encap_len (union) - ")
-                         ASYS_TEXT ("push failed\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::compute_encap_len (union) - ")
+                         ACE_TEXT ("push failed\n")),
                         -1);
     }
   this->computed_scope_encap_len_ = 0;
@@ -2768,9 +2768,9 @@ be_visitor_typecode_defn::compute_encap_length (be_union *node)
   if (node->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, 
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::compute_encap_len (union) - ")
-                         ASYS_TEXT ("cannot compute scope tc size\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::compute_encap_len (union) - ")
+                         ACE_TEXT ("cannot compute scope tc size\n")),
                         -1);
     }
 
@@ -2780,9 +2780,9 @@ be_visitor_typecode_defn::compute_encap_length (be_union *node)
   if (this->pop (this->computed_scope_encap_len_) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::compute_encap_len (union) - ")
-                         ASYS_TEXT ("pop failed\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::compute_encap_len (union) - ")
+                         ACE_TEXT ("pop failed\n")),
                         -1);
     }
 
@@ -2805,9 +2805,9 @@ be_visitor_typecode_defn::compute_encap_length (be_union_branch *node)
   if (!bt || bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, 
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::compute_encap_len (union branch) - ")
-                         ASYS_TEXT ("cannot compute tc size\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::compute_encap_len (union branch) - ")
+                         ACE_TEXT ("cannot compute tc size\n")),
                         -1);
     }
 
@@ -3085,8 +3085,8 @@ queue_insert (ACE_Unbounded_Queue <be_visitor_typecode_defn::QNode *> &queue,
     {
       delete qnode;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ASYS_TEXT ("::queue_insert - failed\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::queue_insert - failed\n")),
                         0);
     }
 

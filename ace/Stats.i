@@ -56,7 +56,7 @@ void
 ACE_Stats_Value::dump (void) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("precision: %u digits; whole: %u, fractional: %u\n"),
+              ACE_TEXT ("precision: %u digits; whole: %u, fractional: %u\n"),
               precision_, whole_, fractional_));
 }
 

@@ -108,9 +108,9 @@ ACE_CLASSIX_Port::operator =(ACE_Addr const& theAddr)
 }
 
 int 
-ACE_CLASSIX_Port::addr_to_string (ASYS_TCHAR s[], size_t) const
+ACE_CLASSIX_Port::addr_to_string (ACE_TCHAR s[], size_t) const
 {
-  ACE_OS::sprintf (s, ASYS_TEXT ("%d:%d"),
+  ACE_OS::sprintf (s, ACE_TEXT ("%d:%d"),
                    ASYS_WIDE_STRING (::agetId()),
                    this->get_port_number ());
 }

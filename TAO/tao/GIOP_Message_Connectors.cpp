@@ -103,7 +103,7 @@ TAO_GIOP_Message_Connectors::
     default:
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%N|%l) Unknown reply status \n")));
+                    ACE_TEXT ("(%N|%l) Unknown reply status \n")));
     }
 
   return 0;
@@ -207,7 +207,7 @@ TAO_GIOP_Message_Connector_10::
     {
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%N |%l) Unable to handle this request \n")));
+                    ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
       return 0;
     }
 
@@ -252,7 +252,7 @@ TAO_GIOP_Message_Connector_10::
     {
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%N | %l) Unable to handle this request \n")));
+                    ACE_TEXT ("(%N | %l) Unable to handle this request \n")));
       return 0;
     }
 
@@ -285,8 +285,8 @@ TAO_GIOP_Message_Connector_10::
     case TAO_GIOP_CLOSECONNECTION:
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("TAO (%P|%t) %N:%l parse_reply: ")
-                           ASYS_TEXT ("wrong message.\n")),
+                           ACE_TEXT ("TAO (%P|%t) %N:%l parse_reply: ")
+                           ACE_TEXT ("wrong message.\n")),
                           -1);
     case TAO_GIOP_LOCATEREPLY:
       // Handle after the switch
@@ -296,8 +296,8 @@ TAO_GIOP_Message_Connector_10::
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("TAO (%P|%t) parse_reply, ")
-                        ASYS_TEXT ("extracting context\n")));
+                        ACE_TEXT ("TAO (%P|%t) parse_reply, ")
+                        ACE_TEXT ("extracting context\n")));
           return -1;
         }
       // Rest of the stuff after the switch
@@ -466,7 +466,7 @@ TAO_GIOP_Message_Connector_12::
           {
             if (TAO_debug_level)
               ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("(%N |%l) Unable to handle this request \n")));
+                          ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
             return 0;
           }
         break;
@@ -488,7 +488,7 @@ TAO_GIOP_Message_Connector_12::
           {
             if (TAO_debug_level)
               ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("(%N |%l) Unable to handle this request \n")));
+                          ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
             return 0;
           }
         break;
@@ -514,7 +514,7 @@ TAO_GIOP_Message_Connector_12::
           {
             if (TAO_debug_level)
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%N |%l) Unable to handle this request \n")));
+                        ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
             return 0;
           }
         break;
@@ -522,7 +522,7 @@ TAO_GIOP_Message_Connector_12::
     default:
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%N |%l) Unable to handle this request \n")));
+                    ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
       return 0;
     }
     
@@ -554,8 +554,8 @@ parse_reply (TAO_Message_State_Factory &mesg_state,
     case TAO_GIOP_CLOSECONNECTION:
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("TAO (%P|%t) %N:%l parse_reply: ")
-                           ASYS_TEXT ("wrong message.\n")),
+                           ACE_TEXT ("TAO (%P|%t) %N:%l parse_reply: ")
+                           ACE_TEXT ("wrong message.\n")),
                           -1);
     case TAO_GIOP_LOCATEREPLY:
       // Handle after the switch
@@ -565,8 +565,8 @@ parse_reply (TAO_Message_State_Factory &mesg_state,
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("TAO (%P|%t) parse_reply, ")
-                        ASYS_TEXT ("extracting context\n")));
+                        ACE_TEXT ("TAO (%P|%t) parse_reply, ")
+                        ACE_TEXT ("extracting context\n")));
           return -1;
         }
       // Rest of the stuff after the switch

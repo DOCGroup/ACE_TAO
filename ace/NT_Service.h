@@ -102,8 +102,8 @@ public:
                   DWORD controls_mask = SERVICE_ACCEPT_STOP);
   // Constructor primarily for use when running the service.
 
-  ACE_NT_Service (LPCTSTR name,
-                  LPCTSTR desc = 0,
+  ACE_NT_Service (const ACE_TCHAR *name,
+                  const ACE_TCHAR *desc = 0,
                   DWORD start_timeout = ACE_NT_SERVICE_START_TIMEOUT,
                   DWORD service_type = SERVICE_WIN32_OWN_PROCESS,
                   DWORD controls_mask = SERVICE_ACCEPT_STOP);
@@ -145,30 +145,30 @@ public:
   // are used to register/insert and remove the service's definition in the
   // SCM registry.
 
-  void name (LPCTSTR name, LPCTSTR desc = 0);
+  void name (const ACE_TCHAR *name, const ACE_TCHAR *desc = 0);
   // Sets the name and description for the service.
   // If desc is 0, it takes the same value as name.
 
-  LPCTSTR name (void) const;
+  const ACE_TCHAR *name (void) const;
   // Get the service name.
 
-  LPCTSTR desc (void) const;
+  const ACE_TCHAR *desc (void) const;
   // Get the service description.
 
-  void host (LPCTSTR host);
+  void host (const ACE_TCHAR *host);
   // Sets the host machine
 
-  LPCTSTR host (void) const;
+  const ACE_TCHAR *host (void) const;
   // Get the host machine.
 
   int insert (DWORD start_type = SERVICE_DEMAND_START,
               DWORD error_control = SERVICE_ERROR_IGNORE,
-              LPCTSTR exe_path = 0,
-              LPCTSTR group_name = 0,
+              const ACE_TCHAR *exe_path = 0,
+              const ACE_TCHAR *group_name = 0,
               LPDWORD tag_id = 0,
-              LPCTSTR dependencies = 0,
-              LPCTSTR account_name = 0,
-              LPCTSTR password = 0);
+              const ACE_TCHAR *dependencies = 0,
+              const ACE_TCHAR *account_name = 0,
+              const ACE_TCHAR *password = 0);
   // Insert (create) the service in the NT Service Control Manager,
   // with the given creation values.  exe_path defaults to the path name
   // of the program that calls the function.  All other 0-defaulted arguments
@@ -217,7 +217,7 @@ public:
 
   int start_svc (ACE_Time_Value *wait_time = 0,
                  DWORD *svc_state = 0,
-                 DWORD argc = 0, LPCTSTR *argv = 0);
+                 DWORD argc = 0, const ACE_TCHAR **argv = 0);
   // Start the service (must have been inserted before).  wait_time is
   // the time to wait for the service to reach a steady state before
   // returning.  If it is 0, the function waits as long as it takes
@@ -307,9 +307,9 @@ protected:
 
   SC_HANDLE svc_sc_handle_;
   // Service's SCM handle
-  LPTSTR name_;
-  LPTSTR desc_;
-  LPTSTR host_;
+  ACE_TCHAR *name_;
+  ACE_TCHAR *desc_;
+  ACE_TCHAR *host_;
 
 };
 
@@ -326,7 +326,8 @@ protected:
   VOID WINAPI ace_nt_svc_handler_##SVCNAME (DWORD fdwControl) {             \
     _ace_nt_svc_obj_##SVCNAME->handle_control(fdwControl);                  \
   }                                                                         \
-  VOID WINAPI ace_nt_svc_main_##SVCNAME (DWORD dwArgc, LPTSTR *lpszArgv) {  \
+  VOID WINAPI ace_nt_svc_main_##SVCNAME (DWORD dwArgc,                      \
+                                         ACE_TCHAR **lpszArgv) {            \
     int delete_svc_obj = 0;                                                 \
     if (_ace_nt_svc_obj_##SVCNAME == 0) {                                   \
       ACE_NEW (_ace_nt_svc_obj_##SVCNAME, SVCCLASS);                        \
@@ -350,7 +351,8 @@ protected:
 
 #define ACE_NT_SERVICE_REFERENCE(SVCNAME)                                  \
 extern ACE_NT_Service * _ace_nt_svc_obj_##SVCNAME;                         \
-extern VOID WINAPI ace_nt_svc_main_##SVCNAME (DWORD dwArgc, LPTSTR *lpszArgv);
+extern VOID WINAPI ace_nt_svc_main_##SVCNAME (DWORD dwArgc,                \
+                                              ACE_TCHAR **lpszArgv);
 
 #define ACE_NT_SERVICE_ENTRY(SVCDESC, SVCNAME)                             \
                       { SVCDESC, &ace_nt_svc_main_##SVCNAME }

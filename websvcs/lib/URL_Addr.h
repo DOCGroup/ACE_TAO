@@ -48,18 +48,18 @@ public:
   virtual ~ACE_URL_Addr (void);
   // destructor
 
-  LPCTSTR get_url (void) const;
+  const ACE_TCHAR *get_url (void) const;
   // Get the original URL
 
   int set (const ACE_URL_Addr& address);
   // Essentially the copy contructor.
 
-  virtual int string_to_addr (LPCTSTR address);
+  virtual int string_to_addr (const ACE_TCHAR *address);
   // Initializes from the scheme specific address, for instance: if
   // the address is an http URL it will initialize the address from
   // an string such as "www.cs.wustl.edu/~schmidt"
 
-  virtual int addr_to_string (LPTSTR s,
+  virtual int addr_to_string (ACE_TCHAR *s,
                               size_t size,
                               int flags = 0) const;
   // Write the address in the scheme specific representation.
@@ -70,23 +70,23 @@ public:
   // The accept method in the Visitor Pattern. Should return 0 on
   // success and not 0 on failure.
 
-  static ACE_URL_Addr* create_address (LPCTSTR url);
+  static ACE_URL_Addr* create_address (const ACE_TCHAR *url);
   // Create an address from a complete URL, such as "http://www/foo"
   // or "ftp://ftp.here/get_this".
   
-  static int known_scheme (LPCTSTR url);
+  static int known_scheme (const ACE_TCHAR *url);
   // Returns 1 if the URL scheme is recognized, 0 otherwise.
 
   u_long hash (void) const;
   // Hash function
 
 protected:
-  void set_url (LPTSTR url);
+  void set_url (ACE_TCHAR *url);
   // Allows the derived classes to store the compact representation of
   // the URL
 
 private:
-  LPTSTR url_;
+  ACE_TCHAR *url_;
 };
 
 class ACE_HTTP_Addr;
@@ -156,15 +156,15 @@ public:
   ACE_HTTP_Addr (void);
   // Constructor
 
-  ACE_HTTP_Addr (LPCTSTR host_name,
-                 LPCTSTR path,
-                 LPCTSTR query = 0,
+  ACE_HTTP_Addr (const ACE_TCHAR *host_name,
+                 const ACE_TCHAR *path,
+                 const ACE_TCHAR *query = 0,
                  u_short port = ACE_DEFAULT_HTTP_PORT);
   // Construct an HTTP URL from the host, path, query and port.
 
-  int set (LPCTSTR host_name,
-           LPCTSTR path,
-           LPCTSTR query = 0,
+  int set (const ACE_TCHAR *host_name,
+           const ACE_TCHAR *path,
+           const ACE_TCHAR *query = 0,
            u_short port = ACE_DEFAULT_HTTP_PORT);
   // Essentially the constructor above.
 
@@ -186,19 +186,19 @@ public:
   // URL can be can be refering to an hostname that cannot be
   // validated at this point.
 
-  LPCTSTR get_hostname (void) const;
+  const ACE_TCHAR *get_hostname (void) const;
   // Get the name of the host.
 
   u_short get_port_number (void) const;
   // Get the port number.
 
-  LPCTSTR get_path (void) const;
+  const ACE_TCHAR *get_path (void) const;
   // Get the path component in the URL
 
-  LPCTSTR get_query (void) const;
+  const ACE_TCHAR *get_query (void) const;
   // Get the query component in the URL
 
-  ACE_URL_Addr* create_relative_address (LPCTSTR url) const;
+  ACE_URL_Addr* create_relative_address (const ACE_TCHAR *url) const;
   // Create an address from a (possibly) relative URL, such as
   // "../foo.html", or "/icons/bar.gif"
   // If the URL is absolute (like "http://www/foo" or "ftp:host/bar")
@@ -210,8 +210,8 @@ public:
   // and port are used.
 
   // = The ACE_URL methods, see the documentation above.
-  virtual int string_to_addr (LPCTSTR address);
-  virtual int addr_to_string (LPTSTR s,
+  virtual int string_to_addr (const ACE_TCHAR *address);
+  virtual int addr_to_string (ACE_TCHAR *s,
                               size_t size,
                               int flags = 0) const;
   virtual int accept (ACE_URL_Addr_Visitor* visitor);
@@ -225,14 +225,14 @@ private:
   // Helper method to cleanup resources
 
 private:
-  LPTSTR hostname_;
+  ACE_TCHAR *hostname_;
   u_short port_number_;
   // The host:port component in the URL
 
-  LPTSTR path_;
+  ACE_TCHAR *path_;
   // The path component in the URL
 
-  LPTSTR query_;
+  ACE_TCHAR *query_;
   // The query component in the URL
 };
 
@@ -258,17 +258,17 @@ public:
   ACE_FTP_Addr (void);
   // Constructor
 
-  ACE_FTP_Addr (LPCTSTR host_name,
-                LPCTSTR path,
-                LPCTSTR user = 0,
-                LPCTSTR passwd = 0);
+  ACE_FTP_Addr (const ACE_TCHAR *host_name,
+                const ACE_TCHAR *path,
+                const ACE_TCHAR *user = 0,
+                const ACE_TCHAR *passwd = 0);
   // Construct an FTP URL from the host_name, the path, the username
   // and the passwd.
 
-  int set (LPCTSTR host_name,
-           LPCTSTR path,
-           LPCTSTR user = 0,
-           LPCTSTR passwd = 0);
+  int set (const ACE_TCHAR *host_name,
+           const ACE_TCHAR *path,
+           const ACE_TCHAR *user = 0,
+           const ACE_TCHAR *passwd = 0);
   // Essentially the constructor above.
 
   ACE_FTP_Addr (const ACE_FTP_Addr &addr);
@@ -283,16 +283,16 @@ public:
   virtual ~ACE_FTP_Addr (void);
   // Destructor
 
-  LPCTSTR get_hostname (void) const;
+  const ACE_TCHAR *get_hostname (void) const;
   // Get the host name component in the URL
 
-  LPCTSTR get_user (void) const;
+  const ACE_TCHAR *get_user (void) const;
   // Get the username component in the URL
 
-  LPCTSTR get_passwd (void) const;
+  const ACE_TCHAR *get_passwd (void) const;
   // Get the passwd component in the URL
 
-  LPCTSTR get_path (void) const;
+  const ACE_TCHAR *get_path (void) const;
   // Get the path component in the URL
 
   ACE_INET_Addr get_inet_address (void) const;
@@ -300,8 +300,8 @@ public:
   // obtain the host and the port.
 
   // = The ACE_Addr methods, see the documentation above.
-  virtual int string_to_addr (LPCTSTR address);
-  virtual int addr_to_string (LPTSTR s,
+  virtual int string_to_addr (const ACE_TCHAR *address);
+  virtual int addr_to_string (ACE_TCHAR *s,
                               size_t size,
                               int flags = 0) const;
   virtual int accept (ACE_URL_Addr_Visitor* visitor);
@@ -315,14 +315,14 @@ private:
   // Helper method to release the internal resources
 
 private:
-  LPTSTR user_;
-  LPTSTR passwd_;
+  ACE_TCHAR *user_;
+  ACE_TCHAR *passwd_;
   // The login name
 
-  LPTSTR hostname_;
+  ACE_TCHAR *hostname_;
   // The hostname part.
 
-  LPTSTR path_;
+  ACE_TCHAR *path_;
   // The other components.
 };
 
@@ -340,14 +340,14 @@ public:
   ACE_Mailto_Addr (void);
   // Constructor
 
-  ACE_Mailto_Addr (LPCTSTR user,
-                   LPCTSTR hostname,
-                   LPCTSTR headers = 0);
+  ACE_Mailto_Addr (const ACE_TCHAR *user,
+                   const ACE_TCHAR *hostname,
+                   const ACE_TCHAR *headers = 0);
   // Construct an FTP URL from the host, path and headers.
 
-  int set (LPCTSTR user,
-           LPCTSTR hostname,
-           LPCTSTR headers = 0);
+  int set (const ACE_TCHAR *user,
+           const ACE_TCHAR *hostname,
+           const ACE_TCHAR *headers = 0);
   // Essentially the constructor above.
 
   ACE_Mailto_Addr (const ACE_Mailto_Addr &addr);
@@ -362,13 +362,13 @@ public:
   virtual ~ACE_Mailto_Addr (void);
   // Destructor
 
-  LPCTSTR get_user (void) const;
+  const ACE_TCHAR *get_user (void) const;
   // Get the username component in the URL
 
-  LPCTSTR get_hostname (void) const;
+  const ACE_TCHAR *get_hostname (void) const;
   // Get the hostname component in the URL
 
-  LPCTSTR get_headers (void) const;
+  const ACE_TCHAR *get_headers (void) const;
   // Get the headers as a single string
 
   // @@ TODO A mailto: URL can contain multiple headers, an iterator
@@ -376,8 +376,8 @@ public:
   // headers would be nice also.
 
   // = The ACE_URL methods, see the documentation above.
-  virtual int string_to_addr (LPCTSTR address);
-  virtual int addr_to_string (LPTSTR s,
+  virtual int string_to_addr (const ACE_TCHAR *address);
+  virtual int addr_to_string (ACE_TCHAR *s,
                               size_t size,
                               int flags = 0) const;
   virtual int accept (ACE_URL_Addr_Visitor* visitor);
@@ -391,9 +391,9 @@ private:
   // Helper method to cleanup resources
 
 private:
-  LPTSTR user_;
-  LPTSTR hostname_;
-  LPTSTR headers_;
+  ACE_TCHAR *user_;
+  ACE_TCHAR *hostname_;
+  ACE_TCHAR *headers_;
 };
 
 #if defined (__ACE_INLINE__)

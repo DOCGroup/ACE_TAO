@@ -63,9 +63,9 @@ static int str_int_index [] = {4, 6, 2, 7, 5, 3, 1, 0}; // RL BFS
 static int str_str_index [] = {4, 2, 1, 0, 3, 6, 5, 7}; // LR preorder
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("RB_Tree_Test"));
+  ACE_START_TEST (ACE_TEXT ("RB_Tree_Test"));
 
   // Construct and run four distinctly parameterized tests.  Note that
   // specialization of the ACE_Less_Than template for character

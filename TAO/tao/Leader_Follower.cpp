@@ -61,8 +61,8 @@ TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wai
           if (this->event_loop_threads_condition_.wait () == -1)
             {
               ACE_ERROR ((LM_ERROR,
-                          ASYS_TEXT ("TAO (%P|%t): TAO_Leader_Follower::wait_for_client_leader_to_complete - ")
-                          ASYS_TEXT ("Condition variable wait failed\n")));
+                          ACE_TEXT ("TAO (%P|%t): TAO_Leader_Follower::wait_for_client_leader_to_complete - ")
+                          ACE_TEXT ("Condition variable wait failed\n")));
 
               result = -1;
             }
@@ -76,8 +76,8 @@ TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wai
             {
               if (errno != ETIME)
                 ACE_ERROR ((LM_ERROR,
-                            ASYS_TEXT ("TAO (%P|%t): TAO_Leader_Follower::wait_for_client_leader_to_complete - ")
-                            ASYS_TEXT ("Condition variable wait failed\n")));
+                            ACE_TEXT ("TAO (%P|%t): TAO_Leader_Follower::wait_for_client_leader_to_complete - ")
+                            ACE_TEXT ("Condition variable wait failed\n")));
 
               result = -1;
             }

@@ -17,7 +17,7 @@ int yyerrno = 0;
 
 // Used to parse service configurator directives from a string rather
 // than from a svc.conf file.
-const ASYS_TCHAR *yydirective = 0;
+const ACE_TCHAR *yydirective = 0;
 
 #define token(x)  x
 %}
@@ -81,10 +81,10 @@ inactive	      { return token (ACE_INACTIVE); }
 		      }
 {white_space}+	      ; /* EMPTY */
 {newline}	      { yylineno++; }
-{other}		      { ACE_ERROR ((LM_ERROR, "unknown character = (%d", *yytext));
+{other}		      { ACE_ERROR ((LM_ERROR, ACE_TEXT ("unknown character = (%d"), *yytext));
                         if (isprint (*yytext))
-                          ACE_ERROR ((LM_ERROR, "|%c", *yytext));
-                        ACE_ERROR ((LM_ERROR, ")\n"));
+                          ACE_ERROR ((LM_ERROR, ACE_TEXT ("|%c"), *yytext));
+                        ACE_ERROR ((LM_ERROR, ACE_TEXT (")\n")));
                       }
 <<EOF>>               { YY_NEW_FILE; yyterminate(); }
 %%

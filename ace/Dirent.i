@@ -2,7 +2,7 @@
 // $Id$
 
 ACE_INLINE int
-ACE_Dirent::open (const char *dirname) 
+ACE_Dirent::open (const ACE_TCHAR *dirname) 
 {
   // If the directory stream is already open, close it to prevent
   // possible resource leaks.
@@ -28,13 +28,13 @@ ACE_Dirent::ACE_Dirent (void)
 }
 
 ACE_INLINE 
-ACE_Dirent::ACE_Dirent (const char *dirname) 
+ACE_Dirent::ACE_Dirent (const ACE_TCHAR *dirname) 
   : dirp_ (0)
 {
   if (this->open (dirname) == -1)
     ACE_ERROR ((LM_ERROR,
-                "%p\n", 
-                "Dirent::Dirent"));
+                ACE_TEXT ("%p\n"), 
+                ACE_TEXT ("Dirent::Dirent")));
 }
 
 ACE_INLINE 

@@ -88,15 +88,24 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
   int status;
 
   // Create a new instance of the named pipe
-  ACE_HANDLE handle = ::CreateNamedPipe (this->local_addr_.get_path_name (),
-					 PIPE_ACCESS_DUPLEX |
-					 FILE_FLAG_OVERLAPPED,
-					 PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE,
-					 PIPE_UNLIMITED_INSTANCES,
-					 1024 * 10,
-					 1024 * 10,
-					 ACE_DEFAULT_TIMEOUT,
-					 NULL);
+  ACE_HANDLE handle = 
+#if defined (ACE_USES_WCHAR)
+    ::CreateNamedPipeW (
+#else /* ACE_USES_WCHAR */
+    ::CreateNamedPipeA (
+#endif /* ACE_USES_WCHAR */    
+        this->local_addr_.get_path_name (),
+        PIPE_ACCESS_DUPLEX 
+        | FILE_FLAG_OVERLAPPED,
+        PIPE_TYPE_MESSAGE 
+        | PIPE_READMODE_MESSAGE,
+        PIPE_UNLIMITED_INSTANCES,
+        1024 * 10,
+        1024 * 10,
+        ACE_DEFAULT_TIMEOUT,
+        NULL);
+
+
   if (handle == ACE_INVALID_HANDLE)
     {
       return -1;
@@ -155,8 +164,8 @@ ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor (const ACE_SPIPE_Addr &local_sap,
 
   if (this->open (local_sap, reuse_addr, perms) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_SPIPE_Acceptor")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SPIPE_Acceptor")));
 }
 
 // General purpose routine for accepting new connections.

@@ -111,139 +111,42 @@ ACE_Hash<ACE_UINT64>::operator () (ACE_UINT64 t) const
 
 ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE u_long
-ACE_Hash<const char *>::operator () (const char *t) const
+ACE_Hash<const ACE_TCHAR *>::operator () (const ACE_TCHAR *t) const
 {
   return ACE::hash_pjw (t);
 }
 
 ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE u_long
-ACE_Hash<char *>::operator () (const char *t) const
-{
-  return ACE::hash_pjw (t);
-}
-
-#if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
-ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE u_long
-ACE_Hash<const wchar_t *>::operator () (const wchar_t *t) const
+ACE_Hash<ACE_TCHAR *>::operator () (const ACE_TCHAR *t) const
 {
   return ACE::hash_pjw (t);
 }
 
 ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE u_long
-ACE_Hash<wchar_t *>::operator () (const wchar_t *t) const
-{
-  return ACE::hash_pjw (t);
-}
-#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
-
-#if !defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT)
-ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE u_long
-ACE_Hash<const ACE_USHORT16 *>::operator () (const ACE_USHORT16 *t) const
-{
-  return ACE::hash_pjw (t);
-}
-
-ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE u_long
-ACE_Hash<ACE_USHORT16 *>::operator () (const ACE_USHORT16 *t) const
-{
-  return ACE::hash_pjw (t);
-}
-#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_USHORT */
-
-ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE int
-ACE_Equal_To<const char *>::operator () (const char *lhs, const char *rhs) const
+ACE_Equal_To<const ACE_TCHAR *>::operator () (const ACE_TCHAR *lhs, const ACE_TCHAR *rhs) const
 {
   return !ACE_OS::strcmp (lhs, rhs);
 }
 
 ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE int
-ACE_Equal_To<char *>::operator () (const char *lhs, const char *rhs) const
-{
-  return !ACE_OS::strcmp (lhs, rhs);
-}
-
-#if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
-ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE int
-ACE_Equal_To<const wchar_t *>::operator () (const wchar_t *lhs, const wchar_t *rhs) const
+ACE_Equal_To<ACE_TCHAR *>::operator () (const ACE_TCHAR *lhs, const ACE_TCHAR *rhs) const
 {
   return !ACE_OS::strcmp (lhs, rhs);
 }
 
 ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE int
-ACE_Equal_To<wchar_t *>::operator () (const wchar_t *lhs, const wchar_t *rhs) const
-{
-  return !ACE_OS::strcmp (lhs, rhs);
-}
-#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
-
-#if !defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT)
-ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE int
-ACE_Equal_To<const ACE_USHORT16 *>::operator () (const ACE_USHORT16 *lhs, const ACE_USHORT16 *rhs) const
-{
-  return !ACE_OS::strcmp (lhs, rhs);
-}
-
-ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE int
-ACE_Equal_To<ACE_USHORT16 *>::operator () (const ACE_USHORT16 *lhs, const ACE_USHORT16 *rhs) const
-{
-  return !ACE_OS::strcmp (lhs, rhs);
-}
-#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_USHORT */
-
-ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE int
-ACE_Less_Than<const char *>::operator () (const char *lhs, const char *rhs) const
+ACE_Less_Than<const ACE_TCHAR *>::operator () (const ACE_TCHAR *lhs, const ACE_TCHAR *rhs) const
 {
   return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
 ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE int
-ACE_Less_Than<char *>::operator () (const char *lhs, const char *rhs) const
+ACE_Less_Than<ACE_TCHAR *>::operator () (const ACE_TCHAR *lhs, const ACE_TCHAR *rhs) const
 {
   return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
-
-#if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
-ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE int
-ACE_Less_Than<const wchar_t *>::operator () (const wchar_t *lhs, const wchar_t *rhs) const
-{
-  return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
-}
-
-ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE int
-ACE_Less_Than<wchar_t *>::operator () (const wchar_t *lhs, const wchar_t *rhs) const
-{
-  return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
-}
-#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
-
-#if !defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT)
-ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE int
-ACE_Less_Than<const ACE_USHORT16 *>::operator () (const ACE_USHORT16 *lhs, const ACE_USHORT16 *rhs) const
-{
-  return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
-}
-
-ACE_TEMPLATE_METHOD_SPECIALIZATION
-ACE_INLINE int
-ACE_Less_Than<ACE_USHORT16 *>::operator () (const ACE_USHORT16 *lhs, const ACE_USHORT16 *rhs) const
-{
-  return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
-}
-
-#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_USHORT */

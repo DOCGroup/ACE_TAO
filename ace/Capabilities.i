@@ -21,13 +21,13 @@ ACE_IntCapEntry::getval (void) const
 }
 
 ACE_INLINE
-ACE_StringCapEntry::ACE_StringCapEntry (const ACE_CString &val)
+ACE_StringCapEntry::ACE_StringCapEntry (const ACE_TString &val)
   : ACE_CapEntry (ACE_STRINGCAP),
     val_(val)
 {
 }
 
-ACE_INLINE ACE_CString
+ACE_INLINE ACE_TString
 ACE_StringCapEntry::getval (void) const
 {
   return val_;

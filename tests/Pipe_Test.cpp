@@ -78,14 +78,14 @@ open (ACE_Pipe &pipe,
 #endif /* ! ACE_LACKS_FORK */
 
 int
-main (int argc, ASYS_TCHAR *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
 #if defined (ACE_LACKS_FORK)
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 
-  ACE_START_TEST (ASYS_TEXT ("Pipe_Test"));
-  ACE_ERROR ((LM_INFO, ASYS_TEXT ("fork is not supported on this platform\n")));
+  ACE_START_TEST (ACE_TEXT ("Pipe_Test"));
+  ACE_ERROR ((LM_INFO, ACE_TEXT ("fork is not supported on this platform\n")));
   ACE_END_TEST;
 #else  /* ! ACE_LACKS_FORK */
   parse_args (argc, argv);

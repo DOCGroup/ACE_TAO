@@ -365,9 +365,9 @@ be_sequence::in_recursion (be_type *node)
     {
       // there has to be a parameter
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_sequence::")
-                         ASYS_TEXT ("in_recursion - ")
-                         ASYS_TEXT ("bad parameter node\n")),
+                         ACE_TEXT ("(%N:%l) be_sequence::")
+                         ACE_TEXT ("in_recursion - ")
+                         ACE_TEXT ("bad parameter node\n")),
                         0);
     }
 
@@ -375,9 +375,9 @@ be_sequence::in_recursion (be_type *node)
   if (!type)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_sequence::")
-                         ASYS_TEXT ("in_recursion - ")
-                         ASYS_TEXT ("bad base type\n")),
+                         ACE_TEXT ("(%N:%l) be_sequence::")
+                         ACE_TEXT ("in_recursion - ")
+                         ACE_TEXT ("bad base type\n")),
                         0);
     }
 

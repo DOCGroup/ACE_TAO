@@ -174,7 +174,7 @@ public:
   virtual int connect_n (size_t n,
                          SVC_HANDLER *svc_handlers[],
                          ACE_PEER_CONNECTOR_ADDR remote_addrs[],
-                         ASYS_TCHAR *failed_svc_handlers = 0,
+                         ACE_TCHAR *failed_svc_handlers = 0,
                          const ACE_Synch_Options &synch_options =
                          ACE_Synch_Options::defaults);
   // Initiate connection of <n> <svc_handlers> to peers at
@@ -264,14 +264,14 @@ protected:
   // some platforms only).
 
   // = Dynamic linking hooks.
-  virtual int init (int argc, ASYS_TCHAR *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   // Default version does no work and returns -1.  Must be overloaded
   // by application developer to do anything meaningful.
 
   virtual int fini (void);
   // Calls <handle_close> to shutdown the Connector gracefully.
 
-  virtual int info (ASYS_TCHAR **, size_t) const;
+  virtual int info (ACE_TCHAR **, size_t) const;
   // Default version returns address info in <buf>.
 
   // = Demultiplexing hooks.

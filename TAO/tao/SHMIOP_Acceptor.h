@@ -106,7 +106,7 @@ private:
   TAO_SHMIOP_ACCEPT_STRATEGY *accept_strategy_;
   // Acceptor strategies.
 
-  ASYS_TCHAR *mmap_file_prefix_;
+  ACE_TCHAR *mmap_file_prefix_;
   // Determine the prefix (include path name) of the mmap file.
 
   off_t mmap_size_;

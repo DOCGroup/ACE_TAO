@@ -199,15 +199,15 @@ print (const char *process_name,
   for (Test_Data *t = data; t != 0; t = t->next_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("<<<< (%P) %s\ni1_ = %d, i2_ = %d, i3_ = %d, d1_ = %f\n"),
+                  ACE_TEXT ("<<<< (%P) %s\ni1_ = %d, i2_ = %d, i3_ = %d, d1_ = %f\n"),
                   process_name,
                   t->i1_,
                   t->i2_,
                   t->i3_,
                   t->d1_));
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("*t->bpl_ = %d, t->long_test_->array_[0] = ")
-                  ASYS_TEXT ("%d\n>>>>\n"),
+                  ACE_TEXT ("*t->bpl_ = %d, t->long_test_->array_[0] = ")
+                  ACE_TEXT ("%d\n>>>>\n"),
                   *t->long_test_->bpl_,
                   t->long_test_->array_[0]));
     }
@@ -261,7 +261,7 @@ child (void)
        )
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%P) sleeping for 10 milliseconds!\n")));
+                  ACE_TEXT ("(%P) sleeping for 10 milliseconds!\n")));
       ACE_OS::sleep (timeout);
     }
 
@@ -272,12 +272,12 @@ child (void)
 }
 
 int
-main (int argc, ASYS_TCHAR *[])
+main (int argc, ACE_TCHAR *[])
 {
   if (argc == 1)
     {
-      ACE_START_TEST (ASYS_TEXT ("Malloc_Test"));
-      ACE_INIT_LOG (ASYS_TEXT ("Malloc_Test-child"));
+      ACE_START_TEST (ACE_TEXT ("Malloc_Test"));
+      ACE_INIT_LOG (ACE_TEXT ("Malloc_Test-child"));
 
       init_test (PARENT_BASE_ADDR);
 
@@ -299,8 +299,8 @@ main (int argc, ASYS_TCHAR *[])
       ACE_ASSERT (data != 0);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%P) PARENT allocator at = %x, ")
-                  ASYS_TEXT ("data allocated at %x\n"),
+                  ACE_TEXT ("(%P) PARENT allocator at = %x, ")
+                  ACE_TEXT ("data allocated at %x\n"),
                   myalloc,
                   data));
       myalloc->dump ();
@@ -323,7 +323,7 @@ main (int argc, ASYS_TCHAR *[])
   else
     {
       // In this case we're the child process.
-      ACE_APPEND_LOG (ASYS_TEXT ("Malloc_Test-child"));
+      ACE_APPEND_LOG (ACE_TEXT ("Malloc_Test-child"));
 
       void *data = 0;
       MALLOC *myalloc = myallocator (CHILD_BASE_ADDR);
@@ -331,8 +331,8 @@ main (int argc, ASYS_TCHAR *[])
       ACE_ASSERT (result != -1);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%P) CHILD allocator at = %x, ")
-                  ASYS_TEXT ("data allocated at %x\n"),
+                  ACE_TEXT ("(%P) CHILD allocator at = %x, ")
+                  ACE_TEXT ("data allocated at %x\n"),
                   myalloc,
                   data));
       myalloc->dump ();
@@ -372,12 +372,12 @@ template class ACE_Based_Pointer<Long_Test>;
 
 #else
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Malloc_Test"));
+  ACE_START_TEST (ACE_TEXT ("Malloc_Test"));
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("process creation is not supported on this ")
-              ASYS_TEXT ("platform\n")));
+              ACE_TEXT ("process creation is not supported on this ")
+              ACE_TEXT ("platform\n")));
   ACE_END_TEST;
   return 0;
 }

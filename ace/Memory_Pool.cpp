@@ -24,7 +24,7 @@ ACE_Local_Memory_Pool::dump (void) const
   ACE_TRACE ("ACE_Local_Memory_Pool::dump");
 }
 
-ACE_Local_Memory_Pool::ACE_Local_Memory_Pool (LPCTSTR ,
+ACE_Local_Memory_Pool::ACE_Local_Memory_Pool (const ACE_TCHAR *,
                                               const OPTIONS *)
 {
   ACE_TRACE ("ACE_Local_Memory_Pool::ACE_Local_Memory_Pool");
@@ -46,7 +46,7 @@ ACE_Local_Memory_Pool::acquire (size_t nbytes,
 
   if (this->allocated_chunks_.insert (cp.get ()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("(%P|%t) insertion into set failed\n")),
+                       ACE_TEXT ("(%P|%t) insertion into set failed\n")),
                       0);
 
   return cp.release ();
@@ -149,7 +149,7 @@ ACE_MMAP_Memory_Pool::protect (void *addr, size_t len, int prot)
   return ACE_OS::mprotect (addr, len, prot);
 }
 
-ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (LPCTSTR backing_store_name,
+ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
                                             const OPTIONS *options)
   : base_addr_ (0),
     flags_ (MAP_SHARED),
@@ -202,8 +202,8 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (LPCTSTR backing_store_name,
                              MAXPATHLEN - 17) == -1) // -17 for ace-malloc-XXXXXX
         {
           ACE_ERROR ((LM_ERROR, 
-                      "Temporary path too long, "
-                      "defaulting to current directory\n"));
+                      ACE_TEXT ("Temporary path too long, ")
+                      ACE_TEXT ("defaulting to current directory\n")));
           this->backing_store_name_[0] = 0;
         }
 
@@ -216,7 +216,7 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (LPCTSTR backing_store_name,
   else
     ACE_OS::strncpy (this->backing_store_name_,
                      backing_store_name,
-                     (sizeof this->backing_store_name_ / sizeof (TCHAR)));
+                     (sizeof this->backing_store_name_ / sizeof (ACE_TCHAR)));
 
 #if !defined (ACE_WIN32) && !defined (CHORUS)
   if (this->signal_handler_.register_handler (SIGSEGV, this) == -1)
@@ -263,7 +263,7 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
                             "",
                             1) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("(%P|%t) %p\n"),
                            this->backing_store_name_),
                           -1);
     }
@@ -295,7 +295,7 @@ ACE_MMAP_Memory_Pool::map_file (off_t map_size)
     {
 #if 0
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("(%P|%t) addr = %u, base_addr = %u, map_size = %u, %p\n"),
+                  ACE_TEXT ("(%P|%t) addr = %u, base_addr = %u, map_size = %u, %p\n"),
                   this->mmap_.addr (),
                   this->base_addr_,
                   map_size,
@@ -383,16 +383,16 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
                            0,
                            this->sa_) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("%p\n"),
-                           ASYS_TEXT ("open")),
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("open")),
                           0);
 
       return this->mmap_.addr ();
     }
   else
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("open")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("open")),
                       0);
 }
 
@@ -419,7 +419,7 @@ int
 ACE_MMAP_Memory_Pool::remap (void *addr)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::remap");
-  //  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("Remapping with fault address at: %X\n"), addr));
+  //  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("Remapping with fault address at: %X\n"), addr));
   off_t current_map_size = ACE_OS::filesize (this->mmap_.handle ());
   // ACE_OS::lseek (this->mmap_.handle (), 0, SEEK_END);
 
@@ -470,9 +470,9 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
   if (signum != SIGSEGV)
     return -1;
   else
-    ; // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("(%P|%t) received %S\n"), signum));
+    ; // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) received %S\n"), signum));
 
-  // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("(%P|%t) new mapping address = %u\n"), (char *) this->base_addr_ + current_map_size));
+  // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) new mapping address = %u\n"), (char *) this->base_addr_ + current_map_size));
 
 #if defined (ACE_HAS_SIGINFO_T) && !defined (ACE_LACKS_SI_ADDR)
   // Make sure that the pointer causing the problem is within the
@@ -480,7 +480,7 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
 
   if (siginfo != 0)
     {
-      // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("(%P|%t) si_signo = %d, si_code = %d, addr = %u\n"), siginfo->si_signo, siginfo->si_code, siginfo->si_addr));
+      // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) si_signo = %d, si_code = %d, addr = %u\n"), siginfo->si_signo, siginfo->si_code, siginfo->si_addr));
       if (this->remap ((void *) siginfo->si_addr) == -1)
         return -1;
       // ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) address %u out of range\n",
@@ -520,7 +520,7 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Lite_MMAP_Memory_Pool)
 
-ACE_Lite_MMAP_Memory_Pool::ACE_Lite_MMAP_Memory_Pool (LPCTSTR backing_store_name,
+ACE_Lite_MMAP_Memory_Pool::ACE_Lite_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
                                                       const OPTIONS *options)
   : ACE_MMAP_Memory_Pool (backing_store_name, options)
 {
@@ -552,7 +552,7 @@ ACE_Sbrk_Memory_Pool::acquire (size_t nbytes,
 {
   ACE_TRACE ("ACE_Sbrk_Memory_Pool::acquire");
   rounded_bytes = this->round_up (nbytes);
-  // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("(%P|%t) acquiring more chunks, nbytes = %d, rounded_bytes = %d\n"), nbytes, rounded_bytes));
+  // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) acquiring more chunks, nbytes = %d, rounded_bytes = %d\n"), nbytes, rounded_bytes));
   void *cp = ACE_OS::sbrk (rounded_bytes);
 
   if (cp == MAP_FAILED)
@@ -561,7 +561,7 @@ ACE_Sbrk_Memory_Pool::acquire (size_t nbytes,
                        cp),
                       0);
   else
-    // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("(%P|%t) acquired more chunks, nbytes = %d, rounded_bytes = %d, new break = %u\n"), nbytes, rounded_bytes, cp));
+    // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) acquired more chunks, nbytes = %d, rounded_bytes = %d, new break = %u\n"), nbytes, rounded_bytes, cp));
   return cp;
 }
 
@@ -571,7 +571,7 @@ ACE_Sbrk_Memory_Pool::dump (void) const
   ACE_TRACE ("ACE_Sbrk_Memory_Pool::dump");
 }
 
-ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool (LPCTSTR ,
+ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool (const ACE_TCHAR *,
                                             const OPTIONS *)
 {
   ACE_TRACE ("ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool");
@@ -621,11 +621,11 @@ ACE_Shared_Memory_Pool::in_use (off_t &offset,
     {
       if (ACE_OS::shmctl (st[counter].shmid_, IPC_STAT, &buf) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("(%P|%t) %p\n"),
-                           ASYS_TEXT ("shmctl")),
+                           ACE_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("shmctl")),
                           -1);
       offset += buf.shm_segsz;
-      // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("(%P|%t) segment size = %d, offset = %d\n"), buf.shm_segsz, offset));
+      // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) segment size = %d, offset = %d\n"), buf.shm_segsz, offset));
     }
 
   return 0;
@@ -648,8 +648,8 @@ ACE_Shared_Memory_Pool::find_seg (const void* const searchPtr,
     {
       if (ACE_OS::shmctl (st[counter].shmid_, IPC_STAT, &buf) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("(%P|%t) %p\n"),
-                           ASYS_TEXT ("shmctl")),
+                           ACE_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("shmctl")),
                           -1);
       offset += buf.shm_segsz;
 
@@ -662,7 +662,7 @@ ACE_Shared_Memory_Pool::find_seg (const void* const searchPtr,
           offset -= buf.shm_segsz;
           return 0;
         }
-      // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("(%P|%t) segment size = %d, offset = %d\n"), buf.shm_segsz, offset));
+      // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) segment size = %d, offset = %d\n"), buf.shm_segsz, offset));
     }
 
   return 0;
@@ -695,8 +695,8 @@ ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
                                   this->file_perms_ | IPC_CREAT | IPC_EXCL);
       if (shmid == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("(%P|%t) %p\n"),
-                           ASYS_TEXT ("shmget")),
+                           ACE_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("shmget")),
                           0);
       st[counter].shmid_ = shmid;
       st[counter].used_ = 1;
@@ -723,7 +723,7 @@ int
 ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::handle_signal");
-  // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("signal %S occurred\n"), signum));
+  // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("signal %S occurred\n"), signum));
 
 #if defined (ACE_HAS_SIGINFO_T) && !defined (ACE_LACKS_SI_ADDR)
   off_t offset;
@@ -732,12 +732,12 @@ ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
 
   if (siginfo != 0)
     {
-      // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("(%P|%t) si_signo = %d, si_code = %d, addr = %u\n"), siginfo->si_signo, siginfo->si_code, siginfo->si_addr));
+      // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) si_signo = %d, si_code = %d, addr = %u\n"), siginfo->si_signo, siginfo->si_code, siginfo->si_addr));
       size_t counter;
       if (this->in_use (offset, counter) == -1)
         ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("(%P|%t) %p\n"),
-                    ASYS_TEXT ("in_use")));
+                    ACE_TEXT ("(%P|%t) %p\n"),
+                    ACE_TEXT ("in_use")));
 #if !defined(_UNICOS)
       else if (!(siginfo->si_code == SEGV_MAPERR
            && siginfo->si_addr < (((char *) this->base_addr_) + offset)
@@ -770,8 +770,8 @@ ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
   if (this->find_seg ((const void *)siginfo->si_addr, offset, counter) == -1)
 #endif /* ! _UNICOS */
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%P|%t) %p\n"),
-                         ASYS_TEXT ("in_use")),
+                         ACE_TEXT ("(%P|%t) %p\n"),
+                         ACE_TEXT ("in_use")),
                         -1);
 
   void *address = (void *) (((char *) this->base_addr_) + offset);
@@ -796,7 +796,7 @@ ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
   return 0;
 }
 
-ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (LPCTSTR backing_store_name,
+ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (const ACE_TCHAR *backing_store_name,
                                                 const OPTIONS *options)
   : base_addr_ (0),
     file_perms_ (ACE_DEFAULT_FILE_PERMS),
@@ -846,8 +846,8 @@ ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (LPCTSTR backing_store_name,
 
   if (this->signal_handler_.register_handler (SIGSEGV, this) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_Sig_Handler::register_handler")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Sig_Handler::register_handler")));
 }
 
 // Ask system for more shared memory.
@@ -860,14 +860,14 @@ ACE_Shared_Memory_Pool::acquire (size_t nbytes,
 
   rounded_bytes = this->round_up (nbytes);
 
-  // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("(%P|%t) acquiring more chunks, nbytes = %d, rounded_bytes = %d\n"), nbytes, rounded_bytes));
+  // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) acquiring more chunks, nbytes = %d, rounded_bytes = %d\n"), nbytes, rounded_bytes));
 
   off_t offset;
 
   if (this->commit_backing_store_name (rounded_bytes, offset) == -1)
     return 0;
 
-  // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("(%P|%t) acquired more chunks, nbytes = %d, rounded_bytes = %d\n"), nbytes, rounded_bytes));
+  // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) acquired more chunks, nbytes = %d, rounded_bytes = %d\n"), nbytes, rounded_bytes));
   return ((char *) this->base_addr_) + offset;
 }
 
@@ -895,8 +895,8 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
     {
       if (errno != EEXIST)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("(%P|%t) %p\n"),
-                           ASYS_TEXT ("shmget")),
+                           ACE_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("shmget")),
                           0);
       first_time = 0;
 
@@ -904,8 +904,8 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
 
       if (shmid == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("(%P|%t) %p\n"),
-                           ASYS_TEXT ("shmget")),
+                           ACE_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("shmget")),
                           0);
 
       // This implementation doesn't care if we don't get the key we
@@ -1002,7 +1002,7 @@ ACE_Pagefile_Memory_Pool::release (void)
   return this->unmap ();
 }
 
-ACE_Pagefile_Memory_Pool::ACE_Pagefile_Memory_Pool (LPCTSTR backing_store_name,
+ACE_Pagefile_Memory_Pool::ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_store_name,
                                                     const OPTIONS *options)
   : shared_cb_ (0),
     page_size_ (ACE_Pagefile_Memory_Pool::round_to_page_size (1)),
@@ -1028,7 +1028,7 @@ ACE_Pagefile_Memory_Pool::ACE_Pagefile_Memory_Pool (LPCTSTR backing_store_name,
 
   ACE_OS::strncpy (this->backing_store_name_,
                    backing_store_name,
-                   (sizeof this->backing_store_name_ / sizeof (TCHAR)));
+                   (sizeof this->backing_store_name_ / sizeof (ACE_TCHAR)));
 }
 
 void *
@@ -1170,16 +1170,16 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
 
       // Get an object handle to the named reserved memory object.
       object_handle_ =
-        ::CreateFileMapping ((HANDLE) 0xffffffff,
+        ACE_TEXT_CreateFileMapping ((HANDLE) 0xffffffff,
 #if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
-                             &sa,
+                                      &sa,
 #else
-                             NULL,
+                                      NULL,
 #endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) */
-                             PAGE_READWRITE | SEC_RESERVE,
-                             0,
-                             this->local_cb_.sh_.max_size_,
-                             this->backing_store_name_);
+                                      PAGE_READWRITE | SEC_RESERVE,
+                                      0,
+                                      this->local_cb_.sh_.max_size_,
+                                      this->backing_store_name_);
       if (object_handle_ == 0)
         return -1;
       first_time =

@@ -532,6 +532,60 @@ ACE_OS::fcntl (ACE_HANDLE handle, int cmd, long arg)
 # endif /* ACE_LACKS_FCNTL */
 }
 
+ACE_INLINE int
+ACE_OS::chdir (const ACE_TCHAR *path)
+{
+  ACE_TRACE ("ACE_OS::chdir");
+#   if defined (VXWORKS)
+  ACE_OSCALL_RETURN (::chdir (ACE_const_cast (char *, path)), int, -1);
+
+#elif defined (ACE_PSOS_LACKS_PHILE)
+  ACE_UNUSED_ARG (path);
+  ACE_NOTSUP_RETURN (-1);
+
+#elif defined (ACE_PSOS)
+    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::change_dir ((char *) path), ace_result_),
+                     int, -1);
+
+#elif defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+  ACE_OSCALL_RETURN (::_chdir (path), int, -1);
+
+#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  ACE_OSCALL_RETURN (::_wchdir (path), int, -1);
+
+#else
+  ACE_OSCALL_RETURN (::chdir (path), int, -1);
+
+#   endif /* VXWORKS */
+}
+
+#if !defined (ACE_LACKS_MKTEMP)
+ACE_INLINE ACE_TCHAR *
+ACE_OS::mktemp (ACE_TCHAR *s)
+{
+# if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  return ::_wmktemp (s);
+# elif defined (ACE_WIN32) 
+  return ::_mktemp (s);
+# else /* ACE_WIN32 */
+  return ::mktemp (s);
+# endif /* ACE_WIN32 */
+}
+#endif /* !ACE_LACKS_MKTEMP */
+
+ACE_INLINE int
+ACE_OS::mkfifo (const ACE_TCHAR *file, mode_t mode)
+{
+  ACE_TRACE ("ACE_OS::mkfifo");
+#if defined (ACE_LACKS_MKFIFO)
+  ACE_UNUSED_ARG (file);
+  ACE_UNUSED_ARG (mode);
+  ACE_NOTSUP_RETURN (-1);
+#else
+  ACE_OSCALL_RETURN (::mkfifo (file, mode), int, -1);
+#   endif /* ACE_LACKS_MKFIFO */
+}
+
 #if !defined (ACE_WIN32)
 
 // Matthew Stevens 7-10-95 Fix GNU GCC 2.7 for memchr() problem.
@@ -594,27 +648,6 @@ extern "C" char *mktemp (char *);
 # else
 #   define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) != 0 ? (errno = RESULT, -1) : 0)
 # endif /* VXWORKS */
-
-# if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-ACE_INLINE int
-ACE_OS::chdir (const char *path)
-{
-  ACE_TRACE ("ACE_OS::chdir");
-#   if defined (VXWORKS)
-  ACE_OSCALL_RETURN (::chdir (ACE_const_cast (char *, path)), int, -1);
-
-#elif defined (ACE_PSOS_LACKS_PHILE)
-  ACE_UNUSED_ARG (path);
-  ACE_NOTSUP_RETURN (-1);
-
-#elif defined (ACE_PSOS)
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::change_dir ((char *) path), ace_result_),
-                     int, -1);
-#else
-  ACE_OSCALL_RETURN (::chdir (path), int, -1);
-#   endif /* VXWORKS */
-}
-# endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
 ACE_INLINE int
 ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
@@ -687,29 +720,6 @@ ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
   ACE_OSCALL_RETURN (::getopt (argc, argv, optstring), int, -1);
 # endif /* VXWORKS */
 }
-
-# if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-ACE_INLINE int
-ACE_OS::mkfifo (const char *file, mode_t mode)
-{
-  ACE_TRACE ("ACE_OS::mkfifo");
-#if defined (ACE_LACKS_MKFIFO)
-  ACE_UNUSED_ARG (file);
-  ACE_UNUSED_ARG (mode);
-  ACE_NOTSUP_RETURN (-1);
-#else
-  ACE_OSCALL_RETURN (::mkfifo (file, mode), int, -1);
-#   endif /* ACE_LACKS_MKFIFO */
-}
-
-#   if !defined (ACE_LACKS_MKTEMP)
-ACE_INLINE char *
-ACE_OS::mktemp (char *s)
-{
-  return ::mktemp (s);
-}
-#   endif /* !ACE_LACKS_MKTEMP */
-# endif /* !ACE_HAS_MOSTLY_UNICODE_APIS */
 
 ACE_INLINE int
 ACE_OS::pipe (ACE_HANDLE fds[])
@@ -830,27 +840,6 @@ ACE_OS::default_win32_security_attributes (LPSECURITY_ATTRIBUTES sa)
 #endif /* ACE_DEFINES_DEFAULT_WIN32_SECURITY_ATTRIBUTES */
 }
 
-# if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-ACE_INLINE int
-ACE_OS::chdir (const char *path)
-{
-  ACE_TRACE ("ACE_OS::chdir");
-#if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
-  ACE_OSCALL_RETURN (::_chdir (path), int, -1);
-#else
-  ACE_OSCALL_RETURN (::_chdir ((char *) path), int, -1);
-#endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
-}
-
-#   if !defined (ACE_LACKS_MKTEMP)
-ACE_INLINE char *
-ACE_OS::mktemp (char *s)
-{
-  return ::mktemp (s);
-}
-#   endif /* !ACE_LACKS_MKTEMP */
-# endif /* !ACE_HAS_MOSTLY_UNICODE_APIS */
-
 ACE_INLINE int
 ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
 {
@@ -861,18 +850,6 @@ ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
   ACE_TRACE ("ACE_OS::getopt");
   ACE_NOTSUP_RETURN (-1);
 }
-
-# if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-ACE_INLINE int
-ACE_OS::mkfifo (const char *file, mode_t mode)
-{
-  ACE_UNUSED_ARG (file);
-  ACE_UNUSED_ARG (mode);
-
-  ACE_TRACE ("ACE_OS::mkfifo");
-  ACE_NOTSUP_RETURN (-1);
-}
-# endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
 ACE_INLINE int
 ACE_OS::pipe (ACE_HANDLE fds[])
@@ -1034,12 +1011,11 @@ ACE_OS::gettimeofday (void)
     return ACE_Time_Value (tv);
 }
 
-#if !defined (ACE_HAS_WINCE)
 ACE_INLINE int
-ACE_OS::stat (const char *file, struct stat *stp)
+ACE_OS::stat (const ACE_TCHAR *file, struct stat *stp)
 {
   ACE_TRACE ("ACE_OS::stat");
-# if defined (VXWORKS)
+#if defined (VXWORKS)
   ACE_OSCALL_RETURN (::stat ((char *) file, stp), int, -1);
 #elif defined (ACE_PSOS_LACKS_PHILE)
   ACE_UNUSED_ARG (file);
@@ -1047,17 +1023,41 @@ ACE_OS::stat (const char *file, struct stat *stp)
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_PSOS)
   ACE_OSCALL_RETURN (::stat_f ((char *) file, stp), int, -1);
-#else
-# if defined (ACE_HAS_X86_STAT_MACROS)
+#elif defined (ACE_HAS_WINCE)
+  ACE_TEXT_WIN32_FIND_DATA fdata;
+
+  HANDLE fhandle;
+
+  fhandle = ::FindFirstFile (file, &fdata);
+  if (fhandle == INVALID_HANDLE_VALUE)
+    {
+      ACE_OS::set_errno_to_last_error ();
+      return -1;
+    }
+  else if (fdata.nFileSizeHigh != 0)
+    {
+      errno = EINVAL;
+      return -1;
+    }
+  else
+    {
+      stp->st_size = fdata.nFileSizeLow;
+      stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime);
+      stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime);
+    }
+  return 0;
+#elif defined (ACE_HAS_X86_STAT_MACROS)
    // Solaris for intel uses an macro for stat(), this macro is a
    // wrapper for _xstat().
   ACE_OSCALL_RETURN (::_xstat (_STAT_VER, file, stp), int, -1);
-#else /* !ACE_HAS_X86_STAT_MACROS */
+#elif defined (__BORLANDC__)  && (__BORLANDC__ <= 0x540) && defined (ACE_USES_WCHAR)
+  ACE_OSCALL_RETURN (::_wstat (file, stp), int, -1);
+#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  ACE_OSCALL_RETURN (::_wstat (file, (struct _stat *) stp), int, -1);
+#else /* VXWORKS */
   ACE_OSCALL_RETURN (::stat (file, stp), int, -1);
-#endif /* !ACE_HAS_X86_STAT_MACROS */
-# endif /* VXWORKS */
+#endif /* VXWORKS */
 }
-#endif /* ACE_HAS_WINCE */
 
 ACE_INLINE time_t
 ACE_OS::time (time_t *tloc)
@@ -1095,9 +1095,8 @@ ACE_OS::rand (void)
   ACE_OSCALL_RETURN (::rand (), int, -1);
 }
 
-#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
 ACE_INLINE int
-ACE_OS::unlink (const char *path)
+ACE_OS::unlink (const ACE_TCHAR *path)
 {
   ACE_TRACE ("ACE_OS::unlink");
 # if defined (VXWORKS)
@@ -1108,31 +1107,41 @@ ACE_OS::unlink (const char *path)
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::remove ((char *) path),
                                                    ace_result_),
                        int, -1);
+# elif defined (ACE_HAS_WINCE)
+  // @@ The problem is, DeleteFile is not actually equals to unlink. ;(
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::DeleteFile (path), ace_result_),
+                        int, -1);
 # elif defined (ACE_LACKS_UNLINK)
     ACE_UNUSED_ARG (path);
     ACE_NOTSUP_RETURN (-1);
+# elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  ACE_OSCALL_RETURN (::_wunlink (path), int, -1);
 # else
   ACE_OSCALL_RETURN (::unlink (path), int, -1);
 # endif /* VXWORKS */
 }
 
 ACE_INLINE int
-ACE_OS::rename (const char *old_name, const char *new_name)
+ACE_OS::rename (const ACE_TCHAR *old_name, const ACE_TCHAR *new_name)
 {
 # if (ACE_LACKS_RENAME)
   ACE_UNUSED_ARG (old_name);
   ACE_UNUSED_ARG (new_name);
   ACE_NOTSUP_RETURN (-1);
-# else
+# elif defined (ACE_HAS_WINCE)
+  ACE_OSCALL_RETURN (::MoveFile (new_name, old_name), int, -1);
+# elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  ACE_OSCALL_RETURN (::_wrename (old_name, new_name), int, -1);
+# else /* ACE_LACKS_RENAME */
   ACE_OSCALL_RETURN (::rename (old_name, new_name), int, -1);
 # endif /* ACE_LACKS_RENAME */
 }
 
-ACE_INLINE char *
-ACE_OS::tempnam (const char *dir, const char *pfx)
+ACE_INLINE ACE_TCHAR *
+ACE_OS::tempnam (const ACE_TCHAR *dir, const ACE_TCHAR *pfx)
 {
   ACE_TRACE ("ACE_OS::tempnam");
-# if defined (VXWORKS) || defined (ACE_LACKS_TEMPNAM)
+#if defined (VXWORKS) || defined (ACE_LACKS_TEMPNAM)
   ACE_UNUSED_ARG (dir);
   ACE_UNUSED_ARG (pfx);
   ACE_NOTSUP_RETURN (0);
@@ -1140,21 +1149,17 @@ ACE_OS::tempnam (const char *dir, const char *pfx)
   // pSOS only considers the directory prefix
   ACE_UNUSED_ARG (pfx);
   ACE_OSCALL_RETURN (::tmpnam ((char *) dir), char *, 0);
-#else
-#if defined (ACE_WIN32)
-#if defined (__BORLANDC__) || (__IBMCPP__)
+#elif defined (__BORLANDC__) || (__IBMCPP__)
   ACE_OSCALL_RETURN (::_tempnam ((char *) dir, (char *) pfx), char *, 0);
-#     else
-  ACE_OSCALL_RETURN (::_tempnam (dir, pfx), char *, 0);
-#     endif /* __BORLANDC__ || __IBMCPP__ */
-#   else
+#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  ACE_OSCALL_RETURN (::_wtempnam (dir, pfx), wchar_t *, 0);
+#else /* VXWORKS */
   ACE_OSCALL_RETURN (::tempnam (dir, pfx), char *, 0);
-#   endif /* WIN32 */
-# endif /* VXWORKS */
+#endif /* VXWORKS */
 }
 
 ACE_INLINE ACE_HANDLE
-ACE_OS::shm_open (const char *filename,
+ACE_OS::shm_open (const ACE_TCHAR *filename,
                   int mode,
                   int perms,
                   LPSECURITY_ATTRIBUTES sa)
@@ -1165,13 +1170,12 @@ ACE_OS::shm_open (const char *filename,
   ACE_OSCALL_RETURN (::shm_open (filename, mode, perms), ACE_HANDLE, -1);
 # else  /* ! ACE_HAS_SHM_OPEN */
   // Just use ::open.
-  return ACE_OS::open (filename, mode, perms,
-                       sa);
+  return ACE_OS::open (filename, mode, perms, sa);
 # endif /* ! ACE_HAS_SHM_OPEN */
 }
 
 ACE_INLINE int
-ACE_OS::shm_unlink (const char *path)
+ACE_OS::shm_unlink (const ACE_TCHAR *path)
 {
   ACE_TRACE ("ACE_OS::shm_unlink");
 # if defined (ACE_HAS_SHM_OPEN)
@@ -1181,10 +1185,9 @@ ACE_OS::shm_unlink (const char *path)
   return ACE_OS::unlink (path);
 # endif /* ! ACE_HAS_SHM_OPEN */
 }
-#endif /* !ACE_HAS_MOSTLY_UNICODE_APIS */
 
-ACE_INLINE LPTSTR
-ACE_OS::cuserid (LPTSTR user, size_t maxlen)
+ACE_INLINE ACE_TCHAR *
+ACE_OS::cuserid (ACE_TCHAR *user, size_t maxlen)
 {
   ACE_TRACE ("ACE_OS::cuserid");
 #if defined (VXWORKS)
@@ -1207,7 +1210,7 @@ ACE_OS::cuserid (LPTSTR user, size_t maxlen)
   ACE_UNUSED_ARG (maxlen);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_WIN32)
-  BOOL result = ::GetUserName (user, (u_long *) &maxlen);
+  BOOL result = ACE_TEXT_GetUserName (user, (u_long *) &maxlen);
   if (result == FALSE)
     ACE_FAIL_RETURN (0);
   else
@@ -1377,6 +1380,15 @@ ACE_OS::strcat (char *s, const char *t)
   return ::strcat (s, t);
 }
 
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE wchar_t *
+ACE_OS::strcat (wchar_t *s, const wchar_t *t)
+{
+  ACE_TRACE ("ACE_OS::strcat");
+  return ::wcscat (s, t);
+}
+#endif /* ACE_HAS_WCHAR */
+
 ACE_INLINE size_t
 ACE_OS::strcspn (const char *s, const char *reject)
 {
@@ -1415,6 +1427,15 @@ ACE_OS::strspn (const char *s, const char *t)
 #endif /* ACE_HAS_WINCE */
 }
 
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE size_t
+ACE_OS::strspn (const wchar_t*s, const wchar_t *t)
+{
+  ACE_TRACE ("ACE_OS::strspn");
+  return ::wcsspn (s, t);
+}
+#endif /* ACE_HAS_WCHAR */
+
 ACE_INLINE char *
 ACE_OS::strchr (char *s, int c)
 {
@@ -1431,6 +1452,15 @@ ACE_OS::strchr (char *s, int c)
     }
 #endif /* ACE_HAS_WINCE */
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE wchar_t *
+ACE_OS::strchr (wchar_t *s, wint_t c)
+{
+  ACE_TRACE ("ACE_OS::strchr");
+  return ::wcschr (s, c);
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE const char *
 ACE_OS::strchr (const char *s, int c)
@@ -1449,6 +1479,15 @@ ACE_OS::strchr (const char *s, int c)
 #endif /* ACE_HAS_WINCE */
 }
 
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE const wchar_t *
+ACE_OS::strchr (const wchar_t *s, wint_t c)
+{
+  ACE_TRACE ("ACE_OS::strchr");
+  return (const wchar_t *) ::wcschr (s, c);
+}
+#endif /* ACE_HAS_WCHAR */
+
 ACE_INLINE const char *
 ACE_OS::strnchr (const char *s, int c, size_t len)
 {
@@ -1458,6 +1497,18 @@ ACE_OS::strnchr (const char *s, int c, size_t len)
 
   return 0;
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE const wchar_t *
+ACE_OS::strnchr (const wchar_t *s, wint_t c, size_t len)
+{
+  for (size_t i = 0; i < len; i++)
+    if (s[i] == c)
+      return s + i;
+
+  return 0;
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE char *
 ACE_OS::strnchr (char *s, int c, size_t len)
@@ -1470,12 +1521,34 @@ ACE_OS::strnchr (char *s, int c, size_t len)
 #endif
 }
 
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE wchar_t *
+ACE_OS::strnchr (wchar_t *s, wint_t c, size_t len)
+{
+#if defined ACE_PSOS_DIAB_PPC  //Complier problem Diab 4.2b
+  const wchar_t *const_wchar_s=s;
+  return (wchar_t *) ACE_OS::strnchr (const_wchar_s, c, len);
+#else
+  return (wchar_t *) ACE_OS::strnchr ((const wchar_t *) s, c, len);
+#endif
+}
+#endif /* ACE_HAS_WCHAR */
+
 ACE_INLINE const char *
 ACE_OS::strstr (const char *s, const char *t)
 {
   ACE_TRACE ("ACE_OS::strstr");
   return (const char *) ::strstr (s, t);
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE const wchar_t *
+ACE_OS::strstr (const wchar_t *s, const wchar_t *t)
+{
+  ACE_TRACE ("ACE_OS::strstr");
+  return (const wchar_t *) ::wcsstr (s, t);
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE char *
 ACE_OS::strstr (char *s, const char *t)
@@ -1484,12 +1557,28 @@ ACE_OS::strstr (char *s, const char *t)
   return ::strstr (s, t);
 }
 
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE wchar_t *
+ACE_OS::strstr (wchar_t *s, const wchar_t *t)
+{
+  ACE_TRACE ("ACE_OS::strstr");
+  return ::wcsstr (s, t);
+}
+#endif /* ACE_HAS_WCHAR */
+
 ACE_INLINE size_t
 ACE_OS::strlen (const char *s)
 {
-  // ACE_TRACE ("ACE_OS::strlen");
   return ::strlen (s);
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE size_t
+ACE_OS::strlen (const wchar_t *s)
+{
+  return ::wcslen (s);
+}
+#endif
 
 ACE_INLINE const char *
 ACE_OS::strnstr (const char *s1, const char *s2, size_t len2)
@@ -1514,6 +1603,31 @@ ACE_OS::strnstr (const char *s1, const char *s2, size_t len2)
   return 0;
 }
 
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE const wchar_t *
+ACE_OS::strnstr (const wchar_t *s1, const wchar_t *s2, size_t len2)
+{
+  // Substring length
+  size_t len1 = ACE_OS::strlen (s1);
+
+  // Check if the substring is longer than the string being searched.
+  if (len2 > len1)
+    return 0;
+
+  // Go upto <len>
+  size_t len = len1 - len2;
+
+  for (size_t i = 0; i <= len; i++)
+    {
+      if (ACE_OS::memcmp (s1 + i, s2, len2 * sizeof (wchar_t)) == 0)
+        // Found a match!  Return the index.
+        return s1 + i;
+    }
+
+  return 0;
+}
+#endif /* ACE_HAS_WCHAR */
+
 ACE_INLINE char *
 ACE_OS::strnstr (char *s, const char *t, size_t len)
 {
@@ -1524,6 +1638,14 @@ ACE_OS::strnstr (char *s, const char *t, size_t len)
   return (char *) ACE_OS::strnstr ((const char *) s, t, len);
 #endif
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE wchar_t *
+ACE_OS::strnstr (wchar_t *s, const wchar_t *t, size_t len)
+{
+  return (wchar_t *) ACE_OS::strnstr ((const wchar_t *) s, t, len);
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE char *
 ACE_OS::strrchr (char *s, int c)
@@ -1544,6 +1666,27 @@ ACE_OS::strrchr (char *s, int c)
 #endif /* ACE_LACKS_STRRCHR */
 }
 
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE const wchar_t *
+ACE_OS::strrchr (const wchar_t *s, wint_t c)
+{
+  ACE_TRACE ("ACE_OS::strrchr");
+# if !defined (ACE_LACKS_WCSRCHR)
+  return (const wchar_t *) ::wcsrchr (s, c);
+# else
+  const wchar_t *p = s + ::wcslen (s);
+
+  while (*p != c)
+    if (p == s)
+      return 0;
+    else
+      p--;
+
+  return p;
+# endif /* ACE_LACKS_WCSRCHR */
+}
+#endif /* ACE_HAS_WCHAR */
+
 ACE_INLINE const char *
 ACE_OS::strrchr (const char *s, int c)
 {
@@ -1563,25 +1706,58 @@ ACE_OS::strrchr (const char *s, int c)
 #endif /* ACE_LACKS_STRRCHR */
 }
 
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE wchar_t *
+ACE_OS::strrchr (wchar_t *s, wint_t c)
+{
+  ACE_TRACE ("ACE_OS::strrchr");
+# if !defined (ACE_LACKS_WCSRCHR)
+  return (wchar_t *) ::wcsrchr (s, c);
+# else
+  wchar_t *p = s + ::wcslen (s);
+
+  while (*p != c)
+    if (p == s)
+      return 0;
+    else
+      p--;
+
+  return p;
+# endif /* ACE_LACKS_WCSRCHR */
+}
+#endif /* ACE_HAS_WCHAR */
+
 ACE_INLINE int
 ACE_OS::strcmp (const char *s, const char *t)
 {
-  ACE_TRACE ("ACE_OS::strcmp");
   return ::strcmp (s, t);
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::strcmp (const wchar_t *s, const wchar_t *t)
+{
+  return ::wcscmp (s, t);
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE char *
 ACE_OS::strcpy (char *s, const char *t)
 {
-  // ACE_TRACE ("ACE_OS::strcpy");
-
   return ::strcpy (s, t);
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE wchar_t *
+ACE_OS::strcpy (wchar_t *s, const wchar_t *t)
+{
+  return ::wcscpy (s, t);
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE char *
 ACE_OS::strecpy (char *s, const char *t)
 {
-  //  ACE_TRACE ("ACE_OS::strecpy");
   register char *dscan = s;
   register const char *sscan = t;
 
@@ -1591,12 +1767,35 @@ ACE_OS::strecpy (char *s, const char *t)
   return dscan;
 }
 
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE wchar_t *
+ACE_OS::strecpy (wchar_t *s, const wchar_t *t)
+{
+  register wchar_t *dscan = s;
+  register const wchar_t *sscan = t;
+
+  while ((*dscan++ = *sscan++) != L'\0')
+    continue;
+
+  return dscan;
+}
+#endif /* ACE_HAS_WCHAR */
+
 ACE_INLINE int
 ACE_OS::to_lower (int c)
 {
   ACE_TRACE ("ACE_OS::to_lower");
   return tolower (c);
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE wint_t
+ACE_OS::to_lower (wint_t c)
+{
+  ACE_TRACE ("ACE_OS::to_lower");
+  return ::towlower (c);
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE char *
 ACE_OS::strpbrk (char *s1, const char *s2)
@@ -1609,6 +1808,15 @@ ACE_OS::strpbrk (char *s1, const char *s2)
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_WINCE */
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE wchar_t *
+ACE_OS::strpbrk (wchar_t *s, const wchar_t *t)
+{
+  ACE_TRACE ("ACE_OS::wcspbrk");
+  return ::wcspbrk (s, t);
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE const char *
 ACE_OS::strpbrk (const char *s1, const char *s2)
@@ -1625,9 +1833,7 @@ ACE_OS::strpbrk (const char *s1, const char *s2)
 ACE_INLINE char *
 ACE_OS::strdup (const char *s)
 {
-  // ACE_TRACE ("ACE_OS::strdup");
-
-  // @@ Should we provide this function on WinCE?
+  // @@ WINCE Should we provide this function on WinCE?
 #if defined (ACE_HAS_STRDUP_EMULATION)
   char *t = (char *) ::malloc (::strlen (s) + 1);
   if (t == 0)
@@ -1639,6 +1845,19 @@ ACE_OS::strdup (const char *s)
 #endif /* ACE_HAS_STRDUP_EMULATION */
 }
 
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE wchar_t *
+ACE_OS::strdup (const wchar_t *s)
+{
+#   if defined (__BORLANDC__)
+  wchar_t *buffer = (wchar_t *) malloc ((ACE_OS::strlen (s) + 1) * sizeof (wchar_t));
+  return ::wcscpy (buffer, s);
+#   else
+  return ::wcsdup (s);
+#   endif /* __BORLANDC__ */
+}
+#endif /* ACE_HAS_WCHAR */
+
 #if !defined (ACE_HAS_WINCE)
 ACE_INLINE int
 ACE_OS::vsprintf (char *buffer, const char *format, va_list argptr)
@@ -1646,6 +1865,14 @@ ACE_OS::vsprintf (char *buffer, const char *format, va_list argptr)
   return ACE_SPRINTF_ADAPTER (::vsprintf (buffer, format, argptr));
 }
 #endif /* ACE_HAS_WINCE */
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
+{
+  return ::vswprintf (buffer, format, argptr);
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS::strcasecmp (const char *s, const char *t)
@@ -1682,6 +1909,41 @@ ACE_OS::strcasecmp (const char *s, const char *t)
   return ::_stricmp (s, t);
 #endif /* ACE_WIN32 */
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::strcasecmp (const wchar_t *s, const wchar_t *t)
+{
+  ACE_TRACE ("ACE_OS::strcasecmp");
+
+# if !defined (ACE_WIN32)
+  const wchar_t *scan1 = s;
+  const wchar_t *scan2 = t;
+
+  while (*scan1 != 0
+         && ACE_OS::to_lower (*scan1) == ACE_OS::to_lower (*scan2))
+    {
+      ++scan1;
+      ++scan2;
+    }
+
+  // The following case analysis is necessary so that characters which
+  // look negative collate low against normal characters but high
+  // against the end-of-string NUL.
+
+  if (*scan1 == '\0' && *scan2 == '\0')
+    return 0;
+  else if (*scan1 == '\0')
+    return -1;
+  else if (*scan2 == '\0')
+    return 1;
+  else
+    return ACE_OS::to_lower (*scan1) - ACE_OS::to_lower (*scan2);
+# else /* ACE_WIN32 */
+  return ::_wcsicmp (s, t);
+# endif /* ACE_WIN32 */
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS::strncasecmp (const char *s,
@@ -1726,6 +1988,48 @@ ACE_OS::strncasecmp (const char *s,
 #endif /* ACE_WIN32 */
 }
 
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::strncasecmp (const wchar_t *s,
+                     const wchar_t *t,
+                     size_t len)
+{
+  ACE_TRACE ("ACE_OS::strcasecmp");
+
+# if !defined (ACE_WIN32)
+  const wchar_t *scan1 = s;
+  const wchar_t *scan2 = t;
+  ssize_t count = ssize_t (n);
+
+  while (--count >= 0
+         && *scan1 != 0
+         && ACE_OS::to_lower (*scan1) == ACE_OS::to_lower (*scan2))
+    {
+      ++scan1;
+      ++scan2;
+    }
+
+  if (count < 0)
+    return 0;
+
+  // The following case analysis is necessary so that characters which
+  // look negative collate low against normal characters but high
+  // against the end-of-string NUL.
+
+  if (*scan1 == '\0' && *scan2 == '\0')
+    return 0;
+  else if (*scan1 == '\0')
+    return -1;
+  else if (*scan2 == '\0')
+    return 1;
+  else
+    return ACE_OS::to_lower (*scan1) - ACE_OS::to_lower (*scan2);
+# else /* ACE_WIN32 */
+  return ::_wcsnicmp (s, t, len);
+# endif /* ACE_WIN32 */
+}
+#endif /* ACE_HAS_WCHAR */
+
 ACE_INLINE int
 ACE_OS::strncmp (const char *s, const char *t, size_t len)
 {
@@ -1733,12 +2037,28 @@ ACE_OS::strncmp (const char *s, const char *t, size_t len)
   return ::strncmp (s, t, len);
 }
 
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::strncmp (const wchar_t *s, const wchar_t *t, size_t len)
+{
+  ACE_TRACE ("ACE_OS::strncmp");
+  return ::wcsncmp (s, t, len);
+}
+#endif /* ACE_HAS_WCHAR */
+
 ACE_INLINE char *
 ACE_OS::strncpy (char *s, const char *t, size_t len)
 {
-  // ACE_TRACE ("ACE_OS::strncpy");
   return ::strncpy (s, t, len);
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE wchar_t *
+ACE_OS::strncpy (wchar_t *s, const wchar_t *t, size_t len)
+{
+  return ::wcsncpy (s, t, len);
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE char *
 ACE_OS::strncat (char *s, const char *t, size_t len)
@@ -1747,12 +2067,31 @@ ACE_OS::strncat (char *s, const char *t, size_t len)
   return ::strncat (s, t, len);
 }
 
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE wchar_t *
+ACE_OS::strncat (wchar_t *s, const wchar_t *t, size_t len)
+{
+  ACE_TRACE ("ACE_OS::strncat");
+  return ::wcsncat (s, t, len);
+}
+#endif /* ACE_HAS_WCHAR */
+
 ACE_INLINE char *
 ACE_OS::strtok (char *s, const char *tokens)
 {
   ACE_TRACE ("ACE_OS::strtok");
   return ::strtok (s, tokens);
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE wchar_t *
+ACE_OS::strtok (wchar_t *s, const wchar_t *tokens)
+{
+  ACE_TRACE ("ACE_OS::strtok");
+  return ::wcstok (s, tokens);
+}
+#endif /* ACE_HAS_WCHAR */
+
 
 ACE_INLINE char *
 ACE_OS::strtok_r (char *s, const char *tokens, char **lasts)
@@ -1792,10 +2131,19 @@ ACE_OS::strtol (const char *s, char **ptr, int base)
 #endif /* ACE_HAS_WINCE */
 }
 
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE long
+ACE_OS::strtol (const wchar_t *s, wchar_t **ptr, int base)
+{
+  ACE_TRACE ("ACE_OS::strtol");
+  return ::wcstol (s, ptr, base);
+}
+#endif /* ACE_HAS_WCHAR */
+
 ACE_INLINE unsigned long
 ACE_OS::strtoul (const char *s, char **ptr, int base)
 {
-  // @@ We must implement this function for WinCE also.
+  // @@ WINCE: We must implement this function for WinCE also.
   // Notice WinCE support wcstoul.
 #if !defined (ACE_HAS_WINCE)
   ACE_TRACE ("ACE_OS::strtoul");
@@ -1814,6 +2162,16 @@ ACE_OS::strtoul (const char *s, char **ptr, int base)
 #endif /* ACE_HAS_WINCE */
 }
 
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE unsigned long
+ACE_OS::strtoul (const wchar_t *s, wchar_t **ptr, int base)
+{
+  ACE_TRACE ("ACE_OS::strtoul");
+  return ::wcstoul (s, ptr, base);
+}
+#endif /* ACE_HAS_WCHAR */
+
 ACE_INLINE double
 ACE_OS::strtod (const char *s, char **endptr)
 {
@@ -1828,6 +2186,15 @@ ACE_OS::strtod (const char *s, char **endptr)
 #endif /* ACE_HAS_WINCE */
 }
 
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE double
+ACE_OS::strtod (const wchar_t *s, wchar_t **endptr)
+{
+  ACE_TRACE ("ACE_OS::strtod");
+  return ::wcstod (s, endptr);
+}
+#endif /* ACE_HAS_WCHAR */
+
 ACE_INLINE int
 ACE_OS::ace_isspace (const char s)
 {
@@ -1838,6 +2205,14 @@ ACE_OS::ace_isspace (const char s)
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_WINCE */
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::ace_isspace (wchar_t c)
+{
+  return iswspace (c);
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE long
 ACE_OS::sysconf (int name)
@@ -1854,7 +2229,7 @@ ACE_OS::sysconf (int name)
 ACE_INLINE int
 ACE_OS::mutex_init (ACE_mutex_t *m,
                     int type,
-                    LPCTSTR name,
+                    const ACE_TCHAR *name,
                     ACE_mutexattr_t *attributes,
                     LPSECURITY_ATTRIBUTES sa)
 {
@@ -1942,9 +2317,9 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   switch (type)
     {
     case USYNC_PROCESS:
-      m->proc_mutex_ = ::CreateMutex (ACE_OS::default_win32_security_attributes (sa),
-                                      FALSE,
-                                      name);
+      m->proc_mutex_ = ACE_TEXT_CreateMutex (ACE_OS::default_win32_security_attributes (sa),
+                                             FALSE,
+                                             name);
       if (m->proc_mutex_ == 0)
         ACE_FAIL_RETURN (-1);
       else
@@ -2330,7 +2705,7 @@ ACE_OS::mutex_unlock (ACE_mutex_t *m)
 ACE_INLINE int
 ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
                            int type,
-                           LPCTSTR name,
+                           const ACE_TCHAR *name,
                            ACE_mutexattr_t *arg)
 {
   // ACE_TRACE ("ACE_OS::thread_mutex_init");
@@ -2544,7 +2919,7 @@ ACE_OS::condattr_destroy (ACE_condattr_t &attributes)
 ACE_INLINE int
 ACE_OS::cond_init (ACE_cond_t *cv,
                    ACE_condattr_t &attributes,
-                   LPCTSTR name,
+                   const ACE_TCHAR *name,
                    void *arg)
 {
   // ACE_TRACE ("ACE_OS::cond_init");
@@ -2592,7 +2967,7 @@ ACE_OS::cond_init (ACE_cond_t *cv,
 }
 
 ACE_INLINE int
-ACE_OS::cond_init (ACE_cond_t *cv, short type, LPCTSTR name, void *arg)
+ACE_OS::cond_init (ACE_cond_t *cv, short type, const ACE_TCHAR *name, void *arg)
 {
   ACE_condattr_t attributes;
   if (ACE_OS::condattr_init (attributes, type) == 0
@@ -2830,7 +3205,7 @@ ACE_OS::thr_self (void)
 
 ACE_INLINE int
 ACE_OS::recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
-                              LPCTSTR name,
+                              const ACE_TCHAR *name,
                               ACE_mutexattr_t *arg,
                               LPSECURITY_ATTRIBUTES sa)
 {
@@ -3311,7 +3686,7 @@ ACE_INLINE int
 ACE_OS::sema_init (ACE_sema_t *s,
                    u_int count,
                    int type,
-                   LPCTSTR name,
+                   const ACE_TCHAR *name,
                    void *arg,
                    int max,
                    LPSECURITY_ATTRIBUTES sa)
@@ -3437,7 +3812,11 @@ ACE_OS::sema_init (ACE_sema_t *s,
   ACE_UNUSED_ARG (arg);
   // Create the semaphore with its value initialized to <count> and
   // its maximum value initialized to <max>.
-  *s = ::CreateSemaphore (ACE_OS::default_win32_security_attributes (sa), count, max, name);
+  *s = 
+    ACE_TEXT_CreateSemaphore (ACE_OS::default_win32_security_attributes (sa), 
+                              count, 
+                              max, 
+                              name);
 
   if (*s == 0)
     ACE_FAIL_RETURN (-1);
@@ -4324,7 +4703,7 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
 ACE_INLINE int
 ACE_OS::rwlock_init (ACE_rwlock_t *rw,
                      int type,
-                     LPCTSTR name,
+                     const ACE_TCHAR *name,
                      void *arg)
 {
   // ACE_TRACE ("ACE_OS::rwlock_init");
@@ -4381,17 +4760,17 @@ ACE_OS::event_init (ACE_event_t *event,
                     int manual_reset,
                     int initial_state,
                     int type,
-                    LPCTSTR name,
+                    const ACE_TCHAR *name,
                     void *arg,
                     LPSECURITY_ATTRIBUTES sa)
 {
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (arg);
-  *event = ::CreateEvent (ACE_OS::default_win32_security_attributes(sa),
-                          manual_reset,
-                          initial_state,
-                          name);
+  *event = ACE_TEXT_CreateEvent (ACE_OS::default_win32_security_attributes(sa),
+                                 manual_reset,
+                                 initial_state,
+                                 name);
   if (*event == NULL)
     ACE_FAIL_RETURN (-1);
   else
@@ -5598,21 +5977,25 @@ ACE_OS::connect (ACE_HANDLE handle,
 
 #if !defined (VXWORKS)
 ACE_INLINE struct hostent *
-ACE_OS::gethostbyname (const char *name)
+ACE_OS::gethostbyname (const ACE_TCHAR *name)
 {
   ACE_TRACE ("ACE_OS::gethostbyname");
 # if defined (ACE_PSOS)
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_HAS_NONCONST_GETBY)
-  ACE_SOCKCALL_RETURN (::gethostbyname ((char *) name), struct hostent *, 0);
+  ACE_SOCKCALL_RETURN (::gethostbyname (ACE_const_cast (char *, name), 
+                       struct hostent *, 
+                       0);
 # else
-  ACE_SOCKCALL_RETURN (::gethostbyname (name), struct hostent *, 0);
+  ACE_SOCKCALL_RETURN (::gethostbyname (ACE_TEXT_ALWAYS_CHAR (name)), 
+                       struct hostent *, 
+                       0);
 # endif /* ACE_HAS_NONCONST_GETBY */
 }
 
 ACE_INLINE struct hostent *
-ACE_OS::gethostbyname2 (const char *name, int family)
+ACE_OS::gethostbyname2 (const ACE_TCHAR *name, int family)
 {
   ACE_TRACE ("ACE_OS::gethostbyname2");
 # if defined (ACE_PSOS)
@@ -5621,9 +6004,14 @@ ACE_OS::gethostbyname2 (const char *name, int family)
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_HAS_IP6)
 #   if defined (ACE_HAS_NONCONST_GETBY)
-  ACE_SOCKCALL_RETURN (::gethostbyname2 (ACE_const_cast (char *, name), family), struct hostent *, 0);
+  ACE_SOCKCALL_RETURN (::gethostbyname2 (ACE_const_cast (char *, name), 
+                                         family), 
+                       struct hostent *, 
+                       0);
 #   else
-  ACE_SOCKCALL_RETURN (::gethostbyname2 (name, family), struct hostent *, 0);
+  ACE_SOCKCALL_RETURN (::gethostbyname2 (ACE_TEXT_ALWAYS_CHAR (name), family), 
+                       struct hostent *, 
+                       0);
 #   endif /* ACE_HAS_NONCONST_GETBY */
 # else
   // IPv4-only implementation
@@ -5635,7 +6023,7 @@ ACE_OS::gethostbyname2 (const char *name, int family)
 }
 
 ACE_INLINE struct hostent *
-ACE_OS::gethostbyaddr (const char *addr, int length, int type)
+ACE_OS::gethostbyaddr (const ACE_TCHAR *addr, int length, int type)
 {
   ACE_TRACE ("ACE_OS::gethostbyaddr");
 # if defined (ACE_PSOS)
@@ -5644,11 +6032,17 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
   ACE_UNUSED_ARG (type);
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_HAS_NONCONST_GETBY)
-  ACE_SOCKCALL_RETURN (::gethostbyaddr ((char *) addr, (ACE_SOCKET_LEN) length, type),
-                       struct hostent *, 0);
+  ACE_SOCKCALL_RETURN (::gethostbyaddr (ACE_const_cast (char *, addr), 
+                                        (ACE_SOCKET_LEN) length, 
+                                        type),
+                       struct hostent *, 
+                       0);
 # else
-  ACE_SOCKCALL_RETURN (::gethostbyaddr (addr, (ACE_SOCKET_LEN) length, type),
-                       struct hostent *, 0);
+  ACE_SOCKCALL_RETURN (::gethostbyaddr (ACE_TEXT_ALWAYS_CHAR (addr), 
+                                        (ACE_SOCKET_LEN) length, 
+                                        type),
+                       struct hostent *, 
+                       0);
 # endif /* ACE_HAS_NONCONST_GETBY */
 }
 #endif /* ! VXWORKS */
@@ -5930,22 +6324,24 @@ ACE_OS::getpeername (ACE_HANDLE handle, struct sockaddr *addr,
 }
 
 ACE_INLINE struct protoent *
-ACE_OS::getprotobyname (const char *name)
+ACE_OS::getprotobyname (const ACE_TCHAR *name)
 {
 #if defined (VXWORKS) || defined (ACE_HAS_WINCE) || (defined (ghs) && defined (__Chorus)) || defined (ACE_PSOS)
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_NONCONST_GETBY)
-  ACE_SOCKCALL_RETURN (::getprotobyname ((char *) name),
-                       struct protoent *, 0);
+  ACE_SOCKCALL_RETURN (::getprotobyname (ACE_const_cast (char *, name),
+                       struct protoent *, 
+                       0);
 #else
-  ACE_SOCKCALL_RETURN (::getprotobyname (name),
-                       struct protoent *, 0);
+  ACE_SOCKCALL_RETURN (::getprotobyname (ACE_TEXT_ALWAYS_CHAR (name)),
+                       struct protoent *, 
+                       0);
 #endif /* VXWORKS */
 }
 
 ACE_INLINE struct protoent *
-ACE_OS::getprotobyname_r (const char *name,
+ACE_OS::getprotobyname_r (const ACE_TCHAR *name,
                           struct protoent *result,
                           ACE_PROTOENT_DATA buffer)
 {
@@ -5967,21 +6363,25 @@ ACE_OS::getprotobyname_r (const char *name,
                         struct protoent *, 0,
                         buffer, sizeof (ACE_PROTOENT_DATA));
 #   else
-    ACE_SOCKCALL_RETURN (::getprotobyname_r (name, result, buffer, sizeof (ACE_PROTOENT_DATA)),
+    ACE_SOCKCALL_RETURN (::getprotobyname_r (name, 
+                                             result, 
+                                             buffer, 
+                                             sizeof (ACE_PROTOENT_DATA)),
                        struct protoent *, 0);
 #   endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 # endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 #elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
-  ACE_SOCKCALL_RETURN (::getprotobyname ((char *) name),
+  ACE_SOCKCALL_RETURN (::getprotobyname (ACE_const_cast (char *, name)),
                        struct protoent *, 0);
 #else
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (result);
 
-  ACE_SOCKCALL_RETURN (::getprotobyname (name),
-                       struct protoent *, 0);
+  ACE_SOCKCALL_RETURN (::getprotobyname (ACE_TEXT_ALWAYS_CHAR (name)),
+                       struct protoent *, 
+                       0);
 #endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) !defined (UNIXWARE) */
 }
 
@@ -6034,7 +6434,7 @@ ACE_OS::getprotobynumber_r (int proto,
 }
 
 ACE_INLINE struct servent *
-ACE_OS::getservbyname (const char *svc, const char *proto)
+ACE_OS::getservbyname (const ACE_TCHAR *svc, const ACE_TCHAR *proto)
 {
   ACE_TRACE ("ACE_OS::getservbyname");
 #if defined (ACE_LACKS_GETSERVBYNAME)
@@ -6042,11 +6442,15 @@ ACE_OS::getservbyname (const char *svc, const char *proto)
   ACE_UNUSED_ARG (proto);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_NONCONST_GETBY)
-  ACE_SOCKCALL_RETURN (::getservbyname ((char *) svc, (char *) proto),
-                       struct servent *, 0);
+  ACE_SOCKCALL_RETURN (::getservbyname (ACE_const_cast (char *, svc), 
+                                        ACE_const_cast (char *, proto)),
+                       struct servent *, 
+                       0);
 #else
-  ACE_SOCKCALL_RETURN (::getservbyname (svc, proto),
-                       struct servent *, 0);
+  ACE_SOCKCALL_RETURN (::getservbyname (ACE_TEXT_ALWAYS_CHAR (svc), 
+                                        ACE_TEXT_ALWAYS_CHAR (proto)),
+                       struct servent *, 
+                       0);
 #endif /* ACE_HAS_NONCONST_GETBY */
 }
 
@@ -6057,11 +6461,14 @@ ACE_OS::getsockname (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_OS::getsockname");
 #if defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
-  ACE_SOCKCALL_RETURN (::getsockname ((ACE_SOCKET) handle, (struct sockaddr_in *) addr,
+  ACE_SOCKCALL_RETURN (::getsockname ((ACE_SOCKET) handle, 
+                                      (struct sockaddr_in *) addr,
                                       (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
 #else
-  ACE_SOCKCALL_RETURN (::getsockname ((ACE_SOCKET) handle, addr, (ACE_SOCKET_LEN *) addrlen),
+  ACE_SOCKCALL_RETURN (::getsockname ((ACE_SOCKET) handle, 
+                                      addr, 
+                                      (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
 #endif /* defined (ACE_PSOS) */
 }
@@ -6074,8 +6481,13 @@ ACE_OS::getsockopt (ACE_HANDLE handle,
                     int *optlen)
 {
   ACE_TRACE ("ACE_OS::getsockopt");
-  ACE_SOCKCALL_RETURN (::getsockopt ((ACE_SOCKET) handle, level, optname, optval, (ACE_SOCKET_LEN *) optlen),
-                       int, -1);
+  ACE_SOCKCALL_RETURN (::getsockopt ((ACE_SOCKET) handle, 
+                                     level, 
+                                     optname, 
+                                     optval, 
+                                     (ACE_SOCKET_LEN *) optlen),
+                       int, 
+                       -1);
 }
 
 ACE_INLINE int
@@ -6086,13 +6498,20 @@ ACE_OS::listen (ACE_HANDLE handle, int backlog)
 }
 
 ACE_INLINE int
-ACE_OS::setsockopt (ACE_HANDLE handle, int level, int optname,
-                    const char *optval, int optlen)
+ACE_OS::setsockopt (ACE_HANDLE handle, 
+                    int level, 
+                    int optname,
+                    const char *optval, 
+                    int optlen)
 {
   ACE_TRACE ("ACE_OS::setsockopt");
-  ACE_SOCKCALL_RETURN (::setsockopt ((ACE_SOCKET) handle, level, optname,
-                                     (ACE_SOCKOPT_TYPE1) optval, optlen),
-                       int, -1);
+  ACE_SOCKCALL_RETURN (::setsockopt ((ACE_SOCKET) handle, 
+                                     level, 
+                                     optname,
+                                     (ACE_SOCKOPT_TYPE1) optval, 
+                                     optlen),
+                       int, 
+                       -1);
 }
 
 ACE_INLINE int
@@ -6146,10 +6565,14 @@ ACE_OS::socket (int domain,
 }
 
 ACE_INLINE int
-ACE_OS::atoi (const char *s)
+ACE_OS::atoi (const ACE_TCHAR *s)
 {
   ACE_TRACE ("ACE_OS::atoi");
+#if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  ACE_OSCALL_RETURN (::_wtoi (s), int, -1);
+#else /* ACE_WIN32 */
   ACE_OSCALL_RETURN (::atoi (s), int, -1);
+#endif /* ACE_WIN32 */
 }
 
 ACE_INLINE int
@@ -6242,27 +6665,32 @@ ACE_OS::fclose (FILE *fp)
 #endif /* !ACE_HAS_WINCE */
 }
 
-#if !defined (ACE_HAS_WINCE)
-// Here are functions that CE doesn't support at all.
-// Notice that some of them might have UNICODE version.
-ACE_INLINE char *
-ACE_OS::fgets (char *buf, int size, FILE *fp)
+ACE_INLINE ACE_TCHAR *
+ACE_OS::fgets (ACE_TCHAR *buf, int size, FILE *fp)
 {
   ACE_TRACE ("ACE_OS::fgets");
+#if defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (size);
+  ACE_UNUSED_ARG (fp);
+  ACE_NOTSUP_RETURN (0);
+#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  ACE_OSCALL_RETURN (::fgetws (buf, size, fp), wchar_t *, 0);
+#else /* ACE_WIN32 */
   ACE_OSCALL_RETURN (::fgets (buf, size, fp), char *, 0);
+#endif /* ACE_WIN32 */
 }
 
 #if !defined (ACE_WIN32)
-// Win32 implementation of fopen(const char*, const char*)
+// Win32 implementation of fopen(const ACE_TCHAR*, const ACE_TCHAR*)
 // is in OS.cpp.
 ACE_INLINE FILE *
-ACE_OS::fopen (const char *filename, const char *mode)
+ACE_OS::fopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode)
 {
   ACE_TRACE ("ACE_OS::fopen");
   ACE_OSCALL_RETURN (::fopen (filename, mode), FILE *, 0);
 }
 #endif /* ACE_WIN32 */
-#endif /* ACE_HAS_WINCE */
 
 ACE_INLINE int
 ACE_OS::fflush (FILE *fp)
@@ -6333,13 +6761,12 @@ ACE_OS::fwrite (const void *ptr, size_t size, size_t nitems, FILE *fp)
 #endif /* ACE_LACKS_POSIX_PROTOTYPES */
 }
 
-#if !defined (ACE_HAS_WINCE)
 ACE_INLINE int
-ACE_OS::truncate (const char *filename,
+ACE_OS::truncate (const ACE_TCHAR *filename,
                   off_t offset)
 {
   ACE_TRACE ("ACE_OS::truncate");
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) 
   ACE_HANDLE handle = ACE_OS::open (filename,
                                     O_WRONLY,
                                     ACE_DEFAULT_FILE_PERMS);
@@ -6365,7 +6792,6 @@ ACE_OS::truncate (const char *filename,
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }
-#endif /* ACE_HAS_WINCE */
 
 // Accessors to PWD file.
 
@@ -6487,8 +6913,11 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
 
 #if !defined (VXWORKS)
 ACE_INLINE struct hostent *
-ACE_OS::gethostbyaddr_r (const char *addr, int length, int type,
-                         hostent *result, ACE_HOSTENT_DATA buffer,
+ACE_OS::gethostbyaddr_r (const ACE_TCHAR *addr, 
+                         int length, 
+                         int type,
+                         hostent *result, 
+                         ACE_HOSTENT_DATA buffer,
                          int *h_errnop)
 {
   ACE_TRACE ("ACE_OS::gethostbyaddr_r");
@@ -6530,20 +6959,27 @@ ACE_OS::gethostbyaddr_r (const char *addr, int length, int type,
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (h_errnop);
-  ACE_SOCKCALL_RETURN (::gethostbyaddr ((char *) addr, (ACE_SOCKET_LEN) length, type),
-                       struct hostent *, 0);
+  ACE_SOCKCALL_RETURN (::gethostbyaddr (ACE_const_cast (char *, addr), 
+                                        (ACE_SOCKET_LEN) length, 
+                                        type),
+                       struct hostent *, 
+                       0);
 # else
   ACE_UNUSED_ARG (h_errnop);
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (result);
 
-  ACE_SOCKCALL_RETURN (::gethostbyaddr (addr, (ACE_SOCKET_LEN) length, type),
-                       struct hostent *, 0);
+  ACE_SOCKCALL_RETURN (::gethostbyaddr (ACE_TEXT_ALWAYS_CHAR (addr), 
+                                        (ACE_SOCKET_LEN) length, 
+                                        type),
+                       struct hostent *, 
+                       0);
 # endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
 }
 
 ACE_INLINE struct hostent *
-ACE_OS::gethostbyname_r (const char *name, hostent *result,
+ACE_OS::gethostbyname_r (const ACE_TCHAR *name, 
+                         hostent *result,
                          ACE_HOSTENT_DATA buffer,
                          int *h_errnop)
 {
@@ -6583,21 +7019,27 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
                         buffer, sizeof (ACE_HOSTENT_DATA));
 #     else
   ACE_SOCKCALL_RETURN (::gethostbyname_r (name, result, buffer,
-                                          sizeof (ACE_HOSTENT_DATA), h_errnop),
-                       struct hostent *, 0);
+                                          sizeof (ACE_HOSTENT_DATA), 
+                                          h_errnop),
+                       struct hostent *, 
+                       0);
 #     endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 #   endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 # elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (h_errnop);
-  ACE_SOCKCALL_RETURN (::gethostbyname ((char *) name), struct hostent *, 0);
+  ACE_SOCKCALL_RETURN (::gethostbyname (ACE_const_cast (char *, name)), 
+                       struct hostent *, 
+                       0);
 # else
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (h_errnop);
 
-  ACE_SOCKCALL_RETURN (::gethostbyname (name), struct hostent *, 0);
+  ACE_SOCKCALL_RETURN (::gethostbyname (ACE_TEXT_ALWAYS_CHAR (name)), 
+                       struct hostent *, 
+                       0);
 # endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
 }
 #endif /* ! VXWORKS */
@@ -6616,8 +7058,10 @@ ACE_OS::gets (char *str)
 #endif /* 0 */
 
 ACE_INLINE struct servent *
-ACE_OS::getservbyname_r (const char *svc, const char *proto,
-                         struct servent *result, ACE_SERVENT_DATA buf)
+ACE_OS::getservbyname_r (const ACE_TCHAR *svc, 
+                         const ACE_TCHAR *proto,
+                         struct servent *result, 
+                         ACE_SERVENT_DATA buf)
 {
   ACE_TRACE ("ACE_OS::getservbyname_r");
 #if defined (ACE_LACKS_GETSERVBYNAME)
@@ -6649,19 +7093,23 @@ ACE_OS::getservbyname_r (const char *svc, const char *proto,
 #elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (result);
-  ACE_SOCKCALL_RETURN (::getservbyname ((char *) svc, (char *) proto),
-                       struct servent *, 0);
+  ACE_SOCKCALL_RETURN (::getservbyname (ACE_const_char (char *, svc), 
+                                        ACE_const_char (char *, proto)),
+                       struct servent *, 
+                       0);
 #else
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (result);
 
-  ACE_SOCKCALL_RETURN (::getservbyname (svc, proto),
-                       struct servent *, 0);
+  ACE_SOCKCALL_RETURN (::getservbyname (ACE_TEXT_ALWAYS_CHAR (svc), 
+                                        ACE_TEXT_ALWAYS_CHAR (proto)),
+                       struct servent *, 
+                       0);
 #endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
 }
 
 ACE_INLINE long
-ACE_OS::inet_addr (const char *name)
+ACE_OS::inet_addr (const ACE_TCHAR *name)
 {
   ACE_TRACE ("ACE_OS::inet_addr");
 #if defined (VXWORKS) || defined (ACE_PSOS)
@@ -6700,11 +7148,11 @@ ACE_OS::inet_addr (const char *name)
 #elif defined (ACE_HAS_NONCONST_GETBY)
   return ::inet_addr ((char *) name);
 #else
-  return ::inet_addr (name);
+  return ::inet_addr (ACE_TEXT_ALWAYS_CHAR (name));
 #endif /* ACE_HAS_NONCONST_GETBY */
 }
 
-ACE_INLINE char *
+ACE_INLINE ACE_TCHAR *
 ACE_OS::inet_ntoa (const struct in_addr addr)
 {
   ACE_TRACE ("ACE_OS::inet_ntoa");
@@ -6712,12 +7160,14 @@ ACE_OS::inet_ntoa (const struct in_addr addr)
   ACE_UNUSED_ARG (addr);
   ACE_NOTSUP_RETURN (0);
 #else
-  ACE_OSCALL_RETURN (::inet_ntoa (addr), char *, 0);
+  ACE_OSCALL_RETURN (ACE_TEXT_CHAR_TO_TCHAR (::inet_ntoa (addr)), 
+                                             ACE_TCHAR *, 
+											 0);
 #endif /* defined (ACE_PSOS) */
 }
 
 ACE_INLINE int
-ACE_OS::inet_pton (int family, const char *strptr, void *addrptr)
+ACE_OS::inet_pton (int family, const ACE_TCHAR *strptr, void *addrptr)
 {
   ACE_TRACE ("ACE_OS::inet_pton");
 
@@ -6741,8 +7191,8 @@ ACE_OS::inet_pton (int family, const char *strptr, void *addrptr)
 #endif  /* ACE_HAS_IP6 */
 }
 
-ACE_INLINE const char *
-ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
+ACE_INLINE const ACE_TCHAR *
+ACE_OS::inet_ntop (int family, const void *addrptr, ACE_TCHAR *strptr, size_t len)
 {
   ACE_TRACE ("ACE_OS::inet_ntop");
 
@@ -6754,13 +7204,13 @@ ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
 
   if (family == AF_INET)
     {
-      ASYS_TCHAR temp[INET_ADDRSTRLEN];
+      ACE_TCHAR temp[INET_ADDRSTRLEN];
 
       // Stevens uses snprintf() in his implementation but snprintf()
       // doesn't appear to be very portable.  For now, hope that using
       // sprintf() will not cause any string/memory overrun problems.
       ACE_OS::sprintf (temp,
-                       ASYS_TEXT ("%d.%d.%d.%d"),
+                       ACE_TEXT ("%d.%d.%d.%d"),
                        p[0], p[1], p[2], p[3]);
 
       if (ACE_OS::strlen (temp) >= len)
@@ -6769,7 +7219,7 @@ ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
           return 0; // Failure
         }
 
-      ACE_OS::strcpy (strptr, ASYS_ONLY_MULTIBYTE_STRING (temp));
+      ACE_OS::strcpy (strptr, temp);
       return strptr;
     }
 
@@ -6840,29 +7290,43 @@ ACE_OS::last_error (int error)
 #endif /* ACE_WIN32 */
 }
 
-#if !defined (ACE_HAS_WINCE)
 ACE_INLINE void
-ACE_OS::perror (const char *s)
+ACE_OS::perror (const ACE_TCHAR *s)
 {
   ACE_TRACE ("ACE_OS::perror");
+#if defined (ACE_HAS_WINCE)
+  // @@ WINCE: How should this be handled
+  ACE_UNUSED_ARG (s);
+#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  ::_wperror (s);
+#else 
   ::perror (s);
+#endif /* ACE_HAS_WINCE */
 }
-#endif /* ! ACE_HAS_WINCE */
 
-// @@ Do we need to implement puts on WinCE???
+
+// @@ WINCE: Do we need to implement puts on WinCE???
 #if !defined (ACE_HAS_WINCE)
 ACE_INLINE int
-ACE_OS::puts (const char *s)
+ACE_OS::puts (const ACE_TCHAR *s)
 {
   ACE_TRACE ("ACE_OS::puts");
+#if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  ACE_OSCALL_RETURN (::_putws (s), int, -1);
+#else /* ACE_WIN32 */
   ACE_OSCALL_RETURN (::puts (s), int, -1);
+#endif /* ACE_WIN32 */
 }
 
 ACE_INLINE int
-ACE_OS::fputs (const char *s, FILE *stream)
+ACE_OS::fputs (const ACE_TCHAR *s, FILE *stream)
 {
-  ACE_TRACE ("ACE_OS::puts");
+  ACE_TRACE ("ACE_OS::fputs");
+#if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  ACE_OSCALL_RETURN (::fputws (s, stream), int, -1);
+#else /* ACE_WIN32 */
   ACE_OSCALL_RETURN (::fputs (s, stream), int, -1);
+#endif /* ACE_WIN32 */
 }
 #endif /* ! ACE_HAS_WINCE */
 
@@ -6888,7 +7352,7 @@ ACE_OS::signal (int signum, ACE_SignalHandler func)
     return (ACE_SignalHandler) ::signal (signum, (void (*)(int)) func);
 #  endif /* !ACE_HAS_TANDEM_SIGNALS */
 #else
-    // @@ Don't know how to implement signal on WinCE (yet.)
+    // @@ WINCE: Don't know how to implement signal on WinCE (yet.)
     ACE_UNUSED_ARG (signum);
     ACE_UNUSED_ARG (func);
     ACE_NOTSUP_RETURN (0);     // Should return SIG_ERR but it is not defined on WinCE.
@@ -6896,15 +7360,16 @@ ACE_OS::signal (int signum, ACE_SignalHandler func)
 }
 
 ACE_INLINE int
-ACE_OS::system (const char *s)
+ACE_OS::system (const ACE_TCHAR *s)
 {
   // ACE_TRACE ("ACE_OS::system");
-#if !defined (CHORUS) && !defined (ACE_HAS_WINCE) && !defined(ACE_PSOS)
-    // ACE_TRACE ("ACE_OS::system");
-    ACE_OSCALL_RETURN (::system (s), int, -1);
-#else
-    ACE_UNUSED_ARG (s);
-    ACE_NOTSUP_RETURN (-1);
+#if defined (CHORUS) || defined (ACE_HAS_WINCE) || defined(ACE_PSOS)
+  ACE_UNUSED_ARG (s);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  ACE_OSCALL_RETURN (::_wsystem (s), int, -1);  
+#else 
+  ACE_OSCALL_RETURN (::system (s), int, -1);
 #endif /* !CHORUS */
 }
 
@@ -8427,7 +8892,7 @@ ACE_OS::compile (const char *instring, char *expbuf, char *endbuf)
 }
 
 ACE_INLINE long
-ACE_OS::filesize (LPCTSTR filename)
+ACE_OS::filesize (const ACE_TCHAR *filename)
 {
   ACE_TRACE ("ACE_OS::filesize");
 
@@ -8456,15 +8921,23 @@ ACE_OS::closesocket (ACE_HANDLE handle)
 }
 
 ACE_INLINE int
-ACE_OS::access (const char *path, int amode)
+ACE_OS::access (const ACE_TCHAR *path, int amode)
 {
   ACE_TRACE ("ACE_OS::access");
 #if defined (ACE_LACKS_ACCESS)
   ACE_UNUSED_ARG (path);
   ACE_UNUSED_ARG (amode);
   ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_WIN32)
-  ACE_OSCALL_RETURN (::_access (path, amode), int, -1);
+#elif defined (ACE_HAS_WINCE)
+  // @@ WINCE: There should be a Win32 API that can do this.
+  // Hard coded read access here.
+  FILE* handle = ACE_OS::fopen (path, ACE_TEXT ("r"));
+  ACE_UNUSED_ARG (amode);
+
+  ACE_OS::fclose (handle);
+  return (handle == ACE_INVALID_HANDLE ? -1 : 0);
+#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  ACE_OSCALL_RETURN (::_waccess (path, amode), int, -1);
 #else
   ACE_OSCALL_RETURN (::access (path, amode), int, -1);
 #endif /* ACE_LACKS_ACCESS */
@@ -8472,7 +8945,7 @@ ACE_OS::access (const char *path, int amode)
 
 
 ACE_INLINE ACE_HANDLE
-ACE_OS::creat (LPCTSTR filename, mode_t mode)
+ACE_OS::creat (const ACE_TCHAR *filename, mode_t mode)
 {
   ACE_TRACE ("ACE_OS::creat");
 #if defined (ACE_WIN32)
@@ -8508,11 +8981,16 @@ ACE_OS::uname (struct utsname *name)
 #endif /* ! ACE_WIN32 && ! VXWORKS && ! CHORUS */
 
 ACE_INLINE int
-ACE_OS::hostname (char name[], size_t maxnamelen)
+ACE_OS::hostname (ACE_TCHAR name[], size_t maxnamelen)
 {
   ACE_TRACE ("ACE_OS::hostname");
-#if !defined (ACE_HAS_WINCE)
-# if defined (ACE_HAS_PHARLAP)
+#if defined (ACE_HAS_WINCE)
+  // @@ WINCE: Don't know how to implement this (yet.)  Can probably get around
+  // this by peeking into the Register set.
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (maxnamelen);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_HAS_PHARLAP)
   // PharLap only can do net stuff with the RT version.
 #   if defined (ACE_HAS_PHARLAP_RT)
   // @@This is not at all reliable... requires ethernet and BOOTP to be used.
@@ -8524,12 +9002,13 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
   ACE_UNUSED_ARG (maxnamelen);
   ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_PHARLAP_RT */
-# elif defined (ACE_WIN32)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerNameA (name, LPDWORD (&maxnamelen)),
+#elif defined (ACE_WIN32)
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (ACE_TEXT_GetComputerName (name, 
+                                                        LPDWORD (&maxnamelen)),
                                           ace_result_), int, -1);
-# elif defined (VXWORKS)
+#elif defined (VXWORKS)
   ACE_OSCALL_RETURN (::gethostname (name, maxnamelen), int, -1);
-# elif defined (CHORUS)
+#elif defined (CHORUS)
   if (::gethostname (name, maxnamelen) == -1)
     return -1;
   else
@@ -8537,13 +9016,13 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
       if (ACE_OS::strlen (name) == 0)
         {
           // Try the HOST environment variable.
-          char *const hostenv = ::getenv ("HOST");
+          ACE_TCHAR *const hostenv = ::getenv (ACE_TEXT ("HOST"));
           if (hostenv)
             ACE_OS::strncpy (name, hostenv, maxnamelen);
         }
       return 0;
     }
-# else /* !ACE_WIN32 */
+#else /* ACE_HAS_WINCE */
   struct utsname host_info;
 
   if (ACE_OS::uname (&host_info) == -1)
@@ -8553,14 +9032,7 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
       ACE_OS::strncpy (name, host_info.nodename, maxnamelen);
       return 0;
     }
-# endif /* ACE_WIN32 */
-#else /* ACE_HAS_WINCE */
-  // @@ Don'T know how to implement this (yet.)  Can probably get around
-  // this by peeking into the Register set.
-  ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (maxnamelen);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ! ACE_HAS_WINCE */
+#endif /* ACE_HAS_WINCE */
 }
 
 ACE_INLINE int
@@ -8699,7 +9171,7 @@ ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
   // SunOS4 does not automatically call _fini()!
   void *ptr;
 
-  ACE_OSCALL (::dlsym (handle, "_fini"), void *, 0, ptr);
+  ACE_OSCALL (::dlsym (handle, ACE_TEXT ("_fini")), void *, 0, ptr);
 
   if (ptr != 0)
     (*((int (*)(void)) ptr)) (); // Call _fini hook explicitly.
@@ -8737,7 +9209,7 @@ ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
 #endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 }
 
-ACE_INLINE ASYS_TCHAR *
+ACE_INLINE ACE_TCHAR *
 ACE_OS::dlerror (void)
 {
   ACE_TRACE ("ACE_OS::dlerror");
@@ -8750,27 +9222,17 @@ ACE_OS::dlerror (void)
 # elif defined (__hpux)
   ACE_OSCALL_RETURN (::strerror(errno), char *, 0);
 # elif defined (ACE_WIN32)
-  static ASYS_TCHAR buf[128];
+  static ACE_TCHAR buf[128];
 #   if defined (ACE_HAS_PHARLAP)
   ACE_OS::sprintf (buf, "error code %d", GetLastError());
 #   else
-#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-  FormatMessageA (FORMAT_MESSAGE_FROM_SYSTEM,
-                  NULL,
-                  ::GetLastError (),
-                  0,
-                  buf,
-                  sizeof buf,
-                  NULL);
-#else
-  FormatMessage (FORMAT_MESSAGE_FROM_SYSTEM,
-                 NULL,
-                 ::GetLastError (),
-                 0,
-                 buf,
-                 sizeof buf / sizeof ASYS_TCHAR,
-                 NULL);
-#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
+  ACE_TEXT_FormatMessage (FORMAT_MESSAGE_FROM_SYSTEM,
+                          NULL,
+                          ::GetLastError (),
+                          0,
+                          buf,
+                          sizeof buf,
+                          NULL);
 #   endif /* ACE_HAS_PHARLAP */
   return buf;
 # else
@@ -8779,7 +9241,7 @@ ACE_OS::dlerror (void)
 }
 
 ACE_INLINE ACE_SHLIB_HANDLE
-ACE_OS::dlopen (const ASYS_TCHAR *fname,
+ACE_OS::dlopen (const ACE_TCHAR *fname,
                 int mode)
 {
   ACE_TRACE ("ACE_OS::dlopen");
@@ -8803,7 +9265,7 @@ ACE_OS::dlopen (const ASYS_TCHAR *fname,
       // Some systems (e.g., SunOS4) do not automatically call _init(), so
       // we'll have to call it manually.
 
-      ACE_OSCALL (::dlsym (handle, "_init"), void *, 0, ptr);
+      ACE_OSCALL (::dlsym (handle, ACE_TEXT ("_init")), void *, 0, ptr);
 
       if (ptr != 0 && (*((int (*)(void)) ptr)) () == -1) // Call _init hook explicitly.
         {
@@ -8817,11 +9279,7 @@ ACE_OS::dlopen (const ASYS_TCHAR *fname,
 # elif defined (ACE_WIN32)
   ACE_UNUSED_ARG (mode);
 
-#   if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-  ACE_WIN32CALL_RETURN (::LoadLibrary (filename), ACE_SHLIB_HANDLE, 0);
-#   else
-  ACE_WIN32CALL_RETURN (::LoadLibraryA (filename), ACE_SHLIB_HANDLE, 0);
-#   endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
+  ACE_WIN32CALL_RETURN (ACE_TEXT_LoadLibrary (filename), ACE_SHLIB_HANDLE, 0);
 # elif defined (__hpux)
 
 #   if defined(__GNUC__) || __cplusplus >= 199707L
@@ -8839,7 +9297,7 @@ ACE_OS::dlopen (const ASYS_TCHAR *fname,
 
 ACE_INLINE void *
 ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
-               const char *sname)
+               const ACE_TCHAR *sname)
 {
   ACE_TRACE ("ACE_OS::dlsym");
 
@@ -8854,7 +9312,7 @@ typedef const char * ACE_DL_SYM_TYPE;
 
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
 #   if defined (ACE_LACKS_POSIX_PROTOTYPES)
-  ACE_OSCALL_RETURN (::dlsym (handle, (char*) symbolname), void *, 0);
+  ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *, 0);
 #   elif defined (ACE_USES_ASM_SYMBOL_IN_DLSYM)
   int l = ACE_OS::strlen (symbolname) + 2;
   char *asm_symbolname = 0;
@@ -8877,12 +9335,10 @@ typedef const char * ACE_DL_SYM_TYPE;
 #   endif /* ACE_LACKS_POSIX_PROTOTYPES */
 # elif defined (ACE_WIN32)
 #   if !defined (ACE_HAS_WINCE)
-  ACE_WIN32CALL_RETURN (::GetProcAddress (handle,
-                                          symbolname),
+  ACE_WIN32CALL_RETURN (::GetProcAddress (handle, symbolname),
                         void *, 0);
 #   else  /* ACE_HAS_WINCE */
-  ACE_WIN32CALL_RETURN (::GetProcAddress (handle,
-                                          ACE_WIDE_STRING (symbolname)),
+  ACE_WIN32CALL_RETURN (::GetProcAddress (handle, symbolname),
                         void *, 0);
 #   endif /* ACE_HAS_WINCE */
 # elif defined (__hpux)
@@ -9450,58 +9906,66 @@ ACE_OS::difftime (time_t t1, time_t t0)
 }
 #endif /* ! ACE_LACKS_DIFFTIME */
 
-#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-ACE_INLINE char *
+ACE_INLINE ACE_TCHAR *
 ACE_OS::ctime (const time_t *t)
 {
   ACE_TRACE ("ACE_OS::ctime");
-# if defined (ACE_HAS_BROKEN_CTIME)
+#if defined (ACE_HAS_BROKEN_CTIME)
   ACE_OSCALL_RETURN (::asctime (::localtime (t)), char *, 0);
 #elif defined(ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
   return "ctime-return";
-# else
+#elif defined (ACE_HAS_WINCE)
+  ACE_TCHAR buf[26];              // 26 is a "magic number" ;)
+  return ACE_OS::ctime_r (t, buf, 26);
+#elif defined (ACE_USES_WCHAR)
+  ACE_OSCALL_RETURN (::_wctime (t), wchar_t *, 0);
+#else
   ACE_OSCALL_RETURN (::ctime (t), char *, 0);
 # endif    /* ACE_HAS_BROKEN_CTIME) */
 }
-#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
-#if !defined (ACE_HAS_WINCE)
-ACE_INLINE char *
-ACE_OS::ctime_r (const time_t *t, char *buf, int buflen)
+#if !defined (ACE_HAS_WINCE)  /* CE version in OS.cpp */
+ACE_INLINE ACE_TCHAR *
+ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
 {
   ACE_TRACE ("ACE_OS::ctime_r");
 # if defined (ACE_HAS_REENTRANT_FUNCTIONS)
 #   if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
-  char *result;
+  ACE_TCHAR *result;
 #     if defined (DIGITAL_UNIX)
-  ACE_OSCALL (::_Pctime_r (t, buf), char *, 0, result);
-#     else
-  ACE_OSCALL (::ctime_r (t, buf), char *, 0, result);
+  ACE_OSCALL (::_Pctime_r (t, buf), ACE_TCHAR *, 0, result);
+#     else /* DIGITAL_UNIX */
+  ACE_OSCALL (::ctime_r (t, buf), ACE_TCHAR *, 0, result);
 #     endif /* DIGITAL_UNIX */
   if (result != 0)
     ::strncpy (buf, result, buflen);
   return buf;
-#   else
+#   else /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
 
 #     if defined (ACE_CTIME_R_RETURNS_INT)
   return (::ctime_r (t, buf, buflen) == -1 ? 0 : buf);
-#     else
-  ACE_OSCALL_RETURN (::ctime_r (t, buf, buflen), char *, 0);
+#     else /* ACE_CTIME_R_RETURNS_INT */
+  ACE_OSCALL_RETURN (::ctime_r (t, buf, buflen), ACE_TCHAR *, 0);
 #     endif /* ACE_CTIME_R_RETURNS_INT */
 
-#   endif /* defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R) */
-# else
-#    if defined(ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
+#   endif /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
+# else /* ACE_HAS_REENTRANT_FUNCTIONS */
+#   if defined(ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
    ::strncpy(buf, "ctime-return",buflen);
    return buf;
-#    else
-  char *result;
+#   else /* ACE_PSOS && !ACE_PSOS_HAS_TIME */
+
+  ACE_TCHAR *result;
+#     if defined (ACE_USES_WCHAR)
+  ACE_OSCALL (::_wctime (t), wchar_t *, 0, result);
+#     else /* ACE_WIN32 */
   ACE_OSCALL (::ctime (t), char *, 0, result);
+#     endif /* ACE_WIN32 */
   if (result != 0)
-    ::strncpy (buf, result, buflen);
+    ACE_OS::strncpy (buf, result, buflen);
   return buf;
-#    endif // ACE_PSOS
-# endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) */
+#    endif /* ACE_PSOS && !ACE_PSOS_HAS_TIME */
+# endif /* ACE_HAS_REENTRANT_FUNCTIONS */
 }
 #endif /* !ACE_HAS_WINCE */
 
@@ -9626,7 +10090,7 @@ ACE_OS::strftime (char *s, size_t maxsize, const char *format,
 ACE_INLINE int
 ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
                     int flags,
-                    LPCTSTR name,
+                    const ACE_TCHAR *name,
                     mode_t perms)
 {
   ACE_TRACE ("ACE_OS::flock_init");
@@ -9998,7 +10462,7 @@ ACE_OS::flock_destroy (ACE_OS::ace_flock_t *lock,
           if (unlink_file)
             ACE_OS::shm_unlink (lock->lockname_);
           ACE_OS::free (ACE_static_cast (void *,
-                                         ACE_const_cast (LPTSTR,
+                                         ACE_const_cast (ACE_TCHAR *,
                                                          lock->lockname_)));
         }
       else if (lock->process_lock_)
@@ -10011,7 +10475,7 @@ ACE_OS::flock_destroy (ACE_OS::ace_flock_t *lock,
           if (unlink_file)
             ACE_OS::unlink (lock->lockname_);
           ACE_OS::free (ACE_static_cast (void *,
-                                         ACE_const_cast (LPTSTR,
+                                         ACE_const_cast (ACE_TCHAR *,
                                                          lock->lockname_)));
         }
 #endif /* CHORUS */
@@ -10111,7 +10575,7 @@ ACE_OS::execvp (const char *file,
 
 #if !defined (ACE_HAS_WINCE)
 ACE_INLINE FILE *
-ACE_OS::fdopen (ACE_HANDLE handle, const char *mode)
+ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
 {
   ACE_TRACE ("ACE_OS::fdopen");
 # if defined (ACE_WIN32)
@@ -10126,6 +10590,8 @@ ACE_OS::fdopen (ACE_HANDLE handle, const char *mode)
     {
 #   if defined(__BORLANDC__) // VSB
       file = ::_fdopen (crt_handle, (char *) mode);
+#   elif defined (ACE_USES_WCHAR)
+      file = ::_wfdopen (crt_handle, mode);
 #   else
       file = ::_fdopen (crt_handle, mode);
 #   endif /* __BORLANDC__ */
@@ -10848,18 +11314,15 @@ ACE_OS::sigaction (int signum,
 #endif /* ACE_LACKS_POSIX_PROTOTYPES */
 }
 
-#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-ACE_INLINE char *
-ACE_OS::getcwd (char *buf, size_t size)
+ACE_INLINE ACE_TCHAR *
+ACE_OS::getcwd (ACE_TCHAR *buf, size_t size)
 {
   ACE_TRACE ("ACE_OS::getcwd");
-# if defined (ACE_WIN32)
-  return ::_getcwd (buf, size);
-# elif defined (ACE_PSOS_LACKS_PHILE)
+#if defined (ACE_PSOS_LACKS_PHILE)
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (size);
   ACE_NOTSUP_RETURN ( (char*)-1);
-# elif defined (ACE_PSOS)
+#elif defined (ACE_PSOS)
 
   static char pathbuf [BUFSIZ];
 
@@ -10939,12 +11402,16 @@ ACE_OS::getcwd (char *buf, size_t size)
 
   // return the path, if there is one
   return (ACE_OS::strlen (pathbuf) > 0) ? pathbuf : (char *) 0;
-
-# else
+#elif defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (size);
+  ACE_NOTSUP_RETURN (0);
+#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  return ::_wgetcwd (buf, size);
+#else
   ACE_OSCALL_RETURN (::getcwd (buf, size), char *, 0);
-# endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 */
 }
-#endif /* !ACE_HAS_MOSTLY_UNICODE_APIS */
 
 ACE_INLINE int
 ACE_OS::sleep (u_int seconds)
@@ -11060,23 +11527,14 @@ ACE_OS::nanosleep (const struct timespec *requested,
 #endif /* ACE_HAS_CLOCK_GETTIME */
 }
 
-#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
 ACE_INLINE int
-ACE_OS::mkdir (const char *path, mode_t mode)
+ACE_OS::mkdir (const ACE_TCHAR *path, mode_t mode)
 {
-# if defined (ACE_WIN32)
-  ACE_UNUSED_ARG (mode);
-
-#if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
-  ACE_OSCALL_RETURN (::_mkdir ((char *) path), int, -1);
-#else
-  ACE_OSCALL_RETURN (::_mkdir (path), int, -1);
- #endif /* __IBMCPP__ */
-# elif defined (ACE_PSOS_LACKS_PHILE)
+#if defined (ACE_PSOS_LACKS_PHILE)
   ACE_UNUSED_ARG (path);
   ACE_UNUSED_ARG (mode);
   ACE_NOTSUP_RETURN (-1);
-# elif defined (ACE_PSOS)
+#elif defined (ACE_PSOS)
   //The pSOS make_dir fails if the last character is a '/'
   int location;
   char *phile_path;
@@ -11111,39 +11569,53 @@ ACE_OS::mkdir (const char *path, mode_t mode)
   ACE_OS::free(phile_path);
   return result;
 
-# elif defined (VXWORKS)
+#elif defined (VXWORKS)
   ACE_UNUSED_ARG (mode);
   ACE_OSCALL_RETURN (::mkdir ((char *) path), int, -1);
-# else
+#elif defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+  ACE_UNUSED_ARG (mode);
+  ACE_OSCALL_RETURN (::_mkdir ((char *) path), int, -1);
+#elif defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG (mode);
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CreateDirectory (path, NULL),
+                                          ace_result_),
+                        int, -1);
+#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  ACE_OSCALL_RETURN (::_wmkdir (path), int, -1);
+#elif defined (ACE_WIN32)
+  ACE_OSCALL_RETURN (::mkdir (path), int, -1);
+#else
   ACE_OSCALL_RETURN (::mkdir (path, mode), int, -1);
-# endif /* VXWORKS */
+#endif /* VXWORKS */
 }
-#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
-ACE_INLINE char *
-ACE_OS::getenv (const char *symbol)
+ACE_INLINE ACE_TCHAR *
+ACE_OS::getenv (const ACE_TCHAR *symbol)
 {
   ACE_TRACE ("ACE_OS::getenv");
-#if !defined (ACE_HAS_WINCE) && !defined(ACE_PSOS)
-  ACE_OSCALL_RETURN (::getenv (symbol), char *, 0);
-#else
-  // @@ WinCE doesn't have the concept of environment variables.
+#if defined (ACE_HAS_WINCE) || defined (ACE_PSOS)
   ACE_UNUSED_ARG (symbol);
   ACE_NOTSUP_RETURN (0);
-#endif /* ! ACE_HAS_WINCE */
+#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  ACE_OSCALL_RETURN (::_wgetenv (symbol), ACE_TCHAR *, 0);
+#else /* ACE_HAS_WINCE || ACE_PSOS */
+  ACE_OSCALL_RETURN (::getenv (symbol), char *, 0);
+#endif /* ACE_HAS_WINCE || ACE_PSOS */
 }
 
 ACE_INLINE int
-ACE_OS::putenv (const char *string)
+ACE_OS::putenv (const ACE_TCHAR *string)
 {
   ACE_TRACE ("ACE_OS::putenv");
-  // VxWorks declares ::putenv with a non-const arg.
-#if !defined (ACE_HAS_WINCE) && !defined (ACE_PSOS)
-  ACE_OSCALL_RETURN (::putenv ((char *) string), int, -1);
-#else
-  // @@ WinCE and pSOS don't have the concept of environment variables.
+#if defined (ACE_HAS_WINCE) || defined (ACE_PSOS)
+  // WinCE and pSOS don't have the concept of environment variables.
   ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  ACE_OSCALL_RETURN (::_wputenv (string), int, -1);
+#else /* ! ACE_HAS_WINCE && ! ACE_PSOS */
+  // VxWorks declares ::putenv with a non-const arg.
+  ACE_OSCALL_RETURN (::putenv ((char *) string), int, -1);
 #endif /* ! ACE_HAS_WINCE && ! ACE_PSOS */
 }
 
@@ -11162,140 +11634,6 @@ ACE_Str_Buf::ACE_Str_Buf (strbuf &sb)
   this->len = sb.len;
   this->buf = sb.buf;
 }
-
-#if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
-ACE_INLINE size_t
-ACE_OS::strlen (const wchar_t *s)
-{
-  // ACE_TRACE ("ACE_OS::strlen");
-# if defined (ACE_HAS_UNICODE)
-  return ::wcslen (s);
-# else
-#   if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
-  return wcslen (s);
-#   else
-  u_int len = 0;
-
-  while (*s++ != 0)
-    len++;
-
-  return len;
-#   endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
-# endif /* ACE_HAS_UNICODE */
-}
-
-ACE_INLINE wchar_t *
-ACE_OS::strcpy (wchar_t *s, const wchar_t *t)
-{
-  // ACE_TRACE ("ACE_OS::strcpy");
-
-# if defined (ACE_HAS_UNICODE)
-  return ::wcscpy (s, t);
-# else
-#   if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
-  return wcscpy (s, t);
-#   else
-  wchar_t *result = s;
-
-  while ((*s++ = *t++) != 0)
-    continue;
-
-  return result;
-#   endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
-# endif /* ACE_HAS_UNICODE */
-}
-
-ACE_INLINE size_t
-ACE_OS::strspn (const wchar_t *s, const wchar_t *t)
-{
-#if !defined (ACE_HAS_WINCE) && defined (ACE_HAS_UNICODE)
-  ACE_TRACE ("ACE_OS::strspn");
-  return ::wcsspn (s, t);
-#else
-  ACE_UNUSED_ARG (s);
-  ACE_UNUSED_ARG (t);
-  ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_WINCE */
-}
-
-ACE_INLINE int
-ACE_OS::strcmp (const wchar_t *s, const wchar_t *t)
-{
-  ACE_TRACE ("ACE_OS::strcmp");
-# if defined (ACE_HAS_UNICODE)
-  return ::wcscmp (s, t);
-# else
-#   if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
-  return wcscmp (s, t);
-#   else
-  const wchar_t *scan1 = s;
-  const wchar_t *scan2 = t;
-
-  while (*scan1 != 0 && *scan1 == *scan2)
-    {
-      ++scan1;
-      ++scan2;
-    }
-
-  // The following case analysis is necessary so that characters which
-  // look negative collate low against normal characters but high
-  // against the end-of-string NUL.
-
-  if (*scan1 == '\0' && *scan2 == '\0')
-    return 0;
-  else if (*scan1 == '\0')
-    return -1;
-  else if (*scan2 == '\0')
-    return 1;
-  else
-    return *scan1 - *scan2;
-#   endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
-# endif /* ACE_HAS_UNICODE */
-}
-#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
-
-#if !defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT)
-ACE_INLINE size_t
-ACE_OS::strlen (const ACE_USHORT16 *s)
-{
-  // ACE_TRACE ("ACE_OS::strlen");
-  u_int len = 0;
-
-  while (*s++ != 0)
-    len++;
-
-  return len;
-}
-
-ACE_INLINE ACE_USHORT16 *
-ACE_OS::strcpy (ACE_USHORT16 *s, const ACE_USHORT16 *t)
-{
-  // ACE_TRACE ("ACE_OS::strcpy");
-
-  ACE_USHORT16 *result = s;
-
-  while ((*s++ = *t++) != 0)
-    continue;
-
-  return result;
-}
-
-ACE_INLINE int
-ACE_OS::strcmp (const ACE_USHORT16 *s, const ACE_USHORT16 *t)
-{
-  ACE_TRACE ("ACE_OS::strcmp");
-
-  while (*s != 0
-         && *t != 0
-         && *s == *t)
-    {
-      ++s;
-      ++t;
-    }
-
-  return *s - *t;
-}
-#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_USHORT */
 
 ACE_INLINE u_int
 ACE_OS::wslen (const WChar *s)
@@ -11349,594 +11687,6 @@ ACE_OS::wsncmp (const WChar *s, const WChar *t, size_t len)
 
   return len == 0 ? 0 : *scan1 - *scan2;
 }
-
-#if defined (ACE_HAS_UNICODE)
-
-ACE_INLINE int
-ACE_OS::atoi (const wchar_t *s)
-{
-  return ::_wtoi (s);
-}
-
-ACE_INLINE wchar_t *
-ACE_OS::strecpy (wchar_t *s, const wchar_t *t)
-{
-  ACE_TRACE ("ACE_OS::strecpy");
-  register wchar_t *dscan = s;
-  register const wchar_t *sscan = t;
-
-  while ((*dscan++ = *sscan++) != '\0')
-    continue;
-
-  return dscan;
-}
-
-ACE_INLINE wchar_t *
-ACE_OS::strpbrk (wchar_t *s, const wchar_t *t)
-{
-  ACE_TRACE ("ACE_OS::wcspbrk");
-  return ::wcspbrk (s, t);
-}
-
-ACE_INLINE const wchar_t *
-ACE_OS::strpbrk (const wchar_t *s, const wchar_t *t)
-{
-  ACE_TRACE ("ACE_OS::wcspbrk");
-  return ::wcspbrk (s, t);
-}
-
-ACE_INLINE wchar_t *
-ACE_OS::strcat (wchar_t *s, const wchar_t *t)
-{
-  ACE_TRACE ("ACE_OS::strcat");
-  return ::wcscat (s, t);
-}
-
-ACE_INLINE const wchar_t *
-ACE_OS::strchr (const wchar_t *s, wint_t c)
-{
-  ACE_TRACE ("ACE_OS::strchr");
-  return (const wchar_t *) ::wcschr (s, c);
-}
-
-ACE_INLINE const wchar_t *
-ACE_OS::strnchr (const wchar_t *s, wint_t c, size_t len)
-{
-  for (size_t i = 0; i < len; i++)
-    if (s[i] == c)
-      return s + i;
-
-  return 0;
-}
-
-ACE_INLINE const wchar_t *
-ACE_OS::strrchr (const wchar_t *s, wint_t c)
-{
-  ACE_TRACE ("ACE_OS::strrchr");
-# if !defined (ACE_HAS_WINCE)
-  return (const wchar_t *) ::wcsrchr (s, c);
-# else
-  const wchar_t *p = s + ::wcslen (s);
-
-  while (*p != c)
-    if (p == s)
-      return 0;
-    else
-      p--;
-
-  return p;
-# endif /* ACE_HAS_WINCE */
-}
-
-ACE_INLINE wchar_t *
-ACE_OS::strchr (wchar_t *s, wint_t c)
-{
-  ACE_TRACE ("ACE_OS::strchr");
-  return ::wcschr (s, c);
-}
-
-ACE_INLINE wchar_t *
-ACE_OS::strnchr (wchar_t *s, wint_t c, size_t len)
-{
-#if defined ACE_PSOS_DIAB_PPC  //Complier problem Diab 4.2b
-  const wchar_t *const_wchar_s=s;
-  return (wchar_t *) ACE_OS::strnchr (const_wchar_s, c, len);
-#else
-  return (wchar_t *) ACE_OS::strnchr ((const wchar_t *) s, c, len);
-#endif
-}
-
-ACE_INLINE wchar_t *
-ACE_OS::strrchr (wchar_t *s, wint_t c)
-{
-  ACE_TRACE ("ACE_OS::strrchr");
-# if !defined (ACE_HAS_WINCE)
-  return (wchar_t *) ::wcsrchr (s, c);
-# else
-  wchar_t *p = s + ::wcslen (s);
-
-  while (*p != c)
-    if (p == s)
-      return 0;
-    else
-      p--;
-
-  return p;
-# endif /* ACE_HAS_WINCE */
-}
-
-ACE_INLINE wint_t
-ACE_OS::to_lower (wint_t c)
-{
-  ACE_TRACE ("ACE_OS::to_lower");
-  return ::towlower (c);
-}
-
-ACE_INLINE int
-ACE_OS::strcasecmp (const wchar_t *s, const wchar_t *t)
-{
-  ACE_TRACE ("ACE_OS::strcasecmp");
-
-# if !defined (ACE_WIN32)
-  const wchar_t *scan1 = s;
-  const wchar_t *scan2 = t;
-
-  while (*scan1 != 0
-         && ACE_OS::to_lower (*scan1) == ACE_OS::to_lower (*scan2))
-    {
-      ++scan1;
-      ++scan2;
-    }
-
-  // The following case analysis is necessary so that characters which
-  // look negative collate low against normal characters but high
-  // against the end-of-string NUL.
-
-  if (*scan1 == '\0' && *scan2 == '\0')
-    return 0;
-  else if (*scan1 == '\0')
-    return -1;
-  else if (*scan2 == '\0')
-    return 1;
-  else
-    return ACE_OS::to_lower (*scan1) - ACE_OS::to_lower (*scan2);
-# else /* ACE_WIN32 */
-  return ::_wcsicmp (s, t);
-# endif /* ACE_WIN32 */
-}
-
-ACE_INLINE int
-ACE_OS::strncasecmp (const wchar_t *s,
-                     const wchar_t *t,
-                     size_t len)
-{
-  ACE_TRACE ("ACE_OS::strcasecmp");
-
-# if !defined (ACE_WIN32)
-  const wchar_t *scan1 = s;
-  const wchar_t *scan2 = t;
-  ssize_t count = ssize_t (n);
-
-  while (--count >= 0
-         && *scan1 != 0
-         && ACE_OS::to_lower (*scan1) == ACE_OS::to_lower (*scan2))
-    {
-      ++scan1;
-      ++scan2;
-    }
-
-  if (count < 0)
-    return 0;
-
-  // The following case analysis is necessary so that characters which
-  // look negative collate low against normal characters but high
-  // against the end-of-string NUL.
-
-  if (*scan1 == '\0' && *scan2 == '\0')
-    return 0;
-  else if (*scan1 == '\0')
-    return -1;
-  else if (*scan2 == '\0')
-    return 1;
-  else
-    return ACE_OS::to_lower (*scan1) - ACE_OS::to_lower (*scan2);
-# else /* ACE_WIN32 */
-  return ::_wcsnicmp (s, t, len);
-# endif /* ACE_WIN32 */
-}
-
-ACE_INLINE int
-ACE_OS::strncmp (const wchar_t *s, const wchar_t *t, size_t len)
-{
-  ACE_TRACE ("ACE_OS::strncmp");
-  return ::wcsncmp (s, t, len);
-}
-
-ACE_INLINE wchar_t *
-ACE_OS::strncpy (wchar_t *s, const wchar_t *t, size_t len)
-{
-  ACE_TRACE ("ACE_OS::strncpy");
-  return ::wcsncpy (s, t, len);
-}
-
-ACE_INLINE wchar_t *
-ACE_OS::strncat (wchar_t *s, const wchar_t *t, size_t len)
-{
-  ACE_TRACE ("ACE_OS::strncat");
-  return ::wcsncat (s, t, len);
-}
-
-ACE_INLINE wchar_t *
-ACE_OS::strtok (wchar_t *s, const wchar_t *tokens)
-{
-  ACE_TRACE ("ACE_OS::strtok");
-  return ::wcstok (s, tokens);
-}
-
-ACE_INLINE long
-ACE_OS::strtol (const wchar_t *s, wchar_t **ptr, int base)
-{
-  ACE_TRACE ("ACE_OS::strtol");
-  return ::wcstol (s, ptr, base);
-}
-
-ACE_INLINE unsigned long
-ACE_OS::strtoul (const wchar_t *s, wchar_t **ptr, int base)
-{
-  ACE_TRACE ("ACE_OS::strtoul");
-  return ::wcstoul (s, ptr, base);
-}
-
-ACE_INLINE double
-ACE_OS::strtod (const wchar_t *s, wchar_t **endptr)
-{
-  ACE_TRACE ("ACE_OS::strtod");
-  return ::wcstod (s, endptr);
-}
-
-ACE_INLINE int
-ACE_OS::ace_isspace (wchar_t c)
-{
-  return iswspace (c);
-}
-
-# if defined (ACE_WIN32)
-
-ACE_INLINE const wchar_t *
-ACE_OS::strstr (const wchar_t *s, const wchar_t *t)
-{
-  ACE_TRACE ("ACE_OS::strstr");
-  return (const wchar_t *) ::wcsstr (s, t);
-}
-
-ACE_INLINE wchar_t *
-ACE_OS::strstr (wchar_t *s, const wchar_t *t)
-{
-  ACE_TRACE ("ACE_OS::strstr");
-  return ::wcsstr (s, t);
-}
-
-ACE_INLINE const wchar_t *
-ACE_OS::strnstr (const wchar_t *s1, const wchar_t *s2, size_t len2)
-{
-  // Substring length
-  size_t len1 = ACE_OS::strlen (s1);
-
-  // Check if the substring is longer than the string being searched.
-  if (len2 > len1)
-    return 0;
-
-  // Go upto <len>
-  size_t len = len1 - len2;
-
-  for (size_t i = 0; i <= len; i++)
-    {
-      if (ACE_OS::memcmp (s1 + i, s2, len2 * sizeof (wchar_t)) == 0)
-        // Found a match!  Return the index.
-        return s1 + i;
-    }
-
-  return 0;
-}
-
-ACE_INLINE wchar_t *
-ACE_OS::strnstr (wchar_t *s, const wchar_t *t, size_t len)
-{
-#if defined ACE_PSOS_DIAB_PPC  //Complier problem Diab 4.2b
-  const wchar_t *const_wchar_s=s;
-  return (wchar_t *) ACE_OS::strnstr (const_wchar_s, t, len);
-#else
-  return (wchar_t *) ACE_OS::strnstr ((const wchar_t *) s, t, len);
-#endif
-}
-
-ACE_INLINE wchar_t *
-ACE_OS::strdup (const wchar_t *s)
-{
-  // ACE_TRACE ("ACE_OS::strdup");
-
-#   if defined (__BORLANDC__)
-  wchar_t *buffer = (wchar_t *) malloc ((ACE_OS::strlen (s) + 1) * sizeof (wchar_t));
-  return ::wcscpy (buffer, s);
-#   else
-  return ::wcsdup (s);
-#   endif /* __BORLANDC__ */
-}
-
-ACE_INLINE int
-ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
-{
-  return ::vswprintf (buffer, format, argptr);
-}
-
-ACE_INLINE int
-ACE_OS::hostname (wchar_t *name, size_t maxnamelen)
-{
-#   if !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP)
-  ACE_TRACE ("ACE_OS::hostname");
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerNameW (name, LPDWORD (&maxnamelen)),
-                                          ace_result_), int, -1);
-#   else
-  ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (maxnamelen);
-  ACE_NOTSUP_RETURN (-1);
-#   endif /* ! ACE_HAS_WINCE */
-}
-
-ACE_INLINE int
-ACE_OS::unlink (const wchar_t *path)
-{
-  ACE_TRACE ("ACE_OS::unlink");
-#   if !defined (ACE_HAS_WINCE)
-  ACE_OSCALL_RETURN (::_wunlink (path), int, -1);
-#   else
-  // @@ The problem is, DeleteFile is not actually equals to unlink. ;(
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::DeleteFile (path), ace_result_),
-                        int, -1);
-#   endif /* ACE_HAS_WINCE */
-}
-
-ACE_INLINE wchar_t *
-ACE_OS::getenv (const wchar_t *symbol)
-{
-#   if !defined (ACE_HAS_WINCE)
-  ACE_TRACE ("ACE_OS::getenv");
-  ACE_OSCALL_RETURN (::_wgetenv (symbol), wchar_t *, 0);
-#   else
-  ACE_UNUSED_ARG (symbol);
-  ACE_NOTSUP_RETURN (0);
-#   endif /* ACE_HAS_WINCE */
-}
-
-ACE_INLINE int
-ACE_OS::putenv (const wchar_t *string)
-{
-  ACE_TRACE ("ACE_OS::putenv");
-  // VxWorks declares ::putenv with a non-const arg.
-#if !defined (ACE_HAS_WINCE) && !defined (ACE_PSOS)
-  ACE_OSCALL_RETURN (::_wputenv ((wchar_t *) string), int, -1);
-#else
-  // @@ WinCE and pSOS don't have the concept of environment variables.
-  ACE_UNUSED_ARG (string);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ! ACE_HAS_WINCE && ! ACE_PSOS */
-}
-
-ACE_INLINE int
-ACE_OS::rename (const wchar_t *old_name, const wchar_t *new_name)
-{
-#   if !defined (ACE_HAS_WINCE)
-  ACE_TRACE ("ACE_OS::rename");
-  ACE_OSCALL_RETURN (::_wrename (old_name, new_name), int, -1);
-#   else
-  // @@ There should be a Win32 API that can do this.
-  ACE_UNUSED_ARG (old_name);
-  ACE_UNUSED_ARG (new_name);
-  ACE_NOTSUP_RETURN (-1);
-#   endif /* ACE_HAS_WINCE */
-}
-
-ACE_INLINE int
-ACE_OS::access (const wchar_t *path, int amode)
-{
-#   if !defined (ACE_HAS_WINCE)
-  ACE_TRACE ("ACE_OS::access");
-  ACE_OSCALL_RETURN (::_waccess (path, amode), int, -1);
-#   else
-  // @@ There should be a Win32 API that can do this.
-  // Hard coded read access here.
-  FILE* handle = ACE_OS::fopen (path, ASYS_TEXT ("r"));
-  ACE_UNUSED_ARG (amode);
-
-  ACE_OS::fclose (handle);
-  return (handle == ACE_INVALID_HANDLE ? -1 : 0);
-#   endif /* ACE_HAS_WINCE */
-}
-
-#   if !defined (ACE_WIN32)
-// Win32 implementation of fopen(const wchar_t*, const wchar_t*)
-// is in OS.cpp.
-ACE_INLINE FILE *
-ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
-{
-  ACE_OSCALL_RETURN (::_wfopen (filename, mode), FILE *, 0);
-}
-#   endif /* ACE_WIN32 */
-
-ACE_INLINE FILE *
-ACE_OS::fdopen (ACE_HANDLE handle, const wchar_t *mode)
-{
-  ACE_TRACE ("ACE_OS::fdopen");
-#   if !defined (ACE_HAS_WINCE)
-  // kernel file handle -> FILE* conversion...
-  // Options: _O_APPEND, _O_RDONLY and _O_TEXT are lost
-
-  FILE *file = 0;
-
-  int crt_handle = ::_open_osfhandle ((long) handle, 0);
-
-  if (crt_handle != -1)
-    {
-#     if defined(__BORLANDC__)
-      file = ::_wfdopen (crt_handle, ACE_const_cast (wchar_t *, mode));
-#     else
-      file = ::_wfdopen (crt_handle, mode);
-#     endif /* defined(__BORLANDC__) */
-
-      if (!file)
-        {
-#     if (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530)
-          ::_rtl_close (crt_handle);
-#     else
-          ::_close (crt_handle);
-#     endif /* (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) */
-        }
-    }
-
-  return file;
-#   else  /* ! ACE_HAS_WINCE */
-  // @@ this function has to be implemented???
-  // Okey, don't know how to implement it on CE.
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (mode);
-  ACE_NOTSUP_RETURN (0);
-#   endif /* ! ACE_HAS_WINCE */
-}
-
-ACE_INLINE int
-ACE_OS::stat (const wchar_t *file, struct stat *stp)
-{
-  ACE_TRACE ("ACE_OS::stat");
-#   if defined (ACE_HAS_WINCE)
-  WIN32_FIND_DATA fdata;
-  HANDLE fhandle;
-
-  fhandle = ::FindFirstFile (file, &fdata);
-  if (fhandle == INVALID_HANDLE_VALUE)
-    {
-      ACE_OS::set_errno_to_last_error ();
-      return -1;
-    }
-  else if (fdata.nFileSizeHigh != 0)
-    {
-      errno = EINVAL;
-      return -1;
-    }
-  else
-    {
-      stp->st_size = fdata.nFileSizeLow;
-      stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime);
-      stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime);
-    }
-  return 0;
-#   elif defined (__BORLANDC__)  && (__BORLANDC__ <= 0x540)
-  ACE_OSCALL_RETURN (::_wstat (file, stp), int, -1);
-#   else
-  ACE_OSCALL_RETURN (::_wstat (file, (struct _stat *) stp), int, -1);
-#   endif /* ACE_HAS_WINCE */
-}
-
-ACE_INLINE void
-ACE_OS::perror (const wchar_t *s)
-{
-  ACE_TRACE ("ACE_OS::perror");
-#   if !defined (ACE_HAS_WINCE)
-  ::_wperror (s);
-#   else
-  // @@ Let's leave this to some later point.
-  ACE_UNUSED_ARG (s);
-  //@@??@@  ACE_NOTSUP_RETURN ();
-#   endif /* ! ACE_HAS_WINCE */
-}
-
-
-// Here are functions that CE doesn't support at all.
-// Notice that some of them might have UNICODE version.
-ACE_INLINE wchar_t *
-ACE_OS::fgets (wchar_t *buf, int size, FILE *fp)
-{
-#if !defined (ACE_HAS_WINCE)
-  ACE_TRACE ("ACE_OS::fgets");
-  ACE_OSCALL_RETURN (::fgetws (buf, size, fp), wchar_t *, 0);
-#else
-  ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (size);
-  ACE_UNUSED_ARG (fp);
-  ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_WINCE */
-}
-
-ACE_INLINE int
-ACE_OS::system (const wchar_t *command)
-{
-#   if !defined (ACE_HAS_WINCE)
-  ACE_OSCALL_RETURN (::_wsystem (command), int, -1);
-#   else
-  // @@ Should be able to emulate this using Win32 APIS.
-  ACE_UNUSED_ARG (command);
-  ACE_NOTSUP_RETURN (-1);
-#   endif /* ACE_HAS_WINCE */
-}
-
-#   if !defined (ACE_LACKS_MKTEMP)
-ACE_INLINE wchar_t *
-ACE_OS::mktemp (wchar_t *s)
-{
-  ACE_TRACE ("ACE_OS::mktemp");
-  return ::_wmktemp (s);
-}
-#   endif /* !ACE_LACKS_MKTEMP */
-
-ACE_INLINE int
-ACE_OS::mkdir (const wchar_t *path, mode_t mode)
-{
-  ACE_TRACE ("ACE_OS::mkdir");
-#   if !defined (ACE_HAS_WINCE)
-  ACE_UNUSED_ARG (mode);
-
-  ACE_OSCALL_RETURN (::_wmkdir (path), int, -1);
-#   else
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CreateDirectory (path, NULL),
-                                          ace_result_),
-                        int, -1);
-#   endif /* ACE_HAS_WINCE */
-}
-
-ACE_INLINE int
-ACE_OS::chdir (const wchar_t *path)
-{
-  ACE_TRACE ("ACE_OS::chdir");
-#   if defined (ACE_HAS_WINCE)
-  ACE_UNUSED_ARG (path);
-  ACE_NOTSUP_RETURN (-1);
-#   else
-  ACE_OSCALL_RETURN (::_wchdir (path), int, -1);
-#   endif /* ACE_HAS_WINCE */
-}
-
-ACE_INLINE wchar_t *
-ACE_OS::getcwd (wchar_t *buf, size_t size)
-{
-  ACE_TRACE ("ACE_OS::getcwd");
-#   if defined (ACE_HAS_WINCE)
-  ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (size);
-  ACE_NOTSUP_RETURN (0);
-#   else
-  return ::_wgetcwd (buf, size);
-#   endif /* ACE_HAS_WINCE */
-}
-
-ACE_INLINE int
-ACE_OS::mkfifo (const wchar_t *file, mode_t mode)
-{
-  // ACE_TRACE ("ACE_OS::mkfifo");
-  ACE_UNUSED_ARG (file);
-  ACE_UNUSED_ARG (mode);
-  ACE_NOTSUP_RETURN (-1);
-}
-# endif /* ACE_WIN32 */
-#endif /* ACE_HAS_UNICODE */
 
 #if defined (ACE_LACKS_COND_T) && defined (ACE_HAS_THREADS)
 ACE_INLINE long
@@ -12384,7 +12134,7 @@ ACE_Cleanup::~ACE_Cleanup (void)
 }
 
 ACE_INLINE DIR *
-ACE_OS::opendir (const char *filename)
+ACE_OS::opendir (const ACE_TCHAR *filename)
 {
 #if defined (ACE_HAS_DIRENT)
 #  if defined (ACE_PSOS)
@@ -12412,8 +12162,8 @@ ACE_OS::opendir (const char *filename)
   DIR *dir;
   ACE_NEW_RETURN (dir, DIR, 0);
   ACE_NEW_RETURN (dir->directory_name_,
-                  char[ACE_OS::strlen (filename)],
-                                  0);
+                  ACE_TCHAR[ACE_OS::strlen (filename)],
+                  0);
   ACE_OS::strcpy (dir->directory_name_, filename);
   dir->current_handle_ = INVALID_HANDLE_VALUE;
   dir->started_reading_ = 0;
@@ -12489,36 +12239,37 @@ ACE_OS::readdir (DIR *d)
 #    if defined (ACE_WIN32)
   if (!d->started_reading_)
     {
-          d->current_handle_ = ::FindFirstFile (d->directory_name_,
-                                            &(d->fdata_));
+          d->current_handle_ = ACE_TEXT_FindFirstFile (d->directory_name_,
+                                                       &(d->fdata_));
 
       if (d->current_handle_ != INVALID_HANDLE_VALUE
               && d->fdata_.dwFileAttributes !=  FILE_ATTRIBUTE_DIRECTORY)
-            {
+        {
           ::FindClose (d->current_handle_);
           d->current_handle_ = INVALID_HANDLE_VALUE;
-            }
-          else // Skip "." and ".."
-            {
-                  int retval = 1;
-                  while (*(d->fdata_.cFileName) == '.'
-                         && retval
-                                 && d->current_handle_ != INVALID_HANDLE_VALUE)
-                        {
-                          retval = ::FindNextFile (d->current_handle_, &(d->fdata_));
-                        }
-              if (retval == 0)
-                d->current_handle_ = INVALID_HANDLE_VALUE;
-                }
+	    }
+	  else // Skip "." and ".."
+	    {
+		  int retval = 1;
+		  while (*(d->fdata_.cFileName) == '.'
+		         && retval
+				 && d->current_handle_ != INVALID_HANDLE_VALUE)
+			{
+			  retval = ACE_TEXT_FindNextFile (d->current_handle_, 
+                                              &(d->fdata_));
+			}
+	      if (retval == 0)
+	        d->current_handle_ = INVALID_HANDLE_VALUE;
+		}
 
-          d->started_reading_ = 1;
-        }
+	  d->started_reading_ = 1;
+	}
   else
     {
-      int retval = ::FindNextFile (d->current_handle_,
-                                   &(d->fdata_));
-          if (retval == 0)
-            d->current_handle_ = INVALID_HANDLE_VALUE;
+      int retval = ACE_TEXT_FindNextFile (d->current_handle_,
+                                          &(d->fdata_));
+	  if (retval == 0)
+	    d->current_handle_ = INVALID_HANDLE_VALUE;
     }
 
   if (d->current_handle_ != INVALID_HANDLE_VALUE)
@@ -12745,18 +12496,18 @@ ACE_OS::isatty (ACE_HANDLE handle)
 # endif /* !ACE_HAS_WINCE */
 
 ACE_INLINE void
-ACE_OS::fopen_mode_to_open_mode_converter (char x, int &hmode)
+ACE_OS::fopen_mode_to_open_mode_converter (ACE_TCHAR x, int &hmode)
 {
     switch (x)
       {
-      case 'r':
+      case ACE_TEXT ('r'):
         if (ACE_BIT_DISABLED (hmode, _O_RDWR))
           {
             ACE_CLR_BITS (hmode, _O_WRONLY);
             ACE_SET_BITS (hmode, _O_RDONLY);
           }
         break;
-      case 'w':
+      case ACE_TEXT ('w'):
         if (ACE_BIT_DISABLED (hmode, _O_RDWR))
           {
             ACE_CLR_BITS (hmode, _O_RDONLY);
@@ -12764,7 +12515,7 @@ ACE_OS::fopen_mode_to_open_mode_converter (char x, int &hmode)
           }
         ACE_SET_BITS (hmode, _O_CREAT | _O_TRUNC);
         break;
-      case 'a':
+      case ACE_TEXT ('a'):
         if (ACE_BIT_DISABLED (hmode, _O_RDWR))
           {
             ACE_CLR_BITS (hmode, _O_RDONLY);
@@ -12772,15 +12523,15 @@ ACE_OS::fopen_mode_to_open_mode_converter (char x, int &hmode)
           }
         ACE_SET_BITS (hmode, _O_CREAT | _O_APPEND);
         break;
-      case '+':
+      case ACE_TEXT ('+'):
         ACE_CLR_BITS (hmode, _O_RDONLY | _O_WRONLY);
         ACE_SET_BITS (hmode, _O_RDWR);
         break;
-      case 't':
+      case ACE_TEXT ('t'):
         ACE_CLR_BITS (hmode, _O_BINARY);
         ACE_SET_BITS (hmode, _O_TEXT);
         break;
-      case 'b':
+      case ACE_TEXT ('b'):
         ACE_CLR_BITS (hmode, _O_TEXT);
         ACE_SET_BITS (hmode, _O_BINARY);
         break;
@@ -12793,64 +12544,21 @@ ACE_OS::fopen_mode_to_open_mode_converter (char x, int &hmode)
 // allocated with <ACE_OS::malloc> and must be freed by
 // <ACE_OS::free>.
 
-ACE_INLINE char *
-ACE_OS::strenvdup (const char *str)
+ACE_INLINE ACE_TCHAR *
+ACE_OS::strenvdup (const ACE_TCHAR *str)
 {
 #if defined (ACE_HAS_WINCE)
-     // WinCE doesn't have environment variables so we just skip it.
+  // WinCE doesn't have environment variables so we just skip it.
   return ACE_OS::strdup (str);
 #else
-  char *temp = 0;
+  ACE_TCHAR *temp = 0;
 
-  if (str[0] == '$'
+  if (str[0] == ACE_TEXT ('$')
       && (temp = ACE_OS::getenv (&str[1])) != 0)
     return ACE_OS::strdup (temp);
   else
     return ACE_OS::strdup (str);
 #endif /* ACE_HAS_WINCE */
-}
-
-#if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR) && defined (ACE_WIN32)
-ACE_INLINE wchar_t *
-ACE_OS::strenvdup (const wchar_t *str)
-{
-#if defined (ACE_HAS_WINCE)
-     // WinCE doesn't have environment variables so we just skip it.
-  return ACE_OS::strdup (str);
-#else
-  wchar_t *temp = 0;
-
-  if (str[0] == '$'
-      && (temp = ACE_OS::getenv (&str[1])) != 0)
-    return ACE_OS::strdup (temp);
-  else
-    return ACE_OS::strdup (str);
-#endif /* ACE_HAS_WINCE */
-}
-#endif /* ACE_HAS_WCHAR_TYPEDEFS_CHAR */
-
-ACE_INLINE
-ACE_OS_WString::~ACE_OS_WString (void)
-{
-  delete[] this->rep_;
-}
-
-ACE_INLINE char *
-ACE_OS_WString::char_rep (void)
-{
-  return this->rep_;
-}
-
-ACE_INLINE
-ACE_OS_CString::~ACE_OS_CString (void)
-{
-  delete[] this->rep_;
-}
-
-ACE_INLINE ACE_USHORT16 *
-ACE_OS_CString::wchar_rep (void)
-{
-  return this->rep_;
 }
 
 ACE_INLINE int

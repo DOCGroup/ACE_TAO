@@ -21,14 +21,14 @@ ACE_Dynamic_Service<SERVICE>::dump (void) const
   ACE_TRACE ("ACE_Dynamic_Service<SERVICE>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 // Get the instance using <name>.
 
 template <class SERVICE> SERVICE *
-ACE_Dynamic_Service<SERVICE>::instance (const char *name)
+ACE_Dynamic_Service<SERVICE>::instance (const ACE_TCHAR *name)
 {
   ACE_TRACE ("ACE_Dynamic_Service::instance");
   const ACE_Service_Type *svc_rec;

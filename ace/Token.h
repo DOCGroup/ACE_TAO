@@ -64,7 +64,7 @@ class ACE_Export ACE_Token
 public:
   // = Initialization and termination.
 
-  ACE_Token (LPCTSTR name = 0, void * = 0);
+  ACE_Token (const ACE_TCHAR *name = 0, void * = 0);
   virtual ~ACE_Token (void);
 
   // = Synchronization operations.

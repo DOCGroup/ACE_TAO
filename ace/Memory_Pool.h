@@ -49,7 +49,7 @@ class ACE_Export ACE_Sbrk_Memory_Pool
 public:
   typedef ACE_Sbrk_Memory_Pool_Options OPTIONS;
 
-  ACE_Sbrk_Memory_Pool (LPCTSTR backing_store_name = 0,
+  ACE_Sbrk_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                         const OPTIONS *options = 0);
   // Initialize the pool.
 
@@ -143,7 +143,7 @@ class ACE_Export ACE_Shared_Memory_Pool : public ACE_Event_Handler
 public:
   typedef ACE_Shared_Memory_Pool_Options OPTIONS;
 
-  ACE_Shared_Memory_Pool (LPCTSTR backing_store_name = 0,
+  ACE_Shared_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                           const OPTIONS *options = 0);
   // Initialize the pool.
 
@@ -268,7 +268,7 @@ class ACE_Export ACE_Local_Memory_Pool
 public:
   typedef ACE_Local_Memory_Pool_Options OPTIONS;
 
-  ACE_Local_Memory_Pool (LPCTSTR backing_store_name = 0,
+  ACE_Local_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                          const OPTIONS *options = 0);
   // Initialize the pool.
 
@@ -387,7 +387,7 @@ public:
 
   // = Initialization and termination methods.
 
-  ACE_MMAP_Memory_Pool (LPCTSTR backing_store_name = 0,
+  ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                         const OPTIONS *options = 0);
   // Initialize the pool.
 
@@ -490,7 +490,7 @@ protected:
   off_t minimum_bytes_;
   // What the minimum bytes of the initial segment should be.
 
-  TCHAR backing_store_name_[MAXPATHLEN + 1];
+  ACE_TCHAR backing_store_name_[MAXPATHLEN + 1];
   // Name of the backing store where the shared memory pool is kept.
 
   int guess_on_fault_;
@@ -518,7 +518,7 @@ class ACE_Export ACE_Lite_MMAP_Memory_Pool : public ACE_MMAP_Memory_Pool
 public:
   // = Initialization and termination methods.
 
-  ACE_Lite_MMAP_Memory_Pool (LPCTSTR backing_store_name = 0,
+  ACE_Lite_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                              const OPTIONS *options = 0);
   // Initialize the pool.
 
@@ -561,7 +561,7 @@ class ACE_Export ACE_Pagefile_Memory_Pool
 public:
   typedef ACE_Pagefile_Memory_Pool_Options OPTIONS;
 
-  ACE_Pagefile_Memory_Pool (LPCTSTR backing_store_name = 0,
+  ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                             const OPTIONS *options = 0);
   // Initialize the pool.
 
@@ -661,7 +661,7 @@ private:
   size_t page_size_;
   // System page size.
 
-  TCHAR backing_store_name_[MAXPATHLEN];
+  ACE_TCHAR backing_store_name_[MAXPATHLEN];
   // Name of the backing store where the shared memory pool is kept.
 };
 

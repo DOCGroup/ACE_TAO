@@ -902,9 +902,9 @@ AC_CHECK_HEADER(utime.h, dnl
   AC_DEFINE(ACE_HAS_UTIME),)
 
 dnl This check will be disabled until we can get ACE to compile when it
-dnl ACE_HAS_UNICODE is defined on UN*X systems
+dnl ACE_HAS_WCHAR is defined on UN*X systems
 dnl AC_CHECK_HEADER(wchar.h,
-dnl   AC_DEFINE(ACE_HAS_UNICODE),)
+dnl   AC_DEFINE(ACE_HAS_WCHAR),)
 
 AC_CHECK_HEADER(libc.h, dnl
   AC_DEFINE(ACE_HAS_LIBC_H))

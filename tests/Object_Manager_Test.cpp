@@ -42,17 +42,17 @@ hook2 (void * /* object */, void *param)
   // invocation in main () will prevent this from being output to the
   // log stream.
   ACE_DEBUG ((LM_DEBUG,
-              "hook2: %d\n",
+              ACE_TEXT ("hook2: %d\n"),
               *paramp));
   delete paramp;
 }
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
   ACE::init ();
 
-  ACE_START_TEST (ASYS_TEXT ("Object_Manager_Test"));
+  ACE_START_TEST (ACE_TEXT ("Object_Manager_Test"));
 
   u_int errors = 0;
 
@@ -67,7 +67,7 @@ main (int, ASYS_TCHAR *[])
     ACE_Object_Manager::instance ()->shutting_down ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("starting_up: %d, shutting_down: %d\n"),
+              ACE_TEXT ("starting_up: %d, shutting_down: %d\n"),
               starting_up,
               shutting_down));
 
@@ -75,17 +75,17 @@ main (int, ASYS_TCHAR *[])
     {
       ++errors;
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("%p\n"),
-                  ASYS_TEXT ("starting_up and shutting_down are supposed to ")
-                  ASYS_TEXT (" be 0!!!!")));
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("starting_up and shutting_down are supposed to ")
+                  ACE_TEXT (" be 0!!!!")));
     }
 
   if (ACE_OS::atexit (hook1) != 0)
     {
       ++errors;
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("%p\n"),
-                  ASYS_TEXT ("ACE_OS::atexit () returned non-zero!!!!")));
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("ACE_OS::atexit () returned non-zero!!!!")));
     }
 
   for (u_int i = 0; i < 10; ++i)
@@ -105,9 +105,9 @@ main (int, ASYS_TCHAR *[])
         {
           ++errors;
           ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"),
-                      ASYS_TEXT ("ACE_Object_Manager::at_exit () ")
-                      ASYS_TEXT ("returned non-zero!!!!")));
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("ACE_Object_Manager::at_exit () ")
+                      ACE_TEXT ("returned non-zero!!!!")));
         }
     }
 

@@ -5,7 +5,7 @@
 
 // Return the name of file that is mapped (if any).
 
-ACE_INLINE const TCHAR *
+ACE_INLINE const ACE_TCHAR *
 ACE_Shared_Memory_MM::filename (void) const
 {
   return this->shared_memory_.filename ();
@@ -24,7 +24,7 @@ ACE_Shared_Memory_MM::open (ACE_HANDLE handle,
 }
 
 ACE_INLINE int
-ACE_Shared_Memory_MM::open (LPCTSTR file_name,
+ACE_Shared_Memory_MM::open (const ACE_TCHAR *file_name,
                             int len,
                             int flags,
                             int mode,

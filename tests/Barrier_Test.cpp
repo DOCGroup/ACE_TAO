@@ -51,7 +51,7 @@ tester (Tester_Args *args)
        iterations <= args->n_iterations_;
        iterations++)
     {
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) in iteration %d\n"),
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) in iteration %d\n"),
                   iterations));
 
       // Block until all other threads have waited, then continue.
@@ -64,9 +64,9 @@ tester (Tester_Args *args)
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Barrier_Test"));
+  ACE_START_TEST (ACE_TEXT ("Barrier_Test"));
 
 #if defined (ACE_HAS_THREADS)
   int n_threads = ACE_MAX_THREADS;
@@ -80,7 +80,7 @@ main (int, ASYS_TCHAR *[])
        iteration_count < ACE_MAX_ITERATIONS;
        iteration_count++)
     {
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("starting iteration %d\n"),
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("starting iteration %d\n"),
                   iteration_count));
 
       if (ACE_Thread_Manager::instance ()->spawn_n
@@ -89,16 +89,16 @@ main (int, ASYS_TCHAR *[])
            (void *) &args,
            THR_NEW_LWP | THR_JOINABLE) == -1)
 
-        ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
-                           ASYS_TEXT ("spawn_n")), 1);
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("spawn_n")), 1);
 
       ACE_Thread_Manager::instance ()->wait ();
     }
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("test done\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("test done\n")));
 #else
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("threads not supported on this platform\n")));
+              ACE_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;

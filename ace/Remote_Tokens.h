@@ -52,7 +52,7 @@ public:
   virtual ~ACE_Remote_Token_Proxy (void);
   // Death.
 
-  int open (const ASYS_TCHAR *name,
+  int open (const ACE_TCHAR *name,
             int ignore_deadlock = 0,
             int debug = 0);
   // Same as Token_Proxy. <name> is the string uniquely identifying
@@ -114,7 +114,7 @@ public:
   virtual void token_acquired (ACE_TPQ_Entry *);
   // Override the default to do nothing.
 
-  virtual const ASYS_TCHAR* owner_id (void);
+  virtual const ACE_TCHAR* owner_id (void);
   // the client id of the current token holder
 
   static void set_server_address (const ACE_INET_Addr &server_address);
@@ -154,7 +154,7 @@ public:
   ACE_Remote_Mutex (void);
   // Null creation.  Remote_Token_Proxy::open must be called.
 
-  ACE_Remote_Mutex (const ASYS_TCHAR *token_name,
+  ACE_Remote_Mutex (const ACE_TCHAR *token_name,
                     int ignore_deadlock = 0,
                     int debug = 0);
   // Calls Remote_Token_Proxy::open for you.
@@ -166,7 +166,7 @@ public:
   // Return deep copy.
 
 protected:
-  virtual ACE_Tokens *create_token (const ASYS_TCHAR *name);
+  virtual ACE_Tokens *create_token (const ACE_TCHAR *name);
   // Make the correct type of ACE_Tokens.  This is called by the Token
   // Manager.
 };
@@ -187,7 +187,7 @@ class ACE_Export ACE_Remote_RLock : public ACE_Remote_Token_Proxy
 public:
   ACE_Remote_RLock (void);
 
-  ACE_Remote_RLock (const ASYS_TCHAR *token_name,
+  ACE_Remote_RLock (const ACE_TCHAR *token_name,
                     int ignore_deadlock = 0,
                     int debug = 0);
 
@@ -203,7 +203,7 @@ public:
   // Return deep copy.
 
 protected:
-  virtual ACE_Tokens *create_token (const ASYS_TCHAR *name);
+  virtual ACE_Tokens *create_token (const ACE_TCHAR *name);
   // Make the correct type of ACE_Tokens.  This is called by the Token
   // Manager.
 };
@@ -223,7 +223,7 @@ class ACE_Export ACE_Remote_WLock : public ACE_Remote_Token_Proxy
 public:
   ACE_Remote_WLock (void);
 
-  ACE_Remote_WLock (const ASYS_TCHAR *token_name,
+  ACE_Remote_WLock (const ACE_TCHAR *token_name,
                     int ignore_deadlock = 0,
                     int debug = 0);
 
@@ -239,7 +239,7 @@ public:
   // Return deep copy.
 
 protected:
-  virtual ACE_Tokens *create_token (const ASYS_TCHAR *name);
+  virtual ACE_Tokens *create_token (const ACE_TCHAR *name);
   // Make the correct type of ACE_Tokens.  This is called by the Token
   // Manager.
 };

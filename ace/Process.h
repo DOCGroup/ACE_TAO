@@ -90,13 +90,13 @@ public:
   // sure to set the others to ACE_INVALID_HANDLE.  Returns 0 on
   // success, -1 on failure.
 
-  int setenv (LPCTSTR format,
+  int setenv (const ACE_TCHAR *format,
               ...);
   // <format> must be of the form "VARIABLE=VALUE".  There can not be
   // any spaces between VARIABLE and the equal sign.
 
-  int setenv (LPCTSTR variable_name,
-              LPCTSTR format,
+  int setenv (const ACE_TCHAR *variable_name,
+              const ACE_TCHAR *format,
               ...);
   // Set a single environment variable, <variable_name>.  Since
   // different platforms separate each environment variable
@@ -105,14 +105,14 @@ public:
   // ("FOO","one + two = %s", "three") will result in "FOO=one + two =
   // three".
 
-  int setenv (LPTSTR envp[]);
+  int setenv (ACE_TCHAR *envp[]);
   // Same as above with argv format.  <envp> must be null terminated.
 
-  void working_directory (LPCTSTR wd);
+  void working_directory (const ACE_TCHAR *wd);
   // Set the working directory for the process.  strlen of <wd> must
   // be <= MAXPATHLEN.
 
-  int command_line (LPCTSTR format, ...);
+  int command_line (const ACE_TCHAR *format, ...);
   // Set the command-line arguments.  <format> can use any printf
   // formats.  The first token in <format> should be the path to the
   // application.  This can either be a full path, relative path, or
@@ -121,19 +121,19 @@ public:
   // path to run a process, this method *must* be called!  Returns 0
   // on success, -1 on failure.
 
-  int command_line (LPCTSTR const argv[]);
+  int command_line (const ACE_TCHAR * const argv[]);
   // Same as above in argv format.  <argv> must be null terminated.
 
   // = Set/get the pathname used to name the process.
-  void process_name (LPCTSTR name);
+  void process_name (const ACE_TCHAR *name);
   // Specify the full path or relative path, or just the executable
   // name for the process. If this is set, then <name> will be used to
   // create the process instead of argv[0] set in the command
   // line. This is here so that you can supply something other than
   // executable name as argv[0].
 
-  LPCTSTR process_name (void);
-  // Return the process_name.  If the <process_name(LPCTSTR name)> set
+  const ACE_TCHAR *process_name (void);
+  // Return the process_name.  If the <process_name(name)> set
   // method is not called, this method will return argv[0].
 
   // = Set/get creation flags.
@@ -144,21 +144,21 @@ public:
 
   // = <ACE_Process> uses these operations to retrieve option values.
 
-  LPTSTR working_directory (void);
+  ACE_TCHAR *working_directory (void);
   // Current working directory.  Returns "" if nothing has been set.
 
-  LPTSTR command_line_buf (void);
+  ACE_TCHAR *command_line_buf (void);
   // Buffer of command-line options.  Returns exactly what was passed
   // to this->command_line.
 
-  LPTSTR const *command_line_argv (void);
+  ACE_TCHAR * const *command_line_argv (void);
   // argv-style command-line options.  Parses and modifies the string
   // created from <command_line_>.  All spaces not in quotes ("" or
   // '') are replaced with null (\0) bytes.  An argv array is built
   // and returned with each entry pointing to the start of
   // null-terminated string.  Returns { 0 } if nothing has been set.
 
-  LPTSTR env_buf (void);
+  ACE_TCHAR *env_buf (void);
   // Null-terminated buffer of null terminated strings.  Each string
   // is an environment assignment "VARIABLE=value".  This buffer
   // should end with two null characters.
@@ -172,7 +172,7 @@ public:
 #if defined (ACE_WIN32)
   // = Non-portable accessors for when you "just have to use them."
 
-  STARTUPINFO *startup_info (void);
+  ACE_TEXT_STARTUPINFO *startup_info (void);
   // Used for setting and getting.
 
   LPSECURITY_ATTRIBUTES get_process_attributes (void) const;
@@ -197,7 +197,7 @@ public:
   // Allows disabling of handle inheritence.
 #else /* All things not WIN32 */
 
-  char *const *env_argv (void);
+  ACE_TCHAR *const *env_argv (void);
   // argv-style array of environment settings.
 
   // = Accessors for the standard handles.
@@ -211,7 +211,7 @@ public:
   // Get current value for avoid_zombies.
 
   // = Set/get real & effective user & group id associated with user.
-  int setreugid (const char* user);
+  int setreugid (const ACE_TCHAR* user);
   void setruid (uid_t id);
   void seteuid (uid_t id);
   void setrgid (uid_t id);
@@ -224,7 +224,7 @@ public:
 protected:
 
 #if !defined (ACE_HAS_WINCE)
-  int setenv_i (LPTSTR assignment, int len);
+  int setenv_i (ACE_TCHAR *assignment, int len);
   // Add <assignment> to environment_buf_ and adjust
   // environment_argv_.  <len> is the strlen of <assignment>.
 
@@ -244,7 +244,7 @@ protected:
   int environment_inherited_;
   // Ensures once only call to inherit environment.
 
-  STARTUPINFO startup_info_;
+  ACE_TEXT_STARTUPINFO startup_info_;
 
   BOOL handle_inheritence_;
   // Default TRUE.
@@ -287,13 +287,13 @@ protected:
   int environment_argv_index_;
   // Pointer to environment_argv_.
 
-  LPTSTR environment_buf_;
+  ACE_TCHAR *environment_buf_;
   // Pointer to buffer of the environment settings.
 
   int environment_buf_len_;
   // Size of the environment buffer. Configurable
 
-  LPTSTR* environment_argv_;
+  ACE_TCHAR **environment_argv_;
   // Pointers into environment_buf_.
 
   int max_environment_args_;
@@ -302,23 +302,23 @@ protected:
   int max_environ_argv_index_;
   // Maximum index of environment_argv_ buffer
 
-  TCHAR working_directory_[MAXPATHLEN + 1];
+  ACE_TCHAR working_directory_[MAXPATHLEN + 1];
   // The current working directory.
 #endif /* !ACE_HAS_WINCE */
 
   int command_line_argv_calculated_;
   // Ensures command_line_argv is only calculated once.
 
-  LPTSTR command_line_buf_;
+  ACE_TCHAR *command_line_buf_;
   // Pointer to buffer of command-line arguments.  E.g., "-f foo -b bar".
 
-  LPTSTR command_line_argv_[MAX_COMMAND_LINE_OPTIONS];
+  ACE_TCHAR *command_line_argv_[MAX_COMMAND_LINE_OPTIONS];
   // Argv-style command-line arguments.
 
   pid_t process_group_;
   // Process-group on Unix; unused on Win32.
 
-  TCHAR process_name_[MAXPATHLEN + 1];
+  ACE_TCHAR process_name_[MAXPATHLEN + 1];
   // Pathname for the process. Relative path or absolute path or just
   // the program name.
 };

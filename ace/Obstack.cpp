@@ -16,9 +16,9 @@ ACE_Obstack::dump (void) const
   ACE_TRACE ("ACE_Obstack::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("size_ = %d\n"), this->size_));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("head_ = %x\n"), this->head_));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("curr_ = %x\n"), this->curr_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("size_ = %d\n"), this->size_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("head_ = %x\n"), this->head_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("curr_ = %x\n"), this->curr_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -30,8 +30,8 @@ ACE_Obchunk::dump (void) const
   ACE_TRACE ("ACE_Obchunk::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("end_ = %x\n"), this->end_));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("cur_ = %x\n"), this->cur_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("end_ = %x\n"), this->end_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("cur_ = %x\n"), this->cur_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -47,11 +47,15 @@ ACE_Obstack::new_chunk (void)
 {
   ACE_TRACE ("ACE_Obstack::new_chunk");
 
-  char *temp;
+  ACE_TCHAR *temp;
   
-  ACE_ALLOCATOR_RETURN (temp,
-                        (char *) this->allocator_strategy_->malloc (sizeof (class ACE_Obchunk) + this->size_),
-                        0);
+  ACE_ALLOCATOR_RETURN 
+    (temp,
+     ACE_static_cast (ACE_TCHAR *,
+                      this->allocator_strategy_->malloc 
+                        (sizeof (class ACE_Obchunk) 
+                         + this->size_ * sizeof (ACE_TCHAR))),
+     0);
 
   return new (temp) ACE_Obchunk (this->size_);
 }
@@ -86,12 +90,12 @@ ACE_Obstack::~ACE_Obstack (void)
     }
 }
 
-char *
-ACE_Obstack::copy (const char *s, 
+ACE_TCHAR *
+ACE_Obstack::copy (const ACE_TCHAR *s, 
 		   size_t len)
 {
   ACE_TRACE ("ACE_Obstack::copy");
-  char *result;
+  ACE_TCHAR *result;
 
   ACE_ASSERT (this->size_ >= len + 1);
 

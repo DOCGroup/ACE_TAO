@@ -101,7 +101,7 @@ ACE_Process_Options::setgroup (pid_t pgrp)
 
 #if defined (ACE_WIN32)
 
-ACE_INLINE STARTUPINFO *
+ACE_INLINE ACE_TEXT_STARTUPINFO *
 ACE_Process_Options::startup_info (void)
 {
 #if !defined (ACE_HAS_WINCE)
@@ -276,13 +276,13 @@ ACE_Process_Options::getegid (void)
 }
 #endif /* ACE_WIN32 */
 
-ACE_INLINE LPTSTR
+ACE_INLINE ACE_TCHAR *
 ACE_Process_Options::command_line_buf (void)
 {
   return command_line_buf_;
 }
 
-ACE_INLINE LPTSTR
+ACE_INLINE ACE_TCHAR *
 ACE_Process_Options::working_directory (void)
 {
 #if !defined (ACE_HAS_WINCE)
@@ -296,7 +296,7 @@ ACE_Process_Options::working_directory (void)
 }
 
 ACE_INLINE void
-ACE_Process_Options::working_directory (LPCTSTR wd)
+ACE_Process_Options::working_directory (const ACE_TCHAR *wd)
 {
 #if !defined(ACE_HAS_WINCE)
   ACE_OS::strcpy (working_directory_, wd);
@@ -306,12 +306,12 @@ ACE_Process_Options::working_directory (LPCTSTR wd)
 }
 
 ACE_INLINE void
-ACE_Process_Options::process_name (LPCTSTR p)
+ACE_Process_Options::process_name (const ACE_TCHAR *p)
 {
   ACE_OS::strcpy (this->process_name_, p);
 }
 
-ACE_INLINE LPCTSTR
+ACE_INLINE const ACE_TCHAR *
 ACE_Process_Options::process_name (void)
 {
   if (process_name_[0] == '\0')
@@ -325,21 +325,21 @@ ACE_Process_Options::process_name (void)
 // under CE.  They are not empty on most other platforms.
 
 ACE_INLINE int
-ACE_Process_Options::setenv (LPTSTR envp[])
+ACE_Process_Options::setenv (ACE_TCHAR *envp[])
 {
   ACE_UNUSED_ARG (envp);
   return -1;
 }
 
 ACE_INLINE int
-ACE_Process_Options::setenv (LPCTSTR format, ...)
+ACE_Process_Options::setenv (const ACE_TCHAR *format, ...)
 {
   return -1;
 }
 
 ACE_INLINE int
-ACE_Process_Options::setenv (LPCTSTR variable_name,
-                             LPCTSTR format,
+ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
+                             const ACE_TCHAR *format,
                              ...)
 {
   return -1;

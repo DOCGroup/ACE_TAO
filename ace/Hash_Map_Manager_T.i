@@ -11,7 +11,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::ACE_H
     cur_size_ (0)
 {
   if (this->open (size, alloc) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Hash_Map_Manager_Ex\n")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE_Hash_Map_Manager_Ex\n")));
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
@@ -22,7 +22,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::ACE_H
     cur_size_ (0)
 {
   if (this->open (ACE_DEFAULT_MAP_SIZE, alloc) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Hash_Map_Manager_Ex\n")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE_Hash_Map_Manager_Ex\n")));
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE int

@@ -24,6 +24,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (ACE_HAS_WCHAR)
+
 #include "ace/SString.h"
 #include "ace/Containers.h"
 #include "ace/Name_Proxy.h"
@@ -49,12 +51,12 @@ public:
   ACE_Remote_Name_Space (void);
   // "Do-nothing" constructor.
 
-  ACE_Remote_Name_Space (const ASYS_TCHAR *hostname, u_short port);
+  ACE_Remote_Name_Space (const ACE_TCHAR *hostname, u_short port);
   // Specifies the scope of this namespace, opens and memory-maps the
   // associated file (if accessible) or contacts the dedicated name
   // server process for NET_LOCAL namespace.
 
-  int open (const ASYS_TCHAR *servername, u_short port);
+  int open (const ACE_TCHAR *servername, u_short port);
   // Specifies the scope of this namespace, opens and memory-maps the
   // associated file (if accessible) or contacts the dedicated name
   // server process for NET_LOCAL namespace.
@@ -125,6 +127,8 @@ private:
   ACE_Name_Proxy ns_proxy_;
   // Interface to Name server process for NET_LOCAL namespace.
 };
+
+#endif /* ACE_HAS_WCHAR */
 
 #include "ace/post.h"
 #endif /* ACE_REMOTE_NAME_SPACE_H */

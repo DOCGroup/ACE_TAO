@@ -114,8 +114,8 @@ Identity_Client::run (CORBA::Environment &ACE_TRY_ENV)
 
   if (obj.in () == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("(%N|%l) <ERROR> [Identity_Client::run] \n"),
-                       ASYS_TEXT ("factory_resolve \n")),
+                       ACE_TEXT ("(%N|%l) <ERROR> [Identity_Client::run] \n"),
+                       ACE_TEXT ("factory_resolve \n")),
                       -1);
 
   Load_Balancer::Object_Group_Factory_var factory =

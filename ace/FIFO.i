@@ -4,7 +4,7 @@
 // FIFO.i
 
 ACE_INLINE int
-ACE_FIFO::get_local_addr (const ASYS_TCHAR *&r) const
+ACE_FIFO::get_local_addr (const ACE_TCHAR *&r) const
 {
   ACE_TRACE ("ACE_FIFO::get_local_addr");
   r = this->rendezvous_;

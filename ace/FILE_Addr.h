@@ -42,10 +42,10 @@ public:
   // Acts like a copy constructor.  If <sa> == ACE_Addr::sap_any then
   // create a temporary filename using <ACE_OS::mktemp>.
 
-  ACE_FILE_Addr (LPCTSTR filename);
+  ACE_FILE_Addr (const ACE_TCHAR *filename);
   // Create a ACE_FILE_Addr from a pathname.
 
-  int set (LPCTSTR filename);
+  int set (const ACE_TCHAR *filename);
   // Create a ACE_FILE_Addr from a pathname.
 
   ACE_FILE_Addr &operator= (const ACE_FILE_Addr &);
@@ -54,12 +54,7 @@ public:
   virtual void *get_addr (void) const;
   // Return a pointer to the address.
 
-#if defined (UNICODE)
-  virtual int addr_to_string (wchar_t *addr, size_t) const;
-  // Transform the current address into string format.
-#endif /* UNICODE */
-
-  virtual int addr_to_string (char *addr, size_t) const;
+  virtual int addr_to_string (ACE_TCHAR *addr, size_t) const;
   // Transform the current address into string format.
 
   int operator == (const ACE_FILE_Addr &SAP) const;
@@ -68,7 +63,7 @@ public:
   int operator != (const ACE_FILE_Addr &SAP) const;
   // Compare two addresses for inequality.
 
-  LPCTSTR get_path_name (void) const;
+  const ACE_TCHAR *get_path_name (void) const;
   // Return the path name used for the rendezvous point.
 
   void dump (void) const;
@@ -78,7 +73,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  TCHAR filename_[MAXNAMLEN + 1];
+  ACE_TCHAR filename_[MAXNAMLEN + 1];
   // Name of the file.
 };
 

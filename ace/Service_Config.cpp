@@ -55,7 +55,7 @@ int ACE_Service_Config::signum_ = SIGHUP;
 
 // Indicates where to write the logging output.  This is typically
 // either a STREAM pipe or a socket address.
-LPCTSTR ACE_Service_Config::logger_key_ = ACE_DEFAULT_LOGGER_KEY;
+const ACE_TCHAR *ACE_Service_Config::logger_key_ = ACE_DEFAULT_LOGGER_KEY;
 
 // The ACE_Service_Manager static service object is now defined by the
 // ACE_Object_Manager, in Object_Manager.cpp.
@@ -146,7 +146,7 @@ ACE_Service_Config::thr_mgr (ACE_Thread_Manager *tm)
 // ACE_Reactor, and unlinking it if necessary.
 
 int
-ACE_Service_Config::remove (const ASYS_TCHAR svc_name[])
+ACE_Service_Config::remove (const ACE_TCHAR svc_name[])
 {
   ACE_TRACE ("ACE_Service_Config::remove");
   return ACE_Service_Repository::instance ()->remove (svc_name);
@@ -159,7 +159,7 @@ ACE_Service_Config::remove (const ASYS_TCHAR svc_name[])
 // can be resumed later on by calling the <resume> method...
 
 int
-ACE_Service_Config::suspend (const ASYS_TCHAR svc_name[])
+ACE_Service_Config::suspend (const ACE_TCHAR svc_name[])
 {
   ACE_TRACE ("ACE_Service_Config::suspend");
   return ACE_Service_Repository::instance ()->suspend (svc_name);
@@ -169,7 +169,7 @@ ACE_Service_Config::suspend (const ASYS_TCHAR svc_name[])
 // been resumed (e.g., a static service).
 
 int
-ACE_Service_Config::resume (const ASYS_TCHAR svc_name[])
+ACE_Service_Config::resume (const ACE_TCHAR svc_name[])
 {
   ACE_TRACE ("ACE_Service_Config::resume");
   return ACE_Service_Repository::instance ()->resume (svc_name);
@@ -210,12 +210,12 @@ ACE_Service_Config::init_svc_conf_file_queue (void)
 // ACE_Service_Config.
 
 int
-ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
+ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Service_Config::parse_args");
   ACE_Get_Opt getopt (argc,
                       argv,
-                      ASYS_TEXT ("bdf:k:nys:S:"),
+                      ACE_TEXT ("bdf:k:nys:S:"),
                       1); // Start at argv[1].
 
   if (ACE_Service_Config::init_svc_conf_file_queue () == -1)
@@ -232,15 +232,14 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
         break;
       case 'f':
         if (ACE_Service_Config::svc_conf_file_queue_->enqueue_tail
-            (ACE_CString (getopt.optarg)) == -1)
+            (ACE_TString (getopt.optarg)) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("%p\n"),
+                             ACE_TEXT ("%p\n"),
                              "enqueue_tail"),
                             -1);
         break;
       case 'k':
-        ACE_Service_Config::logger_key_ =
-          ASYS_ONLY_WIDE_STRING (getopt.optarg);
+        ACE_Service_Config::logger_key_ = getopt.optarg;
         break;
       case 'n':
         ACE_Service_Config::no_static_svcs_ = 1;
@@ -260,7 +259,7 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
               (ACE_Service_Config::signum_,
                ACE_Service_Config::signal_handler_) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ASYS_TEXT ("cannot obtain signal handler\n")),
+                               ACE_TEXT ("cannot obtain signal handler\n")),
                               -1);
 #endif /* ACE_LACKS_UNIX_SIGNALS */
           break;
@@ -271,16 +270,16 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
                           ACE_SVC_QUEUE,
                           -1);
         if (ACE_Service_Config::svc_queue_->enqueue_tail
-            (ACE_CString (getopt.optarg)) == -1)
+            (ACE_TString (getopt.optarg)) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("%p\n"),
+                             ACE_TEXT ("%p\n"),
                              "enqueue_tail"),
                             -1);
         break;
       default:
         if (ACE::debug () > 0)
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("%c is not a ACE_Service_Config option\n"),
+                      ACE_TEXT ("%c is not a ACE_Service_Config option\n"),
                       c));
       }
 
@@ -290,8 +289,8 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
 // Initialize and activate a statically linked service.
 
 int
-ACE_Service_Config::initialize (const ASYS_TCHAR svc_name[],
-                                ASYS_TCHAR *parameters)
+ACE_Service_Config::initialize (const ACE_TCHAR svc_name[],
+                                ACE_TCHAR *parameters)
 {
   ACE_TRACE ("ACE_Service_Config::initialize");
   ACE_ARGV args (parameters);
@@ -299,14 +298,14 @@ ACE_Service_Config::initialize (const ASYS_TCHAR svc_name[],
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("opening static service %s\n"),
+                ACE_TEXT ("opening static service %s\n"),
                 svc_name));
 
   if (ACE_Service_Repository::instance ()->find
       (svc_name,
        (const ACE_Service_Type **) &srp) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%s not found\n"),
+                       ACE_TEXT ("%s not found\n"),
                        svc_name),
                       -1);
   else if (srp->type ()->init (args.argc (),
@@ -314,7 +313,7 @@ ACE_Service_Config::initialize (const ASYS_TCHAR svc_name[],
     {
       // Remove this entry.
       ACE_ERROR ((LM_ERROR,
-                         ASYS_TEXT ("static initialization failed, %p\n"),
+                         ACE_TEXT ("static initialization failed, %p\n"),
                          svc_name));
       ACE_Service_Repository::instance ()->remove (svc_name);
       return -1;
@@ -331,26 +330,26 @@ ACE_Service_Config::initialize (const ASYS_TCHAR svc_name[],
 
 int
 ACE_Service_Config::initialize (const ACE_Service_Type *sr,
-                                ASYS_TCHAR parameters[])
+                                ACE_TCHAR parameters[])
 {
   ACE_TRACE ("ACE_Service_Config::initialize");
   ACE_ARGV args (parameters);
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("opening dynamic service %s\n"),
+                ACE_TEXT ("opening dynamic service %s\n"),
                 sr->name ()));
 
   if (ACE_Service_Repository::instance ()->insert (sr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("insertion failed, %p\n"),
+                       ACE_TEXT ("insertion failed, %p\n"),
                        sr->name ()),
                       -1);
   else if (sr->type ()->init (args.argc (),
                               args.argv ()) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("dynamic initialization failed for %s\n"),
+                  ACE_TEXT ("dynamic initialization failed for %s\n"),
                   sr->name ()));
       ACE_Service_Repository::instance ()->remove (sr->name ());
       return -1;
@@ -394,7 +393,7 @@ ACE_Service_Config::process_directives_i (void)
 }
 
 int
-ACE_Service_Config::process_directive (const ASYS_TCHAR directive[])
+ACE_Service_Config::process_directive (const ACE_TCHAR directive[])
 {
   ACE_TRACE ("ACE_Service_Config::process_directives");
   ACE_UNUSED_ARG (directive);
@@ -425,7 +424,7 @@ ACE_Service_Config::process_directives (void)
 
   if (ACE_Service_Config::svc_conf_file_queue_ != 0)
     {
-      ACE_CString *sptr = 0;
+      ACE_TString *sptr = 0;
       ACE_SVC_QUEUE &queue = *ACE_Service_Config::svc_conf_file_queue_;
 
       // Iterate through all the svc.conf files.
@@ -433,20 +432,16 @@ ACE_Service_Config::process_directives (void)
            iter.next (sptr) != 0;
            iter.advance ())
         {
-          // @@ We can remove the ASYS_WIDE_STRING stuff when this is
-          // defined as an ACE_WString...
-          FILE *fp = ACE_OS::fopen (ASYS_WIDE_STRING (sptr->fast_rep ()),
-                                    ASYS_TEXT ("r"));
+          FILE *fp = ACE_OS::fopen (sptr->fast_rep (),
+                                    ACE_TEXT ("r"));
           if (fp == 0)
             {
               // Invalid svc.conf file.  We'll report it here and
               // break out of the method.
               if (ACE::debug ())
                 ACE_DEBUG ((LM_DEBUG,
-                            ASYS_TEXT ("%p\n"),
-                            // @@ Beware of the WString here...  Not
-                            // sure how to fix this with %p...
-                            ASYS_WIDE_STRING (sptr->fast_rep ())));
+                            ACE_TEXT ("%p\n"),
+                            sptr->fast_rep ()));
               errno = ENOENT;
               result = -1;
               break;
@@ -471,7 +466,7 @@ ACE_Service_Config::process_commandline_directives (void)
 
   if (ACE_Service_Config::svc_queue_ != 0)
     {
-      ACE_CString *sptr = 0;
+      ACE_TString *sptr = 0;
       ACE_SVC_QUEUE &queue = *ACE_Service_Config::svc_queue_;
 
       for (ACE_SVC_QUEUE_ITERATOR iter (queue);
@@ -480,11 +475,11 @@ ACE_Service_Config::process_commandline_directives (void)
         {
           // Process just a single directive.
           if (ACE_Service_Config::process_directive
-              (ASYS_WIDE_STRING (sptr->fast_rep ())) == -1)
+              (sptr->fast_rep ()) == -1)
             {
               ACE_ERROR ((LM_ERROR,
-                          ASYS_TEXT ("%p\n"),
-                          ASYS_TEXT ("process_directive")));
+                          ACE_TEXT ("%p\n"),
+                          ACE_TEXT ("process_directive")));
               result = -1;
             }
         }
@@ -542,8 +537,8 @@ ACE_Service_Config::load_static_svcs (void)
 // Performs an open without parsing command-line arguments.
 
 int
-ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
-                            LPCTSTR logger_key,
+ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
+                            const ACE_TCHAR *logger_key,
                             int ignore_default_svc_conf_file,
                             int ignore_debug_flag)
 {
@@ -568,9 +563,9 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
       // Load the default "svc.conf" entry here if there weren't
       // overriding -f arguments in <parse_args>.
       && ACE_Service_Config::svc_conf_file_queue_->enqueue_tail
-           (ACE_CString (ACE_DEFAULT_SVC_CONF)) == -1)
+           (ACE_TString (ACE_DEFAULT_SVC_CONF)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
+                       ACE_TEXT ("%p\n"),
                        "enqueue_tail"),
                       -1);
 
@@ -595,7 +590,7 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
     // Only use STDERR if the caller hasn't already set the flags.
     flags = (u_long) ACE_Log_Msg::STDERR;
 
-  LPCTSTR key = logger_key;
+  const ACE_TCHAR *key = logger_key;
 
   if (key == 0 || ACE_OS::strcmp (key, ACE_DEFAULT_LOGGER_KEY) == 0)
     // Only use the static <logger_key_> if the caller doesn't
@@ -611,7 +606,7 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
     {
       if (ACE::debug ())
         ACE_DEBUG ((LM_STARTUP,
-                    ASYS_TEXT ("starting up daemon %n\n")));
+                    ACE_TEXT ("starting up daemon %n\n")));
 
       // Initialize the Service Repository (this will still work if
       // user forgets to define an object of type ACE_Service_Config).
@@ -629,7 +624,7 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
           (ACE_Service_Config::signum_,
            ACE_Service_Config::signal_handler_) == -1)
         ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("can't register signal handler\n")));
+                    ACE_TEXT ("can't register signal handler\n")));
 #endif /* ACE_LACKS_UNIX_SIGNALS */
 
       // See if we need to load the static services.
@@ -666,8 +661,8 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
   return result;
 }
 
-ACE_Service_Config::ACE_Service_Config (const ASYS_TCHAR program_name[],
-                                        LPCTSTR logger_key)
+ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
+                                        const ACE_TCHAR *logger_key)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
 
@@ -677,7 +672,7 @@ ACE_Service_Config::ACE_Service_Config (const ASYS_TCHAR program_name[],
     // Only print out an error if it wasn't the svc.conf file that was
     // missing.
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
+                ACE_TEXT ("%p\n"),
                 program_name));
 }
 
@@ -713,13 +708,13 @@ ACE_Service_Config::reconfigure (void)
 #endif /* ! ACE_NLOGGING */
       if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("beginning reconfiguration at %s"),
+                    ACE_TEXT ("beginning reconfiguration at %s"),
                     ACE_OS::ctime (&t)));
     }
   if (ACE_Service_Config::process_directives () == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("process_directives")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("process_directives")));
 }
 
 // Run the event loop until the <ACE_Reactor::handle_events>
@@ -878,22 +873,22 @@ ACE_Service_Config::start_daemon (void)
 template class ACE_Node<ACE_Static_Svc_Descriptor *>;
 template class ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *>;
 template class ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>;
-template class ACE_Node<ACE_CString>;
-template class ACE_Unbounded_Queue<ACE_CString>;
-template class ACE_Unbounded_Queue_Iterator<ACE_CString>;
-template class ACE_Unbounded_Set<ACE_CString>;
-template class ACE_Unbounded_Set_Iterator<ACE_CString>;
+template class ACE_Node<ACE_TString>;
+template class ACE_Unbounded_Queue<ACE_TString>;
+template class ACE_Unbounded_Queue_Iterator<ACE_TString>;
+template class ACE_Unbounded_Set<ACE_TString>;
+template class ACE_Unbounded_Set_Iterator<ACE_TString>;
 template class auto_ptr<ACE_Obstack>;
 template class ACE_Auto_Basic_Ptr<ACE_Obstack>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Node<ACE_Static_Svc_Descriptor *>
 #pragma instantiate ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>
-#pragma instantiate ACE_Node<ACE_CString>
-#pragma instantiate ACE_Unbounded_Queue<ACE_CString>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_CString>
-#pragma instantiate ACE_Unbounded_Set<ACE_CString>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_CString>
+#pragma instantiate ACE_Node<ACE_TString>
+#pragma instantiate ACE_Unbounded_Queue<ACE_TString>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_TString>
+#pragma instantiate ACE_Unbounded_Set<ACE_TString>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_TString>
 #pragma instantiate auto_ptr<ACE_Obstack>
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Obstack>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -22,7 +22,7 @@ ACE_CORBA_Handler::dump (void) const
   ACE_TRACE ("ACE_CORBA_Handler::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nreference_count_ = %d"), this->reference_count_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nreference_count_ = %d"), this->reference_count_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -45,8 +45,8 @@ ACE_ST_CORBA_Handler::dump (void) const
 
   ACE_CORBA_Handler::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("instance_ = %x"), this->instance_));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\niteration_ = %d"), this->iterations_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %x"), this->instance_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\niteration_ = %d"), this->iterations_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -81,7 +81,7 @@ void
 ACE_ST_CORBA_Handler::insert_handle (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_ST_CORBA_Handler::insert_handle");
-//  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("+++ inserting %d\n"), handle));
+//  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("+++ inserting %d\n"), handle));
 
 #if defined (ACE_TAKEOVER_ORBIX_CALLBACKS)
   if (ACE_ST_CORBA_Handler::previous_orbix_open_callback_ != 0)
@@ -96,7 +96,7 @@ ACE_ST_CORBA_Handler::insert_handle (ACE_HANDLE handle)
       (handle, ACE_ST_CORBA_Handler::instance_, ACE_Event_Handler::READ_MASK);
   else
     ;
-//    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("insert_handle: reactor NULL\n")));
+//    ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("insert_handle: reactor NULL\n")));
 }
 
 // Remove a descriptor from the ACE_Reactor that Orbix has just deleted.
@@ -106,7 +106,7 @@ void
 ACE_ST_CORBA_Handler::remove_handle (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_ST_CORBA_Handler::remove_handle");
-//  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("--- removing %d\n"), handle));
+//  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("--- removing %d\n"), handle));
 
 #if defined (ACE_TAKEOVER_ORBIX_CALLBACKS)
   if (ACE_ST_CORBA_Handler::previous_orbix_close_callback_ != 0)
@@ -121,7 +121,7 @@ ACE_ST_CORBA_Handler::remove_handle (ACE_HANDLE handle)
       (handle, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
   else
     ;
-//    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("remove_handle: reactor NULL\n")));
+//    ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("remove_handle: reactor NULL\n")));
 }
 
 /* static */
@@ -329,7 +329,7 @@ ACE_CORBA_Handler::deactivate_service (const char *service_name,
 
   if (ref_count < 0)
     ;
-//    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("warning, reference count == %d\n"),
+//    ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("warning, reference count == %d\n"),
 //               ref_count));
   return 0;
 }
@@ -408,8 +408,8 @@ ACE_MT_CORBA_Handler::dump (void) const
   ACE_TRACE ("ACE_MT_CORBA_Handler::dump");
   ACE_CORBA_Handler::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("instance_ = %x"), this->instance_));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nthr_mgr_ = %x"), this->thr_mgr_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("instance_ = %x"), this->instance_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nthr_mgr_ = %x"), this->thr_mgr_));
   this->pipe_.dump ();
   ACE_MT (ACE_Thread_Mutex *lock =
     ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object

@@ -26,12 +26,12 @@ ACE_UPIPE_Connector::ACE_UPIPE_Connector (void)
 
 int
 ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
-			      const ACE_UPIPE_Addr &addr,
-			      ACE_Time_Value *timeout,
-			      const ACE_Addr & /* local_sap */,
-			      int /* reuse_addr */,
-			      int flags,
-			      int perms)
+                              const ACE_UPIPE_Addr &addr,
+                              ACE_Time_Value *timeout,
+                              const ACE_Addr & /* local_sap */,
+                              int /* reuse_addr */,
+                              int flags,
+                              int perms)
 {
   ACE_TRACE ("ACE_UPIPE_Connector::connect");
   ACE_ASSERT (new_stream.get_handle () == ACE_INVALID_HANDLE);
@@ -64,8 +64,8 @@ ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
 				      sizeof ustream);
       if (result == -1)
 	ACE_ERROR ((LM_ERROR,
-		    ASYS_TEXT ("ACE_UPIPE_Connector %p\n"),
-		    ASYS_TEXT ("write to pipe failed")));
+		    ACE_TEXT ("ACE_UPIPE_Connector %p\n"),
+		    ACE_TEXT ("write to pipe failed")));
 
       // Wait for confirmation of stream linking.
       ACE_Message_Block *mb_p = 0;
@@ -77,8 +77,8 @@ ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
       // They perform different checks and cannot be merged.
       if (result == -1)
 	  ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("ACE_UPIPE_Connector %p\n"),
-		      ASYS_TEXT ("no confirmation from server")));
+                      ACE_TEXT ("ACE_UPIPE_Connector %p\n"),
+		      ACE_TEXT ("no confirmation from server")));
       else
 	// Close down the new_stream at this point in order to
 	// conserve handles.  Note that we don't need the SPIPE

@@ -54,7 +54,7 @@ private:
   int argc_;
   // # of arguments on the command line.
 
-  ASYS_TCHAR **argv_;
+  ACE_TCHAR **argv_;
   // arguments from command line.
 
   CORBA::ORB_var orb_;
@@ -76,7 +76,7 @@ class TAO_IMR_Op
   // = DESCRIPTION
   //     Provides a base class with virtual methods for each operation strategy.
 public:
-  static TAO_IMR_Op *make_op (const ASYS_TCHAR *op_name);
+  static TAO_IMR_Op *make_op (const ACE_TCHAR *op_name);
   // Factory.
 
   TAO_IMR_Op (void);
@@ -88,7 +88,7 @@ public:
   virtual ~TAO_IMR_Op (void);
   // Virtual Destructor.
 
-  virtual int parse (int argc, ASYS_TCHAR **argv) = 0;
+  virtual int parse (int argc, ACE_TCHAR **argv) = 0;
   // Parse arguments.
 
   virtual int run (void) = 0;
@@ -116,7 +116,7 @@ public:
   TAO_IMR_Op_Activate (void);
   ~TAO_IMR_Op_Activate (void);
 
-  virtual int parse (int argc, ASYS_TCHAR **argv);
+  virtual int parse (int argc, ACE_TCHAR **argv);
   virtual int run (void);
 
 protected:
@@ -139,11 +139,11 @@ public:
   TAO_IMR_Op_Add (void);
   ~TAO_IMR_Op_Add (void);
 
-  virtual int parse (int argc, ASYS_TCHAR **argv);
+  virtual int parse (int argc, ACE_TCHAR **argv);
   virtual int run (void);
 
 protected:
-  void setenv (ASYS_TCHAR *optarg);
+  void setenv (ACE_TCHAR *optarg);
   // Sets one of the environment variables
 
   void print_usage (void);
@@ -178,7 +178,7 @@ public:
   TAO_IMR_Op_Autostart (void);
   ~TAO_IMR_Op_Autostart (void);
 
-  virtual int parse (int argc, ASYS_TCHAR **argv);
+  virtual int parse (int argc, ACE_TCHAR **argv);
   virtual int run (void);
 
 protected:
@@ -199,7 +199,7 @@ public:
   TAO_IMR_Op_IOR (void);
   ~TAO_IMR_Op_IOR (void);
 
-  virtual int parse (int argc, ASYS_TCHAR **argv);
+  virtual int parse (int argc, ACE_TCHAR **argv);
   virtual int run (void);
 
 protected:
@@ -226,7 +226,7 @@ public:
   TAO_IMR_Op_List (void);
   ~TAO_IMR_Op_List (void);
 
-  virtual int parse (int argc, ASYS_TCHAR **argv);
+  virtual int parse (int argc, ACE_TCHAR **argv);
   virtual int run (void);
 
 protected:
@@ -256,7 +256,7 @@ public:
   TAO_IMR_Op_Remove (void);
   ~TAO_IMR_Op_Remove (void);
 
-  virtual int parse (int argc, ASYS_TCHAR **argv);
+  virtual int parse (int argc, ACE_TCHAR **argv);
   virtual int run (void);
 
 protected:
@@ -279,7 +279,7 @@ public:
   TAO_IMR_Op_Shutdown (void);
   ~TAO_IMR_Op_Shutdown (void);
 
-  virtual int parse (int argc, ASYS_TCHAR **argv);
+  virtual int parse (int argc, ACE_TCHAR **argv);
   virtual int run (void);
 
 protected:
@@ -303,11 +303,11 @@ public:
   TAO_IMR_Op_Update (void);
   ~TAO_IMR_Op_Update (void);
 
-  virtual int parse (int argc, ASYS_TCHAR **argv);
+  virtual int parse (int argc, ACE_TCHAR **argv);
   virtual int run (void);
 
 protected:
-  void setenv (ASYS_TCHAR *optarg);
+  void setenv (ACE_TCHAR *optarg);
   // Sets one environment variable.
 
   void print_usage (void);

@@ -22,45 +22,44 @@
 
 ACE_RCSID(tests, Capabilities_Test, "$Id$")
 
-static const char config[] = "Capabilities_Test.cfg";
+static const ACE_TCHAR config[] = ACE_TEXT ("Capabilities_Test.cfg");
 
 static int
 load_config (void)
 {
   ACE_Capabilities caps;
-  if (caps.getent (config,
-                   "Config") == -1)
+  if (caps.getent (config, ACE_TEXT ("Config")) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Can't read %s",
+                       ACE_TEXT ("Can't read %s"),
                        config),
                       1);
 
   int b = 0;
-  caps.getval ("bool", b);
+  caps.getval (ACE_TEXT ("bool"), b);
   ACE_DEBUG ((LM_DEBUG,
-              "bool = %d\n",
+              ACE_TEXT ("bool = %d\n"),
               b));
 
   int n = 0;
-  caps.getval ("integer", n);
+  caps.getval (ACE_TEXT ("integer"), n);
 
   ACE_DEBUG ((LM_DEBUG,
-              "integer = %d\n",
+              ACE_TEXT ("integer = %d\n"),
               n));
 
-  ACE_CString s;
-  caps.getval ("string", s);
+  ACE_TString s;
+  caps.getval (ACE_TEXT ("string"), s);
 
   ACE_DEBUG ((LM_DEBUG,
-              "string = %s\n",
+              ACE_TEXT ("string = %s\n"),
               s.c_str ()));
   return 0;
 }
 
 int
-main (int, char *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Capabilities_Test"));
+  ACE_START_TEST (ACE_TEXT ("Capabilities_Test"));
 
 
   // --------------------------------------------------------
@@ -79,7 +78,7 @@ main (int, char *[])
   ACE_HANDLE fd = ACE_OS::open (config, O_RDWR | O_CREAT | O_TRUNC, 0600);
 
   if (fd == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("ACE_OS::open")), -1);
 
 
   if (ACE_OS::write (fd, file_contents, sizeof(file_contents)) !=
@@ -87,13 +86,13 @@ main (int, char *[])
     {
       ACE_OS::unlink (config);
       ACE_OS::close (fd);
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::write"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("ACE_OS::write")), -1);
     }
 
   if (ACE_OS::close (fd) != 0)
     {
       ACE_OS::unlink (config);
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::close"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("ACE_OS::close")), -1);
     }
   // --------------------------------------------------------
 

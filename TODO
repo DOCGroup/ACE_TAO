@@ -95,9 +95,6 @@ ACE/TAO Configuration Project
 /* Compiler enforces C++ One Definition Rule */
 #undef ACE_HAS_ONE_DEFINITION_RULE
 
-/* Platform also has __TEXT defined */
-#undef ACE_HAS_TEXT_MACRO_CONFLICT
-
 /* Platform has void (*)(...) prototype for pthread_key_create() destructor
    (e.g., LynxOS). */
 #undef ACE_HAS_STDARG_THR_DEST
@@ -220,8 +217,8 @@ ACE/TAO Configuration Project
 /* The pthread_create() routine *must* take extern C functions. */
 #undef ACE_HAS_THR_C_FUNC
 
-/* Platform/compiler supports UNICODE */
-#undef ACE_HAS_UNICODE
+/* Platform/compiler supports WCHAR */
+#undef ACE_HAS_WCHAR
 
 /* The Win32 platform supports WinSock 2.0 */
 #undef ACE_HAS_WINSOCK2

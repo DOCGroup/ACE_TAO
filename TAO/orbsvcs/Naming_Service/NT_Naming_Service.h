@@ -50,7 +50,7 @@ public:
   // This is a virtual method inherited from ACE_NT_Service.
         
   virtual int init (int argc,
-                    ASYS_TCHAR *argv[]);
+                    ACE_TCHAR *argv[]);
   // Initialize the objects argc_ and argv_ attributes values.
 
 private:

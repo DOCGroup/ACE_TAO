@@ -64,7 +64,7 @@ public:
   // E.g., the "19" in ACE 4.3.19.  Returns 0 for "stable" (non-beta) releases.
 
   // = C++ compiler version information.
-  static const char* compiler_name (void);
+  static const ACE_TCHAR * compiler_name (void);
   // E.g., the "SunPro C++" in SunPro C++ 4.32.0
 
   static u_int compiler_major_version (void);
@@ -303,7 +303,7 @@ public:
   // Bind a new unused port to <handle>.
 
   static int get_bcast_addr (ACE_UINT32 &bcast_addr,
-                             const char *hostname = 0,
+                             const ACE_TCHAR *hostname = 0,
                              ACE_UINT32 host_addr = 0,
                              ACE_HANDLE handle = ACE_INVALID_HANDLE);
   // Get our broadcast address based on our <host_addr>.  If
@@ -347,7 +347,7 @@ public:
   // = Operations on HANDLEs.
 
   static ACE_HANDLE handle_timed_open (ACE_Time_Value *timeout,
-                                       LPCTSTR name,
+                                       const ACE_TCHAR *name,
                                        int flags,
                                        int perms);
   // Wait up to <timeout> amount of time to actively open a device.
@@ -378,30 +378,20 @@ public:
 
   // = String functions
 #if !defined (ACE_HAS_WINCE)
-  static ASYS_TCHAR *strenvdup (const ASYS_TCHAR *str);
+  static ACE_TCHAR *strenvdup (const ACE_TCHAR *str);
   // Return a dynamically allocated duplicate of <str>, substituting
   // the environment variable if <str[0] == '$'>.  Note that the
   // pointer is allocated with <ACE_OS::malloc> and must be freed by
   // <ACE_OS::free>.
 #endif /* ACE_HAS_WINCE */
 
-  static char *strecpy (char *des, const char *src);
-  // Copies <src> to <des>, returning a pointer to the end of the
-  // copied region, rather than the beginning, as <strcpy> does.
-
-  static const char *strend (const char *);
+  static const char *strend (const char *s);
   // Returns a pointer to the "end" of the string, i.e., the character
   // past the '\0'.
 
   static char *strnew (const char *s);
   // This method is just like <strdup>, except that it uses <operator
   // new> rather than <malloc>.
-
-#   if defined (ACE_WIN32) && defined (ACE_HAS_UNICODE)
-  static wchar_t *strnew (const wchar_t *s);
-  // This method is just like <strdup>, except that it uses <operator
-  // new> rather than <malloc>.
-#endif /* ACE_WIN32 && ACE_HAS_UNICODE */
 
   static char *strndup (const char *str, size_t n);
   // Create a fresh new copy of <str>, up to <n> chars long.  Uses
@@ -411,9 +401,7 @@ public:
   // Create a fresh new copy of <str>, up to <n> chars long.  Uses
   // <ACE_OS::malloc> to allocate the new string.
 
-  static char *strsplit_r (char *s,
-                           const char *token,
-                           char *&next_start);
+  static char *strsplit_r (char *s, const char *token, char *&next_start);
   // Splits string <s> into pieces separated by the string <token>.
   // <next_start> is an opaque cookie handed back by the call to store
   // its state for the next invocation, thus making it re-entrant.
@@ -424,60 +412,63 @@ public:
   // Replace all instances of <search> in <s> with <replace>.  Returns
   // the number of replacements made.
 
-  static const char *execname (const char *pathname);
-  // On Win32 returns <pathname> if it already ends in ".exe,"
-  // otherwise returns a dynamically allocated buffer containing
-  // "<pathname>.exe".  Always returns <pathname> on UNIX.
+#if defined (ACE_HAS_WCHAR)
+  static const wchar_t *strend (const wchar_t *s);
 
-  static const char *basename (const char *pathname,
-                               char delim = ACE_DIRECTORY_SEPARATOR_CHAR_A);
-  // Returns the "basename" of a <pathname> separated by <delim>.  For
-  // instance, the basename of "/tmp/foo.cpp" is "foo.cpp" when
-  // <delim> is '/'.
+  static wchar_t *strnew (const wchar_t *s);
+  
+  static wchar_t *strndup (const wchar_t *str, size_t n);
 
-  static const char *dirname (const char *pathname,
-                              char delim = ACE_DIRECTORY_SEPARATOR_CHAR_A);
-  // Returns the "dirname" of a <pathname>.  For instance, the dirname
-  // of "/tmp/foo.cpp" is "/tmp" when <delim> is '/'.  If <pathname>
-  // has no <delim> ".\0" is returned.  This method does not modify
-  // <pathname> and is not reentrant.
-
-#if defined (ACE_HAS_UNICODE)
-  // A collection of wide string functions.  See above for details.
-
-  static wchar_t *strecpy (wchar_t *s, const wchar_t *t);
-
+  static wchar_t *strnnew (const wchar_t *str, size_t n);
+  
   static wchar_t *strsplit_r (wchar_t *s,
                               const wchar_t *token,
                               wchar_t *&next_start);
 
   static size_t strrepl (wchar_t *s, wchar_t search, wchar_t replace);
 
-  static const wchar_t *execname (const wchar_t *pathname);
+#endif /* ACE_HAS_WCHAR */
 
-  static const wchar_t *basename (const wchar_t *pathname,
-                                  wchar_t delim = ACE_DIRECTORY_SEPARATOR_CHAR_W);
-  // Returns the "basename" of a <pathname>.
-#endif /* ACE_HAS_UNICODE */
+  static const ACE_TCHAR *execname (const ACE_TCHAR *pathname);
+  // On Win32 returns <pathname> if it already ends in ".exe,"
+  // otherwise returns a dynamically allocated buffer containing
+  // "<pathname>.exe".  Always returns <pathname> on UNIX.
 
-  static ASYS_TCHAR *timestamp (ASYS_TCHAR date_and_time[],
-                                int time_len);
+  static const ACE_TCHAR *basename (const ACE_TCHAR *pathname,
+                                    ACE_TCHAR delim = 
+                                      ACE_DIRECTORY_SEPARATOR_CHAR);
+  // Returns the "basename" of a <pathname> separated by <delim>.  For
+  // instance, the basename of "/tmp/foo.cpp" is "foo.cpp" when
+  // <delim> is '/'.
+
+  static const ACE_TCHAR *dirname (const ACE_TCHAR *pathname,
+                                   ACE_TCHAR delim = 
+                                     ACE_DIRECTORY_SEPARATOR_CHAR);
+  // Returns the "dirname" of a <pathname>.  For instance, the dirname
+  // of "/tmp/foo.cpp" is "/tmp" when <delim> is '/'.  If <pathname>
+  // has no <delim> ".\0" is returned.  This method does not modify
+  // <pathname> and is not reentrant.
+
+
+
+  static ACE_TCHAR *timestamp (ACE_TCHAR date_and_time[],
+                               int time_len);
   // Returns the current timestamp in the form
   // "hour:minute:second:microsecond."  The month, day, and year are
   // also stored in the beginning of the date_and_time array.  Returns
   // 0 if unsuccessful, else returns pointer to beginning of the
   // "time" portion of <day_and_time>.
 
-  static pid_t fork (const char *program_name = "<unknown>",
+  static pid_t fork (const ACE_TCHAR *program_name = ACE_TEXT ("<unknown>"),
                      int avoid_zombies = 0);
   // if <avoid_zombies> == 0 call <ACE_OS::fork> directly, else create
   // an orphan process that's inherited by the init process; init
   // cleans up when the orphan process terminates so we don't create
   // zombies.
 
-  static int daemonize (const char pathname[] = "/",
+  static int daemonize (const ACE_TCHAR pathname[] = ACE_TEXT ("/"),
                         int close_all_handles = ACE_DEFAULT_CLOSE_ALL_HANDLES,
-                        const char program_name[] = "<unknown>");
+                        const ACE_TCHAR program_name[] = ACE_TEXT ("<unknown>"));
   // Become a daemon process using the algorithm in Richard Stevens
   // "Advanced Programming in the UNIX Environment."  If
   // <close_all_handles> is non-zero then all open file handles are
@@ -485,8 +476,8 @@ public:
 
   // = Methods for searching and opening shared libraries.
 
-  static int ldfind (const ASYS_TCHAR *filename,
-                     ASYS_TCHAR *pathname,
+  static int ldfind (const ACE_TCHAR *filename,
+                     ACE_TCHAR *pathname,
                      size_t maxlen);
   // Finds the file <filename> either using an absolute path or using
   // a relative path in conjunction with ACE_LD_SEARCH_PATH (e.g.,
@@ -496,19 +487,18 @@ public:
   // apply the appropriate prefix (e.g., "lib" on UNIX and "" on
   // Win32) if the <filename> doesn't match directly.
 
-  static FILE *ldopen (const ASYS_TCHAR *filename,
-                       const ASYS_TCHAR *type);
+  static FILE *ldopen (const ACE_TCHAR *filename,
+                       const ACE_TCHAR *type);
   // Uses <ldopen> to locate and open the appropriate <filename> and
   // returns a pointer to the file, else it returns a NULL
   // pointer. <type> specifies how the file should be open.
 
-  static int get_temp_dir (char *buffer, size_t buffer_len);
-  static int get_temp_dir (wchar_t *buffer, size_t buffer_len);
+  static int get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len);
   // Returns the temporary directory including the trailing slash in
   // <buffer>.  Returns -1 for an error or if the buffer_len is not
   // long enough.
 
-  static ACE_HANDLE open_temp_file (const char *name,
+  static ACE_HANDLE open_temp_file (const ACE_TCHAR *name,
                                     int mode,
                                     int perm = 0);
   // Opening the temp file.  File is automagically unlinked when it is
@@ -523,32 +513,25 @@ public:
   static size_t round_to_allocation_granularity (off_t len);
   // Rounds the request to a multiple of the allocation granularity.
 
+  // @@ UNICODE what about buffer?
   static int format_hexdump (const char *buffer, int size,
-                             ASYS_TCHAR *obuf, int obuf_sz);
+                             ACE_TCHAR *obuf, int obuf_sz);
   // Format buffer into printable format.  This is useful for
   // debugging.
 
   static u_long hash_pjw (const char *str);
-  // Computes the hash value of <str> using the ``Hash PJW'' routine.
+  // Computes the hash value of <str> using the "Hash PJW" routine.
 
   static u_long hash_pjw (const char *str, size_t len);
-  // Computes the hash value of <str> using the ``Hash PJW'' routine.
+  // Computes the hash value of <str> using the "Hash PJW" routine.
 
-#if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
+#if defined (ACE_HAS_WCHAR)
   static u_long hash_pjw (const wchar_t *str);
-  // Computes the hash value of <str> using the ``Hash PJW'' routine.
+  // Computes the hash value of <str> using the "Hash PJW" routine.
 
   static u_long hash_pjw (const wchar_t *str, size_t len);
-  // Computes the hash value of <str> using the ``Hash PJW'' routine.
-#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
-
-#if !defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT)
-  static u_long hash_pjw (const ACE_USHORT16 *str);
-  // Computes the hash value of <str> using the ``Hash PJW'' routine.
-
-  static u_long hash_pjw (const ACE_USHORT16 *str, size_t len);
-  // Computes the hash value of <str> using the ``Hash PJW'' routine.
-#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_USHORT */
+  // Computes the hash value of <str> using the "Hash PJW" routine.
+#endif /* ACE_HAS_WCHAR */
 
   static u_long crc32 (const char *str);
   // Computes the ISO 8802-3 standard 32 bits CRC for the string
@@ -577,7 +560,7 @@ public:
   // Map troublesome win32 errno values to values that standard C
   // strerr function understands.  Thank you Microsoft.
 
-  static const ASYS_TCHAR *sock_error (int error);
+  static const ACE_TCHAR *sock_error (int error);
   // Returns a string containing the error message corresponding to a
   // WinSock error.  This works around an omission in the Win32 API...
 
@@ -595,7 +578,7 @@ public:
   // cleanup before it shuts down.
 
   static void unique_name (const void *object,
-                           LPTSTR name,
+                           ACE_TCHAR *name,
                            size_t length);
   // This method uses process id and object pointer to come up with a
   // machine wide unique name.  The process ID will provide uniqueness
@@ -607,10 +590,10 @@ public:
   static u_long log2 (u_long num);
   // Computes the base 2 logarithm of <num>.
 
-  static char nibble2hex (u_int n);
+  static ACE_TCHAR nibble2hex (u_int n);
   // Hex conversion utility.
 
-  static u_char hex2byte (char c);
+  static u_char hex2byte (ACE_TCHAR c);
   // Convert a hex character to its byte representation.
 
   // = Set/get the debug level.
@@ -794,7 +777,7 @@ private:
   static u_long crc_table_[];
   // CRC table.
 
-  static const char hex_chars_[];
+  static const ACE_TCHAR hex_chars_[];
   // Hex characters.
 
   static char debug_;

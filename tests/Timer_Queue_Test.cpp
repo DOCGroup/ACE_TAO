@@ -192,7 +192,7 @@ test_functionality (ACE_Timer_Queue *tq)
 
 static void
 test_performance (ACE_Timer_Queue *tq,
-		  const ASYS_TCHAR *test_name)
+		  const ACE_TCHAR *test_name)
 {
   Example_Handler eh;
   ACE_Profile_Timer timer;
@@ -228,13 +228,13 @@ test_performance (ACE_Timer_Queue *tq,
   timer.elapsed_time (et);
 
   ACE_DEBUG ((LM_DEBUG, 
-	      ASYS_TEXT ("time to schedule %d timers for %s\n"), 
+	      ACE_TEXT ("time to schedule %d timers for %s\n"), 
 	      max_iterations, test_name));
   ACE_DEBUG ((LM_DEBUG, 
-	      ASYS_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
+	      ACE_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
               et.real_time, et.user_time, et.system_time));
   ACE_DEBUG ((LM_DEBUG, 
-	      ASYS_TEXT ("time per call = %f usecs\n"), 
+	      ACE_TEXT ("time per call = %f usecs\n"), 
 	      (et.user_time / ACE_timer_t (max_iterations)) * 1000000));
 
   // Test the amount of time required to cancel all the timers.
@@ -251,13 +251,13 @@ test_performance (ACE_Timer_Queue *tq,
   timer.elapsed_time (et);
 
   ACE_DEBUG ((LM_DEBUG, 
-	      ASYS_TEXT ("time to cancel %d timers for %s\n"),
+	      ACE_TEXT ("time to cancel %d timers for %s\n"),
 	      max_iterations, test_name));
   ACE_DEBUG ((LM_DEBUG, 
-	      ASYS_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
+	      ACE_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
               et.real_time, et.user_time, et.system_time));
   ACE_DEBUG ((LM_DEBUG, 
-	      ASYS_TEXT ("time per call = %f usecs\n"), 
+	      ACE_TEXT ("time per call = %f usecs\n"), 
 	      (et.user_time / ACE_timer_t (max_iterations)) * 1000000));
 
   // Test the amount of time required to schedule and expire all the
@@ -288,13 +288,13 @@ test_performance (ACE_Timer_Queue *tq,
   timer.elapsed_time (et);
 
   ACE_DEBUG ((LM_DEBUG, 
-	      ASYS_TEXT ("time to schedule and expire %d timers for %s\n"), 
+	      ACE_TEXT ("time to schedule and expire %d timers for %s\n"), 
 	      max_iterations, test_name));
   ACE_DEBUG ((LM_DEBUG, 
-	      ASYS_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
+	      ACE_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
               et.real_time, et.user_time, et.system_time));
   ACE_DEBUG ((LM_DEBUG, 
-	      ASYS_TEXT ("time per call = %f usecs\n"), 
+	      ACE_TEXT ("time per call = %f usecs\n"), 
 	      (et.user_time / ACE_timer_t (max_iterations)) * 1000000));
 
   // Test the amount of time required to randomly cancel all the
@@ -328,16 +328,16 @@ test_performance (ACE_Timer_Queue *tq,
   timer.elapsed_time (et);
 
   ACE_DEBUG ((LM_DEBUG, 
-              ASYS_TEXT ("time to randomly cancel %d timers for %s\n"), 
+              ACE_TEXT ("time to randomly cancel %d timers for %s\n"), 
               max_iterations,
               test_name));
   ACE_DEBUG ((LM_DEBUG, 
-              ASYS_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
+              ACE_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
               et.real_time,
               et.user_time,
               et.system_time));
   ACE_DEBUG ((LM_DEBUG, 
-              ASYS_TEXT ("time per call = %f usecs\n"), 
+              ACE_TEXT ("time per call = %f usecs\n"), 
               (et.user_time / ACE_timer_t (max_iterations)) * 1000000));
 
   // Test the amount of time required to randomly schedule all the timers.
@@ -364,15 +364,15 @@ test_performance (ACE_Timer_Queue *tq,
   timer.elapsed_time (et);
 
   ACE_DEBUG ((LM_DEBUG, 
-	      ASYS_TEXT ("time to randomly schedule %d timers for %s\n"), 
+	      ACE_TEXT ("time to randomly schedule %d timers for %s\n"), 
 	      max_iterations, test_name));
   ACE_DEBUG ((LM_DEBUG, 
-	      ASYS_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
+	      ACE_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
               et.real_time,
               et.user_time,
               et.system_time));
   ACE_DEBUG ((LM_DEBUG, 
-	      ASYS_TEXT ("time per call = %f usecs\n"), 
+	      ACE_TEXT ("time per call = %f usecs\n"), 
 	      (et.user_time / ACE_timer_t (max_iterations)) * 1000000));
 
   // Test the amount of time required to cancel all the timers.
@@ -394,13 +394,13 @@ test_performance (ACE_Timer_Queue *tq,
   timer.elapsed_time (et);
 
   ACE_DEBUG ((LM_DEBUG, 
-	      ASYS_TEXT ("time to expire %d randomly scheduled timers for %s\n"),
+	      ACE_TEXT ("time to expire %d randomly scheduled timers for %s\n"),
 	      max_iterations, test_name));
   ACE_DEBUG ((LM_DEBUG, 
-	      ASYS_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
+	      ACE_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
               et.real_time, et.user_time, et.system_time));
   ACE_DEBUG ((LM_DEBUG, 
-	      ASYS_TEXT ("time per call = %f usecs\n"), 
+	      ACE_TEXT ("time per call = %f usecs\n"), 
 	      (et.user_time / ACE_timer_t (max_iterations)) * 1000000));
   
   delete [] times;
@@ -416,7 +416,7 @@ class Timer_Queue_Stack
 public:
   // = Initialization method
   Timer_Queue_Stack (ACE_Timer_Queue *queue,
-                     const ASYS_TCHAR *name,
+                     const ACE_TCHAR *name,
                      Timer_Queue_Stack *next = NULL)
     : queue_ (queue),
       name_ (name),
@@ -427,7 +427,7 @@ public:
   ACE_Timer_Queue *queue_;
   // Pointer to the subclass of <ACE_Timer_Queue> that we're testing.
   
-  const ASYS_TCHAR *name_;
+  const ACE_TCHAR *name_;
   // Name of the Queue that we're testing.
 
   Timer_Queue_Stack *next_;
@@ -435,9 +435,9 @@ public:
 };
 
 int
-main (int argc, ASYS_TCHAR *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Timer_Queue_Test"));
+  ACE_START_TEST (ACE_TEXT ("Timer_Queue_Test"));
 
   ACE_OS::srand (ACE_OS::time (0L));
  
@@ -454,28 +454,28 @@ main (int argc, ASYS_TCHAR *argv[])
   // Timer_Hash (Heap)
   ACE_NEW_RETURN (tq_stack,
                   Timer_Queue_Stack (new ACE_Timer_Hash_Heap,
-                                     ASYS_TEXT ("ACE_Timer_Hash (Heap)"),
+                                     ACE_TEXT ("ACE_Timer_Hash (Heap)"),
                                      tq_stack),
                   -1);
 
   // Timer_Hash
   ACE_NEW_RETURN (tq_stack,
                   Timer_Queue_Stack (new ACE_Timer_Hash,
-                                     ASYS_TEXT ("ACE_Timer_Hash"),
+                                     ACE_TEXT ("ACE_Timer_Hash"),
                                      tq_stack),
                   -1);
 
   // Timer_stack
   ACE_NEW_RETURN (tq_stack,
                   Timer_Queue_Stack (new ACE_Timer_List,
-                                     ASYS_TEXT ("ACE_Timer_List"),
+                                     ACE_TEXT ("ACE_Timer_List"),
                                      tq_stack),
                   -1);
 
   // Timer_Wheel without preallocated memory
   ACE_NEW_RETURN (tq_stack,
                   Timer_Queue_Stack (new ACE_Timer_Wheel,
-                                     ASYS_TEXT ("ACE_Timer_Wheel (non-preallocated)"),
+                                     ACE_TEXT ("ACE_Timer_Wheel (non-preallocated)"),
                                      tq_stack),
                   -1);
 
@@ -484,20 +484,20 @@ main (int argc, ASYS_TCHAR *argv[])
                   Timer_Queue_Stack (new ACE_Timer_Wheel (ACE_DEFAULT_TIMER_WHEEL_SIZE, 
                                                          ACE_DEFAULT_TIMER_WHEEL_RESOLUTION, 
                                                          max_iterations),
-                                     ASYS_TEXT ("ACE_Timer_Wheel (preallocated)"),
+                                     ACE_TEXT ("ACE_Timer_Wheel (preallocated)"),
                                      tq_stack),
                   -1);
   // Timer_Heap without preallocated memory.
   ACE_NEW_RETURN (tq_stack,
                   Timer_Queue_Stack (new ACE_Timer_Heap,
-                                     ASYS_TEXT ("ACE_Timer_Heap (non-preallocated)"),
+                                     ACE_TEXT ("ACE_Timer_Heap (non-preallocated)"),
                                      tq_stack),
                   -1);
 
   // Timer_Heap with preallocate memory.
   ACE_NEW_RETURN (tq_stack,
                   Timer_Queue_Stack (new ACE_Timer_Heap (max_iterations, 1),
-                                     ASYS_TEXT ("ACE_Timer_Heap (preallocated)"),
+                                     ACE_TEXT ("ACE_Timer_Heap (preallocated)"),
                                      tq_stack),
                   -1);
   
@@ -511,7 +511,7 @@ main (int argc, ASYS_TCHAR *argv[])
   while (tq_ptr != NULL)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("**** starting test of %s\n"), 
+                  ACE_TEXT ("**** starting test of %s\n"), 
 		  tq_ptr->name_));
       test_functionality (tq_ptr->queue_);
       test_performance (tq_ptr->queue_, 

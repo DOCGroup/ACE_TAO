@@ -45,16 +45,10 @@ class ACE_Export ACE_Registry
 public:
 
 // International string
-#if defined (UNICODE)
-  typedef ACE_WString Istring;
-#else
-  typedef ACE_CString Istring;
-#endif /* UNICODE */
-
   struct ACE_Export Name_Component
   {
-    Istring id_;
-    Istring kind_;
+    ACE_TString id_;
+    ACE_TString kind_;
 
     int operator== (const Name_Component &rhs) const;
     int operator!= (const Name_Component &rhs) const;
@@ -66,13 +60,13 @@ public:
   // A Name is an ordered collections of components (ids)
   typedef ACE_Unbounded_Set<Name_Component> Name;
 
-  static LPCTSTR STRING_SEPARATOR;
+  static const ACE_TCHAR *STRING_SEPARATOR;
   // Separator for components in a name
 
-  static Istring make_string (const Name &name);
+  static ACE_TString make_string (const Name &name);
   // Convert a <name> to a <string>
 
-  static Name make_name (const Istring &string);
+  static Name make_name (const ACE_TString &string);
   // Convert a <string> to a <name>
 
   enum Binding_Type {INVALID, OBJECT, CONTEXT};
@@ -88,7 +82,7 @@ public:
     // Constructor
     // (Name version)
 
-    Binding (const Istring &binding_name,
+    Binding (const ACE_TString &binding_name,
              Binding_Type binding_type);
     // Constructor
     // (String version)
@@ -101,8 +95,8 @@ public:
     // Name accessor
     // (Name version)
 
-    void name (Istring &name);
-    Istring name (void);
+    void name (ACE_TString &name);
+    ACE_TString name (void);
     // Name accessors
     // (String version)
 
@@ -110,7 +104,7 @@ public:
     // Type accessor
 
   private:
-    Istring name_;
+    ACE_TString name_;
     Binding_Type type_;
     // A binding has a name and a type
   };
@@ -195,7 +189,7 @@ public:
     // This will fail if <name> already exists
     // (Name version)
 
-    int bind_new (const Istring &name,
+    int bind_new (const ACE_TString &name,
                   const Object &object);
     // Insert <object> with <name> into <this> context
     // This will fail if <name> already exists
@@ -207,7 +201,7 @@ public:
     // This will not fail if <name> already exists
     // (Name version)
 
-    int bind (const Istring &name,
+    int bind (const ACE_TString &name,
               const Object &object);
     // Insert or update <object> with <name> into <this> context
     // This will not fail if <name> already exists
@@ -218,7 +212,7 @@ public:
     // Update <object> with <name> in <this> context
     // (Name version)
 
-    int rebind (const Istring &name,
+    int rebind (const ACE_TString &name,
                 const Object &object);
     // Update <object> with <name> in <this> context
 
@@ -227,7 +221,7 @@ public:
     // Find <object> with <name> in <this> context
     // (Name version)
 
-    int resolve (const Istring &name,
+    int resolve (const ACE_TString &name,
                  Object &object);
     // Find <object> with <name> in <this> context
 
@@ -235,7 +229,7 @@ public:
     // Delete object with <name> in <this> context
     // (Name version)
 
-    int unbind (const Istring &name);
+    int unbind (const ACE_TString &name);
     // Delete object with <name> in <this> context
 
 
@@ -253,7 +247,7 @@ public:
     // This will fail if <name> already exists
     // (Name version)
 
-    int bind_new_context (const Istring &name,
+    int bind_new_context (const ACE_TString &name,
                           Naming_Context &naming_context,
                           u_long persistence = REG_OPTION_NON_VOLATILE,
                           u_long security_access = KEY_ALL_ACCESS,
@@ -270,7 +264,7 @@ public:
     // This will not fail if <name> already exists
     // (Name version)
 
-    int bind_context (const Istring &name,
+    int bind_context (const ACE_TString &name,
                       /* const */ Naming_Context &naming_context,
                       u_long persistence = REG_OPTION_NON_VOLATILE,
                       u_long security_access = KEY_ALL_ACCESS,
@@ -283,7 +277,7 @@ public:
     // Rename <naming_context> to <name>
     // (Name version)
 
-    int rebind_context (const Istring &name,
+    int rebind_context (const ACE_TString &name,
                         /* const */ Naming_Context &naming_context);
     // Rename <naming_context> to <name>
 
@@ -293,7 +287,7 @@ public:
     // Find <naming_context> with <name> in <this> context
     // (Name version)
 
-    int resolve_context (const Istring &name,
+    int resolve_context (const ACE_TString &name,
                          Naming_Context &naming_context,
                          u_long security_access = KEY_ALL_ACCESS);
     // Find <naming_context> with <name> in <this> context
@@ -302,7 +296,7 @@ public:
     // Remove naming_context with <name> from <this> context
     // (Name version)
 
-    int unbind_context (const Istring &name);
+    int unbind_context (const ACE_TString &name);
     // Remove naming_context with <name> from <this> context
 
     int destroy (void);
@@ -345,8 +339,8 @@ public:
     // Get name
     // (Name version)
 
-    void name (Istring &name);
-    Istring name (void);
+    void name (ACE_TString &name);
+    ACE_TString name (void);
     // Get name
     // (String version)
 
@@ -361,7 +355,7 @@ public:
     // Set name
     // (Name version)
 
-    void name (const Istring &name);
+    void name (const ACE_TString &name);
     // Set name
     // (String version)
 
@@ -378,7 +372,7 @@ public:
     HKEY parent_key_;
     // Key for parent
 
-    Istring name_;
+    ACE_TString name_;
     // Name of self
   };
 
@@ -507,14 +501,14 @@ class ACE_Export ACE_Predefined_Naming_Contexts
 public:
   static int connect (ACE_Registry::Naming_Context &naming_context,
                       HKEY predefined = HKEY_LOCAL_MACHINE,
-                      LPCTSTR machine_name = 0);
+                      const ACE_TCHAR *machine_name = 0);
   // Factory method for connecting to predefined registries.  This
   // method works for both remote and local machines.  However, for
   // remote machines, HKEY_CLASSES_ROOT and HKEY_CURRENT_USER types
   // are not allowed
 
 private:
-  static int is_local_host (LPCTSTR machine_name);
+  static int is_local_host (const ACE_TCHAR *machine_name);
   // Check if <machine_name> is the local host
 };
 

@@ -332,8 +332,8 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
                                  "-ORBDemuxStrategy") == 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("Warning: -ORBDemuxStrategy is deprecated.  Please use ")
-                    ASYS_TEXT ("-ORBSystemidPolicyDemuxStrategy or -ORBUseridPolicyDemuxStrategy instead.\n")));
+                    ACE_TEXT ("Warning: -ORBDemuxStrategy is deprecated.  Please use ")
+                    ACE_TEXT ("-ORBSystemidPolicyDemuxStrategy or -ORBUseridPolicyDemuxStrategy instead.\n")));
         curarg++;
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -373,9 +373,9 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
                                  "-ORBConnectorLock") == 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) WARNING: the ")
-                    ASYS_TEXT ("-ORBConnectorLock option is in the client ")
-                    ASYS_TEXT ("strategy factory now\n")));
+                    ACE_TEXT ("TAO (%P|%t) WARNING: the ")
+                    ACE_TEXT ("-ORBConnectorLock option is in the client ")
+                    ACE_TEXT ("strategy factory now\n")));
       }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -395,7 +395,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 ACE_STATIC_SVC_DEFINE (TAO_Default_Server_Strategy_Factory,
-                       ASYS_TEXT ("Server_Strategy_Factory"),
+                       ACE_TEXT ("Server_Strategy_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_Default_Server_Strategy_Factory),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,

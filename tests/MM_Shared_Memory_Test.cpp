@@ -29,7 +29,7 @@
 ACE_RCSID(tests, MM_Shared_Memory_Test, "$Id$")
 
 const int SHMSZ = 27;
-static TCHAR *shm_key;
+static ACE_TCHAR *shm_key;
 
 #if defined (ACE_LACKS_FORK)
 typedef ACE_Thread_Semaphore SYNCHRONIZER;
@@ -112,7 +112,7 @@ parent (void * = 0)
   // Perform a "busy wait" until the child sets the character to '*'.
   while (*shm != '*')
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("(%P) spinning in parent!\n")));
+                ACE_TEXT ("(%P) spinning in parent!\n")));
 
   result = shm_parent.remove ();
   ACE_ASSERT (result != -1);
@@ -132,12 +132,12 @@ spawn (void)
                   -1);
 
 #if !defined (ACE_LACKS_FORK)
-  switch (ACE_OS::fork (ASYS_TEXT ("child")))
+  switch (ACE_OS::fork (ACE_TEXT ("child")))
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%P|%t) %p\n"),
-                         ASYS_TEXT ("fork failed")),
+                         ACE_TEXT ("(%P|%t) %p\n"),
+                         ACE_TEXT ("fork failed")),
                         1);
       /* NOTREACHED */
     case 0:
@@ -159,39 +159,39 @@ spawn (void)
        (void *) 0,
        THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("(%P|%t) %p\n"),
-                       ASYS_TEXT ("thread create failed")),
+                       ACE_TEXT ("(%P|%t) %p\n"),
+                       ACE_TEXT ("thread create failed")),
                       1);
   else if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (parent),
        (void *) 0,
        THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("(%P|%t) %p\n"),
-                       ASYS_TEXT ("thread create failed")),
+                       ACE_TEXT ("(%P|%t) %p\n"),
+                       ACE_TEXT ("thread create failed")),
                       1);
   ACE_Thread_Manager::instance ()->wait ();
   delete synchronizer;
 #else
   ACE_UNUSED_ARG (synchronizer);
   ACE_ERROR_RETURN ((LM_ERROR,
-                     ASYS_TEXT ("only one thread may be run in a process on this platform\n")),
+                     ACE_TEXT ("only one thread may be run in a process on this platform\n")),
                     1);
 #endif /* ACE_HAS_THREADS */
   return 0;
 }
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("MM_Shared_Memory_Test"));
+  ACE_START_TEST (ACE_TEXT ("MM_Shared_Memory_Test"));
 
-  TCHAR temp_file[MAXPATHLEN + 1]; 
+  ACE_TCHAR temp_file[MAXPATHLEN + 1]; 
 
   // Get the temporary directory, 
   // The - 24 is for the filename, mm_shared_mem_testXXXXXX
   if (ACE::get_temp_dir (temp_file, MAXPATHLEN - 24) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "Temporary path too long\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Temporary path too long\n")), -1);
 
   // Add the filename to the end
   ACE_OS::strcat (temp_file, ACE_TEXT ("mm_shared_mem_testXXXXXX"));
@@ -203,7 +203,7 @@ main (int, ASYS_TCHAR *[])
       || (ACE_OS::unlink (shm_key) == -1
           && errno == EPERM))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("(%P|%t) %p\n"),
+                       ACE_TEXT ("(%P|%t) %p\n"),
                        shm_key),
                       1);
   spawn ();

@@ -715,7 +715,7 @@ TAO_AV_UDP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
 
 ACE_FACTORY_DEFINE (AV, TAO_AV_UDP_Flow_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_AV_UDP_Flow_Factory,
-                       ASYS_TEXT ("UDP_Flow_Factory"),
+                       ACE_TEXT ("UDP_Flow_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_AV_UDP_Flow_Factory),
                        ACE_Service_Type::DELETE_THIS |
@@ -725,7 +725,7 @@ ACE_STATIC_SVC_DEFINE (TAO_AV_UDP_Flow_Factory,
 ACE_FACTORY_DEFINE (AV, TAO_AV_UDP_Factory)
 
 ACE_STATIC_SVC_DEFINE (TAO_AV_UDP_Factory,
-                       ASYS_TEXT ("UDP_Factory"),
+                       ACE_TEXT ("UDP_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_AV_UDP_Factory),
                        ACE_Service_Type::DELETE_THIS |

@@ -16,7 +16,7 @@
 // ============================================================================
 
 #ifndef ACE_OS_H
-# define ACE_OS_H
+#define ACE_OS_H
 #include "ace/pre.h"
 
 #include "ace/config-all.h"
@@ -107,10 +107,10 @@ struct dirent {
   unsigned short d_ino;
   unsigned short d_off;
   unsigned short d_reclen;
-  const char *d_name;
+  const ACE_TCHAR *d_name;
 };
 struct DIR {
-  char *directory_name_;
+  ACE_TCHAR *directory_name_;
   // The name of the directory we are looking into
 
   HANDLE current_handle_;
@@ -119,22 +119,152 @@ struct DIR {
   dirent dirent_;
   // The struct for the results
 
-  WIN32_FIND_DATA fdata_;
+  ACE_TEXT_WIN32_FIND_DATA fdata_;
   // The struct for intermediate results.
 
   int started_reading_;
   // A flag to remember if we started reading already.
 };
-#endif /* defined (WIN_32) */
+#endif /* defined (ACE_WIN32) */
 
 # if defined (ACE_PSOS_TM)
 typedef long long longlong_t;
 typedef long      id_t;
 # endif /* ACE_PSOS_TM */
 
-# if defined (ACE_HAS_MOSTLY_UNICODE_APIS) && !defined (UNICODE)
-#   error UNICODE must be defined when using ACE_HAS_MOSTLY_UNICODE_APIS, check your compiler document on how to enable UNICODE.
-# endif /* ACE_HAS_MOSTLY_UNICODE_APIS && !UNICODE */
+# if defined (ACE_LACKS_INLINE_FUNCTIONS) && !defined (ACE_NO_INLINE)
+#   define ACE_NO_INLINE
+# endif /* defined (ACE_LACKS_INLINE_FUNCTIONS) && !defined (ACE_NO_INLINE) */
+
+# if defined (ACE_HAS_ANSI_CASTS)
+
+#   define ACE_sap_any_cast(TYPE)                                      reinterpret_cast<TYPE> (const_cast<ACE_Addr &> (ACE_Addr::sap_any))
+
+#   define ACE_static_cast(TYPE, EXPR)                                 static_cast<TYPE> (EXPR)
+#   define ACE_static_cast_1_ptr(TYPE, T1, EXPR)                       static_cast<TYPE<T1> *> (EXPR)
+#   define ACE_static_cast_2_ptr(TYPE, T1, T2, EXPR)                   static_cast<TYPE<T1, T2> *> (EXPR)
+#   define ACE_static_cast_3_ptr(TYPE, T1, T2, T3, EXPR)               static_cast<TYPE<T1, T2, T3> *> (EXPR)
+#   define ACE_static_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)           static_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
+#   define ACE_static_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)       static_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
+#   define ACE_static_cast_1_ref(TYPE, T1, EXPR)                       static_cast<TYPE<T1> &> (EXPR)
+#   define ACE_static_cast_2_ref(TYPE, T1, T2, EXPR)                   static_cast<TYPE<T1, T2> &> (EXPR)
+#   define ACE_static_cast_3_ref(TYPE, T1, T2, T3, EXPR)               static_cast<TYPE<T1, T2, T3> &> (EXPR)
+#   define ACE_static_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)           static_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
+#   define ACE_static_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)       static_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
+
+#   define ACE_const_cast(TYPE, EXPR)                                  const_cast<TYPE> (EXPR)
+#   define ACE_const_cast_1_ptr(TYPE, T1, EXPR)                        const_cast<TYPE<T1> *> (EXPR)
+#   define ACE_const_cast_2_ptr(TYPE, T1, T2, EXPR)                    const_cast<TYPE<T1, T2> *> (EXPR)
+#   define ACE_const_cast_3_ptr(TYPE, T1, T2, T3, EXPR)                const_cast<TYPE<T1, T2, T3> *> (EXPR)
+#   define ACE_const_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)            const_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
+#   define ACE_const_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)        const_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
+#   define ACE_const_cast_1_ref(TYPE, T1, EXPR)                        const_cast<TYPE<T1> &> (EXPR)
+#   define ACE_const_cast_2_ref(TYPE, T1, T2, EXPR)                    const_cast<TYPE<T1, T2> &> (EXPR)
+#   define ACE_const_cast_3_ref(TYPE, T1, T2, T3, EXPR)                const_cast<TYPE<T1, T2, T3> &> (EXPR)
+#   define ACE_const_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)            const_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
+#   define ACE_const_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)        const_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
+
+#   define ACE_reinterpret_cast(TYPE, EXPR)                            reinterpret_cast<TYPE> (EXPR)
+#   define ACE_reinterpret_cast_1_ptr(TYPE, T1, EXPR)                  reinterpret_cast<TYPE<T1> *> (EXPR)
+#   define ACE_reinterpret_cast_2_ptr(TYPE, T1, T2, EXPR)              reinterpret_cast<TYPE<T1, T2> *> (EXPR)
+#   define ACE_reinterpret_cast_3_ptr(TYPE, T1, T2, T3, EXPR)          reinterpret_cast<TYPE<T1, T2, T3> *> (EXPR)
+#   define ACE_reinterpret_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)      reinterpret_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
+#   define ACE_reinterpret_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)  reinterpret_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
+#   define ACE_reinterpret_cast_1_ref(TYPE, T1, EXPR)                  reinterpret_cast<TYPE<T1> &> (EXPR)
+#   define ACE_reinterpret_cast_2_ref(TYPE, T1, T2, EXPR)              reinterpret_cast<TYPE<T1, T2> &> (EXPR)
+#   define ACE_reinterpret_cast_3_ref(TYPE, T1, T2, T3, EXPR)          reinterpret_cast<TYPE<T1, T2, T3> &> (EXPR)
+#   define ACE_reinterpret_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)      reinterpret_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
+#   define ACE_reinterpret_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)  reinterpret_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
+
+#   if defined (ACE_LACKS_RTTI)
+#     define ACE_dynamic_cast(TYPE, EXPR)                              static_cast<TYPE> (EXPR)
+#     define ACE_dynamic_cast_1_ptr(TYPE, T1, EXPR)                    static_cast<TYPE<T1> *> (EXPR)
+#     define ACE_dynamic_cast_2_ptr(TYPE, T1, T2, EXPR)                static_cast<TYPE<T1, T2> *> (EXPR)
+#     define ACE_dynamic_cast_3_ptr(TYPE, T1, T2, T3, EXPR)            static_cast<TYPE<T1, T2, T3> *> (EXPR)
+#     define ACE_dynamic_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)        static_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
+#     define ACE_dynamic_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)    static_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
+#     define ACE_dynamic_cast_1_ref(TYPE, T1, EXPR)                    static_cast<TYPE<T1> &> (EXPR)
+#     define ACE_dynamic_cast_2_ref(TYPE, T1, T2, EXPR)                static_cast<TYPE<T1, T2> &> (EXPR)
+#     define ACE_dynamic_cast_3_ref(TYPE, T1, T2, T3, EXPR)            static_cast<TYPE<T1, T2, T3> &> (EXPR)
+#     define ACE_dynamic_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)        static_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
+#     define ACE_dynamic_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)    static_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
+#   else  /* ! ACE_LACKS_RTTI */
+#     define ACE_dynamic_cast(TYPE, EXPR)                              dynamic_cast<TYPE> (EXPR)
+#     define ACE_dynamic_cast_1_ptr(TYPE, T1, EXPR)                    dynamic_cast<TYPE<T1> *> (EXPR)
+#     define ACE_dynamic_cast_2_ptr(TYPE, T1, T2, EXPR)                dynamic_cast<TYPE<T1, T2> *> (EXPR)
+#     define ACE_dynamic_cast_3_ptr(TYPE, T1, T2, T3, EXPR)            dynamic_cast<TYPE<T1, T2, T3> *> (EXPR)
+#     define ACE_dynamic_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)        dynamic_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
+#     define ACE_dynamic_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)    dynamic_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
+#     define ACE_dynamic_cast_1_ref(TYPE, T1, EXPR)                    dynamic_cast<TYPE<T1> &> (EXPR)
+#     define ACE_dynamic_cast_2_ref(TYPE, T1, T2, EXPR)                dynamic_cast<TYPE<T1, T2> &> (EXPR)
+#     define ACE_dynamic_cast_3_ref(TYPE, T1, T2, T3, EXPR)            dynamic_cast<TYPE<T1, T2, T3> &> (EXPR)
+#     define ACE_dynamic_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)        dynamic_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
+#     define ACE_dynamic_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)    dynamic_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
+#   endif /* ! ACE_LACKS_RTTI */
+
+# else
+
+#   define ACE_sap_any_cast(TYPE)                                      ((TYPE) (ACE_Addr::sap_any))
+
+#   define ACE_static_cast(TYPE, EXPR)                                 ((TYPE) (EXPR))
+#   define ACE_static_cast_1_ptr(TYPE, T1, EXPR)                       ((TYPE<T1> *) (EXPR))
+#   define ACE_static_cast_2_ptr(TYPE, T1, T2, EXPR)                   ((TYPE<T1, T2> *) (EXPR))
+#   define ACE_static_cast_3_ptr(TYPE, T1, T2, T3, EXPR)               ((TYPE<T1, T2, T3> *) (EXPR))
+#   define ACE_static_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)           ((TYPE<T1, T2, T3, T4> *) (EXPR))
+#   define ACE_static_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)       ((TYPE<T1, T2, T3, T4, T5> *) (EXPR))
+#   define ACE_static_cast_1_ref(TYPE, T1, EXPR)                       ((TYPE<T1> &) (EXPR))
+#   define ACE_static_cast_2_ref(TYPE, T1, T2, EXPR)                   ((TYPE<T1, T2> &) (EXPR))
+#   define ACE_static_cast_3_ref(TYPE, T1, T2, T3, EXPR)               ((TYPE<T1, T2, T3> &) (EXPR))
+#   define ACE_static_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)           ((TYPE<T1, T2, T3, T4> &) (EXPR))
+#   define ACE_static_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)       ((TYPE<T1, T2, T3, T4, T5> &) (EXPR))
+
+#   define ACE_const_cast(TYPE, EXPR)                                  ((TYPE) (EXPR))
+#   define ACE_const_cast_1_ptr(TYPE, T1, EXPR)                        ((TYPE<T1> *) (EXPR))
+#   define ACE_const_cast_2_ptr(TYPE, T1, T2, EXPR)                    ((TYPE<T1, T2> *) (EXPR))
+#   define ACE_const_cast_3_ptr(TYPE, T1, T2, T3, EXPR)                ((TYPE<T1, T2, T3> *) (EXPR))
+#   define ACE_const_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)            ((TYPE<T1, T2, T3, T4> *) (EXPR))
+#   define ACE_const_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)        ((TYPE<T1, T2, T3, T4, T5> *) (EXPR))
+#   define ACE_const_cast_1_ref(TYPE, T1, EXPR)                        ((TYPE<T1> &) (EXPR))
+#   define ACE_const_cast_2_ref(TYPE, T1, T2, EXPR)                    ((TYPE<T1, T2> &) (EXPR))
+#   define ACE_const_cast_3_ref(TYPE, T1, T2, T3, EXPR)                ((TYPE<T1, T2, T3> &) (EXPR))
+#   define ACE_const_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)            ((TYPE<T1, T2, T3, T4> &) (EXPR))
+#   define ACE_const_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)        ((TYPE<T1, T2, T3, T4, T5> &) (EXPR))
+
+#   define ACE_reinterpret_cast(TYPE, EXPR)                            ((TYPE) (EXPR))
+#   define ACE_reinterpret_cast_1_ptr(TYPE, T1, EXPR)                  ((TYPE<T1> *) (EXPR))
+#   define ACE_reinterpret_cast_2_ptr(TYPE, T1, T2, EXPR)              ((TYPE<T1, T2> *) (EXPR))
+#   define ACE_reinterpret_cast_3_ptr(TYPE, T1, T2, T3, EXPR)          ((TYPE<T1, T2, T3> *) (EXPR))
+#   define ACE_reinterpret_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)      ((TYPE<T1, T2, T3, T4> *) (EXPR))
+#   define ACE_reinterpret_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)  ((TYPE<T1, T2, T3, T4, T5> *) (EXPR))
+#   define ACE_reinterpret_cast_1_ref(TYPE, T1, EXPR)                  ((TYPE<T1> &) (EXPR))
+#   define ACE_reinterpret_cast_2_ref(TYPE, T1, T2, EXPR)              ((TYPE<T1, T2> &) (EXPR))
+#   define ACE_reinterpret_cast_3_ref(TYPE, T1, T2, T3, EXPR)          ((TYPE<T1, T2, T3> &) (EXPR))
+#   define ACE_reinterpret_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)      ((TYPE<T1, T2, T3, T4> &) (EXPR))
+#   define ACE_reinterpret_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)  ((TYPE<T1, T2, T3, T4, T5> &) (EXPR))
+
+#   define ACE_dynamic_cast(TYPE, EXPR)                                ((TYPE) (EXPR))
+#   define ACE_dynamic_cast_1_ptr(TYPE, T1, EXPR)                      ((TYPE<T1> *) (EXPR))
+#   define ACE_dynamic_cast_2_ptr(TYPE, T1, T2, EXPR)                  ((TYPE<T1, T2> *) (EXPR))
+#   define ACE_dynamic_cast_3_ptr(TYPE, T1, T2, T3, EXPR)              ((TYPE<T1, T2, T3> *) (EXPR))
+#   define ACE_dynamic_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)          ((TYPE<T1, T2, T3, T4> *) (EXPR))
+#   define ACE_dynamic_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)      ((TYPE<T1, T2, T3, T4, T5> *) (EXPR))
+#   define ACE_dynamic_cast_1_ref(TYPE, T1, EXPR)                      ((TYPE<T1> &) (EXPR))
+#   define ACE_dynamic_cast_2_ref(TYPE, T1, T2, EXPR)                  ((TYPE<T1, T2> &) (EXPR))
+#   define ACE_dynamic_cast_3_ref(TYPE, T1, T2, T3, EXPR)              ((TYPE<T1, T2, T3> &) (EXPR))
+#   define ACE_dynamic_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)          ((TYPE<T1, T2, T3, T4> &) (EXPR))
+#   define ACE_dynamic_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)      ((TYPE<T1, T2, T3, T4, T5> &) (EXPR))
+# endif /* ACE_HAS_ANSI_CASTS */
+
+# if !defined (ACE_CAST_CONST)
+    // Sun CC 4.2, for example, requires const in reinterpret casts of
+    // data members in const member functions.  But, other compilers
+    // complain about the useless const.  This keeps everyone happy.
+#   if defined (__SUNPRO_CC)
+#     define ACE_CAST_CONST const
+#   else  /* ! __SUNPRO_CC */
+#     define ACE_CAST_CONST
+#   endif /* ! __SUNPRO_CC */
+# endif /* ! ACE_CAST_CONST */
 
 // Deal with MSVC++ insanity for CORBA...
 # if defined (ACE_HAS_BROKEN_NAMESPACES)
@@ -303,25 +433,18 @@ typedef long      id_t;
 # endif /* ACE_DEFAULT_RENDEZVOUS */
 
 # if !defined (ACE_DEFAULT_LOGGER_KEY)
-#   if defined (ACE_HAS_UNICODE) && defined (UNICODE)
+
 #     if defined (ACE_HAS_STREAM_PIPES)
-#       define ACE_DEFAULT_LOGGER_KEY L"/tmp/server_daemon"
+#       define ACE_DEFAULT_LOGGER_KEY ACE_TEXT ("/tmp/server_daemon")
 #     else
-#       define ACE_DEFAULT_LOGGER_KEY L"localhost:10012"
+#       define ACE_DEFAULT_LOGGER_KEY ACE_TEXT ("localhost:10012")
 #     endif /* ACE_HAS_STREAM_PIPES */
-#   else /* ACE_HAS_UNICODE */
-#     if defined (ACE_HAS_STREAM_PIPES)
-#       define ACE_DEFAULT_LOGGER_KEY "/tmp/server_daemon"
-#     else
-#       define ACE_DEFAULT_LOGGER_KEY "localhost:10012"
-#     endif /* ACE_HAS_STREAM_PIPES */
-#   endif /* ACE_HAS_UNICODE && UNICODE */
 # endif /* ACE_DEFAULT_LOGGER_KEY */
 
 // The way to specify the local host for loopback IP. This is usually
 // "localhost" but it may need changing on some platforms.
 # if !defined (ACE_LOCALHOST)
-#   define ACE_LOCALHOST ASYS_TEXT("localhost")
+#   define ACE_LOCALHOST ACE_TEXT ("localhost")
 # endif
 
 # if !defined (ACE_DEFAULT_SERVER_HOST)
@@ -418,40 +541,13 @@ typedef long      id_t;
 #   define ACE_DEFAULT_ARGV_BUFSIZ 1024 * 4
 # endif /* ACE_DEFAULT_ARGV_BUFSIZ */
 
-// Because most WinCE APIs use wchar strings, many of ACE functions
-// must adapt to this change also.  For backward compatibility (most
-// platforms still use ASCII char APIs even if they support UNICODE,)
-// these new macros are introduced to avoid code bloating.
-//
-// ASYS stands for ACE SYSTEM something.
-
-# if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-#   define ASYS_TCHAR wchar_t
-#   define ASYS_TEXT(STRING)   __TEXT (STRING)
-# else
-#   define ASYS_TCHAR char
-#   define ASYS_TEXT(STRING)   STRING
-# endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
-
-// Macro to replace __TEXT
-# if !defined (ACE_TEXT)
-#   if (defined (ACE_HAS_UNICODE) && (defined (UNICODE)))
-#     define ACE_TEXT(STRING) L##STRING
-#   else
-#     define ACE_TEXT(STRING) STRING
-#   endif /* UNICODE && ACE_HAS_UNICODE */
-# endif /* !defined ACE_TEXT */
-
-# if !defined (ACE_HAS_TEXT_MACRO_CONFLICT)
-#   define __TEXT(STRING) ACE_TEXT(STRING)
-# endif /* ACE_HAS_TEXT_MACRO_CONFLICT */
 
 // Here are all ACE-specific global declarations needed throughout
 // ACE.
 
 // Helpful dump macros.
-# define ACE_BEGIN_DUMP ASYS_TEXT ("\n====\n(%P|%t|%x)")
-# define ACE_END_DUMP ASYS_TEXT ("====\n")
+# define ACE_BEGIN_DUMP ACE_TEXT ("\n====\n(%P|%t|%x)")
+# define ACE_END_DUMP ACE_TEXT ("====\n")
 
 // A free list which create more elements when there aren't enough
 // elements.
@@ -691,15 +787,15 @@ typedef int key_t;
 #     if defined (ACE_PSOS_CANT_USE_SYS_TYPES)
       // these are missing from the pSOS types.h file, and the compiler
       // supplied types.h file collides with the pSOS version
-      typedef unsigned char u_char;
-      typedef unsigned short        u_short;
-      typedef unsigned int  u_int;
-      typedef unsigned long u_long;
-      typedef unsigned char uchar_t;
-      typedef unsigned short        ushort_t;
-      typedef unsigned int  uint_t;
-      typedef unsigned long ulong_t;
-      typedef char *caddr_t;
+      typedef unsigned char  u_char;
+      typedef unsigned short u_short;
+      typedef unsigned int   u_int;
+      typedef unsigned long  u_long;
+      typedef unsigned char  uchar_t;
+      typedef unsigned short ushort_t;
+      typedef unsigned int   uint_t;
+      typedef unsigned long  ulong_t;
+      typedef char *         caddr_t;
 
 #       if defined (ACE_PSOS_DIAB_PPC)
       typedef unsigned long pid_t;
@@ -793,35 +889,19 @@ typedef struct
 #   define ACE_STDOUT 1
 #   define ACE_STDERR 2
 
-#   define ACE_DIRECTORY_SEPARATOR_STR_A "/"
-#   define ACE_DIRECTORY_SEPARATOR_CHAR_A '/'
+#   define ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT ("/")
+#   define ACE_DIRECTORY_SEPARATOR_CHAR  ACE_TEXT ('/')
 
-#   define ACE_DLL_SUFFIX ".so"
-#   define ACE_DLL_PREFIX "lib"
-#   define ACE_LD_SEARCH_PATH "LD_LIBRARY_PATH"
-#   define ACE_LD_SEARCH_PATH_SEPARATOR_STR ":"
-#   define ACE_LOGGER_KEY "/tmp/server_daemon"
+#   define ACE_DLL_SUFFIX ACE_TEXT (".so")
+#   define ACE_DLL_PREFIX ACE_TEXT ("lib")
+#   define ACE_LD_SEARCH_PATH ACE_TEXT ("LD_LIBRARY_PATH")
+#   define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_TEXT (":")
+#   define ACE_LOGGER_KEY ACE_TEXT ("/tmp/server_daemon")
 
-#   define ACE_PLATFORM_A "pSOS"
-#   define ACE_PLATFORM_EXE_SUFFIX_A ""
-
-# if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-#   define ASYS_WIDE_STRING(ASCII_STRING) ACE_WString (ASCII_STRING).fast_rep ()
-# else
-#   define ASYS_WIDE_STRING(ASCII_STRING) ASCII_STRING
-# endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
-
-#   if defined (ACE_HAS_UNICODE)
-#     define ACE_DIRECTORY_SEPARATOR_STR_W L"/"
-#     define ACE_DIRECTORY_SEPARATOR_CHAR_W L'/'
-#     define ACE_PLATFORM_W L"pSOS"
-#     define ACE_PLATFORM_EXE_SUFFIX_W L""
-#   else
-#     define ACE_DIRECTORY_SEPARATOR_STR_W "/"
-#     define ACE_DIRECTORY_SEPARATOR_CHAR_W '/'
-#     define ACE_PLATFORM_W "pSOS"
-#     define ACE_PLATFORM_EXE_SUFFIX_W ""
-#   endif /* ACE_HAS_UNICODE */
+#   define ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT ("/")
+#   define ACE_DIRECTORY_SEPARATOR_CHAR ACE_TEXT ('/')
+#   define ACE_PLATFORM ACE_TEXT ("pSOS")
+#   define ACE_PLATFORM_EXE_SUFFIX ACE_TEXT ("")
 
 #   define ACE_MAX_DEFAULT_PORT 65535
 
@@ -845,29 +925,12 @@ typedef struct
 #   endif /* ACE_LACKS_MMAP */
 
 // The following 2 defines are used by the ACE Name Server...
-#   if !defined (ACE_DEFAULT_LOCALNAME_A)
-#     define ACE_DEFAULT_LOCALNAME_A "localnames"
-#   endif /* ACE_DEFAULT_LOCALNAME_A */
-
-#   if !defined (ACE_DEFAULT_GLOBALNAME_A)
-#     define ACE_DEFAULT_GLOBALNAME_A "globalnames"
-#   endif /* ACE_DEFAULT_GLOBALNAME_A */
-
-#   if defined (ACE_HAS_UNICODE)
-#     if !defined (ACE_DEFAULT_LOCALNAME_W)
-#       define ACE_DEFAULT_LOCALNAME_W L"localnames"
-#     endif /* ACE_DEFAULT_LOCALNAME_W */
-#     if !defined (ACE_DEFAULT_GLOBALNAME_W)
-#       define ACE_DEFAULT_GLOBALNAME_W L"globalnames"
-#     endif /* ACE_DEFAULT_GLOBALNAME_W */
-#   else
-#     if !defined (ACE_DEFAULT_LOCALNAME_W)
-#       define ACE_DEFAULT_LOCALNAME_W "localnames"
-#     endif /* ACE_DEFAULT_LOCALNAME_W */
-#     if !defined (ACE_DEFAULT_GLOBALNAME_W)
-#       define ACE_DEFAULT_GLOBALNAME_W "globalnames"
-#     endif /* ACE_DEFAULT_GLOBALNAME_W */
-#   endif /* ACE_HAS_UNICODE */
+#   if !defined (ACE_DEFAULT_LOCALNAME)
+#     define ACE_DEFAULT_LOCALNAME ACE_TEXT ("localnames")
+#   endif /* ACE_DEFAULT_LOCALNAME */
+#   if !defined (ACE_DEFAULT_GLOBALNAME)
+#     define ACE_DEFAULT_GLOBALNAME ACE_TEXT ("globalnames")
+#   endif /* ACE_DEFAULT_GLOBALNAME */
 
 typedef int ACE_HANDLE;
 typedef ACE_HANDLE ACE_SOCKET;
@@ -895,12 +958,6 @@ struct  servent {
   int       s_port;    /* port # */
   char     *s_proto;   /* protocol to use */
 };
-
-// For Win32 compatibility.
-
-typedef const char *LPCTSTR;
-typedef char *LPTSTR;
-typedef char TCHAR;
 
 #   define ACE_SEH_TRY if (1)
 #   define ACE_SEH_EXCEPT(X) while (0)
@@ -1068,7 +1125,7 @@ extern "C" pthread_t pthread_self (void);
 # if (ACE_NTRACE == 1)
 #   define ACE_TRACE(X)
 # else
-#   define ACE_TRACE(X) ACE_Trace ____ (ASYS_TEXT (X), __LINE__, ASYS_TEXT (__FILE__))
+#   define ACE_TRACE(X) ACE_Trace ____ (ACE_TEXT (X), __LINE__, ACE_TEXT (__FILE__))
 # endif /* ACE_NTRACE */
 
 # if !defined (ACE_HAS_WINCE) && !defined (ACE_PSOS_DIAB_MIPS)
@@ -1646,18 +1703,6 @@ struct strrecvfd {};
 # if defined (ACE_HAS_PROC_FS)
 #   include /**/ <sys/procfs.h>
 # endif /* ACE_HAS_PROC_FS */
-
-# if defined (ACE_HAS_UNICODE)
-#   if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
-#     include /**/ <cwchar>
-#   elif !defined (__BORLANDC__) && !defined (ACE_HAS_WINCE) /* ACE_HAS_STANDARD_CPP_LIBRARY */
-#     include /**/ <wchar.h>
-#   endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
-# elif defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
-#   include /**/ <wchar.h>
-# elif defined (ACE_LACKS_WCHAR_T)
-typedef ACE_UINT32 wchar_t;
-# endif /* ACE_HAS_UNICODE */
 
 # if defined (ACE_HAS_BROKEN_WRITEV)
 typedef struct iovec ACE_WRITEV_TYPE;
@@ -2979,21 +3024,13 @@ typedef void (*ACE_SignalHandlerV)(...);
 #   endif /* ACE_HAS_WINCE */
 
 // The following defines are used by the ACE Name Server...
-#   if !defined (ACE_DEFAULT_LOCALNAME_A)
-#     define ACE_DEFAULT_LOCALNAME_A "localnames"
-#   endif /* ACE_DEFAULT_LOCALNAME_A */
+#   if !defined (ACE_DEFAULT_LOCALNAME)
+#     define ACE_DEFAULT_LOCALNAME ACE_TEXT ("localnames")
+#   endif /* ACE_DEFAULT_LOCALNAME */
 
-#   if !defined (ACE_DEFAULT_LOCALNAME_W)
-#     define ACE_DEFAULT_LOCALNAME_W L"localnames"
-#   endif /* ACE_DEFAULT_LOCALNAME_W */
-
-#   if !defined (ACE_DEFAULT_GLOBALNAME_A)
-#     define ACE_DEFAULT_GLOBALNAME_A "globalnames"
-#   endif /* ACE_DEFAULT_GLOBALNAME_A */
-
-#   if !defined (ACE_DEFAULT_GLOBALNAME_W)
-#     define ACE_DEFAULT_GLOBALNAME_W L"globalnames"
-#   endif /* ACE_DEFAULT_GLOBALNAME_W */
+#   if !defined (ACE_DEFAULT_GLOBALNAME)
+#     define ACE_DEFAULT_GLOBALNAME ACE_TEXT ("globalnames")
+#   endif /* ACE_DEFAULT_GLOBALNAME */
 
 // Need to work around odd glitches with NT.
 #   if !defined (ACE_MAX_DEFAULT_PORT)
@@ -3001,14 +3038,12 @@ typedef void (*ACE_SignalHandlerV)(...);
 #   endif /* ACE_MAX_DEFAULT_PORT */
 
 // We're on WinNT or Win95
-#   define ACE_PLATFORM_A "Win32"
-#   define ACE_PLATFORM_EXE_SUFFIX_A ".exe"
-#   define ACE_PLATFORM_W L"Win32"
-#   define ACE_PLATFORM_EXE_SUFFIX_W L".exe"
+#   define ACE_PLATFORM ACE_TEXT ("Win32")
+#   define ACE_PLATFORM_EXE_SUFFIX ACE_TEXT (".exe")
 
 // Used for dynamic linking
 #   if !defined (ACE_DEFAULT_SVC_CONF)
-#     define ACE_DEFAULT_SVC_CONF ".\\svc.conf"
+#     define ACE_DEFAULT_SVC_CONF ACE_TEXT (".\\svc.conf")
 #   endif /* ACE_DEFAULT_SVC_CONF */
 
 // The following are #defines and #includes that are specific to
@@ -3067,14 +3102,12 @@ typedef int (*ACE_SEH_EXCEPT_HANDLER)(void *);
 #   define ACE_DEV_NULL "nul"
 
 // Define the pathname separator characters for Win32 (ugh).
-#   define ACE_DIRECTORY_SEPARATOR_STR_A "\\"
-#   define ACE_DIRECTORY_SEPARATOR_STR_W L"\\"
-#   define ACE_DIRECTORY_SEPARATOR_CHAR_A '\\'
-#   define ACE_DIRECTORY_SEPARATOR_CHAR_W L'\\'
-#   define ACE_LD_SEARCH_PATH "PATH"
-#   define ACE_LD_SEARCH_PATH_SEPARATOR_STR ";"
-#   define ACE_DLL_SUFFIX ".dll"
-#   define ACE_DLL_PREFIX ""
+#   define ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT ("\\")
+#   define ACE_DIRECTORY_SEPARATOR_CHAR ACE_TEXT ('\\')
+#   define ACE_LD_SEARCH_PATH ACE_TEXT ("PATH")
+#   define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_TEXT (";")
+#   define ACE_DLL_SUFFIX ACE_TEXT (".dll")
+#   define ACE_DLL_PREFIX ACE_TEXT ("")
 
 // This will help until we figure out everything:
 #   define NFDBITS 32 /* only used in unused functions... */
@@ -3311,16 +3344,6 @@ typedef ACE_UINT64 ACE_hrtime_t;
 
 # else /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
 
-#   if (defined (ACE_HAS_UNICODE) && (defined (UNICODE)))
-typedef const wchar_t *LPCTSTR;
-typedef wchar_t *LPTSTR;
-typedef wchar_t TCHAR;
-#   else
-typedef const char *LPCTSTR;
-typedef char *LPTSTR;
-typedef char TCHAR;
-#   endif /* ACE_HAS_UNICODE && UNICODE */
-
 #   if defined (m88k)
 #     define RUSAGE_SELF 1
 #   endif  /*  m88k */
@@ -3336,24 +3359,12 @@ typedef char TCHAR;
 #   define ACE_INVALID_SEM_KEY -1
 
 // Define the pathname separator characters for UNIX.
-#   define ACE_DIRECTORY_SEPARATOR_STR_A "/"
-#   define ACE_DIRECTORY_SEPARATOR_CHAR_A '/'
+#   define ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT ("/")
+#   define ACE_DIRECTORY_SEPARATOR_CHAR ACE_TEXT ('/')
 
 // We're some kind of UNIX...
-#   define ACE_PLATFORM_A "UNIX"
-#   define ACE_PLATFORM_EXE_SUFFIX_A ""
-
-#   if defined (ACE_HAS_UNICODE)
-#     define ACE_DIRECTORY_SEPARATOR_STR_W L"/"
-#     define ACE_DIRECTORY_SEPARATOR_CHAR_W L'/'
-#     define ACE_PLATFORM_W L"UNIX"
-#     define ACE_PLATFORM_EXE_SUFFIX_W L""
-#   else
-#     define ACE_DIRECTORY_SEPARATOR_STR_W "/"
-#     define ACE_DIRECTORY_SEPARATOR_CHAR_W '/'
-#     define ACE_PLATFORM_W "UNIX"
-#     define ACE_PLATFORM_EXE_SUFFIX_W ""
-#   endif /* ACE_HAS_UNICODE */
+#   define ACE_PLATFORM ACE_TEXT("UNIX")
+#   define ACE_PLATFORM_EXE_SUFFIX ACE_TEXT("")
 
 #   if !defined (ACE_LD_SEARCH_PATH)
 #     define ACE_LD_SEARCH_PATH "LD_LIBRARY_PATH"
@@ -3370,33 +3381,17 @@ typedef char TCHAR;
 #   endif /* ACE_DLL_PREFIX */
 
 // The following 2 defines are used by the ACE Name Server...
-#   if !defined (ACE_DEFAULT_LOCALNAME_A)
-#     define ACE_DEFAULT_LOCALNAME_A "localnames"
-#   endif /* ACE_DEFAULT_LOCALNAME_A */
+#   if !defined (ACE_DEFAULT_LOCALNAME)
+#     define ACE_DEFAULT_LOCALNAME ACE_TEXT ("localnames")
+#   endif /* ACE_DEFAULT_LOCALNAME */
 
-#   if !defined (ACE_DEFAULT_GLOBALNAME_A)
-#     define ACE_DEFAULT_GLOBALNAME_A "globalnames"
-#   endif /* ACE_DEFAULT_GLOBALNAME_A */
-
-#   if defined (ACE_HAS_UNICODE)
-#     if !defined (ACE_DEFAULT_LOCALNAME_W)
-#       define ACE_DEFAULT_LOCALNAME_W L"localnames"
-#     endif /* ACE_DEFAULT_LOCALNAME_W */
-#     if !defined (ACE_DEFAULT_GLOBALNAME_W)
-#       define ACE_DEFAULT_GLOBALNAME_W L"globalnames"
-#     endif /* ACE_DEFAULT_GLOBALNAME_W */
-#   else
-#     if !defined (ACE_DEFAULT_LOCALNAME_W)
-#       define ACE_DEFAULT_LOCALNAME_W "localnames"
-#     endif /* ACE_DEFAULT_LOCALNAME_W */
-#     if !defined (ACE_DEFAULT_GLOBALNAME_W)
-#       define ACE_DEFAULT_GLOBALNAME_W "globalnames"
-#     endif /* ACE_DEFAULT_GLOBALNAME_W */
-#   endif /* ACE_HAS_UNICODE */
+#   if !defined (ACE_DEFAULT_GLOBALNAME)
+#     define ACE_DEFAULT_GLOBALNAME ACE_TEXT ("globalnames")
+#   endif /* ACE_DEFAULT_GLOBALNAME */
 
 // Used for dynamic linking.
 #   if !defined (ACE_DEFAULT_SVC_CONF)
-#     define ACE_DEFAULT_SVC_CONF "./svc.conf"
+#     define ACE_DEFAULT_SVC_CONF ACE_TEXT ("./svc.conf")
 #   endif /* ACE_DEFAULT_SVC_CONF */
 
 // The following are #defines and #includes that are specific to UNIX.
@@ -3950,11 +3945,11 @@ extern "C"
 #   define _SYS_NMLN 257
 struct utsname
 {
-  TCHAR sysname[_SYS_NMLN];
-  TCHAR nodename[_SYS_NMLN];
-  TCHAR release[_SYS_NMLN];
-  TCHAR version[_SYS_NMLN];
-  TCHAR machine[_SYS_NMLN];
+  ACE_TCHAR sysname[_SYS_NMLN];
+  ACE_TCHAR nodename[_SYS_NMLN];
+  ACE_TCHAR release[_SYS_NMLN];
+  ACE_TCHAR version[_SYS_NMLN];
+  ACE_TCHAR machine[_SYS_NMLN];
 };
 # else
 #   include /**/ <sys/utsname.h>
@@ -4375,19 +4370,11 @@ typedef void *(*ACE_THR_C_FUNC)(void *);
 #   define MAP_FAILED ((void *) -1L)
 # endif /* !MAP_FAILED || ACE_HAS_BROKEN_MAP_FAILED */
 
-# if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-#   if defined (ACE_HAS_CHARPTR_DL)
-typedef ASYS_TCHAR * ACE_DL_TYPE;
-#   else
-typedef const ASYS_TCHAR * ACE_DL_TYPE;
-#   endif /* ACE_HAS_CHARPTR_DL */
+# if defined (ACE_HAS_CHARPTR_DL)
+typedef ACE_TCHAR * ACE_DL_TYPE;
 # else
-#   if defined (ACE_HAS_CHARPTR_DL)
-typedef char * ACE_DL_TYPE;
-#   else
-typedef const char * ACE_DL_TYPE;
-#   endif /* ACE_HAS_CHARPTR_DL */
-#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
+typedef const ACE_TCHAR * ACE_DL_TYPE;
+# endif /* ACE_HAS_CHARPTR_DL */
 
 # if !defined (ACE_HAS_SIGINFO_T)
 struct ACE_Export siginfo_t
@@ -5321,7 +5308,7 @@ public:
     struct flock lock_;
 # endif /* ACE_WIN32 */
 
-    LPCTSTR lockname_;
+    const ACE_TCHAR *lockname_;
     // Name of this filelock.
 
     ACE_HANDLE handle_;
@@ -5345,18 +5332,20 @@ public:
 # endif /* ACE_WIN32 */
 
   // = A set of wrappers for miscellaneous operations.
-  static int atoi (const char *s);
-  static char *getenv (const char *symbol);
-  static int putenv (const char *string);
+  static int atoi (const ACE_TCHAR *s);
+  static ACE_TCHAR *getenv (const ACE_TCHAR *symbol);
+  static int putenv (const ACE_TCHAR *string);
+  static ACE_TCHAR *strenvdup (const ACE_TCHAR *str);
+
   static int getopt (int argc,
                      char *const *argv,
                      const char *optstring);
-  static int argv_to_string (ASYS_TCHAR **argv,
-                             ASYS_TCHAR *&buf,
+  static int argv_to_string (ACE_TCHAR **argv,
+                             ACE_TCHAR *&buf,
                              int substitute_env_args = 1);
-  static int string_to_argv (ASYS_TCHAR *buf,
+  static int string_to_argv (ACE_TCHAR *buf,
                              size_t &argc,
-                             ASYS_TCHAR **&argv,
+                             ACE_TCHAR **&argv,
                              int substitute_env_args = 1);
   static long sysconf (int);
 
@@ -5368,11 +5357,11 @@ public:
   static int cond_destroy (ACE_cond_t *cv);
   static int cond_init (ACE_cond_t *cv,
                         short type = ACE_DEFAULT_SYNCH_TYPE,
-                        LPCTSTR name = 0,
+                        const ACE_TCHAR *name = 0,
                         void *arg = 0);
   static int cond_init (ACE_cond_t *cv,
                         ACE_condattr_t &attributes,
-                        LPCTSTR name = 0,
+                        const ACE_TCHAR *name = 0,
                         void *arg = 0);
   static int cond_signal (ACE_cond_t *cv);
   static int cond_timedwait (ACE_cond_t *cv,
@@ -5389,26 +5378,26 @@ public:
 # endif /* ACE_WIN32 && ACE_HAS_WTHREADS */
 
   // = A set of wrappers for determining config info.
-  static LPTSTR cuserid (LPTSTR user,
-                         size_t maxlen = 32);
+  static ACE_TCHAR *cuserid (ACE_TCHAR *user,
+                             size_t maxlen = 32);
   static int uname (struct utsname *name);
   static long sysinfo (int cmd,
                        char *buf,
                        long count);
-  static int hostname (char *name,
+  static int hostname (ACE_TCHAR *name,
                        size_t maxnamelen);
 
   // = A set of wrappers for explicit dynamic linking.
   static int dlclose (ACE_SHLIB_HANDLE handle);
 
-  static ASYS_TCHAR *dlerror (void);
-  static ACE_SHLIB_HANDLE dlopen (const ASYS_TCHAR *filename,
+  static ACE_TCHAR *dlerror (void);
+  static ACE_SHLIB_HANDLE dlopen (const ACE_TCHAR *filename,
                                   int mode = ACE_DEFAULT_SHLIB_MODE);
   static void *dlsym (ACE_SHLIB_HANDLE handle,
-                      const char *symbol);
+                      const ACE_TCHAR *symbol);
 
   // = A set of wrappers for the directory iterator.
-  static DIR *opendir (const char *filename);
+  static DIR *opendir (const ACE_TCHAR *filename);
   static void closedir (DIR *);
   static struct dirent *readdir (DIR *);
   static int readdir_r (DIR *dirp,
@@ -5432,35 +5421,27 @@ public:
 
   static int fsync (ACE_HANDLE handle);
 
-# if !defined (ACE_HAS_WINCE)
-  // CE doesn't support these char version functions.
-  // However, we should provide UNICODE version of them.
-  static FILE *fopen (const char *filename,
-                      const char *mode);
-#   if defined (fdopen)
-#     undef fdopen
-#   endif /* fdopen */
-  static FILE *fdopen (ACE_HANDLE handle,
-                       const char *mode);
-  static char *fgets (char *buf,
-                      int size,
-                      FILE *fp);
-  static int stat (const char *file,
-                   struct stat *);
-  static int truncate (const char *filename,
-                       off_t length);
-  static int fprintf (FILE *fp,
-                      const char *format,
-                      ...);
-  static int sprintf (char *buf,
-                      const char *format,
-                      ...);
-  static int vsprintf (char *buffer,
-                       const char *format,
-                       va_list argptr);
-  static void perror (const char *s);
+  static FILE *fopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode);
+# if defined (fdopen)
+#   undef fdopen
+# endif /* fdopen */
+  static FILE *fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode);
+  static ACE_TCHAR *fgets (ACE_TCHAR *buf, int size, FILE *fp);
+  static int stat (const ACE_TCHAR *file, struct stat *);
+  static int truncate (const ACE_TCHAR *filename, off_t length);
 
+  static int fprintf (FILE *fp, const char *format, ...);
+  static int sprintf (char *buf, const char *format, ...);
+  static int vsprintf (char *buffer, const char *format, va_list argptr);
   static int printf (const char *format, ...);
+# if defined (ACE_HAS_WCHAR)
+  static int sprintf (wchar_t *buf, const wchar_t *format, ...);
+  static int fprintf (FILE *fp, const wchar_t *format, ...);
+  static int vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr);
+# endif /* ACE_HAS_WCHAR */
+
+  static void perror (const ACE_TCHAR *s);
+
 
   // The old gets () which directly maps to the evil, unprotected
   // gets () has been deprecated.  If you really need gets (),
@@ -5472,10 +5453,9 @@ public:
   //              then swallows rest up to newline
   //              then swallows newline
   static char *gets (char *str, int n = 0);
-  static int puts (const char *s);
-  static int fputs (const char *s,
+  static int puts (const ACE_TCHAR *s);
+  static int fputs (const ACE_TCHAR *s,
                     FILE *stream);
-# endif /* ! ACE_HAS_WINCE */
 
   static int fflush (FILE *fp);
   static size_t fread (void *ptr,
@@ -5511,7 +5491,7 @@ public:
   // = A set of wrappers for file locks.
   static int flock_init (ACE_OS::ace_flock_t *lock,
                          int flags = 0,
-                         LPCTSTR name = 0,
+                         const ACE_TCHAR *name = 0,
                          mode_t perms = 0);
   static int flock_destroy (ACE_OS::ace_flock_t *lock,
                             int unlink_file = 1);
@@ -5561,8 +5541,8 @@ public:
   static void exit (int status = 0);
   static void abort (void);
   static pid_t fork (void);
-  static pid_t fork (const char *program_name);
-  static pid_t fork_exec (ASYS_TCHAR *argv[]);
+  static pid_t fork (const ACE_TCHAR *program_name);
+  static pid_t fork_exec (ACE_TCHAR *argv[]);
   // Forks and exec's a process in a manner that works on Solaris and
   // NT.  argv[0] must be the full path name to the executable.
 
@@ -5580,7 +5560,7 @@ public:
   static int setpgid (pid_t pid, pid_t pgid);
   static int setreuid (uid_t ruid, uid_t euid);
   static int setregid (gid_t rgid, gid_t egid);
-  static int system (const char *s);
+  static int system (const ACE_TCHAR *s);
   static pid_t waitpid (pid_t pid,
                         ACE_exitcode *status = 0,
                         int wait_options = 0,
@@ -5664,17 +5644,8 @@ public:
   static char *asctime (const struct tm *tm);
   static char *asctime_r (const struct tm *tm,
                           char *buf, int buflen);
-  static ASYS_TCHAR *ctime (const time_t *t);
-# if !defined (ACE_HAS_WINCE)
-  static char *ctime_r (const time_t *clock,
-                        char *buf,
-                        int buflen);
-# endif /* !ACE_HAS_WINCE */
-# if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-  static wchar_t *ctime_r (const time_t *clock,
-                           wchar_t *buf,
-                           int buflen);
-# endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
+  static ACE_TCHAR *ctime (const time_t *t);
+  static ACE_TCHAR *ctime_r (const time_t *clock, ACE_TCHAR *buf, int buflen);
   static size_t strftime (char *s,
                           size_t maxsize,
                           const char *format,
@@ -5745,7 +5716,7 @@ public:
 
   // = A set of wrappers for recursive mutex locks.
   static int recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
-                                   LPCTSTR name = 0,
+                                   const ACE_TCHAR *name = 0,
                                    ACE_mutexattr_t *arg = 0,
                                    LPSECURITY_ATTRIBUTES sa = 0);
   static int recursive_mutex_destroy (ACE_recursive_thread_mutex_t *m);
@@ -5756,7 +5727,7 @@ public:
   // = A set of wrappers for mutex locks.
   static int mutex_init (ACE_mutex_t *m,
                          int type = ACE_DEFAULT_SYNCH_TYPE,
-                         LPCTSTR name = 0,
+                         const ACE_TCHAR *name = 0,
                          ACE_mutexattr_t *arg = 0,
                          LPSECURITY_ATTRIBUTES sa = 0);
   static int mutex_destroy (ACE_mutex_t *m);
@@ -5780,7 +5751,7 @@ public:
   // single process.
   static int thread_mutex_init (ACE_thread_mutex_t *m,
                                 int type = ACE_DEFAULT_SYNCH_TYPE,
-                                LPCTSTR name = 0,
+                                const ACE_TCHAR *name = 0,
                                 ACE_mutexattr_t *arg = 0);
   static int thread_mutex_destroy (ACE_thread_mutex_t *m);
   static int thread_mutex_lock (ACE_thread_mutex_t *m);
@@ -5788,10 +5759,9 @@ public:
   static int thread_mutex_unlock (ACE_thread_mutex_t *m);
 
   // = A set of wrappers for low-level file operations.
-  static int access (const char *path,
-                     int amode);
+  static int access (const ACE_TCHAR *path, int amode);
   static int close (ACE_HANDLE handle);
-  static ACE_HANDLE creat (LPCTSTR filename,
+  static ACE_HANDLE creat (const ACE_TCHAR *filename,
                            mode_t mode);
   static ACE_HANDLE dup (ACE_HANDLE handle);
   static int dup2 (ACE_HANDLE oldfd,
@@ -5799,7 +5769,7 @@ public:
   static int fattach (int handle,
                       const char *path);
   static long filesize (ACE_HANDLE handle);
-  static long filesize (LPCTSTR handle);
+  static long filesize (const ACE_TCHAR *handle);
   static int getmsg (ACE_HANDLE handle,
                      struct strbuf *ctl,
                      struct strbuf
@@ -5845,7 +5815,7 @@ public:
 #if defined (ACE_HAS_LLSEEK) || defined (ACE_HAS_LSEEK64)
   ACE_LOFF_T llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence);
 #endif /* ACE_HAS_LLSEEK */
-  static ACE_HANDLE open (const char *filename,
+  static ACE_HANDLE open (const ACE_TCHAR *filename,
                           int mode,
                           int perms = 0,
                           LPSECURITY_ATTRIBUTES sa = 0);
@@ -5942,29 +5912,26 @@ public:
                    const ACE_Time_Value &tv);
   static int pipe (ACE_HANDLE handles[]);
 
-  static ACE_HANDLE shm_open (const char *filename,
+  static ACE_HANDLE shm_open (const ACE_TCHAR *filename,
                               int mode,
                               int perms = 0,
                               LPSECURITY_ATTRIBUTES sa = 0);
-  static int shm_unlink (const char *path);
+  static int shm_unlink (const ACE_TCHAR *path);
 
   // = A set of wrappers for directory operations.
   static mode_t umask (mode_t cmask);
-# if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-  static int chdir (const char *path);
-  static int mkdir (const char *path,
+  static int chdir (const ACE_TCHAR *path);
+  static int mkdir (const ACE_TCHAR *path,
                     mode_t mode = ACE_DEFAULT_DIR_PERMS);
-  static int mkfifo (const char *file,
+  static int mkfifo (const ACE_TCHAR *file,
                      mode_t mode = ACE_DEFAULT_FILE_PERMS);
-  static char *mktemp (char *t);
-  static char *getcwd (char *,
-                       size_t);
-  static int rename (const char *old_name,
-                     const char *new_name);
-  static int unlink (const char *path);
-  static char *tempnam (const char *dir = 0,
-                        const char *pfx = 0);
-# endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
+  static ACE_TCHAR *mktemp (ACE_TCHAR *t);
+  static ACE_TCHAR *getcwd (ACE_TCHAR *, size_t);
+  static int rename (const ACE_TCHAR *old_name,
+                     const ACE_TCHAR *new_name);
+  static int unlink (const ACE_TCHAR *path);
+  static ACE_TCHAR *tempnam (const ACE_TCHAR *dir = 0,
+                             const ACE_TCHAR *pfx = 0);
 
   // = A set of wrappers for random number operations.
   static int rand (void);
@@ -5974,7 +5941,7 @@ public:
   // = A set of wrappers for readers/writer locks.
   static int rwlock_init (ACE_rwlock_t *rw,
                           int type = ACE_DEFAULT_SYNCH_TYPE,
-                          LPCTSTR name = 0,
+                          const ACE_TCHAR *name = 0,
                           void *arg = 0);
   static int rwlock_destroy (ACE_rwlock_t *rw);
   static int rw_rdlock (ACE_rwlock_t *rw);
@@ -5989,7 +5956,7 @@ public:
                          int manual_reset = 0,
                          int initial_state = 0,
                          int type = ACE_DEFAULT_SYNCH_TYPE,
-                         LPCTSTR name = 0,
+                         const ACE_TCHAR *name = 0,
                          void *arg = 0,
                          LPSECURITY_ATTRIBUTES sa = 0);
   static int event_destroy (ACE_event_t *event);
@@ -6005,7 +5972,7 @@ public:
   static int sema_init (ACE_sema_t *s,
                         u_int count,
                         int type = ACE_DEFAULT_SYNCH_TYPE,
-                        LPCTSTR name = 0,
+                        const ACE_TCHAR *name = 0,
                         void *arg = 0,
                         int max = 0x7fffffff,
                         LPSECURITY_ATTRIBUTES sa = 0);
@@ -6099,36 +6066,36 @@ public:
   // <qos_params> are ignored and the BSD-style <connect> is called.
 
   static int closesocket (ACE_HANDLE s);
-  static struct hostent *gethostbyaddr (const char *addr,
+  static struct hostent *gethostbyaddr (const ACE_TCHAR *addr,
                                         int length,
                                         int type);
-  static struct hostent *gethostbyname (const char *name);
-  static struct hostent *gethostbyname2 (const char *name, int type);
-  static struct hostent *gethostbyaddr_r (const char *addr,
+  static struct hostent *gethostbyname (const ACE_TCHAR *name);
+  static struct hostent *gethostbyname2 (const ACE_TCHAR *name, int type);
+  static struct hostent *gethostbyaddr_r (const ACE_TCHAR *addr,
                                           int length,
                                           int type,
                                           struct hostent *result,
                                           ACE_HOSTENT_DATA buffer,
                                           int *h_errnop);
-  static struct hostent *gethostbyname_r (const char *name,
+  static struct hostent *gethostbyname_r (const ACE_TCHAR *name,
                                           struct hostent *result,
                                           ACE_HOSTENT_DATA buffer,
                                           int *h_errnop);
   static int getpeername (ACE_HANDLE handle,
                           struct sockaddr *addr,
                           int *addrlen);
-  static struct protoent *getprotobyname (const char *name);
-  static struct protoent *getprotobyname_r (const char *name,
+  static struct protoent *getprotobyname (const ACE_TCHAR *name);
+  static struct protoent *getprotobyname_r (const ACE_TCHAR *name,
                                             struct protoent *result,
                                             ACE_PROTOENT_DATA buffer);
   static struct protoent *getprotobynumber (int proto);
   static struct protoent *getprotobynumber_r (int proto,
                                               struct protoent *result,
                                               ACE_PROTOENT_DATA buffer);
-  static struct servent *getservbyname (const char *svc,
-                                        const char *proto);
-  static struct servent *getservbyname_r (const char *svc,
-                                          const char *proto,
+  static struct servent *getservbyname (const ACE_TCHAR *svc,
+                                        const ACE_TCHAR *proto);
+  static struct servent *getservbyname_r (const ACE_TCHAR *svc,
+                                          const ACE_TCHAR *proto,
                                           struct servent *result,
                                           ACE_SERVENT_DATA buf);
   static int getsockname (ACE_HANDLE handle,
@@ -6139,16 +6106,16 @@ public:
                          int optname,
                          char *optval,
                          int *optlen);
-  static long inet_addr (const char *name);
-  static char *inet_ntoa (const struct in_addr addr);
-  static int inet_aton (const char *strptr,
+  static long inet_addr (const ACE_TCHAR *name);
+  static ACE_TCHAR *inet_ntoa (const struct in_addr addr);
+  static int inet_aton (const ACE_TCHAR *strptr,
                         struct in_addr *addr);
-  static const char *inet_ntop (int family,
-                                const void *addrptr,
-                                char *strptr,
-                                size_t len);
+  static const ACE_TCHAR *inet_ntop (int family,
+                                     const void *addrptr,
+                                     ACE_TCHAR *strptr,
+                                     size_t len);
   static int inet_pton (int family,
-                        const char *strptr,
+                        const ACE_TCHAR *strptr,
                         void *addrptr);
   static int enum_protocols (int *protocols,
                              ACE_Protocol_Info *protocol_buffer,
@@ -6251,105 +6218,120 @@ public:
   static int step (const char *str,
                    char *expbuf);
 
-  // = A set of wrappers for non-UNICODE string operations.
+  // = A set of wrappers for string operations.
+
   static int to_lower (int c);
-  static int strcasecmp (const char *s,
-                         const char *t);
-  static int strncasecmp (const char *s,
-                          const char *t,
-                          size_t len);
-  static char *strcat (char *s,
-                       const char *t);
-  static char *strchr (char *s,
-                       int c);
-  static const char *strchr (const char *s,
-                             int c);
-  static char *strrchr (char *s,
-                        int c);
-  static const char *strrchr (const char *s,
-                              int c);
-  static char *strnchr (char *s,
-                        int c,
-                        size_t len);
-  static const char *strnchr (const char *s,
-                              int c,
-                              size_t len);
-  static int strcmp (const char *s,
-                     const char *t);
-  static int strncmp (const char *s,
-                      const char *t,
-                      size_t len);
-  static char *strcpy (char *s,
-                       const char *t);
+#if defined (ACE_HAS_WCHAR)
+  static wint_t to_lower (wint_t c);
+#endif /* ACE_HAS_WCHAR */
+
+  static char *strcat (char *s, const char *t);
+  static char *strncat (char *s, const char *t, size_t len);
+#if defined (ACE_HAS_WCHAR)
+  static wchar_t *strcat (wchar_t *s, const wchar_t *t);
+  static wchar_t *strncat (wchar_t *s, const wchar_t *t, size_t len);
+#endif /* ACE_HAS_WCHAR */
+
+  static char *strchr (char *s, int c);
+  static const char *strchr (const char *s, int c);
+  static char *strrchr (char *s, int c);
+  static const char *strrchr (const char *s, int c);
+  static char *strnchr (char *s, int c, size_t len);
+  static const char *strnchr (const char *s, int c, size_t len);
+#if defined (ACE_HAS_WCHAR)
+  static wchar_t *strchr (wchar_t *s, wint_t c);
+  static const wchar_t *strchr (const wchar_t *s, wint_t c);
+  static wchar_t *strrchr (wchar_t *s, wint_t c);
+  static const wchar_t *strrchr (const wchar_t *s, wint_t c);
+  static wchar_t *strnchr (wchar_t *s, wint_t c, size_t len);
+  static const wchar_t *strnchr (const wchar_t *s, wint_t c, size_t len);
+#endif /* ACE_HAS_WCHAR */
+
+  static int strcmp (const char *s, const char *t);
+  static int strncmp (const char *s, const char *t, size_t len);
+  static int strcasecmp (const char *s, const char *t);
+  static int strncasecmp (const char *s, const char *t, size_t len);
+#if defined (ACE_HAS_WCHAR)
+  static int strcmp (const wchar_t *s, const wchar_t *t);
+  static int strncmp (const wchar_t *s, const wchar_t *t, size_t len);
+  static int strcasecmp (const wchar_t *s, const wchar_t *t);
+  static int strncasecmp (const wchar_t *s, const wchar_t *t, size_t len);
+#endif /* ACE_HAS_WCHAR */
+
+  static char *strcpy (char *s, const char *t);
   static char *strecpy (char *des, const char *src);
   // Copies <src> to <des>, returning a pointer to the end of the
   // copied region, rather than the beginning, as <strcpy> does.
-  static char *strpbrk (char *s1,
-                        const char *s2);
-  static const char *strpbrk (const char *s1,
-                              const char *s2);
-  static size_t strcspn (const char *s,
-                         const char *reject);
-  static size_t strspn(const char *s1,
-                       const char *s2);
+  static char *strncpy (char *s, const char *t, size_t len);
+#if defined (ACE_HAS_WCHAR)
+  static wchar_t *strcpy (wchar_t *s, const wchar_t *t);
+  static wchar_t *strecpy (wchar_t *s, const wchar_t *t);
+  static wchar_t *strncpy (wchar_t *s, const wchar_t *t, size_t len);
+#endif /* ACE_HAS_WCHAR */
+
+  static char *strpbrk (char *s1, const char *s2);
+  static const char *strpbrk (const char *s1, const char *s2);
+#if defined (ACE_HAS_WCHAR)
+  static wchar_t *strpbrk (wchar_t *s1, const wchar_t *s2);
+  static const wchar_t *strpbrk (const wchar_t *s1, const wchar_t *s2);
+#endif /* ACE_HAS_WCHAR */
+
+
+  static size_t strcspn (const char *s, const char *reject);
+
+  static size_t strspn (const char *s1, const char *s2);
+#if defined (ACE_HAS_WCHAR)
+  static size_t strspn (const wchar_t *s1, const wchar_t *s2);
+#endif /* ACE_HAS_WCHAR */
+
 #if defined (ACE_HAS_STRPTIME)
   static char *strptime (char *buf,
                          const char *format,
                          struct tm *tm);
 #endif /* ACE_HAS_STRPTIME */
-  static char *strstr (char *s,
-                       const char *t);
-  static const char *strstr (const char *s,
-                             const char *t);
-  static char *strnstr (char *s,
-                        const char *t,
-                        size_t len);
-  static const char *strnstr (const char *s,
-                              const char *t,
-                              size_t len);
+
+  static char *strstr (char *s, const char *t);
+  static const char *strstr (const char *s, const char *t);
+  static char *strnstr (char *s, const char *t, size_t len);
+  static const char *strnstr (const char *s, const char *t, size_t len);
+#if defined (ACE_HAS_WCHAR)
+  static wchar_t *strstr (wchar_t *s, const wchar_t *t);
+  static const wchar_t *strstr (const wchar_t *s, const wchar_t *t);
+  static wchar_t *strnstr (wchar_t *s, const wchar_t *t, size_t len);
+  static const wchar_t *strnstr (const wchar_t *s, const wchar_t *t, size_t len);
+#endif /* ACE_HAS_WCHAR */
+
   static char *strdup (const char *s); // Uses malloc
-  static char *strenvdup (const char *str);
+#if defined (ACE_HAS_WCHAR)
+  static wchar_t *strdup (const wchar_t *s);
+#endif /* ACE_HAS_WCHAR */
+
   static size_t strlen (const char *s);
-  static char *strncpy (char *s,
-                        const char *t,
-                        size_t len);
-  static char *strncat (char *s,
-                        const char *t,
-                        size_t len);
-  static char *strtok (char *s,
-                       const char *tokens);
-  static char *strtok_r (char *s,
-                         const char *tokens,
-                         char **lasts);
-  static long strtol (const char *s,
-                      char **ptr,
-                      int base);
-  static u_long strtoul (const char *s,
-                         char **ptr,
-                         int base);
-  static double strtod (const char *s,
-                        char **endptr);
-  static int ace_isspace (const char s);
-
-# if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
+#if defined (ACE_HAS_WCHAR)
   static size_t strlen (const wchar_t *s);
-  static wchar_t *strcpy (wchar_t *s,
-                          const wchar_t *t);
-  static int strcmp (const wchar_t *s,
-                     const wchar_t *t);
-  static size_t strspn (const wchar_t *string,
-                        const wchar_t *charset);
-  static wchar_t *strenvdup (const wchar_t *str);
-# endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
+#endif /* ACE_HAS_WCHAR */
 
-#if !defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT)
-  static size_t strlen (const ACE_UINT16 *s);
-  static ACE_UINT16 *strcpy (ACE_UINT16 *s,
-                             const ACE_UINT16 *t);
-  static int strcmp (const ACE_USHORT16 *s,
-                     const ACE_USHORT16 *t);
-#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_USHORT */
+  static char *strtok (char *s, const char *tokens);
+  static char *strtok_r (char *s, const char *tokens, char **lasts);
+#if defined (ACE_HAS_WCHAR)
+  static wchar_t *strtok (wchar_t *s, const wchar_t *tokens);
+#endif /* ACE_HAS_WCHAR */
 
+  static long strtol (const char *s, char **ptr, int base);
+  static u_long strtoul (const char *s, char **ptr, int base);
+  static double strtod (const char *s, char **endptr);
+#if defined (ACE_HAS_WCHAR)
+  static long strtol (const wchar_t *s, wchar_t **ptr, int base);
+  static u_long strtoul (const wchar_t *s, wchar_t **ptr, int base);
+  static double strtod (const wchar_t *s, wchar_t **endptr);
+#endif /* ACE_HAS_WCHAR */
+
+  static int ace_isspace (const char s);
+#if defined (ACE_HAS_WCHAR)
+  static int ace_isspace (wchar_t c);
+#endif /* ACE_HAS_WCHAR */
+
+  // @@ UNICODE: (brunsch) Can this be handled better?
   // The following WChar typedef and functions are used by TAO.  TAO
   // does not use wchar_t because the size of wchar_t is
   // platform-dependent. These are to be used for all
@@ -6363,124 +6345,6 @@ public:
   static int wsncmp (const WChar *,
                      const WChar *,
                      size_t len);
-
-# if defined (ACE_HAS_UNICODE)
-  // = A set of wrappers for UNICODE string operations.
-  static int atoi (const wchar_t *s);
-  static wint_t to_lower (wint_t c);
-  static wchar_t *strcat (wchar_t *s,
-                          const wchar_t *t);
-  static wchar_t *strchr (wchar_t *s,
-                          wint_t c);
-  static const wchar_t *strchr (const wchar_t *s,
-                                wint_t c);
-  static wchar_t *strecpy (wchar_t *s, const wchar_t *t);
-  static wchar_t *strrchr (wchar_t *s,
-                           wint_t c);
-  static const wchar_t *strrchr (const wchar_t *s,
-                                 wint_t c);
-  static wchar_t *strnchr (wchar_t *s,
-                           wint_t c,
-                           size_t len);
-  static const wchar_t *strnchr (const wchar_t *s,
-                                 wint_t c,
-                                 size_t len);
-  static int strncmp (const wchar_t *s,
-                      const wchar_t *t,
-                      size_t len);
-  static int strcasecmp (const wchar_t *s,
-                         const wchar_t *t);
-  static int strncasecmp (const wchar_t *s,
-                          const wchar_t *t,
-                          size_t len);
-  static wchar_t *strpbrk (wchar_t *s1,
-                           const wchar_t *s2);
-  static const wchar_t *strpbrk (const wchar_t *s1,
-                                 const wchar_t *s2);
-  static wchar_t *strncpy (wchar_t *s,
-                           const wchar_t *t,
-                           size_t len);
-  static wchar_t *strncat (wchar_t *s,
-                           const wchar_t *t,
-                           size_t len);
-  static wchar_t *strtok (wchar_t *s,
-                          const wchar_t *tokens);
-  static long strtol (const wchar_t *s,
-                      wchar_t **ptr,
-                      int base);
-  static u_long strtoul (const wchar_t *s,
-                         wchar_t **ptr,
-                         int base);
-  static double strtod (const wchar_t *s,
-                        wchar_t **endptr);
-  static int ace_isspace (wchar_t c);
-
-#   if defined (ACE_WIN32)
-  static wchar_t *strstr (wchar_t *s,
-                          const wchar_t *t);
-  static const wchar_t *strstr (const wchar_t *s,
-                                const wchar_t *t);
-  static wchar_t *strnstr (wchar_t *s,
-                           const wchar_t *t,
-                           size_t len);
-  static const wchar_t *strnstr (const wchar_t *s,
-                                 const wchar_t *t,
-                                 size_t len);
-  static wchar_t *strdup (const wchar_t *s); // Uses malloc
-  static int sprintf (wchar_t *buf,
-                      const wchar_t *format,
-                      ...);
-#     if 0
-  static int sprintf (wchar_t *buf,
-                      const char *format,
-                      ...);
-#     endif /* 0 */
-  // the following three are newly added for CE.
-  // but they can also be use on Win32.
-  static wchar_t *fgets (wchar_t *buf,
-                         int size,
-                         FILE *fp);
-  static int fprintf (FILE *fp,
-                      const wchar_t *format,
-                      ...);
-  static void perror (const wchar_t *s);
-
-  static int vsprintf (wchar_t *buffer,
-                       const wchar_t *format,
-                       va_list argptr);
-
-  static int access (const wchar_t *path,
-                     int amode);
-  static FILE *fopen (const wchar_t *filename,
-                      const wchar_t *mode);
-  static FILE *fdopen (ACE_HANDLE handle,
-                       const wchar_t *mode);
-  static int stat (const wchar_t *file,
-                   struct stat *);
-  static int truncate (const wchar_t *filename,
-                       off_t length);
-  static int putenv (const wchar_t *str);
-  static wchar_t *getenv (const wchar_t *symbol);
-  static int system (const wchar_t *s);
-  static int hostname (wchar_t *name,
-                       size_t maxnamelen);
-  static ACE_HANDLE open (const wchar_t *filename,
-                          int mode,
-                          int perms = 0,
-                          LPSECURITY_ATTRIBUTES sa = 0);
-  static int rename (const wchar_t *oldname,
-                     const wchar_t *newname);
-  static int unlink (const wchar_t *path);
-  static wchar_t *mktemp (wchar_t *t);
-  static int mkdir (const wchar_t *path,
-                    mode_t mode = ACE_DEFAULT_DIR_PERMS);
-  static int chdir (const wchar_t *path);
-  static wchar_t *getcwd (wchar_t *,
-                          size_t);
-  static int mkfifo (const wchar_t *file,
-                          mode_t mode = ACE_DEFAULT_FILE_PERMS);
-#   endif /* ACE_WIN32 */
-# endif /* ACE_HAS_UNICODE */
 
   // = A set of wrappers for TLI.
   static int t_accept (ACE_HANDLE fildes,
@@ -6683,7 +6547,7 @@ public:
   static void thr_yield (void);
 
   static void unique_name (const void *object,
-                           LPTSTR name,
+                           ACE_TCHAR *name,
                            size_t length);
   // This method uses process id and object pointer to come up with a
   // machine wide unique name.  The process ID will provide uniqueness
@@ -6765,8 +6629,7 @@ private:
   // Supporting data for ctime and ctime_r functions on WinCE.
 #   endif /* ACE_HAS_WINCE */
 
-  static void fopen_mode_to_open_mode_converter (char x,
-                                                 int &hmode);
+  static void fopen_mode_to_open_mode_converter (ACE_TCHAR x, int &hmode);
   // Translate fopen's mode char to open's mode.  This helper function
   // is here to avoid maintaining several pieces of identical code.
 
@@ -6940,7 +6803,7 @@ private:
   int at_exit (ACE_EXIT_HOOK func);
   // For <ACE_OS::atexit> support.
 
-  static void print_error_message (u_int line_number, LPCTSTR message);
+  static void print_error_message (u_int line_number, const ACE_TCHAR *message);
   // For use by init () and fini (), to consolidate error reporting.
 
   friend class ACE_OS;
@@ -6952,32 +6815,6 @@ private:
   friend void ACE_OS_Object_Manager_Internal_Exit_Hook ();
   // This class is for internal use by ACE_OS, etc., only.
 };
-
-# if defined (ACE_HAS_WINCE)
-
-//          **** Warning ****
-// You should not use the following functions under CE at all.
-//
-//          **** Warning ****
-
-size_t fwrite (void *buf, size_t sz, size_t count, FILE *fp);
-size_t fread (void *buf, size_t sz, size_t count, FILE *fp);
-int getc (FILE *fp);
-int ferror (FILE *fp);
-int isatty (int h);
-int fileno (FILE *fp);
-int fflush (FILE *fp);
-#   if defined (UNDER_CE) && (UNDER_CE < 211)
-void exit (int status);
-#   endif /* UNDER_CE && UNDER_CE < 211 */
-int fprintf (FILE *fp, char *format, const char *msg); // not a general purpose
-                                                 // fprintf at all.
-int printf (const char *format, ...);
-int putchar (int c);
-
-//          **** End CE Warning ****
-
-# endif /* ACE_HAS_WINCE */
 
 # if defined (ACE_LACKS_TIMEDWAIT_PROTOTYPES)
 extern "C" ssize_t recv_timedwait (ACE_HANDLE handle,
@@ -7246,64 +7083,6 @@ private:
 };
 
 # endif /* defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) */
-
-class ACE_Export ACE_OS_WString
-{
-  // = TITLE
-  //     A lightweight wchar* to char* string conversion class.
-  //
-  // = DESCRIPTION
-  //     The purpose of this class is to perform conversion between
-  //     wchar and char strings.  It is not intended for general
-  //     purpose use.
-public:
-  ACE_OS_WString (const ACE_USHORT16 *s);
-  // Ctor must take a wchar stirng.
-
-  ~ACE_OS_WString (void);
-  // Dtor will free up the memory.
-
-  char *char_rep (void);
-  // Return the internal char* representation.
-
-private:
-  char *rep_;
-  // Internal pointer to the converted string.
-
-  ACE_OS_WString (void);
-  ACE_OS_WString (ACE_OS_WString &);
-  ACE_OS_WString& operator= (ACE_OS_WString &);
-  // Disallow these operation.
-};
-
-class ACE_Export ACE_OS_CString
-{
-  // = TITLE
-  //     A lightweight char* to wchar* string conversion class.
-  //
-  // = DESCRIPTION
-  //     The purpose of this class is to perform conversion from
-  //     char* to wchar* strings.  It is not intended for general
-  //     purpose use.
-public:
-  ACE_OS_CString (const char *s);
-  // Ctor must take a wchar stirng.
-
-  ~ACE_OS_CString (void);
-  // Dtor will free up the memory.
-
-  ACE_USHORT16 *wchar_rep (void);
-  // Return the internal char* representation.
-
-private:
-  ACE_USHORT16 *rep_;
-  // Internal pointer to the converted string.
-
-  ACE_OS_CString (void);
-  ACE_OS_CString (ACE_OS_CString &);
-  ACE_OS_CString operator= (ACE_OS_CString &);
-  // Disallow these operation.
-};
 
 // Support non-scalar thread keys, such as with some POSIX
 // implementations, e.g., MVS.
@@ -7724,9 +7503,9 @@ extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
 #   define ACE_PTHREAD_CLEANUP_POP(A)
 # endif /* ACE_HAS_THR_C_FUNC */
 
-# if !defined (ACE_DEFAULT_MUTEX_A)
-#   define ACE_DEFAULT_MUTEX_A "ACE_MUTEX"
-# endif /* ACE_DEFAULT_MUTEX_A */
+# if !defined (ACE_DEFAULT_MUTEX)
+#   define ACE_DEFAULT_MUTEX ACE_TEXT ("ACE_MUTEX")
+# endif /* ACE_DEFAULT_MUTEX */
 
 # if !defined (ACE_MAIN)
 #   define ACE_MAIN main
@@ -7800,9 +7579,9 @@ int \
 ace_main_i
 #   else
 #     define main \
-ace_main_i (int, ASYS_TCHAR *[]);                  /* forward declaration */ \
+ace_main_i (int, ACE_TCHAR *[]);                  /* forward declaration */ \
 int \
-ACE_MAIN (int argc, ASYS_TCHAR *argv[]) /* user's entry point, e.g., main */ \
+ACE_MAIN (int argc, ACE_TCHAR *argv[]) /* user's entry point, e.g., main */ \
 { \
   ACE_MAIN_OBJECT_MANAGER \
   return ace_main_i (argc, argv);           /* what the user calls "main" */ \
@@ -7811,9 +7590,9 @@ int \
 ace_main_i
 #     if defined (ACE_WIN32) && defined (UNICODE)
 #     define wmain \
-ace_main_i (int, ASYS_TCHAR *[]);                  /* forward declaration */ \
+ace_main_i (int, ACE_TCHAR *[]);                  /* forward declaration */ \
 int \
-wmain (int argc, ASYS_TCHAR *argv[]) /* user's entry point, e.g., main */ \
+wmain (int argc, ACE_TCHAR *argv[]) /* user's entry point, e.g., main */ \
 { \
   ACE_MAIN_OBJECT_MANAGER \
   return ace_main_i (argc, argv);           /* what the user calls "main" */ \
@@ -7889,7 +7668,7 @@ public:
   static ACE_CE_Bridge *get_default_winbridge (void);
   // Get the reference of default ACE_CE_BRIDGE.
 
-  int write_msg (LPCTSTR str);
+  int write_msg (const ACE_TCHAR *str);
   // Write a string to windows.
 
 #if 0
@@ -7912,7 +7691,7 @@ private:
   // IDC code of the window that receives WM_COMMAND when
   // outputing strings.
 
-  ASYS_TCHAR *cmdline_;
+  ACE_TCHAR *cmdline_;
 
   static ACE_CE_Bridge *default_text_bridge_;
   // A pointer to the default ACE_CE_BRIDGE obj.
@@ -8025,110 +7804,26 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 #   define ACE_WAIT_TIMEOUT LONG_MAX
 # endif /* ACE_WIN32 */
 
-# if defined (UNICODE)
 
-#   if !defined (ACE_DEFAULT_LOCALNAME)
-#     define ACE_DEFAULT_LOCALNAME ACE_DEFAULT_LOCALNAME_W
-#   endif /* ACE_DEFAULT_LOCALNAME */
-#   if !defined (ACE_DEFAULT_GLOBALNAME)
-#     define ACE_DEFAULT_GLOBALNAME ACE_DEFAULT_GLOBALNAME_W
-#   endif /* ACE_DEFAULT_GLOBALNAME */
-#   if !defined (ACE_DIRECTORY_SEPARATOR_STR)
-#     define ACE_DIRECTORY_SEPARATOR_STR ACE_DIRECTORY_SEPARATOR_STR_W
-#   endif /* ACE_DIRECTORY_SEPARATOR_STR */
-#   if !defined (ACE_DIRECTORY_SEPARATOR_CHAR)
-#     define ACE_DIRECTORY_SEPARATOR_CHAR ACE_DIRECTORY_SEPARATOR_CHAR_W
-#   endif /* ACE_DIRECTORY_SEPARATOR_CHAR */
-#   if !defined (ACE_PLATFORM)
-#     define ACE_PLATFORM ACE_PLATFORM_W
-#   endif /* ACE_PLATFORM */
-#   if !defined (ACE_PLATFORM_EXE_SUFFIX)
-#     define ACE_PLATFORM_EXE_SUFFIX ACE_PLATFORM_EXE_SUFFIX_W
-#   endif /* ACE_PLATFORM_EXE_SUFFIX */
-#   if !defined (ACE_DEFAULT_MUTEX_W)
-#     define ACE_DEFAULT_MUTEX_W L"ACE_MUTEX"
-#   endif /* ACE_DEFAULT_MUTEX_W */
-#   if !defined (ACE_DEFAULT_MUTEX)
-#     define ACE_DEFAULT_MUTEX ACE_DEFAULT_MUTEX_W
-#   endif /* ACE_DEFAULT_MUTEX */
-
+// Some ACE classes always use inline functions to maintain high
+// performance, but some platforms have buggy inline function support.
+// In this case, we don't use inline with them.
+# if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#   if defined (ASYS_INLINE)
+#     undef ASYS_INLINE
+#   endif /* ASYS_INLINE */
+#   define ASYS_INLINE
+#   if defined (ACE_HAS_INLINED_OSCALLS)
+#     undef ACE_HAS_INLINED_OSCALLS
+#   endif /* ACE_HAS_INLINED_OSCALLS */
 # else
-
-#   if !defined (ACE_DEFAULT_LOCALNAME)
-#     define ACE_DEFAULT_LOCALNAME ACE_DEFAULT_LOCALNAME_A
-#   endif /* ACE_DEFAULT_LOCALNAME */
-#   if !defined (ACE_DEFAULT_GLOBALNAME)
-#     define ACE_DEFAULT_GLOBALNAME ACE_DEFAULT_GLOBALNAME_A
-#   endif /* ACE_DEFAULT_GLOBALNAME */
-#   if !defined (ACE_DIRECTORY_SEPARATOR_STR)
-#     define ACE_DIRECTORY_SEPARATOR_STR ACE_DIRECTORY_SEPARATOR_STR_A
-#   endif /* ACE_DIRECTORY_SEPARATOR_STR */
-#   if !defined (ACE_DIRECTORY_SEPARATOR_CHAR)
-#     define ACE_DIRECTORY_SEPARATOR_CHAR ACE_DIRECTORY_SEPARATOR_CHAR_A
-#   endif /* ACE_DIRECTORY_SEPARATOR_CHAR */
-#   if !defined (ACE_PLATFORM)
-#     define ACE_PLATFORM ACE_PLATFORM_A
-#   endif /* ACE_PLATFORM */
-#   if !defined (ACE_PLATFORM_EXE_SUFFIX)
-#     define ACE_PLATFORM_EXE_SUFFIX ACE_PLATFORM_EXE_SUFFIX_A
-#   endif /* ACE_PLATFORM_EXE_SUFFIX */
-#   if !defined (ACE_DEFAULT_MUTEX_W)
-#     define ACE_DEFAULT_MUTEX_W "ACE_MUTEX"
-#   endif /* ACE_DEFAULT_MUTEX_W */
-#   if !defined (ACE_DEFAULT_MUTEX)
-#     define ACE_DEFAULT_MUTEX ACE_DEFAULT_MUTEX_A
-#   endif /* ACE_DEFAULT_MUTEX */
-# endif /* UNICODE */
+#   define ASYS_INLINE inline
+# endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 # if !defined (ACE_HAS_MINIMAL_ACE_OS)
 #   include "ace/Trace.h"
 # endif /* ! ACE_HAS_MINIMAL_ACE_OS */
 
-// The following are some insane macros that are useful in cases when
-// one has to have a string in a certain format.  Both of these macros
-// allow the user to create a temporary copy. If the user needs to
-// keep this temporary string around, they must do some sort of strdup
-// on the temporary string.
-//
-// The ACE_WIDE_STRING macro allows the user to create a temporary
-// representation of an ASCII string as a WIDE string.
-//
-// The ACE_MULTIBYTE_STRING macro allows the user to create a
-// temporary representation of a WIDE string as an ASCII string. Note
-// that some data may be lost in this conversion.
-
-# if defined (UNICODE)
-#   define ACE_WIDE_STRING(ASCII_STRING) \
-ACE_OS_CString (ASCII_STRING).wchar_rep ()
-#   define ACE_MULTIBYTE_STRING(WIDE_STRING) \
-ACE_OS_WString (WIDE_STRING).char_rep ()
-#   define ACE_TEXT_STRING ACE_WString
-#   if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-#     define ASYS_MULTIBYTE_STRING(WIDE_STRING) WIDE_STRING
-#     define ASYS_ONLY_WIDE_STRING(WIDE_STRING) WIDE_STRING
-#     define ASYS_ONLY_MULTIBYTE_STRING(WIDE_STRING) \
-ACE_OS_WString (WIDE_STRING).char_rep ()
-#   else
-#     define ASYS_MULTIBYTE_STRING(WIDE_STRING) \
-ACE_OS_WString (WIDE_STRING).char_rep ()
-#     define ASYS_ONLY_WIDE_STRING(ASCII_STRING) \
-ACE_OS_CString (ASCII_STRING).wchar_rep ()
-#     define ASYS_ONLY_MULTIBYTE_STRING(WIDE_STRING) WIDE_STRING
-#   endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
-# else
-#   define ACE_WIDE_STRING(ASCII_STRING) ASCII_STRING
-#   define ACE_MULTIBYTE_STRING(WIDE_STRING) WIDE_STRING
-#   define ACE_TEXT_STRING ACE_CString
-#   define ASYS_MULTIBYTE_STRING(WIDE_STRING) WIDE_STRING
-#   define ASYS_ONLY_WIDE_STRING(WIDE_STRING) WIDE_STRING
-#   define ASYS_ONLY_MULTIBYTE_STRING(WIDE_STRING) WIDE_STRING
-# endif /* UNICODE */
-
-# if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-#   define ASYS_WIDE_STRING(ASCII_STRING) ACE_OS_CString (ASCII_STRING).wchar_rep ()
-# else
-#   define ASYS_WIDE_STRING(ASCII_STRING) ASCII_STRING
-# endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

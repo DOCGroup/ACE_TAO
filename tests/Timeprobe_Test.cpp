@@ -96,9 +96,9 @@ int static_singleton_creator = create_singleton ();
 #endif /* ! ACE_HAS_PURIFY */
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Timeprobe_Test"));
+  ACE_START_TEST (ACE_TEXT ("Timeprobe_Test"));
 
   ACE_TIMEPROBE ("Starting Test");
 

@@ -75,10 +75,12 @@ public:
   ACE_CString (const ACE_CString &);
   // Copy constructor.
 
-  ACE_CString (const ACE_USHORT16 *s,
+#if defined (ACE_HAS_WCHAR)
+  ACE_CString (const wchar_t *s,
                ACE_Allocator *alloc = 0);
   // Constructor that copies <s> into dynamically allocated memory.
   // Probable loss of data. Please use with care.
+#endif /* ACE_HAS_WCHAR */
 
   ACE_CString (char c, ACE_Allocator *alloc = 0);
   // Constructor that copies <c> into dynamically allocated memory.
@@ -202,6 +204,7 @@ ACE_Export ACE_INLINE ACE_CString operator + (const ACE_CString &, const ACE_CSt
 ACE_Export ostream &operator << (ostream &, const ACE_CString &);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
+#if defined (ACE_HAS_WCHAR)
 class ACE_Export ACE_WString
 {
   // = TITLE
@@ -224,44 +227,44 @@ public:
                ACE_Allocator *alloc = 0);
   // Constructor that copies <s> into dynamically allocated memory.
 
-  ACE_WString (const ACE_USHORT16 *s,
+  ACE_WString (const wchar_t *s,
                ACE_Allocator *alloc = 0);
   // Constructor that copies <s> into dynamically allocated memory.
 
-  ACE_WString (const ACE_USHORT16 *s,
+  ACE_WString (const wchar_t *s,
                size_t len,
                ACE_Allocator *alloc = 0);
-  // Constructor that copies <len> ACE_USHORT16's of <s> into dynamically
+  // Constructor that copies <len> wchar_t's of <s> into dynamically
   // allocated memory (will NUL terminate the result).
 
   ACE_WString (size_t len, ACE_Allocator *alloc = 0);
   // Constructor that dynamically allocates memory for <len> + 1
-  // ACE_USHORT16 characters. The newly created memory is set memset to 0.
+  // wchar_t characters. The newly created memory is set memset to 0.
 
   ACE_WString (const ACE_WString &s);
   // Copy constructor.
 
-  ACE_WString (ACE_USHORT16 c, ACE_Allocator *alloc = 0);
+  ACE_WString (wchar_t c, ACE_Allocator *alloc = 0);
   // Constructor that copies <c> into dynamically allocated memory.
 
   ~ACE_WString (void);
   // Deletes the memory...
 
-  ACE_USHORT16 operator [] (size_t slot) const;
+  wchar_t operator [] (size_t slot) const;
   // Return the <slot'th> character in the string (doesn't perform
   // bounds checking).
 
-  ACE_USHORT16 &operator [] (size_t slot);
+  wchar_t &operator [] (size_t slot);
   // Return the <slot'th> character by reference in the string
   // (doesn't perform bounds checking).
 
   ACE_WString &operator = (const ACE_WString &);
   // Assignment operator (does copy memory).
 
-  void set (const ACE_USHORT16 *s);
+  void set (const wchar_t *s);
   // Copy <s>
 
-  void set (const ACE_USHORT16 *s,
+  void set (const wchar_t *s,
             size_t len);
   // Copy <len> bytes of <s> (will NUL terminate the result)
 
@@ -282,16 +285,16 @@ public:
   size_t length (void) const;
   // Return the length of the string.
 
-  ACE_USHORT16 *rep (void) const;
+  wchar_t *rep (void) const;
   // Gets a copy of the underlying pointer.
 
   char *char_rep (void) const;
   // Transform into a copy of the ASCII character representation.
 
-  const ACE_USHORT16 *fast_rep (void) const;
+  const wchar_t *fast_rep (void) const;
   // Get at the underlying representation directly!
 
-  const ACE_USHORT16 *c_str (void) const;
+  const wchar_t *c_str (void) const;
   // Same as STL String's <c_str> and <fast_rep>.
 
   int strstr (const ACE_WString &s) const;
@@ -302,15 +305,15 @@ public:
   // Find <str> starting at pos.  Returns the slot of the first
   // location that matches, else npos.
 
-  int find (const ACE_USHORT16 *s, int pos = 0) const;
+  int find (const wchar_t *s, int pos = 0) const;
   // Find <s> starting at pos.  Returns the slot of the first
   // location that matches, else npos.
 
-  int find (ACE_USHORT16 c, int pos = 0) const;
+  int find (wchar_t c, int pos = 0) const;
   // Find <c> starting at pos.  Returns the slot of the first
   // location that matches, else npos.
 
-  int rfind (ACE_USHORT16 c, int pos = npos) const;
+  int rfind (wchar_t c, int pos = npos) const;
   // Find <c> starting at pos (counting from the end).  Returns the
   // slot of the first location that matches, else npos.
 
@@ -335,10 +338,10 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-  static size_t strlen (const ACE_USHORT16 *);
-  // Computes the length of a "0" terminated ACE_USHORT16 *.
+  static size_t strlen (const wchar_t *);
+  // Computes the length of a "0" terminated wchar_t *.
 
-  static const ACE_USHORT16 *strstr (const ACE_USHORT16 *s1, const ACE_USHORT16 *s2);
+  static const wchar_t *strstr (const wchar_t *s1, const wchar_t *s2);
   // Traditional style strstr
 
   void resize (size_t len);
@@ -354,7 +357,7 @@ private:
   size_t len_;
   // Length of the ACE_WString.
 
-  ACE_USHORT16 *rep_;
+  wchar_t *rep_;
   // Pointer to data.
 };
 
@@ -363,6 +366,7 @@ ACE_Export ACE_INLINE ACE_WString operator+ (const ACE_WString &,
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 ACE_Export ostream &operator << (ostream &, const ACE_WString &);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+#endif /* ACE_HAS_WCHAR */
 
 class ACE_Export ACE_SString
 {
@@ -503,11 +507,11 @@ ACE_Export ostream &operator << (ostream &, const ACE_SString &);
 
 // This allows one to use W or C String based on the Unicode
 // setting
-#if defined (UNICODE)
+#if defined (ACE_USES_WCHAR)
 typedef ACE_WString ACE_TString;
-#else /* UNICODE */
+#else /* ACE_USES_WCHAR */
 typedef ACE_CString ACE_TString;
-#endif /* UNICODE */
+#endif /* ACE_USES_WCHAR */
 
 
 // ************************************************************
@@ -522,24 +526,24 @@ class ACE_Export ACE_Tokenizer
   //    preserve designators.  Does not allow special characters, yet
   //    (e.g., printf ("\"like a quoted string\"")).
 public:
-  ACE_Tokenizer (LPTSTR buffer);
+  ACE_Tokenizer (ACE_TCHAR *buffer);
   // <buffer> will be parsed.
 
-  int delimiter (TCHAR d);
+  int delimiter (ACE_TCHAR d);
   // <d> is a delimiter.  Returns 0 on success, -1 if there is no
   // memory left.
 
-  int delimiter_replace (TCHAR d, TCHAR replacement);
+  int delimiter_replace (ACE_TCHAR d, ACE_TCHAR replacement);
   // <d> is a delimiter and, when found, will be replaced by
   // <replacement>.  Returns 0 on success, -1 if there is no memory
   // left.
 
-  int preserve_designators (TCHAR start, TCHAR stop, int strip=1);
+  int preserve_designators (ACE_TCHAR start, ACE_TCHAR stop, int strip=1);
   // For instance, quotes, or '(' and ')'.  Returns 0 on success, -1
   // if there is no memory left.  If <strip> == 1, then the preserve
   // designators will be stripped from the tokens returned by next.
 
-  LPTSTR next (void);
+  ACE_TCHAR *next (void);
   // Returns the next token.
 
   enum {
@@ -548,17 +552,17 @@ public:
   };
 
 protected:
-  int is_delimiter (TCHAR d, int &replace, TCHAR &r);
+  int is_delimiter (ACE_TCHAR d, int &replace, ACE_TCHAR &r);
   // Returns 1 if <d> is a delimiter, 0 otherwise.  If <d> should be
   // replaced with <r>, <replace> is set to 1, otherwise 0.
 
-  int is_preserve_designator (TCHAR start, TCHAR &stop, int &strip);
+  int is_preserve_designator (ACE_TCHAR start, ACE_TCHAR &stop, int &strip);
   // If <start> is a start preserve designator, returns 1 and sets
   // <stop> to the stop designator.  Returns 0 if <start> is not a
   // preserve designator.
 
 private:
-  LPTSTR buffer_;
+  ACE_TCHAR *buffer_;
   int index_;
 
   class Preserve_Entry
@@ -574,9 +578,9 @@ private:
     //    -)-.  The strip determines whether the designators should be
     //    removed from the token.
   public:
-    TCHAR start_;
+    ACE_TCHAR start_;
     // E.g., "(".
-    TCHAR stop_;
+    ACE_TCHAR stop_;
     // E.g., ")".
     int strip_;
     // Whether the designators should be removed from the token.
@@ -596,9 +600,9 @@ private:
     // = DESCRIPTION
     //    Describes a delimiter for the tokenizer.
   public:
-    TCHAR delimiter_;
+    ACE_TCHAR delimiter_;
     // Most commonly a space ' '.
-    TCHAR replacement_;
+    ACE_TCHAR replacement_;
     // What occurrences of delimiter_ should be replaced with.
     int replace_;
     // Whether replacement_ should be used.  This should be replaced

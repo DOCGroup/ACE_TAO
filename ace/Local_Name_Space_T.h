@@ -26,6 +26,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (ACE_HAS_WCHAR)
+
 #include "ace/Naming_Context.h"
 #include "ace/SString.h"
 #include "ace/Local_Name_Space.h"
@@ -235,7 +237,7 @@ private:
   ACE_Name_Options *name_options_;
   // Keep track of the options such as database name etc
 
-  TCHAR context_file_[MAXPATHLEN + MAXNAMELEN];
+  ACE_TCHAR context_file_[MAXPATHLEN + MAXNAMELEN];
   // Name of the file used as the backing store.
 
   ACE_LOCK *lock_;
@@ -249,6 +251,8 @@ private:
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Local_Name_Space_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+
+#endif /* ACE_HAS_WCHAR */
 
 #include "ace/post.h"
 #endif /* ACE_LOCAL_NAME_SPACE_T_H */

@@ -109,7 +109,7 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (key_t k,
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple");
   if (this->open (k, flags, initial_value, n, perms) == -1)
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_SV_Semaphore::ACE_SV_Semaphore")));
+    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_SV_Semaphore::ACE_SV_Semaphore")));
 }
 
 // Convert name to key.  This function is used internally to create keys
@@ -171,8 +171,8 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const char *name,
                   n,
                   perms) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple")));
 }
 
 ACE_SV_Semaphore_Simple::~ACE_SV_Semaphore_Simple (void)

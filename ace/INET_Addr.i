@@ -29,7 +29,7 @@ ACE_INET_Addr::get_addr (void) const
 
 // Return the dotted Internet address.
 
-ACE_INLINE const char *
+ACE_INLINE const ACE_TCHAR *
 ACE_INET_Addr::get_host_addr (void) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_host_addr");

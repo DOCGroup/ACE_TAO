@@ -40,18 +40,10 @@ ACE_SPIPE_Addr::ACE_SPIPE_Addr (void)
 
 // Transform the string into the current addressing format.
 
-#if defined (UNICODE)
 int
-ACE_SPIPE_Addr::string_to_addr (const wchar_t *addr)
+ACE_SPIPE_Addr::string_to_addr (const ACE_TCHAR *addr)
 {
   return this->set (addr);
-}
-#endif /* UNICODE */
-
-int
-ACE_SPIPE_Addr::string_to_addr (const char *addr)
-{
-  return this->set (ACE_WIDE_STRING (addr));
 }
 
 int
@@ -79,7 +71,7 @@ ACE_SPIPE_Addr::ACE_SPIPE_Addr (const ACE_SPIPE_Addr &sa)
 }
 
 int
-ACE_SPIPE_Addr::set (LPCTSTR addr,
+ACE_SPIPE_Addr::set (const ACE_TCHAR *addr,
 		     gid_t gid, 
 		     uid_t uid)
 {
@@ -87,8 +79,8 @@ ACE_SPIPE_Addr::set (LPCTSTR addr,
   len += sizeof (this->SPIPE_addr_.gid_);
 
 #if defined (ACE_WIN32)
-  const TCHAR *colonp = ACE_OS::strchr (addr, ':');
-  TCHAR temp[BUFSIZ];
+  const ACE_TCHAR *colonp = ACE_OS::strchr (addr, ':');
+  ACE_TCHAR temp[BUFSIZ];
 
   if (colonp == 0) // Assume it's a local name.
     {
@@ -107,7 +99,7 @@ ACE_SPIPE_Addr::set (LPCTSTR addr,
         {
           ACE_OS::strcpy (temp, ACE_TEXT ("\\\\"));
 
-          TCHAR *t;
+          ACE_TCHAR *t;
           
           // We need to allocate a duplicate so that we can write a
           // NUL character into it.
@@ -140,7 +132,7 @@ ACE_SPIPE_Addr::set (LPCTSTR addr,
 
 // Create a ACE_Addr from a ACE_SPIPE pathname. 
 
-ACE_SPIPE_Addr::ACE_SPIPE_Addr (LPCTSTR addr,
+ACE_SPIPE_Addr::ACE_SPIPE_Addr (const ACE_TCHAR *addr,
 				gid_t gid, 
 				uid_t uid)
   : ACE_Addr (AF_SPIPE, sizeof this->SPIPE_addr_)

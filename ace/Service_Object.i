@@ -20,21 +20,11 @@ ACE_Service_Object_Ptr::operator-> ()
   return this->service_object_;
 }
 
-ACE_INLINE const ASYS_TCHAR *
+ACE_INLINE const ACE_TCHAR *
 ACE_Service_Type::name (void) const
 {
   ACE_TRACE ("ACE_Service_Type::name");
   return this->name_;
-}
-
-ACE_INLINE const char *
-ACE_Service_Type::chname (void) const
-{
-#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-  return this->name ();
-#else
-  return this->chname_;
-#endif /* !ACE_HAS_MOSTLY_UNICODE_APIS */
 }
 
 ACE_INLINE const ACE_Service_Type_Impl *
@@ -52,16 +42,12 @@ ACE_Service_Type::handle (void) const
 }
 
 ACE_INLINE void
-ACE_Service_Type::name (const ASYS_TCHAR *n)
+ACE_Service_Type::name (const ACE_TCHAR *n)
 {
   ACE_TRACE ("ACE_Service_Type::name");
 
-  delete [] (ASYS_TCHAR *) this->name_;
+  delete [] (ACE_TCHAR *) this->name_;
   this->name_ = ACE::strnew (n);
-#if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-  delete [] (char *) this->chname_;
-  this->chname_ = ACE_OS_WString (this->name_).char_rep ();
-#endif /* !ACE_HAS_MOSTLY_UNICODE_APIS */
 }
 
 ACE_INLINE void

@@ -41,13 +41,13 @@ public:
   void say_hello (void)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("Hello\n")));
+                  ACE_TEXT ("Hello\n")));
     }
 
   void say_next (void)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("How are you?\n")));
+                  ACE_TEXT ("How are you?\n")));
     }
 };
 

@@ -405,8 +405,8 @@ thread_pool_worker (void *)
     {
       if (ACE_Reactor::instance ()->handle_events () == -1)
         ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("(%t) %p\n"),
-                    ASYS_TEXT ("Error handling events")));
+                    ACE_TEXT ("(%t) %p\n"),
+                    ACE_TEXT ("Error handling events")));
     }
 
   return 0;

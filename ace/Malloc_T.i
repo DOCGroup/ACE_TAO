@@ -200,14 +200,14 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::mutex (void)
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE
-ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (LPCTSTR pool_name)
+ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (const ACE_TCHAR *pool_name)
   : ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Block> (pool_name)
 {
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE
-ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (LPCTSTR pool_name,
-                                                  LPCTSTR lock_name,
+ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (const ACE_TCHAR *pool_name,
+                                                  const ACE_TCHAR *lock_name,
                                                   const ACE_MEM_POOL_OPTIONS *options)
   : ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Block> (pool_name, lock_name, options)
 {
@@ -215,8 +215,8 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (LPCTSTR pool_name,
 
 #if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
 template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE
-ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (LPCTSTR pool_name,
-                                                  LPCTSTR lock_name,
+ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (const ACE_TCHAR *pool_name,
+                                                  const ACE_TCHAR *lock_name,
                                                   const void *options)
   : ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Block> (pool_name, lock_name, options)
 {

@@ -276,8 +276,8 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
       && timeout != 0
       && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR,
-		ASYS_TEXT ("%p\n"),
-		ASYS_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
+		ACE_TEXT ("%p\n"),
+		ACE_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
 }
 
 ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
@@ -310,6 +310,6 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
       && timeout != 0
       && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR,
-		ASYS_TEXT ("%p\n"),
-		ASYS_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
+		ACE_TEXT ("%p\n"),
+		ACE_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
 }

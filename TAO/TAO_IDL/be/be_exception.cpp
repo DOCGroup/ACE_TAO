@@ -105,9 +105,9 @@ be_exception::in_recursion (be_type *node)
             {
               delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ASYS_TEXT ("(%N:%l) be_exception::")
-                                 ASYS_TEXT ("in_recursion - ")
-                                 ASYS_TEXT ("bad field node\n")),
+                                 ACE_TEXT ("(%N:%l) be_exception::")
+                                 ACE_TEXT ("in_recursion - ")
+                                 ACE_TEXT ("bad field node\n")),
                                 0);
             }
           be_type *type = be_type::narrow_from_decl (field->field_type ());
@@ -115,9 +115,9 @@ be_exception::in_recursion (be_type *node)
             {
               delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ASYS_TEXT ("(%N:%l) be_exception::")
-                                 ASYS_TEXT ("in_recursion - ")
-                                 ASYS_TEXT ("bad field type\n")),
+                                 ACE_TEXT ("(%N:%l) be_exception::")
+                                 ACE_TEXT ("in_recursion - ")
+                                 ACE_TEXT ("bad field type\n")),
                                 0);
             }
           if (type->in_recursion (node))

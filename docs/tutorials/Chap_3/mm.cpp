@@ -9,7 +9,7 @@
 #define DATA_SIZE 100
 #define MESSAGE1 "Hiya over there client process"
 #define MESSAGE2  "Did you hear me the first time?"
-LPCTSTR poolname="My_Pool";
+const ACE_TCHAR *poolname="My_Pool";
 
 typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> Malloc_Allocator;
 

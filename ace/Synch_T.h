@@ -740,7 +740,7 @@ class ACE_Condition
 public:
   // = Initialiation and termination methods.
   ACE_Condition (MUTEX &m, int type = USYNC_THREAD,
-                 LPCTSTR name = 0, void *arg = 0);
+                 const ACE_TCHAR *name = 0, void *arg = 0);
   // Initialize the condition variable.
 
   ~ACE_Condition (void);
@@ -788,7 +788,7 @@ protected:
   ACE_cond_t *process_cond_;
   // This condition resides in shared memory.
 
-  LPCTSTR condname_;
+  const ACE_TCHAR *condname_;
   // Remember the name of the condition if we created it so we can
   // unlink it when we go away (only the actor that initialized the
   // memory can destroy it).
@@ -826,7 +826,7 @@ class ACE_Thread_Condition : public ACE_Condition<MUTEX>
   //     mutex and re-evaluate the condition.
 public:
   // = Initialization method.
-  ACE_Thread_Condition (MUTEX &m, LPCTSTR name = 0, void *arg = 0);
+  ACE_Thread_Condition (MUTEX &m, const ACE_TCHAR *name = 0, void *arg = 0);
 
   void dump (void) const;
   // Dump the state of an object.

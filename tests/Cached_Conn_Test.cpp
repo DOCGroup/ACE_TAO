@@ -312,7 +312,7 @@ Svc_Handler::open (void *)
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("opening Svc_Handler %d with handle %d\n"),
+                ACE_TEXT ("opening Svc_Handler %d with handle %d\n"),
                 this,
                 this->peer ().get_handle ()));
 
@@ -323,7 +323,7 @@ int
 Svc_Handler::close (u_long flags)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Closing Svc_Handler %d with handle %d\n"),
+              ACE_TEXT ("Closing Svc_Handler %d with handle %d\n"),
               this,
               this->peer ().get_handle ()));
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::close (flags);
@@ -363,7 +363,7 @@ out_of_sockets_handler (void)
     {
       // Close connections which are cached by explicitly purging the
       // connection cache maintained by the connector.
-      ACE_DEBUG ((LM_DEBUG, "Purging connections from Connection Cache...\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Purging connections from Connection Cache...\n")));
 
       int retval = connect_strategy->purge_connections ();
       ACE_ASSERT (retval != -1);
@@ -371,8 +371,8 @@ out_of_sockets_handler (void)
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("%p\n"),
-                  ASYS_TEXT ("out_of_sockets_handler  failed!")));
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("out_of_sockets_handler  failed!")));
       // This shouldn't happen!
       ACE_ASSERT (0);
     }
@@ -393,8 +393,8 @@ cached_connect (STRATEGY_CONNECTOR &con,
                             remote_addr);
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("connection failed")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("connection failed")),
                       -1);
 
   // Reset Svc_Handler state.
@@ -418,7 +418,7 @@ server (ACCEPTOR *acceptor)
 
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("client %s connected from %d\n"),
+                ACE_TEXT ("client %s connected from %d\n"),
                 cli_addr.get_host_name (),
                 cli_addr.get_port_number ()));
 
@@ -459,7 +459,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
   for (int i = 1; i <= iterations; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("iteration %d\n"),
+                  ACE_TEXT ("iteration %d\n"),
                   i));
 
       // If <listen_once> is false, one Acceptor is used for every
@@ -483,14 +483,14 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
           if (acceptor.acceptor ().get_local_addr (server_addr) == -1)
             {
               ACE_ERROR ((LM_ERROR,
-                          ASYS_TEXT ("%p\n"),
-                          ASYS_TEXT ("get_local_addr")));
+                          ACE_TEXT ("%p\n"),
+                          ACE_TEXT ("get_local_addr")));
               ACE_ASSERT (0);
             }
 
           if (debug)
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("starting server at port %d\n"),
+                        ACE_TEXT ("starting server at port %d\n"),
                         server_addr.get_port_number ()));
         }
 
@@ -526,25 +526,25 @@ test_caching_strategy_type (void)
   switch (caching_strategy_type)
     {
     case ACE_NULL:
-      ACE_DEBUG ((LM_DEBUG, "\nNull_Caching_Strategy\n\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nNull_Caching_Strategy\n\n")));
       ACE_NEW (caching_strategy,
                NULL_CACHING_STRATEGY_ADAPTER);
       break;
 
     case ACE_LRU:
-      ACE_DEBUG ((LM_DEBUG, "\nLRU_Caching_Strategy\n\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nLRU_Caching_Strategy\n\n")));
       ACE_NEW (caching_strategy,
                LRU_CACHING_STRATEGY_ADAPTER);
       break;
 
     case ACE_LFU:
-      ACE_DEBUG ((LM_DEBUG, "\nLFU_Caching_Strategy\n\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nLFU_Caching_Strategy\n\n")));
       ACE_NEW (caching_strategy,
                LFU_CACHING_STRATEGY_ADAPTER);
       break;
 
     case ACE_FIFO:
-      ACE_DEBUG ((LM_DEBUG, "\nFIFO_Caching_Strategy\n\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nFIFO_Caching_Strategy\n\n")));
       ACE_NEW (caching_strategy,
                FIFO_CACHING_STRATEGY_ADAPTER);
       break;
@@ -561,9 +561,9 @@ test_caching_strategy_type (void)
 #endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "l:i:p:c:a:d");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("l:i:p:c:a:d"));
 
   int cc;
 
@@ -574,42 +574,42 @@ parse_args (int argc, char *argv[])
         debug = 1;
         break;
       case 'l':
-        listen_once = atoi (get_opt.optarg);
+        listen_once = ACE_OS::atoi (get_opt.optarg);
         break;
       case 'i':
-        iterations = atoi (get_opt.optarg);
+        iterations = ACE_OS::atoi (get_opt.optarg);
         user_has_specified_iterations = 1;
         break;
       case 'p':
-        purge_percentage = atoi (get_opt.optarg);
+        purge_percentage = ACE_OS::atoi (get_opt.optarg);
         break;
       case 'c':
         // Note that if null caching strategy is used then this test
         // will fail if the number of servers exceed number of open
         // files allowed for the process.
-        if (ACE_OS::strcmp (get_opt.optarg, "null") == 0)
+        if (ACE_OS::strcmp (get_opt.optarg, ACE_TEXT ("null")) == 0)
           caching_strategy_type = ACE_NULL;
-        if (ACE_OS::strcmp (get_opt.optarg, "lru") == 0)
+        if (ACE_OS::strcmp (get_opt.optarg, ACE_TEXT ("lru")) == 0)
           caching_strategy_type = ACE_LRU;
-        if (ACE_OS::strcmp (get_opt.optarg, "lfu") == 0)
+        if (ACE_OS::strcmp (get_opt.optarg, ACE_TEXT ("lfu")) == 0)
           caching_strategy_type = ACE_LFU;
-        if (ACE_OS::strcmp (get_opt.optarg, "fifo") == 0)
+        if (ACE_OS::strcmp (get_opt.optarg, ACE_TEXT ("fifo")) == 0)
           caching_strategy_type = ACE_FIFO;
         break;
       case 'a':
-        keep_handles_available = atoi (get_opt.optarg);
+        keep_handles_available = ACE_OS::atoi (get_opt.optarg);
         break;
       case '?':
       case 'h':
       default:
         ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("usage: %s ")
-                    ASYS_TEXT ("[-c (caching strategy: lru / lfu / fifo / null [default = all])] ")
-                    ASYS_TEXT ("[-i (iterations)] ")
-                    ASYS_TEXT ("[-l (listen once)] ")
-                    ASYS_TEXT ("[-d (addition debugging output)] ")
-                    ASYS_TEXT ("[-p (purge percent)] ")
-                    ASYS_TEXT ("[-a (keep handles available)] "),
+                    ACE_TEXT ("usage: %s ")
+                    ACE_TEXT ("[-c (caching strategy: lru / lfu / fifo / null [default = all])] ")
+                    ACE_TEXT ("[-i (iterations)] ")
+                    ACE_TEXT ("[-l (listen once)] ")
+                    ACE_TEXT ("[-d (addition debugging output)] ")
+                    ACE_TEXT ("[-p (purge percent)] ")
+                    ACE_TEXT ("[-a (keep handles available)] "),
                     argv[0]));
         return -1;
       }
@@ -619,7 +619,7 @@ parse_args (int argc, char *argv[])
 
 int
 main (int argc,
-      ASYS_TCHAR *argv[])
+      ACE_TCHAR *argv[])
 {
   // Validate options.
   int result = parse_args (argc, argv);
@@ -635,7 +635,7 @@ main (int argc,
 #endif /* ACE_WIN32 */
 
   // Start the test only if options are valid.
-  ACE_START_TEST (ASYS_TEXT ("Cached_Conn_Test"));
+  ACE_START_TEST (ACE_TEXT ("Cached_Conn_Test"));
 
   // Remove the extra debugging attributes from Log_Msg output.
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
@@ -683,14 +683,14 @@ main (int argc,
 
 int
 main (int argc,
-      ASYS_TCHAR *argv[])
+      ACE_TCHAR *argv[])
 {
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 
-  ACE_START_TEST (ASYS_TEXT ("Cached_Conn_Test"));
+  ACE_START_TEST (ACE_TEXT ("Cached_Conn_Test"));
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("C Set++ won't build this test correctly\n")));
+              ACE_TEXT ("C Set++ won't build this test correctly\n")));
 
 #endif /* !__xlC__ || __xlC > 0x0301 */
 

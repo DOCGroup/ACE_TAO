@@ -9,8 +9,8 @@ int
 main (int, char *argv[])
 {
   ACE_ERROR_RETURN ((LM_INFO,
-                     ASYS_TEXT ("%s: not supported with ")
-                     ASYS_TEXT ("ACE_LACKS_UNIX_DOMAIN_SOCKETS\n"),
+                     ACE_TEXT ("%s: not supported with ")
+                     ACE_TEXT ("ACE_LACKS_UNIX_DOMAIN_SOCKETS\n"),
                      argv[0]),
                      -1);
 }

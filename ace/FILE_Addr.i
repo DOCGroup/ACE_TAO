@@ -35,7 +35,7 @@ ACE_FILE_Addr::operator != (const ACE_FILE_Addr &sap) const
 
 // Return the path name used for the rendezvous point.
 
-ACE_INLINE LPCTSTR
+ACE_INLINE const ACE_TCHAR *
 ACE_FILE_Addr::get_path_name (void) const
 {
   return this->filename_;

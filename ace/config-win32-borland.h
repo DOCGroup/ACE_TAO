@@ -21,7 +21,7 @@
 
 # include "ace/config-win32-common.h"
 
-# define ACE_CC_NAME "Borland C++ Builder"
+# define ACE_CC_NAME ACE_TEXT ("Borland C++ Builder")
 # define ACE_CC_MAJOR_VERSION (__BORLANDC__ / 0x100)
 # define ACE_CC_MINOR_VERSION (__BORLANDC__ % 0x100)
 # define ACE_CC_BETA_VERSION (0)
@@ -50,7 +50,6 @@
 # define ACE_HAS_STRPTIME 1
 # define ACE_HAS_TEMPLATE_SPECIALIZATION 1
 # define ACE_HAS_TEMPLATE_TYPEDEFS 1
-# define ACE_HAS_TEXT_MACRO_CONFLICT 1
 # define ACE_HAS_TYPENAME_KEYWORD 1
 # define ACE_HAS_USER_MODE_MASKS 1
 # define ACE_HAS_USING_KEYWORD 1
@@ -64,8 +63,8 @@
 # define ACE_NEW_THROWS_EXCEPTIONS 1
 # define ACE_SIZEOF_LONG_DOUBLE 10
 # define ACE_TEMPLATES_REQUIRE_SOURCE 1
-# define ACE_UINT64_FORMAT_SPECIFIER "%Lu"
-# define ACE_INT64_FORMAT_SPECIFIER "%Ld"
+# define ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT ("%Lu")
+# define ACE_INT64_FORMAT_SPECIFIER ACE_TEXT ("%Ld")
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 
 /* need to ensure these are included before <iomanip> */

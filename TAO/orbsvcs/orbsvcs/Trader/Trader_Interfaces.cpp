@@ -1291,7 +1291,7 @@ TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
 
   // Ok, then, Carlos, we'll do it a different way: ip addr + pid.
   ACE_UINT32 ip_addr = 0;
-  ASYS_TCHAR host_name[BUFSIZ];
+  ACE_TCHAR host_name[BUFSIZ];
 
   if (ACE_OS::hostname (host_name,
                         BUFSIZ) != -1)

@@ -25,9 +25,9 @@ ACE_RCSID(tests, Collection_Test, "$Id$")
 
 typedef int DATA;
 
-int main (int, ASYS_TCHAR *[])
+int main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Collection_Test"));
+  ACE_START_TEST (ACE_TEXT ("Collection_Test"));
 
   typedef ACE_Unbounded_Set<DATA> UNBOUNDED_SET;
   typedef ACE_Unbounded_Set_Iterator<DATA> UNBOUNDED_SET_ITERATOR;
@@ -43,7 +43,7 @@ int main (int, ASYS_TCHAR *[])
            iterator != unbounded_set.end ();
            ++iterator)
         {
-          ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%d\n"),
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d\n"),
                       (*iterator)));
         }
     }
@@ -54,7 +54,7 @@ int main (int, ASYS_TCHAR *[])
         {
           DATA *data = 0;
           iterator.next (data);
-          ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%d\n"),
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d\n"),
                       (*data)));
           iterator.advance ();
         }
@@ -94,7 +94,7 @@ int main (int, ASYS_TCHAR *[])
            i != array1.size ();
            ++i)
         {
-          ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%d\n"),
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d\n"),
                       array1[i]));
           ACE_ASSERT (array1[i] == 4);
         }
@@ -106,7 +106,7 @@ int main (int, ASYS_TCHAR *[])
         {
           DATA *data = 0;
           iterator.next (data);
-          ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%d\n"),
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d\n"),
                       (*data)));
           ACE_ASSERT (*data == 4);
           iterator.advance ();

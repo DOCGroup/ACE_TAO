@@ -254,23 +254,9 @@ ACE::handle_exception_ready (ACE_HANDLE handle,
                             1);
 }
 
-ASYS_INLINE char *
-ACE::strecpy (char *s, const char *t)
-{
-  return ACE_OS::strecpy (s, t);
-}
-
-#if defined (ACE_HAS_UNICODE)
-ASYS_INLINE wchar_t *
-ACE::strecpy (wchar_t *s, const wchar_t *t)
-{
-  return ACE_OS::strecpy (s, t);
-}
-#endif /* ACE_HAS_UNICODE */
-
 ASYS_INLINE void
 ACE::unique_name (const void *object,
-                  LPTSTR name,
+                  ACE_TCHAR *name,
                   size_t length)
 {
   ACE_OS::unique_name (object, name, length);
@@ -307,21 +293,22 @@ ACE::log2 (u_long num)
   return log;
 }
 
-ASYS_INLINE char
+ASYS_INLINE ACE_TCHAR
 ACE::nibble2hex (u_int n)
 {
+  // @@ UNICODE does this work?
   return ACE::hex_chars_[n & 0x0f];
 }
 
 ASYS_INLINE u_char
-ACE::hex2byte (char c)
+ACE::hex2byte (ACE_TCHAR c)
 {
   if (isdigit (c))
-    return (u_char) (c - '0');
+    return (u_char) (c - ACE_TEXT ('0'));
   else if (islower (c))
-    return (u_char) (10 + c - 'a');
+    return (u_char) (10 + c - ACE_TEXT ('a'));
   else
-    return (u_char) (10 + c - 'A');
+    return (u_char) (10 + c - ACE_TEXT ('A'));
 }
 
 ASYS_INLINE char
@@ -339,7 +326,6 @@ ACE::debug (char c)
 ASYS_INLINE char *
 ACE::strnew (const char *s)
 {
-  // ACE_TRACE ("ACE::strnew");
   char *t = new char [::strlen(s) + 1];
   if (t == 0)
     return 0;
@@ -347,15 +333,14 @@ ACE::strnew (const char *s)
     return ACE_OS::strcpy (t, s);
 }
 
-#if defined (ACE_WIN32) && defined (ACE_HAS_UNICODE)
+#if defined (ACE_HAS_WCHAR)
 ASYS_INLINE wchar_t *
 ACE::strnew (const wchar_t *s)
 {
-  // ACE_TRACE ("ACE_OS::strnew");
   wchar_t *t = new wchar_t[::wcslen (s) + 1];
   if (t == 0)
     return 0;
   else
     return ACE_OS::strcpy (t, s);
 }
-#endif /* ACE_WIN32 && ACE_HAS_UNICODE */
+#endif /* ACE_HAS_WCHAR */

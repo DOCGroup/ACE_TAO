@@ -32,8 +32,8 @@ public:
   ACE_URL_Addr (void);
   // Constructor.
 
-  ACE_URL_Addr (LPCTSTR host_name,
-                LPCTSTR path_name,
+  ACE_URL_Addr (const ACE_TCHAR *host_name,
+                const ACE_TCHAR *path_name,
                 u_short port = ACE_DEFAULT_HTTP_PORT);
 
   ACE_URL_Addr (const ACE_URL_Addr &addr);
@@ -42,7 +42,7 @@ public:
   int set (const ACE_URL_Addr &addr);
   // Essentially the copy constructor.
 
-  virtual int string_to_addr (LPCTSTR address);
+  virtual int string_to_addr (const ACE_TCHAR *address);
   // Initializes an <ACE_URL_Addr> from the <address>, which can be
   // "ip-number:port-number/path-name" (e.g.,
   // "www.cs.wustl.edu:1234/~schmidt/" "ip-number:port-number/path-name"
@@ -50,7 +50,7 @@ public:
   // the <address> it is assumed to be an ip-number or ip-address
   // number, with the port number <ACE_DEFAULT_HTTP_PORT>.
 
-  virtual int addr_to_string (LPTSTR s,
+  virtual int addr_to_string (ACE_TCHAR *s,
                               size_t size,
                               int ipaddr_format = 1) const;
   // Transform the current <ACE_INET_Addr> address into string format.
@@ -61,7 +61,7 @@ public:
   // "www.cs.wustl.edu:80/~schmidt/").  Returns -1 if the <size> of
   // the <buffer> is too small, else 0.
 
-  virtual LPCTSTR addr_to_string (int ipaddr_format = 1) const;
+  virtual const ACE_TCHAR *addr_to_string (int ipaddr_format = 1) const;
   // Transform the current <ACE_INET_Addr> address into string format.
   // If <ipaddr_format> is non-0 this produces
   // "ip-number:port-number/path-name" (e.g.,
@@ -88,16 +88,16 @@ public:
   virtual u_long hash (void) const;
   // Computes and returns hash value.
 
-  LPCTSTR get_path_name (void) const;
+  const ACE_TCHAR *get_path_name (void) const;
   // Return the path name.
 
   int destroy (void);
   // Commit suicide.
 private:
-  LPTSTR path_name_;
+  ACE_TCHAR *path_name_;
   // Our path name.
 
-  LPTSTR addr_string_;
+  ACE_TCHAR *addr_string_;
   // The dynamically address string that's used for the
   // <addr_to_string> method.
 

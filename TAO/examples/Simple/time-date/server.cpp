@@ -23,13 +23,13 @@
 ACE_RCSID(Misc, main, "$Id$")
 
 int
-main (int argc, ASYS_TCHAR *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   if (ACE_Service_Config::open (argc, argv) == -1 
       && errno != ENOENT)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("open")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("open")),
                       1);
 
   // Run forever, performing the configured services until we

@@ -50,7 +50,7 @@ TAO_NT_Naming_Service::handle_exception (ACE_HANDLE)
 
 int
 TAO_NT_Naming_Service::init (int argc,
-                             ASYS_TCHAR *argv[])
+                             ACE_TCHAR *argv[])
 {
   HKEY hkey = 0;
   BYTE buf[ACE_DEFAULT_ARGV_BUFSIZ];

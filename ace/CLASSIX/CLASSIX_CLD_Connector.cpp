@@ -41,7 +41,7 @@ ACE_CLASSIX_CLD_Connector::ACE_CLASSIX_CLD_Connector (
 		     reuse_addr, flags, perms, 
 		     protocol_family, protocol) == -1)
       ACE_ERROR ((LM_ERROR, 
-		  ASYS_TEXT ("%p\n"),  ASYS_TEXT 
+		  ACE_TEXT ("%p\n"),  ACE_TEXT 
 		  ("ACE_CLASSIX_CLD_Connector::ACE_CLASSIX_CLD_Connector")));
 }
 

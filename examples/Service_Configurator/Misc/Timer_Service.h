@@ -16,7 +16,7 @@ public:
   Timer_Service_1 (void);
   // Default constructor.
 
-  virtual int init (int argc, ASYS_TCHAR *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   // Initialization hook.
 
   virtual int handle_timeout (const ACE_Time_Value &,
@@ -27,7 +27,7 @@ public:
   // Close hook.
 
 protected:
-  ASYS_TCHAR name_[BUFSIZ];
+  ACE_TCHAR name_[BUFSIZ];
   // Keep track of which service this is!
 
 private:

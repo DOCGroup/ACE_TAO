@@ -22,7 +22,7 @@ ACE_RCSID(tests, ARGV_Test, "$Id$")
 int 
 main (int, char *argv[])
 {
-  ACE_START_TEST (ASYS_TEXT ("ARGV_Test"));
+  ACE_START_TEST (ACE_TEXT ("ARGV_Test"));
 
   // From command line.
   ACE_ARGV cl (argv);
@@ -38,13 +38,13 @@ main (int, char *argv[])
               my.argv ());
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("argc = %d\n"),
-              ASYS_TEXT (a.argc ())));
+              ACE_TEXT ("argc = %d\n"),
+              ACE_TEXT (a.argc ())));
 
   // Print the contents of the combined <ACE_ARGV>.
   for (size_t i = 0; i < a.argc (); i++)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("(%d) %s\n"),
+                ACE_TEXT ("(%d) %s\n"),
                 i,
                 a.argv ()[i]));
 

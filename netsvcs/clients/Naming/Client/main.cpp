@@ -23,13 +23,13 @@ main (int, char *argv[])
   new_args.add ("-d"); 
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("argc = %d\n"),
-              ASYS_TEXT (new_args.argc ())));
+              ACE_TEXT ("argc = %d\n"),
+              ACE_TEXT (new_args.argc ())));
 
   // Print the contents of the combined <ACE_ARGV>.
   for (size_t i = 0; i < new_args.argc (); i++)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("(%d) %s\n"),
+                ACE_TEXT ("(%d) %s\n"),
                 i,
                 new_args.argv ()[i]));
 

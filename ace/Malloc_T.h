@@ -113,10 +113,10 @@ public:
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
   // = Initialization.
-  ACE_Allocator_Adapter (LPCTSTR pool_name = 0);
+  ACE_Allocator_Adapter (const ACE_TCHAR *pool_name = 0);
 
-  ACE_Allocator_Adapter (LPCTSTR pool_name,
-                         LPCTSTR lock_name,
+  ACE_Allocator_Adapter (const ACE_TCHAR *pool_name,
+                         const ACE_TCHAR *lock_name,
                          MEMORY_POOL_OPTIONS options = 0)
       : allocator_ (pool_name, lock_name, options)
     {
@@ -269,14 +269,14 @@ public:
   typedef ACE_TYPENAME ACE_CB::ACE_Malloc_Header MALLOC_HEADER;
 
   // = Initialization and termination methods.
-  ACE_Malloc_T (LPCTSTR pool_name = 0);
+  ACE_Malloc_T (const ACE_TCHAR *pool_name = 0);
   // Initialize ACE_Malloc.  This constructor passes <pool_name> to
   // initialize the memory pool, and uses <ACE::basename> to
   // automatically extract out the name used for the underlying lock
   // name (if necessary).
 
-  ACE_Malloc_T (LPCTSTR pool_name,
-                LPCTSTR lock_name,
+  ACE_Malloc_T (const ACE_TCHAR *pool_name,
+                const ACE_TCHAR *lock_name,
                 const ACE_MEM_POOL_OPTIONS *options = 0);
   // Initialize ACE_Malloc.  This constructor passes <pool_name> to
   // initialize the memory pool, and uses <lock_name> to automatically
@@ -285,8 +285,8 @@ public:
   // initialize the underlying memory pool.
 
 #if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
-  ACE_Malloc_T (LPCTSTR pool_name,
-                LPCTSTR lock_name,
+  ACE_Malloc_T (const ACE_TCHAR *pool_name,
+                const ACE_TCHAR *lock_name,
                 const void *options = 0);
   // This is necessary to work around template bugs with certain C++
   // compilers.
@@ -556,14 +556,14 @@ class ACE_Malloc : public ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Blo
 {
 public:
   // = Initialization and termination methods.
-  ACE_Malloc (LPCTSTR pool_name = 0);
+  ACE_Malloc (const ACE_TCHAR *pool_name = 0);
   // Initialize ACE_Malloc.  This constructor passes <pool_name> to
   // initialize the memory pool, and uses <ACE::basename> to
   // automatically extract out the name used for the underlying lock
   // name (if necessary).
 
-  ACE_Malloc (LPCTSTR pool_name,
-              LPCTSTR lock_name,
+  ACE_Malloc (const ACE_TCHAR *pool_name,
+              const ACE_TCHAR *lock_name,
               const ACE_MEM_POOL_OPTIONS *options = 0);
   // Initialize ACE_Malloc.  This constructor passes <pool_name> to
   // initialize the memory pool, and uses <lock_name> to automatically
@@ -572,8 +572,8 @@ public:
   // initialize the underlying memory pool.
 
 #if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
-  ACE_Malloc (LPCTSTR pool_name,
-              LPCTSTR lock_name,
+  ACE_Malloc (const ACE_TCHAR *pool_name,
+              const ACE_TCHAR *lock_name,
               const void *options = 0);
   // This is necessary to work around template bugs with certain C++
   // compilers.

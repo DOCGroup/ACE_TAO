@@ -221,7 +221,7 @@ CORBA_Request::handle_response (TAO_InputCDR &incoming,
     default:
       // @@ (JP) Don't know what to do about any of these yet.
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("(%P|%t) unhandled reply status\n")));
+                  ACE_TEXT ("(%P|%t) unhandled reply status\n")));
   }
 }
 

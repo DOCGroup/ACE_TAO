@@ -36,7 +36,7 @@ static void *
 worker (void *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%t) worker starting\n")));
+              ACE_TEXT (" (%t) worker starting\n")));
 
   { // First section.
     ACE_Auto_IncDec<INTERLOCKED_INT> threads_in_section_auto_inc_dec
@@ -60,7 +60,7 @@ worker (void *)
   }
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%t) worker exiting\n")));
+              ACE_TEXT (" (%t) worker exiting\n")));
   return 0;
 }
 
@@ -83,13 +83,13 @@ template class ACE_Auto_IncDec<int>;
 // Spawn off threads.
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Auto_IncDec_Test"));
+  ACE_START_TEST (ACE_TEXT ("Auto_IncDec_Test"));
 
 #if defined (ACE_HAS_THREADS)
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%t) main thread starting\n")));
+              ACE_TEXT (" (%t) main thread starting\n")));
 
   current_threads_in_first_section = 0;
   current_threads_in_second_section = 0;
@@ -100,8 +100,8 @@ main (int, ASYS_TCHAR *[])
        0,
        THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("spawn_n")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("spawn_n")),
                       -1);
   // Make sure at least one thread is started...
   ACE_Thread::yield ();
@@ -110,7 +110,7 @@ main (int, ASYS_TCHAR *[])
     {
       // wait according to the number of threads...
       ACE_DEBUG ((LM_DEBUG,
-                  " %d in first section, %d in second section\n",
+                  ACE_TEXT (" %d in first section, %d in second section\n"),
                   current_threads_in_first_section.value (),
                   current_threads_in_second_section.value ()));
 
@@ -124,7 +124,7 @@ main (int, ASYS_TCHAR *[])
               && current_threads_in_second_section.value () == 0);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%t) exiting main thread\n")));
+              ACE_TEXT (" (%t) exiting main thread\n")));
 #else
   int counter = 0;
   {

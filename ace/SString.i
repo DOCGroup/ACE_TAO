@@ -312,6 +312,7 @@ ACE_CString::hash (void) const
   return ACE::hash_pjw (this->rep_, this->len_);
 }
 
+#if defined (ACE_HAS_WCHAR)
 ACE_INLINE ACE_WString
 operator+ (const ACE_WString &s,
            const ACE_WString &t)
@@ -320,6 +321,7 @@ operator+ (const ACE_WString &s,
   temp += t;
   return temp;
 }
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE ACE_CString
 operator+ (const ACE_CString &s, const ACE_CString &t)
@@ -500,6 +502,9 @@ ACE_SString::length (void) const
   return this->len_;
 }
 
+
+#if defined (ACE_HAS_WCHAR)
+
 ACE_INLINE ACE_WString
 ACE_WString::substr (size_t offset,
                      ssize_t length) const
@@ -509,7 +514,7 @@ ACE_WString::substr (size_t offset,
 
 // Get a copy of the underlying representation.
 
-ACE_INLINE ACE_USHORT16 *
+ACE_INLINE wchar_t *
 ACE_WString::rep (void) const
 {
   ACE_TRACE ("ACE_WString::rep");
@@ -517,9 +522,9 @@ ACE_WString::rep (void) const
     return 0;
   else
     {
-      ACE_USHORT16 *t;
-      ACE_NEW_RETURN (t, ACE_USHORT16[this->len_ + 1], 0);
-      ACE_OS::memcpy (t, this->rep_, this->len_ * sizeof (ACE_USHORT16));
+      wchar_t *t;
+      ACE_NEW_RETURN (t, wchar_t[this->len_ + 1], 0);
+      ACE_OS::memcpy (t, this->rep_, this->len_ * sizeof (wchar_t));
 
       // 0 terminate
       t[this->len_] = 0;
@@ -530,13 +535,13 @@ ACE_WString::rep (void) const
 
 // Get at the underlying representation directly!
 
-ACE_INLINE const ACE_USHORT16 *
+ACE_INLINE const wchar_t *
 ACE_WString::fast_rep (void) const
 {
   return this->rep_;
 }
 
-ACE_INLINE const ACE_USHORT16 *
+ACE_INLINE const wchar_t *
 ACE_WString::c_str (void) const
 {
   return this->rep_;
@@ -551,7 +556,7 @@ ACE_WString::operator== (const ACE_WString &s) const
   return this->len_ == s.len_
     && ACE_OS::memcmp ((const void *) this->rep_,
                        (const void *) s.rep_,
-                       this->len_ * sizeof (ACE_USHORT16)) == 0;
+                       this->len_ * sizeof (wchar_t)) == 0;
 }
 
 // Less than comparison operator.
@@ -563,10 +568,10 @@ ACE_WString::operator < (const ACE_WString &s) const
   return (this->len_ < s.len_)
           ? (ACE_OS::memcmp ((const void *) this->rep_,
                              (const void *) s.rep_,
-                             this->len_ * sizeof (ACE_USHORT16)) <= 0)
+                             this->len_ * sizeof (wchar_t)) <= 0)
           : (ACE_OS::memcmp ((const void *) this->rep_,
                              (const void *) s.rep_,
-                             s.len_ * sizeof (ACE_USHORT16)) < 0);
+                             s.len_ * sizeof (wchar_t)) < 0);
 }
 
 // Greater than comparison operator.
@@ -578,10 +583,10 @@ ACE_WString::operator > (const ACE_WString &s) const
   return (this->len_ <= s.len_)
           ? (ACE_OS::memcmp ((const void *) this->rep_,
                              (const void *) s.rep_,
-                             this->len_ * sizeof (ACE_USHORT16)) > 0)
+                             this->len_ * sizeof (wchar_t)) > 0)
           : (ACE_OS::memcmp ((const void *) this->rep_,
                              (const void *) s.rep_,
-                             s.len_ * sizeof (ACE_USHORT16)) >= 0);
+                             s.len_ * sizeof (wchar_t)) >= 0);
 }
 
 
@@ -601,12 +606,12 @@ ACE_WString::compare (const ACE_WString &s) const
 
   return ACE_OS::memcmp ((const void *) this->rep_,
                          (const void *) s.rep_,
-                         this->len_ * sizeof (ACE_USHORT16));
+                         this->len_ * sizeof (wchar_t));
 }
 
 // Return the <slot'th> character in the string.
 
-ACE_INLINE ACE_USHORT16
+ACE_INLINE wchar_t
 ACE_WString::operator[] (size_t slot) const
 {
   ACE_TRACE ("ACE_WString::operator[]");
@@ -615,7 +620,7 @@ ACE_WString::operator[] (size_t slot) const
 
 // Return the <slot'th> character in the string.
 
-ACE_INLINE ACE_USHORT16 &
+ACE_INLINE wchar_t &
 ACE_WString::operator[] (size_t slot)
 {
   ACE_TRACE ("ACE_WString::operator[]");
@@ -623,10 +628,10 @@ ACE_WString::operator[] (size_t slot)
 }
 
 ACE_INLINE int
-ACE_WString::find (const ACE_USHORT16 *s, int pos) const
+ACE_WString::find (const wchar_t *s, int pos) const
 {
-  ACE_USHORT16 *substr = this->rep_ + pos;
-  const ACE_USHORT16 *pointer = ACE_WString::strstr (substr, s);
+  wchar_t *substr = this->rep_ + pos;
+  const wchar_t *pointer = ACE_WString::strstr (substr, s);
   if (pointer == 0)
     return ACE_WString::npos;
   else
@@ -634,7 +639,7 @@ ACE_WString::find (const ACE_USHORT16 *s, int pos) const
 }
 
 ACE_INLINE int
-ACE_WString::find (ACE_USHORT16 c, int pos) const
+ACE_WString::find (wchar_t c, int pos) const
 {
   if (pos == ACE_WString::npos)
     pos = this->len_;
@@ -661,7 +666,7 @@ ACE_WString::find (const ACE_WString &str, int pos) const
 }
 
 ACE_INLINE int
-ACE_WString::rfind (ACE_USHORT16 c, int pos) const
+ACE_WString::rfind (wchar_t c, int pos) const
 {
   if (pos == ACE_WString::npos)
     pos = this->len_;
@@ -685,6 +690,8 @@ ACE_WString::hash (void) const
 {
   return ACE::hash_pjw (this->rep_);
 }
+
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE
 ACE_Auto_String_Free::ACE_Auto_String_Free (char* p)

@@ -24,6 +24,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (ACE_HAS_WCHAR)
+
 #include "ace/SString.h"
 #include "ace/Containers.h"
 #include "ace/Service_Object.h"
@@ -92,7 +94,7 @@ public:
   // file
 
   // = Dynamic initialization hooks.
-  virtual int init (int argc, ASYS_TCHAR *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   // Initialize name options and naming context when dynamically
   // linked.
 
@@ -232,10 +234,10 @@ private:
   ACE_Name_Space *name_space_;
   // Name space (can be either local or remote) dynamically bound.
 
-  ASYS_TCHAR hostname_[MAXHOSTNAMELEN + 1];
+  ACE_TCHAR hostname_[MAXHOSTNAMELEN + 1];
   // Holds the local hostname.
 
-  const ASYS_TCHAR *netnameserver_host_;
+  const ACE_TCHAR *netnameserver_host_;
   // Holds name of net name server.
 
   int netnameserver_port_;
@@ -256,7 +258,7 @@ public:
   ~ACE_Name_Options (void);
 
   void parse_args (int argc,
-                   ASYS_TCHAR *argv[]);
+                   ACE_TCHAR *argv[]);
   // Parse arguments.
 
   // = Set/Get port number
@@ -268,20 +270,20 @@ public:
   void context (ACE_Naming_Context::Context_Scope_Type);
 
   // = Set/Get host name
-  void nameserver_host (const ASYS_TCHAR *host);
-  const ASYS_TCHAR *nameserver_host (void);
+  void nameserver_host (const ACE_TCHAR *host);
+  const ACE_TCHAR *nameserver_host (void);
 
   // = Set/Get name space directory
-  void namespace_dir (LPCTSTR dir);
-  LPCTSTR namespace_dir (void);
+  void namespace_dir (const ACE_TCHAR *dir);
+  const ACE_TCHAR *namespace_dir (void);
 
   // = Set/Get process name
-  void process_name (LPCTSTR dir);
-  LPCTSTR process_name (void);
+  void process_name (const ACE_TCHAR *dir);
+  const ACE_TCHAR *process_name (void);
 
   // = Set/Get database name
-  void database (LPCTSTR);
-  LPCTSTR database (void);
+  void database (const ACE_TCHAR *);
+  const ACE_TCHAR *database (void);
 
   // = Set/Get base address of the underlying allocator
   void base_address (char *address);
@@ -310,16 +312,16 @@ private:
   int nameserver_port_;
   // Port to connect to nameserver process.
 
-  const ASYS_TCHAR *nameserver_host_;
+  const ACE_TCHAR *nameserver_host_;
   // Hostname of nameserver.
 
-  LPTSTR namespace_dir_;
+  ACE_TCHAR *namespace_dir_;
   // Directory to hold name_bindings.
 
-  LPCTSTR process_name_;
+  const ACE_TCHAR *process_name_;
   // Name of this process.
 
-  LPCTSTR database_;
+  const ACE_TCHAR *database_;
   // Name of the database that stores the name/value/type bindings.
 
   char *base_address_;
@@ -330,6 +332,8 @@ private:
 };
 
 ACE_FACTORY_DECLARE (ACE, ACE_Naming_Context)
+
+#endif /* ACE_HAS_WCHAR */
 
 #include "ace/post.h"
 #endif /* ACE_NAMING_CONTEXT_H */

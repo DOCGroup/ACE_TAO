@@ -77,7 +77,7 @@ cleanup (void *ptr)
   // core dump on LynxOS 2.5.0.
   ACE_UNUSED_ARG (ptr);
 #else  /* ! ACE_HAS_PTHREADS_DRAFT4 */
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) in cleanup, ptr = %x\n"), ptr));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) in cleanup, ptr = %x\n"), ptr));
 #endif /* ! ACE_HAS_PTHREADS_DRAFT4 */
 
   operator delete (ptr);
@@ -92,7 +92,7 @@ worker (void *c)
   // size as a long on all current ACE platforms.
   int count = (int) (long) c;
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) worker, iterations = %d\n"), count));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) worker, iterations = %d\n"), count));
 
   ACE_thread_key_t key = ACE_OS::NULL_key;
   int *ip = 0;
@@ -102,43 +102,43 @@ worker (void *c)
 
   if (ACE_Thread::keycreate (&key, cleanup) == -1)
     {
-      ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p (no keys available)\n"),
-                  ASYS_TEXT ("ACE_Thread::keycreate")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p (no keys available)\n"),
+                  ACE_TEXT ("ACE_Thread::keycreate")));
       return (void *) -1;
     }
 
   ACE_NEW_RETURN (ip, int, 0);
 
   if (ACE_Thread::setspecific (key, (void *) ip) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
-                ASYS_TEXT ("ACE_Thread::setspecific")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                ACE_TEXT ("ACE_Thread::setspecific")));
 
   for (int i = 0; i < count; i++)
     {
       if (ACE_Thread::keycreate (&key, cleanup) == -1)
         {
-          ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p (no more keys)\n"),
-                      ASYS_TEXT ("ACE_Thread::keycreate")));
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p (no more keys)\n"),
+                      ACE_TEXT ("ACE_Thread::keycreate")));
           break;
         }
 
       ACE_NEW_RETURN (ip, int, 0);
 
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) in worker at location 1, ")
-                            ASYS_TEXT ("key = %d, ip = %x\n"),
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) in worker at location 1, ")
+                            ACE_TEXT ("key = %d, ip = %x\n"),
                   key, ip));
 
       if (ACE_Thread::setspecific (key, (void *) ip) == -1)
-        ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
-                    ASYS_TEXT ("ACE_Thread::setspecific")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                    ACE_TEXT ("ACE_Thread::setspecific")));
 
       if (ACE_Thread::getspecific (key, (void **) &ip) == -1)
-        ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
-                    ASYS_TEXT ("ACE_Thread::getspecific")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                    ACE_TEXT ("ACE_Thread::getspecific")));
 
       if (ACE_Thread::setspecific (key, (void *) 0) == -1)
-        ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
-                    ASYS_TEXT ("ACE_Thread::setspecific")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                    ACE_TEXT ("ACE_Thread::setspecific")));
 
 #if ! defined (ACE_HAS_PTHREADS_DRAFT4)
       // See comment in cleanup () above.
@@ -146,8 +146,8 @@ worker (void *c)
 #endif /* ! ACE_HAS_PTHREADS_DRAFT4 */
 
       if (ACE_Thread::keyfree (key) == -1)
-        ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
-                    ASYS_TEXT ("ACE_Thread::keyfree")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                    ACE_TEXT ("ACE_Thread::keyfree")));
 
       // Cause an error.
       ACE_OS::read (ACE_INVALID_HANDLE, 0, 0);
@@ -180,8 +180,8 @@ worker (void *c)
           ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, output_lock,
                                     0));
           ACE_DEBUG ((LM_ERROR,
-                      ASYS_TEXT ("use of ACE_TSS_Type_Adapter failed, value ")
-                      ASYS_TEXT ("is %u, it should be 37!\n"),
+                      ACE_TEXT ("use of ACE_TSS_Type_Adapter failed, value ")
+                      ACE_TEXT ("is %u, it should be 37!\n"),
                       (*u)->operator u_int ()));
           ++errors;
         }
@@ -192,28 +192,28 @@ worker (void *c)
 
       if (ACE_Thread::keycreate (&key, cleanup) == -1)
         {
-          ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p (no more keys)\n"),
-                      ASYS_TEXT ("ACE_Thread::keycreate")));
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p (no more keys)\n"),
+                      ACE_TEXT ("ACE_Thread::keycreate")));
           break;
         }
 
       ACE_NEW_RETURN (ip, int, 0);
 
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) in worker at location 2, ")
-                            ASYS_TEXT ("key = %d, ip = %x\n"),
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) in worker at location 2, ")
+                            ACE_TEXT ("key = %d, ip = %x\n"),
                   key, ip));
 
       if (ACE_Thread::setspecific (key, (void *) ip) == -1)
-        ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
-                    ASYS_TEXT ("ACE_Thread::setspecific")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                    ACE_TEXT ("ACE_Thread::setspecific")));
 
       if (ACE_Thread::getspecific (key, (void **) &ip) == -1)
-        ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
-                    ASYS_TEXT ("ACE_Thread::getspecific")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                    ACE_TEXT ("ACE_Thread::getspecific")));
 
       if (ACE_Thread::setspecific (key, (void *) 0) == -1)
-        ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
-                    ASYS_TEXT ("ACE_Thread::setspecific")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                    ACE_TEXT ("ACE_Thread::setspecific")));
 
 #if !defined (ACE_HAS_PTHREADS_DRAFT4)
       // See comment in cleanup () above.
@@ -221,8 +221,8 @@ worker (void *c)
 #endif /* ! ACE_HAS_PTHREADS_DRAFT4 */
 
       if (ACE_Thread::keyfree (key) == -1)
-        ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
-                    ASYS_TEXT ("ACE_Thread::keyfree")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                    ACE_TEXT ("ACE_Thread::keyfree")));
 #endif /* ! __Lynx__ || ACE_HAS_TSS_EMULATION */
     }
 
@@ -243,9 +243,9 @@ template class ACE_TSS<ACE_TSS_Type_Adapter<u_int> >;
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("TSS_Test"));
+  ACE_START_TEST (ACE_TEXT ("TSS_Test"));
 
 #if defined (ACE_HAS_THREADS)
   Errno::allocate_lock ();
@@ -269,7 +269,7 @@ main (int, ASYS_TCHAR *[])
        (void *) ITERATIONS,
        THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"), ASYS_TEXT ("spawn_n")), 1);
+                       ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n")), 1);
 
   ACE_Thread_Manager::instance ()->wait ();
 
@@ -279,7 +279,7 @@ main (int, ASYS_TCHAR *[])
   Errno::deallocate_lock ();
 #else
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("threads are not supported on this platform\n")));
+              ACE_TEXT ("threads are not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 
   ACE_END_TEST;

@@ -213,7 +213,7 @@ public:
   void accumulate (const ACE_Throughput_Stats &throughput);
   // Update the values to reflect the stats in <throughput>
 
-  void dump_results (const ASYS_TCHAR* msg, ACE_UINT32 scale_factor);
+  void dump_results (const ACE_TCHAR* msg, ACE_UINT32 scale_factor);
   // Print down the stats
 
 private:

@@ -22,8 +22,8 @@ ACE_Token_Request::ACE_Token_Request (void)
 ACE_Token_Request::ACE_Token_Request (int token_type,
 				      int proxy_type,
 				      ACE_UINT32 operation_type,
-				      const char token_name[],
-				      const char client_id[],
+				      const ACE_TCHAR token_name[],
+				      const ACE_TCHAR client_id[],
 				      const ACE_Synch_Options &options)
 {
   this->token_type (token_type);
@@ -69,7 +69,8 @@ ACE_Token_Request::decode (void)
       return -1;
     }
   else // Skip this->tokenName_ + '\0' + ':'.
-    this->client_id_ = &this->token_name_[token_len + 2];
+    this->client_id_ = 
+      &this->token_name_[(token_len + 2) * sizeof (ACE_TCHAR)];
 
   // Fixed size header
   // token_name_ plus '\0'
@@ -90,42 +91,42 @@ void
 ACE_Token_Request::dump (void) const
 {
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("*******\nlength = %d\ntoken name = %s\nclient id = %s\n"),
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("*******\nlength = %d\ntoken name = %s\nclient id = %s\n"),
 	     this->length (), this->token_name (), this->client_id ()));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("type = ")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("type = ")));
 
   if (this->token_type () == ACE_Tokens::MUTEX)
-    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("MUTEX\n")));
+    ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("MUTEX\n")));
   else // == ACE_Tokens::RWLOCK
     {
       if (this->proxy_type () == ACE_RW_Token::READER)
-	ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("RLOCK\n")));
+	ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("RLOCK\n")));
       else // == WRITER
-	ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("WLOCK\n")));
+	ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("WLOCK\n")));
     }
 
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("operation = ")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("operation = ")));
   switch (this->operation_type ())
     {
     case ACE_Token_Request::ACQUIRE:
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACQUIRE\n")));
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACQUIRE\n")));
       break;
     case ACE_Token_Request::RELEASE:
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("RELEASE\n")));
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("RELEASE\n")));
       break;
     case ACE_Token_Request::RENEW:
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("RENEW\n")));
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("RENEW\n")));
       break;
     default:
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("<unknown operation type> = %d\n"), this->operation_type ()));
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("<unknown operation type> = %d\n"), this->operation_type ()));
       break;
     }
 
   if (this->options ()[ACE_Synch_Options::USE_TIMEOUT] == 0)
-    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("blocking forever\n")));
+    ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("blocking forever\n")));
   else
     {
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("waiting for %d secs and %d usecs\n"),
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("waiting for %d secs and %d usecs\n"),
 		 this->options ().timeout ().sec (), this->options ().timeout ().usec ()));
     }
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -168,7 +169,7 @@ ACE_Token_Reply::decode (void)
 void
 ACE_Token_Reply::dump (void) const
 {
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("*******\nlength = %d\nerrnum = %d"),
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("*******\nlength = %d\nerrnum = %d"),
 	     this->length (), this->errnum ()));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("arg = %d"), this->arg ()));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("arg = %d"), this->arg ()));
 }

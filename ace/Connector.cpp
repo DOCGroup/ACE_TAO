@@ -26,8 +26,8 @@ ACE_Connector<SH, PR_CO_2>::dump (void) const
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nclosing_ = %d"), this->closing_));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nflags_ = %d"), this->flags_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nclosing_ = %d"), this->closing_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nflags_ = %d"), this->flags_));
   this->handler_map_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -214,9 +214,9 @@ ACE_Svc_Tuple<SH>::dump (void) const
   ACE_TRACE ("ACE_Svc_Tuple<SH>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("svc_handler_ = %x"), this->svc_handler_));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\narg_ = %x"), this->arg_));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\ncancellation_id_ = %d"), this->cancellation_id_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("svc_handler_ = %x"), this->svc_handler_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\narg_ = %x"), this->arg_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncancellation_id_ = %d"), this->cancellation_id_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -267,8 +267,8 @@ ACE_Connector<SH, PR_CO_2>::cleanup_AST (ACE_HANDLE handle,
       // Error, entry not found in map.
       errno = ENOENT;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("%p %d not found in map\n"),
-                         ASYS_TEXT ("find"),
+                         ACE_TEXT ("%p %d not found in map\n"),
+                         ACE_TEXT ("find"),
                          handle),
                         -1);
     }
@@ -496,7 +496,7 @@ template <class SH, PR_CO_1> int
 ACE_Connector<SH, PR_CO_2>::connect_n (size_t n,
                                        SH *sh[],
                                        PR_AD remote_addrs[],
-                                       ASYS_TCHAR *failed_svc_handlers,
+                                       ACE_TCHAR *failed_svc_handlers,
                                        const ACE_Synch_Options &synch_options)
 {
   int result = 0;
@@ -670,7 +670,7 @@ ACE_Connector<SH, PR_CO_2>::fini (void)
 // Hook called by the explicit dynamic linking facility.
 
 template <class SH, PR_CO_1> int
-ACE_Connector<SH, PR_CO_2>::init (int, ASYS_TCHAR *[])
+ACE_Connector<SH, PR_CO_2>::init (int, ACE_TCHAR *[])
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::init");
   return -1;
@@ -691,15 +691,15 @@ ACE_Connector<SH, PR_CO_2>::resume (void)
 }
 
 template <class SH, PR_CO_1> int
-ACE_Connector<SH, PR_CO_2>::info (ASYS_TCHAR **strp, size_t length) const
+ACE_Connector<SH, PR_CO_2>::info (ACE_TCHAR **strp, size_t length) const
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::info");
-  ASYS_TCHAR buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ];
 
   ACE_OS::sprintf (buf,
-                   ASYS_TEXT ("%s\t %s"),
-                   ASYS_TEXT ("ACE_Connector"),
-                   ASYS_TEXT ("# connector factory\n"));
+                   ACE_TEXT ("%s\t %s"),
+                   ACE_TEXT ("ACE_Connector"),
+                   ACE_TEXT ("# connector factory\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -825,7 +825,7 @@ ACE_Strategy_Connector<SH, PR_CO_2>::ACE_Strategy_Connector
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::ACE_Connector");
 
   if (this->open (reactor, cre_s, conn_s, con_s, flags) == -1)
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Strategy_Connector::ACE_Strategy_Connector")));
+    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_Strategy_Connector::ACE_Strategy_Connector")));
 }
 
 template <class SH, PR_CO_1>

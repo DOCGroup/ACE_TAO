@@ -78,7 +78,7 @@ public:
     /* -----------------------------------------------------*/
     // = ACCESS
 
-    virtual int addr_to_string (ASYS_TCHAR addr[], size_t) const;
+    virtual int addr_to_string (ACE_TCHAR addr[], size_t) const;
     // Transform the current <ACE_CLASSIX_Port> address into string format,
     // which is in the form "actor-id:port-number"
 
