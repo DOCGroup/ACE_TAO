@@ -199,12 +199,12 @@ main (int argc, char **argv)
         }
 
       // Allocate the servant activator.
-      MyFooServantActivator *activator;
+      ServantActivator *activator;
       ACE_NEW_RETURN (activator,
-                      MyFooServantActivator (orb.in ()),
+                      ServantActivator (orb.in ()),
                       0);
 
-      // Set MyFooServantActivator object as the servant_manager of
+      // Set ServantActivator object as the servant_manager of
       // firstPOA.
       first_poa->set_servant_manager (activator
                                       ACE_ENV_ARG_PARAMETER);
@@ -220,22 +220,22 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       // Create a reference with user created ID in firstPOA which uses
-      // the MyFooServantActivator.
+      // the ServantActivator.
 
-      PortableServer::ObjectId_var first_foo_oid =
-        PortableServer::string_to_ObjectId ("firstFoo");
+      PortableServer::ObjectId_var first_test_oid =
+        PortableServer::string_to_ObjectId ("first test");
 
-      CORBA::Object_var first_foo =
-        first_poa->create_reference_with_id (first_foo_oid.in (), "IDL:Foo:1.0" ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var first_test =
+        first_poa->create_reference_with_id (first_test_oid.in (), "IDL:test:1.0" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Allocate the servant activator.
-      MyFooServantLocator *locator;
+      ServantLocator *locator;
       ACE_NEW_RETURN (locator,
-                      MyFooServantLocator (orb.in ()),
+                      ServantLocator (orb.in ()),
                       0);
 
-      // Set MyFooServantLocator object as the servant Manager of
+      // Set ServantLocator object as the servant Manager of
       // secondPOA.
       second_poa->set_servant_manager (locator
                                        ACE_ENV_ARG_PARAMETER);
@@ -251,36 +251,36 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       // Try to create a reference with user created ID in second_poa
-      // which uses MyFooServantLocator.
+      // which uses ServantLocator.
 
-      PortableServer::ObjectId_var second_foo_oid =
-        PortableServer::string_to_ObjectId ("secondFoo");
+      PortableServer::ObjectId_var second_test_oid =
+        PortableServer::string_to_ObjectId ("second test");
 
-      CORBA::Object_var second_foo =
-        second_poa->create_reference_with_id (second_foo_oid.in (),
-                                              "IDL:Foo:1.0" ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var second_test =
+        second_poa->create_reference_with_id (second_test_oid.in (),
+                                              "IDL:test:1.0" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Invoke object_to_string on the references created in firstPOA and
       // secondPOA.
 
-      CORBA::String_var first_foo_ior =
-        orb->object_to_string (first_foo.in () ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var first_test_ior =
+        orb->object_to_string (first_test.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
-      CORBA::String_var second_foo_ior =
-        orb->object_to_string (second_foo.in () ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var second_test_ior =
+        orb->object_to_string (second_test.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Print the ior's of first_foo and second_foo.
+      // Print the ior's of first_test and second_test.
 
       ACE_DEBUG((LM_DEBUG,"%s\n%s\n",
-                 first_foo_ior.in (),
-                 second_foo_ior.in ()));
+                 first_test_ior.in (),
+                 second_test_ior.in ()));
 
-      int write_result = write_iors_to_file (first_foo_ior.in (),
-                                             second_foo_ior.in ());
+      int write_result = write_iors_to_file (first_test_ior.in (),
+                                             second_test_ior.in ());
       if (write_result != 0)
         return write_result;
 

@@ -7,6 +7,7 @@ DIRS = \
 	Excessive_Object_Deactivations \
 	Etherealization \
         POA_Destruction \
+        Default_Servant \
         Identity \
         Non_Servant_Upcalls \
         Single_Threaded_POA \

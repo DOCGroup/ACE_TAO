@@ -716,6 +716,13 @@ protected:
                      PortableServer::POA::ServantNotActive,
                      PortableServer::POA::WrongPolicy));
 
+  PortableServer::Servant reference_to_servant_i (CORBA::Object_ptr reference
+                                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POA::ObjectNotActive,
+                     PortableServer::POA::WrongAdapter,
+                     PortableServer::POA::WrongPolicy));
+
   PortableServer::Servant id_to_servant_i (const PortableServer::ObjectId &oid
                                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,

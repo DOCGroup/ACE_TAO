@@ -1,6 +1,6 @@
 // $Id$
 
-interface Foo
+interface test
 {
   long doit ();
   // Returns numbers: they are constantly increasing

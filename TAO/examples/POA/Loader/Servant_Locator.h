@@ -10,7 +10,7 @@
 //     Servant_Locator.h
 //
 // = DESCRIPTION
-//     Defines a ServantLocator_i class , used with a POA having
+//     Defines a ServantLocator class , used with a POA having
 //     a NON_RETAIN policy.
 //
 // = AUTHOR
@@ -27,7 +27,7 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/DLL.h"
 
-class ServantLocator_i : public PortableServer::ServantLocator
+class ServantLocator : public PortableServer::ServantLocator
 {
   // = TITLE
   //   This class is used by a POA with USE_SERVANT_MANAGER and
@@ -54,7 +54,7 @@ public:
   // in the dll. Invoking the function pointer obtained would then destroy
   // the servant.
 
-  ServantLocator_i (CORBA::ORB_ptr orb,
+  ServantLocator (CORBA::ORB_ptr orb,
                     const char *dllname,
                     const char *factory_function,
                     const char *garbage_collection_function);
@@ -68,7 +68,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::ForwardRequest));
   // This method is invoked by a POA whenever it receives a request
-  // for MyFoo object that is not currently active.  When the POA is
+  // for test object that is not currently active.  When the POA is
   // created using the NON_RETAIN policy the Active Object Map is not
   // maintained, in other words, an association between the ObjectId
   // and the servant is not maintained. Hence every client request the
@@ -84,7 +84,7 @@ public:
                            PortableServer::Servant the_servant
                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // This method is invoked whenever a MyFooServant completes a
+  // This method is invoked whenever a test servant completes a
   // request. As the Servant Loactor interface is used when the POA
   // doesnt maintain the Active Object Map, its necessary to get rid
   // of the servant after the client request has been processed. The

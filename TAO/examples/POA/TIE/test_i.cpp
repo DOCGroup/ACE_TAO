@@ -4,19 +4,19 @@
 //
 //
 // = FILENAME
-//     Foo_i.cpp
+//     test_i.cpp
 //
 // = DESCRIPTION
-//     This is a simple foo servant implementation
+//     This is a simple test servant implementation
 //
 // = AUTHOR
 //     Irfan Pyarali
 //
 //===========================================================================
 
-#include "Foo_i.h"
+#include "test_i.h"
 
-ACE_RCSID(TIE, Foo_i, "$Id$")
+ACE_RCSID(TIE, test_i, "$Id$")
 
   // Constructor
   Tie_i::Tie_i (CORBA::Long value)

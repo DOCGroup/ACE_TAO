@@ -9,8 +9,8 @@
 //     Servant_Activator.cpp
 //
 // = DESCRIPTION
-//     Implementation of MyFooServantActivator , which is used by a
-//     POA with a RETAIN policy.
+//     Implementation of ServantActivator, which is used by a POA with
+//     a RETAIN policy.
 //
 // = AUTHOR
 //     Irfan Pyarali
@@ -18,19 +18,19 @@
 // ============================================================================
 
 #include "Servant_Activator.h"
-#include "MyFooServant.h"
+#include "test_i.h"
 
 ACE_RCSID(On_Demand_Activation, Servant_Activator, "$Id$")
 
-MyFooServantActivator::MyFooServantActivator (CORBA::ORB_ptr orb)
-  :  orb_ (CORBA::ORB::_duplicate (orb))
+ServantActivator::ServantActivator (CORBA::ORB_ptr orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
 PortableServer::Servant
-MyFooServantActivator::incarnate (const PortableServer::ObjectId &oid,
-                                  PortableServer::POA_ptr poa
-                                  ACE_ENV_ARG_DECL)
+ServantActivator::incarnate (const PortableServer::ObjectId &oid,
+                             PortableServer::POA_ptr poa
+                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -38,11 +38,11 @@ MyFooServantActivator::incarnate (const PortableServer::ObjectId &oid,
 
   CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
 
-  // If ObjectId string has a Foo Substring, create and return a
-  // MyFooServant.
+  // If ObjectId string has a test substring, create and return a
+  // test_i.
 
-  if (ACE_OS::strstr (s.in (), "Foo") != 0)
-    return new MyFooServant (this->orb_.in (), poa, 27);
+  if (ACE_OS::strstr (s.in (), "test") != 0)
+    return new test_i (this->orb_.in (), poa);
   else
     {
       ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
@@ -51,17 +51,16 @@ MyFooServantActivator::incarnate (const PortableServer::ObjectId &oid,
 
 
 void
-MyFooServantActivator::etherealize (const PortableServer::ObjectId &,
-                                    PortableServer::POA_ptr ,
-                                    PortableServer::Servant servant,
-                                    CORBA::Boolean ,
-                                    CORBA::Boolean remaining_activations
-                                    ACE_ENV_ARG_DECL_NOT_USED)
+ServantActivator::etherealize (const PortableServer::ObjectId &,
+                               PortableServer::POA_ptr ,
+                               PortableServer::Servant servant,
+                               CORBA::Boolean ,
+                               CORBA::Boolean remaining_activations
+                               ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // If there are no remaining activations i.e ObjectIds associated
-  // with MyFooServant delete it.
-
+  // with test_i delete it.
   if (remaining_activations == 0)
     delete servant;
 }

@@ -1,22 +1,18 @@
 // $Id$
 //=============================================================================
 //
-//
 // = FILENAME
-//     MyFooServant.h
+//     test_i.h
 //
 // = DESCRIPTION
-//     Defines MyFooServant class for the Foo interface
+//     Defines test_i class for the test interface
 //
 // = AUTHOR
 //     Irfan Pyarali and Michael Kircher
 //
 //=============================================================================
 
-#ifndef MYFOOSERVANT_H
-#define MYFOOSERVANT_H
-
-#include "FooS.h"
+#include "testS.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -25,15 +21,15 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class MyFooServantActivator;
+class ServantActivator;
 
-class MyFooServant : public virtual PortableServer::RefCountServantBase,
-                     public virtual POA_Foo
+class test_i : public virtual PortableServer::RefCountServantBase,
+                     public virtual POA_test
 {
 public:
-  MyFooServant (CORBA::ORB_ptr orb_ptr,
+  test_i (CORBA::ORB_ptr orb_ptr,
                 PortableServer::POA_ptr poa,
-                MyFooServantActivator &activator,
+                ServantActivator &activator,
                 CORBA::Long value);
 
   virtual CORBA::Long doit (ACE_ENV_SINGLE_ARG_DECL)
@@ -42,7 +38,7 @@ public:
   // Setup forwarding
   virtual void forward (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     Foo::Cannot_Forward));
+                     test::Cannot_Forward));
 
   virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -53,12 +49,10 @@ public:
 protected:
   CORBA::ORB_var orb_;
   PortableServer::POA_var poa_;
-  MyFooServantActivator &activator_;
+  ServantActivator &activator_;
   CORBA::Long value_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
-#endif /* MYFOOSERVANT_H */
