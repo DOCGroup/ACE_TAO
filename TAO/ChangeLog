@@ -1,3 +1,21 @@
+Thu Sep 26 09:25:19 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp (get_location):
+
+	  Removed comment that wasn't relevant to the corresponding code.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp (enable_alert):
+	  (disable_alert):
+
+	  Added comment about how and why AMI is used.
+
+	* orbsvcs/orbsvcs/CosLoadBalancing.bor (OBJFILES):
+	* orbsvcs/orbsvcs/CosLoadBalancing.dsp:
+	* orbsvcs/orbsvcs/CosLoadBalancing_Static.dsp:
+
+	  Added "LB_Location_Index_Map" to the list of C++ source and
+	  object files.
+
 Thu Sep 26 09:14:22 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_Location_Index_Map.h:

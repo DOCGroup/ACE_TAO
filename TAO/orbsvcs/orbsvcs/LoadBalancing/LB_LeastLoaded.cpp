@@ -237,11 +237,6 @@ TAO_LB_LeastLoaded::get_location (
           // informing the LoadAlert object associated with the member
           // at that location it should redirect client requests back
           // to the LoadManager.
-          //
-          // AMI is used to improve member selection times and overall
-          // throughput since the LoadAlert object need not be alerted
-          // synchronously.  In particular, the load alert can and
-          // should be performed in parallel to the member selection.
           load_manager->enable_alert (loc
                                       ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);

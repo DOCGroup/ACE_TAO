@@ -30,6 +30,7 @@ OBJFILES = \
 	$(OBJDIR)\LB_LoadListMap.obj \
 	$(OBJDIR)\LB_LoadManager.obj \
 	$(OBJDIR)\LB_LoadMap.obj \
+	$(OBJDIR)\LB_Location_Index_Map.obj \
 	$(OBJDIR)\LB_MemberLocator.obj \
 	$(OBJDIR)\LB_MonitorMap.obj \
 	$(OBJDIR)\LB_Pull_Handler.obj \

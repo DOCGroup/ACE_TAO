@@ -211,6 +211,10 @@ SOURCE=.\LoadBalancing\LB_LoadMap.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\LoadBalancing\LB_Location_Index_Map.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\LoadBalancing\LB_MemberLocator.cpp
 # End Source File
 # Begin Source File
@@ -312,6 +316,10 @@ SOURCE=.\LoadBalancing\LB_LoadManager.h
 # Begin Source File
 
 SOURCE=.\LoadBalancing\LB_LoadMap.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_Location_Index_Map.h
 # End Source File
 # Begin Source File
 
