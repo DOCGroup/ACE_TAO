@@ -352,9 +352,9 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n,
       if (type == CosNaming::ncontext)
         {
           // Narrow to NamingContext.
-          context = CosNaming::NamingContext::_narrow (result,
+          context = CosNaming::NamingContext::_narrow (result.in (),
                                                        ACE_TRY_ENV);
-          ACE_CHECK_RETURN (result);
+          ACE_CHECK_RETURN (result._retn ());
         }
       else
         // The first name component wasn't bound to a NamingContext.
