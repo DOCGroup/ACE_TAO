@@ -28,6 +28,9 @@ Fri Nov 06 08:57:49 1998  David L. Levine  <levine@cs.wustl.edu>
           Peter Nordlund <petern@nada.kth.se> for provided the new
           text.
 
+        * ace/SOCK_Dgram_Mcast.cpp (unsubscribe): fixed ACE_TRACE
+          string.
+
 Thu Nov  5 23:10:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Thread_Manager.cpp (wait_task): Fixed a wrong parenthesis
