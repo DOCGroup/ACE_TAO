@@ -1,3 +1,10 @@
+Mon Dec 21 16:06:07 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Shared_Memory_MM.i: Changed the remove() method to call
+ 	  ACE_Mem_Map::remove() rather than ACE_Mem_Map::unmap() so the
+ 	  code is consistent with the documentation.  Thanks to James
+ 	  Johnson for reporting this.
+
 Mon Dec 21 13:55:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Containers_T.{i,cpp} (ACE_Bounded_Set::is_full): On LynxOS
