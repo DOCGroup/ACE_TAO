@@ -41,12 +41,6 @@ sub crlf {
 }
 
 
-sub separate_static_project {
-  #my($self) = shift;
-  return 1;
-}
-
-
 sub project_file_name {
   my($self) = shift;
   my($name) = shift;
