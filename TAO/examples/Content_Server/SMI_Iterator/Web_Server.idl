@@ -25,7 +25,7 @@ module Web_Server
     short status;
  };
 
-  struct Metadata_Type 
+  struct Metadata_Type
   {
     // Modification date.
     string modification_date;
