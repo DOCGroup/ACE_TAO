@@ -76,7 +76,7 @@ class TAO_Export CORBA_PollableSet_var : public TAO_Base_var
 {
 public:
   CORBA_PollableSet_var (void); // default constructor
-  CORBA_PollableSet_var (CORBA_PollableSet_ptr);
+  CORBA_PollableSet_var (CORBA_PollableSet_ptr p) : ptr_ (p) {}
   CORBA_PollableSet_var (const CORBA_PollableSet_var &); // copy constructor
   ~CORBA_PollableSet_var (void); // destructor
 
@@ -152,7 +152,7 @@ class TAO_Export CORBA_Pollable_var : public TAO_Base_var
 {
 public:
   CORBA_Pollable_var (void); // default constructor
-  CORBA_Pollable_var (CORBA_Pollable_ptr);
+  CORBA_Pollable_var (CORBA_Pollable_ptr p) : ptr_ (p) {}
   CORBA_Pollable_var (const CORBA_Pollable_var &); // copy constructor
   ~CORBA_Pollable_var (void); // destructor
 
@@ -290,7 +290,7 @@ class TAO_Export CORBA_DIIPollable_var : public TAO_Base_var
 {
 public:
   CORBA_DIIPollable_var (void); // default constructor
-  CORBA_DIIPollable_var (CORBA_DIIPollable_ptr);
+  CORBA_DIIPollable_var (CORBA_DIIPollable_ptr p) : ptr_ (p) {}
   CORBA_DIIPollable_var (const CORBA_DIIPollable_var &); // copy constructor
   ~CORBA_DIIPollable_var (void); // destructor
 
