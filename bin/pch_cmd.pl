@@ -35,16 +35,16 @@ sub usageAndExit {
   if (defined $msg) {
     print "$msg\n";
   }
-  print "Usage: $base [-o <output option>] [-p <pch header>] " .
+  print "Usage: $base [-t <output option>] [-p <pch header>] " .
         "[-c <command>]\n" .
         "        " . " " x length($base) . "[command options]\n\n" .
-        "-o   Pass the output option of the command.  This is used to\n" .
+        "-t   Pass the output option of the command.  This is used to\n" .
         "     determine the output name for the command.  If the command\n" .
         "     does not have an output option, then this script can not be " .
         "used.\n" .
         "-p   Pass the name of the precompiled header file.\n" .
         "-c   Pass the name of the command to execute.\n" .
-        "     NOTE: This option must be used after -o and -p.\n";
+        "     NOTE: This option must be used after -t and -p.\n";
   exit(1);
 }
 
