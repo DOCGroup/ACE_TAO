@@ -17,27 +17,27 @@
 // set oid, value then call valid() to be sure object was constructed correctly.
 //
 // = AUTHOR
-//   Peter E Mellquist     
-//   Michael R MacFaden  mrm@cisco.com - rework & ACE port 
+//   Peter E Mellquist
+//   Michael R MacFaden  mrm@cisco.com - rework & ACE port
 // ============================================================================
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company
 
   ATTENTION: USE OF THIS SOFTWARE IS SUBJECT TO THE FOLLOWING TERMS.
-  Permission to use, copy, modify, distribute and/or sell this software 
-  and/or its documentation is hereby granted without fee. User agrees 
-  to display the above copyright notice and this license notice in all 
-  copies of the software and any documentation of the software. User 
-  agrees to assume all liability for the use of the software; Hewlett-Packard 
-  makes no representations about the suitability of this software for any 
-  purpose. It is provided "AS-IS without warranty of any kind,either express 
-  or implied. User hereby grants a royalty-free license to any and all 
-  derivatives based upon this software code base. 
+  Permission to use, copy, modify, distribute and/or sell this software
+  and/or its documentation is hereby granted without fee. User agrees
+  to display the above copyright notice and this license notice in all
+  copies of the software and any documentation of the software. User
+  agrees to assume all liability for the use of the software; Hewlett-Packard
+  makes no representations about the suitability of this software for any
+  purpose. It is provided "AS-IS without warranty of any kind,either express
+  or implied. User hereby grants a royalty-free license to any and all
+  derivatives based upon this software code base.
 =====================================================================*/
 
-#include "asnmp/oid.h"	       // include oid class defs
-#include "asnmp/vb.h"		       // include vb class defs
+#include "asnmp/oid.h"         // include oid class defs
+#include "asnmp/vb.h"                  // include vb class defs
 #include "asnmp/snmperrs.h"      // error codes
 
 ACE_RCSID(asnmp, vb, "$Id$")
@@ -45,32 +45,32 @@ ACE_RCSID(asnmp, vb, "$Id$")
 //---------------[ Vb::Vb( void) ]--------------------------------------
 // constructor with no arguments
 // makes an vb, unitialized
-Vb::Vb( void): output_(NULL), iv_vb_value_(NULL), 
+Vb::Vb( void): output_(0), iv_vb_value_(0),
     exception_status_(SNMP_CLASS_SUCCESS)
-{ 
+{
 }
 
 //---------------[ Vb::Vb( const Oid &oid) ]-----------------------------
 // constructor to initialize the oid
 // makes a vb with oid portion initialized
-Vb::Vb( const Oid &oid):  output_(NULL), iv_vb_oid_(oid), iv_vb_value_(NULL), 
+Vb::Vb( const Oid &oid):  output_(0), iv_vb_oid_(oid), iv_vb_value_(0),
  exception_status_(SNMP_CLASS_SUCCESS)
-{ 
+{
 }
 
 //---------------[ Vb::Vb( const Oid &oid, const SmiSyntax &val) ]-------
 Vb::Vb( const Oid &oid, const SnmpSyntax &val, const SmiUINT32 status):
-  output_(NULL), iv_vb_oid_(oid), iv_vb_value_(NULL), exception_status_(status)
-{ 
+  output_(0), iv_vb_oid_(oid), iv_vb_value_(0), exception_status_(status)
+{
   // iv_vb_value_ = recast_smi_object(val);  // allocate and construct object
   iv_vb_value_ = val.clone();
 }
 
 //---------------[ Vb::Vb( const Vb &vb) ]-----------------------------
 // copy constructor
-Vb::Vb( const Vb &vb): output_(NULL), iv_vb_value_(NULL)
-{  
-   *this = vb; 
+Vb::Vb( const Vb &vb): output_(0), iv_vb_value_(0)
+{
+   *this = vb;
 }
 
 //---------------[ Vb::~Vb() ]------------------------------------------
@@ -78,8 +78,8 @@ Vb::Vb( const Vb &vb): output_(NULL), iv_vb_value_(NULL)
 // if the vb has a oid or an octect string then
 // the associated memory needs to be freed
 Vb::~Vb()
-{ 
-  free_vb(); 
+{
+  free_vb();
   delete [] output_; // formatting buffer if it exists
 }
 
@@ -90,9 +90,9 @@ Vb::~Vb()
 int Vb::valid() const
 {
    if ( iv_vb_oid_.valid() && (iv_vb_value_ && iv_vb_value_->valid()) )
-     return TRUE;
+     return 1;
    else
-     return FALSE;
+     return 0;
 }
 
 
@@ -102,14 +102,14 @@ int Vb::valid() const
 // before assigning source
 Vb& Vb::operator=( const Vb &vb)
 {
-   free_vb();	 // free up target to begin with
+   free_vb();    // free up target to begin with
 
    //-----[ reassign the Oid portion 1st ]
    vb.get_oid( iv_vb_oid_);
 
    //-----[ next set the vb value portion ]
-   if (vb.iv_vb_value_ == NULL) {
-     iv_vb_value_ = NULL;
+   if (vb.iv_vb_value_ == 0) {
+     iv_vb_value_ = 0;
    }
    else {
      iv_vb_value_ = vb.iv_vb_value_->clone();
@@ -128,14 +128,14 @@ void Vb::set_null()
 //---------------[ Vb::set_oid( const Oid oid ) ]-----------------------
 // set value oid only with another oid
 void Vb::set_oid( const Oid& oid)
-{ 
+{
   iv_vb_oid_ = oid;
 }
 
 //---------------[ Vb::get_oid( Oid &oid) ]-----------------------------
 // get oid portion
 void Vb::get_oid( Oid &oid) const
-{ 
+{
   oid = iv_vb_oid_;
 }
 
@@ -149,7 +149,7 @@ void Vb::free_vb()
   if (iv_vb_value_)
     delete iv_vb_value_;
   exception_status_ = SNMP_CLASS_SUCCESS;
-  iv_vb_value_ = NULL;
+  iv_vb_value_ = 0;
 }
 
 void Vb::set_value( const SnmpInt32& i)
@@ -223,19 +223,19 @@ int Vb::get_value( SnmpUInt32 &u)
    if (iv_vb_value_ && iv_vb_value_->valid())
    {
        SmiUINT32 syntax = iv_vb_value_->get_syntax();
-       if (syntax == sNMP_SYNTAX_GAUGE32 || 
-	   syntax == sNMP_SYNTAX_CNTR32 ||
-	   syntax == sNMP_SYNTAX_TIMETICKS || 
-	   syntax == sNMP_SYNTAX_UINT32) 
+       if (syntax == sNMP_SYNTAX_GAUGE32 ||
+           syntax == sNMP_SYNTAX_CNTR32 ||
+           syntax == sNMP_SYNTAX_TIMETICKS ||
+           syntax == sNMP_SYNTAX_UINT32)
        {
-	   u = *((SnmpUInt32 *) iv_vb_value_);
-	   return SNMP_CLASS_SUCCESS;
+           u = *((SnmpUInt32 *) iv_vb_value_);
+           return SNMP_CLASS_SUCCESS;
        }
    }
    return SNMP_CLASS_INVALID;
 }
 
-/* return a uint or a gauge. this is casting, but no semantic difference 
+/* return a uint or a gauge. this is casting, but no semantic difference
  * at this level
  */
 int Vb::get_value( Gauge32 &g)
@@ -318,9 +318,9 @@ int Vb::get_value( SnmpSyntax &val)
   if (iv_vb_value_) {
     val = *iv_vb_value_;
     if (val.valid())
-	return SNMP_CLASS_SUCCESS;
+        return SNMP_CLASS_SUCCESS;
     else
-	return SNMP_CLASS_INVALID;
+        return SNMP_CLASS_INVALID;
   }
   else
   {
@@ -338,7 +338,7 @@ int Vb::get_value( SnmpSyntax &val)
 // the caller has a vb object and does not know what it is.
 // This would be useful in the implementation of a browser.
 SmiUINT32 Vb::get_syntax()
-{ 
+{
   if ( exception_status_ != SNMP_CLASS_SUCCESS)
     return exception_status_;
   else
@@ -356,20 +356,20 @@ char  *Vb::to_string_value()
 
 // return the printable oid
 char  *Vb::to_string_oid()
-{ 
-  return iv_vb_oid_.to_string(); 
+{
+  return iv_vb_oid_.to_string();
 }
 
 // generate string with name/ value format
 char  *Vb::to_string()
-{ 
+{
   int len = ACE_OS::strlen(iv_vb_oid_.to_string());
   char *ptr = "";
   if (iv_vb_value_)
-      ptr = iv_vb_value_->to_string(); 
+      ptr = iv_vb_value_->to_string();
   len += ACE_OS::strlen(ptr) + 3 + 1; // " / " + null
-  ACE_NEW_RETURN(output_, char[len], ""); 
-  ACE_OS::sprintf(output_, "%s / %s", iv_vb_oid_.to_string(), ptr); 
+  ACE_NEW_RETURN(output_, char[len], "");
+  ACE_OS::sprintf(output_, "%s / %s", iv_vb_oid_.to_string(), ptr);
   return output_;
 }
 
@@ -383,8 +383,8 @@ void set_exception_status( Vb *vb, const SmiUINT32 status)
 // hack, by side effect, compare based on string formatting output_
 int operator==( const Vb &lhs, const Vb &rhs)
 {
-  if ( lhs.iv_vb_oid_ != rhs.iv_vb_oid_) 
-       return FALSE;
+  if ( lhs.iv_vb_oid_ != rhs.iv_vb_oid_)
+       return 0;
 
   if (lhs.iv_vb_value_ != 0 && rhs.iv_vb_value_ != 0) {
      int val = strcmp(lhs.iv_vb_value_->to_string(),
@@ -392,6 +392,5 @@ int operator==( const Vb &lhs, const Vb &rhs)
      return !val;
    }
   else
-    return FALSE;
+    return 0;
 }
-

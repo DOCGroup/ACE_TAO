@@ -18,32 +18,32 @@
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company
- 
+
   ATTENTION: USE OF THIS SOFTWARE IS SUBJECT TO THE FOLLOWING TERMS.
-  Permission to use, copy, modify, distribute and/or sell this software 
-  and/or its documentation is hereby granted without fee. User agrees 
-  to display the above copyright notice and this license notice in all 
-  copies of the software and any documentation of the software. User 
-  agrees to assume all liability for the use of the software; Hewlett-Packard 
-  makes no representations about the suitability of this software for any 
-  purpose. It is provided "AS-IS without warranty of any kind,either express 
-  or implied. User hereby grants a royalty-free license to any and all 
-  derivatives based upon this software code base. 
-=====================================================================*/ 
- 
+  Permission to use, copy, modify, distribute and/or sell this software
+  and/or its documentation is hereby granted without fee. User agrees
+  to display the above copyright notice and this license notice in all
+  copies of the software and any documentation of the software. User
+  agrees to assume all liability for the use of the software; Hewlett-Packard
+  makes no representations about the suitability of this software for any
+  purpose. It is provided "AS-IS without warranty of any kind,either express
+  or implied. User hereby grants a royalty-free license to any and all
+  derivatives based upon this software code base.
+=====================================================================*/
+
 #include "asnmp/ctr64.h"
 
 ACE_RCSID(asnmp, ctr64, "$Id$")
 
-#define MAX32 4294967295
+#define MAX32 4294967295u
 
 //-----------[ syntax type ]----------------------------------------------
 SmiUINT32 Counter64::get_syntax()
-{ 
-  return sNMP_SYNTAX_CNTR64; 
+{
+  return sNMP_SYNTAX_CNTR64;
 }
 
-//------------------[ constructor with values ]-------------------------- 
+//------------------[ constructor with values ]--------------------------
 Counter64::Counter64( unsigned long hiparm, unsigned long loparm)
 {
   smival.syntax = sNMP_SYNTAX_CNTR64;
@@ -51,7 +51,7 @@ Counter64::Counter64( unsigned long hiparm, unsigned long loparm)
   smival.value.hNumber.lopart = loparm;
 }
 
-//------------------[ constructor with low value only ]------------------ 
+//------------------[ constructor with low value only ]------------------
 Counter64::Counter64( unsigned long long llw )
 {
   smival.syntax = sNMP_SYNTAX_CNTR64;
@@ -59,7 +59,7 @@ Counter64::Counter64( unsigned long long llw )
   smival.value.hNumber.lopart = (unsigned long) llw & 0xffffffff;
 }
 
-//------------------[ copy constructor ]--------------------------------- 
+//------------------[ copy constructor ]---------------------------------
 Counter64::Counter64( const Counter64 &ctr64 )
 {
   smival.syntax = sNMP_SYNTAX_CNTR64;
@@ -67,41 +67,41 @@ Counter64::Counter64( const Counter64 &ctr64 )
   smival.value.hNumber.lopart = ctr64.low();
 }
 
-//------------------[ destructor ]--------------------------------- 
+//------------------[ destructor ]---------------------------------
 Counter64::~Counter64()
 {
 }
 
 
-//------------------[ Counter64::high() ]------------------------------ 
-// return the high part   
+//------------------[ Counter64::high() ]------------------------------
+// return the high part
 unsigned long Counter64::high() const
-{ 
-  return smival.value.hNumber.hipart; 
+{
+  return smival.value.hNumber.hipart;
 }
 
 
-//------------------[ Counter64::low() ]-------------------------------        
-// return the low part   
+//------------------[ Counter64::low() ]-------------------------------
+// return the low part
 unsigned long Counter64::low() const
-{ 
+{
   return smival.value.hNumber.lopart;
 }
 
-//------------------[ set_high( const unsigned long h) ]-----------        
-// set the high part   
+//------------------[ set_high( const unsigned long h) ]-----------
+// set the high part
 void Counter64::set_high( const unsigned long h)
-{ 
-  smival.value.hNumber.hipart = h; 
+{
+  smival.value.hNumber.hipart = h;
 }
-   
-//------------------[ set_low( const unsigned long l) ]------------        
-// set the low part   
+
+//------------------[ set_low( const unsigned long l) ]------------
+// set the low part
 void Counter64::set_low( const unsigned long l)
-{ 
-  smival.value.hNumber.lopart = l; 
-} 
-        
+{
+  smival.value.hNumber.lopart = l;
+}
+
 
 //-----------[ to_long_double( Counter64 c64) ]-----------------------------
 // convert a Counter 64 to a long double
@@ -114,7 +114,7 @@ long double Counter64::to_long_double()  const
 }
 
 
-//-----------[ ld_to_c64( long double ld) ]----------------------------      
+//-----------[ ld_to_c64( long double ld) ]----------------------------
 // convert a long double to a Counter64
 // semantics changed from prior version
 Counter64& Counter64::assign( long double ld)
@@ -132,28 +132,28 @@ SnmpSyntax& Counter64::operator=( SnmpSyntax &val)
   if ( this == &val )
       return *this;
 
-  smival.value.hNumber.lopart = 0;	// pessimsitic - assume no mapping
+  smival.value.hNumber.lopart = 0;      // pessimsitic - assume no mapping
   smival.value.hNumber.hipart = 0;
 
   // try to make assignment valid
   if (val.valid()){
     switch (val.get_syntax()){
       case sNMP_SYNTAX_CNTR64:
-	smival.value.hNumber.hipart = 
-		((Counter64 &)val).smival.value.hNumber.hipart;
-	smival.value.hNumber.lopart = 
-		((Counter64 &)val).smival.value.hNumber.lopart;
-	break;
+        smival.value.hNumber.hipart =
+                ((Counter64 &)val).smival.value.hNumber.hipart;
+        smival.value.hNumber.lopart =
+                ((Counter64 &)val).smival.value.hNumber.lopart;
+        break;
 
       case sNMP_SYNTAX_CNTR32:
       case sNMP_SYNTAX_TIMETICKS:
       case sNMP_SYNTAX_GAUGE32:
-   // case sNMP_SYNTAX_UINT32:		.. indistinguishable from GAUGE32
+   // case sNMP_SYNTAX_UINT32:          .. indistinguishable from GAUGE32
       case sNMP_SYNTAX_INT32:
-	// take advantage of union...
-	smival.value.hNumber.lopart = ((Counter64 &)val).smival.value.uNumber;
-	smival.value.hNumber.hipart = 0;
-	break;
+        // take advantage of union...
+        smival.value.hNumber.lopart = ((Counter64 &)val).smival.value.uNumber;
+        smival.value.hNumber.hipart = 0;
+        break;
     }
   }
   return *this;
@@ -166,7 +166,7 @@ Counter64& Counter64::operator=( const unsigned long long rhs)
    smival.value.hNumber.lopart = (unsigned long) rhs;
    return *this;
 }
- 
+
 // overloaded assignment
 Counter64& Counter64::operator=( const Counter64 &rhs)
 {
@@ -174,27 +174,27 @@ Counter64& Counter64::operator=( const Counter64 &rhs)
    smival.value.hNumber.lopart = rhs.low();
    return *this;
 }
- 
+
 // otherwise, behave like an unsigned long int
 Counter64::operator unsigned long long()
 {
-  unsigned long long val = smival.value.hNumber.hipart; 
+  unsigned long long val = smival.value.hNumber.hipart;
   val = val << 32; // shift right 4 bytes
   val |= smival.value.hNumber.lopart;
-  return val; 
+  return val;
 }
 
 //----------------[ Counter64::clone() ]-----------------------------------
 // create a new instance of this Value
-SnmpSyntax* Counter64::clone() const 
-{ 
-  return ( SnmpSyntax *) new Counter64(*this); 
+SnmpSyntax* Counter64::clone() const
+{
+  return ( SnmpSyntax *) new Counter64(*this);
 }
 
 //----------------[ Counter64::valid() ]-------------------------------------
 int Counter64::valid() const
-{ 
-  return 1; 
+{
+  return 1;
 }
 
 //----------[ return ASCII format ]-------------------------
@@ -203,10 +203,9 @@ int Counter64::valid() const
 char * Counter64::to_string()
 {
   if ( high() != 0 )
-    sprintf(output_buffer, "0x%X%08X", 
-	    (unsigned int)high(), (unsigned int)low());
+    sprintf(output_buffer, "0x%X%08X",
+            (unsigned int)high(), (unsigned int)low());
   else
     sprintf(output_buffer, "%d", (int) low());
   return output_buffer;
 }
-

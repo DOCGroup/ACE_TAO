@@ -13,7 +13,7 @@
 //   transactions over UDP/IP networks
 //
 // = AUTHOR
-//   Michael R MacFaden  mrm@cisco.com - remove v2c, async, rework for ACE 
+//   Michael R MacFaden  mrm@cisco.com - remove v2c, async, rework for ACE
 // ============================================================================
 
 #include "ace/Reactor.h"
@@ -29,10 +29,10 @@ inline void reset_receive_buffer(iovec& io)
   io.iov_len = 0;
 }
 
-transaction::transaction(const Pdu& pdu, const UdpTarget& target, 
-			 ACE_SOCK_Dgram& io):
+transaction::transaction(const Pdu& pdu, const UdpTarget& target,
+                         ACE_SOCK_Dgram& io):
                          result_(0),
-			 wp_(pdu,target), params_(target), session_(io)
+                         wp_(pdu,target), params_(target), session_(io)
 {
   // last step, convert address (get ride of this once we have merged address
   UdpAddress udp;
@@ -54,25 +54,25 @@ transaction::~transaction()
 // implement state machine, send, wait (timeout/results) return
 int transaction::run()
 {
-  int rc, done = FALSE;
+  int rc, done = 0;
   int retry_counter = 0;
   ACE_Time_Value to(params_.get_timeout(), 0); // seconds
   ACE_Reactor reactor;
 
   // 1. register io port for read access
-  if (reactor.register_handler(session_.get_handle(), this, 
-			       ACE_Event_Handler::READ_MASK) == -1)
+  if (reactor.register_handler(session_.get_handle(), this,
+                               ACE_Event_Handler::READ_MASK) == -1)
     return SNMP_CLASS_INTERNAL_ERROR;
 
-  // register a time handler and a socket with this 
-  
+  // register a time handler and a socket with this
+
   while (!done) {
-   
-    if ((rc = send()) < 0)	// send pkt to agent
-	return rc;
+
+    if ((rc = send()) < 0)      // send pkt to agent
+        return rc;
     else {
       if (retry_counter++ > params_.get_retry())
-	return SNMP_CLASS_TIMEOUT;
+        return SNMP_CLASS_TIMEOUT;
     }
 
     // 2. wait for events (timeout, returned msg)
@@ -83,7 +83,7 @@ int transaction::run()
          to.set(params_.get_timeout(), 0);
       }
       else
-	return SNMP_CLASS_INTERNAL_ERROR;
+        return SNMP_CLASS_INTERNAL_ERROR;
     }
    }
   return SNMP_CLASS_INTERNAL_ERROR;
@@ -97,20 +97,20 @@ int transaction::run(transaction_result * r)
 
     // 1. register io port for read access
     ACE_Reactor * reactor = ACE_Reactor::instance();
-    if (reactor->register_handler(session_.get_handle(), 
-				  this, 
-				  READ_MASK) == -1)
-	return SNMP_CLASS_INTERNAL_ERROR;
+    if (reactor->register_handler(session_.get_handle(),
+                                  this,
+                                  READ_MASK) == -1)
+        return SNMP_CLASS_INTERNAL_ERROR;
 
     retry_counter_ = 0;
 
-    // register a time handler and a socket with this 
+    // register a time handler and a socket with this
     ACE_Time_Value to = params_.get_timeout();
     if (reactor->schedule_timer(this, 0, to, to) < 0)
-	return SNMP_CLASS_INTERNAL_ERROR;
+        return SNMP_CLASS_INTERNAL_ERROR;
 
-    if ((rc = send()) < 0)	// send pkt to agent
-	return rc;
+    if ((rc = send()) < 0)      // send pkt to agent
+        return rc;
     return 0;
 }
 
@@ -120,12 +120,12 @@ int transaction::handle_input (ACE_HANDLE)
   // OS allocates iovec_.iov_base ptr and len
   delete [] receive_iovec_.iov_base;
   reset_receive_buffer(receive_iovec_);
-  int rc = session_.recv(&receive_iovec_, receive_addr_, 0); 
+  int rc = session_.recv(&receive_iovec_, receive_addr_, 0);
   if (rc == -1) {
       delete [] receive_iovec_.iov_base;
       reset_receive_buffer(receive_iovec_);
       if (result_)
-	  result_->result(this, SNMP_CLASS_RESOURCE_UNAVAIL);
+          result_->result(this, SNMP_CLASS_RESOURCE_UNAVAIL);
       return SNMP_CLASS_RESOURCE_UNAVAIL;
   }
   if (result_)
@@ -137,14 +137,14 @@ int transaction::handle_input (ACE_HANDLE)
 }
 
 int transaction::handle_timeout(const ACE_Time_Value &,
-				const void *)
+                                const void *)
 {
     int rc;
-    if ((rc = send()) < 0)	// send pkt to agent
-	result_->result(this, 0);
+    if ((rc = send()) < 0)      // send pkt to agent
+        result_->result(this, 0);
     else
-	if (retry_counter_++ > params_.get_retry())
-	    result_->result(this, SNMP_CLASS_TIMEOUT);
+        if (retry_counter_++ > params_.get_retry())
+            result_->result(this, SNMP_CLASS_TIMEOUT);
 
     return 0;
 }
@@ -157,7 +157,7 @@ const ACE_INET_Addr& transaction::get_from_addr() const
 
 
 // return pdu to caller
-int transaction::result(Pdu& pdu, char *comm_str, ACE_INET_Addr *from) 
+int transaction::result(Pdu& pdu, char *comm_str, ACE_INET_Addr *from)
 {
   // TODO: check to see the sender matches the receiver address..
 
@@ -169,7 +169,7 @@ int transaction::result(Pdu& pdu, char *comm_str, ACE_INET_Addr *from)
    return -1;
 
  wpdu tmp(receive_iovec_);
- 
+
  snmp_version ver;
 
  // return comm str and from address of incomming pdu if requested
@@ -177,7 +177,7 @@ int transaction::result(Pdu& pdu, char *comm_str, ACE_INET_Addr *from)
  if (comm_str)
    ACE_OS::strcpy(comm_str, (char *)tmp.get_community());
  if (from)
-  *from = receive_addr_; 
+  *from = receive_addr_;
  return rc;
 }
 
@@ -196,7 +196,7 @@ int transaction::send()
     return -1;
   }
   ssize_t rc = session_.send (io.iov_base, io.iov_len, addr_ , 0);
-  return rc;                
+  return rc;
 }
 
 transaction_result::~transaction_result() {}

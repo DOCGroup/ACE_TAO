@@ -177,7 +177,7 @@ public:
 
 protected:
   int valid_flag;
-  // state of constructed object (TRUE/FALSE)
+  // state of constructed object (1/0)
   unsigned char address_buffer[MAX_ADDR_SZ];
   // addr internal representation
 

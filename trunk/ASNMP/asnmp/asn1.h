@@ -141,7 +141,7 @@ struct snmp_pdu {
 
 // vb list
 struct variable_list {
-    struct variable_list *next_variable;    // NULL for last variable
+    struct variable_list *next_variable;    // 0 for last variable
     oid     *name;                          // Object identifier of variable
     int     name_length;                    // number of subid's in name
     unsigned char   type;                   // ASN type of variable
