@@ -67,7 +67,7 @@ client: $(POA_CLT_OBJS)
 #	-/bin/rm -rf *.o $(BIN) obj.* core Templates.DB .make.state
 
 realclean: clean
-	-/bin/rm -rf FooC.* FooS.*
+	-/bin/rm -rf FooC.* FooS.* FooS_T.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
