@@ -12,6 +12,8 @@ TAO_LB_LoadBalancer::disconnect (TAO_LB_ReplicaProxy *proxy,
 
   (void) this->strategy_->remove (proxy);
 
+  // @@ Deactivate the proxy servant.
+
 #if 0
   if (this->strategy_->remove (proxy) != 0)
     ACE_THROW (LoadBalancing::LoadBalancer::InvalidReplicaProxy ());

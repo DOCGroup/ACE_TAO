@@ -13,6 +13,7 @@ ACE_RCSID(orbsvcs, ReplicaProxy, "$Id$")
 
 TAO_LB_ReplicaProxy::TAO_LB_ReplicaProxy (void)
   : has_high_load_ (0),
+    lock_ (),
     balancer_ (0),
     current_load_ (0),
     connected_ (0)
@@ -28,6 +29,9 @@ TAO_LB_ReplicaProxy::current_load (CORBA::Float load,
   // @@ Ossama: this is the point were the load dampening should
   // happen. Probably strategized....
 
+  // Do not lock here.  Locking is done in the load_changed() method,
+  // below.
+
   this->current_load_ = load;
   // ACE_DEBUG ((LM_DEBUG, "Load[%x] = %f\n", long(this), load));
 
@@ -39,7 +43,9 @@ TAO_LB_ReplicaProxy::disconnect (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::NotConnected,
                    CORBA::SystemException))
 {
-  // @@ Ossama: this code is not thread safe...
+  ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX,
+                     guard,
+                     this->lock_));
 
   if (this->connected_)
     {
@@ -54,18 +60,18 @@ TAO_LB_ReplicaProxy::disconnect (CORBA::Environment &ACE_TRY_ENV)
     }
 }
 
-void TAO_LB_ReplicaProxy::connect (TAO_LB_LoadBalancer *balancer,
-                                   LoadBalancing::ReplicaControl_ptr control,
-                                   CORBA::Object_ptr replica,
-                                   CORBA::Environment &ACE_TRY_ENV)
+void
+TAO_LB_ReplicaProxy::connect (TAO_LB_LoadBalancer *balancer,
+                              LoadBalancing::ReplicaControl_ptr control,
+                              CORBA::Object_ptr replica,
+                              CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::NilControl,
                    LoadBalancing::ReplicaProxy::NilReplica,
                    CORBA::SystemException))
 {
-  // @@ Ossama: this is a perfect example of code that is not thread
-  // safe: what if we get a 'current_load' message in another thread?
-  // Or a disconnect() message from a misbehaving replica? Or two
-  // calls to connect?
+  ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX,
+                     guard,
+                     this->lock_));
 
   if (balancer == 0)
     ACE_THROW (CORBA::BAD_PARAM (

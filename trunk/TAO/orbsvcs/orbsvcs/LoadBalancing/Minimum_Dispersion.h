@@ -23,6 +23,7 @@
 #include "LoadBalancing_Strategy.h"
 #include "orbsvcs/LoadBalancingS.h"
 #include "ace/Containers.h"
+#include "ace/Synch.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #   pragma once
@@ -65,6 +66,10 @@ public:
 private:
   TAO_LB_ReplicaProxySet proxies_;
   // Set containing the ReplicaProxy servants.
+
+  ACE_SYNCH_MUTEX lock_;
+  // Lock used to ensure atomic access to state retained by this
+  // class.
 };
 
 #include "ace/post.h"

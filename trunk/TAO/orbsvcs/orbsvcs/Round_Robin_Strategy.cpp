@@ -11,12 +11,17 @@ ACE_RCSID(orbsvcs, Round_Robin_Strategy, "$Id$")
 
 TAO_LB_Round_Robin_Strategy::TAO_LB_Round_Robin_Strategy (void)
   : proxies_ (),
-    next_replica_ (this->proxies_.begin ())
+    next_replica_ (this->proxies_.begin ()),
+    lock_ ()
 {
 }
 
 TAO_LB_Round_Robin_Strategy::~TAO_LB_Round_Robin_Strategy (void)
 {
+  ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX,
+                     guard,
+                     this->lock_));
+
   // @@ Are the objects deactivated from the POA?  And shouldn't this
   // be done by the LoadBalancing strategy *before* the destructor is
   // invoked?
@@ -37,7 +42,11 @@ CORBA::Object_ptr
 TAO_LB_Round_Robin_Strategy::replica (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ Ossama: more code that is not thread safe
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                    guard,
+                    this->lock_,
+                    CORBA::Object::_nil ());
+
   if (this->proxies_.is_empty ())
     {
       // @@ What do we do if the set is empty?
@@ -77,7 +86,11 @@ TAO_LB_Round_Robin_Strategy::replica (CORBA::Environment &ACE_TRY_ENV)
 int
 TAO_LB_Round_Robin_Strategy::insert (TAO_LB_ReplicaProxy *proxy)
 {
-  // @@ Ossama: more code that is not thread safe
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                            guard,
+                            this->lock_,
+                            -1));
+
   int r = this->proxies_.insert (proxy);
   this->next_replica_ = this->proxies_.begin ();
   return r;
@@ -86,7 +99,11 @@ TAO_LB_Round_Robin_Strategy::insert (TAO_LB_ReplicaProxy *proxy)
 int
 TAO_LB_Round_Robin_Strategy::remove (TAO_LB_ReplicaProxy *proxy)
 {
-  // @@ Ossama: more code that is not thread safe
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                            guard,
+                            this->lock_,
+                            -1));
+
   int r = this->proxies_.remove (proxy);
   this->next_replica_ = this->proxies_.begin ();
   return r;
