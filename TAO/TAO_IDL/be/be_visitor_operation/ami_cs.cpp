@@ -20,8 +20,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_operation, 
-           operation_ami_cs, 
+ACE_RCSID (be_visitor_operation,
+           operation_ami_cs,
            "$Id$")
 
 // ************************************************************
@@ -271,18 +271,13 @@ be_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node,
 
   os->indent ();
 
-  // Create the GIOP_Invocation and grab the outgoing CDR stream.
-  switch (node->flags ())
-    {
-    case AST_Operation::OP_oneway:
-      // If it is a oneway, we wouldnt have come here to generate AMI
-      // sendc method.
-      break;
-    default:
-      *os << "TAO_GIOP_Twoway_Asynch_Invocation _tao_call ";
-    }
+  // Check the flags just once, and assert, getting in this state
+  // indicates a severe bug in the IDL compiler.
+  if(node->flags () == AST_Operation::OP_oneway)
+    ACE_ASSERT(!"Cannot generate AMI calls for oneways");
 
-  *os << "(" << be_idt << be_idt_nl
+  *os << "TAO_GIOP_Twoway_Asynch_Invocation _tao_call("
+      << be_idt << be_idt_nl
       << "istub," << be_nl;
   *os << "\"";
 
@@ -350,38 +345,77 @@ be_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node,
   }
 
 
-
   // Next argument is the ami handler passed in for this method.
   *os << "ami_handler" << be_uidt_nl
-
       << ");" << be_uidt_nl;
 
-  *os << "\n" << be_nl
-      << "for (;;)" << be_nl
+  *os << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << "\n" << be_nl;
+
+  *os << "int _invoke_status;\n"
+      << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl
+      << "TAO_ClientRequestInterceptor_Adapter _tao_vfr ("
+      << be_idt << be_idt_nl
+      << "istub->orb_core ()->client_request_interceptors ()," << be_nl
+      << "&_tao_call," << be_nl
+      << "_invoke_status"
+      << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "\n#endif  /* TAO_HAS_INTERCEPTORS */\n" << be_nl;
+
+  *os << "for (;;)" << be_nl
       << "{" << be_idt_nl;
 
+  *os << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl
+      << "TAO_AMI_ClientRequestInfo_i _tao_ri (" << be_idt << be_idt_nl
+      << "&_tao_call," << be_nl
+      << "this" << be_uidt_nl
+      << ");" << be_uidt_nl;
+  *os << "\n#endif /* TAO_HAS_INTERCEPTORS */\n" << be_nl;
+
+  *os << "CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;\n";
+
+  *os << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl
+      << "_tao_ri.response_expected(0);" << be_nl
+      << "ACE_TRY" << be_idt_nl
+      << "{" << be_idt_nl
+      << "_tao_vfr.send_request (" << be_idt << be_idt_nl
+      << "&_tao_ri" << be_nl
+      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "ACE_TRY_CHECK;\n" << be_nl
+      << "if (_invoke_status == TAO_INVOKE_RESTART)" << be_nl
+      << "{" << be_idt_nl
+      << "_tao_call.restart_flag (1);" << be_nl
+      << "continue;" << be_uidt_nl
+      << "}\n"
+      << "#endif /* TAO_HAS_INTERCEPTORS */\n" << be_nl;
+
   *os << "_tao_call.start (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_nl;
-  // Check if there is an exception.
-  // Return type is void, so we know what to generate here.
-  *os << "ACE_CHECK;" << be_nl;
 
-  // Prepare the request header
-  os->indent ();
-  *os << "CORBA::Short _tao_response_flag = ";
-
-  switch (node->flags ())
+  if (this->gen_check_interceptor_exception (bt) == -1)
     {
-    case AST_Operation::OP_oneway:
-      *os << "_tao_call.sync_scope ();";
-      break;
-    default:
-      *os << "TAO_TWOWAY_RESPONSE_FLAG;" << be_nl;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_ami_cs::"
+                         "gen_marshal_and_invoke - "
+                         "codegen for checking exception failed\n"),
+                        -1);
     }
 
   *os << be_nl
       << "_tao_call.prepare_header (" << be_idt << be_idt_nl
-      << "ACE_static_cast (CORBA::Octet, _tao_response_flag) ACE_ENV_ARG_PARAMETER"
-      << be_uidt_nl << ");" << be_uidt << "\n";
+      << "ACE_static_cast (CORBA::Octet, _tao_response_flag)" << be_nl
+      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl << ");"
+      << be_uidt_nl;
+
+  if (this->gen_check_interceptor_exception (bt) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_ami_cs::"
+                         "gen_marshal_and_invoke - "
+                         "codegen for checking exception failed\n"),
+                        -1);
+    }
 
   // Now make sure that we have some in and inout
   // parameters. Otherwise, there is nothing to be marshaled in.
@@ -390,7 +424,7 @@ be_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node,
     {
       *os << be_nl
           << "TAO_OutputCDR &_tao_out = _tao_call.out_stream ();"
-          << be_nl << be_nl 
+          << be_nl << be_nl
           << "if (!(" << be_idt << be_idt_nl;
 
       // Marshal each in and inout argument.
@@ -415,9 +449,8 @@ be_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node,
           << "))" << be_nl;
 
       // If marshaling fails, raise exception.
-      int status = this->gen_raise_exception (bt, 
-                                              "CORBA::MARSHAL",
-                                              "");
+      int status = this->gen_raise_interceptor_exception (
+          bt, "CORBA::MARSHAL", "");
 
       if (status == -1)
         {
@@ -432,13 +465,12 @@ be_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node,
     }
 
   *os << be_nl << be_nl
-      << "int _invoke_status =" << be_idt_nl
-      << "_tao_call.invoke (ACE_ENV_SINGLE_ARG_PARAMETER);";
-
-  *os << be_uidt_nl;
+      << "_invoke_status =" << be_idt_nl
+      << "_tao_call.invoke (ACE_ENV_SINGLE_ARG_PARAMETER);"
+      << be_uidt_nl;
 
   // Check if there is an exception.
-  if (this->gen_check_exception (bt) == -1)
+  if (this->gen_check_interceptor_exception (bt) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_ami_cs::"
@@ -448,18 +480,28 @@ be_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node,
     }
 
   *os << be_nl
-      << "if (_invoke_status == TAO_INVOKE_RESTART)" << be_idt_nl
-      << "{" << be_nl
-      << "  _tao_call.restart_flag (1);" << be_nl
-      << "  continue;" <<be_nl
-      << "}"<< be_uidt_nl << be_nl
-      << "if (_invoke_status != TAO_INVOKE_OK)" << be_idt_nl
+      << "if (_invoke_status == TAO_INVOKE_RESTART)" << be_nl
+      << "{" << be_idt
+      << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl
+      << "_tao_ri.reply_status (_invoke_status);" << be_nl
+      << "_tao_vfr.receive_other (" << be_idt << be_idt_nl
+      << "&_tao_ri" << be_nl
+      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "ACE_TRY_CHECK;"
+      << "\n#else" << be_nl
+      << "_tao_call.restart_flag (1);"
+      << "\n#endif  /* TAO_HAS_INTERCEPTORS */" << be_nl
+      << "continue;" << be_uidt_nl
+      << "}"<< be_nl
+      << "else if (_invoke_status != TAO_INVOKE_OK)" << be_nl
       << "{" << be_idt_nl;
 
-  int status = 
-    this->gen_raise_exception (bt,
-                               "CORBA::UNKNOWN",
-                               "TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES");
+  int status =
+    this->gen_raise_interceptor_exception (
+      bt,
+      "CORBA::UNKNOWN",
+      "TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES");
 
   if (status == -1)
     {
@@ -471,9 +513,93 @@ be_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node,
     }
 
   *os << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "break;" << be_uidt_nl 
-      << "}" << be_nl;
+      << "}\n";
+
+  *os << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl
+      << "_tao_ri.reply_status (_invoke_status);" << be_nl
+      << "_tao_vfr.receive_other (" << be_idt_nl
+      << "&_tao_ri" << be_nl
+      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+      << ");" << be_nl
+      << "ACE_TRY_CHECK;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "ACE_CATCHANY" << be_idt_nl
+      << "{" << be_idt_nl
+      << "_tao_ri.exception(&ACE_ANY_EXCEPTION);" << be_nl
+      << "_tao_vfr.receive_exception(" << be_idt << be_idt_nl
+      << "&_tao_ri" << be_nl
+      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_nl;
+  // The receive_exception() interception point may have thrown a
+  // PortableInterceptor::ForwardRequest exception.  In that event,
+  // the connection retry loop must be restarted so do not rethrow the
+  // caught exception.
+  *os << be_nl
+      << "PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
+      << "_tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_nl;
+
+  *os << be_nl
+      << "if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION" << be_nl
+      << "    || _tao_status == PortableInterceptor::USER_EXCEPTION)"
+      << be_idt_nl
+      << "{" << be_idt_nl;
+
+  if (be_global->use_raw_throw ())
+    {
+      *os << "throw;";
+    }
+  else
+    {
+      *os << "ACE_RE_THROW;";
+    }
+
+  *os << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl;
+
+  *os << "}" << be_uidt_nl
+      << "ACE_ENDTRY;" << be_nl;
+
+  if (this->gen_check_exception (bt) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_cs::"
+                         "gen_marshal_and_invoke - "
+                         "codegen for checking exception failed\n"),
+                        -1);
+    }
+  // The receive_exception() or receive_other() interception point may
+  // have thrown a PortableInterceptor::ForwardRequest exception.  In
+  // that event, the connection retry loop must be restarted.  Note
+  // that the _invoke_status variable is not set by the interceptor
+  // support code, so we must explicitly check the status in the
+  // ClientRequestInfo object.
+  *os << be_nl
+      << "PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
+      << "_tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl;
+
+  if (this->gen_check_exception (bt) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_cs::"
+                         "gen_marshal_and_invoke - "
+                         "codegen for checking exception failed\n"),
+                        -1);
+    }
+
+  *os << be_nl
+      << "if (_tao_status == PortableInterceptor::LOCATION_FORWARD" << be_nl
+      << "    || _tao_status == PortableInterceptor::TRANSPORT_RETRY)"
+      << be_idt_nl
+      << "{" << be_idt_nl
+      << "continue;" << be_uidt_nl
+      << "}" << be_uidt_nl;
+
+  *os << "\n#endif  /* TAO_HAS_INTERCEPTORS */\n" << be_nl;
+
+  *os << "break;" << be_uidt_nl
+      << "}\n" << be_nl;
 
   // Return type is void and we are going to worry about OUT or INOUT
   // parameters. Return from here.

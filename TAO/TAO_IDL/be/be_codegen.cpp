@@ -25,8 +25,8 @@
 #include "utl_string.h"
 #include "idl_defines.h"
 
-ACE_RCSID (be, 
-           be_codegen, 
+ACE_RCSID (be,
+           be_codegen,
            "$Id$")
 
 TAO_IDL_BE_Export TAO_CodeGen *tao_cg = 0;
@@ -148,7 +148,7 @@ TAO_CodeGen::start_client_header (const char *fname)
   else
     {
       *this->client_header_ << be_nl << "// TAO_IDL - Generated from" << be_nl
-                            << "// " << __FILE__ << ":" << __LINE__ 
+                            << "// " << __FILE__ << ":" << __LINE__
                             << be_nl << be_nl;
 
       // Generate the #ident string, if any.
@@ -192,10 +192,6 @@ TAO_CodeGen::start_client_header (const char *fname)
           // Include Messaging skeleton file.
           this->gen_standard_include (this->client_header_,
                                       "tao/Messaging/Messaging.h");
-
-          // Including Asynch Invocation file.
-          this->gen_standard_include (this->client_header_,
-                                      "tao/Messaging/Twoway_Asynch_Invocation.h");
         }
 
       // Include the smart proxy base class if smart proxies are enabled.
@@ -315,7 +311,7 @@ TAO_CodeGen::start_client_stubs (const char *fname)
     }
 
   *this->client_stubs_ << be_nl << "// TAO_IDL - Generated from" << be_nl
-                       << "// " << __FILE__ << ":" << __LINE__ 
+                       << "// " << __FILE__ << ":" << __LINE__
                        << be_nl << be_nl;
 
   // Generate the ident string, if any.
@@ -350,7 +346,18 @@ TAO_CodeGen::start_client_stubs (const char *fname)
                               "tao/ClientRequestInfo_i.h");
   this->gen_standard_include (this->client_stubs_,
                               "tao/ClientInterceptorAdapter.h");
-  *this->client_stubs_ << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */";
+  *this->client_stubs_ << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n\n";
+
+  if (be_global->ami_call_back () == I_TRUE)
+    {
+      // Including Asynch Invocation file.
+      this->gen_standard_include (this->client_stubs_,
+                                  "tao/Messaging/Twoway_Asynch_Invocation.h");
+      *this->client_stubs_ << "\n#if TAO_HAS_INTERCEPTORS == 1\n";
+      this->gen_standard_include (this->client_stubs_,
+                                  "tao/Messaging/AMI_ClientRequestInfo_i.h");
+      *this->client_stubs_ << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n\n";
+    }
 
   *this->client_stubs_ << "\n\n#if defined (__BORLANDC__)\n"
                        << "#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig\n"
@@ -433,7 +440,7 @@ TAO_CodeGen::start_server_header (const char *fname)
   else
     {
       *this->server_header_ << be_nl << "// TAO_IDL - Generated from" << be_nl
-                            << "// " << __FILE__ << ":" << __LINE__ 
+                            << "// " << __FILE__ << ":" << __LINE__
                             << be_nl << be_nl;
 
       // Generate the ident string, if any.
@@ -458,8 +465,6 @@ TAO_CodeGen::start_server_header (const char *fname)
           // Include Messaging skeleton file.
           this->gen_standard_include (this->server_header_,
                                       "tao/Messaging/MessagingS.h");
-          this->gen_standard_include (this->server_header_,
-                                      "tao/Messaging/Twoway_Asynch_Invocation.h");
         }
 
       // We must include all the skeleton headers corresponding to
@@ -594,9 +599,9 @@ TAO_CodeGen::start_server_template_header (const char *fname)
     }
   else
     {
-      *this->server_template_header_ << be_nl << "// TAO_IDL - Generated from" 
-                                     << be_nl 
-                                     << "// " << __FILE__ << ":" << __LINE__ 
+      *this->server_template_header_ << be_nl << "// TAO_IDL - Generated from"
+                                     << be_nl
+                                     << "// " << __FILE__ << ":" << __LINE__
                                      << be_nl << be_nl;
 
       // Generate the ident string, if any.
@@ -662,7 +667,7 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
     }
 
   *this->server_skeletons_ << be_nl << be_nl << "// TAO_IDL - Generated from "
-                           << be_nl << "// " << __FILE__ << ":" << __LINE__ 
+                           << be_nl << "// " << __FILE__ << ":" << __LINE__
                            << be_nl << be_nl;
 
   // Generate the ident string, if any.
@@ -768,8 +773,8 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
   else
     {
       *this->server_template_skeletons_ << be_nl << "// TAO_IDL - Generated from "
-                                        << be_nl << "// " 
-                                        << __FILE__ << ":" << __LINE__ 
+                                        << be_nl << "// "
+                                        << __FILE__ << ":" << __LINE__
                                         << be_nl << be_nl;
 
       // Generate the ident string, if any.
@@ -906,8 +911,8 @@ TAO_CodeGen::start_implementation_header (const char *fname)
   else
     {
       *this->implementation_header_ << be_nl << "// TAO_IDL - Generated from "
-                                    << be_nl << "// " 
-                                    << __FILE__ << ":" << __LINE__ 
+                                    << be_nl << "// "
+                                    << __FILE__ << ":" << __LINE__
                                     << be_nl << be_nl;
 
       // Generate the ident string, if any.
@@ -969,8 +974,8 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
   else
     {
       *this->implementation_skeleton_ << be_nl << "// TAO_IDL - Generated from "
-                                      << be_nl << "// " 
-                                      << __FILE__ << ":" << __LINE__ 
+                                      << be_nl << "// "
+                                      << __FILE__ << ":" << __LINE__
                                       << be_nl << be_nl;
 
       // Generate the ident string, if any.
@@ -1000,7 +1005,7 @@ TAO_CodeGen::end_client_header (void)
 {
   // Generate the <<= and >>= operators here.
 
-  *this->client_header_ << be_nl << be_nl << "// TAO_IDL - Generated from" 
+  *this->client_header_ << be_nl << be_nl << "// TAO_IDL - Generated from"
                         << be_nl << "// " << __FILE__ << ":" << __LINE__;
 
   // Insert the code to include the inline file.
@@ -1036,7 +1041,7 @@ int
 TAO_CodeGen::end_server_header (void)
 {
   *this->server_header_ << be_nl << be_nl << "// TAO_IDL - Generated from "
-                        << be_nl << "// " << __FILE__ << ":" << __LINE__ 
+                        << be_nl << "// " << __FILE__ << ":" << __LINE__
                         << be_nl << be_nl;
 
   // Insert the template header.
@@ -1132,7 +1137,7 @@ int
 TAO_CodeGen::end_server_template_header (void)
 {
   *this->server_template_header_ << be_nl << be_nl << "// TAO_IDL - Generated from "
-                                 << be_nl << "// " 
+                                 << be_nl << "// "
                                  << __FILE__ << ":" << __LINE__;
 
   // Insert the code to include the inline file.
@@ -1183,7 +1188,7 @@ int
 TAO_CodeGen::end_server_template_inline (void)
 {
   *this->server_template_inline_ << "\n\n";
-   
+
   return 0;
 }
 
@@ -1353,4 +1358,3 @@ TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
           << included_file
           << end_delimiter;
 }
-
