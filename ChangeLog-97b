@@ -64,6 +64,8 @@ Mon Oct 20 07:49:54 1997  David L. Levine  <levine@cs.wustl.edu>
 	  create Templates.DB/Modules.DB, because that should have been
 	  Module.DB, and it's not needed anyways.
 
+	* ace/config-vxworks-ghs-1.8.h: removed ACE_HAS_VERBOSE_NOTSUP.
+
 Mon Oct 20 06:21:24 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.h: Added a new special case for _KCC so that its
