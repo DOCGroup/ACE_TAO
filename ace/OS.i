@@ -7679,31 +7679,35 @@ ACE_OS::shm_open (const char *filename,
 ACE_INLINE void
 ACE_OS::tzset (void)
 {
-# if defined (ACE_WIN32)
+# if !defined (ACE_HAS_WINCE) && !defined (VXWORKS)
+#   if defined (ACE_WIN32)
   ::_tzset ();  // For Win32.
-# elif defined (VXWORKS)
-  errno = ENOTSUP;
-# else
+#   else
   ::tzset ();   // For UNIX platforms.
-# endif
+#   endif /* ACE_WIN32 */
+# else
+  errno = ENOTSUP;
+# endif /* !ACE_HAS_WINCE && !VXWORKS */
 }
 
 ACE_INLINE long
 ACE_OS::timezone (void)
 {
-#if defined (ACE_WIN32)
+# if !defined (ACE_HAS_WINCE) && !defined (VXWORKS)
+#   if defined (ACE_WIN32)
   return ::_timezone;  // For Win32.
-# elif defined(__Lynx__)
+#   elif defined(__Lynx__)
   long result = 0;
   struct timeval time;
   struct timezone zone;
   ACE_OSCALL (::gettimeofday (&time, &zone), int, -1, result);
   return zone.tz_minuteswest * 60;
-# elif defined (VXWORKS)
-  ACE_NOTSUP_RETURN (-1);
-# else
+#   else
   return ::timezone;   // For UNIX platforms.
-#endif
+#   endif
+# else
+  ACE_NOTSUP_RETURN (-1);
+# endif /* !ACE_HAS_WINCE && !VXWORKS */
 }
 
 #if !defined (ACE_LACKS_DIFFTIME)
