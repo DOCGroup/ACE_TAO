@@ -1,3 +1,13 @@
+Tue Jul 11 13:39:35 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_union.cpp:
+
+	  Modified compute_default_index(). It was based on the
+	  label count, but TAO's class Typecode bases its index on
+	  a member count, not a label count, so unions with
+	  multiple case labels were getting typecodes generated
+	  with the default index set incorrectly.
+
 Tue Jul 11 13:18:42 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Trader_T.h:
