@@ -1,3 +1,23 @@
+Fri Jan 23 11:43:25 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Fixed_Array_Argument_T.cpp:
+        * tao/Fixed_Array_Argument_T.h:
+        * tao/Fixed_Array_Argument_T.inl:
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/Var_Array_Argument_T.h:
+        * tao/Var_Array_Argument_T.inl:
+        
+          Added the tag template parameter introduced in
+          
+          Thu Jan 22 16:14:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+		  to the necessary class signatures.
+		  
+		* TAO_IDL/be/be_visitor_arg_traits (visit_array):
+		
+		  Added code generation for the tag template parameter corresponding
+		  to the changes listed above.
+
 Thu Jan 22 19:37:21 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/IFR_Service.mpc:

@@ -368,7 +368,16 @@ be_visitor_arg_traits::visit_array (be_array *node)
       *os << node->name () << "_out," << be_nl;
     }
 
-  *os << node->name () << "_forany" << be_uidt_nl
+  *os << node->name () << "_forany";
+  
+  // The SArgument classes don't need the TAG parameter,
+  if (ACE_OS::strlen (this->S_) == 0)
+    {
+      *os << "," << be_nl
+          << node->name () << "_tag";
+    }
+    
+  *os << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
