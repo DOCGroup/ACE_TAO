@@ -46,7 +46,6 @@
 #include "ace/Strategies_T.h"
 #include "ace/Singleton.h"
 #include "ace/File_Lock.h"
-#include "ace/Synch.h"
 
 // Counting_Service and Options in here
 #include "Process_Strategy_Test.h"
