@@ -280,8 +280,14 @@ oneway		return IDL_ONEWAY;
 (\"([^\\\"]*|\\[ntvbrfax\\\?\'\"])*\"[ \t]*)+	{
 		  /* Skip the quotes */
 		  char *tmp = ace_yytext;
-		  tmp[strlen(tmp)-1] = '\0';
-		  yylval.sval = new UTL_String(tmp + 1);
+#if defined (__SUNPRO_CC)
+		  tmp[strlen (tmp) - 2] = '\0';
+#else
+		  tmp[strlen (tmp) - 1] = '\0';
+#endif
+		  ACE_NEW_RETURN (yylval.sval,
+                                  UTL_String (tmp + 1),
+                                  IDL_STRING_LITERAL);
 		  return IDL_STRING_LITERAL;
 	      	}
 L\"([^\\\"]*|\\u([0-9a-fA-F]{1,4}))*\"	{

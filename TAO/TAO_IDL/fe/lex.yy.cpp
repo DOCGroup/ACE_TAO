@@ -790,7 +790,7 @@ static char *tao_yy_last_accepting_cpos;
 char tao_yytext[TAO_YYLMAX];
 char *tao_yytext_ptr;
 #define INITIAL 0
-/*  $Id: idl.ll,v 1.60.4.5 2002/06/28 14:06:18 parsons Exp $
+/*  $Id: idl.ll,v 1.67 2002/07/01 13:49:22 parsons Exp $
 
 COPYRIGHT
 
@@ -1523,8 +1523,14 @@ TAO_YY_RULE_SETUP
 {
 		  /* Skip the quotes */
 		  char *tmp = ace_tao_yytext;
-		  tmp[strlen(tmp)-1] = '\0';
-		  tao_yylval.sval = new UTL_String(tmp + 1);
+#if defined (__SUNPRO_CC)
+		  tmp[strlen (tmp) - 2] = '\0';
+#else
+		  tmp[strlen (tmp) - 1] = '\0';
+#endif
+		  ACE_NEW_RETURN (tao_yylval.sval,
+                                  UTL_String (tmp + 1),
+                                  IDL_STRING_LITERAL);
 		  return IDL_STRING_LITERAL;
 	      	}
 	TAO_YY_BREAK
