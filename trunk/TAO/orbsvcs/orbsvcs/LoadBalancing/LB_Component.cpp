@@ -1,4 +1,5 @@
 #include "LB_Component.h"
+#include "LB_ORBInitializer.h"
 
 
 ACE_RCSID (LoadBalancing,
@@ -40,8 +41,8 @@ TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
 
           ++i;  // 1
 
-          object_group.length (len);
-          object_group[j] = CORBA::string_dup (argv[i]);
+          object_groups.length (len);
+          object_groups[j] = CORBA::string_dup (argv[i]);
 
           ++i;  // 2
 
@@ -70,8 +71,8 @@ TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
 
           ++i;  // 3
 
-          object_group.length (len);
-          object_group[j] = CORBA::string_dup (argv[i]);
+          object_groups.length (len);
+          object_groups[j] = CORBA::string_dup (argv[i]);
         }
       else if (ACE_OS::strcasecmp (argv[i], "-LBLocation") == 0)
         {
@@ -101,7 +102,7 @@ TAO_LB_Component::register_orb_initializer (
   ACE_TRY
     {
       // Register the LB_Component ORB initializer.
-      // PortableInterceptor::ORBInitializer_ptr tmp;
+      PortableInterceptor::ORBInitializer_ptr tmp;
       ACE_NEW_THROW_EX (tmp,
                         TAO_LB_ORBInitializer (object_groups,
                                                repository_ids,
@@ -113,8 +114,7 @@ TAO_LB_Component::register_orb_initializer (
                           CORBA::COMPLETED_NO));
       ACE_TRY_CHECK;
 
-      //PortableInterceptor::ORBInitializer_var initializer = tmp;
-      initializer = tmp;
+      PortableInterceptor::ORBInitializer_var initializer = tmp;
 
       PortableInterceptor::register_orb_initializer (initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);

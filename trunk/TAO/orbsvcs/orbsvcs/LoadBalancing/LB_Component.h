@@ -43,6 +43,13 @@ public:
   /// Terminates object when dynamic unlinking occurs.
   virtual int fini (void);
 
+protected:
+
+  /// Register the LB_Component's ORBInitializer.
+  int register_orb_initializer (const CORBA::StringSeq & object_groups,
+                                const CORBA::StringSeq & repository_ids,
+                                const char * location);
+
 };
 
 

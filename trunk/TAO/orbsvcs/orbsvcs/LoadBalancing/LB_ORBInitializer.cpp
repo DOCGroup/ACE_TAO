@@ -1,7 +1,8 @@
 #include "LB_ORBInitializer.h"
-#include "LB_LoadManager.h"
+#include "LB_IORInterceptor.h"
+#include "LB_ServerRequestInterceptor.h"
 
-#include "tao/debug.h"
+#include "orbsvcs/CosLoadBalancingC.h"
 
 
 ACE_RCSID (LoadBalancing,
@@ -15,7 +16,8 @@ TAO_LB_ORBInitializer::TAO_LB_ORBInitializer (
   const char * location)
   : object_groups_ (object_groups),
     repository_ids_ (repository_ids),
-    location_ (location)
+    location_ (location),
+    load_alert_ ()
 {
 }
 
@@ -47,12 +49,13 @@ TAO_LB_ORBInitializer::post_init (
   ACE_CHECK;
 
   PortableInterceptor::IORInterceptor_ptr tmp;
-  ACE_NEW_THROW_EX (foo,
+  ACE_NEW_THROW_EX (tmp,
                     TAO_LB_IORInterceptor (this->object_groups_,
                                            this->repository_ids_,
-                                           this->location_,
+                                           this->location_.in (),
                                            lm.in (),
-                                           orb_id.in ()),
+                                           orbid.in (),
+                                           this->load_alert_),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
@@ -66,4 +69,21 @@ TAO_LB_ORBInitializer::post_init (
                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
+  // ----------------
+
+  PortableInterceptor::ServerRequestInterceptor_ptr sri;
+  ACE_NEW_THROW_EX (sri,
+                    TAO_LB_ServerRequestInterceptor (this->load_alert_),
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK;
+
+  PortableInterceptor::ServerRequestInterceptor_var sr_interceptor = sri;
+
+  info->add_server_request_interceptor (sr_interceptor.in ()
+                                        ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }

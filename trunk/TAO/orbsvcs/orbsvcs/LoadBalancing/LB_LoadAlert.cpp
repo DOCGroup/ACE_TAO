@@ -14,9 +14,9 @@ TAO_LB_LoadAlert::TAO_LB_LoadAlert (void)
 {
 }
 
-TAO_LB_LoadAlert::~TAO_LB_LoadAlert (void)
-{
-}
+// TAO_LB_LoadAlert::~TAO_LB_LoadAlert (void)
+// {
+// }
 
 void
 TAO_LB_LoadAlert::enable_alert (CORBA::Object_ptr /* object_group */

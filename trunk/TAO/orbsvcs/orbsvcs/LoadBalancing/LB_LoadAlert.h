@@ -26,8 +26,7 @@
 
 
 class TAO_LoadBalancing_Export TAO_LB_LoadAlert
-  : public virtual POA_CosLoadBalancing::LoadAlert,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_CosLoadBalancing::LoadAlert
 {
 public:
 
@@ -59,12 +58,13 @@ public:
 
 protected:
 
+
   /// Destructor.
   /**
    * Protected destructor to enforce correct memory management via
    * reference counting.
    */
-  ~TAO_LB_LoadAlert (void);
+  //~TAO_LB_LoadAlert (void);
 
 private:
 
