@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file RequestProcessingStrategy.h
+ *  @file Request_Processing_Strategy.h
  *
  *  $Id$
  *
@@ -10,14 +10,14 @@
  */
 //=============================================================================
 
-#ifndef TAO_REQUEST_PROCESSING_STRATEGY_H
-#define TAO_REQUEST_PROCESSING_STRATEGY_H
+#ifndef TAO_REQUESTPROCESSINGSTRATEGYSERVANTLOCATOR_H
+#define TAO_REQUESTPROCESSINGSTRATEGYSERVANTLOCATOR_H
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
 #include "PolicyFactory.h"
 #include "Active_Object_Map.h"
-#include "Policy_Strategy.h"
+#include "RequestProcessingStrategyServantManager.h"
 #include "ace/Service_Config.h"
 
 #include "Servant_Location.h"
@@ -71,45 +71,28 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export RequestProcessingStrategy :
-       public virtual Policy_Strategy
+    class TAO_PortableServer_Export Servant_Locator_Request_Processing_Strategy :
+       public virtual Servant_Manager_Request_Processing_Strategy
     {
     public:
-      virtual ~RequestProcessingStrategy (void);
+      virtual ~Servant_Locator_Request_Processing_Strategy (void);
 
-      virtual void strategy_init(TAO_POA *poa);
-
-      virtual
       PortableServer::ServantManager_ptr
       get_servant_manager (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy)) = 0;
+                         PortableServer::POA::WrongPolicy));
 
-      virtual
       void
       set_servant_manager (PortableServer::ServantManager_ptr imgr
                            ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy)) = 0;
-
-      virtual
-      PortableServer::Servant
-      get_servant (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy)) = 0;
-
-      virtual
-      void
-      set_servant (PortableServer::Servant servant
-                   ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy)) = 0;
+                         PortableServer::POA::WrongPolicy));
 
       virtual
       TAO_SERVANT_LOCATION
       locate_servant (const PortableServer::ObjectId &system_id,
-                      PortableServer::Servant &servant
-                      ACE_ENV_ARG_DECL) = 0;
+                        PortableServer::Servant &servant
+                        ACE_ENV_ARG_DECL);
 
       virtual
       PortableServer::Servant
@@ -118,10 +101,10 @@ namespace TAO
                         TAO::Portable_Server::Servant_Upcall &servant_upcall,
                         TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
                         int &wait_occurred_restart_call
-                        ACE_ENV_ARG_DECL) = 0;
+                        ACE_ENV_ARG_DECL);
 
-    protected:
-      TAO_POA* poa_;
+    private:
+      PortableServer::ServantLocator_var servant_locator_;
     };
   }
 }
@@ -129,4 +112,4 @@ namespace TAO
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #include /**/ "ace/post.h"
-#endif /* TAO_REQUEST_PROCESSING_STRATEGY_H */
+#endif /* TAO_REQUESTPROCESSINGSTRATEGYSERVANTLOCATOR_H */

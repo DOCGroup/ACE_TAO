@@ -38,6 +38,10 @@ namespace TAO
       /// Create a new servant retention strategy
       virtual RequestProcessingStrategy* create (
         ::PortableServer::RequestProcessingPolicyValue value);
+
+      virtual RequestProcessingStrategy* create (
+        ::PortableServer::RequestProcessingPolicyValue value,
+        ::PortableServer::ServantRetentionPolicyValue srvalue);
     };
 
     ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, RequestProcessingStrategyFactoryImpl)

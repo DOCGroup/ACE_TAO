@@ -30,7 +30,7 @@ namespace TAO
   {
     class Cached_Policies;
     class ThreadStrategy;
-    class Request_Processing_Strategy;
+    class RequestProcessingStrategy;
     class IdAssignmentStrategy;
     class LifespanStrategy;
     class IdUniquenessStrategy;
@@ -51,7 +51,7 @@ namespace TAO
 
       ThreadStrategy *thread_strategy (void) const;
 
-      Request_Processing_Strategy *request_processing_strategy (void) const;
+      RequestProcessingStrategy *request_processing_strategy (void) const;
 
       IdAssignmentStrategy *id_assignment_strategy (void) const;
 
@@ -65,7 +65,7 @@ namespace TAO
 
     private:
       ThreadStrategy *thread_strategy_;
-      Request_Processing_Strategy *request_processing_strategy_;
+      RequestProcessingStrategy *request_processing_strategy_;
       IdAssignmentStrategy *id_assignment_strategy_;
       LifespanStrategy *lifespan_strategy_;
       IdUniquenessStrategy *id_uniqueness_strategy_;

@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    RequestProcessingStrategy.cpp
+ *  @file    Request_Processing_Strategy.cpp
  *
  *  $Id$
  *
@@ -16,7 +16,7 @@
 #include "tao/PortableServer/ServantActivatorC.h"
 #include "tao/PortableServer/ServantLocatorC.h"
 
-#include "tao/PortableServer/RequestProcessingStrategy.h"
+#include "tao/PortableServer/RequestProcessingStrategyServantManager.h"
 #include "tao/PortableServer/ServantRetentionStrategy.h"
 #include "tao/PortableServer/LifespanStrategy.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
@@ -34,16 +34,30 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    RequestProcessingStrategy::~RequestProcessingStrategy()
+    Servant_Manager_Request_Processing_Strategy::~Servant_Manager_Request_Processing_Strategy (void)
     {
     }
 
-    void
-    RequestProcessingStrategy::strategy_init(TAO_POA *poa)
+    PortableServer::Servant
+    Servant_Manager_Request_Processing_Strategy::get_servant (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableServer::POA::WrongPolicy))
     {
-      poa_ = poa;
-      // dependent on type create the correct strategy.
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        0);
     }
+
+    void
+    Servant_Manager_Request_Processing_Strategy::set_servant (PortableServer::Servant servant
+                 ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableServer::POA::WrongPolicy))
+    {
+      ACE_UNUSED_ARG (servant);
+
+      ACE_THROW (PortableServer::POA::WrongPolicy ());
+    }
+
   }
 }
 

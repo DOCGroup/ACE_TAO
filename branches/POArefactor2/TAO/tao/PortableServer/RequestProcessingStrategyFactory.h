@@ -22,6 +22,7 @@
 
 #include "tao/PortableServer/StrategyFactory.h"
 #include "tao/PortableServer/RequestProcessingPolicyC.h"
+#include "tao/PortableServer/ServantRetentionPolicyC.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -38,6 +39,11 @@ namespace TAO
       /// Create a new servant retention strategy
       virtual RequestProcessingStrategy* create (
         ::PortableServer::RequestProcessingPolicyValue value) = 0;
+
+      /// Create a new servant retention strategy
+      virtual RequestProcessingStrategy* create (
+        ::PortableServer::RequestProcessingPolicyValue value,
+        ::PortableServer::ServantRetentionPolicyValue srvalue) = 0;
     };
   }
 }

@@ -1,6 +1,10 @@
 // $Id$
 
 #include "RequestProcessingStrategyFactoryImpl.h"
+#include "RequestProcessingStrategyAOMOnly.h"
+#include "RequestProcessingStrategyDefaultServant.h"
+#include "RequestProcessingStrategyServantLocator.h"
+#include "RequestProcessingStrategyServantActivator.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,
@@ -34,6 +38,47 @@ namespace TAO
         }
         case ::PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY :
         {
+          break;
+        }
+      }
+
+      return strategy;
+    }
+
+    RequestProcessingStrategy*
+    RequestProcessingStrategyFactoryImpl::create (
+        ::PortableServer::RequestProcessingPolicyValue value,
+        ::PortableServer::ServantRetentionPolicyValue srvalue)
+    {
+      RequestProcessingStrategy* strategy = 0;
+
+      switch (value)
+      {
+        case ::PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY :
+        {
+          ACE_NEW_RETURN (strategy, AOM_Only_Request_Processing_Strategy, 0);
+          break;
+        }
+        case ::PortableServer::USE_DEFAULT_SERVANT :
+        {
+          ACE_NEW_RETURN (strategy, Default_Servant_Request_Processing_Strategy, 0);
+          break;
+        }
+        case ::PortableServer::USE_SERVANT_MANAGER :
+        {
+          switch (srvalue)
+          {
+            case ::PortableServer::RETAIN :
+            {
+              ACE_NEW_RETURN (strategy, Servant_Activator_Request_Processing_Strategy, 0);
+              break;
+            }
+            case ::PortableServer::NON_RETAIN :
+            {
+              ACE_NEW_RETURN (strategy, Servant_Locator_Request_Processing_Strategy, 0);
+              break;
+            }
+          }
           break;
         }
       }

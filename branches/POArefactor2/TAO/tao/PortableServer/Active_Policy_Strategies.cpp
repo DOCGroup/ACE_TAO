@@ -14,6 +14,7 @@
 #include "ThreadStrategy.h"
 #include "ThreadStrategyFactory.h"
 #include "RequestProcessingStrategy.h"
+#include "RequestProcessingStrategyFactory.h"
 #include "IdAssignmentStrategy.h"
 #include "IdAssignmentStrategyFactory.h"
 #include "LifespanStrategy.h"
@@ -74,38 +75,22 @@ namespace TAO
 
       /**/
 
-      switch (policies.request_processing())
-      {
-        case ::PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY :
-        {
-          ACE_NEW (request_processing_strategy_, AOM_Only_Request_Processing_Strategy);
-          break;
-        }
-        case ::PortableServer::USE_DEFAULT_SERVANT :
-        {
-          ACE_NEW (request_processing_strategy_, Default_Servant_Request_Processing_Strategy);
-          break;
-        }
-        case ::PortableServer::USE_SERVANT_MANAGER :
-        {
-          switch (policies.servant_retention())
-          {
-            case ::PortableServer::RETAIN :
-            {
-              ACE_NEW (request_processing_strategy_, Servant_Activator_Request_Processing_Strategy);
-              break;
-            }
-            case ::PortableServer::NON_RETAIN :
-            {
-              ACE_NEW (request_processing_strategy_, Servant_Locator_Request_Processing_Strategy);
-              break;
-            }
-          }
-          break;
-        }
-      }
+      RequestProcessingStrategyFactory *request_processing_strategy_factory =
+        ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyFactory");
 
-      request_processing_strategy_->strategy_init (poa);
+      if (request_processing_strategy_factory == 0)
+        {
+          ACE_Service_Config::process_directive (ACE_TEXT("dynamic RequestProcessingStrategyFactory Service_Object *")
+                                                 ACE_TEXT("TAO_PortableServer:_make_RequestProcessingStrategyFactoryImpl()"));
+          request_processing_strategy_factory =
+            ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyFactory");
+        }
+
+      if (request_processing_strategy_factory != 0)
+        request_processing_strategy_ = request_processing_strategy_factory->create (policies.request_processing(), policies.servant_retention());
+
+      if (thread_strategy_ != 0)
+        request_processing_strategy_->strategy_init (poa);
 
       /**/
 

@@ -12,7 +12,7 @@ namespace TAO
     }
 
     ACE_INLINE
-    Request_Processing_Strategy*
+    RequestProcessingStrategy*
     Active_Policy_Strategies::request_processing_strategy (void) const
     {
       return request_processing_strategy_;
