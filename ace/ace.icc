@@ -116,6 +116,8 @@ group LOGGING_FILES =
   "Log_Msg_Callback.cpp",
   "Log_Msg_Backend.cpp",
   "Log_Msg_IPC.cpp",
+  "Log_Msg_NT_Event_Log",
+  "Log_Msg_UNIX_Syslog",
   "Log_Record.cpp",
   "Logging_Strategy.cpp",
   "Trace.cpp"
@@ -126,6 +128,8 @@ group LOGGING_INCLUDES =
   "Log_Msg_Callback.h",
   "Log_Msg_Backend.h",
   "Log_Msg_IPC.h",
+  "Log_Msg_NT_Event_Log.h",
+  "Log_Msg_UNIX_Syslog.h",
   "Log_Record.h",
   "Logging_Strategy.h",
   "Trace.h"
