@@ -1158,6 +1158,73 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
 }
 
 CORBA::TypeCode_ptr
+TAO_TypeCodeFactory_i::alias_value_box_tc_common (
+    const char *id,
+    const char *name,
+    CORBA::TypeCode_ptr underlying_type,
+    CORBA::TCKind kind
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  if (name != 0 && !this->valid_name (name))
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (15,
+                                          CORBA::COMPLETED_NO),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  // Repo id may not be null for valueboxtype.
+  if (id == 0 || !this->valid_id (id))
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (16,
+                                          CORBA::COMPLETED_NO),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  CORBA::Boolean valid_content =
+    this->valid_content_type (underlying_type
+                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+  if (!valid_content)
+    {
+      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (2,
+                                             CORBA::COMPLETED_NO),
+                        CORBA::TypeCode::_nil ());
+    }
+
+  TAO_OutputCDR cdr;
+
+  cdr << TAO_ENCAP_BYTE_ORDER;
+
+  cdr << id;
+
+  cdr << name;
+
+  cdr << underlying_type;
+
+  ACE_Message_Block consolidated_block;
+
+  ACE_CDR::consolidate (&consolidated_block,
+                        cdr.begin ());
+
+  CORBA::TypeCode_ptr new_typecode =
+    CORBA::TypeCode::_nil ();
+
+  ACE_NEW_THROW_EX (new_typecode,
+                    CORBA_TypeCode (kind,
+                                    consolidated_block.length (),
+                                    consolidated_block.rd_ptr (),
+                                    0,
+                                    0),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+  return new_typecode;
+}
+
+CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::value_event_tc_common (
     const char *id,
     const char *name,

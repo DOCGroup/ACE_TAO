@@ -252,7 +252,7 @@ private:
       const char *id,
       const char *name,
       CORBA::TypeCode_ptr underlying_type,
-      CORBA::TCKiond kind
+      CORBA::TCKind kind
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
