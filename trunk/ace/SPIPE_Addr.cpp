@@ -106,7 +106,7 @@ ACE_SPIPE_Addr::set (const ACE_TCHAR *addr,
           ACE_ALLOCATOR_RETURN (t, ACE_OS::strdup (addr), -1);
 
           t[colonp - addr] = ACE_LIB_TEXT ('\0');
-          ACE_OS::strcpy (temp, t);
+          ACE_OS::strcat (temp, t);
 
           ACE_OS::free (t);
         }
