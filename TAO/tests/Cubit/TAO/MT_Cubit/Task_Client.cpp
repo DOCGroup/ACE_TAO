@@ -213,7 +213,6 @@ Client::get_high_priority_jitter (void)
       jitter += difference * difference;
     }
 
-fprintf(stderr, "jitter=%f, samples=%f\n", jitter,number_of_samples );
   // Return the square root of the sum of the differences computed
   // above, i.e. jitter.
   return sqrt (jitter / (number_of_samples - 1));
@@ -238,7 +237,7 @@ Client::get_low_priority_jitter (void)
           ts_->global_jitter_array_[j][i] - average;
         jitter += difference * difference;
       }
-fprintf(stderr, "jitter=%f, samples=%f\n", jitter,number_of_samples );
+
   // Return the square root of the sum of the differences computed
   // above, i.e. jitter.
   return sqrt (jitter / (number_of_samples - 1));
@@ -539,10 +538,10 @@ Client::svc (void)
 
   // Perform the tests.
   int result = this->run_tests (cb,
-                                ts_->loop_count_,
+				ts_->loop_count_,
                                 this->id_,
                                 ts_->datatype_,
-                                frequency);
+				frequency);
 
   if (result == -1)
     return -1;
@@ -605,12 +604,15 @@ Client::run_tests (Cubit_ptr cb,
 
       if ( (i % ts_->granularity_) == 0)
         {
-          ACE_Time_Value tv (0,
-                             (u_long) ((sleep_time - delta) < 0
-                                       ? 0
-                                       : (sleep_time - delta)));
-          ACE_OS::sleep (tv);
-
+	  if (ts_->use_utilization_test_ == 0)
+	    {
+	      ACE_Time_Value tv (0,
+				 (u_long) ((sleep_time - delta) < 0
+					   ? 0
+					   : (sleep_time - delta)));
+	      ACE_OS::sleep (tv);
+	    }
+	      
 #if defined (CHORUS)
           pstartTime = pccTime1Get();
 #else /* CHORUS */
