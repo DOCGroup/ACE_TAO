@@ -674,6 +674,7 @@ ACE_LACKS_LINEBUFFERED_STREAMBUF        Platform lacks streambuf
 ACE_LACKS_LONGLONG_T                    Compiler/platform does no
                                         supports the unsigned long
                                         long datatype.
+ACE_LACKS_LSTAT                         Platform lacks the lstat() function.
 ACE_LACKS_MADVISE                       Platform lacks madvise()
                                         (e.g., Linux)
 ACE_LACKS_MALLOC_H                      Platform lacks malloc.h
@@ -726,6 +727,7 @@ ACE_LACKS_PWD_REENTRANT_FUNCTIONS       Platform lacks getpwnam_r()
 ACE_LACKS_QSORT                         Compiler/platform lacks the
                                         standard C library qsort()
                                         function
+ACE_LACKS_READLINK                      Platform lacks the readlink() function.
 ACE_LACKS_READV                         Platform doesn't define readv,
                                         so use our own
 ACE_LACKS_RLIMIT                        Platform/compiler lacks

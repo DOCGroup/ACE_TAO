@@ -4548,6 +4548,8 @@ public:
                     int ptrname);
   static int fstat (ACE_HANDLE,
                     struct stat *);
+  static int lstat (const char *,
+                    struct stat *);
   static int ftruncate (ACE_HANDLE,
                         off_t);
   static size_t fwrite (const void *ptr,
@@ -4853,6 +4855,9 @@ public:
                        void *buf,
                        size_t len,
                        ACE_OVERLAPPED *);
+  static int readlink (const char *path,
+                       char *buf,
+                       size_t bufsiz);
   static ssize_t pread (ACE_HANDLE handle,
                         void *buf,
                         size_t nbyte,
