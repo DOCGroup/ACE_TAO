@@ -113,6 +113,7 @@ PLUGGABLE_MESSAGING_FILES = \
   GIOP_Message_Locate_Header \
   target_specification \
   GIOP_Message_State \
+  Incoming_Message_Queue \
   Tagged_Profile
 
 DEFAULT_RESOURCES_FILES = \
