@@ -24,6 +24,7 @@
 #include "video.h"
 #include "proto.h"
 #include "decoders.h"
+#include "ace/OS.h"
 
 /* External declarations. */
 
@@ -235,7 +236,11 @@ ParseReconBlock(int n)
 	  DECODE_DCT_COEFF_NEXT(run, level);
 
 	  if (run == END_OF_BLOCK) break;
-
+          if (i >= 64)
+            {
+              ACE_DEBUG ((LM_DEBUG,"(%P|%t) subscript out of range \n"));
+              break;
+            }
 	  i = i + run + 1;
 	  pos = zigzag_direct[i];
 	  coeff = (level * qscale * ((int) iqmatrixptr[pos])) >> 3;
@@ -298,6 +303,11 @@ ParseReconBlock(int n)
 	  if (run == END_OF_BLOCK) break;
 
 	  i = i+run+1;
+          if (i >= 64)
+            {
+              ACE_DEBUG ((LM_DEBUG,"(%P|%t) subscript out of range \n"));
+              break;
+            }
 	  pos = zigzag_direct[i];
 	  if (level < 0) {
 	      coeff = (((level<<1) - 1) * qscale * 

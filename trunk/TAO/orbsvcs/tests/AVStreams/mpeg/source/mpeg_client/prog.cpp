@@ -258,9 +258,9 @@ lemond.cse.ogi.edu\n\
     fprintf(stderr, "Reading next program.\n");
     */
     Fgets(prog[items].title);
-    Fgets(prog[items].vh);
+    //    Fgets(prog[items].vh);
     Fgets(prog[items].vf);
-    Fgets(prog[items].ah);
+    //    Fgets(prog[items].ah);
     Fgets(prog[items].af);
     item[items] = (XmString)XmStringCreateLtoR(prog[items].title, XmStringTag);
     if ((++items) >= ITEMS) break;
@@ -318,14 +318,14 @@ void StartProgram(char * title, char * vh, char * vf, char * ah, char * af)
   if (!cmdBusy) {
     char *str = title;
     len = strlen(str);
-    if (len > 0 && str[len-1] == 0x0d) str[len - 1] = 0;
-    str = vh;
-    len = strlen(str);
+//     if (len > 0 && str[len-1] == 0x0d) str[len - 1] = 0;
+//     str = vh;
+    //    len = strlen(str);
     if (len > 0 && str[len-1] == 0x0d) str[len - 1] = 0;
     str = vf;
-    len = strlen(str);
-    if (len > 0 && str[len-1] == 0x0d) str[len - 1] = 0;
-    str = ah;
+    //    len = strlen(str);
+    //    if (len > 0 && str[len-1] == 0x0d) str[len - 1] = 0;
+    //    str = ah;
     len = strlen(str);
     if (len > 0 && str[len-1] == 0x0d) str[len - 1] = 0;
     str = af;
@@ -334,22 +334,31 @@ void StartProgram(char * title, char * vh, char * vf, char * ah, char * af)
     XmTextFieldSetString(titlewidget, title);
     cmdBusy = 1;
     CmdWrite(&tmp, 1);
-    len = strlen(vh);
-    CmdWrite((char *)&len, 4);
-    CmdWrite(vh, len);
+//     len = strlen(vh);
+//     CmdWrite((char *)&len, 4);
+//     cerr << "StartProgram: len =" << len;
+//     CmdWrite(vh, len);
+//     cerr << " StartProgram: vh =" << vh << endl;
     len = strlen(vf);
     CmdWrite((char *)&len, 4);
+    cerr << "StartProgram: len =" << len;
     CmdWrite(vf, len);
-    len = strlen(ah);
-    CmdWrite((char *)&len, 4);
-    CmdWrite(ah, len);
+    cerr << " StartProgram: vf =" << vf << endl;
+//     len = strlen(ah);
+//     CmdWrite((char *)&len, 4);
+//     cerr << "StartProgram: len =" << len;
+//     CmdWrite(ah, len);
+//     cerr << " StartProgram: ah =" << ah << endl;
     len = strlen(af);
     CmdWrite((char *)&len, 4);
+    cerr << "StartProgram: len =" << len;
     CmdWrite(af, len);
+    cerr << " StartProgram: af =" << af << endl;
   }
   else {
     beep();
   }
+  cerr << "StartProgram  done\n";
 }
 
 static int curListPos(void)
@@ -524,6 +533,8 @@ static void playCB(Widget w, XtPointer closure, XtPointer call_data)
     int i = curListPos();
     if (i >= items || i < 0)
       return;
+    cerr << "PlayCB\n";
+    cerr << prog[i].title << " " << prog[i].vh << " " <<prog[i].vf << " " << prog[i].ah << " " << prog[i].af << endl;
     StartProgram(prog[i].title, prog[i].vh, prog[i].vf, prog[i].ah, prog[i].af);
   }
 }
