@@ -1,3 +1,11 @@
+Sat May 24 14:10:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+          Removed cygwin specific code, isn't needed anymore
+
+        * ace/config-cygwin32.h:
+          Cygwin supports mmap and msync.
+
 Fri May 23 22:20:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Kokyu/Kokyu.cpp: Fixed fuzz errors.
