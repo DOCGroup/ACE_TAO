@@ -18,6 +18,23 @@ Thu Oct  9 10:30:43 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 Wed Oct  8 20:01:35 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/SOCK_Connector: Modified the ACE_SOCK_Connector so that it
+ 	  doesn't maintain state and doesn't inherit from ACE_SOCK.
+  	  Therefore, we can have multiple threads using the same
+ 	  ACE_SOCK_Connector simultaneously without any reentrancy
+ 	  problems.
+
+	* ace/SOCK.h: Moved the open() method into the public part of the
+ 	  class so it can be used in ACE_SOCK_Connector::connect().
+
+	* ace/Connector.h: Removed the this->connector_ from the
+ 	  ACE_Connector class in order to make this pattern work correctly
+ 	  with multi-threaded programs.  Also removed the connector()
+	  accessor (which was never useful anyway).
+
+	* ace/SOCK.cpp (open): Explicitly test setsockopt() for -1 in case
+	  of failure.
+
 	* tests/SOCK_Test.cpp (server): Revised this test to reflect the
  	  fact that it doesn't iterate, but only runs one client and one
  	  server.

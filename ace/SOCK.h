@@ -57,24 +57,23 @@ public:
   // Return the address of the remotely connected peer (if there is
   // one), in the referenced ACE_Addr. Returns 0 if successful, else -1.
 
-  int open (int type, 
-            int protocol_family, 
-            int protocol,
-            int reuse_addr);
-  // Wrapper around the <socket> system call.
-
   void dump (void) const;
   // Dump the state of an object.
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
+  int open (int type, 
+            int protocol_family, 
+            int protocol,
+            int reuse_addr);
+  // Wrapper around the <socket> system call.
+
 protected:
-
-  ACE_SOCK (void);
-  // Default constructor.  It's protected to make sure no instance is
-  // instantiated.
-
+  ACE_SOCK (int type,
+	    int protocol_family, 
+            int protocol = 0,
+	    int reuse_addr = 0);
   ACE_SOCK (int type, int protocol_family, 
             int protocol = 0, int reuse_addr = 0);
   // Constructor with arguments to call the <socket> system call.

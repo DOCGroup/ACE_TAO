@@ -62,7 +62,7 @@ ACE_SOCK::open (int type,
   if (this->get_handle () == ACE_INVALID_HANDLE)
     return -1;
   else if (reuse_addr && this->set_option (SOL_SOCKET, SO_REUSEADDR,
-                                           &one, sizeof one)) 
+                                           &one, sizeof one) == -1)
     {
       this->close ();
       return -1;

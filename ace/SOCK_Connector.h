@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -21,9 +20,13 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Time_Value.h"
 
-class ACE_Export ACE_SOCK_Connector : public ACE_SOCK
+class ACE_Export ACE_SOCK_Connector
   // = TITLE
-  //     Defines an active connection factory for the socket wrappers. 
+  //     Defines an active connection factory for the socket wrappers.
+  //
+  // = DESCRIPTION
+  //     Objects of this class do not store state so they can be used
+  //     reentrantly in multi-threaded programs...
 {
 public:
   // = Initialization routines.

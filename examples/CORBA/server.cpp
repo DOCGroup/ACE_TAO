@@ -1,6 +1,6 @@
-#include "ace/Service_Config.h"
 // $Id$
 
+#include "ace/Service_Config.h"
 #include "ace/CORBA_Handler.h"
 #include "Test_i.h"
 
