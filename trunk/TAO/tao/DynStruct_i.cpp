@@ -120,7 +120,7 @@ TAO_DynStruct_i::get_members (CORBA::Environment& _env)
   NameValuePairSeq* members;
   ACE_NEW_THROW_RETURN (members,
                         NameValuePairSeq (length),
-                        CORBA::NO_MEMORY,
+                        CORBA::NO_MEMORY (),
                         0);
 
   // We must do this explicitly.

@@ -136,7 +136,7 @@ TAO_DynSequence_i::get_elements (CORBA::Environment& _env)
   AnySeq_ptr elements;
   ACE_NEW_THROW_RETURN (elements,
                         AnySeq (length),
-                        CORBA::NO_MEMORY,
+                        CORBA::NO_MEMORY (),
                         0);
 
   // We must do this explicitly.
@@ -308,7 +308,7 @@ TAO_DynSequence_i::to_any (CORBA::Environment& _env)
   ACE_NEW_THROW_RETURN (retval,
                         CORBA_Any (this->type (_env),
                                    in_cdr.start ()),
-                        CORBA::NO_MEMORY,
+                        CORBA::NO_MEMORY (),
                         0);
   return retval;
 }
