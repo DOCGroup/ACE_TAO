@@ -227,43 +227,37 @@ TAO_GIOP::dump_msg (const char *label,
 {
   if (TAO_debug_level >= 5)
     {
+      // Message name.
       const char *message_name = "UNKNOWN MESSAGE";
       u_long slot = ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET];
       if (slot < sizeof (names)/sizeof(names[0]))
         message_name = names [slot];
+
+      // Byte order.
       int byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
+      
+      // request/reply id.
+      CORBA::ULong tmp = 0;
+      CORBA::ULong *id = &tmp;
+      if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP::Request ||
+          ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP::Reply)
+        {
+          // @@ Only works if ServiceContextList is empty....
+          id = ACE_reinterpret_cast (CORBA::ULong *,
+                                     (char * ) (ptr + TAO_GIOP_HEADER_LEN + 4));
+        }
+
+      // Print.
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P | %t):%s GIOP v%c.%c msg, %d data bytes, %s endian, %s",
+                  "(%P | %t):%s GIOP v%c.%c msg, %d data bytes, %s endian, %s = %d\n",
                   label,
                   digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
                   digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
                   len - TAO_GIOP_HEADER_LEN,
                   (byte_order == TAO_ENCAP_BYTE_ORDER) ? "my" : "other",
-                  message_name));
-
-      if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP::Request)
-        {
-          // @@ Only works if ServiceContextList is empty....
-          const CORBA::ULong *request_id =
-            ACE_reinterpret_cast (const CORBA::ULong *,
-                                  ptr + TAO_GIOP_HEADER_LEN + 4);
-          ACE_DEBUG ((LM_DEBUG,
-                      " = %d\n",
-                      *request_id));
-        }
-      else if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP::Reply)
-        {
-          const CORBA::ULong *request_id =
-            ACE_reinterpret_cast (const CORBA::ULong *,
-                                  ptr + TAO_GIOP_HEADER_LEN + 4);
-          ACE_DEBUG ((LM_DEBUG,
-                      " = %d\n",
-                      *request_id));
-        }
-      else
-        ACE_DEBUG ((LM_DEBUG,
-                    "\n"));
-
+                  message_name,
+                  *id));
+      
       if (TAO_debug_level >= 10)
         ACE_HEX_DUMP ((LM_DEBUG,
                        (const char *) ptr,

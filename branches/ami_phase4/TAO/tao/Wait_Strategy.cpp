@@ -539,8 +539,9 @@ TAO_Muxed_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
     {
       // = Wait as a follower.
       
-      // ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - wait (follower) on <%x>\n",
-      // this->transport_));
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - wait (follower) on <%x>\n",
+                  this->transport_));
 
       // Grab the condtion variable.
       ACE_SYNCH_CONDITION* cond =
@@ -578,8 +579,9 @@ TAO_Muxed_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
                     "TAO (%P|%t) TAO_Muxed_Wait_On_Leader_Follower::wait - "
                     "remove_follower failed for <%x>\n", cond));
 
-      // ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - done (follower:%d) on <%x>\n",
-      // this->reply_received_, this->transport_));
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - done (follower) on <%x>, reply_received %d\n",
+                  reply_received, this->transport_));
 
       // Now somebody woke us up to become a leader or to handle
       // our input. We are already removed from the follower queue.
@@ -615,14 +617,16 @@ TAO_Muxed_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
 
     // Run the reactor event loop.
 
-    // ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - wait (leader) on <%x>\n",
-    // this->transport_));
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) - wait (leader):to enter reactor event loop on <%x>\n",
+                this->transport_));
 
     while (result > 0 && reply_received == 0)
       result = orb_core->reactor ()->handle_events (max_wait_time);
 
-    // ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - done (leader) on <%x>\n",
-    // this->transport_));
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) - wait : (leader) : done with reactor event loop on <%x>\n",
+                this->transport_));
   }
 
   // Wake up the next leader, we cannot do that in handle_input,
@@ -683,8 +687,9 @@ TAO_Muxed_Wait_On_Leader_Follower::handle_input (void)
                     orb_core->leader_follower ().lock (),
                     -1);
 
-  //  ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - reading reply <%x>\n",
-  //              this->transport_));
+  ACE_DEBUG ((LM_DEBUG,
+              "TAO (%P|%t) - reading reply on <%x>\n",
+              this->transport_));
   
   // Receive any data that is available, without blocking...
   int result = this->transport_->handle_client_input (0);
