@@ -3362,12 +3362,12 @@ TAO_POA_Current_Impl::TAO_POA_Current_Impl (TAO_POA *impl,
 
     servant_ (servant),
     operation_ (operation),
-    orb_core_ (&orb_core),
+    orb_core_ (orb_core),
     previous_current_impl_ (0),
     active_object_map_entry_ (0)
 {
   // Set the current context and remember the old one.
-  this->previous_current_impl_ = this->orb_core_->poa_current ().implementation (this);
+  this->previous_current_impl_ = this->orb_core_.poa_current ().implementation (this);
 }
 
 TAO_POA_Current_Impl::~TAO_POA_Current_Impl (void)
@@ -3435,7 +3435,7 @@ TAO_POA_Current_Impl::~TAO_POA_Current_Impl (void)
     }
 
   // Reset the old context.
-  this->orb_core_->poa_current ().implementation (this->previous_current_impl_);
+  this->orb_core_.poa_current ().implementation (this->previous_current_impl_);
 }
 
 PortableServer::POA_ptr

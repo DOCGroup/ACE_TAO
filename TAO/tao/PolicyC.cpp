@@ -23,11 +23,26 @@ ACE_RCSID(tao, PolicyC, "$Id$")
 
 // ****************************************************************
 
-const CORBA::PolicyErrorCode CORBA::BAD_POLICY               = 0;
-const CORBA::PolicyErrorCode CORBA::UNSUPPORTED_POLICY       = 1;
-const CORBA::PolicyErrorCode CORBA::BAD_POLICY_TYPE          = 2;
-const CORBA::PolicyErrorCode CORBA::BAD_POLICY_VALUE         = 3;
-const CORBA::PolicyErrorCode CORBA::UNSUPPORTED_POLICY_VALUE = 4;
+TAO_NAMESPACE_TYPE (const CORBA::PolicyErrorCode)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (const CORBA::PolicyErrorCode, BAD_POLICY, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (const CORBA::PolicyErrorCode)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (const CORBA::PolicyErrorCode, UNSUPPORTED_POLICY, 1)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (const CORBA::PolicyErrorCode)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (const CORBA::PolicyErrorCode, BAD_POLICY_TYPE, 2)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (const CORBA::PolicyErrorCode)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (const CORBA::PolicyErrorCode, BAD_POLICY_VALUE, 3)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (const CORBA::PolicyErrorCode)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (const CORBA::PolicyErrorCode, UNSUPPORTED_POLICY_VALUE, 4)
+TAO_NAMESPACE_END
 
 // ****************************************************************
 

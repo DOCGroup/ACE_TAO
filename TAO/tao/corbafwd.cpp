@@ -8,4 +8,7 @@
 
 ACE_RCSID(tao, corbafwd, "$Id$")
 
-const CORBA::ServiceType CORBA::Security = 1;
+TAO_NAMESPACE_TYPE (const CORBA::ServiceType)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (const CORBA::ServiceType, Security, 1)
+TAO_NAMESPACE_END

@@ -1385,7 +1385,8 @@ TAO_ORB_Table::unbind (const char* orb_id)
 TAO_Export TAO_ORB_Core *
 TAO_ORB_Core_instance (void)
 {
-  return CORBA::instance ()->orb_core_;
+  int argc = 0;
+  return CORBA::ORB_init (argc, 0, 0)->orb_core_;
 }
 
 // ****************************************************************
