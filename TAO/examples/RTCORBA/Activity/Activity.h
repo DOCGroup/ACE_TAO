@@ -20,6 +20,7 @@
 #include "ace/Sched_Params.h"
 #include "orbsvcs/CosNamingC.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
+#include "activity_export.h"
 
 class ACE_Barrier;
 class Job_i;
@@ -33,7 +34,7 @@ class Builder;
  * generating activity in this process.
  *
  */
-class Activity
+class activity_Export Activity
 {
   friend class ACE_Singleton<Activity, ACE_Null_Mutex>;
 

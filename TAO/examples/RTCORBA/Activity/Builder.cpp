@@ -135,7 +135,6 @@ Builder::job_list (JOB_LIST& job_list)
   return job_count_;
 }
 
-ACE_SVC_FACTORY_DEFINE (Builder)
 
 ACE_STATIC_SVC_DEFINE(Builder,
                       ACE_TEXT ("Builder"),
@@ -143,3 +142,5 @@ ACE_STATIC_SVC_DEFINE(Builder,
                       &ACE_SVC_NAME (Builder),
                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                       0)
+
+ACE_FACTORY_DEFINE (activity, Builder)

@@ -14,6 +14,7 @@
 #define JOB_I_H
 
 #include "JobS.h"
+#include "activity_export.h"
 
 class ACE_Arg_Shifter;
 
@@ -23,7 +24,7 @@ class ACE_Arg_Shifter;
  * @brief Implements a Job that performs some cpu bound work.
  *
  */
-class Job_i : public POA_Job, public virtual PortableServer::RefCountServantBase
+class activity_Export Job_i : public POA_Job, public virtual PortableServer::RefCountServantBase
 {
  public:
   /// Constructor

@@ -15,6 +15,7 @@
 
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/PortableServer/PortableServer.h"
+#include "activity_export.h"
 
 class ACE_Arg_Shifter;
 
@@ -24,7 +25,7 @@ class ACE_Arg_Shifter;
  * @brief An options holder for parameters to creating a poa.
  *
  */
-class POA_Holder
+class activity_Export POA_Holder
 {
  public:
   /// Constructor

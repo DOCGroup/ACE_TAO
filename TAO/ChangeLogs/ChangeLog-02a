@@ -1,3 +1,28 @@
+Thu Feb 08 12:08:09 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/RTCORBA/Activity/activity_export.h: Added a new export
+	  definition file. This is needed for Win32 based systems.
+	
+	* examples/RTCORBA/Activity/Thread_Task.h: 
+	* examples/RTCORBA/Activity/Activity.h:
+	* examples/RTCORBA/Activity/Job_i.h:
+	* examples/RTCORBA/Activity/POA_Holder.h:
+	* examples/RTCORBA/Activity/Periodic_Task.h:
+	* examples/RTCORBA/Activity/Task_Stats.h:
+	* examples/RTCORBA/Activity/Thread_Task.h: Added the export flag
+	  to all the header files. 
+	
+	* examples/RTCORBA/Activity/Builder.cpp:
+	* examples/RTCORBA/Activity/Builder.h: Changed the svc_conf macros
+	  to use the export flags.
+	
+	* examples/RTCORBA/Activity/activity.dsp: Added the export
+	  definition file. Fixed the release build configurtaion. It was
+	  broken. 
+
+	  The above fixes should fix the annoying warnings in Win32 builds.
+
+
 Thu Feb 07 22:52:07 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/PortableServer/PolicyS.h:

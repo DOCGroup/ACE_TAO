@@ -27,7 +27,7 @@
  * overlapped period(s) are considered "missed".
  *
  */
-class Thread_Task : public Periodic_Task
+class activity_Export Thread_Task : public Periodic_Task
 {
  public:
   /// Constructor
