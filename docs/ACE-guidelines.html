@@ -126,6 +126,29 @@ bgcolor="#ffffff">
         or <code>TAO_</code>.  There are too many system headers out
         there that #define <code>OK</code>, <code>SUCCESS</code>,
         <code>ERROR</code>, and so on.<p>
+
+    <li>Try to centralize <code>#ifdefs</code> with <code>typedefs</code>
+        and <code>#defines</code>.  For example, use this:
+        <pre>
+        #if defined(ACE_PSOS)
+          typedef long ACE_NETIF_TYPE;
+        # define ACE_DEFAULT_NETIF 0
+        #else  /* ! ACE_PSOS */
+          typedef const ASYS_TCHAR* ACE_NETIF_TYPE;
+        # define ACE_DEFAULT_NETIF ASYS_TEXT("le0")
+        #endif /* ! ACE_PSOS */
+        </pre><p>
+
+        instead of:
+
+        <pre><p>
+        #if defined (ACE_PSOS)
+          // pSOS supports numbers, not names for network interfaces
+          long net_if,
+        #else  /* ! ACE_PSOS */
+          const ASYS_TCHAR *net_if,
+        #endif /* ! ACE_PSOS */
+        </pre><p>
   </ul>
 
   <li><strong>C++ Syntax and Constructs</strong><p>
