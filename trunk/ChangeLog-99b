@@ -1,3 +1,16 @@
+Sat Apr  3 15:27:07 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* Makefile.am
+	* ace/Makefile.am
+	* netsvcs/clients/Naming/Client/Makefile.am
+	* netsvcs/clients/Tokens/manual/Makefile.am
+	* netsvcs/lib/Makefile.am
+	* tests/Makefile.am
+	
+	  Added targets to clean up files and directories created during
+	  compilation.  Automake will setup the `clean-local' targets to
+	  run automatically whenever a `make clean' is done.
+
 Fri Apr 02 23:25:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/make_release: added TAO/tao/Version.h.  Thanks to

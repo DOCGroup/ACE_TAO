@@ -30,3 +30,7 @@ noinst_DATA = svc.conf svc2.conf
 
 EXTRA_DIST = $(noinst_DATA)
 
+## Clean up template repositories, etc.
+clean-local:
+	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
+	-rm -rf ptrepository Templates.DB gcctemp.c gcctemp so_locations

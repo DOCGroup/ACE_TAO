@@ -284,3 +284,8 @@ EXTRA_DIST = $(noinst_SCRIPTS) $(noinst_DATA)
 ##                 $(tmp)/ace_temp_file* \
 ##                 $(tmp)/ace_test_file \
 ##                 $(tmp)/Naming_Test*
+
+## Clean up template repositories, etc.
+clean-local:
+	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
+	-rm -rf ptrepository Templates.DB gcctemp.c gcctemp so_locations

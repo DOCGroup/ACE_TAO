@@ -112,7 +112,13 @@ endif
 ## Directories to include in the distribution but which I am too lazy to
 ## create Makefile.am files for.  A Makefile.am for these directories isn't
 ## needed anyway.
-ACE_EXTRA_DIST = $(top_srcdir)/bin $(top_srcdir)/docs $(top_srcdir)/m4
+ACE_EXTRA_DIST = bin docs m4
+
+## Clean up some additional files/directories possibly created during
+## the configure script tests.
+clean-local:
+	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
+	-rm -rf ptrepository Templates.DB gcctemp.c gcctemp so_locations
 
 ## Make sure config.h doesn't get into the distribution
 ## since it may later intefere with the newly generated
@@ -121,7 +127,8 @@ ACE_EXTRA_DIST = $(top_srcdir)/bin $(top_srcdir)/docs $(top_srcdir)/m4
 ## config.h is platform specific.
 dist-hook:
 	-rm -f $(distdir)/ace/config.h
-	tar cf - $(ACE_EXTRA_DIST) | (cd $(distdir); tar xfBp -)
+	(cd $(top_srcdir); tar cf - $(ACE_EXTRA_DIST)) | (cd $(distdir); \
+          tar xfBp -)
 	list=`find $(distdir) -type d -name CVS -print`; for p in $$list; do \
           rm -rf $$p; \
         done
