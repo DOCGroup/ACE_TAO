@@ -1,3 +1,21 @@
+Sun Sep  5 09:32:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/CDR/basic_types.cpp:
+	* tests/Connection_Failure/client.cpp:
+	* tests/DynAny_Test/data.h:
+	* tests/ORB_init/ORB_init.cpp:
+
+	  Added missing #include directives now needed due to included
+	  header reductions in tao/ORB.h.
+
+	* tests/ORT/ObjectReferenceFactory.h (make_object):
+	* tests/ORT/ObjectReferenceFactory.cpp (make_object):
+
+	  Removed exception specification.  Valuetypes in TAO_IDL
+	  generated stubs do not have one, nor does this test
+	  ObjectReferenceFactory method need one.  Fixes a compile-time
+	  error.
+
 Sun Sep  5 09:21:49 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Event/ECG_Reactive_ConsumerEC_Control.h:

@@ -28,7 +28,6 @@ ObjectReferenceFactory::make_object (
     const char *repository_id,
     const PortableInterceptor::ObjectId & id
     ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_ASSERT (repository_id != 0);
 
