@@ -1,0 +1,40 @@
+
+CCCC - a code counter for C and C++
+===================================
+
+A program to analyse C and C++ source code and report on
+some simple software metrics
+Version  1.00 
+Copyright Tim Littlefair, 1995
+
+The development of this program was heavily dependent on
+the Purdue Compiler Construction Tool Set (PCCTS) 
+by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
+and others.
+
+This software is provided with NO WARRANTY
+
+
+Scope: ../../../lib/interp.cpp
+Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+typedef size_t attribute_calculator  1    86      69     6     0   0.1   0.0
+static attribute_calculator calc_st  88   88       0     0     0            
+static attribute_calculator calc_ex  89   89       0     0     0            
+static attribute_calculator calc_un  90   90       0     0     0            
+static attribute_calculator calc_al  91   91       0     0     0            
+static attribute_calculator calc_ar  92   92       0     0     0            
+typedef CORBA_Boolean param_skip_rt  95   99       4     0     0   0.0   0.0
+static CORBA_Boolean skip_encapsula  101  105      0     4     1 ! *** ! ***
+static CORBA_Boolean skip_long(){}   107  113      0     5     1 ! *** ! ***
+struct table_element{};              116  139     18     5     0   0.3   0.0
+static table_element table[]={};     141  188     37    10     0   0.3   0.0
+{struct align_struct_ x one;char du  191  221     23     4     0   0.2   0.0
+;                                    221  221      0     0     0            
+align_struct_ table[t].size=sizeof(  223  224      0     0     0            
+table[t].alignment=(char*)&align.tw  225  226      0     1     0 ! ***      
+line 227: syntax error at "}" missing Eof
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+Summary for scope:                               603   709   174   1.2   0.3
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+

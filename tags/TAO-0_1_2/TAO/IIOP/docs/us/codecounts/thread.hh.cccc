@@ -1,0 +1,35 @@
+
+CCCC - a code counter for C and C++
+===================================
+
+A program to analyse C and C++ source code and report on
+some simple software metrics
+Version  1.00 
+Copyright Tim Littlefair, 1995
+
+The development of this program was heavily dependent on
+the Purdue Compiler Construction Tool Set (PCCTS) 
+by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
+and others.
+
+This software is provided with NO WARRANTY
+
+
+Scope: ../../../lib/thread.hh
+Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+typedef thread_t pthread_t;          1    67      39     4     0   0.1   0.0
+typedef mutex_t pthread_mutex_t;     68   68       0     0     0            
+typedef cond_t pthread_cond_t;       69   69       0     0     0            
+typedef unsigned long pthread_attr_  70   70       0     0     0            
+typedef thread_key_t pthread_key_t;  71   71       0     0     0            
+struct pthread_once_t{};             81   84       0     3     0 ! ***      
+inline void pthread_once(pthread_on  88   97       0     9     1 ! *** ! ***
+inline void*pthread_getspecific(pth  107  114      0     6     1 ! *** ! ***
+inline int pthread_create(pthread_t  118  127      0     9     1 ! *** ! ***
+class Critical{};                    133  156      6    14     0   2.3   0.0
+class ForceSynchronousCancel{};      159  181     10     8     0   0.8   0.0
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+Summary for scope:                                55    64     3   1.2   0.1
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+

@@ -1,0 +1,26 @@
+
+CCCC - a code counter for C and C++
+===================================
+
+A program to analyse C and C++ source code and report on
+some simple software metrics
+Version  1.00 
+Copyright Tim Littlefair, 1995
+
+The development of this program was heavily dependent on
+the Purdue Compiler Construction Tool Set (PCCTS) 
+by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
+and others.
+
+This software is provided with NO WARRANTY
+
+
+Scope: ../../../lib/cdr.hh
+Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+struct _EXPCLASS CDR{enum{SHORT_SIZ  1    362    155 ? 142 !  25   0.9   0.2
+;                                    362  362      0     0     0            
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+Summary for scope:                               155   143    25   0.9   0.2
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+
