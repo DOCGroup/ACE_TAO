@@ -269,14 +269,14 @@ int FT_ReplicaFactory_i::idle (int & result)
 
 
 
-int FT_ReplicaFactory_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
+int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
   int result = 0;
 
   // ugly but effective
   TAO_debug_level++;
 
-  this->orb_ = orb;
+  this->orb_ = CORBA::ORB::_duplicate (orb);
 
   // Use the ROOT POA for now
   CORBA::Object_var poa_object =

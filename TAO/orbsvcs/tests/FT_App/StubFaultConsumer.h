@@ -45,7 +45,7 @@ public:
   /**
    * Publish this objects IOR.
    */
-  int init (CORBA::ORB_var & orb, ::FT::FaultNotifier_var & notifier
+  int init (CORBA::ORB_ptr orb, ::FT::FaultNotifier_var & notifier
     ACE_ENV_ARG_DECL);
 
   /**

@@ -50,7 +50,7 @@ int TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
 
     CORBA::ORB_var orb = CORBA::ORB_init(argc, asciiArgv, name_ ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
-    if(! CORBA::is_nil(orb))
+    if(! CORBA::is_nil(orb.in ()))
     {
       // create an instance of the servant object and give it a
       // chance at the arguments.
@@ -60,7 +60,7 @@ int TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
       {
         //////////////////////////////////
         // let the servant register itself
-        result = servant.init(orb);
+        result = servant.init(orb.in ());
         if (result == 0)
         {
           ACE_ERROR ((LM_INFO,

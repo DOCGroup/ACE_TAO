@@ -98,6 +98,9 @@ project(*FactoryRegistry): taoclient, fault_tolerance, orbsvcsexe {
     FTAPP_FactoryRegistry_Main.cpp
   }
 
+  Header_Files {
+    
+  }
   // explicitly omit IDL files
   IDL_Files {
   }

@@ -70,10 +70,10 @@ public:
 
   /**
    * Initialize this object.
-   * @param orbManager our ORB -- we keep var to it.
+   * @param orb our ORB -- we keep var to it.
    * @return zero for success; nonzero is process return code for failure.
    */
-  int init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Prepare to exit.

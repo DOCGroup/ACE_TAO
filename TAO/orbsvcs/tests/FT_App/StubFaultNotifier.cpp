@@ -146,10 +146,10 @@ int StubFaultNotifier::fini ()
 /**
  * Publish this objects IOR.
  */
-int StubFaultNotifier::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
+int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
   int result = 0;
-  this->orb_ = orb;
+  this->orb_ = CORBA::ORB::_duplicate (orb);
 
   // Use the ROOT POA for now
   CORBA::Object_var poa_object =

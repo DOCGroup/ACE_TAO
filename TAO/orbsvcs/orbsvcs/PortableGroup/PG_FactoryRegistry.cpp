@@ -147,11 +147,11 @@ int TAO::PG_FactoryRegistry::fini (ACE_ENV_SINGLE_ARG_DECL)
   return 0;
 }
 
-int TAO::PG_FactoryRegistry::init (CORBA::ORB_var & orb  ACE_ENV_ARG_DECL)
+int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb  ACE_ENV_ARG_DECL)
 {
   int result = 0;
 
-  this->orb_ = orb;
+  this->orb_ = CORBA::ORB::_duplicate (orb);
 
   // Use the ROOT POA for now
   CORBA::Object_var poa_object =
