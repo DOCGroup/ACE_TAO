@@ -1,3 +1,10 @@
+Thu May 22 10:53:43 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+
+          Make sure to apply the relative definitions to the flag override
+          values.
+
 Thu May 22 10:30:31 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/BorlandWorkspaceCreator.pm:
