@@ -811,7 +811,7 @@ nobase_include_HEADERS += \
   ServicesC.inl \
   ServicesS.inl \
   ServicesS_T.inl \
-  ShortSeqC.i \
+  ShortSeqC.inl \
   Special_Basic_Argument_T.inl \
   Special_Basic_SArgument_T.inl \
   StringSeqC.inl \
@@ -820,8 +820,8 @@ nobase_include_HEADERS += \
   Synch_Refcountable.inl \
   SystemException.inl \
   TAOC.inl \
-  TAOS.i \
-  TAOS_T.i \
+  TAOS.inl \
+  TAOS_T.inl \
   TAO_Server_Request.i \
   TAO_Singleton.inl \
   TAO_Singleton_Manager.inl \
