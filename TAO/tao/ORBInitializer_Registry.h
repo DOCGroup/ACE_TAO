@@ -30,7 +30,6 @@
 #include "tao/TAO_Singleton.h"
 #include "ace/Containers_T.h"
 
-
 /// Global list that contains all portable interceptor ORB
 /// initializers.
 class TAO_Export TAO_ORBInitializer_Registry

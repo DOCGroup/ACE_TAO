@@ -32,6 +32,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+#if (TAO_HAS_CORBA_MESSAGING == 1)
+
 class TAO_Export TAO_RelativeRoundtripTimeoutPolicy
   : public Messaging::RelativeRoundtripTimeoutPolicy,
     public TAO_Local_RefCounted_Object
@@ -150,6 +152,8 @@ private:
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
+
+#endif /*TAO_HAS_CORBA_MESSAGING == 1 */
 
 #include "ace/post.h"
 #endif /* TAO_MESSAGING_POLICY_I_H */

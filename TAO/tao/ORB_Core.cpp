@@ -2520,10 +2520,13 @@ TAO_Sync_Strategy &
 TAO_ORB_Core::get_sync_strategy (TAO_Stub *,
                                  int &scope)
 {
+
   if (scope == TAO::SYNC_WITH_TRANSPORT ||
       scope == TAO::SYNC_WITH_SERVER ||
       scope == TAO::SYNC_WITH_TARGET)
     return this->transport_sync_strategy ();
+
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
   if (scope == TAO::SYNC_NONE ||
       scope == TAO::SYNC_EAGER_BUFFERING)
@@ -2531,6 +2534,8 @@ TAO_ORB_Core::get_sync_strategy (TAO_Stub *,
 
   if (scope == TAO::SYNC_DELAYED_BUFFERING)
     return this->delayed_buffering_sync_strategy ();
+
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
   return this->transport_sync_strategy ();
 }
@@ -2541,6 +2546,8 @@ TAO_ORB_Core::set_sync_scope_hook (Sync_Scope_Hook hook)
   TAO_ORB_Core::sync_scope_hook_ = hook;
   return;
 }
+
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
 void
 TAO_ORB_Core::stubless_sync_scope (CORBA::Policy *&result)
@@ -2567,6 +2574,8 @@ TAO_ORB_Core::stubless_sync_scope (CORBA::Policy *&result)
   return;
 }
 
+#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+
 void
 TAO_ORB_Core::call_timeout_hook (TAO_Stub *stub,
                                  int &has_timeout,
@@ -2588,6 +2597,8 @@ TAO_ORB_Core::set_timeout_hook (Timeout_Hook hook)
 
   return;
 }
+
+#if (TAO_HAS_RELATIVE_ROUNTRIP_POLICY == 1)
 
 CORBA::Policy *
 TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
@@ -2615,6 +2626,7 @@ TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
 
   return result;
 }
+#endif /* TAO_HAS_RELATIVE_ROUNTRIP_POLICY == 1*/
 
 #if (TAO_HAS_RT_CORBA == 1)
 

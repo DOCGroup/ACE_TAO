@@ -39,7 +39,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-
 class TAO_ORB_Core;
 
 /// This class encapsulates the data passed to ORBInitializers during
