@@ -13,13 +13,15 @@
 ACE_RCSID(SV_Message_Queues, TMQ_Client, "$Id$")
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   long pid = long (ACE_OS::getpid ());
 
   ACE_Typed_SV_Message_Queue<Message_Data> msgque (key_t (SRV_KEY));
 
-  Message_Data msg_data (pid, ACE_OS::cuserid (ACE_static_cast (char *, 0)), "did you get this?");
+  Message_Data msg_data (pid,
+                         ACE_OS::cuserid (ACE_static_cast (char *, 0)),
+                         "did you get this?");
 
   ACE_Typed_SV_Message<Message_Data> send_msg (msg_data,
 					       SRV_ID,
@@ -27,17 +29,19 @@ main (int, char *[])
 					       recv_msg (pid);
 
   if (msgque.send (send_msg) < 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "msgque.send"), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("msgque.send")), 1);
 
   if (msgque.recv (recv_msg) < 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "msgque.recv"), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("msgque.recv")), 1);
 
   Message_Data &recv_msg_data = recv_msg.data ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "a message of length %d"
-              " received from server %d"
-       		  " (user %s): %s\n",
+              ACE_TEXT ("a message of length %d")
+              ACE_TEXT (" received from server %d")
+              ACE_TEXT (" (user %C): %C\n"),
               recv_msg_data.length (),
               recv_msg_data.pid (),
               recv_msg_data.user (),
