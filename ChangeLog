@@ -1,3 +1,18 @@
+Thu Aug  5 07:45:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* m4/config_h.m4:
+	  Replace some AH_TEMPLATE definitions.  ACE_CHECK_HAS_FUNCS and
+	  ACE_CHECK_LACKS_FUNCS provide autoheader templates themselves.
+
+	* configure.ac:
+	  Replace some calls to AC_CHECK_FUNC with ACE_CHECK_HAS_FUNCS or
+	  ACE_CHECK_LACKS_FUNC.
+
+	* m4/ace_headers.m4:
+	  New file, with ACE_CHECK_HAS_FUNCS and ACE_CHECK_LACKS_FUNCS
+	  autoconf macros.  These macros are similar to AC_CHECK_FUNCS,
+	  but define either ACE_HAS_<foo> or ACE_LACKS_<foo>.
+
 Thu Aug  5 09:21:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         The following changes are from Martin Corino <mcorino@remedy.nl>
