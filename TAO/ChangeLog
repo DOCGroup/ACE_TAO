@@ -1,3 +1,17 @@
+Wed Jun 23 12:26:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Allocator.h:
+          New base template for TAO allocators.
+
+        * tao/Buffer_Allocator_T.{h,cpp}:
+          New buffer allocator template capable of allocating an object
+          of a certain type that is passed a template parameter with an
+          allocator which type can also be passed as template parameter.
+
+          These templates will be used for allocating the AMH response
+          handler by using an allocator which will be added soon. Thanks to
+          Balachandran Natarajan for helping with this.
+
 Wed Jun 23 08:34:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp:
