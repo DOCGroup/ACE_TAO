@@ -202,10 +202,10 @@ public:
   virtual void osfx (void)        {  if (flags() & unitbuf) flush(); }
 #else
 #if defined (__GNUC__)
-  virtual int ipfx0(void)         { return iostream::ipfx0 (); }  //
-Optimized ipfx(0)
-  virtual int ipfx1(void)         { return iostream::ipfx1(); }  //
-Optimized ipfx(1)
+  // Optimized ipfx(0)
+  virtual int ipfx0(void)         { return iostream::ipfx0 (); }
+  // Optimized ipfx(1)
+  virtual int ipfx1(void)         { return iostream::ipfx1(); }
 #else
   virtual int ipfx0(void)         {  return iostream::ipfx (0); }
   virtual int ipfx1(void)         {  return iostream::ipfx (1); }
@@ -283,4 +283,3 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 #endif /* ACE_LACKS_ACE_IOSTREAM */
 #endif /* ACE_IOSTREAM_T_H */
-
