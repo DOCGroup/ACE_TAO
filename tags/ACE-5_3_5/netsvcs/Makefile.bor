@@ -1,0 +1,7 @@
+#
+# Makefile for building the netsvcs
+#
+
+DIRS = lib clients servers
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
