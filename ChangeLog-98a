@@ -1,3 +1,16 @@
+Thu Jan 01 18:24:56 1998  Nanbor Wang  <nw1@cs.wustl.edu>
+
+	* netsvcs/lib/Base_Optimizer.i: Removed this file.
+
+	* netsvcs/lib/Base_Optimizer.h: Added codes to include in the
+	  source file conditionally if needed.
+
+	* netsvcs/lib/Base_Optimizer.cpp: Moved template implementation
+	  from .i file.  Removed ACE_INLINE keyword.
+
+	* netsvcs/lib/Server_Logging_Handler.cpp: Added explicit template
+	  instantiation macros.
+
 Thu Jan 01 17:13:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * apps/Gateway/Peer/Peer.cpp (Peer_Connector::open): added
