@@ -503,16 +503,16 @@ ACE_OS::chdir (const char *path)
 # endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
 ACE_INLINE int
-ACE_OS::fcntl (ACE_HANDLE handle, int cmd, int value)
+ACE_OS::fcntl (ACE_HANDLE handle, int cmd, long arg)
 {
   ACE_TRACE ("ACE_OS::fcntl");
 # if defined (ACE_LACKS_FCNTL)
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (cmd);
-  ACE_UNUSED_ARG (value);
+  ACE_UNUSED_ARG (arg);
   ACE_NOTSUP_RETURN (-1);
 # else
-  ACE_OSCALL_RETURN (::fcntl (handle, cmd, value), int, -1);
+  ACE_OSCALL_RETURN (::fcntl (handle, cmd, arg), int, -1);
 # endif /* ACE_LACKS_FCNTL */
 }
 
@@ -567,7 +567,7 @@ ACE_OS::fsync (ACE_HANDLE handle)
   ACE_NOTSUP_RETURN (-1);
 # else
   ACE_OSCALL_RETURN (::fsync (handle), int, -1);
-# endif /* ACE_LACKS_FCNTL */
+# endif /* ACE_LACKS_FSYNC */
 }
 
 ACE_INLINE gid_t
@@ -753,12 +753,12 @@ ACE_OS::mktemp (char *s)
 # endif /* !ACE_HAS_MOSTLY_UNICODE_APIS */
 
 ACE_INLINE int
-ACE_OS::fcntl (ACE_HANDLE handle, int cmd, int value)
+ACE_OS::fcntl (ACE_HANDLE handle, int cmd, long arg)
 {
   ACE_TRACE ("ACE_OS::fcntl");
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (cmd);
-  ACE_UNUSED_ARG (value);
+  ACE_UNUSED_ARG (arg);
 
   ACE_NOTSUP_RETURN (-1); // We should be able to map this stuff
 }
@@ -8299,7 +8299,9 @@ ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock,
   lock->lock_.l_len = len;
   lock->lock_.l_type = F_WRLCK;         // set write lock
   // block, if no access
-  ACE_OSCALL_RETURN (::fcntl (lock->handle_, F_SETLKW, &lock->lock_), int, -1);
+  ACE_OSCALL_RETURN (ACE_OS::fcntl (lock->handle_, F_SETLKW,
+                                    ACE_reinterpret_cast (long, &lock->lock_)),
+                     int, -1);
 #endif /* ACE_WIN32 */
 }
 
@@ -8345,7 +8347,9 @@ ACE_OS::flock_rdlock (ACE_OS::ace_flock_t *lock,
   lock->lock_.l_len = len;
   lock->lock_.l_type = F_RDLCK;         // set read lock
   // block, if no access
-  ACE_OSCALL_RETURN (::fcntl (lock->handle_, F_SETLKW, &lock->lock_), int, -1);
+  ACE_OSCALL_RETURN (ACE_OS::fcntl (lock->handle_, F_SETLKW,
+                                    ACE_reinterpret_cast (long, &lock->lock_)),
+                     int, -1);
 #endif /* ACE_WIN32 */
 }
 
@@ -8392,9 +8396,9 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock,
 
   int result = 0;
   // Does not block, if no access, returns -1 and set errno = EBUSY;
-  ACE_OSCALL (::fcntl (lock->handle_,
-                       F_SETLK,
-                       &lock->lock_),
+  ACE_OSCALL (ACE_OS::fcntl (lock->handle_,
+                             F_SETLK,
+                             ACE_reinterpret_cast (long, &lock->lock_)),
               int, -1, result);
 
 # if ! defined (ACE_PSOS)
@@ -8449,7 +8453,9 @@ ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock,
 
   int result = 0;
   // Does not block, if no access, returns -1 and set errno = EBUSY;
-  ACE_OSCALL (::fcntl (lock->handle_, F_SETLK, &lock->lock_), int, -1, result);
+  ACE_OSCALL (ACE_OS::fcntl (lock->handle_, F_SETLK,
+                             ACE_reinterpret_cast (long, &lock->lock_)),
+              int, -1, result);
 
 # if ! defined (ACE_PSOS)
   if (result == -1 && (errno == EACCES || errno == EAGAIN))
@@ -8493,7 +8499,9 @@ ACE_OS::flock_unlock (ACE_OS::ace_flock_t *lock,
   lock->lock_.l_type = F_UNLCK;   // Unlock file.
 
   // release lock
-  ACE_OSCALL_RETURN (::fcntl (lock->handle_, F_SETLK, &lock->lock_), int, -1);
+  ACE_OSCALL_RETURN (ACE_OS::fcntl (lock->handle_, F_SETLK,
+                                    ACE_reinterpret_cast (long, &lock->lock_)),
+                     int, -1);
 #endif /* ACE_WIN32 */
 }
 
