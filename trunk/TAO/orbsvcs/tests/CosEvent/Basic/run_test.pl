@@ -8,64 +8,53 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # This is a Perl script that runs the client and all the other servers that
 # are needed
 
-unshift @INC, '../../../../../bin';
-require ACEutils;
-require Process;
-require Uniqueid;
-use Cwd;
-
-$cwd = getcwd();
-ACE::checkForTarget($cwd);
+use lib '../../../../../bin';
+use PerlACE::Run_Test;
 
 $status = 0;
 
-print STDERR "\n\nShutdown EC with clients still attached\n";
-$T = Process::Create ($EXEPREFIX . "Shutdown".$EXE_EXT);
-if ($T->TimedWait (60) == -1) {
-  print STDERR "ERROR: Test timedout\n";
-  $status = 1;
-  $T->Kill (); $T->TimedWait (1);
+$svc_pull_conf = PerlACE::LocalFile ("svc.pull.conf");
+
+sub RunTest ($$$)
+{
+    my $message = shift;
+    my $program = shift;
+    my $arguments = shift;
+
+    my $TEST = new PerlACE::Process ($program, $arguments);
+
+    print STDERR "\n\n$message\n";
+    
+    my $test = $TEST->SpawnWaitKill (240);
+
+    if ($test != 0) {
+        print STDERR "ERROR: Test returned $test\n";
+        $status = 1;
+    }
 }
 
-print STDERR "\n\nDisconnect callbacks test\n";
-$T = Process::Create ($EXEPREFIX . "Disconnect".$EXE_EXT);
-if ($T->TimedWait (60) == -1) {
-  print STDERR "ERROR: Test timedout\n";
-  $status = 1;
-  $T->Kill (); $T->TimedWait (1);
-}
+RunTest ("\n\nShutdown EC with clients still attached\n",
+         "Shutdown",
+         "");
 
-print STDERR "\n\nMT Disconnects test\n";
-$T = Process::Create ($EXEPREFIX . "MT_Disconnect".$EXE_EXT);
-if ($T->TimedWait (240) == -1) {
-  print STDERR "ERROR: Test timedout\n";
-  $status = 1;
-  $T->Kill (); $T->TimedWait (1);
-}
+RunTest ("\n\nDisconnect callbacks test\n",
+         "Disconnect",
+         "");
+          
+RunTest ("\n\nMT Disconnects test\n",
+         "MT_Disconnect",
+         "");
 
-print STDERR "\n\nPush Events\n";
-$T = Process::Create ($EXEPREFIX . "Push_Event".$EXE_EXT);
-if ($T->TimedWait (60) == -1) {
-  print STDERR "ERROR: Test timedout\n";
-  $status = 1;
-  $T->Kill (); $T->TimedWait (1);
-}
+RunTest ("\n\nPush Events\n",
+         "Push_Event",
+         "");
 
-print STDERR "\n\nPull-Push Events\n";
-$T = Process::Create ($EXEPREFIX . "Pull_Push_Event".$EXE_EXT,
-                      " -ORBSvcConf $cwd$DIR_SEPARATOR" . "svc.pull.conf");
-if ($T->TimedWait (60) == -1) {
-  print STDERR "ERROR: Test timedout\n";
-  $status = 1;
-  $T->Kill (); $T->TimedWait (1);
-}
+RunTest ("\n\nPull-Push Events\n",
+         "Pull_Push_Event",
+         "-ORBSvcConf $svc_pull_conf");
 
-print STDERR "\n\nRandom\n";
-$T = Process::Create ($EXEPREFIX . "Random".$EXE_EXT);
-if ($T->TimedWait (60) == -1) {
-  print STDERR "ERROR: Test timedout\n";
-  $status = 1;
-  $T->Kill (); $T->TimedWait (1);
-}
+RunTest ("\n\nRandom\n",
+         "Random",
+         "");
 
 exit $status;

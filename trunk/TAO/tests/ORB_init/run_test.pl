@@ -5,20 +5,16 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../bin';
-require ACEutils;
-use Cwd;
+use lib '../../../bin';
+use PerlACE::Run_Test;
 
-ACE::checkForTarget(getcwd());
+$T = new PerlACE::Process ("ORB_init");
 
-$orb_init = Process::Create ($EXEPREFIX."ORB_init".$EXE_EXT);
+$test = $T->SpawnWaitKill (60);
 
-$pid = $orb_init->TimedWait (15);
-if ($pid == -1) {
-  print STDERR "ERROR: ORB_init timed out\n";
-  $orb_init->Kill (); $orb_init->TimedWait (1);
-
-  exit 1;
+if ($test != 0) {
+    print STDERR "ERROR: test returned $test\n";
+    exit 1;
 }
 
 exit 0;

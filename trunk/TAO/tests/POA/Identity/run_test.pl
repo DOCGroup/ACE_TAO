@@ -5,23 +5,17 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../../bin';
-require Process;
-require ACEutils;
-use Cwd;
+use lib '../../../../bin';
+use PerlACE::Run_Test;
 
-ACE::checkForTarget(getcwd());
+$T = new PerlACE::Process ("Identity", "-ORBobjrefstyle url");
 
-$T = Process::Create ($EXEPREFIX."Identity".$EXE_EXT, "-ORBobjrefstyle url");
+$test = $T->SpawnWaitKill (60);
 
-$client = $T->TimedWait (60);
-if ($client == -1) {
-  print STDERR "ERROR: test timedout\n";
-  $T->Kill (); $T->TimedWait (1);
-}
-
-if ($client == -1) {
-  exit 1;
+if ($test != 0) {
+    print STDERR "ERROR: test returned $test\n";
+    exit 1;
 }
 
 exit 0;
+

@@ -5,22 +5,16 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../../bin';
-require ACEutils;
-require Process;
-use Cwd;
+use lib '../../../../bin';
+use PerlACE::Run_Test;
 
-$status = 0;
+$T = new PerlACE::Process ("EC_Basic");
 
-ACE::checkForTarget(getcwd());
+$test = $T->SpawnWaitKill (60);
 
-$TEST = Process::Create ($EXEPREFIX."EC_Basic".$EXE_EXT, "");
-
-if ($TEST->TimedWait (60) == -1) {
-  print STDERR "ERROR: test timedout\n";
-  $status = 1;
-  $TEST->Kill (); $TEST->TimedWait (1);
+if ($test != 0) {
+    print STDERR "ERROR: test returned $test\n";
+    exit 1;
 }
 
-# @@ Capture any errors from the server too.
-exit $status;
+exit 0;

@@ -5,103 +5,106 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../../bin';
-require Process;
-require ACEutils;
-use Cwd;
+use lib '../../../../bin';
+use PerlACE::Run_Test;
 
-$cwd = getcwd();
-ACE::checkForTarget($cwd);
+$status = 0;
+
+$ec_conf = PerlACE::LocalFile ("ec.conf");
+$ec_mt_conf = PerlACE::LocalFile ("ec_mt_conf");
 
 print STDERR "================ Collocated tests, single threaded\n";
 
-$T = Process::Create ($EXEPREFIX."ECT_Throughput".$EXE_EXT,
-		      " -ORBsvcconf $cwd$DIR_SEPARATOR" . "ec.conf" .
-                      " -m new -u 10000 -n 1 -t 0 -c 4");
+$T = new PerlACE::Process ("ECT_Throughput",
+                           "-ORBsvcconf $ec_conf"
+                           . " -m new -u 10000 -n 1 -t 0 -c 4");
 
-if ($T->TimedWait (120) == -1) {
-  print STDERR "ERROR: test timedout\n";
-  $T->Kill (); $T->TimedWait (1);
-  exit 1;
+
+$test = $T->SpawnWaitKill (120);
+
+if ($test != 0) {
+    print STDERR "ERROR: test returned $test\n";
+    $status = 1;
 }
 
 print STDERR "================ Collocated tests, single threaded\n";
 
-$T = Process::Create ($EXEPREFIX."ECT_Throughput".$EXE_EXT,
-		      " -ORBsvcconf $cwd$DIR_SEPARATOR" . "ec.mt.conf" .
-                      " -m new -u 10000 -n 1 -t 0 -c 4");
+$T = new PerlACE::Process ("ECT_Throughput",
+                           "-ORBsvcconf $ec_mt_conf" 
+                           . "-m new -u 10000 -n 1 -t 0 -c 4");
 
-if ($T->TimedWait (60) == -1) {
-  print STDERR "ERROR: test timedout\n";
-  $T->Kill (); $T->TimedWait (1);
-  exit 1;
+$test = $T->SpawnWaitKill (60);
+
+if ($test != 0) {
+    print STDERR "ERROR: test returned $test\n";
+    $status = 1;
 }
 
 print STDERR "================ Remote test\n";
 
-$ns_ior = "NameService.ior";
+$ns_ior = PerlACE::LocalFile ("NameService.ior");
 
 unlink $ns_ior;
-$NS = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR.
-                       "..".$DIR_SEPARATOR.
-                       "Naming_Service".$DIR_SEPARATOR.
-                       "Naming_Service".$EXE_EXT,
-                       " -o $ns_ior ");
 
-if (ACE::waitforfile_timed ($ns_ior, 5) == -1) {
-  print STDERR "ERROR: cannot find file <$ns_ior>\n";
-  $NS->Kill (); $NS->TimedWait (1);
-  exit 1;
+$NS = new PerlACE::Process ("../../Naming_Service/Naming_Service",
+                           "-o $ns_ior");
+                           
+$ES = new PerlACE::Process ("../../Event_Service/Event_Service",
+                            "-ORBInitRef NameService=file://$ns_ior "
+                            . " -ORBSvcConf $ec_conf "
+                            . " -t NEW");
+                            
+$C = new PerlACE::Process ("ECT_Consumer",
+                           "-ORBInitRef NameService=file://$ns_ior "
+                           . " -c 4 -s 1");
+
+$S = new PerlACE::Process ("ECT_Supplier",
+                           "-ORBInitRef NameService=file://$ns_ior "
+                           . " -s 1 -u 5000 -n 1 -t 0");
+
+$NS->Spawn ();
+
+if (PerlACE::waitforfile_timed ($ns_ior, 5) == -1) {
+    print STDERR "ERROR: cannot find file <$ns_ior>\n";
+    $NS->Kill (); 
+    exit 1;
 }
 
-$ES = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR.
-                       "..".$DIR_SEPARATOR.
-                       "Event_Service".$DIR_SEPARATOR.
-                       "Event_Service".$EXE_EXT,
-                       " -ORBInitRef NameService=file://$ns_ior "
-                       ." -ORBSvcConf $cwd$DIR_SEPARATOR" . "ec.conf "
-		       . " -t NEW");
+$ES->Spawn ();
 
 sleep 5;
 
-$C = Process::Create ($EXEPREFIX."ECT_Consumer".$EXE_EXT,
-		      " -ORBInitRef NameService=file://$ns_ior "
-		      . " -c 4 -s 1");
+$C->Spawn ();
+$S->Spawn ();
 
-$S = Process::Create ($EXEPREFIX."ECT_Supplier".$EXE_EXT,
-		      " -ORBInitRef NameService=file://$ns_ior "
-		      . " -s 1 -u 5000 -n 1 -t 0");
+$supplier = $S->WaitKill (300);
 
-if ($S->TimedWait (300) == -1) {
-  print STDERR "ERROR: supplier timedout\n";
-  $S->Kill (); $S->TimedWait (1);
-  $C->Kill (); $C->TimedWait (1);
-  $ES->Kill (); $ES->TimedWait (1);
-  $NS->Kill (); $NS->TimedWait (1);
-  exit 1;
+if ($supplier != 0) {
+    print STDERR "ERROR: supplier returned $supplier\n";
+    $status = 1;
 }
 
-if ($C->TimedWait (60) == -1) {
-  print STDERR "ERROR: consumer timedout\n";
-  $C->Kill (); $C->TimedWait (1);
-  $ES->Kill (); $ES->TimedWait (1);
-  $NS->Kill (); $NS->TimedWait (1);
-  exit 1;
+$consumer = $C->WaitKill (60);
+
+if ($consumer != 0) {
+    print STDERR "ERROR: consumer returned $consumer\n";
+    $status = 1;
 }
 
-if ($ES->TimedWait (5) == -1) {
-  print STDERR "ERROR: event channel timedout\n";
-  $ES->Kill (); $ES->TimedWait (1);
-  $NS->Kill (); $NS->TimedWait (1);
-  exit 1;
+$eserver = $ES->WaitKill (5);
+
+if ($eserver != 0) {
+    print STDERR "ERROR: event server returned $eserver\n";
+    $status = 1;
 }
 
-$NS->Terminate (); if ($NS->TimedWait (5) == -1) {
-  print STDERR "ERROR: cannot terminate naming service\n";
-  $NS->Kill (); $NS->TimedWait (1);
-  exit 1;
+$nserver = $NS->TerminateWaitKill (5);
+
+if ($nserver != 0) {
+    print STDERR "ERROR: name server returned $nserver\n";
+    $status = 1;
 }
 
 unlink $ns_ior;
 
-exit 0;
+exit $status;

@@ -8,5 +8,5 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 @ARGS=('run_test.pl', '-i', 'dii');
 push @ARGS, @ARGV;
 
-exec 'run_test.pl', @ARGS;
+system ('perl ', join ' ', @ARGS);
 

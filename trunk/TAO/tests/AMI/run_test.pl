@@ -5,63 +5,54 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../bin';
-require ACEutils;
-use Cwd;
+use lib '../../../bin';
+use PerlACE::Run_Test;
 
-$cwd = getcwd();
-$client_conf="$DIR_SEPARATOR" . "muxed.conf";
-$client_process="simple_client";
-$debug_level='0';
-$threads='2';
-$iterations='1';
+$client_conf = PerlACE::LocalFile ("muxed.conf");
 
-ACE::checkForTarget($cwd);
+$debug_level = '0';
+$iterations = '1';
+
 foreach $i (@ARGV) {
-  if ($i eq '-mux') {
-    $client_conf = "muxed.conf";
-  } elsif ($i eq '-debug') {
-    $debug_level = '1';
-  } elsif ($i eq '-exclusive') {
-    $client_conf = 'exclusive.conf';
-  }
+    if ($i eq '-mux') {
+        $client_conf = PerlACE::LocalFile ("muxed.conf");
+    } 
+    elsif ($i eq '-debug') {
+        $debug_level = '1';
+    } 
+    elsif ($i eq '-exclusive') {
+        $client_conf = PerlACE::LocalFile ('exclusive.conf');
+    }
 }
 
-$iorfile = "server.ior";
+$iorfile = PerlACE::LocalFile ("server.ior");
 
 unlink $iorfile;
-$SV = Process::Create ($EXEPREFIX."server$EXE_EXT",
-			  " -ORBdebuglevel $debug_level"
-			  . "-d -o $iorfile");
 
-if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
-  print STDERR "ERROR: cannot find file <$iorfile>\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  exit 1;
-}
+$SV = new PerlACE::Process ("server", 
+                            "-ORBdebuglevel $debug_level -d -o $iorfile");
 
-$CL = Process::Create ($EXEPREFIX."$client_process$EXE_EXT",
-			  " -ORBsvcconf $client_conf "
-			  . "-ORBdebuglevel $debug_level"
-			  . " -k file://$iorfile "
-			  . " -i $iterations -x -d");
+$SV->Spawn ();
 
-$client = $CL->TimedWait (60);
-if ($client == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $CL->Kill (); $CL->TimedWait (1);
-}
+if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+} 
 
-$server = $SV->TimedWait (5);
-if ($server == -1) {
-  print STDERR "ERROR: server timedout\n";
-  $SV->Kill (); $SV->TimedWait (1);
-}
+$CL = new PerlACE::Process ("simple_client",
+                            "-ORBsvcconf $client_conf "
+                            . "-ORBdebuglevel $debug_level"
+                            . " -k file://$iorfile "
+                            . " -i $iterations -x -d");
+
+$client = $CL->SpawnWaitKill (60);
+$server = $SV->WaitKill (5);
 
 unlink $iorfile;
 
 if ($server != 0 || $client != 0) {
-   exit 1;
+    exit 1;
 }
  
 exit 0;

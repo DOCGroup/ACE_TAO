@@ -5,71 +5,65 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../../../bin';
-require Process;
-require ACEutils;
-use Cwd;
+use lib '../../../../../bin';
+use PerlACE::Run_Test;
 
 # amount of delay between running the servers
 
-$sleeptime = 6;
 $status = 0;
-$cwd = getcwd();
 
-ACE::checkForTarget($cwd);
+$pingior = PerlACE::LocalFile ("ping.ior");
+$pongior = PerlACE::LocalFile ("pong.ior");
 
-$latency_ping= $EXEPREFIX.".".$DIR_SEPARATOR."ping".$EXE_EXT;
-$latency_pong = $EXEPREFIX.".".$DIR_SEPARATOR."pong".$EXE_EXT;
-$latency_control = $EXEPREFIX.".".$DIR_SEPARATOR."control".$EXE_EXT;
+unlink $pingior, $pongior;
 
+$PING = new PerlACE::Process ("ping", "-o $pingior");
+$PONG = new PerlACE::Process ("pong", "-o $pongior");
+$CTRL = new PerlACE::Process ("control", "-f file://$pingior -g file://$pongior");
 
-# variables for parameters
+print STDERR "Starting Ping\n";
 
-sub ping
-{
-    my $args = " -o ping_ior";
-    print ("\nPing: $args\n");
-    $SV = Process::Create ($latency_ping, $args);
+$PING->Spawn ();
+
+if (PerlACE::waitforfile_timed ($pingior, 20) == -1) {
+    print STDERR "ERROR: cannot find file <$pingior>\n";
+    $PING->Kill (); 
+    exit 1;
 }
 
+print STDERR "Starting Pong\n";
 
-sub pong
-{
-    my $args = " -o pong_ior";
-    print ("\nPong: $args\n");
-    $CL = Process::Create ($latency_pong, $args);
-}                                                     
-
-
-sub control
-{
-    my $args = " -f file://ping_ior -g file://pong_ior";
-    print ("\nControl: $args\n");
-    $CO = Process::Create ($latency_control, $args);
+$PONG->Spawn ();
+if (PerlACE::waitforfile_timed ($pongior, 20) == -1) {
+    print STDERR "ERROR: cannot find file <$pongior>\n";
+    $PING->Kill ();
+    $PONG->Kill (); 
+    exit 1;
 }
 
-ping ();
+print STDERR "Starting Control\n";
 
-sleep $sleeptime;
+$control = $CTRL->SpawnWaitKill (200);
 
-pong ();
-
-sleep $sleeptime;
-
-control ();
-
-
-if ($CL->TimedWait (200) == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $status = 1;
-  $CL->Kill (); $CL->TimedWait (1);
+if ($control != 0) {
+    print STDERR "ERROR: control returned $control\n";
+    $status = 1;
 }
 
-$SV->Terminate (); if ($SV->TimedWait (5) == -1) {
-  print STDERR "ERROR: cannot terminate server\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  $CO->Kill (); $CO->TimedWait (1);
-  exit 1;
+$pi = $PING->TerminateWaitKill (5);
+
+if ($pi != 0) {
+    print STDERR "ERROR: ping returned $pi\n";
+    $status = 1;
 }
+
+$po = $PONG->TerminateWaitKill (5);
+
+if ($po != 0) {
+    print STDERR "ERROR: pong returned $po\n";
+    $status = 1;
+}
+
+unlink $pingior, $pongior;
 
 exit $status;
