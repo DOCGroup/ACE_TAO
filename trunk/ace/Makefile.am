@@ -894,7 +894,7 @@ INLINE_FILES = \
 ## However, if we set the package to "ace" instead of "ACE" then we won't
 ## need to set the "pkgincludedir."
 ##        -Ossama
-##pkgincludedir = $(prefix)/include/ace
+##pkgincludedir = $(includedir)/ace
 pkginclude_HEADERS = \
   $(HEADER_FILES) \
   $(INLINE_FILES) \
