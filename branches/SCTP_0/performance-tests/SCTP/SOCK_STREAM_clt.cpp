@@ -44,7 +44,7 @@ int main(int argc, char **argv){
   // Initialize the options manager
   Options_Manager optsMgr(argc, argv, "client-opts");
 
-  // show usage is requested
+  // show usage if requested
   if (optsMgr._usage) {
     optsMgr._show_usage(cerr, "client-opts");
     return 1;
@@ -91,7 +91,7 @@ int main(int argc, char **argv){
   // connection is closed by runTest* functions
   testResultsHistogram = runTest(dataStream);
 
-  // report out the test statistics IF NO EXECPTIONS have been thrown
+  // report out the test statistics.
   // all histograms created are placed onto a linked list that report()
   // can access. So the histogram created in one of the *_test() functions
   // will be reported out by the report() call
