@@ -176,9 +176,9 @@ public:
   // This method adds the <handle> to the I/O completion port
   
   // = Timer management. 
-  virtual int schedule_timer (ACE_Handler &handler, 
-			      const void *act,
-			      const ACE_Time_Value &time);
+  virtual long schedule_timer (ACE_Handler &handler, 
+			       const void *act,
+			       const ACE_Time_Value &time);
   // Schedule a <handler> that will expire after <time>.  If it
   // expires then <act> is passed in as the value to the <handler>'s
   // <handle_timeout> callback method.  This method returns a
@@ -189,26 +189,28 @@ public:
   // with accidentally deleting the wrong timer.  Returns -1 on
   // failure (which is guaranteed never to be a valid <timer_id>.
 
-  virtual int schedule_repeating_timer (ACE_Handler &handler, 
-					const void *act,
-					const ACE_Time_Value &interval);  
+  virtual long schedule_repeating_timer (ACE_Handler &handler, 
+					 const void *act,
+					 const ACE_Time_Value &interval);  
   
   // Same as above except <interval> it is used to reschedule the
   // <handler> automatically.
   
-  int schedule_timer (ACE_Handler &handler, 
-		      const void *act,
-		      const ACE_Time_Value &time,
-		      const ACE_Time_Value &interval);
+  virtual long schedule_timer (ACE_Handler &handler, 
+			       const void *act,
+			       const ACE_Time_Value &time,
+			       const ACE_Time_Value &interval);
   // This combines the above two methods into one. Mostly for backward
   // compatibility.
 
-  virtual int cancel_timer (ACE_Handler &handler);
+  virtual int cancel_timer (ACE_Handler &handler,
+			    int dont_call_handle_close = 1);
   // Cancel all timers associated with this <handler>.  Returns number
   // of timers cancelled.
 
-  virtual int cancel_timer (int timer_id, 
-			    const void **act = 0);
+  virtual int cancel_timer (long timer_id, 
+			    const void **act = 0,
+			    int dont_call_handle_close = 1);
   // Cancel the single <ACE_Handler> that matches the <timer_id> value
   // (which was returned from the <schedule> method).  If <act> is
   // non-NULL then it will be set to point to the ``magic cookie''
