@@ -1,3 +1,10 @@
+Thu Oct  7 17:32:18 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Malloc_Allocator.cpp:
+	* ace/Malloc_Allocator.inl:
+
+          Moved all virtual methods from *.inl to *.cpp.
+
 Thu Oct  7 16:45:21 2004  Steve Huston  <shuston@riverace.com>
 
 	* bin/MakeProjectCreator/config/global.features: Added uses_wchar = 0
