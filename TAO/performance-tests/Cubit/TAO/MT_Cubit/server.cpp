@@ -178,9 +178,11 @@ Cubit_Task::initialize_orb (void)
                           1);
 
       this->naming_context_ =
-        CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
+        CosNaming::NamingContext::_narrow (naming_obj.in (),
+                                           TAO_TRY_ENV);
 
-      // Check the environment and return 1 if exception occurred or nil pointer.
+      // Check the environment and return 1 if exception occurred or
+      // nil pointer.
       if (TAO_TRY_ENV.exception () != 0 ||
           CORBA::is_nil (this->naming_context_.in ())==CORBA::B_TRUE )
         return 1;
@@ -406,6 +408,7 @@ Cubit_Factory_Task::svc (void)
               ">>> (%P|%t) Beginning Cubit Factory task with args = '%s'\n",
               orbargs_));
 
+  // @@ This should be replaced with the TAO_ORB_Manager...
   this->initialize_orb ();
   this->create_factory ();
 
@@ -518,6 +521,9 @@ Cubit_Factory_Task::initialize_orb (void)
 }
 
 // Parses the command line arguments and returns an error status.
+// @@ This method should be integrated into one of the classes
+// (preferably into an Options singleton) rather than kept as a
+// stand-alone function.
 
 static int
 parse_args (int argc, char *argv[])
@@ -567,16 +573,22 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-int
+// @@ This method should be integrated into one of the classes rather
+// than kept as a stand-alone function.
+
+static int
 initialize (int argc, char **argv)
 {
 #if defined (VXWORKS)
    hostAdd ("mv2604e", "130.38.183.178");
 #if defined (VME_DRIVER)
    STATUS status = vmeDrv ();
+
    if (status != OK)
      printf ("ERROR on call to vmeDrv()\n");
+
    status = vmeDevCreate ("/vme");
+
    if (status != OK)
      printf ("ERROR on call to vmeDevCreate()\n");
 #endif /* defined (VME_DRIVER) */
@@ -613,7 +625,11 @@ initialize (int argc, char **argv)
 }
 
 // Starts up the servants
-int
+
+// @@ This method should be integrated into one of the classes rather
+// than kept as a stand-alone function.
+
+static int
 start_servants (void)
 {
   char *args1;
@@ -623,11 +639,11 @@ start_servants (void)
                   -1);
   int i;
 
+  // Barrier for the multiple clients to synchronize after binding to
+  // the servants.
   ACE_Barrier barrier_ (num_of_objs + 1);
-  // Barrier for the multiple clients to synchronize after
-  // binding to the servants.
 
-  // Create an array to hold pointers to the Cubit objects
+  // Create an array to hold pointers to the Cubit objects.
   CORBA::String *cubits;
 
   ACE_NEW_RETURN (cubits,
@@ -660,7 +676,7 @@ start_servants (void)
                                0,
                                priority);
 
-  // Create an array to hold pointers to the low priority tasks..
+  // Create an array to hold pointers to the low priority tasks.
   Cubit_Task **low_priority_task;
 
   ACE_NEW_RETURN (low_priority_task,
@@ -679,6 +695,7 @@ start_servants (void)
               num_of_objs - 1));
 
   // Create the low priority servants.
+
   for (i = 0; i < num_of_objs - 1; i++)
     {
       char *args;
@@ -727,17 +744,17 @@ start_servants (void)
   for (i = 0; i < num_of_objs-1; ++i)
     cubits[i + 1] = low_priority_task[i]->get_servant_ior (0);
 
-  FILE *iorFile = 0;
+  FILE *ior_file = 0;
 
   if (ior_file != 0)
-    iorFile = fopen (ior_file, "w");
+    ior_file = fopen (ior_file, "w");
 
   for (i = 0; i < num_of_objs; ++i)
     {
       if (ior_file != 0)
         {
-          fputs (cubits[i], iorFile);
-          fputs ("\n", iorFile);
+          fputs (cubits[i], ior_file);
+          fputs ("\n", ior_file);
         }
       ACE_OS::printf ("cubits[%d] ior = %s\n",
                       i,
@@ -745,7 +762,7 @@ start_servants (void)
     }
 
   if (ior_file != 0)
-    ACE_OS::fclose (iorFile);
+    ACE_OS::fclose (ior_file);
 
   ACE_NEW_RETURN (factory_task,
                   Cubit_Factory_Task (args, "internet", cubits, num_of_objs),
@@ -773,7 +790,7 @@ main (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error in Initialization\n"),
                       1);
-  if(start_servants () != 0)
+  if (start_servants () != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error creating the servants\n"),
                       1);

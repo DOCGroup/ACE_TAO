@@ -39,8 +39,8 @@ Util_Thread::get_number_of_computations (void)
   return this->number_of_computations_;
 }
 
-// Perform repeated prime factor computations on an arbitrary number
-// and you thought your life was boring. :-)
+// Perform repeated prime factor computations on an arbitrary number.
+// And you thought your life was boring... :-)
 
 int
 Util_Thread::run_computations (void)
