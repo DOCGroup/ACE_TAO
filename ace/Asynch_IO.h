@@ -294,6 +294,18 @@ public:
             int priority = 0,
             int signal_number = ACE_SIGRTMIN);
 
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+  /**
+  * Same as above but with scatter support, through chaining of composite
+  * message blocks using the continuation field.
+  */
+  int readv (ACE_Message_Block &message_block,
+             u_long num_bytes_to_read,
+             const void *act = 0,
+             int priority = 0,
+             int signal_number = ACE_SIGRTMIN);
+#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+
   /// Return the underlying implementation class.
   ACE_Asynch_Read_Stream_Impl *implementation (void) const;
 
@@ -407,6 +419,18 @@ public:
              const void *act = 0,
              int priority = 0,
              int signal_number = ACE_SIGRTMIN);
+
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+  /**
+  * Same as above but with gather support, through chaining of composite
+  * message blocks using the continuation field.
+  */
+  int writev (ACE_Message_Block &message_block,
+              u_long bytes_to_write,
+              const void *act = 0,
+              int priority = 0,
+              int signal_number = ACE_SIGRTMIN);
+#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
   /// Return the underlying implementation class.
   ACE_Asynch_Write_Stream_Impl *implementation (void) const;
@@ -524,6 +548,22 @@ public:
             const void *act = 0,
             int priority = 0,
             int signal_number = ACE_SIGRTMIN);
+
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+  /**
+  * Same as above but with scatter support, through chaining of composite
+  * message blocks using the continuation field.
+  * NOTE: In win32 Each data block payload must be at least the size of a system 
+  * memory page and must be aligned on a system memory page size boundary
+  */
+  int readv (ACE_Message_Block &message_block,
+             u_long bytes_to_read,
+             u_long offset = 0,
+             u_long offset_high = 0,
+             const void *act = 0,
+             int priority = 0,
+             int signal_number = ACE_SIGRTMIN);
+#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
   /// Return the underlying implementation class.
   ACE_Asynch_Read_File_Impl *implementation (void) const;
@@ -644,6 +684,22 @@ public:
              const void *act = 0,
              int priority = 0,
              int signal_number = ACE_SIGRTMIN);
+
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+  /**
+  * Same as above but with gather support, through chaining of composite
+  * message blocks using the continuation field.
+  * NOTE: In win32 Each data block payload must be at least the size of a system 
+  * memory page and must be aligned on a system memory page size boundary
+  */
+  int writev (ACE_Message_Block &message_block,
+              u_long bytes_to_write,
+              u_long offset = 0,
+              u_long offset_high = 0,
+              const void *act = 0,
+              int priority = 0,
+              int signal_number = ACE_SIGRTMIN);
+#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
   /// Return the underlying implementation class.
   ACE_Asynch_Write_File_Impl *implementation (void) const;

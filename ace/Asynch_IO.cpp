@@ -205,6 +205,22 @@ ACE_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                                         signal_number);
 }
 
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+int
+ACE_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
+                               u_long bytes_to_read,
+                               const void *act,
+                               int priority,
+                               int signal_number)
+{
+  return this->implementation ()->readv (message_block,
+                                         bytes_to_read,
+                                         act,
+                                         priority,
+                                         signal_number);
+}
+#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+
 ACE_Asynch_Read_Stream_Impl *
 ACE_Asynch_Read_Stream::implementation (void) const
 {
@@ -310,6 +326,22 @@ ACE_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
                                          priority,
                                         signal_number);
 }
+
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+int
+ACE_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
+                                 u_long bytes_to_write,
+                                 const void *act,
+                                 int priority,
+                                 int signal_number)
+{
+  return this->implementation ()->writev (message_block,
+                                          bytes_to_write,
+                                          act,
+                                          priority,
+                                          signal_number);
+}
+#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
 ACE_Asynch_Write_Stream_Impl *
 ACE_Asynch_Write_Stream::implementation (void) const
@@ -421,6 +453,26 @@ ACE_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                         signal_number);
 }
 
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+int
+ACE_Asynch_Read_File::readv (ACE_Message_Block &message_block,
+                             u_long bytes_to_read,
+                             u_long offset,
+                             u_long offset_high,
+                             const void *act,
+                             int priority,
+                             int signal_number)
+{
+  return this->implementation ()->readv (message_block,
+                                         bytes_to_read,
+                                         offset,
+                                         offset_high,
+                                         act,
+                                         priority,
+                                         signal_number);
+}
+#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+
 ACE_Asynch_Read_File_Impl *
 ACE_Asynch_Read_File::implementation (void) const
 {
@@ -512,6 +564,26 @@ ACE_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                          priority,
                                          signal_number);
 }
+
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+int
+ACE_Asynch_Write_File::writev (ACE_Message_Block &message_block,
+                               u_long bytes_to_write,
+                               u_long offset,
+                               u_long offset_high,
+                               const void *act,
+                               int priority,
+                               int signal_number)
+{
+  return this->implementation ()->writev (message_block,
+                                          bytes_to_write,
+                                          offset,
+                                          offset_high,
+                                          act,
+                                          priority,
+                                          signal_number);
+}
+#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
 ACE_Asynch_Write_File_Impl *
 ACE_Asynch_Write_File::implementation (void) const
