@@ -219,6 +219,18 @@ public:
 
 ACE_TEMPLATE_SPECIALIZATION
 /**
+ * @class ACE_Hash<void *>
+ *
+ * @brief Function object for hashing a void *
+ */
+class ACE_Export ACE_Hash<void *>
+{
+public:
+  u_long operator () (const void *) const;
+};
+
+ACE_TEMPLATE_SPECIALIZATION
+/**
  * @class ACE_Equal_To<const
  *
  * @brief Function object for determining whether two const strings are equal.

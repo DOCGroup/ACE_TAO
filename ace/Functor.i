@@ -122,6 +122,13 @@ ACE_Hash<ACE_TCHAR *>::operator () (const ACE_TCHAR *t) const
   return ACE::hash_pjw (t);
 }
 
+//ACE_TEMPLATE_METHOD_SPECIALIZATION
+ACE_INLINE u_long
+ACE_Hash<void *>::operator () (const void *t) const
+{
+  return (u_long) t;
+}
+
 /***********************************************************************/
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE int
