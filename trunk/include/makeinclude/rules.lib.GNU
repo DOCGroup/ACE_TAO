@@ -92,7 +92,9 @@ ifdef TEMPINCDIR
 	fi
 endif
 	-chmod a+r $@
+ifneq (,$(RANLIB))
 	-$(RANLIB) $@
+endif # RANLIB
 
 # Note that if you don't want to build shared libraries, just remove the $(VSHOBJS)
 ifdef SHLIBBUILD
@@ -114,5 +116,7 @@ ifdef SHLIBA
 $(SHLIBA): $(VSHLIB)
 	$(AR) $(ARFLAGS) $@ $?
 	-chmod a+rx $@
+ifneq (,$(RANLIB))
 	-$(RANLIB) $@
+endif # RANLIB
 endif
