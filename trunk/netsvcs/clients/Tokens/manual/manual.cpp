@@ -370,4 +370,11 @@ template class ACE_Map_Reverse_Iterator<STDIN_Token::TID, ACE_Token_Collection *
 #pragma instantiate ACE_Map_Reverse_Iterator<STDIN_Token::TID, ACE_Token_Collection *, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#else
+int 
+main (int, char *[])
+{
+  ACE_ERROR_RETURN ((LM_ERROR, 
+		     "threads or ACE_HAS_TOKENS_LIBRARY not supported on this platform\n"), -1);
+}
 #endif /* ACE_HAS_THREADS && ACE_HAS_TOKENS_LIBRARY */
