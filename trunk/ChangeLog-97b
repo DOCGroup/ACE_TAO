@@ -1,3 +1,9 @@
+Fri Oct 03 21:20:26 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Makefile: disable INSTALL in $(ACE_ROOT)/ace Makefile,
+	  because it's not needed and it creates circular symlinks when
+	  the library build fails.
+
 Fri Oct  3 11:39:45 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Thread_Manager: Added a new flags_ field to
