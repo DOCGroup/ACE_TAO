@@ -1,9 +1,12 @@
 // Remote_Name_Space.cpp
 // $Id$
 
-#include "ace/Remote_Name_Space.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Log_Msg.h"
+#include "ace/Other/Remote_Name_Space.h"
+#include "ace/Utils/Templates/Auto_Ptr.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 ACE_RCSID(ace, Remote_Name_Space, "$Id$")
 

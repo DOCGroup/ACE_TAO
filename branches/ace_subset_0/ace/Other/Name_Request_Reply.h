@@ -21,13 +21,13 @@
 #define ACE_NAME_REQUEST_REPLY_H
 #include "ace/pre.h"
 
-#include "ace/Time_Value.h"
+#include "ace/Timer/Time_Value.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SString.h"
+#include "ace/Utils/SString.h"
 
 /**
  * @class ACE_Name_Request

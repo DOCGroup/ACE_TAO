@@ -17,14 +17,14 @@
 #define ACE_LOCAL_NAME_SPACE_H
 #include "ace/pre.h"
 
-#include "ace/SString.h"
+#include "ace/Utils/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Malloc_T.h"
-#include "ace/Synch.h"
+#include "ace/Memory/Malloc_T.h"
+#include "ace/Threads/Synch.h"
 
 /**
  * @class ACE_NS_String
@@ -124,7 +124,7 @@ private:
 };
 
 // Include the ACE_Local_Name_Space templates stuff at this point.
-#include "ace/Local_Name_Space_T.h"
+#include "ace/Other/Local_Name_Space_T.h"
 
 #include "ace/post.h"
 #endif /* ACE_LOCAL_NAME_SPACE_H */

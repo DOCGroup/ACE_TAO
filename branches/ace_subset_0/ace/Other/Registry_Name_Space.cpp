@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ace/Registry_Name_Space.h"
+#include "ace/Other/Registry_Name_Space.h"
 
 ACE_RCSID(ace, Registry_Name_Space, "$Id$")
 

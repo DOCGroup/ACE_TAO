@@ -21,17 +21,17 @@
 #define ACE_NAME_PROXY_H
 #include "ace/pre.h"
 
-#include "ace/INET_Addr.h"
+#include "ace/IPC/INET_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SOCK_Connector.h"
-#include "ace/SOCK_Stream.h"
-#include "ace/Service_Config.h"
-#include "ace/Synch_Options.h"
-#include "ace/Name_Request_Reply.h"
+#include "ace/Sockets/SOCK_Connector.h"
+#include "ace/Sockets/SOCK_Stream.h"
+#include "ace/Svcconf/Service_Config.h"
+#include "ace/Threads/Synch_Options.h"
+#include "ace/Other/Name_Request_Reply.h"
 
 /**
  * @class ACE_Name_Proxy

@@ -22,11 +22,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SString.h"
-#include "ace/Containers.h"
-#include "ace/Service_Object.h"
-#include "ace/Name_Proxy.h"
-#include "ace/Name_Space.h"
+#include "ace/Utils/SString.h"
+#include "ace/Utils/Containers.h"
+#include "ace/Svcconf/Service_Object.h"
+#include "ace/Other/Name_Proxy.h"
+#include "ace/Other/Name_Space.h"
 
 // Forward decl
 class ACE_Name_Options;
