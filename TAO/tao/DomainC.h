@@ -173,7 +173,7 @@ class TAO_Export CORBA_DomainManager : public virtual CORBA_Object
     // This needed to be able to store the arguments, exceptiosn, constexts
     // and build the lists dynamically on demand so that unnecessary time overhead
     // of building these lists when they arent used is avoided.
-    class TAO_ClientRequest_Info_CORBA_DomainManager_get_domain_policy 
+    class TAO_ClientRequest_Info_CORBA_DomainManager_get_domain_policy
       : public TAO_ClientRequestInfo
     {
     public:
@@ -335,8 +335,8 @@ private:
   // This needed to be able to store the arguments, exceptiosn, constexts
   // and build the lists dynamically on demand so that unnecessary time overhead
   // of building these lists when they arent used is avoided.
-  class TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager 
-    : public TAO_ClientRequest_Info
+  class TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager
+    : public TAO_ClientRequestInfo
   {
   public:
     friend class CORBA_ConstructionPolicy;

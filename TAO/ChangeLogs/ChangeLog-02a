@@ -1,3 +1,11 @@
+Mon Oct 23 11:51:41 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/DomainC.h:
+
+	  Corrected typo where the name of the ClientRequestInfo base
+	  class was not updated to the new name.  Thanks to Jeff for
+	  pointing this out.
+
 Mon Oct 23 02:49:25 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Interceptor_List.h:
