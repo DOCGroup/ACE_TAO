@@ -1034,10 +1034,10 @@ ACE_OS::strcpy (char *s, const char *t)
 }
 
 ACE_INLINE int
-ACE_OS::tolower (int c)
+ACE_OS::to_lower (int c)
 {
-  // ACE_TRACE ("ACE_OS::tolower");
-  return ::tolower (c);
+  // ACE_TRACE ("ACE_OS::to_lower");
+  return tolower (c);
 }
 
 ACE_INLINE char *
@@ -1093,9 +1093,9 @@ ACE_OS::strcasecmp (const char *s, const char *t)
        for (;
             *s != '\0' && *t != '\0';
             ++s, ++t)
-         if (ACE_OS::tolower (*s) != ACE_OS::tolower (*t))
+         if (ACE_OS::to_lower (*s) != ACE_OS::to_lower (*t))
            {
-             result = ((ACE_OS::tolower (*s) < ACE_OS::tolower (*t)) ? -1 : 1);
+             result = ((ACE_OS::to_lower (*s) < ACE_OS::to_lower (*t)) ? -1 : 1);
              break;
            }
      }
@@ -1123,9 +1123,9 @@ ACE_OS::strncasecmp (const char *s, const char *t, size_t len)
 
   while (*s != '\0' && *t != '\0' && len != 0)
     {
-      if (ACE_OS::tolower (*s) != ACE_OS::tolower (*t))
+      if (ACE_OS::to_lower (*s) != ACE_OS::to_lower (*t))
         {
-          result = ((ACE_OS::tolower (*s) < ACE_OS::tolower (*t)) ? -1 : 1);
+          result = ((ACE_OS::to_lower (*s) < ACE_OS::to_lower (*t)) ? -1 : 1);
           break;
         }
 
@@ -7398,9 +7398,9 @@ ACE_OS::strcpy (wchar_t *s, const wchar_t *t)
 }
 
 ACE_INLINE wint_t
-ACE_OS::tolower (wint_t c)
+ACE_OS::to_lower (wint_t c)
 {
-  // ACE_TRACE ("ACE_OS::tolower");
+  // ACE_TRACE ("ACE_OS::to_lower");
   return ::towlower (c);
 }
 
@@ -7430,9 +7430,9 @@ ACE_OS::strcasecmp (const wchar_t *s, const wchar_t *t)
        for (;
             *s != '\0' && *t != '\0';
             ++s, ++t)
-         if (ACE_OS::tolower (*s) != ACE_OS::tolower (*t))
+         if (ACE_OS::to_lower (*s) != ACE_OS::to_lower (*t))
            {
-             result = ((ACE_OS::tolower (*s) < ACE_OS::tolower (*t)) ? -1 : 1);
+             result = ((ACE_OS::to_lower (*s) < ACE_OS::to_lower (*t)) ? -1 : 1);
              break;
            }
      }
@@ -7458,9 +7458,9 @@ ACE_OS::strncasecmp (const wchar_t *s, const wchar_t *t, size_t len)
 
   while (*s != '\0' && *t != '\0' && len != 0)
     {
-      if (ACE_OS::tolower (*s) != ACE_OS::tolower (*t))
+      if (ACE_OS::to_lower (*s) != ACE_OS::to_lower (*t))
         {
-          result = ((ACE_OS::tolower (*s) < ACE_OS::tolower (*t)) ? -1 : 1);
+          result = ((ACE_OS::to_lower (*s) < ACE_OS::to_lower (*t)) ? -1 : 1);
           break;
         }
 
