@@ -153,29 +153,36 @@ public:
 
   ~JAWS_Asynch_IO (void);
 
-  void read (ACE_Message_Block& mb, int size);
+  virtual void accept (JAWS_IO_Handler *ioh);
 
-  void transmit_file (const char *filename,
+  void read (JAWS_IO_Handler *ioh, ACE_Message_Block *mb, unsigned int size);
+
+  void transmit_file (JAWS_IO_Handler *ioh,
+                      const char *filename,
                       const char *header,
-                      int header_size,
+                      unsigned int header_size,
                       const char *trailer,
-                      int trailer_size);
+                      unsigned int trailer_size);
 
-  void receive_file (const char *filename,
+  void receive_file (JAWS_IO_Handler *ioh,
+                     const char *filename,
                      void *initial_data,
-                     int initial_data_length,
-                     int entire_length);
+                     unsigned int initial_data_length,
+                     unsigned int entire_length);
 
-  void send_confirmation_message (const char *buffer,
-                                  int length);
+  void send_confirmation_message (JAWS_IO_Handler *ioh,
+                                  const char *buffer,
+                                  unsigned int length);
 
-  void send_error_message (const char *buffer,
-                           int length);
+  void send_error_message (JAWS_IO_Handler *ioh,
+                           const char *buffer,
+                           unsigned int length);
 
 protected:
   enum Message_Types
   {
     CONFORMATION,
+    CONFIRMATION = CONFORMATION,
     ERROR_MESSAGE
   };
 
@@ -183,17 +190,22 @@ protected:
                              int length,
                              int act);
 
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result
+                                   &result);
   // This method will be called when an asynchronous read completes on
   // a stream.
 
-  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
+  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result
+                                    &result);
   // This method will be called when an asynchronous write completes
   // on a stream.
 
-  virtual void handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result);
+  virtual void handle_transmit_file (const ACE_Asynch_Transmit_File::Result
+                                     &result);
   // This method will be called when an asynchronous transmit file
   // completes.
+
+  virtual void handle_accept (const ACE_Asynch_Accept::Result &result);
 };
 
 typedef ACE_Singleton<JAWS_Asynch_IO, ACE_SYNCH_MUTEX>
