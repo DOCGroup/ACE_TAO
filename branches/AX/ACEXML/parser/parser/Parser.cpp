@@ -1657,7 +1657,6 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
           break;
         }
 
-
       /*
       Parse DefaultDecl:
         #REQUIRED
