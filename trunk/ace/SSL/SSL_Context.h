@@ -23,7 +23,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SString.h"
-#include "ace/Singleton.h"
 #include "ace/Synch.h"
 
 #include <openssl/ssl.h>
@@ -282,7 +281,7 @@ public:
    * exchanged.  These must be provided in the form of DH key
    * generation parameters loaded in, or as fixed keys hardcoded into
    * the code itself.  ACE_SSL supports loaded parameters.
-   * 
+   *
    */
   //@{
   /**
