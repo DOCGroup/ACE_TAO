@@ -1,3 +1,33 @@
+Tue Jun  1 16:48:58 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	   Ported <ACE_Asynch_Operation::cancel> to POSIX platforms based
+	   on <aio_cancel> API. Made the return values  consistent in both 
+	   WIN32 and POSIX platforms as follows. 
+
+	 All completion notifications for the I/O operations will occur
+	 normally. 
+
+	 = Return Values:
+
+	 -1 : Operation failed. (can get only in POSIX).
+	  0 : All the operations were cancelled.
+	  1 : All the operations were already finished in this
+	      handle. Unable to cancel them.
+	  2 : Atleast one of the requested operations cannot be
+	      cancelled.
+
+	* ace/Asynch_IO.cpp
+	* ace/Asynch_IO.h
+	* ace/POSIX_Asynch_IO.cpp
+	* ace/POSIX_Asynch_IO.h
+	* ace/POSIX_Proactor.h
+	* ace/WIN32_Asynch_IO.cpp:
+	* ace/POSIX_Proactor.cpp: 
+
+	* ace/config-linux-lxpthreads.h: Enabled the ACE_HAS_AIO_CALLS
+	flag for this platform.
+	
+
 Tue Jun  1 15:02:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Connector.h:
