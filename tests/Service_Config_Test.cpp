@@ -76,7 +76,8 @@ Test_Singleton::instance (u_short variety)
 
   ACE_Object_Manager::at_exit (instances[variety],
                                test_singleton_cleanup,
-                               (void *) variety);
+                               ACE_reinterpret_cast (void *,
+                                 ACE_static_cast (u_long, variety)));
   return instances[variety];
 }
 
