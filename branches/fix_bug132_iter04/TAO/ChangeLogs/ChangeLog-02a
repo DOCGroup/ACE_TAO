@@ -1,3 +1,29 @@
+Sun Apr 22 19:32:55 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/README:
+        * tests/Makefile:
+        * tests/Makefile.bor:
+        * tests/AMI_Buffering/README:
+        * tests/AMI_Buffering/Makefile:
+        * tests/AMI_Buffering/Makefile.bor:
+        * tests/AMI_Buffering/admin.bor:
+        * tests/AMI_Buffering/client.bor:
+        * tests/AMI_Buffering/server.bor:
+        * tests/AMI_Buffering/run_test.pl:
+        * tests/AMI_Buffering/run_timeout.pl:
+        * tests/AMI_Buffering/run_buffer_size.pl:
+        * tests/AMI_Buffering/run_message_count.pl:
+        * tests/AMI_Buffering/Test.idl:
+        * tests/AMI_Buffering/AMI_Buffering.h:
+        * tests/AMI_Buffering/AMI_Buffering.cpp:
+        * tests/AMI_Buffering/AMI_Buffering_Admin.h:
+        * tests/AMI_Buffering/AMI_Buffering_Admin.cpp:
+        * tests/AMI_Buffering/Reply_Handler.h:
+        * tests/AMI_Buffering/Reply_Handler.cpp:
+        * tests/AMI_Buffering/admin.cpp:
+        * tests/AMI_Buffering/client.cpp:
+        * tests/AMI_Buffering/server.cpp:
+
 Fri Apr 20 15:29:13 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Makefile:
