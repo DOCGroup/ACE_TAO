@@ -2,7 +2,7 @@
 
 #include "ace/TTY_IO.h"
 
-ACE_RCSID(ace, TTY_IO, "TTY_IO.cpp,v 4.18 1999/06/02 21:20:14 nanbor Exp")
+ACE_RCSID(ace, TTY_IO, "$Id$")
 
 // Interface for reading/writing serial device parameters
 
@@ -51,55 +51,117 @@ ACE_TTY_IO::control (Control_Mode cmd,
     case SETPARAMS:
       switch (arg->baudrate)
         {
-        case 300:
-          newbaudrate = B300;
-          break;
-        case 600:
-          newbaudrate = B600;
-          break;
-        case 1200:
-          newbaudrate = B1200;
-          break;
-        case 2400:
-          newbaudrate = B2400;
-          break;
-        case 4800:
-          newbaudrate = B4800;
-          break;
-        case 9600:
-          newbaudrate = B9600;
-          break;
-        case 19200:
-          newbaudrate = B19200;
-          break;
-        case 38400:
-          newbaudrate = B38400;
-          break;
+#if defined (B0)
+	case 0:       newbaudrate = B0;       break;
+#endif /* B0 */
+#if defined (B50)
+	case 50:      newbaudrate = B50;      break;
+#endif /* B50 */
+#if defined (B75)
+	case 75:      newbaudrate = B75;      break;
+#endif /* B75 */
+#if defined (B110)
+	case 110:     newbaudrate = B110;     break;
+#endif /* B110 */
+#if defined (B134)
+	case 134:     newbaudrate = B134;     break;
+#endif /* B134 */
+#if defined (B150)
+	case 150:     newbaudrate = B150;     break;
+#endif /* B150 */
+#if defined (B200)
+	case 200:     newbaudrate = B200;     break;
+#endif /* B200 */
+#if defined (B300)
+        case 300:     newbaudrate = B300;     break;
+#endif /* B300 */
+#if defined (B600)
+        case 600:     newbaudrate = B600;     break;
+#endif /* B600 */
+#if defined (B1200)
+        case 1200:    newbaudrate = B1200;    break;
+#endif /* B1200 */
+#if defined (B1800)
+	case 1800:    newbaudrate = B1800;    break;
+#endif /* B1800 */
+#if defined (B2400)
+        case 2400:    newbaudrate = B2400;    break;
+#endif /* B2400 */
+#if defined (B4800)
+        case 4800:    newbaudrate = B4800;    break;
+#endif /* B4800 */
+#if defined (B9600)
+        case 9600:    newbaudrate = B9600;    break;
+#endif /* B9600 */
+#if defined (B19200)
+        case 19200:   newbaudrate = B19200;   break;
+#endif /* B19200 */
+#if defined (B38400)
+        case 38400:   newbaudrate = B38400;   break;
+#endif /* B38400 */
 #if defined (B56000)
-	case 56000:
-	  newbaudrate = B56000;
-	  break;
+	case 56000:   newbaudrate = B56000;   break;
 #endif /* B56000 */
 #if defined (B57600)
-        case 57600:
-          newbaudrate = B57600;
-          break;
+        case 57600:   newbaudrate = B57600;   break;
 #endif /* B57600 */
+#if defined (B76800)
+	case 76800:   newbaudrate = B76800;   break;
+#endif /* B76800 */
 #if defined (B115200)
-        case 115200:
-          newbaudrate = B115200;
-          break;
+        case 115200:  newbaudrate = B115200;  break;
 #endif /* B115200 */
 #if defined (B128000)
-	case 128000:
-	  newbaudrate = B128000;
-	  break;
+	case 128000:  newbaudrate = B128000;  break;
 #endif /* B128000 */
+#if defined (B153600)
+	case 153600:  newbaudrate = B153600;  break;
+#endif /* B153600 */
+#if defined (B230400)
+	case 230400:  newbaudrate = B230400;  break;
+#endif /* B230400 */
+#if defined (B307200)
+	case 307200:  newbaudrate = B307200;  break;
+#endif /* B307200 */
 #if defined (B256000)
-	case 256000:
-	  newbaudrate = B256000;
-	  break;
+	case 256000:  newbaudrate = B256000;  break;
 #endif /* B256000 */
+#if defined (B460800)
+	case 460800:  newbaudrate = B460800;  break;
+#endif /* B460800 */
+#if defined (B500000)
+	case 500000:  newbaudrate = B500000;  break;
+#endif /* B500000 */
+#if defined (B576000)
+	case 576000:  newbaudrate = B576000;  break;
+#endif /* B576000 */
+#if defined (B921600)
+	case 921600:  newbaudrate = B921600;  break;
+#endif /* B921600 */
+#if defined (B1000000)
+	case 1000000: newbaudrate = B1000000; break;
+#endif /* B1000000 */
+#if defined (B1152000)
+	case 1152000: newbaudrate = B1152000; break;
+#endif /* B1152000 */
+#if defined (B1500000)
+	case 1500000: newbaudrate = B1500000; break;
+#endif /* B1500000 */
+#if defined (B2000000)
+	case 2000000: newbaudrate = B2000000; break;
+#endif /* B2000000 */
+#if defined (B2500000)
+	case 2500000: newbaudrate = B2500000; break;
+#endif /* B2500000 */
+#if defined (B3000000)
+	case 3000000: newbaudrate = B3000000; break;
+#endif /* B3000000 */
+#if defined (B3500000)
+	case 3500000: newbaudrate = B3500000; break;
+#endif /* B3500000 */
+#if defined (B4000000)
+	case 4000000: newbaudrate = B4000000; break;
+#endif /* B4000000 */
         default:
           return -1;
         }

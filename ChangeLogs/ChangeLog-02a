@@ -1,3 +1,14 @@
+Thu Feb 21 09:32:56 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/TTY_IO.cpp (control): Use the appropriate B* macros to set all
+	  the baudrate cases.  Thanks to Olli Savia <ops@iki.fi> for
+ 	  contributing this.
+
+	* ace/Signal.cpp (dispatch): Added a cast of (ACE_SignalHandler) to the
+	  SIG_DFL parameter so things will work on IRIX 6.5 with GCC
+ 	  3.0.1.  Thanks to Dan Green <dan.c.green@lmco.com> for reporting
+ 	  this.
+
 Thu Feb 21 13:09:13 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/streams.h: strstream was deprecated in the 1998 ISO C++

@@ -416,7 +416,7 @@ ACE_Sig_Handler::dispatch (int signum,
       if (eh->handle_signal (signum, siginfo, ucontext) == -1)
         {
           // Define the default disposition.
-          ACE_Sig_Action sa (SIG_DFL, (sigset_t *) 0);
+          ACE_Sig_Action sa ((ACE_SignalHandler) SIG_DFL, (sigset_t *) 0);
 
           ACE_Sig_Handler::signal_handlers_[signum] = 0;
 
