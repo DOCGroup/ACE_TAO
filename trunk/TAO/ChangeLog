@@ -1,3 +1,9 @@
+Fri Nov 28 13:34:03 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Sequence_Latency/Deferred/client.bor:
+        * performance-tests/Sequence_Latency/DII/client.bor:
+          Added missing libraries
+
 Fri Nov 28 12:44:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/AV.mpc:
