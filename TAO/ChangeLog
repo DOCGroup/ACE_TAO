@@ -1,3 +1,8 @@
+Mon Dec 23 16:25:08 2002  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/tests/Security/Makefile: Added 
+	  orbsvcs/tests/Security/Crash_Test/Crash_Test directory.
+
 Mon Dec 23 15:50:54 2002  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/Crash_Test/Crash_Test.dsw:
