@@ -1,3 +1,8 @@
+Wed Sep 04 09:43:45 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao\PortableInterceptorC.cpp (_create_policy): Fixed unused arg
+	  warning.	
+
 Tue Sep 03 18:34:51 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 	* tao/Messaging/TAO_Messaging_Static.dsp: Added the new files in
