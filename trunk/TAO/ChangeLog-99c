@@ -1,3 +1,8 @@
+Tue Jan 12 20:10:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/GIOP.cpp (send_request): Changed to use sendv_n to do vector
+	  write.
+
 Tue Jan 12 19:13:07 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
