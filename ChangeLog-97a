@@ -1,3 +1,25 @@
+Tue Feb 04 18:26:01 1997    <irfan@cha-cha.cs.wustl.edu>
+
+	* ace/Service_Config.cpp (alloc): The implementation now creates a
+ 	  ACE_New_Allocator rather than a ACE_Allocator_Adaptor.  If you
+	  still want the old behavior, overwrite the allocator singleton
+	  in Service_Config.
+
+	* ace/OS.i (mktemp): Added the missing ACE_INLINE directive.
+
+	* ace/OS.h: ACE_HAS_INLINED_OSCALLS is now automatically defined
+	  when __ACE_INLINE__ is defined. 
+
+	* ace/Malloc: Added a virtual destructor to ACE_Allocator.  Also
+ 	  added a new class ACE_New_Allocator which is a sub-class of
+ 	  ACE_Allocator. This class uses the new/delete operators to
+ 	  allocate and free up memory.  Please note that the only methods
+ 	  that are supported are malloc and free. All other methods are
+ 	  no-ops.  If you require this functionality, please use:
+ 	  ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL,
+ 	  MUTEX>> This will allow you to use the added functionality of
+ 	  bind/find/etc. while using the new/delete operators.
+
 Tue Feb  4 15:08:55 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Misc/test_iostreams.cpp: Added a test that illustrates

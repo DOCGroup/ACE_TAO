@@ -29,6 +29,9 @@ class ACE_Export ACE_Allocator
 public:
   // = Memory Management
   
+  virtual ~ACE_Allocator (void);
+  // Virtual destructor
+
   virtual void *malloc (size_t nbytes) = 0;
   // Allocate <nbytes>, but don't give them any initial value.
 
@@ -209,6 +212,54 @@ struct ACE_Export ACE_Malloc_Stats
 #else
 #define AMS(X) 
 #endif /* ACE_MALLOC_STATS */
+
+
+class ACE_New_Allocator : public ACE_Allocator
+  // = TITLE
+  //     Defines a class that provided a simple implementation of
+  //     memory allocation.
+  //
+  // = DESCRIPTION
+  //     This class uses the new/delete operators to allocate and free
+  //     up memory.  Please note that the only methods that are
+  //     supported are malloc and free. All other methods are no-ops.
+  //     If you require this functionality, please use:
+  //     ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL, MUTEX>>
+  //     This will allow you to use the added functionality of
+  //     bind/find/etc. while using the new/delete operators.
+{
+public:
+  
+  void *malloc (size_t nbytes); 
+  
+  void *calloc (size_t nbytes, char initial_value = '\0');
+  
+  void free (void *ptr);
+  
+  int remove (void);
+  
+  int bind (const char *name, void *pointer, int duplicates = 0);
+  
+  int trybind (const char *name, void *&pointer);
+  
+  int find (const char *name, void *&pointer);
+  
+  int find (const char *name);
+  
+  int unbind (const char *name);
+  
+  int unbind (const char *name, void *&pointer);
+  
+  int sync (ssize_t len = -1, int flags = MS_SYNC);
+  
+  int sync (void *addr, size_t len, int flags = MS_SYNC);
+  
+  int protect (ssize_t len = -1, int prot = PROT_RDWR); 
+  
+  int protect (void *addr, size_t len, int prot = PROT_RDWR);
+  
+  void dump (void) const;
+};
 
 #if defined (__ACE_INLINE__)
 #include "ace/Malloc.i"

@@ -6097,7 +6097,7 @@ ACE_OS::system (const wchar_t *command)
   ACE_OSCALL_RETURN (::_wsystem (command), int, -1);    
 }
 
-wchar_t *
+ACE_INLINE wchar_t *
 ACE_OS::mktemp (wchar_t *s)
 {
   // ACE_TRACE ("ACE_OS::mktemp");
