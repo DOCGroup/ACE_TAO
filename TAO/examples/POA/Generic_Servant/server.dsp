@@ -82,7 +82,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAOd.lib aced.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\..\..\bin\MyFood.dll" /pdbtype:sept /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
+# ADD LINK32 TAOd.lib aced.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\..\..\bin\Generic_Servantd.dll" /pdbtype:sept /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 # SUBTRACT LINK32 /profile /pdb:none
 
 !ENDIF 
@@ -144,7 +144,7 @@ InputName=Foo
 
 BuildCmds= \
 	tao_idl -Wb,export_macro=GENERIC_SERVANT_Export\
-         -Wb,export_include=generic_servant_export.h $(InputName).idl
+          -Wb,export_include=generic_servant_export.h $(InputName).idl
 
 "$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -175,7 +175,7 @@ InputName=Foo
 
 BuildCmds= \
 	tao_idl -Wb,export_macro=GENERIC_SERVANT_Export\
-         -Wb,export_include=generic_servant_export.h $(InputName).idl
+          -Wb,export_include=generic_servant_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

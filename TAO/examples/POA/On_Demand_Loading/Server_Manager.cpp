@@ -257,7 +257,7 @@ Server_i::create_activator (PortableServer::POA_var first_poa)
       // objectId.
 
       PortableServer::ObjectId_var first_foo_oid =
-        servant_activator_impl_->create_dll_object_id ("MyFoo",
+        servant_activator_impl_->create_dll_object_id ("Generic_Servant",
                                                        "create_MyFoo");
 
       first_foo_ = first_poa->create_reference_with_id (first_foo_oid.in (),
@@ -307,7 +307,7 @@ Server_i::create_locator (PortableServer::POA_var second_poa)
       // objectId.
       PortableServer::ObjectId_var second_foo_oid =
         servant_locator_impl_->create_dll_object_id 
-        ("MyFoo",
+        ("Generic_Servant",
          "create_MyFoo");
       second_foo_ = second_poa->create_reference_with_id 
         (second_foo_oid.in (),
