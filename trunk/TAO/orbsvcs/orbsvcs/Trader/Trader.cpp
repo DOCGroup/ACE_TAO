@@ -14,11 +14,7 @@
 // 
 // ============================================================================
 
-#define ACE_BUILD_DLL
-
 #include "Trader.h"
-#include "ace/OS.h"
-#include <iostream.h>
 
 TAO_Trader_Base::TAO_Trader_Base (void)
   : trading_components_ (*this),
@@ -75,7 +71,6 @@ TAO_Trader_Base::trading_components (void) const
 {
   return this->trading_components_;
 }
-
 
 CORBA::Boolean
 TAO_Trader_Base::is_valid_identifier_name (const char* ident)
