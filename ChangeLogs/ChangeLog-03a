@@ -1,3 +1,13 @@
+Fri Jan 18 10:29:06 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Service_Config.h (process_file):
+	* ace/Service_Config.cpp (process_directives, process_file):
+
+	  Factored out code that processes a svc.conf file into the new
+	  static process_file() method.  This allows svc.conf files to be
+	  explicitly parsed by the application at any arbitrary point in
+	  time instead of Service Configuration initialization time alone.
+
 Thu Jan 17 18:51:09 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Name_Space.cpp (operator =): Fixed a memory leak.  Thanks

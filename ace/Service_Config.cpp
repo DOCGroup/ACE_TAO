@@ -385,6 +385,41 @@ ACE_Service_Config::process_directives_i (ACE_Svc_Conf_Param *param)
 }
 
 int
+ACE_Service_Config::process_file (const ACE_TCHAR file[])
+{
+  ACE_TRACE ("ACE_Service_Config::process_file");
+
+  int result = 0;
+
+  FILE *fp = ACE_OS::fopen (file,
+                            ACE_LIB_TEXT ("r"));
+
+  if (fp == 0)
+    {
+      // Invalid svc.conf file.  We'll report it here and break out of
+      // the method.
+      if (ACE::debug ())
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_LIB_TEXT ("%p\n"),
+                    file));
+
+      errno = ENOENT;
+      result = -1;
+    }
+  else
+    {
+      ACE_Svc_Conf_Param f (fp);
+
+      // Keep track of the number of errors.
+      result = ACE_Service_Config::process_directives_i (&f);
+
+      (void) ACE_OS::fclose (fp);
+    }
+
+  return result;
+}
+
+int
 ACE_Service_Config::process_directive (const ACE_TCHAR directive[])
 {
   ACE_TRACE ("ACE_Service_Config::process_directive");
@@ -405,7 +440,6 @@ ACE_Service_Config::process_directive (const ACE_TCHAR directive[])
 
 // Process service configuration requests as indicated in the queue of
 // svc.conf files.
-
 int
 ACE_Service_Config::process_directives (void)
 {
@@ -423,28 +457,15 @@ ACE_Service_Config::process_directives (void)
            iter.next (sptr) != 0;
            iter.advance ())
         {
-          FILE *fp = ACE_OS::fopen (sptr->fast_rep (),
-                                    ACE_LIB_TEXT ("r"));
-          if (fp == 0)
+          int r = ACE_Service_Config::process_file (sptr->fast_rep ());
+
+          if (r < 0)
             {
-              // Invalid svc.conf file.  We'll report it here and
-              // break out of the method.
-              if (ACE::debug ())
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_LIB_TEXT ("%p\n"),
-                            sptr->fast_rep ()));
-              errno = ENOENT;
-              result = -1;
+              result = r;
               break;
             }
-          else
-            {
-              ACE_Svc_Conf_Param f (fp);
 
-              // Keep track of the number of errors.
-              result += ACE_Service_Config::process_directives_i (&f);
-            }
-          ACE_OS::fclose (fp);
+          result += r;
         }
     }
 
