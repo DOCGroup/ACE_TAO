@@ -5319,24 +5319,76 @@ ACE_CACHE_CHECK(for POSIX O_NONBLOCK semantics,
       ])
   ], AC_DEFINE(ACE_HAS_POSIX_NONBLOCK),)
 
-dnl Check if platform defines MAP_FAILED as a long constant
-ACE_CACHE_CHECK(for MAP_FAILED long constant,
-  ace_cv_feature_long_map_failed,[
-    dnl We need the square brackets around "ACEMAPFAILED.+[0-9]L" to
+dnl Check for MAP_FAILED constant
+ACE_CACHE_CHECK(for MAP_FAILED constant,
+  ace_cv_lib_have_map_failed,[
+    dnl We need the square brackets around "ACEMAPFAILED.+[0-9]" to
     dnl prevent the character class "[0-9]" from becoming "0-9" due to
     dnl M4 quoting.
-    AC_EGREP_CPP([ACEMAPFAILED.+[0-9]L],
+    AC_EGREP_CPP([ACEMAPFAILED.+[0-9]],
       [
 #include <sys/mman.h>
        ACEMAPFAILED MAP_FAILED
       ],
       [
-       ace_cv_feature_long_map_failed=yes
+       ace_cv_lib_have_map_failed=yes
       ],
       [
-       ace_cv_feature_long_map_failed=no
+       ace_cv_lib_have_map_failed=no
       ])
-  ], AC_DEFINE(ACE_HAS_LONG_MAP_FAILED),)
+  ],
+  [
+   dnl Check if platform defines MAP_FAILED as a long constant
+   ACE_CACHE_CHECK(if MAP_FAILED is a long constant,
+     ace_cv_feature_long_map_failed,[
+       dnl We need the square brackets around "ACEMAPFAILED.+[0-9]L" to
+       dnl prevent the character class "[0-9]" from becoming "0-9" due to
+       dnl M4 quoting.
+       AC_EGREP_CPP([ACEMAPFAILED.+[0-9]L],
+         [
+#include <sys/mman.h>
+          ACEMAPFAILED MAP_FAILED
+         ],
+         [
+          ace_cv_feature_long_map_failed=yes
+         ],
+         [
+          ace_cv_feature_long_map_failed=no
+         ])
+     ], AC_DEFINE(ACE_HAS_LONG_MAP_FAILED),
+     [
+      dnl Check if MAP_FAILED is _not_ cast to void *
+      ACE_CACHE_CHECK(if MAP_FAILED is not cast to void *,
+        ace_cv_have_broken_map_failed,[
+          AC_TRY_COMPILE(
+            [
+#include <sys/mman.h>
+            ],
+            [
+             void * foo = MAP_FAILED;
+            ],
+            [
+             ace_cv_have_broken_map_failed=no
+            ],
+            [
+             AC_TRY_COMPILE(
+               [
+#include <sys/mman.h>
+               ],
+               [
+                void * foo = (void *) MAP_FAILED;
+               ],
+               [
+                ace_cv_have_broken_map_failed=yes
+               ],
+               [
+                dnl If we get here then we have no idea what is wrong!
+                ace_cv_have_broken_map_failed=no
+               ])
+            ])
+        ], AC_DEFINE(ACE_HAS_BROKEN_MAP_FAILED),)
+     ])
+  ],)
 
 dnl Check if platform supports SO_SNDBUF/SO_RCVBUF socket options
 ACE_CACHE_CHECK(for SO_SNDBUF/SO_RCVBUF socket options,
