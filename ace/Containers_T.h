@@ -1014,11 +1014,11 @@ public:
   void reset (ACE_DLList<T> &l);
 
   // = Iteration methods.
-  /// Move forward by one element in the set.  Returns 0 when all the
-  /// items in the set have been seen, else 1.
+  /// Move forward by one element in the list.  Returns 0 when all the
+  /// items in the list have been seen, else 1.
   int advance (void);
 
-  /// Pass back the <next_item> that hasn't been seen in the Stack.
+  /// Pass back the <next_item> that hasn't been seen in the list.
   /// Returns 0 when all items have been seen, else 1.
   int next (T *&);
 
@@ -1076,11 +1076,11 @@ public:
   void reset (ACE_DLList<T> &l);
 
   // = Iteration methods.
-  /// Move forward by one element in the set.  Returns 0 when all the
-  /// items in the set have been seen, else 1.
+  /// Move forward by one element in the list.  Returns 0 when all the
+  /// items in the list have been seen, else 1.
   int advance (void);
 
-  /// Pass back the <next_item> that hasn't been seen in the Stack.
+  /// Pass back the <next_item> that hasn't been seen in the list.
   /// Returns 0 when all items have been seen, else 1.
   int next (T *&);
 
