@@ -126,14 +126,6 @@ OBJFILES = \
 	$(OBJDIR)\utl_scope.obj \
 	$(OBJDIR)\utl_stack.obj \
 	$(OBJDIR)\utl_string.obj \
-	$(OBJDIR)\utl_strlist.obj \
-	$(OBJDIR)\utl_decllist.obj \
-	$(OBJDIR)\utl_exceptlist.obj \
-	$(OBJDIR)\utl_exprlist.obj \
-	$(OBJDIR)\utl_idlist.obj \
-	$(OBJDIR)\utl_labellist.obj \
-	$(OBJDIR)\utl_list.obj \
-	$(OBJDIR)\utl_namelist.obj \
 	$(OBJDIR)\utl_strlist.obj
 
 CFLAGS = -I.. -Ibe_include -Ife -Iinclude -Iutil \

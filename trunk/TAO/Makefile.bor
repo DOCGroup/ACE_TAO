@@ -20,6 +20,10 @@ ace_tao:
 	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
 	cd $(ACE_ROOT)\TAO\orbsvcs\Trading_Service
 	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
+	cd $(ACE_ROOT)\TAO\orbsvcs\Event_Service
+	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
+	cd $(ACE_ROOT)\TAO\orbsvcs\CosEvent_Service
+	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
 
 examples:
 	cd $(ACE_ROOT)\TAO\examples\simple\echo
