@@ -604,7 +604,7 @@ string_strsncpy_test (void)
      ACE_DEBUG ((LM_DEBUG,
                  ACE_TEXT ("Testing strsncpy (wchar_t version)\n")));
 
-     wchar_t strsncpy1[]  ACE_TEXT_WIDE = ("abcdefghijklmnopqrstuvwxyzabc");
+     wchar_t strsncpy1[]  = ACE_TEXT_WIDE ("abcdefghijklmnopqrstuvwxyzabc");
      wchar_t strsncpy2[36];
 
      ACE_ASSERT
