@@ -34,13 +34,18 @@ main (int, ASYS_TCHAR *[])
   ACE_START_TEST (ASYS_TEXT ("SString_Test"));
 
   {
-    ACE_CString empty_string;
     ACE_CString s1 ("hello");
     ACE_CString s2 ("world");
     ACE_CString s3 ("ll");
     ACE_CString s4 ("ello");
     ACE_CString s5 = s1 + " " + s2;
 
+    char single_character = 'z';
+    ACE_CString single_character_string (single_character);
+
+    ACE_CString empty_string;
+    ACE_CString zero_size_string (s1.c_str (), 0, 0, 1);
+
     ACE_ASSERT (s1 != s2);
     ACE_ASSERT (s1 != s5);
     ACE_ASSERT (s1.strstr (s2) == -1);
@@ -59,13 +64,18 @@ main (int, ASYS_TCHAR *[])
   }
 
   {
-    ACE_CString empty_string (0, 0, 0);
     ACE_CString s1 ("hello", 0, 0);
     ACE_CString s2 ("world", 0, 0);
     ACE_CString s3 ("ll", 0, 0);
     ACE_CString s4 ("ello", 0, 0);
     ACE_CString s5 = s1 + " " + s2;
 
+    char single_character = 'z';
+    ACE_CString single_character_string (single_character);
+
+    ACE_CString empty_string (0, 0, 0);
+    ACE_CString zero_size_string (s1.c_str (), 0, 0, 0);
+
     ACE_ASSERT (s1 != s2);
     ACE_ASSERT (s1 != s5);
     ACE_ASSERT (s1.strstr (s2) == -1);
@@ -84,12 +94,17 @@ main (int, ASYS_TCHAR *[])
   }
 
   {
-    ACE_WString empty_string;
     ACE_WString s1 ("hello");
     ACE_WString s2 ("world");
     ACE_WString s3 ("ll");
     ACE_WString s4 ("ello");
     ACE_WString s5 = s1 + " " + s2;
+
+    ACE_USHORT16 single_character = 'z';
+    ACE_WString single_character_string (single_character);
+    
+    ACE_WString empty_string;
+    ACE_WString zero_size_string (s1.c_str (), 0, 0);
 
     ACE_ASSERT (s1 != s2);
     ACE_ASSERT (s1 != s5);
