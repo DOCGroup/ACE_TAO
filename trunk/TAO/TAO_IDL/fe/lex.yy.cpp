@@ -2616,7 +2616,6 @@ idl_store_pragma (char *buf)
       if (new_prefix != 0)
         {
           unsigned long depth = idl_global->scopes ()->depth ();
-          size_t size = idl_global->pragma_prefixes ().size ();
 
           // If a prefix is added at global scope
           // but in an included IDL file, we don't pop, so we can
