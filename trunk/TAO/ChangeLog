@@ -1,3 +1,19 @@
+Wed Sep 29 10:12:43 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDLbe/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDLbe/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDLbe_include/be_interface.h:
+        
+          For local interfaces that inherit directly from 
+          Components::SessionComponent, added code generation for
+          empty implementations of ciao_preactivate() and
+          ciao_postactivate(). These operations are pure virtual in
+          SessionComponent, and the empty implementations allow
+          developers to override or not as they choose. The only
+          interfaces affected will be of the form Foo_Exec in
+          executor mapping IDL generated for component Foo.
+
 Wed Sep 29 07:31:34 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:

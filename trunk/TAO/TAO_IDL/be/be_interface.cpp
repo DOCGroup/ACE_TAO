@@ -60,7 +60,8 @@ be_interface::be_interface (void)
     in_mult_inheritance_ (-1),
     strategy_ (0),
     original_interface_ (0),
-    has_mixed_parentage_ (-1)
+    has_mixed_parentage_ (-1),
+    session_component_child_ (-1)
 {
   ACE_NEW (this->strategy_,
            be_interface_default_strategy (this));
@@ -95,7 +96,8 @@ be_interface::be_interface (UTL_ScopedName *n,
     skel_count_ (0),
     in_mult_inheritance_ (-1),
     original_interface_ (0),
-    has_mixed_parentage_ (-1)
+    has_mixed_parentage_ (-1),
+    session_component_child_ (-1)
 {
   ACE_NEW (this->strategy_,
            be_interface_default_strategy (this));
@@ -2594,6 +2596,55 @@ be_interface::has_mixed_parentage (void)
     }
 
   return this->has_mixed_parentage_;
+}
+
+int
+be_interface::session_component_child (void)
+{
+  if (this->session_component_child_ == -1)
+    {
+      // We are looking only for executor interfaces.
+      if (!this->is_local_)
+        {
+          this->session_component_child_ = 0;
+          return this->session_component_child_;
+        }
+        
+      Identifier tail_id ("SessionComponent");
+      UTL_ScopedName tail (&tail_id, 0);
+      Identifier head_id ("Components");
+      UTL_ScopedName sn (&head_id, &tail);
+     
+      AST_Decl *session_component =
+        const_cast<be_interface*> (this)->scope ()->lookup_by_name (&sn, 
+                                                                    I_TRUE);
+        
+      tail_id.destroy ();
+      head_id.destroy ();
+        
+      // If Components::SessionComponent is not in the AST, we are
+      // barking up the wrong tree.  
+      if (session_component == 0)
+        {
+          this->session_component_child_ = 0;
+          return this->session_component_child_;
+        }
+        
+      for (long i = 0; i < this->pd_n_inherits; ++i)
+        {
+          AST_Decl *tmp = this->pd_inherits[i];
+          
+          if (tmp == session_component)
+            {
+              this->session_component_child_ = 1;
+              return this->session_component_child_;
+            }
+        }
+        
+      this->session_component_child_ = 0;
+    }
+  
+  return this->session_component_child_;
 }
 
 const char *

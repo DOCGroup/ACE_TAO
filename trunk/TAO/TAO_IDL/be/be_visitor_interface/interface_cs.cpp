@@ -323,6 +323,27 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "return obj;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
+  // Empty implementations so the application can override or not.
+  if (node->session_component_child () == 1)
+    {
+      *os << "// These two are inherited from SessionComponent." 
+          << be_nl << be_nl
+          << "void" << be_nl
+          << node->full_name () << "::ciao_preactivate (" 
+          << be_idt << be_idt_nl
+          << "ACE_ENV_SINGLE_ARG_DECL_NOT_USED" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "{" << be_nl
+          << "}" << be_nl << be_nl
+          << "void" << be_nl
+          << node->full_name () << "::ciao_postactivate (" 
+          << be_idt << be_idt_nl
+          << "ACE_ENV_SINGLE_ARG_DECL_NOT_USED" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "{" << be_nl
+          << "}" << be_nl << be_nl;
+    }
+
   *os << "CORBA::Boolean" << be_nl
       << node->full_name () << "::_is_a (" << be_idt << be_idt_nl
       << "const char *value" << be_nl;
