@@ -107,8 +107,7 @@ TAO_NAMESPACE  Messaging
     ExceptionHolder_var &operator= (const ExceptionHolder_var &);
     ExceptionHolder* operator-> (void) const;
     
-    operator const ExceptionHolder* () const;
-    operator ExceptionHolder* ();
+    operator ExceptionHolder*& ();
     // in, inout, out, _retn 
     ExceptionHolder* in (void) const;
     ExceptionHolder*& inout (void);

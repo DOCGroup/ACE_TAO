@@ -164,7 +164,7 @@ TAO_Default_ORT::ObjectReferenceTemplate_var::operator= (const ObjectReferenceTe
   return *this;
 }
 
-TAO_Default_ORT::ObjectReferenceTemplate_var::operator TAO_Default_ORT::ObjectReferenceTemplate* () // cast
+TAO_Default_ORT::ObjectReferenceTemplate_var::operator TAO_Default_ORT::ObjectReferenceTemplate*& () // cast
 {
   return this->ptr_;
 }
