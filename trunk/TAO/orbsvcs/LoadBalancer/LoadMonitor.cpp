@@ -385,6 +385,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       //    exception.
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      // Wait for the signal handler thread to finish
+      // before the process exits.
+      signal_handler.wait ();
 #endif  /* linux && ACE_HAS_THREADS */
 
       if (timer_id != -1 && reactor->cancel_timer (timer_id) == 0)
