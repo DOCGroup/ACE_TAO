@@ -19,7 +19,7 @@ SUBDIRS = \
 DESTDIRS = \
   config \
   emulation \
-  man
+  man \
   posix \
   sys \
   vxworks \

@@ -15,9 +15,9 @@ AUTOMAKE_OPTIONS = 1.4
 
 ## Create a libtool convenience library that contains the contents of
 ## the POSIX-specific version of PACE.
-noinst_LTLIBRARIES = libPACE.la
+noinst_LTLIBRARIES = libPACE_POSIX.la
 
-libPACE_la_SOURCES = \
+libPACE_POSIX_la_SOURCES = \
   aio.c \
   assert.c \
   ctype.c \
