@@ -1,3 +1,14 @@
+Tue Aug  4 17:32:30 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* orbsvcs/tests/Logger/Logging_Test_i.cpp: 
+	* orbsvcs/Logging_Service/Logging_Service_i.cpp: 
+	  Added some debugging code to test the <make_logger> hashing feature.
+	
+	* orbsvcs/orbsvcs/Log/Logger_i.{h,cpp}: Added ACE_Hash_Map
+	  code. Now calls to make_logger will use the <name> parameter as a
+	  hash key to return either a new Logger or a preexisting one. Added 
+	  some debugging code to the hash-relevant portions.	
+
 Tue Aug  4 17:23:31 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/tests/Trading/export_test.cpp,

@@ -22,21 +22,6 @@
 
 #include "orbsvcs/LoggerS.h"
 
-class TAO_ORBSVCS_Export Logger_Factory_i : public virtual POA_Logger_Factory
-{
-  // = TITLE
-  //     Create a <Logger> of type <name>.
-public:
-  Logger_Factory_i (void);
-  // constructor.
-
-  virtual Logger_ptr make_logger (const char *name,
-                                  CORBA::Environment &_env);
-  // This function creates and returns a logger with the given <name>.
-  // Currently, <name> is unused.
-};
-
-
 class Logger_i : public virtual POA_Logger
 {
   // = TITLE
@@ -76,5 +61,30 @@ private:
   // Keeps track of what our current verbosity level is.  This can be
   // reset by the client to a new value at any point.
 };
+
+
+class TAO_ORBSVCS_Export Logger_Factory_i : public virtual POA_Logger_Factory
+{
+  // = TITLE
+  //     Create a <Logger> of type <name>.
+public:
+  Logger_Factory_i (void);
+  // Constructor.
+
+  ~Logger_Factory_i (void);
+  // Destructor.
+  
+  virtual Logger_ptr make_logger (const char *name,
+                                  CORBA::Environment &_env);
+  // This function creates and returns a logger with the given <name>.
+  // <name> is used by the hash map manager to hash Logger instances
+
+private:
+  // Calls to make_logger will create a new instance of Logger and
+  // bind into the hash map manager if <name> is unique, else it will
+  // return a previously bound entry. 
+  ACE_Hash_Map_Manager<const char *, Logger_i *, ACE_Null_Mutex> hash_map_;
+};
+
 
 #endif /* TAO_ORBSVCS_LOGGER_I_H */
