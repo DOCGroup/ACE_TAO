@@ -873,9 +873,9 @@ TAO_PropertySet::get_properties (const CosPropertyService::PropertyNames &proper
             property_names [i];
 
           // Make an any value with tk_void type.
-          nproperties [i].property_value =
-            CORBA::Any (CORBA::_tc_void,
-                        0);
+          CORBA::Any any;
+          any._tao_set_typecode (CORBA::_tc_void);
+          nproperties [i].property_value = any;
         }
     }
 
