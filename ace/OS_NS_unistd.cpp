@@ -14,7 +14,8 @@ ACE_RCSID(ace, OS_NS_unistd, "$Id$")
 #include "ace/OS_NS_ctype.h"
 #include "ace/Default_Constants.h"
 #include "ace/OS_Memory.h"
-#include "ace/Guard_T.h"
+#include "ace/OS_NS_Thread.h"
+#include "ace/Object_Manager_Base.h"
 
 #if defined (ACE_NEEDS_FTRUNCATE)
 extern "C" int

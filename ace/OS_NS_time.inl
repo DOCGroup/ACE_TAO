@@ -5,6 +5,7 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_sys_time.h"
 
 ACE_INLINE char *
 ACE_OS::asctime (const struct tm *t)
