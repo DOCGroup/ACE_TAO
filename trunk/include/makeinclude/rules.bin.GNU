@@ -24,7 +24,7 @@ $(BIN): %: %.icc $(SRC)
 else
 ifdef kylix
 $(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)
-	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $(VLDLIBS) $(POSTLINK) $^, $@,,
+	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $(VLDLIBS) $(BORINITEXEOBJ) $(POSTLINK) $^, $@,,
 else
 $(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)

@@ -119,7 +119,7 @@ ifdef ibmcxx_build
 	fi
 else
 ifdef kylix
-	$(SOLINK.cc) $(LDFLAGS) $(VSHOBJS1), $@,, $(ACE_SHLIBS) $(LIBS)
+	$(SOLINK.cc) $(LDFLAGS) $(VSHOBJS1), $@,, $(ACE_SHLIBS) $(LIBS) $(BORINITSHAREDOBJ)
 else
 ifeq (1,$(ace_lib_prelink))
         #### Attempt a link (which will fail), to add template instantiations
