@@ -1,0 +1,27 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO
+//
+// = FILENAME
+//    InconsistentTypeCode.pidl
+//
+// = DESCRIPTION
+//    ORB exception thrown by the ORB Dynamic Any factory functions
+//
+// = AUTHOR
+//    OMG 
+//
+// ============================================================================
+
+#pragma prefix "omg.org"
+
+module CORBA
+{
+  interface ORB {
+    // The exception thrown by the ORB Dynamic Any factory functions
+    exception InconsistentTypeCode {};
+  };
+};
