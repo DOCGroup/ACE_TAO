@@ -8,7 +8,7 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-#if (TAO_HAS_AMI_POLLER == 1)
+#if (TAO_HAS_AMI_CALLBACK == 1)
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_Messaging::ReplyHandler_tie<T>::ReplyHandler_tie (T &t)
@@ -88,4 +88,4 @@ POA_Messaging::ReplyHandler_tie<T>::_default_POA (CORBA::Environment &ACE_TRY_EN
 }
 
 #endif /* ACE_HAS_USING_KEYWORD */
-#endif /* TAO_HAS_AMI_POLLER == 1 */
+#endif /* TAO_HAS_AMI_CALLBACK == 1 */

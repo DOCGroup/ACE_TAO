@@ -12,7 +12,6 @@
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 #include "tao/MessagingS.h"
-#include "tao/POA_CORBA.h"
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
 
@@ -220,7 +219,7 @@ void *Messaging::RebindPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &RebindPolicy::_narrow))
+      &ACE_NESTED_CLASS (Messaging, RebindPolicy)::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
@@ -299,7 +298,7 @@ void *Messaging::SyncScopePolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &SyncScopePolicy::_narrow))
+      &ACE_NESTED_CLASS (Messaging, SyncScopePolicy)::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
@@ -414,7 +413,7 @@ void *Messaging::RequestPriorityPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &RequestPriorityPolicy::_narrow))
+      &ACE_NESTED_CLASS (Messaging, RequestPriorityPolicy)::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
@@ -493,7 +492,7 @@ void *Messaging::ReplyPriorityPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ReplyPriorityPolicy::_narrow))
+      &ACE_NESTED_CLASS (Messaging, ReplyPriorityPolicy)::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
@@ -572,7 +571,7 @@ void *Messaging::RequestStartTimePolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &RequestStartTimePolicy::_narrow))
+      &ACE_NESTED_CLASS (Messaging, RequestStartTimePolicy)::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
@@ -651,7 +650,7 @@ void *Messaging::RequestEndTimePolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &RequestEndTimePolicy::_narrow))
+      &ACE_NESTED_CLASS (Messaging, RequestEndTimePolicy)::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
@@ -730,7 +729,7 @@ void *Messaging::ReplyStartTimePolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ReplyStartTimePolicy::_narrow))
+      &ACE_NESTED_CLASS (Messaging, ReplyStartTimePolicy)::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
@@ -809,7 +808,7 @@ void *Messaging::ReplyEndTimePolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ReplyEndTimePolicy::_narrow))
+      &ACE_NESTED_CLASS (Messaging, ReplyEndTimePolicy)::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
@@ -888,7 +887,7 @@ void *Messaging::RelativeRequestTimeoutPolicy::_tao_QueryInterface (ptr_arith_t 
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &RelativeRequestTimeoutPolicy::_narrow))
+      &ACE_NESTED_CLASS (Messaging, RelativeRequestTimeoutPolicy)::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
@@ -967,7 +966,7 @@ void *Messaging::RelativeRoundtripTimeoutPolicy::_tao_QueryInterface (ptr_arith_
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &RelativeRoundtripTimeoutPolicy::_narrow))
+      &ACE_NESTED_CLASS (Messaging, RelativeRoundtripTimeoutPolicy)::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
@@ -1082,7 +1081,7 @@ void *Messaging::RoutingPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &RoutingPolicy::_narrow))
+      &ACE_NESTED_CLASS (Messaging, RoutingPolicy)::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
@@ -1161,7 +1160,7 @@ void *Messaging::MaxHopsPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &MaxHopsPolicy::_narrow))
+      &ACE_NESTED_CLASS (Messaging, MaxHopsPolicy)::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
@@ -1240,7 +1239,7 @@ void *Messaging::QueueOrderPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &QueueOrderPolicy::_narrow))
+      &ACE_NESTED_CLASS (Messaging, QueueOrderPolicy)::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
@@ -1497,78 +1496,77 @@ TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, INVOCATION_POLICIES, 2U)
 TAO_NAMESPACE_END
-static const CORBA::Long _oc_Messaging_ExceptionHolder[] =
-{
-  TAO_ENCAP_BYTE_ORDER, // byte order
-  34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x4d657373), ACE_NTOHL (0x6167696e), ACE_NTOHL (0x672f4578), ACE_NTOHL (0x63657074), ACE_NTOHL (0x696f6e48), ACE_NTOHL (0x6f6c6465), ACE_NTOHL (0x723a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:Messaging/ExceptionHolder:1.0
-  16, ACE_NTOHL (0x45786365), ACE_NTOHL (0x7074696f), ACE_NTOHL (0x6e486f6c), ACE_NTOHL (0x64657200),  // name = ExceptionHolder
-  3, // member count
-  20, ACE_NTOHL (0x69735f73), ACE_NTOHL (0x79737465), ACE_NTOHL (0x6d5f6578), ACE_NTOHL (0x63657074), ACE_NTOHL (0x696f6e00),  // name = is_system_exception
-  CORBA::tk_boolean,
-
-  11, ACE_NTOHL (0x62797465), ACE_NTOHL (0x5f6f7264), ACE_NTOHL (0x65720000),  // name = byte_order
-  CORBA::tk_boolean,
-
-  20, ACE_NTOHL (0x6d617273), ACE_NTOHL (0x68616c65), ACE_NTOHL (0x645f6578), ACE_NTOHL (0x63657074), ACE_NTOHL (0x696f6e00),  // name = marshaled_exception
-  CORBA::tk_sequence, // typecode kind
-  12, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_octet,
-
-    0U,
-
-};
 
 #if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
-static CORBA::TypeCode _tc_TAO_tc_Messaging_ExceptionHolder (CORBA::tk_struct, sizeof (_oc_Messaging_ExceptionHolder), (char *) &_oc_Messaging_ExceptionHolder, 0, sizeof (Messaging::ExceptionHolder));
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (Messaging)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ExceptionHolder, &_tc_TAO_tc_Messaging_ExceptionHolder)
-TAO_NAMESPACE_END
-
-#if !defined (_MESSAGING_EXCEPTIONHOLDER__TAO_SEQ_OCTET_CS_)
-#define _MESSAGING_EXCEPTIONHOLDER__TAO_SEQ_OCTET_CS_
-
-// *************************************************************
-// Messaging::ExceptionHolder::_tao_seq_Octet
-// *************************************************************
-
-Messaging::ExceptionHolder::_tao_seq_Octet::_tao_seq_Octet (void)
-{}
-Messaging::ExceptionHolder::_tao_seq_Octet::_tao_seq_Octet (CORBA::ULong max) // uses max size
-  :
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
- (max)
-{}
-Messaging::ExceptionHolder::_tao_seq_Octet::_tao_seq_Octet (CORBA::ULong max, CORBA::ULong length, CORBA::Octet *buffer, CORBA::Boolean release)
-  :
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
- (max, length, buffer, release)
-{}
-Messaging::ExceptionHolder::_tao_seq_Octet::_tao_seq_Octet (const _tao_seq_Octet &seq) // copy ctor
-  :
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
- (seq)
-{}
-Messaging::ExceptionHolder::_tao_seq_Octet::~_tao_seq_Octet (void) // dtor
-{}
-void Messaging::ExceptionHolder::_tao_seq_Octet::_tao_any_destructor (void *x)
+Messaging::ExceptionHolder* Messaging::ExceptionHolder::_downcast (CORBA::ValueBase* v)
 {
-  _tao_seq_Octet *tmp = ACE_static_cast (_tao_seq_Octet*,x);
-  delete tmp;
+  if (v == 0) return 0;
+  return (ExceptionHolder* ) v->_tao_obv_narrow ((ptr_arith_t) &_downcast);
+}
+
+const char* Messaging::ExceptionHolder::_tao_obv_repository_id () const
+{
+  return this->_tao_obv_static_repository_id ();
+}
+
+void* Messaging::ExceptionHolder::_tao_obv_narrow (ptr_arith_t type_id)
+{
+  if (type_id == (ptr_arith_t) &_downcast)
+    return this;
+  void *rval = 0;
+  return rval;
+}
+
+CORBA::Boolean Messaging::ExceptionHolder::_tao_marshal_v (TAO_OutputCDR & strm)
+{
+  return this->_tao_marshal__Messaging_ExceptionHolder (strm);
+}
+
+CORBA::Boolean Messaging::ExceptionHolder::_tao_unmarshal_v (TAO_InputCDR & strm)
+{
+  return this->_tao_unmarshal__Messaging_ExceptionHolder (strm);
+}
+
+CORBA::Boolean Messaging::ExceptionHolder::_tao_unmarshal (TAO_InputCDR &strm, Messaging::ExceptionHolder *&new_object)
+{
+  CORBA::Boolean retval = 1;
+  CORBA::ValueBase *base;   // %! should be a _var
+  CORBA::ValueFactory_ptr factory;   // %! should be a _var
+  if (!CORBA::ValueBase::_tao_unmarshal_pre (strm, factory, base,
+          Messaging::ExceptionHolder::_tao_obv_static_repository_id ()) )
+    {
+      return 0;
+    }
+  if (factory != 0)
+    {
+      base = factory->create_for_unmarshal ();
+      factory->_remove_ref ();
+      if (base == 0)  return 0;  // %! except.?
+      //%! ACE_DEBUG ((LM_DEBUG, "Messaging::ExceptionHolder::_tao_unmarshal %s\n", base->_tao_obv_repository_id () ));
+      retval = base->_tao_unmarshal_v (strm);
+      //%! ACE_DEBUG ((LM_DEBUG, "Messaging::ExceptionHolder::_tao_unmarshal retval unmarshal_v is %d\n", retval));
+      if (!retval) return 0;
+    }
+  // Now base must be null or point to the unmarshaled object.
+  // Align the pointer to the right subobject.
+  new_object = Messaging::ExceptionHolder::_downcast (base);
+  // %! unmarshal_post
+  return 1;
+}
+
+
+#if !defined (_MESSAGING_EXCEPTIONHOLDER___INIT_CS_)
+#define _MESSAGING_EXCEPTIONHOLDER___INIT_CS_
+
+Messaging::ExceptionHolder_init::~ExceptionHolder_init ()
+{
+}
+
+const char*
+Messaging::ExceptionHolder_init::tao_repository_id ()
+{
+  return Messaging::ExceptionHolder::_tao_obv_static_repository_id ();
 }
 
 
@@ -1662,7 +1660,7 @@ void *Messaging::ReplyHandler::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ReplyHandler::_narrow))
+      &ACE_NESTED_CLASS (Messaging, ReplyHandler)::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
@@ -1818,474 +1816,781 @@ Messaging::TAO_Messaging_ReplyHandler_Smart_Proxy_Base::get_proxy (void)
 
 #endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
+#if (TAO_HAS_AMI_CALLBACK == 1)
 
-void operator<<= (CORBA::Any &_tao_any, const Messaging::PriorityRange &_tao_elem) // copying
-{
-  TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      Messaging::_tc_PriorityRange,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
-    );
-}
+    CORBA::Boolean
+  OBV_Messaging::ExceptionHolder::_tao_marshal__Messaging_ExceptionHolder (TAO_OutputCDR &strm){
+    return _tao_marshal_state (strm);
 
-void operator<<= (CORBA::Any &_tao_any, Messaging::PriorityRange *_tao_elem) // non copying
-{
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      Messaging::_tc_PriorityRange,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      Messaging::PriorityRange::_tao_any_destructor
-    );
-}
+  }
+CORBA::Boolean OBV_Messaging::ExceptionHolder::_tao_unmarshal__Messaging_ExceptionHolder (TAO_InputCDR &strm){
+    return _tao_unmarshal_state (strm);
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PriorityRange *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(const Messaging::PriorityRange*&,_tao_elem);
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::PriorityRange *&_tao_elem)
-{
-  _tao_elem = 0;
-  ACE_TRY_NEW_ENV
+  }
+  // accessor to set the member
+  void
+  OBV_Messaging::ExceptionHolder::is_system_exception (CORBA::Boolean val) // set
   {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (Messaging::_tc_PriorityRange, ACE_TRY_ENV)) // not equal
-      {
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const Messaging::PriorityRange*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
+    // set the value
+    this->_pd_is_system_exception = val;
+  }
+  // retrieve the member
+  CORBA::Boolean
+  OBV_Messaging::ExceptionHolder::is_system_exception (void) const
+  {
+    return this->_pd_is_system_exception;
+  }
+
+  // accessor to set the member
+  void
+  OBV_Messaging::ExceptionHolder::byte_order (CORBA::Boolean val) // set
+  {
+    // set the value
+    this->_pd_byte_order = val;
+  }
+  // retrieve the member
+  CORBA::Boolean
+  OBV_Messaging::ExceptionHolder::byte_order (void) const
+  {
+    return this->_pd_byte_order;
+  }
+
+
+#if !defined (_MESSAGING_EXCEPTIONHOLDER__TAO_SEQ_OCTET_CS_)
+#define _MESSAGING_EXCEPTIONHOLDER__TAO_SEQ_OCTET_CS_
+
+Messaging::ExceptionHolder::_tao_seq_Octet::_tao_seq_Octet (void)
+{}
+Messaging::ExceptionHolder::_tao_seq_Octet::_tao_seq_Octet (CORBA::ULong max) // uses max size
+  :
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  TAO_Unbounded_Sequence<CORBA::Octet>
+#else /* TAO_USE_SEQUENCE_TEMPLATES */
+  TAO_Unbounded_Sequence<CORBA::Octet>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+ (max)
+{}
+Messaging::ExceptionHolder::_tao_seq_Octet::_tao_seq_Octet (CORBA::ULong max, CORBA::ULong length, CORBA::Octet *buffer, CORBA::Boolean release)
+  :
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  TAO_Unbounded_Sequence<CORBA::Octet>
+#else /* TAO_USE_SEQUENCE_TEMPLATES */
+  TAO_Unbounded_Sequence<CORBA::Octet>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+ (max, length, buffer, release)
+{}
+Messaging::ExceptionHolder::_tao_seq_Octet::_tao_seq_Octet (const _tao_seq_Octet &seq) // copy ctor
+  :
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  TAO_Unbounded_Sequence<CORBA::Octet>
+#else /* TAO_USE_SEQUENCE_TEMPLATES */
+  TAO_Unbounded_Sequence<CORBA::Octet>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+ (seq)
+{}
+Messaging::ExceptionHolder::_tao_seq_Octet::~_tao_seq_Octet (void) // dtor
+{}
+void Messaging::ExceptionHolder::_tao_seq_Octet::_tao_any_destructor (void *x)
+{
+  _tao_seq_Octet *tmp = ACE_static_cast (_tao_seq_Octet*,x);
+  delete tmp;
+}
+
+  // *************************************************************
+  // Inline operations for class Messaging::ExceptionHolder::_tao_seq_Octet_var
+  // *************************************************************
+
+ACE_INLINE
+  Messaging::ExceptionHolder::_tao_seq_Octet_var::_tao_seq_Octet_var (void) // default constructor
+    : ptr_ (0)
+  {}
+
+  ACE_INLINE
+  Messaging::ExceptionHolder::_tao_seq_Octet_var::_tao_seq_Octet_var (_tao_seq_Octet *p)
+    : ptr_ (p)
+  {}
+
+  ACE_INLINE
+  Messaging::ExceptionHolder::_tao_seq_Octet_var::_tao_seq_Octet_var (const ::Messaging::ExceptionHolder::_tao_seq_Octet_var &p) // copy constructor
+  {
+    if (p.ptr_)
+      ACE_NEW (this->ptr_, ::Messaging::ExceptionHolder::_tao_seq_Octet (*p.ptr_));
     else
+      this->ptr_ = 0;
+  }
+
+// fixed-size base types only
+  ACE_INLINE
+  Messaging::ExceptionHolder::_tao_seq_Octet_var::_tao_seq_Octet_var (const ::Messaging::ExceptionHolder::_tao_seq_Octet &p)
+  {
+    ACE_NEW (this->ptr_, ::Messaging::ExceptionHolder::_tao_seq_Octet (p));
+  }
+
+  ACE_INLINE
+  Messaging::ExceptionHolder::_tao_seq_Octet_var::~_tao_seq_Octet_var (void) // destructor
+  {
+    delete this->ptr_;
+  }
+
+  ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet_var &
+  Messaging::ExceptionHolder::_tao_seq_Octet_var::operator= (_tao_seq_Octet *p)
+  {
+    delete this->ptr_;
+    this->ptr_ = p;
+    return *this;
+  }
+
+  ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet_var &
+  Messaging::ExceptionHolder::_tao_seq_Octet_var::operator= (const ::Messaging::ExceptionHolder::_tao_seq_Octet_var &p) // deep copy
+  {
+    if (this != &p)
     {
-      Messaging::PriorityRange *tmp;
-      ACE_NEW_RETURN (tmp, Messaging::PriorityRange, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            Messaging::_tc_PriorityRange,
-            1,
-            ACE_static_cast (void *, tmp),
-            Messaging::PriorityRange::_tao_any_destructor
-          );
-        _tao_elem = tmp;
-        return 1;
-      }
-      else
-      {
-        delete tmp;
-      }
+      delete this->ptr_;
+      ACE_NEW_RETURN (this->ptr_, ::Messaging::ExceptionHolder::_tao_seq_Octet (*p.ptr_), *this);
     }
+    return *this;
   }
-  ACE_CATCHANY
+
+  // fixed-size types only
+  ACE_INLINE ::Messaging::ExceptionHolder::_tao_seq_Octet_var &
+  Messaging::ExceptionHolder::_tao_seq_Octet_var::operator= (const ::Messaging::ExceptionHolder::_tao_seq_Octet &p)
   {
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-void operator<<= (CORBA::Any &_tao_any, const Messaging::RoutingTypeRange &_tao_elem) // copying
-{
-  TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      Messaging::_tc_RoutingTypeRange,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
-    );
-}
-
-void operator<<= (CORBA::Any &_tao_any, Messaging::RoutingTypeRange *_tao_elem) // non copying
-{
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      Messaging::_tc_RoutingTypeRange,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      Messaging::RoutingTypeRange::_tao_any_destructor
-    );
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RoutingTypeRange *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(const Messaging::RoutingTypeRange*&,_tao_elem);
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::RoutingTypeRange *&_tao_elem)
-{
-  _tao_elem = 0;
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (Messaging::_tc_RoutingTypeRange, ACE_TRY_ENV)) // not equal
-      {
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
+    if (this->ptr_ != &p)
     {
-      _tao_elem = ACE_static_cast(
-          const Messaging::RoutingTypeRange*,
-          _tao_any.value ()
-        );
-      return 1;
+      delete this->ptr_;
+      ACE_NEW_RETURN (this->ptr_, ::Messaging::ExceptionHolder::_tao_seq_Octet (p), *this);
     }
-    else
-    {
-      Messaging::RoutingTypeRange *tmp;
-      ACE_NEW_RETURN (tmp, Messaging::RoutingTypeRange, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            Messaging::_tc_RoutingTypeRange,
-            1,
-            ACE_static_cast (void *, tmp),
-            Messaging::RoutingTypeRange::_tao_any_destructor
-          );
-        _tao_elem = tmp;
-        return 1;
-      }
-      else
-      {
-        delete tmp;
-      }
-    }
+    return *this;
   }
-  ACE_CATCHANY
+
+  ACE_INLINE const ::Messaging::ExceptionHolder::_tao_seq_Octet *
+  Messaging::ExceptionHolder::_tao_seq_Octet_var::operator-> (void) const
   {
+    return this->ptr_;
   }
-  ACE_ENDTRY;
-  return 0;
-}
 
-void operator<<= (CORBA::Any &_tao_any, const Messaging::PolicyValue &_tao_elem) // copying
-{
-  TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      Messaging::_tc_PolicyValue,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
-    );
-}
-
-void operator<<= (CORBA::Any &_tao_any, Messaging::PolicyValue *_tao_elem) // non copying
-{
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      Messaging::_tc_PolicyValue,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      Messaging::PolicyValue::_tao_any_destructor
-    );
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PolicyValue *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(const Messaging::PolicyValue*&,_tao_elem);
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::PolicyValue *&_tao_elem)
-{
-  _tao_elem = 0;
-  ACE_TRY_NEW_ENV
+  ACE_INLINE ::Messaging::ExceptionHolder::_tao_seq_Octet *
+  Messaging::ExceptionHolder::_tao_seq_Octet_var::operator-> (void)
   {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (Messaging::_tc_PolicyValue, ACE_TRY_ENV)) // not equal
-      {
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const Messaging::PolicyValue*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      Messaging::PolicyValue *tmp;
-      ACE_NEW_RETURN (tmp, Messaging::PolicyValue, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            Messaging::_tc_PolicyValue,
-            1,
-            ACE_static_cast (void *, tmp),
-            Messaging::PolicyValue::_tao_any_destructor
-          );
-        _tao_elem = tmp;
-        return 1;
-      }
-      else
-      {
-        delete tmp;
-      }
-    }
+    return this->ptr_;
   }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  return 0;
-}
 
-void operator<<= (
-    CORBA::Any &_tao_any,
-    const Messaging::PolicyValueSeq &_tao_elem
-  ) // copying
-{
-  TAO_OutputCDR stream;
-  if (stream << _tao_elem)
+  ACE_INLINE
+  Messaging::ExceptionHolder::_tao_seq_Octet_var::operator const ::Messaging::ExceptionHolder::_tao_seq_Octet &() const // cast
   {
+    return *this->ptr_;
+  }
+
+  ACE_INLINE
+  Messaging::ExceptionHolder::_tao_seq_Octet_var::operator ::Messaging::ExceptionHolder::_tao_seq_Octet &() // cast
+  {
+    return *this->ptr_;
+  }
+
+  ACE_INLINE
+  Messaging::ExceptionHolder::_tao_seq_Octet_var::operator ::Messaging::ExceptionHolder::_tao_seq_Octet &() const // cast
+  {
+    return *this->ptr_;
+  }
+
+  ACE_INLINE CORBA::Octet &
+  Messaging::ExceptionHolder::_tao_seq_Octet_var::operator[] (CORBA::ULong index)
+  {
+    return this->ptr_->operator[] (index);
+  }
+
+  ACE_INLINE const ::Messaging::ExceptionHolder::_tao_seq_Octet &
+  Messaging::ExceptionHolder::_tao_seq_Octet_var::in (void) const
+  {
+    return *this->ptr_;
+  }
+
+  ACE_INLINE ::Messaging::ExceptionHolder::_tao_seq_Octet &
+  Messaging::ExceptionHolder::_tao_seq_Octet_var::inout (void)
+  {
+    return *this->ptr_;
+  }
+
+  // mapping for variable size
+  ACE_INLINE ::Messaging::ExceptionHolder::_tao_seq_Octet *&
+  Messaging::ExceptionHolder::_tao_seq_Octet_var::out (void)
+  {
+    delete this->ptr_;
+    this->ptr_ = 0;
+    return this->ptr_;
+  }
+
+  ACE_INLINE ::Messaging::ExceptionHolder::_tao_seq_Octet *
+  Messaging::ExceptionHolder::_tao_seq_Octet_var::_retn (void)
+  {
+    ::Messaging::ExceptionHolder::_tao_seq_Octet *tmp = this->ptr_;
+    this->ptr_ = 0;
+    return tmp;
+  }
+
+  ACE_INLINE ::Messaging::ExceptionHolder::_tao_seq_Octet *
+  Messaging::ExceptionHolder::_tao_seq_Octet_var::ptr (void) const
+  {
+    return this->ptr_;
+  }
+
+  // *************************************************************
+  // Inline operations for class Messaging::ExceptionHolder::_tao_seq_Octet_out
+  // *************************************************************
+
+  ACE_INLINE
+  Messaging::ExceptionHolder::_tao_seq_Octet_out::_tao_seq_Octet_out (_tao_seq_Octet *&p)
+    : ptr_ (p)
+  {
+    this->ptr_ = 0;
+  }
+
+  ACE_INLINE
+  Messaging::ExceptionHolder::_tao_seq_Octet_out::_tao_seq_Octet_out (_tao_seq_Octet_var &p) // constructor from _var
+    : ptr_ (p.out ())
+  {
+    delete this->ptr_;
+    this->ptr_ = 0;
+  }
+
+  ACE_INLINE
+  Messaging::ExceptionHolder::_tao_seq_Octet_out::_tao_seq_Octet_out (const ::Messaging::ExceptionHolder::_tao_seq_Octet_out &p) // copy constructor
+    : ptr_ (ACE_const_cast (_tao_seq_Octet_out&, p).ptr_)
+  {}
+
+  ACE_INLINE ::Messaging::ExceptionHolder::_tao_seq_Octet_out &
+  Messaging::ExceptionHolder::_tao_seq_Octet_out::operator= (const ::Messaging::ExceptionHolder::_tao_seq_Octet_out &p)
+  {
+    this->ptr_ = ACE_const_cast (_tao_seq_Octet_out&, p).ptr_;
+    return *this;
+  }
+
+  ACE_INLINE ::Messaging::ExceptionHolder::_tao_seq_Octet_out &
+  Messaging::ExceptionHolder::_tao_seq_Octet_out::operator= (_tao_seq_Octet *p)
+  {
+    this->ptr_ = p;
+    return *this;
+  }
+
+  ACE_INLINE
+  Messaging::ExceptionHolder::_tao_seq_Octet_out::operator ::Messaging::ExceptionHolder::_tao_seq_Octet *&() // cast
+  {
+    return this->ptr_;
+  }
+
+  ACE_INLINE ::Messaging::ExceptionHolder::_tao_seq_Octet *&
+  Messaging::ExceptionHolder::_tao_seq_Octet_out::ptr (void) // ptr
+  {
+    return this->ptr_;
+  }
+
+  ACE_INLINE ::Messaging::ExceptionHolder::_tao_seq_Octet *
+  Messaging::ExceptionHolder::_tao_seq_Octet_out::operator-> (void)
+  {
+    return this->ptr_;
+  }
+
+  ACE_INLINE CORBA::Octet &
+  Messaging::ExceptionHolder::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
+  {
+    return this->ptr_->operator[] (index);
+  }
+
+
+#endif /* end #if !defined */
+
+// accessor to set the member
+  void
+  OBV_Messaging::ExceptionHolder::marshaled_exception (const Messaging::ExceptionHolder::_tao_seq_Octet &val)
+  {
+    this->_pd_marshaled_exception = val;
+  }
+
+  // readonly get method
+  const Messaging::ExceptionHolder::_tao_seq_Octet &
+  OBV_Messaging::ExceptionHolder::marshaled_exception (void) const
+  {
+    return this->_pd_marshaled_exception;
+  }
+
+  // read/write get method
+  Messaging::ExceptionHolder::_tao_seq_Octet &
+  OBV_Messaging::ExceptionHolder::marshaled_exception (void)
+  {
+    return this->_pd_marshaled_exception;
+  }
+
+#endif /* TAO_HAS_AMI_CALLBACK == 1 */
+
+
+                void operator<<= (CORBA::Any &_tao_any, const Messaging::PriorityRange &_tao_elem) // copying
+  {
+    TAO_OutputCDR stream;
+    stream << _tao_elem;
     _tao_any._tao_replace (
-        Messaging::_tc_PolicyValueSeq,
+        Messaging::_tc_PriorityRange,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin ()
       );
   }
-}
 
-void operator<<= (CORBA::Any &_tao_any, Messaging::PolicyValueSeq *_tao_elem) // non copying
-{
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      Messaging::_tc_PolicyValueSeq,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      Messaging::PolicyValueSeq::_tao_any_destructor
-    );
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PolicyValueSeq *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(
-      const Messaging::PolicyValueSeq*&,
-      _tao_elem
-    );
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::PolicyValueSeq *&_tao_elem)
-{
-  _tao_elem = 0;
-  ACE_TRY_NEW_ENV
+  void operator<<= (CORBA::Any &_tao_any, Messaging::PriorityRange *_tao_elem) // non copying
   {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (Messaging::_tc_PolicyValueSeq, ACE_TRY_ENV)) // not equal
-      {
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
+    TAO_OutputCDR stream;
+    stream << *_tao_elem;
+    _tao_any._tao_replace (
+        Messaging::_tc_PriorityRange,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _tao_elem,
+        Messaging::PriorityRange::_tao_any_destructor
+      );
+  }
+
+  CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PriorityRange *&_tao_elem)
+  {
+    return _tao_any >>= ACE_const_cast(const Messaging::PriorityRange*&,_tao_elem);
+  }
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::PriorityRange *&_tao_elem)
+  {
+    _tao_elem = 0;
+    ACE_TRY_NEW_ENV
     {
-      _tao_elem = ACE_static_cast(
-          const Messaging::PolicyValueSeq*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      Messaging::PolicyValueSeq *tmp;
-      ACE_NEW_RETURN (tmp, Messaging::PolicyValueSeq, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
+      CORBA::TypeCode_var type = _tao_any.type ();
+      if (!type->equivalent (Messaging::_tc_PriorityRange, ACE_TRY_ENV)) // not equal
+        {
+          return 0;
+        }
+      ACE_TRY_CHECK;
+      if (_tao_any.any_owns_data ())
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            Messaging::_tc_PolicyValueSeq,
-            1,
-            ACE_static_cast (void *, tmp),
-            Messaging::PolicyValueSeq::_tao_any_destructor
+        _tao_elem = ACE_static_cast(
+            const Messaging::PriorityRange*,
+            _tao_any.value ()
           );
-        _tao_elem = tmp;
         return 1;
       }
       else
       {
-        delete tmp;
+        Messaging::PriorityRange *tmp;
+        ACE_NEW_RETURN (tmp, Messaging::PriorityRange, 0);
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        if (stream >> *tmp)
+        {
+          ((CORBA::Any *)&_tao_any)->_tao_replace (
+              Messaging::_tc_PriorityRange,
+              1,
+              ACE_static_cast (void *, tmp),
+              Messaging::PriorityRange::_tao_any_destructor
+            );
+          _tao_elem = tmp;
+          return 1;
+        }
+        else
+        {
+          delete tmp;
+        }
       }
     }
+    ACE_CATCHANY
+    {
+    }
+    ACE_ENDTRY;
+    return 0;
   }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  return 0;
-}
 
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
-
-Messaging::ReplyHandler_ptr (*_TAO_collocation_Messaging_ReplyHandler_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-void operator<<= (CORBA::Any &_tao_any, Messaging::ReplyHandler_ptr _tao_elem)
-{
-  TAO_OutputCDR stream;
-  if (stream << _tao_elem)
+  void operator<<= (CORBA::Any &_tao_any, const Messaging::RoutingTypeRange &_tao_elem) // copying
   {
+    TAO_OutputCDR stream;
+    stream << _tao_elem;
     _tao_any._tao_replace (
-        Messaging::_tc_ReplyHandler,
+        Messaging::_tc_RoutingTypeRange,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin ()
+      );
+  }
+
+  void operator<<= (CORBA::Any &_tao_any, Messaging::RoutingTypeRange *_tao_elem) // non copying
+  {
+    TAO_OutputCDR stream;
+    stream << *_tao_elem;
+    _tao_any._tao_replace (
+        Messaging::_tc_RoutingTypeRange,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
-        Messaging::ReplyHandler::_duplicate (_tao_elem),
-        Messaging::ReplyHandler::_tao_any_destructor
+        _tao_elem,
+        Messaging::RoutingTypeRange::_tao_any_destructor
       );
   }
-}
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::ReplyHandler_ptr &_tao_elem)
-{
-  ACE_TRY_NEW_ENV
+  CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RoutingTypeRange *&_tao_elem)
   {
-    _tao_elem = Messaging::ReplyHandler::_nil ();
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (Messaging::_tc_ReplyHandler, ACE_TRY_ENV)) // not equal
-      {
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    TAO_InputCDR stream (
-        _tao_any._tao_get_cdr (),
-        _tao_any._tao_byte_order ()
-      );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
-    {
-      _tao_elem = Messaging::ReplyHandler::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+    return _tao_any >>= ACE_const_cast(const Messaging::RoutingTypeRange*&,_tao_elem);
+  }
 
-      ((CORBA::Any *)&_tao_any)->_tao_replace (
-          Messaging::_tc_ReplyHandler,
-          1,
-          _tao_elem,
-          Messaging::ReplyHandler::_tao_any_destructor
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::RoutingTypeRange *&_tao_elem)
+  {
+    _tao_elem = 0;
+    ACE_TRY_NEW_ENV
+    {
+      CORBA::TypeCode_var type = _tao_any.type ();
+      if (!type->equivalent (Messaging::_tc_RoutingTypeRange, ACE_TRY_ENV)) // not equal
+        {
+          return 0;
+        }
+      ACE_TRY_CHECK;
+      if (_tao_any.any_owns_data ())
+      {
+        _tao_elem = ACE_static_cast(
+            const Messaging::RoutingTypeRange*,
+            _tao_any.value ()
+          );
+        return 1;
+      }
+      else
+      {
+        Messaging::RoutingTypeRange *tmp;
+        ACE_NEW_RETURN (tmp, Messaging::RoutingTypeRange, 0);
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        if (stream >> *tmp)
+        {
+          ((CORBA::Any *)&_tao_any)->_tao_replace (
+              Messaging::_tc_RoutingTypeRange,
+              1,
+              ACE_static_cast (void *, tmp),
+              Messaging::RoutingTypeRange::_tao_any_destructor
+            );
+          _tao_elem = tmp;
+          return 1;
+        }
+        else
+        {
+          delete tmp;
+        }
+      }
+    }
+    ACE_CATCHANY
+    {
+    }
+    ACE_ENDTRY;
+    return 0;
+  }
+
+  void operator<<= (CORBA::Any &_tao_any, const Messaging::PolicyValue &_tao_elem) // copying
+  {
+    TAO_OutputCDR stream;
+    stream << _tao_elem;
+    _tao_any._tao_replace (
+        Messaging::_tc_PolicyValue,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin ()
+      );
+  }
+
+  void operator<<= (CORBA::Any &_tao_any, Messaging::PolicyValue *_tao_elem) // non copying
+  {
+    TAO_OutputCDR stream;
+    stream << *_tao_elem;
+    _tao_any._tao_replace (
+        Messaging::_tc_PolicyValue,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _tao_elem,
+        Messaging::PolicyValue::_tao_any_destructor
+      );
+  }
+
+  CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PolicyValue *&_tao_elem)
+  {
+    return _tao_any >>= ACE_const_cast(const Messaging::PolicyValue*&,_tao_elem);
+  }
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::PolicyValue *&_tao_elem)
+  {
+    _tao_elem = 0;
+    ACE_TRY_NEW_ENV
+    {
+      CORBA::TypeCode_var type = _tao_any.type ();
+      if (!type->equivalent (Messaging::_tc_PolicyValue, ACE_TRY_ENV)) // not equal
+        {
+          return 0;
+        }
+      ACE_TRY_CHECK;
+      if (_tao_any.any_owns_data ())
+      {
+        _tao_elem = ACE_static_cast(
+            const Messaging::PolicyValue*,
+            _tao_any.value ()
+          );
+        return 1;
+      }
+      else
+      {
+        Messaging::PolicyValue *tmp;
+        ACE_NEW_RETURN (tmp, Messaging::PolicyValue, 0);
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        if (stream >> *tmp)
+        {
+          ((CORBA::Any *)&_tao_any)->_tao_replace (
+              Messaging::_tc_PolicyValue,
+              1,
+              ACE_static_cast (void *, tmp),
+              Messaging::PolicyValue::_tao_any_destructor
+            );
+          _tao_elem = tmp;
+          return 1;
+        }
+        else
+        {
+          delete tmp;
+        }
+      }
+    }
+    ACE_CATCHANY
+    {
+    }
+    ACE_ENDTRY;
+    return 0;
+  }
+
+    void operator<<= (
+      CORBA::Any &_tao_any,
+      const Messaging::PolicyValueSeq &_tao_elem
+    ) // copying
+  {
+    TAO_OutputCDR stream;
+    if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          Messaging::_tc_PolicyValueSeq,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
         );
-      return 1;
     }
   }
-  ACE_CATCHANY
+
+  void operator<<= (CORBA::Any &_tao_any, Messaging::PolicyValueSeq *_tao_elem) // non copying
   {
+    TAO_OutputCDR stream;
+    stream << *_tao_elem;
+    _tao_any._tao_replace (
+        Messaging::_tc_PolicyValueSeq,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _tao_elem,
+        Messaging::PolicyValueSeq::_tao_any_destructor
+      );
+  }
+
+  CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PolicyValueSeq *&_tao_elem)
+  {
+    return _tao_any >>= ACE_const_cast(
+        const Messaging::PolicyValueSeq*&,
+        _tao_elem
+      );
+  }
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::PolicyValueSeq *&_tao_elem)
+  {
+    _tao_elem = 0;
+    ACE_TRY_NEW_ENV
+    {
+      CORBA::TypeCode_var type = _tao_any.type ();
+      if (!type->equivalent (Messaging::_tc_PolicyValueSeq, ACE_TRY_ENV)) // not equal
+        {
+          return 0;
+        }
+      ACE_TRY_CHECK;
+      if (_tao_any.any_owns_data ())
+      {
+        _tao_elem = ACE_static_cast(
+            const Messaging::PolicyValueSeq*,
+            _tao_any.value ()
+          );
+        return 1;
+      }
+      else
+      {
+        Messaging::PolicyValueSeq *tmp;
+        ACE_NEW_RETURN (tmp, Messaging::PolicyValueSeq, 0);
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        if (stream >> *tmp)
+        {
+          ((CORBA::Any *)&_tao_any)->_tao_replace (
+              Messaging::_tc_PolicyValueSeq,
+              1,
+              ACE_static_cast (void *, tmp),
+              Messaging::PolicyValueSeq::_tao_any_destructor
+            );
+          _tao_elem = tmp;
+          return 1;
+        }
+        else
+        {
+          delete tmp;
+        }
+      }
+    }
+    ACE_CATCHANY
+    {
+    }
+    ACE_ENDTRY;
+    return 0;
+  }
+
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+
+  Messaging::ReplyHandler_ptr (*_TAO_collocation_Messaging_ReplyHandler_Stub_Factory_function_pointer) (
+      CORBA::Object_ptr obj
+    ) = 0;
+    void operator<<= (CORBA::Any &_tao_any, Messaging::ReplyHandler_ptr _tao_elem)
+  {
+    TAO_OutputCDR stream;
+    if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          Messaging::_tc_ReplyHandler,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          Messaging::ReplyHandler::_duplicate (_tao_elem),
+          Messaging::ReplyHandler::_tao_any_destructor
+        );
+    }
+  }
+
+  CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::ReplyHandler_ptr &_tao_elem)
+  {
+    ACE_TRY_NEW_ENV
+    {
+      _tao_elem = Messaging::ReplyHandler::_nil ();
+      CORBA::TypeCode_var type = _tao_any.type ();
+      if (!type->equivalent (Messaging::_tc_ReplyHandler, ACE_TRY_ENV)) // not equal
+        {
+          return 0;
+        }
+      ACE_TRY_CHECK;
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      CORBA::Object_var _tao_obj_var;
+      if (stream >> _tao_obj_var.out ())
+      {
+        _tao_elem = Messaging::ReplyHandler::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            Messaging::_tc_ReplyHandler,
+            1,
+            _tao_elem,
+            Messaging::ReplyHandler::_tao_any_destructor
+          );
+        return 1;
+      }
+    }
+    ACE_CATCHANY
+    {
+      _tao_elem = Messaging::ReplyHandler::_nil ();
+      return 0;
+    }
+    ACE_ENDTRY;
     _tao_elem = Messaging::ReplyHandler::_nil ();
     return 0;
   }
-  ACE_ENDTRY;
-  _tao_elem = Messaging::ReplyHandler::_nil ();
-  return 0;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Manager<Messaging::ReplyHandler,Messaging::ReplyHandler_var>;
-  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-  #  pragma instantiate TAO_Object_Manager<Messaging::ReplyHandler,Messaging::ReplyHandler_var>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+      defined (ACE_HAS_GNU_REPO)
+      template class TAO_Object_Manager<Messaging::ReplyHandler,Messaging::ReplyHandler_var>;
+    #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+    #  pragma instantiate TAO_Object_Manager<Messaging::ReplyHandler,Messaging::ReplyHandler_var>
+  #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
 #if !defined _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_Octet_CPP_
-#define _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_Octet_CPP_
+  #define _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_Octet_CPP_
 
 CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Messaging::PolicyValue::_tao_seq_Octet &_tao_sequence
-  )
-{
-  if (strm << _tao_sequence.length ())
+      TAO_OutputCDR &strm,
+      const Messaging::PolicyValue::_tao_seq_Octet &_tao_sequence
+    )
   {
-    // encode all elements
+    if (strm << _tao_sequence.length ())
+    {
+      // encode all elements
 
 #if defined (TAO_NO_COPY_OCTET_SEQUENCES)
+      {
+        TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
+          ACE_static_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (Messaging::PolicyValue::_tao_seq_Octet *)&_tao_sequence);
+        if (oseq->mb ())
+          return strm.write_octet_array_mb (oseq->mb ());
+        else
+          return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
+      }
+
+#else /* TAO_NO_COPY_OCTET_SEQUENCES */
+      return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
+
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
+    }
+    return 0; // error
+  }
+
+  CORBA::Boolean operator>> (
+      TAO_InputCDR &strm,
+      Messaging::PolicyValue::_tao_seq_Octet &_tao_sequence
+    )
+  {
+    CORBA::ULong _tao_seq_len;
+    if (strm >> _tao_seq_len)
     {
-      TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
-        ACE_static_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (Messaging::PolicyValue::_tao_seq_Octet *)&_tao_sequence);
-      if (oseq->mb ())
-        return strm.write_octet_array_mb (oseq->mb ());
+      // set the length of the sequence
+      _tao_sequence.length (_tao_seq_len);
+      // If length is 0 we return true.
+      if (0 >= _tao_seq_len)
+        return 1;
+      // retrieve all the elements
+
+#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
+      if (ACE_BIT_DISABLED (strm.start ()->flags (),ACE_Message_Block::DONT_DELETE))
+      {
+        TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
+          ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &_tao_sequence);
+        oseq->replace (_tao_seq_len, strm.start ());
+        oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
+        strm.skip_bytes (_tao_seq_len);
+        return 1;
+      }
       else
-        return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-    }
+        return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
 
 #else /* TAO_NO_COPY_OCTET_SEQUENCES */
-    return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
+      return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
 
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES */
-  }
-  return 0; // error
-}
-
-CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Messaging::PolicyValue::_tao_seq_Octet &_tao_sequence
-  )
-{
-  CORBA::ULong _tao_seq_len;
-  if (strm >> _tao_seq_len)
-  {
-    // set the length of the sequence
-    _tao_sequence.length (_tao_seq_len);
-    // If length is 0 we return true.
-    if (0 >= _tao_seq_len)
-      return 1;
-    // retrieve all the elements
-
-#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
-    if (ACE_BIT_DISABLED (strm.start ()->flags (),ACE_Message_Block::DONT_DELETE))
-    {
-      TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
-        ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &_tao_sequence);
-      oseq->replace (_tao_seq_len, strm.start ());
-      oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
-      strm.skip_bytes (_tao_seq_len);
-      return 1;
     }
-    else
-      return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
-
-#else /* TAO_NO_COPY_OCTET_SEQUENCES */
-    return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
+    return 0; // error
   }
-  return 0; // error
-}
 
 #endif /* _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_Octet_CPP_ */
 
@@ -2330,78 +2635,5 @@ CORBA::Boolean operator>> (
   }
   return 0; // error
 }
-
-
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
-
-#if !defined _TAO_CDR_OP_Messaging_ExceptionHolder__tao_seq_Octet_CPP_
-#define _TAO_CDR_OP_Messaging_ExceptionHolder__tao_seq_Octet_CPP_
-
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Messaging::ExceptionHolder::_tao_seq_Octet &_tao_sequence
-  )
-{
-  if (strm << _tao_sequence.length ())
-  {
-    // encode all elements
-
-#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
-    {
-      TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
-        ACE_static_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (Messaging::ExceptionHolder::_tao_seq_Octet *)&_tao_sequence);
-      if (oseq->mb ())
-        return strm.write_octet_array_mb (oseq->mb ());
-      else
-        return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-    }
-
-#else /* TAO_NO_COPY_OCTET_SEQUENCES */
-    return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
-  }
-  return 0; // error
-}
-
-CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Messaging::ExceptionHolder::_tao_seq_Octet &_tao_sequence
-  )
-{
-  CORBA::ULong _tao_seq_len;
-  if (strm >> _tao_seq_len)
-  {
-    // set the length of the sequence
-    _tao_sequence.length (_tao_seq_len);
-    // If length is 0 we return true.
-    if (0 >= _tao_seq_len)
-      return 1;
-    // retrieve all the elements
-
-#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
-    if (ACE_BIT_DISABLED (strm.start ()->flags (),ACE_Message_Block::DONT_DELETE))
-    {
-      TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
-        ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &_tao_sequence);
-      oseq->replace (_tao_seq_len, strm.start ());
-      oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
-      strm.skip_bytes (_tao_seq_len);
-      return 1;
-    }
-    else
-      return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
-
-#else /* TAO_NO_COPY_OCTET_SEQUENCES */
-    return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
-  }
-  return 0; // error
-}
-
-#endif /* _TAO_CDR_OP_Messaging_ExceptionHolder__tao_seq_Octet_CPP_ */
-
-#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
