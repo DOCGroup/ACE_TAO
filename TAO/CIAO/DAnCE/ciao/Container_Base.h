@@ -107,6 +107,7 @@ namespace CIAO
      * are distinct from the component.
      */
     PortableServer::POA_var facet_cons_poa_;
+    PortableServer::POA_var home_servant_poa_;
   };
 
   class Session_Container;
@@ -195,7 +196,7 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Install a servant for component or home.
-    CORBA::Object_ptr install_servant (PortableServer::Servant p,
+    virtual CORBA::Object_ptr install_servant (PortableServer::Servant p,
                                        Container::OA_Type t
                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -207,7 +208,7 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Get an object reference to a component or home from the servant.
-    CORBA::Object_ptr get_objref (PortableServer::Servant p
+    virtual CORBA::Object_ptr get_objref (PortableServer::Servant p
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
