@@ -85,7 +85,7 @@ public:
   // return a chunk of memory back to free store.
 
 private:
-  T *pool_;
+  char *pool_;
   // remember how we allocate the memory in the first place so
   // we can clear things up later.
 
