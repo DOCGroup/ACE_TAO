@@ -14,8 +14,8 @@ Mon Dec  6 11:06:43 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  If the file passed as argument is in a directory and the
 	  directory doesn't exist then create the directory.  In order to
 	  be as general as possible a script fragment was implemented with
-	  the same functionality equivalent as "mkdir -p" because "mkdir
-	  -p" may not be portable.
+	  the same functionality as "mkdir -p" because "mkdir -p" may not
+	  be portable.
 
 	* m4/threads.m4 (ACE_SEARCH_THREAD_FLAGS):
 
