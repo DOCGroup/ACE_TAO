@@ -45,7 +45,7 @@ for ($i = 0; $i <= $#ARGV; $i++) {
 unlink $iorfile;
 
 $SV = new PerlACE::Process ("server", "-f $iorfile $extra_args");
-$CL = new PerlACE::Process ("../Generic_Servant/client", "$extra_args $oneway -i $iterations -f $iorfile -x");
+$CL = new PerlACE::Process ("../Generic_Servant/client", "$extra_args $oneway -i $iterations -k file://$iorfile -x");
 
 $status = 0;
 

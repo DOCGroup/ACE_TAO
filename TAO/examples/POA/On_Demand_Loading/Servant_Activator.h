@@ -27,7 +27,7 @@
 class ServantActivator_i : public PortableServer::ServantActivator
 {
   //= TITLE
-  //   Servant Activator for the MyFoo servant.
+  //   Servant Activator for the test servant.
   //
   //= DESCRIPTION
   //   This class associates an unassociated servant with an object in
@@ -42,13 +42,13 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::ForwardRequest));
   // This method is invoked by a POA with USE_SERVANT_MANAGER and
-  // RETAIN policies, whenever it receives a request for a
-  // MyFooServant object that is not currently active. When an servant
-  // pointer corresponding to objectId is not found in the Active
-  // Object Map, the POA hands over the job of obtaining the servant
-  // to the Servant Manager. Depending upon whether the POA is created
-  // with RETAIN or NON_RETAIN as the servant_retention policy, the
-  // Servant Activator or the Servant Locator interface is invoked
+  // RETAIN policies, whenever it receives a request for a test object
+  // that is not currently active. When an servant pointer
+  // corresponding to objectId is not found in the Active Object Map,
+  // the POA hands over the job of obtaining the servant to the
+  // Servant Manager. Depending upon whether the POA is created with
+  // RETAIN or NON_RETAIN as the servant_retention policy, the Servant
+  // Activator or the Servant Locator interface is invoked
   // respectively.
 
   virtual void etherealize (const PortableServer::ObjectId &oid,
@@ -58,12 +58,12 @@ public:
                             CORBA::Boolean remaining_activations
                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // This method is invoked whenever a MyFooServant for a MyFoo object
-  // is deactivated. This occurs when the POA is destroyed or the
-  // Object is deactivated. When the POA is getting destroyed, it
-  // needs to deactivate every  object in the Active Object Map and on
-  // that call the  ServantActivator invokes this method which will
-  // destroy the servant associated with the object.
+  // This method is invoked whenever a test servant is
+  // deactivated. This occurs when the POA is destroyed or the Object
+  // is deactivated. When the POA is getting destroyed, it needs to
+  // deactivate every object in the Active Object Map and on that call
+  // the ServantActivator invokes this method which will destroy the
+  // servant associated with the object.
 
   PortableServer::ObjectId_var create_dll_object_id (const char *dllname,
                                                      const char *factory_function);

@@ -51,9 +51,9 @@ unlink $iorfile1, $iorfile2;
 
 $SV  = new PerlACE::Process ("server", "-f $iorfile $extra_args");
 $CL1 = new PerlACE::Process ("../Generic_Servant/client", 
-                             "$extra_args $oneway -i $iterations -f $iorfile1");
+                             "$extra_args $oneway -i $iterations -k file://$iorfile1");
 $CL2 = new PerlACE::Process ("../Generic_Servant/client",
-                             "$extra_args $oneway -i $iterations -f $iorfile2 -x"); 
+                             "$extra_args $oneway -i $iterations -k file://$iorfile2 -x"); 
 
 $SV->Spawn ();
 

@@ -5,13 +5,13 @@
 
 ACE_RCSID(Loader, Server_Manager, "$Id$")
 
-Server_i::Server_i(void)
+Server_i::Server_i (void)
   : ior_output_file_ (0),
     policies_ (4)
 {
 }
 
-Server_i::~Server_i(void)
+Server_i::~Server_i (void)
 {
 }
 
@@ -244,13 +244,13 @@ Server_i::create_activator (PortableServer::POA_var first_poa)
       // the servant on demand.
       PortableServer::ServantManager_ptr temp_servant_activator;
       ACE_NEW_RETURN (temp_servant_activator,
-                      ServantActivator_i (orb_.in (),
-                                          "Generic_Servant",
-                                          "supply_servant",
-                                          "destroy_servant"),
+                      ServantActivator (orb_.in (),
+                                        "Generic_Servant",
+                                        "supply_servant",
+                                        "destroy_servant"),
                       0);
 
-      // Set ServantActivator_i object as the servant_manager of
+      // Set ServantActivator object as the servant_manager of
       // firstPOA.
       this->servant_activator_ = temp_servant_activator;
       first_poa->set_servant_manager (this->servant_activator_.in ()
@@ -266,12 +266,12 @@ Server_i::create_activator (PortableServer::POA_var first_poa)
       ACE_TRY_CHECK;
 
       // Create a reference with user created ID in firstPOA which
-      // uses the MyFooServantActivator.
-      PortableServer::ObjectId_var first_foo_oid =
-        PortableServer::string_to_ObjectId ("firstFoo");
+      // uses the ServantActivator.
+      PortableServer::ObjectId_var first_test_oid =
+        PortableServer::string_to_ObjectId ("first test");
 
-      first_foo_ = first_poa->create_reference_with_id (first_foo_oid.in (),
-                                                        "IDL:Foo:1.0"
+      first_test_ = first_poa->create_reference_with_id (first_test_oid.in (),
+                                                        "IDL:test:1.0"
                                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -298,12 +298,12 @@ Server_i::create_locator (PortableServer::POA_var second_poa)
       // the servant on demand.
       PortableServer::ServantManager_ptr temp_servant_locator;
       ACE_NEW_RETURN (temp_servant_locator,
-                      ServantLocator_i (orb_.in (),
-                                        "Generic_Servant",
-                                        "supply_servant",
-                                        "destroy_servant"),
+                      ServantLocator (orb_.in (),
+                                      "Generic_Servant",
+                                      "supply_servant",
+                                      "destroy_servant"),
                       0);
-      // Set ServantLocator_i object as the servant Manager of
+      // Set ServantLocator object as the servant Manager of
       // secondPOA.
       this->servant_locator_ = temp_servant_locator;
       second_poa->set_servant_manager (this->servant_locator_.in ()
@@ -314,20 +314,20 @@ Server_i::create_locator (PortableServer::POA_var second_poa)
       //
       // this->servant_locator_ = temp_servant_locator->_this ();
       //
-      // Set ServantLocator_i object as the servant Manager of
+      // Set ServantLocator object as the servant Manager of
       // secondPOA.
       // second_poa->set_servant_manager (this->servant_locator_.in ()
       //                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Try to create a reference with user created ID in second_poa
-      // which uses MyFooServantLocator.
-      PortableServer::ObjectId_var second_foo_oid =
-        PortableServer::string_to_ObjectId ("secondFoo");
+      // which uses ServantLocator.
+      PortableServer::ObjectId_var second_test_oid =
+        PortableServer::string_to_ObjectId ("second test");
 
-      second_foo_ =
-        second_poa->create_reference_with_id (second_foo_oid.in (),
-                                              "IDL:Foo:1.0"
+      second_test_ =
+        second_poa->create_reference_with_id (second_test_oid.in (),
+                                              "IDL:test:1.0"
                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -353,25 +353,25 @@ Server_i::run (void)
       // Invoke object_to_string on the references created in firstPOA
       // and secondPOA.
 
-      CORBA::String_var first_foo_ior =
-        orb_->object_to_string (first_foo_.in ()
+      CORBA::String_var first_test_ior =
+        orb_->object_to_string (first_test_.in ()
                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::String_var second_foo_ior =
-        orb_->object_to_string (second_foo_.in ()
+      CORBA::String_var second_test_ior =
+        orb_->object_to_string (second_test_.in ()
                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Print the ior's of first_foo and second_foo.
+      // Print the ior's of first_test and second_test.
 
       ACE_DEBUG ((LM_DEBUG,"%s\n%s\n",
-                  first_foo_ior.in (),
-                  second_foo_ior.in ()));
+                  first_test_ior.in (),
+                  second_test_ior.in ()));
 
       int write_result =
-        this->write_iors_to_file (first_foo_ior.in (),
-                                  second_foo_ior.in ());
+        this->write_iors_to_file (first_test_ior.in (),
+                                  second_test_ior.in ());
       if (write_result != 0)
         return write_result;
 

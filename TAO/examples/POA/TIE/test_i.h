@@ -1,9 +1,9 @@
 // $Id$
+
 //=============================================================================
 //
-//
 // = FILENAME
-//     Foo_i.h
+//     test_i.h
 //
 // = DESCRIPTION
 //     Defines implementation classes for the interfaces
@@ -13,10 +13,7 @@
 //
 //=============================================================================
 
-#ifndef FOO_I_H
-#define FOO_I_H
-
-#include "FooS.h"
+#include "testS.h"
 
 class Tie_i
 {
@@ -108,5 +105,3 @@ public:
     };
   };
 };
-
-#endif /* FOO_I_H */

@@ -9,7 +9,7 @@
 //     Servant_Activator.cpp
 //
 // = DESCRIPTION
-//     Implementation of <ServantActivator_i>, which is used by a POA
+//     Implementation of <ServantActivator>, which is used by a POA
 //     with a RETAIN policy.
 //
 // = AUTHOR
@@ -26,17 +26,17 @@ ACE_RCSID(Loader, Servant_Activator, "$Id$")
 // is used for obtaining the servant. The garbage_collection_function
 // is used to kill the servant.
 
-ServantActivator_i::ServantActivator_i (CORBA::ORB_ptr orb,
-                                        const char *dllname,
-                                        const char *factory_function,
-                                        const char *garbage_collection_function)
+ServantActivator::ServantActivator (CORBA::ORB_ptr orb,
+                                    const char *dllname,
+                                    const char *factory_function,
+                                    const char *garbage_collection_function)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
   // The dll is opened using the dllname passed.
-   if (this->dll_.open (dllname) == -1)
-     ACE_ERROR ((LM_ERROR,
-                 "%p\n",
-                 this->dll_.error ()));
+  if (this->dll_.open (dllname) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "%p\n",
+                this->dll_.error ()));
 
   // Obtain the symbol for the function that will get the servant
   // object.
@@ -64,9 +64,9 @@ ServantActivator_i::ServantActivator_i (CORBA::ORB_ptr orb,
 // This method associates an servant with the ObjectID.
 
 PortableServer::Servant
-ServantActivator_i::incarnate (const PortableServer::ObjectId &oid,
-                               PortableServer::POA_ptr poa
-                               ACE_ENV_ARG_DECL)
+ServantActivator::incarnate (const PortableServer::ObjectId &oid,
+                             PortableServer::POA_ptr poa
+                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -86,17 +86,18 @@ ServantActivator_i::incarnate (const PortableServer::ObjectId &oid,
 // entire POA is is deactivated or destroyed.
 
 void
-ServantActivator_i::etherealize (const PortableServer::ObjectId &oid,
-                                 PortableServer::POA_ptr poa,
-                                 PortableServer::Servant servant,
-                                 CORBA::Boolean,
-                                 CORBA::Boolean remaining_activations
-                                 ACE_ENV_ARG_DECL_NOT_USED)
+ServantActivator::etherealize (const PortableServer::ObjectId &oid,
+                               PortableServer::POA_ptr poa,
+                               PortableServer::Servant servant,
+                               CORBA::Boolean,
+                               CORBA::Boolean remaining_activations
+                               ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // If there are no remaining activations i.e ObjectIds associated
-  // with MyFooServant object, deactivate it by calling the garbage_collection_function.
-  // Etheralization happens on POA::destroy() and/or Object::deactivate().
+  // with test servant, deactivate it by calling the
+  // garbage_collection_function.  Etheralization happens on
+  // POA::destroy() and/or Object::deactivate().
 
   if (remaining_activations == 0)
     (*servant_garbage_collector_) (oid,

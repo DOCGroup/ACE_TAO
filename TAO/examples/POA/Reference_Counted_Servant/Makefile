@@ -143,8 +143,8 @@ server: $(addprefix $(VDIR),$(SERVER_OBJS))
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i \
- ../Generic_Servant/MyFooServant.h ../Generic_Servant/FooS.h \
- ../Generic_Servant/FooC.h $(TAO_ROOT)/tao/corba.h \
+ ../Generic_Servant/test_i.h ../Generic_Servant/testS.h \
+ ../Generic_Servant/testC.h $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -231,7 +231,7 @@ server: $(addprefix $(VDIR),$(SERVER_OBJS))
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- ../Generic_Servant/generic_servant_export.h ../Generic_Servant/FooC.i \
+ ../Generic_Servant/generic_servant_export.h ../Generic_Servant/testC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -246,7 +246,7 @@ server: $(addprefix $(VDIR),$(SERVER_OBJS))
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- ../Generic_Servant/FooS_T.h ../Generic_Servant/FooS_T.i \
- ../Generic_Servant/FooS_T.cpp ../Generic_Servant/FooS.i
+ ../Generic_Servant/testS_T.h ../Generic_Servant/testS_T.i \
+ ../Generic_Servant/testS_T.cpp ../Generic_Servant/testS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

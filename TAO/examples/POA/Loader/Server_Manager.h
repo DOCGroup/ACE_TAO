@@ -87,10 +87,10 @@ private:
   PortableServer::POAManager_var poa_manager_;
   // The poa_manager object.
 
-  CORBA::Object_var first_foo_;
+  CORBA::Object_var first_test_;
   // The object pointer used by the ServantActivator.
 
-  CORBA::Object_var second_foo_;
+  CORBA::Object_var second_test_;
   // The object pointer used by the Servant Locator.
 
   PortableServer::ServantManager_var servant_activator_;

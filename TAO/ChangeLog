@@ -1,3 +1,128 @@
+Thu Aug 22 14:06:06 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao\PortableServer\POA.cpp (id_to_servant_i and
+	  reference_to_servant_i): If a POA has the USE_DEFAULT_SERVANT
+	  policy and a default servant has been registered with the POA,
+	  id_to_servant() should return the default servant. But since the
+	  original POA spec did not have this requirement, id_to_servant()
+	  was throwing the ObjectNotActive exception.  Changed
+	  id_to_servant_i() to handle this use
+	  case. reference_to_servant() was already handling this use case,
+	  but needed some refactoring.
+
+ 	  Thanks to Lan Zhineng <lanzn@huawei.com> for reporting this.
+
+	* tests\POA\Default_Servant: Added new test that checks the
+	  behavior of POA::id_to_servant() and POA::reference_to_servant()
+	  with the use of default servants.
+
+          The following files were added:
+
+	  - tests/POA/Default_Servant/Default_Servant.cpp
+	  - tests/POA/Default_Servant/Default_Servant.dsp
+	  - tests/POA/Default_Servant/Default_Servant.dsw
+	  - tests/POA/Default_Servant/Default_Servant.mpc
+	  - tests/POA/Default_Servant/Makefile
+	  - tests/POA/Default_Servant/makefile.bor
+	  - tests/POA/Default_Servant/run_test.pl
+	  - tests/POA/Default_Servant/test.idl
+
+          The following files were added:
+
+	  - tests/TAO_Tests.dsw
+	  - tests/POA/Makefile
+	  - tests/POA/Makefile.bor
+	  - tests/POA/README
+	  - ACE_wrappers/bin/auto_run_tests.lst
+
+        * examples/POA: The use of name "Foo" for the test interface was
+	  unnecessary, inconsistent, and somewhat silly.  Therefore, I
+	  replaced it with the standard name "test".
+
+	  The following files were removed:
+
+	  - examples/POA/Forwarding/Foo.idl
+	  - examples/POA/Forwarding/MyFooServant.cpp
+	  - examples/POA/Forwarding/MyFooServant.h
+	  - examples/POA/Generic_Servant/Foo.idl
+	  - examples/POA/Generic_Servant/MyFooServant.cpp
+	  - examples/POA/Generic_Servant/MyFooServant.h
+	  - examples/POA/TIE/Foo.idl
+	  - examples/POA/TIE/Foo_i.cpp
+	  - examples/POA/TIE/Foo_i.h
+
+	  The following files were added:
+
+	  - examples/POA/Forwarding/test.idl
+	  - examples/POA/Forwarding/test_i.cpp
+	  - examples/POA/Forwarding/test_i.h
+	  - examples/POA/Generic_Servant/test.idl
+	  - examples/POA/Generic_Servant/test_i.cpp
+	  - examples/POA/Generic_Servant/test_i.h
+	  - examples/POA/TIE/test.idl
+	  - examples/POA/TIE/test_i.cpp
+	  - examples/POA/TIE/test_i.h
+
+  	  The following files were changed:
+
+	  - examples/POA/README
+	  - examples/POA/Adapter_Activator/Makefile
+	  - examples/POA/Adapter_Activator/run_test.pl
+	  - examples/POA/Adapter_Activator/server.cpp
+	  - examples/POA/Explicit_Activation/Makefile
+	  - examples/POA/Explicit_Activation/run_test.pl
+	  - examples/POA/Explicit_Activation/server.cpp
+	  - examples/POA/Forwarding/Makefile
+	  - examples/POA/Forwarding/Servant_Activator.cpp
+	  - examples/POA/Forwarding/Servant_Activator.h
+	  - examples/POA/Forwarding/client.bor
+	  - examples/POA/Forwarding/client.cpp
+	  - examples/POA/Forwarding/client.dsp
+	  - examples/POA/Forwarding/server.bor
+	  - examples/POA/Forwarding/server.cpp
+	  - examples/POA/Forwarding/server.dsp
+	  - examples/POA/Generic_Servant/Makefile
+	  - examples/POA/Generic_Servant/README
+	  - examples/POA/Generic_Servant/client.bor
+	  - examples/POA/Generic_Servant/client.cpp
+	  - examples/POA/Generic_Servant/client.dsp
+	  - examples/POA/Generic_Servant/generic_servant.bor
+	  - examples/POA/Generic_Servant/server.dsp
+	  - examples/POA/Loader/Servant_Activator.cpp
+	  - examples/POA/Loader/Servant_Activator.h
+	  - examples/POA/Loader/Servant_Locator.cpp
+	  - examples/POA/Loader/Servant_Locator.h
+	  - examples/POA/Loader/Server_Manager.cpp
+	  - examples/POA/Loader/Server_Manager.h
+	  - examples/POA/Loader/run_test.pl
+	  - examples/POA/On_Demand_Activation/Makefile
+	  - examples/POA/On_Demand_Activation/README
+	  - examples/POA/On_Demand_Activation/Servant_Activator.cpp
+	  - examples/POA/On_Demand_Activation/Servant_Activator.h
+	  - examples/POA/On_Demand_Activation/Servant_Locator.cpp
+	  - examples/POA/On_Demand_Activation/Servant_Locator.h
+	  - examples/POA/On_Demand_Activation/run_test.pl
+	  - examples/POA/On_Demand_Activation/server.cpp
+	  - examples/POA/On_Demand_Loading/Servant_Activator.cpp
+	  - examples/POA/On_Demand_Loading/Servant_Activator.h
+	  - examples/POA/On_Demand_Loading/Servant_Locator.cpp
+	  - examples/POA/On_Demand_Loading/Servant_Locator.h
+	  - examples/POA/On_Demand_Loading/Servant_Manager.cpp
+	  - examples/POA/On_Demand_Loading/Servant_Manager.h
+	  - examples/POA/On_Demand_Loading/Server_Manager.cpp
+	  - examples/POA/On_Demand_Loading/Server_Manager.h
+	  - examples/POA/On_Demand_Loading/run_test.pl
+	  - examples/POA/Reference_Counted_Servant/Makefile
+	  - examples/POA/Reference_Counted_Servant/run_test.pl
+	  - examples/POA/Reference_Counted_Servant/server.cpp
+	  - examples/POA/TIE/Makefile
+	  - examples/POA/TIE/client.bor
+	  - examples/POA/TIE/client.cpp
+	  - examples/POA/TIE/client.dsp
+	  - examples/POA/TIE/server.bor
+	  - examples/POA/TIE/server.cpp
+          - examples/POA/TIE/server.dsp
+
 Wed Aug 21 22:51:09 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/PSS/PSDL.bor:

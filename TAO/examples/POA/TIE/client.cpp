@@ -17,7 +17,7 @@
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
 #include "ace/Profile_Timer.h"
-#include "FooC.h"
+#include "testC.h"
 
 ACE_RCSID(TIE, client, "$Id$")
 
@@ -125,7 +125,7 @@ public:
           }
         */
         // Try to narrow the object reference to a reference.
-        T_var foo = T::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        T_var test = T::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
 
         /*if (ACE_ENV_SINGLE_ARG_PARAMETER.exception () != 0)
@@ -145,7 +145,7 @@ public:
         for (i = 0; i < iterations ; i++)
           {
             // Invoke the doit() method on the reference.
-            result = foo->doit (ACE_ENV_SINGLE_ARG_PARAMETER);
+            result = test->doit (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_CHECK;
           }
 
