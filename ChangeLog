@@ -1,3 +1,11 @@
+Wed Aug  4 16:19:40 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Global_Macros.h (ACE_CORBA_1, ACE_CORBA_2, ACE_CORBA_3):
+
+	  Marked these macros as deprecated, and removed the version of
+	  these macros that defined the obsolete "CORBA_foo" broken
+	  namespace workaround classes.
+
 Wed Aug  4 14:46:07 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* Makefile.am:

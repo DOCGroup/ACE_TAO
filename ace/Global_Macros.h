@@ -106,39 +106,47 @@ friend class ace_dewarn_gplusplus
 
 // ----------------------------------------------------------------
 
-#if defined (ACE_HAS_NO_THROW_SPEC)
+# if defined (ACE_HAS_NO_THROW_SPEC)
 #   define ACE_THROW_SPEC(X)
-#else
-# if defined (ACE_HAS_EXCEPTIONS)
-#   define ACE_THROW_SPEC(X) throw X
-#   if defined (ACE_WIN32) && defined(_MSC_VER) && !defined (ghs)
+# else
+#  if defined (ACE_HAS_EXCEPTIONS)
+#    define ACE_THROW_SPEC(X) throw X
+#    if defined (ACE_WIN32) && defined(_MSC_VER) && !defined (ghs)
 // @@ MSVC "supports" the keyword but doesn't implement it (Huh?).
 //    Therefore, we simply supress the warning for now.
-#     pragma warning( disable : 4290 )
-#   endif /* ACE_WIN32 */
-# else  /* ! ACE_HAS_EXCEPTIONS */
-#   define ACE_THROW_SPEC(X)
-# endif /* ! ACE_HAS_EXCEPTIONS */
-#endif /*ACE_HAS_NO_THROW_SPEC*/
+#      pragma warning( disable : 4290 )
+#    endif /* ACE_WIN32 */
+#  else  /* ! ACE_HAS_EXCEPTIONS */
+#    define ACE_THROW_SPEC(X)
+#  endif /* ! ACE_HAS_EXCEPTIONS */
+# endif /*ACE_HAS_NO_THROW_SPEC*/
 
 // ----------------------------------------------------------------
 
 // Deal with MSVC++ 6 (or less) insanity for CORBA...
-# if defined (ACE_HAS_BROKEN_NAMESPACES)
-#   define ACE_CORBA_1(NAME) CORBA_##NAME
-#   define ACE_CORBA_2(TYPE, NAME) CORBA_##TYPE##_##NAME
-#   define ACE_CORBA_3(TYPE, NAME) CORBA_##TYPE::NAME
-#   if !defined (ACE_NESTED_CLASS)
+# if !defined (ACE_NESTED_CLASS)
+#   if defined (ACE_HAS_BROKEN_NAMESPACES)
 #     define ACE_NESTED_CLASS(TYPE, NAME) NAME
-#   endif  /* !ACE_NESTED_CLASS */
-# else  /* ! ACE_HAS_BROKEN_NAMESPACES */
-#   define ACE_CORBA_1(NAME) CORBA::NAME
-#   define ACE_CORBA_2(TYPE, NAME) CORBA::TYPE::NAME
-#   define ACE_CORBA_3(TYPE, NAME) CORBA::TYPE::NAME
-#   if !defined (ACE_NESTED_CLASS)
+#   else  /* ! ACE_HAS_BROKEN_NAMESPACES */
 #     define ACE_NESTED_CLASS(TYPE, NAME) TYPE::NAME
-#   endif  /* !ACE_NESTED_CLASS */
-# endif /* ! ACE_HAS_BROKEN_NAMESPACES */
+#   endif /* ! ACE_HAS_BROKEN_NAMESPACES */
+# endif  /* !ACE_NESTED_CLASS */
+
+/**
+ * @name CORBA namespace macros.
+ *
+ * CORBA namespace macros.
+ *
+ * @deprecated These macros were formerly used by TAO but are now
+ *             deprecated, and only remain to retain some backward
+ *             compatibility.  They will be removed in a future ACE
+ *             release.
+ */
+//@{
+# define ACE_CORBA_1(NAME) CORBA::NAME
+# define ACE_CORBA_2(TYPE, NAME) CORBA::TYPE::NAME
+# define ACE_CORBA_3(TYPE, NAME) CORBA::TYPE::NAME
+//@}
 
 // ----------------------------------------------------------------
 
