@@ -440,6 +440,14 @@ AC_CHECK_HEADER([memory.h],
   ,
   [AC_DEFINE([ACE_LACKS_MEMORY_H])])
 
+AC_CHECK_HEADER([stdint.h],
+  ,
+  [AC_DEFINE(ACE_LACKS_STDINT_H)])
+
+AC_CHECK_HEADER([inttypes.h],
+  ,
+  [AC_DEFINE(ACE_LACKS_INTTYPES_H)])
+
 AC_CHECK_HEADER([bytesex.h],
   [AC_DEFINE([ACE_HAS_BYTESEX_H])])
 
