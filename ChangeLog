@@ -1,3 +1,15 @@
+Wed Jan 19 22:55:50 2005  Marek Brudka  <mbrudka@aster.pl>
+
+	* bin/MakeProjectCreator/config/tao_xtresource.mpb:
+	* bin/MakeProjectCreator/config/tao_xtreactor.mpb:
+	* bin/MakeProjectCreator/config/tao_tkresource.mpb:
+	* bin/MakeProjectCreator/config/tao_tkreactor.mpb:
+	* bin/MakeProjectCreator/config/tao_qtresource.mpb:
+	* bin/MakeProjectCreator/config/tao_qtreactor.mpb:
+	* bin/MakeProjectCreator/config/tao_flresource.mpb:
+	* bin/MakeProjectCreator/config/tao_flreactor.mpb:
+	Adapted to new naming.
+
 Sun Jan  9 01:13:42 2005  Marek Brudka  <mbrudka@aster.pl>
 
 	* ace/TkReactor.h (Module):
