@@ -48,6 +48,11 @@ Sun Sep 14 21:02:31 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Token_Manager.h: inserting missing "public" access control
 	  specifier for ACE_Cleanup.
 
+	* ace/OS.{h,cpp} (gethrtime, Linux only): inlined and added Alpha
+	  support.
+
+	* ace/config-linux*.h: only define ACE_HAS_PENTIUM if i386 is defined.
+
 Sun Sep 14 10:35:57 1997    <irfan@TWOSTEP>
 
 	* ace/Reactor: The Reactor classes (ACE_Reactor and ACE_ReactorEx)
