@@ -1,3 +1,14 @@
+Tue Oct 28 20:56:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_sequence.cpp:
+	* TAO_IDL/be/be_visitor_arg_traits.cpp:
+	* TAO_IDL/be_include/be_sequence.h:
+	* TAO_IDL/be_include/be_visitor_arg_traits.h:
+	* TAO_IDL/util/utl_scope.cpp: 
+
+	  Fixed warnings that arose due to a conversion of string to a
+	  non-const pointers.
+
 Tue Oct 28 15:53:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Invocation_Adapter.h:
