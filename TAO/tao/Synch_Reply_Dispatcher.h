@@ -68,7 +68,7 @@ private:
   /// Cache the ORB Core pointer.
   TAO_ORB_Core *orb_core_;
 
-  /* @@todo: At some point of time we are going to get to a situation
+  /* @todo At some point of time we are going to get to a situation
      where TAO has huge stack sizes. Need to think on how we would
      deal with that. One idea would be to push these things on TSS as
      this is created by the thread on a per invocation basis. Post 1.2

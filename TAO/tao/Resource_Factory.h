@@ -101,16 +101,16 @@ public:
 
   enum Purging_Strategy
   {
-    // Least Recently Used
+    /// Least Recently Used
     LRU,
 
-    // Least Frequently Used
+    /// Least Frequently Used
     LFU,
 
-    // First In First Out
+    /// First In First Out
     FIFO,
 
-    // Dont use any strategy.
+    /// Dont use any strategy.
     NOOP
   };
 
