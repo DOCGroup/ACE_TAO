@@ -286,7 +286,7 @@ TAO_CodeGen::start_client_header (const char *fname)
       *this->client_header_ << "#endif\n";
       *this->client_header_ << "#define TAO_EXPORT_MACRO "
                             << idl_global->stub_export_macro ()
-                            << be_nl;
+                            << be_nl << be_nl;
 
       // Generate export macro for nested classes
       *this->client_header_
@@ -297,9 +297,10 @@ TAO_CodeGen::start_client_header (const char *fname)
         << "#  define TAO_EXPORT_NESTED_MACRO "
         << idl_global->stub_export_macro ()
         << be_nl
-        << "#endif /* TAO_EXPORT_NESTED_CLASSES */\n";
+        << "#endif /* TAO_EXPORT_NESTED_CLASSES */\n\n";
 
       *this->client_header_ << "#if defined(_MSC_VER)\n"
+                            << "#pragma warning(push)\n"
                             << "#pragma warning(disable:4250)\n"
                             << "#endif /* _MSC_VER */\n\n";
 
@@ -507,6 +508,7 @@ TAO_CodeGen::start_server_header (const char *fname)
                             << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
 
       *this->server_header_ << "#if defined(_MSC_VER)\n"
+                            << "#pragma warning(push)\n"
                             << "#pragma warning(disable:4250)\n"
                             << "#endif /* _MSC_VER */\n\n";
 
@@ -596,6 +598,7 @@ TAO_CodeGen::start_server_template_header (const char *fname)
       this->server_template_header_->print ("#define %s\n\n", macro_name);
 
       *this->server_template_header_ << "#if defined(_MSC_VER)\n"
+                                     << "#pragma warning(push)\n"
                                      << "#pragma warning(disable:4250)\n"
                                      << "#endif /* _MSC_VER */\n\n";
 
@@ -705,10 +708,6 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
 
       this->server_template_skeletons_->print ("#ifndef %s\n", macro_name);
       this->server_template_skeletons_->print ("#define %s\n\n", macro_name);
-
-      *this->server_template_skeletons_ << "#if defined(_MSC_VER)\n"
-                                        << "#pragma warning(disable:4250)\n"
-                                        << "#endif /* _MSC_VER */\n\n";
 
       // generate the include statement for the server header
       *this->server_template_skeletons_ << "#include \"" <<
@@ -959,7 +958,7 @@ TAO_CodeGen::end_client_header (void)
   *this->client_header_ << "#endif /* defined INLINE */\n\n";
 
   *this->client_header_ << "#if defined(_MSC_VER)\n"
-                        << "#pragma warning(default:4250)\n"
+                        << "#pragma warning(pop)\n"
                         << "#endif /* _MSC_VER */\n";
 
   // code to put the last #endif
@@ -981,7 +980,7 @@ TAO_CodeGen::end_server_header (void)
   *this->server_header_ << "#endif /* defined INLINE */\n\n";
 
   *this->server_header_ << "#if defined(_MSC_VER)\n"
-                        << "#pragma warning(default:4250)\n"
+                        << "#pragma warning(pop)\n"
                         << "#endif /* _MSC_VER */\n";
 
   // code to put the last #endif
@@ -1050,7 +1049,7 @@ TAO_CodeGen::end_server_template_header (void)
   *this->server_template_header_ << "#endif /* defined REQUIRED PRAGMA */\n\n";
 
   *this->server_template_header_ << "#if defined(_MSC_VER)\n"
-                                 << "#pragma warning(default:4250)\n"
+                                 << "#pragma warning(pop)\n"
                                  << "#endif /* _MSC_VER */\n";
 
   // code to put the last #endif
