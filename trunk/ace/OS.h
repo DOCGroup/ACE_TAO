@@ -5825,6 +5825,12 @@ public:
                     ACE_OVERLAPPED *overlapped,
                     ACE_OVERLAPPED_COMPLETION_FUNC func);
   // QoS-enabled <ioctl>.
+  static int ioctl (ACE_HANDLE socket,
+                    ACE_QoS *ace_qos,
+					u_long *bytes_returned);
+  // Calls QoS-enabled <ioctl> with I/O control code as SIO_SET_QOS.
+  // Transforms an ACE_QoS into a windows QOS before passing it into 
+  // WSAIoctl ().
   static int isastream (ACE_HANDLE handle);
   static int isatty (ACE_HANDLE handle);
   static off_t lseek (ACE_HANDLE handle,

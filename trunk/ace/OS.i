@@ -4966,6 +4966,44 @@ ACE_OS::ioctl (ACE_HANDLE socket,
 }
 
 ACE_INLINE int
+ACE_OS::ioctl (ACE_HANDLE socket,
+               ACE_QoS *ace_qos,
+ 			   u_long *bytes_returned)
+{
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+  
+  QOS qos;
+  DWORD qos_len;
+
+  // Construct the WinSock2 QOS structure.
+  
+  qos.SendingFlowspec = ace_qos->sending_flowspec ();
+  qos.ReceivingFlowspec = ace_qos->receiving_flowspec ();
+  qos.ProviderSpecific = (WSABUF) ace_qos->provider_specific ();
+
+  qos_len = sizeof (QOS) + ace_qos->provider_specific ().iov_len;
+
+  ACE_SOCKCALL_RETURN (::WSAIoctl ((ACE_SOCKET) socket,
+                                   SIO_SET_QOS,
+                                   &qos,
+                                   qos_len,
+                                   0,
+                                   0,
+								   bytes_returned,
+                                   0,
+								   0),
+                       int,
+                       SOCKET_ERROR);
+#else
+  ACE_UNUSED_ARG (socket);
+  ACE_UNUSED_ARG (ace_qos);
+  ACE_UNUSED_ARG (bytes_returned);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+
+ACE_INLINE int
 ACE_OS::bind (ACE_HANDLE handle, struct sockaddr *addr, int addrlen)
 {
   ACE_TRACE ("ACE_OS::bind");
