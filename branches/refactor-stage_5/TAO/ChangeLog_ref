@@ -1,3 +1,16 @@
+Mon Aug 11 11:31:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+
+          Fixed generated comment.
+
+        * TAO_IDL/be/be_visitor_operation/proxy_impl_xh.cpp:
+        * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+        * TAO_IDL/be_include/be_visitor_operation/proxy_impl_xh.h:
+
+          Added generation of throw spec to thruPOA collocation proxy
+          operations.
+
 Mon Aug 11 10:54:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TOA_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:

@@ -30,7 +30,7 @@ be_visitor_interface_thru_poa_proxy_impl_sh::visit_interface (
   *os << be_nl
       << "///////////////////////////////////////////////////////////////////////"
       << be_nl
-      << "//                    ThruPOA  Impl. Declaration" << be_nl
+      << "//                    ThruPOA Proxy Impl. Declaration" << be_nl
       << "//" << be_nl << be_nl;
 
   *os << "// TAO_IDL - Generated from" << be_nl
