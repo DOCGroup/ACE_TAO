@@ -233,40 +233,6 @@ public:
    */
   static int close_singletons (void);
 
-  // = Reactor event loop management methods.
-  /**
-   * Run the event loop until the <ACE_Reactor::handle_events> method
-   * returns -1 or the <end_reactor_event_loop> method is invoked.
-   * DO NOT USE THIS METHOD. It may be unsupported in future releases.
-   * Use <ACE_Reactor::run_event_loop> instead.
-   */
-  static int run_reactor_event_loop (void);
-
-  /**
-   * Run the event loop until the <ACE_Reactor::handle_events> method
-   * returns -1, the <end_reactor_event_loop> method is invoked, or the
-   * <ACE_Time_Value> expires.
-   * DO NOT USE THIS METHOD. It may be unsupported in future releases.
-   * <Use ACE_Reactor::run_event_loop> instead.
-   */
-  static int run_reactor_event_loop (ACE_Time_Value &tv);
-
-  /**
-   * Instruct the <ACE_Service_Config> to terminate its event loop and
-   * notifies the <ACE_Reactor::instance> so that it can wake up
-   * and close down gracefully.
-   * DO NOT USE THIS METHOD. It may be unsupported in future releases.
-   * Use <ACE_Reactor::end_event_loop> instead.
-   */
-  static int end_reactor_event_loop (void);
-
-  /**
-   * Report if the Reactor's event loop is finished.
-   * DO NOT USE THIS METHOD. It may be unsupported in future releases.
-   * Use <ACE_Reactor::event_loop_done> instead.
-   */
-  static int reactor_event_loop_done (void);
-
   /// True if reconfiguration occurred.
   static int reconfig_occurred (void);
 
@@ -285,68 +251,6 @@ public:
 
   /// Returns a pointer to the list of statically linked services.
   static ACE_STATIC_SVCS *static_svcs (void);
-
-  /**
-   * Get pointer to a process-wide <ACE_Reactor>.
-   * DO NOT USE THIS METHOD. It may be unsupported in future releases.
-   * Use <ACE_Reactor::instance> instead.
-   */
-  static ACE_Reactor *reactor (void);
-
-  /**
-   * Set pointer to a process-wide <ACE_Reactor> and return existing
-   * pointer.
-   * DO NOT USE THIS METHOD. It may be unsupported in future releases.
-   * Use <ACE_Reactor::instance> instead.
-   */
-  static ACE_Reactor *reactor (ACE_Reactor *);
-
-  /**
-   * Get pointer to a process-wide <ACE_Service_Repository>.
-   * DO NOT USE THIS METHOD. It may be unsupported in future releases.
-   * Use <ACE_Service_Repository::instance> instead.
-   */
-  static ACE_Service_Repository *svc_rep (void);
-
-  /**
-   * Set pointer to a process-wide <ACE_Service_Repository> and return
-   * existing pointer.
-   * DO NOT USE THIS METHOD. It may be unsupported in future releases.
-   * Use <ACE_Service_Repository::instance> instead.
-   */
-  static ACE_Service_Repository *svc_rep (ACE_Service_Repository *);
-
-  /**
-   * Get pointer to a process-wide <ACE_Thread_Manager>.
-   * DO NOT USE THIS METHOD. It may be unsupported in future releases.
-   * Use <ACE_Thread_Manager::instance> instead.
-   */
-  static ACE_Thread_Manager *thr_mgr (void);
-
-#if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
-  /**
-   * Set pointer to a process-wide <ACE_Thread_Manager> and return
-   * existing pointer.
-   * DO NOT USE THIS METHOD. It may be unsupported in future releases.
-   * Use ACE_Thread_Manager::instance() instead.
-   */
-  static ACE_Thread_Manager *thr_mgr (ACE_Thread_Manager *);
-#endif /* ! defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
-
-  /**
-   * Get pointer to a default <ACE_Allocator>.
-   * DO NOT USE THIS METHOD. It may be unsupported in future releases.
-   * Use <ACE_Allocator::instance> instead.
-   */
-  static ACE_Allocator *alloc (void);
-
-  /**
-   * Set pointer to a process-wide <ACE_Allocator> and return existing
-   * pointer.
-   * DO NOT USE THIS METHOD. It may be unsupported in future releases.
-   * Use <ACE_Allocator::instance> instead.
-   */
-  static ACE_Allocator *alloc (ACE_Allocator *);
 
   // = Utility methods.
   /// Dynamically link the shared object file and retrieve a pointer to

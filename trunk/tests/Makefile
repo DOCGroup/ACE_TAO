@@ -33,6 +33,7 @@ BIN =   Aio_Platform_Test \
         DLL_Test\
         Enum_Interfaces_Test \
         Env_Value_Test \
+	Framework_Component_Test \
         Future_Test \
         Future_Set_Test \
 	Get_Opt_Test \

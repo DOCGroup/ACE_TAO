@@ -10,7 +10,7 @@ template <class KEY, class DATA>
 class JAWS_Assoc_Array
 {
 
-friend JAWS_Assoc_Array_Iterator<KEY, DATA>;
+friend class JAWS_Assoc_Array_Iterator<KEY, DATA>;
 
 public:
   JAWS_Assoc_Array (int maxsize = 1024);

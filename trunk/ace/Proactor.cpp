@@ -15,6 +15,7 @@ ACE_RCSID(ace, Proactor, "$Id$")
 // calls.
 #include "ace/Task_T.h"
 #include "ace/Log_Msg.h"
+#include "ace/Framework_Component.h"
 
 #if defined (ACE_HAS_AIO_CALLS)
 #   include "ace/POSIX_Proactor.h"
@@ -311,6 +312,7 @@ ACE_Proactor::instance (size_t /* threads */)
                           0);
 
           ACE_Proactor::delete_proactor_ = 1;
+          ACE_REGISTER_FRAMEWORK_COMPONENT(ACE_Proactor, ACE_Proactor::proactor_);
         }
     }
   return ACE_Proactor::proactor_;
@@ -328,6 +330,7 @@ ACE_Proactor::instance (ACE_Proactor * r, int delete_proactor)
 
   ACE_Proactor::delete_proactor_ = delete_proactor;
   ACE_Proactor::proactor_ = r;
+  ACE_REGISTER_FRAMEWORK_COMPONENT(ACE_Proactor, ACE_Proactor::proactor_);
 
   return t;
 }
@@ -1057,6 +1060,12 @@ template class ACE_Timer_Wheel_Iterator_T<ACE_Handler *,
 #pragma instantiate ACE_Timer_Wheel_Iterator_T<ACE_Handler *,\
   ACE_Proactor_Handle_Timeout_Upcall,\
   ACE_SYNCH_RECURSIVE_MUTEX>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Framework_Component_T<ACE_Proactor>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Framework_Component_T<ACE_Proactor>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #else /* !ACE_WIN32 || !ACE_HAS_AIO_CALLS */

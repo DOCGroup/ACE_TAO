@@ -5,11 +5,8 @@
 # include "ace/Token_Manager.h"
 #endif /* ! ACE_LACKS_ACE_TOKEN */
 #if defined (ACE_LACKS_ACE_SVCCONF)
-#  if !defined (ACE_HAS_WINCE)
-#    include "ace/Proactor.h"
-#  endif /* !ACE_HAS_WINCE */
-#  include "ace/Reactor.h"
 #  include "ace/Thread_Manager.h"
+#  include "ace/Framework_Component.h"
 #else  /* ! ACE_LACKS_ACE_SVCCONF */
 #  include "ace/Service_Manager.h"
 #  include "ace/Service_Config.h"
@@ -608,12 +605,7 @@ ACE_Object_Manager::fini (void)
 
 #if defined (ACE_LACKS_ACE_SVCCONF)
 
-      ACE_Reactor::close_singleton ();
-
-#  if (((defined (ACE_HAS_WINNT)) && (ACE_HAS_WINNT == 1)) || (defined (ACE_HAS_AIO_CALLS)))
-      ACE_Proactor::close_singleton ();
-#  endif /* !ACE_HAS_WINCE */
-
+      ACE_Framework_Repository::close_singleton ();
 
 #  if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
       ACE_Thread_Manager::close_singleton ();

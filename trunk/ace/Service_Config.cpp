@@ -10,8 +10,8 @@
 #include "ace/Containers.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Reactor.h"
-#include "ace/Proactor.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Framework_Component.h"
 
 #include "ace/Service_Config.h"
 
@@ -79,69 +79,6 @@ ACE_Service_Config::static_svcs (void)
   return ACE_Service_Config::static_svcs_;
 }
 
-ACE_Allocator *
-ACE_Service_Config::alloc (void)
-{
-  ACE_TRACE ("ACE_Service_Config::allocator");
-  return ACE_Allocator::instance ();
-}
-
-ACE_Allocator *
-ACE_Service_Config::alloc (ACE_Allocator *r)
-{
-  ACE_TRACE ("ACE_Service_Config::allocator");
-  return ACE_Allocator::instance (r);
-}
-
-ACE_Reactor *
-ACE_Service_Config::reactor (void)
-{
-  ACE_TRACE ("ACE_Service_Config::reactor");
-  return ACE_Reactor::instance ();
-}
-
-ACE_Reactor *
-ACE_Service_Config::reactor (ACE_Reactor *r)
-{
-  ACE_TRACE ("ACE_Service_Config::reactor");
-  return ACE_Reactor::instance (r);
-}
-
-ACE_Service_Repository *
-ACE_Service_Config::svc_rep ()
-{
-  ACE_TRACE ("ACE_Service_Config::svc_rep");
-  return ACE_Service_Repository::instance ();
-}
-
-ACE_Service_Repository *
-ACE_Service_Config::svc_rep (ACE_Service_Repository *s)
-{
-  ACE_TRACE ("ACE_Service_Config::svc_rep");
-  return ACE_Service_Repository::instance (s);
-}
-
-ACE_Thread_Manager *
-ACE_Service_Config::thr_mgr (void)
-{
-  ACE_TRACE ("ACE_Service_Config::thr_mgr");
-
-#if defined (ACE_THREAD_MANAGER_LACKS_STATICS)
-  return ACE_THREAD_MANAGER_SINGLETON::instance ();
-#else /* ! ACE_THREAD_MANAGER_LACKS_STATICS */
-  return ACE_Thread_Manager::instance ();
-#endif /* ACE_THREAD_MANAGER_LACKS_STATICS */
-}
-
-#if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
-ACE_Thread_Manager *
-ACE_Service_Config::thr_mgr (ACE_Thread_Manager *tm)
-{
-  ACE_TRACE ("ACE_Service_Config::thr_mgr");
-  return ACE_Thread_Manager::instance (tm);
-}
-#endif /* ! ACE_THREAD_MANAGER_LACKS_STATICS */
-
 // Totally remove <svc_name> from the daemon by removing it from the
 // ACE_Reactor, and unlinking it if necessary.
 
@@ -190,6 +127,8 @@ ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
 
   // Initialize the Service Repository.
   ACE_Service_Repository::instance (size);
+
+  ACE_Framework_Repository::instance ();
 
   // Initialize the ACE_Reactor (the ACE_Reactor should be the same
   // size as the ACE_Service_Repository).
@@ -746,46 +685,6 @@ ACE_Service_Config::reconfigure (void)
                 ACE_LIB_TEXT ("process_directives")));
 }
 
-// Run the event loop until the <ACE_Reactor::handle_events>
-// method returns -1 or the <end_reactor_event_loop> method
-// is invoked.
-
-int
-ACE_Service_Config::run_reactor_event_loop (void)
-{
-  ACE_TRACE ("ACE_Service_Config::run_reactor_event_loop");
-
-  return ACE_Reactor::run_event_loop ();
-}
-
-// Run the event loop until the <ACE_Reactor::handle_events> method
-// returns -1, the <end_reactor_event_loop> method is invoked, or the
-// <ACE_Time_Value> expires.
-
-int
-ACE_Service_Config::run_reactor_event_loop (ACE_Time_Value &tv)
-{
-  ACE_TRACE ("ACE_Service_Config::run_reactor_event_loop");
-
-  return ACE_Reactor::run_event_loop (tv);
-}
-
-/* static */
-int
-ACE_Service_Config::end_reactor_event_loop (void)
-{
-  ACE_TRACE ("ACE_Service_Config::end_reactor_event_loop");
-  return ACE_Reactor::end_event_loop ();
-}
-
-/* static */
-int
-ACE_Service_Config::reactor_event_loop_done (void)
-{
-  ACE_TRACE ("ACE_Service_Config::reactor_event_loop_done");
-  return ACE_Reactor::event_loop_done ();
-}
-
 // Tidy up and perform last rites on a terminating ACE_Service_Config.
 int
 ACE_Service_Config::close (void)
@@ -850,11 +749,7 @@ ACE_Service_Config::close_singletons (void)
 {
   ACE_TRACE ("ACE_Service_Config::close_singletons");
 
-  ACE_Reactor::close_singleton ();
-
-#if (((defined (ACE_HAS_WINNT)) && (ACE_HAS_WINNT == 1)) || (defined (ACE_HAS_AIO_CALLS)))
-  ACE_Proactor::close_singleton ();
-#endif /* !ACE_HAS_WINCE */
+  ACE_Framework_Repository::close_singleton ();
 
 #if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
   ACE_Thread_Manager::close_singleton ();
