@@ -1,3 +1,22 @@
+Thu Mar 27 12:13:21 2003  Edward Scott  <eas@prismtechnologies.com>
+
+	* orbsvcs/tests/ior_corbaname/Makefile:
+	* orbsvcs/tests/Trading/Makefile:
+	* orbsvcs/tests/Simple_Naming/Makefile:
+	* orbsvcs/tests/Security/SecurityLevel1/Makefile:
+	* orbsvcs/tests/Security/Secure_Invocation/Makefile:
+	* orbsvcs/tests/Security/MT_SSLIOP/Makefile:
+	* orbsvcs/tests/Security/MT_IIOP_SSL/Makefile:
+	* orbsvcs/tests/Security/Crash_Test/Makefile:
+	* orbsvcs/tests/AVStreams/Latency/Makefile:
+	* orbsvcs/tests/AVStreams/Full_Profile/Makefile:
+	* orbsvcs/tests/AVStreams/Component_Switching/Makefile:
+	* orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile: 
+
+	  Updated dependencies.
+
 Wed Mar 26 16:40:58 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/IORManipulation/IORManipulation.cpp: Fixed a leak that
