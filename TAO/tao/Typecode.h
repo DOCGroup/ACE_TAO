@@ -131,7 +131,7 @@ public:
   CORBA::ULong member_count (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
   /// Returns member_name (...), raises (BadKind, Bounds); Useful for
-  /// tk_struct, tk_union, tk_enum, tk_alias, and tk_except.
+  /// tk_struct, tk_union, tk_enum, tk_alias, tk_except and tk_value.
   const char *member_name (CORBA::ULong slot
                            ACE_ENV_ARG_DECL_WITH_DEFAULTS) const;
 

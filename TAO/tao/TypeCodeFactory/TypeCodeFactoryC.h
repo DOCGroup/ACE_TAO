@@ -420,6 +420,21 @@ TAO_NAMESPACE  CORBA
       )) = 0;
     
     // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual CORBA::TypeCode_ptr create_event_tc (
+        const char * id,
+        const char * name,
+        CORBA::ValueModifier type_modifier,
+        CORBA::TypeCode_ptr concrete_base,
+        const CORBA::ValueMemberSeq & members
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+    // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
