@@ -45,8 +45,10 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
 {
   ACE_Log_Msg::instance ()->acquire ();
 
+#define DUMP_IOV_PREFIX  "Transport[" ACE_SIZE_T_FORMAT_SPECIFIER "]::%s"
   ACE_DEBUG ((LM_DEBUG,
-              "TAO (%P|%t) - Transport[%d]::%s, "
+              "TAO (%P|%t) - "
+              DUMP_IOV_PREFIX ", "
               "sending %d buffers\n",
               id, location, iovcnt));
   for (int i = 0; i != iovcnt && 0 < current_transfer; ++i)
@@ -58,7 +60,8 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
         iov_len = current_transfer;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Transport[%d]::%s, "
+                  "TAO (%P|%t) - "
+                  DUMP_IOV_PREFIX ", "
                   "buffer %d/%d has %d bytes\n",
                   id, location,
                   i, iovcnt,
@@ -69,7 +72,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
         {
           ACE_TCHAR header[1024];
           ACE_OS::sprintf (header,
-                           "TAO - Transport[%d]::%s ("
+                           "TAO - " DUMP_IOV_PREFIX " ("
                            ACE_SIZE_T_FORMAT_SPECIFIER "/"
                            ACE_SIZE_T_FORMAT_SPECIFIER ")\n",
                            id, location, offset, iov_len);
@@ -85,7 +88,8 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
       current_transfer -= iov_len;
     }
   ACE_DEBUG ((LM_DEBUG,
-              "TAO (%P|%t) - Transport[%d]::%s, "
+              "TAO (%P|%t) - "
+              DUMP_IOV_PREFIX ", "
               "end of data\n",
               id, location));
 
