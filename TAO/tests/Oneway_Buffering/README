@@ -23,10 +23,9 @@ $ ./run_test.pl
 maximum time allowed for a single test.  Three separate scripts are
 used to stay within those bounds:
 
-$ ./run_sync_none.pl
-$ ./run_sync_with_transport.pl
-$ ./run_sync_with_server.pl
-$ ./run_sync_with_target.pl
+$ ./run_message_count.pl
+$ ./run_timeout.pl
+$ ./run_message_bytes.pl
 
 	each script returns 0 if the test was successful.
 
