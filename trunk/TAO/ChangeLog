@@ -1,3 +1,13 @@
+Thu Sep 23 19:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Removed the generation of _MSC_VER >= 1200, the oldest msvc compiler
+          we now support is msvc6 and this has _MSC_VER == 1200, so these
+          checks for the version are not needed. All msvc compiler we use now
+          support pragma warning push/pop. This is part of the fix for bug
+          1943, all generated code in the repo needs to be updated, also all
+          manual written code that uses this check
+
 Thu Sep 23 17:48:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Sequence_Unit_Tests/string_sequence_element.hpp:
@@ -149,7 +159,7 @@ Tue Sep 21 20:15:01 2004  Carlos O'Ryan  <coryan@atdesk.com>
 	* tests/Sequence_Unit_Tests/testing_range_checking.hpp:
 	  Specializes the range_checking traits to raise an exception when
 	  an out-of-range access is attempted.
-	
+
 	* tests/Sequence_Unit_Tests/testing_exception.hpp:
 	  Exception raised by the testing traits.
 
