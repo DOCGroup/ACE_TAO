@@ -3,6 +3,9 @@ implementation of a CORBA2-compliant ORB that supports real-time
 extensions.  Please see http://www.cs.wustl.edu/~schmidt/TAO.html for
 more information on TAO.
 
+Some detailed information on this version of TAO is available in the
+'docs' subdirectory in HTML format.
+
 The current alpha release of TAO contains the following:
 
      * An ORB Core based on ACE C++ components. This ORB Core provides 3
