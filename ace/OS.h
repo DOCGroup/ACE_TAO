@@ -6106,6 +6106,9 @@ public:
                          const char *reject);
   static size_t strspn(const char *s1,
                        const char *s2);
+  static char *strptime (char *buf,
+                         const char *format,
+                         struct tm *tm);
   static char *strstr (char *s,
                        const char *t);
   static const char *strstr (const char *s,
@@ -6552,6 +6555,15 @@ private:
   friend class ACE_OS_Object_Manager;
   // Allow the ACE_OS_Object_Manager to call set_exit_hook.
 
+#if defined (ACE_LACKS_STRPTIME)
+  static int strptime_getnum (char *buf,
+                              int *num,
+                              int *bi,
+                              int *fi,
+                              int min,
+                              int max);
+#endif /* ACE_LACKS_STRPTIME */
+
 # if defined (ACE_WIN32)
 #   if defined (ACE_HAS_WINCE)
   static const wchar_t *day_of_week_name[7];
@@ -6559,7 +6571,8 @@ private:
   // Supporting data for ctime and ctime_r functions on WinCE.
 #   endif /* ACE_HAS_WINCE */
 
-  static void fopen_mode_to_open_mode_converter (char x, int &hmode);
+  static void fopen_mode_to_open_mode_converter (char x,
+                                                 int &hmode);
   // Translate fopen's mode char to open's mode.  This helper function
   // is here to avoid maintaining several pieces of identical code.
 # endif /* ACE_WIN32 */
