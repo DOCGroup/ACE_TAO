@@ -617,7 +617,6 @@ Sun Jun 22 03:27:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * tao/Notify_Handler.h:
           Due to subsetting in ACE, added include of Global_Macros.h.
 
-
 Sat Jun 21 22:29:16 2003  Pradeep Gore  <pradeep@oomworks.com>
 
         * orbsvcs/tests/Notify/lib/Makefile.bor:
