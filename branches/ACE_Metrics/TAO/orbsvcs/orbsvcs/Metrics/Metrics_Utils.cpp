@@ -148,10 +148,11 @@ WSOA_Metrics_Handles::WSOA_Metrics_Handles ()
   , image_processed_metrics_handle_(0)
   , image_quiescent_metrics_handle_(0)
   , tile_received_first_metrics_handle_(0)
-  , tile_processed_first_metrics_handle_(0)
   , tile_queuing_first_metrics_handle_(0)
   , tile_decompression_first_metrics_handle_(0)
+  , tile_decompression_handle_(0)
   , tile_ipm_first_metrics_handle_(0)
+  , tile_processed_first_metrics_handle_(0)
   , zlib_compression_handle_(0)
   , zlib_decompression_handle_(0)
 {
@@ -226,10 +227,10 @@ WSOA_Metrics_Handles::WSOA_Metrics_Handles ()
      RtecScheduler::handle_t temp_metrics_handle = 0;
      for (i = 1; i <= WSOA_METRICS_MAX_TILING_FACTOR; ++i)
      {
-	     ::sprintf (registration_name, "tile_received_%d", i);
+             ::sprintf (registration_name, "tile_received_%d", i);
 
          // We just throw the handles away rather than storing them,
-	     // as they're always calculated by offset from the first.
+             // as they're always calculated by offset from the first.
          REGISTER_METRICS_REPORTING_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
                                        base_metrics,
                                        registration_name,
@@ -248,10 +249,10 @@ WSOA_Metrics_Handles::WSOA_Metrics_Handles ()
 
      for (i = 1; i <= WSOA_METRICS_MAX_TILING_FACTOR; ++i)
      {
-	     ::sprintf (registration_name, "tile_processed_%d", i);
+             ::sprintf (registration_name, "tile_processed_%d", i);
 
          // We just throw the handles away rather than storing them,
-	     // as they're always calculated by offset from the first.
+             // as they're always calculated by offset from the first.
         REGISTER_METRICS_REPORTING_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
                                       base_metrics,
                                       registration_name,
@@ -270,10 +271,10 @@ WSOA_Metrics_Handles::WSOA_Metrics_Handles ()
 
      for (i = 1; i <= WSOA_METRICS_MAX_TILING_FACTOR; ++i)
      {
-	     ::sprintf (registration_name, "tile_queuing_%d", i);
+             ::sprintf (registration_name, "tile_queuing_%d", i);
 
          // We just throw the handles away rather than storing them,
-	     // as they're always calculated by offset from the first.
+             // as they're always calculated by offset from the first.
          REGISTER_METRICS_REPORTING_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
                                        base_metrics,
                                        registration_name,
@@ -292,10 +293,10 @@ WSOA_Metrics_Handles::WSOA_Metrics_Handles ()
 
      for (i = 1; i <= WSOA_METRICS_MAX_TILING_FACTOR; ++i)
      {
-	     ::sprintf (registration_name, "tile_decompression_%d", i);
+             ::sprintf (registration_name, "tile_decompression_%d", i);
 
          // We just throw the handles away rather than storing them,
-	     // as they're always calculated by offset from the first.
+             // as they're always calculated by offset from the first.
          REGISTER_METRICS_REPORTING_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
                                        base_metrics,
                                        registration_name,
@@ -313,10 +314,10 @@ WSOA_Metrics_Handles::WSOA_Metrics_Handles ()
 
      for (i = 1; i <= WSOA_METRICS_MAX_TILING_FACTOR; ++i)
      {
-	     ::sprintf (registration_name, "tile_ipm_%d", i);
+             ::sprintf (registration_name, "tile_ipm_%d", i);
 
          // We just throw the handles away rather than storing them,
-	     // as they're always calculated by offset from the first.
+             // as they're always calculated by offset from the first.
          REGISTER_METRICS_REPORTING_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
                                        base_metrics,
                                        registration_name,
@@ -339,49 +340,49 @@ WSOA_Metrics_Handles::WSOA_Metrics_Handles ()
                                    *TAO_METRICS_LOGGER_REF_SINGLETON::instance(),
                                    this->zlib_decompression_handle_);
 #else /* ! TAO_USES_REPORTING_METRICS */
-     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
+     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_CACHE_SINGLETON_TYPE::instance(),
                                    base_metrics,
                                    "TAO_compute_scheduling",
                                    TAO_Metrics_Utils::SCHED,
                                    this->compute_metrics_handle_);
 
-     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
+     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_CACHE_SINGLETON_TYPE::instance(),
                                    base_metrics,
                                    "RTARM_triggered_adaptation",
                                    TAO_Metrics_Utils::RTARM,
                                    this->RTARM_triggered_adaptation_metrics_handle_);
 
-     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
+     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_CACHE_SINGLETON_TYPE::instance(),
                                    base_metrics,
                                    "RTARM_region_transition",
                                    TAO_Metrics_Utils::RTARM,
                                    this->RTARM_region_transition_metrics_handle_);
 
-     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
+     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_CACHE_SINGLETON_TYPE::instance(),
                                    base_metrics,
                                    "QuO_contract_eval",
                                    TAO_Metrics_Utils::QUO,
                                    this->QuO_contract_eval_metrics_handle_);
 
-     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
+     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_CACHE_SINGLETON_TYPE::instance(),
                                    base_metrics,
                                    "tile_request_delegate",
                                    TAO_Metrics_Utils::QUO,
                                    this->tile_request_delegate_metrics_handle_);
 
-     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
+     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_CACHE_SINGLETON_TYPE::instance(),
                                    base_metrics,
                                    "image_received",
                                    TAO_Metrics_Utils::QUO,
                                    this->image_received_metrics_handle_);
 
-     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
+     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_CACHE_SINGLETON_TYPE::instance(),
                                    base_metrics,
                                    "image_processed",
                                    TAO_Metrics_Utils::QUO,
                                    this->image_processed_metrics_handle_);
 
-     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
+     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_CACHE_SINGLETON_TYPE::instance(),
                                    base_metrics,
                                    "image_quiescent",
                                    TAO_Metrics_Utils::QUO,
@@ -391,7 +392,7 @@ WSOA_Metrics_Handles::WSOA_Metrics_Handles ()
      u_int i;
 
      // Store the first tile received handle, and make room for the others.
-     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
+     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_CACHE_SINGLETON_TYPE::instance(),
                                    base_metrics,
                                    "tile_received_0",
                                    TAO_Metrics_Utils::QUO,
@@ -400,11 +401,11 @@ WSOA_Metrics_Handles::WSOA_Metrics_Handles ()
      RtecScheduler::handle_t temp_metrics_handle;
      for (i = 1; i <= WSOA_METRICS_MAX_TILING_FACTOR; ++i)
      {
-	     ::sprintf (registration_name, "tile_received_%d", i);
+             ::sprintf (registration_name, "tile_received_%d", i);
 
          // We just throw the handles away rather than storing them,
-	     // as they're always calculated by offset from the first.
-         REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
+             // as they're always calculated by offset from the first.
+         REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_CACHE_SINGLETON_TYPE::instance(),
                                        base_metrics,
                                        registration_name,
                                        TAO_Metrics_Utils::QUO,
@@ -412,7 +413,7 @@ WSOA_Metrics_Handles::WSOA_Metrics_Handles ()
      }
 
      // Store the first tile processed handle, and make room for the others.
-     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
+     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_CACHE_SINGLETON_TYPE::instance(),
                                    base_metrics,
                                    "tile_processed_0",
                                    TAO_Metrics_Utils::QUO,
@@ -420,11 +421,11 @@ WSOA_Metrics_Handles::WSOA_Metrics_Handles ()
 
      for (i = 1; i <= WSOA_METRICS_MAX_TILING_FACTOR; ++i)
      {
-	     ::sprintf (registration_name, "tile_processed_%d", i);
+             ::sprintf (registration_name, "tile_processed_%d", i);
 
          // We just throw the handles away rather than storing them,
-	     // as they're always calculated by offset from the first.
-        REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
+             // as they're always calculated by offset from the first.
+        REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_CACHE_SINGLETON_TYPE::instance(),
                                       base_metrics,
                                       registration_name,
                                       TAO_Metrics_Utils::QUO,
@@ -432,7 +433,7 @@ WSOA_Metrics_Handles::WSOA_Metrics_Handles ()
      }
 
      // Store the first tile processed handle, and make room for the others.
-     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
+     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_CACHE_SINGLETON_TYPE::instance(),
                                    base_metrics,
                                    "tile_queuing_0",
                                    TAO_Metrics_Utils::QUO,
@@ -440,11 +441,11 @@ WSOA_Metrics_Handles::WSOA_Metrics_Handles ()
 
      for (i = 1; i <= WSOA_METRICS_MAX_TILING_FACTOR; ++i)
      {
-	     ::sprintf (registration_name, "tile_queuing_%d", i);
+             ::sprintf (registration_name, "tile_queuing_%d", i);
 
          // We just throw the handles away rather than storing them,
-	     // as they're always calculated by offset from the first.
-         REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
+             // as they're always calculated by offset from the first.
+         REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_CACHE_SINGLETON_TYPE::instance(),
                                        base_metrics,
                                        registration_name,
                                        TAO_Metrics_Utils::QUO,
@@ -452,7 +453,7 @@ WSOA_Metrics_Handles::WSOA_Metrics_Handles ()
      }
 
      // Store the first tile processed handle, and make room for the others.
-     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
+     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_CACHE_SINGLETON_TYPE::instance(),
                                    base_metrics,
                                    "tile_decompression_0",
                                    TAO_Metrics_Utils::QUO,
@@ -460,18 +461,18 @@ WSOA_Metrics_Handles::WSOA_Metrics_Handles ()
 
      for (i = 1; i <= WSOA_METRICS_MAX_TILING_FACTOR; ++i)
      {
-	     ::sprintf (registration_name, "tile_decompression_%d", i);
+             ::sprintf (registration_name, "tile_decompression_%d", i);
 
          // We just throw the handles away rather than storing them,
-	     // as they're always calculated by offset from the first.
-         REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
+             // as they're always calculated by offset from the first.
+         REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_CACHE_SINGLETON_TYPE::instance(),
                                        base_metrics,
                                        registration_name,
                                        TAO_Metrics_Utils::QUO,
                                        temp_metrics_handle);
      }
 
-     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
+     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_CACHE_SINGLETON_TYPE::instance(),
                                    base_metrics,
                                    "tile_ipm_0",
                                    TAO_Metrics_Utils::QUO,
@@ -479,30 +480,30 @@ WSOA_Metrics_Handles::WSOA_Metrics_Handles ()
 
      for (i = 1; i <= WSOA_METRICS_MAX_TILING_FACTOR; ++i)
      {
-	     ::sprintf (registration_name, "tile_ipm_%d", i);
+             ::sprintf (registration_name, "tile_ipm_%d", i);
 
          // We just throw the handles away rather than storing them,
-	     // as they're always calculated by offset from the first.
-         REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
+             // as they're always calculated by offset from the first.
+         REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_CACHE_SINGLETON_TYPE::instance(),
                                        base_metrics,
                                        registration_name,
                                        TAO_Metrics_Utils::QUO,
                                        temp_metrics_handle);
 
-         REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
+         REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_CACHE_SINGLETON_TYPE::instance(),
                                        base_metrics,
                                        registration_name,
                                        TAO_Metrics_Utils::QUO,
-                                       tile_decompression_handle);
+                                       tile_decompression_handle_);
      }
 
-     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
+     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_CACHE_SINGLETON_TYPE::instance(),
                                    base_metrics,
                                    "zlib Compression",
                                    TAO_Metrics_Utils::SCHED,
                                    this->zlib_compression_handle_);
 
-     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_REPORTING_CACHE_SINGLETON_TYPE::instance(),
+     REGISTER_METRICS_PROBE_RETURN(TAO_METRICS_CACHE_SINGLETON_TYPE::instance(),
                                    base_metrics,
                                    "zlib Compression",
                                    TAO_Metrics_Utils::SCHED,
@@ -523,5 +524,3 @@ template class ACE_Singleton<WSOA_Metrics_Handles, ACE_Thread_Mutex>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* METRICS_UTILS_CPP */
-
-

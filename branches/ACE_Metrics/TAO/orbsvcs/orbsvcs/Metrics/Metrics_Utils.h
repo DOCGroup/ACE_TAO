@@ -110,6 +110,7 @@ public:
   RtecScheduler::handle_t tile_received_first_metrics_handle_;
   RtecScheduler::handle_t tile_queuing_first_metrics_handle_;
   RtecScheduler::handle_t tile_decompression_first_metrics_handle_;
+  RtecScheduler::handle_t tile_decompression_handle_;
   RtecScheduler::handle_t tile_ipm_first_metrics_handle_;
   RtecScheduler::handle_t tile_processed_first_metrics_handle_;
 

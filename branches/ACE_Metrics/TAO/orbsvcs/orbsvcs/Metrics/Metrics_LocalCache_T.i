@@ -705,7 +705,7 @@ register_base_metrics (const char *name,
                        TAO_Metrics_Utils::Base_Metrics_Type bmt,
                        unsigned short incr_base_id)
 {
-   ACE_METRICS_CACHE_DATA_BASE_TYPE base_data = 0;
+   TAO_Metrics_Cache_Data_Base* base_data = 0;
    TAO_Metrics_Cache_Data_Base * base_data_temp = 0;
    RtecScheduler::handle_t handle =
       this->next_base_metrics_handle_++;
@@ -976,7 +976,7 @@ template <class ACE_LOCK, class ALLOCATOR>
 ACE_INLINE void
 TAO_Metrics_LocalCache<ACE_LOCK, ALLOCATOR>::report_base_metrics_start (RtecScheduler::handle_t handle)
 {
-   ACE_METRICS_CACHE_DATA_BASE_TYPE base_data = 0;
+   TAO_Metrics_Cache_Data_Base* base_data = 0;
    TAO_Metrics_Cache_Data_Base * base_data_tmp = 0;
    if (base_monitor_maps_ [supplier_index_].find (handle, base_data) < 0)
    {
@@ -1024,7 +1024,7 @@ ACE_INLINE void
 TAO_Metrics_LocalCache<ACE_LOCK, ALLOCATOR>::
 report_base_metrics_stop (RtecScheduler::handle_t handle)
 {
-   ACE_METRICS_CACHE_DATA_BASE_TYPE base_data = 0;
+   TAO_Metrics_Cache_Data_Base* base_data = 0;
    TAO_Metrics_Cache_Data_Base * base_data_tmp = 0;
    if (base_monitor_maps_ [supplier_index_].find (handle, base_data) < 0)
    {
@@ -1066,7 +1066,7 @@ ACE_INLINE void
 TAO_Metrics_LocalCache<ACE_LOCK, ALLOCATOR>::
 report_base_metrics_suspend (RtecScheduler::handle_t handle)
 {
-   ACE_METRICS_CACHE_DATA_BASE_TYPE base_data = 0;
+   TAO_Metrics_Cache_Data_Base* base_data = 0;
    TAO_Metrics_Cache_Data_Base * base_data_tmp = 0;
    if (base_monitor_maps_ [supplier_index_].find (handle, base_data) < 0)
    {
@@ -1109,7 +1109,7 @@ ACE_INLINE void
 TAO_Metrics_LocalCache<ACE_LOCK, ALLOCATOR>::
 report_base_metrics_resume (RtecScheduler::handle_t handle)
 {
-   ACE_METRICS_CACHE_DATA_BASE_TYPE base_data = 0;
+   TAO_Metrics_Cache_Data_Base* base_data = 0;
    TAO_Metrics_Cache_Data_Base * base_data_tmp = 0;
    if (base_monitor_maps_ [supplier_index_].find (handle, base_data) < 0)
    {
@@ -1311,16 +1311,19 @@ TAO_Metrics_ReportingLocalCache<ACE_LOCK, ALLOCATOR>::output_statistics (Metrics
    }
 
    // Iterate over registered base metrics data and harvest those probes.
-   ACE_Metrics_Cache<ACE_LOCK,ALLOCATOR>::
-     TAO_Metrics_LocalCache<ACE_LOCK,ALLOCATOR>::
-     TAO_Metrics_ReportingLocalCache<ACE_LOCK,ALLOCATOR>::
-     TAO_Metrics_Cache_Data_Base * base_data = 0;
+   // UGLY: shouldn't have to do this...?
+   typename TAO_Metrics_ReportingLocalCache<ACE_LOCK, ALLOCATOR>::ACE_METRICS_CACHE_DATA_BASE_TYPE base_data = 0;
 
-   ACE_Hash_Map_Iterator_Ex<RtecScheduler::handle_t,
+   //METRICS_BASE_MONITOR_MAP_ITERATOR
+   /*
+     ACE_Hash_Map_Iterator_Ex<RtecScheduler::handle_t,
      ACE_Based_Pointer<TAO_Metrics_Cache_Data_Base>,
      ACE_Hash<RtecScheduler::handle_t>,
      ACE_Equal_To<RtecScheduler::handle_t>,
-     ACE_Null_Mutex> base_iter (this->base_monitor_maps_ [this->consumer_index_]);
+     ACE_Null_Mutex>
+   */
+   typename TAO_Metrics_ReportingLocalCache<ACE_LOCK, ALLOCATOR>::METRICS_BASE_MONITOR_MAP_ITERATOR
+     base_iter (this->base_monitor_maps_ [this->consumer_index_]);
    for (;
         base_iter.done () == 0;
         ++base_iter)
@@ -1340,12 +1343,8 @@ TAO_Metrics_ReportingLocalCache<ACE_LOCK, ALLOCATOR>::output_statistics (Metrics
     // Iterate over registered upcall data and harvest those probes, and
     // the aggregate QoS data too.
    TAO_Metrics_Cache_Data_Base::TAO_Metrics_Cache_Data * data = 0;
-
-   ACE_Hash_Map_Iterator_Ex<RtecScheduler::handle_t,
-     ACE_Based_Pointer<TAO_Metrics_Cache_Data_Base>,
-     ACE_Hash<RtecScheduler::handle_t>,
-     ACE_Equal_To<RtecScheduler::handle_t>,
-     ACE_Null_Mutex> data_iter (this->monitor_maps_ [this->consumer_index_]);
+   typename TAO_Metrics_ReportingLocalCache<ACE_LOCK, ALLOCATOR>::METRICS_MONITOR_MAP_ITERATOR
+     data_iter (this->monitor_maps_ [this->consumer_index_]);
 
     for (u_long qos_length = 1;
          data_iter.done () == 0;
@@ -1425,7 +1424,8 @@ register_upcall_adapter (RtecScheduler::handle_t handle,
    base_ptr->register_upcall_adapter (handle, name, is_hrt, incr_upcall_id);
 
    // Look for an existing data structure entry in the 0th hash map.
-   ACE_METRICS_CACHE_DATA_TYPE data = 0;
+   typename TAO_Metrics_ReportingLocalCache<ACE_LOCK, ALLOCATOR>::ACE_METRICS_CACHE_DATA_TYPE
+     data = 0;
    if (monitor_maps_ [0].find (handle, data) != 0)
    {
 #if defined (METRICS_CACHE_ERROR_OUTPUT_ENABLED)
@@ -1492,7 +1492,8 @@ register_base_metrics (const char *name,
    }
 
    // Look for an existing data structure entry in each hash map.
-   ACE_METRICS_CACHE_DATA_BASE_TYPE base_data = 0;
+   typename TAO_Metrics_ReportingLocalCache<ACE_LOCK, ALLOCATOR>::ACE_METRICS_CACHE_DATA_BASE_TYPE
+     base_data = 0;
    if (base_monitor_maps_ [0].find (handle, base_data) != 0)
    {
 #if defined (METRICS_CACHE_ERROR_OUTPUT_ENABLED)
