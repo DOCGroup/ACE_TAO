@@ -1,7 +1,11 @@
+Tue May 25 11:50:01 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB.cpp (ORB_init): Removed out-dated comments.
+
 Tue May 25 11:40:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/orbsvcs/orbsvcs/AV/sfp.cpp:
-	  Initialized 'result' in end_stream()to avoid a compiler 
+	  Initialized 'result' in end_stream()to avoid a compiler
 	  warning.
 
 Tue May 25 11:21:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
