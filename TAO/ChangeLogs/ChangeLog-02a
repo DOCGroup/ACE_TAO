@@ -1,3 +1,20 @@
+Thu May 23 17:38:10 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/DynamicInterface/Dynamic_Implementation.cpp:
+        * tao/DynamicInterface/Dynamic_Implementation.h:
+
+          Added overrides of _is_a() and _get_interface(), so DSI calls
+          to these methods can be handled by the ORB, but only in
+          the context of an existing request (see the CORBA C++
+          mapping, section 1.38.3). Thanks to Eric Quere 
+          <Eric.Quere@med.ge.com> and Frank Pilhofer <fp@fpx.de> for
+          reporting the omission.
+
+        * tao/PortableServer/Servant_Base.cpp:
+        * tao/PortableServer/Servant_Base.h:
+
+          Cosmetic changes.
+
 Thu May 23 15:46:01 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/debug.cpp:
