@@ -148,15 +148,15 @@ ACE_Hash_Addr<ACE_INET_Addr>::hash_i (const ACE_INET_Addr &addr) const
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION && egcs, if __GNUG__ */
 
 ACE_INLINE ACE_Allocator*
-TAO_ORB_Core::data_block_allocator (void)
+TAO_ORB_Core::output_cdr_dblock_allocator (void)
 {
-  return &this->data_block_allocator_;
+  return &this->output_cdr_dblock_allocator_;
 }
 
 ACE_INLINE ACE_Allocator*
-TAO_ORB_Core::cdr_buffer_allocator (void)
+TAO_ORB_Core::output_cdr_buffer_allocator (void)
 {
-  return &this->cdr_buffer_allocator_;
+  return &this->output_cdr_buffer_allocator_;
 }
 
 ACE_INLINE CORBA_Environment*
@@ -170,3 +170,54 @@ TAO_ORB_Core::default_environment (CORBA_Environment* env)
 {
   this->default_environment_ = env;
 }
+
+// ****************************************************************
+
+ACE_INLINE void
+TAO_Resource_Factory::resource_source (int which_source)
+{
+  resource_source_ = which_source;
+}
+
+ACE_INLINE int
+TAO_Resource_Factory::resource_source (void)
+{
+  return resource_source_;
+}
+
+ACE_INLINE void
+TAO_Resource_Factory::poa_source (int which_source)
+{
+  poa_source_ = which_source;
+}
+
+ACE_INLINE int
+TAO_Resource_Factory::poa_source (void)
+{
+  return poa_source_;
+}
+
+ACE_INLINE int
+TAO_Resource_Factory::reactor_lock (void)
+{
+  return reactor_lock_;
+}
+
+ACE_INLINE int
+TAO_Resource_Factory::init (int argc, char *argv[])
+{
+  return this->parse_args (argc, argv);
+}
+
+// ****************************************************************
+
+ACE_INLINE
+TAO_Resource_Factory::App_Allocated::App_Allocated (void)
+  : orb_(0),
+    poa_(0),
+    alloc_(0),
+    input_cdr_dblock_allocator_ (0),
+    input_cdr_buffer_allocator_ (0)
+{
+}
+

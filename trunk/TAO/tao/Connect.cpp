@@ -505,13 +505,21 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   // @@ TODO This should take its memory from a specialized
   // allocator. It is better to use a message block than a on stack
   // buffer because we cannot minimize memory copies in that case.
-  TAO_InputCDR input (CDR::DEFAULT_BUFSIZE);
+  TAO_InputCDR input (CDR::DEFAULT_BUFSIZE,
+                      TAO_ENCAP_BYTE_ORDER,
+                      TAO_Marshal::DEFAULT_MARSHAL_FACTORY,
+                      this->orb_core_->input_cdr_buffer_allocator (),
+                      this->orb_core_->input_cdr_dblock_allocator ());
 
   char repbuf[CDR::DEFAULT_BUFSIZE];
 #if defined(ACE_HAS_PURIFY)
   (void) ACE_OS::memset (repbuf, '\0', sizeof (repbuf));
 #endif /* ACE_HAS_PURIFY */
-  TAO_OutputCDR output (repbuf, sizeof(repbuf));
+  TAO_OutputCDR output (repbuf, sizeof(repbuf),
+                        TAO_ENCAP_BYTE_ORDER,
+                        TAO_Marshal::DEFAULT_MARSHAL_FACTORY,
+                        this->orb_core_->output_cdr_buffer_allocator (),
+                        this->orb_core_->output_cdr_buffer_allocator ());
 
   int result = 0;
   int error_encountered = 0;

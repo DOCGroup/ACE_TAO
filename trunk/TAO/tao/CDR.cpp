@@ -244,12 +244,12 @@ TAO_OutputCDR::grow_and_adjust (size_t size, size_t align, char*& buf)
 		      ACE_Message_Block (block_size,
 					 ACE_Message_Block::MB_DATA,
 					 0, 0,
-					 orb_core->cdr_buffer_allocator (),
+					 orb_core->output_cdr_buffer_allocator (),
 					 0,
 					 0,
 					 ACE_Time_Value::zero,
 					 ACE_Time_Value::max_time,
-					 orb_core->data_block_allocator ()),
+					 orb_core->output_cdr_dblock_allocator ()),
 		      -1);
       this->good_bit_ = 1;
 
@@ -580,8 +580,18 @@ TAO_OutputCDR::write_boolean_array (const CORBA::Boolean* x,
 
 TAO_InputCDR::TAO_InputCDR (const char *buf, size_t bufsiz,
                             int byte_order,
-                            TAO_Marshal_Factory *factory)
-  : start_ (buf, bufsiz),
+                            TAO_Marshal_Factory *factory,
+                            ACE_Allocator* buffer_allocator,
+                            ACE_Allocator* data_block_allocator)
+  : start_ (bufsiz,
+            ACE_Message_Block::MB_DATA,
+            0,
+            buf,
+            buffer_allocator,
+            0, 0,
+            ACE_Time_Value::zero,
+            ACE_Time_Value::max_time,
+            data_block_allocator),
     factory_ (factory),
     do_byte_swap_ (byte_order != TAO_ENCAP_BYTE_ORDER),
     good_bit_ (1)
@@ -591,8 +601,19 @@ TAO_InputCDR::TAO_InputCDR (const char *buf, size_t bufsiz,
 
 TAO_InputCDR::TAO_InputCDR (size_t bufsiz,
                             int byte_order,
-                            TAO_Marshal_Factory *factory)
-  : start_ (bufsiz),
+                            TAO_Marshal_Factory *factory,
+                            ACE_Allocator* buffer_allocator,
+                            ACE_Allocator* data_block_allocator)
+  : start_ (bufsiz,
+            ACE_Message_Block::MB_DATA,
+            0,
+            0,
+            buffer_allocator,
+            0,
+            0,
+            ACE_Time_Value::zero,
+            ACE_Time_Value::max_time,
+            data_block_allocator),
     factory_ (factory),
     do_byte_swap_ (byte_order != TAO_ENCAP_BYTE_ORDER),
     good_bit_ (1)
@@ -685,8 +706,19 @@ TAO_InputCDR::operator= (const TAO_InputCDR& rhs)
   return *this;
 }
 
-TAO_InputCDR::TAO_InputCDR (const TAO_OutputCDR& rhs)
-  : start_ (rhs.total_length () + CDR::MAX_ALIGNMENT),
+TAO_InputCDR::TAO_InputCDR (const TAO_OutputCDR& rhs,
+                            ACE_Allocator* buffer_allocator,
+                            ACE_Allocator* data_block_allocator)
+  : start_ (rhs.total_length () + CDR::MAX_ALIGNMENT,
+            ACE_Message_Block::MB_DATA,
+            0,
+            0,
+            buffer_allocator,
+            0,
+            0,
+            ACE_Time_Value::zero,
+            ACE_Time_Value::max_time,
+            data_block_allocator),
     factory_ (rhs.factory_),
     do_byte_swap_ (rhs.do_byte_swap_),
     good_bit_ (1)

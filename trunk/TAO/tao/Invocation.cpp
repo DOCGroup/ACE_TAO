@@ -62,8 +62,8 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (IIOP_Object *data,
     out_stream_ (buffer, sizeof buffer, /* CDR::DEFAULT_BUFSIZE */
 		 TAO_ENCAP_BYTE_ORDER,
 		 TAO_Marshal::DEFAULT_MARSHAL_FACTORY,
-		 orb_core->cdr_buffer_allocator (),
-		 orb_core->data_block_allocator ()),
+		 orb_core->output_cdr_buffer_allocator (),
+		 orb_core->output_cdr_dblock_allocator ()),
     orb_core_ (orb_core)
 {
   // @@ TODO The comments here are scary, can someone please give me a
