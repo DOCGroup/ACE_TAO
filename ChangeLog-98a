@@ -1,3 +1,9 @@
+Tue Feb 17 15:53:41 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/ACE.cpp (recv_n): Added a check to drop out if the MSG_PEEK
+ 	  flag is set!  Thanks to Keith Brown <kalbrown@ix.netcom.com> for
+	  reporting this.
+
 Tue Feb 17 12:56:24 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* include/makeinclude/wrapper_macros.GNU: Broke the "purify"
