@@ -693,7 +693,7 @@ Sun Aug 06 16:46:31 2000  Ossama Othman  <ossama@uci.edu>
 
           TAO-specific Singleton classes.  These classes registers with
           the TAO_Singleton_Manager instead of the ACE_Object_Manager to
-          ensure that TAO Singletons are isolated within TAO.
+          ensure that TAO Singletons are isolated within TAO.  [Bug 386]
 
         * tao/TAO_Singleton_Manager.cpp:
         * tao/TAO_Singleton_Manager.h:
@@ -704,6 +704,7 @@ Sun Aug 06 16:46:31 2000  Ossama Othman  <ossama@uci.edu>
           register with the TAO_Singleton_Manager.  The
           TAO_Singleton_Manager cleans up all registered
           singletons/objects upon destruction of the last ORB reference.
+	  [Bug 386]
 
         * tao/DLL_ORB.cpp:
         * tao/DLL_ORB.h:
@@ -711,7 +712,7 @@ Sun Aug 06 16:46:31 2000  Ossama Othman  <ossama@uci.edu>
 
           New helper class that can be used to ensure that the ORB is
           properly initialized and destroyed when dynamically loading and
-          unloading the ORB.
+          unloading the ORB.  [Bug 386]
 
         * tao/TAO_Export.h:
 
@@ -736,7 +737,7 @@ Sun Aug 06 16:46:31 2000  Ossama Othman  <ossama@uci.edu>
         * tao/ORB_Core.i (instance):
 
           The ORB table is now a TAO_Singleton, instead of an
-          ACE_Singleton.
+          ACE_Singleton.  [Bug 386]
 
         * tao/ORB_Core.cpp:
 
@@ -744,10 +745,10 @@ Sun Aug 06 16:46:31 2000  Ossama Othman  <ossama@uci.edu>
 
           The ORB table is now a TAO_Singleton, instead of an
           ACE_Singleton.  Changed the template instantiations
-          accordingly.
+          accordingly.  [Bug 386]
 
           TAO's thread-specific storage resources are now accessed through
-          a TAO_TSS_Singleton instead of an ACE_TSS_Singleton.
+          a TAO_TSS_Singleton instead of an ACE_TSS_Singleton.  [Bug 386]
 
           (unbind):
 
@@ -812,13 +813,13 @@ Sun Aug 06 16:46:31 2000  Ossama Othman  <ossama@uci.edu>
         * tao/ValueFactory_Map.h:
 
           Use new TAO_Singleton class instead of ACE_Singleton to ensure
-          resources are isolated to TAO.
+          resources are isolated to TAO.  [Bug 386]
 
         * TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp (visit_interface):
         * TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp (visit_interface):
 
           Generated code now uses TAO_Singletons instead of ACE_Singletons
-          to ensure isolation of resources to TAO.
+          to ensure isolation of resources to TAO.  [Bug 386]
 
 Fri Aug  4 18:50:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
 
@@ -1135,7 +1136,7 @@ Mon Jul 24 01:27:53 2000  Ossama Othman  <ossama@uci.edu>
           Explicitly shutdown all open connections that have been
           registered with the ORB Core by removing them from the Reactor
           upon ORB destruction.  This allows the ORB to use a Singleton
-          reactor, for example, instead of an ORB-specific one.
+          reactor, for example, instead of an ORB-specific one. [Bug 386]
 
         * tao/Acceptor_Impl.cpp (activate_svc_handler):
 
@@ -1147,7 +1148,7 @@ Mon Jul 24 01:27:53 2000  Ossama Othman  <ossama@uci.edu>
           handle (not handler) associated with the connection that was just
           accepted with the ORB Core.  This form of open connection
           tracking is only performed when the "reactive" ORB concurrency
-          model is selected.
+          model is selected.  [Bug 386]
 
         * tao/IIOP_Connect.cpp (handle_close):
         * tao/SHMIOP_Connect.cpp (handle_close):
@@ -1157,6 +1158,7 @@ Mon Jul 24 01:27:53 2000  Ossama Othman  <ossama@uci.edu>
           Deregister the handle corresponding to the Connection Handler
           being shutdown from the ORB Core so that the ORB Core doesn't
           attempt to remove it from the Reactor upon ORB destruction.
+	  [Bug 386]
 
 Sun Jul 23 22:01:23 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
