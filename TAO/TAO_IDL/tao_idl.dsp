@@ -44,7 +44,7 @@ CFG=TAO_IDL Compiler - Win32 Alpha Debug
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "include" /I "be_include" /I "..\.." /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D IDL_CFE_VERSION=\"1.3.0\" /FD /D CPP_LOCATION="\"C:\\Program Files\\DevStudio\\VC\\bin\\CL.EXE\"" /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "include" /I "be_include" /I "..\.." /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /FD /D CPP_LOCATION="\"C:\\Program Files\\DevStudio\\VC\\bin\\CL.EXE\"" /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -72,7 +72,7 @@ LINK32=link.exe
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "include" /I "be_include" /I "..\.." /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D IDL_CFE_VERSION=\"1.3.0\" /FD /D CPP_LOCATION="\"C:\\Program Files\\DevStudio\\VC\\bin\\CL.EXE\"" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "include" /I "be_include" /I "..\.." /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /FD /D CPP_LOCATION="\"C:\\Program Files\\DevStudio\\VC\\bin\\CL.EXE\"" /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
