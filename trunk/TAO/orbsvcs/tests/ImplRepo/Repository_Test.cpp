@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include <iostream.h>
 #include "../../ImplRepo_Service/Repository.h"
 
 const char *NAME_VALUE = "server";
@@ -28,7 +27,7 @@ int main (int argc, char *argv[])
   new_rec.wdir = ACE::strnew (WDIR_VALUE);
 
   ACE_DEBUG ((LM_DEBUG, "=Adding Record to Repository\n"));
-  
+
   // Add our one record
   int result = rep.add (NAME_VALUE, new_rec);
 
@@ -45,7 +44,7 @@ int main (int argc, char *argv[])
     {
       if (ACE_OS::strcmp (rec.comm_line, COMM_LINE_VALUE) != 0)
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                      "Error: comm_line compare failed: \"%s\" \"%s\"\n",
                      rec.comm_line,
                      COMM_LINE_VALUE));
@@ -54,7 +53,7 @@ int main (int argc, char *argv[])
 
       if (ACE_OS::strcmp (rec.env, ENV_VALUE) != 0)
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                      "Error: env compare failed: \"%s\" \"%s\"\n",
                      rec.env,
                      ENV_VALUE));
@@ -63,7 +62,7 @@ int main (int argc, char *argv[])
 
       if (ACE_OS::strcmp (rec.wdir, WDIR_VALUE) != 0)
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                      "Error: wdir compare failed: \"%s\" \"%s\"\n",
                      rec.wdir,
                      WDIR_VALUE));
@@ -72,7 +71,7 @@ int main (int argc, char *argv[])
 
       if (ACE_OS::strcmp (rec.host, HOST_VALUE) != 0)
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                      "Error: host compare failed: \"%s\" \"%s\"\n",
                      rec.host,
                      HOST_VALUE));
@@ -81,7 +80,7 @@ int main (int argc, char *argv[])
 
       if (rec.port != PORT_VALUE)
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                      "Error: port compare failed: \"%hu\" \"%hu\"\n",
                      rec.port,
                      PORT_VALUE));
@@ -90,7 +89,7 @@ int main (int argc, char *argv[])
 
       if (ACE_OS::strcmp (rec.ping_ior, PING_IOR_VALUE) != 0)
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                      "Error: ping_ior compare failed: \"%s\" \"%s\"\n",
                      rec.ping_ior,
                      PING_IOR_VALUE));
@@ -110,7 +109,7 @@ int main (int argc, char *argv[])
     {
       if (ACE_OS::strcmp (cl, COMM_LINE_VALUE) != 0)
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       "Error: comm_line compare failed: \"%s\" \"%s\"\n",
                       cl,
                       COMM_LINE_VALUE));
@@ -119,7 +118,7 @@ int main (int argc, char *argv[])
 
       if (ACE_OS::strcmp (env, ENV_VALUE) != 0)
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       "Error: env compare failed: \"%s\" \"%s\"\n",
                       env,
                       ENV_VALUE));
@@ -128,20 +127,20 @@ int main (int argc, char *argv[])
 
       if (ACE_OS::strcmp (ping_ior, PING_IOR_VALUE) != 0)
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       "Error: ping_ior compare failed: \"%s\" \"%s\"\n",
                       ping_ior,
                       PING_IOR_VALUE));
           test_success = 0;
         }
-  
+
       delete [] cl;
       delete [] env;
       delete [] ping_ior;
     }
 
   ACE_DEBUG ((LM_DEBUG, "=Performing Reregister Test\n"));
-  
+
   if (rep.add (NAME_VALUE, new_rec) != 1)
     {
       ACE_DEBUG ((LM_DEBUG, "Error: Reregistration not detected\n"));
@@ -161,6 +160,6 @@ int main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "Tests were successful\n"));
       return 0;
     }
-  else 
+  else
     return -1;
 }
