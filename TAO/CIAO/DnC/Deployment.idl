@@ -1,0 +1,520 @@
+//$Id$
+#include <orb.idl>
+
+module CORBA {
+  typedef sequence <unsigned long> ULongSeq;
+  typedef sequence <string> StringSeq;
+};
+
+module Deployment {
+
+  enum SatisfierPropertyKind {
+    Quantity,
+    Capacity,
+    Minimum,
+    Maximum,
+    _Attribute,
+    Selection
+  };
+
+  struct SatisfierProperty {
+    string name;
+    SatisfierPropertyKind kind;
+    any value;
+  };
+
+  typedef sequence < SatisfierProperty > SatisfierProperties;
+
+  struct SharedResource {
+    string name;
+    ::CORBA::StringSeq resourceType;
+    ::CORBA::ULongSeq nodeRef;
+    SatisfierProperties property;
+  };
+
+  typedef sequence < SharedResource > SharedResources;
+
+  struct Resource {
+    string name;
+    ::CORBA::StringSeq resourceType;
+    SatisfierProperties property;
+  };
+
+  typedef sequence < Resource > Resources;
+
+  struct Node {
+    string name;
+    string label;
+    ::CORBA::ULongSeq sharedResourceRef;
+    ::CORBA::ULongSeq connectionRef;
+    Resources resource;
+  };
+
+  typedef sequence < Node > Nodes;
+
+  struct Interconnect {
+    string name;
+    string label;
+    ::CORBA::ULongSeq connectionRef;
+    ::CORBA::ULongSeq connectRef;
+    Resources resource;
+  };
+
+  typedef sequence < Interconnect > Interconnects;
+
+  struct Bridge {
+    string name;
+    string label;
+    ::CORBA::ULongSeq connectRef;
+    Resources resource;
+  };
+
+  typedef sequence < Bridge > Bridges;
+
+  struct Domain {
+    string UUID;
+    string label;
+    SharedResources sharedResource;
+    Nodes node;
+    Interconnects interconnect;
+    Bridges bridge;
+  };
+
+  struct Property {
+    string name;
+    any value;
+  };
+
+  typedef sequence < Property > Properties;
+
+  enum CCMComponentPortKind {
+    Facet,
+    SimplexReceptacle,
+    MultiplexReceptacle,
+    EventEmitter,
+    EventPublisher,
+    EventConsumer
+  };
+
+  struct ComponentPortDescription {
+    string name;
+    string specificType;
+    ::CORBA::StringSeq supportedType;
+    boolean provider;
+    boolean exclusiveProvider;
+    boolean exclusiveUser;
+    boolean optional;
+    CCMComponentPortKind kind;
+  };
+
+  typedef sequence < ComponentPortDescription > ComponentPortDescriptions;
+
+  struct ComponentPropertyDescription {
+    string name;
+    CORBA::TypeCode type;
+  };
+
+  typedef sequence < ComponentPropertyDescription > ComponentPropertyDescriptions;
+
+  struct ComponentInterfaceDescription {
+    string label;
+    string UUID;
+    string specificType;
+    ::CORBA::StringSeq supportedType;
+    string idlFile;
+    Properties configProperty;
+    ComponentPortDescriptions port;
+    ComponentPropertyDescriptions property;
+  };
+
+  struct Requirement {
+    string resourceType;
+    Properties property;
+  };
+
+  typedef sequence < Requirement > Requirements;
+
+  struct MonolithicDeploymentDescription {
+    string name;
+    ::CORBA::StringSeq source;
+    ::CORBA::ULongSeq artifactRef;
+    Properties execParameter;
+    Requirements deployRequirement;
+  };
+
+  typedef sequence < MonolithicDeploymentDescription > MonolithicDeploymentDescriptions;
+
+  struct InstanceDeploymentDescription {
+    string name;
+    string node;
+    ::CORBA::StringSeq source;
+    unsigned long implementationRef;
+    Properties configProperty;
+  };
+
+  typedef sequence < InstanceDeploymentDescription > InstanceDeploymentDescriptions;
+
+  struct ComponentExternalPortEndpoint {
+    string portName;
+  };
+
+  typedef sequence < ComponentExternalPortEndpoint > ComponentExternalPortEndpoints;
+
+  struct PlanSubcomponentPortEndpoint {
+    string portName;
+    boolean provider;
+    CCMComponentPortKind kind;
+    unsigned long instanceRef;
+  };
+
+  typedef sequence < PlanSubcomponentPortEndpoint > PlanSubcomponentPortEndpoints;
+
+  struct ExternalReferenceEndpoint {
+    string location;
+  };
+
+  typedef sequence < ExternalReferenceEndpoint > ExternalReferenceEndpoints;
+
+  struct PlanConnectionDescription {
+    string name;
+    ::CORBA::StringSeq source;
+    Requirements deployRequirement;
+    ComponentExternalPortEndpoints externalEndpoint;
+    PlanSubcomponentPortEndpoints internalEndpoint;
+    ExternalReferenceEndpoints externalReference;
+  };
+
+  typedef sequence < PlanConnectionDescription > PlanConnectionDescriptions;
+
+  struct PlanSubcomponentPropertyReference {
+    string propertyName;
+    unsigned long instanceRef;
+  };
+
+  typedef sequence < PlanSubcomponentPropertyReference > PlanSubcomponentPropertyReferences;
+
+  struct PlanPropertyMapping {
+    string name;
+    ::CORBA::StringSeq source;
+    string externalName;
+    PlanSubcomponentPropertyReferences delegatesTo;
+  };
+
+  typedef sequence < PlanPropertyMapping > PlanPropertyMappings;
+
+  struct ImplementationDependency {
+    string requiredType;
+  };
+
+  typedef sequence < ImplementationDependency > ImplementationDependencies;
+
+  struct ArtifactDeploymentDescription {
+    string name;
+    string location;
+    string node;
+    ::CORBA::StringSeq source;
+    Properties execParameter;
+    Requirements deployRequirement;
+  };
+
+  typedef sequence < ArtifactDeploymentDescription > ArtifactDeploymentDescriptions;
+
+  struct DeploymentPlan {
+    string label;
+    ComponentInterfaceDescription realizes;
+    MonolithicDeploymentDescriptions implementation;
+    InstanceDeploymentDescriptions instance;
+    PlanConnectionDescriptions connection;
+    PlanPropertyMappings externalProperty;
+    ImplementationDependencies dependsOn;
+    ArtifactDeploymentDescriptions artifact;
+  };
+
+  exception ResourceNotAvailable {
+    string name;
+    string resourceType;
+    string propertyName;
+    string elementName;
+    string resourceName;
+  };
+
+  exception PlanError {
+    string name;
+    string reason;
+  };
+
+  enum DomainUpdateKind {
+    Add,
+    Delete,
+    UpdateAll,
+    UpdateAvailable
+  };
+
+  interface TargetManager {
+    Domain getAllResources ();
+    Domain getAvailableResources ();
+    void commitResources (in DeploymentPlan plan)
+      raises (ResourceNotAvailable, PlanError);
+    void releaseResources (in DeploymentPlan argname);
+    void updateDomain (in ::CORBA::StringSeq elements, in Domain domainSubset, in DomainUpdateKind updateKind);
+  };
+
+  typedef sequence < Object > Endpoints;
+
+  struct Connection {
+    string name;
+    Endpoints endpoint;
+  };
+
+  typedef sequence < Connection > Connections;
+
+  exception StartError {
+    string name;
+    string reason;
+  };
+
+  exception InvalidConnection {
+    string name;
+    string reason;
+  };
+
+  interface Application {
+    void finishLaunch (in Connections providedReference, in boolean start)
+      raises (StartError, InvalidConnection);
+    void start ()
+      raises (StartError);
+  };
+
+  exception InvalidProperty {
+    string name;
+    string reason;
+  };
+
+  exception StopError {
+    string name;
+    string reason;
+  };
+
+  interface ApplicationManager {
+    Application startLaunch (in Properties configProperty, out Connections providedReference, in boolean start)
+      raises (ResourceNotAvailable, StartError, InvalidProperty);
+    void destroyApplication (in Application app)
+      raises (StopError);
+  };
+
+  typedef sequence < Application > Applications;
+
+  interface DomainApplicationManager :
+      ApplicationManager
+  {
+    Applications getApplications ();
+    DeploymentPlan getPlan ();
+  };
+
+  typedef sequence < DomainApplicationManager > DomainApplicationManagers;
+
+  interface ExecutionManager {
+    DomainApplicationManager preparePlan (in DeploymentPlan plan, in boolean commitResources)
+      raises (ResourceNotAvailable, PlanError, StartError);
+    DomainApplicationManagers getManagers ();
+    void destroyManager (in DomainApplicationManager manager)
+      raises (StopError);
+  };
+
+  interface Logger {
+  };
+
+  interface NodeApplicationManager :
+      ApplicationManager
+  {
+  };
+
+  interface NodeManager {
+    void joinDomain (in Domain domain, in TargetManager manager, in Logger log);
+    void leaveDomain ();
+    NodeApplicationManager preparePlan (in DeploymentPlan plan)
+      raises (StartError, PlanError);
+    void destroyManager (in NodeApplicationManager appManager)
+      raises (StopError);
+  };
+
+  interface NodeApplication :
+      Application
+  {
+  };
+
+  interface DomainApplication :
+      Application
+  {
+  };
+
+  exception NameExists {
+  };
+
+  exception PackageError {
+    string label;
+    string reason;
+  };
+
+  exception NoSuchName {
+  };
+
+  exception LastConfiguration {
+  };
+
+  exception InvalidReference {
+  };
+
+  struct ComponentPackageDescription;
+
+  typedef sequence < ComponentPackageDescription > ComponentPackageDescriptions;
+
+  struct ComponentPackageReference {
+    string requiredType;
+  };
+
+  typedef sequence < ComponentPackageReference > ComponentPackageReferences;
+
+  struct SubcomponentInstantiationDescription {
+    string name;
+    ComponentPackageDescriptions package;
+    Properties configProperty;
+    Requirements selectRequirement;
+    ComponentPackageReferences reference;
+  };
+
+  typedef sequence < SubcomponentInstantiationDescription > SubcomponentInstantiationDescriptions;
+
+  struct SubcomponentPortEndpoint {
+    string portName;
+    unsigned long instanceRef;
+  };
+
+  typedef sequence < SubcomponentPortEndpoint > SubcomponentPortEndpoints;
+
+  struct AssemblyConnectionDescription {
+    string name;
+    Requirements deployRequirement;
+    ComponentExternalPortEndpoints externalEndpoint;
+    SubcomponentPortEndpoints internalEndpoint;
+    ExternalReferenceEndpoints externalReference;
+  };
+
+  typedef sequence < AssemblyConnectionDescription > AssemblyConnectionDescriptions;
+
+  struct SubcomponentPropertyReference {
+    string propertyName;
+    unsigned long instanceRef;
+  };
+
+  typedef sequence < SubcomponentPropertyReference > SubcomponentPropertyReferences;
+
+  struct AssemblyPropertyMapping {
+    string name;
+    string externalName;
+    SubcomponentPropertyReferences delegatesTo;
+  };
+
+  typedef sequence < AssemblyPropertyMapping > AssemblyPropertyMappings;
+
+  struct ComponentAssemblyDescription {
+    SubcomponentInstantiationDescriptions instance;
+    AssemblyConnectionDescriptions connection;
+    AssemblyPropertyMappings externalProperty;
+  };
+
+  typedef sequence < ComponentAssemblyDescription > ComponentAssemblyDescriptions;
+
+  struct NamedImplementationArtifact;
+
+  typedef sequence < NamedImplementationArtifact > NamedImplementationArtifacts;
+
+  struct ImplementationArtifactDescription {
+    string label;
+    string UUID;
+    string location;
+    Properties execParameter;
+    Requirements deployRequirement;
+    NamedImplementationArtifacts dependsOn;
+  };
+
+  struct NamedImplementationArtifact {
+    string name;
+    ImplementationArtifactDescription referencedArtifact;
+  };
+
+  struct MonolithicImplementationDescription {
+    Properties execParameter;
+    Requirements deployRequirement;
+    NamedImplementationArtifacts primaryArtifact;
+  };
+
+  typedef sequence < MonolithicImplementationDescription > MonolithicImplementationDescriptions;
+
+  struct Capability {
+    string name;
+    ::CORBA::StringSeq resourceType;
+    SatisfierProperties property;
+  };
+
+  typedef sequence < Capability > Capabilities;
+
+  struct ComponentImplementationDescription {
+    string label;
+    string UUID;
+    ComponentInterfaceDescription implements;
+    ComponentAssemblyDescriptions assemblyImpl;
+    MonolithicImplementationDescriptions monolithicImpl;
+    Properties configProperty;
+    Capabilities capability;
+    ImplementationDependencies dependsOn;
+  };
+
+  struct PackagedComponentImplementation {
+    string name;
+    ComponentImplementationDescription referencedImplementation;
+  };
+
+  typedef sequence < PackagedComponentImplementation > PackagedComponentImplementations;
+
+  struct ComponentPackageDescription {
+    string label;
+    string UUID;
+    ComponentInterfaceDescription realizes;
+    Properties configProperty;
+    PackagedComponentImplementations implementation;
+  };
+
+  struct PackageConfiguration {
+    string name;
+    string label;
+    ::CORBA::ULongSeq specializedConfigRef;
+    ComponentPackageDescriptions basePackage;
+    Requirements selectRequirement;
+    Properties configProperty;
+  };
+
+  interface RepositoryManager {
+    void installPackage (in string name, in string label, in string location)
+      raises (NameExists, PackageError);
+    void createPackage (in string name, in string label, in ComponentPackageDescription package, in string baseLocation)
+      raises (NameExists, PackageError);
+    PackageConfiguration findConfigurationByName (in string label)
+      raises (NoSuchName);
+    ::CORBA::StringSeq getAllNames ();
+    ::CORBA::StringSeq findNamesByType (in string type);
+    ::CORBA::StringSeq getAllTypes ();
+    void createConfiguration (in string nname, in string bname, in Properties cp, in Requirements sr)
+      raises (NoSuchName, NameExists);
+    void updateConfiguration (in string name, in Properties cp, in Requirements sr)
+      raises (NoSuchName);
+    void deleteConfiguration (in string name, in boolean deletePackage)
+      raises (NoSuchName, LastConfiguration);
+  };
+
+  struct RequirementSatisfier {
+    string name;
+    ::CORBA::StringSeq resourceType;
+    SatisfierProperties property;
+  };
+};
