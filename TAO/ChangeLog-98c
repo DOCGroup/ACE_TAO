@@ -18,7 +18,7 @@ Mon Feb 16 10:18:25 1998  David L. Levine  <levine@cs.wustl.edu>
           fallback strategies if the task activiation fails:
           ACE_SCHED_OTHER scheduling class with requested priority, then
           ACE_SCHED_OTHER scheduling class with minimum thread priority.
-          Thanks to Robert Olson <olson@mcs.anl.gov> for reporting the
+          Thanks to Bob Olson <olson@mcs.anl.gov> for reporting the
           problem in Irix, which doesn't have a thread priority of 0
           with ACE_SCHED_OTHER.
 
