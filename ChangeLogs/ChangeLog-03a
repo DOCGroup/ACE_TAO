@@ -7,6 +7,9 @@ Wed May 15 15:58:07 UTC 2002  Don Hinton  <dhinton@ieee.org>
 	
 	* ace/DLL.{h,cpp}:
 
+          Removed the return in open() after an ACE_Lib_Find error, so that
+          dlopen() will be called and the appropriate error stored.
+
 	  Added new static flag, open_called_, to keep track of whether or not
 	  a library function (specifically dlopen) has been called.  This is 
 	  used internally to make sure that dlerror() isn't called unless the 
