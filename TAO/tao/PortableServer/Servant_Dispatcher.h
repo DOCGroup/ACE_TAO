@@ -29,7 +29,7 @@ class TAO_POA_Policy_Set;
 class TAO_POA;
 class ACE_Lock;
 class TAO_ORB_Core;
-class TAO_Service_Context;
+class TAO_ServerRequest;
 
 /**
  * @class TAO_Servant_Dispatcher
@@ -45,8 +45,9 @@ public:
   /// Pre_invoke remote request.
   virtual void pre_invoke_remote_request (TAO_POA &poa,
                                           CORBA::Short servant_priority,
-                                          TAO_Service_Context &request_service_context,
-                                          TAO_Service_Context &reply_service_context,
+                                          //TAO_Service_Context &request_service_context,
+                                          //TAO_Service_Context &reply_service_context,
+										  TAO_ServerRequest &req,
                                           TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
                                           ACE_ENV_ARG_DECL) = 0;
 
