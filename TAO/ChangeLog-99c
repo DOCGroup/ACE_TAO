@@ -1,3 +1,8 @@
+Mon Jan 25 17:24:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: 
+	  Updated dependencies.
+
 Mon Jan 25 13:54:00 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * rules.tao.GNU,orbsvcs/orbsvcs/Makefile:  added TAO_ORBSVCS
