@@ -1,3 +1,11 @@
+Wed Jun 10 16:09:49 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POAS.h (POA_PortableServer): Added missing TAO_Exports.
+
+	* tests/POA/DSI: New test directory to show DSI features in TAO.
+
+	* tests/POA/TIE: New test directory to show TIE features in TAO.
+
 1998-06-10  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Concurrency/CC_LockSet.{h,cpp}
