@@ -1,3 +1,13 @@
+Tue Apr  6 15:25:56 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * ace/High_Res_Timer.{h,i,cpp}: On Win32, don't call calibrate
+          if we cannot get the scale factor.  Instead, just automatically
+          fall back on ACE_OS::gettimeofday ().  
+
+          Also added another static variable to represent the conditions
+          where the global scale factor is not set yet or high resolution
+          timers are not supported.
+
 Tue Apr 06 15:14:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Basic_Types.h:  added ACE_UINT64_LITERAL for platforms
