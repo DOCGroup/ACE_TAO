@@ -8,7 +8,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/debug.h"
-#include "tao/RT_Policy_i.h"
 
 #if !defined(__ACE_INLINE__)
 #include "SSLIOP_Acceptor.i"
@@ -451,7 +450,7 @@ TAO_SSLIOP_Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
   // Set the reactor in the underlying ACE_SSL_SOCK_Acceptor to force
   // it to use the one the ORB was configured to use.
   this->accept_strategy_->acceptor ().reactor (r);
-    
+
   if (this->ssl_acceptor_.open (addr,
                                 r,
                                 this->creation_strategy_,
