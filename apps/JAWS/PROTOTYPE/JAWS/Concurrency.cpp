@@ -172,6 +172,10 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
           // definately something wrong.
           JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, negative result");
           ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Concurrency_Base::svc_hook"));
+          handler->done ();
+          handler = 0;
+          JAWS_IO_Handler **ioh = waiter->find (waiter_index);
+          *ioh = 0;
           break;
         }
 

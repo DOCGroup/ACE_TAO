@@ -97,7 +97,7 @@ JAWS_IO_Asynch_Acceptor::open (const ACE_INET_Addr &address, int backlog)
 
   return this->acceptor_.open (address,
                                JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE,
-                               0,
+                               1,
                                backlog,
                                1,
                                0,
