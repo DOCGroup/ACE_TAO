@@ -1,4 +1,10 @@
-Tue Feb 16 13:05:42 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Tue Feb 16 16:38:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/exceptions.html: Added documentation for the new macro
+	  ACE_PRINT_EXCEPTION.  Since there's no portable way to print out
+	  the content of a CORBA_Exception, we use this macro to deal with
+	  differences among various ORB implementations.  This macro is
+	  user definable.
 
 	Thanks to Eric Covington <eric@nowsol.com> for figuring out the
 	following.
