@@ -45,7 +45,7 @@ IDL_SRC = \
         $(addsuffix S.cpp, $(IDL_ALWAYS)) \
         $(addsuffix C.cpp, $(IDL_ALWAYS))
 
-TEST_FILES = main namespace_check
+TEST_FILES = main 
 
 TEST_OBJS = $(addsuffix .o, $(TEST_FILES)) $(IDL_SRC:.cpp=.o)
 SRC = $(IDL_SRC) \
@@ -59,8 +59,7 @@ SRC = $(IDL_SRC) \
         paramsS.cpp \
         nested_scopeC.cpp \
         nested_scopeS.cpp \
-	main.cpp \
-        namespace_check.cpp
+	main.cpp 
 
 TAO_IDLFLAGS += -Ge 1 
 IDL_TEST_LIBS = $(TAO_SRVR_LIBS)
@@ -74,8 +73,7 @@ include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
 ifneq ($(templates),explicit)
-BUILD += 	namespace_check.cpp   \
-		reopened_modulesC.cpp \
+BUILD +=        reopened_modulesC.cpp \
 		reopen_include1C.cpp  \
 		reopen_include2C.cpp  \
                 paramsC.cpp           \
@@ -97,9 +95,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 CPPFLAGS += -I$(TAO_ROOT)
 
 .PRECIOUS: $(foreach file, $(IDL_SRC), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
-
-namespace_check.cpp: reopened_modulesC.h reopen_include1C.h reopen_include2C.h \
-                     paramsC.h nested_scopeC.h
 
 reopened_modulesC.h: reopened_modules.idl $(TAO_IDL)
 	$(TAO_IDL) -w $(TAO_IDLFLAGS) reopened_modules.idl
