@@ -1,3 +1,12 @@
+Wed Apr 26 15:34:00 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Interceptor.pidl: Renamed "corba.pidl" to "CORBA.pidl".
+
+	* tao/diffs/InterceptorC.h.diff:
+	* tao/Makefile (interceptor.target): Added an example on how to
+	  auto generate code for pidl files with only local interfaces in
+	  them.
+
 Wed Apr 26 12:36:28 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
