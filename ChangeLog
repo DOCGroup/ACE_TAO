@@ -1,3 +1,11 @@
+Fri Nov  3 09:41:20 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/RMCast/RMCast_Membership_Test.cpp:
+          Fixed warning about variables possibly uninitialized before
+          their first use.  In fact the variables are initialized before
+          their first use, but the code flow is too complex for the
+          compiler to figure that out.
+
 Fri Nov  3 09:34:39 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Makefile:
