@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAO_LoadBalancing.lib TAO_PortableServer.lib TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\orbsvcs" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\..\ace"
+# ADD LINK32 TAO_CosNaming.lib TAO_LoadBalancing.lib TAO_PortableServer.lib TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\orbsvcs" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "LoadBalancing server - Win32 Debug"
 
@@ -76,7 +76,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAO_LoadBalancingd.lib TAO_PortableServerd.lib TAOd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\orbsvcs" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\..\ace"
+# ADD LINK32 TAO_CosNamingd.lib TAO_LoadBalancingd.lib TAO_PortableServerd.lib TAOd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\orbsvcs" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\..\ace"
 
 !ENDIF 
 
@@ -89,19 +89,19 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\Hash_Replica_i.cpp
+SOURCE=.\Hasher_i.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Hash_ReplicaC.cpp
+SOURCE=.\HasherC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Hash_ReplicaControl.cpp
+SOURCE=.\HasherFactory.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Hash_ReplicaS.cpp
+SOURCE=.\HasherS.cpp
 # End Source File
 # Begin Source File
 
@@ -113,19 +113,23 @@ SOURCE=.\server.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\Hash_Replica_i.h
+SOURCE=.\Hasher_i.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Hash_ReplicaC.h
+SOURCE=.\HasherC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Hash_ReplicaControl.h
+SOURCE=.\HasherFactory.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Hash_ReplicaS.h
+SOURCE=.\HasherS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\HasherS_T.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
@@ -133,18 +137,18 @@ SOURCE=.\Hash_ReplicaS.h
 # PROP Default_Filter "idl"
 # Begin Source File
 
-SOURCE=.\Hash_Replica.idl
+SOURCE=.\Hasher.idl
 
 !IF  "$(CFG)" == "LoadBalancing server - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__HASH_="..\..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__HASHE="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build
-InputPath=.\Hash_Replica.idl
-InputName=Hash_Replica
+InputPath=.\Hasher.idl
+InputName=Hasher
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl -Ge 1 Hash_Replica.idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 Hasher.idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -177,13 +181,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "LoadBalancing server - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__HASH_="..\..\..\..\bin\tao_idl.exe"	
+USERDEP__HASHE="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build
-InputPath=.\Hash_Replica.idl
-InputName=Hash_Replica
+InputPath=.\Hasher.idl
+InputName=Hasher
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl.exe -Ge 1 Hash_Replica.idl
+	..\..\..\..\bin\tao_idl.exe -Ge 1 Hasher.idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -222,11 +226,15 @@ BuildCmds= \
 # PROP Default_Filter "i"
 # Begin Source File
 
-SOURCE=.\Hash_ReplicaC.i
+SOURCE=.\HasherC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Hash_ReplicaS.i
+SOURCE=.\HasherS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\HasherS_T.i
 # End Source File
 # End Group
 # End Target

@@ -56,7 +56,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_LoadBalancing.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib TAO_CosNaming.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_LoadBalancing.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "LoadBalancing - Win32 Debug"
 
@@ -83,7 +83,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAOd.lib aced.lib TAO_PortableServerd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_LoadBalancingd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAOd.lib aced.lib TAO_PortableServerd.lib TAO_CosNamingd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_LoadBalancingd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 # SUBTRACT LINK32 /profile
 
 !ELSEIF  "$(CFG)" == "LoadBalancing - Win32 MFC Debug"
@@ -112,7 +112,7 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 TAOd.lib aced.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_LoadBalancingd.dll" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 # SUBTRACT BASE LINK32 /profile
-# ADD LINK32 TAOd.lib aced.lib TAO_PortableServermfcd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_LoadBalancingmfcd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAOd.lib aced.lib TAO_PortableServermfcd.lib TAO_CosNamingmfcd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_LoadBalancingmfcd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 # SUBTRACT LINK32 /profile
 
 !ELSEIF  "$(CFG)" == "LoadBalancing - Win32 MFC Release"
@@ -140,7 +140,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_LoadBalancing.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 ace.lib TAO.lib TAO_PortableServermfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_LoadBalancingmfc.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 ace.lib TAO.lib TAO_PortableServermfc.lib TAO_CosNamingmfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_LoadBalancingmfc.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ENDIF 
 
@@ -207,10 +207,6 @@ SOURCE=.\LoadBalancing\LB_ReplicaLocator.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\LoadBalancing\LB_Round_Robin_Strategy.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\LoadBalancing\LB_RPMS_Monitor.cpp
 # End Source File
 # Begin Source File
@@ -223,7 +219,15 @@ SOURCE=.\LoadBalancing\LB_RPMS_Monitor_ORBInitializer.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\LoadBalancingC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\LoadBalancing\LoadBalancingI.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancingS.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -283,10 +287,6 @@ SOURCE=.\LoadBalancing\LB_ReplicaLocator.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\LoadBalancing\LB_Round_Robin_Strategy.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\LoadBalancing\LB_RPMS_Monitor.h
 # End Source File
 # Begin Source File
@@ -303,7 +303,19 @@ SOURCE=.\LoadBalancing\LoadBalancing_export.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\LoadBalancingC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\LoadBalancing\LoadBalancingI.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancingS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancingS_T.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
@@ -423,6 +435,18 @@ SOURCE=.\LoadBalancing\LB_ObjectGroup_Map.inl
 # Begin Source File
 
 SOURCE=.\LoadBalancing\LB_RPMS_Monitor_Interceptor.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancingC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancingS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancingS_T.i
 # End Source File
 # End Group
 # Begin Group "Template Files"

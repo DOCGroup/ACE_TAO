@@ -7,6 +7,7 @@ ACE_RCSID (orbsvcs,
            LB_Balancing_Strategy,
            "$Id$")
 
+
 TAO_LB_Balancing_Strategy::~TAO_LB_Balancing_Strategy (void)
 {
 }

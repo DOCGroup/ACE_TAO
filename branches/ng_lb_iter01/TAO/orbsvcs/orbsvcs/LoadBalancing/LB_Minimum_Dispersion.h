@@ -33,7 +33,7 @@
 
 // Forward declarations
 // class TAO_LB_ReplicaProxy;
-class TAO_LB_ObjectGroup_Map_Entry;
+struct TAO_LB_ObjectGroup_Map_Entry;
 
 // typedef ACE_Unbounded_Set<TAO_LB_ReplicaProxy *> TAO_LB_ReplicaProxySet;
 // typedef ACE_Unbounded_Set_Iterator<TAO_LB_ReplicaProxy *> TAO_LB_ReplicaProxySetIterator;

@@ -46,6 +46,7 @@ CPP_SRCS += \
   LoadBalancing/LB_ObjectGroupManager \
   LoadBalancing/LB_ObjectGroup_Map \
   LoadBalancing/LB_PropertyManager \
+  LoadBalancing/LB_Pull_Handler \
   LoadBalancing/LB_RPMS_Monitor \
   LoadBalancing/LB_RPMS_Monitor_Interceptor \
   LoadBalancing/LB_RPMS_Monitor_ORBInitializer \

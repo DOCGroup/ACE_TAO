@@ -154,7 +154,7 @@ TAO_LoadBalancing_ReplicationManager_i::remove_load_monitor (
 
   if (this->location_map_.find (the_location,
                                 location_entry) != 0)
-    ACE_THROW (LoadBalancing::LocationNotFound);
+    ACE_THROW (LoadBalancing::LocationNotFound ());
 
   (void) location_entry->load_monitor.out ();
 
@@ -175,9 +175,8 @@ TAO_LoadBalancing_ReplicationManager_i::set_default_properties (
                    LoadBalancing::InvalidProperty,
                    LoadBalancing::UnsupportedProperty))
 {
-  return
-    this->property_manager_.set_default_properties (props,
-                                                    ACE_TRY_ENV);
+  this->property_manager_.set_default_properties (props,
+                                                  ACE_TRY_ENV);
 }
 
 LoadBalancing::Properties *
@@ -197,9 +196,8 @@ TAO_LoadBalancing_ReplicationManager_i::remove_default_properties (
                    LoadBalancing::InvalidProperty,
                    LoadBalancing::UnsupportedProperty))
 {
-  return
-    this->property_manager_.remove_default_properties (props,
-                                                       ACE_TRY_ENV);
+  this->property_manager_.remove_default_properties (props,
+                                                     ACE_TRY_ENV);
 }
 
 void
@@ -211,10 +209,9 @@ TAO_LoadBalancing_ReplicationManager_i::set_type_properties (
                    LoadBalancing::InvalidProperty,
                    LoadBalancing::UnsupportedProperty))
 {
-  return
-    this->property_manager_.set_type_properties (type_id,
-                                                 overrides,
-                                                 ACE_TRY_ENV);
+  this->property_manager_.set_type_properties (type_id,
+                                               overrides,
+                                               ACE_TRY_ENV);
 }
 
 LoadBalancing::Properties *
@@ -237,10 +234,9 @@ TAO_LoadBalancing_ReplicationManager_i::remove_type_properties (
                    LoadBalancing::InvalidProperty,
                    LoadBalancing::UnsupportedProperty))
 {
-  return
-    this->property_manager_.remove_type_properties (type_id,
-                                                    props,
-                                                    ACE_TRY_ENV);
+  this->property_manager_.remove_type_properties (type_id,
+                                                  props,
+                                                  ACE_TRY_ENV);
 }
 
 void
@@ -253,10 +249,9 @@ TAO_LoadBalancing_ReplicationManager_i::set_properties_dynamically (
                    LoadBalancing::InvalidProperty,
                    LoadBalancing::UnsupportedProperty))
 {
-  return
-    this->property_manager_.set_properties_dynamically (object_group,
-                                                        overrides,
-                                                        ACE_TRY_ENV);
+  this->property_manager_.set_properties_dynamically (object_group,
+                                                      overrides,
+                                                      ACE_TRY_ENV);
 }
 
 LoadBalancing::Properties *
@@ -463,9 +458,8 @@ TAO_LoadBalancing_ReplicationManager_i::delete_object (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    LoadBalancing::ObjectNotFound))
 {
-  return
-    this->generic_factory_.delete_object (factory_creation_id,
-                                          ACE_TRY_ENV);
+  this->generic_factory_.delete_object (factory_creation_id,
+                                        ACE_TRY_ENV);
 }
 
 CORBA::Object_ptr

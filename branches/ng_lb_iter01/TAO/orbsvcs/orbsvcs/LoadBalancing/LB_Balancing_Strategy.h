@@ -24,7 +24,7 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // class TAO_LB_ReplicaProxy;
-class TAO_LB_ObjectGroup_Map_Entry;
+struct TAO_LB_ObjectGroup_Map_Entry;
 
 
 /**
@@ -67,9 +67,6 @@ public:
 //                              CORBA::Environment &ACE_TRY_ENV);
 };
 
-#if !defined (__ACE_INLINE__)
-#include "LoadBalancing_Strategy.i"
-#endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
 
