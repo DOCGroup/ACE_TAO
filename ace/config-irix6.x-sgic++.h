@@ -1,13 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
-// NOTE: THIS IS NOT A COMPLETE CONFIG FILE.
-
-// Here we setup the common config for IRIX 6.2, 6.4 and hopefully 6.3
-// but with pthreads enabled.
-
-// This file is automatically included in several irix6.* config
-// files, but is *not* included in the irix6.2-nothreads file.
+// Use this file for IRIX 6.[234] if you have the pthreads patches
+// installed.
 
 #if !defined (ACE_CONFIG_IRIX6X_H)
 #define ACE_CONFIG_IRIX6X_H
