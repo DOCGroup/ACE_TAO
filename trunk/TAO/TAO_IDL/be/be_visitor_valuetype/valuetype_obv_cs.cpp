@@ -95,7 +95,6 @@ be_visitor_valuetype_obv_cs::visit_field (be_field *node)
   be_visitor_valuetype_field_cs *visitor =
     new be_visitor_valuetype_field_cs (ctx);
   visitor->in_obv_space_ = 1;
-  // visitor->setenclosings ("ACE_INLINE ");
   if (visitor->visit_field (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

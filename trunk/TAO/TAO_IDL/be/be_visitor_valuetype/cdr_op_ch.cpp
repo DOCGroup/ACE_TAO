@@ -69,6 +69,14 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
     }
 
 
+  if (!node->is_abstract_valuetype ())
+    { // functions that marshal state
+      be_visitor_context* new_ctx  =
+        new be_visitor_context (*this->ctx_);
+      be_visitor_valuetype_marshal_ch visitor (new_ctx);
+      visitor.visit_valuetype (node);
+    }
+
   node->cli_hdr_cdr_op_gen (1);
   return 0;
 }
