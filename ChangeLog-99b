@@ -1,3 +1,8 @@
+Fri Aug 27 09:32:26 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/make_release: added some diagnostics to see why
+          diffs aren't being created.
+
 Fri Aug 27 07:17:58 1999  Toshio Hori  <toshi@etl.go.jp>
 
         * ACE-INSTALL.html: fixed a typo, missing ; after
