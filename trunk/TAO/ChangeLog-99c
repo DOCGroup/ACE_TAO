@@ -1,3 +1,11 @@
+Tue Nov  9 18:54:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/tao_idl.cpp:
+	  Added call to function which checks to make sure all
+	  forward declared interfaces are defined. Thanks to
+	  Devesh Kothari <dkothari@atdsprint.com> for sending
+	  in the example that pointed out this bug.
+
 Tue Nov  9 17:12:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tests/Endpoint_Per_Priority/client.dsp:
