@@ -1,6 +1,6 @@
-/* Test program for different methods of copying files. */
 // $Id$
 
+// Test program for different methods of copying files.
 
 #include "ace/OS.h"
 #include "ace/Profile_Timer.h"
@@ -8,25 +8,25 @@
 #include "ace/Signal.h"
 #include "IO_Test.h"
 
-/* Name of program. */
+// Name of program.
 static char *program_name;
 
-/* Name of default input file. */
+// Name of default input file.
 static char *input_filename = "/usr/dict/words";
 
-/* Name of default output file. */
+// Name of default output file.
 static char *output_filename = "/tmp/foo";
 
-/* Check if removing output file upon completion... */
+// Check if removing output file upon completion...
 static int remove_output = 1;
 
-/* Count of the number of iterations to run the tests. */
+// Count of the number of iterations to run the tests.
 static int iteration_count = 100;
 
-/* Profiler used to keep track of file I/O time. */
+// Profiler used to keep track of file I/O time.
 static ACE_Profile_Timer tm;
 
-/* Explain usage and exit. */
+// Explain usage and exit.
 
 static void 
 print_usage_and_die (void)
@@ -37,17 +37,17 @@ print_usage_and_die (void)
   ACE_OS::exit (1);
 }
 
-/* Clean up the output file on exit from a signal. */
+// Clean up the output file on exit from a signal.
 
-static void
-clean_up (int = 0)
+extern "C" void
+cleanup (int = 0)
 {
   if (remove_output)
     ACE_OS::unlink (output_filename);
   ACE_OS::exit (0);
 }
 
-/* Set up the program name used in error messages. */
+// Set up the program name used in error messages.
 
 static void
 set_program_name (char name[])
@@ -58,7 +58,7 @@ set_program_name (char name[])
     program_name = name + 1;
 }
 
-/* Parse the command-line arguments and set options. */
+// Parse the command-line arguments and set options.
 
 static void
 parse_args (int argc, char *argv[])
@@ -86,7 +86,7 @@ parse_args (int argc, char *argv[])
   }
 }
 
-/* Vector of pointers to derived classes that inherit from IO_Test base class. */ 
+// Vector of pointers to derived classes that inherit from IO_Test base class.
 
 static IO_Test *test_vector[100];
 
@@ -99,7 +99,7 @@ run_tests (int iterations, FILE *input_fp, FILE *output_fp)
   test_vector[2] = new Block_Read_Write_Test ("Block_Read_Write_Test", tm);
   test_vector[3] = new Mmap1_Test ("Mmap1_Test", tm);
   test_vector[4] = new Mmap2_Test ("Mmap2_Test", tm);
-  /* test_vector[5] = new Slow_Read_Write_Test ("Slow"Read_Write_Test", tm) */
+  // test_vector[5] = new Slow_Read_Write_Test ("Slow"Read_Write_Test", tm)
   test_vector[5] = (IO_Test *) 0;
 
   for (int i = 0; test_vector[i] != 0; i++)
@@ -135,7 +135,8 @@ main (int argc, char *argv[])
 
   set_program_name (argv[0]);
   parse_args (argc, argv);
-  ACE_Sig_Action sig ((ACE_SignalHandler) clean_up, SIGINT);
+
+  ACE_Sig_Action sa ((ACE_SignalHandler) cleanup, SIGINT);
 
   if ((input_fp = ACE_OS::fopen (input_filename, "r")) == 0)
     ACE_OS::perror (input_filename), ACE_OS::exit (1);
@@ -150,6 +151,6 @@ main (int argc, char *argv[])
   if (ACE_OS::fclose (input_fp) == -1 || ACE_OS::fclose (output_fp) == -1)
     ACE_OS::perror ("fclose"), ACE_OS::exit (1);
 
-  clean_up ();
+  cleanup ();
   return 0;
 }

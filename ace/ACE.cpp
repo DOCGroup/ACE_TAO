@@ -135,7 +135,7 @@ ACE::ldfind (const char *filename,
     }
 
   if (ACE_OS::strcmp (searchfilename 
-		      + ACE_OS::strlen(searchfilename) - ACE_OS::strlen (ACE_DLL_SUFFIX), 
+		      + ACE_OS::strlen (searchfilename) - ACE_OS::strlen (ACE_DLL_SUFFIX), 
 		      ACE_DLL_SUFFIX))
     ACE_ERROR ((LM_NOTICE, 
 		"CAUTION: improper name for a shared library on this patform: %s\n", 
@@ -587,7 +587,9 @@ ACE::bind_port (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE::bind_port");
   sockaddr_in sin;
-  const int MAX_SHORT = 65535;
+  // This should be a constant, so I hope they never change the number
+  // of bits in a port number!
+  const int MAX_SHORT = 65535; 
   static int upper_limit = MAX_SHORT;
   int lower_limit = IPPORT_RESERVED;
   int round_trip = upper_limit;

@@ -1,6 +1,6 @@
-// This program tests out all the various ACE_Malloc combinations and
 // $Id$
 
+// This program tests out all the various ACE_Malloc combinations and
 // the ACE_Allocator_Adapter.
 
 #include "ace/Thread.h"
@@ -157,7 +157,7 @@ wait_for_children (void)
 #endif /* ACE_WIN32 */
 }
 
-static void 
+extern "C" void 
 handler (int)
 {
   Malloc::instance ()->remove ();
@@ -167,7 +167,8 @@ handler (int)
 int
 main (int argc, char *argv[])
 {
-  signal (SIGINT, ACE_SignalHandler (handler));
+  // Register a signal handler.
+  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
 
   Options::instance ()->parse_args (argc, argv);
 

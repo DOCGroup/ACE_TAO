@@ -1,10 +1,54 @@
-Tue Nov 26 21:35:53 1996  David L. Levine  <levine@cs.wustl.edu>
+Tue Nov 26 18:00:25 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
 
-	* ace/OS.cpp:  check for 0 thr_id before dereferencing with
- 	  STHREADS in ACE_OS::thr_create()
+	* ace/{OS,Thread}: Added Chuck Gehr's suggested change for the
+ 	  pthread_keycreate() routine, which must take extern "C"
+ 	  functions on MVC C++.  This fix isn't perfect, but it should
+ 	  allow the ACE library to build...
 
-	* Log_Msg.cpp: fake out TSS on VxWorks in Log_Msg::instance()
- 	  by using a spare field in the task control block
+	* man: Updated all of the manual pages and HTML files.
+
+	* ace/Signal.cpp: Updated the code so that we don't try to
+ 	  register a static C++ dispatch method if ACE_HAS_SIG_C_FUNC is
+ 	  defined.  This fixes problems with the MVS C++ compiler...
+  	  Thanks to Chuck Gehr for this suggestion.
+
+	* ace/OS.h: Added extern "C" { } wrappers around the signal
+ 	  handling mechanisms if ACE_HAS_SIG_C_FUNC is defined.  This
+ 	  fixes problems with the MVS C++ compiler...  Thanks to Chuck
+ 	  Gehr for this suggestion.
+
+	* ace/Reactor.cpp (open): Moved the initialization of the
+ 	  ACE_Timer_Queue field to *before* the handler_rep_.open() call.
+  	  We do this first in case the handler_rep_ call fails (which it
+ 	  sometimes does on Win32 when we restart applications quickly due
+ 	  to the use of sockets as a notification mechanism).  At least
+ 	  this way the timer_queue_ isn't 0, so we can still use the
+ 	  Reactor as a timer...  Thanks to Tilo Christ for motivating
+	  me to fix this.
+
+	* ace/OS.i: Apparently, DIGITAL_UNIX gethostbyname() returns
+ 	  thread-specific storage, so we can use this for
+ 	  gethostbyname_r().
+
+	* ace/OS.i: Need to add:
+
+	  #else
+
+	  after line 3268: return (size_t) ACE_OS::sysconf (_SC_THREAD_STACK_MIN);
+
+	  otherwise we get a compile error:
+
+	  line 3296.1: CBC1331(W) Return value of type "unsigned int" is expected
+
+	  This is because no code ends up getting generated.  Thanks to Chuck
+	  Gehr for this fix.
+
+	* ace/OS.i (ACE_PTHREAD_CLEANUP_PUSH): Removed an extraneous set
+ 	  of parens.  Thanks to Chuck Gehr for this fix.
+
+	* ace/OS.cpp (thr_create): Oops, needed to add a check if thr_id
+ 	  == 0 before assigning *thr_handle = *thr_id!  Thanks to Prashant
+ 	  for finding this.
 
 Tue Nov 26 21:06:13 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
@@ -26,7 +70,8 @@ Tue Nov 26 11:27:33 1996  David L. Levine  <levine@cs.wustl.edu>
  	  added VXWORKS support for these tests by spawning a new thread
  	  instead of forking a new process (the same as on Win32)
 
-Tue Nov 26 00:36:16 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+	* netsvcs/clients/Naming/Client/Client_Test.cpp (open): Added a
+ 	  return 0 for success.
 
 	* ace/Singleton.h: Modified the use of the ACE_NEW_RETURN macro so
  	  we not only check if new has failed, but also check that the
@@ -47,6 +92,57 @@ Tue Nov 26 00:36:16 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  changes to ACE_TSS<>::ts_get().  The ACE_Mutex should be
  	  ACE_Thread_Mutex.  This should fix lots of nasty run-time bugs
  	  seen with recent versions of the ACE 0.33 beta...
+
+Tue Nov 26 21:06:13 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace/Pipe.cpp (open): This change relates to Win32 code only.
+  	  Removed the reuse_addr flag to acceptor.open() so that we don't
+ 	  try to reuse the acceptor socket immediately. Apparently, this
+ 	  causes no end of trouble on Win32 as the following connect()
+ 	  call fails (randomly).  Now it should be possible to create
+ 	  multiple ACE_Pipes in one process and hence create multiple
+	  Reactors also without any problems.
+
+Tue Nov 26 14:40:00 1996  David L. Levine  <levine@cs.wustl.edu>
+
+	* Log_Msg.cpp: fake out TSS on VxWorks in Log_Msg::instance()
+ 	  by using a spare field in the task control block
+
+	* tests/{CPP_Test,Mutex_Test,Shared_Memory_MM_Test,SPIPE_Test}.cpp:
+ 	  added VXWORKS support for these tests by spawning a new
+	  thread instead of forking a new process (the same as on
+	  Win32)
+
+	* OS.h: VxWorks can't handle the ACE_THR_FUNC typedef if
+	  it's in the extern "C" block, so I moved it back out.
+	  Also, the horrible GreenHills hack is no longer required.
+
+	* OS.i: there's an ACE_OS_CALL_RETURN before a ::strncpy() call, 
+	  I changed it to ACE_OS_CALL.
+
+	* OS.i: Added call to VxWorks ::mkdir()
+
+	* Pipe.cpp: VxWorks doesn't know about TCP_NODELAY.
+
+	* INET_Addr.cpp: get_host_name() is missing a return
+	  statement, on VxWorks only   
+
+	* Thread_Manager.i:  in ACE_Thread_Control::thr_mgr(), there
+	  were two consecutive return statements, removed the first
+	  one.
+
+	* Time_Request_Reply.{h,cpp}:  GreenHills warns that "type
+	  qualifiers are meaningless" for declaration of const
+	  ACE_UINT32 time(), so I removed them.
+
+	* UPIPE_Stream.cpp, line 95: warning: integer conversion
+	  resulted in a change of sign, so we cast n to int.
+
+	* Map_Manager.cpp: in ACE_Map_Manager::resize_i(), variable
+	  foo is unnecessary, so we omitted it.
+
+	* tests/CPP_Test.cpp (and a few others) have references to
+	  argv[0]:
 
 Tue Nov 26 03:15:22 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
@@ -3991,4 +4087,5 @@ Mon Jul  1 02:15:34 1996  Tim H. Harrison  (harrison@lambada.cs.wustl.edu)
 	  ACE_Reactor.  This is so Reactor, ReactorEx, and Proactor can
 	  all reuse the calculations required by the Timer_Queue without
 	  duplicating code.
+
 

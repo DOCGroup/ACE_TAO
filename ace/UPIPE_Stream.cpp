@@ -92,7 +92,7 @@ ACE_UPIPE_Stream::send (const char *buffer,
   ACE_NEW_RETURN (mb_p, ACE_Message_Block (n), -1);
 
   mb_p->copy (buffer, n);
-  return this->stream_.put (mb_p, timeout) == -1 ? -1 : n;
+  return this->stream_.put (mb_p, timeout) == -1 ? -1 : (int) n;
 }
 
 // Receive a buffer.

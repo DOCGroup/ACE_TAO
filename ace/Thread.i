@@ -9,7 +9,7 @@
 
 ACE_INLINE int
 ACE_Thread::keycreate (ACE_thread_key_t *keyp,
-		       void (*destructor)(void *value),
+		       ACE_THR_DEST destructor,
 		       void *inst)
 {
   ACE_TRACE ("ACE_Thread::keycreate");

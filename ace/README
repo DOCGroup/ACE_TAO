@@ -73,6 +73,7 @@ ACE_HAS_SIGINFO_T			Platform supports SVR4 extended signals
 ACE_HAS_SIGNAL_SAFE_OS_CALLS		Automatically restart OS system calls when EINTR occurs
 ACE_HAS_SIGWAIT				Platform/compiler has the sigwait(2) prototype
 ACE_HAS_SIG_ATOMIC_T			Compiler/platform defines the sig_atomic_t typedef
+ACE_HAS_SIG_C_FUNC			Compiler requires extern "C" functions for signals.
 ACE_HAS_SIN_LEN				Platform supports new BSD inet_addr len field.
 ACE_HAS_SIZET_SOCKET_LEN		OS/compiler uses size_t * rather than int * for socket lengths
 ACE_HAS_SOCKIO_H                	Compiler/platform provides the sockio.h file
@@ -107,6 +108,7 @@ ACE_HAS_TEMPLATE_TYPEDEFS		Compiler implements templates that support typedefs i
 ACE_HAS_TERM_IOCTLS			Platform has terminal ioctl flags like TCGETS and TCSETS.
 ACE_HAS_THREADS				Platform supports threads
 ACE_HAS_THREAD_SPECIFIC_STORAGE 	Compiler/platform has thread-specific storage
+ACE_HAS_THR_C_DEST			The pthread_keycreate() routine *must* take extern C functions.
 ACE_HAS_THR_C_FUNC			The pthread_create() routine *must* take extern C functions.
 ACE_HAS_TID_T				Platform supports the tid_t type (e.g., AIX)
 ACE_HAS_TIMEZONE_GETTIMEOFDAY		Platform/compiler supports timezone * as second parameter to gettimeofday()

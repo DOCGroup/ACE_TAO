@@ -74,7 +74,7 @@ ACE_Thread_Control::thr_mgr (ACE_Thread_Manager *tm)
 {
   ACE_TRACE ("ACE_Thread_Control::thr_mgr");
   ACE_Thread_Manager *o_tm = this->tm_;
-  return this->tm_ = tm;
+  this->tm_ = tm;
   return o_tm;
 }
 

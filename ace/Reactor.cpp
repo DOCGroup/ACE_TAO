@@ -859,6 +859,13 @@ ACE_Reactor::open (size_t size,
       this->delete_signal_handler_ = 0;
     }
 
+  // We do this first in case the handler_rep_ call fails (which it
+  // sometimes does on Win32 when we restart applications quickly due
+  // to the use of sockets as a notification mechanism).  At least
+  // this way the timer_queue_ isn't 0, so we can still use the
+  // Reactor as a timer...
+  ACE_NEW_RETURN (this->timer_queue_, ACE_Timer_Queue, -1);
+  
   if (this->handler_rep_.open (size) == -1)
     return -1;
 #if defined (ACE_MT_SAFE)
@@ -870,8 +877,6 @@ ACE_Reactor::open (size_t size,
     }
 #endif /* ACE_MT_SAFE */
 
-  ACE_NEW_RETURN (this->timer_queue_, ACE_Timer_Queue, -1);
-  
 #if defined (ACE_USE_POLL)
   ACE_NEW_RETURN (this->poll_h_, pollfd[size], -1);
 

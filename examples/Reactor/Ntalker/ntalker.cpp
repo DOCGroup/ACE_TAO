@@ -152,7 +152,7 @@ static sig_atomic_t done = 0;
 
 // Signal handler.
 
-static void
+extern "C" void
 handler (int)
 {
   done = 1;
@@ -161,7 +161,8 @@ handler (int)
 int 
 main (int argc, char *argv[])
 {
-  ACE_Sig_Action sig ((ACE_SignalHandler) handler, SIGINT);
+  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+
   parse_args (argc, argv);
 
   ACE_Reactor reactor;
