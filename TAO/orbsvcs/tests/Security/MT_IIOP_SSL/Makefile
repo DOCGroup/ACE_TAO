@@ -46,7 +46,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
 CLNT_LIBS = -lTAO_SSLIOP $(TAO_CLNT_LIBS)
-SRVR_LIBS = -lTAO_SSLIOP $(TAO_SRVR_LIBS)
+SRVR_LIBS = -lTAO_SSLIOP -lACE_SSL $(PLATFORM_SSL_LIBS) $(TAO_SRVR_LIBS)
 
 #----------------------------------------------------------------------------
 #       Local targets

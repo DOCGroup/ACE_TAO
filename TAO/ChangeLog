@@ -1,3 +1,12 @@
+Fri Sep 12 10:58:28 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/Security/MT_IIOP_SSL/Makefile (SRVR_LIBS):
+
+	  Explicitly link the ACE_SSL library to address an unresolved
+	  symbol link-time error in Solaris Sun CC 5.3 builds.  The
+	  server binary appears to needs the ACE_SSL_Context::instance()
+	  method, at least according to the linker error.
+
 Fri Sep 12 12:50:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/RTScheduling/Current/Current.dsp:
