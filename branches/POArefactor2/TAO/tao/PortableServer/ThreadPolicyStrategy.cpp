@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Thread_Strategy.h"
+#include "ThreadPolicyStrategy.h"
 
 ACE_RCSID (PortableServer,
            Thread_Strategy,
