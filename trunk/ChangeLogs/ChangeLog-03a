@@ -1,3 +1,14 @@
+Tue Mar 19 02:40:00 2002  Si Mong Park  <spark@ociweb.com>
+
+        * ace/OS_String.h:
+        * ace/OS_String.inl:
+        * ace/OS_String.cpp:
+          Corrected proper ACE_HAS_REENTRANT_FUNCTIONS macro checking location
+          for the strtok_r_emulation functions.  Debian compilation error was
+          because ACE_HAS_REENTRANT_FUNCTIONS was not defined in the configuration.
+          If ACE_HAS_REENTRANT_FUNCTIONS is defined, then emulation functions
+          should not be visible.
+
 Mon Mar 19 08:32:34 2002  Boris Kolpackov  <bosk@ipmce.ru>
 	* THANKS: Added Chen Jian <jchen@huawei.com> to the Hall of fame.
 	
