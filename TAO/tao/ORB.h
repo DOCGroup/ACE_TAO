@@ -428,7 +428,7 @@ namespace CORBA
     /**
      * Instructs the ORB to initialize itself and run its event loop in
      * the current thread, not returning until the ORB has shut down.
-     * If an error occurs during initialization or at run-time, a CORBA
+     * If an error occurs during initialization or at runtime, a CORBA
      * system exception will be thrown.
      */
     void run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
@@ -437,7 +437,7 @@ namespace CORBA
      * Instructs the ORB to initialize itself and run its event loop in
      * the current thread, not returning until the ORB has shut down or
      * the time value specified through <tv> has expired.  If an error
-     * occurs during initialization or at run-time, a CORBA system
+     * occurs during initialization or at runtime, a CORBA system
      * exception will be thrown.  <tv> is reduced by the amount of time
      * spent in this call.
      **/
@@ -448,7 +448,7 @@ namespace CORBA
      * Instructs the ORB to initialize itself and run its event loop in
      * the current thread, not returning until the ORB has shut down or
      * the time value specified through <tv> has expired.  If an error
-     * occurs during initialization or at run-time, a CORBA system
+     * occurs during initialization or at runtime, a CORBA system
      * exception will be thrown.  <tv> is reduced by the amount of time
      * spent in this call.  If <tv> is 0, it means that the timeout is
      * infinite.  If <tv> is ACE_Time_Value::zero, it specifies to poll
