@@ -67,11 +67,11 @@ public:
   virtual int mark_as_closed_i (const void *recycling_act);
   // Mark as closed (non-locking version). This is used during the cleanup of the
   // connections purged.
-
+ 
   // = Typedefs for managing the map
   typedef ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>
           REFCOUNTED_HASH_RECYCLABLE_ADDRESS;
-  typedef ACE_Hash_Cache_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,
+ typedef ACE_Hash_Cache_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,
                                      SVC_HANDLER *,
                                      ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
                                      ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
@@ -204,7 +204,11 @@ class ACE_Bounded_Cached_Connect_Strategy : public
   //     brainstorming about it.
 
    typedef ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>
-      CCSEBASE;
+   CCSEBASE;
+
+  // = Typedefs for managing the map
+  typedef ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>
+          REFCOUNTED_HASH_RECYCLABLE_ADDRESS;
  
  public:
  
