@@ -25,6 +25,9 @@
 #include "ace/Thread.h"
 #include "ace/Synch_T.h"
 #include "ace/Signal.h"
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+# include "ace/Object_Manager.h"
+#endif /* ACE_MT_SAFE */
 
 #if defined (ACE_HAS_UNICODE)
 #define ACE_WSPRINTF(BUF,VALUE) ::wsprintf (BUF, "%S", VALUE)
@@ -36,11 +39,11 @@
 // included in the <ACE_Log_Msg> class, but due to "order of include"
 // problems it can't be...
 #if defined (ACE_WIN32)
-#include "ace/SPIPE_Connector.h"
-static ACE_SPIPE_Stream message_queue_;
+# include "ace/SPIPE_Connector.h"
+  static ACE_SPIPE_Stream *ACE_Log_Msg_message_queue = 0;
 #else
-#include "ace/FIFO_Send_Msg.h"
-static ACE_FIFO_Send_Msg message_queue_;
+# include "ace/FIFO_Send_Msg.h"
+  static ACE_FIFO_Send_Msg *ACE_Log_Msg_message_queue = 0;
 #endif /* ACE_WIN32 */
 
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
@@ -88,11 +91,22 @@ ACE_Thread_Mutex *ACE_Log_Msg_Manager::lock_ = 0;
 ACE_Thread_Mutex *
 ACE_Log_Msg_Manager::get_lock (void)
 {
+  // This function is called by the first thread to create an ACE_Log_Msg
+  // instance.  It makes the call while holding a mutex, so we don't have
+  // to grab another one here.
+
   if (ACE_Log_Msg_Manager::lock_ == 0)
     {
       ACE_NO_HEAP_CHECK;
 
       ACE_NEW_RETURN_I (ACE_Log_Msg_Manager::lock_, ACE_Thread_Mutex, 0);
+
+      // Allocated the static message queue instance.
+#     if defined (ACE_WIN32)
+        ACE_NEW_RETURN (ACE_Log_Msg_message_queue, ACE_SPIPE_Stream, 0);
+#     else
+        ACE_NEW_RETURN (ACE_Log_Msg_message_queue, ACE_FIFO_Send_Msg, 0);
+#endif /* ACE_WIN32 */
     }
 
   return ACE_Log_Msg_Manager::lock_;
@@ -115,6 +129,10 @@ ACE_Log_Msg_Manager::close (void)
   // Ugly, ugly, but don't know a better way.
   delete ACE_Log_Msg_Manager::lock_;
   ACE_Log_Msg_Manager::lock_ = 0;
+
+  // Destroy the static message queue instance.
+  delete ACE_Log_Msg_message_queue;
+  ACE_Log_Msg_message_queue = 0;
 }
 
 /* static */
@@ -157,13 +175,12 @@ ACE_Log_Msg::instance (void)
 
   if (ACE_Log_Msg_key_created_ == 0)
     {
-      // Synchronize Singleton creation (note that this may lose big
-      // if the compiler doesn't perform thread-safe initialization of
-      // local statics...).
-      static ACE_Thread_Mutex keylock_;
-      ACE_thread_mutex_t &lock = (ACE_thread_mutex_t &) keylock_.lock ();
+      static ACE_Thread_Mutex *lock =
+        ACE_Managed_Object<ACE_Thread_Mutex>::get_object
+          (ACE_Object_Manager::ACE_LOG_MSG_INSTANCE_LOCK);
+      if (lock == 0) return 0;
 
-      ACE_OS::thread_mutex_lock (&lock);
+      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0);
 
       if (ACE_Log_Msg_key_created_ == 0)
         {
@@ -175,14 +192,12 @@ ACE_Log_Msg::instance (void)
             if (ACE_OS::thr_keycreate (&ACE_Log_Msg_key_,
                                        &ACE_TSS_cleanup) != 0)
               {
-                ACE_OS::thread_mutex_unlock (&lock);
                 return 0; // Major problems, this should *never* happen!
               }
           }
 
           ACE_Log_Msg_key_created_ = 1;
         }
-      ACE_OS::thread_mutex_unlock (&lock);
     }
 
   ACE_Log_Msg *tss_log_msg = 0;
@@ -253,9 +268,7 @@ ACE_Log_Msg::close (void)
   // harded coded into the ACE_Object_Manager's shutdown sequence,
   // in its destructor.
 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_Log_Msg_Manager::close ();
-#endif /* (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) */
+  ACE_MT (ACE_Log_Msg_Manager::close ());
 }
 
 void
@@ -450,15 +463,16 @@ ACE_Log_Msg::open (const char *prog_name,
       else
 #if defined (ACE_WIN32)
         {
-          if (message_queue_.get_handle () != ACE_INVALID_HANDLE)
-            message_queue_.close ();
+          if (ACE_Log_Msg_message_queue->get_handle () != ACE_INVALID_HANDLE)
+            ACE_Log_Msg_message_queue->close ();
           ACE_SPIPE_Connector con;
-          status = con.connect (message_queue_, ACE_SPIPE_Addr (logger_key));
+          status = con.connect (ACE_Log_Msg_message_queue,
+                                ACE_SPIPE_Addr (logger_key));
         }
 #else
-        if (message_queue_.get_handle () != ACE_INVALID_HANDLE)
-          message_queue_.close ();
-        status = message_queue_.open (logger_key);
+        if (ACE_Log_Msg_message_queue->get_handle () != ACE_INVALID_HANDLE)
+          ACE_Log_Msg_message_queue->close ();
+        status = ACE_Log_Msg_message_queue->open (logger_key);
 #endif /* ACE_WIN32 */
 
       if (status == -1)
@@ -864,13 +878,15 @@ ACE_Log_Msg::log (const char *format_str,
 #if defined (ACE_HAS_STREAM_PIPES)
           // Try to use the putpmsg() API if possible in order to
           // ensure correct message queueing according to priority.
-          result = message_queue_.send (int (log_record.priority ()),
-                                        &log_msg);
+          result = ACE_Log_Msg_message_queue->
+                     send (int (log_record.priority ()),
+                           &log_msg);
 #elif !defined (ACE_WIN32)
-          result = message_queue_.send (log_msg);
+          result = ACE_Log_Msg_message_queue->send (log_msg);
 #else
-          result = message_queue_.send ((const ACE_Str_Buf *) &log_msg,
-                                        (const ACE_Str_Buf *) 0);
+          result = ACE_Log_Msg_message_queue->
+                     send ((const ACE_Str_Buf *) &log_msg,
+                           (const ACE_Str_Buf *) 0);
 #endif /* ACE_HAS_STREAM_PIPES */
         }
       // Format the message and print it to stderr and/or ship it
@@ -972,11 +988,11 @@ ACE_Log_Msg::dump (void) const
   if (this->thr_state_ != 0)
     ACE_DEBUG ((LM_DEBUG, "\thr_state_ = %d\n", *this->thr_state_));
   ACE_DEBUG ((LM_DEBUG, "\nmsg_off_ = %d\n", this->msg_off_));
-  message_queue_.dump ();
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_Log_Msg_Manager::get_lock ()->dump ();
+  ACE_Log_Msg_message_queue->dump ();
+
+  ACE_MT (ACE_Log_Msg_Manager::get_lock ()->dump ());
   // Synchronize output operations.
-#endif /* ACE_MT_SAFE */
+
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
