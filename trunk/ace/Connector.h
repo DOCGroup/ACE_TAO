@@ -37,7 +37,7 @@ public:
   ACE_Svc_Tuple (SVC_HANDLER *, 
 		 ACE_HANDLE,
 		 const void * = 0, 
-		 int timer_id = 0);
+		 int timer_id = -1);
 
   // = Get SVC_HANDLER.
   SVC_HANDLER *svc_handler (void);
@@ -207,6 +207,10 @@ protected:
 
   virtual int handle_output (ACE_HANDLE);
   // Called by ACE_Reactor when asynchronous connections succeed.
+
+  virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  // Called by ACE_Reactor when asynchronous connections complete (on
+  // some platforms only).
 
   // = Dynamic linking hooks.
   virtual int init (int argc, char *argv[]);

@@ -1,3 +1,19 @@
+Fri May 30 02:39:39 1997    <irfan@TWOSTEP>
+
+	* ace/Connector.cpp 
+	  
+	  (create_AST): On Win32, added the except mask when registering
+ 	  with the Reactor to find out when asynchronous connects
+ 	  complete.
+
+	  (Svc_Tuple): Made sure that the default value for the timer_id
+ 	  in AST is not 0. 0 is a valid timer_id. I have changed this to
+ 	  be -1.
+
+	  (handle_exception): Added this method. On
+ 	  Win32, the except mask must also be set for asynchronous
+ 	  connects.
+
 Thu May 29 21:28:25 1997    <harrison@samba.cs.wustl.edu>
 
 	* Process.*: Removed the ACE_Process_Old class.
