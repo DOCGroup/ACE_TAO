@@ -33,6 +33,9 @@ CPPDIR = .;LifeCycle
 
 IDLDIR = .
 
+INCDIR_NAME = orbsvcs\LifeCycle
+INCLUDES = LifeCycle\*.h
+
 LIBFILES = $(ACE_LIB) $(TAO_LIB) $(TAO_NAMING_LIB)
 
 all: idl_src_files lifecycle_lib

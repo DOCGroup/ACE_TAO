@@ -33,6 +33,9 @@ CPPDIR = .;Time
 
 IDLDIR = .
 
+INCDIR_NAME = orbsvcs\Time
+INCLUDES = Time\*.h
+
 LIBFILES = $(ACE_LIB) $(TAO_LIB)
 
 all: idl_src_files time_lib
