@@ -61,9 +61,13 @@ module CORBA
     PolicyErrorCode reason;
   };
 
+  //@@ should be replaced with the inclusion of UShortSeq.pidl
+  //
+  typedef sequence<unsigned short> UShortSeq;
+  
   exception InvalidPolicies
   {
-    sequence<unsigned short> indices;
+    UShortSeq indices;
   };
 
   interface Policy

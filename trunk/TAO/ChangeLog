@@ -1,3 +1,12 @@
+Tue Dec 30 17:43:30 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* tao/IOP_IOR.pidl:
+	* tao/Policy.pidl:
+	* tao/Services.pidl:
+	* orbsvcs/orbsvcs/Security.idl:
+
+	  Got rid of deprecated anonymous sequence declarations.
+
 Tue Dec 30 13:20:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile.PortableGroup:
@@ -5,19 +14,19 @@ Tue Dec 30 13:20:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  Need to link in IOManip library. If not done, dynamic loading
 	  of this library starts failing which is bad. I almost had a
 	  scare now and I thought that our service configurator was
-	  broken. 
+	  broken.
 
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
 
 	  Added back changes that were lost during the merge on "Sun Dec
-	  21 19:35:44 2003  Dale Wilson  <wilson_d@ociweb.com>" 
-	
+	  21 19:35:44 2003  Dale Wilson  <wilson_d@ociweb.com>"
+
 	* orbsvcs/tests/Miop/McastHello/Makefile:
 
 	  No need to link in the libraries as done here. The test works
 	  with dynamic libraries and should work as such. Linking in
-	  libraries only tries to mask teh errors. 
+	  libraries only tries to mask teh errors.
 
 Tue Dec 30 10:21:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -44,7 +53,7 @@ Tue Dec 30 09:57:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tests/Bug_1568_Regression/Bug_1568_Regression.mpc:
 	* tests/Bug_1670_Regression/Bug_1670_Regression.mpc:
 
-	  Fixed the idlflags in the mpc files. 
+	  Fixed the idlflags in the mpc files.
 
 Tue Dec 30 15:16:02 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -55,7 +64,7 @@ Tue Dec 30 08:15:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/performance-tests/LoadBalancing/Makefile:
 
-	  Fixed a link error. Thanks to Don for letting me know. 
+	  Fixed a link error. Thanks to Don for letting me know.
 
 Tue Dec 30 14:09:54 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
