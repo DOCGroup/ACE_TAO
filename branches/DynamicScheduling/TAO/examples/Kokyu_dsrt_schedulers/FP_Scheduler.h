@@ -5,9 +5,10 @@
 
 #include "tao/RTScheduling/RTSchedulerC.h"
 #include "FP_SchedulingC.h"
-#include "Kokyu.h"
+#include "Kokyu_dsrt.h"
+#include "Kokyu_dsrt_schedulers_export.h"
 
-class FP_Segment_Sched_Param_Policy:
+class Kokyu_DSRT_Schedulers_Export FP_Segment_Sched_Param_Policy:
 public FP_Scheduling::SegmentSchedulingParameterPolicy,
        public TAO_Local_RefCounted_Object
 {
@@ -31,7 +32,7 @@ public FP_Scheduling::SegmentSchedulingParameterPolicy,
   FP_Scheduling::SegmentSchedulingParameter value_;
 };
 
-class Fixed_Priority_Scheduler:
+class Kokyu_DSRT_Schedulers_Export Fixed_Priority_Scheduler:
 public FP_Scheduling::FP_Scheduler,
 public TAO_Local_RefCounted_Object
 {
@@ -157,11 +158,41 @@ public TAO_Local_RefCounted_Object
                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+private:
+
+  struct FP_Scheduler_Traits
+  {
+    typedef RTScheduling::Current::IdType Guid_t;
+
+    struct _QoSDescriptor_t
+    {
+      typedef long Priority_t;
+      Priority_t priority_;
+    };
+
+    typedef _QoSDescriptor_t QoSDescriptor_t;
+
+    typedef Kokyu::Fixed_Priority_Comparator<QoSDescriptor_t> QoSComparator_t;
+
+    class _Guid_Hash
+    {
+    public:
+      u_long operator () (const Guid_t& id)
+      {
+        return ACE::hash_pjw ((const char *) id.get_buffer (),
+                              id.length ());
+      }
+    };
+
+    typedef _Guid_Hash Guid_Hash;
+  };
+
  private:
   CORBA::ORB_var orb_;
   IOP::Codec_var codec_;
   RTScheduling::Current_var current_;
-  Kokyu::DSRT_Dispatcher_Auto_Ptr kokyu_dispatcher_;
+  Kokyu::DSRT_Dispatcher_Factory<FP_Scheduler_Traits>::DSRT_Dispatcher_Auto_Ptr
+  kokyu_dispatcher_;
 };
 
 #endif //FIXED_PRIORITY_SCHEDULER_H

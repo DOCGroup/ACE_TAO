@@ -8,25 +8,23 @@
 namespace
 {
   static const IOP::ServiceId service_id = 0xdddd;
-}
+  static ACE_Atomic_Op<ACE_Thread_Mutex, long> server_guid_counter;
+  void guid_copy( Kokyu::GuidType& lhs, const RTScheduling::Current::IdType& rhs)
+  {
+    lhs.length(rhs.length ());
+    ACE_OS::memcpy(lhs.get_buffer (),
+                   rhs.get_buffer (),
+                   rhs.length ());
+  }
 
-void guid_copy( Kokyu::GuidType& lhs, const RTScheduling::Current::IdType& rhs)
-{
-  lhs.length(rhs.length ());
-  ACE_OS::memcpy(lhs.get_buffer (),
-                 rhs.get_buffer (),
-                 rhs.length ());
+  void guid_copy( RTScheduling::Current::IdType& lhs, const Kokyu::GuidType& rhs)
+  {
+    lhs.length(rhs.length ());
+    ACE_OS::memcpy(lhs.get_buffer (),
+                   rhs.get_buffer (),
+                   rhs.length ());
+  }
 }
-
-void guid_copy( RTScheduling::Current::IdType& lhs, const Kokyu::GuidType& rhs)
-{
-  lhs.length(rhs.length ());
-  ACE_OS::memcpy(lhs.get_buffer (),
-                 rhs.get_buffer (),
-                 rhs.length ());
-}
-
-ACE_Atomic_Op<ACE_Thread_Mutex, long> server_guid_counter;
 
 FP_Scheduling::SegmentSchedulingParameter
 FP_Segment_Sched_Param_Policy::value (
@@ -56,8 +54,9 @@ Fixed_Priority_Scheduler::Fixed_Priority_Scheduler (CORBA::ORB_ptr orb)
 {
   Kokyu::DSRT_ConfigInfo config;
 
-  config.sched_strategy_ = Kokyu::DSRT_FP;
-  kokyu_dispatcher_ = Kokyu::Dispatcher_Factory::create_DSRT_dispatcher (config);
+  kokyu_dispatcher_ =
+    Kokyu::DSRT_Dispatcher_Factory<FP_Scheduler_Traits>::
+    create_DSRT_dispatcher (config);
 
   CORBA::Object_var object =
     orb->resolve_initial_references ("RTScheduler_Current"
@@ -136,7 +135,7 @@ Fixed_Priority_Scheduler::begin_new_scheduling_segment (const RTScheduling::Curr
                   this->current_->id ()->get_buffer (),
                   this->current_->id ()->length ());
 
-  Kokyu::DSRT_QoSDescriptor qos;
+  FP_Scheduler_Traits::QoSDescriptor_t qos;
   FP_Scheduling::SegmentSchedulingParameterPolicy_var sched_param_policy =
     FP_Scheduling::SegmentSchedulingParameterPolicy::_narrow (sched_policy);
 
@@ -185,7 +184,7 @@ Fixed_Priority_Scheduler::update_scheduling_segment (const RTScheduling::Current
 
   RTCORBA::Priority desired_priority = sched_param.base_priority;
 
-  Kokyu::DSRT_QoSDescriptor qos;
+  FP_Scheduler_Traits::QoSDescriptor_t qos;
   qos.priority_ = desired_priority;
 
   kokyu_dispatcher_->update_schedule (count, qos);
@@ -399,7 +398,7 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
       sched_param_out.ptr () = this->create_segment_scheduling_parameter (sched_param);
     }
 
-  Kokyu::DSRT_QoSDescriptor qos;
+  FP_Scheduler_Traits::QoSDescriptor_t qos;
   qos.priority_ = desired_priority;
   this->kokyu_dispatcher_->schedule (id, qos);
 
@@ -547,7 +546,7 @@ Fixed_Priority_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_
                   guid));
     }
 
-  Kokyu::DSRT_QoSDescriptor qos;
+  FP_Scheduler_Traits::QoSDescriptor_t qos;
   qos.priority_ = desired_priority;
   this->kokyu_dispatcher_->schedule (guid, qos);
 }

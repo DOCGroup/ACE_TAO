@@ -5,9 +5,10 @@
 
 #include "tao/RTScheduling/RTSchedulerC.h"
 #include "MUF_SchedulingC.h"
-#include "Kokyu.h"
+#include "Kokyu_dsrt.h"
+#include "Kokyu_dsrt_schedulers_export.h"
 
-class MUF_Sched_Param_Policy:
+class Kokyu_DSRT_Schedulers_Export MUF_Sched_Param_Policy:
 public MUF_Scheduling::SchedulingParameterPolicy,
        public TAO_Local_RefCounted_Object
 {
@@ -24,7 +25,7 @@ public MUF_Scheduling::SchedulingParameterPolicy,
     MUF_Scheduling::SchedulingParameter value_;
 };
 
-class MUF_Scheduler:
+class Kokyu_DSRT_Schedulers_Export MUF_Scheduler:
 public MUF_Scheduling::Scheduler,
 public TAO_Local_RefCounted_Object
 {
@@ -148,11 +149,55 @@ public TAO_Local_RefCounted_Object
                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+private:
+
+  struct MUF_Scheduler_Traits
+  {
+    typedef RTScheduling::Current::IdType Guid_t;
+
+    struct _QoSDescriptor_t
+    {
+      typedef long Criticality_t;
+      typedef TimeBase::TimeT Time_t;
+      class _Now
+      {
+      public:
+        Time_t operator () ()
+        {
+          ACE_Time_Value time = ACE_OS::gettimeofday ();
+          return 10*time.usec () + 10000000*time.sec ();
+        }
+      };
+
+      typedef _Now Now;
+
+      Criticality_t criticality_;
+      Time_t deadline_;
+      Time_t exec_time_;
+    };
+
+    typedef _QoSDescriptor_t QoSDescriptor_t;
+
+    typedef Kokyu::MUF_Comparator<QoSDescriptor_t> QoSComparator_t;
+
+    class _Guid_Hash
+    {
+    public:
+      u_long operator () (const Guid_t& id)
+      {
+        return ACE::hash_pjw ((const char *) id.get_buffer (),
+                              id.length ());
+      }
+    };
+    typedef _Guid_Hash Guid_Hash;
+  };
+
  private:
   CORBA::ORB_var orb_;
   IOP::Codec_var codec_;
   RTScheduling::Current_var current_;
-  Kokyu::DSRT_Dispatcher_Auto_Ptr kokyu_dispatcher_;
+  Kokyu::DSRT_Dispatcher_Factory<MUF_Scheduler_Traits>::DSRT_Dispatcher_Auto_Ptr
+    kokyu_dispatcher_;
 };
 
 #endif //MUF_SCHEDULER_H
