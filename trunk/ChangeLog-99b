@@ -1,3 +1,13 @@
+Wed Jun 16 20:03:41 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/Containers_T.cpp: Qualify dllist_ with 'this->' to get the
+          template types looked up correctly. This is what fixes the pesky
+          future error 641 on HP-UX aC++.
+
+        * ace/RB_Tree.i: Qualify node_ and tree_ with 'this->' to get the
+          template types looked up correctly. aC++ is really happy now,
+          and so is Steve :-)
+
 Wed Jun 16 18:50:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/OS.i:
