@@ -1,5 +1,10 @@
 Mon Jan 26 13:20:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
+        * include/makeinclude/platform_osf1_4.0_g++.GNU: added $(ACELIB)
+          to SOFLAGS.  Thanks to Oliver Kellogg <Oliver.Kellogg@vs.dasa.de>
+          for reporting the problem with building shared libraries on
+          g++/DU 4.0.
+
         * performance-tests/Misc/childbirth_time.cpp (prof_native_thread,
           prof_ace_os_thread): changed type of local j to int to avoid
           signed/unsigned comparison.
