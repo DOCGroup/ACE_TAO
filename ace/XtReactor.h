@@ -49,40 +49,41 @@ public:
 
   XtAppContext context (void);
 
-  // Register timers/handles with Xt.
-  virtual int register_handler_i (ACE_HANDLE handle, 
-				  ACE_Event_Handler *handler,
-				  ACE_Reactor_Mask mask);
-
-  virtual int register_handler_i (const ACE_Handle_Set &handles, 
-				  ACE_Event_Handler *handler, 
-				  ACE_Reactor_Mask mask);
-  // Register a set of <handles>.
-
-  virtual int remove_handler_i (ACE_HANDLE handle, ACE_Reactor_Mask mask);
-
-  virtual int schedule_timer (ACE_Event_Handler *handler, 
-		              const void *arg,
-		              const ACE_Time_Value &delta_time, 
-		              const ACE_Time_Value &interval);
+  // = Timer operations.
+  virtual long schedule_timer (ACE_Event_Handler *handler, 
+			       const void *arg,
+			       const ACE_Time_Value &delta_time, 
+			       const ACE_Time_Value &interval);
 
   virtual int cancel_timer (ACE_Event_Handler *handler,
 			    int dont_call_handle_close = 1);
-  virtual int cancel_timer (int timer_id, 
+
+  virtual int cancel_timer (long timer_id, 
 			    const void **arg = 0,
 			    int dont_call_handle_close = 1);
 
 protected:
+  // = Register timers/handles with Xt.
+  virtual int register_handler_i (ACE_HANDLE handle, 
+				  ACE_Event_Handler *handler,
+				  ACE_Reactor_Mask mask);
+  // Register a single <handler>.
+
+  virtual int register_handler_i (const ACE_Handle_Set &handles, 
+				  ACE_Event_Handler *handler, 
+				  ACE_Reactor_Mask mask);
+  // Register a set of <handlers>.
+
+  virtual int remove_handler_i (ACE_HANDLE handle, ACE_Reactor_Mask mask);
+  // Remove the <handler> associated with this <handle>.
 
   virtual int wait_for_multiple_events (ACE_Reactor_Handle_Set &,
 					ACE_Time_Value *); 
+  // Wait for events to occur.
 
   virtual int XtWaitForMultipleEvents (int, 
 				       ACE_Reactor_Handle_Set &,
 				       ACE_Time_Value *); 
-
-  ACE_XtReactor (const ACE_Reactor &);
-  ACE_XtReactor &operator = (const ACE_Reactor &);
 
   XtAppContext context_;
   struct ACE_XtReactorID *ids_;
@@ -91,8 +92,14 @@ protected:
 
 private:
   void reset_timeout (void);
+
+  // = Integrate with the X callback function mechanism.
   static void TimerCallbackProc (XtPointer closure, XtIntervalId *id);
   static void InputCallbackProc (XtPointer closure, int* source, XtInputId *id);
+
+  // = Disable copying and assignment.
+  ACE_XtReactor (const ACE_Reactor &);
+  void operator = (const ACE_Reactor &);
 };
 #endif /* ACE_HAS_XT */
 

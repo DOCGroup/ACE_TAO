@@ -602,24 +602,25 @@ protected:
   // Do the work of actually binding the <handle> and <eh> with the
   // <mask>.
 
+  virtual int register_handler_i (const ACE_Handle_Set &handles, 
+				  ACE_Event_Handler *handler, 
+				  ACE_Reactor_Mask mask);
+  // Register a set of <handles>.
+
   virtual int remove_handler_i (ACE_HANDLE handle, 
 				ACE_Reactor_Mask);
   // Do the work of actually unbinding the <handle> and <eh> with the
   // <mask>.
 
-  virtual int suspend_i (ACE_HANDLE handle);
-  // Suspend the <Event_Handler> associated with <handle>
-  virtual int resume_i (ACE_HANDLE handle);
-  // Resume the <Event_Handler> associated with <handle>
-
   virtual int remove_handler_i (const ACE_Handle_Set &handles, 
-				 ACE_Reactor_Mask);
+				ACE_Reactor_Mask);
   // Remove a set of <handles>.
 
-  virtual int register_handler_i (const ACE_Handle_Set &handles, 
-				  ACE_Event_Handler *handler, 
-				  ACE_Reactor_Mask mask);
-  // Register a set of <handles>.
+  virtual int suspend_i (ACE_HANDLE handle);
+  // Suspend the <Event_Handler> associated with <handle>
+
+  virtual int resume_i (ACE_HANDLE handle);
+  // Resume the <Event_Handler> associated with <handle>
 
   virtual int handler_i (ACE_HANDLE handle, 
 			  ACE_Reactor_Mask, 
