@@ -607,11 +607,6 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
 
   assert (data_ != 0);
 
-  CORBA::Object_ptr obj = 0;
-
-  // Get a CORBA::Object_ptr from _data using <QueryInterface>.
-  (void) this->data_->QueryInterface (IID_CORBA_Object, (void **) &obj);
-
   // Get a pointer to the connector, which might be in thread-specific
   // storage, depending on the concurrency model.
   TAO_CONNECTOR *con = TAO_ORB_Core_instance ()->connector ();

@@ -92,14 +92,8 @@ CORBA_Request::~CORBA_Request (void)
 void
 CORBA_Request::invoke (void)
 {
-  STUB_Object *stub;
-
-  if (target_->QueryInterface (IID_STUB_Object,
-			       (void **) &stub) != TAO_NOERROR)
-    {
-      env_.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return;
-    }
+  STUB_Object *stub = this->target_->_get_parent ();
+  stub->AddRef ();
 
   stub->do_dynamic_call ((char *) opname_,
 			 CORBA::B_TRUE,
@@ -114,14 +108,8 @@ CORBA_Request::invoke (void)
 void
 CORBA_Request::send_oneway (void)
 {
-  STUB_Object *stub;
-
-  if (target_->QueryInterface (IID_STUB_Object,
-			       (void **) &stub) != TAO_NOERROR)
-    {
-      env_.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return;
-    }
+  STUB_Object *stub = this->target_->_get_parent ();
+  stub->AddRef ();
 
   stub->do_dynamic_call ((char *) opname_,
 			 CORBA::B_TRUE,
