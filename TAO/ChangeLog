@@ -1,3 +1,12 @@
+Mon Mar 31 13:05:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+
+          Fixed clashes between newly added generated code and existing
+          code in AbstractBase, for interfaces that are abstract or
+          inherit from both Object and AbstractBase.
+
 Mon Mar 31 12:29:32 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Makefile (DIRS): Updated  to include the new test.
