@@ -35,6 +35,7 @@
 #include "ace/SStringfwd.h"
 #include "ace/iosfwd.h"
 
+#include <stdarg.h>
 #include <stdio.h>   /* For "FILE" typedef. */
 
 class ACE_Allocator;
