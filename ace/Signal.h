@@ -450,6 +450,17 @@ private:
 
 #include "ace/Containers.h"
 
+#if defined (ACE_HAS_SIG_C_FUNC)
+extern "C" void
+ace_sig_handler_dispatch (int signum, siginfo_t *info, ucontext_t *context);
+
+#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
+extern "C" void
+ace_sig_handlers_dispatch (int signum, siginfo_t *info, ucontext_t *context);
+#endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
+
+#endif /* ACE_HAS_SIG_C_FUNC */
+
 #if defined (__ACE_INLINE__)
 #include "ace/Signal.i"
 #endif /* __ACE_INLINE__ */
