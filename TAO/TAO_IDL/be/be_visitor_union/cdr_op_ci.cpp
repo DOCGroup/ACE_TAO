@@ -123,9 +123,7 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
   // an enum, this does no harm.
   if (node->default_index () == -1)
     {
-      os->decr_indent (0);
       *os << "default:" << be_nl;
-      os->incr_indent ();
       *os << "break;";
     }
 
@@ -177,7 +175,7 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
       << "}" << be_uidt_nl << be_nl
       << "CORBA::Boolean result = 1;" << be_nl << be_nl
       << "switch (_tao_discriminant)" << be_nl
-      << "{" << be_idt_nl;
+      << "{" << be_idt;
 
   if (this->visit_scope (node) == -1)
     {
@@ -196,14 +194,14 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
   // an enum, this does no harm.
   if (node->default_index () == -1)
     {
-      os->decr_indent (0);
-      *os << "default:" << be_nl;
-      os->incr_indent ();
-      *os << "_tao_union._d (_tao_discriminant);" << be_idt_nl;
-      *os << "break;" << be_uidt << be_uidt_nl;
+      *os << be_nl;
+      *os << "default:" << be_idt_nl;
+      *os << "_tao_union._d (_tao_discriminant);" << be_nl;
+      *os << "break;" << be_uidt;
     }
 
-  *os << "}" << be_nl << be_nl
+  *os << be_uidt_nl 
+      << "}" << be_nl << be_nl
       << "return result;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
@@ -232,6 +230,8 @@ be_visitor_union_cdr_op_ci::pre_process (be_decl *bd)
   be_union_branch* b =
     be_union_branch::narrow_from_decl (bd);
 
+  *os << be_nl;
+
   for (unsigned long i = 0; i < b->label_list_length (); ++i)
     {
       // check if we are printing the default case
@@ -242,7 +242,9 @@ be_visitor_union_cdr_op_ci::pre_process (be_decl *bd)
       else
         {
           *os << "case ";
+
           b->gen_label_value (os, i);
+
           *os << ":";
         }
 
@@ -257,6 +259,7 @@ be_visitor_union_cdr_op_ci::pre_process (be_decl *bd)
     }
 
   *os << "{" << be_idt_nl;
+
   return 0;
 }
 
@@ -276,7 +279,7 @@ be_visitor_union_cdr_op_ci::post_process (be_decl *bd)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_uidt_nl << "}" << be_nl
-      << "break;" << be_uidt_nl;
+      << "break;" << be_uidt;
 
   return 0;
 }
