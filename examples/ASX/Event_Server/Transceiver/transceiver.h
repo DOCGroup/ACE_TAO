@@ -51,10 +51,10 @@ private:
   u_short port_number_;
   // Port number of event server.
 
-  char *host_name_;
+  const char *host_name_;
   // Name of event server.
 
-  char *role_;
+  const char *role_;
   // Are we playing the Consumer or Supplier role?
 };
 

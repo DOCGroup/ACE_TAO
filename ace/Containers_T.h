@@ -23,7 +23,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Containers.h"      /* Need ACE_DLList_Node */
+// Need by ACE_DLList_Node.
+#include "ace/Containers.h"      
 
 class ACE_Allocator;
 
@@ -735,7 +736,7 @@ public:
   T *insert_head (T *new_item);
   // Delegates to ACE_Double_Linked_List.
 
-  T* delete_head (void);
+  T *delete_head (void);
   // Delegates to ACE_Double_Linked_List.
 
   T *delete_tail (void);

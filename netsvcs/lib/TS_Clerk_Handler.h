@@ -27,16 +27,21 @@
 #include "ace/Malloc.h"
 #include "ace/Time_Request_Reply.h"
 
-// A simple struct containing delta time and a sequence number
-struct ACE_Time_Info
+class ACE_Time_Info
 {
+  // = TITLE
+  // A simple struct containing delta time and a sequence number.
+
+public:
   long delta_time_;
+
   ACE_UINT32 sequence_num_;
 };
 
 class ACE_TS_Clerk_Processor;  // forward declaration
 
 class ACE_Svc_Export ACE_TS_Clerk_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+{
   // = TITLE
   //    The Clerk Handler provides the interface that is used by the
   //    Clerk Processor to send time update requests to all the
@@ -49,8 +54,8 @@ class ACE_Svc_Export ACE_TS_Clerk_Handler : public ACE_Svc_Handler<ACE_SOCK_STRE
   //    the round trip delay for the reply to come back. Once it gets
   //    the reply back from the server (handle_input), it adjusts the
   //    system time using the round trip delay estimate and then
-  //    passes the delta time by reference back to the Clerk Processor.
-{
+  //    passes the delta time by reference back to the Clerk
+  //    Processor.
 public:
   ACE_TS_Clerk_Handler (ACE_TS_Clerk_Processor *processor = 0,
                         ACE_INET_Addr &addr = (ACE_INET_Addr &) ACE_Addr::sap_any);
@@ -100,20 +105,25 @@ public:
   ACE_INET_Addr &remote_addr (void);
   // Get/Set remote addr
 
-  int send_request (ACE_UINT32 sequence_num, ACE_Time_Info &time_info);
+  int send_request (ACE_UINT32 sequence_num,
+                    ACE_Time_Info &time_info);
   // Send request for time update to the server as well as return the
   // current time info by reference.
 
 protected:
-  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
+  virtual int handle_signal (int signum,
+                             siginfo_t *,
+                             ucontext_t *);
   // Handle SIGPIPE.
 
   static void stderr_output (int = 0);
 
   enum
     {
-      MAX_RETRY_TIMEOUT = 300 // 5 minutes is the maximum timeout.
+      MAX_RETRY_TIMEOUT = 300 
+      // 5 minutes is the maximum timeout.
     };
+
 private:
   int recv_reply (ACE_Time_Request &reply);
   // Receive a reply from a server containing time update
@@ -148,16 +158,17 @@ private:
 };
 
 class ACE_TS_Clerk_Processor : public ACE_Connector <ACE_TS_Clerk_Handler, ACE_SOCK_CONNECTOR>
+{
   // = TITLE
   //    This class manages all the connections to the servers along
   //    with querying them periodically for time updates.
+  //
   // = DESCRIPTION
   //    The Clerk Processor creates connections to all the servers and
   //    creates an ACE_TS_Clerk_Handler for each connection to handle
   //    the requests and replies. It periodically sends a request for
-  //    time update through each of the handlers and uses the replies for
-  //    computing a synchronized system time.
-{
+  //    time update through each of the handlers and uses the replies
+  //    for computing a synchronized system time.
 public:
   ACE_TS_Clerk_Processor (void);
   // Default constructor
@@ -166,7 +177,8 @@ public:
                               const void *arg);
   // Query servers for time periodically (timeout value)
 
-  int initiate_connection (ACE_TS_Clerk_Handler *, ACE_Synch_Options &);
+  int initiate_connection (ACE_TS_Clerk_Handler *,
+                           ACE_Synch_Options &);
   // Set up connections to all servers
 
 protected:

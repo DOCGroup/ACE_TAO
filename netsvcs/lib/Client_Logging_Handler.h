@@ -10,7 +10,7 @@
 //    Client_Logging_Handler.h
 //
 // = AUTHOR
-//    Doug Schmidt
+//    Doug Schmidt <schmidt@.cs.wustl.edu>
 //
 // ============================================================================
 
@@ -38,6 +38,7 @@
 #endif /* ACE_HAS_STREAM_PIPES */
 
 class ACE_Svc_Export ACE_Client_Logging_Handler : public ACE_Svc_Handler<LOGGING_STREAM, ACE_NULL_SYNCH>
+{
   // = TITLE
   //    This client logging daemon is a mediator that receives logging
   //    records from local applications processes and forwards them to
@@ -49,7 +50,7 @@ class ACE_Svc_Export ACE_Client_Logging_Handler : public ACE_Svc_Handler<LOGGING
   //     <ACE_SOCK_Stream> to forward the logging message to the
   //     server.  However, on platforms that don't support
   //     <ACE_SPIPEs> (e.g., Win32) we use sockets instead.
-{
+
 public:
   // = Initialization and termination.
 

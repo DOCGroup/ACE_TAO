@@ -30,6 +30,7 @@
 #include "ace/Token_Request_Reply.h"
 
 class ACE_Svc_Export ACE_Token_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+{
   // = TITLE
   //    Product object created by an <ACE_Token_Acceptor>.  A
   //    <Token_Handler> exchanges messages with a <Token_Proxy> object
@@ -43,7 +44,7 @@ class ACE_Svc_Export ACE_Token_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM,
   //   schedules and handles timeouts that are used to support "timed
   //   waits."  Clients used timed waits to bound the amount of time
   //   they block trying to get a token.
-{
+
 public:
   // = Initialization and termination.
 
@@ -147,9 +148,10 @@ private:
 //     the definition to the .cpp file.
 
 class ACE_TS_Mutex : public ACE_Local_Mutex
+{
   // = TITLE
   //     ACE_TS_Mutex  -- ACE_*T*oken_*S*erver_Mutex
-{
+
 public:
   ACE_TS_Mutex (const char *name,
                 ACE_Token_Handler *th);
@@ -177,9 +179,9 @@ private:
 };
 
 class ACE_TS_RLock : public ACE_Local_RLock
+{
   // = TITLE
   //     ACE_TS_RLock  -- ACE_*T*oken_*S*erver_RLock
-{
 public:
   ACE_TS_RLock (const char *name,
                 ACE_Token_Handler *th);
@@ -207,9 +209,9 @@ private:
 };
 
 class ACE_TS_WLock : public ACE_Local_WLock
+{
   // = TITLE
   //     ACE_TS_WLock  -- ACE_*T*oken_*S*erver_WLock
-{
 public:
   ACE_TS_WLock (const char *name,
                 ACE_Token_Handler *th);
@@ -236,13 +238,11 @@ private:
   // construction and notified when blocking acquires succeed.
 };
 
-// ************************************************************
-
 class ACE_Token_Acceptor : public ACE_Strategy_Acceptor<ACE_Token_Handler, ACE_SOCK_ACCEPTOR>
+{
   // = TITLE
   //     This class contains the service-specific methods that can't
   //     easily be factored into the <ACE_Strategy_Acceptor>.
-{
 public:
   virtual int init (int argc, char *argv[]);
   // Dynamic linking hook.
