@@ -232,8 +232,6 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 // TODO: Currently the IDL compiler does not support C++ exceptions, so we
 // cannot use them even if the platform has them.
 //
-#define TAO_THROW_SPEC(X) ACE_THROW_SPEC(X)
-
 #if defined (ACE_HAS_EXCEPTIONS) && defined (TAO_IDL_COMPILER_HAS_EXCEPTIONS)
 
 #define TAO_TRY_ENV __env
@@ -254,6 +252,8 @@ try { CORBA::Environment TAO_TRY_ENV;
 #define TAO_THROW(EXCEPTION) throw EXCEPTION;
 #define TAO_THROW_RETURN(EXCEPTION, RETURN) throw EXCEPTION
 #define TAO_RETHROW throw;
+
+#define TAO_THROW_SPEC(X) ACE_THROW_SPEC(X)
 
 #else /* ACE_HAS_EXCEPTIONS && TAO_IDL_COMPILES_HAS_EXCEPTIONS */
 
@@ -351,6 +351,8 @@ return
 #define TAO_RETHROW_RETURN(RETURN) \
 _env.exception (TAO_TRY_ENV.exception ()); \
 return RETURN
+
+#define TAO_THROW_SPEC(X)
 
 #endif /* ACE_HAS_EXCEPTIONS */
 
