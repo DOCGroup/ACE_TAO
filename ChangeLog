@@ -1,3 +1,8 @@
+Thu Jan  8 16:16:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/Date_Time.i:
+	  Changed the order of the methods to fix Tru64 warnings.
+
 Thu Jan  8 11:07:31 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/SSL/SSL_Context.cpp: Added #include "ace/ACE.h" for ACE::debug()
