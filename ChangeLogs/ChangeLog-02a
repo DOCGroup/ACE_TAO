@@ -3413,17 +3413,19 @@ Tue Oct 17 00:21:41 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
         * examples/Service_Configurator/IPC-tests/server/Handle_Timeout.h,
           examples/Service_Configurator/IPC-tests/server/Handle_Timeout.i,
-          examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.h,
-          examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.i,
-          examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.h,
-          examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.i,
-          examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.h,
-          examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.i,
-          examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.h,
-          examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.i:
-          Changed *::get_handle(), *::handle_input(), and *::handle_close() to
-          use ACE_HANDLE and ACE_INVALID_HANDLE instead of int and -1.
-
+ 	  examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.h,
+ 	  examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.i,
+ 	  examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.h,
+ 	  examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.i,
+ 	  examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.h,
+ 	  examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.i,
+ 	  examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.h,
+ 	  examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.i:
+          Changed *::get_handle(), *::handle_input(), and
+ 	  *::handle_close() to use ACE_HANDLE and ACE_INVALID_HANDLE
+ 	  instead of int and -1.  Thanks to Mike Curtis
+ 	  <mccurry@my-deja.com> for pointing this out.
+	
 Mon Oct 16 14:05:13 2000  David L. Levine <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: removed spurious 3D characters from
