@@ -5,7 +5,8 @@ Sat Nov 27 22:06:26 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  Peter C. Chien <peter@newsol.com> for the tip.
 
 	* ace/ace_ce_dll.dsp: Reworked for WinCE 2.11.  More
-	  configurations are added.
+	  configurations are added and the distributed token related files
+	  are removed from the project.
 
 	* ace/OS.{h,cpp}: WinCE 2.11 and above does implement exit method
 	  so we don't need to provide our own for them.
