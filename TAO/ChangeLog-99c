@@ -1,208 +1,216 @@
+Wed Dec 01 17:21:51 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Thruput/TAO/new_client_test,new_run_test,
+          new_server_test: replace hard-coded perl path with magic
+          to use perl from the users environment.  Thanks to
+          Tom Lockhart <Thomas.G.Lockhart@jpl.nasa.gov> for
+          reporting this.
+
 Wed Dec  1 17:04:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
-	  Removed separate throughput test run. The 
-	  ACE_Throughput_Stats class handles latency and throughput
-	  and doesn't add appreciable overhead to the 
-	  throughput results.
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+          Removed separate throughput test run. The
+          ACE_Throughput_Stats class handles latency and throughput
+          and doesn't add appreciable overhead to the
+          throughput results.
 
-	* performance-tests/RTCorba/Oneways/Reliable/client_test.pl:
-	  New perl script that just runs the client. This makes it
-	  easier to run all the tests with various parameters when
-	  client and server are on different machines.
+        * performance-tests/RTCorba/Oneways/Reliable/client_test.pl:
+          New perl script that just runs the client. This makes it
+          easier to run all the tests with various parameters when
+          client and server are on different machines.
 
-	* performance-tests/RTCorba/Oneways/Reliable/README:
-	  Updated to reflect the above changes.
+        * performance-tests/RTCorba/Oneways/Reliable/README:
+          Updated to reflect the above changes.
 
 Wed Dec  1 13:52:25 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface.cpp:
-	  Added missing parameter to match %p in an ACE_ERROR
-	  message. Thanks to Chad Elliott <elliott_c@ociweb.com>
-	  for pointing this out.
+        * TAO_IDL/be/be_interface.cpp:
+          Added missing parameter to match %p in an ACE_ERROR
+          message. Thanks to Chad Elliott <elliott_c@ociweb.com>
+          for pointing this out.
 
 Wed Dec  1 12:38:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Exception.h:
-	  Moved the TAO_Export macro in the ostream operator declaration, 
-	  and added an 'extern' as well.
+        * tao/Exception.h:
+          Moved the TAO_Export macro in the ostream operator declaration,
+          and added an 'extern' as well.
 
 Tue Nov 30 19:35:13 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
-	* performance-tests/RTCorba/Oneways/Reliable/server.cpp:
-	  Client and server now output the priority of the
-	  thread each is running in.
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+        * performance-tests/RTCorba/Oneways/Reliable/server.cpp:
+          Client and server now output the priority of the
+          thread each is running in.
 
-	* performance-tests/RTCorba/Oneways/Reliable/run_test.pl:
-	  Running test with no command line args now adds
-	  tests of several queue sizes for buffered oneways.
+        * performance-tests/RTCorba/Oneways/Reliable/run_test.pl:
+          Running test with no command line args now adds
+          tests of several queue sizes for buffered oneways.
 
 Tue Nov 30 19:12:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/tutorials/Quoter/index.html:
-	* docs/tutorials/Quoter/RT_Event_Service/index.html:
-	* docs/tutorials/Quoter/RT_Event_Service/Makefile:
-	* docs/tutorials/Quoter/RT_Event_Service/Stock_Consumer.cpp:
-	* docs/tutorials/Quoter/RT_Event_Service/Stock_Consumer.h:
-	* docs/tutorials/Quoter/RT_Event_Service/Stock_Factory_i.cpp:
-	* docs/tutorials/Quoter/RT_Event_Service/Stock_Factory_i.h:
-	* docs/tutorials/Quoter/RT_Event_Service/Stock_i.cpp:
-	* docs/tutorials/Quoter/RT_Event_Service/Stock_i.h:
-	* docs/tutorials/Quoter/RT_Event_Service/client.cpp:
-	* docs/tutorials/Quoter/RT_Event_Service/server.cpp:
-	  New tutorial on how to use the real-time Events Service for
-	  event filtering.
+        * docs/tutorials/Quoter/index.html:
+        * docs/tutorials/Quoter/RT_Event_Service/index.html:
+        * docs/tutorials/Quoter/RT_Event_Service/Makefile:
+        * docs/tutorials/Quoter/RT_Event_Service/Stock_Consumer.cpp:
+        * docs/tutorials/Quoter/RT_Event_Service/Stock_Consumer.h:
+        * docs/tutorials/Quoter/RT_Event_Service/Stock_Factory_i.cpp:
+        * docs/tutorials/Quoter/RT_Event_Service/Stock_Factory_i.h:
+        * docs/tutorials/Quoter/RT_Event_Service/Stock_i.cpp:
+        * docs/tutorials/Quoter/RT_Event_Service/Stock_i.h:
+        * docs/tutorials/Quoter/RT_Event_Service/client.cpp:
+        * docs/tutorials/Quoter/RT_Event_Service/server.cpp:
+          New tutorial on how to use the real-time Events Service for
+          event filtering.
 
-	* docs/tutorials/Quoter/Event_Service/Makefile:
-	* docs/tutorials/Quoter/Event_Service/Stock_Consumer.h:
-	* docs/tutorials/Quoter/Event_Service/index.html:
-	  Fixed some typos
+        * docs/tutorials/Quoter/Event_Service/Makefile:
+        * docs/tutorials/Quoter/Event_Service/Stock_Consumer.h:
+        * docs/tutorials/Quoter/Event_Service/index.html:
+          Fixed some typos
 
 Tue Nov 30 16:47:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/util/utl_scope.cpp:
-	  Added a branch to give only a warning for a case
-	  difference only name clash. Thanks to
-	  Alexander Villatora <alex@cfx.com> for reporting
-	  this bug.
+        * TAO_IDL/util/utl_scope.cpp:
+          Added a branch to give only a warning for a case
+          difference only name clash. Thanks to
+          Alexander Villatora <alex@cfx.com> for reporting
+          this bug.
 
 Tue Nov 30 13:25:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Oneways/Reliable/Makefile:
-	  Changed the order of files in the SRC macro so the IDL-generated
-	  files will compile first. Thanks to David for this
-	  suggestion.
+        * performance-tests/RTCorba/Oneways/Reliable/Makefile:
+          Changed the order of files in the SRC macro so the IDL-generated
+          files will compile first. Thanks to David for this
+          suggestion.
 
 Tue Nov 30 12:04:43 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile:
-	  added the Log to the build
+        * orbsvcs/orbsvcs/Makefile:
+          added the Log to the build
 
 Tue Nov 30 11:31:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Exception.h: Added TAO_Export to the exception streaming
-	  operator.  Thanks to Mirko Brandner <mbrandner@yahoo.com> for
-	  reporting this.
+        * tao/Exception.h: Added TAO_Export to the exception streaming
+          operator.  Thanks to Mirko Brandner <mbrandner@yahoo.com> for
+          reporting this.
 
 Tue Nov 30 00:49:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/tutorials/Quoter/AMI/index.html:
-	* docs/tutorials/Quoter/Event_Service/index.html:
-	* docs/tutorials/Quoter/Naming_Service/index.html:
-	* docs/tutorials/Quoter/Simple/Client/index.html:
-	* docs/tutorials/Quoter/Simple/ImprovedServer/index.html:
-	* docs/tutorials/Quoter/Simple/Server/index.html:
-	  Spell checking.
+        * docs/tutorials/Quoter/AMI/index.html:
+        * docs/tutorials/Quoter/Event_Service/index.html:
+        * docs/tutorials/Quoter/Naming_Service/index.html:
+        * docs/tutorials/Quoter/Simple/Client/index.html:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/index.html:
+        * docs/tutorials/Quoter/Simple/Server/index.html:
+          Spell checking.
 
 Tue Nov 30 00:28:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tutorials/Quoter/index.html:
-	* tutorials/Quoter/Event_Service/Consumer_i.h:
-	* tutorials/Quoter/Event_Service/Makefile:
-	* tutorials/Quoter/Event_Service/Quoter.idl:
-	* tutorials/Quoter/Event_Service/Stock_Consumer.cpp:
-	* tutorials/Quoter/Event_Service/Stock_Consumer.h:
-	* tutorials/Quoter/Event_Service/Stock_Factory_i.cpp:
-	* tutorials/Quoter/Event_Service/Stock_Factory_i.h:
-	* tutorials/Quoter/Event_Service/Stock_i.cpp:
-	* tutorials/Quoter/Event_Service/Stock_i.h:
-	* tutorials/Quoter/Event_Service/client.cpp:
-	* tutorials/Quoter/Event_Service/ec.conf:
-	* tutorials/Quoter/Event_Service/index.html:
-	* tutorials/Quoter/Event_Service/server.cpp:
-	* tutorials/Quoter/Event_Service/stock_list.txt:
-	* tutorials/Quoter/Event_Service/stock_list1.txt:
-	* tutorials/Quoter/Event_Service/stock_list2.txt:
-	  New tutorial that shows how to use TAO's implementation of the
-	  COS Events Service.
+        * tutorials/Quoter/index.html:
+        * tutorials/Quoter/Event_Service/Consumer_i.h:
+        * tutorials/Quoter/Event_Service/Makefile:
+        * tutorials/Quoter/Event_Service/Quoter.idl:
+        * tutorials/Quoter/Event_Service/Stock_Consumer.cpp:
+        * tutorials/Quoter/Event_Service/Stock_Consumer.h:
+        * tutorials/Quoter/Event_Service/Stock_Factory_i.cpp:
+        * tutorials/Quoter/Event_Service/Stock_Factory_i.h:
+        * tutorials/Quoter/Event_Service/Stock_i.cpp:
+        * tutorials/Quoter/Event_Service/Stock_i.h:
+        * tutorials/Quoter/Event_Service/client.cpp:
+        * tutorials/Quoter/Event_Service/ec.conf:
+        * tutorials/Quoter/Event_Service/index.html:
+        * tutorials/Quoter/Event_Service/server.cpp:
+        * tutorials/Quoter/Event_Service/stock_list.txt:
+        * tutorials/Quoter/Event_Service/stock_list1.txt:
+        * tutorials/Quoter/Event_Service/stock_list2.txt:
+          New tutorial that shows how to use TAO's implementation of the
+          COS Events Service.
 
 Mon Nov 29 16:47:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
-	* performance-tests/RTCorba/Oneways/Reliable/server.cpp:
-	* performance-tests/RTCorba/Oneways/Reliable/test_i.cpp:
-	  Moved RCSID line to be after the #included files.
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+        * performance-tests/RTCorba/Oneways/Reliable/server.cpp:
+        * performance-tests/RTCorba/Oneways/Reliable/test_i.cpp:
+          Moved RCSID line to be after the #included files.
 
 Mon Nov 29 15:46:31 1999 Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/notify/Notify_Constraint_Interpreter.{h,cpp}:
-	* orbsvcs/orbsvcs/notify/Notify_Constraint_Visitors.{h,cpp}:
-	* orbsvcs/orbsvcs/notify/Notify_FilterFactory_i.{h,cpp}:
-	* orbsvcs/orbsvcs/notify/Notify_Filter_i.{h,cpp}:
-	Added these files to integrate with the Trader's TCL
-	implementation.
+        * orbsvcs/orbsvcs/notify/Notify_Constraint_Interpreter.{h,cpp}:
+        * orbsvcs/orbsvcs/notify/Notify_Constraint_Visitors.{h,cpp}:
+        * orbsvcs/orbsvcs/notify/Notify_FilterFactory_i.{h,cpp}:
+        * orbsvcs/orbsvcs/notify/Notify_Filter_i.{h,cpp}:
+        Added these files to integrate with the Trader's TCL
+        implementation.
 
 Mon Nov 29 15:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
-	  Fixed the usage of the be_interface constructor due
-	  to changes Jeff was putting in two changelog entries ago.
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+          Fixed the usage of the be_interface constructor due
+          to changes Jeff was putting in two changelog entries ago.
 
 Mon Nov 29 14:15:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Oneways/Reliable/Reliable.dsw:
-	* performance-tests/RTCorba/Oneways/Reliable/client.dsp:
-	* performance-tests/RTCorba/Oneways/Reliable/server.dsp:
-	* performance-tests/RTCorba/Oneways/Reliable/test.idl:
-	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
-	* performance-tests/RTCorba/Oneways/Reliable/server.cpp:
-	* performance-tests/RTCorba/Oneways/Reliable/test_i.h:
-	* performance-tests/RTCorba/Oneways/Reliable/test_i.i:
-	* performance-tests/RTCorba/Oneways/Reliable/test_i.cpp:
-	* performance-tests/RTCorba/Oneways/Reliable/run_test.pl:
-	* performance-tests/RTCorba/Oneways/Reliable/Makefile:
-	* performance-tests/RTCorba/Oneways/Reliable/README:
-	  Test suite for reliable and buffered oneway requests. Latency
-	  and throughput measurements are made for each type of
-	  SyncScope policy value (and for buffered oneway requests
-	  if the SyncScope policy value is SYNC_NONE). The same
-	  measurements are also made on twoway requests for
-	  comparison. See the README file for details.
+        * performance-tests/RTCorba/Oneways/Reliable/Reliable.dsw:
+        * performance-tests/RTCorba/Oneways/Reliable/client.dsp:
+        * performance-tests/RTCorba/Oneways/Reliable/server.dsp:
+        * performance-tests/RTCorba/Oneways/Reliable/test.idl:
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+        * performance-tests/RTCorba/Oneways/Reliable/server.cpp:
+        * performance-tests/RTCorba/Oneways/Reliable/test_i.h:
+        * performance-tests/RTCorba/Oneways/Reliable/test_i.i:
+        * performance-tests/RTCorba/Oneways/Reliable/test_i.cpp:
+        * performance-tests/RTCorba/Oneways/Reliable/run_test.pl:
+        * performance-tests/RTCorba/Oneways/Reliable/Makefile:
+        * performance-tests/RTCorba/Oneways/Reliable/README:
+          Test suite for reliable and buffered oneway requests. Latency
+          and throughput measurements are made for each type of
+          SyncScope policy value (and for buffered oneway requests
+          if the SyncScope policy value is SYNC_NONE). The same
+          measurements are also made on twoway requests for
+          comparison. See the README file for details.
 
 Mon Nov 29 11:45:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/fe/idl.yy:
-	* TAO_IDL/fe/y.tab.h:
-	* TAO_IDL/fe/y.tab.cpp:
-	* TAO_IDL/fe.fe_interface_header.cpp:
-	* TAO_IDL/include/fe_interface_header.h:
-	* TAO_IDL/include/ast_generator.h:
-	* TAO_IDL/ast/ast_generator.cpp:
-	* TAO_IDL/include/ast_interface.h:
-	* TAO_IDL/ast/ast_interface.cpp:
-	* TAO_IDL/be_include/be_generator.h:
-	* TAO_IDL/be/be_generator.cpp:
-	* TAO_IDL/be_include/be_interface.h:
-	* TAO_IDL/be/be_interface.cpp:
-	* TAO_IDL/be/be_valuetype.cpp:
-	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
-	  Operations cannot be overloaded in IDL. If an illegal
-	  overload occurred in the next generations, the error
-	  was caught, but not if it skipped a generation. This
-	  was mystifying, since the comments in the front end
-	  said that a flat list was compiled of all the interface's
-	  ancestors. As it turned out, when the back end was
-	  written, this list was changed to include only the
-	  immediate ancestors, for the purpose of generating
-	  the inhertance list in the class declaration. So such a
-	  flat list had to be added, maintained, and the
-	  signatures of all related functions changed. Thanks to
-	  Jochen Linkohr <Jochen.Linkohr@stz-rechnereinsatz.de>
-	  for uncovering this bug.
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe.fe_interface_header.cpp:
+        * TAO_IDL/include/fe_interface_header.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+          Operations cannot be overloaded in IDL. If an illegal
+          overload occurred in the next generations, the error
+          was caught, but not if it skipped a generation. This
+          was mystifying, since the comments in the front end
+          said that a flat list was compiled of all the interface's
+          ancestors. As it turned out, when the back end was
+          written, this list was changed to include only the
+          immediate ancestors, for the purpose of generating
+          the inhertance list in the class declaration. So such a
+          flat list had to be added, maintained, and the
+          signatures of all related functions changed. Thanks to
+          Jochen Linkohr <Jochen.Linkohr@stz-rechnereinsatz.de>
+          for uncovering this bug.
 
 Sun Nov 28 23:27:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/tutorials/Quoter/index.html:
-	* docs/tutorials/Quoter/Naming_Service/index.html:
-	* docs/tutorials/Quoter/Naming_Service/Makefile:
-	* docs/tutorials/Quoter/Naming_Service/client.cpp:
-	* docs/tutorials/Quoter/Naming_Service/server.cpp:
-	  New tutorial that discusses how to use the naming service,
-	  including TAO's Interoperable Naming Service support.
+        * docs/tutorials/Quoter/index.html:
+        * docs/tutorials/Quoter/Naming_Service/index.html:
+        * docs/tutorials/Quoter/Naming_Service/Makefile:
+        * docs/tutorials/Quoter/Naming_Service/client.cpp:
+        * docs/tutorials/Quoter/Naming_Service/server.cpp:
+          New tutorial that discusses how to use the naming service,
+          including TAO's Interoperable Naming Service support.
 
-	* docs/tutorials/Quoter/Simple/index.html:
-	  Use re-direction to go to the general index.
+        * docs/tutorials/Quoter/Simple/index.html:
+          Use re-direction to go to the general index.
 
 Sun Nov 28 23:23:32 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -212,78 +220,78 @@ Sun Nov 28 23:23:32 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Sun Nov 28 19:00:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/tutorials/Quoter/Simple/ImprovedServer/Stock_Factory_i.cpp:
-	* docs/tutorials/Quoter/Simple/ImprovedServer/Stock_Factory_i.h:
-	* docs/tutorials/Quoter/Simple/ImprovedServer/Stock_i.cpp:
-	* docs/tutorials/Quoter/Simple/ImprovedServer/Stock_i.h:
-	* docs/tutorials/Quoter/Simple/ImprovedServer/index.html:
-	* docs/tutorials/Quoter/Simple/ImprovedServer/server.cpp:
-	* docs/tutorials/Quoter/Simple/ImprovedServer/stock_list.txt:
-	  Another tutorial, this one about how to use POA policies to use
-	  user assigned IDs, and how to do memory managment of servants.
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Stock_Factory_i.cpp:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Stock_Factory_i.h:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Stock_i.cpp:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Stock_i.h:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/index.html:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/server.cpp:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/stock_list.txt:
+          Another tutorial, this one about how to use POA policies to use
+          user assigned IDs, and how to do memory managment of servants.
 
-	* docs/tutorials/Quoter/index.html:
-	* docs/tutorials/Quoter/AMI/index.html:
-	* docs/tutorials/Quoter/Simple/Client/index.html:
-	* docs/tutorials/Quoter/Simple/Server/index.html:
-	  Validated using weblint.
+        * docs/tutorials/Quoter/index.html:
+        * docs/tutorials/Quoter/AMI/index.html:
+        * docs/tutorials/Quoter/Simple/Client/index.html:
+        * docs/tutorials/Quoter/Simple/Server/index.html:
+          Validated using weblint.
 
 Sun Nov 28 18:08:45 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* docs/tutorials/Quoter/AMI/index.html: Changed the backgrounds
-	  for the tutorial pages so they are white.  Also, changed the use
- 	  of <h1> to <h3>, which is easier to read.
+        * docs/tutorials/Quoter/AMI/index.html: Changed the backgrounds
+          for the tutorial pages so they are white.  Also, changed the use
+          of <h1> to <h3>, which is easier to read.
 
 Sun Nov 28 17:26:54 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* configure.in:
+        * configure.in:
 
-	  Added support for the following configure script options:
+          Added support for the following configure script options:
 
                 --enable-intf-repo      enable interface repository
                 --enable-messaging      enable CORBA messaging support
                 --enable-minimum-corba  enable minimum CORBA support
                 --enable-rt-corba       enable Real-Time CORBA support
 
-	  Other minor updates.
+          Other minor updates.
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Added orb.idl and Policy.pidl to the of headers to be installed.
-	  Policy.pidl is included in orb.idl, which is why it must be
-	  installed too.
+          Added orb.idl and Policy.pidl to the of headers to be installed.
+          Policy.pidl is included in orb.idl, which is why it must be
+          installed too.
 
 Sun Nov 28 15:16:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/tutorials/Quoter/AMI/index.html:
-	* docs/tutorials/Quoter/AMI/Makefile:
-	* docs/tutorials/Quoter/AMI/Quoter.idl:
-	* docs/tutorials/Quoter/AMI/svc.conf:
-	* docs/tutorials/Quoter/AMI/Handler_i.h:
-	* docs/tutorials/Quoter/AMI/Handler_i.cpp:
-	* docs/tutorials/Quoter/AMI/Stock_Factory_i.h:
-	* docs/tutorials/Quoter/AMI/Stock_Factory_i.cpp:
-	* docs/tutorials/Quoter/AMI/Stock_i.h:
-	* docs/tutorials/Quoter/AMI/Stock_i.cpp:
-	* docs/tutorials/Quoter/AMI/client.cpp:
-	* docs/tutorials/Quoter/AMI/server.cpp:
-	  New tutorial on how to use AMI with TAO, the server must be
-	  improved since it only has two objects.
+        * docs/tutorials/Quoter/AMI/index.html:
+        * docs/tutorials/Quoter/AMI/Makefile:
+        * docs/tutorials/Quoter/AMI/Quoter.idl:
+        * docs/tutorials/Quoter/AMI/svc.conf:
+        * docs/tutorials/Quoter/AMI/Handler_i.h:
+        * docs/tutorials/Quoter/AMI/Handler_i.cpp:
+        * docs/tutorials/Quoter/AMI/Stock_Factory_i.h:
+        * docs/tutorials/Quoter/AMI/Stock_Factory_i.cpp:
+        * docs/tutorials/Quoter/AMI/Stock_i.h:
+        * docs/tutorials/Quoter/AMI/Stock_i.cpp:
+        * docs/tutorials/Quoter/AMI/client.cpp:
+        * docs/tutorials/Quoter/AMI/server.cpp:
+          New tutorial on how to use AMI with TAO, the server must be
+          improved since it only has two objects.
 
-	* docs/tutorials/Quoter/index.html:
-	  Added the new AMI tutorial
+        * docs/tutorials/Quoter/index.html:
+          Added the new AMI tutorial
 
-	* docs/tutorials/Quoter/Simple/Server/index.html:
-	  Fixed typos
+        * docs/tutorials/Quoter/Simple/Server/index.html:
+          Fixed typos
 
-	* tests/AMI/Makefile:
-	  The dependencies where not updated correctly. Fixed.
+        * tests/AMI/Makefile:
+          The dependencies where not updated correctly. Fixed.
 
 Sun Nov 28 14:20:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* docs/tutorials/Quoter: Changed the backgrounds for the tutorial
-	  pages so they are white.  Also, changed the use of <h1> to <h3>,
- 	  which is easier to read.
+        * docs/tutorials/Quoter: Changed the backgrounds for the tutorial
+          pages so they are white.  Also, changed the use of <h1> to <h3>,
+          which is easier to read.
 
 Sun Nov 28 11:34:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -308,9 +316,9 @@ Sun Nov 28 11:34:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Fri Nov 26 15:27:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/Policy.h: Added TAO_AV_Export macros
-	  for all the TAO_AV_Policy classes.  Thanks to Paulo Breda Vieira
- 	  <breda@inesca.pt> for reporting this.
+        * orbsvcs/orbsvcs/AV/Policy.h: Added TAO_AV_Export macros
+          for all the TAO_AV_Policy classes.  Thanks to Paulo Breda Vieira
+          <breda@inesca.pt> for reporting this.
 
 Sat Nov 27 15:04:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -318,9 +326,9 @@ Sat Nov 27 15:04:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Fri Nov 26 09:30:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Negation_Filter.cpp:
-	  Fixed warning due to mismatched return types under g++ 2.7.2.3,
- 	  thanks to David for pointing this out.
+        * orbsvcs/orbsvcs/Event/EC_Negation_Filter.cpp:
+          Fixed warning due to mismatched return types under g++ 2.7.2.3,
+          thanks to David for pointing this out.
 
 Wed Nov 24 20:17:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
