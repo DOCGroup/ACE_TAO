@@ -1,8 +1,14 @@
+Mon Jul  5 13:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Sequence_Latency/AMH_Single_Threaded/run_test.pl:
+          Made this file executable so that we can run it from our daily
+          performance build
+
 Sat Jul  3 13:35:28 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
         * TAO_IDL/be/be_produce.cpp:
-        
+
           Moved the initialization of the stream for generated file
           containing Any operators (if the option is set to generate
           these into a separate file) again, to BE_produce, just
@@ -19,7 +25,7 @@ Sat Jul  3 13:35:28 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Sat Jul  3 11:25:54 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
-        
+
           Moved the initialization of the stream for generated file
           containing Any operators (if the option is set to generate
           these into a separate file) out of the TAO_CodeGen
@@ -35,7 +41,7 @@ Sat Jul  3 11:25:54 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Sat Jul  3 10:06:19 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp:
-        
+
           Put back an O_EXCL file open flag that was inadvertently
           removed in a previous checkin.
 
@@ -45,7 +51,7 @@ Fri Jul  2 15:39:42 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/driver/drv_preproc.cpp:
         * TAO_IDL/fe/fe_init.cpp:
         * TAO_IDL/include/fe_extern.h:
-        
+
           Moved bits of code that instantiate ACE_Env_Value<char*> into
           new methods created in the front end library. Having them in
           the executable was causing a problem for Tru64 builds, since
@@ -59,11 +65,11 @@ Fri Jul  2 13:20:46 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/tao_idl.cpp:
         * TAO_IDL/driver/drv_preproc.cpp:
-        
+
           Put back the code using mkstemp() (for platforms that support
           it) to generate unique and secure temporary file names. This
           code was removed in
-          
+
           Thu Jul  1 20:01:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           For platforms that do not support mkstemp(), we now use ACE's
@@ -73,7 +79,7 @@ Fri Jul  2 13:20:46 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Fri Jul  2 16:11:12 UTC 2004 Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.cpp:
-	  Fixed the usage of auto_ptr to fix compile errors in the HPUX 
+	  Fixed the usage of auto_ptr to fix compile errors in the HPUX
 	  builds. Thanks to Don Hinton for pointing out the way to fix
 	  this.
 
