@@ -87,7 +87,7 @@ public:
   virtual int visit_string (be_string *node);
   // visit a structure
 
-  virtual int visit_structure (be_structure *node);
+//   virtual int visit_structure (be_structure *node);
   // visit a structure
 
   virtual int visit_union (be_union *node);
@@ -137,7 +137,7 @@ public:
 
   int gen_typecode (be_string *node);
 
-  int gen_typecode (be_structure *node);
+//   int gen_typecode (be_structure *node);
 
 //   int gen_typecode (be_typedef *node);
 
@@ -167,7 +167,7 @@ public:
 
   int gen_encapsulation (be_string *node);
 
-  int gen_encapsulation (be_structure *node);
+//   int gen_encapsulation (be_structure *node);
 
   int gen_encapsulation (be_typedef *node);
 
@@ -185,7 +185,7 @@ public:
 
   ACE_CDR::Long compute_tc_size (be_exception *node);
 
-  ACE_CDR::Long compute_tc_size (be_interface *node);
+//   ACE_CDR::Long compute_tc_size (be_interface *node);
 
   ACE_CDR::Long compute_tc_size (be_interface_fwd *node);
 
@@ -195,7 +195,7 @@ public:
 
   ACE_CDR::Long compute_tc_size (be_string *node);
 
-  ACE_CDR::Long compute_tc_size (be_structure *node);
+//   ACE_CDR::Long compute_tc_size (be_structure *node);
 
   ACE_CDR::Long compute_tc_size (be_typedef *node);
 
@@ -215,7 +215,7 @@ public:
 
   ACE_CDR::Long compute_encap_length (be_field *node);
 
-  ACE_CDR::Long compute_encap_length (be_interface *node);
+//   ACE_CDR::Long compute_encap_length (be_interface *node);
 
   ACE_CDR::Long compute_encap_length (be_interface_fwd *node);
 
@@ -225,7 +225,7 @@ public:
 
   ACE_CDR::Long compute_encap_length (be_string *node);
 
-  ACE_CDR::Long compute_encap_length (be_structure *node);
+//   ACE_CDR::Long compute_encap_length (be_structure *node);
 
   ACE_CDR::Long compute_encap_length (be_typedef *node);
 
