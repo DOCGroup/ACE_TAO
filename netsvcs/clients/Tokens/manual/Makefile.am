@@ -22,4 +22,7 @@ manual_LDADD = \
               $(top_builddir)/netsvcs/lib/libnetsvcs.la \
               $(top_builddir)/ace/libACE.la
 
-
+## Clean up template repositories, etc.
+clean-local:
+	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
+	-rm -rf ptrepository Templates.DB gcctemp.c gcctemp so_locations

@@ -44,6 +44,12 @@ noinst_HEADERS = \
          TS_Server_Handler.h  \
          Token_Handler.h
 
+## Clean up template repositories, etc.
+clean-local:
+	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
+	-rm -rf ptrepository Templates.DB gcctemp.c gcctemp so_locations
+
+
 ## What do we about the below?  It was in the original libnetsvcs Makefile.
 ##  ifeq ($(SUPPRESS_DASH_G),1)
 ##  #### Build this target without -g on some platforms.

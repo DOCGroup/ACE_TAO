@@ -811,3 +811,8 @@ pkginclude_HEADERS = \
 
 ## Make sure the following get into the distribution
 EXTRA_DIST = $(ACE_TEMPLATE_FILES)
+
+## Clean up template repositories, etc.
+clean-local:
+	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
+	-rm -rf ptrepository Templates.DB gcctemp.c gcctemp so_locations
