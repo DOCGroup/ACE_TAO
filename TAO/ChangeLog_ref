@@ -1,3 +1,8 @@
+Sun Aug  3 09:05:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_include/be_visitor_tmplinst.h: Added to the branch
+	  refactor-stage_5.
+
 Tue Jul 29 11:52:12 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         Merged with the main trunk and created a new branch,\
