@@ -1,9 +1,9 @@
 Wed Sep 16 13:41:50 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.h: Added more protection for the semun definition, i.e.,
-	  (defined (__GLIBC__) && defined (_SEM_SEMUN_UNDEFINED)).  This
-	  fixes problems with Linux, GLIBC 2.1, and PGCC.  Thanks to
-	  Marc Lehmann <pcg@goof.com> for reporting this.
+        * ace/OS.h: Added more protection for the semun definition, i.e.,
+          (defined (__GLIBC__) && defined (_SEM_SEMUN_UNDEFINED)).  This
+          fixes problems with Linux, GLIBC 2.1, and PGCC.  Thanks to
+          Marc Lehmann <pcg@goof.com> for reporting this.
 
 Wed Sep 16 11:41:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -18,6 +18,9 @@ Wed Sep 16 11:41:57 1998  David L. Levine  <levine@cs.wustl.edu>
           PowerPC.  If it was called more than once in a
           compilation unit, when inlined, the assembler complained
           about multiple definitions of the aclock symbol.
+
+        * ace/Malloc_T.cpp (dump): fixed typo, cb_ptr instead of
+          cp_ptr.  Thanks to Umar Syyid <usyyid@hns.com> for reporting this.
 
 Wed Sep 16 11:28:47 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
