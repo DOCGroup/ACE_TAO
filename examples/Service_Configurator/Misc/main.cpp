@@ -1,5 +1,23 @@
 // $Id$
 
+// ============================================================================
+//
+// = LIBRARY
+//    examples/Service_Configurator/Misc
+//
+// = FILENAME
+//    main.cpp
+//
+// = DESCRIPTION
+//   This directory contains an example that illustrates how the ACE
+//   Service Configurator can configure static and dynamic services,
+//   both from the command-line and from a svc.config file.
+//
+// = AUTHOR
+//    Doug Schmidt <schmidt@cs.wustl.edu>
+//
+// ============================================================================
+
 #include "ace/Service_Config.h"
 #include "Timer_Service.h"
 
@@ -29,8 +47,8 @@ main (int argc, char *argv[])
                        "open"),
                       1);
 
-  // Run forever, performing the configured services until we receive
-  // a SIGINT.
+  // Run forever, performing the configured services until we
+  // shutdown.
 
   ACE_Reactor::run_event_loop ();
   return 0;
