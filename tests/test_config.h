@@ -8,7 +8,7 @@
 // = AUTHOR
 //    Prashant Jain <pjain@cs.wustl.edu>, Tim Harrison
 //    <harrison@cs.wustl.edu>, and David Levine <levine@cs.wustl.edu>
-// 
+//
 // ============================================================================
 
 #if !defined (ACE_TEST_CONFIG_H)
@@ -139,11 +139,11 @@ typedef size_t KEY;
 #define ACE_INIT_LOG(NAME) \
   char temp[BUFSIZ]; \
   ACE_OS::sprintf (temp, "%s%s%s", \
-		   ACE_LOG_DIRECTORY_A, \
-		   ACE::basename (NAME, ACE_DIRECTORY_SEPARATOR_CHAR_A), \
-		   ".log"); \
+                   ACE_LOG_DIRECTORY_A, \
+                   ACE::basename (NAME, ACE_DIRECTORY_SEPARATOR_CHAR_A), \
+                   ".log"); \
   ACE_DEBUG ((LM_DEBUG, "Deleting old log file %s (if any)\n\n", temp)); \
-  ACE_OS::unlink (temp); 
+  ACE_OS::unlink (temp);
 
 const int ACE_NS_MAX_ENTRIES = 1000;
 const int ACE_DEFAULT_USECS = 1000;
@@ -173,25 +173,35 @@ private:
 static ACE_Test_Output ace_file_stream;
 
 ACE_Test_Output::ACE_Test_Output (void)
-{ 
+{
 }
 
-ACE_Test_Output::~ACE_Test_Output (void) 
-{ 
+ACE_Test_Output::~ACE_Test_Output (void)
+{
 }
 
-int 
+int
 ACE_Test_Output::set_output (const char *filename, int append)
 {
   char temp[BUFSIZ];
   // Ignore the error value since the directory may already exist.
 
-  ACE_OS::sprintf (temp, "%s%s%s", 
-		   ACE_LOG_DIRECTORY_A, 
-		   ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR_A),
-		   ".log");
+  ACE_OS::sprintf (temp, "%s%s%s",
+                   ACE_LOG_DIRECTORY_A,
+                   ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR_A),
+                   ".log");
 
-#if ! defined (VXWORKS)
+#if defined (VXWORKS)
+  // This is the only way I could figure out to avoid a console warning
+  // about opening an existing file (w/o O_CREAT), or attempting to unlink
+  // a non-existant one.
+  int fd;
+  if ((fd = ACE_OS::open (temp, O_WRONLY | O_CREAT, 0x644)) != ERROR)
+    {
+      ACE_OS::close (fd);
+      ACE_OS::unlink (temp);
+    }
+#else /* ! VXWORKS */
   // This doesn't seem to work on VxWorks if the directory doesn't
   // exist:  it creates a plain file instead of a directory.  If the
   // directory does exist, it causes a wierd console error message
@@ -212,24 +222,24 @@ ACE_Test_Output::set_output (const char *filename, int append)
       return -1;
     }
 
-  ACE_LOG_MSG->msg_ostream (ace_file_stream.output_file ()); 
-  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER ); 
-  ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM); 
+  ACE_LOG_MSG->msg_ostream (ace_file_stream.output_file ());
+  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER );
+  ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
 
   return 0;
 }
 
 ofstream *
-ACE_Test_Output::output_file (void) 
-{ 
-  return &this->output_file_; 
+ACE_Test_Output::output_file (void)
+{
+  return &this->output_file_;
 }
-  
-void 
-ACE_Test_Output::close (void) 
-{ 
-  this->output_file_.flush (); 
-  this->output_file_.close (); 
+
+void
+ACE_Test_Output::close (void)
+{
+  this->output_file_.flush ();
+  this->output_file_.close ();
 }
 
 void
@@ -239,9 +249,9 @@ randomize (int array[], size_t size)
 
   for (i = 0; i < size; i++)
     array [i] = i;
-  
+
   ACE_OS::srand (ACE_OS::time (0L));
- 
+
   // Generate an array of random numbers from 0 .. size - 1.
 
   for (i = 0; i < size; i++)
