@@ -1,3 +1,8 @@
+Sun Aug 17 09:53:57 2003  Diego Sevilla  <dsevilla@ditec.um.es>
+
+	* CCF/CCF/CCF.mwc: Fixed a bug in the name of a file that was
+	  preventing the build in VC71.
+
 Fri Aug 15 16:26:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIAO/CCF/CCF/CIDL/CIDL.vcproj:
