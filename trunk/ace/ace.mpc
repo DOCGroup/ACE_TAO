@@ -10,14 +10,18 @@ project(ACE) : acedefaults, aceversion, core, qt_moc, qt_reactor {
   // This mpc file could be greatly simplified by putting the separate components
   // in subdirectories. 
 
+  // Old OS files.  put these back and remove the OS_NS*, Cleanup.cpp, and
+  // Object_Manager_Base.cpp to improve compile times at the cost of
+  // footprint. dhinton
+  //OS.cpp
+  //OS_Dirent.cpp
+  //OS_Memory.cpp
+  //OS_String.cpp
+
   Source_Files(ACE_COMPONENTS) {
     OS {
       Basic_Types.cpp
       Time_Value.cpp
-      //OS.cpp
-      //OS_Dirent.cpp
-      //OS_Memory.cpp
-      //OS_String.cpp
       Cleanup.cpp
       Object_Manager_Base.cpp
       OS_NS_arpa_inet.cpp

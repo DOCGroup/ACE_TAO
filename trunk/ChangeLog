@@ -1,3 +1,24 @@
+Sun Nov  2 15:58:23 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/ace.mpc:
+          Added a comment about footprint and compile times, and moved the
+          commented out files up--MPC doesn't like comments in file
+          lists.  Thanks to Johnny Willemsen <jwillemsen@remedy.nl>
+          for reporting this.
+
+        * ace/OS_NS_netdb.inl:
+          Fixed a couple of instances of ::memcpy that didn't include
+          ACE_OS.
+
+        * ace/_S_NS_netdb.cpp:
+          Added #include Object_Manager_Base.h.
+
+        * ace/OS_NS_unistd.cpp:
+          Added #include Object_Manager_Base.h and OS_NS_Thread.h.
+
+        * ace/OS_NS_time.inl:
+          Added #include OS_NS_sys_time.h.
+
 Sun Nov  2 12:55:21 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Shared_Memory.h:

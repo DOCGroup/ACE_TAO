@@ -17,7 +17,7 @@
         TYPE ace_result_; \
         ACE_OSCALL (OP, TYPE, FAILVALUE, ace_result_); \
         if (ace_result_ != FAILVALUE) \
-          ::memcpy (TARGET, \
+          ACE_OS::memcpy (TARGET, \
                     ace_result_, \
                     SIZE < sizeof (TYPE) ? SIZE : sizeof (TYPE)); \
         ACE_OS::netdb_release (); \
@@ -31,7 +31,7 @@
         TYPE ace_result_; \
         ACE_OSCALL(OP,TYPE,FAILVALUE,ace_result_); \
         if (ace_result_ != FAILVALUE) \
-          ::memcpy (TARGET, \
+          ACE_OS::memcpy (TARGET, \
                     ace_result_, \
                     SIZE < sizeof (TYPE) ? SIZE : sizeof (TYPE)); \
         return ace_result_; \
