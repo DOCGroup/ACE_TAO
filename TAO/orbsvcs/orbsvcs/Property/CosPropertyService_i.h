@@ -158,10 +158,7 @@ public:
                                               CORBA::Environment &env);
   // Tell whether this property is defined or no. Forget about the
   // value.
-  
-  // @@ Alex, can these be put into the private part of the class,
-  // i.e., do we need them to be accessed outside of the
-  // implementation of this class?
+private:
   typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex> 
           CosProperty_Hash_Map;
   typedef ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value> 
@@ -170,7 +167,8 @@ public:
           CosProperty_Hash_Entry_ptr;
   typedef ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex> 
           CosProperty_Hash_Iterator;
-private:
+  // Typedefs are useful.
+
   CosProperty_Hash_Map hash_table_;
   // This Hash_Table manages storage for our properties.
 };
@@ -289,21 +287,18 @@ public:
   
   virtual void destroy (CORBA::Environment &env);
   // Destroys the iterator.
-
-  // @@ Alex, can these be put into the private part of the class,
-  // i.e., do we need them to be accessed outside of the
-  // implementation of this class?
+private:
   typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
-          CosProperty_Hash_Map;
+  CosProperty_Hash_Map;
   typedef ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
           CosProperty_Hash_Iterator;
   typedef ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value>
           CosProperty_Hash_Entry;
   typedef CosProperty_Hash_Entry * CosProperty_Hash_Entry_ptr;
-  
-private:
+
   CosProperty_Hash_Iterator iterator_;
   // The Iterator object.
+  
 };
 
 class TAO_ORBSVCS_Export TAO_PropertiesIterator :  public virtual POA_CosPropertyService::PropertiesIterator
@@ -351,10 +346,7 @@ public:
   virtual void destroy (CORBA::Environment &env);
   // Destroys the iterator.
 
-  // @@ Alex, can these be put into the private part of the class,
-  // i.e., do we need them to be accessed outside of the
-  // implementation of this class?
-
+private:
   typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
           CosProperty_Hash_Map;
   typedef ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
@@ -362,8 +354,7 @@ public:
   typedef ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value>
           CosProperty_Hash_Entry;
   typedef CosProperty_Hash_Entry * CosProperty_Hash_Entry_ptr;
-  
-private:
+
   CosProperty_Hash_Iterator iterator_;
   // The iterator object.
 };
