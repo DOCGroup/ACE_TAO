@@ -21,7 +21,8 @@ man_MANS = tao-config.1
 SUBDIRS = \
         TAO_IDL \
         tao \
-	orbsvcs
+	orbsvcs \
+	utils
 
 ## For some reason, automake doesn't include acconfig.h in the distribution
 EXTRA_DIST =  \
