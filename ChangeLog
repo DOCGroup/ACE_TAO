@@ -1,3 +1,10 @@
+Wed Jan  3 13:10:39 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * apps/JAWS/server/HTTP_Helpers.cpp:
+
+          Added ACE_MT around an ACE_Guard to remove an unused var
+          warning in the single threaded builds.
+
 Wed Jan  3 12:56:13 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Timer_Wheel_T.cpp:

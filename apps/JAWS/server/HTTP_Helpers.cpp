@@ -383,7 +383,7 @@ HTTP_Status_Code::instance (void)
 {
   if (HTTP_Status_Code::instance_ == 0)
     {
-      ACE_Guard<ACE_SYNCH_MUTEX> g (lock_);
+      ACE_MT (ACE_Guard<ACE_SYNCH_MUTEX> g (lock_));
 
       if (HTTP_Status_Code::instance_ == 0)
 	{
