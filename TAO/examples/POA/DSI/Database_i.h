@@ -11,7 +11,7 @@ class DatabaseImpl
 {
 public:
 
-  typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC;
+  typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC;
 
   class Simpler_Malloc : public MALLOC
   {
@@ -19,8 +19,8 @@ public:
     Simpler_Malloc (void);
   };
 
-  typedef ACE_Singleton <Simpler_Malloc, ACE_Null_Mutex> DATABASE;
-  typedef ACE_Malloc_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> DATABASE_ITERATOR;
+  typedef ACE_Singleton<Simpler_Malloc, ACE_Null_Mutex> DATABASE;
+  typedef ACE_Malloc_Iterator<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> DATABASE_ITERATOR;
 
   class Entry : public PortableServer::DynamicImplementation
   {
@@ -81,13 +81,13 @@ public:
     // Returns the default POA for this servant.
 
   protected:
-    Entry common_servant_;
-
     CORBA::ORB_var orb_;
     // ORB (auto) pointer
 
     PortableServer::POA_var poa_;
     // Default POA
+
+    Entry common_servant_;
   };
 
   static char *entry_type_to_repository_id (const char *entry_type);
@@ -110,11 +110,10 @@ public:
     void operator delete (void *pointer);
 
   private:
-    char *name_;
-    // Employee name.
-
     CORBA::Long id_;
     // Employee ID.
-  };
 
+    char *name_;
+    // Employee name.
+  };
 };
