@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Containers.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #if !defined (ACE_CONTAINERS_H)
@@ -22,10 +22,10 @@
 class ACE_Allocator;
 
 template <class T>
-class ACE_Bounded_Stack 
+class ACE_Bounded_Stack
   // = TITLE
   //     Implement a generic LIFO abstract data type.
-  //     
+  //
   // = DESCRIPTION
   //     This implementation of a Stack uses a bounded array
   //     that is allocated dynamically.
@@ -34,16 +34,16 @@ public:
   // = Initialization, assignemnt, and termination methods.
 
   ACE_Bounded_Stack (size_t size);
-  // Initialize a new stack so that it is empty. 
+  // Initialize a new stack so that it is empty.
 
   ACE_Bounded_Stack (const ACE_Bounded_Stack<T> &s);
-  // The copy constructor (performs initialization). 
+  // The copy constructor (performs initialization).
 
   void operator= (const ACE_Bounded_Stack<T> &s);
-  // Assignment operator (performs assignment). 
+  // Assignment operator (performs assignment).
 
-  ~ACE_Bounded_Stack (void); 
- // Perform actions needed when stack goes out of scope. 
+  ~ACE_Bounded_Stack (void);
+ // Perform actions needed when stack goes out of scope.
 
   // = Classic Stack operations.
 
@@ -57,7 +57,7 @@ public:
   // already empty, 0 if the stack is not already empty, and -1 if
   // failure occurs.
 
-  int top (T &item) const; 
+  int top (T &item) const;
   // Return top stack item without removing it.  Returns -1 if the
   // stack is already empty, 0 if the stack is not already empty, and
   // -1 if failure occurs.
@@ -65,10 +65,10 @@ public:
   // = Check boundary conditions.
 
   int is_empty (void) const;
-  // Returns 1 if the container is empty, otherwise returns 0. 
+  // Returns 1 if the container is empty, otherwise returns 0.
 
   int is_full (void) const;
-  // Returns 1 if the container is full, otherwise returns 0. 
+  // Returns 1 if the container is full, otherwise returns 0.
 
   size_t size (void) const;
   // The number of items in the stack.
@@ -83,20 +83,20 @@ private:
   size_t size_;
   // Size of the dynamically allocated data.
 
-  size_t top_; 
-  // Keeps track of the current top of stack. 
+  size_t top_;
+  // Keeps track of the current top of stack.
 
-  T *stack_; 
-  // Holds the stack's contents. 
+  T *stack_;
+  // Holds the stack's contents.
 };
 
 //----------------------------------------
 
 template <class T, size_t SIZE>
-class ACE_Fixed_Stack 
+class ACE_Fixed_Stack
   // = TITLE
   //     Implement a generic LIFO abstract data type.
-  //     
+  //
   // = DESCRIPTION
   //     This implementation of a Stack uses a fixed array
   //     with the size fixed at instantiation time.
@@ -104,16 +104,16 @@ class ACE_Fixed_Stack
 public:
   // = Initialization, assignemnt, and termination methods.
   ACE_Fixed_Stack (void);
-  // Initialize a new stack so that it is empty. 
+  // Initialize a new stack so that it is empty.
 
   ACE_Fixed_Stack (const ACE_Fixed_Stack<T, SIZE> &s);
-  // The copy constructor (performs initialization). 
+  // The copy constructor (performs initialization).
 
   void operator= (const ACE_Fixed_Stack<T, SIZE> &s);
-  // Assignment operator (performs assignment). 
+  // Assignment operator (performs assignment).
 
-  ~ACE_Fixed_Stack (void); 
-  // Perform actions needed when stack goes out of scope. 
+  ~ACE_Fixed_Stack (void);
+  // Perform actions needed when stack goes out of scope.
 
   // = Classic Stack operations.
 
@@ -127,7 +127,7 @@ public:
   // already empty, 0 if the stack is not already empty, and -1 if
   // failure occurs.
 
-  int top (T &item) const; 
+  int top (T &item) const;
   // Return top stack item without removing it.  Returns -1 if the
   // stack is already empty, 0 if the stack is not already empty, and
   // -1 if failure occurs.
@@ -135,10 +135,10 @@ public:
   // = Check boundary conditions.
 
   int is_empty (void) const;
-  // Returns 1 if the container is empty, otherwise returns 0. 
+  // Returns 1 if the container is empty, otherwise returns 0.
 
   int is_full (void) const;
-  // Returns 1 if the container is full, otherwise returns 0. 
+  // Returns 1 if the container is full, otherwise returns 0.
 
   size_t size (void) const;
   // The number of items in the stack.
@@ -153,11 +153,11 @@ private:
   size_t size_;
   // Size of the allocated data.
 
-  size_t top_; 
-  // Keeps track of the current top of stack. 
+  size_t top_;
+  // Keeps track of the current top of stack.
 
   T stack_[SIZE];
-  // Holds the stack's contents. 
+  // Holds the stack's contents.
 };
 
 //----------------------------------------
@@ -230,10 +230,10 @@ protected:
 #endif /* 0 */
 
 template <class T>
-class ACE_Unbounded_Stack 
+class ACE_Unbounded_Stack
   // = TITLE
   //     Implement a generic LIFO abstract data type.
-  //     
+  //
   // = DESCRIPTION
   //     This implementation of an unbounded Stack uses a linked list.
 {
@@ -245,13 +245,13 @@ public:
   // allocation strategy if specified.
 
   ACE_Unbounded_Stack (const ACE_Unbounded_Stack<T> &s);
-  // The copy constructor (performs initialization). 
+  // The copy constructor (performs initialization).
 
   void operator= (const ACE_Unbounded_Stack<T> &s);
-  // Assignment operator (performs assignment). 
+  // Assignment operator (performs assignment).
 
-  ~ACE_Unbounded_Stack (void); 
-  // Perform actions needed when stack goes out of scope. 
+  ~ACE_Unbounded_Stack (void);
+  // Perform actions needed when stack goes out of scope.
 
   // = Classic Stack operations.
 
@@ -265,7 +265,7 @@ public:
   // already empty, 0 if the stack is not already empty, and -1 if
   // failure occurs.
 
-  int top (T &item) const; 
+  int top (T &item) const;
   // Return top stack item without removing it.  Returns -1 if the
   // stack is already empty, 0 if the stack is not already empty, and
   // -1 if failure occurs.
@@ -273,10 +273,10 @@ public:
   // = Check boundary conditions.
 
   int is_empty (void) const;
-  // Returns 1 if the container is empty, otherwise returns 0. 
+  // Returns 1 if the container is empty, otherwise returns 0.
 
   int is_full (void) const;
-  // Returns 1 if the container is full, otherwise returns 0. 
+  // Returns 1 if the container is full, otherwise returns 0.
 
   // = Auxiliary methods (not strictly part of the Stack ADT).
 
@@ -284,7 +284,7 @@ public:
   // Insert <new_item> into the Stack at the head (but doesn't allow
   // duplicates).  Returns -1 if failures occur, 1 if item is already
   // present, else 0.
-  
+
   int remove (const T &item);
   // Remove <item> from the Stack.  Returns 0 if it removes the item,
   // -1 if it can't find the item, and -1 if a failure occurs.
@@ -410,7 +410,7 @@ public:
   // if specified.
 
   ACE_Unbounded_Queue (const ACE_Unbounded_Queue<T> &);
-  // Copy constructor. 
+  // Copy constructor.
 
   void operator= (const ACE_Unbounded_Queue<T> &);
   // Assignment operator.
@@ -421,10 +421,10 @@ public:
   // = Check boundary conditions.
 
   int is_empty (void) const;
-  // Returns 1 if the container is empty, otherwise returns 0. 
+  // Returns 1 if the container is empty, otherwise returns 0.
 
   int is_full (void) const;
-  // Returns 1 if the container is full, otherwise returns 0. 
+  // Returns 1 if the container is full, otherwise returns 0.
 
   // = Classic queue operations.
 
@@ -557,7 +557,7 @@ public:
   // if specified.
 
   ACE_Double_Linked_List (ACE_Double_Linked_List<T> &);
-  // Copy constructor. 
+  // Copy constructor.
 
   void operator= (ACE_Double_Linked_List<T> &);
   // Assignment operator.
@@ -568,10 +568,10 @@ public:
   // = Check boundary conditions.
 
   int is_empty (void) const;
-  // Returns 1 if the container is empty, otherwise returns 0. 
+  // Returns 1 if the container is empty, otherwise returns 0.
 
   int is_full (void) const;
-  // Returns 1 if the container is full, otherwise returns 0. 
+  // Returns 1 if the container is full, otherwise returns 0.
 
   // = Classic queue operations.
 
@@ -584,14 +584,14 @@ public:
   // -1 on failure.
 
   T* delete_head (void);
-  // Removes and returns the first <item> in the list.  Returns 0 on
-  // success, -1 if the queue was empty.  This method will *not* free the
-  // internal node.
+  // Removes and returns the first <item> in the list.  Returns
+  // internal node's address on success, 0 if the queue was empty.
+  // This method will *not* free the internal node.
 
   T *delete_tail (void);
-  // Removes and returns the last <item> in the list.  Returns 0 on
-  // success, -1 if the queue was empty. This method will *not* free the
-  // internal node.
+  // Removes and returns the last <item> in the list.  Returns
+  // internal nodes's address on success, 0 if the queue was
+  // empty. This method will *not* free the internal node.
 
   // = Additional utility methods.
 
@@ -643,7 +643,7 @@ protected:
                       T *old_item = 0);
   // Insert a <new_element> into the list.  It will be added before
   // or after <old_item>.  Default is to insert the new item *after*
-  // <head_>.  Return 0 if succeed, -1 if error occured.  
+  // <head_>.  Return 0 if succeed, -1 if error occured.
 
   int remove_element (T *item);
   // Remove an <item> from the list.  Return 0 if succeed, -1 otherwise.
@@ -651,12 +651,12 @@ protected:
   // <next_> or <prev_> is NULL.  The function resets item's <next_> and
   // <prev_> to 0 to prevent clobbering the double-linked list if a user
   // tries to remove the same node again.
-  
+
   T *head_;
   // Head of the circular double-linked list.
 
   size_t size_;
-  // Size of this list. 
+  // Size of this list.
 
   ACE_Allocator *allocator_;
   // Allocation Strategy of the queue.
@@ -702,7 +702,7 @@ template <class T>
 class ACE_Unbounded_Set
   // = TITLE
   //     Implement a simple unordered set of <T> of unbounded size.
-  //     
+  //
   // = DESCRIPTION
   //     This implementation of an unordered set uses a circular
   //     linked list with a dummy node.  This implementation does not
@@ -716,7 +716,7 @@ public:
   // if specified.
 
   ACE_Unbounded_Set (const ACE_Unbounded_Set<T> &);
-  // Copy constructor. 
+  // Copy constructor.
 
   void operator= (const ACE_Unbounded_Set<T> &);
   // Assignment operator.
@@ -727,10 +727,10 @@ public:
   // = Check boundary conditions.
 
   int is_empty (void) const;
-  // Returns 1 if the container is empty, otherwise returns 0. 
+  // Returns 1 if the container is empty, otherwise returns 0.
 
   int is_full (void) const;
-  // Returns 1 if the container is full, otherwise returns 0. 
+  // Returns 1 if the container is full, otherwise returns 0.
 
   // = Classic unordered set operations.
 
@@ -738,7 +738,7 @@ public:
   // Insert <new_item> into the set (doesn't allow duplicates).
   // Returns -1 if failures occur, 1 if item is already present, else
   // 0.
-  
+
   int remove (const T &item);
   // Remove first occurrence of <item> from the set.  Returns 0 if
   // it removes the item, -1 if it can't find the item, and -1 if a
@@ -782,14 +782,14 @@ private:
 };
 
 // Forward declaration.
-template <class T, size_t SIZE> 
+template <class T, size_t SIZE>
 class ACE_Fixed_Set;
 
 template <class T, size_t SIZE>
 class ACE_Fixed_Set_Iterator
   // = TITLE
   //     Interates through an unordered set.
-  //     
+  //
   // = DESCRIPTION
   //     This implementation of an unordered set uses a fixed array.
   //     Allows deletions while iteration is occurring.
@@ -818,7 +818,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_Fixed_Set<T, SIZE> &s_; 
+  ACE_Fixed_Set<T, SIZE> &s_;
   // Set we are iterating over.
 
   ssize_t next_;
@@ -829,7 +829,7 @@ template <class T, size_t SIZE>
 class ACE_Fixed_Set
   // = TITLE
   //     Implement a simple unordered set of <T> with maximum <SIZE>.
-  //     
+  //
   // = DESCRIPTION
   //     This implementation of an unordered set uses a fixed array.
   //     This implementation does not allow duplicates...
@@ -841,7 +841,7 @@ public:
   // Constructor.
 
   ACE_Fixed_Set (const ACE_Fixed_Set<T, SIZE> &);
-  // Copy constructor. 
+  // Copy constructor.
 
   void operator= (const ACE_Fixed_Set<T, SIZE> &);
   // Assignment operator.
@@ -852,10 +852,10 @@ public:
   // = Check boundary conditions.
 
   int is_empty (void) const;
-  // Returns 1 if the container is empty, otherwise returns 0. 
+  // Returns 1 if the container is empty, otherwise returns 0.
 
   int is_full (void) const;
-  // Returns 1 if the container is full, otherwise returns 0. 
+  // Returns 1 if the container is full, otherwise returns 0.
 
   // = Classic unordered set operations.
 
@@ -863,12 +863,12 @@ public:
   // Insert <new_item> into the set (doesn't allow duplicates).
   // Returns -1 if failures occur, 1 if item is already present, else
   // 0.
-  
+
   int remove (const T &item);
   // Remove first occurrence of <item> from the set.  Returns 0 if
   // it removes the item, -1 if it can't find the item, and -1 if a
   // failure occurs.
-  
+
   int find (const T &item) const;
   // Finds if <item> occurs in the set.  Returns 0 if finds, else -1.
 
@@ -894,20 +894,20 @@ private:
 
   size_t cur_size_;
   // Current size of the set.
-  
+
   size_t max_size_;
   // Maximum size of the set.
 };
 
 // Forward declaration.
-template <class T> 
+template <class T>
 class ACE_Bounded_Set;
 
 template <class T>
 class ACE_Bounded_Set_Iterator
   // = TITLE
   //     Interates through an unordered set.
-  //     
+  //
   // = DESCRIPTION
   //     This implementation of an unordered set uses a Bounded array.
   //     Allows deletions while iteration is occurring.
@@ -936,7 +936,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_Bounded_Set<T> &s_; 
+  ACE_Bounded_Set<T> &s_;
   // Set we are iterating over.
 
   ssize_t next_;
@@ -946,16 +946,16 @@ private:
 template <class T>
 class ACE_Bounded_Set
   // = TITLE
-  //     Implement a simple unordered set of <T> with maximum 
+  //     Implement a simple unordered set of <T> with maximum
   //     set at creation time.
-  // 
+  //
   // = DESCRIPTION
   //     This implementation of an unordered set uses a Bounded array.
   //     This implementation does not allow duplicates...
 {
 friend class ACE_Bounded_Set_Iterator<T>;
 public:
-  enum 
+  enum
   {
     DEFAULT_SIZE = 10
   };
@@ -968,7 +968,7 @@ public:
   // Constructor.
 
   ACE_Bounded_Set (const ACE_Bounded_Set<T> &);
-  // Copy constructor. 
+  // Copy constructor.
 
   void operator= (const ACE_Bounded_Set<T> &);
   // Assignment operator.
@@ -979,10 +979,10 @@ public:
   // = Check boundary conditions.
 
   int is_empty (void) const;
-  // Returns 1 if the container is empty, otherwise returns 0. 
+  // Returns 1 if the container is empty, otherwise returns 0.
 
   int is_full (void) const;
-  // Returns 1 if the container is full, otherwise returns 0. 
+  // Returns 1 if the container is full, otherwise returns 0.
 
   // = Classic unordered set operations.
 
@@ -990,12 +990,12 @@ public:
   // Insert <new_item> into the set (doesn't allow duplicates).
   // Returns -1 if failures occur, 1 if item is already present, else
   // 0.
-  
+
   int remove (const T &item);
   // Remove first occurrence of <item> from the set.  Returns 0 if it
   // removes the item, -1 if it can't find the item, and -1 if a
   // failure occurs.
-  
+
   int find (const T &item) const;
   // Finds if <item> occurs in the set.  Returns 0 if finds, else -1.
 
@@ -1023,7 +1023,7 @@ private:
 
   size_t cur_size_;
   // Current size of the set.
-  
+
   size_t max_size_;
   // Maximum size of the set.
 };
