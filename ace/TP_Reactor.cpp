@@ -296,10 +296,6 @@ ACE_TP_Reactor::handle_notify_events (int &event_count,
 
   if (notify_handle != ACE_INVALID_HANDLE)
     {
-
-      // Clear the handle of the read_mask of our <ready_set_>
-      this->ready_set_.rd_mask_.clr_bit (notify_handle);
-
       // Now just do a read on the pipe..
       ACE_Notification_Buffer buffer;
 
@@ -310,12 +306,17 @@ ACE_TP_Reactor::handle_notify_events (int &event_count,
           // to be handled.
           event_count--;
 
+          // Clear the handle of the read_mask of our <ready_set_>
+          // this->ready_set_.rd_mask_.clr_bit (notify_handle);
+
           // Release the token before dispatching notifies...
           guard.release_token ();
 
           // Dispatch the upcall for the notify
-          if (this->notify_handler_->dispatch_notify (buffer) > 0)
-            result = 1; // We had a successful dispatch.
+          this->notify_handler_->dispatch_notify (buffer);
+
+          // We had a successful dispatch.
+          result = 1;
 
           // Put ourseleves in the queue
           this->renew ();

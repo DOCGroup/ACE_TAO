@@ -1,3 +1,9 @@
+Fri Sep  7 14:17:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/TP_Reactor.cpp: Do not clear the notify handle bit when
+	  trying to dispatch notify calls. This shoudl fix the long
+	  pending problems with TRU 64 builds.
+
 Fri Sep 07 12:12:39 2001  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv1/Iterative_Logging_Server.dsp:
