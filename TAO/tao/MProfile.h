@@ -41,7 +41,7 @@ class TAO_Export TAO_MProfile
   //   responsibility for controling access (i.e. locking).
 public:
   // = Initalization and termination methods.
-  TAO_MProfile (CORBA::ULong sz);
+  TAO_MProfile (CORBA::ULong sz = 0);
 
   TAO_MProfile (const TAO_MProfile &mprofiles);
   // **NOTE:  IF mprofiles->last_ > 0, THEN this->size_ will be set to
