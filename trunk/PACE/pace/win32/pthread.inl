@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/pthread.inl
+ *    pace/win32/pthread.inl
  *
  * = AUTHOR
  *    Luther Baker

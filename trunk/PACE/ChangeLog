@@ -1,3 +1,9 @@
+Thu Jun 29 19:22:46 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32
+	  Altered syntax (#include pace/posix/file.h) left over
+	  from copying.
+
 Thu Jun 29 16:42:31 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* pace/posix/pthread.{h,inl}:

@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/aio.h
+ *    pace/win32/aio.h
  *
  * = AUTHOR
  *    Luther Baker
@@ -54,7 +54,7 @@ extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #if defined (PACE_HAS_INLINE)
-# include "pace/posix/aio.inl"
+# include "pace/win32/aio.inl"
 #endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_AIO_H */

@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/sched.c
+ *    pace/win32/sched.c
  *
  * = AUTHOR
  *    Luther Baker
@@ -16,5 +16,5 @@
 #include "pace/sched.h"
 
 #if !defined (PACE_HAS_INLINE)
-# include "pace/posix/sched.inl"
+# include "pace/win32/sched.inl"
 #endif /* ! PACE_HAS_INLINE */

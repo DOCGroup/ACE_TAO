@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/termios.inl
+ *    pace/win32/termios.inl
  *
  * = AUTHOR
  *    Luther Baker

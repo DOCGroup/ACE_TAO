@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/grp.inl
+ *    pace/win32/grp.inl
  *
  * = AUTHOR
  *    Luther Baker

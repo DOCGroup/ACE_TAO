@@ -7,7 +7,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/types.h
+ *    pace/win32/types.h
  *
  * = AUTHOR
  *    Luther Baker

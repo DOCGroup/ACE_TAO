@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/mman.inl
+ *    pace/win32/mman.inl
  *
  * = AUTHOR
  *    Luther Baker

@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/fnctl.h
+ *    pace/win32/fnctl.h
  *
  * = AUTHOR
  *    Luther Baker
@@ -48,7 +48,7 @@ extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #if defined (PACE_HAS_INLINE)
-# include "pace/posix/fcntl.inl"
+# include "pace/win32/fcntl.inl"
 #endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_FCNTL_H */
