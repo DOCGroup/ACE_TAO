@@ -1363,8 +1363,9 @@ CORBA_Any::operator>>= (const CORBA::Any *&a) const
         }
       else
         {
-          CORBA::Any_var tmp;
-          ACE_NEW_RETURN (tmp.out (), CORBA::Any, 0);
+          CORBA::Any *x;
+          ACE_NEW_RETURN (x, CORBA::Any, 0);
+          CORBA::Any_var tmp = x;
           TAO_InputCDR stream (this->cdr_,
                                this->byte_order_);
           if (!(stream >> tmp.inout ()))

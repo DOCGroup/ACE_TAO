@@ -1,3 +1,13 @@
+Fri Mar 10 11:28:17 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/Any.cpp:
+	  The >>= operator for 'const Any*' was not working properly,
+	  thanks to Jeff for letting me know.
+
+	* tao/GIOPC.h:
+	* tao/GIOPC.cpp:
+	  Another pair of files updated.
+
 Fri Mar 10 12:49:21 2000  Jeff Paraons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_codegen.cpp 
