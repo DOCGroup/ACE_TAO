@@ -1,3 +1,21 @@
+Tue Dec  7 13:30:20 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Multipel_Endpoints/Makefile
+	* performance-tests/RTCorba/Multipel_Endpoints/Endpoint_Per_Priority/Makefile
+	* performance-tests/RTCorba/Multipel_Endpoints/Endpoint_Per_Priority/README
+	* performance-tests/RTCorba/Multipel_Endpoints/Endpoint_Per_Priority/client.cpp
+	* performance-tests/RTCorba/Multipel_Endpoints/Endpoint_Per_Priority/run-test.pl
+	* performance-tests/RTCorba/Multipel_Endpoints/Endpoint_Per_Priority/server.conf
+	* performance-tests/RTCorba/Multipel_Endpoints/Orb_Per_Priority/Makefile
+	* performance-tests/RTCorba/Multipel_Endpoints/Orb_Per_Priority/client.cpp
+	* performance-tests/RTCorba/Multipel_Endpoints/Orb_Per_Priority/run-test.pl
+	* performance-tests/RTCorba/Multipel_Endpoints/Orb_Per_Priority/server.cpp
+	* performance-tests/RTCorba/Multipel_Endpoints/Single_Endpoint/Makefile
+	* performance-tests/RTCorba/Multipel_Endpoints/Single_Endpoint/client.cpp
+	* performance-tests/RTCorba/Multipel_Endpoints/Single_Endpoint/run-test.pl:
+	  Added THR_BOUND flag whereever we spawned threads in the tests.
+	  Updated perl scripts.
+
 Tue Dec  7 17:56:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Pool_Per_Endpoint.h:
@@ -5,8 +23,8 @@ Tue Dec  7 17:56:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  real-time configurations. Thanks to Marina for pointing this
 	  out.
 
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/server.conf: 
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.conf: 
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/server.conf:
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.conf:
 	  Don't use thread-per-connection as it is hard to control the
 	  priority of the ORB created threads.
 
