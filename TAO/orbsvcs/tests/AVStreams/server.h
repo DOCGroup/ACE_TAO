@@ -21,7 +21,7 @@
 #define AVSTREAMS_SERVER_H
 
 #include "orbsvcs/AV/AVStreams_i.h"
-#include "tao/tao_util.h"
+#include "tao/TAO.h"
 
 class Video_Server_StreamEndPoint : public virtual TAO_Server_StreamEndPoint
 {
