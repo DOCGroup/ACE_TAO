@@ -1,6 +1,4 @@
-#
 # $Id$
-#
 
 BIN = Dump_Schedule
 BUILD = $(BIN)
@@ -232,6 +230,6 @@ Dump_Schedule: $(addprefix $(VDIR),$(DUMP_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs/Scheduler_Factory.i
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
