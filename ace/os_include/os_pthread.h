@@ -418,7 +418,9 @@ public:
 
      // Use new pthread_attr_setstack if XPG6 support is enabled.
 #    if defined (_XOPEN_SOURCE) && (_XOPEN_SOURCE - 0) >= 600
-#      define ACE_HAS_PTHREAD_SETSTACK
+#      if !defined (ACE_HAS_PTHREAD_SETSTACK)
+#        define ACE_HAS_PTHREAD_SETSTACK
+#      endif /* ACE_HAS_PTHREAD_SETSTACK */
 #    endif /* (_XOPEN_SOURCE - 0) >= 600 */
 
 #    if !defined (_XOPEN_SOURCE) \
