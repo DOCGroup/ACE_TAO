@@ -1,3 +1,8 @@
+Thu Nov 15 15:43:20 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* ace/Naming_Context.cpp (info): Wrapped sprintf() arguments with
+	  ACE_LIB_TEXT.  Fix supplied by Johnny Willemsen.
+
 Thu Nov 15 12:43:31 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/wchar.txt: Added a writeup for ACE_LIB_TEXT and ACE_TEXT
