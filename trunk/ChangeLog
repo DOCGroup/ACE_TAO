@@ -1,3 +1,11 @@
+Sun Jan 23 13:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Capabilities.cpp:
+          Removed instantiations of ACE_Hash and ACE_Equal_To of
+          ACE_TString. These where already giving problems on VxWorks,
+          now also on Irix, so removed them. Thanks to Doug McCorkle
+          <mccdo at iastate dot edu> for reporting this
+
 Sun Jan 23 12:39:20 2005  Marek Brudka  <mbrudka@aster.pl>
 
         * bin/MakeProjectCreator/config/tao_xtresource.mpb:
