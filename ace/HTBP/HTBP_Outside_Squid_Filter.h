@@ -71,8 +71,8 @@ namespace ACE
       virtual ssize_t recv_data_trailer(Channel *);
     };
 
-  };
-};
+  }
+}
 
 #if defined (__ACE_INLINE__)
 #include "HTBP_Outside_Squid_Filter.inl"

@@ -280,8 +280,8 @@ namespace ACE
       Session *session_;
 
     };
-  };
-};
+  }
+}
 
 #if defined (__ACE_INLINE__)
 #include "HTBP_Stream.inl"

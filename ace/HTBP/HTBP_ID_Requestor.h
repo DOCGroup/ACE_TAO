@@ -52,7 +52,7 @@ namespace ACE
       static ACE_SYNCH_MUTEX htid_lock_;
     };
 
-  };
-};
+  }
+}
 #include /**/ "ace/post.h"
 #endif /* HTID_REQUESTOR_H */

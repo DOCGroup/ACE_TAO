@@ -87,8 +87,8 @@ namespace ACE
       int http_code_;
 
     };
-  };
-};
+  }
+}
 
 #if defined (__ACE_INLINE__)
 #include "HTBP_Filter.inl"
