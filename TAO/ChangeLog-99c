@@ -4,6 +4,9 @@ Sat Mar 13 11:58:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Removed unused variable, thanks to David Levine for reporting
 	  this.
 
+	* TAO-INSTALL.html:
+	  Updated the notes on how to compile TAO.
+
 Sat Mar 13 11:57:27 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* tao/ORB.cpp (ORB_init): Revised the multicast_query() stuff just
