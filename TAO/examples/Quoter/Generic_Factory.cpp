@@ -35,7 +35,8 @@ Quoter_Generic_Factory_Server::~Quoter_Generic_Factory_Server (void)
       generic_Factory_Name.length (2);
       generic_Factory_Name[0].id = CORBA::string_dup ("IDL_Quoter");
       generic_Factory_Name[1].id = CORBA::string_dup ("Quoter_Generic_Factory");
-      this->quoterNamingContext_var_->unbind (generic_Factory_Name,ACE_TRY_ENV);
+      if (this->quoterNamingContext_var_.ptr () != 0)
+        this->quoterNamingContext_var_->unbind (generic_Factory_Name,ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
