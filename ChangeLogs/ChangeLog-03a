@@ -1,3 +1,8 @@
+Sun Apr 28 12:27:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/ace_flags.bor:
+          Added cflags and lib for new TAO IFRService library
+
 Sat Apr 27 20:00:27 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ace_dll.dsp:
