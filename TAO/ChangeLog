@@ -1,3 +1,15 @@
+Tue Dec 23 09:48:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/IDL_Test/Makefile:
+	* tests/IDL_Test/keywords.idl:
+
+	  Added a test case for the bug report from Cyrille. The fix went
+	  in this change "Tue Dec 23 09:47:27 2003  Jeff Parsons
+	  <j.parsons@vanderbilt.edu>". The IDL file has the exact
+	  construction that Cyrille reported. We now by default generate
+	  AMI code if ami==1 in the IDL_Test. Therefore we link in the
+	  Messaging library too.
+
 Tue Dec 23 09:47:27 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 	* TAO_IDL/ast/ast_decl.cpp:
