@@ -171,6 +171,10 @@ how to run the following tests:
           This test exercises IDL interfaces that inherit from
           multiple interfaces.
 
+        . Muxing
+
+          Simple test for connection muxing.
+
         . Native_Exceptions
 
           Simple test to show (and verify) that TAO can generate code
@@ -238,6 +242,11 @@ how to run the following tests:
         . Single_Read
         
           This is a stress test for TAO's "single read" feature.
+
+        . Server_Leaks
+        
+          Try to make the server-side leak resources by connecting and
+	  disconnecting multiple clients.
 
         . Smart Proxies
 
