@@ -2225,6 +2225,7 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/Service_Context.h \
  $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/TAO_Server_Request.i
+ $(TAO_ROOT)/tao/TAO_Server_Request.i \
+ $(TAO_ROOT)/tao/Protocols_Hooks.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
