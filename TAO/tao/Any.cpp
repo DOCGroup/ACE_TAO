@@ -121,7 +121,7 @@ CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr type,
   : type_ (CORBA::TypeCode::_duplicate (type)),
     value_ (0),
     cdr_ (ACE_Message_Block::duplicate (mb)),
-    any_owns_data_ (1)
+    any_owns_data_ (0)
 {
 }
 
