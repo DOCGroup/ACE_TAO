@@ -48,7 +48,9 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::ACE_Cached_Connect_Strategy_Ex
 template <ACE_T1>
 ACE_Cached_Connect_Strategy_Ex<ACE_T2>::~ACE_Cached_Connect_Strategy_Ex (void)
 {
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
+#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
+  cleanup ();
+#else 
   // Close down all cached service handlers.
   for (ACE_TYPENAME CONNECTION_CACHE::ITERATOR iter = this->connection_cache_.begin ();
        iter != this->connection_cache_.end ();
@@ -484,6 +486,33 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::find (ACE_Refcounted_Hash_Recyclable<ACE
 
   return -1;
 }
+
+#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
+template <ACE_T1> void
+ACE_Cached_Connect_Strategy_Ex<ACE_T2>::cleanup (void)
+{
+  typedef ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,
+                                   ACE_Pair<SVC_HANDLER *, ATTRIBUTES>,
+                                   ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
+                                   ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
+                                   ACE_Null_Mutex>
+    CONNECTION_MAP_ITERATOR;
+
+  CONNECTION_MAP_ITERATOR end = this->connection_cache_.map ().end ();
+  CONNECTION_MAP_ITERATOR iter = this->connection_cache_.map ().begin ();
+
+  for (;
+       iter != end;
+       ++iter)
+    {
+      if ((*iter).int_id_.first () != 0)
+        {
+          (*iter).int_id_.first ()->recycler (0, 0);
+          (*iter).int_id_.first ()->close ();
+        }
+    }
+}
+#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Cached_Connect_Strategy_Ex)
 
