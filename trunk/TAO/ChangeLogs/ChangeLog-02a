@@ -1,3 +1,8 @@
+Tue Apr  3 18:16:04 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/tests/Security/Secure_Invocation/Makefile: 
+	  Updated dependencies.
+
 Tue Apr  3 15:54:11 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* orbsvcs/Notify_Service/Notify_Service.cpp (run): Don't printout
