@@ -393,7 +393,7 @@ be_visitor_field_cdr_op_cs::visit_component_fwd (be_component_fwd *node)
 }
 
 int
-be_visitor_field_cdr_op_cs::visit_valuetype (be_valuetype *node)
+be_visitor_field_cdr_op_cs::visit_valuetype (be_valuetype *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_field *f = this->ctx_->be_node_as_field ();
@@ -442,7 +442,7 @@ be_visitor_field_cdr_op_cs::visit_eventtype (be_eventtype *node)
 }
 
 int
-be_visitor_field_cdr_op_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
+be_visitor_field_cdr_op_cs::visit_valuetype_fwd (be_valuetype_fwd *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -660,7 +660,7 @@ be_visitor_field_cdr_op_cs::visit_sequence (be_sequence *node)
 }
 
 int
-be_visitor_field_cdr_op_cs::visit_string (be_string *node)
+be_visitor_field_cdr_op_cs::visit_string (be_string *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
