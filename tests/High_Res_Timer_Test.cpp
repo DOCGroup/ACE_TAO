@@ -1,6 +1,5 @@
 // $Id$
-
-// ============================================================================
+//============================================================================
 //
 // = LIBRARY
 //    tests
@@ -14,7 +13,7 @@
 // = AUTHOR
 //    David L. Levine <levine@cs.wustl.edu>
 //
-// ============================================================================
+//============================================================================
 
 #include "test_config.h"
 #include "ace/Log_Msg.h"
@@ -22,7 +21,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(tests, High_Res_Timer_Test, "$Id$")
+ACE_RCSID(tests, High_Res_Timer_Test, "High_Res_Timer_Test.cpp,v 4.6 2000/04/23 04:43:58 brunsch Exp")
 
 static
 u_int
@@ -47,9 +46,37 @@ check (const u_int interval, const u_int measured)
                       1);
 }
 
+// Does a sanity check of the microseconds vs nanoseconds. They're supposed
+// to represent the same interval.
+static u_int
+check_micro_nano (ACE_hrtime_t microinterval, ACE_hrtime_t nanointerval)
+{
+  const u_int threshold = 8 /* promille */;
+
+  microinterval *= 1000u;
+  const u_int difference = (u_int)(microinterval > nanointerval  ?
+                                   microinterval - nanointerval  :
+                                   nanointerval - microinterval    );
+
+  const u_int promille_difference = difference * 1000 / (u_int)(nanointerval);
+
+  if ((promille_difference < threshold) || (difference < 1500))
+    return 0;
+  else
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("The microseconds * 1000 of %u differs from ")
+                       ACE_TEXT ("the nanoseconds of %u by %u promille\n"),
+                       (u_int)microinterval,
+                       (u_int)nanointerval,
+                       promille_difference),
+                      1);
+}
+
 static
 ACE_Time_Value
-time_interval (const ACE_Time_Value &interval)
+time_interval (const ACE_Time_Value &interval,
+               ACE_hrtime_t& nanoseconds,
+               ACE_hrtime_t& microseconds)
 {
   ACE_High_Res_Timer timer;
 
@@ -59,12 +86,15 @@ time_interval (const ACE_Time_Value &interval)
 
   ACE_Time_Value measured;
   timer.elapsed_time (measured);
+  timer.elapsed_time (nanoseconds);
+  timer.elapsed_microseconds (microseconds);
   return measured;
 }
 
+
 static
 u_int
-intervals [] = {0, 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000}; /* usec */
+intervals [] = {0, 1, 10, 100, 1000, 10000, 100000, 1000000, 4000000}; /*usec*/
 
 int
 main (int argc, ACE_TCHAR *argv[])
@@ -98,13 +128,18 @@ main (int argc, ACE_TCHAR *argv[])
       for (u_int j = 0; j < iterations; ++j)
         {
           const ACE_Time_Value interval (0, intervals[i]);
-          const ACE_Time_Value measured = time_interval (interval);
+          ACE_hrtime_t nanoseconds;
+          ACE_hrtime_t microseconds;
+          const ACE_Time_Value measured = time_interval (interval,
+                                                         nanoseconds,
+                                                         microseconds);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("interval: %u usec, measured: %u usec%s\n"),
                       interval.sec () * 1000000 + interval.usec (),
                       measured.sec () * 1000000 + measured.usec (),
                       intervals[i] <= TIMER_RESOLUTION  ?
-                      ACE_TEXT (" (interval and measured may differ)")  :  ACE_TEXT ("")));
+                      ACE_TEXT (" (interval and measured may differ)")  :
+                      ACE_TEXT ("")));
 
           if (intervals[i] > TIMER_RESOLUTION)
             {
@@ -112,6 +147,23 @@ main (int argc, ACE_TCHAR *argv[])
                                measured.sec () * 1000000 + measured.usec ());
               // Don't check for error for intervals below 10 msec.
             }
+          // Check the ACE_Timer_Value-calculated microseconds against
+          // the ACE_High_Res_Timer-calculated nanoseconds.
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("ACE_Time_Value usec: %u, ACE_HR nsec: %u\n"),
+                      measured.sec () * 1000000 + measured.usec (),
+                      (u_int)nanoseconds));
+          // This gives problems -> should be fixed
+          errors += check_micro_nano (measured.sec () * 1000000 +
+                                      measured.usec (),
+                                      nanoseconds);
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("ACE_High_Res_Timer usec: %u, nsec: %u\n"),
+                      (u_int)microseconds,
+                      (u_int)nanoseconds));
+          // Now check the ACE_High_Res_Timer-calculated values against
+          // each other.
+          errors += check_micro_nano (microseconds, nanoseconds);
         }
     }
 
