@@ -36,7 +36,7 @@ ifndef minimum_corba
 
 endif # minimum_corba
 
-ifdef corba_messaging
+ifeq ($(corba_messaging),1)
 
 # No Buffered Oneways without CORBA Messaging
   DIRS += Buffered_Oneways
