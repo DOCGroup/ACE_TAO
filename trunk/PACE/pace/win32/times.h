@@ -22,7 +22,17 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
-  PACE_INLINE clock_t pace_times (struct tms * buffer);
+#ifndef PACE_CLOCK_T
+#define PACE_CLOCK_T
+typedef clock_t pace_clock_t;
+#endif /* PACE_CLOCK_T */
+
+#ifndef PACE_TMS
+#define PACE_TMS
+typedef struct tms pace_tms;
+#endif /* PACE_TMS */
+
+  PACE_INLINE pace_clock_t pace_times (struct tms * buffer);
 
 #if defined (PACE_HAS_CPLUSPLUS)
 }

@@ -1,6 +1,17 @@
+Fri Jul  7 02:18:02 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+        * pace/win32/termios.*:
+        * pace/win32/wait.h:
+        * pace/win32/utsname.*:
+        * pace/win32/times.*:
+        * pace/win32/stat.*:
+        * pace/win32/mman.*:
+	  Added changes made to /posix earlier.
+
+
 Thu Jul  6 13:04:02 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
-        * tests/Posix_SP_Test.c: 
+        * tests/Posix_SP_Test.c:
           Made tests more robust checking for all possible parameter
           values. Also, changed check for failure. Just because a
           function doesn't support a particular parameter value, does
