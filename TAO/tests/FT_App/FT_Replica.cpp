@@ -73,19 +73,19 @@ namespace {
 
 int main (int argc, char * argv[] )
 {
-  int result = parse_args (argc, argv);
-
-  if (result == 0)
+  int result = 0;
+  ACE_TRY_NEW_ENV
   {
+    // Create an object that manages all the
+    // details of being a server.
+    TAO_ORB_Manager orbManager;
 
-    ACE_TRY_NEW_ENV
-    {
-      // Create an object that manages all the
-      // details of being a server.
-      TAO_ORB_Manager orbManager;
-
-      result = orbManager.init (argc, argv
+    result = orbManager.init (argc, argv
           ACE_ENV_ARG_PARAMETER);
+
+    if (result == 0)
+    {
+      result = parse_args (argc, argv);
       if(result == 0)
       {
         ACE_CHECK_RETURN (-1);
@@ -192,13 +192,13 @@ int main (int argc, char * argv[] )
           -1);
       }
     }
-    ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-        "FT_Replica::main\t\n");
-      result = -1;
-    }
-    ACE_ENDTRY;
   }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      "FT_Replica::main\t\n");
+    result = -1;
+  }
+  ACE_ENDTRY;
   return result;
 }

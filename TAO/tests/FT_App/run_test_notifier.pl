@@ -58,13 +58,38 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #       Check termination status.
 #       Delete temp files.
 #
-# [1] Client mediated fault tolerance.  These points will 
+# [1] Client mediated fault tolerance.  These points will
 #     change when IOGR support is available.
 use lib '../../../bin';
 use PerlACE::Run_Test;
 
-my($debug) = 1;
-my($simulated) = 1;
+########################
+#command line options
+#set defaults:
+my($verbose) = 0;         # 1: report perl actions before executing them
+my($debug_builds) = 0;    # 0: use exes from Release directories
+my($simulated) = 1;       # 1: use "client simulated" fault tolerance
+
+foreach $i (@ARGV) {
+  if ($i eq "--debug_build")
+  {
+    $debug_builds = 1;
+  }
+  elsif ($i eq "--no_simulate")  # reverse this once we have FT ORB support
+  {
+    $simulated = 0;
+  }
+  elsif ($i eq "-v")
+  {
+    $verbose = 1;
+  }
+}
+
+
+my($build_directory) = "/Release";
+if ( debug_builds ) {
+  $build_directory = "";
+}
 
 #define temp files
 my($replica1_ior) = PerlACE::LocalFile ("replica1.ior");
@@ -82,32 +107,32 @@ unlink #client_data
 
 my($status) = 0;
 
-my($REP1) = new PerlACE::Process ("Release/ft_replica", "-o $replica1_ior -r 1");
-my($REP2) = new PerlACE::Process ("Release/ft_replica", "-o $replica2_ior -r 2");
-my($DET) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector/Release/Fault_Detector", "-o $detector_ior -q");
-my($NOT) = new PerlACE::Process ("Release/ft_notifier", "-o $notifier_ior -q -d $detector_ior -r $replica1_ior,$replica2_ior");
+my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $replica1_ior -r 1");
+my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $replica2_ior -r 2");
+my($DET) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector$build_directory/Fault_Detector", "-o $detector_ior -q");
+my($NOT) = new PerlACE::Process (".$build_directory/ft_notifier", "-o $notifier_ior -q -d $detector_ior -r $replica1_ior,$replica2_ior");
 my($CL);
 if (simulated) {
-  $CL = new PerlACE::Process ("Release/ft_client", "-f $replica1_ior,$replica2_ior -c testscript");
+  $CL = new PerlACE::Process (".$build_directory/ft_client", "-f $replica1_ior,$replica2_ior -c testscript");
 }else{
   #todo figure out how to get iogr
-  $CL = new PerlACE::Process ("Release/ft_client", "-f $replica1_iogr -c testscript");
+  $CL = new PerlACE::Process (".$build_directory/ft_client", "-f $replica1_iogr -c testscript");
 }
 
-print "TEST: starting replica1\n" if ($debug);
+print "TEST: starting replica1\n" if ($verbose);
 $REP1->Spawn ();
 
-print "TEST: waiting for replica 1's IOR\n" if ($debug);
+print "TEST: waiting for replica 1's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($replica1_ior, 5) == -1) {
     print STDERR "ERROR: cannot find file <$replica1_ior>\n";
     $REP1->Kill (); $REP1->TimedWait (1);
     exit 1;
 }
 
-print "\nTEST: starting replica2\n" if ($debug);
+print "\nTEST: starting replica2\n" if ($verbose);
 $REP2->Spawn ();
 
-print "TEST: waiting for replica 2's IOR\n" if ($debug);
+print "TEST: waiting for replica 2's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($replica2_ior, 5) == -1) {
     print STDERR "ERROR: cannot find file <$replica2_ior>\n";
     $REP1->Kill (); $REP1->TimedWait (1);
@@ -115,10 +140,10 @@ if (PerlACE::waitforfile_timed ($replica2_ior, 5) == -1) {
     exit 1;
 }
 
-print "\nTEST: starting detector factory\n" if ($debug);
+print "\nTEST: starting detector factory\n" if ($verbose);
 $DET->Spawn ();
 
-print "TEST: waiting for detector's IOR\n" if ($debug);
+print "TEST: waiting for detector's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($detector_ior, 5) == -1) {
     print STDERR "ERROR: cannot find file <$detector_ior>\n";
     $REP1->Kill (); $REP1->TimedWait (1);
@@ -127,10 +152,10 @@ if (PerlACE::waitforfile_timed ($detector_ior, 5) == -1) {
     exit 1;
 }
 
-print "\nTEST: starting notifier\n" if ($debug);
+print "\nTEST: starting notifier\n" if ($verbose);
 $NOT->Spawn ();
 
-print "TEST: waiting for notifier's IOR\n" if ($debug);
+print "TEST: waiting for notifier's IOR\n" if ($verbose);
 if (PerlACE::waitforfile_timed ($notifier_ior, 5) == -1) {
     print STDERR "ERROR: cannot find file <$notifier_ior>\n";
     $REP1->Kill (); $REP1->TimedWait (1);
@@ -140,7 +165,7 @@ if (PerlACE::waitforfile_timed ($notifier_ior, 5) == -1) {
     exit 1;
 }
 
-print "\nTEST: starting client.\n" if ($debug);
+print "\nTEST: starting client.\n" if ($verbose);
 $client = $CL->SpawnWaitKill (60);
 
 if ($client != 0) {
@@ -148,35 +173,35 @@ if ($client != 0) {
     $status = 1;
 }
 
-print "\nTEST: wait for replica 1.\n" if ($debug);
+print "\nTEST: wait for replica 1.\n" if ($verbose);
 $replica1 = $REP1->WaitKill (60);
 if ($replica1 != 0) {
     print STDERR "ERROR: replica returned $replica1\n";
     $status = 1;
 }
 
-print "\nTEST: wait for replica 2.\n" if ($debug);
+print "\nTEST: wait for replica 2.\n" if ($verbose);
 $replica2 = $REP2->WaitKill (60);
 if ($replica2 != 0) {
     print STDERR "ERROR: replica returned $replica2\n";
     $status = 1;
 }
 
-print "\nTEST: wait for detector factory to leave.\n" if ($debug);
+print "\nTEST: wait for detector factory to leave.\n" if ($verbose);
 $detector = $DET->WaitKill (60);
 if ($detector != 0) {
     print STDERR "ERROR: detector returned $detector\n";
     $status = 1;
 }
 
-print "\nTEST: wait for notifier to leave.\n" if ($debug);
+print "\nTEST: wait for notifier to leave.\n" if ($verbose);
 $notifier = $NOT->WaitKill (60);
 if ($notifier != 0) {
     print STDERR "ERROR: notifier returned $notifier\n";
     $status = 1;
 }
 
-print "\nTEST: releasing scratch files.\n" if ($debug);
+print "\nTEST: releasing scratch files.\n" if ($verbose);
 unlink $replica1_ior;
 unlink $replica2_ior;
 unlink $detector_ior;
