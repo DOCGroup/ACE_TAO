@@ -202,7 +202,7 @@ ACE_INET_Addr::set (u_short port_number,
   if(encode)
     ip_addr = htonl(ip_addr);
 
-  /* Build up a 128 bit address.  An IPv5-mapped IPv6 address is
+  /* Build up a 128 bit address.  An IPv4-mapped IPv6 address is
      defined as 0:0:0:0:0:ffff:IPv4_address.  This id defined in RFC 1884 */
   struct {
     char prefix[10];
