@@ -24,9 +24,18 @@ TAO_Internal::open_services (int& argc, char** argv)
 
   if (TAO_Internal::service_open_count_++ == 0)
     {
+      int ignore_static_service = 1;
+      int ignore_default_svc_conf = 0;
 #if defined (TAO_USES_STATIC_SERVICE) || defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
+      ignore_static_service = 0;
+#if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
+      ignore_default_svc_conf = 1;
+#endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
+#endif /* TAO_USES_STATIC_SERVICE || TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
       int retv = ACE_Service_Config::open (argc, argv,
-                                           ACE_DEFAULT_LOGGER_KEY, 0);
+                                           ACE_DEFAULT_LOGGER_KEY,
+                                           ignore_static_service,
+                                           ignore_default_svc_conf);
 # if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
       ACE_Service_Config::process_directive
         (TAO_DEFAULT_RESOURCE_FACTORY_ARGS);
@@ -36,9 +45,6 @@ TAO_Internal::open_services (int& argc, char** argv)
         (TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS);
 # endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
       return retv;
-#else
-      return ACE_Service_Config::open (argc, argv);
-#endif /* TAO_USES_STATIC_SERVICE */
     }
   else
     return 0;

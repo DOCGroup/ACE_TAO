@@ -111,16 +111,24 @@ public:
                       LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY);
   // Performs an open without parsing command-line arguments.
 
+  static int open_i (const ASYS_TCHAR program_name[],
+                     LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY,
+                     int ignore_default_svc_conf = 0);
+  // Performs an open without parsing command-line arguments.  Returns
+  // number of errors that occurred on failure and 0 otherwise.
+
   static int open (const ASYS_TCHAR program_name[],
                    LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY,
-                   int ignore_static_svcs = 1);
+                   int ignore_static_svcs = 1,
+                   int ignore_default_svc_conf = 0);
   // Performs an open without parsing command-line arguments.  Returns
   // number of errors that occurred on failure and 0 otherwise.
 
   static int open (int argc,
                    ASYS_TCHAR *argv[],
                    LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY,
-                   int ignore_static_svcs = 1);
+                   int ignore_static_svcs = 1,
+                   int ignore_default_svc_conf = 0);
   // This is the primary entry point into the ACE_Service_Config (the
   // constructor just handles simple initializations).  It parses
   // arguments passed in from the command-line.  Returns number of

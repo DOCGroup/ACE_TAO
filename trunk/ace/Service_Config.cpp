@@ -525,19 +525,18 @@ ACE_Service_Config::load_static_svcs (void)
 // Performs an open without parsing command-line arguments.
 
 int
-ACE_Service_Config::open (const ASYS_TCHAR program_name[],
-                          LPCTSTR logger_key,
-                          int ignore_static_svcs)
+ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
+                            LPCTSTR logger_key,
+                            int ignore_default_svc_conf)
 {
   int retval = 0;
   ACE_TRACE ("ACE_Service_Config::open");
 
-  ACE_Service_Config::no_static_svcs_ = (char) ignore_static_svcs;
-
   if (ACE_Service_Config::init_svc_conf_file_queue () == -1)
     return -1;
 
-  if (ACE_Service_Config::svc_conf_file_queue_->is_empty ()
+  if ( !ignore_default_svc_conf &&
+       ACE_Service_Config::svc_conf_file_queue_->is_empty ()
       // Load the default "svc.conf" entry here if there weren't
       // overriding -f arguments in <parse_args>.
       && ACE_Service_Config::svc_conf_file_queue_->enqueue_tail
