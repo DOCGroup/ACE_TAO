@@ -72,6 +72,10 @@ public:
   ~CORBA_Environment (void);
   // Destructor, release the exception.
 
+  static CORBA_Environment * _duplicate (CORBA_Environment *);
+  static CORBA_Environment * _nil (void);
+  // Some static methods that need to be defined in every pseudo object
+
   CORBA_Exception* exception (void) const;
   // Return the exception.  Caller must call <_incr_refcnf> in order
   // to keep the ptr.
