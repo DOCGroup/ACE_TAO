@@ -48,7 +48,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Domain_Static"=.\Domain\TAO_Domain_Static.dsp - Package Owner=<4>
+Project: "Domain_static"=.\Domain\TAO_Domain_Static.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -316,6 +316,18 @@ Package=<4>
 ###############################################################################
 
 Project: "RTPortableServer_Static"=.\RTPortableServer\TAO_RTPortableServer_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RTScheduler"=.\RTScheduling\TAO_RTScheduler.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
