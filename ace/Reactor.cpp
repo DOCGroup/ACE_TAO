@@ -224,7 +224,7 @@ ACE_Reactor::run_alertable_reactor_event_loop (ACE_Time_Value &tv,
 {
   ACE_TRACE ("ACE_Reactor::run_alertable_reactor_event_loop");
 
-  while (1)
+  for (;;)
     {
       int result = this->implementation_->alertable_handle_events (tv);
 
@@ -255,7 +255,6 @@ ACE_Reactor::reactor_event_loop_done (void)
   ACE_TRACE ("ACE_Reactor::reactor_event_loop_done");
   return this->implementation_->deactivated ();
 }
-  // Report if the <ACE_Reactor::instance>'s event loop is finished.
 
 void
 ACE_Reactor::reset_reactor_event_loop (void)
@@ -264,8 +263,6 @@ ACE_Reactor::reset_reactor_event_loop (void)
 
   this->implementation_->deactivate (0);
 }
-  // Resets the <ACE_Reactor::end_event_loop_> static so that the
-  // <run_event_loop> method can be restarted.
 
 void
 ACE_Reactor::dump (void) const
