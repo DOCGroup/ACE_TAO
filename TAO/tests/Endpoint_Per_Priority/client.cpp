@@ -1,7 +1,6 @@
 // $Id$
 
 #include "testC.h"
-#include "tao/rtcorbafwd.h"
 #include "tao/Priority_Mapping.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
@@ -124,7 +123,7 @@ main (int argc, char *argv[])
       if (ACE_OS::last_error () == EPERM)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "server (%P|%t): user is not superuser, "
+                      "client (%P|%t): user is not superuser, "
                       "test runs in time-shared class\n"));
           policy = ACE_SCHED_OTHER;
           flags = THR_NEW_LWP|THR_JOINABLE;
@@ -137,9 +136,7 @@ main (int argc, char *argv[])
 
   ACE_TRY_NEW_ENV
     {
-      ACE_DEBUG ((LM_DEBUG, "High res. timer calibration...."));
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-      ACE_DEBUG ((LM_DEBUG, "done\n"));
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
@@ -294,7 +291,7 @@ Client::svc (void)
       // increase the likelihood that each thread will have its own
       // connection.  (This is not an issue when all threads&endpoints
       // are of different priorities).
-      
+
       for (int j = 0; j < 100; ++j)
         {
           CORBA::PolicyList_var pols;
@@ -302,7 +299,7 @@ Client::svc (void)
                                          ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
-      
+
       ACE_hrtime_t throughput_base = ACE_OS::gethrtime ();
 
       for (int i = 0; i < this->niterations_; ++i)
