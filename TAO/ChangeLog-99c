@@ -23,9 +23,20 @@ Tue Mar 23 21:36:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Tue Mar 23 19:14:23 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-        * tao/ORB.cpp (multicast_query): Printed the error message in
-          the accept call only if the TAO_debug_level > 0.
-
+	* examples/Simple/Simple_util.h (class Server): 
+	  Added a method to test the InterOperable Naming Service with
+	  any of the existing Simple examples in TAO (like bank,time etc.)
+	  Specifying a "-i object_id" option to the any of the examples
+	  will allow a client to use  the multiple end-point iioploc ior
+	  for the server as 
+	  iioploc:1.0//<host-name>:<port>/<object_id>,<other-endpoints>
+	  
+	  This change will be used by the InterOperable Naming Service 
+	  test that will be added soon to the TAO\tests.
+	  
+	* tao/ORB.cpp (multicast_query): Printed the error message in
+	  the accept call only if the TAO_debug_level > 0.
+	  
 Tue Mar 23 10:14:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * TAO_IDL/be/be_interface.cpp: There were some missing '\n' that
