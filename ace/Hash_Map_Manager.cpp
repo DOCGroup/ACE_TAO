@@ -71,20 +71,22 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::resize_i (size_t size)
 
   this->table_ = (ACE_Hash_Map_Entry<EXT_ID, INT_ID> **) ptr;
 
-  this->sentinel_ = (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *) this->allocator_->malloc (sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>));
-
-  if (this->sentinel_ == 0)
+  ptr = this->allocator_->malloc (sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>));
+  if (ptr == 0)
     {
       this->allocator_->free (this->table_);
+      this->table_ = 0;
       errno = ENOMEM;
       return -1;
     }
-  else
-    new (this->sentinel_) ACE_Hash_Map_Entry<EXT_ID, INT_ID>;
+
+  this->sentinel_ = (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *) ptr;
+  new (this->sentinel_) ACE_Hash_Map_Entry<EXT_ID, INT_ID>;
 
   // This isn't strictly necessary, but we'll do it to make life
   // easier.
   this->sentinel_->next_ = this->sentinel_;
+
 
   this->total_size_ = size;
 
@@ -163,6 +165,8 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::close_i (void)
 
       this->allocator_->free (this->table_);
       this->table_ = 0;
+
+      this->sentinel_->ext_id_ = sentinel_ext_id_fakenull_;
       this->allocator_->free (this->sentinel_);
       this->sentinel_ = 0;
     }
@@ -339,34 +343,6 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::unbind (const EXT_ID &ext_id)
 template <class EXT_ID, class INT_ID, class LOCK> int 
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_find (const EXT_ID &ext_id,
 							 ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry,
-                                                         u_long &loc)
-{
-  loc = this->hash (ext_id) % this->total_size_;
-
-  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = this->table_[loc];
-
-  for (this->sentinel_->ext_id_ = ext_id;
-       this->equal (temp->ext_id_, ext_id) == 0;
-       temp = temp->next_)
-    continue;
-
-  this->sentinel_->ext_id_ = sentinel_ext_id_fakenull_;
-
-  if (temp != this->sentinel_)
-    {
-      entry = temp;
-      return 0;
-    }
-  else
-    {
-      errno = ENOENT;
-      return -1;
-    }
-}
-
-template <class EXT_ID, class INT_ID, class LOCK> int 
-ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_find (const EXT_ID &ext_id,
-							 ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry,
 							 ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&prev,
                                                          u_long &loc)
 {
@@ -391,6 +367,15 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_find (const EXT_ID &ext_id,
       errno = ENOENT;
       return -1;
     }
+}
+
+template <class EXT_ID, class INT_ID, class LOCK> int 
+ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_find (const EXT_ID &ext_id,
+							 ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry,
+                                                         u_long &loc)
+{
+  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *prev;
+  return this->shared_find (ext_id, entry, prev, loc);
 }
 
 template <class EXT_ID, class INT_ID, class LOCK> int 
@@ -483,11 +468,14 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, LOCK>::ACE_Hash_Map_Iterator (ACE_Hash_Map
     next_ (this->map_man_.sentinel_)
 {
   if (this->map_man_.table_ != 0)
-    this->advance ();
+    {
+      this->next_ = this->map_man_.table_[0];
+      this->advance ();
+    }
 }
 
 template <class EXT_ID, class INT_ID, class LOCK>  int
-ACE_Hash_Map_Iterator<EXT_ID, INT_ID, LOCK>::next (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&mm)
+ACE_Hash_Map_Iterator<EXT_ID, INT_ID, LOCK>::next (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
   ACE_READ_GUARD_RETURN (LOCK, ace_mon, this->map_man_.lock_, -1);
 
@@ -495,7 +483,7 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, LOCK>::next (ACE_Hash_Map_Entry<EXT_ID, IN
       && this->index_ < this->map_man_.total_size_
       && this->next_ != this->map_man_.sentinel_)
     {
-      mm = this->next_;
+      entry = this->next_;
       return 1;
     }
   else
@@ -520,15 +508,19 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, LOCK>::advance (void)
 {
   ACE_READ_GUARD_RETURN (LOCK, ace_mon, this->map_man_.lock_, -1);
 
+  if (this->map_man_.table_ == 0)
+    return -1;
+
   if (this->next_->next_ != this->map_man_.sentinel_)
     this->next_ = this->next_->next_;
   else
-    while (this->index_++ < this->map_man_.total_size_)
-      if (this->map_man_.table_[this->index_ - 1] != this->map_man_.sentinel_)
-	{
-	  this->next_ = this->map_man_.table_[this->index_ - 1];
-	  break;
-	}
+    while (++this->index_ < this->map_man_.total_size_)
+      if (this->map_man_.table_[this->index_]
+          != this->map_man_.sentinel_)
+        {
+          this->next_ = this->map_man_.table_[this->index_];
+          break;
+        }
 
   return this->index_ < this->map_man_.total_size_
     && this->next_ != this->map_man_.sentinel_;
