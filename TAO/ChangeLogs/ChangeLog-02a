@@ -1,3 +1,8 @@
+Wed Feb 27 20:20:19 2002  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
+	
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+	  Changed the include to point to the Messaging directory.
+
 Wed Feb 27 20:24:12 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/performance-tests/RTEvent/lib/RTCORBA_Setup.inl:
