@@ -335,12 +335,8 @@ TAO_SSLIOP_Server_Connection_Handler::handle_input_i (
 {
   int result;
 
-  ACE_DEBUG ((LM_DEBUG, "***** SERVER IN *****\n"));
-
   // Set up the SSLIOP::Current object.
   TAO_SSL_State_Guard ssl_state_guard (this, this->orb_core (), result);
-
-  ACE_DEBUG ((LM_DEBUG, "***** SERVER OUT *****\n"));
 
   if (result != 0)
     return -1;
@@ -434,7 +430,7 @@ TAO_SSLIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
                                       TAO_ORB_Core* orb_core,
                                       CORBA::Boolean /* lite_flag */,
                                       void *arg)
-  : TAO_SSLIOP_Connection_Handler (orb_core->thr_mgr ()),
+  : TAO_SSLIOP_Connection_Handler (t),
     TAO_Connection_Handler (orb_core),
     transport_ (this, orb_core),
     tcp_properties_ (ACE_static_cast
@@ -531,14 +527,10 @@ TAO_SSLIOP_Client_Connection_Handler::handle_input (ACE_HANDLE)
 {
   int result;
 
-  ACE_DEBUG ((LM_DEBUG, "***** CLIENT IN *****\n"));
-
   // Set up the SSLIOP::Current object.
   TAO_SSL_State_Guard ssl_state_guard (this, this->orb_core (), result);
   if (result != 0)
     return -1;
-
-  ACE_DEBUG ((LM_DEBUG, "***** CLIENT OUT *****\n"));
 
   result = this->transport ()->handle_client_input ();
 
