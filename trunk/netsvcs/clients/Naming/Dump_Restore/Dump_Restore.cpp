@@ -16,7 +16,7 @@
 
 ACE_RCSID(Dump_Restore, Dump_Restore, "$Id$")
 
-Dump_Restore::Dump_Restore (int argc, char *argv[])
+Dump_Restore::Dump_Restore (int argc, ACE_TCHAR *argv[])
   : infile_ (0)
 {
   ACE_NEW (this->ns_context_,
@@ -28,12 +28,12 @@ Dump_Restore::Dump_Restore (int argc, char *argv[])
 
   //determine name context
   if (ACE_OS::strcmp (this->name_options_->nameserver_host (),
-                      "localhost") == 0)
+                      ACE_TEXT ("localhost")) == 0)
     {
       if (ns_context_->open (ACE_Naming_Context::PROC_LOCAL) == -1)
         ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "ns_context_->open"));
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("ns_context_->open")));
     }
   else
     {
@@ -46,8 +46,8 @@ Dump_Restore::Dump_Restore (int argc, char *argv[])
 
       if (this->ns_context_->open (ACE_Naming_Context::NET_LOCAL) == -1)
         ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "ns_context_->open"));
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("ns_context_->open")));
     }
 
   this->display_menu ();
@@ -56,8 +56,8 @@ Dump_Restore::Dump_Restore (int argc, char *argv[])
                                                  ACE_Reactor::instance (),
                                                  ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "register_stdin_handler"));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("register_stdin_handler")));
 }
 
 Dump_Restore::~Dump_Restore (void)
@@ -80,7 +80,7 @@ Dump_Restore::handle_input (ACE_HANDLE)
   if (::scanf ("%s", option) <= 0)
     {
       ACE_DEBUG ((LM_ERROR,
-                  "try again\n"));
+                  ACE_TEXT ("try again\n")));
       return 0;
     }
 
@@ -98,7 +98,7 @@ Dump_Restore::handle_input (ACE_HANDLE)
     case 'h' :
       if (::scanf ("%s %hu", buf1, &port) <= 0)
         break;
-      set_host (buf1, port);
+      set_host (ACE_TEXT_CHAR_TO_TCHAR (buf1), port);
       break;
     case 'F':
     case 'f':
@@ -131,7 +131,7 @@ Dump_Restore::handle_input (ACE_HANDLE)
       quit ();
       break;
     default :
-      ACE_DEBUG ((LM_DEBUG, "Unrecognized command.\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Unrecognized command.\n")));
     }
 
   display_menu ();
@@ -142,59 +142,59 @@ void
 Dump_Restore::display_menu (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "\n"));
+              ACE_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG,
-              "Name Service Main Menu\n"));
+              ACE_TEXT ("Name Service Main Menu\n")));
   ACE_DEBUG ((LM_DEBUG,
-              "----------------------\n"));
+              ACE_TEXT ("----------------------\n")));
 
   // Check if using local name space or remote name space
   if (ACE_OS::strcmp (this->name_options_->nameserver_host (),
-                      "localhost") == 0)
+                      ACE_TEXT ("localhost")) == 0)
     {
       if (this->ns_scope_ == ACE_Naming_Context::PROC_LOCAL)
         ACE_DEBUG ((LM_DEBUG,
-                    "  *** Using Process Local Database ***\n\n"));
+                    ACE_TEXT ("  *** Using Process Local Database ***\n\n")));
       else
         ACE_DEBUG ((LM_DEBUG,
-                    "  *** Using Node Local Database ***\n\n"));
+                    ACE_TEXT ("  *** Using Node Local Database ***\n\n")));
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "  Hostname: %s\n",
+                  ACE_TEXT ("  Hostname: %s\n"),
                   this->hostname_));
       ACE_DEBUG ((LM_DEBUG,
-                  "  Port Number: %d\n",
+                  ACE_TEXT ("  Port Number: %d\n"),
                   this->port_));
     }
 
   if (this->infile_)
     ACE_DEBUG ((LM_DEBUG,
-                "Input File: %s\n",
+                ACE_TEXT ("Input File: %C\n"),
                 this->filename_));
   else
     ACE_DEBUG ((LM_DEBUG,
-                "** No Input File Specified **\n"));
+                ACE_TEXT ("** No Input File Specified **\n")));
 
   ACE_DEBUG ((LM_DEBUG,
-              "<P> Use Process Local Database\n"));
+              ACE_TEXT ("<P> Use Process Local Database\n")));
   ACE_DEBUG ((LM_DEBUG,
-              "<N> Use Node Local Database\n"));
+              ACE_TEXT ("<N> Use Node Local Database\n")));
   ACE_DEBUG ((LM_DEBUG,
-              "<H> Set Remote Name server <host> and <port>\n"));
+              ACE_TEXT ("<H> Set Remote Name server <host> and <port>\n")));
   ACE_DEBUG ((LM_DEBUG,
-              "<F> Set Input File <file name>\n"));
+              ACE_TEXT ("<F> Set Input File <file name>\n")));
   ACE_DEBUG ((LM_DEBUG,
-              "<B> Bind\n"));
+              ACE_TEXT ("<B> Bind\n")));
   ACE_DEBUG ((LM_DEBUG,
-              "<U> Unbind\n"));
+              ACE_TEXT ("<U> Unbind\n")));
   ACE_DEBUG ((LM_DEBUG,
-              "<R> Rebind\n"));
+              ACE_TEXT ("<R> Rebind\n")));
   ACE_DEBUG ((LM_DEBUG,
-              "<D> Dump <file name>\n"));
+              ACE_TEXT ("<D> Dump <file name>\n")));
   ACE_DEBUG ((LM_DEBUG,
-              "<Q> or ^C (exit) \n"));
+              ACE_TEXT ("<Q> or ^C (exit) \n")));
 }
 
 
@@ -202,7 +202,7 @@ int
 Dump_Restore::set_proc_local (void)
 {
   // Set Name Options
-  this->name_options_->nameserver_host ("localhost");
+  this->name_options_->nameserver_host (ACE_TEXT ("localhost"));
   this->name_options_->nameserver_port (0);
 
   // Set Naming Context scope
@@ -219,8 +219,8 @@ Dump_Restore::set_proc_local (void)
 
   if (this->ns_context_->open (ACE_Naming_Context::PROC_LOCAL) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ns_context_->open"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("ns_context_->open")),
                       -1);
 
   return 0;
@@ -230,7 +230,7 @@ int
 Dump_Restore::set_node_local (void)
 {
   // Set Name Options
-  this->name_options_->nameserver_host ("localhost");
+  this->name_options_->nameserver_host (ACE_TEXT ("localhost"));
   this->name_options_->nameserver_port (0);
 
   // Set Naming Context scope
@@ -246,14 +246,14 @@ Dump_Restore::set_node_local (void)
 
   if (ns_context_->open (ACE_Naming_Context::NODE_LOCAL) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ns_context_->open"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("ns_context_->open")),
                       -1);
   return 0;
 }
 
 int
-Dump_Restore::set_host (const char *hostname,
+Dump_Restore::set_host (const ACE_TCHAR *hostname,
                         int port)
 {
   // Set Name Options
@@ -262,11 +262,9 @@ Dump_Restore::set_host (const char *hostname,
 
   // Don't really need to do this but it's a hack to fix the problme
   // of Display () not printing the right hostname
-  ACE_OS::strcpy (this->hostname_,
-                  hostname);
+  ACE_OS::strcpy (this->hostname_, hostname);
   this->port_ = port;
-  this->ns_scope_ =
-    ACE_Naming_Context::NET_LOCAL;
+  this->ns_scope_ = ACE_Naming_Context::NET_LOCAL;
 
   // remove old naming context
   delete this->ns_context_;
@@ -279,8 +277,8 @@ Dump_Restore::set_host (const char *hostname,
   // assume net_local context
   if (ns_context_->open (ACE_Naming_Context::NET_LOCAL) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ns_context_->open"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("ns_context_->open")),
                       -1);
   return 0;
 }
@@ -382,8 +380,8 @@ Dump_Restore::populate (Dump_Restore::Operation_Type op)
               break;
             default:
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "%p\n",
-                                 "populate"),
+                                 ACE_TEXT ("%p\n"),
+                                 ACE_TEXT ("populate")),
                                 -1);
               /* NOTREACHED */
             }
@@ -405,15 +403,15 @@ Dump_Restore::bind (const char *key,
                                   type);
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ns_context_->bind"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("ns_context_->bind")),
                       -1);
   else if (result == 1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%s%s%s\n",
-                       "key <",
+                       ACE_TEXT ("%s%s%s\n"),
+                       ACE_TEXT ("key <"),
                        key,
-                       "> already bound"),
+                       ACE_TEXT ("> already bound")),
                       1);
   return 0;
 }
@@ -425,8 +423,8 @@ Dump_Restore::unbind (const char *key)
 
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
-                       "%p\n",
-                       "ns_context_->unbind"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("ns_context_->unbind")),
                       -1);
   return 0;
 }
@@ -440,8 +438,8 @@ Dump_Restore::rebind (const char *key,
                            value,
                            type) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ns_context_->rebind"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("ns_context_->rebind")),
                       -1);
   return 0;
 }

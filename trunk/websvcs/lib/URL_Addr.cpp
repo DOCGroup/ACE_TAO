@@ -44,6 +44,15 @@ static size_t tn3270_size = sizeof(tn3270)/sizeof(tn3270[0]) - 1;
 static ACE_TCHAR gopher[] = ACE_TEXT ("gopher:");
 static size_t gopher_size = sizeof(gopher)/sizeof(gopher[0]) - 1;
 
+// When assembling URLs, sprintf() is often used. The format specifier for
+// a string changes depending on the platform and char width being fed to it.
+// Since we use ACE_TCHAR for strings, and it changes with the char width,
+// the printf specifier needs to change with the platform.
+#if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
+#  define ACE_PRINTF_S ACE_TEXT ("%s")
+#else
+#  define ACE_PRINTF_S ACE_TEXT ("%ls")
+#endif
 
 ACE_URL_Addr::ACE_URL_Addr (void)
   : url_ (0)
@@ -259,11 +268,11 @@ ACE_HTTP_Addr::set (const ACE_HTTP_Addr &addr)
   if (addr.hostname_ != 0)
     ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (addr.hostname_), -1);
   else
-    ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (""), -1);
+    ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (ACE_TEXT ("")), -1);
   if (addr.path_ != 0)
     ACE_ALLOCATOR_RETURN (this->path_, ACE_OS::strdup (addr.path_), -1);
   else
-    ACE_ALLOCATOR_RETURN (this->path_, ACE_OS::strdup (""), -1);
+    ACE_ALLOCATOR_RETURN (this->path_, ACE_OS::strdup (ACE_TEXT ("")), -1);
   this->port_number_ = addr.port_number_;
   if (addr.query_ != 0)
     ACE_ALLOCATOR_RETURN (this->query_, ACE_OS::strdup (addr.query_), -1);
@@ -507,24 +516,28 @@ ACE_HTTP_Addr::addr_to_string (ACE_TCHAR *buffer,
   if (flags == 0)
     {
       ACE_INET_Addr inet = this->get_inet_address ();
-      n += ACE_OS::sprintf (buffer + n, "%s", inet.get_host_addr ());
+      n += ACE_OS::sprintf (buffer + n, ACE_PRINTF_S, inet.get_host_addr ());
     }
   else
     {
-     n += ACE_OS::sprintf (buffer + n, "%s", this->hostname_);
+     n += ACE_OS::sprintf (buffer + n, ACE_PRINTF_S, this->hostname_);
     }
 
   if (this->port_number_ != ACE_DEFAULT_HTTP_PORT)
     {
-      n += ACE_OS::sprintf (buffer + n, ":%d", this->port_number_);
+      n += ACE_OS::sprintf (buffer + n, ACE_TEXT (":%d"), this->port_number_);
     }
   if (this->path_ != 0)
     {
-      n += ACE_OS::sprintf (buffer + n, "/%s", this->path_);
+      n += ACE_OS::sprintf (buffer + n,
+                            ACE_TEXT ("/") ACE_PRINTF_S,
+                            this->path_);
     }
   if (this->query_ != 0)
     {
-      n += ACE_OS::sprintf (buffer + n, "?%s", this->query_);
+      n += ACE_OS::sprintf (buffer + n,
+                            ACE_TEXT ("?") ACE_PRINTF_S,
+                            this->query_);
     }
   return 0;
 }
@@ -677,30 +690,34 @@ ACE_FTP_Addr::addr_to_string (ACE_TCHAR *buffer,
 
   if (this->user_ != 0)
     {
-      n += ACE_OS::sprintf (buffer + n, "%s", this->user_);
+      n += ACE_OS::sprintf (buffer + n, ACE_PRINTF_S, this->user_);
     }
   if (this->password_ != 0)
     {
-      n += ACE_OS::sprintf (buffer + n, ":%s", this->password_);
+      n += ACE_OS::sprintf (buffer + n,
+                            ACE_TEXT (":") ACE_PRINTF_S,
+                            this->password_);
     }
 
   if (this->user_ != 0)
     {
-      n += ACE_OS::sprintf (buffer + n, "@");
+      n += ACE_OS::sprintf (buffer + n, ACE_TEXT ("@"));
     }
 
   if (flags == 0)
     {
       ACE_INET_Addr inet = this->get_inet_address ();
-      n += ACE_OS::sprintf (buffer + n, "%s", inet.get_host_addr ());
+      n += ACE_OS::sprintf (buffer + n, ACE_PRINTF_S, inet.get_host_addr ());
     }
   else
     {
-      n += ACE_OS::sprintf (buffer + n, "%s", this->hostname_);
+      n += ACE_OS::sprintf (buffer + n, ACE_PRINTF_S, this->hostname_);
     }
   if (this->path_ != 0)
     {
-      n += ACE_OS::sprintf (buffer + n, "/%s", this->path_);
+      n += ACE_OS::sprintf (buffer + n,
+                            ACE_TEXT ("/") ACE_PRINTF_S,
+                            this->path_);
     }
   return 0;
 }
@@ -884,11 +901,13 @@ ACE_Mailto_Addr::addr_to_string (ACE_TCHAR *buffer,
   if (this->user_ == 0 || this->hostname_ == 0)
     return -1;
 
-  size_t n = ACE_OS::sprintf (buffer, ACE_TEXT ("mailto:%s@%s"),
+  size_t n = ACE_OS::sprintf (buffer,
+                              ACE_TEXT ("mailto:") ACE_PRINTF_S ACE_TEXT
+                              ("@") ACE_PRINTF_S,
                               this->user_, this->hostname_);
   if (this->headers_ != 0)
     {
-      n += ACE_OS::sprintf (buffer + n, ACE_TEXT ("?%s"),
+      n += ACE_OS::sprintf (buffer + n, ACE_TEXT ("?") ACE_PRINTF_S,
                             this->headers_);
     }
 

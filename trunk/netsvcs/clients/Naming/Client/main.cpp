@@ -12,7 +12,7 @@
 ACE_RCSID(Client, main, "$Id$")
 
 int
-main (int, char *argv[])
+ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
   ACE_Service_Config daemon;
   ACE_ARGV new_args;
@@ -20,13 +20,13 @@ main (int, char *argv[])
   // Load the existing <argv> into our new one.
   new_args.add (argv);
   // Enable loading of static services.
-  new_args.add ("-y"); 
+  new_args.add (ACE_TEXT ("-y")); 
   // Enable debugging within dynamically linked services.
-  new_args.add ("-d"); 
+  new_args.add (ACE_TEXT ("-d")); 
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("argc = %d\n"),
-              ACE_TEXT (new_args.argc ())));
+              new_args.argc ()));
 
   // Print the contents of the combined <ACE_ARGV>.
   for (int i = 0; i < new_args.argc (); i++)
@@ -39,25 +39,23 @@ main (int, char *argv[])
                    new_args.argv ()) == -1)
     {
       if (errno != ENOENT)
-	ACE_ERROR ((LM_ERROR,
-                    "%p\n%a",
-                    "open",
-                    1));
+	ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")),
+                          1);
       else // Use static binding.
 	{
           ACE_ARGV args;
 
           args.add (argv[0]);
-	  args.add ("-p10011"); // Port number.
+	  args.add (ACE_TEXT ("-p10011")); // Port number.
 	  ACE_Service_Object *so =
             ACE_SVC_INVOKE (ACE_Naming_Context);
 
 	  if (so->init (args.argc (),
                         args.argv ()) == -1)
-	    ACE_ERROR ((LM_ERROR,
-                        "%p\n%a",
-                        "ACE_Naming_Context",
-                        1));
+	    ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("%p\n"),
+                               ACE_TEXT ("ACE_Naming_Context")),
+                              1);
 
 	  so = ACE_SVC_INVOKE (Client_Test);
 
