@@ -34,7 +34,9 @@ Mon Oct  4 17:08:03 1999  Marina Spivak  <marina@cs.wustl.edu>
 	* orbsvcs/tests/Sched_Conf/Makefile
 	* orbsvcs/tests/CosEC_Multiple/Makefile
 	* orbsvcs/tests/AVStreams/benchmark/Makefile
-	  Updated inclusions and makefile dependencies to reflect the
+	* orbsvcs/orbsvcs/orbsvcs.dsp
+	* orbsvcs/orbsvcs_static.dsp
+	Updated inclusions and makefile dependencies to reflect the
 	  change above.
 
 Mon Oct 04 15:20:00 1999  Michael Kircher <Michael.Kircher@mchp.siemens.de>
