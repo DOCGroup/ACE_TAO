@@ -1,3 +1,8 @@
+Tue May 21 15:53:07 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/File_IO/client.cpp (validate_connection): Fixed exception
+	  macro error.
+
 Tue May 21 15:03:45 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Thread_Lane_Resources.cpp (connector_registry): There was a
