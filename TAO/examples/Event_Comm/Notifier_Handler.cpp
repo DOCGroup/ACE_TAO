@@ -121,7 +121,8 @@ Notifier_Handler::init (int argc,
   }
  ACE_CATCHANY
    {
-     ACE_TRY_ENV.print_exception ("Notifier_Handler::init\n");
+     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                          "Notifier_Handler::init\n");
      return -1;
    }
  ACE_ENDTRY;

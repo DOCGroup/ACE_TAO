@@ -41,7 +41,8 @@ Notifier::Notifier (int argc, char *argv[])
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("Notifier_Server.init failed\n ");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Notifier_Server.init failed\n ");
     }
   ACE_ENDTRY;
 
