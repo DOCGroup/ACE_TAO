@@ -23,6 +23,7 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "../lib/Command.h"
+#include "ace/SString.h"
 
 /**
  * @class TAO_Notify_Tests_RT_POA_Command

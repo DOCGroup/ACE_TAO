@@ -18,6 +18,7 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/orbsvcs/CosNotifyCommC.h"
+#include "ace/SString.h"
 
 /**
  * @class TAO_Notify_Lanes_Consumer
