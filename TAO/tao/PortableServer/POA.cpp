@@ -182,8 +182,6 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
                   ACE_ENV_ARG_DECL)
   : name_ (name),
     poa_manager_ (poa_manager),
-    policy_list_ (0),
-    mprofile_ (0),
     tagged_component_ (),
     tagged_component_id_ (),
     profile_id_array_ (0),
@@ -346,7 +344,7 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
   // Iterate over the registered IOR interceptors so that they may be
   // given the opportunity to add tagged components to the profiles
   // for this servant.
-  this->tao_establish_components (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->establish_components (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -950,38 +948,28 @@ TAO_POA::adapter_name_i (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_POA::set_policy_list (CORBA::PolicyList *policy_list)
-{
-  this->policy_list_ = policy_list;
-}
-
-void
-TAO_POA::set_mprofile (TAO_MProfile *mprofile)
-{
-  this->mprofile_ = mprofile;
-}
-
-void
-TAO_POA::tao_add_ior_component (const IOP::TaggedComponent &component
-                                ACE_ENV_ARG_DECL)
+TAO_POA::add_ior_component (TAO_MProfile & mprofile,
+                            const IOP::TaggedComponent &component
+                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Add the given tagged component to all profiles.
 
-  CORBA::ULong profile_count = this->mprofile_->profile_count ();
+  const CORBA::ULong profile_count = mprofile.profile_count ();
 
   for (CORBA::ULong i = 0; i < profile_count; ++i)
     {
-      TAO_Profile *profile = this->mprofile_->get_profile (i);
+      TAO_Profile *profile = mprofile.get_profile (i);
 
-      profile->add_tagged_component (component ACE_ENV_ARG_PARAMETER);
+      profile->add_tagged_component (component
+                                     ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-
     }
 }
 
 void
-TAO_POA::tao_add_ior_component_to_profile (
+TAO_POA::add_ior_component_to_profile (
+    TAO_MProfile & mprofile,
     const IOP::TaggedComponent &component,
     IOP::ProfileId profile_id
     ACE_ENV_ARG_DECL)
@@ -992,14 +980,16 @@ TAO_POA::tao_add_ior_component_to_profile (
 
   int found_profile = 0;
 
-  CORBA::ULong profile_count = this->mprofile_->profile_count ();
+  const CORBA::ULong profile_count = mprofile.profile_count ();
+
   for (CORBA::ULong i = 0; i < profile_count; ++i)
     {
-      TAO_Profile *profile = this->mprofile_->get_profile (i);
+      TAO_Profile *profile = mprofile.get_profile (i);
 
       if (profile->tag () == profile_id)
         {
-          profile->add_tagged_component (component ACE_ENV_ARG_PARAMETER);
+          profile->add_tagged_component (component
+                                         ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           found_profile = 1;
@@ -3586,41 +3576,33 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
 
   TAO_Default_Acceptor_Filter filter;
   TAO_Stub *data =
-    this->create_stub_object (key,
-                              type_id,
-                              client_exposed_policies._retn (),
-                              &filter,
-                              this->orb_core_.lane_resources ().acceptor_registry ()
-                              ACE_ENV_ARG_PARAMETER);
+    this->create_stub_object (
+      key,
+      type_id,
+      client_exposed_policies._retn (),
+      &filter,
+      this->orb_core_.lane_resources ().acceptor_registry ()
+      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return data;
 }
 
 void
-TAO_POA::tao_establish_components (ACE_ENV_SINGLE_ARG_DECL)
+TAO_POA::establish_components (ACE_ENV_SINGLE_ARG_DECL)
 {
-  PortableInterceptor::IORInfo_ptr info_temp;
-  ACE_NEW_THROW_EX (info_temp,
-                    TAO_IORInfo (&(this->orb_core_), this),
+  TAO_IORInfo * tao_info;
+  ACE_NEW_THROW_EX (tao_info,
+                    TAO_IORInfo (this),
                     CORBA::NO_MEMORY (
                        CORBA_SystemException::_tao_minor_code (
-                          TAO_MPROFILE_CREATION_ERROR,
+                          TAO_DEFAULT_MINOR_CODE,
                           ENOMEM),
                        CORBA::COMPLETED_NO));
   ACE_CHECK;
 
-  PortableInterceptor::IORInfo_var info = info_temp;
+  PortableInterceptor::IORInfo_var info = tao_info;
 
-  this->establish_components (info.in ()
-                              ACE_ENV_ARG_PARAMETER);
-
-}
-
-void
-TAO_POA::establish_components (PortableInterceptor::IORInfo_ptr info
-                               ACE_ENV_ARG_DECL)
-{
   // Iterate over the registered IOR interceptors so that they may be
   // given the opportunity to add tagged components to the profiles
   // for this servant.
@@ -3635,9 +3617,8 @@ TAO_POA::establish_components (PortableInterceptor::IORInfo_ptr info
     {
       ACE_TRY
         {
-          interceptors[i]->establish_components (
-            info
-            ACE_ENV_ARG_PARAMETER);
+          interceptors[i]->establish_components (info.in ()
+                                                 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
@@ -3651,6 +3632,7 @@ TAO_POA::establish_components (PortableInterceptor::IORInfo_ptr info
             {
               CORBA::String_var name = interceptors[i]->name (
                 ACE_ENV_SINGLE_ARG_PARAMETER);
+              ACE_TRY_CHECK;
               // @@ What do we do if we get an exception here?
 
               if (name.in () != 0)
@@ -3670,15 +3652,20 @@ TAO_POA::establish_components (PortableInterceptor::IORInfo_ptr info
       ACE_CHECK;
     }
 
-  this->components_established_i (info
-                                  ACE_ENV_ARG_PARAMETER);
+  tao_info->components_established ();
 
-  return;
+  this->components_established (info.in ()
+                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // The IORInfo instance is no longer valid.  Invalidate it to
+  // prevent the user from peforming "illegal" operations.
+  tao_info->invalidate ();
 }
 
 void
-TAO_POA::components_established_i (PortableInterceptor::IORInfo_ptr info
-                                   ACE_ENV_ARG_DECL)
+TAO_POA::components_established (PortableInterceptor::IORInfo_ptr info
+                                 ACE_ENV_ARG_DECL)
 {
   // Iterate over the registered IOR interceptors so that they may be
   // given the opportunity to add tagged components to the profiles
@@ -3690,8 +3677,9 @@ TAO_POA::components_established_i (PortableInterceptor::IORInfo_ptr info
   if (interceptor_count == 0)
     return;
 
-  /// All the establish_components methods are invoked. Now, call the
-  /// components_established method on all the IOR Interceptors.
+  // All the establish_components() interception points have been
+  // invoked. Now call the components_established() interception point
+  // on all the IORInterceptors.
   for (size_t j = 0; j < interceptor_count; ++j)
     {
       ACE_TRY
@@ -3709,18 +3697,6 @@ TAO_POA::components_established_i (PortableInterceptor::IORInfo_ptr info
       ACE_ENDTRY;
       ACE_CHECK;
     }
-}
-
-TAO_MProfile *
-TAO_POA::get_mprofile ()
-{
-  return this->mprofile_;
-}
-
-CORBA::PolicyList *
-TAO_POA::get_policy_list ()
-{
-  return this->policy_list_;
 }
 
 void
@@ -3748,16 +3724,14 @@ save_ior_component_and_profile_id (const IOP::TaggedComponent &component,
   // this->tagged_component_id_ is increased, we need to increase the
   // size of this->profile_id_array_ also.
 
-  CORBA::ULong present_length = this->tagged_component_id_.length ();
+  const CORBA::ULong present_length = this->tagged_component_id_.length ();
 
-  CORBA::ULong new_length = present_length + 1;
+  const CORBA::ULong new_length = present_length + 1;
 
   this->tagged_component_id_.length (new_length);
-
   this->tagged_component_id_ [present_length]= component;
 
   this->profile_id_array_.size (new_length);
-
   this->profile_id_array_ [present_length] = profile_id;
 }
 
@@ -3829,17 +3803,13 @@ TAO_POA::create_stub_object (const TAO_ObjectKey &object_key,
                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  /// TAO_IORInfo needs 'policy_list'. So, save it.
-  this->set_policy_list (policy_list);
-  this->set_mprofile (&mprofile);
-
-  // Add the saved tagged components (from IORInfo::add_ior_component
-  // methods to the IOR... if needed.
+  // Add the saved tagged components methods to the profiles.
   CORBA::ULong len = this->tagged_component_.length ();
   for (CORBA::ULong i = 0; i != len; ++i)
     {
-      this->tao_add_ior_component (this->tagged_component_[i]
-                                   ACE_ENV_ARG_PARAMETER);
+      this->add_ior_component (mprofile,
+                               this->tagged_component_[i]
+                               ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
       }
 
@@ -3847,9 +3817,10 @@ TAO_POA::create_stub_object (const TAO_ObjectKey &object_key,
 
   for (CORBA::ULong k = 0; k != len; ++k)
     {
-      this->tao_add_ior_component_to_profile (this->tagged_component_id_[k],
-                                              this->profile_id_array_[k]
-                                              ACE_ENV_ARG_PARAMETER);
+      this->add_ior_component_to_profile (mprofile,
+                                          this->tagged_component_id_[k],
+                                          this->profile_id_array_[k]
+                                          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
 
@@ -3857,7 +3828,7 @@ TAO_POA::create_stub_object (const TAO_ObjectKey &object_key,
 }
 
 CORBA::PolicyList *
-TAO_POA::client_exposed_policies (CORBA::Short object_priority
+TAO_POA::client_exposed_policies (CORBA::Short /* object_priority */
                                   ACE_ENV_ARG_DECL)
 {
   CORBA::PolicyList *client_exposed_policies = 0;
@@ -3873,8 +3844,6 @@ TAO_POA::client_exposed_policies (CORBA::Short object_priority
   this->policies_.add_client_exposed_fixed_policies (client_exposed_policies
                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-
-  ACE_UNUSED_ARG (object_priority);
 
   return policies._retn ();
 }

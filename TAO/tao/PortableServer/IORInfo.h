@@ -15,9 +15,6 @@
 
 #include "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
-#include "tao/PortableServer/POA.h"
-
 #include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -38,8 +35,7 @@
 
 
 /// Forward declarations.
-class TAO_Profile;
-class TAO_MProfile;
+class TAO_POA;
 
 
 /**
@@ -48,22 +44,21 @@ class TAO_MProfile;
  * @brief This class exposes an interface that allows IORInterceptors add
  * tagged components to IORs.
  */
-class TAO_PortableServer_Export TAO_IORInfo :
-  public virtual PortableInterceptor::IORInfo,
-  public virtual TAO_Local_RefCounted_Object
+class TAO_IORInfo
+  : public virtual PortableInterceptor::IORInfo,
+    public virtual TAO_Local_RefCounted_Object
 {
-  friend class TAO_dummy_friend;
-  friend class TAO_POA;
-
 public:
 
   /// Constructor.
-  TAO_IORInfo (TAO_ORB_Core *orb_core,
-               TAO_POA *poa);
+  TAO_IORInfo (TAO_POA *poa);
 
-  /*           TAO_MProfile &mp,
-               CORBA::PolicyList *policy_list);
-  */
+  /**
+   * @name PortableInterceptor::IORInfo Methods
+   *
+   * Methods exposed by the PortableInterceptor::IORInfo interface.
+   */
+  //@{
 
   /// Return the policy matching the given policy type that is in
   /// effect for the object whose IOR is being created.
@@ -107,11 +102,39 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+  //@}
+
+  /// Invalidate this IORInfo instance.
+  /**
+   * Once the IOR interception points have been invoked, this IORInfo
+   * instance is no longer valid.
+   */
+  void invalidate (void);
+
+  /// Inform the this IORInfo object that the
+  /// IORInterceptor::components_established() interception point has
+  /// been called.
+  /**
+   * This method is used so to inform the IORInfo when the
+   * add_ior_component() and add_ior_component_to_profile() methods
+   * are invalid.  They are only valid in the
+   * IORInterceptor::establish_components() interception point.
+   */
+  void components_established (void);
+
 protected:
 
-  /// Destructor is protected to force instantiation on the heap since
-  /// it is reference counted.
+  /// Protected destructor to enforce proper memory managment through
+  /// the reference counting mechanism.
   ~TAO_IORInfo (void);
+
+  /// Check if this IORInfo instance is valid.
+  /**
+   * Once all IORInterceptor interception points have been called,
+   * this IORInfo object is no longer valid.  Throw an exception in
+   * that case.
+   */
+  void check_validity (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
 
@@ -123,35 +146,24 @@ private:
 
 private:
 
-  /// Pointer to the ORB Core of the current ORB.
-  TAO_ORB_Core *orb_core_;
-
   /// Pointer to POA
   TAO_POA *poa_;
 
-  /*
-    /// Reference to the profiles corresponding to the servant being
-  /// created.
-  TAO_MProfile &mp_;
-
-  /// Pointer to the list of policies in effect for the servant
-  /// being created.
-  CORBA::PolicyList *policy_list_;
-  */
-
-  /// The Adapter state
-  PortableInterceptor::AdapterState state_;
-
-  /// The AdapterManagerId
-  PortableInterceptor::AdapterManagerId manager_id_;
-
-  /// The ObjectReferenceTemplate
-  PortableInterceptor::ObjectReferenceTemplate *adapter_template_;
-
-  /// The current factory
-  PortableInterceptor::ObjectReferenceFactory *current_factory_;
+  /// True if the IORInterceptor::components_established()
+  /// interception point was called.  False otherwise.
+  /**
+   * This flag is used to prevent the add_ior_component() and
+   * add_ior_component_to_profile() methods from being incorrectly
+   * called after the IORInterceptor::establish_components()
+   * interception point has been called.
+   */
+  CORBA::Boolean components_established_;
 
 };
+
+#if defined (__ACE_INLINE__)
+# include "IORInfo.inl"
+#endif /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
