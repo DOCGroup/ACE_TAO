@@ -1,3 +1,17 @@
+Wed Dec 30 19:17:44 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/POA/On_Demand_Loading/Server_Manager.{h,cpp}: 
+          Added these two files for the helper class Server_i used by the
+	  server application.
+
+	* examples/POA/On_Demand_Loading/server.cpp:
+	  This file has been totally revamped and now uses the Server_i
+	  class object.
+
+	* examples/POA/On_Demand_Loading/Makefile:
+	  Added an extra entry for Server_Manager used by the server
+	  program.
+        
 Wed Dec 30 17:25:51 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	The following files have been added to the newly created
