@@ -43,6 +43,13 @@ main (int argc, char *argv[])
 
   ACE_ENDTRY;
 
+#else
+
+  ACE_UNUSED_ARG(argc);
+  ACE_UNUSED_ARG(argv);
+  ACE_DEBUG ((LM_DEBUG,
+              "Exposed_Policies are disabled on this configuration\n"));
+
 #endif /* (TAO_HAS_RT_CORBA == 1) */
 
   return 0;

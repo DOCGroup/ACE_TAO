@@ -434,6 +434,9 @@ template class ACE_Equal_To<CosNotifyFilter::ConstraintID>;
 template class ACE_Array<TAO_Notify_Filter_i::Notify_Constraint_Expr*>;
 template class ACE_Array_Base<TAO_Notify_Filter_i::Notify_Constraint_Expr*>;
 
+template class auto_ptr<CosNotifyFilter::ConstraintInfoSeq>;
+template class ACE_Auto_Basic_Ptr<CosNotifyFilter::ConstraintInfoSeq>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Hash_Map_Entry<CosNotifyFilter::ConstraintID,TAO_Notify_Filter_i::Notify_Constraint_Expr*>
@@ -447,5 +450,8 @@ template class ACE_Array_Base<TAO_Notify_Filter_i::Notify_Constraint_Expr*>;
 
 #pragma instantiate ACE_Array<TAO_Notify_Filter_i::Notify_Constraint_Expr*>
 #pragma instantiate ACE_Array_Base<TAO_Notify_Filter_i::Notify_Constraint_Expr*>
+
+#pragma instantiate auto_ptr<CosNotifyFilter::ConstraintInfoSeq>
+#pragma instantiate ACE_Auto_Basic_Ptr<CosNotifyFilter::ConstraintInfoSeq>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

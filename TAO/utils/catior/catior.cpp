@@ -20,7 +20,7 @@
 #include "ace/streams.h"
 #include "tao/corba.h"
 #include "tao/IIOP_Profile.h"
-#include "tao/UIOP_Profile.h"
+#include "tao/Strategies/UIOP_Profile.h"
 
 static CORBA::Boolean
 catiiop (char* string,

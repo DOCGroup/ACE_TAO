@@ -1483,7 +1483,7 @@ IMR_Forwarder::postinvoke (const PortableServer::ObjectId &,
                            const char * ,
                            PortableServer::ServantLocator::Cookie ,
                            PortableServer::Servant servant
-                           TAO_ENV_ARG_DECL)
+                           TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   delete servant;

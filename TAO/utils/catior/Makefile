@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO
+LDLIBS = -lTAO_Strategies -lTAO
 
 BIN   	= catior
 
@@ -199,6 +199,8 @@ include $(TAO_ROOT)/taoconfig.mk
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -357,8 +359,6 @@ include $(TAO_ROOT)/taoconfig.mk
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
@@ -371,9 +371,10 @@ include $(TAO_ROOT)/taoconfig.mk
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(TAO_ROOT)/tao/IIOP_Endpoint.i \
  $(TAO_ROOT)/tao/IIOP_Profile.i \
- $(TAO_ROOT)/tao/UIOP_Profile.h \
- $(TAO_ROOT)/tao/UIOP_Connect.h \
- $(TAO_ROOT)/tao/UIOP_Transport.h \
+ $(TAO_ROOT)/tao/Strategies/UIOP_Profile.h \
+ $(TAO_ROOT)/tao/Strategies/strategies_export.h \
+ $(TAO_ROOT)/tao/Strategies/UIOP_Connect.h \
+ $(TAO_ROOT)/tao/Strategies/UIOP_Transport.h \
  $(ACE_ROOT)/ace/LSOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
@@ -407,15 +408,15 @@ include $(TAO_ROOT)/taoconfig.mk
  $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
- $(TAO_ROOT)/tao/UIOP_Transport.i \
+ $(TAO_ROOT)/tao/Strategies/UIOP_Transport.i \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/Connection_Handler.h \
  $(TAO_ROOT)/tao/Connection_Handler.inl \
  $(TAO_ROOT)/tao/Wait_Strategy.h \
- $(TAO_ROOT)/tao/UIOP_Connect.i \
- $(TAO_ROOT)/tao/UIOP_Endpoint.h \
- $(TAO_ROOT)/tao/UIOP_Endpoint.i \
- $(TAO_ROOT)/tao/UIOP_Profile.i
+ $(TAO_ROOT)/tao/Strategies/UIOP_Connect.i \
+ $(TAO_ROOT)/tao/Strategies/UIOP_Endpoint.h \
+ $(TAO_ROOT)/tao/Strategies/UIOP_Endpoint.i \
+ $(TAO_ROOT)/tao/Strategies/UIOP_Profile.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
