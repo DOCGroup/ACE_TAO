@@ -112,7 +112,7 @@ int main (int argc, char *argv[])
 
       CORBA::Object_var object =
         session_factory->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       CORBA::String_var ior =
         orb->object_to_string (object.in () ACE_ENV_ARG_PARAMETER);
