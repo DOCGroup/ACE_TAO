@@ -355,7 +355,7 @@ public:
   // set the forward_profiles.  This object will assume ownership of
   // this TAO_MProfile object!!
 
-//FREDprotected:
+protected:
   void put_params (CORBA_Environment &TAO_IN_ENV,
                    const TAO_Call_Data *info,
                    TAO_GIOP_Invocation &call,
@@ -369,7 +369,7 @@ public:
   // Helper method to factor out common code in dynamic oneway
   // vs. twoway invocations.
 
-//FREDprivate:
+private:
   TAO_Profile *set_profile_in_use_i (TAO_Profile *pfile);
   // Makes a copy of the profile and frees the existing profile_in_use.
   // NOT THREAD SAFE
@@ -378,16 +378,13 @@ public:
   // NON-THREAD-SAFE.
   // reset the flag telling that the locate request should be used
 
-  TAO_Profile *next_forward_profile (void);
-  // NON-THREAD-SAFE.  utility method for next_profile.
+  void reset_base ();
+  // NON-THREAD-SAFE.  utility method which resets or initializes
+  // the base_profile list and forward flags.
 
   void forward_back_one (void);
   // NON-THREAD-SAFE.  utility method which unrolls (removes or pops)
   // the top most forwarding profile list.
-
-  void reset_base ();
-  // NON-THREAD-SAFE.  utility method which resets or initializes
-  // the base_profile list and forward flags.
 
   void reset_forward ();
    // NOT THREAD-SAFE.  utility method which pops all forward profile
@@ -396,7 +393,10 @@ public:
   ~STUB_Object (void);
   // Destructor is to be called only through _decr_refcnt()
 
-//FREDprivate:
+  TAO_Profile *next_forward_profile (void);
+  // NON-THREAD-SAFE.  utility method for next_profile.
+
+private:
     // @@ For now, we keep track of transport specific profiles here,
   //    but in the next iteration this will go away ... only transport
   //    neutral info is kept here => STUB_Object should also go away!
