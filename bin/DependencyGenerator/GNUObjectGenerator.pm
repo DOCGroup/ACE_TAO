@@ -24,20 +24,11 @@ use vars qw(@ISA);
 sub process {
   my($noext)   = basename($_[1]);
   my($objects) = [];
-  my(@exts)    = ('o');
-  my(@dirs)    = (defined $ENV{VDIR} ? $ENV{VDIR} : '');
   $noext =~ s/\.[^\.]+$//o;
 
-  if (defined $ENV{SOEXT}) {
-    push(@exts, $ENV{SOEXT});
-  }
-  if (defined $ENV{VSHDIR}) {
-    push(@dirs, $ENV{VSHDIR});
-  }
-
-  foreach my $dirs (@dirs) {
-    foreach my $ext (@exts) {
-      push(@$objects, "$dirs$noext.$ext");
+  foreach my $dirs (qw(VDIR VSHDIR)) {
+    foreach my $ext (qw(SOEXT OBJEXT)) {
+      push @{$objects}, '$('.$dirs.')'.$noext.'.$('.$ext.')';
     }
   }
 
