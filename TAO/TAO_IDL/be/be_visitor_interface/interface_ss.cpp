@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_interface.h"
 
@@ -109,8 +109,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "int _TAO_collocation_POA_" << node->flatname ()
       << "_Stub_Factory_Initializer_Scarecrow = " << be_idt_nl
       << "_TAO_collocation_POA_" << node->flatname ()
-      << "_Stub_Factory_Initializer (_TAO_collocation_POA_"
-      << node->flatname () << "_Stub_Factory_Initializer);" << be_uidt_nl;
+      << "_Stub_Factory_Initializer (ACE_reinterpret_cast (void*, _TAO_collocation_POA_"
+      << node->flatname () << "_Stub_Factory_Initializer));" << be_uidt_nl;
 
   os->incr_indent (0);
 
@@ -141,23 +141,23 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     {
       // we are outermost. So the POA_ prefix is prepended to our name
       *os << node->full_skel_name () << "::POA_"
-	  << node->local_name () << " ("
-	  << "const POA_" << node->local_name () << "& rhs)";
+          << node->local_name () << " ("
+          << "const POA_" << node->local_name () << "& rhs)";
     }
   else
     {
       // the POA_ prefix is prepended to our outermost module name
       *os << node->full_skel_name () << "::"
-	  << node->local_name () << " (const "
-	  << node->local_name () << "& rhs)";
+          << node->local_name () << " (const "
+          << node->local_name () << "& rhs)";
     }
   *os << be_idt_nl
       << ": ";
   if (node->traverse_inheritance_graph
       (be_interface::copy_ctor_helper, os) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "be_visitor_interface_ss::visit_interface - "
-		       " copy ctor generation failed\n"), -1);
+                       "be_visitor_interface_ss::visit_interface - "
+                       " copy ctor generation failed\n"), -1);
   *os << "  TAO_ServantBase (rhs)" << be_uidt_nl
       << "{}\n" << be_nl;
 
