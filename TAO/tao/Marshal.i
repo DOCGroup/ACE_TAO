@@ -155,9 +155,9 @@ TAO_Marshal_Factory::make_marshal_object (CORBA::TypeCode_ptr tc,
 // deep_free for Any
 ACE_INLINE CORBA::TypeCode::traverse_status
 TAO_Marshal_Any::deep_free (CORBA::TypeCode_ptr,
-			    const void *source,
-			    const void *,
-			    CORBA::Environment &)
+                            const void * /* source */,
+                            const void *,
+                            CORBA::Environment &)
 {
   // ((CORBA::Any *) source)->~CORBA_Any ();
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
@@ -177,9 +177,9 @@ TAO_Marshal_TypeCode::deep_free (CORBA::TypeCode_ptr,
 // deep_free for Principal
 ACE_INLINE CORBA::TypeCode::traverse_status
 TAO_Marshal_Principal::deep_free (CORBA::TypeCode_ptr,
-				  const void *value,
-				  const void *,
-				  CORBA::Environment &)
+                                  const void *value,
+                                  const void *,
+                                  CORBA::Environment &)
 {
   CORBA::release (*(CORBA::Principal_ptr *) value);
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
@@ -188,9 +188,9 @@ TAO_Marshal_Principal::deep_free (CORBA::TypeCode_ptr,
 // deep_free for ObjRef
 ACE_INLINE CORBA::TypeCode::traverse_status
 TAO_Marshal_ObjRef::deep_free (CORBA::TypeCode_ptr,
-			       const void *source,
-			       const void *,
-			       CORBA::Environment &)
+                               const void *source,
+                               const void *,
+                               CORBA::Environment &)
 {
   CORBA::Object_ptr obj = *(CORBA::Object_ptr *)source;
   CORBA::release (obj);
@@ -200,9 +200,9 @@ TAO_Marshal_ObjRef::deep_free (CORBA::TypeCode_ptr,
 // deep_free for string
 ACE_INLINE CORBA::TypeCode::traverse_status
 TAO_Marshal_String::deep_free (CORBA::TypeCode_ptr,
-			       const void *source,
-			       const void *,
-			       CORBA::Environment &)
+                               const void *source,
+                               const void *,
+                               CORBA::Environment &)
 {
   CORBA::string_free (*(CORBA::String *) source);
   *(CORBA::String *)source = 0;
@@ -212,9 +212,9 @@ TAO_Marshal_String::deep_free (CORBA::TypeCode_ptr,
 // deep_free for wstring
 ACE_INLINE CORBA::TypeCode::traverse_status
 TAO_Marshal_WString::deep_free (CORBA::TypeCode_ptr,
-				const void *source,
-				const void *,
-				CORBA::Environment &)
+                                const void *source,
+                                const void *,
+                                CORBA::Environment &)
 {
   CORBA::wstring_free (*(CORBA::WString *) source);
   *(CORBA::WString *)source = 0;
