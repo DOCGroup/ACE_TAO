@@ -1,3 +1,26 @@
+Thu Mar 18 10:45:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any_Basic_Impl.cpp (create_empty):
+         
+          For the default case (excluding long long and long double),
+          replaced the 8-char zeroed array (passed as a buffer to the
+          Any_Basic_Impl constructor) with a CORBA::ULonglong set to 0.
+          This is simpler and we know it always works since the spec
+          requires CORBA::ULonglong to be 8 bytes.
+          
+        * tao/FloatSeq.pidl:  
+        * tao/FloatSeqA.cpp:
+        * tao/FloatSeqC.cpp:
+        * tao/FloatSeqC.i:
+        * tao/FloatSeqC.h:
+        
+          New files, adding sequence of CORBA::Float to TAO's growing list
+          of predefined sequences of basic types.
+          
+        * tao/tao.mpc:
+        
+          Added the above new files to the generator.
+
 Thu Mar 18 15:55:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/IDL_Test/Makefile.bor:
