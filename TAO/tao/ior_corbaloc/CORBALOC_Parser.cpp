@@ -8,6 +8,8 @@
 #include "tao/Environment.h"
 #include "ace/Read_Buffer.h"
 
+#include "orbsvcs/orbsvcs/CosNamingC.h"
+
 #if !defined(__ACE_INLINE__)
 #include "CORBALOC_Parser.i"
 #endif /* __ACE_INLINE__ */
@@ -54,7 +56,7 @@ TAO_CORBALOC_Parser::parse_string_count_helper (const char * &corbaloc_name,
           else if (*(i+1) != '/')
             {
               // This is the last addr and will not be terminated with a
-              // ',' ..but need to count it too. 
+              // ',' ..but need to count it too.
                   ++count_addr;
 
               // Indication that the next characters are to be
@@ -98,16 +100,16 @@ TAO_CORBALOC_Parser::parse_string_assign_helper (ACE_Array_Base <char *> &addr,
         {
           // If there is no explicit protocol specified, prepend the
           // default "iiop:"
-          
+
           // Allocation of  memory
-          addr [current_addr] = 
+          addr [current_addr] =
             CORBA::string_alloc (addr_list_length +
                                  sizeof (iiop_prefix) +
                                  key_string.length ());
-          
+
           ACE_OS::strcpy (addr [current_addr],
                           iiop_prefix);
-          
+
           ACE_OS::strcat (addr [current_addr],
                           cloc_name_ptr);
         }
@@ -119,12 +121,12 @@ TAO_CORBALOC_Parser::parse_string_assign_helper (ACE_Array_Base <char *> &addr,
           // If the protocol is <iiop:>
           ACE_OS::strcpy (addr [current_addr],
                           cloc_name_ptr);
-          
+
         }
-      
+
       ACE_OS::strcat (addr [current_addr],
                       key_string.c_str ());
-      
+
       ++current_addr;
       // Get the next token.
       cloc_name_ptr = ACE_OS::strtok_r (NULL,
@@ -141,30 +143,31 @@ TAO_CORBALOC_Parser::parse_string_mprofile_helper (ACE_Array_Base <char *>  &add
                                                    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::Object_ptr obj = CORBA::Object::_nil ();
-
+ 
   // Make one MProfile for all of these endpoints
   TAO_MProfile mprofile;
-
+  
   for (CORBA::ULong j = 0; j != count_addr; ++j)
     {
+      CORBA::Object_ptr obj = CORBA::Object::_nil ();
+      
       int retv =
         orb->orb_core ()->connector_registry ()->make_mprofile (addr [j],
                                                                 mprofile,
                                                                 ACE_TRY_ENV);
-
+      
       ACE_CHECK_RETURN (CORBA::Object::_nil ());   // Return nil.
-
+      
       if (retv != 0)
         {
           ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                               CORBA_SystemException::_tao_minor_code (
-                                 TAO_DEFAULT_MINOR_CODE,
-                                 EINVAL),
-                               CORBA::COMPLETED_NO),
+                              CORBA_SystemException::_tao_minor_code (
+                                TAO_DEFAULT_MINOR_CODE,
+                                EINVAL),
+                              CORBA::COMPLETED_NO),
                             CORBA::Object::_nil ());
         }
-
+      
       // Now make the TAO_Stub.
       TAO_Stub *data = 0;
       ACE_NEW_THROW_EX (data,
@@ -176,19 +179,19 @@ TAO_CORBALOC_Parser::parse_string_mprofile_helper (ACE_Array_Base <char *>  &add
                                             ENOMEM),
                                           CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
+      
       TAO_Stub_Auto_Ptr safe_data (data);
-
+      
       // Figure out if the servant is collocated.
       TAO_ServantBase *servant = 0;
       TAO_SERVANT_LOCATION servant_location =
         orb->_get_collocated_servant (safe_data.get (),
                                       servant);
-
+      
       int collocated = 0;
       if (servant_location != TAO_SERVANT_NOT_FOUND)
         collocated = 1;
-
+      
       // Create the CORBA level proxy.  This will increase the ref_count
       // on data by one
       ACE_NEW_THROW_EX (obj,
@@ -201,13 +204,35 @@ TAO_CORBALOC_Parser::parse_string_mprofile_helper (ACE_Array_Base <char *>  &add
                                             ENOMEM),
                                           CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
+      
       // All is well, so release the stub object from its auto_ptr.
       data = safe_data.release ();
+      CosNaming::NamingContextExt_var naming_context;
 
+      ACE_TRY
+        {
+          // Narrow to get the correct reference to check if this
+          // reference is the one needed.
+          naming_context =
+            CosNaming::NamingContextExt::_narrow (obj, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+          
+        }
+      ACE_CATCH (CORBA::SystemException, ex)
+        {
+          // Do not do anything.
+        }
+      ACE_ENDTRY;
+      
+      if (!CORBA::is_nil (naming_context.in ()))
+        {
+          // If this is the endpoint which has the NameService, return
+          // the reference. 
+          return obj;
+        }
     }
-
-  return obj;
+  
+  return CORBA::Object::_nil ();
 }
 
 CORBA::Object_ptr
@@ -220,7 +245,7 @@ TAO_CORBALOC_Parser::parse_string_rir_helper (const char *
 
   const char rir_prefix [] = "rir:/";
   CORBA::Object_ptr rir_obj = CORBA::Object::_nil ();
-  
+
   ACE_TRY
     {
       // "rir" protocol. Pass the key string as an
@@ -308,7 +333,7 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
           this->parse_string_count_helper (corbaloc_name,
                                            addr_list_length,
                                            count_addr);
-  
+
           // Convert corbaloc_name as a ACE_CString
           ACE_CString corbaloc_name_str (corbaloc_name, 0, 1);
 
