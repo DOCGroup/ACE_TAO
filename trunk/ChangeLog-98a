@@ -1,8 +1,11 @@
 Fri Mar 13 09:09:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Profile_Timer.*,config-chorus.GNU,README,
-          tests/Handle_Set_Test.cpp (test_performance):
-          added ACE_LACKS_FLOATING_POINT support.
+          tests/Handle_Set_Test.cpp (test_performance): added
+          ACE_LACKS_FLOATING_POINT support.
+
+        * include/makeinclude/platform_chorus_ghs.GNU: removed
+          -X445 from CFLAGS.  I don't know what it does.
 
 Fri Mar 13 01:10:36 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
