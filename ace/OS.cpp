@@ -1755,7 +1755,7 @@ ACE_Thread_Adapter::invoke (void)
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
 # if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
           int using_afx = -1;
-          if (thr_desc->flags ())
+          if (thr_desc)
             using_afx = ACE_BIT_ENABLED (thr_desc->flags (), THR_USE_AFX);
 # endif /* ACE_WIN32 && ACE_HAS_MFC && (ACE_HAS_MFC != 0) */
           // Call TSS destructors.
