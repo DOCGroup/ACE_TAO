@@ -1,3 +1,7 @@
+Tue Jan 21 08:43:24 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/generate_doxygen.pl: Fixed a cut and paste error. 
+
 Mon Jan 20 16:22:43 2003  Heather Drury <drury_h@ociweb.com>
 
         * ace/NT_Service.cpp: Modified return statement as the
