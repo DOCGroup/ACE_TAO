@@ -1483,7 +1483,7 @@ ACE_ReactorEx::instance (void)
 }
 
 ACE_ReactorEx *
-ACE_ReactorEx::reactorEx (ACE_ReactorEx *r)
+ACE_ReactorEx::instance (ACE_ReactorEx *r)
 {
   return NULL;
 }

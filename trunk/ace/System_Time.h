@@ -22,9 +22,6 @@
 #include "ace/Memory_Pool.h"
 #include "ace/Malloc_T.h"
 
-// fwd decl.
-// class ACE_MMAP_MEMORY_POOL;
-
 class ACE_Export ACE_Date_Time
   // TITLE
   //    This class holds internally date and time and has interfaces
