@@ -32,6 +32,9 @@
 // Needed for broken linkers that can't grok long symbols.
 #define ACE_Refcounted_Hash_Recyclable ARHR
 
+
+class ACE_Service_Repository;
+
 /**
  * @class ACE_Recycling_Strategy
  *
