@@ -2,7 +2,7 @@ $Id$
 
 The tests in this directory time the latency contributed by
 various parts of the ORB, but mostly the emphasis is on the
-contribution due to the pluggable protocols code. So far, the
+contribution due to the pluggable protocols code.  So far, the
 output is only to the screen, and is created using the ACE
 Timeprobe class. At various points in the ORB code and in this
 test code, an ACE Timeprobe is inserted. When this point is 
