@@ -96,34 +96,27 @@ CC_LockSet::lock (CosConcurrencyControl::lock_mode mode,
 
   CC_LockModeEnum lm = lmconvert(mode);
 
-  TAO_TRY
+  // Check to see if the requested mode is compatible with the
+  // modes held so far. If not put the request on hold.  @@TAO I'm
+  // not shure whether we can run into race conditions on the
+  // variables here (waiting_calls_, lock_, and strongest_held_).
+  if(compatible(strongest_held_,lm)==CORBA::B_FALSE)
     {
-      // Check to see if the requested mode is compatible with the
-      // modes held so far. If not put the request on hold.  @@TAO I'm
-      // not shure whether we can run into race conditions on the
-      // variables here (waiting_calls_, lock_, and strongest_held_).
-      if(compatible(strongest_held_,lm)==CORBA::B_FALSE)
-        {
-          waiting_calls_++;
-          if(semaphore_.acquire()==-1)
-            TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
-          lock_[lm]++;
-          strongest_held_ = lm;
-        }
-      else
-        {
-          lock_[lm]++;
-          // If the mode granted is stronger than the strongest mode
-          // held so far, we must update the strongest_held_ variable.
-          if(lm>strongest_held_)
-            strongest_held_ = lm;
-        }
+      waiting_calls_++;
+      if(semaphore_.acquire()==-1)
+        TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
+      lock_[lm]++;
+      strongest_held_ = lm;
     }
-  TAO_CATCHANY
+  else
     {
-      TAO_RETHROW;
+      lock_[lm]++;
+      // If the mode granted is stronger than the strongest mode
+      // held so far, we must update the strongest_held_ variable.
+      if(lm>strongest_held_)
+        strongest_held_ = lm;
     }
-  TAO_ENDTRY;
+
   ACE_DEBUG ((LM_DEBUG,
               "waiting_calls_: %i, strongest_held_: %i, IR: %i, R: %i, U: %i, IW: %i, W: %i\n",
               waiting_calls_, strongest_held_,
