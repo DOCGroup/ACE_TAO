@@ -215,43 +215,6 @@ TAO_ExtAttributeDef_i::fill_description (
 }
 
 void
-TAO_ExtAttributeDef_i::exceptions (const char *sub_section,
-                                   const CORBA::ExceptionDefSeq &exceptions)
-{
-  CORBA::ULong length = exceptions.length ();
-
-  if (length == 0)
-    {
-      return;
-    }
-
-  // Create new subsection because this function should be called
-  // only on a new TAO_ExtAttributeDef_i.
-  ACE_Configuration_Section_Key excepts_key;
-  this->repo_->config ()->open_section (this->section_key_,
-                                        sub_section,
-                                        1,
-                                        excepts_key);
-
-  this->repo_->config ()->set_integer_value (excepts_key,
-                                             "count",
-                                             length);
-
-  char *type_path = 0;
-
-  for (CORBA::ULong i = 0; i < length; ++i)
-    {
-      type_path = 
-        TAO_IFR_Service_Utils::reference_to_path (exceptions[i].in ());
-
-      char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
-      this->repo_->config ()->set_string_value (excepts_key,
-                                                stringified,
-                                                type_path);
-    }
-}
-
-void
 TAO_ExtAttributeDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
                                         const char *sub_section
                                         ACE_ENV_ARG_DECL)

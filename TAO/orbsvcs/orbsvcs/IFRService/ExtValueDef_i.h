@@ -106,6 +106,12 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  void exceptions (ACE_Configuration_Section_Key &key,
+                   const char *sub_section,
+                   const CORBA::ExcDescriptionSeq &exceptions);
+  /// Public because it's also called from 
+  /// TAO_Container_i::create_ext_value_i.
+
 private:
   /// Common code for the set/get operations with attributes and initializers.
 
@@ -113,10 +119,6 @@ private:
                         ACE_Configuration_Section_Key &key,
                         const char *sub_section
                         ACE_ENV_ARG_DECL);
-
-  void exceptions (ACE_Configuration_Section_Key &key,
-                   const char *sub_section,
-                   const CORBA::ExcDescriptionSeq &exceptions);
 
   void exceptions (ACE_Configuration_Section_Key &key,
                    const char *sub_section,
