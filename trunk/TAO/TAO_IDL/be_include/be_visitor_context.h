@@ -54,6 +54,12 @@ class be_typedef;
 class be_union;
 class be_union_branch;
 
+// When interface is defined as macro redefine it as aceinterface
+#if defined (interface)
+# define aceinterface interface
+# undef interface
+#endif /* interface */
+
 class be_visitor_context
 {
 public:
@@ -273,5 +279,8 @@ private:
   // See the method declaration above.
 };
 
-
+#if defined (interface)
+# define interface aceinterface
+#endif /* interface */
+ 
 #endif /* BE_VISITOR_CONTEXT_H */
