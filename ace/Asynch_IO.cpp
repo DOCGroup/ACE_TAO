@@ -911,12 +911,12 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::transmit_buffers (void)
 // *********************************************************************
 
 ACE_Handler::ACE_Handler (void)
-  : proactor_ (0)
+  : proactor_ (0), handle_ (ACE_INVALID_HANDLE)
 {
 }
 
 ACE_Handler::ACE_Handler (ACE_Proactor *d)
-  : proactor_ (d)
+  : proactor_ (d), handle_ (ACE_INVALID_HANDLE)
 {
 }
 
@@ -980,7 +980,13 @@ ACE_Handler::proactor (ACE_Proactor *p)
 ACE_HANDLE
 ACE_Handler::handle (void) const
 {
-  return ACE_INVALID_HANDLE;
+  return this->handle_;
+}
+
+void
+ACE_Handler::handle (ACE_HANDLE h)
+{
+  this->handle_ = h;
 }
 
 // ************************************************************

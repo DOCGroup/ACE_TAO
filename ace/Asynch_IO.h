@@ -1085,9 +1085,15 @@ public:
    */
   virtual ACE_HANDLE handle (void) const;
 
+  /// Set the ACE_HANDLE value for this Handler.
+  virtual void handle (ACE_HANDLE);
+
 protected:
   /// The proactor associated with this handler.
   ACE_Proactor *proactor_;
+
+  /// The ACE_HANDLE in use with this handler.
+  ACE_HANDLE    handle_;
 };
 
 // Forward declarations

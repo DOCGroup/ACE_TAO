@@ -42,8 +42,8 @@
 static ACE_Atomic_Op <ACE_Thread_Mutex, size_t> Completions_To_Go;
 
 
-#if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
-     (defined (ACE_HAS_AIO_CALLS)) && !defined (ACE_POSIX_AIOCB_PROACTOR))
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
+     defined (ACE_HAS_AIO_CALLS)
 // This only works on Win32 platforms and on Unix platforms supporting
 // POSIX aio calls.
 

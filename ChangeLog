@@ -1,3 +1,16 @@
+Tue Feb 06 17:55:28 2001  Steve Huston  <shuston@riverace.com>
+
+        * examples/Reactor/Proactor/post_completions.cpp: Allow this to
+          run with AIOCB_Proactor.
+
+        * ace/Asynch_IO.{h cpp}: Added ACE_Handler::handle (ACE_HANDLE)
+          function to set the handle; changed ACE_HANDLE ACE_Handler::handle
+          to return the actual value.
+
+        * ace/Asynch_Acceptor.cpp (handle_accept): Call ACE_Handler::handle
+          to set the handle value for the new handler before calling its
+          open() method.
+
 Tue Feb 06 17:16:43 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/MEM_Stream_Test.cpp:
@@ -11,6 +24,7 @@ Mon Feb  5 16:19:20 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 	  macros to use the form 0x0123 rather than 0123X.  Thanks to
  	  Craig Rodrigues <crodrigu@bbn.com> for helping find this
  	  problem.
+
 Mon Feb  5 18:20:11 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* ace/config-sunos5.5.h (ACE_USES_OLD_IOSTREAMS):
