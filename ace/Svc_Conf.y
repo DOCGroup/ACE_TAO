@@ -130,23 +130,33 @@ stream_modules
   ;
 
 module_list 
-  : module_list module { $2->link ($1); $$ = $2; }
+  : module_list module 
+    { 
+      if ($2 != 0)
+        {
+          $2->link ($1);
+          $$ = $2; 
+        }
+    }
   | /* EMPTY */ { $$ = 0; }
   ;
 
 module 
   : dynamic 
     {
-      ACE_ARGV args ($<static_node_>1->parameters ());
-      ACE_Module_Type *mt = get_module ($<static_node_>-1, $<static_node_>1);
+      if ($<static_node_>1 != 0)
+        {
+          ACE_ARGV args ($<static_node_>1->parameters ());
+          ACE_Module_Type *mt = get_module ($<static_node_>-1, $<static_node_>1);
 
-      if (mt->init (args.argc (), args.argv ()) == -1
-	  || ((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->push (mt) == -1)
-	{
-	  ACE_ERROR ((LM_ERROR, "dynamic initialization failed for Module %s\n",
-		     $<static_node_>1->name ()));
-	  yyerrno++;
-	}
+          if (mt->init (args.argc (), args.argv ()) == -1
+              || ((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->push (mt) == -1)
+            {
+              ACE_ERROR ((LM_ERROR, "dynamic initialization failed for Module %s\n",
+                          $<static_node_>1->name ()));
+              yyerrno++;
+            }
+        }
     }
   | static  
     { 
