@@ -40,7 +40,7 @@ public:
 // including the template source.  This in turn creates two copies of
 // the static member variable.
 //
-// So to get around this problem, the *_SINGLETON_DECLARE macro is 
+// So to get around this problem, the *_SINGLETON_DECLARE macro is
 // used to instruct the compiler to not create the second copy in the
 // program.  This macro solution does not work for Borland C++, so for
 // this compiler you must explicitly disable the template instantiation
@@ -57,7 +57,7 @@ public:
 # endif
 #endif
 typedef ACE_Singleton<test_class, ACE_Null_Mutex> TEST_SINGLETON;
-TEST_SINGLETON_DECLARE (ACE_Singleton, test_class, ACE_Null_Mutex);
+TEST_SINGLETON_DECLARE (ACE_Singleton, test_class, ACE_Null_Mutex)
 #if defined (__BORLANDC__)
 # if !defined (TEST_BUILD_DLL)
 #   pragma option pop
