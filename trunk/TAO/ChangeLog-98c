@@ -1,3 +1,8 @@
+Wed Nov 19 23:01:46 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_state_operation.cpp: Fixed the problem with
+	strings as return values.
+
 Wed Nov 19 22:11:28 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.39, released Wed Nov 19 22:11:28 1997.
@@ -86,7 +91,7 @@ Wed Nov 19 12:07:42 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Wed Nov 19 10:37:19 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* orbsvcs/lib/Scheduler_Factory.cpp: 
+	* orbsvcs/lib/Scheduler_Factory.cpp:
 	  The type declared for the rt_info array was wrong.
 
 Wed Nov 19 09:18:30 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
@@ -119,13 +124,13 @@ Wed Nov 19 07:47:13 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Wed Nov 19 05:53:42 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/DII_Cubit/clnt.cpp: 
-	* tests/Cubit/TAO/DII_Cubit/clnt.h: 
-	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: 	
+	* tests/Cubit/TAO/DII_Cubit/clnt.cpp:
+	* tests/Cubit/TAO/DII_Cubit/clnt.h:
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp:
 	* tests/Cubit/TAO/IDL_Cubit/clnt.h: Changed code to add loop
  	around all cube calls, and make output more consistent.
 
-	* orbsvcs/tests/Logger/Makefile: 
+	* orbsvcs/tests/Logger/Makefile:
 	* orbsvcs/tests/Logger/ior_multicast.cpp:
 	* orbsvcs/tests/Logger/ior_multicast.h: Removed unneeded
  	ior_multicast.* source files from the logger example.  It now uses
@@ -142,7 +147,7 @@ Wed Nov 19 05:53:42 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
 	* orbsvcs/lib/CosNamingS.i:
 	* orbsvcs/lib/CosNamingS.h:
 	* orbsvcs/lib/CosNamingC.cpp:
-	* orbsvcs/lib/CosNamingC.i:	
+	* orbsvcs/lib/CosNamingC.i:
 	* orbsvcs/lib/CosNamingC.h: Removed these files from the
  	repository, since the IDL compiler generates these correctly.
 
@@ -151,7 +156,7 @@ Wed Nov 19 05:53:42 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 	* orbsvcs/bin/Naming_Service/svr.h: Constructor of event handler
  	for multicast doesn't need reply port anymore.
-	
+
 	* orbsvcs/bin/Naming_Service/svr.cpp (handle_input): Now receives
  	the port number in the multicast request.  Suggested by Doug
  	Schmidt.
@@ -163,7 +168,7 @@ Wed Nov 19 05:53:42 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
 	* orbsvcs/bin/Naming_Service/NS_CosNaming.cpp (NS_ExtId):
  	Reordered initializers in the constructor.
 
-	* tests/Cubit/TAO/IDL_Cubit/clnt.h: 
+	* tests/Cubit/TAO/IDL_Cubit/clnt.h:
 	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp (run): Added a loop around
  	all cube calls and added calls/sec stats for them.
 
@@ -174,7 +179,7 @@ Wed Nov 19 05:53:42 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
 	* tao/orbobj.i: reorder the declaration of inline
  	CORBA_OBJ::Add_Ref(), to remove a warning.
 
-	* tests/Cubit/TAO/MT_Cubit/server/svr.cpp (main): 
+	* tests/Cubit/TAO/MT_Cubit/server/svr.cpp (main):
 	removed return statement that was causing a warning.
 
 Wed Nov 19 04:22:48 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
@@ -187,22 +192,22 @@ Tue Nov 18 01:29:00 1997    <nw1@COYOTE>
 
 Tue Nov 18 18:53:57 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
-	* TAO_IDL/be/be_state_typedef.cpp (gen_code): 
-	* TAO_IDL/be/be_state_structure.cpp (gen_code): 
-	* TAO_IDL/be/be_state_sequence.cpp (gen_code): 
-	* TAO_IDL/be/be_state_operation.cpp (gen_code): 
+	* TAO_IDL/be/be_state_typedef.cpp (gen_code):
+	* TAO_IDL/be/be_state_structure.cpp (gen_code):
+	* TAO_IDL/be/be_state_sequence.cpp (gen_code):
+	* TAO_IDL/be/be_state_operation.cpp (gen_code):
 	* TAO_IDL/be/be_state_array.cpp (gen_code): Comment out
  	unreachable break statements.
 
-	* TAO_IDL/ast/ast_array.cpp (n_dims): 
-	* TAO_IDL/include/ast_array.h (AST_Array::n_dims): 
-	* TAO_IDL/ast/ast_attribute.cpp (readonly): 
-	* TAO_IDL/include/ast_attribute.h (AST_Attribute::readonly): 
-	* TAO_IDL/ast/ast_argument.cpp (direction): 
-	* TAO_IDL/include/ast_argument.h (AST_Argument::direction): 
-	* tao/nvlist.h (CORBA_NamedValue::name): 
-	* TAO_IDL/include/utl_scope.h (UTL_Scope::scope_node_type): 
-	* TAO_IDL/ast/ast_predefined_type.cpp (pt): 
+	* TAO_IDL/ast/ast_array.cpp (n_dims):
+	* TAO_IDL/include/ast_array.h (AST_Array::n_dims):
+	* TAO_IDL/ast/ast_attribute.cpp (readonly):
+	* TAO_IDL/include/ast_attribute.h (AST_Attribute::readonly):
+	* TAO_IDL/ast/ast_argument.cpp (direction):
+	* TAO_IDL/include/ast_argument.h (AST_Argument::direction):
+	* tao/nvlist.h (CORBA_NamedValue::name):
+	* TAO_IDL/include/utl_scope.h (UTL_Scope::scope_node_type):
+	* TAO_IDL/ast/ast_predefined_type.cpp (pt):
 	* TAO_IDL/include/ast_predefined_type.h (AST_PredefinedType::pt):
  	removed const from declarations that it didn't have a meaning for.
   	Also from return statements.  These changes were suggested by
@@ -227,7 +232,7 @@ Tue Nov 18 17:44:02 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
  	short on VxWorks/GreenHills.
 
 	* TAO_IDL/be/be_state.cpp: Added template instantiations for SGI.
-	
+
 	* tao/deep_free.cpp (deep_free): Removed unused 'alignment'
  	variable.
 
@@ -242,36 +247,36 @@ Tue Nov 18 17:44:02 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 Tue Nov 18 17:33:20 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* orbsvcs/lib/RtecEventChannelAdmin.idl: 
-	* orbsvcs/lib/RtecEventComm.idl: 
+	* orbsvcs/lib/RtecEventChannelAdmin.idl:
+	* orbsvcs/lib/RtecEventComm.idl:
 	  Changed several operations to "oneway" to avoid dead-locks in
 	  the Event Channel tests.
 
-	* orbsvcs/lib/Runtime_Scheduler.h: 
-	* orbsvcs/lib/Runtime_Scheduler.cpp: 
+	* orbsvcs/lib/Runtime_Scheduler.h:
+	* orbsvcs/lib/Runtime_Scheduler.cpp:
 	  This class is a servant, event though it is only used
 	  collocated, so it must inherit from the POA class.
 
-	* orbsvcs/lib/Scheduler_Factory.cpp: 
+	* orbsvcs/lib/Scheduler_Factory.cpp:
 	  Care must be exercised to create the Runtime_Scheduler instance
 	  only once the ORB is up and running.
 
-	* orbsvcs/lib/CosNamingC.cpp: 
-	* orbsvcs/lib/CosNamingC.h: 
-	* orbsvcs/lib/CosNamingS.cpp: 
-	* orbsvcs/lib/CosNamingS.h: 
-	* orbsvcs/lib/RtecEventChannelAdminC.cpp: 
-	* orbsvcs/lib/RtecEventChannelAdminC.h: 
-	* orbsvcs/lib/RtecEventChannelAdminS.cpp: 
-	* orbsvcs/lib/RtecEventChannelAdminS.h: 
-	* orbsvcs/lib/RtecEventCommC.cpp: 
-	* orbsvcs/lib/RtecEventCommC.h: 
-	* orbsvcs/lib/RtecEventCommS.cpp: 
-	* orbsvcs/lib/RtecEventCommS.h: 
-	* orbsvcs/lib/RtecSchedulerC.cpp: 
-	* orbsvcs/lib/RtecSchedulerC.h: 
-	* orbsvcs/lib/RtecSchedulerS.cpp: 
-	* orbsvcs/lib/RtecSchedulerS.h: 
+	* orbsvcs/lib/CosNamingC.cpp:
+	* orbsvcs/lib/CosNamingC.h:
+	* orbsvcs/lib/CosNamingS.cpp:
+	* orbsvcs/lib/CosNamingS.h:
+	* orbsvcs/lib/RtecEventChannelAdminC.cpp:
+	* orbsvcs/lib/RtecEventChannelAdminC.h:
+	* orbsvcs/lib/RtecEventChannelAdminS.cpp:
+	* orbsvcs/lib/RtecEventChannelAdminS.h:
+	* orbsvcs/lib/RtecEventCommC.cpp:
+	* orbsvcs/lib/RtecEventCommC.h:
+	* orbsvcs/lib/RtecEventCommS.cpp:
+	* orbsvcs/lib/RtecEventCommS.h:
+	* orbsvcs/lib/RtecSchedulerC.cpp:
+	* orbsvcs/lib/RtecSchedulerC.h:
+	* orbsvcs/lib/RtecSchedulerS.cpp:
+	* orbsvcs/lib/RtecSchedulerS.h:
 	  Regenerated all the stubs and skeletons using the latest IDL
 	  compiler, but still some hand crafting is required, namely for
 	  operations in base classes.
@@ -293,11 +298,11 @@ Tue Nov 18 14:27:02 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 Tue Nov 18 04:00:46 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* tao/poa.cpp: 
+	* tao/poa.cpp:
 	  An operation lookup on the dispatching code will cause an error
 	  message and the CORBA::BAD_OPERATION exception to be raised.
 
-	* tao/orb_core.cpp: 
+	* tao/orb_core.cpp:
 	  Somehow the options for setting the Event Service and the
 	  Scheduling Service IOR were lost. Eventually they must be
 	  removed, but we are still testing the Naming Service.
@@ -308,7 +313,7 @@ Tue Nov 18 02:17:24 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Nov 18 02:03:22 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
-	* orbsvcs/tests/Logger/svr.cpp: 
+	* orbsvcs/tests/Logger/svr.cpp:
 	* orbsvcs/tests/Logger/clnt.cpp: This test example now uses the
  	naming service in the server and client.  Also changed the code to
  	have a default use in case the naming service is not available.
