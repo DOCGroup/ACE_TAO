@@ -1,3 +1,15 @@
+Mon May 11 13:14:22 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* ace/RB_Tree.{cpp,h,i}: (new) Red-Black Tree data structure
+	  implementation.  A Red-Black Tree is an efficient 
+	  self-balancing binary tree that uses recoloring to
+	  minimize rotations while rebalancing on insertion or
+	  deletion of a tree node.  Items in the tree are stored
+	  according to a key provided at insertion.  This
+	  implementation is an OO rendition of the ADT described
+	  in Cormen, Leiserson, Rivest, "Introduction to Algorithms"
+          (c) 1990, MIT.
+
 Mon May 11 12:31:41 1998  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.h: Made ACE_LD_SEARCH_PATH, ACE_LD_SEARCH_PATH_SEPARATOR_STR,
