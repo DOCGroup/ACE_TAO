@@ -17,7 +17,9 @@
 #endif /* __ACE_INLINE__ */
 
 
-ACE_RCSID(tao, Pluggable, "$Id$")
+ACE_RCSID (tao,
+           Pluggable,
+           "$Id$")
 
 // *********************************************************************
 
@@ -94,9 +96,9 @@ TAO_Connector::make_mprofile (const char *string,
       // to the IOR string index (i.e. 3)
     }
 
-  const int objkey_index =
-    ior.find (this->object_key_delimiter (), ior_index) + ior_index;
   // Find the object key
+  const int objkey_index =
+    ior.find (this->object_key_delimiter (), ior_index);
 
   if (objkey_index == 0 || objkey_index == ACE_CString::npos)
     {
@@ -149,18 +151,19 @@ TAO_Connector::make_mprofile (const char *string,
 
   for (CORBA::ULong j = 0; j < profile_count; ++j)
     {
-      begin += end + 1;
+      begin = end + 1;
 
       if (j < profile_count - 1)
         end = ior.find (endpoint_delimiter, begin);
       else
-        end = objkey_index - begin;  // Handle last endpoint differently
+        end = objkey_index;  // Handle last endpoint differently
 
       if (end < ACE_static_cast (int, ior.length ()) && end != ior.npos)
         {
-          ACE_CString endpoint = ior.substring (begin, end);
-          endpoint += ior.substring (objkey_index);
+          ACE_CString endpoint = ior.substring (begin, end - begin);
+
           // Add the object key to the string.
+          endpoint += ior.substring (objkey_index);
 
           // The endpoint should now be of the form:
           //    `N.n@endpoint/object_key'
