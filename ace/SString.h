@@ -82,18 +82,18 @@ public:
   // Assignment operator (does copy memory).
 
   void set (const char *s, int release = 1);
-  // Copy <s>
+  // Copy <s> into this <ACE_CString>.
 
-  void set (const char *s, size_t len, int release = 1);
-  // Copy <len> bytes of <s> (will NUL terminate the result)
+  void set (size_t len, const char *s, int release = 1);
+  // Copy <len> bytes of <s> (will NUL terminate the result).
 
   ACE_CString substring (size_t offset, ssize_t length = -1) const;
   // Return a substring given an offset and length, if length == -1
   // use rest of str return empty substring if offset or offset/length
-  // are invalid
+  // are invalid.
 
   ACE_CString substr (size_t offset, ssize_t length = -1) const;
-  // Same as substring
+  // Same as <substring>.
 
   ACE_CString &operator += (const ACE_CString &);
   // Concat operator (copies memory).
@@ -113,7 +113,7 @@ public:
   // if it has length 0!
 
   const char *c_str (void) const;
-  // Same as STL String's c_str()
+  // Same as STL String's <c_str> and <fast_rep>.
 
   int strstr (const ACE_CString &s) const;
   // Comparison operator that will match substrings.  Returns the
@@ -254,7 +254,7 @@ public:
   // Get the underlying pointer.
 
   const char *c_str (void) const;
-  // Get the underlying pointer.
+  // Same as STL String's <c_str> and <fast_rep>.
 
   int strstr (const ACE_SString &s) const;
   // Comparison operator that will match substrings.  Returns the
@@ -371,7 +371,7 @@ public:
   void set (const ACE_USHORT16 *s);
   // Copy <s>
 
-  void set (const ACE_USHORT16 *s, size_t len);
+  void set (size_t len, const ACE_USHORT16 *s);
   // Copy <len> bytes of <s> (will NUL terminate the result)
 
   ACE_WString substring (size_t offset, ssize_t length = -1) const;
@@ -401,7 +401,7 @@ public:
   // Get at the underlying representation directly!
 
   const ACE_USHORT16 *c_str (void) const;
-  // Same as STL String's c_str()
+  // Same as STL String's <c_str> and <fast_rep>.
 
   int strstr (const ACE_WString &s) const;
   // Comparison operator that will match substrings.  Returns the
