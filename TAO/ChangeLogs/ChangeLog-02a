@@ -1,3 +1,13 @@
+Mon May 07 10:47:11 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/GIOP_Message_Base.cpp (write_protocol_header): 
+	  Optimize the implementation of this function.  Insted of
+	  marshaling each field of the GIOP header individually we create
+	  one big octet array, store all the fields there (they are octets
+	  for the most part) and then marshal the whole header in a single
+	  operation.  Saves a little over 0.5% on the client and server
+	  sides.
+
 Mon May 07 10:35:27 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Big_Twoways/Big_Twoways.dsw:
