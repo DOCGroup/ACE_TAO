@@ -13,8 +13,8 @@
 //=============================================================================
 
 #include "FT_Creator.h"
-#include <iostream>
-#include <fstream>
+// FUZZ: disable check_for_streams_include
+#include "ace/streams.h"
 #include <orbsvcs/PortableGroup/PG_Properties_Encoder.h>
 
 #include <ace/Get_Opt.h>
@@ -92,14 +92,14 @@ FTAPP::FT_Creator::parse_args (int argc, char *argv[])
 
       default:
       {
-        std::cerr << "Creator: Unknown argument -" << (char) c << std::endl;
-        usage(std::cerr);
+        cerr << "Creator: Unknown argument -" << (char) c << endl;
+        usage(cerr);
         result = 1;
         break;
       }
       case '?':
       {
-        usage(std::cerr);
+        usage(cerr);
         result = 1;
         break;
       }
@@ -108,8 +108,8 @@ FTAPP::FT_Creator::parse_args (int argc, char *argv[])
 
   if ( this->create_roles_.size() == 0 && this->unregister_roles_.size() == 0)
   {
-    std::cerr << "Creator: neither create (-t) nor kill (-u) specified.  Nothing to do." << std::endl;
-    usage (std::cerr);
+    cerr << "Creator: neither create (-t) nor kill (-u) specified.  Nothing to do." << endl;
+    usage (cerr);
     result = -1;
   }
 
@@ -186,7 +186,7 @@ int FTAPP::FT_Creator::run (ACE_ENV_SINGLE_ARG_DECL)
   for ( nType = 0; result == 0 && nType < typeCount; ++nType)
   {
     const char * role = this->create_roles_[nType].c_str();
-    std::cout << std::endl << "Creator: Creating group of " << role << std::endl;
+    cout << endl << "Creator: Creating group of " << role << endl;
     PortableGroup::ObjectGroup_var group = this->creator_.create_group (
       role,
       this->write_iors_
@@ -212,7 +212,7 @@ int FTAPP::FT_Creator::run (ACE_ENV_SINGLE_ARG_DECL)
       }
       else
       {
-        std::cerr << "Can't open iogr output file " << iogr_filename << std::endl;
+        cerr << "Can't open iogr output file " << iogr_filename << endl;
         result = 1;
       }
     }
