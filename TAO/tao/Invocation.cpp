@@ -602,7 +602,6 @@ TAO_GIOP_Invocation::profile (TAO_Profile *p)
     {
       (void) p->_incr_refcnt ();
       this->profile_ = p;
-      (void) this->profile_->_incr_refcnt ();
 
       if (tmp)
         (void) tmp->_decr_refcnt ();

@@ -8,6 +8,7 @@
 #include "target_specification.h"
 #include "Object_KeyC.h"
 #include "ORB_Core.h"
+#include "Client_Strategy_Factory.h"
 #include "ace/CDR_Base.h"
 
 #if !defined (__ACE_INLINE__)
@@ -33,8 +34,13 @@ TAO_Profile::TAO_Profile (CORBA::ULong tag,
     , tag_ (tag)
     , orb_core_ (orb_core)
     , forward_to_ (0)
+    , refcount_lock_ (0)
     , refcount_ (1)
 {
+  // @@ NOTE: Need to probably use a different type of lock.
+  this->refcount_lock_ =
+    this->orb_core_->client_factory ()->create_profile_lock ();
+
   (void) this->orb_core_->object_key_table ().bind (obj_key,
                                                     this->ref_object_key_);
 }
@@ -52,8 +58,12 @@ TAO_Profile::TAO_Profile (CORBA::ULong tag,
     , tag_ (tag)
     , orb_core_ (orb_core)
     , forward_to_ (0)
+    , refcount_lock_ (0)
     , refcount_ (1)
 {
+  // @@ NOTE: Need to probably use a different type of lock.
+  this->refcount_lock_ =
+    this->orb_core_->client_factory ()->create_profile_lock ();
 }
 
 TAO_Profile::~TAO_Profile (void)
@@ -62,12 +72,14 @@ TAO_Profile::~TAO_Profile (void)
     delete this->tagged_profile_;
 
   this->orb_core_->object_key_table ().unbind (this->ref_object_key_);
+
+  delete this->refcount_lock_;
 }
 
 CORBA::ULong
 TAO_Profile::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->refcount_lock_, 0);
+  ACE_GUARD_RETURN (ACE_Lock, guard, *this->refcount_lock_, 0);
 
   return this->refcount_++;
 }
@@ -76,7 +88,7 @@ CORBA::ULong
 TAO_Profile::_decr_refcnt (void)
 {
   {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->refcount_lock_, 0);
+    ACE_GUARD_RETURN (ACE_Lock, mon, *this->refcount_lock_, 0);
     this->refcount_--;
     if (this->refcount_ != 0)
       return this->refcount_;
