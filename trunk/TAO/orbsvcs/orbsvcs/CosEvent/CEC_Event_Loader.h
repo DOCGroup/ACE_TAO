@@ -29,27 +29,28 @@ class ACE_Svc_Export TAO_CEC_Event_Loader : public TAO_Object_Loader
 
   // Constructor
   TAO_CEC_Event_Loader (void);
-  
+
   // Destructor
   ~TAO_CEC_Event_Loader (void);
-  
+
   // Called by the Service Configurator framework to initialize the
   // Event Service. Defined in <ace/Service_Config.h>
   virtual int init (int argc, char *argv[]);
- 
+
   // Called by the Service Configurator framework to remove the
   // Event Service. Defined in <ace/Service_Config.h>
   virtual int fini (void);
-  
+
   // This function call creates the Event Channel given a reference to the
   // ORB and the command line parameters.
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                    int argc, char *argv[],
                                    CORBA::Environment
-                                   &ACE_TRY_ENV);
+                                   &ACE_TRY_ENV)
+     ACE_THROW_SPEC (());
 
  protected:
-  
+
   // ORB
   CORBA::ORB_var orb_;
 
@@ -76,6 +77,6 @@ class ACE_Svc_Export TAO_CEC_Event_Loader : public TAO_Object_Loader
 
 };
 
-ACE_SVC_FACTORY_DECLARE (TAO_CEC_Event_Loader);
+ACE_SVC_FACTORY_DECLARE (TAO_CEC_Event_Loader)
 
 #endif /* TAO_CEC_EVENT_LOADER_H */

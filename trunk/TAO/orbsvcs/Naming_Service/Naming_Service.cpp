@@ -48,7 +48,7 @@ TAO_Naming_Service::init (int argc,
       // '-1' in case of an exception.
       result = this->my_naming_server_.init_with_orb (this->argc_,
                                                       this->argv_,
-                                                      this->orb_.in ());
+                                                      this->orb_);
 
       if (result == -1)
         return result;
@@ -70,7 +70,7 @@ TAO_Naming_Service::parse_args (int argc,
 {
   ACE_Get_Opt get_opts (argc, argv, "b:do:p:s:t:f:m:");
   int c;
-  int time;
+  int time = 0;
   int count_argv = 0;
 
   while ((c = get_opts ()) != -1)
@@ -92,12 +92,12 @@ TAO_Naming_Service::parse_args (int argc,
           // of '-t' option.
           argc = argc-2;
           break;
-
-      case '?':
-      default:
-        // Donot do anything. The TAO_Naming_Server::parse_args ()
-        // takes care of indicating an error in case of error.
-        break;
+     
+        case '?':
+        default:
+          // Donot do anything. The TAO_Naming_Server::parse_args ()
+          // takes care of indicating an error in case of error.
+          break;
         }
     }
   return 0;

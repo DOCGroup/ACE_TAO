@@ -5,7 +5,7 @@
 //   libTAO_CosNaming.so
 //
 // DESCRIPTION
-//   This class allows for dynamically loading 
+//   This class allows for dynamically loading
 //   the Naming Service.
 //
 // AUTHORS
@@ -34,9 +34,9 @@ TAO_Naming_Loader::init (int argc, char *argv[])
   ACE_TRY
     {
       // Initialize the ORB
-      CORBA::ORB_ptr orb =
+      CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
- 
+
       // This function call initializes the Naming Service
       CORBA::Object_var object =
         this->create_object (orb, argc, argv, ACE_TRY_ENV);
@@ -63,17 +63,18 @@ CORBA::Object_ptr
 TAO_Naming_Loader::create_object (CORBA::ORB_ptr orb,
                                   int argc, char *argv[],
                                   CORBA::Environment &)
+   ACE_THROW_SPEC (())
 {
   int result;
 
-  // Initializes the Naming Service. Returns -1 
+  // Initializes the Naming Service. Returns -1
   // on an error.
   result = this->naming_server_.init_with_orb (argc,
                                                argv,
                                                orb);
   if (result == -1)
     return CORBA::Object::_nil ();
-  
+
   return 0;
 }
 
@@ -84,4 +85,3 @@ template class ACE_Dynamic_Service<TAO_Naming_Loader>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Dynamic_Service<TAO_Naming_Loader>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

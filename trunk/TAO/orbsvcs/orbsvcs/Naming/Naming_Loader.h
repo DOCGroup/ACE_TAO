@@ -46,13 +46,15 @@ public:
   // ORB and the command line parameters.
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                    int argc, char *argv[],
-                                   CORBA::Environment &ACE_TRY_ENV);
+                                   CORBA::Environment &ACE_TRY_ENV)
+     ACE_THROW_SPEC (());
+  
 
  protected:
   TAO_Naming_Server naming_server_;
   // Instance of the TAO_Naming_Server
 };
 
-ACE_SVC_FACTORY_DECLARE (TAO_Naming_Loader);
+ACE_SVC_FACTORY_DECLARE (TAO_Naming_Loader)
 
 #endif /* TAO_NAMING_LOADER_H */
