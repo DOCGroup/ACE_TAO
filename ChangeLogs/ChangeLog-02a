@@ -1,3 +1,35 @@
+Wed May 24 10:22:18 2000  Ossama Othman  <ossama@uci.edu>
+
+	* THANKS:
+
+	  Added Håkon Innerdal <hakoni@funcom.com> to the list of
+	  contributors.
+
+	* ace/config-linux-common.h (ACE_DEFAULT_SELECT_REACTOR_SIZE):
+
+	  Commented out the definition of this macro.  Its setting
+	  unnecessarily limited the default size of the Select_Reactor to
+	  256 file descriptors.  `ace/OS.h' correctly sets the default
+	  size to FD_SETSIZE.  Thanks to Håkon Innerdal
+	  <hakoni@funcom.com> for pointing this out.
+
+	* ace/Select_Reactor_Base.cpp (open):
+
+	  Do not check if the desired size of the repository, i.e. the
+	  maximum number of file descriptors, is greater than FD_SETSIZE.
+	  The same check is effectively done in the call to
+	  ACE::set_handle_limits().  The redundant check also prevented
+	  the Reactor from supporting file descriptors numbering more than
+	  FD_SETSIZE on platforms that support them (e.g. via
+	  setrlimit(RLIMIT_NOFILE, ...)).  Thanks to Håkon Innerdal
+	  <hakoni@funcom.com> for reporting the problem, and for providing
+	  a fix.
+
+	* m4/platform.m4 (ACE_DEFAULT_SELECT_REACTOR_SIZE):
+
+	  No longer set the default size to 256 file descriptors.
+	  `ace/OS.h' correctly set it to FD_SETSIZE.
+
 Wed May 24 10:08:37 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * THANKS:
