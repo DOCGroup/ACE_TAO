@@ -1,3 +1,8 @@
+Sun Sep 26 14:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Security/MT_SSLIOP/server.cpp:
+          Fixed compile error
+
 Sat Sep 25 21:36:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Sequence_Unit_Tests/string_sequence_element.hpp:
@@ -10,7 +15,7 @@ Sat Sep 25 14:08:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Fix for the compilation errors that shows up on the
 	  scoreboard. This was essentially due to misuse of gendir
-	  keyword. 
+	  keyword.
 
 Sat Sep 25 09:54:29 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
@@ -29,7 +34,7 @@ Fri Sep 24 13:16:44 MST 2004  Trevor Fields  <fields_t@ociweb.com>
 
         This is the merge of changes to the Implementation Repository into the
         DOC group repository.  The original work was done mostly by
-        Justin Michel.  
+        Justin Michel.
 
         * orbsvcs/ImplRepo_Service/Activator_Loader.h:
         * orbsvcs/ImplRepo_Service/Activator_Loader.cpp:
@@ -95,21 +100,21 @@ Fri Sep 24 13:16:44 MST 2004  Trevor Fields  <fields_t@ociweb.com>
           Added support for using the ImR locator and activator services
 	  within the ACE Service Configurator framework. Split locator and
 	  activator into separate libraries and executables.
-	
+
           Refactored Activator_Options and Locator_Options to facilitate
 	  use in separate libraries. Fixed problems with activator
 	  persistence including support for environment variables.
-	
+
           Fixed problems with the list() operation and iterators,
           although the better solution will likely be to eliminate
           the iterators entirely.
-	
+
           Simplified Service_Info class into a simple struct which
           further simplified and enhanced the startup code for
 	  servers. Refactored some locator servant options to throw
 	  NO_IMPLEMENT until the IDL is updated to correctly remove these
-	  operations. 
-	
+	  operations.
+
           Fixed many miscellaneous bugs and performance problems.
           Removed the ready_check() feature, as the current implementation
            was broken, and the correct solution is relatively
