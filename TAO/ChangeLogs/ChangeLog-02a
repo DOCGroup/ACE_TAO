@@ -1,3 +1,47 @@
+Thu May  9 11:38:16 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	This checkin is to move the TAO_Connector_Registry to a lane. May
+	be this should have been done in the first place, but it needed
+	non-blocking connect code to show up. When using non-blocking
+	connects the thread waits in the Reactor used to create a
+	connector object. The reactor is usually the one created by the
+	thread that created the maion thread and all hell breaks
+	loose. This showed up only in the Collocation tests and thanks to
+	Irfan for helping me understand what the Collocation test does. 
+
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i: Removed the pointer to the connector registry
+	  maintained by the ORB_Core. 
+
+	  The accessor method to the connector registry now takes in an
+	  ACE_ENV_ARG_DECL to propagate exceptions, since the connector
+	  registry is created on demand. 
+
+	  Removed the code that initialized the connector_registry in
+	  ORB_Core::init (), since it has to be created on demand. 
+
+	  The accessor to the connector registry gets the information from
+	  the lane resources. 
+	
+	* tao/CORBALOC_Parser.cpp:
+	* tao/Invocation.cpp:
+	* tao/ORB.cpp:
+	* tao/Object.cpp: All accesses to the connector registry passes
+	  the environment object and performs exception checking after the
+	  call. 
+	  
+	* tao/Thread_Lane_Resources.cpp: 
+	* tao/Thread_Lane_Resources.h: Creates, manages and allows access
+	  to the connector registry object.
+
+	* tao/corbafwd.h: Added a location code to indicate the failure to
+	  initialize a connector registry.
+
+
+	  The above checkins should fix collocation test problems in our
+	  builds.  
+	
 Thu May  9 08:16:11 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/Simple_Naming/run_test.pl:

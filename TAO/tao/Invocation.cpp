@@ -236,7 +236,8 @@ TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc
   // Get a pointer to the connector registry, which might be in
   // thread-specific storage, depending on the concurrency model.
   TAO_Connector_Registry *conn_reg =
-    this->orb_core_->connector_registry ();
+    this->orb_core_->connector_registry (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
 
   if (conn_reg == 0)
     {

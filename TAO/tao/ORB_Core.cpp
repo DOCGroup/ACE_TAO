@@ -14,7 +14,6 @@
 #include "Stub.h"
 #include "Leader_Follower.h"
 #include "Connector_Registry.h"
-#include "Acceptor_Registry.h"
 
 #include "Sync_Strategies.h"
 
@@ -26,15 +25,16 @@
 #include "Invocation.h"
 #include "BiDir_Adapter.h"
 
-#include "tao/Thread_Lane_Resources.h"
-#include "tao/Thread_Lane_Resources_Manager.h"
-#include "tao/Collocation_Resolver.h"
-#include "tao/Stub_Factory.h"
 
-#include "tao/Endpoint_Selector_Factory.h"
-#include "tao/Request_Dispatcher.h"
-
+#include "Collocation_Resolver.h"
+#include "Endpoint_Selector_Factory.h"
 #include "Flushing_Strategy.h"
+#include "Request_Dispatcher.h"
+#include "Stub_Factory.h"
+#include "Thread_Lane_Resources.h"
+#include "Thread_Lane_Resources_Manager.h"
+
+
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 # include "Buffering_Constraint_Policy.h"
@@ -103,7 +103,6 @@ ACE_CString TAO_ORB_Core::poa_factory_directive_ =
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   : protocols_hooks_ (0),
     lock_ (),
-    connector_registry_ (0),
     thread_lane_resources_manager_ (0),
     collocation_resolver_ (0),
     stub_factory_ (0),
@@ -1033,28 +1032,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                         CORBA::COMPLETED_NO),
                       -1);
 
-  // Initialize the connector registry and create a connector for each
-  // configured protocol.
-  if (this->connector_registry ()->open (this) != 0)
-    ACE_THROW_RETURN (CORBA::INITIALIZE (
-                        CORBA::SystemException::_tao_minor_code (
-                          TAO_ORB_CORE_INIT_LOCATION_CODE,
-                          0),
-                        CORBA::COMPLETED_NO),
-                      -1);
-
-#if 0
-  /*
-   *   TODO: No support for preconnect. Needs to be removed, when
-   *   things settle down.
-   *
-   */
-  // Have the connector registry parse the preconnects.
-  if (this->orb_params ()->preconnects ().is_empty () == 0)
-    this->connector_registry ()->preconnect (
-            this,
-            this->orb_params ()->preconnects ());
-#endif /*if 0*/
 
   // Look for BiDirectional library here. If the user has svc.conf
   // file, load the library at this point.
@@ -1115,14 +1092,6 @@ TAO_ORB_Core::fini (void)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_LIB_TEXT ("Destroying ORB <%s>\n"),
                   this->orbid_));
-    }
-
-  // Close connectors before acceptors!
-  // Ask the registry to close all registered connectors.
-  if (this->connector_registry_ != 0)
-    {
-      this->connector_registry_->close_all ();
-      delete this->connector_registry_;
     }
 
   // Finalize lane resources.
@@ -2099,11 +2068,14 @@ TAO_ORB_Core::resolve_rir (const char *name
         }
       else
         {
+          TAO_Connector_Registry *conn_reg =
+            this->connector_registry (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK_RETURN (0);
+
           // Obtain the appropriate object key delimiter for the
           // specified protocol.
           object_key_delimiter =
-            this->connector_registry ()->object_key_delimiter (
-                     list_of_profiles.c_str ());
+            conn_reg->object_key_delimiter (list_of_profiles.c_str ());
         }
 
       // Make sure that the default initial reference doesn't end
@@ -2530,6 +2502,16 @@ TAO_ORB_Core::create_data_block_i (size_t size,
                          0);
 
   return nb;
+}
+
+TAO_Connector_Registry *
+TAO_ORB_Core::connector_registry (ACE_ENV_SINGLE_ARG_DECL)
+{
+  TAO_Connector_Registry *conn =
+    this->lane_resources ().connector_registry (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return conn;
 }
 
 ACE_Reactor *
