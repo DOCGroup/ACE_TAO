@@ -1,3 +1,12 @@
+Thu Feb 27 10:31:44 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* include/makeinclude/platform_linux_icc.GNU: The GNU file can now
+	  work with 64 bit intel compiler in Itanium. Thanks to Lubomir
+	  Bulej <lubomir.bulej@mff.cuni.cz> and Petr Tuma
+	  <petr.tuma@mff.cuni.cz> for providing the patches. 
+
+	* THANKS: Added Lubomir Bulej to the hall of fame. 
+
 Thu Feb 27 10:22:05 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ace/Synch.h:
