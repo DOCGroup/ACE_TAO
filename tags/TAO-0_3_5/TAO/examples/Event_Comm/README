@@ -1,0 +1,97 @@
+OVERVIEW
+
+This directory contains source code for a prototype CORBA-based
+distributed notification mechanism.  This mechanism implements a
+"publish/subscribe" communication protocol.  It allows Suppliers to
+pass messages containing object references to a dynamically managed
+group of Consumers.  This is similar to the OMG COSS Event Service,
+though not as sophisticated.
+
+DIRECTORY STRUCTURE
+
+There are 3 executables:
+
+Notifier
+
+	-- The Notifier supplies events from Suppliers to Consumers
+           It which must be started first.
+           It has an instance of an IDL Notifier
+	   object.  This object accepts subscriptions from Consumers
+	   and forwards events sent to it either via Consumers or
+	   Suppliers.
+           The Notifier object is registered with a naming service
+           so that it can be located by other objects.
+	   To run the Notifier, type:
+           notifier
+
+           To exit the Notifier press CTRL-C.
+           All consumers registered with the Notifier will shutdown.
+           Suppliers should however, be shutdown beforehand.
+Supplier:
+           On startup the Supplier gets hold of the Notifier object from
+           the naming service and registers itself with it.
+           The Supplier accepts strings from the user and sends them to
+           the Notifier.
+           To run the supplier type:
+           supplier
+
+           To exit the supplier type CTRL-C or type "quit".
+           To send strings to the Consumers, type the string on the prompt
+           and press ENTER.
+
+Consumer:
+           It has an instance of an IDL Consumer object.
+	   This object is used to receive notifications from the
+           Notifier object.
+           When the Consumer starts up, it gets an object reference to
+           the Notifier.
+	   It then subscribes its Consumer object with
+	   the Notifier by passing an object reference.
+
+	   In addition to passing an object reference to a
+	   Notifier, the Consumer also may specify a
+	   filtering criteria, which is a regular expression.  If
+	   the filtering criteria is the string "" then the Notifier
+	   will send all Notifications to the Consumer (i.e., "" is
+	   treated as a "wildcard").  Otherwise, the filtering
+	   criteria is considered to be a regular expression,
+	   and only those Notification tags that match the regular
+	   expression will be forwarded to the Consumer.  The regular
+	   expressions are those used by ed(1) (see the regexp(5)
+	   manual page for more info).
+
+           To run the Consumer, type:
+           consumer <filtering_criteria>
+
+           e.g. consumer a*b
+           will accept the following strings: ab , b, aaaab.
+
+           To send strings to other Consumers, type the string on the prompt
+           and press ENTER.
+
+RUNNING THE SAMPLE:
+
+To run the tests do the following:
+
+1. Compile everything.
+
+2. Start the Notifier as described above.
+
+3. Start the Supplier executable.
+
+4. Start up as many copies of the Consumer as you'd like.
+   Typically, I run each one in its own window.
+
+5. Once the Consumers have subscribed you can send them info by typing
+   commands in the Supplier window.  These will be sent to all the
+   Consumers who have subscribed.  Likewise, you can send messages
+   from a Consumer to all other Consumers by typing messages in a
+   Consumer window.
+
+   Note that if you type "quit" or  ^C in a Consumer window the
+   Consumer will unsubscribe and shutdown its handlers and exit.
+   Likewise, if you type  ^C in the Notifier window
+   the Notifier will disconnect all of its Consumers and exit.
+
+6. When you want to terminate a Consumer or a Supplier, just type ^C
+   or "quit" and the process will shut down gracefully.

@@ -1,0 +1,115 @@
+--- y.tab.cpp.orig	Fri Sep  4 18:41:31 1998
++++ y.tab.cpp	Fri Sep  4 18:43:08 1998
+@@ -1,4 +1,4 @@
+-
++// $Id$
+ # line 74 "fe/idl.tao_yy"
+ #include "idl.h"
+ #include "idl_extern.h"
+@@ -103,7 +103,6 @@
+ #include <memory.h>
+ #endif
+ 
+-#include <values.h>
+ 
+ #ifdef __cplusplus
+ 
+@@ -494,52 +493,52 @@
+ 
+ tao_yytoktype tao_yytoks[] =
+ {
+-	"IDENTIFIER",	257,
+-	"IDL_CONST",	258,
+-	"IDL_MODULE",	259,
+-	"IDL_INTERFACE",	260,
+-	"IDL_TYPEDEF",	261,
+-	"IDL_LONG",	262,
+-	"IDL_SHORT",	263,
+-	"IDL_UNSIGNED",	264,
+-	"IDL_DOUBLE",	265,
+-	"IDL_FLOAT",	266,
+-	"IDL_CHAR",	267,
+-	"IDL_WCHAR",	268,
+-	"IDL_OCTET",	269,
+-	"IDL_BOOLEAN",	270,
+-	"IDL_ANY",	271,
+-	"IDL_STRUCT",	272,
+-	"IDL_UNION",	273,
+-	"IDL_SWITCH",	274,
+-	"IDL_ENUM",	275,
+-	"IDL_SEQUENCE",	276,
+-	"IDL_STRING",	277,
+-	"IDL_WSTRING",	278,
+-	"IDL_EXCEPTION",	279,
+-	"IDL_CASE",	280,
+-	"IDL_DEFAULT",	281,
+-	"IDL_READONLY",	282,
+-	"IDL_ATTRIBUTE",	283,
+-	"IDL_ONEWAY",	284,
+-	"IDL_IDEMPOTENT",	285,
+-	"IDL_VOID",	286,
+-	"IDL_IN",	287,
+-	"IDL_OUT",	288,
+-	"IDL_INOUT",	289,
+-	"IDL_RAISES",	290,
+-	"IDL_CONTEXT",	291,
+-	"IDL_NATIVE",	292,
+-	"IDL_INTEGER_LITERAL",	293,
+-	"IDL_STRING_LITERAL",	294,
+-	"IDL_CHARACTER_LITERAL",	295,
+-	"IDL_FLOATING_PT_LITERAL",	296,
+-	"IDL_TRUETOK",	297,
+-	"IDL_FALSETOK",	298,
+-	"IDL_SCOPE_DELIMITOR",	299,
+-	"IDL_LEFT_SHIFT",	300,
+-	"IDL_RIGHT_SHIFT",	301,
+-	"-unknown-",	-1	/* ends search */
++	{"IDENTIFIER",	257},
++	{"IDL_CONST",	258},
++	{"IDL_MODULE",	259},
++	{"IDL_INTERFACE",	260},
++	{"IDL_TYPEDEF",	261},
++	{"IDL_LONG",	262},
++	{"IDL_SHORT",	263},
++	{"IDL_UNSIGNED",	264},
++	{"IDL_DOUBLE",	265},
++	{"IDL_FLOAT",	266},
++	{"IDL_CHAR",	267},
++	{"IDL_WCHAR",	268},
++	{"IDL_OCTET",	269},
++	{"IDL_BOOLEAN",	270},
++	{"IDL_ANY",	271},
++	{"IDL_STRUCT",	272},
++	{"IDL_UNION",	273},
++	{"IDL_SWITCH",	274},
++	{"IDL_ENUM",	275},
++	{"IDL_SEQUENCE",	276},
++	{"IDL_STRING",	277},
++	{"IDL_WSTRING",	278},
++	{"IDL_EXCEPTION",	279},
++	{"IDL_CASE",	280},
++	{"IDL_DEFAULT",	281},
++	{"IDL_READONLY",	282},
++	{"IDL_ATTRIBUTE",	283},
++	{"IDL_ONEWAY",	284},
++	{"IDL_IDEMPOTENT",	285},
++	{"IDL_VOID",	286},
++	{"IDL_IN",	287},
++	{"IDL_OUT",	288},
++	{"IDL_INOUT",	289},
++	{"IDL_RAISES",	290},
++	{"IDL_CONTEXT",	291},
++	{"IDL_NATIVE",	292},
++	{"IDL_INTEGER_LITERAL",	293},
++	{"IDL_STRING_LITERAL",	294},
++	{"IDL_CHARACTER_LITERAL",	295},
++	{"IDL_FLOATING_PT_LITERAL",	296},
++	{"IDL_TRUETOK",	297},
++	{"IDL_FALSETOK",	298},
++	{"IDL_SCOPE_DELIMITOR",	299},
++	{"IDL_LEFT_SHIFT",	300},
++	{"IDL_RIGHT_SHIFT",	301},
++	{"-unknown-",	-1}	/* ends search */
+ };
+ 
+ char * tao_yyreds[] =

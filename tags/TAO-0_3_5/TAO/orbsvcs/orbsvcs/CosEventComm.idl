@@ -1,0 +1,99 @@
+// $Id$
+
+#pragma prefix "omg.org"
+
+module CosEventComm
+{
+  // = TITLE
+  //   IDL module for the Corba Object Service for Event Communication.
+
+  exception Disconnected 
+    {
+      // = TITLE
+      // If the event communication has already been disconnected, the
+      // Disconnected exception is raised.
+    };
+
+  interface PushConsumer
+    {
+      // = TITLE
+      //   definition of the PushConsumer.
+      //
+      // = DESCRIPTION
+      //   A push-style consumer supports the PushConsumer interface to
+      //   receive event data.
+
+      void push (in any data) raises (Disconnected);
+      // A supplier communicates event data to the consumer by invoking
+      // the push operation and passing the event data as a parameter.
+      // If the event communication has already been disconnected, the
+      // Disconnected exception is raised.
+
+      void disconnect_push_consumer ();
+      // The disconnect_push_consumer operation terminates the event
+      // communication; it releases resources used at the consumer to
+      // support the event communication.  The PushConsumer object
+      // reference is disposed.
+    };
+
+  interface PushSupplier
+    {
+      // = TITLE
+      //   Definition of the PushSupplier.
+      //
+      // = DESCRIPTION
+      //   A push-style supplier supports the PushSupplier interface.
+
+      void disconnect_push_supplier ();
+      // The disconnect_push_supplier operation terminates the event
+      // communication; it releases resources used at the supplier to
+      // support the event communication.  The PushSupplier object
+      // reference is disposed.
+    };
+
+  interface PullSupplier
+    {
+      // = TITLE
+      //   Definition of the PullSupplier.
+      //
+      // = DESCRIPTION
+      //   A pull-style supplier supports the PullSupplier interface to
+      //   transmit event data.
+
+      any pull () raises (Disconnected);
+      // The pull operation blocks until the event data is available or
+      // an exception is raised. It returns the event data to the
+      // consumer.  If the event communication has already been
+      // disconnected, the Disconnected exception is raised.
+
+      any try_pull (out boolean has_event) raises (Disconnected);
+      // The try_pull operation does not block: if the event data is
+      // available, it returns the event data and sets the has_event
+      // parameter to true; if the event is not available, it sets the
+      // has_event parameter to false and the event data is returned as
+      // long with an undefined value.  If the event communication has
+      // already been disconnected, the Disconnected exception is
+      // raised.
+
+      void disconnect_pull_supplier ();
+      // The disconnect_pull_supplier operation terminates the event
+      // communication; it releases resources used at the supplier to
+      // support the event communication.  The PullSupplier object
+      // reference is disposed.
+    };
+
+  interface PullConsumer
+    {
+      // = TITLE
+      //   Definition of the PullConsumer.
+      //
+      // = DESCRIPTION
+      //   A pull-style consumer supports the PullConsumer interface.
+
+      void disconnect_pull_consumer ();
+      // The disconnect_pull_consumer operation terminates the event
+      // communication; it releases resources used at the consumer to
+      // support the event communication. The PullConsumer object
+      // reference is disposed.
+    };
+};

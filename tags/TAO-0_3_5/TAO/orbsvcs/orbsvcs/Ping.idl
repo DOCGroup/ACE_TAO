@@ -1,0 +1,10 @@
+// $Id$
+
+interface Ping_Object
+{
+  void ping ();
+  // Used for checking for liveness of a server.  When the server receives
+  // this, it should send back a response indicating it is sill alive.
+  // Depending on the policy specified, a timeout can be reached where the
+  // Implementation Repository will restart the server.
+};
