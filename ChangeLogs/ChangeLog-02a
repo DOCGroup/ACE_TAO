@@ -1,3 +1,9 @@
+Tue Dec  5 11:45:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/SSL/SSL_SOCK_Acceptor.cpp:
+
+          Added ACE_TEXT to a debug message.
+
 Tue Dec  5 10:07:14 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/Misc/childbirth_time.cpp:
