@@ -1,3 +1,13 @@
+Wed Oct  8 20:01:35 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tests/SOCK_Test.cpp (server): Revised this test to reflect the
+ 	  fact that it doesn't iterate, but only runs one client and one
+ 	  server.
+
+	* tests: Added a new test for multi-threaded sockets called
+ 	  MT_SOCK_Test.cpp.  Thanks to Bob Laferriere
+ 	  <laferrie@gsao.med.ge.com> for motivating this test.
+
 Wed Oct  8 12:09:46 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/OS.i (strcasecmp): Oops, we forgot to compare the strlen

@@ -153,6 +153,7 @@ const int ACE_MAX_DELAY = 10;
 const int ACE_MAX_INTERVAL = 0;
 const int ACE_MAX_ITERATIONS = 10;
 const int ACE_MAX_PROCESSES = 10;
+const int ACE_MAX_CLIENTS = 30;
 
 char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
