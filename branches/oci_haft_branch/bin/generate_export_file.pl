@@ -139,7 +139,11 @@ $epilogue = "
 #if (-UC-_NTRACE == 1)
 #  define -UC-_TRACE(X)
 #else /* (-UC-_NTRACE == 1) */
+#  if !defined (ACE_HAS_TRACE)
+#    define ACE_HAS_TRACE
+#  endif /* ACE_HAS_TRACE */
 #  define -UC-_TRACE(X) ACE_TRACE_IMPL(X)
+#  include \"ace/Trace.h\"
 #endif /* (-UC-_NTRACE == 1) */
 
 #endif /* -UC-_EXPORT_H */

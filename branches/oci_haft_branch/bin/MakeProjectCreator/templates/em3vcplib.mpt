@@ -1,4 +1,5 @@
 conditional_include "idl_compiler_win32"
+conditional_include "common"
 
 type_description      = "Static Library"
 platform_longs        = "WCE ARM" "WCE x86" "WCE emulator"
@@ -37,7 +38,8 @@ WCE ARM {
 
 Static Release {
   use_debug_libraries   = 0
-  compile_flags         = /W3 /O2 /Zi
+  optimize              = 1
+  compile_flags         = /W3 /Zi
   defines               = NDEBUG
   compile_flags_removed = /YX
   output_dir            = Static_Release
@@ -47,7 +49,8 @@ Static Release {
 
 Static Debug {
   use_debug_libraries   = 1
-  compile_flags         = /W3 /Zi /Od
+  optimize              =
+  compile_flags         = /W3 /Zi
   defines               = _DEBUG
   compile_flags_removed = /Fr /YX
   output_dir            = Static_Debug
@@ -58,7 +61,8 @@ Static Debug {
 
 MFC Release {
   use_debug_libraries   = 0
-  compile_flags         = /W3 /O2 /Zi
+  optimize              = 1
+  compile_flags         = /W3 /Zi
   defines               = NDEBUG
   compile_flags_removed = /YX
   output_dir            = MFC_Release
@@ -69,7 +73,8 @@ MFC Release {
 
 MFC Debug {
   use_debug_libraries   = 1
-  compile_flags         = /W3 /Zi /Od
+  optimize              =
+  compile_flags         = /W3 /Zi
   defines               = _DEBUG
   compile_flags_removed = /Fr /YX
   output_dir            = MFC_Debug
@@ -80,4 +85,4 @@ MFC Debug {
 }
 
 conditional_include "vcpartialmacros"
-conditional_include "zziplib"
+

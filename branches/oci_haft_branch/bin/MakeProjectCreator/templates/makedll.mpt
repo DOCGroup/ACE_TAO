@@ -1,43 +1,65 @@
 conditional_include "idl_compiler"
+conditional_include "common"
 
 configurations = gcc
 soext          = so
-ssl_libs       = ssl crypto
-zzip_libs      = z zziplib
+cppflags       = -O
 
 gcc {
   cxx       = g++
   pic       = -fPIC
-  shflags   = -shared
   platforms = linux
 }
 
-CC {
+SunCC {
   cxx       = CC
   pic       = -KPIC
-  shflags   = -G
   linkflags = -library=Cstd -library=Crun
+  clean     = SunWS_cache
   platforms = solaris
 }
 
 aCC {
   cxx       = aCC
   pic       = +Z
-  shflags   = -b
   platforms = hpux
 }
 
+xlC_r {
+  cxx       = xlC_r
+  platforms = aix
+}
+
+SGICC {
+  cxx       = CC
+  pic       = -KPIC
+  linkflags = -Wl,-woff,84
+  clean     = ii_files
+  platforms = irix
+}
+
 linux {
-  ldlibs = -ldl -lpthread
+  shflags = -shared
+  ldlibs  = -ldl -lpthread
 }
 
 solaris {
-  ldlibs = -lsocket -ldl -lnsl -lgen -lposix4
+  shflags = -G
+  ldlibs  = -lsocket -ldl -lnsl -lgen -lposix4
 }
 
 hpux {
-  soext  = sl
-  ldlibs = -lxti -lpthread -lrt -ldld
-  }
+  soext   = sl
+  shflags = -b
+  ldlibs  = -lxti -lpthread -lrt -ldld
+}
 
-conditional_include "zziplib"
+aix {
+  soext  = a
+  ldlibs = -ldl
+}
+
+irix {
+  shflags = -shared
+  ldlibs  = -lsocket -ldl -lnsl -lgen -lpthread
+}

@@ -249,6 +249,13 @@ generic_outputext   If the command does not generate any of the other output
                     types listed above, then the extensions should be listed
                     under this.
 
+Particular output extensions are not required.  However at least one output
+extension type is required in order for MPC to generate a target.  Your
+command doesn't necessarily have to generate output, but an extension type
+is none the less required.  This can be desirable in some situations,
+whereas the command set to run for the custom type may be a script that runs
+a test.  Thereby, integrating building and testing.
+
 For custom file types, there are two keywords that can be used within the
 custom file type input lists: commandflags and gendir.  The commandflags can
 be used to augment or override the commandflags defined in the Define_Custom
@@ -325,6 +332,32 @@ flag_overrides  Used to determine flags that have been overridden on a per
                 file basis.
 custom_types    The list of custom file types that may have been defined
                 in the mpc file or a base project.
+fornotlast      Insert the text on every foreach iteration except the last.
+forlast         Insert the text only on the last foreach iteration.
+fornotfirst     Insert the text on every foreach iteration except the first.
+forfirst        Insert the text only on the first foreach iteration.
+forcount        A one based index number of the foreach iterations.
+
+Workspaces
+----------
+Workspaces (mwc files) can have assignments similar to projects.  There are
+currently only two assignments allowed.
+
+The first is 'cmdline'.  The values given to the cmdline assignment will be
+processed as command line options, but only to the projects that are
+contained within the workspace (or the scope of the assignment).  The only
+valid command line options for cmdline are -base, -global, -include, -ti,
+-template, -static, -static_only, -relative, -notoplevel, -value_template
+and -value_project.
+
+The second assignment is 'implicit'.  This assignment takes two different
+types of values.  It takes a boolean value (0 or 1) to indicate that an
+implicit project should be created in directories that contain no mpc file,
+but contain project related files (source, headers, etc.).  The default
+value for implicit is 0.  It also takes a charater string that represents a
+base project (similar to the -base option).  In this case, implicit is
+enabled and each implicitly generate project file will have the base project
+or base projects (when addition is used) when the project is created.
 
 Defaulting Behavior
 -------------------
@@ -357,12 +390,17 @@ Defaulting Behavior
    staticname is assigned the sharedname value (the same applies if
    staticname is specified and sharedname is not)
 
-6) If pch_header is not specified and a header file matches *_pch.h
+6) If exename is specified then the project target is considered an
+   executable.  If neither exename, sharedname or staticname are used and
+   any of the source files listed contains a "main", then the project target
+   is considered an executable, otherwise it is considered a library.
+
+7) If pch_header is not specified and a header file matches *_pch.h
 
    it is assumed to be the precompiled header file (the same applies to
    pch_source)
 
-7) If -relative is not used to set ACE_ROOT and the ACE_ROOT environment
+8) If -relative is not used to set ACE_ROOT and the ACE_ROOT environment
    variable is set
 
    it will be used to set the relative value for ACE_ROOT.  If -relative is

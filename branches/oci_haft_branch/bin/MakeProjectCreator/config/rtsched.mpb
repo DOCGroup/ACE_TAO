@@ -1,5 +1,6 @@
 project : naming {
-  after   += RTSched
-  libs    += TAO_RTSched
-  comps   += Sched
+  after     += RTSched
+  libs      += TAO_RTSched
+  comps     += Sched
+  tagchecks += Sched
 }

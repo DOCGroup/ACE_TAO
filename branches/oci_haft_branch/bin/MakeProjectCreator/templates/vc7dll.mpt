@@ -1,9 +1,8 @@
 conditional_include "idl_compiler_win32"
+conditional_include "common"
 
 configurations     = Release Debug "Static Release" "Static Debug"
 common_defines     = WIN32 _WINDOWS
-ssl_libs           = libeay32 ssleay32
-zzip_libs          = z zzip
 
 Release {
   type_is_dynamic  = 1
@@ -18,7 +17,7 @@ Release {
 Debug {
   type_is_dynamic  = 1
   type_is_binary   = 1
-  optimization     = 0
+  optimize         = 0
   debug            = 1
   defines          = _DEBUG
   output_dir       = .
@@ -40,7 +39,7 @@ Static Release {
 
 Static Debug {
   type_is_static   = 1
-  optimization     = 0
+  optimize         = 0
   debug            = 1
   defines          = _DEBUG
   output_dir       = Static_Debug
@@ -65,7 +64,7 @@ MFC Release {
 MFC Debug {
   type_is_dynamic  = 1
   type_is_binary   = 1
-  optimization     = 0
+  optimize         = 0
   debug            = 1
   defines          = _DEBUG
   output_dir       = MFC_Debug
@@ -89,7 +88,7 @@ Static MFC Release {
 
 Static MFC Debug {
   type_is_static   = 1
-  optimization     = 0
+  optimize         = 0
   debug            = 1
   defines          = _DEBUG
   output_dir       = Static_MFC_Debug
@@ -101,4 +100,3 @@ Static MFC Debug {
 }
 
 conditional_include "vcfullmacros"
-conditional_include "zziplib"

@@ -32,8 +32,13 @@ sub crlf {
 
 sub workspace_file_name {
   my($self) = shift;
-  return $self->get_modified_workspace_name($self->get_workspace_name(),
-                                            '.nmake');
+  if ($self->make_coexistence()) {
+    return $self->get_modified_workspace_name($self->get_workspace_name(),
+                                              '.nmake');
+  }
+  else {
+    return $self->get_modified_workspace_name('Makefile', '');
+  }
 }
 
 

@@ -1,5 +1,6 @@
 project : iortable, svc_utils {
-  after   += CosNaming
-  libs    += TAO_CosNaming
-  comps   += Naming
+  after     += CosNaming
+  libs      += TAO_CosNaming
+  comps     += Naming
+  tagchecks += Naming
 }
