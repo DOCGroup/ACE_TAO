@@ -3,6 +3,7 @@
 #include "HTBP_ID_Requestor.h"
 #include "HTBP_Environment.h"
 
+#include "ace/OS_NS_stdio.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/UUID.h"
