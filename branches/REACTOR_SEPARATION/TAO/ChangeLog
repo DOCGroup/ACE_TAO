@@ -1,3 +1,8 @@
+Mon Dec 13 02:32:56 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* tao/Strategies/advanced_resource.cpp (Message): 
+	Fix small bug related with missing plugin librar.
+
 Mon Dec 13 02:28:06 2004  Marek Brudka  <mbrudka@aster.pl>
 
 	* tests/FL_Cube/FL_Cube.mpc (Module):

@@ -160,15 +160,17 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
           else if (ACE_OS::strcasecmp (current_arg,
                                        ACE_TEXT("fl")) == 0)
           {
-              this->reactor_type_ = TAO_REACTOR_FL;
               if ( !has_flreactor() )
                   this->report_unsupported_error (ACE_TEXT("FlReactor"));
+              else
+                  this->reactor_type_ = TAO_REACTOR_FL;
           }
           else if (ACE_OS::strcasecmp (current_arg, ACE_TEXT("tk")) == 0)
           {
-              this->reactor_type_ = TAO_REACTOR_TK;
               if ( !has_tkreactor() )
                   this->report_unsupported_error (ACE_TEXT("TkReactor"));
+              else
+                  this->reactor_type_ = TAO_REACTOR_TK;
           }
           else if (ACE_OS::strcasecmp (current_arg,
                                        ACE_TEXT("wfmo")) == 0)
