@@ -1,3 +1,8 @@
+Wed Nov 12 17:41:02 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tao/iiopobj.cpp: I had forgotten to update the return type of
+	_get_name in iiopobj.cpp to "char *" instead of "const char *".
+
 Wed Nov 12 14:28:48 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_union.cpp: Fixed a problem where the front end
