@@ -15,8 +15,7 @@ namespace CIAO
 
 #include <memory>
 #include <vector>
-#include "XSCRT/XMLSchema.hpp"
-#include "XSCRT/Parser.hpp"
+#include <XMLSchema/Types.hpp>
 
 #include "Basic_Deployment_Data.hpp"
 
@@ -30,7 +29,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      //
+      // 
       public:
       ::XMLSchema::string< char > const& name () const;
       ::XMLSchema::string< char >& name ();
@@ -40,7 +39,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > name_;
 
       // referencedArtifact
-      //
+      // 
       public:
       ::CIAO::Config_Handlers::ImplementationArtifactDescription const& referencedArtifact () const;
       ::CIAO::Config_Handlers::ImplementationArtifactDescription& referencedArtifact ();
@@ -50,7 +49,9 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ImplementationArtifactDescription > referencedArtifact_;
 
       public:
-      NamedImplementationArtifact ();
+      NamedImplementationArtifact (::XMLSchema::string< char > const& name__,
+      ::CIAO::Config_Handlers::ImplementationArtifactDescription const& referencedArtifact__);
+
       NamedImplementationArtifact (::XSCRT::XML::Element< char > const&);
       NamedImplementationArtifact (NamedImplementationArtifact const& s);
 
@@ -67,7 +68,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // label
-      //
+      // 
       public:
       bool label_p () const;
       ::XMLSchema::string< char > const& label () const;
@@ -78,7 +79,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > label_;
 
       // UUID
-      //
+      // 
       public:
       bool UUID_p () const;
       ::XMLSchema::string< char > const& UUID () const;
@@ -89,7 +90,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > UUID_;
 
       // location
-      //
+      // 
       public:
       typedef ::std::vector< ::XMLSchema::string< char > >::iterator location_iterator;
       typedef ::std::vector< ::XMLSchema::string< char > >::const_iterator location_const_iterator;
@@ -103,7 +104,7 @@ namespace CIAO
       ::std::vector< ::XMLSchema::string< char > > location_;
 
       // execParameter
-      //
+      // 
       public:
       bool execParameter_p () const;
       ::CIAO::Config_Handlers::Property const& execParameter () const;
@@ -114,7 +115,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Property > execParameter_;
 
       // deployRequirement
-      //
+      // 
       public:
       bool deployRequirement_p () const;
       ::CIAO::Config_Handlers::Requirement const& deployRequirement () const;
@@ -125,7 +126,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
 
       // dependsOn
-      //
+      // 
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact >::iterator dependsOn_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact >::const_iterator dependsOn_const_iterator;
@@ -139,7 +140,7 @@ namespace CIAO
       ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact > dependsOn_;
 
       // infoProperty
-      //
+      // 
       public:
       bool infoProperty_p () const;
       ::CIAO::Config_Handlers::Property const& infoProperty () const;
@@ -150,7 +151,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Property > infoProperty_;
 
       // contentLocation
-      //
+      // 
       public:
       bool contentLocation_p () const;
       ::XMLSchema::string< char > const& contentLocation () const;
@@ -162,6 +163,7 @@ namespace CIAO
 
       public:
       ImplementationArtifactDescription ();
+
       ImplementationArtifactDescription (::XSCRT::XML::Element< char > const&);
       ImplementationArtifactDescription (ImplementationArtifactDescription const& s);
 
@@ -171,6 +173,289 @@ namespace CIAO
       private:
       char regulator__;
     };
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+  }
+}
+
+#include <XMLSchema/Traversal.hpp>
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Traversal
+    {
+      struct NamedImplementationArtifact : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::NamedImplementationArtifact >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        name (Type&);
+
+        virtual void
+        name (Type const&);
+
+        virtual void
+        referencedArtifact (Type&);
+
+        virtual void
+        referencedArtifact (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
+      struct ImplementationArtifactDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ImplementationArtifactDescription >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        label (Type&);
+
+        virtual void
+        label (Type const&);
+
+        virtual void
+        label_none (Type&);
+
+        virtual void
+        label_none (Type const&);
+
+        virtual void
+        UUID (Type&);
+
+        virtual void
+        UUID (Type const&);
+
+        virtual void
+        UUID_none (Type&);
+
+        virtual void
+        UUID_none (Type const&);
+
+        virtual void
+        location (Type&);
+
+        virtual void
+        location (Type const&);
+
+        virtual void
+        location_pre (Type&);
+
+        virtual void
+        location_pre (Type const&);
+
+        virtual void
+        location_next (Type&);
+
+        virtual void
+        location_next (Type const&);
+
+        virtual void
+        location_post (Type&);
+
+        virtual void
+        location_post (Type const&);
+
+        virtual void
+        location_none (Type&);
+
+        virtual void
+        location_none (Type const&);
+
+        virtual void
+        execParameter (Type&);
+
+        virtual void
+        execParameter (Type const&);
+
+        virtual void
+        execParameter_none (Type&);
+
+        virtual void
+        execParameter_none (Type const&);
+
+        virtual void
+        deployRequirement (Type&);
+
+        virtual void
+        deployRequirement (Type const&);
+
+        virtual void
+        deployRequirement_none (Type&);
+
+        virtual void
+        deployRequirement_none (Type const&);
+
+        virtual void
+        dependsOn (Type&);
+
+        virtual void
+        dependsOn (Type const&);
+
+        virtual void
+        dependsOn_pre (Type&);
+
+        virtual void
+        dependsOn_pre (Type const&);
+
+        virtual void
+        dependsOn_next (Type&);
+
+        virtual void
+        dependsOn_next (Type const&);
+
+        virtual void
+        dependsOn_post (Type&);
+
+        virtual void
+        dependsOn_post (Type const&);
+
+        virtual void
+        dependsOn_none (Type&);
+
+        virtual void
+        dependsOn_none (Type const&);
+
+        virtual void
+        infoProperty (Type&);
+
+        virtual void
+        infoProperty (Type const&);
+
+        virtual void
+        infoProperty_none (Type&);
+
+        virtual void
+        infoProperty_none (Type const&);
+
+        virtual void
+        contentLocation (Type&);
+
+        virtual void
+        contentLocation (Type const&);
+
+        virtual void
+        contentLocation_none (Type&);
+
+        virtual void
+        contentLocation_none (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+    }
+  }
+}
+
+#include <XMLSchema/Writer.hpp>
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Writer
+    {
+      struct NamedImplementationArtifact : Traversal::NamedImplementationArtifact, 
+      virtual ::XSCRT::Writer< char >
+      {
+        typedef ::CIAO::Config_Handlers::NamedImplementationArtifact Type;
+        NamedImplementationArtifact (::XSCRT::XML::Element< char >&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        name (Type const&);
+
+        virtual void
+        referencedArtifact (Type const&);
+
+        protected:
+        NamedImplementationArtifact ();
+      };
+
+      struct ImplementationArtifactDescription : Traversal::ImplementationArtifactDescription, 
+      virtual ::XSCRT::Writer< char >
+      {
+        typedef ::CIAO::Config_Handlers::ImplementationArtifactDescription Type;
+        ImplementationArtifactDescription (::XSCRT::XML::Element< char >&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        label (Type const&);
+
+        virtual void
+        UUID (Type const&);
+
+        virtual void
+        location_pre (Type const&);
+
+        virtual void
+        location_next (Type const&);
+
+        virtual void
+        location_post (Type const&);
+
+        virtual void
+        execParameter (Type const&);
+
+        virtual void
+        deployRequirement (Type const&);
+
+        virtual void
+        dependsOn_pre (Type const&);
+
+        virtual void
+        dependsOn_next (Type const&);
+
+        virtual void
+        dependsOn_post (Type const&);
+
+        virtual void
+        infoProperty (Type const&);
+
+        virtual void
+        contentLocation (Type const&);
+
+        protected:
+        ImplementationArtifactDescription ();
+      };
+    }
   }
 }
 

@@ -8,11 +8,6 @@ namespace CIAO
     // TCKind
     // 
 
-    TCKind::
-    TCKind ()
-    {
-    }
-
     TCKind::Value TCKind::
     integral () const
     {
@@ -771,10 +766,11 @@ namespace CIAO
     // 
 
     Any::
-    Any ()
+    Any (::CIAO::Config_Handlers::DataType const& type__,
+    ::CIAO::Config_Handlers::DataValue const& value__)
     :
-    type_ (new ::CIAO::Config_Handlers::DataType ()),
-    value_ (new ::CIAO::Config_Handlers::DataValue ()),
+    type_ (new ::CIAO::Config_Handlers::DataType (type__)),
+    value_ (new ::CIAO::Config_Handlers::DataValue (value__)),
     regulator__ ()
     {
       type_->container (this);
@@ -848,10 +844,11 @@ namespace CIAO
     // 
 
     Property::
-    Property ()
+    Property (::XMLSchema::string< char > const& name__,
+    ::CIAO::Config_Handlers::Any const& value__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    value_ (new ::CIAO::Config_Handlers::Any ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    value_ (new ::CIAO::Config_Handlers::Any (value__)),
     regulator__ ()
     {
       name_->container (this);
@@ -925,10 +922,11 @@ namespace CIAO
     // 
 
     Node::
-    Node ()
+    Node (::XMLSchema::string< char > const& name__,
+    ::XMLSchema::string< char > const& label__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    label_ (new ::XMLSchema::string< char > ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    label_ (new ::XMLSchema::string< char > (label__)),
     regulator__ ()
     {
       name_->container (this);
@@ -1001,11 +999,6 @@ namespace CIAO
     // SatisfierPropertyKind
     // 
 
-    SatisfierPropertyKind::
-    SatisfierPropertyKind ()
-    {
-    }
-
     SatisfierPropertyKind::Value SatisfierPropertyKind::
     integral () const
     {
@@ -1034,11 +1027,13 @@ namespace CIAO
     // 
 
     SatisfierProperty::
-    SatisfierProperty ()
+    SatisfierProperty (::XMLSchema::string< char > const& name__,
+    ::CIAO::Config_Handlers::SatisfierPropertyKind const& kind__,
+    ::CIAO::Config_Handlers::Any const& value__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    kind_ (new ::CIAO::Config_Handlers::SatisfierPropertyKind ()),
-    value_ (new ::CIAO::Config_Handlers::Any ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    kind_ (new ::CIAO::Config_Handlers::SatisfierPropertyKind (kind__)),
+    value_ (new ::CIAO::Config_Handlers::Any (value__)),
     regulator__ ()
     {
       name_->container (this);
@@ -1137,11 +1132,13 @@ namespace CIAO
     // 
 
     Resource::
-    Resource ()
+    Resource (::XMLSchema::string< char > const& name__,
+    ::XMLSchema::string< char > const& resourceType__,
+    ::CIAO::Config_Handlers::SatisfierProperty const& property__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    resourceType_ (new ::XMLSchema::string< char > ()),
-    property_ (new ::CIAO::Config_Handlers::SatisfierProperty ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    resourceType_ (new ::XMLSchema::string< char > (resourceType__)),
+    property_ (new ::CIAO::Config_Handlers::SatisfierProperty (property__)),
     regulator__ ()
     {
       name_->container (this);
@@ -1240,12 +1237,15 @@ namespace CIAO
     // 
 
     SharedResource::
-    SharedResource ()
+    SharedResource (::XMLSchema::string< char > const& name__,
+    ::XMLSchema::string< char > const& resourceType__,
+    ::CIAO::Config_Handlers::Node const& node__,
+    ::CIAO::Config_Handlers::SatisfierProperty const& property__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    resourceType_ (new ::XMLSchema::string< char > ()),
-    node_ (new ::CIAO::Config_Handlers::Node ()),
-    property_ (new ::CIAO::Config_Handlers::SatisfierProperty ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    resourceType_ (new ::XMLSchema::string< char > (resourceType__)),
+    node_ (new ::CIAO::Config_Handlers::Node (node__)),
+    property_ (new ::CIAO::Config_Handlers::SatisfierProperty (property__)),
     regulator__ ()
     {
       name_->container (this);
@@ -1369,11 +1369,13 @@ namespace CIAO
     // 
 
     Requirement::
-    Requirement ()
+    Requirement (::XMLSchema::string< char > const& resourceType__,
+    ::XMLSchema::string< char > const& name__,
+    ::CIAO::Config_Handlers::Property const& property__)
     :
-    resourceType_ (new ::XMLSchema::string< char > ()),
-    name_ (new ::XMLSchema::string< char > ()),
-    property_ (new ::CIAO::Config_Handlers::Property ()),
+    resourceType_ (new ::XMLSchema::string< char > (resourceType__)),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    property_ (new ::CIAO::Config_Handlers::Property (property__)),
     regulator__ ()
     {
       resourceType_->container (this);
@@ -1472,11 +1474,13 @@ namespace CIAO
     // 
 
     ResourceDeploymentDescription::
-    ResourceDeploymentDescription ()
+    ResourceDeploymentDescription (::XMLSchema::string< char > const& requirementName__,
+    ::XMLSchema::string< char > const& resourceName__,
+    ::CIAO::Config_Handlers::Any const& resourceValue__)
     :
-    requirementName_ (new ::XMLSchema::string< char > ()),
-    resourceName_ (new ::XMLSchema::string< char > ()),
-    resourceValue_ (new ::CIAO::Config_Handlers::Any ()),
+    requirementName_ (new ::XMLSchema::string< char > (requirementName__)),
+    resourceName_ (new ::XMLSchema::string< char > (resourceName__)),
+    resourceValue_ (new ::CIAO::Config_Handlers::Any (resourceValue__)),
     regulator__ ()
     {
       requirementName_->container (this);
@@ -1575,31 +1579,34 @@ namespace CIAO
     // 
 
     ArtifactDeploymentDescription::
-    ArtifactDeploymentDescription ()
+    ArtifactDeploymentDescription (::XMLSchema::string< char > const& name__,
+    ::XMLSchema::string< char > const& node__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    source_ (new ::XMLSchema::string< char > ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    node_ (new ::XMLSchema::string< char > (node__)),
     regulator__ ()
     {
       name_->container (this);
-      source_->container (this);
+      node_->container (this);
     }
 
     ArtifactDeploymentDescription::
     ArtifactDeploymentDescription (::CIAO::Config_Handlers::ArtifactDeploymentDescription const& s)
     :
     name_ (new ::XMLSchema::string< char > (*s.name_)),
-    source_ (new ::XMLSchema::string< char > (*s.source_)),
-    node_ (s.node_.get () ? new ::XMLSchema::string< char > (*s.node_) : 0),
-    execParameter_ (s.execParameter_.get () ? new ::CIAO::Config_Handlers::Property (*s.execParameter_) : 0),
-    deployRequirement_ (s.deployRequirement_.get () ? new ::CIAO::Config_Handlers::Requirement (*s.deployRequirement_) : 0),
-    deployedResource_ (s.deployedResource_.get () ? new ::CIAO::Config_Handlers::ResourceDeploymentDescription (*s.deployedResource_) : 0),
+    node_ (new ::XMLSchema::string< char > (*s.node_)),
     id_ (s.id_.get () ? new ::XMLSchema::ID< char > (*s.id_) : 0),
     regulator__ ()
     {
       name_->container (this);
-      source_->container (this);
-      if (node_.get ()) node_->container (this);
+      source_.reserve (s.source_.size ());
+      {
+        for (source_const_iterator i (s.source_.begin ());
+        i != s.source_.end ();
+        ++i) add_source (*i);
+      }
+
+      node_->container (this);
       location_.reserve (s.location_.size ());
       {
         for (location_const_iterator i (s.location_.begin ());
@@ -1607,9 +1614,27 @@ namespace CIAO
         ++i) add_location (*i);
       }
 
-      if (execParameter_.get ()) execParameter_->container (this);
-      if (deployRequirement_.get ()) deployRequirement_->container (this);
-      if (deployedResource_.get ()) deployedResource_->container (this);
+      execParameter_.reserve (s.execParameter_.size ());
+      {
+        for (execParameter_const_iterator i (s.execParameter_.begin ());
+        i != s.execParameter_.end ();
+        ++i) add_execParameter (*i);
+      }
+
+      deployRequirement_.reserve (s.deployRequirement_.size ());
+      {
+        for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());
+        i != s.deployRequirement_.end ();
+        ++i) add_deployRequirement (*i);
+      }
+
+      deployedResource_.reserve (s.deployedResource_.size ());
+      {
+        for (deployedResource_const_iterator i (s.deployedResource_.begin ());
+        i != s.deployedResource_.end ();
+        ++i) add_deployedResource (*i);
+      }
+
       if (id_.get ()) id_->container (this);
     }
 
@@ -1618,10 +1643,15 @@ namespace CIAO
     {
       name (s.name ());
 
-      source (s.source ());
+      source_.clear ();
+      source_.reserve (s.source_.size ());
+      {
+        for (source_const_iterator i (s.source_.begin ());
+        i != s.source_.end ();
+        ++i) add_source (*i);
+      }
 
-      if (s.node_.get ()) node (*(s.node_));
-      else node_ = ::std::auto_ptr< ::XMLSchema::string< char > > (0);
+      node (s.node ());
 
       location_.clear ();
       location_.reserve (s.location_.size ());
@@ -1631,14 +1661,29 @@ namespace CIAO
         ++i) add_location (*i);
       }
 
-      if (s.execParameter_.get ()) execParameter (*(s.execParameter_));
-      else execParameter_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Property > (0);
+      execParameter_.clear ();
+      execParameter_.reserve (s.execParameter_.size ());
+      {
+        for (execParameter_const_iterator i (s.execParameter_.begin ());
+        i != s.execParameter_.end ();
+        ++i) add_execParameter (*i);
+      }
 
-      if (s.deployRequirement_.get ()) deployRequirement (*(s.deployRequirement_));
-      else deployRequirement_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > (0);
+      deployRequirement_.clear ();
+      deployRequirement_.reserve (s.deployRequirement_.size ());
+      {
+        for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());
+        i != s.deployRequirement_.end ();
+        ++i) add_deployRequirement (*i);
+      }
 
-      if (s.deployedResource_.get ()) deployedResource (*(s.deployedResource_));
-      else deployedResource_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ResourceDeploymentDescription > (0);
+      deployedResource_.clear ();
+      deployedResource_.reserve (s.deployedResource_.size ());
+      {
+        for (deployedResource_const_iterator i (s.deployedResource_.begin ());
+        i != s.deployedResource_.end ();
+        ++i) add_deployedResource (*i);
+      }
 
       if (s.id_.get ()) id (*(s.id_));
       else id_ = ::std::auto_ptr< ::XMLSchema::ID< char > > (0);
@@ -1669,32 +1714,57 @@ namespace CIAO
 
     // ArtifactDeploymentDescription
     // 
-    ::XMLSchema::string< char > const& ArtifactDeploymentDescription::
-    source () const
+    ArtifactDeploymentDescription::source_iterator ArtifactDeploymentDescription::
+    begin_source ()
     {
-      return *source_;
+      return source_.begin ();
     }
 
-    ::XMLSchema::string< char >& ArtifactDeploymentDescription::
-    source ()
+    ArtifactDeploymentDescription::source_iterator ArtifactDeploymentDescription::
+    end_source ()
     {
-      return *source_;
+      return source_.end ();
+    }
+
+    ArtifactDeploymentDescription::source_const_iterator ArtifactDeploymentDescription::
+    begin_source () const
+    {
+      return source_.begin ();
+    }
+
+    ArtifactDeploymentDescription::source_const_iterator ArtifactDeploymentDescription::
+    end_source () const
+    {
+      return source_.end ();
     }
 
     void ArtifactDeploymentDescription::
-    source (::XMLSchema::string< char > const& e)
+    add_source (::XMLSchema::string< char > const& e)
     {
-      *source_ = e;
+      if (source_.capacity () < source_.size () + 1)
+      {
+        ::std::vector< ::XMLSchema::string< char > > v;
+        v.reserve (source_.size () + 1);
+
+        while (source_.size ())
+        {
+          //@@ VC6
+          ::XMLSchema::string< char >& t = source_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          source_.pop_back ();
+        }
+
+        source_.swap (v);
+      }
+
+      source_.push_back (e);
+      source_.back ().container (this);
     }
 
     // ArtifactDeploymentDescription
     // 
-    bool ArtifactDeploymentDescription::
-    node_p () const
-    {
-      return node_.get () != 0;
-    }
-
     ::XMLSchema::string< char > const& ArtifactDeploymentDescription::
     node () const
     {
@@ -1710,16 +1780,7 @@ namespace CIAO
     void ArtifactDeploymentDescription::
     node (::XMLSchema::string< char > const& e)
     {
-      if (node_.get ())
-      {
-        *node_ = e;
-      }
-
-      else
-      {
-        node_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
-        node_->container (this);
-      }
+      *node_ = e;
     }
 
     // ArtifactDeploymentDescription
@@ -1775,107 +1836,155 @@ namespace CIAO
 
     // ArtifactDeploymentDescription
     // 
-    bool ArtifactDeploymentDescription::
-    execParameter_p () const
+    ArtifactDeploymentDescription::execParameter_iterator ArtifactDeploymentDescription::
+    begin_execParameter ()
     {
-      return execParameter_.get () != 0;
+      return execParameter_.begin ();
     }
 
-    ::CIAO::Config_Handlers::Property const& ArtifactDeploymentDescription::
-    execParameter () const
+    ArtifactDeploymentDescription::execParameter_iterator ArtifactDeploymentDescription::
+    end_execParameter ()
     {
-      return *execParameter_;
+      return execParameter_.end ();
     }
 
-    ::CIAO::Config_Handlers::Property& ArtifactDeploymentDescription::
-    execParameter ()
+    ArtifactDeploymentDescription::execParameter_const_iterator ArtifactDeploymentDescription::
+    begin_execParameter () const
     {
-      return *execParameter_;
+      return execParameter_.begin ();
+    }
+
+    ArtifactDeploymentDescription::execParameter_const_iterator ArtifactDeploymentDescription::
+    end_execParameter () const
+    {
+      return execParameter_.end ();
     }
 
     void ArtifactDeploymentDescription::
-    execParameter (::CIAO::Config_Handlers::Property const& e)
+    add_execParameter (::CIAO::Config_Handlers::Property const& e)
     {
-      if (execParameter_.get ())
+      if (execParameter_.capacity () < execParameter_.size () + 1)
       {
-        *execParameter_ = e;
+        ::std::vector< ::CIAO::Config_Handlers::Property > v;
+        v.reserve (execParameter_.size () + 1);
+
+        while (execParameter_.size ())
+        {
+          //@@ VC6
+          ::CIAO::Config_Handlers::Property& t = execParameter_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          execParameter_.pop_back ();
+        }
+
+        execParameter_.swap (v);
       }
 
-      else
-      {
-        execParameter_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Property > (new ::CIAO::Config_Handlers::Property (e));
-        execParameter_->container (this);
-      }
+      execParameter_.push_back (e);
+      execParameter_.back ().container (this);
     }
 
     // ArtifactDeploymentDescription
     // 
-    bool ArtifactDeploymentDescription::
-    deployRequirement_p () const
+    ArtifactDeploymentDescription::deployRequirement_iterator ArtifactDeploymentDescription::
+    begin_deployRequirement ()
     {
-      return deployRequirement_.get () != 0;
+      return deployRequirement_.begin ();
     }
 
-    ::CIAO::Config_Handlers::Requirement const& ArtifactDeploymentDescription::
-    deployRequirement () const
+    ArtifactDeploymentDescription::deployRequirement_iterator ArtifactDeploymentDescription::
+    end_deployRequirement ()
     {
-      return *deployRequirement_;
+      return deployRequirement_.end ();
     }
 
-    ::CIAO::Config_Handlers::Requirement& ArtifactDeploymentDescription::
-    deployRequirement ()
+    ArtifactDeploymentDescription::deployRequirement_const_iterator ArtifactDeploymentDescription::
+    begin_deployRequirement () const
     {
-      return *deployRequirement_;
+      return deployRequirement_.begin ();
+    }
+
+    ArtifactDeploymentDescription::deployRequirement_const_iterator ArtifactDeploymentDescription::
+    end_deployRequirement () const
+    {
+      return deployRequirement_.end ();
     }
 
     void ArtifactDeploymentDescription::
-    deployRequirement (::CIAO::Config_Handlers::Requirement const& e)
+    add_deployRequirement (::CIAO::Config_Handlers::Requirement const& e)
     {
-      if (deployRequirement_.get ())
+      if (deployRequirement_.capacity () < deployRequirement_.size () + 1)
       {
-        *deployRequirement_ = e;
+        ::std::vector< ::CIAO::Config_Handlers::Requirement > v;
+        v.reserve (deployRequirement_.size () + 1);
+
+        while (deployRequirement_.size ())
+        {
+          //@@ VC6
+          ::CIAO::Config_Handlers::Requirement& t = deployRequirement_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          deployRequirement_.pop_back ();
+        }
+
+        deployRequirement_.swap (v);
       }
 
-      else
-      {
-        deployRequirement_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > (new ::CIAO::Config_Handlers::Requirement (e));
-        deployRequirement_->container (this);
-      }
+      deployRequirement_.push_back (e);
+      deployRequirement_.back ().container (this);
     }
 
     // ArtifactDeploymentDescription
     // 
-    bool ArtifactDeploymentDescription::
-    deployedResource_p () const
+    ArtifactDeploymentDescription::deployedResource_iterator ArtifactDeploymentDescription::
+    begin_deployedResource ()
     {
-      return deployedResource_.get () != 0;
+      return deployedResource_.begin ();
     }
 
-    ::CIAO::Config_Handlers::ResourceDeploymentDescription const& ArtifactDeploymentDescription::
-    deployedResource () const
+    ArtifactDeploymentDescription::deployedResource_iterator ArtifactDeploymentDescription::
+    end_deployedResource ()
     {
-      return *deployedResource_;
+      return deployedResource_.end ();
     }
 
-    ::CIAO::Config_Handlers::ResourceDeploymentDescription& ArtifactDeploymentDescription::
-    deployedResource ()
+    ArtifactDeploymentDescription::deployedResource_const_iterator ArtifactDeploymentDescription::
+    begin_deployedResource () const
     {
-      return *deployedResource_;
+      return deployedResource_.begin ();
+    }
+
+    ArtifactDeploymentDescription::deployedResource_const_iterator ArtifactDeploymentDescription::
+    end_deployedResource () const
+    {
+      return deployedResource_.end ();
     }
 
     void ArtifactDeploymentDescription::
-    deployedResource (::CIAO::Config_Handlers::ResourceDeploymentDescription const& e)
+    add_deployedResource (::CIAO::Config_Handlers::ResourceDeploymentDescription const& e)
     {
-      if (deployedResource_.get ())
+      if (deployedResource_.capacity () < deployedResource_.size () + 1)
       {
-        *deployedResource_ = e;
+        ::std::vector< ::CIAO::Config_Handlers::ResourceDeploymentDescription > v;
+        v.reserve (deployedResource_.size () + 1);
+
+        while (deployedResource_.size ())
+        {
+          //@@ VC6
+          ::CIAO::Config_Handlers::ResourceDeploymentDescription& t = deployedResource_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          deployedResource_.pop_back ();
+        }
+
+        deployedResource_.swap (v);
       }
 
-      else
-      {
-        deployedResource_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ResourceDeploymentDescription > (new ::CIAO::Config_Handlers::ResourceDeploymentDescription (e));
-        deployedResource_->container (this);
-      }
+      deployedResource_.push_back (e);
+      deployedResource_.back ().container (this);
     }
 
     // ArtifactDeploymentDescription
@@ -1918,28 +2027,29 @@ namespace CIAO
     // 
 
     MonolithicDeploymentDescription::
-    MonolithicDeploymentDescription ()
+    MonolithicDeploymentDescription (::XMLSchema::string< char > const& name__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    source_ (new ::XMLSchema::string< char > ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
     regulator__ ()
     {
       name_->container (this);
-      source_->container (this);
     }
 
     MonolithicDeploymentDescription::
     MonolithicDeploymentDescription (::CIAO::Config_Handlers::MonolithicDeploymentDescription const& s)
     :
     name_ (new ::XMLSchema::string< char > (*s.name_)),
-    source_ (new ::XMLSchema::string< char > (*s.source_)),
-    execParameter_ (s.execParameter_.get () ? new ::CIAO::Config_Handlers::Property (*s.execParameter_) : 0),
-    deployRequirement_ (s.deployRequirement_.get () ? new ::CIAO::Config_Handlers::Requirement (*s.deployRequirement_) : 0),
     id_ (s.id_.get () ? new ::XMLSchema::ID< char > (*s.id_) : 0),
     regulator__ ()
     {
       name_->container (this);
-      source_->container (this);
+      source_.reserve (s.source_.size ());
+      {
+        for (source_const_iterator i (s.source_.begin ());
+        i != s.source_.end ();
+        ++i) add_source (*i);
+      }
+
       artifact_.reserve (s.artifact_.size ());
       {
         for (artifact_const_iterator i (s.artifact_.begin ());
@@ -1947,8 +2057,20 @@ namespace CIAO
         ++i) add_artifact (*i);
       }
 
-      if (execParameter_.get ()) execParameter_->container (this);
-      if (deployRequirement_.get ()) deployRequirement_->container (this);
+      execParameter_.reserve (s.execParameter_.size ());
+      {
+        for (execParameter_const_iterator i (s.execParameter_.begin ());
+        i != s.execParameter_.end ();
+        ++i) add_execParameter (*i);
+      }
+
+      deployRequirement_.reserve (s.deployRequirement_.size ());
+      {
+        for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());
+        i != s.deployRequirement_.end ();
+        ++i) add_deployRequirement (*i);
+      }
+
       if (id_.get ()) id_->container (this);
     }
 
@@ -1957,7 +2079,13 @@ namespace CIAO
     {
       name (s.name ());
 
-      source (s.source ());
+      source_.clear ();
+      source_.reserve (s.source_.size ());
+      {
+        for (source_const_iterator i (s.source_.begin ());
+        i != s.source_.end ();
+        ++i) add_source (*i);
+      }
 
       artifact_.clear ();
       artifact_.reserve (s.artifact_.size ());
@@ -1967,11 +2095,21 @@ namespace CIAO
         ++i) add_artifact (*i);
       }
 
-      if (s.execParameter_.get ()) execParameter (*(s.execParameter_));
-      else execParameter_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Property > (0);
+      execParameter_.clear ();
+      execParameter_.reserve (s.execParameter_.size ());
+      {
+        for (execParameter_const_iterator i (s.execParameter_.begin ());
+        i != s.execParameter_.end ();
+        ++i) add_execParameter (*i);
+      }
 
-      if (s.deployRequirement_.get ()) deployRequirement (*(s.deployRequirement_));
-      else deployRequirement_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > (0);
+      deployRequirement_.clear ();
+      deployRequirement_.reserve (s.deployRequirement_.size ());
+      {
+        for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());
+        i != s.deployRequirement_.end ();
+        ++i) add_deployRequirement (*i);
+      }
 
       if (s.id_.get ()) id (*(s.id_));
       else id_ = ::std::auto_ptr< ::XMLSchema::ID< char > > (0);
@@ -2002,22 +2140,53 @@ namespace CIAO
 
     // MonolithicDeploymentDescription
     // 
-    ::XMLSchema::string< char > const& MonolithicDeploymentDescription::
-    source () const
+    MonolithicDeploymentDescription::source_iterator MonolithicDeploymentDescription::
+    begin_source ()
     {
-      return *source_;
+      return source_.begin ();
     }
 
-    ::XMLSchema::string< char >& MonolithicDeploymentDescription::
-    source ()
+    MonolithicDeploymentDescription::source_iterator MonolithicDeploymentDescription::
+    end_source ()
     {
-      return *source_;
+      return source_.end ();
+    }
+
+    MonolithicDeploymentDescription::source_const_iterator MonolithicDeploymentDescription::
+    begin_source () const
+    {
+      return source_.begin ();
+    }
+
+    MonolithicDeploymentDescription::source_const_iterator MonolithicDeploymentDescription::
+    end_source () const
+    {
+      return source_.end ();
     }
 
     void MonolithicDeploymentDescription::
-    source (::XMLSchema::string< char > const& e)
+    add_source (::XMLSchema::string< char > const& e)
     {
-      *source_ = e;
+      if (source_.capacity () < source_.size () + 1)
+      {
+        ::std::vector< ::XMLSchema::string< char > > v;
+        v.reserve (source_.size () + 1);
+
+        while (source_.size ())
+        {
+          //@@ VC6
+          ::XMLSchema::string< char >& t = source_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          source_.pop_back ();
+        }
+
+        source_.swap (v);
+      }
+
+      source_.push_back (e);
+      source_.back ().container (this);
     }
 
     // MonolithicDeploymentDescription
@@ -2073,72 +2242,104 @@ namespace CIAO
 
     // MonolithicDeploymentDescription
     // 
-    bool MonolithicDeploymentDescription::
-    execParameter_p () const
+    MonolithicDeploymentDescription::execParameter_iterator MonolithicDeploymentDescription::
+    begin_execParameter ()
     {
-      return execParameter_.get () != 0;
+      return execParameter_.begin ();
     }
 
-    ::CIAO::Config_Handlers::Property const& MonolithicDeploymentDescription::
-    execParameter () const
+    MonolithicDeploymentDescription::execParameter_iterator MonolithicDeploymentDescription::
+    end_execParameter ()
     {
-      return *execParameter_;
+      return execParameter_.end ();
     }
 
-    ::CIAO::Config_Handlers::Property& MonolithicDeploymentDescription::
-    execParameter ()
+    MonolithicDeploymentDescription::execParameter_const_iterator MonolithicDeploymentDescription::
+    begin_execParameter () const
     {
-      return *execParameter_;
+      return execParameter_.begin ();
+    }
+
+    MonolithicDeploymentDescription::execParameter_const_iterator MonolithicDeploymentDescription::
+    end_execParameter () const
+    {
+      return execParameter_.end ();
     }
 
     void MonolithicDeploymentDescription::
-    execParameter (::CIAO::Config_Handlers::Property const& e)
+    add_execParameter (::CIAO::Config_Handlers::Property const& e)
     {
-      if (execParameter_.get ())
+      if (execParameter_.capacity () < execParameter_.size () + 1)
       {
-        *execParameter_ = e;
+        ::std::vector< ::CIAO::Config_Handlers::Property > v;
+        v.reserve (execParameter_.size () + 1);
+
+        while (execParameter_.size ())
+        {
+          //@@ VC6
+          ::CIAO::Config_Handlers::Property& t = execParameter_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          execParameter_.pop_back ();
+        }
+
+        execParameter_.swap (v);
       }
 
-      else
-      {
-        execParameter_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Property > (new ::CIAO::Config_Handlers::Property (e));
-        execParameter_->container (this);
-      }
+      execParameter_.push_back (e);
+      execParameter_.back ().container (this);
     }
 
     // MonolithicDeploymentDescription
     // 
-    bool MonolithicDeploymentDescription::
-    deployRequirement_p () const
+    MonolithicDeploymentDescription::deployRequirement_iterator MonolithicDeploymentDescription::
+    begin_deployRequirement ()
     {
-      return deployRequirement_.get () != 0;
+      return deployRequirement_.begin ();
     }
 
-    ::CIAO::Config_Handlers::Requirement const& MonolithicDeploymentDescription::
-    deployRequirement () const
+    MonolithicDeploymentDescription::deployRequirement_iterator MonolithicDeploymentDescription::
+    end_deployRequirement ()
     {
-      return *deployRequirement_;
+      return deployRequirement_.end ();
     }
 
-    ::CIAO::Config_Handlers::Requirement& MonolithicDeploymentDescription::
-    deployRequirement ()
+    MonolithicDeploymentDescription::deployRequirement_const_iterator MonolithicDeploymentDescription::
+    begin_deployRequirement () const
     {
-      return *deployRequirement_;
+      return deployRequirement_.begin ();
+    }
+
+    MonolithicDeploymentDescription::deployRequirement_const_iterator MonolithicDeploymentDescription::
+    end_deployRequirement () const
+    {
+      return deployRequirement_.end ();
     }
 
     void MonolithicDeploymentDescription::
-    deployRequirement (::CIAO::Config_Handlers::Requirement const& e)
+    add_deployRequirement (::CIAO::Config_Handlers::Requirement const& e)
     {
-      if (deployRequirement_.get ())
+      if (deployRequirement_.capacity () < deployRequirement_.size () + 1)
       {
-        *deployRequirement_ = e;
+        ::std::vector< ::CIAO::Config_Handlers::Requirement > v;
+        v.reserve (deployRequirement_.size () + 1);
+
+        while (deployRequirement_.size ())
+        {
+          //@@ VC6
+          ::CIAO::Config_Handlers::Requirement& t = deployRequirement_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          deployRequirement_.pop_back ();
+        }
+
+        deployRequirement_.swap (v);
       }
 
-      else
-      {
-        deployRequirement_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > (new ::CIAO::Config_Handlers::Requirement (e));
-        deployRequirement_->container (this);
-      }
+      deployRequirement_.push_back (e);
+      deployRequirement_.back ().container (this);
     }
 
     // MonolithicDeploymentDescription
@@ -2180,11 +2381,6 @@ namespace CIAO
     // ResourceUsageKind
     // 
 
-    ResourceUsageKind::
-    ResourceUsageKind ()
-    {
-    }
-
     ResourceUsageKind::Value ResourceUsageKind::
     integral () const
     {
@@ -2213,12 +2409,15 @@ namespace CIAO
     // 
 
     InstanceResourceDeploymentDescription::
-    InstanceResourceDeploymentDescription ()
+    InstanceResourceDeploymentDescription (::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage__,
+    ::XMLSchema::string< char > const& requirementName__,
+    ::XMLSchema::string< char > const& resourceName__,
+    ::CIAO::Config_Handlers::Any const& resourceValue__)
     :
-    resourceUsage_ (new ::CIAO::Config_Handlers::ResourceUsageKind ()),
-    requirementName_ (new ::XMLSchema::string< char > ()),
-    resourceName_ (new ::XMLSchema::string< char > ()),
-    resourceValue_ (new ::CIAO::Config_Handlers::Any ()),
+    resourceUsage_ (new ::CIAO::Config_Handlers::ResourceUsageKind (resourceUsage__)),
+    requirementName_ (new ::XMLSchema::string< char > (requirementName__)),
+    resourceName_ (new ::XMLSchema::string< char > (resourceName__)),
+    resourceValue_ (new ::CIAO::Config_Handlers::Any (resourceValue__)),
     regulator__ ()
     {
       resourceUsage_->container (this);
@@ -2342,12 +2541,15 @@ namespace CIAO
     // 
 
     InstanceDeploymentDescription::
-    InstanceDeploymentDescription ()
+    InstanceDeploymentDescription (::XMLSchema::string< char > const& name__,
+    ::XMLSchema::string< char > const& node__,
+    ::XMLSchema::string< char > const& source__,
+    ::XMLSchema::IDREF< char > const& implementation__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    node_ (new ::XMLSchema::string< char > ()),
-    source_ (new ::XMLSchema::string< char > ()),
-    implementation_ (new ::XMLSchema::IDREF< char > ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    node_ (new ::XMLSchema::string< char > (node__)),
+    source_ (new ::XMLSchema::string< char > (source__)),
+    implementation_ (new ::XMLSchema::IDREF< char > (implementation__)),
     regulator__ ()
     {
       name_->container (this);
@@ -2363,7 +2565,6 @@ namespace CIAO
     node_ (new ::XMLSchema::string< char > (*s.node_)),
     source_ (new ::XMLSchema::string< char > (*s.source_)),
     implementation_ (new ::XMLSchema::IDREF< char > (*s.implementation_)),
-    configProperty_ (s.configProperty_.get () ? new ::CIAO::Config_Handlers::Property (*s.configProperty_) : 0),
     deployedResource_ (s.deployedResource_.get () ? new ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription (*s.deployedResource_) : 0),
     deployedSharedResource_ (s.deployedSharedResource_.get () ? new ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription (*s.deployedSharedResource_) : 0),
     id_ (s.id_.get () ? new ::XMLSchema::ID< char > (*s.id_) : 0),
@@ -2373,7 +2574,13 @@ namespace CIAO
       node_->container (this);
       source_->container (this);
       implementation_->container (this);
-      if (configProperty_.get ()) configProperty_->container (this);
+      configProperty_.reserve (s.configProperty_.size ());
+      {
+        for (configProperty_const_iterator i (s.configProperty_.begin ());
+        i != s.configProperty_.end ();
+        ++i) add_configProperty (*i);
+      }
+
       if (deployedResource_.get ()) deployedResource_->container (this);
       if (deployedSharedResource_.get ()) deployedSharedResource_->container (this);
       if (id_.get ()) id_->container (this);
@@ -2390,8 +2597,13 @@ namespace CIAO
 
       implementation (s.implementation ());
 
-      if (s.configProperty_.get ()) configProperty (*(s.configProperty_));
-      else configProperty_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Property > (0);
+      configProperty_.clear ();
+      configProperty_.reserve (s.configProperty_.size ());
+      {
+        for (configProperty_const_iterator i (s.configProperty_.begin ());
+        i != s.configProperty_.end ();
+        ++i) add_configProperty (*i);
+      }
 
       if (s.deployedResource_.get ()) deployedResource (*(s.deployedResource_));
       else deployedResource_ = ::std::auto_ptr< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription > (0);
@@ -2488,37 +2700,53 @@ namespace CIAO
 
     // InstanceDeploymentDescription
     // 
-    bool InstanceDeploymentDescription::
-    configProperty_p () const
+    InstanceDeploymentDescription::configProperty_iterator InstanceDeploymentDescription::
+    begin_configProperty ()
     {
-      return configProperty_.get () != 0;
+      return configProperty_.begin ();
     }
 
-    ::CIAO::Config_Handlers::Property const& InstanceDeploymentDescription::
-    configProperty () const
+    InstanceDeploymentDescription::configProperty_iterator InstanceDeploymentDescription::
+    end_configProperty ()
     {
-      return *configProperty_;
+      return configProperty_.end ();
     }
 
-    ::CIAO::Config_Handlers::Property& InstanceDeploymentDescription::
-    configProperty ()
+    InstanceDeploymentDescription::configProperty_const_iterator InstanceDeploymentDescription::
+    begin_configProperty () const
     {
-      return *configProperty_;
+      return configProperty_.begin ();
+    }
+
+    InstanceDeploymentDescription::configProperty_const_iterator InstanceDeploymentDescription::
+    end_configProperty () const
+    {
+      return configProperty_.end ();
     }
 
     void InstanceDeploymentDescription::
-    configProperty (::CIAO::Config_Handlers::Property const& e)
+    add_configProperty (::CIAO::Config_Handlers::Property const& e)
     {
-      if (configProperty_.get ())
+      if (configProperty_.capacity () < configProperty_.size () + 1)
       {
-        *configProperty_ = e;
+        ::std::vector< ::CIAO::Config_Handlers::Property > v;
+        v.reserve (configProperty_.size () + 1);
+
+        while (configProperty_.size ())
+        {
+          //@@ VC6
+          ::CIAO::Config_Handlers::Property& t = configProperty_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          configProperty_.pop_back ();
+        }
+
+        configProperty_.swap (v);
       }
 
-      else
-      {
-        configProperty_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Property > (new ::CIAO::Config_Handlers::Property (e));
-        configProperty_->container (this);
-      }
+      configProperty_.push_back (e);
+      configProperty_.back ().container (this);
     }
 
     // InstanceDeploymentDescription
@@ -2630,11 +2858,6 @@ namespace CIAO
     // CCMComponentPortKind
     // 
 
-    CCMComponentPortKind::
-    CCMComponentPortKind ()
-    {
-    }
-
     CCMComponentPortKind::Value CCMComponentPortKind::
     integral () const
     {
@@ -2663,16 +2886,23 @@ namespace CIAO
     // 
 
     ComponentPortDescription::
-    ComponentPortDescription ()
+    ComponentPortDescription (::XMLSchema::string< char > const& name__,
+    ::XMLSchema::string< char > const& specificType__,
+    ::XMLSchema::string< char > const& supportedType__,
+    ::XMLSchema::string< char > const& provider__,
+    ::XMLSchema::string< char > const& exclusiveProvider__,
+    ::XMLSchema::string< char > const& exclusiveUser__,
+    ::XMLSchema::string< char > const& optional__,
+    ::CIAO::Config_Handlers::CCMComponentPortKind const& kind__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    specificType_ (new ::XMLSchema::string< char > ()),
-    supportedType_ (new ::XMLSchema::string< char > ()),
-    provider_ (new ::XMLSchema::string< char > ()),
-    exclusiveProvider_ (new ::XMLSchema::string< char > ()),
-    exclusiveUser_ (new ::XMLSchema::string< char > ()),
-    optional_ (new ::XMLSchema::string< char > ()),
-    kind_ (new ::CIAO::Config_Handlers::CCMComponentPortKind ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    specificType_ (new ::XMLSchema::string< char > (specificType__)),
+    supportedType_ (new ::XMLSchema::string< char > (supportedType__)),
+    provider_ (new ::XMLSchema::string< char > (provider__)),
+    exclusiveProvider_ (new ::XMLSchema::string< char > (exclusiveProvider__)),
+    exclusiveUser_ (new ::XMLSchema::string< char > (exclusiveUser__)),
+    optional_ (new ::XMLSchema::string< char > (optional__)),
+    kind_ (new ::CIAO::Config_Handlers::CCMComponentPortKind (kind__)),
     regulator__ ()
     {
       name_->container (this);
@@ -2896,10 +3126,11 @@ namespace CIAO
     // 
 
     ComponentPropertyDescription::
-    ComponentPropertyDescription ()
+    ComponentPropertyDescription (::XMLSchema::string< char > const& name__,
+    ::CIAO::Config_Handlers::DataType const& type__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    type_ (new ::CIAO::Config_Handlers::DataType ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    type_ (new ::CIAO::Config_Handlers::DataType (type__)),
     regulator__ ()
     {
       name_->container (this);
@@ -2973,9 +3204,9 @@ namespace CIAO
     // 
 
     ComponentExternalPortEndpoint::
-    ComponentExternalPortEndpoint ()
+    ComponentExternalPortEndpoint (::XMLSchema::string< char > const& portName__)
     :
-    portName_ (new ::XMLSchema::string< char > ()),
+    portName_ (new ::XMLSchema::string< char > (portName__)),
     regulator__ ()
     {
       portName_->container (this);
@@ -3024,11 +3255,13 @@ namespace CIAO
     // 
 
     PlanSubcomponentPortEndpoint::
-    PlanSubcomponentPortEndpoint ()
+    PlanSubcomponentPortEndpoint (::XMLSchema::string< char > const& portName__,
+    ::CIAO::Config_Handlers::CCMComponentPortKind const& kind__,
+    ::XMLSchema::IDREF< char > const& instance__)
     :
-    portName_ (new ::XMLSchema::string< char > ()),
-    kind_ (new ::CIAO::Config_Handlers::CCMComponentPortKind ()),
-    instance_ (new ::XMLSchema::IDREF< char > ()),
+    portName_ (new ::XMLSchema::string< char > (portName__)),
+    kind_ (new ::CIAO::Config_Handlers::CCMComponentPortKind (kind__)),
+    instance_ (new ::XMLSchema::IDREF< char > (instance__)),
     regulator__ ()
     {
       portName_->container (this);
@@ -3167,9 +3400,9 @@ namespace CIAO
     // 
 
     ExternalReferenceEndpoint::
-    ExternalReferenceEndpoint ()
+    ExternalReferenceEndpoint (::XMLSchema::string< char > const& location__)
     :
-    location_ (new ::XMLSchema::string< char > ()),
+    location_ (new ::XMLSchema::string< char > (location__)),
     regulator__ ()
     {
       location_->container (this);
@@ -3218,12 +3451,15 @@ namespace CIAO
     // 
 
     ConnectionResourceDeploymentDescription::
-    ConnectionResourceDeploymentDescription ()
+    ConnectionResourceDeploymentDescription (::XMLSchema::string< char > const& targetName__,
+    ::XMLSchema::string< char > const& requirementName__,
+    ::XMLSchema::string< char > const& resourceName__,
+    ::CIAO::Config_Handlers::Any const& resourceValue__)
     :
-    targetName_ (new ::XMLSchema::string< char > ()),
-    requirementName_ (new ::XMLSchema::string< char > ()),
-    resourceName_ (new ::XMLSchema::string< char > ()),
-    resourceValue_ (new ::CIAO::Config_Handlers::Any ()),
+    targetName_ (new ::XMLSchema::string< char > (targetName__)),
+    requirementName_ (new ::XMLSchema::string< char > (requirementName__)),
+    resourceName_ (new ::XMLSchema::string< char > (resourceName__)),
+    resourceValue_ (new ::CIAO::Config_Handlers::Any (resourceValue__)),
     regulator__ ()
     {
       targetName_->container (this);
@@ -3347,9 +3583,9 @@ namespace CIAO
     // 
 
     PlanConnectionDescription::
-    PlanConnectionDescription ()
+    PlanConnectionDescription (::XMLSchema::string< char > const& name__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
     regulator__ ()
     {
       name_->container (this);
@@ -3360,13 +3596,17 @@ namespace CIAO
     :
     name_ (new ::XMLSchema::string< char > (*s.name_)),
     source_ (s.source_.get () ? new ::XMLSchema::string< char > (*s.source_) : 0),
-    deployRequirement_ (s.deployRequirement_.get () ? new ::CIAO::Config_Handlers::Requirement (*s.deployRequirement_) : 0),
-    deployedResource_ (s.deployedResource_.get () ? new ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription (*s.deployedResource_) : 0),
     regulator__ ()
     {
       name_->container (this);
       if (source_.get ()) source_->container (this);
-      if (deployRequirement_.get ()) deployRequirement_->container (this);
+      deployRequirement_.reserve (s.deployRequirement_.size ());
+      {
+        for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());
+        i != s.deployRequirement_.end ();
+        ++i) add_deployRequirement (*i);
+      }
+
       externalEndpoint_.reserve (s.externalEndpoint_.size ());
       {
         for (externalEndpoint_const_iterator i (s.externalEndpoint_.begin ());
@@ -3388,7 +3628,12 @@ namespace CIAO
         ++i) add_externalReference (*i);
       }
 
-      if (deployedResource_.get ()) deployedResource_->container (this);
+      deployedResource_.reserve (s.deployedResource_.size ());
+      {
+        for (deployedResource_const_iterator i (s.deployedResource_.begin ());
+        i != s.deployedResource_.end ();
+        ++i) add_deployedResource (*i);
+      }
     }
 
     ::CIAO::Config_Handlers::PlanConnectionDescription& PlanConnectionDescription::
@@ -3399,8 +3644,13 @@ namespace CIAO
       if (s.source_.get ()) source (*(s.source_));
       else source_ = ::std::auto_ptr< ::XMLSchema::string< char > > (0);
 
-      if (s.deployRequirement_.get ()) deployRequirement (*(s.deployRequirement_));
-      else deployRequirement_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > (0);
+      deployRequirement_.clear ();
+      deployRequirement_.reserve (s.deployRequirement_.size ());
+      {
+        for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());
+        i != s.deployRequirement_.end ();
+        ++i) add_deployRequirement (*i);
+      }
 
       externalEndpoint_.clear ();
       externalEndpoint_.reserve (s.externalEndpoint_.size ());
@@ -3426,8 +3676,13 @@ namespace CIAO
         ++i) add_externalReference (*i);
       }
 
-      if (s.deployedResource_.get ()) deployedResource (*(s.deployedResource_));
-      else deployedResource_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription > (0);
+      deployedResource_.clear ();
+      deployedResource_.reserve (s.deployedResource_.size ());
+      {
+        for (deployedResource_const_iterator i (s.deployedResource_.begin ());
+        i != s.deployedResource_.end ();
+        ++i) add_deployedResource (*i);
+      }
 
       return *this;
     }
@@ -3490,37 +3745,53 @@ namespace CIAO
 
     // PlanConnectionDescription
     // 
-    bool PlanConnectionDescription::
-    deployRequirement_p () const
+    PlanConnectionDescription::deployRequirement_iterator PlanConnectionDescription::
+    begin_deployRequirement ()
     {
-      return deployRequirement_.get () != 0;
+      return deployRequirement_.begin ();
     }
 
-    ::CIAO::Config_Handlers::Requirement const& PlanConnectionDescription::
-    deployRequirement () const
+    PlanConnectionDescription::deployRequirement_iterator PlanConnectionDescription::
+    end_deployRequirement ()
     {
-      return *deployRequirement_;
+      return deployRequirement_.end ();
     }
 
-    ::CIAO::Config_Handlers::Requirement& PlanConnectionDescription::
-    deployRequirement ()
+    PlanConnectionDescription::deployRequirement_const_iterator PlanConnectionDescription::
+    begin_deployRequirement () const
     {
-      return *deployRequirement_;
+      return deployRequirement_.begin ();
+    }
+
+    PlanConnectionDescription::deployRequirement_const_iterator PlanConnectionDescription::
+    end_deployRequirement () const
+    {
+      return deployRequirement_.end ();
     }
 
     void PlanConnectionDescription::
-    deployRequirement (::CIAO::Config_Handlers::Requirement const& e)
+    add_deployRequirement (::CIAO::Config_Handlers::Requirement const& e)
     {
-      if (deployRequirement_.get ())
+      if (deployRequirement_.capacity () < deployRequirement_.size () + 1)
       {
-        *deployRequirement_ = e;
+        ::std::vector< ::CIAO::Config_Handlers::Requirement > v;
+        v.reserve (deployRequirement_.size () + 1);
+
+        while (deployRequirement_.size ())
+        {
+          //@@ VC6
+          ::CIAO::Config_Handlers::Requirement& t = deployRequirement_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          deployRequirement_.pop_back ();
+        }
+
+        deployRequirement_.swap (v);
       }
 
-      else
-      {
-        deployRequirement_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > (new ::CIAO::Config_Handlers::Requirement (e));
-        deployRequirement_->container (this);
-      }
+      deployRequirement_.push_back (e);
+      deployRequirement_.back ().container (this);
     }
 
     // PlanConnectionDescription
@@ -3678,37 +3949,53 @@ namespace CIAO
 
     // PlanConnectionDescription
     // 
-    bool PlanConnectionDescription::
-    deployedResource_p () const
+    PlanConnectionDescription::deployedResource_iterator PlanConnectionDescription::
+    begin_deployedResource ()
     {
-      return deployedResource_.get () != 0;
+      return deployedResource_.begin ();
     }
 
-    ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription const& PlanConnectionDescription::
-    deployedResource () const
+    PlanConnectionDescription::deployedResource_iterator PlanConnectionDescription::
+    end_deployedResource ()
     {
-      return *deployedResource_;
+      return deployedResource_.end ();
     }
 
-    ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription& PlanConnectionDescription::
-    deployedResource ()
+    PlanConnectionDescription::deployedResource_const_iterator PlanConnectionDescription::
+    begin_deployedResource () const
     {
-      return *deployedResource_;
+      return deployedResource_.begin ();
+    }
+
+    PlanConnectionDescription::deployedResource_const_iterator PlanConnectionDescription::
+    end_deployedResource () const
+    {
+      return deployedResource_.end ();
     }
 
     void PlanConnectionDescription::
-    deployedResource (::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription const& e)
+    add_deployedResource (::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription const& e)
     {
-      if (deployedResource_.get ())
+      if (deployedResource_.capacity () < deployedResource_.size () + 1)
       {
-        *deployedResource_ = e;
+        ::std::vector< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription > v;
+        v.reserve (deployedResource_.size () + 1);
+
+        while (deployedResource_.size ())
+        {
+          //@@ VC6
+          ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription& t = deployedResource_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          deployedResource_.pop_back ();
+        }
+
+        deployedResource_.swap (v);
       }
 
-      else
-      {
-        deployedResource_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription > (new ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription (e));
-        deployedResource_->container (this);
-      }
+      deployedResource_.push_back (e);
+      deployedResource_.back ().container (this);
     }
 
 
@@ -3716,9 +4003,9 @@ namespace CIAO
     // 
 
     ImplementationDependency::
-    ImplementationDependency ()
+    ImplementationDependency (::XMLSchema::string< char > const& requiredType__)
     :
-    requiredType_ (new ::XMLSchema::string< char > ()),
+    requiredType_ (new ::XMLSchema::string< char > (requiredType__)),
     regulator__ ()
     {
       requiredType_->container (this);
@@ -3767,11 +4054,13 @@ namespace CIAO
     // 
 
     Capability::
-    Capability ()
+    Capability (::XMLSchema::string< char > const& name__,
+    ::XMLSchema::string< char > const& resourceType__,
+    ::CIAO::Config_Handlers::SatisfierProperty const& property__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    resourceType_ (new ::XMLSchema::string< char > ()),
-    property_ (new ::CIAO::Config_Handlers::SatisfierProperty ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    resourceType_ (new ::XMLSchema::string< char > (resourceType__)),
+    property_ (new ::CIAO::Config_Handlers::SatisfierProperty (property__)),
     regulator__ ()
     {
       name_->container (this);
@@ -3870,14 +4159,19 @@ namespace CIAO
     // 
 
     ImplementationRequirement::
-    ImplementationRequirement ()
+    ImplementationRequirement (::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage__,
+    ::XMLSchema::string< char > const& resourcePort__,
+    ::XMLSchema::string< char > const& componentPort__,
+    ::XMLSchema::string< char > const& resourceType__,
+    ::XMLSchema::string< char > const& name__,
+    ::CIAO::Config_Handlers::Property const& property__)
     :
-    resourceUsage_ (new ::CIAO::Config_Handlers::ResourceUsageKind ()),
-    resourcePort_ (new ::XMLSchema::string< char > ()),
-    componentPort_ (new ::XMLSchema::string< char > ()),
-    resourceType_ (new ::XMLSchema::string< char > ()),
-    name_ (new ::XMLSchema::string< char > ()),
-    property_ (new ::CIAO::Config_Handlers::Property ()),
+    resourceUsage_ (new ::CIAO::Config_Handlers::ResourceUsageKind (resourceUsage__)),
+    resourcePort_ (new ::XMLSchema::string< char > (resourcePort__)),
+    componentPort_ (new ::XMLSchema::string< char > (componentPort__)),
+    resourceType_ (new ::XMLSchema::string< char > (resourceType__)),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    property_ (new ::CIAO::Config_Handlers::Property (property__)),
     regulator__ ()
     {
       resourceUsage_->container (this);
@@ -4051,11 +4345,13 @@ namespace CIAO
     // 
 
     ComponentPackageReference::
-    ComponentPackageReference ()
+    ComponentPackageReference (::XMLSchema::string< char > const& requiredUUID__,
+    ::XMLSchema::string< char > const& requiredName__,
+    ::XMLSchema::string< char > const& requiredType__)
     :
-    requiredUUID_ (new ::XMLSchema::string< char > ()),
-    requiredName_ (new ::XMLSchema::string< char > ()),
-    requiredType_ (new ::XMLSchema::string< char > ()),
+    requiredUUID_ (new ::XMLSchema::string< char > (requiredUUID__)),
+    requiredName_ (new ::XMLSchema::string< char > (requiredName__)),
+    requiredType_ (new ::XMLSchema::string< char > (requiredType__)),
     regulator__ ()
     {
       requiredUUID_->container (this);
@@ -4154,10 +4450,11 @@ namespace CIAO
     // 
 
     SubcomponentPortEndpoint::
-    SubcomponentPortEndpoint ()
+    SubcomponentPortEndpoint (::XMLSchema::string< char > const& portName__,
+    ::XMLSchema::IDREF< char > const& instance__)
     :
-    portName_ (new ::XMLSchema::string< char > ()),
-    instance_ (new ::XMLSchema::IDREF< char > ()),
+    portName_ (new ::XMLSchema::string< char > (portName__)),
+    instance_ (new ::XMLSchema::IDREF< char > (instance__)),
     regulator__ ()
     {
       portName_->container (this);
@@ -4231,9 +4528,9 @@ namespace CIAO
     // 
 
     AssemblyConnectionDescription::
-    AssemblyConnectionDescription ()
+    AssemblyConnectionDescription (::XMLSchema::string< char > const& name__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
     regulator__ ()
     {
       name_->container (this);
@@ -4662,9 +4959,7 @@ namespace CIAO
 
     DataType::
     DataType (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
 
       ::XSCRT::Parser< char > p (e);
@@ -4691,9 +4986,7 @@ namespace CIAO
 
     DataValue::
     DataValue (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
 
       ::XSCRT::Parser< char > p (e);
@@ -4810,14 +5103,8 @@ namespace CIAO
 
     Any::
     Any (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    type_ (new ::CIAO::Config_Handlers::DataType ()),
-    value_ (new ::CIAO::Config_Handlers::DataValue ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      type_->container (this);
-      value_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -4828,14 +5115,14 @@ namespace CIAO
 
         if (n == "type")
         {
-          ::CIAO::Config_Handlers::DataType t (e);
-          type (t);
+          type_ = ::std::auto_ptr< ::CIAO::Config_Handlers::DataType > (new ::CIAO::Config_Handlers::DataType (e));
+          type_->container (this);
         }
 
         else if (n == "value")
         {
-          ::CIAO::Config_Handlers::DataValue t (e);
-          value (t);
+          value_ = ::std::auto_ptr< ::CIAO::Config_Handlers::DataValue > (new ::CIAO::Config_Handlers::DataValue (e));
+          value_->container (this);
         }
 
         else 
@@ -4849,14 +5136,8 @@ namespace CIAO
 
     Property::
     Property (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    value_ (new ::CIAO::Config_Handlers::Any ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      value_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -4867,14 +5148,14 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "value")
         {
-          ::CIAO::Config_Handlers::Any t (e);
-          value (t);
+          value_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Any > (new ::CIAO::Config_Handlers::Any (e));
+          value_->container (this);
         }
 
         else 
@@ -4888,14 +5169,8 @@ namespace CIAO
 
     Node::
     Node (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    label_ (new ::XMLSchema::string< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      label_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -4906,14 +5181,14 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "label")
         {
-          ::XMLSchema::string< char > t (e);
-          label (t);
+          label_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          label_->container (this);
         }
 
         else 
@@ -4971,16 +5246,8 @@ namespace CIAO
 
     SatisfierProperty::
     SatisfierProperty (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    kind_ (new ::CIAO::Config_Handlers::SatisfierPropertyKind ()),
-    value_ (new ::CIAO::Config_Handlers::Any ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      kind_->container (this);
-      value_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -4991,20 +5258,20 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "kind")
         {
-          ::CIAO::Config_Handlers::SatisfierPropertyKind t (e);
-          kind (t);
+          kind_ = ::std::auto_ptr< ::CIAO::Config_Handlers::SatisfierPropertyKind > (new ::CIAO::Config_Handlers::SatisfierPropertyKind (e));
+          kind_->container (this);
         }
 
         else if (n == "value")
         {
-          ::CIAO::Config_Handlers::Any t (e);
-          value (t);
+          value_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Any > (new ::CIAO::Config_Handlers::Any (e));
+          value_->container (this);
         }
 
         else 
@@ -5018,16 +5285,8 @@ namespace CIAO
 
     Resource::
     Resource (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    resourceType_ (new ::XMLSchema::string< char > ()),
-    property_ (new ::CIAO::Config_Handlers::SatisfierProperty ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      resourceType_->container (this);
-      property_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5038,20 +5297,20 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "resourceType")
         {
-          ::XMLSchema::string< char > t (e);
-          resourceType (t);
+          resourceType_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          resourceType_->container (this);
         }
 
         else if (n == "property")
         {
-          ::CIAO::Config_Handlers::SatisfierProperty t (e);
-          property (t);
+          property_ = ::std::auto_ptr< ::CIAO::Config_Handlers::SatisfierProperty > (new ::CIAO::Config_Handlers::SatisfierProperty (e));
+          property_->container (this);
         }
 
         else 
@@ -5065,18 +5324,8 @@ namespace CIAO
 
     SharedResource::
     SharedResource (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    resourceType_ (new ::XMLSchema::string< char > ()),
-    node_ (new ::CIAO::Config_Handlers::Node ()),
-    property_ (new ::CIAO::Config_Handlers::SatisfierProperty ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      resourceType_->container (this);
-      node_->container (this);
-      property_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5087,26 +5336,26 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "resourceType")
         {
-          ::XMLSchema::string< char > t (e);
-          resourceType (t);
+          resourceType_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          resourceType_->container (this);
         }
 
         else if (n == "node")
         {
-          ::CIAO::Config_Handlers::Node t (e);
-          node (t);
+          node_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Node > (new ::CIAO::Config_Handlers::Node (e));
+          node_->container (this);
         }
 
         else if (n == "property")
         {
-          ::CIAO::Config_Handlers::SatisfierProperty t (e);
-          property (t);
+          property_ = ::std::auto_ptr< ::CIAO::Config_Handlers::SatisfierProperty > (new ::CIAO::Config_Handlers::SatisfierProperty (e));
+          property_->container (this);
         }
 
         else 
@@ -5120,16 +5369,8 @@ namespace CIAO
 
     Requirement::
     Requirement (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    resourceType_ (new ::XMLSchema::string< char > ()),
-    name_ (new ::XMLSchema::string< char > ()),
-    property_ (new ::CIAO::Config_Handlers::Property ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      resourceType_->container (this);
-      name_->container (this);
-      property_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5140,20 +5381,20 @@ namespace CIAO
 
         if (n == "resourceType")
         {
-          ::XMLSchema::string< char > t (e);
-          resourceType (t);
+          resourceType_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          resourceType_->container (this);
         }
 
         else if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "property")
         {
-          ::CIAO::Config_Handlers::Property t (e);
-          property (t);
+          property_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Property > (new ::CIAO::Config_Handlers::Property (e));
+          property_->container (this);
         }
 
         else 
@@ -5167,16 +5408,8 @@ namespace CIAO
 
     ResourceDeploymentDescription::
     ResourceDeploymentDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    requirementName_ (new ::XMLSchema::string< char > ()),
-    resourceName_ (new ::XMLSchema::string< char > ()),
-    resourceValue_ (new ::CIAO::Config_Handlers::Any ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      requirementName_->container (this);
-      resourceName_->container (this);
-      resourceValue_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5187,20 +5420,20 @@ namespace CIAO
 
         if (n == "requirementName")
         {
-          ::XMLSchema::string< char > t (e);
-          requirementName (t);
+          requirementName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          requirementName_->container (this);
         }
 
         else if (n == "resourceName")
         {
-          ::XMLSchema::string< char > t (e);
-          resourceName (t);
+          resourceName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          resourceName_->container (this);
         }
 
         else if (n == "resourceValue")
         {
-          ::CIAO::Config_Handlers::Any t (e);
-          resourceValue (t);
+          resourceValue_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Any > (new ::CIAO::Config_Handlers::Any (e));
+          resourceValue_->container (this);
         }
 
         else 
@@ -5214,14 +5447,8 @@ namespace CIAO
 
     ArtifactDeploymentDescription::
     ArtifactDeploymentDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    source_ (new ::XMLSchema::string< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      source_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5232,20 +5459,20 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "source")
         {
           ::XMLSchema::string< char > t (e);
-          source (t);
+          add_source (t);
         }
 
         else if (n == "node")
         {
-          ::XMLSchema::string< char > t (e);
-          node (t);
+          node_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          node_->container (this);
         }
 
         else if (n == "location")
@@ -5257,19 +5484,19 @@ namespace CIAO
         else if (n == "execParameter")
         {
           ::CIAO::Config_Handlers::Property t (e);
-          execParameter (t);
+          add_execParameter (t);
         }
 
         else if (n == "deployRequirement")
         {
           ::CIAO::Config_Handlers::Requirement t (e);
-          deployRequirement (t);
+          add_deployRequirement (t);
         }
 
         else if (n == "deployedResource")
         {
           ::CIAO::Config_Handlers::ResourceDeploymentDescription t (e);
-          deployedResource (t);
+          add_deployedResource (t);
         }
 
         else 
@@ -5298,14 +5525,8 @@ namespace CIAO
 
     MonolithicDeploymentDescription::
     MonolithicDeploymentDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    source_ (new ::XMLSchema::string< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      source_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5316,14 +5537,14 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "source")
         {
           ::XMLSchema::string< char > t (e);
-          source (t);
+          add_source (t);
         }
 
         else if (n == "artifact")
@@ -5335,13 +5556,13 @@ namespace CIAO
         else if (n == "execParameter")
         {
           ::CIAO::Config_Handlers::Property t (e);
-          execParameter (t);
+          add_execParameter (t);
         }
 
         else if (n == "deployRequirement")
         {
           ::CIAO::Config_Handlers::Requirement t (e);
-          deployRequirement (t);
+          add_deployRequirement (t);
         }
 
         else 
@@ -5411,18 +5632,8 @@ namespace CIAO
 
     InstanceResourceDeploymentDescription::
     InstanceResourceDeploymentDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    resourceUsage_ (new ::CIAO::Config_Handlers::ResourceUsageKind ()),
-    requirementName_ (new ::XMLSchema::string< char > ()),
-    resourceName_ (new ::XMLSchema::string< char > ()),
-    resourceValue_ (new ::CIAO::Config_Handlers::Any ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      resourceUsage_->container (this);
-      requirementName_->container (this);
-      resourceName_->container (this);
-      resourceValue_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5433,26 +5644,26 @@ namespace CIAO
 
         if (n == "resourceUsage")
         {
-          ::CIAO::Config_Handlers::ResourceUsageKind t (e);
-          resourceUsage (t);
+          resourceUsage_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ResourceUsageKind > (new ::CIAO::Config_Handlers::ResourceUsageKind (e));
+          resourceUsage_->container (this);
         }
 
         else if (n == "requirementName")
         {
-          ::XMLSchema::string< char > t (e);
-          requirementName (t);
+          requirementName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          requirementName_->container (this);
         }
 
         else if (n == "resourceName")
         {
-          ::XMLSchema::string< char > t (e);
-          resourceName (t);
+          resourceName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          resourceName_->container (this);
         }
 
         else if (n == "resourceValue")
         {
-          ::CIAO::Config_Handlers::Any t (e);
-          resourceValue (t);
+          resourceValue_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Any > (new ::CIAO::Config_Handlers::Any (e));
+          resourceValue_->container (this);
         }
 
         else 
@@ -5466,18 +5677,8 @@ namespace CIAO
 
     InstanceDeploymentDescription::
     InstanceDeploymentDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    node_ (new ::XMLSchema::string< char > ()),
-    source_ (new ::XMLSchema::string< char > ()),
-    implementation_ (new ::XMLSchema::IDREF< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      node_->container (this);
-      source_->container (this);
-      implementation_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5488,32 +5689,32 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "node")
         {
-          ::XMLSchema::string< char > t (e);
-          node (t);
+          node_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          node_->container (this);
         }
 
         else if (n == "source")
         {
-          ::XMLSchema::string< char > t (e);
-          source (t);
+          source_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          source_->container (this);
         }
 
         else if (n == "implementation")
         {
-          ::XMLSchema::IDREF< char > t (e);
-          implementation (t);
+          implementation_ = ::std::auto_ptr< ::XMLSchema::IDREF< char > > (new ::XMLSchema::IDREF< char > (e));
+          implementation_->container (this);
         }
 
         else if (n == "configProperty")
         {
           ::CIAO::Config_Handlers::Property t (e);
-          configProperty (t);
+          add_configProperty (t);
         }
 
         else if (n == "deployedResource")
@@ -5598,26 +5799,8 @@ namespace CIAO
 
     ComponentPortDescription::
     ComponentPortDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    specificType_ (new ::XMLSchema::string< char > ()),
-    supportedType_ (new ::XMLSchema::string< char > ()),
-    provider_ (new ::XMLSchema::string< char > ()),
-    exclusiveProvider_ (new ::XMLSchema::string< char > ()),
-    exclusiveUser_ (new ::XMLSchema::string< char > ()),
-    optional_ (new ::XMLSchema::string< char > ()),
-    kind_ (new ::CIAO::Config_Handlers::CCMComponentPortKind ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      specificType_->container (this);
-      supportedType_->container (this);
-      provider_->container (this);
-      exclusiveProvider_->container (this);
-      exclusiveUser_->container (this);
-      optional_->container (this);
-      kind_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5628,50 +5811,50 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "specificType")
         {
-          ::XMLSchema::string< char > t (e);
-          specificType (t);
+          specificType_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          specificType_->container (this);
         }
 
         else if (n == "supportedType")
         {
-          ::XMLSchema::string< char > t (e);
-          supportedType (t);
+          supportedType_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          supportedType_->container (this);
         }
 
         else if (n == "provider")
         {
-          ::XMLSchema::string< char > t (e);
-          provider (t);
+          provider_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          provider_->container (this);
         }
 
         else if (n == "exclusiveProvider")
         {
-          ::XMLSchema::string< char > t (e);
-          exclusiveProvider (t);
+          exclusiveProvider_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          exclusiveProvider_->container (this);
         }
 
         else if (n == "exclusiveUser")
         {
-          ::XMLSchema::string< char > t (e);
-          exclusiveUser (t);
+          exclusiveUser_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          exclusiveUser_->container (this);
         }
 
         else if (n == "optional")
         {
-          ::XMLSchema::string< char > t (e);
-          optional (t);
+          optional_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          optional_->container (this);
         }
 
         else if (n == "kind")
         {
-          ::CIAO::Config_Handlers::CCMComponentPortKind t (e);
-          kind (t);
+          kind_ = ::std::auto_ptr< ::CIAO::Config_Handlers::CCMComponentPortKind > (new ::CIAO::Config_Handlers::CCMComponentPortKind (e));
+          kind_->container (this);
         }
 
         else 
@@ -5685,14 +5868,8 @@ namespace CIAO
 
     ComponentPropertyDescription::
     ComponentPropertyDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    type_ (new ::CIAO::Config_Handlers::DataType ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      type_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5703,14 +5880,14 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "type")
         {
-          ::CIAO::Config_Handlers::DataType t (e);
-          type (t);
+          type_ = ::std::auto_ptr< ::CIAO::Config_Handlers::DataType > (new ::CIAO::Config_Handlers::DataType (e));
+          type_->container (this);
         }
 
         else 
@@ -5724,12 +5901,8 @@ namespace CIAO
 
     ComponentExternalPortEndpoint::
     ComponentExternalPortEndpoint (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    portName_ (new ::XMLSchema::string< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      portName_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5740,8 +5913,8 @@ namespace CIAO
 
         if (n == "portName")
         {
-          ::XMLSchema::string< char > t (e);
-          portName (t);
+          portName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          portName_->container (this);
         }
 
         else 
@@ -5755,16 +5928,8 @@ namespace CIAO
 
     PlanSubcomponentPortEndpoint::
     PlanSubcomponentPortEndpoint (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    portName_ (new ::XMLSchema::string< char > ()),
-    kind_ (new ::CIAO::Config_Handlers::CCMComponentPortKind ()),
-    instance_ (new ::XMLSchema::IDREF< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      portName_->container (this);
-      kind_->container (this);
-      instance_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5775,8 +5940,8 @@ namespace CIAO
 
         if (n == "portName")
         {
-          ::XMLSchema::string< char > t (e);
-          portName (t);
+          portName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          portName_->container (this);
         }
 
         else if (n == "provider")
@@ -5787,14 +5952,14 @@ namespace CIAO
 
         else if (n == "kind")
         {
-          ::CIAO::Config_Handlers::CCMComponentPortKind t (e);
-          kind (t);
+          kind_ = ::std::auto_ptr< ::CIAO::Config_Handlers::CCMComponentPortKind > (new ::CIAO::Config_Handlers::CCMComponentPortKind (e));
+          kind_->container (this);
         }
 
         else if (n == "instance")
         {
-          ::XMLSchema::IDREF< char > t (e);
-          instance (t);
+          instance_ = ::std::auto_ptr< ::XMLSchema::IDREF< char > > (new ::XMLSchema::IDREF< char > (e));
+          instance_->container (this);
         }
 
         else 
@@ -5808,12 +5973,8 @@ namespace CIAO
 
     ExternalReferenceEndpoint::
     ExternalReferenceEndpoint (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    location_ (new ::XMLSchema::string< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      location_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5824,8 +5985,8 @@ namespace CIAO
 
         if (n == "location")
         {
-          ::XMLSchema::string< char > t (e);
-          location (t);
+          location_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          location_->container (this);
         }
 
         else 
@@ -5839,18 +6000,8 @@ namespace CIAO
 
     ConnectionResourceDeploymentDescription::
     ConnectionResourceDeploymentDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    targetName_ (new ::XMLSchema::string< char > ()),
-    requirementName_ (new ::XMLSchema::string< char > ()),
-    resourceName_ (new ::XMLSchema::string< char > ()),
-    resourceValue_ (new ::CIAO::Config_Handlers::Any ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      targetName_->container (this);
-      requirementName_->container (this);
-      resourceName_->container (this);
-      resourceValue_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5861,26 +6012,26 @@ namespace CIAO
 
         if (n == "targetName")
         {
-          ::XMLSchema::string< char > t (e);
-          targetName (t);
+          targetName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          targetName_->container (this);
         }
 
         else if (n == "requirementName")
         {
-          ::XMLSchema::string< char > t (e);
-          requirementName (t);
+          requirementName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          requirementName_->container (this);
         }
 
         else if (n == "resourceName")
         {
-          ::XMLSchema::string< char > t (e);
-          resourceName (t);
+          resourceName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          resourceName_->container (this);
         }
 
         else if (n == "resourceValue")
         {
-          ::CIAO::Config_Handlers::Any t (e);
-          resourceValue (t);
+          resourceValue_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Any > (new ::CIAO::Config_Handlers::Any (e));
+          resourceValue_->container (this);
         }
 
         else 
@@ -5894,12 +6045,8 @@ namespace CIAO
 
     PlanConnectionDescription::
     PlanConnectionDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5910,8 +6057,8 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "source")
@@ -5923,7 +6070,7 @@ namespace CIAO
         else if (n == "deployRequirement")
         {
           ::CIAO::Config_Handlers::Requirement t (e);
-          deployRequirement (t);
+          add_deployRequirement (t);
         }
 
         else if (n == "externalEndpoint")
@@ -5947,7 +6094,7 @@ namespace CIAO
         else if (n == "deployedResource")
         {
           ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription t (e);
-          deployedResource (t);
+          add_deployedResource (t);
         }
 
         else 
@@ -5961,12 +6108,8 @@ namespace CIAO
 
     ImplementationDependency::
     ImplementationDependency (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    requiredType_ (new ::XMLSchema::string< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      requiredType_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -5977,8 +6120,8 @@ namespace CIAO
 
         if (n == "requiredType")
         {
-          ::XMLSchema::string< char > t (e);
-          requiredType (t);
+          requiredType_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          requiredType_->container (this);
         }
 
         else 
@@ -5992,16 +6135,8 @@ namespace CIAO
 
     Capability::
     Capability (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    resourceType_ (new ::XMLSchema::string< char > ()),
-    property_ (new ::CIAO::Config_Handlers::SatisfierProperty ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      resourceType_->container (this);
-      property_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -6012,20 +6147,20 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "resourceType")
         {
-          ::XMLSchema::string< char > t (e);
-          resourceType (t);
+          resourceType_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          resourceType_->container (this);
         }
 
         else if (n == "property")
         {
-          ::CIAO::Config_Handlers::SatisfierProperty t (e);
-          property (t);
+          property_ = ::std::auto_ptr< ::CIAO::Config_Handlers::SatisfierProperty > (new ::CIAO::Config_Handlers::SatisfierProperty (e));
+          property_->container (this);
         }
 
         else 
@@ -6039,22 +6174,8 @@ namespace CIAO
 
     ImplementationRequirement::
     ImplementationRequirement (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    resourceUsage_ (new ::CIAO::Config_Handlers::ResourceUsageKind ()),
-    resourcePort_ (new ::XMLSchema::string< char > ()),
-    componentPort_ (new ::XMLSchema::string< char > ()),
-    resourceType_ (new ::XMLSchema::string< char > ()),
-    name_ (new ::XMLSchema::string< char > ()),
-    property_ (new ::CIAO::Config_Handlers::Property ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      resourceUsage_->container (this);
-      resourcePort_->container (this);
-      componentPort_->container (this);
-      resourceType_->container (this);
-      name_->container (this);
-      property_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -6065,38 +6186,38 @@ namespace CIAO
 
         if (n == "resourceUsage")
         {
-          ::CIAO::Config_Handlers::ResourceUsageKind t (e);
-          resourceUsage (t);
+          resourceUsage_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ResourceUsageKind > (new ::CIAO::Config_Handlers::ResourceUsageKind (e));
+          resourceUsage_->container (this);
         }
 
         else if (n == "resourcePort")
         {
-          ::XMLSchema::string< char > t (e);
-          resourcePort (t);
+          resourcePort_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          resourcePort_->container (this);
         }
 
         else if (n == "componentPort")
         {
-          ::XMLSchema::string< char > t (e);
-          componentPort (t);
+          componentPort_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          componentPort_->container (this);
         }
 
         else if (n == "resourceType")
         {
-          ::XMLSchema::string< char > t (e);
-          resourceType (t);
+          resourceType_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          resourceType_->container (this);
         }
 
         else if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "property")
         {
-          ::CIAO::Config_Handlers::Property t (e);
-          property (t);
+          property_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Property > (new ::CIAO::Config_Handlers::Property (e));
+          property_->container (this);
         }
 
         else 
@@ -6110,16 +6231,8 @@ namespace CIAO
 
     ComponentPackageReference::
     ComponentPackageReference (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    requiredUUID_ (new ::XMLSchema::string< char > ()),
-    requiredName_ (new ::XMLSchema::string< char > ()),
-    requiredType_ (new ::XMLSchema::string< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      requiredUUID_->container (this);
-      requiredName_->container (this);
-      requiredType_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -6130,20 +6243,20 @@ namespace CIAO
 
         if (n == "requiredUUID")
         {
-          ::XMLSchema::string< char > t (e);
-          requiredUUID (t);
+          requiredUUID_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          requiredUUID_->container (this);
         }
 
         else if (n == "requiredName")
         {
-          ::XMLSchema::string< char > t (e);
-          requiredName (t);
+          requiredName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          requiredName_->container (this);
         }
 
         else if (n == "requiredType")
         {
-          ::XMLSchema::string< char > t (e);
-          requiredType (t);
+          requiredType_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          requiredType_->container (this);
         }
 
         else 
@@ -6157,14 +6270,8 @@ namespace CIAO
 
     SubcomponentPortEndpoint::
     SubcomponentPortEndpoint (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    portName_ (new ::XMLSchema::string< char > ()),
-    instance_ (new ::XMLSchema::IDREF< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      portName_->container (this);
-      instance_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -6175,14 +6282,14 @@ namespace CIAO
 
         if (n == "portName")
         {
-          ::XMLSchema::string< char > t (e);
-          portName (t);
+          portName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          portName_->container (this);
         }
 
         else if (n == "instance")
         {
-          ::XMLSchema::IDREF< char > t (e);
-          instance (t);
+          instance_ = ::std::auto_ptr< ::XMLSchema::IDREF< char > > (new ::XMLSchema::IDREF< char > (e));
+          instance_->container (this);
         }
 
         else 
@@ -6196,12 +6303,8 @@ namespace CIAO
 
     AssemblyConnectionDescription::
     AssemblyConnectionDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -6212,8 +6315,8 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "deployRequirement")
@@ -6243,6 +6346,6518 @@ namespace CIAO
         else 
         {
         }
+      }
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+  }
+}
+
+#include <XMLSchema/TypeInfo.hpp>
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace
+    {
+      ::XMLSchema::TypeInfoInitializer < char > XMLSchemaTypeInfoInitializer_ (::XSCRT::extended_type_info_map ());
+
+      struct TCKindTypeInfoInitializer
+      {
+        TCKindTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (TCKind));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      TCKindTypeInfoInitializer TCKindTypeInfoInitializer_;
+
+      struct DataTypeTypeInfoInitializer
+      {
+        DataTypeTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (DataType));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      DataTypeTypeInfoInitializer DataTypeTypeInfoInitializer_;
+
+      struct DataValueTypeInfoInitializer
+      {
+        DataValueTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (DataValue));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      DataValueTypeInfoInitializer DataValueTypeInfoInitializer_;
+
+      struct AnyTypeInfoInitializer
+      {
+        AnyTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (Any));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      AnyTypeInfoInitializer AnyTypeInfoInitializer_;
+
+      struct PropertyTypeInfoInitializer
+      {
+        PropertyTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (Property));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      PropertyTypeInfoInitializer PropertyTypeInfoInitializer_;
+
+      struct NodeTypeInfoInitializer
+      {
+        NodeTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (Node));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      NodeTypeInfoInitializer NodeTypeInfoInitializer_;
+
+      struct SatisfierPropertyKindTypeInfoInitializer
+      {
+        SatisfierPropertyKindTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (SatisfierPropertyKind));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      SatisfierPropertyKindTypeInfoInitializer SatisfierPropertyKindTypeInfoInitializer_;
+
+      struct SatisfierPropertyTypeInfoInitializer
+      {
+        SatisfierPropertyTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (SatisfierProperty));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      SatisfierPropertyTypeInfoInitializer SatisfierPropertyTypeInfoInitializer_;
+
+      struct ResourceTypeInfoInitializer
+      {
+        ResourceTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (Resource));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      ResourceTypeInfoInitializer ResourceTypeInfoInitializer_;
+
+      struct SharedResourceTypeInfoInitializer
+      {
+        SharedResourceTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (SharedResource));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      SharedResourceTypeInfoInitializer SharedResourceTypeInfoInitializer_;
+
+      struct RequirementTypeInfoInitializer
+      {
+        RequirementTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (Requirement));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      RequirementTypeInfoInitializer RequirementTypeInfoInitializer_;
+
+      struct ResourceDeploymentDescriptionTypeInfoInitializer
+      {
+        ResourceDeploymentDescriptionTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (ResourceDeploymentDescription));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      ResourceDeploymentDescriptionTypeInfoInitializer ResourceDeploymentDescriptionTypeInfoInitializer_;
+
+      struct ArtifactDeploymentDescriptionTypeInfoInitializer
+      {
+        ArtifactDeploymentDescriptionTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (ArtifactDeploymentDescription));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      ArtifactDeploymentDescriptionTypeInfoInitializer ArtifactDeploymentDescriptionTypeInfoInitializer_;
+
+      struct MonolithicDeploymentDescriptionTypeInfoInitializer
+      {
+        MonolithicDeploymentDescriptionTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (MonolithicDeploymentDescription));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      MonolithicDeploymentDescriptionTypeInfoInitializer MonolithicDeploymentDescriptionTypeInfoInitializer_;
+
+      struct ResourceUsageKindTypeInfoInitializer
+      {
+        ResourceUsageKindTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (ResourceUsageKind));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      ResourceUsageKindTypeInfoInitializer ResourceUsageKindTypeInfoInitializer_;
+
+      struct InstanceResourceDeploymentDescriptionTypeInfoInitializer
+      {
+        InstanceResourceDeploymentDescriptionTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (InstanceResourceDeploymentDescription));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      InstanceResourceDeploymentDescriptionTypeInfoInitializer InstanceResourceDeploymentDescriptionTypeInfoInitializer_;
+
+      struct InstanceDeploymentDescriptionTypeInfoInitializer
+      {
+        InstanceDeploymentDescriptionTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (InstanceDeploymentDescription));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      InstanceDeploymentDescriptionTypeInfoInitializer InstanceDeploymentDescriptionTypeInfoInitializer_;
+
+      struct CCMComponentPortKindTypeInfoInitializer
+      {
+        CCMComponentPortKindTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (CCMComponentPortKind));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      CCMComponentPortKindTypeInfoInitializer CCMComponentPortKindTypeInfoInitializer_;
+
+      struct ComponentPortDescriptionTypeInfoInitializer
+      {
+        ComponentPortDescriptionTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (ComponentPortDescription));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      ComponentPortDescriptionTypeInfoInitializer ComponentPortDescriptionTypeInfoInitializer_;
+
+      struct ComponentPropertyDescriptionTypeInfoInitializer
+      {
+        ComponentPropertyDescriptionTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (ComponentPropertyDescription));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      ComponentPropertyDescriptionTypeInfoInitializer ComponentPropertyDescriptionTypeInfoInitializer_;
+
+      struct ComponentExternalPortEndpointTypeInfoInitializer
+      {
+        ComponentExternalPortEndpointTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (ComponentExternalPortEndpoint));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      ComponentExternalPortEndpointTypeInfoInitializer ComponentExternalPortEndpointTypeInfoInitializer_;
+
+      struct PlanSubcomponentPortEndpointTypeInfoInitializer
+      {
+        PlanSubcomponentPortEndpointTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (PlanSubcomponentPortEndpoint));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      PlanSubcomponentPortEndpointTypeInfoInitializer PlanSubcomponentPortEndpointTypeInfoInitializer_;
+
+      struct ExternalReferenceEndpointTypeInfoInitializer
+      {
+        ExternalReferenceEndpointTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (ExternalReferenceEndpoint));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      ExternalReferenceEndpointTypeInfoInitializer ExternalReferenceEndpointTypeInfoInitializer_;
+
+      struct ConnectionResourceDeploymentDescriptionTypeInfoInitializer
+      {
+        ConnectionResourceDeploymentDescriptionTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (ConnectionResourceDeploymentDescription));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      ConnectionResourceDeploymentDescriptionTypeInfoInitializer ConnectionResourceDeploymentDescriptionTypeInfoInitializer_;
+
+      struct PlanConnectionDescriptionTypeInfoInitializer
+      {
+        PlanConnectionDescriptionTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (PlanConnectionDescription));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      PlanConnectionDescriptionTypeInfoInitializer PlanConnectionDescriptionTypeInfoInitializer_;
+
+      struct ImplementationDependencyTypeInfoInitializer
+      {
+        ImplementationDependencyTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (ImplementationDependency));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      ImplementationDependencyTypeInfoInitializer ImplementationDependencyTypeInfoInitializer_;
+
+      struct CapabilityTypeInfoInitializer
+      {
+        CapabilityTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (Capability));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      CapabilityTypeInfoInitializer CapabilityTypeInfoInitializer_;
+
+      struct ImplementationRequirementTypeInfoInitializer
+      {
+        ImplementationRequirementTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (ImplementationRequirement));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      ImplementationRequirementTypeInfoInitializer ImplementationRequirementTypeInfoInitializer_;
+
+      struct ComponentPackageReferenceTypeInfoInitializer
+      {
+        ComponentPackageReferenceTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (ComponentPackageReference));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      ComponentPackageReferenceTypeInfoInitializer ComponentPackageReferenceTypeInfoInitializer_;
+
+      struct SubcomponentPortEndpointTypeInfoInitializer
+      {
+        SubcomponentPortEndpointTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (SubcomponentPortEndpoint));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      SubcomponentPortEndpointTypeInfoInitializer SubcomponentPortEndpointTypeInfoInitializer_;
+
+      struct AssemblyConnectionDescriptionTypeInfoInitializer
+      {
+        AssemblyConnectionDescriptionTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (AssemblyConnectionDescription));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      AssemblyConnectionDescriptionTypeInfoInitializer AssemblyConnectionDescriptionTypeInfoInitializer_;
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Traversal
+    {
+      // DataType
+      //
+      //
+
+      void DataType::
+      traverse (Type& o)
+      {
+        pre (o);
+        if (o.kind_p ()) kind (o);
+        else kind_none (o);
+        post (o);
+      }
+
+      void DataType::
+      traverse (Type const& o)
+      {
+        pre (o);
+        if (o.kind_p ()) kind (o);
+        else kind_none (o);
+        post (o);
+      }
+
+      void DataType::
+      pre (Type&)
+      {
+      }
+
+      void DataType::
+      pre (Type const&)
+      {
+      }
+
+      void DataType::
+      kind (Type& o)
+      {
+        dispatch (o.kind ());
+      }
+
+      void DataType::
+      kind (Type const& o)
+      {
+        dispatch (o.kind ());
+      }
+
+      void DataType::
+      kind_none (Type&)
+      {
+      }
+
+      void DataType::
+      kind_none (Type const&)
+      {
+      }
+
+      void DataType::
+      post (Type&)
+      {
+      }
+
+      void DataType::
+      post (Type const&)
+      {
+      }
+
+      // DataValue
+      //
+      //
+
+      void DataValue::
+      traverse (Type& o)
+      {
+        pre (o);
+        if (o.short_p ()) short_ (o);
+        else short_none (o);
+        if (o.long_p ()) long_ (o);
+        else long_none (o);
+        if (o.ushort_p ()) ushort (o);
+        else ushort_none (o);
+        if (o.ulong_p ()) ulong (o);
+        else ulong_none (o);
+        if (o.float_p ()) float_ (o);
+        else float_none (o);
+        if (o.double_p ()) double_ (o);
+        else double_none (o);
+        if (o.boolean_p ()) boolean (o);
+        else boolean_none (o);
+        if (o.octet_p ()) octet (o);
+        else octet_none (o);
+        if (o.objref_p ()) objref (o);
+        else objref_none (o);
+        if (o.enum_p ()) enum_ (o);
+        else enum_none (o);
+        if (o.string_p ()) string (o);
+        else string_none (o);
+        if (o.longlong_p ()) longlong (o);
+        else longlong_none (o);
+        if (o.ulonglong_p ()) ulonglong (o);
+        else ulonglong_none (o);
+        if (o.longdouble_p ()) longdouble (o);
+        else longdouble_none (o);
+        if (o.fixed_p ()) fixed (o);
+        else fixed_none (o);
+        if (o.typecode_p ()) typecode (o);
+        else typecode_none (o);
+        post (o);
+      }
+
+      void DataValue::
+      traverse (Type const& o)
+      {
+        pre (o);
+        if (o.short_p ()) short_ (o);
+        else short_none (o);
+        if (o.long_p ()) long_ (o);
+        else long_none (o);
+        if (o.ushort_p ()) ushort (o);
+        else ushort_none (o);
+        if (o.ulong_p ()) ulong (o);
+        else ulong_none (o);
+        if (o.float_p ()) float_ (o);
+        else float_none (o);
+        if (o.double_p ()) double_ (o);
+        else double_none (o);
+        if (o.boolean_p ()) boolean (o);
+        else boolean_none (o);
+        if (o.octet_p ()) octet (o);
+        else octet_none (o);
+        if (o.objref_p ()) objref (o);
+        else objref_none (o);
+        if (o.enum_p ()) enum_ (o);
+        else enum_none (o);
+        if (o.string_p ()) string (o);
+        else string_none (o);
+        if (o.longlong_p ()) longlong (o);
+        else longlong_none (o);
+        if (o.ulonglong_p ()) ulonglong (o);
+        else ulonglong_none (o);
+        if (o.longdouble_p ()) longdouble (o);
+        else longdouble_none (o);
+        if (o.fixed_p ()) fixed (o);
+        else fixed_none (o);
+        if (o.typecode_p ()) typecode (o);
+        else typecode_none (o);
+        post (o);
+      }
+
+      void DataValue::
+      pre (Type&)
+      {
+      }
+
+      void DataValue::
+      pre (Type const&)
+      {
+      }
+
+      void DataValue::
+      short_ (Type& o)
+      {
+        dispatch (o.short_ ());
+      }
+
+      void DataValue::
+      short_ (Type const& o)
+      {
+        dispatch (o.short_ ());
+      }
+
+      void DataValue::
+      short_none (Type&)
+      {
+      }
+
+      void DataValue::
+      short_none (Type const&)
+      {
+      }
+
+      void DataValue::
+      long_ (Type& o)
+      {
+        dispatch (o.long_ ());
+      }
+
+      void DataValue::
+      long_ (Type const& o)
+      {
+        dispatch (o.long_ ());
+      }
+
+      void DataValue::
+      long_none (Type&)
+      {
+      }
+
+      void DataValue::
+      long_none (Type const&)
+      {
+      }
+
+      void DataValue::
+      ushort (Type& o)
+      {
+        dispatch (o.ushort ());
+      }
+
+      void DataValue::
+      ushort (Type const& o)
+      {
+        dispatch (o.ushort ());
+      }
+
+      void DataValue::
+      ushort_none (Type&)
+      {
+      }
+
+      void DataValue::
+      ushort_none (Type const&)
+      {
+      }
+
+      void DataValue::
+      ulong (Type& o)
+      {
+        dispatch (o.ulong ());
+      }
+
+      void DataValue::
+      ulong (Type const& o)
+      {
+        dispatch (o.ulong ());
+      }
+
+      void DataValue::
+      ulong_none (Type&)
+      {
+      }
+
+      void DataValue::
+      ulong_none (Type const&)
+      {
+      }
+
+      void DataValue::
+      float_ (Type& o)
+      {
+        dispatch (o.float_ ());
+      }
+
+      void DataValue::
+      float_ (Type const& o)
+      {
+        dispatch (o.float_ ());
+      }
+
+      void DataValue::
+      float_none (Type&)
+      {
+      }
+
+      void DataValue::
+      float_none (Type const&)
+      {
+      }
+
+      void DataValue::
+      double_ (Type& o)
+      {
+        dispatch (o.double_ ());
+      }
+
+      void DataValue::
+      double_ (Type const& o)
+      {
+        dispatch (o.double_ ());
+      }
+
+      void DataValue::
+      double_none (Type&)
+      {
+      }
+
+      void DataValue::
+      double_none (Type const&)
+      {
+      }
+
+      void DataValue::
+      boolean (Type& o)
+      {
+        dispatch (o.boolean ());
+      }
+
+      void DataValue::
+      boolean (Type const& o)
+      {
+        dispatch (o.boolean ());
+      }
+
+      void DataValue::
+      boolean_none (Type&)
+      {
+      }
+
+      void DataValue::
+      boolean_none (Type const&)
+      {
+      }
+
+      void DataValue::
+      octet (Type& o)
+      {
+        dispatch (o.octet ());
+      }
+
+      void DataValue::
+      octet (Type const& o)
+      {
+        dispatch (o.octet ());
+      }
+
+      void DataValue::
+      octet_none (Type&)
+      {
+      }
+
+      void DataValue::
+      octet_none (Type const&)
+      {
+      }
+
+      void DataValue::
+      objref (Type& o)
+      {
+        dispatch (o.objref ());
+      }
+
+      void DataValue::
+      objref (Type const& o)
+      {
+        dispatch (o.objref ());
+      }
+
+      void DataValue::
+      objref_none (Type&)
+      {
+      }
+
+      void DataValue::
+      objref_none (Type const&)
+      {
+      }
+
+      void DataValue::
+      enum_ (Type& o)
+      {
+        dispatch (o.enum_ ());
+      }
+
+      void DataValue::
+      enum_ (Type const& o)
+      {
+        dispatch (o.enum_ ());
+      }
+
+      void DataValue::
+      enum_none (Type&)
+      {
+      }
+
+      void DataValue::
+      enum_none (Type const&)
+      {
+      }
+
+      void DataValue::
+      string (Type& o)
+      {
+        dispatch (o.string ());
+      }
+
+      void DataValue::
+      string (Type const& o)
+      {
+        dispatch (o.string ());
+      }
+
+      void DataValue::
+      string_none (Type&)
+      {
+      }
+
+      void DataValue::
+      string_none (Type const&)
+      {
+      }
+
+      void DataValue::
+      longlong (Type& o)
+      {
+        dispatch (o.longlong ());
+      }
+
+      void DataValue::
+      longlong (Type const& o)
+      {
+        dispatch (o.longlong ());
+      }
+
+      void DataValue::
+      longlong_none (Type&)
+      {
+      }
+
+      void DataValue::
+      longlong_none (Type const&)
+      {
+      }
+
+      void DataValue::
+      ulonglong (Type& o)
+      {
+        dispatch (o.ulonglong ());
+      }
+
+      void DataValue::
+      ulonglong (Type const& o)
+      {
+        dispatch (o.ulonglong ());
+      }
+
+      void DataValue::
+      ulonglong_none (Type&)
+      {
+      }
+
+      void DataValue::
+      ulonglong_none (Type const&)
+      {
+      }
+
+      void DataValue::
+      longdouble (Type& o)
+      {
+        dispatch (o.longdouble ());
+      }
+
+      void DataValue::
+      longdouble (Type const& o)
+      {
+        dispatch (o.longdouble ());
+      }
+
+      void DataValue::
+      longdouble_none (Type&)
+      {
+      }
+
+      void DataValue::
+      longdouble_none (Type const&)
+      {
+      }
+
+      void DataValue::
+      fixed (Type& o)
+      {
+        dispatch (o.fixed ());
+      }
+
+      void DataValue::
+      fixed (Type const& o)
+      {
+        dispatch (o.fixed ());
+      }
+
+      void DataValue::
+      fixed_none (Type&)
+      {
+      }
+
+      void DataValue::
+      fixed_none (Type const&)
+      {
+      }
+
+      void DataValue::
+      typecode (Type& o)
+      {
+        dispatch (o.typecode ());
+      }
+
+      void DataValue::
+      typecode (Type const& o)
+      {
+        dispatch (o.typecode ());
+      }
+
+      void DataValue::
+      typecode_none (Type&)
+      {
+      }
+
+      void DataValue::
+      typecode_none (Type const&)
+      {
+      }
+
+      void DataValue::
+      post (Type&)
+      {
+      }
+
+      void DataValue::
+      post (Type const&)
+      {
+      }
+
+      // Any
+      //
+      //
+
+      void Any::
+      traverse (Type& o)
+      {
+        pre (o);
+        type (o);
+        value (o);
+        post (o);
+      }
+
+      void Any::
+      traverse (Type const& o)
+      {
+        pre (o);
+        type (o);
+        value (o);
+        post (o);
+      }
+
+      void Any::
+      pre (Type&)
+      {
+      }
+
+      void Any::
+      pre (Type const&)
+      {
+      }
+
+      void Any::
+      type (Type& o)
+      {
+        dispatch (o.type ());
+      }
+
+      void Any::
+      type (Type const& o)
+      {
+        dispatch (o.type ());
+      }
+
+      void Any::
+      value (Type& o)
+      {
+        dispatch (o.value ());
+      }
+
+      void Any::
+      value (Type const& o)
+      {
+        dispatch (o.value ());
+      }
+
+      void Any::
+      post (Type&)
+      {
+      }
+
+      void Any::
+      post (Type const&)
+      {
+      }
+
+      // Property
+      //
+      //
+
+      void Property::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        value (o);
+        post (o);
+      }
+
+      void Property::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        value (o);
+        post (o);
+      }
+
+      void Property::
+      pre (Type&)
+      {
+      }
+
+      void Property::
+      pre (Type const&)
+      {
+      }
+
+      void Property::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void Property::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void Property::
+      value (Type& o)
+      {
+        dispatch (o.value ());
+      }
+
+      void Property::
+      value (Type const& o)
+      {
+        dispatch (o.value ());
+      }
+
+      void Property::
+      post (Type&)
+      {
+      }
+
+      void Property::
+      post (Type const&)
+      {
+      }
+
+      // Node
+      //
+      //
+
+      void Node::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        label (o);
+        post (o);
+      }
+
+      void Node::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        label (o);
+        post (o);
+      }
+
+      void Node::
+      pre (Type&)
+      {
+      }
+
+      void Node::
+      pre (Type const&)
+      {
+      }
+
+      void Node::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void Node::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void Node::
+      label (Type& o)
+      {
+        dispatch (o.label ());
+      }
+
+      void Node::
+      label (Type const& o)
+      {
+        dispatch (o.label ());
+      }
+
+      void Node::
+      post (Type&)
+      {
+      }
+
+      void Node::
+      post (Type const&)
+      {
+      }
+
+      // SatisfierProperty
+      //
+      //
+
+      void SatisfierProperty::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        kind (o);
+        value (o);
+        post (o);
+      }
+
+      void SatisfierProperty::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        kind (o);
+        value (o);
+        post (o);
+      }
+
+      void SatisfierProperty::
+      pre (Type&)
+      {
+      }
+
+      void SatisfierProperty::
+      pre (Type const&)
+      {
+      }
+
+      void SatisfierProperty::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void SatisfierProperty::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void SatisfierProperty::
+      kind (Type& o)
+      {
+        dispatch (o.kind ());
+      }
+
+      void SatisfierProperty::
+      kind (Type const& o)
+      {
+        dispatch (o.kind ());
+      }
+
+      void SatisfierProperty::
+      value (Type& o)
+      {
+        dispatch (o.value ());
+      }
+
+      void SatisfierProperty::
+      value (Type const& o)
+      {
+        dispatch (o.value ());
+      }
+
+      void SatisfierProperty::
+      post (Type&)
+      {
+      }
+
+      void SatisfierProperty::
+      post (Type const&)
+      {
+      }
+
+      // Resource
+      //
+      //
+
+      void Resource::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        resourceType (o);
+        property (o);
+        post (o);
+      }
+
+      void Resource::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        resourceType (o);
+        property (o);
+        post (o);
+      }
+
+      void Resource::
+      pre (Type&)
+      {
+      }
+
+      void Resource::
+      pre (Type const&)
+      {
+      }
+
+      void Resource::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void Resource::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void Resource::
+      resourceType (Type& o)
+      {
+        dispatch (o.resourceType ());
+      }
+
+      void Resource::
+      resourceType (Type const& o)
+      {
+        dispatch (o.resourceType ());
+      }
+
+      void Resource::
+      property (Type& o)
+      {
+        dispatch (o.property ());
+      }
+
+      void Resource::
+      property (Type const& o)
+      {
+        dispatch (o.property ());
+      }
+
+      void Resource::
+      post (Type&)
+      {
+      }
+
+      void Resource::
+      post (Type const&)
+      {
+      }
+
+      // SharedResource
+      //
+      //
+
+      void SharedResource::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        resourceType (o);
+        node (o);
+        property (o);
+        post (o);
+      }
+
+      void SharedResource::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        resourceType (o);
+        node (o);
+        property (o);
+        post (o);
+      }
+
+      void SharedResource::
+      pre (Type&)
+      {
+      }
+
+      void SharedResource::
+      pre (Type const&)
+      {
+      }
+
+      void SharedResource::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void SharedResource::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void SharedResource::
+      resourceType (Type& o)
+      {
+        dispatch (o.resourceType ());
+      }
+
+      void SharedResource::
+      resourceType (Type const& o)
+      {
+        dispatch (o.resourceType ());
+      }
+
+      void SharedResource::
+      node (Type& o)
+      {
+        dispatch (o.node ());
+      }
+
+      void SharedResource::
+      node (Type const& o)
+      {
+        dispatch (o.node ());
+      }
+
+      void SharedResource::
+      property (Type& o)
+      {
+        dispatch (o.property ());
+      }
+
+      void SharedResource::
+      property (Type const& o)
+      {
+        dispatch (o.property ());
+      }
+
+      void SharedResource::
+      post (Type&)
+      {
+      }
+
+      void SharedResource::
+      post (Type const&)
+      {
+      }
+
+      // Requirement
+      //
+      //
+
+      void Requirement::
+      traverse (Type& o)
+      {
+        pre (o);
+        resourceType (o);
+        name (o);
+        property (o);
+        post (o);
+      }
+
+      void Requirement::
+      traverse (Type const& o)
+      {
+        pre (o);
+        resourceType (o);
+        name (o);
+        property (o);
+        post (o);
+      }
+
+      void Requirement::
+      pre (Type&)
+      {
+      }
+
+      void Requirement::
+      pre (Type const&)
+      {
+      }
+
+      void Requirement::
+      resourceType (Type& o)
+      {
+        dispatch (o.resourceType ());
+      }
+
+      void Requirement::
+      resourceType (Type const& o)
+      {
+        dispatch (o.resourceType ());
+      }
+
+      void Requirement::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void Requirement::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void Requirement::
+      property (Type& o)
+      {
+        dispatch (o.property ());
+      }
+
+      void Requirement::
+      property (Type const& o)
+      {
+        dispatch (o.property ());
+      }
+
+      void Requirement::
+      post (Type&)
+      {
+      }
+
+      void Requirement::
+      post (Type const&)
+      {
+      }
+
+      // ResourceDeploymentDescription
+      //
+      //
+
+      void ResourceDeploymentDescription::
+      traverse (Type& o)
+      {
+        pre (o);
+        requirementName (o);
+        resourceName (o);
+        resourceValue (o);
+        post (o);
+      }
+
+      void ResourceDeploymentDescription::
+      traverse (Type const& o)
+      {
+        pre (o);
+        requirementName (o);
+        resourceName (o);
+        resourceValue (o);
+        post (o);
+      }
+
+      void ResourceDeploymentDescription::
+      pre (Type&)
+      {
+      }
+
+      void ResourceDeploymentDescription::
+      pre (Type const&)
+      {
+      }
+
+      void ResourceDeploymentDescription::
+      requirementName (Type& o)
+      {
+        dispatch (o.requirementName ());
+      }
+
+      void ResourceDeploymentDescription::
+      requirementName (Type const& o)
+      {
+        dispatch (o.requirementName ());
+      }
+
+      void ResourceDeploymentDescription::
+      resourceName (Type& o)
+      {
+        dispatch (o.resourceName ());
+      }
+
+      void ResourceDeploymentDescription::
+      resourceName (Type const& o)
+      {
+        dispatch (o.resourceName ());
+      }
+
+      void ResourceDeploymentDescription::
+      resourceValue (Type& o)
+      {
+        dispatch (o.resourceValue ());
+      }
+
+      void ResourceDeploymentDescription::
+      resourceValue (Type const& o)
+      {
+        dispatch (o.resourceValue ());
+      }
+
+      void ResourceDeploymentDescription::
+      post (Type&)
+      {
+      }
+
+      void ResourceDeploymentDescription::
+      post (Type const&)
+      {
+      }
+
+      // ArtifactDeploymentDescription
+      //
+      //
+
+      void ArtifactDeploymentDescription::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        source (o);
+        node (o);
+        location (o);
+        execParameter (o);
+        deployRequirement (o);
+        deployedResource (o);
+        if (o.id_p ()) id (o);
+        else id_none (o);
+        post (o);
+      }
+
+      void ArtifactDeploymentDescription::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        source (o);
+        node (o);
+        location (o);
+        execParameter (o);
+        deployRequirement (o);
+        deployedResource (o);
+        if (o.id_p ()) id (o);
+        else id_none (o);
+        post (o);
+      }
+
+      void ArtifactDeploymentDescription::
+      pre (Type&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      pre (Type const&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void ArtifactDeploymentDescription::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void ArtifactDeploymentDescription::
+      source (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ArtifactDeploymentDescription::Type::source_iterator b (o.begin_source()), e (o.end_source());
+
+        if (b != e)
+        {
+          source_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) source_next (o);
+          }
+
+          source_post (o);
+        }
+      }
+
+      void ArtifactDeploymentDescription::
+      source (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ArtifactDeploymentDescription::Type::source_const_iterator b (o.begin_source()), e (o.end_source());
+
+        if (b != e)
+        {
+          source_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) source_next (o);
+          }
+
+          source_post (o);
+        }
+      }
+
+      void ArtifactDeploymentDescription::
+      source_pre (Type&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      source_pre (Type const&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      source_next (Type&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      source_next (Type const&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      source_post (Type&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      source_post (Type const&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      node (Type& o)
+      {
+        dispatch (o.node ());
+      }
+
+      void ArtifactDeploymentDescription::
+      node (Type const& o)
+      {
+        dispatch (o.node ());
+      }
+
+      void ArtifactDeploymentDescription::
+      location (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ArtifactDeploymentDescription::Type::location_iterator b (o.begin_location()), e (o.end_location());
+
+        if (b != e)
+        {
+          location_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) location_next (o);
+          }
+
+          location_post (o);
+        }
+      }
+
+      void ArtifactDeploymentDescription::
+      location (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ArtifactDeploymentDescription::Type::location_const_iterator b (o.begin_location()), e (o.end_location());
+
+        if (b != e)
+        {
+          location_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) location_next (o);
+          }
+
+          location_post (o);
+        }
+      }
+
+      void ArtifactDeploymentDescription::
+      location_pre (Type&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      location_pre (Type const&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      location_next (Type&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      location_next (Type const&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      location_post (Type&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      location_post (Type const&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      execParameter (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ArtifactDeploymentDescription::Type::execParameter_iterator b (o.begin_execParameter()), e (o.end_execParameter());
+
+        if (b != e)
+        {
+          execParameter_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) execParameter_next (o);
+          }
+
+          execParameter_post (o);
+        }
+
+        else execParameter_none (o);
+      }
+
+      void ArtifactDeploymentDescription::
+      execParameter (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ArtifactDeploymentDescription::Type::execParameter_const_iterator b (o.begin_execParameter()), e (o.end_execParameter());
+
+        if (b != e)
+        {
+          execParameter_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) execParameter_next (o);
+          }
+
+          execParameter_post (o);
+        }
+
+        else execParameter_none (o);
+      }
+
+      void ArtifactDeploymentDescription::
+      execParameter_pre (Type&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      execParameter_pre (Type const&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      execParameter_next (Type&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      execParameter_next (Type const&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      execParameter_post (Type&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      execParameter_post (Type const&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      execParameter_none (Type&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      execParameter_none (Type const&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      deployRequirement (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ArtifactDeploymentDescription::Type::deployRequirement_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
+
+        if (b != e)
+        {
+          deployRequirement_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) deployRequirement_next (o);
+          }
+
+          deployRequirement_post (o);
+        }
+
+        else deployRequirement_none (o);
+      }
+
+      void ArtifactDeploymentDescription::
+      deployRequirement (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ArtifactDeploymentDescription::Type::deployRequirement_const_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
+
+        if (b != e)
+        {
+          deployRequirement_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) deployRequirement_next (o);
+          }
+
+          deployRequirement_post (o);
+        }
+
+        else deployRequirement_none (o);
+      }
+
+      void ArtifactDeploymentDescription::
+      deployRequirement_pre (Type&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      deployRequirement_pre (Type const&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      deployRequirement_next (Type&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      deployRequirement_next (Type const&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      deployRequirement_post (Type&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      deployRequirement_post (Type const&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      deployRequirement_none (Type&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      deployRequirement_none (Type const&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      deployedResource (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ArtifactDeploymentDescription::Type::deployedResource_iterator b (o.begin_deployedResource()), e (o.end_deployedResource());
+
+        if (b != e)
+        {
+          deployedResource_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) deployedResource_next (o);
+          }
+
+          deployedResource_post (o);
+        }
+
+        else deployedResource_none (o);
+      }
+
+      void ArtifactDeploymentDescription::
+      deployedResource (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ArtifactDeploymentDescription::Type::deployedResource_const_iterator b (o.begin_deployedResource()), e (o.end_deployedResource());
+
+        if (b != e)
+        {
+          deployedResource_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) deployedResource_next (o);
+          }
+
+          deployedResource_post (o);
+        }
+
+        else deployedResource_none (o);
+      }
+
+      void ArtifactDeploymentDescription::
+      deployedResource_pre (Type&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      deployedResource_pre (Type const&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      deployedResource_next (Type&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      deployedResource_next (Type const&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      deployedResource_post (Type&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      deployedResource_post (Type const&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      deployedResource_none (Type&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      deployedResource_none (Type const&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      id (Type& o)
+      {
+        dispatch (o.id ());
+      }
+
+      void ArtifactDeploymentDescription::
+      id (Type const& o)
+      {
+        dispatch (o.id ());
+      }
+
+      void ArtifactDeploymentDescription::
+      id_none (Type&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      id_none (Type const&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      post (Type&)
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      post (Type const&)
+      {
+      }
+
+      // MonolithicDeploymentDescription
+      //
+      //
+
+      void MonolithicDeploymentDescription::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        source (o);
+        artifact (o);
+        execParameter (o);
+        deployRequirement (o);
+        if (o.id_p ()) id (o);
+        else id_none (o);
+        post (o);
+      }
+
+      void MonolithicDeploymentDescription::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        source (o);
+        artifact (o);
+        execParameter (o);
+        deployRequirement (o);
+        if (o.id_p ()) id (o);
+        else id_none (o);
+        post (o);
+      }
+
+      void MonolithicDeploymentDescription::
+      pre (Type&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      pre (Type const&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void MonolithicDeploymentDescription::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void MonolithicDeploymentDescription::
+      source (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        MonolithicDeploymentDescription::Type::source_iterator b (o.begin_source()), e (o.end_source());
+
+        if (b != e)
+        {
+          source_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) source_next (o);
+          }
+
+          source_post (o);
+        }
+      }
+
+      void MonolithicDeploymentDescription::
+      source (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        MonolithicDeploymentDescription::Type::source_const_iterator b (o.begin_source()), e (o.end_source());
+
+        if (b != e)
+        {
+          source_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) source_next (o);
+          }
+
+          source_post (o);
+        }
+      }
+
+      void MonolithicDeploymentDescription::
+      source_pre (Type&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      source_pre (Type const&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      source_next (Type&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      source_next (Type const&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      source_post (Type&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      source_post (Type const&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      artifact (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        MonolithicDeploymentDescription::Type::artifact_iterator b (o.begin_artifact()), e (o.end_artifact());
+
+        if (b != e)
+        {
+          artifact_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) artifact_next (o);
+          }
+
+          artifact_post (o);
+        }
+      }
+
+      void MonolithicDeploymentDescription::
+      artifact (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        MonolithicDeploymentDescription::Type::artifact_const_iterator b (o.begin_artifact()), e (o.end_artifact());
+
+        if (b != e)
+        {
+          artifact_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) artifact_next (o);
+          }
+
+          artifact_post (o);
+        }
+      }
+
+      void MonolithicDeploymentDescription::
+      artifact_pre (Type&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      artifact_pre (Type const&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      artifact_next (Type&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      artifact_next (Type const&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      artifact_post (Type&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      artifact_post (Type const&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      execParameter (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        MonolithicDeploymentDescription::Type::execParameter_iterator b (o.begin_execParameter()), e (o.end_execParameter());
+
+        if (b != e)
+        {
+          execParameter_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) execParameter_next (o);
+          }
+
+          execParameter_post (o);
+        }
+      }
+
+      void MonolithicDeploymentDescription::
+      execParameter (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        MonolithicDeploymentDescription::Type::execParameter_const_iterator b (o.begin_execParameter()), e (o.end_execParameter());
+
+        if (b != e)
+        {
+          execParameter_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) execParameter_next (o);
+          }
+
+          execParameter_post (o);
+        }
+      }
+
+      void MonolithicDeploymentDescription::
+      execParameter_pre (Type&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      execParameter_pre (Type const&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      execParameter_next (Type&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      execParameter_next (Type const&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      execParameter_post (Type&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      execParameter_post (Type const&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      deployRequirement (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        MonolithicDeploymentDescription::Type::deployRequirement_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
+
+        if (b != e)
+        {
+          deployRequirement_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) deployRequirement_next (o);
+          }
+
+          deployRequirement_post (o);
+        }
+      }
+
+      void MonolithicDeploymentDescription::
+      deployRequirement (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        MonolithicDeploymentDescription::Type::deployRequirement_const_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
+
+        if (b != e)
+        {
+          deployRequirement_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) deployRequirement_next (o);
+          }
+
+          deployRequirement_post (o);
+        }
+      }
+
+      void MonolithicDeploymentDescription::
+      deployRequirement_pre (Type&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      deployRequirement_pre (Type const&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      deployRequirement_next (Type&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      deployRequirement_next (Type const&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      deployRequirement_post (Type&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      deployRequirement_post (Type const&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      id (Type& o)
+      {
+        dispatch (o.id ());
+      }
+
+      void MonolithicDeploymentDescription::
+      id (Type const& o)
+      {
+        dispatch (o.id ());
+      }
+
+      void MonolithicDeploymentDescription::
+      id_none (Type&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      id_none (Type const&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      post (Type&)
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      post (Type const&)
+      {
+      }
+
+      // InstanceResourceDeploymentDescription
+      //
+      //
+
+      void InstanceResourceDeploymentDescription::
+      traverse (Type& o)
+      {
+        pre (o);
+        resourceUsage (o);
+        requirementName (o);
+        resourceName (o);
+        resourceValue (o);
+        post (o);
+      }
+
+      void InstanceResourceDeploymentDescription::
+      traverse (Type const& o)
+      {
+        pre (o);
+        resourceUsage (o);
+        requirementName (o);
+        resourceName (o);
+        resourceValue (o);
+        post (o);
+      }
+
+      void InstanceResourceDeploymentDescription::
+      pre (Type&)
+      {
+      }
+
+      void InstanceResourceDeploymentDescription::
+      pre (Type const&)
+      {
+      }
+
+      void InstanceResourceDeploymentDescription::
+      resourceUsage (Type& o)
+      {
+        dispatch (o.resourceUsage ());
+      }
+
+      void InstanceResourceDeploymentDescription::
+      resourceUsage (Type const& o)
+      {
+        dispatch (o.resourceUsage ());
+      }
+
+      void InstanceResourceDeploymentDescription::
+      requirementName (Type& o)
+      {
+        dispatch (o.requirementName ());
+      }
+
+      void InstanceResourceDeploymentDescription::
+      requirementName (Type const& o)
+      {
+        dispatch (o.requirementName ());
+      }
+
+      void InstanceResourceDeploymentDescription::
+      resourceName (Type& o)
+      {
+        dispatch (o.resourceName ());
+      }
+
+      void InstanceResourceDeploymentDescription::
+      resourceName (Type const& o)
+      {
+        dispatch (o.resourceName ());
+      }
+
+      void InstanceResourceDeploymentDescription::
+      resourceValue (Type& o)
+      {
+        dispatch (o.resourceValue ());
+      }
+
+      void InstanceResourceDeploymentDescription::
+      resourceValue (Type const& o)
+      {
+        dispatch (o.resourceValue ());
+      }
+
+      void InstanceResourceDeploymentDescription::
+      post (Type&)
+      {
+      }
+
+      void InstanceResourceDeploymentDescription::
+      post (Type const&)
+      {
+      }
+
+      // InstanceDeploymentDescription
+      //
+      //
+
+      void InstanceDeploymentDescription::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        node (o);
+        source (o);
+        implementation (o);
+        configProperty (o);
+        if (o.deployedResource_p ()) deployedResource (o);
+        else deployedResource_none (o);
+        if (o.deployedSharedResource_p ()) deployedSharedResource (o);
+        else deployedSharedResource_none (o);
+        if (o.id_p ()) id (o);
+        else id_none (o);
+        post (o);
+      }
+
+      void InstanceDeploymentDescription::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        node (o);
+        source (o);
+        implementation (o);
+        configProperty (o);
+        if (o.deployedResource_p ()) deployedResource (o);
+        else deployedResource_none (o);
+        if (o.deployedSharedResource_p ()) deployedSharedResource (o);
+        else deployedSharedResource_none (o);
+        if (o.id_p ()) id (o);
+        else id_none (o);
+        post (o);
+      }
+
+      void InstanceDeploymentDescription::
+      pre (Type&)
+      {
+      }
+
+      void InstanceDeploymentDescription::
+      pre (Type const&)
+      {
+      }
+
+      void InstanceDeploymentDescription::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void InstanceDeploymentDescription::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void InstanceDeploymentDescription::
+      node (Type& o)
+      {
+        dispatch (o.node ());
+      }
+
+      void InstanceDeploymentDescription::
+      node (Type const& o)
+      {
+        dispatch (o.node ());
+      }
+
+      void InstanceDeploymentDescription::
+      source (Type& o)
+      {
+        dispatch (o.source ());
+      }
+
+      void InstanceDeploymentDescription::
+      source (Type const& o)
+      {
+        dispatch (o.source ());
+      }
+
+      void InstanceDeploymentDescription::
+      implementation (Type& o)
+      {
+        dispatch (o.implementation ());
+      }
+
+      void InstanceDeploymentDescription::
+      implementation (Type const& o)
+      {
+        dispatch (o.implementation ());
+      }
+
+      void InstanceDeploymentDescription::
+      configProperty (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        InstanceDeploymentDescription::Type::configProperty_iterator b (o.begin_configProperty()), e (o.end_configProperty());
+
+        if (b != e)
+        {
+          configProperty_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) configProperty_next (o);
+          }
+
+          configProperty_post (o);
+        }
+
+        else configProperty_none (o);
+      }
+
+      void InstanceDeploymentDescription::
+      configProperty (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        InstanceDeploymentDescription::Type::configProperty_const_iterator b (o.begin_configProperty()), e (o.end_configProperty());
+
+        if (b != e)
+        {
+          configProperty_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) configProperty_next (o);
+          }
+
+          configProperty_post (o);
+        }
+
+        else configProperty_none (o);
+      }
+
+      void InstanceDeploymentDescription::
+      configProperty_pre (Type&)
+      {
+      }
+
+      void InstanceDeploymentDescription::
+      configProperty_pre (Type const&)
+      {
+      }
+
+      void InstanceDeploymentDescription::
+      configProperty_next (Type&)
+      {
+      }
+
+      void InstanceDeploymentDescription::
+      configProperty_next (Type const&)
+      {
+      }
+
+      void InstanceDeploymentDescription::
+      configProperty_post (Type&)
+      {
+      }
+
+      void InstanceDeploymentDescription::
+      configProperty_post (Type const&)
+      {
+      }
+
+      void InstanceDeploymentDescription::
+      configProperty_none (Type&)
+      {
+      }
+
+      void InstanceDeploymentDescription::
+      configProperty_none (Type const&)
+      {
+      }
+
+      void InstanceDeploymentDescription::
+      deployedResource (Type& o)
+      {
+        dispatch (o.deployedResource ());
+      }
+
+      void InstanceDeploymentDescription::
+      deployedResource (Type const& o)
+      {
+        dispatch (o.deployedResource ());
+      }
+
+      void InstanceDeploymentDescription::
+      deployedResource_none (Type&)
+      {
+      }
+
+      void InstanceDeploymentDescription::
+      deployedResource_none (Type const&)
+      {
+      }
+
+      void InstanceDeploymentDescription::
+      deployedSharedResource (Type& o)
+      {
+        dispatch (o.deployedSharedResource ());
+      }
+
+      void InstanceDeploymentDescription::
+      deployedSharedResource (Type const& o)
+      {
+        dispatch (o.deployedSharedResource ());
+      }
+
+      void InstanceDeploymentDescription::
+      deployedSharedResource_none (Type&)
+      {
+      }
+
+      void InstanceDeploymentDescription::
+      deployedSharedResource_none (Type const&)
+      {
+      }
+
+      void InstanceDeploymentDescription::
+      id (Type& o)
+      {
+        dispatch (o.id ());
+      }
+
+      void InstanceDeploymentDescription::
+      id (Type const& o)
+      {
+        dispatch (o.id ());
+      }
+
+      void InstanceDeploymentDescription::
+      id_none (Type&)
+      {
+      }
+
+      void InstanceDeploymentDescription::
+      id_none (Type const&)
+      {
+      }
+
+      void InstanceDeploymentDescription::
+      post (Type&)
+      {
+      }
+
+      void InstanceDeploymentDescription::
+      post (Type const&)
+      {
+      }
+
+      // ComponentPortDescription
+      //
+      //
+
+      void ComponentPortDescription::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        specificType (o);
+        supportedType (o);
+        provider (o);
+        exclusiveProvider (o);
+        exclusiveUser (o);
+        optional (o);
+        kind (o);
+        post (o);
+      }
+
+      void ComponentPortDescription::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        specificType (o);
+        supportedType (o);
+        provider (o);
+        exclusiveProvider (o);
+        exclusiveUser (o);
+        optional (o);
+        kind (o);
+        post (o);
+      }
+
+      void ComponentPortDescription::
+      pre (Type&)
+      {
+      }
+
+      void ComponentPortDescription::
+      pre (Type const&)
+      {
+      }
+
+      void ComponentPortDescription::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void ComponentPortDescription::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void ComponentPortDescription::
+      specificType (Type& o)
+      {
+        dispatch (o.specificType ());
+      }
+
+      void ComponentPortDescription::
+      specificType (Type const& o)
+      {
+        dispatch (o.specificType ());
+      }
+
+      void ComponentPortDescription::
+      supportedType (Type& o)
+      {
+        dispatch (o.supportedType ());
+      }
+
+      void ComponentPortDescription::
+      supportedType (Type const& o)
+      {
+        dispatch (o.supportedType ());
+      }
+
+      void ComponentPortDescription::
+      provider (Type& o)
+      {
+        dispatch (o.provider ());
+      }
+
+      void ComponentPortDescription::
+      provider (Type const& o)
+      {
+        dispatch (o.provider ());
+      }
+
+      void ComponentPortDescription::
+      exclusiveProvider (Type& o)
+      {
+        dispatch (o.exclusiveProvider ());
+      }
+
+      void ComponentPortDescription::
+      exclusiveProvider (Type const& o)
+      {
+        dispatch (o.exclusiveProvider ());
+      }
+
+      void ComponentPortDescription::
+      exclusiveUser (Type& o)
+      {
+        dispatch (o.exclusiveUser ());
+      }
+
+      void ComponentPortDescription::
+      exclusiveUser (Type const& o)
+      {
+        dispatch (o.exclusiveUser ());
+      }
+
+      void ComponentPortDescription::
+      optional (Type& o)
+      {
+        dispatch (o.optional ());
+      }
+
+      void ComponentPortDescription::
+      optional (Type const& o)
+      {
+        dispatch (o.optional ());
+      }
+
+      void ComponentPortDescription::
+      kind (Type& o)
+      {
+        dispatch (o.kind ());
+      }
+
+      void ComponentPortDescription::
+      kind (Type const& o)
+      {
+        dispatch (o.kind ());
+      }
+
+      void ComponentPortDescription::
+      post (Type&)
+      {
+      }
+
+      void ComponentPortDescription::
+      post (Type const&)
+      {
+      }
+
+      // ComponentPropertyDescription
+      //
+      //
+
+      void ComponentPropertyDescription::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        type (o);
+        post (o);
+      }
+
+      void ComponentPropertyDescription::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        type (o);
+        post (o);
+      }
+
+      void ComponentPropertyDescription::
+      pre (Type&)
+      {
+      }
+
+      void ComponentPropertyDescription::
+      pre (Type const&)
+      {
+      }
+
+      void ComponentPropertyDescription::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void ComponentPropertyDescription::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void ComponentPropertyDescription::
+      type (Type& o)
+      {
+        dispatch (o.type ());
+      }
+
+      void ComponentPropertyDescription::
+      type (Type const& o)
+      {
+        dispatch (o.type ());
+      }
+
+      void ComponentPropertyDescription::
+      post (Type&)
+      {
+      }
+
+      void ComponentPropertyDescription::
+      post (Type const&)
+      {
+      }
+
+      // ComponentExternalPortEndpoint
+      //
+      //
+
+      void ComponentExternalPortEndpoint::
+      traverse (Type& o)
+      {
+        pre (o);
+        portName (o);
+        post (o);
+      }
+
+      void ComponentExternalPortEndpoint::
+      traverse (Type const& o)
+      {
+        pre (o);
+        portName (o);
+        post (o);
+      }
+
+      void ComponentExternalPortEndpoint::
+      pre (Type&)
+      {
+      }
+
+      void ComponentExternalPortEndpoint::
+      pre (Type const&)
+      {
+      }
+
+      void ComponentExternalPortEndpoint::
+      portName (Type& o)
+      {
+        dispatch (o.portName ());
+      }
+
+      void ComponentExternalPortEndpoint::
+      portName (Type const& o)
+      {
+        dispatch (o.portName ());
+      }
+
+      void ComponentExternalPortEndpoint::
+      post (Type&)
+      {
+      }
+
+      void ComponentExternalPortEndpoint::
+      post (Type const&)
+      {
+      }
+
+      // PlanSubcomponentPortEndpoint
+      //
+      //
+
+      void PlanSubcomponentPortEndpoint::
+      traverse (Type& o)
+      {
+        pre (o);
+        portName (o);
+        if (o.provider_p ()) provider (o);
+        else provider_none (o);
+        kind (o);
+        instance (o);
+        post (o);
+      }
+
+      void PlanSubcomponentPortEndpoint::
+      traverse (Type const& o)
+      {
+        pre (o);
+        portName (o);
+        if (o.provider_p ()) provider (o);
+        else provider_none (o);
+        kind (o);
+        instance (o);
+        post (o);
+      }
+
+      void PlanSubcomponentPortEndpoint::
+      pre (Type&)
+      {
+      }
+
+      void PlanSubcomponentPortEndpoint::
+      pre (Type const&)
+      {
+      }
+
+      void PlanSubcomponentPortEndpoint::
+      portName (Type& o)
+      {
+        dispatch (o.portName ());
+      }
+
+      void PlanSubcomponentPortEndpoint::
+      portName (Type const& o)
+      {
+        dispatch (o.portName ());
+      }
+
+      void PlanSubcomponentPortEndpoint::
+      provider (Type& o)
+      {
+        dispatch (o.provider ());
+      }
+
+      void PlanSubcomponentPortEndpoint::
+      provider (Type const& o)
+      {
+        dispatch (o.provider ());
+      }
+
+      void PlanSubcomponentPortEndpoint::
+      provider_none (Type&)
+      {
+      }
+
+      void PlanSubcomponentPortEndpoint::
+      provider_none (Type const&)
+      {
+      }
+
+      void PlanSubcomponentPortEndpoint::
+      kind (Type& o)
+      {
+        dispatch (o.kind ());
+      }
+
+      void PlanSubcomponentPortEndpoint::
+      kind (Type const& o)
+      {
+        dispatch (o.kind ());
+      }
+
+      void PlanSubcomponentPortEndpoint::
+      instance (Type& o)
+      {
+        dispatch (o.instance ());
+      }
+
+      void PlanSubcomponentPortEndpoint::
+      instance (Type const& o)
+      {
+        dispatch (o.instance ());
+      }
+
+      void PlanSubcomponentPortEndpoint::
+      post (Type&)
+      {
+      }
+
+      void PlanSubcomponentPortEndpoint::
+      post (Type const&)
+      {
+      }
+
+      // ExternalReferenceEndpoint
+      //
+      //
+
+      void ExternalReferenceEndpoint::
+      traverse (Type& o)
+      {
+        pre (o);
+        location (o);
+        post (o);
+      }
+
+      void ExternalReferenceEndpoint::
+      traverse (Type const& o)
+      {
+        pre (o);
+        location (o);
+        post (o);
+      }
+
+      void ExternalReferenceEndpoint::
+      pre (Type&)
+      {
+      }
+
+      void ExternalReferenceEndpoint::
+      pre (Type const&)
+      {
+      }
+
+      void ExternalReferenceEndpoint::
+      location (Type& o)
+      {
+        dispatch (o.location ());
+      }
+
+      void ExternalReferenceEndpoint::
+      location (Type const& o)
+      {
+        dispatch (o.location ());
+      }
+
+      void ExternalReferenceEndpoint::
+      post (Type&)
+      {
+      }
+
+      void ExternalReferenceEndpoint::
+      post (Type const&)
+      {
+      }
+
+      // ConnectionResourceDeploymentDescription
+      //
+      //
+
+      void ConnectionResourceDeploymentDescription::
+      traverse (Type& o)
+      {
+        pre (o);
+        targetName (o);
+        requirementName (o);
+        resourceName (o);
+        resourceValue (o);
+        post (o);
+      }
+
+      void ConnectionResourceDeploymentDescription::
+      traverse (Type const& o)
+      {
+        pre (o);
+        targetName (o);
+        requirementName (o);
+        resourceName (o);
+        resourceValue (o);
+        post (o);
+      }
+
+      void ConnectionResourceDeploymentDescription::
+      pre (Type&)
+      {
+      }
+
+      void ConnectionResourceDeploymentDescription::
+      pre (Type const&)
+      {
+      }
+
+      void ConnectionResourceDeploymentDescription::
+      targetName (Type& o)
+      {
+        dispatch (o.targetName ());
+      }
+
+      void ConnectionResourceDeploymentDescription::
+      targetName (Type const& o)
+      {
+        dispatch (o.targetName ());
+      }
+
+      void ConnectionResourceDeploymentDescription::
+      requirementName (Type& o)
+      {
+        dispatch (o.requirementName ());
+      }
+
+      void ConnectionResourceDeploymentDescription::
+      requirementName (Type const& o)
+      {
+        dispatch (o.requirementName ());
+      }
+
+      void ConnectionResourceDeploymentDescription::
+      resourceName (Type& o)
+      {
+        dispatch (o.resourceName ());
+      }
+
+      void ConnectionResourceDeploymentDescription::
+      resourceName (Type const& o)
+      {
+        dispatch (o.resourceName ());
+      }
+
+      void ConnectionResourceDeploymentDescription::
+      resourceValue (Type& o)
+      {
+        dispatch (o.resourceValue ());
+      }
+
+      void ConnectionResourceDeploymentDescription::
+      resourceValue (Type const& o)
+      {
+        dispatch (o.resourceValue ());
+      }
+
+      void ConnectionResourceDeploymentDescription::
+      post (Type&)
+      {
+      }
+
+      void ConnectionResourceDeploymentDescription::
+      post (Type const&)
+      {
+      }
+
+      // PlanConnectionDescription
+      //
+      //
+
+      void PlanConnectionDescription::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        if (o.source_p ()) source (o);
+        else source_none (o);
+        deployRequirement (o);
+        externalEndpoint (o);
+        internalEndpoint (o);
+        externalReference (o);
+        deployedResource (o);
+        post (o);
+      }
+
+      void PlanConnectionDescription::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        if (o.source_p ()) source (o);
+        else source_none (o);
+        deployRequirement (o);
+        externalEndpoint (o);
+        internalEndpoint (o);
+        externalReference (o);
+        deployedResource (o);
+        post (o);
+      }
+
+      void PlanConnectionDescription::
+      pre (Type&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      pre (Type const&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void PlanConnectionDescription::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void PlanConnectionDescription::
+      source (Type& o)
+      {
+        dispatch (o.source ());
+      }
+
+      void PlanConnectionDescription::
+      source (Type const& o)
+      {
+        dispatch (o.source ());
+      }
+
+      void PlanConnectionDescription::
+      source_none (Type&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      source_none (Type const&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      deployRequirement (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        PlanConnectionDescription::Type::deployRequirement_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
+
+        if (b != e)
+        {
+          deployRequirement_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) deployRequirement_next (o);
+          }
+
+          deployRequirement_post (o);
+        }
+
+        else deployRequirement_none (o);
+      }
+
+      void PlanConnectionDescription::
+      deployRequirement (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        PlanConnectionDescription::Type::deployRequirement_const_iterator b (o.begin_deployRequirement()), e (o.end_deployRequirement());
+
+        if (b != e)
+        {
+          deployRequirement_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) deployRequirement_next (o);
+          }
+
+          deployRequirement_post (o);
+        }
+
+        else deployRequirement_none (o);
+      }
+
+      void PlanConnectionDescription::
+      deployRequirement_pre (Type&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      deployRequirement_pre (Type const&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      deployRequirement_next (Type&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      deployRequirement_next (Type const&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      deployRequirement_post (Type&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      deployRequirement_post (Type const&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      deployRequirement_none (Type&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      deployRequirement_none (Type const&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      externalEndpoint (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        PlanConnectionDescription::Type::externalEndpoint_iterator b (o.begin_externalEndpoint()), e (o.end_externalEndpoint());
+
+        if (b != e)
+        {
+          externalEndpoint_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) externalEndpoint_next (o);
+          }
+
+          externalEndpoint_post (o);
+        }
+
+        else externalEndpoint_none (o);
+      }
+
+      void PlanConnectionDescription::
+      externalEndpoint (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        PlanConnectionDescription::Type::externalEndpoint_const_iterator b (o.begin_externalEndpoint()), e (o.end_externalEndpoint());
+
+        if (b != e)
+        {
+          externalEndpoint_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) externalEndpoint_next (o);
+          }
+
+          externalEndpoint_post (o);
+        }
+
+        else externalEndpoint_none (o);
+      }
+
+      void PlanConnectionDescription::
+      externalEndpoint_pre (Type&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      externalEndpoint_pre (Type const&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      externalEndpoint_next (Type&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      externalEndpoint_next (Type const&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      externalEndpoint_post (Type&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      externalEndpoint_post (Type const&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      externalEndpoint_none (Type&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      externalEndpoint_none (Type const&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      internalEndpoint (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        PlanConnectionDescription::Type::internalEndpoint_iterator b (o.begin_internalEndpoint()), e (o.end_internalEndpoint());
+
+        if (b != e)
+        {
+          internalEndpoint_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) internalEndpoint_next (o);
+          }
+
+          internalEndpoint_post (o);
+        }
+
+        else internalEndpoint_none (o);
+      }
+
+      void PlanConnectionDescription::
+      internalEndpoint (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        PlanConnectionDescription::Type::internalEndpoint_const_iterator b (o.begin_internalEndpoint()), e (o.end_internalEndpoint());
+
+        if (b != e)
+        {
+          internalEndpoint_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) internalEndpoint_next (o);
+          }
+
+          internalEndpoint_post (o);
+        }
+
+        else internalEndpoint_none (o);
+      }
+
+      void PlanConnectionDescription::
+      internalEndpoint_pre (Type&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      internalEndpoint_pre (Type const&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      internalEndpoint_next (Type&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      internalEndpoint_next (Type const&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      internalEndpoint_post (Type&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      internalEndpoint_post (Type const&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      internalEndpoint_none (Type&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      internalEndpoint_none (Type const&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      externalReference (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        PlanConnectionDescription::Type::externalReference_iterator b (o.begin_externalReference()), e (o.end_externalReference());
+
+        if (b != e)
+        {
+          externalReference_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) externalReference_next (o);
+          }
+
+          externalReference_post (o);
+        }
+
+        else externalReference_none (o);
+      }
+
+      void PlanConnectionDescription::
+      externalReference (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        PlanConnectionDescription::Type::externalReference_const_iterator b (o.begin_externalReference()), e (o.end_externalReference());
+
+        if (b != e)
+        {
+          externalReference_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) externalReference_next (o);
+          }
+
+          externalReference_post (o);
+        }
+
+        else externalReference_none (o);
+      }
+
+      void PlanConnectionDescription::
+      externalReference_pre (Type&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      externalReference_pre (Type const&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      externalReference_next (Type&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      externalReference_next (Type const&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      externalReference_post (Type&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      externalReference_post (Type const&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      externalReference_none (Type&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      externalReference_none (Type const&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      deployedResource (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        PlanConnectionDescription::Type::deployedResource_iterator b (o.begin_deployedResource()), e (o.end_deployedResource());
+
+        if (b != e)
+        {
+          deployedResource_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) deployedResource_next (o);
+          }
+
+          deployedResource_post (o);
+        }
+
+        else deployedResource_none (o);
+      }
+
+      void PlanConnectionDescription::
+      deployedResource (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        PlanConnectionDescription::Type::deployedResource_const_iterator b (o.begin_deployedResource()), e (o.end_deployedResource());
+
+        if (b != e)
+        {
+          deployedResource_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) deployedResource_next (o);
+          }
+
+          deployedResource_post (o);
+        }
+
+        else deployedResource_none (o);
+      }
+
+      void PlanConnectionDescription::
+      deployedResource_pre (Type&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      deployedResource_pre (Type const&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      deployedResource_next (Type&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      deployedResource_next (Type const&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      deployedResource_post (Type&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      deployedResource_post (Type const&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      deployedResource_none (Type&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      deployedResource_none (Type const&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      post (Type&)
+      {
+      }
+
+      void PlanConnectionDescription::
+      post (Type const&)
+      {
+      }
+
+      // ImplementationDependency
+      //
+      //
+
+      void ImplementationDependency::
+      traverse (Type& o)
+      {
+        pre (o);
+        requiredType (o);
+        post (o);
+      }
+
+      void ImplementationDependency::
+      traverse (Type const& o)
+      {
+        pre (o);
+        requiredType (o);
+        post (o);
+      }
+
+      void ImplementationDependency::
+      pre (Type&)
+      {
+      }
+
+      void ImplementationDependency::
+      pre (Type const&)
+      {
+      }
+
+      void ImplementationDependency::
+      requiredType (Type& o)
+      {
+        dispatch (o.requiredType ());
+      }
+
+      void ImplementationDependency::
+      requiredType (Type const& o)
+      {
+        dispatch (o.requiredType ());
+      }
+
+      void ImplementationDependency::
+      post (Type&)
+      {
+      }
+
+      void ImplementationDependency::
+      post (Type const&)
+      {
+      }
+
+      // Capability
+      //
+      //
+
+      void Capability::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        resourceType (o);
+        property (o);
+        post (o);
+      }
+
+      void Capability::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        resourceType (o);
+        property (o);
+        post (o);
+      }
+
+      void Capability::
+      pre (Type&)
+      {
+      }
+
+      void Capability::
+      pre (Type const&)
+      {
+      }
+
+      void Capability::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void Capability::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void Capability::
+      resourceType (Type& o)
+      {
+        dispatch (o.resourceType ());
+      }
+
+      void Capability::
+      resourceType (Type const& o)
+      {
+        dispatch (o.resourceType ());
+      }
+
+      void Capability::
+      property (Type& o)
+      {
+        dispatch (o.property ());
+      }
+
+      void Capability::
+      property (Type const& o)
+      {
+        dispatch (o.property ());
+      }
+
+      void Capability::
+      post (Type&)
+      {
+      }
+
+      void Capability::
+      post (Type const&)
+      {
+      }
+
+      // ImplementationRequirement
+      //
+      //
+
+      void ImplementationRequirement::
+      traverse (Type& o)
+      {
+        pre (o);
+        resourceUsage (o);
+        resourcePort (o);
+        componentPort (o);
+        resourceType (o);
+        name (o);
+        property (o);
+        post (o);
+      }
+
+      void ImplementationRequirement::
+      traverse (Type const& o)
+      {
+        pre (o);
+        resourceUsage (o);
+        resourcePort (o);
+        componentPort (o);
+        resourceType (o);
+        name (o);
+        property (o);
+        post (o);
+      }
+
+      void ImplementationRequirement::
+      pre (Type&)
+      {
+      }
+
+      void ImplementationRequirement::
+      pre (Type const&)
+      {
+      }
+
+      void ImplementationRequirement::
+      resourceUsage (Type& o)
+      {
+        dispatch (o.resourceUsage ());
+      }
+
+      void ImplementationRequirement::
+      resourceUsage (Type const& o)
+      {
+        dispatch (o.resourceUsage ());
+      }
+
+      void ImplementationRequirement::
+      resourcePort (Type& o)
+      {
+        dispatch (o.resourcePort ());
+      }
+
+      void ImplementationRequirement::
+      resourcePort (Type const& o)
+      {
+        dispatch (o.resourcePort ());
+      }
+
+      void ImplementationRequirement::
+      componentPort (Type& o)
+      {
+        dispatch (o.componentPort ());
+      }
+
+      void ImplementationRequirement::
+      componentPort (Type const& o)
+      {
+        dispatch (o.componentPort ());
+      }
+
+      void ImplementationRequirement::
+      resourceType (Type& o)
+      {
+        dispatch (o.resourceType ());
+      }
+
+      void ImplementationRequirement::
+      resourceType (Type const& o)
+      {
+        dispatch (o.resourceType ());
+      }
+
+      void ImplementationRequirement::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void ImplementationRequirement::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void ImplementationRequirement::
+      property (Type& o)
+      {
+        dispatch (o.property ());
+      }
+
+      void ImplementationRequirement::
+      property (Type const& o)
+      {
+        dispatch (o.property ());
+      }
+
+      void ImplementationRequirement::
+      post (Type&)
+      {
+      }
+
+      void ImplementationRequirement::
+      post (Type const&)
+      {
+      }
+
+      // ComponentPackageReference
+      //
+      //
+
+      void ComponentPackageReference::
+      traverse (Type& o)
+      {
+        pre (o);
+        requiredUUID (o);
+        requiredName (o);
+        requiredType (o);
+        post (o);
+      }
+
+      void ComponentPackageReference::
+      traverse (Type const& o)
+      {
+        pre (o);
+        requiredUUID (o);
+        requiredName (o);
+        requiredType (o);
+        post (o);
+      }
+
+      void ComponentPackageReference::
+      pre (Type&)
+      {
+      }
+
+      void ComponentPackageReference::
+      pre (Type const&)
+      {
+      }
+
+      void ComponentPackageReference::
+      requiredUUID (Type& o)
+      {
+        dispatch (o.requiredUUID ());
+      }
+
+      void ComponentPackageReference::
+      requiredUUID (Type const& o)
+      {
+        dispatch (o.requiredUUID ());
+      }
+
+      void ComponentPackageReference::
+      requiredName (Type& o)
+      {
+        dispatch (o.requiredName ());
+      }
+
+      void ComponentPackageReference::
+      requiredName (Type const& o)
+      {
+        dispatch (o.requiredName ());
+      }
+
+      void ComponentPackageReference::
+      requiredType (Type& o)
+      {
+        dispatch (o.requiredType ());
+      }
+
+      void ComponentPackageReference::
+      requiredType (Type const& o)
+      {
+        dispatch (o.requiredType ());
+      }
+
+      void ComponentPackageReference::
+      post (Type&)
+      {
+      }
+
+      void ComponentPackageReference::
+      post (Type const&)
+      {
+      }
+
+      // SubcomponentPortEndpoint
+      //
+      //
+
+      void SubcomponentPortEndpoint::
+      traverse (Type& o)
+      {
+        pre (o);
+        portName (o);
+        instance (o);
+        post (o);
+      }
+
+      void SubcomponentPortEndpoint::
+      traverse (Type const& o)
+      {
+        pre (o);
+        portName (o);
+        instance (o);
+        post (o);
+      }
+
+      void SubcomponentPortEndpoint::
+      pre (Type&)
+      {
+      }
+
+      void SubcomponentPortEndpoint::
+      pre (Type const&)
+      {
+      }
+
+      void SubcomponentPortEndpoint::
+      portName (Type& o)
+      {
+        dispatch (o.portName ());
+      }
+
+      void SubcomponentPortEndpoint::
+      portName (Type const& o)
+      {
+        dispatch (o.portName ());
+      }
+
+      void SubcomponentPortEndpoint::
+      instance (Type& o)
+      {
+        dispatch (o.instance ());
+      }
+
+      void SubcomponentPortEndpoint::
+      instance (Type const& o)
+      {
+        dispatch (o.instance ());
+      }
+
+      void SubcomponentPortEndpoint::
+      post (Type&)
+      {
+      }
+
+      void SubcomponentPortEndpoint::
+      post (Type const&)
+      {
+      }
+
+      // AssemblyConnectionDescription
+      //
+      //
+
+      void AssemblyConnectionDescription::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        if (o.deployRequirement_p ()) deployRequirement (o);
+        else deployRequirement_none (o);
+        externalEndpoint (o);
+        internalEndpoint (o);
+        externalReference (o);
+        post (o);
+      }
+
+      void AssemblyConnectionDescription::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        if (o.deployRequirement_p ()) deployRequirement (o);
+        else deployRequirement_none (o);
+        externalEndpoint (o);
+        internalEndpoint (o);
+        externalReference (o);
+        post (o);
+      }
+
+      void AssemblyConnectionDescription::
+      pre (Type&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      pre (Type const&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void AssemblyConnectionDescription::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void AssemblyConnectionDescription::
+      deployRequirement (Type& o)
+      {
+        dispatch (o.deployRequirement ());
+      }
+
+      void AssemblyConnectionDescription::
+      deployRequirement (Type const& o)
+      {
+        dispatch (o.deployRequirement ());
+      }
+
+      void AssemblyConnectionDescription::
+      deployRequirement_none (Type&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      deployRequirement_none (Type const&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      externalEndpoint (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        AssemblyConnectionDescription::Type::externalEndpoint_iterator b (o.begin_externalEndpoint()), e (o.end_externalEndpoint());
+
+        if (b != e)
+        {
+          externalEndpoint_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) externalEndpoint_next (o);
+          }
+
+          externalEndpoint_post (o);
+        }
+
+        else externalEndpoint_none (o);
+      }
+
+      void AssemblyConnectionDescription::
+      externalEndpoint (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        AssemblyConnectionDescription::Type::externalEndpoint_const_iterator b (o.begin_externalEndpoint()), e (o.end_externalEndpoint());
+
+        if (b != e)
+        {
+          externalEndpoint_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) externalEndpoint_next (o);
+          }
+
+          externalEndpoint_post (o);
+        }
+
+        else externalEndpoint_none (o);
+      }
+
+      void AssemblyConnectionDescription::
+      externalEndpoint_pre (Type&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      externalEndpoint_pre (Type const&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      externalEndpoint_next (Type&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      externalEndpoint_next (Type const&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      externalEndpoint_post (Type&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      externalEndpoint_post (Type const&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      externalEndpoint_none (Type&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      externalEndpoint_none (Type const&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      internalEndpoint (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        AssemblyConnectionDescription::Type::internalEndpoint_iterator b (o.begin_internalEndpoint()), e (o.end_internalEndpoint());
+
+        if (b != e)
+        {
+          internalEndpoint_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) internalEndpoint_next (o);
+          }
+
+          internalEndpoint_post (o);
+        }
+
+        else internalEndpoint_none (o);
+      }
+
+      void AssemblyConnectionDescription::
+      internalEndpoint (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        AssemblyConnectionDescription::Type::internalEndpoint_const_iterator b (o.begin_internalEndpoint()), e (o.end_internalEndpoint());
+
+        if (b != e)
+        {
+          internalEndpoint_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) internalEndpoint_next (o);
+          }
+
+          internalEndpoint_post (o);
+        }
+
+        else internalEndpoint_none (o);
+      }
+
+      void AssemblyConnectionDescription::
+      internalEndpoint_pre (Type&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      internalEndpoint_pre (Type const&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      internalEndpoint_next (Type&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      internalEndpoint_next (Type const&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      internalEndpoint_post (Type&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      internalEndpoint_post (Type const&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      internalEndpoint_none (Type&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      internalEndpoint_none (Type const&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      externalReference (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        AssemblyConnectionDescription::Type::externalReference_iterator b (o.begin_externalReference()), e (o.end_externalReference());
+
+        if (b != e)
+        {
+          externalReference_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) externalReference_next (o);
+          }
+
+          externalReference_post (o);
+        }
+
+        else externalReference_none (o);
+      }
+
+      void AssemblyConnectionDescription::
+      externalReference (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        AssemblyConnectionDescription::Type::externalReference_const_iterator b (o.begin_externalReference()), e (o.end_externalReference());
+
+        if (b != e)
+        {
+          externalReference_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) externalReference_next (o);
+          }
+
+          externalReference_post (o);
+        }
+
+        else externalReference_none (o);
+      }
+
+      void AssemblyConnectionDescription::
+      externalReference_pre (Type&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      externalReference_pre (Type const&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      externalReference_next (Type&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      externalReference_next (Type const&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      externalReference_post (Type&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      externalReference_post (Type const&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      externalReference_none (Type&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      externalReference_none (Type const&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      post (Type&)
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      post (Type const&)
+      {
+      }
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Writer
+    {
+      // TCKind
+      //
+      //
+
+      TCKind::
+      TCKind (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      TCKind::
+      TCKind ()
+      {
+      }
+
+      void TCKind::
+      traverse (Type const& o)
+      {
+        ::std::basic_string< char > s;
+
+        if (o == ::CIAO::Config_Handlers::TCKind::tk_null) s = "tk_null";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_void) s = "tk_void";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_short) s = "tk_short";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_long) s = "tk_long";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_ushort) s = "tk_ushort";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_ulong) s = "tk_ulong";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_float) s = "tk_float";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_double) s = "tk_double";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_boolean) s = "tk_boolean";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_char) s = "tk_char";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_octet) s = "tk_octet";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_any) s = "tk_any";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_TypeCode) s = "tk_TypeCode";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_Principal) s = "tk_Principal";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_objref) s = "tk_objref";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_struct) s = "tk_struct";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_union) s = "tk_union";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_enum) s = "tk_enum";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_string) s = "tk_string";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_sequence) s = "tk_sequence";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_array) s = "tk_array";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_alias) s = "tk_alias";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_except) s = "tk_except";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_longlong) s = "tk_longlong";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_ulonglong) s = "tk_ulonglong";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_longdouble) s = "tk_longdouble";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_wchar) s = "tk_wchar";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_wstring) s = "tk_wstring";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_wfixed) s = "tk_wfixed";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_value) s = "tk_value";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_value_box) s = "tk_value_box";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_native) s = "tk_native";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_abstract_interface) s = "tk_abstract_interface";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_local_interface) s = "tk_local_interface";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_component) s = "tk_component";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_home) s = "tk_home";
+        else if (o == ::CIAO::Config_Handlers::TCKind::tk_event) s = "tk_event";
+        else 
+        {
+        }
+
+        if (::XSCRT::XML::Attribute< char >* a = attr_ ())
+        {
+          a->value (s);
+        }
+
+        else
+        {
+          top_().value (s);
+        }
+      }
+
+      // DataType
+      //
+      //
+
+      DataType::
+      DataType (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      DataType::
+      DataType ()
+      {
+      }
+
+      void DataType::
+      traverse (Type const& o)
+      {
+        Traversal::DataType::traverse (o);
+      }
+
+      void DataType::
+      kind (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("kind", top_ ()));
+        Traversal::DataType::kind (o);
+        pop_ ();
+      }
+
+      // DataValue
+      //
+      //
+
+      DataValue::
+      DataValue (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      DataValue::
+      DataValue ()
+      {
+      }
+
+      void DataValue::
+      traverse (Type const& o)
+      {
+        Traversal::DataValue::traverse (o);
+      }
+
+      void DataValue::
+      short_ (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("short", top_ ()));
+        Traversal::DataValue::short_ (o);
+        pop_ ();
+      }
+
+      void DataValue::
+      long_ (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("long", top_ ()));
+        Traversal::DataValue::long_ (o);
+        pop_ ();
+      }
+
+      void DataValue::
+      ushort (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("ushort", top_ ()));
+        Traversal::DataValue::ushort (o);
+        pop_ ();
+      }
+
+      void DataValue::
+      ulong (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("ulong", top_ ()));
+        Traversal::DataValue::ulong (o);
+        pop_ ();
+      }
+
+      void DataValue::
+      float_ (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("float", top_ ()));
+        Traversal::DataValue::float_ (o);
+        pop_ ();
+      }
+
+      void DataValue::
+      double_ (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("double", top_ ()));
+        Traversal::DataValue::double_ (o);
+        pop_ ();
+      }
+
+      void DataValue::
+      boolean (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("boolean", top_ ()));
+        Traversal::DataValue::boolean (o);
+        pop_ ();
+      }
+
+      void DataValue::
+      octet (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("octet", top_ ()));
+        Traversal::DataValue::octet (o);
+        pop_ ();
+      }
+
+      void DataValue::
+      objref (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("objref", top_ ()));
+        Traversal::DataValue::objref (o);
+        pop_ ();
+      }
+
+      void DataValue::
+      enum_ (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("enum", top_ ()));
+        Traversal::DataValue::enum_ (o);
+        pop_ ();
+      }
+
+      void DataValue::
+      string (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("string", top_ ()));
+        Traversal::DataValue::string (o);
+        pop_ ();
+      }
+
+      void DataValue::
+      longlong (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("longlong", top_ ()));
+        Traversal::DataValue::longlong (o);
+        pop_ ();
+      }
+
+      void DataValue::
+      ulonglong (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("ulonglong", top_ ()));
+        Traversal::DataValue::ulonglong (o);
+        pop_ ();
+      }
+
+      void DataValue::
+      longdouble (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("longdouble", top_ ()));
+        Traversal::DataValue::longdouble (o);
+        pop_ ();
+      }
+
+      void DataValue::
+      fixed (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("fixed", top_ ()));
+        Traversal::DataValue::fixed (o);
+        pop_ ();
+      }
+
+      void DataValue::
+      typecode (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("typecode", top_ ()));
+        Traversal::DataValue::typecode (o);
+        pop_ ();
+      }
+
+      // Any
+      //
+      //
+
+      Any::
+      Any (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      Any::
+      Any ()
+      {
+      }
+
+      void Any::
+      traverse (Type const& o)
+      {
+        Traversal::Any::traverse (o);
+      }
+
+      void Any::
+      type (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("type", top_ ()));
+        Traversal::Any::type (o);
+        pop_ ();
+      }
+
+      void Any::
+      value (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("value", top_ ()));
+        Traversal::Any::value (o);
+        pop_ ();
+      }
+
+      // Property
+      //
+      //
+
+      Property::
+      Property (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      Property::
+      Property ()
+      {
+      }
+
+      void Property::
+      traverse (Type const& o)
+      {
+        Traversal::Property::traverse (o);
+      }
+
+      void Property::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("name", top_ ()));
+        Traversal::Property::name (o);
+        pop_ ();
+      }
+
+      void Property::
+      value (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("value", top_ ()));
+        Traversal::Property::value (o);
+        pop_ ();
+      }
+
+      // Node
+      //
+      //
+
+      Node::
+      Node (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      Node::
+      Node ()
+      {
+      }
+
+      void Node::
+      traverse (Type const& o)
+      {
+        Traversal::Node::traverse (o);
+      }
+
+      void Node::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("name", top_ ()));
+        Traversal::Node::name (o);
+        pop_ ();
+      }
+
+      void Node::
+      label (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("label", top_ ()));
+        Traversal::Node::label (o);
+        pop_ ();
+      }
+
+      // SatisfierPropertyKind
+      //
+      //
+
+      SatisfierPropertyKind::
+      SatisfierPropertyKind (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      SatisfierPropertyKind::
+      SatisfierPropertyKind ()
+      {
+      }
+
+      void SatisfierPropertyKind::
+      traverse (Type const& o)
+      {
+        ::std::basic_string< char > s;
+
+        if (o == ::CIAO::Config_Handlers::SatisfierPropertyKind::Quantity) s = "Quantity";
+        else if (o == ::CIAO::Config_Handlers::SatisfierPropertyKind::Capacity) s = "Capacity";
+        else if (o == ::CIAO::Config_Handlers::SatisfierPropertyKind::Minimum) s = "Minimum";
+        else if (o == ::CIAO::Config_Handlers::SatisfierPropertyKind::Maximum) s = "Maximum";
+        else if (o == ::CIAO::Config_Handlers::SatisfierPropertyKind::Attribute) s = "Attribute";
+        else if (o == ::CIAO::Config_Handlers::SatisfierPropertyKind::Selection) s = "Selection";
+        else 
+        {
+        }
+
+        if (::XSCRT::XML::Attribute< char >* a = attr_ ())
+        {
+          a->value (s);
+        }
+
+        else
+        {
+          top_().value (s);
+        }
+      }
+
+      // SatisfierProperty
+      //
+      //
+
+      SatisfierProperty::
+      SatisfierProperty (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      SatisfierProperty::
+      SatisfierProperty ()
+      {
+      }
+
+      void SatisfierProperty::
+      traverse (Type const& o)
+      {
+        Traversal::SatisfierProperty::traverse (o);
+      }
+
+      void SatisfierProperty::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("name", top_ ()));
+        Traversal::SatisfierProperty::name (o);
+        pop_ ();
+      }
+
+      void SatisfierProperty::
+      kind (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("kind", top_ ()));
+        Traversal::SatisfierProperty::kind (o);
+        pop_ ();
+      }
+
+      void SatisfierProperty::
+      value (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("value", top_ ()));
+        Traversal::SatisfierProperty::value (o);
+        pop_ ();
+      }
+
+      // Resource
+      //
+      //
+
+      Resource::
+      Resource (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      Resource::
+      Resource ()
+      {
+      }
+
+      void Resource::
+      traverse (Type const& o)
+      {
+        Traversal::Resource::traverse (o);
+      }
+
+      void Resource::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("name", top_ ()));
+        Traversal::Resource::name (o);
+        pop_ ();
+      }
+
+      void Resource::
+      resourceType (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("resourceType", top_ ()));
+        Traversal::Resource::resourceType (o);
+        pop_ ();
+      }
+
+      void Resource::
+      property (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("property", top_ ()));
+        Traversal::Resource::property (o);
+        pop_ ();
+      }
+
+      // SharedResource
+      //
+      //
+
+      SharedResource::
+      SharedResource (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      SharedResource::
+      SharedResource ()
+      {
+      }
+
+      void SharedResource::
+      traverse (Type const& o)
+      {
+        Traversal::SharedResource::traverse (o);
+      }
+
+      void SharedResource::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("name", top_ ()));
+        Traversal::SharedResource::name (o);
+        pop_ ();
+      }
+
+      void SharedResource::
+      resourceType (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("resourceType", top_ ()));
+        Traversal::SharedResource::resourceType (o);
+        pop_ ();
+      }
+
+      void SharedResource::
+      node (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("node", top_ ()));
+        Traversal::SharedResource::node (o);
+        pop_ ();
+      }
+
+      void SharedResource::
+      property (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("property", top_ ()));
+        Traversal::SharedResource::property (o);
+        pop_ ();
+      }
+
+      // Requirement
+      //
+      //
+
+      Requirement::
+      Requirement (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      Requirement::
+      Requirement ()
+      {
+      }
+
+      void Requirement::
+      traverse (Type const& o)
+      {
+        Traversal::Requirement::traverse (o);
+      }
+
+      void Requirement::
+      resourceType (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("resourceType", top_ ()));
+        Traversal::Requirement::resourceType (o);
+        pop_ ();
+      }
+
+      void Requirement::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("name", top_ ()));
+        Traversal::Requirement::name (o);
+        pop_ ();
+      }
+
+      void Requirement::
+      property (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("property", top_ ()));
+        Traversal::Requirement::property (o);
+        pop_ ();
+      }
+
+      // ResourceDeploymentDescription
+      //
+      //
+
+      ResourceDeploymentDescription::
+      ResourceDeploymentDescription (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      ResourceDeploymentDescription::
+      ResourceDeploymentDescription ()
+      {
+      }
+
+      void ResourceDeploymentDescription::
+      traverse (Type const& o)
+      {
+        Traversal::ResourceDeploymentDescription::traverse (o);
+      }
+
+      void ResourceDeploymentDescription::
+      requirementName (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("requirementName", top_ ()));
+        Traversal::ResourceDeploymentDescription::requirementName (o);
+        pop_ ();
+      }
+
+      void ResourceDeploymentDescription::
+      resourceName (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("resourceName", top_ ()));
+        Traversal::ResourceDeploymentDescription::resourceName (o);
+        pop_ ();
+      }
+
+      void ResourceDeploymentDescription::
+      resourceValue (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("resourceValue", top_ ()));
+        Traversal::ResourceDeploymentDescription::resourceValue (o);
+        pop_ ();
+      }
+
+      // ArtifactDeploymentDescription
+      //
+      //
+
+      ArtifactDeploymentDescription::
+      ArtifactDeploymentDescription (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      ArtifactDeploymentDescription::
+      ArtifactDeploymentDescription ()
+      {
+      }
+
+      void ArtifactDeploymentDescription::
+      traverse (Type const& o)
+      {
+        Traversal::ArtifactDeploymentDescription::traverse (o);
+      }
+
+      void ArtifactDeploymentDescription::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("name", top_ ()));
+        Traversal::ArtifactDeploymentDescription::name (o);
+        pop_ ();
+      }
+
+      void ArtifactDeploymentDescription::
+      source_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< char > ("source", top_ ()));
+      }
+
+      void ArtifactDeploymentDescription::
+      source_next (Type const& o)
+      {
+        source_post (o);
+        source_pre (o);
+      }
+
+      void ArtifactDeploymentDescription::
+      source_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void ArtifactDeploymentDescription::
+      node (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("node", top_ ()));
+        Traversal::ArtifactDeploymentDescription::node (o);
+        pop_ ();
+      }
+
+      void ArtifactDeploymentDescription::
+      location_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< char > ("location", top_ ()));
+      }
+
+      void ArtifactDeploymentDescription::
+      location_next (Type const& o)
+      {
+        location_post (o);
+        location_pre (o);
+      }
+
+      void ArtifactDeploymentDescription::
+      location_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void ArtifactDeploymentDescription::
+      execParameter_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< char > ("execParameter", top_ ()));
+      }
+
+      void ArtifactDeploymentDescription::
+      execParameter_next (Type const& o)
+      {
+        execParameter_post (o);
+        execParameter_pre (o);
+      }
+
+      void ArtifactDeploymentDescription::
+      execParameter_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void ArtifactDeploymentDescription::
+      deployRequirement_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< char > ("deployRequirement", top_ ()));
+      }
+
+      void ArtifactDeploymentDescription::
+      deployRequirement_next (Type const& o)
+      {
+        deployRequirement_post (o);
+        deployRequirement_pre (o);
+      }
+
+      void ArtifactDeploymentDescription::
+      deployRequirement_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void ArtifactDeploymentDescription::
+      deployedResource_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< char > ("deployedResource", top_ ()));
+      }
+
+      void ArtifactDeploymentDescription::
+      deployedResource_next (Type const& o)
+      {
+        deployedResource_post (o);
+        deployedResource_pre (o);
+      }
+
+      void ArtifactDeploymentDescription::
+      deployedResource_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void ArtifactDeploymentDescription::
+      id (Type const& o)
+      {
+        ::XSCRT::XML::Attribute< char > a ("id", "", top_ ());
+        attr_ (&a);
+        Traversal::ArtifactDeploymentDescription::id (o);
+        attr_ (0);
+      }
+
+      // MonolithicDeploymentDescription
+      //
+      //
+
+      MonolithicDeploymentDescription::
+      MonolithicDeploymentDescription (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      MonolithicDeploymentDescription::
+      MonolithicDeploymentDescription ()
+      {
+      }
+
+      void MonolithicDeploymentDescription::
+      traverse (Type const& o)
+      {
+        Traversal::MonolithicDeploymentDescription::traverse (o);
+      }
+
+      void MonolithicDeploymentDescription::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("name", top_ ()));
+        Traversal::MonolithicDeploymentDescription::name (o);
+        pop_ ();
+      }
+
+      void MonolithicDeploymentDescription::
+      source_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< char > ("source", top_ ()));
+      }
+
+      void MonolithicDeploymentDescription::
+      source_next (Type const& o)
+      {
+        source_post (o);
+        source_pre (o);
+      }
+
+      void MonolithicDeploymentDescription::
+      source_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void MonolithicDeploymentDescription::
+      artifact_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< char > ("artifact", top_ ()));
+      }
+
+      void MonolithicDeploymentDescription::
+      artifact_next (Type const& o)
+      {
+        artifact_post (o);
+        artifact_pre (o);
+      }
+
+      void MonolithicDeploymentDescription::
+      artifact_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void MonolithicDeploymentDescription::
+      execParameter_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< char > ("execParameter", top_ ()));
+      }
+
+      void MonolithicDeploymentDescription::
+      execParameter_next (Type const& o)
+      {
+        execParameter_post (o);
+        execParameter_pre (o);
+      }
+
+      void MonolithicDeploymentDescription::
+      execParameter_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void MonolithicDeploymentDescription::
+      deployRequirement_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< char > ("deployRequirement", top_ ()));
+      }
+
+      void MonolithicDeploymentDescription::
+      deployRequirement_next (Type const& o)
+      {
+        deployRequirement_post (o);
+        deployRequirement_pre (o);
+      }
+
+      void MonolithicDeploymentDescription::
+      deployRequirement_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void MonolithicDeploymentDescription::
+      id (Type const& o)
+      {
+        ::XSCRT::XML::Attribute< char > a ("id", "", top_ ());
+        attr_ (&a);
+        Traversal::MonolithicDeploymentDescription::id (o);
+        attr_ (0);
+      }
+
+      // ResourceUsageKind
+      //
+      //
+
+      ResourceUsageKind::
+      ResourceUsageKind (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      ResourceUsageKind::
+      ResourceUsageKind ()
+      {
+      }
+
+      void ResourceUsageKind::
+      traverse (Type const& o)
+      {
+        ::std::basic_string< char > s;
+
+        if (o == ::CIAO::Config_Handlers::ResourceUsageKind::None) s = "None";
+        else if (o == ::CIAO::Config_Handlers::ResourceUsageKind::InstanceUsesResource) s = "InstanceUsesResource";
+        else if (o == ::CIAO::Config_Handlers::ResourceUsageKind::ResourceUsesInstance) s = "ResourceUsesInstance";
+        else if (o == ::CIAO::Config_Handlers::ResourceUsageKind::PortUsesResource) s = "PortUsesResource";
+        else if (o == ::CIAO::Config_Handlers::ResourceUsageKind::ResourceUsesPort) s = "ResourceUsesPort";
+        else 
+        {
+        }
+
+        if (::XSCRT::XML::Attribute< char >* a = attr_ ())
+        {
+          a->value (s);
+        }
+
+        else
+        {
+          top_().value (s);
+        }
+      }
+
+      // InstanceResourceDeploymentDescription
+      //
+      //
+
+      InstanceResourceDeploymentDescription::
+      InstanceResourceDeploymentDescription (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      InstanceResourceDeploymentDescription::
+      InstanceResourceDeploymentDescription ()
+      {
+      }
+
+      void InstanceResourceDeploymentDescription::
+      traverse (Type const& o)
+      {
+        Traversal::InstanceResourceDeploymentDescription::traverse (o);
+      }
+
+      void InstanceResourceDeploymentDescription::
+      resourceUsage (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("resourceUsage", top_ ()));
+        Traversal::InstanceResourceDeploymentDescription::resourceUsage (o);
+        pop_ ();
+      }
+
+      void InstanceResourceDeploymentDescription::
+      requirementName (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("requirementName", top_ ()));
+        Traversal::InstanceResourceDeploymentDescription::requirementName (o);
+        pop_ ();
+      }
+
+      void InstanceResourceDeploymentDescription::
+      resourceName (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("resourceName", top_ ()));
+        Traversal::InstanceResourceDeploymentDescription::resourceName (o);
+        pop_ ();
+      }
+
+      void InstanceResourceDeploymentDescription::
+      resourceValue (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("resourceValue", top_ ()));
+        Traversal::InstanceResourceDeploymentDescription::resourceValue (o);
+        pop_ ();
+      }
+
+      // InstanceDeploymentDescription
+      //
+      //
+
+      InstanceDeploymentDescription::
+      InstanceDeploymentDescription (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      InstanceDeploymentDescription::
+      InstanceDeploymentDescription ()
+      {
+      }
+
+      void InstanceDeploymentDescription::
+      traverse (Type const& o)
+      {
+        Traversal::InstanceDeploymentDescription::traverse (o);
+      }
+
+      void InstanceDeploymentDescription::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("name", top_ ()));
+        Traversal::InstanceDeploymentDescription::name (o);
+        pop_ ();
+      }
+
+      void InstanceDeploymentDescription::
+      node (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("node", top_ ()));
+        Traversal::InstanceDeploymentDescription::node (o);
+        pop_ ();
+      }
+
+      void InstanceDeploymentDescription::
+      source (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("source", top_ ()));
+        Traversal::InstanceDeploymentDescription::source (o);
+        pop_ ();
+      }
+
+      void InstanceDeploymentDescription::
+      implementation (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("implementation", top_ ()));
+        Traversal::InstanceDeploymentDescription::implementation (o);
+        pop_ ();
+      }
+
+      void InstanceDeploymentDescription::
+      configProperty_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< char > ("configProperty", top_ ()));
+      }
+
+      void InstanceDeploymentDescription::
+      configProperty_next (Type const& o)
+      {
+        configProperty_post (o);
+        configProperty_pre (o);
+      }
+
+      void InstanceDeploymentDescription::
+      configProperty_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void InstanceDeploymentDescription::
+      deployedResource (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("deployedResource", top_ ()));
+        Traversal::InstanceDeploymentDescription::deployedResource (o);
+        pop_ ();
+      }
+
+      void InstanceDeploymentDescription::
+      deployedSharedResource (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("deployedSharedResource", top_ ()));
+        Traversal::InstanceDeploymentDescription::deployedSharedResource (o);
+        pop_ ();
+      }
+
+      void InstanceDeploymentDescription::
+      id (Type const& o)
+      {
+        ::XSCRT::XML::Attribute< char > a ("id", "", top_ ());
+        attr_ (&a);
+        Traversal::InstanceDeploymentDescription::id (o);
+        attr_ (0);
+      }
+
+      // CCMComponentPortKind
+      //
+      //
+
+      CCMComponentPortKind::
+      CCMComponentPortKind (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      CCMComponentPortKind::
+      CCMComponentPortKind ()
+      {
+      }
+
+      void CCMComponentPortKind::
+      traverse (Type const& o)
+      {
+        ::std::basic_string< char > s;
+
+        if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::Facet) s = "Facet";
+        else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::SimplexReceptacle) s = "SimplexReceptacle";
+        else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::MultiplexReceptacle) s = "MultiplexReceptacle";
+        else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::EventEmitter) s = "EventEmitter";
+        else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::EventPublisher) s = "EventPublisher";
+        else if (o == ::CIAO::Config_Handlers::CCMComponentPortKind::EventConsumer) s = "EventConsumer";
+        else 
+        {
+        }
+
+        if (::XSCRT::XML::Attribute< char >* a = attr_ ())
+        {
+          a->value (s);
+        }
+
+        else
+        {
+          top_().value (s);
+        }
+      }
+
+      // ComponentPortDescription
+      //
+      //
+
+      ComponentPortDescription::
+      ComponentPortDescription (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      ComponentPortDescription::
+      ComponentPortDescription ()
+      {
+      }
+
+      void ComponentPortDescription::
+      traverse (Type const& o)
+      {
+        Traversal::ComponentPortDescription::traverse (o);
+      }
+
+      void ComponentPortDescription::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("name", top_ ()));
+        Traversal::ComponentPortDescription::name (o);
+        pop_ ();
+      }
+
+      void ComponentPortDescription::
+      specificType (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("specificType", top_ ()));
+        Traversal::ComponentPortDescription::specificType (o);
+        pop_ ();
+      }
+
+      void ComponentPortDescription::
+      supportedType (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("supportedType", top_ ()));
+        Traversal::ComponentPortDescription::supportedType (o);
+        pop_ ();
+      }
+
+      void ComponentPortDescription::
+      provider (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("provider", top_ ()));
+        Traversal::ComponentPortDescription::provider (o);
+        pop_ ();
+      }
+
+      void ComponentPortDescription::
+      exclusiveProvider (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("exclusiveProvider", top_ ()));
+        Traversal::ComponentPortDescription::exclusiveProvider (o);
+        pop_ ();
+      }
+
+      void ComponentPortDescription::
+      exclusiveUser (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("exclusiveUser", top_ ()));
+        Traversal::ComponentPortDescription::exclusiveUser (o);
+        pop_ ();
+      }
+
+      void ComponentPortDescription::
+      optional (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("optional", top_ ()));
+        Traversal::ComponentPortDescription::optional (o);
+        pop_ ();
+      }
+
+      void ComponentPortDescription::
+      kind (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("kind", top_ ()));
+        Traversal::ComponentPortDescription::kind (o);
+        pop_ ();
+      }
+
+      // ComponentPropertyDescription
+      //
+      //
+
+      ComponentPropertyDescription::
+      ComponentPropertyDescription (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      ComponentPropertyDescription::
+      ComponentPropertyDescription ()
+      {
+      }
+
+      void ComponentPropertyDescription::
+      traverse (Type const& o)
+      {
+        Traversal::ComponentPropertyDescription::traverse (o);
+      }
+
+      void ComponentPropertyDescription::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("name", top_ ()));
+        Traversal::ComponentPropertyDescription::name (o);
+        pop_ ();
+      }
+
+      void ComponentPropertyDescription::
+      type (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("type", top_ ()));
+        Traversal::ComponentPropertyDescription::type (o);
+        pop_ ();
+      }
+
+      // ComponentExternalPortEndpoint
+      //
+      //
+
+      ComponentExternalPortEndpoint::
+      ComponentExternalPortEndpoint (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      ComponentExternalPortEndpoint::
+      ComponentExternalPortEndpoint ()
+      {
+      }
+
+      void ComponentExternalPortEndpoint::
+      traverse (Type const& o)
+      {
+        Traversal::ComponentExternalPortEndpoint::traverse (o);
+      }
+
+      void ComponentExternalPortEndpoint::
+      portName (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("portName", top_ ()));
+        Traversal::ComponentExternalPortEndpoint::portName (o);
+        pop_ ();
+      }
+
+      // PlanSubcomponentPortEndpoint
+      //
+      //
+
+      PlanSubcomponentPortEndpoint::
+      PlanSubcomponentPortEndpoint (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      PlanSubcomponentPortEndpoint::
+      PlanSubcomponentPortEndpoint ()
+      {
+      }
+
+      void PlanSubcomponentPortEndpoint::
+      traverse (Type const& o)
+      {
+        Traversal::PlanSubcomponentPortEndpoint::traverse (o);
+      }
+
+      void PlanSubcomponentPortEndpoint::
+      portName (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("portName", top_ ()));
+        Traversal::PlanSubcomponentPortEndpoint::portName (o);
+        pop_ ();
+      }
+
+      void PlanSubcomponentPortEndpoint::
+      provider (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("provider", top_ ()));
+        Traversal::PlanSubcomponentPortEndpoint::provider (o);
+        pop_ ();
+      }
+
+      void PlanSubcomponentPortEndpoint::
+      kind (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("kind", top_ ()));
+        Traversal::PlanSubcomponentPortEndpoint::kind (o);
+        pop_ ();
+      }
+
+      void PlanSubcomponentPortEndpoint::
+      instance (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("instance", top_ ()));
+        Traversal::PlanSubcomponentPortEndpoint::instance (o);
+        pop_ ();
+      }
+
+      // ExternalReferenceEndpoint
+      //
+      //
+
+      ExternalReferenceEndpoint::
+      ExternalReferenceEndpoint (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      ExternalReferenceEndpoint::
+      ExternalReferenceEndpoint ()
+      {
+      }
+
+      void ExternalReferenceEndpoint::
+      traverse (Type const& o)
+      {
+        Traversal::ExternalReferenceEndpoint::traverse (o);
+      }
+
+      void ExternalReferenceEndpoint::
+      location (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("location", top_ ()));
+        Traversal::ExternalReferenceEndpoint::location (o);
+        pop_ ();
+      }
+
+      // ConnectionResourceDeploymentDescription
+      //
+      //
+
+      ConnectionResourceDeploymentDescription::
+      ConnectionResourceDeploymentDescription (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      ConnectionResourceDeploymentDescription::
+      ConnectionResourceDeploymentDescription ()
+      {
+      }
+
+      void ConnectionResourceDeploymentDescription::
+      traverse (Type const& o)
+      {
+        Traversal::ConnectionResourceDeploymentDescription::traverse (o);
+      }
+
+      void ConnectionResourceDeploymentDescription::
+      targetName (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("targetName", top_ ()));
+        Traversal::ConnectionResourceDeploymentDescription::targetName (o);
+        pop_ ();
+      }
+
+      void ConnectionResourceDeploymentDescription::
+      requirementName (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("requirementName", top_ ()));
+        Traversal::ConnectionResourceDeploymentDescription::requirementName (o);
+        pop_ ();
+      }
+
+      void ConnectionResourceDeploymentDescription::
+      resourceName (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("resourceName", top_ ()));
+        Traversal::ConnectionResourceDeploymentDescription::resourceName (o);
+        pop_ ();
+      }
+
+      void ConnectionResourceDeploymentDescription::
+      resourceValue (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("resourceValue", top_ ()));
+        Traversal::ConnectionResourceDeploymentDescription::resourceValue (o);
+        pop_ ();
+      }
+
+      // PlanConnectionDescription
+      //
+      //
+
+      PlanConnectionDescription::
+      PlanConnectionDescription (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      PlanConnectionDescription::
+      PlanConnectionDescription ()
+      {
+      }
+
+      void PlanConnectionDescription::
+      traverse (Type const& o)
+      {
+        Traversal::PlanConnectionDescription::traverse (o);
+      }
+
+      void PlanConnectionDescription::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("name", top_ ()));
+        Traversal::PlanConnectionDescription::name (o);
+        pop_ ();
+      }
+
+      void PlanConnectionDescription::
+      source (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("source", top_ ()));
+        Traversal::PlanConnectionDescription::source (o);
+        pop_ ();
+      }
+
+      void PlanConnectionDescription::
+      deployRequirement_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< char > ("deployRequirement", top_ ()));
+      }
+
+      void PlanConnectionDescription::
+      deployRequirement_next (Type const& o)
+      {
+        deployRequirement_post (o);
+        deployRequirement_pre (o);
+      }
+
+      void PlanConnectionDescription::
+      deployRequirement_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void PlanConnectionDescription::
+      externalEndpoint_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< char > ("externalEndpoint", top_ ()));
+      }
+
+      void PlanConnectionDescription::
+      externalEndpoint_next (Type const& o)
+      {
+        externalEndpoint_post (o);
+        externalEndpoint_pre (o);
+      }
+
+      void PlanConnectionDescription::
+      externalEndpoint_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void PlanConnectionDescription::
+      internalEndpoint_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< char > ("internalEndpoint", top_ ()));
+      }
+
+      void PlanConnectionDescription::
+      internalEndpoint_next (Type const& o)
+      {
+        internalEndpoint_post (o);
+        internalEndpoint_pre (o);
+      }
+
+      void PlanConnectionDescription::
+      internalEndpoint_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void PlanConnectionDescription::
+      externalReference_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< char > ("externalReference", top_ ()));
+      }
+
+      void PlanConnectionDescription::
+      externalReference_next (Type const& o)
+      {
+        externalReference_post (o);
+        externalReference_pre (o);
+      }
+
+      void PlanConnectionDescription::
+      externalReference_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void PlanConnectionDescription::
+      deployedResource_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< char > ("deployedResource", top_ ()));
+      }
+
+      void PlanConnectionDescription::
+      deployedResource_next (Type const& o)
+      {
+        deployedResource_post (o);
+        deployedResource_pre (o);
+      }
+
+      void PlanConnectionDescription::
+      deployedResource_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      // ImplementationDependency
+      //
+      //
+
+      ImplementationDependency::
+      ImplementationDependency (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      ImplementationDependency::
+      ImplementationDependency ()
+      {
+      }
+
+      void ImplementationDependency::
+      traverse (Type const& o)
+      {
+        Traversal::ImplementationDependency::traverse (o);
+      }
+
+      void ImplementationDependency::
+      requiredType (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("requiredType", top_ ()));
+        Traversal::ImplementationDependency::requiredType (o);
+        pop_ ();
+      }
+
+      // Capability
+      //
+      //
+
+      Capability::
+      Capability (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      Capability::
+      Capability ()
+      {
+      }
+
+      void Capability::
+      traverse (Type const& o)
+      {
+        Traversal::Capability::traverse (o);
+      }
+
+      void Capability::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("name", top_ ()));
+        Traversal::Capability::name (o);
+        pop_ ();
+      }
+
+      void Capability::
+      resourceType (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("resourceType", top_ ()));
+        Traversal::Capability::resourceType (o);
+        pop_ ();
+      }
+
+      void Capability::
+      property (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("property", top_ ()));
+        Traversal::Capability::property (o);
+        pop_ ();
+      }
+
+      // ImplementationRequirement
+      //
+      //
+
+      ImplementationRequirement::
+      ImplementationRequirement (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      ImplementationRequirement::
+      ImplementationRequirement ()
+      {
+      }
+
+      void ImplementationRequirement::
+      traverse (Type const& o)
+      {
+        Traversal::ImplementationRequirement::traverse (o);
+      }
+
+      void ImplementationRequirement::
+      resourceUsage (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("resourceUsage", top_ ()));
+        Traversal::ImplementationRequirement::resourceUsage (o);
+        pop_ ();
+      }
+
+      void ImplementationRequirement::
+      resourcePort (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("resourcePort", top_ ()));
+        Traversal::ImplementationRequirement::resourcePort (o);
+        pop_ ();
+      }
+
+      void ImplementationRequirement::
+      componentPort (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("componentPort", top_ ()));
+        Traversal::ImplementationRequirement::componentPort (o);
+        pop_ ();
+      }
+
+      void ImplementationRequirement::
+      resourceType (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("resourceType", top_ ()));
+        Traversal::ImplementationRequirement::resourceType (o);
+        pop_ ();
+      }
+
+      void ImplementationRequirement::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("name", top_ ()));
+        Traversal::ImplementationRequirement::name (o);
+        pop_ ();
+      }
+
+      void ImplementationRequirement::
+      property (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("property", top_ ()));
+        Traversal::ImplementationRequirement::property (o);
+        pop_ ();
+      }
+
+      // ComponentPackageReference
+      //
+      //
+
+      ComponentPackageReference::
+      ComponentPackageReference (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      ComponentPackageReference::
+      ComponentPackageReference ()
+      {
+      }
+
+      void ComponentPackageReference::
+      traverse (Type const& o)
+      {
+        Traversal::ComponentPackageReference::traverse (o);
+      }
+
+      void ComponentPackageReference::
+      requiredUUID (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("requiredUUID", top_ ()));
+        Traversal::ComponentPackageReference::requiredUUID (o);
+        pop_ ();
+      }
+
+      void ComponentPackageReference::
+      requiredName (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("requiredName", top_ ()));
+        Traversal::ComponentPackageReference::requiredName (o);
+        pop_ ();
+      }
+
+      void ComponentPackageReference::
+      requiredType (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("requiredType", top_ ()));
+        Traversal::ComponentPackageReference::requiredType (o);
+        pop_ ();
+      }
+
+      // SubcomponentPortEndpoint
+      //
+      //
+
+      SubcomponentPortEndpoint::
+      SubcomponentPortEndpoint (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      SubcomponentPortEndpoint::
+      SubcomponentPortEndpoint ()
+      {
+      }
+
+      void SubcomponentPortEndpoint::
+      traverse (Type const& o)
+      {
+        Traversal::SubcomponentPortEndpoint::traverse (o);
+      }
+
+      void SubcomponentPortEndpoint::
+      portName (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("portName", top_ ()));
+        Traversal::SubcomponentPortEndpoint::portName (o);
+        pop_ ();
+      }
+
+      void SubcomponentPortEndpoint::
+      instance (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("instance", top_ ()));
+        Traversal::SubcomponentPortEndpoint::instance (o);
+        pop_ ();
+      }
+
+      // AssemblyConnectionDescription
+      //
+      //
+
+      AssemblyConnectionDescription::
+      AssemblyConnectionDescription (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      AssemblyConnectionDescription::
+      AssemblyConnectionDescription ()
+      {
+      }
+
+      void AssemblyConnectionDescription::
+      traverse (Type const& o)
+      {
+        Traversal::AssemblyConnectionDescription::traverse (o);
+      }
+
+      void AssemblyConnectionDescription::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("name", top_ ()));
+        Traversal::AssemblyConnectionDescription::name (o);
+        pop_ ();
+      }
+
+      void AssemblyConnectionDescription::
+      deployRequirement (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("deployRequirement", top_ ()));
+        Traversal::AssemblyConnectionDescription::deployRequirement (o);
+        pop_ ();
+      }
+
+      void AssemblyConnectionDescription::
+      externalEndpoint_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< char > ("externalEndpoint", top_ ()));
+      }
+
+      void AssemblyConnectionDescription::
+      externalEndpoint_next (Type const& o)
+      {
+        externalEndpoint_post (o);
+        externalEndpoint_pre (o);
+      }
+
+      void AssemblyConnectionDescription::
+      externalEndpoint_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void AssemblyConnectionDescription::
+      internalEndpoint_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< char > ("internalEndpoint", top_ ()));
+      }
+
+      void AssemblyConnectionDescription::
+      internalEndpoint_next (Type const& o)
+      {
+        internalEndpoint_post (o);
+        internalEndpoint_pre (o);
+      }
+
+      void AssemblyConnectionDescription::
+      internalEndpoint_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void AssemblyConnectionDescription::
+      externalReference_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< char > ("externalReference", top_ ()));
+      }
+
+      void AssemblyConnectionDescription::
+      externalReference_next (Type const& o)
+      {
+        externalReference_post (o);
+        externalReference_pre (o);
+      }
+
+      void AssemblyConnectionDescription::
+      externalReference_post (Type const&)
+      {
+        pop_ ();
       }
     }
   }

@@ -1,10 +1,9 @@
 // $Id$
 
 #include "DomainApplicationManager_Impl.h"
-#include "NodeManager/NodeDaemonC.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
-#include "ace/SString.h"
+#include "NodeManager/NodeDaemonC.h"
 
 #if !defined (__ACE_INLINE__)
 # include "DomainApplicationManager_Impl.inl"
@@ -96,7 +95,7 @@ init (ACE_ENV_SINGLE_ARG_DECL)
           // corresponding child plan as input, which returns a
           // NodeApplicationManager object reference.
           Deployment::ApplicationManager_var tmp_app_manager =
-            my_node_manager->preparePlan (artifacts.child_plan_.in ()
+            my_node_manager->preparePlan (artifacts.child_plan_
                                           ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
@@ -345,6 +344,7 @@ startLaunch (const ::Deployment::Properties & configProperty,
                    ::Deployment::InvalidProperty))
 {
   ACE_UNUSED_ARG (start);
+  ACE_DEBUG ((LM_DEBUG, "CIAO::DomainApplicationManager_Impl::startLaunch.\n"));
   ACE_TRY
     {
       // Invoke startLaunch() operations on each cached NodeApplicationManager
@@ -395,7 +395,7 @@ startLaunch (const ::Deployment::Properties & configProperty,
           ACE_TRY_CHECK;
 
           // Cache the returned set of connections into the list.
-          this->add_connections (retn_connections.in ());
+          this->add_connections (retn_connections);
 
           // Cache the returned NodeApplication object reference into
           // the hash table.
@@ -420,6 +420,7 @@ finishLaunch (::CORBA::Boolean start
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
 {
+  ACE_DEBUG ((LM_DEBUG, "CIAO::DomainApplicationManager_Impl::finishLaunch.\n"));
   ACE_TRY
     {
       // Invoke finishLaunch() operation on each cached NodeApplication object.
@@ -444,7 +445,7 @@ finishLaunch (::CORBA::Boolean start
 
           // Get the Connections variable.
           Deployment::Connections * my_connections =
-            this->get_outgoing_connections ((entry->int_id_).child_plan_.in ());
+            this->get_outgoing_connections ((entry->int_id_).child_plan_);
 
           if (my_connections == 0)
             ACE_THROW (Deployment::StartError ());
@@ -484,6 +485,7 @@ start (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Deployment::StartError))
 {
+  ACE_DEBUG ((LM_DEBUG, "CIAO::DomainApplicationManager_Impl::start.\n"));
   ACE_TRY
     {
       // Invoke start() operation on each cached NodeApplication object.
@@ -523,6 +525,7 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Deployment::StopError))
 {
+  ACE_DEBUG ((LM_DEBUG, "CIAO::DomainApplicationManager_Impl::destroyApplication.\n"));
   ACE_TRY
     {
       // Invoke destroyManager() operation on each cached
@@ -580,7 +583,7 @@ destroyManager (ACE_ENV_SINGLE_ARG_DECL)
 
           ::Deployment::NodeManager_var my_node_manager =
              (entry->int_id_).node_manager_;
-
+          
           // Since we have the first arg is not used by NM anyway.
           my_node_manager->destroyManager (0 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;

@@ -36,6 +36,13 @@ namespace XSCRT
     friend std::ostream&
     operator << (std::ostream& os, TypeId const& t);
     */
+    
+  public:
+    char const*
+    name () const
+    {
+      return tid_->name ();
+    }
 
   private:
     std::type_info const* tid_;
@@ -155,7 +162,7 @@ namespace XSCRT
   {
     ExtendedTypeInfoMap::const_iterator i (
       extended_type_info_map ().find (tid));
-
+    
     if (i == extended_type_info_map ().end ()) throw NotAvailable ();
 
     return i->second;
@@ -170,6 +177,6 @@ namespace XSCRT
   }
 }
 
-#include "XSCRT/ExtendedTypeInfo.ipp"
+#include <XSCRT/ExtendedTypeInfo.ipp>
 
 #endif  // XSCRT_EXTENDED_TYPE_INFO_HPP

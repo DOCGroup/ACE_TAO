@@ -9,10 +9,11 @@ namespace CIAO
     // 
 
     SubcomponentInstantiationDescription::
-    SubcomponentInstantiationDescription ()
+    SubcomponentInstantiationDescription (::XMLSchema::string< char > const& name__,
+    ::CIAO::Config_Handlers::ComponentPackageDescription const& package__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    package_ (new ::CIAO::Config_Handlers::ComponentPackageDescription ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    package_ (new ::CIAO::Config_Handlers::ComponentPackageDescription (package__)),
     regulator__ ()
     {
       name_->container (this);
@@ -246,10 +247,11 @@ namespace CIAO
     // 
 
     SubcomponentPropertyReference::
-    SubcomponentPropertyReference ()
+    SubcomponentPropertyReference (::XMLSchema::string< char > const& propertyName__,
+    ::CIAO::Config_Handlers::SubcomponentInstantiationDescription const& instance__)
     :
-    propertyName_ (new ::XMLSchema::string< char > ()),
-    instance_ (new ::CIAO::Config_Handlers::SubcomponentInstantiationDescription ()),
+    propertyName_ (new ::XMLSchema::string< char > (propertyName__)),
+    instance_ (new ::CIAO::Config_Handlers::SubcomponentInstantiationDescription (instance__)),
     regulator__ ()
     {
       propertyName_->container (this);
@@ -323,11 +325,13 @@ namespace CIAO
     // 
 
     AssemblyPropertyMapping::
-    AssemblyPropertyMapping ()
+    AssemblyPropertyMapping (::XMLSchema::string< char > const& name__,
+    ::XMLSchema::string< char > const& externalName__,
+    ::CIAO::Config_Handlers::SubcomponentPropertyReference const& delegatesTo__)
     :
-    name_ (new ::XMLSchema::string< char > ()),
-    externalName_ (new ::XMLSchema::string< char > ()),
-    delegatesTo_ (new ::CIAO::Config_Handlers::SubcomponentPropertyReference ()),
+    name_ (new ::XMLSchema::string< char > (name__)),
+    externalName_ (new ::XMLSchema::string< char > (externalName__)),
+    delegatesTo_ (new ::CIAO::Config_Handlers::SubcomponentPropertyReference (delegatesTo__)),
     regulator__ ()
     {
       name_->container (this);
@@ -1225,14 +1229,8 @@ namespace CIAO
 
     SubcomponentInstantiationDescription::
     SubcomponentInstantiationDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    package_ (new ::CIAO::Config_Handlers::ComponentPackageDescription ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      package_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -1243,14 +1241,14 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "package")
         {
-          ::CIAO::Config_Handlers::ComponentPackageDescription t (e);
-          package (t);
+          package_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPackageDescription > (new ::CIAO::Config_Handlers::ComponentPackageDescription (e));
+          package_->container (this);
         }
 
         else if (n == "configProperty")
@@ -1297,14 +1295,8 @@ namespace CIAO
 
     SubcomponentPropertyReference::
     SubcomponentPropertyReference (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    propertyName_ (new ::XMLSchema::string< char > ()),
-    instance_ (new ::CIAO::Config_Handlers::SubcomponentInstantiationDescription ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      propertyName_->container (this);
-      instance_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -1315,14 +1307,14 @@ namespace CIAO
 
         if (n == "propertyName")
         {
-          ::XMLSchema::string< char > t (e);
-          propertyName (t);
+          propertyName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          propertyName_->container (this);
         }
 
         else if (n == "instance")
         {
-          ::CIAO::Config_Handlers::SubcomponentInstantiationDescription t (e);
-          instance (t);
+          instance_ = ::std::auto_ptr< ::CIAO::Config_Handlers::SubcomponentInstantiationDescription > (new ::CIAO::Config_Handlers::SubcomponentInstantiationDescription (e));
+          instance_->container (this);
         }
 
         else 
@@ -1336,16 +1328,8 @@ namespace CIAO
 
     AssemblyPropertyMapping::
     AssemblyPropertyMapping (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    name_ (new ::XMLSchema::string< char > ()),
-    externalName_ (new ::XMLSchema::string< char > ()),
-    delegatesTo_ (new ::CIAO::Config_Handlers::SubcomponentPropertyReference ()),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
-      name_->container (this);
-      externalName_->container (this);
-      delegatesTo_->container (this);
 
       ::XSCRT::Parser< char > p (e);
 
@@ -1356,20 +1340,20 @@ namespace CIAO
 
         if (n == "name")
         {
-          ::XMLSchema::string< char > t (e);
-          name (t);
+          name_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          name_->container (this);
         }
 
         else if (n == "externalName")
         {
-          ::XMLSchema::string< char > t (e);
-          externalName (t);
+          externalName_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          externalName_->container (this);
         }
 
         else if (n == "delegatesTo")
         {
-          ::CIAO::Config_Handlers::SubcomponentPropertyReference t (e);
-          delegatesTo (t);
+          delegatesTo_ = ::std::auto_ptr< ::CIAO::Config_Handlers::SubcomponentPropertyReference > (new ::CIAO::Config_Handlers::SubcomponentPropertyReference (e));
+          delegatesTo_->container (this);
         }
 
         else 
@@ -1383,9 +1367,7 @@ namespace CIAO
 
     ComponentAssemblyDescription::
     ComponentAssemblyDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
 
       ::XSCRT::Parser< char > p (e);
@@ -1424,9 +1406,7 @@ namespace CIAO
 
     MonolithicImplementationDescription::
     MonolithicImplementationDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
 
       ::XSCRT::Parser< char > p (e);
@@ -1465,9 +1445,7 @@ namespace CIAO
 
     ComponentImplementationDescription::
     ComponentImplementationDescription (::XSCRT::XML::Element< char > const& e)
-    :
-    Base__ (e),
-    regulator__ ()
+    :Base__ (e), regulator__ ()
     {
 
       ::XSCRT::Parser< char > p (e);
@@ -1540,6 +1518,1500 @@ namespace CIAO
         else 
         {
         }
+      }
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+  }
+}
+
+#include <XMLSchema/TypeInfo.hpp>
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace
+    {
+      ::XMLSchema::TypeInfoInitializer < char > XMLSchemaTypeInfoInitializer_ (::XSCRT::extended_type_info_map ());
+
+      struct SubcomponentInstantiationDescriptionTypeInfoInitializer
+      {
+        SubcomponentInstantiationDescriptionTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (SubcomponentInstantiationDescription));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      SubcomponentInstantiationDescriptionTypeInfoInitializer SubcomponentInstantiationDescriptionTypeInfoInitializer_;
+
+      struct SubcomponentPropertyReferenceTypeInfoInitializer
+      {
+        SubcomponentPropertyReferenceTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (SubcomponentPropertyReference));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      SubcomponentPropertyReferenceTypeInfoInitializer SubcomponentPropertyReferenceTypeInfoInitializer_;
+
+      struct AssemblyPropertyMappingTypeInfoInitializer
+      {
+        AssemblyPropertyMappingTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (AssemblyPropertyMapping));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      AssemblyPropertyMappingTypeInfoInitializer AssemblyPropertyMappingTypeInfoInitializer_;
+
+      struct ComponentAssemblyDescriptionTypeInfoInitializer
+      {
+        ComponentAssemblyDescriptionTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (ComponentAssemblyDescription));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      ComponentAssemblyDescriptionTypeInfoInitializer ComponentAssemblyDescriptionTypeInfoInitializer_;
+
+      struct MonolithicImplementationDescriptionTypeInfoInitializer
+      {
+        MonolithicImplementationDescriptionTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (MonolithicImplementationDescription));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      MonolithicImplementationDescriptionTypeInfoInitializer MonolithicImplementationDescriptionTypeInfoInitializer_;
+
+      struct ComponentImplementationDescriptionTypeInfoInitializer
+      {
+        ComponentImplementationDescriptionTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (ComponentImplementationDescription));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      ComponentImplementationDescriptionTypeInfoInitializer ComponentImplementationDescriptionTypeInfoInitializer_;
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Traversal
+    {
+      // SubcomponentInstantiationDescription
+      //
+      //
+
+      void SubcomponentInstantiationDescription::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        package (o);
+        if (o.configProperty_p ()) configProperty (o);
+        else configProperty_none (o);
+        if (o.selectRequirement_p ()) selectRequirement (o);
+        else selectRequirement_none (o);
+        if (o.reference_p ()) reference (o);
+        else reference_none (o);
+        if (o.id_p ()) id (o);
+        else id_none (o);
+        post (o);
+      }
+
+      void SubcomponentInstantiationDescription::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        package (o);
+        if (o.configProperty_p ()) configProperty (o);
+        else configProperty_none (o);
+        if (o.selectRequirement_p ()) selectRequirement (o);
+        else selectRequirement_none (o);
+        if (o.reference_p ()) reference (o);
+        else reference_none (o);
+        if (o.id_p ()) id (o);
+        else id_none (o);
+        post (o);
+      }
+
+      void SubcomponentInstantiationDescription::
+      pre (Type&)
+      {
+      }
+
+      void SubcomponentInstantiationDescription::
+      pre (Type const&)
+      {
+      }
+
+      void SubcomponentInstantiationDescription::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void SubcomponentInstantiationDescription::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void SubcomponentInstantiationDescription::
+      package (Type& o)
+      {
+        dispatch (o.package ());
+      }
+
+      void SubcomponentInstantiationDescription::
+      package (Type const& o)
+      {
+        dispatch (o.package ());
+      }
+
+      void SubcomponentInstantiationDescription::
+      configProperty (Type& o)
+      {
+        dispatch (o.configProperty ());
+      }
+
+      void SubcomponentInstantiationDescription::
+      configProperty (Type const& o)
+      {
+        dispatch (o.configProperty ());
+      }
+
+      void SubcomponentInstantiationDescription::
+      configProperty_none (Type&)
+      {
+      }
+
+      void SubcomponentInstantiationDescription::
+      configProperty_none (Type const&)
+      {
+      }
+
+      void SubcomponentInstantiationDescription::
+      selectRequirement (Type& o)
+      {
+        dispatch (o.selectRequirement ());
+      }
+
+      void SubcomponentInstantiationDescription::
+      selectRequirement (Type const& o)
+      {
+        dispatch (o.selectRequirement ());
+      }
+
+      void SubcomponentInstantiationDescription::
+      selectRequirement_none (Type&)
+      {
+      }
+
+      void SubcomponentInstantiationDescription::
+      selectRequirement_none (Type const&)
+      {
+      }
+
+      void SubcomponentInstantiationDescription::
+      reference (Type& o)
+      {
+        dispatch (o.reference ());
+      }
+
+      void SubcomponentInstantiationDescription::
+      reference (Type const& o)
+      {
+        dispatch (o.reference ());
+      }
+
+      void SubcomponentInstantiationDescription::
+      reference_none (Type&)
+      {
+      }
+
+      void SubcomponentInstantiationDescription::
+      reference_none (Type const&)
+      {
+      }
+
+      void SubcomponentInstantiationDescription::
+      id (Type& o)
+      {
+        dispatch (o.id ());
+      }
+
+      void SubcomponentInstantiationDescription::
+      id (Type const& o)
+      {
+        dispatch (o.id ());
+      }
+
+      void SubcomponentInstantiationDescription::
+      id_none (Type&)
+      {
+      }
+
+      void SubcomponentInstantiationDescription::
+      id_none (Type const&)
+      {
+      }
+
+      void SubcomponentInstantiationDescription::
+      post (Type&)
+      {
+      }
+
+      void SubcomponentInstantiationDescription::
+      post (Type const&)
+      {
+      }
+
+      // SubcomponentPropertyReference
+      //
+      //
+
+      void SubcomponentPropertyReference::
+      traverse (Type& o)
+      {
+        pre (o);
+        propertyName (o);
+        instance (o);
+        post (o);
+      }
+
+      void SubcomponentPropertyReference::
+      traverse (Type const& o)
+      {
+        pre (o);
+        propertyName (o);
+        instance (o);
+        post (o);
+      }
+
+      void SubcomponentPropertyReference::
+      pre (Type&)
+      {
+      }
+
+      void SubcomponentPropertyReference::
+      pre (Type const&)
+      {
+      }
+
+      void SubcomponentPropertyReference::
+      propertyName (Type& o)
+      {
+        dispatch (o.propertyName ());
+      }
+
+      void SubcomponentPropertyReference::
+      propertyName (Type const& o)
+      {
+        dispatch (o.propertyName ());
+      }
+
+      void SubcomponentPropertyReference::
+      instance (Type& o)
+      {
+        dispatch (o.instance ());
+      }
+
+      void SubcomponentPropertyReference::
+      instance (Type const& o)
+      {
+        dispatch (o.instance ());
+      }
+
+      void SubcomponentPropertyReference::
+      post (Type&)
+      {
+      }
+
+      void SubcomponentPropertyReference::
+      post (Type const&)
+      {
+      }
+
+      // AssemblyPropertyMapping
+      //
+      //
+
+      void AssemblyPropertyMapping::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        externalName (o);
+        delegatesTo (o);
+        post (o);
+      }
+
+      void AssemblyPropertyMapping::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        externalName (o);
+        delegatesTo (o);
+        post (o);
+      }
+
+      void AssemblyPropertyMapping::
+      pre (Type&)
+      {
+      }
+
+      void AssemblyPropertyMapping::
+      pre (Type const&)
+      {
+      }
+
+      void AssemblyPropertyMapping::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void AssemblyPropertyMapping::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void AssemblyPropertyMapping::
+      externalName (Type& o)
+      {
+        dispatch (o.externalName ());
+      }
+
+      void AssemblyPropertyMapping::
+      externalName (Type const& o)
+      {
+        dispatch (o.externalName ());
+      }
+
+      void AssemblyPropertyMapping::
+      delegatesTo (Type& o)
+      {
+        dispatch (o.delegatesTo ());
+      }
+
+      void AssemblyPropertyMapping::
+      delegatesTo (Type const& o)
+      {
+        dispatch (o.delegatesTo ());
+      }
+
+      void AssemblyPropertyMapping::
+      post (Type&)
+      {
+      }
+
+      void AssemblyPropertyMapping::
+      post (Type const&)
+      {
+      }
+
+      // ComponentAssemblyDescription
+      //
+      //
+
+      void ComponentAssemblyDescription::
+      traverse (Type& o)
+      {
+        pre (o);
+        instance (o);
+        connection (o);
+        if (o.externalProperty_p ()) externalProperty (o);
+        else externalProperty_none (o);
+        post (o);
+      }
+
+      void ComponentAssemblyDescription::
+      traverse (Type const& o)
+      {
+        pre (o);
+        instance (o);
+        connection (o);
+        if (o.externalProperty_p ()) externalProperty (o);
+        else externalProperty_none (o);
+        post (o);
+      }
+
+      void ComponentAssemblyDescription::
+      pre (Type&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      pre (Type const&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      instance (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ComponentAssemblyDescription::Type::instance_iterator b (o.begin_instance()), e (o.end_instance());
+
+        if (b != e)
+        {
+          instance_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) instance_next (o);
+          }
+
+          instance_post (o);
+        }
+      }
+
+      void ComponentAssemblyDescription::
+      instance (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ComponentAssemblyDescription::Type::instance_const_iterator b (o.begin_instance()), e (o.end_instance());
+
+        if (b != e)
+        {
+          instance_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) instance_next (o);
+          }
+
+          instance_post (o);
+        }
+      }
+
+      void ComponentAssemblyDescription::
+      instance_pre (Type&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      instance_pre (Type const&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      instance_next (Type&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      instance_next (Type const&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      instance_post (Type&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      instance_post (Type const&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      connection (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ComponentAssemblyDescription::Type::connection_iterator b (o.begin_connection()), e (o.end_connection());
+
+        if (b != e)
+        {
+          connection_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) connection_next (o);
+          }
+
+          connection_post (o);
+        }
+      }
+
+      void ComponentAssemblyDescription::
+      connection (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ComponentAssemblyDescription::Type::connection_const_iterator b (o.begin_connection()), e (o.end_connection());
+
+        if (b != e)
+        {
+          connection_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) connection_next (o);
+          }
+
+          connection_post (o);
+        }
+      }
+
+      void ComponentAssemblyDescription::
+      connection_pre (Type&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      connection_pre (Type const&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      connection_next (Type&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      connection_next (Type const&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      connection_post (Type&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      connection_post (Type const&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      externalProperty (Type& o)
+      {
+        dispatch (o.externalProperty ());
+      }
+
+      void ComponentAssemblyDescription::
+      externalProperty (Type const& o)
+      {
+        dispatch (o.externalProperty ());
+      }
+
+      void ComponentAssemblyDescription::
+      externalProperty_none (Type&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      externalProperty_none (Type const&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      post (Type&)
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      post (Type const&)
+      {
+      }
+
+      // MonolithicImplementationDescription
+      //
+      //
+
+      void MonolithicImplementationDescription::
+      traverse (Type& o)
+      {
+        pre (o);
+        if (o.execParameter_p ()) execParameter (o);
+        else execParameter_none (o);
+        primaryArtifact (o);
+        if (o.deployRequirement_p ()) deployRequirement (o);
+        else deployRequirement_none (o);
+        post (o);
+      }
+
+      void MonolithicImplementationDescription::
+      traverse (Type const& o)
+      {
+        pre (o);
+        if (o.execParameter_p ()) execParameter (o);
+        else execParameter_none (o);
+        primaryArtifact (o);
+        if (o.deployRequirement_p ()) deployRequirement (o);
+        else deployRequirement_none (o);
+        post (o);
+      }
+
+      void MonolithicImplementationDescription::
+      pre (Type&)
+      {
+      }
+
+      void MonolithicImplementationDescription::
+      pre (Type const&)
+      {
+      }
+
+      void MonolithicImplementationDescription::
+      execParameter (Type& o)
+      {
+        dispatch (o.execParameter ());
+      }
+
+      void MonolithicImplementationDescription::
+      execParameter (Type const& o)
+      {
+        dispatch (o.execParameter ());
+      }
+
+      void MonolithicImplementationDescription::
+      execParameter_none (Type&)
+      {
+      }
+
+      void MonolithicImplementationDescription::
+      execParameter_none (Type const&)
+      {
+      }
+
+      void MonolithicImplementationDescription::
+      primaryArtifact (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        MonolithicImplementationDescription::Type::primaryArtifact_iterator b (o.begin_primaryArtifact()), e (o.end_primaryArtifact());
+
+        if (b != e)
+        {
+          primaryArtifact_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) primaryArtifact_next (o);
+          }
+
+          primaryArtifact_post (o);
+        }
+      }
+
+      void MonolithicImplementationDescription::
+      primaryArtifact (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        MonolithicImplementationDescription::Type::primaryArtifact_const_iterator b (o.begin_primaryArtifact()), e (o.end_primaryArtifact());
+
+        if (b != e)
+        {
+          primaryArtifact_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) primaryArtifact_next (o);
+          }
+
+          primaryArtifact_post (o);
+        }
+      }
+
+      void MonolithicImplementationDescription::
+      primaryArtifact_pre (Type&)
+      {
+      }
+
+      void MonolithicImplementationDescription::
+      primaryArtifact_pre (Type const&)
+      {
+      }
+
+      void MonolithicImplementationDescription::
+      primaryArtifact_next (Type&)
+      {
+      }
+
+      void MonolithicImplementationDescription::
+      primaryArtifact_next (Type const&)
+      {
+      }
+
+      void MonolithicImplementationDescription::
+      primaryArtifact_post (Type&)
+      {
+      }
+
+      void MonolithicImplementationDescription::
+      primaryArtifact_post (Type const&)
+      {
+      }
+
+      void MonolithicImplementationDescription::
+      deployRequirement (Type& o)
+      {
+        dispatch (o.deployRequirement ());
+      }
+
+      void MonolithicImplementationDescription::
+      deployRequirement (Type const& o)
+      {
+        dispatch (o.deployRequirement ());
+      }
+
+      void MonolithicImplementationDescription::
+      deployRequirement_none (Type&)
+      {
+      }
+
+      void MonolithicImplementationDescription::
+      deployRequirement_none (Type const&)
+      {
+      }
+
+      void MonolithicImplementationDescription::
+      post (Type&)
+      {
+      }
+
+      void MonolithicImplementationDescription::
+      post (Type const&)
+      {
+      }
+
+      // ComponentImplementationDescription
+      //
+      //
+
+      void ComponentImplementationDescription::
+      traverse (Type& o)
+      {
+        pre (o);
+        if (o.label_p ()) label (o);
+        else label_none (o);
+        if (o.UUID_p ()) UUID (o);
+        else UUID_none (o);
+        if (o.implements_p ()) implements (o);
+        else implements_none (o);
+        if (o.assemblyImpl_p ()) assemblyImpl (o);
+        else assemblyImpl_none (o);
+        if (o.monolithicImpl_p ()) monolithicImpl (o);
+        else monolithicImpl_none (o);
+        if (o.configProperty_p ()) configProperty (o);
+        else configProperty_none (o);
+        if (o.capability_p ()) capability (o);
+        else capability_none (o);
+        if (o.dependsOn_p ()) dependsOn (o);
+        else dependsOn_none (o);
+        if (o.infoProperty_p ()) infoProperty (o);
+        else infoProperty_none (o);
+        if (o.contentLocation_p ()) contentLocation (o);
+        else contentLocation_none (o);
+        post (o);
+      }
+
+      void ComponentImplementationDescription::
+      traverse (Type const& o)
+      {
+        pre (o);
+        if (o.label_p ()) label (o);
+        else label_none (o);
+        if (o.UUID_p ()) UUID (o);
+        else UUID_none (o);
+        if (o.implements_p ()) implements (o);
+        else implements_none (o);
+        if (o.assemblyImpl_p ()) assemblyImpl (o);
+        else assemblyImpl_none (o);
+        if (o.monolithicImpl_p ()) monolithicImpl (o);
+        else monolithicImpl_none (o);
+        if (o.configProperty_p ()) configProperty (o);
+        else configProperty_none (o);
+        if (o.capability_p ()) capability (o);
+        else capability_none (o);
+        if (o.dependsOn_p ()) dependsOn (o);
+        else dependsOn_none (o);
+        if (o.infoProperty_p ()) infoProperty (o);
+        else infoProperty_none (o);
+        if (o.contentLocation_p ()) contentLocation (o);
+        else contentLocation_none (o);
+        post (o);
+      }
+
+      void ComponentImplementationDescription::
+      pre (Type&)
+      {
+      }
+
+      void ComponentImplementationDescription::
+      pre (Type const&)
+      {
+      }
+
+      void ComponentImplementationDescription::
+      label (Type& o)
+      {
+        dispatch (o.label ());
+      }
+
+      void ComponentImplementationDescription::
+      label (Type const& o)
+      {
+        dispatch (o.label ());
+      }
+
+      void ComponentImplementationDescription::
+      label_none (Type&)
+      {
+      }
+
+      void ComponentImplementationDescription::
+      label_none (Type const&)
+      {
+      }
+
+      void ComponentImplementationDescription::
+      UUID (Type& o)
+      {
+        dispatch (o.UUID ());
+      }
+
+      void ComponentImplementationDescription::
+      UUID (Type const& o)
+      {
+        dispatch (o.UUID ());
+      }
+
+      void ComponentImplementationDescription::
+      UUID_none (Type&)
+      {
+      }
+
+      void ComponentImplementationDescription::
+      UUID_none (Type const&)
+      {
+      }
+
+      void ComponentImplementationDescription::
+      implements (Type& o)
+      {
+        dispatch (o.implements ());
+      }
+
+      void ComponentImplementationDescription::
+      implements (Type const& o)
+      {
+        dispatch (o.implements ());
+      }
+
+      void ComponentImplementationDescription::
+      implements_none (Type&)
+      {
+      }
+
+      void ComponentImplementationDescription::
+      implements_none (Type const&)
+      {
+      }
+
+      void ComponentImplementationDescription::
+      assemblyImpl (Type& o)
+      {
+        dispatch (o.assemblyImpl ());
+      }
+
+      void ComponentImplementationDescription::
+      assemblyImpl (Type const& o)
+      {
+        dispatch (o.assemblyImpl ());
+      }
+
+      void ComponentImplementationDescription::
+      assemblyImpl_none (Type&)
+      {
+      }
+
+      void ComponentImplementationDescription::
+      assemblyImpl_none (Type const&)
+      {
+      }
+
+      void ComponentImplementationDescription::
+      monolithicImpl (Type& o)
+      {
+        dispatch (o.monolithicImpl ());
+      }
+
+      void ComponentImplementationDescription::
+      monolithicImpl (Type const& o)
+      {
+        dispatch (o.monolithicImpl ());
+      }
+
+      void ComponentImplementationDescription::
+      monolithicImpl_none (Type&)
+      {
+      }
+
+      void ComponentImplementationDescription::
+      monolithicImpl_none (Type const&)
+      {
+      }
+
+      void ComponentImplementationDescription::
+      configProperty (Type& o)
+      {
+        dispatch (o.configProperty ());
+      }
+
+      void ComponentImplementationDescription::
+      configProperty (Type const& o)
+      {
+        dispatch (o.configProperty ());
+      }
+
+      void ComponentImplementationDescription::
+      configProperty_none (Type&)
+      {
+      }
+
+      void ComponentImplementationDescription::
+      configProperty_none (Type const&)
+      {
+      }
+
+      void ComponentImplementationDescription::
+      capability (Type& o)
+      {
+        dispatch (o.capability ());
+      }
+
+      void ComponentImplementationDescription::
+      capability (Type const& o)
+      {
+        dispatch (o.capability ());
+      }
+
+      void ComponentImplementationDescription::
+      capability_none (Type&)
+      {
+      }
+
+      void ComponentImplementationDescription::
+      capability_none (Type const&)
+      {
+      }
+
+      void ComponentImplementationDescription::
+      dependsOn (Type& o)
+      {
+        dispatch (o.dependsOn ());
+      }
+
+      void ComponentImplementationDescription::
+      dependsOn (Type const& o)
+      {
+        dispatch (o.dependsOn ());
+      }
+
+      void ComponentImplementationDescription::
+      dependsOn_none (Type&)
+      {
+      }
+
+      void ComponentImplementationDescription::
+      dependsOn_none (Type const&)
+      {
+      }
+
+      void ComponentImplementationDescription::
+      infoProperty (Type& o)
+      {
+        dispatch (o.infoProperty ());
+      }
+
+      void ComponentImplementationDescription::
+      infoProperty (Type const& o)
+      {
+        dispatch (o.infoProperty ());
+      }
+
+      void ComponentImplementationDescription::
+      infoProperty_none (Type&)
+      {
+      }
+
+      void ComponentImplementationDescription::
+      infoProperty_none (Type const&)
+      {
+      }
+
+      void ComponentImplementationDescription::
+      contentLocation (Type& o)
+      {
+        dispatch (o.contentLocation ());
+      }
+
+      void ComponentImplementationDescription::
+      contentLocation (Type const& o)
+      {
+        dispatch (o.contentLocation ());
+      }
+
+      void ComponentImplementationDescription::
+      contentLocation_none (Type&)
+      {
+      }
+
+      void ComponentImplementationDescription::
+      contentLocation_none (Type const&)
+      {
+      }
+
+      void ComponentImplementationDescription::
+      post (Type&)
+      {
+      }
+
+      void ComponentImplementationDescription::
+      post (Type const&)
+      {
+      }
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Writer
+    {
+      // SubcomponentInstantiationDescription
+      //
+      //
+
+      SubcomponentInstantiationDescription::
+      SubcomponentInstantiationDescription (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      SubcomponentInstantiationDescription::
+      SubcomponentInstantiationDescription ()
+      {
+      }
+
+      void SubcomponentInstantiationDescription::
+      traverse (Type const& o)
+      {
+        Traversal::SubcomponentInstantiationDescription::traverse (o);
+      }
+
+      void SubcomponentInstantiationDescription::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("name", top_ ()));
+        Traversal::SubcomponentInstantiationDescription::name (o);
+        pop_ ();
+      }
+
+      void SubcomponentInstantiationDescription::
+      package (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("package", top_ ()));
+        Traversal::SubcomponentInstantiationDescription::package (o);
+        pop_ ();
+      }
+
+      void SubcomponentInstantiationDescription::
+      configProperty (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("configProperty", top_ ()));
+        Traversal::SubcomponentInstantiationDescription::configProperty (o);
+        pop_ ();
+      }
+
+      void SubcomponentInstantiationDescription::
+      selectRequirement (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("selectRequirement", top_ ()));
+        Traversal::SubcomponentInstantiationDescription::selectRequirement (o);
+        pop_ ();
+      }
+
+      void SubcomponentInstantiationDescription::
+      reference (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("reference", top_ ()));
+        Traversal::SubcomponentInstantiationDescription::reference (o);
+        pop_ ();
+      }
+
+      void SubcomponentInstantiationDescription::
+      id (Type const& o)
+      {
+        ::XSCRT::XML::Attribute< char > a ("id", "", top_ ());
+        attr_ (&a);
+        Traversal::SubcomponentInstantiationDescription::id (o);
+        attr_ (0);
+      }
+
+      // SubcomponentPropertyReference
+      //
+      //
+
+      SubcomponentPropertyReference::
+      SubcomponentPropertyReference (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      SubcomponentPropertyReference::
+      SubcomponentPropertyReference ()
+      {
+      }
+
+      void SubcomponentPropertyReference::
+      traverse (Type const& o)
+      {
+        Traversal::SubcomponentPropertyReference::traverse (o);
+      }
+
+      void SubcomponentPropertyReference::
+      propertyName (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("propertyName", top_ ()));
+        Traversal::SubcomponentPropertyReference::propertyName (o);
+        pop_ ();
+      }
+
+      void SubcomponentPropertyReference::
+      instance (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("instance", top_ ()));
+        Traversal::SubcomponentPropertyReference::instance (o);
+        pop_ ();
+      }
+
+      // AssemblyPropertyMapping
+      //
+      //
+
+      AssemblyPropertyMapping::
+      AssemblyPropertyMapping (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      AssemblyPropertyMapping::
+      AssemblyPropertyMapping ()
+      {
+      }
+
+      void AssemblyPropertyMapping::
+      traverse (Type const& o)
+      {
+        Traversal::AssemblyPropertyMapping::traverse (o);
+      }
+
+      void AssemblyPropertyMapping::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("name", top_ ()));
+        Traversal::AssemblyPropertyMapping::name (o);
+        pop_ ();
+      }
+
+      void AssemblyPropertyMapping::
+      externalName (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("externalName", top_ ()));
+        Traversal::AssemblyPropertyMapping::externalName (o);
+        pop_ ();
+      }
+
+      void AssemblyPropertyMapping::
+      delegatesTo (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("delegatesTo", top_ ()));
+        Traversal::AssemblyPropertyMapping::delegatesTo (o);
+        pop_ ();
+      }
+
+      // ComponentAssemblyDescription
+      //
+      //
+
+      ComponentAssemblyDescription::
+      ComponentAssemblyDescription (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      ComponentAssemblyDescription::
+      ComponentAssemblyDescription ()
+      {
+      }
+
+      void ComponentAssemblyDescription::
+      traverse (Type const& o)
+      {
+        Traversal::ComponentAssemblyDescription::traverse (o);
+      }
+
+      void ComponentAssemblyDescription::
+      instance_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< char > ("instance", top_ ()));
+      }
+
+      void ComponentAssemblyDescription::
+      instance_next (Type const& o)
+      {
+        instance_post (o);
+        instance_pre (o);
+      }
+
+      void ComponentAssemblyDescription::
+      instance_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void ComponentAssemblyDescription::
+      connection_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< char > ("connection", top_ ()));
+      }
+
+      void ComponentAssemblyDescription::
+      connection_next (Type const& o)
+      {
+        connection_post (o);
+        connection_pre (o);
+      }
+
+      void ComponentAssemblyDescription::
+      connection_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void ComponentAssemblyDescription::
+      externalProperty (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("externalProperty", top_ ()));
+        Traversal::ComponentAssemblyDescription::externalProperty (o);
+        pop_ ();
+      }
+
+      // MonolithicImplementationDescription
+      //
+      //
+
+      MonolithicImplementationDescription::
+      MonolithicImplementationDescription (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      MonolithicImplementationDescription::
+      MonolithicImplementationDescription ()
+      {
+      }
+
+      void MonolithicImplementationDescription::
+      traverse (Type const& o)
+      {
+        Traversal::MonolithicImplementationDescription::traverse (o);
+      }
+
+      void MonolithicImplementationDescription::
+      execParameter (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("execParameter", top_ ()));
+        Traversal::MonolithicImplementationDescription::execParameter (o);
+        pop_ ();
+      }
+
+      void MonolithicImplementationDescription::
+      primaryArtifact_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< char > ("primaryArtifact", top_ ()));
+      }
+
+      void MonolithicImplementationDescription::
+      primaryArtifact_next (Type const& o)
+      {
+        primaryArtifact_post (o);
+        primaryArtifact_pre (o);
+      }
+
+      void MonolithicImplementationDescription::
+      primaryArtifact_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void MonolithicImplementationDescription::
+      deployRequirement (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("deployRequirement", top_ ()));
+        Traversal::MonolithicImplementationDescription::deployRequirement (o);
+        pop_ ();
+      }
+
+      // ComponentImplementationDescription
+      //
+      //
+
+      ComponentImplementationDescription::
+      ComponentImplementationDescription (::XSCRT::XML::Element< char >& e)
+      : ::XSCRT::Writer< char > (e)
+      {
+      }
+
+      ComponentImplementationDescription::
+      ComponentImplementationDescription ()
+      {
+      }
+
+      void ComponentImplementationDescription::
+      traverse (Type const& o)
+      {
+        Traversal::ComponentImplementationDescription::traverse (o);
+      }
+
+      void ComponentImplementationDescription::
+      label (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("label", top_ ()));
+        Traversal::ComponentImplementationDescription::label (o);
+        pop_ ();
+      }
+
+      void ComponentImplementationDescription::
+      UUID (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("UUID", top_ ()));
+        Traversal::ComponentImplementationDescription::UUID (o);
+        pop_ ();
+      }
+
+      void ComponentImplementationDescription::
+      implements (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("implements", top_ ()));
+        Traversal::ComponentImplementationDescription::implements (o);
+        pop_ ();
+      }
+
+      void ComponentImplementationDescription::
+      assemblyImpl (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("assemblyImpl", top_ ()));
+        Traversal::ComponentImplementationDescription::assemblyImpl (o);
+        pop_ ();
+      }
+
+      void ComponentImplementationDescription::
+      monolithicImpl (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("monolithicImpl", top_ ()));
+        Traversal::ComponentImplementationDescription::monolithicImpl (o);
+        pop_ ();
+      }
+
+      void ComponentImplementationDescription::
+      configProperty (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("configProperty", top_ ()));
+        Traversal::ComponentImplementationDescription::configProperty (o);
+        pop_ ();
+      }
+
+      void ComponentImplementationDescription::
+      capability (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("capability", top_ ()));
+        Traversal::ComponentImplementationDescription::capability (o);
+        pop_ ();
+      }
+
+      void ComponentImplementationDescription::
+      dependsOn (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("dependsOn", top_ ()));
+        Traversal::ComponentImplementationDescription::dependsOn (o);
+        pop_ ();
+      }
+
+      void ComponentImplementationDescription::
+      infoProperty (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("infoProperty", top_ ()));
+        Traversal::ComponentImplementationDescription::infoProperty (o);
+        pop_ ();
+      }
+
+      void ComponentImplementationDescription::
+      contentLocation (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< char > ("contentLocation", top_ ()));
+        Traversal::ComponentImplementationDescription::contentLocation (o);
+        pop_ ();
       }
     }
   }

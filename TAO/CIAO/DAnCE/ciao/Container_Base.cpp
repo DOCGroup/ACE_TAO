@@ -93,7 +93,10 @@ namespace CIAO
                                 ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
 
-    this->create_facet_consumer_POA (root_poa.in ()
+    ACE_CString port_poa_name (name);
+    port_poa_name += ":Port_POA";
+    this->create_facet_consumer_POA (port_poa_name.c_str (),
+                                     root_poa.in ()
                                      ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
 
@@ -137,6 +140,7 @@ namespace CIAO
 
   void
   Session_Container::create_facet_consumer_POA (
+      const char *name,
       PortableServer::POA_ptr root
       ACE_ENV_ARG_DECL)
   {
@@ -164,7 +168,7 @@ namespace CIAO
     ACE_CHECK;
 
     this->facet_cons_poa_ =
-      root->create_POA ("facet_consumer_poa",
+      root->create_POA (name,
                         poa_manager.in (),
                         policies
                         ACE_ENV_ARG_PARAMETER);
