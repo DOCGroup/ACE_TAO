@@ -85,36 +85,33 @@ public:
   // =Operations
 
   UTL_String (void);
-  // default constructor
+  // Default constructor.
 
   UTL_String (const char *str);
-  // construct from a const char *
-
-  UTL_String (unsigned long maxlen);
-  // constructor with an initial string length
+  // Construct from a const char *.
 
   UTL_String (UTL_String *s);
-  // construct using a pointer to UTL_String
+  // Copy constructor.
 
   virtual ~UTL_String (void);
-  // destructor
+  // Destructor.
 
-  // =AST Dumping
+  // =AST Dumping.
 
   virtual void dump (ostream &o);
-  // dump to the ostream
+  // Dump to the ostream.
 
   // =Other Operations
 
   char *get_string (void);
-  // Get contents of utl_string
+  // Get contents of utl_string.
 
   char *get_canonical_rep (void);
   // Get canonical representation. This is (implemented as) the all upper
-  // case corresponding string
+  // case corresponding string.
 
   virtual long compare (UTL_String *s);
-  // Compare two String *
+  // Compare two UTL_String *
 
   virtual long compare_quiet (UTL_String *s);
   // Like the above but without error or warning message output.
@@ -124,22 +121,19 @@ public:
 
 private:
   // Data
-  char          *p_str;
-  // Storage for characters
+  char *p_str;
+  // Storage for characters.
 
-  char          *c_str;
+  char *c_str;
   // Canonicalized string
 
   unsigned long len;
-  // How long is string
+  // How long is string.
 
-  unsigned long alloced;
-  // How much allocated
-
-  // =Private helper operations
+  // =Private helper operations.
 
   void canonicalize (void);
-  // Compute canonical representation
+  // Compute canonical representation.
 };
 
 #endif           // _STRING_STRING_HH
