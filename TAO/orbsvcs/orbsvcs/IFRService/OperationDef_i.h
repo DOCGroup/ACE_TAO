@@ -167,7 +167,7 @@ public:
   // making descriptions.
 
   void make_description (CORBA::OperationDescription &desc
-                         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr type_i (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)

@@ -501,7 +501,7 @@ TAO_InterfaceDef_i::describe_interface_i (ACE_ENV_SINGLE_ARG_DECL)
       op.section_key (key);
 
       op.make_description (fifd->operations[i]
-                           ACE_ENV_SINGLE_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
 

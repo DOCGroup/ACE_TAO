@@ -40,7 +40,7 @@ TAO_ExtValueDef_i::ext_initializers (
 
 CORBA::ExtInitializerSeq *
 TAO_ExtValueDef_i::ext_initializers_i (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -164,7 +164,7 @@ TAO_ExtValueDef_i::ext_initializers (
 void 
 TAO_ExtValueDef_i::ext_initializers_i (
     const CORBA::ExtInitializerSeq &ext_initializers
-    ACE_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -263,7 +263,7 @@ TAO_ExtValueDef_i::describe_ext_value (
 
 CORBA::ExtValueDef::ExtFullValueDescription *
 TAO_ExtValueDef_i::describe_ext_value_i (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -316,7 +316,6 @@ TAO_ExtValueDef_i::describe_ext_value_i (
                                           ops_key);
   CORBA::ULong count = 0;
   CORBA::ULong param_count = 0;
-  CORBA::ULong except_count = 0;
   char *stringified = 0;
   CORBA::ULong i = 0;
   CORBA::ULong j = 0;
@@ -715,7 +714,7 @@ TAO_ExtValueDef_i::describe_ext_value_i (
                                                          param_count);
               fv_desc->initializers[i].members.length (param_count);
 
-              for (j = 0; j < param_count; +j)
+              for (j = 0; j < param_count; ++j)
                 {
                   stringified = TAO_IFR_Service_Utils::int_to_string (j);
                   this->repo_->config ()->open_section (params_key,
@@ -731,8 +730,13 @@ TAO_ExtValueDef_i::describe_ext_value_i (
                                                             "arg_path",
                                                             holder);
                   obj = 
-                    TAO_IFR_Service_Utils::path_to_ir_object (holder,
-                                                              this->repo_);
+                    TAO_IFR_Service_Utils::path_to_ir_object (
+                                               holder,
+                                               this->repo_
+                                               ACE_ENV_ARG_PARAMETER
+                                             );
+                  ACE_CHECK_RETURN (0);
+
                   fv_desc->initializers[i].members[j].type_def =
                     CORBA::IDLType::_narrow (obj.in ()
                                              ACE_ENV_ARG_PARAMETER);
