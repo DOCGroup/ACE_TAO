@@ -22,12 +22,16 @@ DIRS  = Simple_Naming \
         Event \
 	CosEvent \
 	Concurrency \
+	FaultTolerance \
 	ImplRepo \
 	InterfaceRepo \
 	Trading \
 	AVStreams \
 	Notify \
-	Interoperable_Naming
+	Interoperable_Naming \
+	LoadBalancing \
+	ior_corbaname \
+	tests_svc_loader
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

@@ -171,7 +171,19 @@ endif
 
 all: ORBSVCS_COMPONENTS
 
-all debug profile optimize install deinstall clean realclean clobber depend rcs_info idl_stubs:
+realclean::
+ifneq ($(MKLIST),)
+  ifeq (Windows,$(findstring Windows,$(OS)))
+	@cmd /c "FOR /D %m IN ($(MKLIST)) DO $(MAKE) -f %m MAKEFILE=$$m $(@:.nested=)"
+  else  # ! Windows
+	@for m in $(MKLIST); do \
+	echo $$m; \
+        $(MAKE) -f $$m MAKEFILE=$$m $(@:.nested=); \
+        done
+  endif # ! Windows
+endif # MKLIST
+
+all debug profile optimize install deinstall clean clobber depend rcs_info idl_stubs:
 ifneq ($(MKLIST),)
   ifeq (Windows,$(findstring Windows,$(OS)))
 	@cmd /c "FOR /D %m IN ($(MKLIST)) DO $(MAKE) -f %m MAKEFILE=$$m $(@:.nested=)"
@@ -187,7 +199,8 @@ endif # MKLIST
 ORBSVCS_COMPONENTS:
 	@sh $(ACE_ROOT)/bin/ace_components --orbsvcs --set ' $(TAO_ORBSVCS) '
 
-realclean:
+
+realclean::
 	-$(RM) ORBSVCS_COMPONENTS.list
 
 #----------------------------------------------------------------------------

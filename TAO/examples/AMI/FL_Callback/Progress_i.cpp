@@ -8,7 +8,7 @@
 #include <FL/Fl_Button.h>
 
 #if !defined(__ACE_INLINE__)
-#include "test_i.i"
+#include "Progress_i.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(FL_Cube, test_i, "$Id$")
@@ -22,7 +22,7 @@ void
 Progress_i::sent_request (CORBA::Long id,
                      CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
-{ 
+{
   //ACE_DEBUG ((LM_DEBUG, "Progress (%t) - sent request %d\n", id));
   this->window_->sent_request (id);
 }

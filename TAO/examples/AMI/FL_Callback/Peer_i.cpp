@@ -14,7 +14,7 @@ Peer_Handler_i::Peer_Handler_i (Peer_i *peer)
 }
 
 void
-Peer_Handler_i::request (CORBA::Long retval, 
+Peer_Handler_i::request (CORBA::Long retval,
                          CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -26,10 +26,11 @@ Peer_Handler_i::request (CORBA::Long retval,
 }
 
 
-void 
+void
 Peer_Handler_i::request_excep (
     AMI_PeerExceptionHolder * excep_holder,
     CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (excep_holder);
   ACE_UNUSED_ARG (ACE_TRY_ENV);
@@ -118,6 +119,7 @@ Peer_i::start (const PeerSet &the_peers,
 
 void
 Peer_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0, ACE_TRY_ENV);
 }
