@@ -1,104 +1,109 @@
+Fri Mar 23 07:12:50 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/examples/Notify/Subscribe/Makefile:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile:
+          Add libraries to make QNX happy
+
 Fri Mar 23 06:44:12 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/POA/Excessive_Object_Deactivations: Fixed warnings
-	  with g++ builds. The file is
-	  Excessive_Object_deactivations.cpp. 
+        * tests/POA/Excessive_Object_Deactivations/Excessive_Object_deactivations.cpp:
+          Fixed warnings with g++ builds.
 
 Thu Mar 22 19:29:09 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/PortableServer/Active_Object_Map.i
-	  (find_servant_and_system_id_using_user_id): One version of this
-	  function was broken because it did not check the <deactivated_>
-	  and the <servant_> fields.  Thanks to Jody Hagins
-	  <jody@atdesk.com> for pointing this out.  This fixes
-	  [BUGID:834].  
+        * tao/PortableServer/Active_Object_Map.i
+          (find_servant_and_system_id_using_user_id): One version of this
+          function was broken because it did not check the <deactivated_>
+          and the <servant_> fields.  Thanks to Jody Hagins
+          <jody@atdesk.com> for pointing this out.  This fixes
+          [BUGID:834].
 
-	* tests/POA/Excessive_Object_Deactivations: New test for
-	  regression checking excessive object deactivations in the POA.
-	  The test checks excessive deactivations in a POA with SYSTEM_ID
-	  and other POA with USER_ID.  The test also check for excessive
-	  deactivations during upcalls.
+        * tests/POA/Excessive_Object_Deactivations: New test for
+          regression checking excessive object deactivations in the POA.
+          The test checks excessive deactivations in a POA with SYSTEM_ID
+          and other POA with USER_ID.  The test also check for excessive
+          deactivations during upcalls.
 
-	* tests/POA/Multiple_Deactivations: No longer needed with
-	  tests/POA/Excessive_Object_Deactivations in place.
+        * tests/POA/Multiple_Deactivations: No longer needed with
+          tests/POA/Excessive_Object_Deactivations in place.
 
-	* tao/PortableServer/POA.cpp (key_to_stub_i): 
+        * tao/PortableServer/POA.cpp (key_to_stub_i):
 
-	  (Re)fixed compilation problems under Minimum CORBA
-	  configurations which got reverted when Bala backed out Carlos'
-	  changes.
+          (Re)fixed compilation problems under Minimum CORBA
+          configurations which got reverted when Bala backed out Carlos'
+          changes.
 
-	* tao/ORB_Core.cpp (collocation_strategy): Small change for better
-	  code readability.  Thanks Ossama.
+        * tao/ORB_Core.cpp (collocation_strategy): Small change for better
+          code readability.  Thanks Ossama.
 
-	* tests/POA/Destruction was renamed to tests/POA/POA_Destruction.
-	
-	* tests/POA/Deactivation was renamed to tests/POA/Object_Reactivation.
-	
-	* Following files were also updated to accomodate new and renamed
-	  tests:
+        * tests/POA/Destruction was renamed to tests/POA/POA_Destruction.
 
-	  - tests/TAO_Tests.dsw
-	  - tests/POA/Makefile
-	  - tests/POA/Makefile.bor
-	  - tests/POA/README
-	  - ACE_wrappers/bin/auto_run_tests.lst
+        * tests/POA/Deactivation was renamed to tests/POA/Object_Reactivation.
+
+        * Following files were also updated to accomodate new and renamed
+          tests:
+
+          - tests/TAO_Tests.dsw
+          - tests/POA/Makefile
+          - tests/POA/Makefile.bor
+          - tests/POA/README
+          - ACE_wrappers/bin/auto_run_tests.lst
 
 Thu Mar 22 20:08:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/PortableServer/POA.cpp: Backed out changes from "Thu Mar 22
-	  15:32:22 2001  Carlos O'Ryan  <coryan@uci.edu>." The fix is
-	  being commited by Irfan as the above changes may not be the
-	  right fix.
+        * tao/PortableServer/POA.cpp: Backed out changes from "Thu Mar 22
+          15:32:22 2001  Carlos O'Ryan  <coryan@uci.edu>." The fix is
+          being commited by Irfan as the above changes may not be the
+          right fix.
 
 Thu Mar 22 15:32:22 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/PortableServer/POA.cpp (deactivate_object_i): 
-	  The deactivation code did not check for previous deactivations,
-	  this can result in crashes as the ORB deactivates objects in the
-	  middle of a request. This fixes [BUGID:834]
-	  Also fixed compilation problems under Minimum CORBA
-	  configurations.
+        * tao/PortableServer/POA.cpp (deactivate_object_i):
+          The deactivation code did not check for previous deactivations,
+          this can result in crashes as the ORB deactivates objects in the
+          middle of a request. This fixes [BUGID:834]
+          Also fixed compilation problems under Minimum CORBA
+          configurations.
 
-	* tests/POA/Makefile:
-	* tests/POA/Makefile.bor:
-	* tests/POA/README:
-	* tests/POA/Multiple_Deactivations/README:
-	* tests/POA/Multiple_Deactivations/Makefile:
-	* tests/POA/Multiple_Deactivations/Makefile.bor:
-	* tests/POA/Multiple_Deactivations/run_test.pl:
-	* tests/POA/Multiple_Deactivations/Test.idl:
-	* tests/POA/Multiple_Deactivations/Empty.h:
-	* tests/POA/Multiple_Deactivations/Empty.cpp:
-	* tests/POA/Multiple_Deactivations/server.cpp:
-	  New regression test for the previous bug.
+        * tests/POA/Makefile:
+        * tests/POA/Makefile.bor:
+        * tests/POA/README:
+        * tests/POA/Multiple_Deactivations/README:
+        * tests/POA/Multiple_Deactivations/Makefile:
+        * tests/POA/Multiple_Deactivations/Makefile.bor:
+        * tests/POA/Multiple_Deactivations/run_test.pl:
+        * tests/POA/Multiple_Deactivations/Test.idl:
+        * tests/POA/Multiple_Deactivations/Empty.h:
+        * tests/POA/Multiple_Deactivations/Empty.cpp:
+        * tests/POA/Multiple_Deactivations/server.cpp:
+          New regression test for the previous bug.
 
 Thu Mar 22 12:20:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * docs/releasenotes/index.html:
-        
+
           Updated the release notes to reflect the latest status of
-          AMI, e.g. AMI timeouts. 
+          AMI, e.g. AMI timeouts.
 
 Thu Mar 22 09:25:43 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/tests/Security/RejectInsecure/Makefile:
-	* orbsvcs/tests/Security/RejectInsecure/README:
-	* orbsvcs/tests/Security/RejectInsecure/authorization_test.idl:
-	* orbsvcs/tests/Security/RejectInsecure/authorization_test_i.cpp:
-	* orbsvcs/tests/Security/RejectInsecure/authorization_test_i.h:
-	* orbsvcs/tests/Security/RejectInsecure/authorization_test_i.i:
-	* orbsvcs/tests/Security/RejectInsecure/client.conf:
-	* orbsvcs/tests/Security/RejectInsecure/client.cpp:
-	* orbsvcs/tests/Security/RejectInsecure/client_nopasswd.conf:
-	* orbsvcs/tests/Security/RejectInsecure/server.conf:
-	* orbsvcs/tests/Security/RejectInsecure/server.cpp:
-	* orbsvcs/tests/Security/RejectInsecure/server_i.h:
-	* orbsvcs/tests/Security/RejectInsecure/server_nopasswd.conf:
+        * orbsvcs/tests/Security/RejectInsecure/Makefile:
+        * orbsvcs/tests/Security/RejectInsecure/README:
+        * orbsvcs/tests/Security/RejectInsecure/authorization_test.idl:
+        * orbsvcs/tests/Security/RejectInsecure/authorization_test_i.cpp:
+        * orbsvcs/tests/Security/RejectInsecure/authorization_test_i.h:
+        * orbsvcs/tests/Security/RejectInsecure/authorization_test_i.i:
+        * orbsvcs/tests/Security/RejectInsecure/client.conf:
+        * orbsvcs/tests/Security/RejectInsecure/client.cpp:
+        * orbsvcs/tests/Security/RejectInsecure/client_nopasswd.conf:
+        * orbsvcs/tests/Security/RejectInsecure/server.conf:
+        * orbsvcs/tests/Security/RejectInsecure/server.cpp:
+        * orbsvcs/tests/Security/RejectInsecure/server_i.h:
+        * orbsvcs/tests/Security/RejectInsecure/server_nopasswd.conf:
 
-	  Removed this incomplete/non-functional test.  The
-	  Secure_Invocation I recently added tests most of what this test
-	  was intended to do but in a more straightforward manner.
+          Removed this incomplete/non-functional test.  The
+          Secure_Invocation I recently added tests most of what this test
+          was intended to do but in a more straightforward manner.
 
 Thu Mar 22 07:02:17 2001  Carlos O'Ryan  <coryan@uci.edu>
 
