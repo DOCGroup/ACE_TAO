@@ -63,11 +63,6 @@ LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/balar_Minimum/
 WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?balar_Minimum
 STATUS = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/balar_Minimum/status.txt
 
-[Debian_Full]
-LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/sirion_Full/
-WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?sirion_Full
-STATUS = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/sirion_Full/status.txt
-
 [Debian_Core]
 LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/balar_Core/
 WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?balar_Core
@@ -152,11 +147,6 @@ STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/toutatis_Full/statu
 LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/charanga_Full/
 WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?charanga_Full
 STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/charanga_Full/status.txt
-
-[Debian_Minimum_Static]
-LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/charanga_Minimum/
-WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?charanga_Minimum
-STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/charanga_Minimum/status.txt
 
 ORANGE = 48
 RED    = 72
