@@ -22,7 +22,9 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
     cdr_memcpy_tradeoff_ (ACE_DEFAULT_CDR_MEMCPY_TRADEOFF),
     use_lite_protocol_ (0),
     use_dotted_decimal_addresses_ (0),
-    std_profile_components_ (1)
+    std_profile_components_ (1),
+    sched_policy_ (THR_SCHED_DEFAULT),
+    scope_policy_ (THR_SCOPE_PROCESS)
 {
   for (int i=0; i<= NO_OF_MCAST_SERVICES; i++)
     this->service_port_[i] = 0;

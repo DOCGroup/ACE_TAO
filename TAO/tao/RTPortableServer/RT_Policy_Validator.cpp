@@ -197,7 +197,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies,
         }
 
       // Check 3.
-      if (rt_priority_model == RTCORBA::SERVER_DECLARED)
+      if (rt_priority_model == TAO_POA_Cached_Policies::SERVER_DECLARED)
         {
           int match = 0;
           for (CORBA::ULong i = 0; i < bands.length (); ++i)
@@ -259,7 +259,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies,
   // model is SERVER_DECLARED, make sure we have at least one thread
   // lane that can provide service for the specified SERVER_DECLARED
   // priority.
-  if (rt_priority_model == RTCORBA::SERVER_DECLARED)
+  if (rt_priority_model == TAO_POA_Cached_Policies::SERVER_DECLARED)
     {
       // If this POA is using the default thread pool (which doesn't
       // have lanes) or a thread pool without lanes, we are done with
@@ -392,7 +392,7 @@ TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,
   ACE_CHECK_RETURN (0);
 
   RTCORBA::RTORB_var rt_orb =
-    RTCORBA::RTORB::_narrow (object,
+    RTCORBA::RTORB::_narrow (object.in (),
                              ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 

@@ -32,9 +32,11 @@ static const char *rt_poa_factory_name = "TAO_RT_POA";
 static const char *rt_poa_factory_directive = "dynamic TAO_RT_POA Service_Object * TAO_RTPortableServer:_make_TAO_RT_Object_Adapter_Factory()";
 
 TAO_RT_ORBInitializer::TAO_RT_ORBInitializer (int priority_mapping_type,
-                                              int sched_policy)
+                                              long sched_policy,
+                                              long scope_policy)
   : priority_mapping_type_ (priority_mapping_type),
-    sched_policy_ (sched_policy)
+    sched_policy_ (sched_policy),
+    scope_policy_ (scope_policy)
 {
 }
 
@@ -78,18 +80,25 @@ TAO_RT_ORBInitializer::pre_init (
   TAO_RT_Protocols_Hooks::set_server_protocols_hook
     (TAO_ServerProtocolPolicy::hook);
 
+  // Conversion.
+  long sched_policy = SCHED_OTHER;
+  if (this->sched_policy_ == THR_SCHED_FIFO)
+    sched_policy = SCHED_FIFO;
+  else if (this->sched_policy_ == THR_SCHED_RR)
+    sched_policy = SCHED_RR;
+
   // Create the initial priority mapping instance.
   TAO_Priority_Mapping *pm;
   switch (this->priority_mapping_type_)
     {
     case TAO_PRIORITY_MAPPING_LINEAR:
       ACE_NEW (pm,
-               TAO_Linear_Priority_Mapping (this->sched_policy_));
+               TAO_Linear_Priority_Mapping (sched_policy));
       break;
     default:
     case TAO_PRIORITY_MAPPING_DIRECT:
       ACE_NEW (pm,
-               TAO_Direct_Priority_Mapping (this->sched_policy_));
+               TAO_Direct_Priority_Mapping (sched_policy));
       break;
     }
 
@@ -165,6 +174,9 @@ TAO_RT_ORBInitializer::pre_init (
                                     current,
                                     ACE_TRY_ENV);
   ACE_CHECK;
+
+  tao_info->orb_core ()->orb_params ()->scope_policy (this->scope_policy_);
+  tao_info->orb_core ()->orb_params ()->sched_policy (this->sched_policy_);
 }
 
 void

@@ -72,9 +72,10 @@ RT_Priority_Model_Processing::pre_invoke (
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Using thread pool with lane ")
-                      ACE_TEXT ("(%P|%t|%d|%d): original thread priority not changed\n"),
+                      ACE_TEXT ("(%P|%t|%d|%d): original thread CORBA priority %d not changed\n"),
                       lane->pool ().id (),
-                      lane->id ()));
+                      lane->id (),
+                      lane->lane_priority ()));
         }
 
       return;
@@ -173,37 +174,17 @@ RT_Priority_Model_Processing::pre_invoke (
                       ACE_TEXT ("temporarily changed to CORBA %d\n"),
                       priority_model,
                       thread_pool_id,
-                      original_CORBA_priority_,
-                      original_native_priority_,
+                      this->original_CORBA_priority_,
+                      this->original_native_priority_,
                       target_priority));
         }
 
-      // Change the priority of the current thread to the target value
-      // for the duration of request.
-      if (this->original_CORBA_priority_ != target_priority)
-        {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("RTCORBA::CLIENT_PROPAGATED processing")
-                        ACE_TEXT (" (%P|%t): original thread CORBA/native priority %d/%d;")
-                        ACE_TEXT (" temporarily changed to CORBA priority %d\n"),
-                        this->original_CORBA_priority_,
-                        this->original_native_priority_,
-                        target_priority));
+      if (tph->set_thread_CORBA_priority (target_priority,
+                                          ACE_TRY_ENV)
+          == -1)
+        ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
 
-          if (tph->set_thread_CORBA_priority (target_priority,
-                                              ACE_TRY_ENV)
-              == -1)
-            ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
-
-          this->state_ = PRIORITY_RESET_REQUIRED;
-        }
-      else if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("RTCORBA::CLIENT_PROPAGATED processing")
-                    ACE_TEXT (" (%P|%t): original thread priority =")
-                    ACE_TEXT (" requested priority = %d\n"),
-                    target_priority));
+      this->state_ = PRIORITY_RESET_REQUIRED;
     }
   else if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,

@@ -131,7 +131,7 @@ TAO_RT_Thread_Lane_Resources_Manager::default_lane_resources (void)
 
 int
 TAO_RT_Thread_Lane_Resources_Manager::shutdown_reactors (TAO_Thread_Lane_Resources &lane_resources,
-                                                         CORBA_Environment &ACE_TRY_ENV)
+                                                         CORBA_Environment &)
 {
   TAO_Leader_Follower &leader_follower =
     lane_resources.leader_follower ();
