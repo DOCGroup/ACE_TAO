@@ -10,7 +10,7 @@
 //     on the Dir_Service object.
 //
 // = AUTHOR
-//     Kirthika Parameswaran <kirthiak@cs.wustl.edu>
+//     Kirthika Parameswaran <kirthika@cs.wustl.edu>
 //
 // ================================================================
 
@@ -113,89 +113,75 @@ read_IOR_from_file (void)
 int
 main (int argc, char **argv)
 {
-  CORBA::Environment env;
-
-  // Initialize the ORB
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, env);
-  if (env.exception () != 0)
+  TAO_TRY
     {
-      env.print_exception ("CORBA::ORB_init");
-      return -1;
-    }
+      // Initialize the ORB
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      // Initialize options based on command-line arguments.
+      int parse_args_result = parse_args (argc, argv);
+      if (parse_args_result != 0)
+        return parse_args_result;
 
-  // Initialize options based on command-line arguments.
-  int parse_args_result = parse_args (argc, argv);
-  if (parse_args_result != 0)
-    return parse_args_result;
-
-  if (IOR == 0)
-    {
-      int result = read_IOR_from_file ();
-      if (result != 0)
-        ACE_ERROR_RETURN ((LM_ERROR, "Cannot read IOR from %s\n", IOR_file), -1);
-    }
-
-  // Get an object reference from the argument string.
-  CORBA::Object_var object = orb->string_to_object (IOR, env);
-
-  if (env.exception () != 0)
-    {
-      env.print_exception ("CORBA::ORB::string_to_object");
-      return -1;
-    }
-
-  // Try to narrow the object reference to a Dir_Service reference.
-  Dir_Service_var my_dir_service = Dir_Service::_narrow (object.in (), env);
-
-  if (env.exception () != 0)
-    {
-      env.print_exception ("Dir_Service::_narrow");
-      return -1;
-    }
-
-  CORBA::String_var ior =
-    orb->object_to_string (my_dir_service.in (), env);
-
-  if (env.exception () != 0)
-    {
-      env.print_exception ("CORBA::ORB::object_to_string");
-      return -1;
-    }
-
-  ACE_DEBUG ((LM_DEBUG,
-              "\nConnecting to: %s\n\n",
-              ior.in ()));
-
-  long result = 0;
-
-  for (int i = 0; i < iterations && env.exception () == 0; i++)
-    {
-      if (oneway)
-        // Invoke the area_code_info() method of the foo reference.
-        my_dir_service->area_codes_info (env);
-      else
+      if (IOR == 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "Whats the contact number for the DOC group?\n"));
-          // Invoke the tele_number() method of the foo reference.
-          result = my_dir_service->tele_number ("DOC Group",env);
-           // Print the result of doit () method of the foo reference.
-          ACE_DEBUG ((LM_DEBUG, "The telephone number is %d\n", result));
-       }
+          int result = read_IOR_from_file ();
+          if (result != 0)
+            ACE_ERROR_RETURN ((LM_ERROR, "Cannot read IOR from %s\n", IOR_file), -1);
+        }
+
+      // Get an object reference from the argument string.
+      CORBA::Object_var object = orb->string_to_object (IOR, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+ // Try to narrow the object reference to a Dir_Service reference.
+      Dir_Service_var my_dir_service = Dir_Service::_narrow (object.in (), TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      CORBA::String_var ior =
+        orb->object_to_string (my_dir_service.in (), TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "\nConnecting to: %s\n\n",
+                  ior.in ()));
+
+      long result = 0;
+
+      for (int i = 0; i < iterations && TAO_TRY_ENV.exception () == 0; i++)
+        {
+          if (oneway)
+            {
+              // Invoke the area_code_info() method of the Dir_Service reference.
+              my_dir_service->area_codes_info (TAO_TRY_ENV);
+              TAO_CHECK_ENV;
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Whats the contact number for the DOC group?\n"));
+              // Invoke the tele_number() method of the Dir_Service reference.
+              result = my_dir_service->tele_number ("DOC Group",TAO_TRY_ENV);
+              TAO_CHECK_ENV;
+              ACE_DEBUG ((LM_DEBUG, "The telephone number is %d\n", result));
+            }
        
-      my_dir_service->end_note (env);
+          my_dir_service->end_note (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+        }
+
+      if (shutdown_server && TAO_TRY_ENV.exception () == 0)
+        {
+          my_dir_service->shutdown (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+        }
+      ACE_OS::free (IOR);
     }
-
-  if (shutdown_server && env.exception () == 0)
-    my_dir_service->shutdown (env);
-
-  if (env.exception () != 0)
+  TAO_CATCHANY
     {
-      env.print_exception ("Dir_Service::tele_number");
+      TAO_TRY_ENV.print_exception ("Exception in main:");
       return 1;
     }
-  
-  ACE_OS::free (IOR);
-  
+  TAO_ENDTRY;
   return 0;
 }
