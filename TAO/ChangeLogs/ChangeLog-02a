@@ -1,3 +1,23 @@
+Wed Dec 12 12:54:51 2001  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
+
+	* orbsvcs/orbsvcs/Event_Utilities.cpp:
+	  Added a new parameter to the class ACE_SupplierQOS_Factory that
+	  specifies the number of elements to initialize. The parameter
+	  defaults to zero. Previously the length of the QOS IDL structure 
+	  defaulted to 0 length and on each insert call would reallocate
+	  one additional slot and copy the old contents of the QOS to the
+	  new structure. For 500 MC addresses, this was expensive. The
+	  Changes were incorporated thanks to Mark Hyett<mhyett@dctd.saic.com>.
+
+	* orbsvcs/orbsvcs/Event_Utilities.h:
+	  Added a new parameter to the class ACE_SupplierQOS_Factory that
+	  specifies the number of elements to initialise. The parameter 
+	  defaults to 0. Previously the length of the QOS IDL structure 
+	  defaulted to 0 length and on each insert call would reallocate
+	  one additional slot and copy the old contents of the QOS to the
+	  new structure. For 500 MC addresses, this was expensive. The
+	  Changes were incorporated thanks to Mark Hyett<mhyett@dctd.saic.com>.
+
 Tue Dec 12 06:55:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Base.cpp (process_request_message): Avoid
@@ -63,6 +83,7 @@ Tue Dec 11 15:06:00 2001  Carlos O'Ryan  <coryan@uci.edu>
 	  call to generate the extra comma does not work on windows.
 	  Change for another "clever" trick that should be more reliable.
 
+>>>>>>> 1.4531
 Tue Dec 11 09:54:04 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/orbconf.h:
