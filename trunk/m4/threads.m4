@@ -50,7 +50,11 @@ dnl Check if compiler accepts specific flag to enable threads
     dnl so search for a usable compiler flag to enable thread support.
     dnl If no thread flag is found then the remaining tests should still
     dnl figure out how to enable thread support via library checks.
-    ACE_SEARCH_THREAD_FLAGS(mt pthread pthreads mthreads threads Kthread,,)
+    ACE_SEARCH_THREAD_FLAGS(
+      [mt pthread pthreads mthreads threads Kthread -thread_safe],,)
+      dnl NOTE: "-thread_safe" is correct, not "thread_safe."
+      dnl       KAI C++ uses the flag "--thread_safe" which is why
+      dnl       "-thread_safe" is passed as the flag to test.
    ],
    [
     dnl Do nothing
