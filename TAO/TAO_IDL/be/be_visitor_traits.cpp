@@ -24,6 +24,10 @@
 #include "be_eventtype_fwd.h"
 #include "be_component.h"
 #include "be_component_fwd.h"
+#include "be_field.h"
+#include "be_exception.h"
+#include "be_structure.h"
+#include "be_union.h"
 #include "be_array.h"
 #include "be_typedef.h"
 #include "be_helper.h"
@@ -259,9 +263,67 @@ be_visitor_traits::visit_eventtype_fwd (be_eventtype_fwd *node)
 }
 
 int
+be_visitor_traits::visit_field (be_field *node)
+{
+  be_type *ft = be_type::narrow_from_decl (node->field_type ());
+
+  if (ft->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_traits::"
+                         "visit_field - visit field type failed\n"),
+                        -1);
+    }
+
+  return 0;
+}
+
+int
+be_visitor_traits::visit_exception (be_exception *node)
+{
+  if (this->visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_traits::"
+                         "visit_exception - visit scope failed\n"),
+                        -1);
+    }
+
+  return 0;
+}
+
+int
+be_visitor_traits::visit_struct (be_structure *node)
+{
+  if (this->visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_traits::"
+                         "visit_struct - visit scope failed\n"),
+                        -1);
+    }
+
+  return 0;
+}
+
+int
+be_visitor_traits::visit_union (be_union *node)
+{
+  if (this->visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_traits::"
+                         "visit_union - visit scope failed\n"),
+                        -1);
+    }
+
+  return 0;
+}
+
+int
 be_visitor_traits::visit_array (be_array *node)
 {
-  if (node->cli_traits_gen ())
+  if (node->imported () || node->cli_traits_gen ())
     {
       return 0;
     }
