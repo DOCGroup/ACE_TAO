@@ -56,7 +56,7 @@ Cubit_Client::func (u_int i)
 int
 Cubit_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:k:x");
+  ACE_Get_Opt get_opts (argc_, argv_, "dn:k:xp:");
   int c;
 
   while ((c = get_opts ()) != -1)
