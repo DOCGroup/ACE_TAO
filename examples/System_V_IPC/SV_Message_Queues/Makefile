@@ -75,8 +75,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SV_Message_Queue.h \
  $(ACE_ROOT)/ace/SV_Message.h \
  $(ACE_ROOT)/ace/SV_Message.i \
- $(ACE_ROOT)/ace/SV_Message_Queue.i \
- test.h
+ $(ACE_ROOT)/ace/SV_Message_Queue.i test.h
 .obj/MQ_Client.o .shobj/MQ_Client.: MQ_Client.cpp \
  $(ACE_ROOT)/ace/SV_Message_Queue.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -92,8 +91,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/SV_Message.h \
  $(ACE_ROOT)/ace/SV_Message.i \
- $(ACE_ROOT)/ace/SV_Message_Queue.i \
- test.h
+ $(ACE_ROOT)/ace/SV_Message_Queue.i test.h
 .obj/TMQ_Server.o .shobj/TMQ_Server.: TMQ_Server.cpp \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Synch.h \

@@ -342,8 +342,7 @@ endif
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Connector.i \
- Conn_Test.h
+ $(ACE_ROOT)/ace/Connector.i Conn_Test.h
 .obj/Enum_Interfaces_Test.o .shobj/Enum_Interfaces_Test.: Enum_Interfaces_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
@@ -1474,8 +1473,7 @@ endif
  $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Pipe.h \
- $(ACE_ROOT)/ace/Pipe.i \
- test_config.h
+ $(ACE_ROOT)/ace/Pipe.i test_config.h
 .obj/Reactor_Timer_Test.o .shobj/Reactor_Timer_Test.: Reactor_Timer_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
@@ -1844,8 +1842,7 @@ endif
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Task_T.i \
- test_config.h
+ $(ACE_ROOT)/ace/Task_T.i test_config.h
 .obj/Thread_Manager_Test.o .shobj/Thread_Manager_Test.: Thread_Manager_Test.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread.h \
@@ -1876,8 +1873,7 @@ endif
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Signal.i \
- test_config.h
+ $(ACE_ROOT)/ace/Signal.i test_config.h
 .obj/Thread_Pool_Test.o .shobj/Thread_Pool_Test.: Thread_Pool_Test.cpp \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -1946,8 +1942,7 @@ endif
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Task_T.i \
- test_config.h
+ $(ACE_ROOT)/ace/Task_T.i test_config.h
 .obj/Time_Service_Test.o .shobj/Time_Service_Test.: Time_Service_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
@@ -1963,8 +1958,8 @@ endif
  $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/Process.i
 .obj/Time_Value_Test.o .shobj/Time_Value_Test.: Time_Value_Test.cpp \
- $(ACE_ROOT)/ace/config.h \
- test_config.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h test_config.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/stdcpp.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
@@ -2114,8 +2109,8 @@ endif
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Signal.i \
- TSS_Test_Errno.h test_config.h
+ $(ACE_ROOT)/ace/Signal.i TSS_Test_Errno.h \
+ test_config.h
 .obj/UPIPE_SAP_Test.o .shobj/UPIPE_SAP_Test.: UPIPE_SAP_Test.cpp \
  $(ACE_ROOT)/ace/Stream.h \
  $(ACE_ROOT)/ace/ACE.h \
