@@ -1,8 +1,22 @@
+Thu Mar 10 19:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.{h,cpp}:
+          New upcall wrapper for the direct collocation case
+
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+          Use the new direct collocation upcall wrapper for the strategized
+          proxy broker. This reduces the footprint
+
+        * TAO_IDL/be/be_codegen.cpp:
+          When direct collocation is enabled, generate an include for the
+          new direct collocation upcall wrapper. Removed the generate of
+          ForwardRequestC.h, it is not needed anymore
+
 Thu Mar 10 11:20:01 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
         * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
-        
+
           Added preprocessor checks around IDL compiler code that
           generates inline constants. For VC6, which is broken in
           its handling of inline constants, inline constant
@@ -19,10 +33,10 @@ Thu Mar 10 09:37:25 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_produce.cpp:
         * TAO_IDL/be/be_visitor_root/root.cpp:
         * TAO_IDL/be_include/be_global.h:
-        
+
           Added new command line option -SS to suppress generation of
           skeleton files. Only an empty *S.h file, containing the
-          copyright and an explanatory comment, is generated when 
+          copyright and an explanatory comment, is generated when
           this option is used. This empty file is generated in order
           to have something to include in the *S.h file generated
           from an IDL file that includes the file on which the
