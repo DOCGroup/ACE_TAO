@@ -47,7 +47,7 @@ namespace CIAO
 
     Port_Activator (const char *oid,
                     const char *name,
-                    Port_Activator::Type t);
+                    Type t);
 
     virtual ~Port_Activator (void);
 
@@ -56,7 +56,7 @@ namespace CIAO
 
     /// Activate the servant reponsible for this port.
     /**
-     * There are intentionally no exception specifications. It is the
+     * There are intentionally no throw specifications. It is the
      * caller's responsibility to handle CORBA and C++
      * specifications.
      */

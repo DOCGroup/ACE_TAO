@@ -2,6 +2,7 @@
 #include "CIAO_common.h"
 #include "Port_Activator.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (ciao,
            Servant_Activator,
