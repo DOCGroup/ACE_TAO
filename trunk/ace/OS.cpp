@@ -2697,9 +2697,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   if (flags == 0) flags = VX_FP_TASK;
   if (stacksize == 0) stacksize = 20000;
 
-  const u_int thr_id_provided = thr_id && ACE_OS::strncmp (*thr_id,
-                                                           "==ace_t==",
-                                                           9);
+  const u_int thr_id_provided =
+    thr_id && *thr_id && ACE_OS::strncmp (*thr_id, "==ace_t==", 9);
 
   ACE_hthread_t tid;
 #   if 0 /* Don't support setting of stack, because it doesn't seem to work. */
@@ -2754,19 +2753,29 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     return -1;
   else
     {
-      if (! thr_id_provided)
+      if (! thr_id_provided  &&  thr_id)
         {
-          // ::taskTcb (int tid) returns the address of the WIND_TCB
-          // (task control block).  According to the ::taskSpawn()
-          // documentation, the name of the new task is stored at
-          // pStackBase, but is that of the current task?  If so, it
-          // might be a bit quicker than this extraction of the tcb . . .
-          ACE_OS::strncpy (*thr_id + 9, ::taskTcb (tid)->name, 10);
+          if (*thr_id  &&  ! ACE_OS::strncmp (*thr_id, "==ace_t==", 9))
+            // *thr_id was allocated by the Thread_Manager.
+            // ::taskTcb (int tid) returns the address of the WIND_TCB
+            // (task control block).  According to the ::taskSpawn()
+            // documentation, the name of the new task is stored at
+            // pStackBase, but is that of the current task?  If so, it
+            // might be a bit quicker than this extraction of the tcb . . .
+            ACE_OS::strncpy (*thr_id + 9, ::taskTcb (tid)->name, 10);
+          else
+            // *thr_id was not allocated by the Thread_Manager.
+            // Pass back the task name in the location pointed to
+            // by thr_id.
+            *thr_id = ::taskTcb (tid)->name;
         }
       // else if the thr_id was provided, there's no need to overwrite
-      // it with the same value (string).
+      // it with the same value (string).  If thr_id is 0, then we can't
+      // pass the task name back.
 
-      *thr_handle = tid;
+      if (thr_handle)
+        *thr_handle = tid;
+
       return 0;
     }
 
