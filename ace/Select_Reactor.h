@@ -385,9 +385,20 @@ public:
   // <handle> is given the Select_Reactor will *not* call
   // eh->get_handle() to extract the underlying I/O handle.
 
+#if defined (ACE_WIN32)
+
+  // Originally this interface was available for all platforms, but
+  // because ACE_HANDLE is an int on non-Win32 platforms, compilers
+  // are not able to tell the difference between
+  // register_handler(ACE_Event_Handler*,ACE_Reactor_Mask) and
+  // register_handler(ACE_Event_Handler*,ACE_HANDLE). Therefore, we
+  // have restricted this method to Win32 only.
+
   virtual int register_handler (ACE_Event_Handler *event_handler, 
                                 ACE_HANDLE event_handle = ACE_INVALID_HANDLE);
   // Not implemented.
+
+#endif /* ACE_WIN32 */
 
   virtual int register_handler (ACE_HANDLE event_handle,
                                 ACE_HANDLE io_handle,

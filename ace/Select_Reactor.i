@@ -62,6 +62,8 @@ ACE_Select_Reactor::register_handler (int signum,
 						  old_sh, old_disp); 
 }
 
+#if defined (ACE_WIN32)
+
 ACE_INLINE int 
 ACE_Select_Reactor::register_handler (ACE_Event_Handler *event_handler, 
 				      ACE_HANDLE event_handle)
@@ -71,6 +73,8 @@ ACE_Select_Reactor::register_handler (ACE_Event_Handler *event_handler,
   ACE_UNUSED_ARG (event_handle);
   ACE_NOTSUP_RETURN (-1);
 }
+
+#endif /* ACE_WIN32 */
 
 ACE_INLINE int 
 ACE_Select_Reactor::register_handler (ACE_HANDLE event_handle,
