@@ -13,12 +13,44 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+// uncomment next line if you are using FreeBSD 2.1.x
+// #define FreeBSD_2_1
+
 // Platform specific directives
 #define FreeBSD
 #define ACE_LACKS_GETPGID
+#define ACE_LACKS_RWLOCK_T
 #define ACE_HAS_SIG_MACROS
+
+#if defined(FreeBSD_2_1)
+struct  if_data {
+/* generic interface information */
+  u_char  ifi_type;       /* ethernet, tokenring, etc */
+  u_char  ifi_physical;   /* e.g., AUI, Thinnet, 10base-T, etc */
+  u_char  ifi_addrlen;    /* media address length */
+  u_char  ifi_hdrlen;     /* media header length */
+  u_long  ifi_mtu;        /* maximum transmission unit */
+  u_long  ifi_metric;     /* routing metric (external only) */
+  u_long  ifi_baudrate;   /* linespeed */
+/* volatile statistics */
+  u_long  ifi_ipackets;   /* packets received on interface */
+  u_long  ifi_ierrors;    /* input errors on interface */
+  u_long  ifi_opackets;   /* packets sent on interface */
+  u_long  ifi_oerrors;    /* output errors on interface */
+  u_long  ifi_collisions; /* collisions on csma interfaces */
+  u_long  ifi_ibytes;     /* total number of octets received */
+  u_long  ifi_obytes;     /* total number of octets sent */
+  u_long  ifi_imcasts;    /* packets received via multicast */
+  u_long  ifi_omcasts;    /* packets sent via multicast */
+  u_long  ifi_iqdrops;    /* dropped on input, this interface */
+  u_long  ifi_noproto;    /* destined for unsupported protocol */
+  struct  timeval ifi_lastchange;/* time of last administrative ch
+ange */
+} ;
+#else
 // Platform supports POSIX timers via timestruct_t.
 #define ACE_HAS_POSIX_TIME
+#endif /* defined FreeBSD_2_1 */
 #define ACE_NEEDS_SYSTIME_H
 
 #define ACE_LACKS_STRRECVFD
@@ -31,7 +63,11 @@
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYSCALL_H
 
+#if defined(FreeBSD_2_1)
+#define ACE_HAS_CPLUSPLUS_HEADERS
+#else
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
+#endif /* defined FreeBSD_2_1 */
 
 // Compiler/platform supports SVR4 signal typedef
 #define ACE_HAS_SVR4_SIGNAL_T
