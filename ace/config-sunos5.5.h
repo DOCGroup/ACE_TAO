@@ -27,6 +27,8 @@
        to work around problems with automatic template instantiation. */
 #   define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 #   define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
+// Note that SunC++ 5.0 doesn't yet appear to support 
+// ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION...
 #   define ACE_TEMPLATES_REQUIRE_SOURCE
 #   define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #   define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1

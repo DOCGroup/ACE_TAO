@@ -35,7 +35,7 @@ typedef ACE_Select_Reactor_Token_T<ACE_Noop_Token> ACE_Select_Reactor_Token;
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
 typedef ACE_Select_Reactor_T<ACE_Select_Reactor_Token> ACE_Select_Reactor;
-
+ACE_TEMPLATE_SPECIALIZATION
 class ACE_Export ACE_Guard< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
 {
   // = TITLE

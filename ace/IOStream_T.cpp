@@ -145,11 +145,11 @@ ACE_IOStream<STREAM>::operator<< (ACE_IOStream_String &v)
 {
   if (opfx ())
     {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && defined (_MSC_VER)
       for (int i = 0; i < v.GetLength (); ++i)
 #else
       for (u_int i = 0; i < (u_int) v.length (); ++i)
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && defined (_MSC_VER) */
         this->put (v[i]);
     }
 
