@@ -21,7 +21,7 @@
 
 #  include "ace/Synch.h"
 
-class TAO_Internal
+class ACE_Svc_Export TAO_Internal
 // = TITLE
 //    This class encapsulates some private behaviors and global data
 //    structures used internal to TAO.  No application should EVER see
