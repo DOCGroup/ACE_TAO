@@ -1710,6 +1710,7 @@ be_visitor_ccm_pre_proc::create_explicit (be_home *node)
   i->set_name (explicit_name);
   i->set_defined_in (node->defined_in ());
   i->set_imported (node->imported ());
+  be_interface::narrow_from_decl (i)->gen_fwd_helper_name ();
 
   // Reuse the home's decls in the explicit interface. No need
   // to check for name clashes, redefinition, etc. because it
@@ -1778,6 +1779,7 @@ be_visitor_ccm_pre_proc::create_implicit (be_home *node)
   i->set_name (implicit_name);
   i->set_defined_in (node->defined_in ());
   i->set_imported (node->imported ());
+  be_interface::narrow_from_decl (i)->gen_fwd_helper_name ();
   AST_Module *m = AST_Module::narrow_from_scope (node->defined_in ());
   m->be_add_interface (i);
   return i;
@@ -1816,6 +1818,7 @@ be_visitor_ccm_pre_proc::create_equivalent (be_home *node,
   retval->set_name (equiv_name);
   retval->set_defined_in (s);
   retval->set_imported (node->imported ());
+  be_interface::narrow_from_decl (retval)->gen_fwd_helper_name ();
   UTL_ScopedName *unmangled_name = ACE_static_cast (UTL_ScopedName *,
                                                     node->name ()->copy ());
   UTL_ScopedName *mangled_name =
