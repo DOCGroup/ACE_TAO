@@ -1,3 +1,8 @@
+Thu Jan 31 13:32:07 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* XML/common/XML_Common.dsp: Fixed the LIB path to use relative
+	  path.
+
 Thu Jan 31 19:18:16 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	* include/makeinclude/wrapper_macros.GNU:
