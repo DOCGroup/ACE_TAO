@@ -730,7 +730,7 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request
                               TAO_INVOKE_OK);
           }
 
-        CORBA::SystemException* ex =
+        CORBA::SystemException *ex =
           TAO_Exceptions::create_system_exception (type_id.in ()
                                                    ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (TAO_INVOKE_OK);
@@ -747,6 +747,13 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request
 
         ex->minor (minor);
         ex->completed (CORBA::CompletionStatus (completion));
+
+#if defined (TAO_HAS_EXCEPTIONS)
+        // Without this, the call to create_system_exception() above
+        // causes a memory leak. On platforms without native exceptions,
+        // the CORBA_Environment class manages the memory.
+        auto_ptr<CORBA::SystemException> safety (ex);
+#endif
 
         // Raise the exception.
         ACE_ENV_RAISE (ex);
@@ -883,10 +890,16 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
           // @@ Think about a better way to raise the exception here,
           //    maybe we need some more macros?
 #if defined (TAO_HAS_EXCEPTIONS)
+          // If we have native exceptions, we must manage the memory allocated
+          // by the call above to alloc(). Otherwise the Environment class
+          // manages the memory.
+          auto_ptr<CORBA::Exception> safety (exception);
+
           // Direct throw because we don't have the ACE_TRY_ENV.
           exception->_raise ();
 #else
-          ACE_TRY_ENV.exception (exception); // We can not use ACE_THROW here.
+          // We can not use ACE_THROW here.
+          ACE_TRY_ENV.exception (exception);
 #endif
           return TAO_INVOKE_EXCEPTION;
         }
@@ -1076,3 +1089,16 @@ TAO_GIOP_Locate_Request_Invocation::invoke (ACE_ENV_SINGLE_ARG_DECL)
 
   return TAO_INVOKE_OK;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class auto_ptr<CORBA::SystemException>;
+template class auto_ptr<CORBA::Exception>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate auto_ptr<CORBA::SystemException>
+#pragma instantiate auto_ptr<CORBA::Exception>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
