@@ -7566,7 +7566,7 @@ AC_CONFIG_FILES([
 ])
 
 dnl Configure subdirectories if they are present.
-if test -d $srcdir/ACEXML -a X$ace_user_with_acexml = Xyes; then
+if test -d $srcdir/ACEXML; then
   AC_CONFIG_FILES([
     ACEXML/Makefile
     ACEXML/common/Makefile
