@@ -13,9 +13,6 @@
  *
  * ============================================================================= */
 
-#include <errno.h>
-extern int errno;
-
 #if (PACE_HAS_POSIX_CLS_UOF)
 PACE_INLINE
 char *
