@@ -355,13 +355,19 @@ int
 ACE_INET_Addr::get_host_name (char hostname[], size_t len) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_host_name");
-#if defined (VXWORKS)
   char name [MAXHOSTNAMELEN + 1];
-  int error = ::hostGetByAddr ((int) this->inet_addr_.sin_addr.s_addr, name);
+
+#if defined (VXWORKS)
+  int error = ::hostGetByAddr ((int) this->inet_addr_.sin_addr.s_addr,
+                               name);
   if (error == OK)
     {
       if (ACE_OS::strlen (name) >= len)
-        return -1;
+        {
+          // Not enough space to store the name.
+          errno = ENOSPC;
+          return -1;
+        }
       else
 	{
 	  ACE_OS::strcpy (hostname, name);
@@ -374,30 +380,44 @@ ACE_INET_Addr::get_host_name (char hostname[], size_t len) const
       return -1;
     }
 #else
-  int a_len = sizeof this->inet_addr_.sin_addr.s_addr;
-
-  hostent hentry;
-  int error = 0;
-  ACE_HOSTENT_DATA buf;
-  hostent *hp;
-
-  hp = ACE_OS::gethostbyaddr_r ((char *) &this->inet_addr_.sin_addr,
-				a_len, this->addr_type_,
-				&hentry, buf, &error);
-  if (hp == 0)
+  if (this->inet_addr_.sin_addr.s_addr == INADDR_ANY)
     {
-      errno = error;
-      return -1;
+      if (ACE_OS::hostname (buf, MAXHOSTNAMELEN) == -1)
+        return 0;
+      else
+        return buf;
     }
   else
     {
-      if (ACE_OS::strlen (hp->h_name) >= len)
-        return -1;
+      hostent hentry;
+      int error = 0;
+      ACE_HOSTENT_DATA buf;
+      int a_len = sizeof this->inet_addr_.sin_addr.s_addr;
+
+      hostent *hp = ACE_OS::gethostbyaddr_r ((char *) &this->inet_addr_.sin_addr,
+                                             a_len,
+                                             this->addr_type_,
+                                             &hentry,
+                                             buf,
+                                             &error);
+      if (hp == 0)
+        {
+          errno = error;
+          return -1;
+        }
       else
-	{
-	  ACE_OS::strcpy (hostname, hp->h_name);
-	  return 0;
-	}
+        {
+          if (ACE_OS::strlen (hp->h_name) >= len)
+            {
+              errno = ENOSPC;
+              return -1;
+            }
+          else
+            {
+              ACE_OS::strcpy (hostname, hp->h_name);
+              return 0;
+            }
+        }
     }
 #endif /* VXWORKS */
 }
@@ -409,21 +429,32 @@ ACE_INET_Addr::get_host_name (void) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_host_name");
 
+  static char name[MAXHOSTNAMELEN + 1];
 #if defined (VXWORKS)
-  static char buf[MAXHOSTNAMELEN + 1];
-
-  ::gethostname (buf, MAXHOSTNAMELEN + 1);
-  return buf;
-#else
-  int a_len = sizeof this->inet_addr_.sin_addr.s_addr;
-
-  hostent *hp = ACE_OS::gethostbyaddr ((char *) &this->inet_addr_.sin_addr,
-				       a_len, this->addr_type_);
-
-  if (hp == 0)
+  if (this->get_host_name (name, MAXHOSTNAMELEN) == -1)
     return 0;
   else
-    return hp->h_name;
+    return name;
+#else
+  if (this->inet_addr_.sin_addr.s_addr == INADDR_ANY)
+    {
+      if (ACE_OS::hostname (name, MAXHOSTNAMELEN) == -1)
+        return 0;
+      else
+        return name;
+    }
+  else
+    {
+      int a_len = sizeof this->inet_addr_.sin_addr.s_addr;
+
+      hostent *hp = ACE_OS::gethostbyaddr ((char *) &this->inet_addr_.sin_addr,
+                                           a_len, this->addr_type_);
+
+      if (hp == 0)
+        return 0;
+      else
+        return hp->h_name;
+    }
 #endif /* VXWORKS */
 }
 
