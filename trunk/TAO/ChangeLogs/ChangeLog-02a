@@ -1,3 +1,14 @@
+Wed Nov 15 19:11:28 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security.idl:
+	* orbsvcs/orbsvcs/SecurityAdmin.idl:
+	* orbsvcs/orbsvcs/SecurityLevel1.idl:
+	* orbsvcs/orbsvcs/SecurityLevel2.idl:
+	* orbsvcs/orbsvcs/SecurityReplaceabpe.idl:
+
+	  Updated against Security Service 1.8 final specification
+	  (security/00-11-03).
+
 Wed Nov 15 18:45:45 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ClientRequestInfo.cpp (target, operation):
