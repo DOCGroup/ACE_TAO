@@ -14,48 +14,33 @@ Fri Dec 26 22:39:16 2003  Jaiganesh B  <jai@dre.vanderbilt.edu>
         * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
         * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
 
-        Made changes to the remove_member () methos to delete the object
-        group entry from the location_map When a member of the object
-        group is removed.
+          Made changes to the remove_member () methos to delete the object 
+          group entry from the location_map When a member of the object
+	  group is removed. 
 
-        Thanks to Stephen Procter <stephen.procter@rd.bbc.co.uk>
-        for letting know about the problem through the PRF.
+	  Thanks to Stephen Procter <stephen.procter@rd.bbc.co.uk> for
+	  letting us know about the problem through the PRF. 
 
 Fri Dec 26 22:32:25 2003  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
-        *
-          orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/server.cpp:
-        *
-          orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/server.dsp:
-        *
-          orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/server.dsp:
-        *
-          orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Basic.cpp:
-        *
-          orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Basic.h:
-        *
-          orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Simple.h:
-        *
-          orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Simple.cpp:
-        *
-          orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/LB_server.cpp:
-        *
-          orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/LB_server.cpp:
-        *
-          orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Manage_Object_Group.dsw:
-        *
-          orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Manage_Object_Group.mpc:
-        *
-          orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Makefile:
-        *
-          orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Makefile.bor:
-        *
-          orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Test.idl:
-        *
-          orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/run_test.pl:
-        Added a new test to check the add_member () and remove_member ()
-        functionality on the object group manager.
-
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/server.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/server.dsp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/server.dsp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Basic.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Basic.h:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Simple.h:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Simple.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/LB_server.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/LB_server.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Manage_Object_Group.dsw:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Manage_Object_Group.mpc:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Makefile:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Makefile.bor:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Test.idl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/run_test.pl:
+        
+	  Added a new test to check the add_member () and remove_member ()
+	  functionality on the object group manager. 
 
 Fri Dec 26 17:35:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
