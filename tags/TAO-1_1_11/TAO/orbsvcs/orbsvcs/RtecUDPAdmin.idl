@@ -1,0 +1,33 @@
+// $Id$
+
+#ifndef TAO_RTEC_UDP_ADMIN_IDL
+#define TAO_RTEC_UDP_ADMIN_IDL
+
+#include "RtecEventComm.idl"
+
+module RtecUDPAdmin 
+{
+  // = TITLE
+  //   Multicast Administration module
+  //
+  // = DESCRIPTION
+  //   When the EC is used as an interface to multicast communication
+  //   a mapping between event types and multicast addresses must be
+  //   stablished.
+
+  struct UDP_Addr 
+  {
+    unsigned long ipaddr;
+    unsigned short port;
+  };
+
+  interface AddrServer 
+    {
+      void get_addr (in RtecEventComm::EventHeader header,
+                     out UDP_Addr addr);
+      // Get the addr and port given the event header.
+    };
+
+};
+
+#endif /* TAO_RTEC_UDP_ADMIN_IDL */

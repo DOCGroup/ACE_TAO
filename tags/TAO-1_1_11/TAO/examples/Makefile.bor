@@ -1,0 +1,12 @@
+
+#
+# Makefile for building the TAO examples
+#
+
+DIRS = Buffered_Oneways \
+       Callback_Quoter Simple \
+       Event_Comm \
+       POA \
+       Simple
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

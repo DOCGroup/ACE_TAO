@@ -1,0 +1,36 @@
+/* -*- C++ -*- */
+// $Id$
+
+struct BinStruct
+{
+  short	s;
+  char	c;
+  long	l;
+  octet o;
+  double d;
+  //  octet pad[8];  // to make it 32 bytes
+  // commented out until IDL support for arrays is added
+};
+
+// Richly typed data
+interface ttcp_sequence
+{
+  typedef sequence<short> ShortSeq;
+  typedef sequence<long> LongSeq;
+  typedef sequence<double> DoubleSeq;
+  typedef sequence<char> CharSeq;
+  typedef sequence<octet> OctetSeq;
+  typedef sequence<BinStruct> StructSeq;
+
+  // = Routines to send sequences of various data types.
+  oneway void sendShortSeq (in ShortSeq ttcp_seq);
+  oneway void sendLongSeq (in LongSeq ttcp_seq);
+  oneway void sendDoubleSeq (in DoubleSeq ttcp_seq);
+  oneway void sendCharSeq (in CharSeq ttcp_seq);
+  oneway void sendOctetSeq (in OctetSeq ttcp_seq);
+  oneway void sendStructSeq (in StructSeq ttcp_seq);
+
+  // = Control the timers.
+  oneway void start_timer ();
+  oneway void stop_timer ();
+};

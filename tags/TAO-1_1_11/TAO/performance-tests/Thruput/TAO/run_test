@@ -1,0 +1,55 @@
+#!/bin/csh -f
+#
+# $Id$
+#
+
+#   $1  <Total_Data_Size> 
+#   $2  <Max_msg_size_in_Kb?> <-- currently not used? $2 == $argv[2] ??
+#   $3  <Output file name>
+#   $4  <seq_type>
+#   $5  <ior_file>
+
+# e.g. 
+# % run_test 10000 512 mambo\! s iiop:1.0//128.252.165.144:10015/P350892cc000ad963RootPOA/RootPOA_is_BAD/TTCP_IIOP_test
+#
+
+# if ($#argv < 4) then
+# 	echo "Usage: run_test <Total_Data_Size> <Max_msg_size> <Title_Of_This_Test> <seq_type>"
+# 	exit 1
+# endif
+#
+@ msize=1024
+@ limit= ($argv[2] * 1024)
+#echo $limit
+#echo $msize 
+	echo "-->"
+	echo "--> ITERATION #" 1 
+	echo "  client -S" $1 "-m m -l" $msize "-L" $3 "-q" $4 -f $5
+	echo "-->"
+./client -S $1 -m m -l $msize -L $3 -q $4 -f $5
+set flag=0
+while ($msize <= $limit)
+  if ($flag == 0) goto label
+	echo "-->"
+	echo "--> ITERATION #" 1 
+        echo "  client -S" $1 "-m m -l" $msize "-L" $3 "-q" $4 -f $5
+	echo "-->"
+            ./client -S $1 -m m -l $msize -L $3 -q $4  -f $5
+ label:
+  set flag=1
+  sleep 5
+  foreach i (2)
+	echo "-->"
+	echo "--> ITERATION #" $i 
+        echo "  client -S" $1 "-m m -l" $msize "-L" $3 "-q" $4 -f $5
+	echo "-->"
+	./client -S $1 -m m -l $msize -L $3 -q $4 -f $5
+  end
+	echo "---------------------------"
+	@ msize = ($msize * 2)
+	sleep 5
+end 
+
+echo " "
+echo "Done at:" 
+date
