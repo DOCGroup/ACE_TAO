@@ -59,14 +59,9 @@ EXTRA_DIST = \
         acconfig.h \
         ace-config.in \
         ace-config.1.in \
-        aceConf.sh.in \
-        ACE.ifnames \
-        ace-diff-config.in
+        aceConf.sh.in
 
-DISTCLEANFILES = ace-config aceConf.sh ace-config.1 ace-diff-config \
-                 ace-diff-config.results ace-diff-config.results.bak
-
-MAINTAINERCLEANFILES = ACE.ifnames
+DISTCLEANFILES = ace-config aceConf.sh ace-config.1 
 
 ## release:
 ##         $(MAKE) dist distdir=$(PACKAGE)$(VERSION)
@@ -96,18 +91,6 @@ ace-config.1: ace-config.1.in Makefile
 	sed -e 's,\@libdir\@,$(libdir),g' \
               < $(srcdir)/ace-config.1.in > ace-config.1.tmp \
           && mv ace-config.1.tmp ace-config.1
-
-## The file containing the list of preprocessor conditional macros used by ACE
-noinst_DATA = ACE.ifnames
-
-ACE.ifnames: ChangeLog acconfig.h
-if MAINTAINER_MODE
-	rm -f $@
-	ifnames $(top_srcdir)/ace/*.{h,i,cpp} | sed -e 's/ .*//g' \
-           > $(top_srcdir)/$@
-else
-	touch $(top_srcdir)/$@
-endif
 
 ## Directories to include in the distribution but which I am too lazy to
 ## create Makefile.am files for.  A Makefile.am for these directories isn't
