@@ -599,30 +599,6 @@ ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
 # endif /* VXWORKS */
 }
 
-ACE_INLINE uid_t
-ACE_OS::getuid (void)
-{
-  // ACE_TRACE ("ACE_OS::getuid");
-# if defined (VXWORKS) || defined(CHORUS)  || defined (ACE_PSOS)
-  // getuid() is not supported:  just one user anyways
-  return 0;
-# else
-  ACE_OSCALL_RETURN (::getuid (), uid_t, (uid_t) -1);
-# endif /* VXWORKS */
-}
-
-ACE_INLINE int
-ACE_OS::isatty (ACE_HANDLE fd)
-{
-# if defined (ACE_LACKS_ISATTY)
-  ACE_UNUSED_ARG (fd);
-  return 0;
-#else
-  // ACE_TRACE ("ACE_OS::isatty");
-  ACE_OSCALL_RETURN (::isatty (fd), int, -1);
-# endif /* defined (ACE_LACKS_ISATTY) */
-}
-
 # if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
 ACE_INLINE int
 ACE_OS::mkfifo (const char *file, mode_t mode)
@@ -802,26 +778,6 @@ ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
 
   // ACE_TRACE ("ACE_OS::getopt");
   ACE_NOTSUP_RETURN (-1);
-}
-
-ACE_INLINE uid_t
-ACE_OS::getuid (void)
-{
-  // ACE_TRACE ("ACE_OS::getuid");
-  ACE_NOTSUP_RETURN (-1);
-}
-
-ACE_INLINE int
-ACE_OS::isatty (ACE_HANDLE handle)
-{
-# if !defined (ACE_HAS_WINCE)
-  // ACE_TRACE ("ACE_OS::isatty");
-  int fd = ::_open_osfhandle ((long) handle, 0);
-  ACE_OSCALL_RETURN (::_isatty ((int) fd), int, -1);
-# else
-  ACE_UNUSED_ARG (handle);
-  return 0;
-# endif /* ACE_HAS_WINCE */
 }
 
 # if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
@@ -10839,4 +10795,54 @@ ACE_OS::qsort (void *base,
   ACE_UNUSED_ARG (width);
   ACE_UNUSED_ARG (compar);
 #endif /* ACE_LACKS_QSORT */
+}
+
+ACE_INLINE int
+ACE_OS::setuid (uid_t uid)
+{
+  // ACE_TRACE ("ACE_OS::setuid");
+# if defined (VXWORKS) || defined (ACE_PSOS)
+  // setuid() is not supported:  just one user anyways
+  return 0;
+# elif defined (ACE_WIN32) || defined(CHORUS)
+  ACE_NOTSUP_RETURN (-1);
+#else
+  ACE_OSCALL_RETURN (::setuid (uid), int,  -1);
+# endif /* VXWORKS */
+}
+
+ACE_INLINE uid_t
+ACE_OS::getuid (void)
+{
+  // ACE_TRACE ("ACE_OS::getuid");
+# if defined (VXWORKS) || defined (ACE_PSOS)
+  // getuid() is not supported:  just one user anyways
+  return 0;
+# elif defined (ACE_WIN32) || defined(CHORUS)
+  // ACE_TRACE ("ACE_OS::getuid");
+  ACE_NOTSUP_RETURN (-1);
+#else
+  ACE_OSCALL_RETURN (::getuid (), uid_t, (uid_t) -1);
+# endif /* VXWORKS */
+}
+
+ACE_INLINE int
+ACE_OS::isatty (ACE_HANDLE fd)
+{
+# if defined (ACE_LACKS_ISATTY)
+  ACE_UNUSED_ARG (fd);
+  return 0;
+# elif defined (ACE_WIN32)
+#  if !defined (ACE_HAS_WINCE)
+  // ACE_TRACE ("ACE_OS::isatty");
+  int fd = ::_open_osfhandle ((long) handle, 0);
+  ACE_OSCALL_RETURN (::_isatty ((int) fd), int, -1);
+#  else
+  ACE_UNUSED_ARG (handle);
+  return 0;
+#  endif /* ACE_HAS_WINCE */
+# else 
+  // ACE_TRACE ("ACE_OS::isatty");
+  ACE_OSCALL_RETURN (::isatty (fd), int, -1);
+# endif /* defined (ACE_LACKS_ISATTY) */
 }
