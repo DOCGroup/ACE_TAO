@@ -1,3 +1,14 @@
+Tue Apr 27 17:27:16 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/LSOCK_Acceptor.{h,cpp}:
+	* tao/LSOCK_Connector.{h,cpp}:
+	* tao/LSOCK_Profile.{h,i,cpp}:
+	* tao/LSOCK_Transport.{h,cpp}:
+
+	  These are the Unix Domain Socket pluggable protocol files for TAO.
+	  They are not operational yet, but getting them under CVS
+	  control at this point seems like a good thing to do.
+
 Tue Apr 27 16:48:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA:
