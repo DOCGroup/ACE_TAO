@@ -17,6 +17,9 @@ Fri Jun 19 22:17:35 1998  David L. Levine  <levine@cs.wustl.edu>
           other users to continue to check in files prior to or during the
           release.
 
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp (read): added
+          ACE_UNUSED_ARG (len).
+
 Fri Jun 19 16:51:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/config-freebsd-pthread.h (ACE_HAS_NONCONST_MSGSND): Macro
