@@ -1,3 +1,38 @@
+Thu Jun 29 15:13:50 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ior_corbaloc/CORBALOC_Parser.cpp:
+	  Got the basic functionality of corbaloc: running.
+	  		
+	* tests/ior_corbaloc/ior_corbaloc_client_i.cpp: 
+	  Made the argument to string_to_object as a command line
+	  parameter.
+
+Tue Jun 27 17:45:47 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ior_corbaloc/CORBALOC_Parser.h: 
+	* tao/ior_corbaloc/CORBALOC_Parser.cpp : 
+
+	  Implemented part of <corbaloc:iiop:>. Seperated the <obj_addr>
+	  from <obj_addr_list>. Used 
+	  connector_registry ()->make_mprofile () to create an
+	  TAO_MProfile for the array of <obj_addr>.
+
+	* tests/ior_corbaloc/corbaloc.idl: 
+	* tests/ior_corbaloc/Makefile: 
+
+	* tests/ior_corbaloc/client.cpp:
+	* tests/ior_corbaloc/ior_corbaloc_client_i.h: 
+	* tests/ior_corbaloc/ior_corbaloc_client_i.cpp : 
+	
+	* tests/ior_corbaloc/server.cpp: 
+	* tests/ior_corbaloc/status_i.h: 
+	* tests/ior_corbaloc/status_i.cpp: 
+
+	  Added an example to test the corbaloc: style IOR. When the
+	  client invokes a request on the server, the server prints that
+	  the connection between the client and server is set.
+	  Tested <corbaloc:rir:>.
+	
 Thu Jun 29 11:47:48 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Stub.h:
@@ -19,6 +54,19 @@ Thu Jun 29 11:47:48 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Tue Jun 27 10:45:17 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
+	* tao/ior_corbaloc/Makefile: 
+	* tao/ior_corbaloc/ior_corbaloc_export.h: 
+	* tao/ior_corbaloc/CORBALOC_Parser.i : 
+	* tao/ior_corbaloc/CORBALOC_Parser.h: 
+	* tao/ior_corbaloc/CORBALOC_Parser.cpp : 
+	  Implemented part of  the corbaloc: style parser. Able to support
+	  <corbaloc:rir:/>. Done with seperating the <obj_addr> from the
+	  <obj_addr_list>
+
+	* tao/ORB.cpp : 
+	  Removed the file_string_to_object function as it is no longer
+	  needed.
+
         * tao/ior_corbaloc/Makefile:
         * tao/ior_corbaloc/ior_corbaloc_export.h:
         * tao/ior_corbaloc/CORBALOC_Parser.i :
@@ -31,6 +79,7 @@ Tue Jun 27 10:45:17 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
         * tao/ORB.cpp :
           Removed the file_string_to_object function as it is no longer
           needed.
+>>>>>>> 1.996.2.6
 
 Mon Jun 26 14:56:42 2000  Carlos O'Ryan  <coryan@uci.edu>
 

@@ -7,7 +7,7 @@
 //    TAO/tests/ior_corbaloc/
 //
 // = FILENAME
-//    ior_corbaloc_client_i.cpp 
+//    ior_corbaloc_client_i.cpp
 //
 // = DESCRIPTION
 //    This example implements a simple client which sends a corbaloc:
@@ -42,13 +42,13 @@ IOR_corbaloc_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
 
       name.length (1);
       name[0].id = CORBA::string_dup ("STATUS");
-      
-      // Resolve the name 
+
+      // Resolve the name
       CORBA::Object_var factory_object =
         this->naming_context_->resolve (name,
                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
-        
+
       // Narrow
       corbaloc::Status_var factory =
         corbaloc::Status::_narrow (factory_object.in (), ACE_TRY_ENV);
@@ -105,10 +105,10 @@ IOR_corbaloc_Client_i::init (int argc, char **argv)
 
       // There must be at least one argument, the file that has to be
       // retrieved
-      
+
       // Get a reference to the Naming Service
       CORBA::Object_var naming_context_object =
-        orb->string_to_object ("corbaloc:rir:/NameService", ACE_TRY_ENV);
+        orb->string_to_object (argv[1], ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_context_object.in ()))
