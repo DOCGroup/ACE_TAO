@@ -6372,7 +6372,6 @@ AC_OUTPUT([
            netsvcs/lib/Makefile
            netsvcs/servers/Makefile
            tests/Makefile
-           tests/log/Makefile
           ])
 
 dnl Make sure ace-diff-config is executable
