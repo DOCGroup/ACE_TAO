@@ -53,7 +53,7 @@ TAO_ORB_Table::end (void)
 }
 
 TAO_ORB_Core* const *
-TAO_ORB_Table::get_orbs( size_t& num_orbs )
+TAO_ORB_Table::get_orbs (size_t& num_orbs)
 {
   num_orbs = this->num_orbs_;
   return this->orbs_;
