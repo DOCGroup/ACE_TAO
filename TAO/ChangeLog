@@ -1,3 +1,10 @@
+Thu Feb 24 10:38:04 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/tao.mpc:
+
+	  Removed all skeleton related "*SArgument* files.  They are now
+	  in the tao/PortableServer directory.
+
 Thu Feb 24 10:34:49 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Object_SArgument_T.h:
