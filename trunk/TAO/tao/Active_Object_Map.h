@@ -587,6 +587,9 @@ class TAO_Active_Hint_Strategy : public TAO_Id_Hint_Strategy
   //     Strategy for adding active hints to ids.
 public:
 
+  virtual ~TAO_Active_Hint_Strategy (void);
+  // Virtual destructor.
+
   virtual int recover_key (const PortableServer::ObjectId &system_id,
                            PortableServer::ObjectId &user_id);
 
@@ -620,6 +623,9 @@ class TAO_No_Hint_Strategy : public TAO_Id_Hint_Strategy
   // = DESCRIPTION
   //     Strategy for not adding active hints to ids.
 public:
+
+  virtual ~TAO_No_Hint_Strategy (void);
+  // Virtual destructor.
 
   virtual int recover_key (const PortableServer::ObjectId &system_id,
                            PortableServer::ObjectId &user_id);

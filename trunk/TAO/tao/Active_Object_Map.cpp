@@ -144,12 +144,13 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
                                               int unique_id_policy,
                                               int persistent_id_policy,
                                               const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters)
-  : id_uniqueness_strategy_ (0),
+  : user_id_map_ (0),
+    servant_map_ (0),
+    id_uniqueness_strategy_ (0),
     lifespan_strategy_ (0),
     id_assignment_strategy_ (0),
     id_hint_strategy_ (0),
-    user_id_map_ (0),
-    servant_map_ (0)
+    system_id_size_ (0)
 {
   if (unique_id_policy)
     {
@@ -963,6 +964,10 @@ TAO_Id_Hint_Strategy::~TAO_Id_Hint_Strategy (void)
 
 ////////////////////////////////////////////////////////////////////////////////
 
+TAO_Active_Hint_Strategy::~TAO_Active_Hint_Strategy (void)
+{
+}
+
 int
 TAO_Active_Hint_Strategy::recover_key (const PortableServer::ObjectId &system_id,
                                        PortableServer::ObjectId &user_id)
@@ -1011,6 +1016,10 @@ TAO_Active_Hint_Strategy::system_id (PortableServer::ObjectId_out system_id,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+
+TAO_No_Hint_Strategy::~TAO_No_Hint_Strategy (void)
+{
+}
 
 int
 TAO_No_Hint_Strategy::recover_key (const PortableServer::ObjectId &system_id,
