@@ -1527,6 +1527,8 @@ private:
   ACE_Ordered_MultiSet<T> &set_;
 };
 
+/* MATT UPDATE */
+
 /**
  * @class ACE_Ordered_MultiSet
  *
@@ -1534,7 +1536,7 @@ private:
  * that allows duplicates.  This class template requires that <
  * operator semantics be defined for the parameterized type <T>, but
  * does not impose any restriction on how that ordering operator is
- * implemented.
+ * implemented.  The set is implemented as a linked list.  
  */
 template <class T>
 class ACE_Ordered_MultiSet
@@ -1548,31 +1550,54 @@ public:
   // = Initialization and termination methods.
   /// Constructor.  Use user specified allocation strategy
   /// if specified.
+  /**
+   * Initialize the set using the allocation strategy specified.  If none, use the 
+   * default strategy. 
+   */
   ACE_Ordered_MultiSet (ACE_Allocator *alloc = 0);
 
   /// Copy constructor.
+  /**
+   * Initialize the set to be a copy of the provided set. 
+   */
   ACE_Ordered_MultiSet (const ACE_Ordered_MultiSet<T> &);
 
   /// Destructor.
+  /**
+   * Delete the nodes of the set. 
+   */
   ~ACE_Ordered_MultiSet (void);
 
   /// Assignment operator.
+  /**
+   * Delete the nodes in lhs, and copy the nodes from the rhs. 
+   */
   void operator= (const ACE_Ordered_MultiSet<T> &);
 
   // = Check boundary conditions.
 
   /// Returns 1 if the container is empty, otherwise returns 0.
+  /**
+   * Constant time check to determine if the set is empty. 
+   */
   int is_empty (void) const;
 
   /// Size of the set.
+  /**
+   * Constant time check to determine the size of the set. 
+   */
   size_t size (void) const;
 
   // = Classic unordered set operations.
 
   /// Insert <new_item> into the ordered multiset.
   /// Returns -1 if failures occur, else 0.
+  /**
+   * Linear time, order preserving insert into the set beginning at the head. 
+   */
   int insert (const T &new_item);
 
+  ///Linear time insert beginning at the point specified by the provided iterator. 
   /**
    * Insert <new_item> into the ordered multiset, starting its search at
    * the node pointed to by the iterator, and if insertion was successful,
@@ -1583,10 +1608,14 @@ public:
 
   /// Remove first occurrence of <item> from the set.  Returns 0 if
   /// it removes the item, -1 if it can't find the item.
+  /**
+   * Linear time search operation which removes the item from the set if found .
+   */
   int remove (const T &item);
 
+  ///Linear find operation. 
   /**
-   * Finds first occurrance of <item> in the multiset, using the iterator's
+   * Finds first occurrence of <item> in the multiset, using the iterator's
    * current position as a hint to improve performance. If find succeeds,
    * it positions the iterator at that node and returns 0, or if it cannot
    * locate the node, it leaves the iterator alone and just returns -1.
@@ -1594,6 +1623,9 @@ public:
   int find (const T &item, ITERATOR &iter) const;
 
   /// Reset the <ACE_Ordered_MultiSet> to be empty.
+  /**
+   * Delete the nodes inside the set. 
+   */
   void reset (void);
 
   /// Dump the state of an object.
@@ -1647,6 +1679,7 @@ private:
 
 // ****************************************************************
 
+/* MATT UPDATE */
 /**
  * @class ACE_Array
  *
@@ -1669,14 +1702,22 @@ public:
   // = Initialization and termination methods.
 
   /// Dynamically create an uninitialized array.
+  /**
+   * Initialize an empty array of the specified size using the provided
+   * allocation strategy. 
+   */
   ACE_Array (size_t size = 0,
              ACE_Allocator* alloc = 0);
 
   /// Dynamically initialize the entire array to the <default_value>.
+  /**
+   * Initialize an array the given size placing the default_value in each index. 
+   */
   ACE_Array (size_t size,
              const T &default_value,
              ACE_Allocator* alloc = 0);
 
+  ///Copy constructor. 
   /**
    * The copy constructor performs initialization by making an exact
    * copy of the contents of parameter <s>, i.e., *this == s will
@@ -1684,6 +1725,7 @@ public:
    */
   ACE_Array (const ACE_Array<T> &s);
 
+  ///Assignment operator
   /**
    * Assignment operator performs an assignment by making an exact
    * copy of the contents of parameter <s>, i.e., *this == s will
@@ -1696,6 +1738,7 @@ public:
 
   // = Compare operators
 
+  ///Equality comparison operator.
   /**
    * Compare this array with <s> for equality.  Two arrays are equal
    * if their <size>'s are equal and all the elements from 0 .. <size>
@@ -1703,6 +1746,7 @@ public:
    */
   int operator== (const ACE_Array<T> &s) const;
 
+  ///Inequality comparison operator. 
   /**
    * Compare this array with <s> for inequality such that <*this> !=
    * <s> is always the complement of the boolean return value of
