@@ -273,7 +273,7 @@ worker_parent (void *)
   TCHAR pid_str[12];
   // Store the parent's process id so we can pass it to the child
   // portably.
-  ACE_OS::sprintf (pid_str, "%d", ACE_OS::getpid ());
+  ACE_OS::sprintf (pid_str, "%d", parent_pid);
 
   // We're going to create a new process that runs this program again,
   // so we need to indicate that it's the child.
@@ -367,6 +367,10 @@ main (int argc, ASYS_TCHAR *argv[])
     {
       ACE_START_TEST (ASYS_TEXT ("Signal_Test"));
       ACE_INIT_LOG (ASYS_TEXT ("Signal_Test-child"));
+
+      // We need to set this here to work around "features" of Linux
+      // threads...
+      parent_pid = ACE_OS::getpid ();
 
       // Run the parent logic for the signal test.
       run_test (worker_parent);
