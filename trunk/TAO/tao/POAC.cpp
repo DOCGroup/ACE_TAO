@@ -7,6 +7,10 @@
 // Information on TAO is available at
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
+// Take care: The typecodes are platform dependent, therefor 
+// a ifdef is needed right now. This is going to be changed in
+// the future.
+
 #include "tao/corba.h"
 
 #if !defined (__ACE_INLINE__)
@@ -31,6 +35,17 @@ CORBA::TypeCode_ptr PortableServer::_tc__tao_seq_Octet = &_tc__tc_PortableServer
 
 static const CORBA::Long _oc_PortableServer_ObjectId[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  32, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x4f2f7265, 0x63656a62, 0x3a644974, 0x302e31,  // repository ID = IDL:PortableServer/ObjectId:1.0
+  9, 0x656a624f, 0x64497463, 0xfdfdfd00,  // name = ObjectId
+  CORBA::tk_sequence, // typecode kind
+  12, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    CORBA::tk_octet,
+
+  0,
+#else
   TAO_ENCAP_BYTE_ORDER, // byte order
   32, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f4f, 0x626a6563, 0x7449643a, 0x312e3000,  // repository ID = IDL:PortableServer/ObjectId:1.0
   9, 0x4f626a65, 0x63744964, 0x0,  // name = ObjectId
@@ -40,6 +55,7 @@ static const CORBA::Long _oc_PortableServer_ObjectId[] =
     CORBA::tk_octet,
 
   0,
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_ObjectId (CORBA::tk_alias, sizeof (_oc_PortableServer_ObjectId), (char *) &_oc_PortableServer_ObjectId, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ObjectId = &_tc__tc_PortableServer_ObjectId;
@@ -134,6 +150,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ForwardR
 
 static const CORBA::Long _oc_PortableServer_ForwardRequest[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
   TAO_ENCAP_BYTE_ORDER, // byte order
   38, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x462f7265, 0x6177726f, 0x65526472, 0x73657571, 0x2e313a74, 0xfdfd0030,  // repository ID = IDL:PortableServer/ForwardRequest:1.0
   15, 0x77726f46, 0x52647261, 0x65757165, 0xfd007473,  // name = ForwardRequest
@@ -144,6 +161,19 @@ static const CORBA::Long _oc_PortableServer_ForwardRequest[] =
     TAO_ENCAP_BYTE_ORDER, // byte order
     21, 0x3a4c4449, 0x42524f43, 0x624f2f41, 0x7463656a, 0x302e313a, 0xfdfdfd00,  // repository ID = IDL:CORBA/Object:1.0
     7, 0x656a624f, 0xfd007463,  // name = Object,
+#else
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  38, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f46, 0x6f727761, 0x72645265, 0x71756573, 0x743a312e, 0x30000000,  // repository ID = IDL:PortableServer/ForwardRequest:1.0
+  15, 0x466f7277, 0x61726452, 0x65717565, 0x73740000,  // name = ForwardRequest
+  1, // member count
+    18, 0x666f7277, 0x6172645f, 0x72656665, 0x72656e63, 0x65004004,  // name = forward_reference
+    CORBA::tk_objref,
+44, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    21, 0x49444c3a, 0x434f5242, 0x412f4f62, 0x6a656374, 0x3a312e30, 0x0,  // repository ID = IDL:CORBA/Object:1.0
+    7, 0x4f626a65, 0x63740069,  // name = Object,
+#endif
+
 };
 static CORBA::TypeCode _tc__tc_PortableServer_ForwardRequest (CORBA::tk_except, sizeof (_oc_PortableServer_ForwardRequest), (char *) &_oc_PortableServer_ForwardRequest, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ForwardRequest = &_tc__tc_PortableServer_ForwardRequest;
@@ -151,12 +181,21 @@ CORBA::TypeCode_ptr PortableServer::_tc_ForwardRequest = &_tc__tc_PortableServer
 
 static const CORBA::Long _oc_PortableServer_ThreadPolicyValue[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  41, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x542f7265, 0x61657268, 0x6c6f5064, 0x56796369, 0x65756c61, 0x302e313a, 0xfdfdfd00,  // repository ID = IDL:PortableServer/ThreadPolicyValue:1.0
+  18, 0x65726854, 0x6f506461, 0x7963696c, 0x756c6156, 0xfdfd0065,  // name = ThreadPolicyValue
+  2, // member count
+    15, 0x5f42524f, 0x4c525443, 0x444f4d5f, 0xfd004c45,  // name = ORB_CTRL_MODEL
+    20, 0x474e4953, 0x545f454c, 0x41455248, 0x4f4d5f44, 0x4c4544,  // name = SINGLE_THREAD_MODEL
+#else
   TAO_ENCAP_BYTE_ORDER, // byte order
   41, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f54, 0x68726561, 0x64506f6c, 0x69637956, 0x616c7565, 0x3a312e30, 0x0,  // repository ID = IDL:PortableServer/ThreadPolicyValue:1.0
   18, 0x54687265, 0x6164506f, 0x6c696379, 0x56616c75, 0x65000000,  // name = ThreadPolicyValue
   2, // member count
     15, 0x4f52425f, 0x4354524c, 0x5f4d4f44, 0x454c0000,  // name = ORB_CTRL_MODEL
     20, 0x53494e47, 0x4c455f54, 0x48524541, 0x445f4d4f, 0x44454c00,  // name = SINGLE_THREAD_MODEL
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_ThreadPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_ThreadPolicyValue), (char *) &_oc_PortableServer_ThreadPolicyValue, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ThreadPolicyValue = &_tc__tc_PortableServer_ThreadPolicyValue;
@@ -246,9 +285,15 @@ CORBA::Boolean PortableServer::ThreadPolicy::_is_a (const CORBA::Char *value, CO
 
 static const CORBA::Long _oc_PortableServer_ThreadPolicy[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  36, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x542f7265, 0x61657268, 0x6c6f5064, 0x3a796369, 0x302e31,  // repository ID = IDL:PortableServer/ThreadPolicy:1.0
+  13, 0x65726854, 0x6f506461, 0x7963696c, 0xfdfdfd00,  // name = ThreadPolicy,
+#else
   TAO_ENCAP_BYTE_ORDER, // byte order
   36, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f54, 0x68726561, 0x64506f6c, 0x6963793a, 0x312e3000,  // repository ID = IDL:PortableServer/ThreadPolicy:1.0
   13, 0x54687265, 0x6164506f, 0x6c696379, 0x0,  // name = ThreadPolicy,
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_ThreadPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_ThreadPolicy), (char *) &_oc_PortableServer_ThreadPolicy, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ThreadPolicy = &_tc__tc_PortableServer_ThreadPolicy;
@@ -256,12 +301,21 @@ CORBA::TypeCode_ptr PortableServer::_tc_ThreadPolicy = &_tc__tc_PortableServer_T
 
 static const CORBA::Long _oc_PortableServer_LifespanPolicyValue[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  43, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x4c2f7265, 0x73656669, 0x506e6170, 0x63696c6f, 0x6c615679, 0x313a6575, 0xfd00302e,  // repository ID = IDL:PortableServer/LifespanPolicyValue:1.0
+  20, 0x6566694c, 0x6e617073, 0x696c6f50, 0x61567963, 0x65756c,  // name = LifespanPolicyValue
+  2, // member count
+    10, 0x4e415254, 0x4e454953, 0xfdfd0054,  // name = TRANSIENT
+    11, 0x53524550, 0x45545349, 0xfd00544e,  // name = PERSISTENT
+#else
   TAO_ENCAP_BYTE_ORDER, // byte order
   43, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f4c, 0x69666573, 0x70616e50, 0x6f6c6963, 0x7956616c, 0x75653a31, 0x2e300000,  // repository ID = IDL:PortableServer/LifespanPolicyValue:1.0
   20, 0x4c696665, 0x7370616e, 0x506f6c69, 0x63795661, 0x6c756500,  // name = LifespanPolicyValue
   2, // member count
     10, 0x5452414e, 0x5349454e, 0x54000000,  // name = TRANSIENT
     11, 0x50455253, 0x49535445, 0x4e540000,  // name = PERSISTENT
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_LifespanPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_LifespanPolicyValue), (char *) &_oc_PortableServer_LifespanPolicyValue, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_LifespanPolicyValue = &_tc__tc_PortableServer_LifespanPolicyValue;
@@ -351,9 +405,15 @@ CORBA::Boolean PortableServer::LifespanPolicy::_is_a (const CORBA::Char *value, 
 
 static const CORBA::Long _oc_PortableServer_LifespanPolicy[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  38, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x4c2f7265, 0x73656669, 0x506e6170, 0x63696c6f, 0x2e313a79, 0xfdfd0030,  // repository ID = IDL:PortableServer/LifespanPolicy:1.0
+  15, 0x6566694c, 0x6e617073, 0x696c6f50, 0xfd007963,  // name = LifespanPolicy,
+#else
   TAO_ENCAP_BYTE_ORDER, // byte order
   38, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f4c, 0x69666573, 0x70616e50, 0x6f6c6963, 0x793a312e, 0x30000000,  // repository ID = IDL:PortableServer/LifespanPolicy:1.0
   15, 0x4c696665, 0x7370616e, 0x506f6c69, 0x63790000,  // name = LifespanPolicy,
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_LifespanPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_LifespanPolicy), (char *) &_oc_PortableServer_LifespanPolicy, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_LifespanPolicy = &_tc__tc_PortableServer_LifespanPolicy;
@@ -361,12 +421,21 @@ CORBA::TypeCode_ptr PortableServer::_tc_LifespanPolicy = &_tc__tc_PortableServer
 
 static const CORBA::Long _oc_PortableServer_IdUniquenessPolicyValue[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  47, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x492f7265, 0x696e5564, 0x6e657571, 0x50737365, 0x63696c6f, 0x6c615679, 0x313a6575, 0xfd00302e,  // repository ID = IDL:PortableServer/IdUniquenessPolicyValue:1.0
+  24, 0x6e556449, 0x65757169, 0x7373656e, 0x696c6f50, 0x61567963, 0x65756c,  // name = IdUniquenessPolicyValue
+  2, // member count
+    10, 0x51494e55, 0x495f4555, 0xfdfd0044,  // name = UNIQUE_ID
+    12, 0x544c554d, 0x454c5049, 0x44495f,  // name = MULTIPLE_ID
+#else
   TAO_ENCAP_BYTE_ORDER, // byte order
   47, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f49, 0x64556e69, 0x7175656e, 0x65737350, 0x6f6c6963, 0x7956616c, 0x75653a31, 0x2e300000,  // repository ID = IDL:PortableServer/IdUniquenessPolicyValue:1.0
   24, 0x4964556e, 0x69717565, 0x6e657373, 0x506f6c69, 0x63795661, 0x6c756500,  // name = IdUniquenessPolicyValue
   2, // member count
     10, 0x554e4951, 0x55455f49, 0x44000000,  // name = UNIQUE_ID
     12, 0x4d554c54, 0x49504c45, 0x5f494400,  // name = MULTIPLE_ID
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_IdUniquenessPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_IdUniquenessPolicyValue), (char *) &_oc_PortableServer_IdUniquenessPolicyValue, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_IdUniquenessPolicyValue = &_tc__tc_PortableServer_IdUniquenessPolicyValue;
@@ -456,9 +525,15 @@ CORBA::Boolean PortableServer::IdUniquenessPolicy::_is_a (const CORBA::Char *val
 
 static const CORBA::Long _oc_PortableServer_IdUniquenessPolicy[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  42, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x492f7265, 0x696e5564, 0x6e657571, 0x50737365, 0x63696c6f, 0x2e313a79, 0xfdfd0030,  // repository ID = IDL:PortableServer/IdUniquenessPolicy:1.0
+  19, 0x6e556449, 0x65757169, 0x7373656e, 0x696c6f50, 0xfd007963,  // name = IdUniquenessPolicy,
+#else
   TAO_ENCAP_BYTE_ORDER, // byte order
   42, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f49, 0x64556e69, 0x7175656e, 0x65737350, 0x6f6c6963, 0x793a312e, 0x30000000,  // repository ID = IDL:PortableServer/IdUniquenessPolicy:1.0
   19, 0x4964556e, 0x69717565, 0x6e657373, 0x506f6c69, 0x63790000,  // name = IdUniquenessPolicy,
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_IdUniquenessPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_IdUniquenessPolicy), (char *) &_oc_PortableServer_IdUniquenessPolicy, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_IdUniquenessPolicy = &_tc__tc_PortableServer_IdUniquenessPolicy;
@@ -466,12 +541,21 @@ CORBA::TypeCode_ptr PortableServer::_tc_IdUniquenessPolicy = &_tc__tc_PortableSe
 
 static const CORBA::Long _oc_PortableServer_IdAssignmentPolicyValue[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  47, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x492f7265, 0x73734164, 0x6d6e6769, 0x50746e65, 0x63696c6f, 0x6c615679, 0x313a6575, 0xfd00302e,  // repository ID = IDL:PortableServer/IdAssignmentPolicyValue:1.0
+  24, 0x73416449, 0x6e676973, 0x746e656d, 0x696c6f50, 0x61567963, 0x65756c,  // name = IdAssignmentPolicyValue
+  2, // member count
+    8, 0x52455355, 0x44495f,  // name = USER_ID
+    10, 0x54535953, 0x495f4d45, 0xfdfd0044,  // name = SYSTEM_ID
+#else
   TAO_ENCAP_BYTE_ORDER, // byte order
   47, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f49, 0x64417373, 0x69676e6d, 0x656e7450, 0x6f6c6963, 0x7956616c, 0x75653a31, 0x2e300000,  // repository ID = IDL:PortableServer/IdAssignmentPolicyValue:1.0
   24, 0x49644173, 0x7369676e, 0x6d656e74, 0x506f6c69, 0x63795661, 0x6c756500,  // name = IdAssignmentPolicyValue
   2, // member count
     8, 0x55534552, 0x5f494400,  // name = USER_ID
     10, 0x53595354, 0x454d5f49, 0x44000000,  // name = SYSTEM_ID
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_IdAssignmentPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_IdAssignmentPolicyValue), (char *) &_oc_PortableServer_IdAssignmentPolicyValue, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_IdAssignmentPolicyValue = &_tc__tc_PortableServer_IdAssignmentPolicyValue;
@@ -561,9 +645,15 @@ CORBA::Boolean PortableServer::IdAssignmentPolicy::_is_a (const CORBA::Char *val
 
 static const CORBA::Long _oc_PortableServer_IdAssignmentPolicy[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  42, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x492f7265, 0x73734164, 0x6d6e6769, 0x50746e65, 0x63696c6f, 0x2e313a79, 0xfdfd0030,  // repository ID = IDL:PortableServer/IdAssignmentPolicy:1.0
+  19, 0x73416449, 0x6e676973, 0x746e656d, 0x696c6f50, 0xfd007963,  // name = IdAssignmentPolicy,
+#else
   TAO_ENCAP_BYTE_ORDER, // byte order
   42, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f49, 0x64417373, 0x69676e6d, 0x656e7450, 0x6f6c6963, 0x793a312e, 0x30000000,  // repository ID = IDL:PortableServer/IdAssignmentPolicy:1.0
   19, 0x49644173, 0x7369676e, 0x6d656e74, 0x506f6c69, 0x63790000,  // name = IdAssignmentPolicy,
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_IdAssignmentPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_IdAssignmentPolicy), (char *) &_oc_PortableServer_IdAssignmentPolicy, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_IdAssignmentPolicy = &_tc__tc_PortableServer_IdAssignmentPolicy;
@@ -571,12 +661,21 @@ CORBA::TypeCode_ptr PortableServer::_tc_IdAssignmentPolicy = &_tc__tc_PortableSe
 
 static const CORBA::Long _oc_PortableServer_ImplicitActivationPolicyValue[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  53, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x492f7265, 0x696c706d, 0x41746963, 0x76697463, 0x6f697461, 0x6c6f506e, 0x56796369, 0x65756c61, 0x302e313a, 0xfdfdfd00,  // repository ID = IDL:PortableServer/ImplicitActivationPolicyValue:1.0
+  30, 0x6c706d49, 0x74696369, 0x69746341, 0x69746176, 0x6f506e6f, 0x7963696c, 0x756c6156, 0xfdfd0065,  // name = ImplicitActivationPolicyValue
+  2, // member count
+    20, 0x4c504d49, 0x54494349, 0x5443415f, 0x54415649, 0x4e4f49,  // name = IMPLICIT_ACTIVATION
+    23, 0x495f4f4e, 0x494c504d, 0x5f544943, 0x49544341, 0x49544156, 0xfd004e4f,  // name = NO_IMPLICIT_ACTIVATION
+#else
   TAO_ENCAP_BYTE_ORDER, // byte order
   53, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f49, 0x6d706c69, 0x63697441, 0x63746976, 0x6174696f, 0x6e506f6c, 0x69637956, 0x616c7565, 0x3a312e30, 0x0,  // repository ID = IDL:PortableServer/ImplicitActivationPolicyValue:1.0
   30, 0x496d706c, 0x69636974, 0x41637469, 0x76617469, 0x6f6e506f, 0x6c696379, 0x56616c75, 0x65000000,  // name = ImplicitActivationPolicyValue
   2, // member count
     20, 0x494d504c, 0x49434954, 0x5f414354, 0x49564154, 0x494f4e00,  // name = IMPLICIT_ACTIVATION
     23, 0x4e4f5f49, 0x4d504c49, 0x4349545f, 0x41435449, 0x56415449, 0x4f4e0000,  // name = NO_IMPLICIT_ACTIVATION
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_ImplicitActivationPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_ImplicitActivationPolicyValue), (char *) &_oc_PortableServer_ImplicitActivationPolicyValue, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ImplicitActivationPolicyValue = &_tc__tc_PortableServer_ImplicitActivationPolicyValue;
@@ -666,9 +765,15 @@ CORBA::Boolean PortableServer::ImplicitActivationPolicy::_is_a (const CORBA::Cha
 
 static const CORBA::Long _oc_PortableServer_ImplicitActivationPolicy[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  48, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x492f7265, 0x696c706d, 0x41746963, 0x76697463, 0x6f697461, 0x6c6f506e, 0x3a796369, 0x302e31,  // repository ID = IDL:PortableServer/ImplicitActivationPolicy:1.0
+  25, 0x6c706d49, 0x74696369, 0x69746341, 0x69746176, 0x6f506e6f, 0x7963696c, 0xfdfdfd00,  // name = ImplicitActivationPolicy,
+#else
   TAO_ENCAP_BYTE_ORDER, // byte order
   48, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f49, 0x6d706c69, 0x63697441, 0x63746976, 0x6174696f, 0x6e506f6c, 0x6963793a, 0x312e3000,  // repository ID = IDL:PortableServer/ImplicitActivationPolicy:1.0
   25, 0x496d706c, 0x69636974, 0x41637469, 0x76617469, 0x6f6e506f, 0x6c696379, 0x0,  // name = ImplicitActivationPolicy,
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_ImplicitActivationPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_ImplicitActivationPolicy), (char *) &_oc_PortableServer_ImplicitActivationPolicy, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ImplicitActivationPolicy = &_tc__tc_PortableServer_ImplicitActivationPolicy;
@@ -676,12 +781,21 @@ CORBA::TypeCode_ptr PortableServer::_tc_ImplicitActivationPolicy = &_tc__tc_Port
 
 static const CORBA::Long _oc_PortableServer_ServantRetentionPolicyValue[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
   TAO_ENCAP_BYTE_ORDER, // byte order
-  51, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f53, 0x65727661, 0x6e745265, 0x74656e74, 0x696f6e50, 0x6f6c6963, 0x7956616c, 0x75653a31, 0x2e300000,  // repository ID = IDL:PortableServer/ServantRetentionPolicyValue:1.0
+  51, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x532f7265, 0x61767265, 0x6552746e, 0x746e6574, 0x506e6f69, 0x63696c6f, 0x6c615679, 0x313a6575, 0xfd00302e,  // repository ID = IDL:PortableServer/ServantRetentionPolicyValue:1.0
+  28, 0x76726553, 0x52746e61, 0x6e657465, 0x6e6f6974, 0x696c6f50, 0x61567963, 0x65756c,  // name = ServantRetentionPolicyValue
+  2, // member count
+    7, 0x41544552, 0xfd004e49,  // name = RETAIN
+    11, 0x5f4e4f4e, 0x41544552, 0xfd004e49,  // name = NON_RETAIN
+#else
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  51, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f53, 0x65727661, 0x6e745265, 0x74656e74, 0x696f6e50, 0x6f6c6963, 0x7956616c, 0x75653a31, 0x2e300004,  // repository ID = IDL:PortableServer/ServantRetentionPolicyValue:1.0
   28, 0x53657276, 0x616e7452, 0x6574656e, 0x74696f6e, 0x506f6c69, 0x63795661, 0x6c756500,  // name = ServantRetentionPolicyValue
   2, // member count
     7, 0x52455441, 0x494e0000,  // name = RETAIN
     11, 0x4e4f4e5f, 0x52455441, 0x494e0000,  // name = NON_RETAIN
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_ServantRetentionPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_ServantRetentionPolicyValue), (char *) &_oc_PortableServer_ServantRetentionPolicyValue, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ServantRetentionPolicyValue = &_tc__tc_PortableServer_ServantRetentionPolicyValue;
@@ -771,9 +885,15 @@ CORBA::Boolean PortableServer::ServantRetentionPolicy::_is_a (const CORBA::Char 
 
 static const CORBA::Long _oc_PortableServer_ServantRetentionPolicy[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  46, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x532f7265, 0x61767265, 0x6552746e, 0x746e6574, 0x506e6f69, 0x63696c6f, 0x2e313a79, 0xfdfd0030,  // repository ID = IDL:PortableServer/ServantRetentionPolicy:1.0
+  23, 0x76726553, 0x52746e61, 0x6e657465, 0x6e6f6974, 0x696c6f50, 0xfd007963,  // name = ServantRetentionPolicy,
+#else
   TAO_ENCAP_BYTE_ORDER, // byte order
   46, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f53, 0x65727661, 0x6e745265, 0x74656e74, 0x696f6e50, 0x6f6c6963, 0x793a312e, 0x30000000,  // repository ID = IDL:PortableServer/ServantRetentionPolicy:1.0
   23, 0x53657276, 0x616e7452, 0x6574656e, 0x74696f6e, 0x506f6c69, 0x63790000,  // name = ServantRetentionPolicy,
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_ServantRetentionPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_ServantRetentionPolicy), (char *) &_oc_PortableServer_ServantRetentionPolicy, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ServantRetentionPolicy = &_tc__tc_PortableServer_ServantRetentionPolicy;
@@ -781,6 +901,15 @@ CORBA::TypeCode_ptr PortableServer::_tc_ServantRetentionPolicy = &_tc__tc_Portab
 
 static const CORBA::Long _oc_PortableServer_RequestProcessingPolicyValue[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  52, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x522f7265, 0x65757165, 0x72507473, 0x7365636f, 0x676e6973, 0x696c6f50, 0x61567963, 0x3a65756c, 0x302e31,  // repository ID = IDL:PortableServer/RequestProcessingPolicyValue:1.0
+  29, 0x75716552, 0x50747365, 0x65636f72, 0x6e697373, 0x6c6f5067, 0x56796369, 0x65756c61, 0xfdfdfd00,  // name = RequestProcessingPolicyValue
+  3, // member count
+    27, 0x5f455355, 0x49544341, 0x4f5f4556, 0x43454a42, 0x414d5f54, 0x4e4f5f50, 0xfd00594c,  // name = USE_ACTIVE_OBJECT_MAP_ONLY
+    20, 0x5f455355, 0x41464544, 0x5f544c55, 0x56524553, 0x544e41,  // name = USE_DEFAULT_SERVANT
+    20, 0x5f455355, 0x56524553, 0x5f544e41, 0x414e414d, 0x524547,  // name = USE_SERVANT_MANAGER
+#else
   TAO_ENCAP_BYTE_ORDER, // byte order
   52, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f52, 0x65717565, 0x73745072, 0x6f636573, 0x73696e67, 0x506f6c69, 0x63795661, 0x6c75653a, 0x312e3000,  // repository ID = IDL:PortableServer/RequestProcessingPolicyValue:1.0
   29, 0x52657175, 0x65737450, 0x726f6365, 0x7373696e, 0x67506f6c, 0x69637956, 0x616c7565, 0x0,  // name = RequestProcessingPolicyValue
@@ -788,6 +917,7 @@ static const CORBA::Long _oc_PortableServer_RequestProcessingPolicyValue[] =
     27, 0x5553455f, 0x41435449, 0x56455f4f, 0x424a4543, 0x545f4d41, 0x505f4f4e, 0x4c590000,  // name = USE_ACTIVE_OBJECT_MAP_ONLY
     20, 0x5553455f, 0x44454641, 0x554c545f, 0x53455256, 0x414e5400,  // name = USE_DEFAULT_SERVANT
     20, 0x5553455f, 0x53455256, 0x414e545f, 0x4d414e41, 0x47455200,  // name = USE_SERVANT_MANAGER
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_RequestProcessingPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_RequestProcessingPolicyValue), (char *) &_oc_PortableServer_RequestProcessingPolicyValue, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_RequestProcessingPolicyValue = &_tc__tc_PortableServer_RequestProcessingPolicyValue;
@@ -878,9 +1008,15 @@ CORBA::Boolean PortableServer::RequestProcessingPolicy::_is_a (const CORBA::Char
 
 static const CORBA::Long _oc_PortableServer_RequestProcessingPolicy[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  47, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x522f7265, 0x65757165, 0x72507473, 0x7365636f, 0x676e6973, 0x696c6f50, 0x313a7963, 0xfd00302e,  // repository ID = IDL:PortableServer/RequestProcessingPolicy:1.0
+  24, 0x75716552, 0x50747365, 0x65636f72, 0x6e697373, 0x6c6f5067, 0x796369,  // name = RequestProcessingPolicy,
+#else
   TAO_ENCAP_BYTE_ORDER, // byte order
   47, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f52, 0x65717565, 0x73745072, 0x6f636573, 0x73696e67, 0x506f6c69, 0x63793a31, 0x2e300000,  // repository ID = IDL:PortableServer/RequestProcessingPolicy:1.0
   24, 0x52657175, 0x65737450, 0x726f6365, 0x7373696e, 0x67506f6c, 0x69637900,  // name = RequestProcessingPolicy,
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_RequestProcessingPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_RequestProcessingPolicy), (char *) &_oc_PortableServer_RequestProcessingPolicy, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_RequestProcessingPolicy = &_tc__tc_PortableServer_RequestProcessingPolicy;
@@ -1014,10 +1150,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POAManag
 
 static const CORBA::Long _oc_PortableServer_POAManager_AdapterInactive[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
   TAO_ENCAP_BYTE_ORDER, // byte order
   50, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x614d414f, 0x6567616e, 0x64412f72, 0x65747061, 0x616e4972, 0x76697463, 0x2e313a65, 0xfdfd0030,  // repository ID = IDL:PortableServer/POAManager/AdapterInactive:1.0
   16, 0x70616441, 0x49726574, 0x7463616e, 0x657669,  // name = AdapterInactive
   0, // member count
+#else
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  50, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f50, 0x4f414d61, 0x6e616765, 0x722f4164, 0x61707465, 0x72496e61, 0x63746976, 0x653a312e, 0x30000000,  // repository ID = IDL:PortableServer/POAManager/AdapterInactive:1.0
+  16, 0x41646170, 0x74657249, 0x6e616374, 0x69766500,  // name = AdapterInactive
+  0, // member count
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_POAManager_AdapterInactive (CORBA::tk_except, sizeof (_oc_PortableServer_POAManager_AdapterInactive), (char *) &_oc_PortableServer_POAManager_AdapterInactive, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POAManager::_tc_AdapterInactive = &_tc__tc_PortableServer_POAManager_AdapterInactive;
@@ -1034,9 +1177,15 @@ CORBA::Boolean PortableServer::POAManager::_is_a (const CORBA::Char *value, CORB
 
 static const CORBA::Long _oc_PortableServer_POAManager[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  34, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x614d414f, 0x6567616e, 0x2e313a72, 0xfdfd0030,  // repository ID = IDL:PortableServer/POAManager:1.0
+  11, 0x4d414f50, 0x67616e61, 0xfd007265,  // name = POAManager,
+#else
   TAO_ENCAP_BYTE_ORDER, // byte order
   34, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f50, 0x4f414d61, 0x6e616765, 0x723a312e, 0x30000000,  // repository ID = IDL:PortableServer/POAManager:1.0
   11, 0x504f414d, 0x616e6167, 0x65720000,  // name = POAManager,
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_POAManager (CORBA::tk_objref, sizeof (_oc_PortableServer_POAManager), (char *) &_oc_PortableServer_POAManager, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_POAManager = &_tc__tc_PortableServer_POAManager;
@@ -1102,9 +1251,15 @@ CORBA::Boolean PortableServer::AdapterActivator::_is_a (const CORBA::Char *value
 
 static const CORBA::Long _oc_PortableServer_AdapterActivator[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  40, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x412f7265, 0x74706164, 0x63417265, 0x61766974, 0x3a726f74, 0x302e31,  // repository ID = IDL:PortableServer/AdapterActivator:1.0
+  17, 0x70616441, 0x41726574, 0x76697463, 0x726f7461, 0xfdfdfd00,  // name = AdapterActivator,
+#else
   TAO_ENCAP_BYTE_ORDER, // byte order
   40, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f41, 0x64617074, 0x65724163, 0x74697661, 0x746f723a, 0x312e3000,  // repository ID = IDL:PortableServer/AdapterActivator:1.0
   17, 0x41646170, 0x74657241, 0x63746976, 0x61746f72, 0x0,  // name = AdapterActivator,
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_AdapterActivator (CORBA::tk_objref, sizeof (_oc_PortableServer_AdapterActivator), (char *) &_oc_PortableServer_AdapterActivator, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_AdapterActivator = &_tc__tc_PortableServer_AdapterActivator;
@@ -1170,9 +1325,15 @@ CORBA::Boolean PortableServer::ServantManager::_is_a (const CORBA::Char *value, 
 
 static const CORBA::Long _oc_PortableServer_ServantManager[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  38, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x532f7265, 0x61767265, 0x614d746e, 0x6567616e, 0x2e313a72, 0xfdfd0030,  // repository ID = IDL:PortableServer/ServantManager:1.0
+  15, 0x76726553, 0x4d746e61, 0x67616e61, 0xfd007265,  // name = ServantManager,
+#else
   TAO_ENCAP_BYTE_ORDER, // byte order
   38, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f53, 0x65727661, 0x6e744d61, 0x6e616765, 0x723a312e, 0x30000000,  // repository ID = IDL:PortableServer/ServantManager:1.0
   15, 0x53657276, 0x616e744d, 0x616e6167, 0x65720000,  // name = ServantManager,
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_ServantManager (CORBA::tk_objref, sizeof (_oc_PortableServer_ServantManager), (char *) &_oc_PortableServer_ServantManager, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ServantManager = &_tc__tc_PortableServer_ServantManager;
@@ -1239,9 +1400,15 @@ CORBA::Boolean PortableServer::ServantActivator::_is_a (const CORBA::Char *value
 
 static const CORBA::Long _oc_PortableServer_ServantActivator[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  40, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x532f7265, 0x61767265, 0x6341746e, 0x61766974, 0x3a726f74, 0x302e31,  // repository ID = IDL:PortableServer/ServantActivator:1.0
+  17, 0x76726553, 0x41746e61, 0x76697463, 0x726f7461, 0xfdfdfd00,  // name = ServantActivator,
+#else
   TAO_ENCAP_BYTE_ORDER, // byte order
   40, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f53, 0x65727661, 0x6e744163, 0x74697661, 0x746f723a, 0x312e3000,  // repository ID = IDL:PortableServer/ServantActivator:1.0
   17, 0x53657276, 0x616e7441, 0x63746976, 0x61746f72, 0x0,  // name = ServantActivator,
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_ServantActivator (CORBA::tk_objref, sizeof (_oc_PortableServer_ServantActivator), (char *) &_oc_PortableServer_ServantActivator, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ServantActivator = &_tc__tc_PortableServer_ServantActivator;
@@ -1308,9 +1475,15 @@ CORBA::Boolean PortableServer::ServantLocator::_is_a (const CORBA::Char *value, 
 
 static const CORBA::Long _oc_PortableServer_ServantLocator[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  38, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x532f7265, 0x61767265, 0x6f4c746e, 0x6f746163, 0x2e313a72, 0xfdfd0030,  // repository ID = IDL:PortableServer/ServantLocator:1.0
+  15, 0x76726553, 0x4c746e61, 0x7461636f, 0xfd00726f,  // name = ServantLocator,
+#else
   TAO_ENCAP_BYTE_ORDER, // byte order
   38, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f53, 0x65727661, 0x6e744c6f, 0x6361746f, 0x723a312e, 0x30000000,  // repository ID = IDL:PortableServer/ServantLocator:1.0
   15, 0x53657276, 0x616e744c, 0x6f636174, 0x6f720000,  // name = ServantLocator,
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_ServantLocator (CORBA::tk_objref, sizeof (_oc_PortableServer_ServantLocator), (char *) &_oc_PortableServer_ServantLocator, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_ServantLocator = &_tc__tc_PortableServer_ServantLocator;
@@ -1444,10 +1617,17 @@ return 1;
 
 static const CORBA::Long _oc_PortableServer_POA_AdapterAlreadyExists[] =
 {
-TAO_ENCAP_BYTE_ORDER, // byte order
-48, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x412f414f, 0x74706164, 0x6c417265, 0x64616572, 0x69784579, 0x3a737473, 0x302e31,  // repository ID = IDL:PortableServer/POA/AdapterAlreadyExists:1.0
-21, 0x70616441, 0x41726574, 0x6165726c, 0x78457964, 0x73747369, 0xfdfdfd00,  // name = AdapterAlreadyExists
-0, // member count
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  48, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x412f414f, 0x74706164, 0x6c417265, 0x64616572, 0x69784579, 0x3a737473, 0x302e31,  // repository ID = IDL:PortableServer/POA/AdapterAlreadyExists:1.0
+  21, 0x70616441, 0x41726574, 0x6165726c, 0x78457964, 0x73747369, 0xfdfdfd00,  // name = AdapterAlreadyExists
+  0, // member count
+#else
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  48, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f50, 0x4f412f41, 0x64617074, 0x6572416c, 0x72656164, 0x79457869, 0x7374733a, 0x312e3000,  // repository ID = IDL:PortableServer/POA/AdapterAlreadyExists:1.0
+  21, 0x41646170, 0x74657241, 0x6c726561, 0x64794578, 0x69737473, 0x0,  // name = AdapterAlreadyExists
+  0, // member count
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_POA_AdapterAlreadyExists (CORBA::tk_except, sizeof (_oc_PortableServer_POA_AdapterAlreadyExists), (char *) &_oc_PortableServer_POA_AdapterAlreadyExists, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterAlreadyExists = &_tc__tc_PortableServer_POA_AdapterAlreadyExists;
@@ -1532,10 +1712,17 @@ return 1;
 
 static const CORBA::Long _oc_PortableServer_POA_AdapterInactive[] =
 {
-TAO_ENCAP_BYTE_ORDER, // byte order
-43, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x412f414f, 0x74706164, 0x6e497265, 0x69746361, 0x313a6576, 0xfd00302e,  // repository ID = IDL:PortableServer/POA/AdapterInactive:1.0
-16, 0x70616441, 0x49726574, 0x7463616e, 0x657669,  // name = AdapterInactive
-0, // member count
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  43, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x412f414f, 0x74706164, 0x6e497265, 0x69746361, 0x313a6576, 0xfd00302e,  // repository ID = IDL:PortableServer/POA/AdapterInactive:1.0
+  16, 0x70616441, 0x49726574, 0x7463616e, 0x657669,  // name = AdapterInactive
+  0, // member count
+#else
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  43, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f50, 0x4f412f41, 0x64617074, 0x6572496e, 0x61637469, 0x76653a31, 0x2e300070,  // repository ID = IDL:PortableServer/POA/AdapterInactive:1.0
+  16, 0x41646170, 0x74657249, 0x6e616374, 0x69766500,  // name = AdapterInactive
+  0, // member count
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_POA_AdapterInactive (CORBA::tk_except, sizeof (_oc_PortableServer_POA_AdapterInactive), (char *) &_oc_PortableServer_POA_AdapterInactive, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterInactive = &_tc__tc_PortableServer_POA_AdapterInactive;
@@ -1620,10 +1807,17 @@ return 1;
 
 static const CORBA::Long _oc_PortableServer_POA_AdapterNonExistent[] =
 {
-TAO_ENCAP_BYTE_ORDER, // byte order
-46, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x412f414f, 0x74706164, 0x6f4e7265, 0x6978456e, 0x6e657473, 0x2e313a74, 0xfdfd0030,  // repository ID = IDL:PortableServer/POA/AdapterNonExistent:1.0
-19, 0x70616441, 0x4e726574, 0x78456e6f, 0x65747369, 0xfd00746e,  // name = AdapterNonExistent
-0, // member count
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  46, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x412f414f, 0x74706164, 0x6f4e7265, 0x6978456e, 0x6e657473, 0x2e313a74, 0xfdfd0030,  // repository ID = IDL:PortableServer/POA/AdapterNonExistent:1.0
+  19, 0x70616441, 0x4e726574, 0x78456e6f, 0x65747369, 0xfd00746e,  // name = AdapterNonExistent
+  0, // member count
+#else
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  46, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f50, 0x4f412f41, 0x64617074, 0x65724e6f, 0x6e457869, 0x7374656e, 0x743a312e, 0x30000000,  // repository ID = IDL:PortableServer/POA/AdapterNonExistent:1.0
+  19, 0x41646170, 0x7465724e, 0x6f6e4578, 0x69737465, 0x6e740000,  // name = AdapterNonExistent
+  0, // member count
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_POA_AdapterNonExistent (CORBA::tk_except, sizeof (_oc_PortableServer_POA_AdapterNonExistent), (char *) &_oc_PortableServer_POA_AdapterNonExistent, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterNonExistent = &_tc__tc_PortableServer_POA_AdapterNonExistent;
@@ -1718,13 +1912,21 @@ return 1;
 
 static const CORBA::Long _oc_PortableServer_POA_InvalidPolicy[] =
 {
-TAO_ENCAP_BYTE_ORDER, // byte order
-41, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x492f414f, 0x6c61766e, 0x6f506469, 0x7963696c, 0x302e313a, 0xfdfdfd00,  // repository ID = IDL:PortableServer/POA/InvalidPolicy:1.0
-14, 0x61766e49, 0x5064696c, 0x63696c6f, 0xfdfd0079,  // name = InvalidPolicy
-1, // member count
-6, 0x65646e69, 0xfdfd0078,  // name = index
-CORBA::tk_ushort,
-
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  41, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x492f414f, 0x6c61766e, 0x6f506469, 0x7963696c, 0x302e313a, 0xfdfdfd00,  // repository ID = IDL:PortableServer/POA/InvalidPolicy:1.0
+  14, 0x61766e49, 0x5064696c, 0x63696c6f, 0xfdfd0079,  // name = InvalidPolicy
+  1, // member count
+  6, 0x65646e69, 0xfdfd0078,  // name = index
+  CORBA::tk_ushort,
+#else
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  41, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f50, 0x4f412f49, 0x6e76616c, 0x6964506f, 0x6c696379, 0x3a312e30, 0x0,  // repository ID = IDL:PortableServer/POA/InvalidPolicy:1.0
+  14, 0x496e7661, 0x6c696450, 0x6f6c6963, 0x79000000,  // name = InvalidPolicy
+  1, // member count
+  6, 0x696e6465, 0x78000000,  // name = index
+  CORBA::tk_ushort,
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_POA_InvalidPolicy (CORBA::tk_except, sizeof (_oc_PortableServer_POA_InvalidPolicy), (char *) &_oc_PortableServer_POA_InvalidPolicy, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POA::_tc_InvalidPolicy = &_tc__tc_PortableServer_POA_InvalidPolicy;
@@ -1809,10 +2011,17 @@ return 1;
 
 static const CORBA::Long _oc_PortableServer_POA_NoServant[] =
 {
-TAO_ENCAP_BYTE_ORDER, // byte order
-37, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x4e2f414f, 0x7265536f, 0x746e6176, 0x302e313a, 0xfdfdfd00,  // repository ID = IDL:PortableServer/POA/NoServant:1.0
-10, 0x65536f4e, 0x6e617672, 0xfdfd0074,  // name = NoServant
-0, // member count
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  37, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x4e2f414f, 0x7265536f, 0x746e6176, 0x302e313a, 0xfdfdfd00,  // repository ID = IDL:PortableServer/POA/NoServant:1.0
+  10, 0x65536f4e, 0x6e617672, 0xfdfd0074,  // name = NoServant
+  0, // member count
+#else
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  37, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f50, 0x4f412f4e, 0x6f536572, 0x76616e74, 0x3a312e30, 0x0,  // repository ID = IDL:PortableServer/POA/NoServant:1.0
+  10, 0x4e6f5365, 0x7276616e, 0x74000000,  // name = NoServant
+  0, // member count
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_POA_NoServant (CORBA::tk_except, sizeof (_oc_PortableServer_POA_NoServant), (char *) &_oc_PortableServer_POA_NoServant, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POA::_tc_NoServant = &_tc__tc_PortableServer_POA_NoServant;
@@ -1897,10 +2106,17 @@ return 1;
 
 static const CORBA::Long _oc_PortableServer_POA_ObjectAlreadyActive[] =
 {
-TAO_ENCAP_BYTE_ORDER, // byte order
-47, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x4f2f414f, 0x63656a62, 0x726c4174, 0x79646165, 0x69746341, 0x313a6576, 0xfd00302e,  // repository ID = IDL:PortableServer/POA/ObjectAlreadyActive:1.0
-20, 0x656a624f, 0x6c417463, 0x64616572, 0x74634179, 0x657669,  // name = ObjectAlreadyActive
-0, // member count
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  47, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x4f2f414f, 0x63656a62, 0x726c4174, 0x79646165, 0x69746341, 0x313a6576, 0xfd00302e,  // repository ID = IDL:PortableServer/POA/ObjectAlreadyActive:1.0
+  20, 0x656a624f, 0x6c417463, 0x64616572, 0x74634179, 0x657669,  // name = ObjectAlreadyActive
+  0, // member count
+#else
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  47, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f50, 0x4f412f4f, 0x626a6563, 0x74416c72, 0x65616479, 0x41637469, 0x76653a31, 0x2e300000,  // repository ID = IDL:PortableServer/POA/ObjectAlreadyActive:1.0
+  20, 0x4f626a65, 0x6374416c, 0x72656164, 0x79416374, 0x69766500,  // name = ObjectAlreadyActive
+  0, // member count
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_POA_ObjectAlreadyActive (CORBA::tk_except, sizeof (_oc_PortableServer_POA_ObjectAlreadyActive), (char *) &_oc_PortableServer_POA_ObjectAlreadyActive, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POA::_tc_ObjectAlreadyActive = &_tc__tc_PortableServer_POA_ObjectAlreadyActive;
@@ -1985,10 +2201,17 @@ return 1;
 
 static const CORBA::Long _oc_PortableServer_POA_ObjectNotActive[] =
 {
-TAO_ENCAP_BYTE_ORDER, // byte order
-43, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x4f2f414f, 0x63656a62, 0x746f4e74, 0x69746341, 0x313a6576, 0xfd00302e,  // repository ID = IDL:PortableServer/POA/ObjectNotActive:1.0
-16, 0x656a624f, 0x6f4e7463, 0x74634174, 0x657669,  // name = ObjectNotActive
-0, // member count
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  43, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x4f2f414f, 0x63656a62, 0x746f4e74, 0x69746341, 0x313a6576, 0xfd00302e,  // repository ID = IDL:PortableServer/POA/ObjectNotActive:1.0
+  16, 0x656a624f, 0x6f4e7463, 0x74634174, 0x657669,  // name = ObjectNotActive
+  0, // member count
+#else
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  43, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f50, 0x4f412f4f, 0x626a6563, 0x744e6f74, 0x41637469, 0x76653a31, 0x2e300068,  // repository ID = IDL:PortableServer/POA/ObjectNotActive:1.0
+  16, 0x4f626a65, 0x63744e6f, 0x74416374, 0x69766500,  // name = ObjectNotActive
+  0, // member count
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_POA_ObjectNotActive (CORBA::tk_except, sizeof (_oc_PortableServer_POA_ObjectNotActive), (char *) &_oc_PortableServer_POA_ObjectNotActive, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POA::_tc_ObjectNotActive = &_tc__tc_PortableServer_POA_ObjectNotActive;
@@ -2073,10 +2296,17 @@ return 1;
 
 static const CORBA::Long _oc_PortableServer_POA_ServantAlreadyActive[] =
 {
-TAO_ENCAP_BYTE_ORDER, // byte order
-48, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x532f414f, 0x61767265, 0x6c41746e, 0x64616572, 0x74634179, 0x3a657669, 0x302e31,  // repository ID = IDL:PortableServer/POA/ServantAlreadyActive:1.0
-21, 0x76726553, 0x41746e61, 0x6165726c, 0x63417964, 0x65766974, 0xfdfdfd00,  // name = ServantAlreadyActive
-0, // member count
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  48, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x532f414f, 0x61767265, 0x6c41746e, 0x64616572, 0x74634179, 0x3a657669, 0x302e31,  // repository ID = IDL:PortableServer/POA/ServantAlreadyActive:1.0
+  21, 0x76726553, 0x41746e61, 0x6165726c, 0x63417964, 0x65766974, 0xfdfdfd00,  // name = ServantAlreadyActive
+  0, // member count
+#else
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  48, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f50, 0x4f412f53, 0x65727661, 0x6e74416c, 0x72656164, 0x79416374, 0x6976653a, 0x312e3000,  // repository ID = IDL:PortableServer/POA/ServantAlreadyActive:1.0
+  21, 0x53657276, 0x616e7441, 0x6c726561, 0x64794163, 0x74697665, 0x0,  // name = ServantAlreadyActive
+  0, // member count
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_POA_ServantAlreadyActive (CORBA::tk_except, sizeof (_oc_PortableServer_POA_ServantAlreadyActive), (char *) &_oc_PortableServer_POA_ServantAlreadyActive, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POA::_tc_ServantAlreadyActive = &_tc__tc_PortableServer_POA_ServantAlreadyActive;
@@ -2161,10 +2391,17 @@ return 1;
 
 static const CORBA::Long _oc_PortableServer_POA_ServantNotActive[] =
 {
-TAO_ENCAP_BYTE_ORDER, // byte order
-44, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x532f414f, 0x61767265, 0x6f4e746e, 0x74634174, 0x3a657669, 0x302e31,  // repository ID = IDL:PortableServer/POA/ServantNotActive:1.0
-17, 0x76726553, 0x4e746e61, 0x6341746f, 0x65766974, 0xfdfdfd00,  // name = ServantNotActive
-0, // member count
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  44, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x532f414f, 0x61767265, 0x6f4e746e, 0x74634174, 0x3a657669, 0x302e31,  // repository ID = IDL:PortableServer/POA/ServantNotActive:1.0
+  17, 0x76726553, 0x4e746e61, 0x6341746f, 0x65766974, 0xfdfdfd00,  // name = ServantNotActive
+  0, // member count
+#else
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  44, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f50, 0x4f412f53, 0x65727661, 0x6e744e6f, 0x74416374, 0x6976653a, 0x312e3000,  // repository ID = IDL:PortableServer/POA/ServantNotActive:1.0
+  17, 0x53657276, 0x616e744e, 0x6f744163, 0x74697665, 0x0,  // name = ServantNotActive
+  0, // member count
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_POA_ServantNotActive (CORBA::tk_except, sizeof (_oc_PortableServer_POA_ServantNotActive), (char *) &_oc_PortableServer_POA_ServantNotActive, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POA::_tc_ServantNotActive = &_tc__tc_PortableServer_POA_ServantNotActive;
@@ -2249,10 +2486,17 @@ return 1;
 
 static const CORBA::Long _oc_PortableServer_POA_WrongAdapter[] =
 {
-TAO_ENCAP_BYTE_ORDER, // byte order
-40, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x572f414f, 0x676e6f72, 0x70616441, 0x3a726574, 0x302e31,  // repository ID = IDL:PortableServer/POA/WrongAdapter:1.0
-13, 0x6e6f7257, 0x61644167, 0x72657470, 0xfdfdfd00,  // name = WrongAdapter
-0, // member count
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  40, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x572f414f, 0x676e6f72, 0x70616441, 0x3a726574, 0x302e31,  // repository ID = IDL:PortableServer/POA/WrongAdapter:1.0
+  13, 0x6e6f7257, 0x61644167, 0x72657470, 0xfdfdfd00,  // name = WrongAdapter
+  0, // member count
+#else
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  40, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f50, 0x4f412f57, 0x726f6e67, 0x41646170, 0x7465723a, 0x312e3000,  // repository ID = IDL:PortableServer/POA/WrongAdapter:1.0
+  13, 0x57726f6e, 0x67416461, 0x70746572, 0x0,  // name = WrongAdapter
+  0, // member count
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_POA_WrongAdapter (CORBA::tk_except, sizeof (_oc_PortableServer_POA_WrongAdapter), (char *) &_oc_PortableServer_POA_WrongAdapter, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POA::_tc_WrongAdapter = &_tc__tc_PortableServer_POA_WrongAdapter;
@@ -2337,10 +2581,17 @@ return 1;
 
 static const CORBA::Long _oc_PortableServer_POA_WrongPolicy[] =
 {
-TAO_ENCAP_BYTE_ORDER, // byte order
-39, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x572f414f, 0x676e6f72, 0x696c6f50, 0x313a7963, 0xfd00302e,  // repository ID = IDL:PortableServer/POA/WrongPolicy:1.0
-12, 0x6e6f7257, 0x6c6f5067, 0x796369,  // name = WrongPolicy
-0, // member count
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  39, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x572f414f, 0x676e6f72, 0x696c6f50, 0x313a7963, 0xfd00302e,  // repository ID = IDL:PortableServer/POA/WrongPolicy:1.0
+  12, 0x6e6f7257, 0x6c6f5067, 0x796369,  // name = WrongPolicy
+  0, // member count
+#else
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  39, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f50, 0x4f412f57, 0x726f6e67, 0x506f6c69, 0x63793a31, 0x2e300000,  // repository ID = IDL:PortableServer/POA/WrongPolicy:1.0
+  12, 0x57726f6e, 0x67506f6c, 0x69637900,  // name = WrongPolicy
+  0, // member count
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_POA_WrongPolicy (CORBA::tk_except, sizeof (_oc_PortableServer_POA_WrongPolicy), (char *) &_oc_PortableServer_POA_WrongPolicy, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::POA::_tc_WrongPolicy = &_tc__tc_PortableServer_POA_WrongPolicy;
@@ -2357,9 +2608,15 @@ CORBA::Boolean PortableServer::POA::_is_a (const CORBA::Char *value, CORBA::Envi
 
 static const CORBA::Long _oc_PortableServer_POA[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  27, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x502f7265, 0x313a414f, 0xfd00302e,  // repository ID = IDL:PortableServer/POA:1.0
+  4, 0x414f50,  // name = POA,
+#else
   TAO_ENCAP_BYTE_ORDER, // byte order
   27, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f50, 0x4f413a31, 0x2e300000,  // repository ID = IDL:PortableServer/POA:1.0
   4, 0x504f4100,  // name = POA,
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_POA (CORBA::tk_objref, sizeof (_oc_PortableServer_POA), (char *) &_oc_PortableServer_POA, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_POA = &_tc__tc_PortableServer_POA;
@@ -2493,10 +2750,17 @@ return 1;
 
 static const CORBA::Long _oc_PortableServer_Current_NoContext[] =
 {
-TAO_ENCAP_BYTE_ORDER, // byte order
-41, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x432f7265, 0x65727275, 0x4e2f746e, 0x6e6f436f, 0x74786574, 0x302e313a, 0xfdfdfd00,  // repository ID = IDL:PortableServer/Current/NoContext:1.0
-10, 0x6f436f4e, 0x7865746e, 0xfdfd0074,  // name = NoContext
-0, // member count
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  41, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x432f7265, 0x65727275, 0x4e2f746e, 0x6e6f436f, 0x74786574, 0x302e313a, 0xfdfdfd00,  // repository ID = IDL:PortableServer/Current/NoContext:1.0
+  10, 0x6f436f4e, 0x7865746e, 0xfdfd0074,  // name = NoContext
+  0, // member count
+#else
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  41, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f43, 0x75727265, 0x6e742f4e, 0x6f436f6e, 0x74657874, 0x3a312e30, 0x3c8,  // repository ID = IDL:PortableServer/Current/NoContext:1.0
+  10, 0x4e6f436f, 0x6e746578, 0x74000000,  // name = NoContext
+  0, // member count
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_Current_NoContext (CORBA::tk_except, sizeof (_oc_PortableServer_Current_NoContext), (char *) &_oc_PortableServer_Current_NoContext, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::Current::_tc_NoContext = &_tc__tc_PortableServer_Current_NoContext;
@@ -2544,9 +2808,15 @@ CORBA::Boolean PortableServer::Current::_is_a (const CORBA::Char *value, CORBA::
 
 static const CORBA::Long _oc_PortableServer_Current[] =
 {
+#ifdef ACE_LITTLE_ENDIAN // NT
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  31, 0x3a4c4449, 0x74726f50, 0x656c6261, 0x76726553, 0x432f7265, 0x65727275, 0x313a746e, 0xfd00302e,  // repository ID = IDL:PortableServer/Current:1.0
+  8, 0x72727543, 0x746e65,  // name = Current,
+#else
   TAO_ENCAP_BYTE_ORDER, // byte order
   31, 0x49444c3a, 0x506f7274, 0x61626c65, 0x53657276, 0x65722f43, 0x75727265, 0x6e743a31, 0x2e300000,  // repository ID = IDL:PortableServer/Current:1.0
   8, 0x43757272, 0x656e7400,  // name = Current,
+#endif
 };
 static CORBA::TypeCode _tc__tc_PortableServer_Current (CORBA::tk_objref, sizeof (_oc_PortableServer_Current), (char *) &_oc_PortableServer_Current, CORBA::B_FALSE);
 CORBA::TypeCode_ptr PortableServer::_tc_Current = &_tc__tc_PortableServer_Current;
