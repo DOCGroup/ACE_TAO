@@ -158,10 +158,13 @@ take advantage of if a compiler supports them:
     <CODE>ACE_HAS_BROKEN_NAMESPACES</CODE> is <EM>not</EM> enabled. <P>
 
 <LI> <B>STL</B> -- Unfortunately many of the platforms that ACE
-	supports don't have an STL library, so ACE does not depends on
-	STL and does not use it.
+	supports don't have an STL library.  Moreover, different versions
+        of STL behave differently.  Therefore, ACE does not depends on
+	STL and does not use it internally.
 	If your target platform(s) support STL you should be able to
-	use both without problems. <P>
+	use it with ACE and TAO without problems, though your C++
+        compiler may have problems with it (this is beyond the scope
+        of ACE, however). <P>
 </UL>
 
 <P><HR><P>
