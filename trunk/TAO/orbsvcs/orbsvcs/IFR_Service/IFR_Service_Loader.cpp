@@ -58,7 +58,7 @@ int
 TAO_IFR_Service_Loader::fini (void)
 {
   // Remove the IFR_Service Service.
-  return this->ifr_service_.fini ();
+  return this->ifr_server_.fini ();
 }
 
 CORBA::Object_ptr
@@ -72,9 +72,9 @@ TAO_IFR_Service_Loader::create_object (CORBA::ORB_ptr orb,
 
   // Initializes the IFR_Service Service. Returns -1
   // on an error.
-  result = this->ifr_service_.init_with_orb (argc,
-                                               argv,
-                                               orb);
+  result = this->ifr_server_.init_with_orb (argc,
+                                           argv,
+                                           orb);
   if (result == -1)
     return CORBA::Object::_nil ();
 

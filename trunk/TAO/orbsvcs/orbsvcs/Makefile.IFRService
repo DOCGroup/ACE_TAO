@@ -7,12 +7,12 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-MAKEFILE = Makefile.IFR_Service_LIB
+MAKEFILE = Makefile.IFRService
 LIBNAME  = libTAO_IFRService
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
-VPATH=.
+VPATH=.:IFR_Service
 
 ACE_SHLIBS = -lTAO_TypeCodeFactory -lTAO_Svc_Utils -lTAO_IFR_Client -lTAO_IORTable -lTAO_PortableServer -lTAO -lACE
 
@@ -30,62 +30,61 @@ include $(TAO_ROOT)/rules.tao.GNU
 override TAO_IDLFLAGS += \
         -I$(TAO_ROOT) -Ge 1 \
 	-Wb,export_macro=TAO_IFR_Service_Export \
-	-Wb,export_include=ifr_service_export.h \
+	-Wb,export_include=IFR_Service/ifr_service_export.h \
 	-Wb,pre_include=ace/pre.h \
 	-Wb,post_include=ace/post.h
 	 
 CPP_SRCS += \
-        AbstractInterfaceDef_i \
-        AliasDef_i \
-        ArrayDef_i \
-        AttributeDef_i \
-        ComponentDef_i \
-        ComponentRepository_i \
-        ConstantDef_i \
-        ConsumesDef_i \
-        Contained_i \
-        Container_i \
-        EmitsDef_i \
-        EnumDef_i \
-        EventDef_i \
-        ExceptionDef_i \
-        FactoryDef_i \
-        FinderDef_i \
-        FixedDef_i \
-        HomeDef_i \
-        IDLType_i \
-        IFR_BaseS \
-        IFR_BasicS \
-        IFR_ComponentsS \
-        IFR_ExtendedS \
-        IFR_Server \
-        IFR_Service \
-        IFR_Service_Loader \
-        InterfaceDef_i \
-        IRObject_i \
-        LocalInterfaceDef_i \
-        ModuleDef_i \
-        NativeDef_i \
-        OperationDef_i \
-        Options \
-        PrimaryKeyDef_i \
-        PrimitiveDef_i \
-        ProvidesDef_i \
-        PublishesDef_i \
-        Repository_i \
-        SequenceDef_i \
-        Servant_Factory \
-        Servant_Locator \
-        StringDef_i \
-        StructDef_i \
-        tmplinst \
-        TypedefDef_i \
-        UnionDef_i \
-        UsesDef_i \
-        ValueBoxDef_i \
-        ValueDef_i \
-        ValueMemberDef_i \
-        WstringDef_i
+        IFR_Service/AbstractInterfaceDef_i \
+        IFR_Service/AliasDef_i \
+        IFR_Service/ArrayDef_i \
+        IFR_Service/AttributeDef_i \
+        IFR_Service/ComponentDef_i \
+        IFR_Service/ComponentRepository_i \
+        IFR_Service/ConstantDef_i \
+        IFR_Service/ConsumesDef_i \
+        IFR_Service/Contained_i \
+        IFR_Service/Container_i \
+        IFR_Service/EmitsDef_i \
+        IFR_Service/EnumDef_i \
+        IFR_Service/EventDef_i \
+        IFR_Service/ExceptionDef_i \
+        IFR_Service/FactoryDef_i \
+        IFR_Service/FinderDef_i \
+        IFR_Service/FixedDef_i \
+        IFR_Service/HomeDef_i \
+        IFR_Service/IDLType_i \
+        IFR_Service/IFR_BaseS \
+        IFR_Service/IFR_BasicS \
+        IFR_Service/IFR_ComponentsS \
+        IFR_Service/IFR_ExtendedS \
+        IFR_Service/IFR_Service_Utils \
+        IFR_Service/IFR_Service_Loader \
+        IFR_Service/InterfaceDef_i \
+        IFR_Service/IRObject_i \
+        IFR_Service/LocalInterfaceDef_i \
+        IFR_Service/ModuleDef_i \
+        IFR_Service/NativeDef_i \
+        IFR_Service/OperationDef_i \
+        IFR_Service/Options \
+        IFR_Service/PrimaryKeyDef_i \
+        IFR_Service/PrimitiveDef_i \
+        IFR_Service/ProvidesDef_i \
+        IFR_Service/PublishesDef_i \
+        IFR_Service/Repository_i \
+        IFR_Service/SequenceDef_i \
+        IFR_Service/Servant_Factory \
+        IFR_Service/Servant_Locator \
+        IFR_Service/StringDef_i \
+        IFR_Service/StructDef_i \
+        IFR_Service/tmplinst \
+        IFR_Service/TypedefDef_i \
+        IFR_Service/UnionDef_i \
+        IFR_Service/UsesDef_i \
+        IFR_Service/ValueBoxDef_i \
+        IFR_Service/ValueDef_i \
+        IFR_Service/ValueMemberDef_i \
+        IFR_Service/WstringDef_i
 
 FILES = $(CPP_SRCS)
 DEFS  = $(addsuffix .h,$(FILES))
@@ -120,10 +119,12 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/AbstractInterfaceDef_i.o .obj/AbstractInterfaceDef_i.so .shobj/AbstractInterfaceDef_i.o .shobj/AbstractInterfaceDef_i.so: AbstractInterfaceDef_i.cpp \
- AbstractInterfaceDef_i.h InterfaceDef_i.h Container_i.h IRObject_i.h \
- IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+.obj/AbstractInterfaceDef_i.o .obj/AbstractInterfaceDef_i.so .shobj/AbstractInterfaceDef_i.o .shobj/AbstractInterfaceDef_i.so: IFR_Service/AbstractInterfaceDef_i.cpp \
+ IFR_Service/AbstractInterfaceDef_i.h IFR_Service/InterfaceDef_i.h \
+ IFR_Service/Container_i.h IFR_Service/IRObject_i.h \
+ IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -274,14 +275,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -317,8 +320,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h Contained_i.h IDLType_i.h Repository_i.h \
- IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/Contained_i.h \
+ IFR_Service/IDLType_i.h IFR_Service/Repository_i.h \
+ IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -328,10 +332,11 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl
 
-.obj/AliasDef_i.o .obj/AliasDef_i.so .shobj/AliasDef_i.o .shobj/AliasDef_i.so: AliasDef_i.cpp AliasDef_i.h TypedefDef_i.h Contained_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/AliasDef_i.o .obj/AliasDef_i.so .shobj/AliasDef_i.o .shobj/AliasDef_i.so: IFR_Service/AliasDef_i.cpp IFR_Service/AliasDef_i.h \
+ IFR_Service/TypedefDef_i.h IFR_Service/Contained_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -482,14 +487,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -525,8 +532,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IDLType_i.h Repository_i.h Container_i.h \
- IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IDLType_i.h \
+ IFR_Service/Repository_i.h IFR_Service/Container_i.h \
+ IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -535,11 +543,13 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- Servant_Factory.h
+ IFR_Service/Servant_Factory.h
 
-.obj/ArrayDef_i.o .obj/ArrayDef_i.so .shobj/ArrayDef_i.o .shobj/ArrayDef_i.so: ArrayDef_i.cpp ArrayDef_i.h IDLType_i.h IRObject_i.h \
- IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+.obj/ArrayDef_i.o .obj/ArrayDef_i.so .shobj/ArrayDef_i.o .shobj/ArrayDef_i.so: IFR_Service/ArrayDef_i.cpp IFR_Service/ArrayDef_i.h \
+ IFR_Service/IDLType_i.h IFR_Service/IRObject_i.h \
+ IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -690,14 +700,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -733,7 +745,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h Repository_i.h Container_i.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/Repository_i.h \
+ IFR_Service/Container_i.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -742,12 +755,13 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- Servant_Factory.h
+ IFR_Service/Servant_Factory.h
 
-.obj/AttributeDef_i.o .obj/AttributeDef_i.so .shobj/AttributeDef_i.o .shobj/AttributeDef_i.so: AttributeDef_i.cpp AttributeDef_i.h Contained_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/AttributeDef_i.o .obj/AttributeDef_i.so .shobj/AttributeDef_i.o .shobj/AttributeDef_i.so: IFR_Service/AttributeDef_i.cpp \
+ IFR_Service/AttributeDef_i.h IFR_Service/Contained_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -898,14 +912,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -941,7 +957,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h Repository_i.h Container_i.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/Repository_i.h \
+ IFR_Service/Container_i.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -950,12 +967,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- IDLType_i.h ExceptionDef_i.h Servant_Factory.h
+ IFR_Service/IDLType_i.h IFR_Service/ExceptionDef_i.h \
+ IFR_Service/Servant_Factory.h
 
-.obj/ComponentDef_i.o .obj/ComponentDef_i.so .shobj/ComponentDef_i.o .shobj/ComponentDef_i.so: ComponentDef_i.cpp Repository_i.h Container_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/ComponentDef_i.o .obj/ComponentDef_i.so .shobj/ComponentDef_i.o .shobj/ComponentDef_i.so: IFR_Service/ComponentDef_i.cpp \
+ IFR_Service/Repository_i.h IFR_Service/Container_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -1106,14 +1125,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -1149,7 +1170,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -1158,17 +1179,20 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- ComponentDef_i.h InterfaceDef_i.h Contained_i.h IDLType_i.h \
- IFR_ComponentsS.h \
+ IFR_Service/ComponentDef_i.h IFR_Service/InterfaceDef_i.h \
+ IFR_Service/Contained_i.h IFR_Service/IDLType_i.h \
+ IFR_Service/IFR_ComponentsS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ComponentsC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ComponentsC.i \
- IFR_ComponentsS_T.h IFR_ComponentsS_T.i IFR_ComponentsS_T.cpp \
- IFR_ComponentsS.i
+ IFR_Service/IFR_ComponentsS_T.h IFR_Service/IFR_ComponentsS_T.i \
+ IFR_Service/IFR_ComponentsS_T.cpp IFR_Service/IFR_ComponentsS.i
 
-.obj/ComponentRepository_i.o .obj/ComponentRepository_i.so .shobj/ComponentRepository_i.o .shobj/ComponentRepository_i.so: ComponentRepository_i.cpp \
- ComponentRepository_i.h Repository_i.h Container_i.h IRObject_i.h \
- IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+.obj/ComponentRepository_i.o .obj/ComponentRepository_i.so .shobj/ComponentRepository_i.o .shobj/ComponentRepository_i.so: IFR_Service/ComponentRepository_i.cpp \
+ IFR_Service/ComponentRepository_i.h IFR_Service/Repository_i.h \
+ IFR_Service/Container_i.h IFR_Service/IRObject_i.h \
+ IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -1319,14 +1343,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -1362,7 +1388,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -1371,16 +1397,17 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- IFR_ComponentsS.h \
+ IFR_Service/IFR_ComponentsS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ComponentsC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ComponentsC.i \
- IFR_ComponentsS_T.h IFR_ComponentsS_T.i IFR_ComponentsS_T.cpp \
- IFR_ComponentsS.i
+ IFR_Service/IFR_ComponentsS_T.h IFR_Service/IFR_ComponentsS_T.i \
+ IFR_Service/IFR_ComponentsS_T.cpp IFR_Service/IFR_ComponentsS.i
 
-.obj/ConstantDef_i.o .obj/ConstantDef_i.so .shobj/ConstantDef_i.o .shobj/ConstantDef_i.so: ConstantDef_i.cpp ConstantDef_i.h Contained_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/ConstantDef_i.o .obj/ConstantDef_i.so .shobj/ConstantDef_i.o .shobj/ConstantDef_i.so: IFR_Service/ConstantDef_i.cpp \
+ IFR_Service/ConstantDef_i.h IFR_Service/Contained_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -1531,14 +1558,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -1574,7 +1603,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h Repository_i.h Container_i.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/Repository_i.h \
+ IFR_Service/Container_i.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -1583,12 +1613,13 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- IDLType_i.h Servant_Factory.h
+ IFR_Service/IDLType_i.h IFR_Service/Servant_Factory.h
 
-.obj/ConsumesDef_i.o .obj/ConsumesDef_i.so .shobj/ConsumesDef_i.o .shobj/ConsumesDef_i.so: ConsumesDef_i.cpp Repository_i.h Container_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/ConsumesDef_i.o .obj/ConsumesDef_i.so .shobj/ConsumesDef_i.o .shobj/ConsumesDef_i.so: IFR_Service/ConsumesDef_i.cpp \
+ IFR_Service/Repository_i.h IFR_Service/Container_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -1739,14 +1770,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -1782,7 +1815,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -1791,12 +1824,15 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- ConsumesDef_i.h EventDef_i.h Contained_i.h
+ IFR_Service/ConsumesDef_i.h IFR_Service/EventDef_i.h \
+ IFR_Service/Contained_i.h
 
-.obj/Contained_i.o .obj/Contained_i.so .shobj/Contained_i.o .shobj/Contained_i.so: Contained_i.cpp concrete_classes.h \
- ComponentRepository_i.h Repository_i.h Container_i.h IRObject_i.h \
- IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+.obj/Contained_i.o .obj/Contained_i.so .shobj/Contained_i.o .shobj/Contained_i.so: IFR_Service/Contained_i.cpp \
+ IFR_Service/concrete_classes.h IFR_Service/ComponentRepository_i.h \
+ IFR_Service/Repository_i.h IFR_Service/Container_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -1947,14 +1983,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -1990,7 +2028,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -1999,25 +2037,36 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- IFR_ComponentsS.h \
+ IFR_Service/IFR_ComponentsS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ComponentsC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ComponentsC.i \
- IFR_ComponentsS_T.h IFR_ComponentsS_T.i IFR_ComponentsS_T.cpp \
- IFR_ComponentsS.i PrimitiveDef_i.h IDLType_i.h StringDef_i.h \
- WstringDef_i.h SequenceDef_i.h ArrayDef_i.h FixedDef_i.h EnumDef_i.h \
- TypedefDef_i.h Contained_i.h AliasDef_i.h NativeDef_i.h \
- ValueBoxDef_i.h UnionDef_i.h StructDef_i.h ConsumesDef_i.h \
- EventDef_i.h PublishesDef_i.h EmitsDef_i.h PrimaryKeyDef_i.h \
- ProvidesDef_i.h UsesDef_i.h ValueMemberDef_i.h FactoryDef_i.h \
- OperationDef_i.h FinderDef_i.h AttributeDef_i.h ConstantDef_i.h \
- ComponentDef_i.h InterfaceDef_i.h HomeDef_i.h ValueDef_i.h \
- ExceptionDef_i.h ModuleDef_i.h AbstractInterfaceDef_i.h \
- LocalInterfaceDef_i.h Servant_Factory.h
+ IFR_Service/IFR_ComponentsS_T.h IFR_Service/IFR_ComponentsS_T.i \
+ IFR_Service/IFR_ComponentsS_T.cpp IFR_Service/IFR_ComponentsS.i \
+ IFR_Service/PrimitiveDef_i.h IFR_Service/IDLType_i.h \
+ IFR_Service/StringDef_i.h IFR_Service/WstringDef_i.h \
+ IFR_Service/SequenceDef_i.h IFR_Service/ArrayDef_i.h \
+ IFR_Service/FixedDef_i.h IFR_Service/EnumDef_i.h \
+ IFR_Service/TypedefDef_i.h IFR_Service/Contained_i.h \
+ IFR_Service/AliasDef_i.h IFR_Service/NativeDef_i.h \
+ IFR_Service/ValueBoxDef_i.h IFR_Service/UnionDef_i.h \
+ IFR_Service/StructDef_i.h IFR_Service/ConsumesDef_i.h \
+ IFR_Service/EventDef_i.h IFR_Service/PublishesDef_i.h \
+ IFR_Service/EmitsDef_i.h IFR_Service/PrimaryKeyDef_i.h \
+ IFR_Service/ProvidesDef_i.h IFR_Service/UsesDef_i.h \
+ IFR_Service/ValueMemberDef_i.h IFR_Service/FactoryDef_i.h \
+ IFR_Service/OperationDef_i.h IFR_Service/FinderDef_i.h \
+ IFR_Service/AttributeDef_i.h IFR_Service/ConstantDef_i.h \
+ IFR_Service/ComponentDef_i.h IFR_Service/InterfaceDef_i.h \
+ IFR_Service/HomeDef_i.h IFR_Service/ValueDef_i.h \
+ IFR_Service/ExceptionDef_i.h IFR_Service/ModuleDef_i.h \
+ IFR_Service/AbstractInterfaceDef_i.h \
+ IFR_Service/LocalInterfaceDef_i.h IFR_Service/Servant_Factory.h
 
-.obj/Container_i.o .obj/Container_i.so .shobj/Container_i.o .shobj/Container_i.so: Container_i.cpp Repository_i.h Container_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/Container_i.o .obj/Container_i.so .shobj/Container_i.o .shobj/Container_i.so: IFR_Service/Container_i.cpp IFR_Service/Repository_i.h \
+ IFR_Service/Container_i.h IFR_Service/IRObject_i.h \
+ IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -2168,14 +2217,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -2211,7 +2262,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -2220,11 +2271,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- InterfaceDef_i.h Contained_i.h IDLType_i.h Servant_Factory.h
+ IFR_Service/InterfaceDef_i.h IFR_Service/Contained_i.h \
+ IFR_Service/IDLType_i.h IFR_Service/Servant_Factory.h
 
-.obj/EmitsDef_i.o .obj/EmitsDef_i.so .shobj/EmitsDef_i.o .shobj/EmitsDef_i.so: EmitsDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+.obj/EmitsDef_i.o .obj/EmitsDef_i.so .shobj/EmitsDef_i.o .shobj/EmitsDef_i.so: IFR_Service/EmitsDef_i.cpp IFR_Service/Repository_i.h \
+ IFR_Service/Container_i.h IFR_Service/IRObject_i.h \
+ IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -2375,14 +2429,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -2418,7 +2474,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -2427,12 +2483,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- EmitsDef_i.h EventDef_i.h Contained_i.h
+ IFR_Service/EmitsDef_i.h IFR_Service/EventDef_i.h \
+ IFR_Service/Contained_i.h
 
-.obj/EnumDef_i.o .obj/EnumDef_i.so .shobj/EnumDef_i.o .shobj/EnumDef_i.so: EnumDef_i.cpp EnumDef_i.h TypedefDef_i.h Contained_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/EnumDef_i.o .obj/EnumDef_i.so .shobj/EnumDef_i.o .shobj/EnumDef_i.so: IFR_Service/EnumDef_i.cpp IFR_Service/EnumDef_i.h \
+ IFR_Service/TypedefDef_i.h IFR_Service/Contained_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -2583,14 +2641,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -2626,8 +2686,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IDLType_i.h Repository_i.h Container_i.h \
- IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IDLType_i.h \
+ IFR_Service/Repository_i.h IFR_Service/Container_i.h \
+ IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -2636,11 +2697,13 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- Servant_Factory.h
+ IFR_Service/Servant_Factory.h
 
-.obj/EventDef_i.o .obj/EventDef_i.so .shobj/EventDef_i.o .shobj/EventDef_i.so: EventDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+.obj/EventDef_i.o .obj/EventDef_i.so .shobj/EventDef_i.o .shobj/EventDef_i.so: IFR_Service/EventDef_i.cpp IFR_Service/Repository_i.h \
+ IFR_Service/Container_i.h IFR_Service/IRObject_i.h \
+ IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -2791,14 +2854,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -2834,7 +2899,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -2843,12 +2908,13 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- EventDef_i.h Contained_i.h
+ IFR_Service/EventDef_i.h IFR_Service/Contained_i.h
 
-.obj/ExceptionDef_i.o .obj/ExceptionDef_i.so .shobj/ExceptionDef_i.o .shobj/ExceptionDef_i.so: ExceptionDef_i.cpp ExceptionDef_i.h Contained_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/ExceptionDef_i.o .obj/ExceptionDef_i.so .shobj/ExceptionDef_i.o .shobj/ExceptionDef_i.so: IFR_Service/ExceptionDef_i.cpp \
+ IFR_Service/ExceptionDef_i.h IFR_Service/Contained_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -2999,14 +3065,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -3042,7 +3110,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h Container_i.h Repository_i.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/Container_i.h \
+ IFR_Service/Repository_i.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -3051,12 +3120,13 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- IDLType_i.h Servant_Factory.h
+ IFR_Service/IDLType_i.h IFR_Service/Servant_Factory.h
 
-.obj/FactoryDef_i.o .obj/FactoryDef_i.so .shobj/FactoryDef_i.o .shobj/FactoryDef_i.so: FactoryDef_i.cpp Repository_i.h Container_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/FactoryDef_i.o .obj/FactoryDef_i.so .shobj/FactoryDef_i.o .shobj/FactoryDef_i.so: IFR_Service/FactoryDef_i.cpp \
+ IFR_Service/Repository_i.h IFR_Service/Container_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -3207,14 +3277,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -3250,7 +3322,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -3259,12 +3331,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- FactoryDef_i.h OperationDef_i.h Contained_i.h
+ IFR_Service/FactoryDef_i.h IFR_Service/OperationDef_i.h \
+ IFR_Service/Contained_i.h
 
-.obj/FinderDef_i.o .obj/FinderDef_i.so .shobj/FinderDef_i.o .shobj/FinderDef_i.so: FinderDef_i.cpp Repository_i.h Container_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/FinderDef_i.o .obj/FinderDef_i.so .shobj/FinderDef_i.o .shobj/FinderDef_i.so: IFR_Service/FinderDef_i.cpp IFR_Service/Repository_i.h \
+ IFR_Service/Container_i.h IFR_Service/IRObject_i.h \
+ IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -3415,14 +3489,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -3458,7 +3534,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -3467,11 +3543,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- FinderDef_i.h OperationDef_i.h Contained_i.h
+ IFR_Service/FinderDef_i.h IFR_Service/OperationDef_i.h \
+ IFR_Service/Contained_i.h
 
-.obj/FixedDef_i.o .obj/FixedDef_i.so .shobj/FixedDef_i.o .shobj/FixedDef_i.so: FixedDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+.obj/FixedDef_i.o .obj/FixedDef_i.so .shobj/FixedDef_i.o .shobj/FixedDef_i.so: IFR_Service/FixedDef_i.cpp IFR_Service/Repository_i.h \
+ IFR_Service/Container_i.h IFR_Service/IRObject_i.h \
+ IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -3622,14 +3701,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -3665,7 +3746,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -3674,11 +3755,13 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- FixedDef_i.h IDLType_i.h
+ IFR_Service/FixedDef_i.h IFR_Service/IDLType_i.h
 
-.obj/HomeDef_i.o .obj/HomeDef_i.so .shobj/HomeDef_i.o .shobj/HomeDef_i.so: HomeDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+.obj/HomeDef_i.o .obj/HomeDef_i.so .shobj/HomeDef_i.o .shobj/HomeDef_i.so: IFR_Service/HomeDef_i.cpp IFR_Service/Repository_i.h \
+ IFR_Service/Container_i.h IFR_Service/IRObject_i.h \
+ IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -3829,14 +3912,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -3872,7 +3957,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -3881,16 +3966,18 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- HomeDef_i.h InterfaceDef_i.h Contained_i.h IDLType_i.h \
- IFR_ComponentsS.h \
+ IFR_Service/HomeDef_i.h IFR_Service/InterfaceDef_i.h \
+ IFR_Service/Contained_i.h IFR_Service/IDLType_i.h \
+ IFR_Service/IFR_ComponentsS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ComponentsC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ComponentsC.i \
- IFR_ComponentsS_T.h IFR_ComponentsS_T.i IFR_ComponentsS_T.cpp \
- IFR_ComponentsS.i
+ IFR_Service/IFR_ComponentsS_T.h IFR_Service/IFR_ComponentsS_T.i \
+ IFR_Service/IFR_ComponentsS_T.cpp IFR_Service/IFR_ComponentsS.i
 
-.obj/IDLType_i.o .obj/IDLType_i.so .shobj/IDLType_i.o .shobj/IDLType_i.so: IDLType_i.cpp IDLType_i.h IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/IDLType_i.o .obj/IDLType_i.so .shobj/IDLType_i.o .shobj/IDLType_i.so: IFR_Service/IDLType_i.cpp IFR_Service/IDLType_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -4041,14 +4128,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -4084,9 +4173,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h
+ IFR_Service/ifr_service_export.h
 
-.obj/IFR_BaseS.o .obj/IFR_BaseS.so .shobj/IFR_BaseS.o .shobj/IFR_BaseS.so: IFR_BaseS.cpp IFR_BaseS.h \
+.obj/IFR_BaseS.o .obj/IFR_BaseS.so .shobj/IFR_BaseS.o .shobj/IFR_BaseS.so: IFR_Service/IFR_BaseS.cpp IFR_Service/IFR_BaseS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -4238,7 +4327,8 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(ACE_ROOT)/ace/Map.h \
@@ -4401,8 +4491,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/IFR_BasicS.o .obj/IFR_BasicS.so .shobj/IFR_BasicS.o .shobj/IFR_BasicS.so: IFR_BasicS.cpp IFR_BasicS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BaseS.h \
+.obj/IFR_BasicS.o .obj/IFR_BasicS.so .shobj/IFR_BasicS.o .shobj/IFR_BasicS.so: IFR_Service/IFR_BasicS.cpp IFR_Service/IFR_BasicS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -4553,10 +4643,12 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(ACE_ROOT)/ace/Map.h \
@@ -4719,9 +4811,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/IFR_ComponentsS.o .obj/IFR_ComponentsS.so .shobj/IFR_ComponentsS.o .shobj/IFR_ComponentsS.so: IFR_ComponentsS.cpp IFR_ComponentsS.h \
- $(ACE_ROOT)/ace/pre.h IFR_ExtendedS.h \
- IFR_BasicS.h IFR_BaseS.h \
+.obj/IFR_ComponentsS.o .obj/IFR_ComponentsS.so .shobj/IFR_ComponentsS.o .shobj/IFR_ComponentsS.so: IFR_Service/IFR_ComponentsS.cpp \
+ IFR_Service/IFR_ComponentsS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_ExtendedS.h IFR_Service/IFR_BasicS.h \
+ IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -4872,18 +4966,20 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ComponentsC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ComponentsC.i \
- IFR_ComponentsS_T.h IFR_ComponentsS_T.i IFR_ComponentsS_T.cpp \
- IFR_ComponentsS.i \
+ IFR_Service/IFR_ComponentsS_T.h IFR_Service/IFR_ComponentsS_T.i \
+ IFR_Service/IFR_ComponentsS_T.cpp IFR_Service/IFR_ComponentsS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(ACE_ROOT)/ace/Map.h \
@@ -5046,9 +5142,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/IFR_ExtendedS.o .obj/IFR_ExtendedS.so .shobj/IFR_ExtendedS.o .shobj/IFR_ExtendedS.so: IFR_ExtendedS.cpp IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/IFR_ExtendedS.o .obj/IFR_ExtendedS.so .shobj/IFR_ExtendedS.o .shobj/IFR_ExtendedS.so: IFR_Service/IFR_ExtendedS.cpp \
+ IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -5199,14 +5296,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(ACE_ROOT)/ace/Map.h \
@@ -5369,375 +5468,140 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/IFR_Server.o .obj/IFR_Server.so .shobj/IFR_Server.o .shobj/IFR_Server.so: IFR_Server.cpp IFR_Service.h \
- $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+.obj/IFR_Service_Utils.o .obj/IFR_Service_Utils.so .shobj/IFR_Service_Utils.o .shobj/IFR_Service_Utils.so: IFR_Service/IFR_Service_Utils.cpp \
+ IFR_Service/IFR_Service_Utils.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
- $(ACE_ROOT)/ace/OS_Errno.h \
- $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/OS_Dirent.inl \
- $(ACE_ROOT)/ace/OS_String.h \
- $(ACE_ROOT)/ace/OS_String.inl \
- $(ACE_ROOT)/ace/OS_Memory.h \
- $(ACE_ROOT)/ace/OS_Memory.inl \
- $(ACE_ROOT)/ace/OS_TLI.h \
- $(ACE_ROOT)/ace/OS_TLI.inl \
- $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/Time_Value.inl \
- $(ACE_ROOT)/ace/Default_Constants.h \
- $(ACE_ROOT)/ace/Global_Macros.h \
- $(ACE_ROOT)/ace/Min_Max.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Flag_Manip.h \
- $(ACE_ROOT)/ace/Flag_Manip.i \
- $(ACE_ROOT)/ace/Handle_Ops.h \
- $(ACE_ROOT)/ace/Handle_Ops.i \
- $(ACE_ROOT)/ace/Lib_Find.h \
- $(ACE_ROOT)/ace/Lib_Find.i \
- $(ACE_ROOT)/ace/Init_ACE.h \
- $(ACE_ROOT)/ace/Init_ACE.i \
- $(ACE_ROOT)/ace/Sock_Connect.h \
- $(ACE_ROOT)/ace/Sock_Connect.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Malloc_Allocator.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Malloc_Allocator.i \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Unbounded_Set.h \
- $(ACE_ROOT)/ace/Node.h \
- $(ACE_ROOT)/ace/Node.cpp \
- $(ACE_ROOT)/ace/Unbounded_Set.inl \
- $(ACE_ROOT)/ace/Unbounded_Set.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/CDR_Base.inl \
- $(ACE_ROOT)/ace/CORBA_macros.h \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/varbase.h \
- $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/Object.h \
- $(TAO_ROOT)/tao/Policy_ForwardC.h \
- $(TAO_ROOT)/tao/Sequence.h \
- $(TAO_ROOT)/tao/Managed_Types.h \
- $(TAO_ROOT)/tao/Managed_Types.i \
- $(TAO_ROOT)/tao/Sequence.i \
- $(TAO_ROOT)/tao/Sequence_T.h \
- $(TAO_ROOT)/tao/Sequence_T.i \
- $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
- $(TAO_ROOT)/tao/CDR.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/String_Base_Const.h \
- $(ACE_ROOT)/ace/String_Base.i \
- $(ACE_ROOT)/ace/String_Base.cpp \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
- $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- $(TAO_ROOT)/tao/CDR.i \
- $(TAO_ROOT)/tao/Policy_ForwardC.i \
- $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/Exception.h \
- $(TAO_ROOT)/tao/Exception.i \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
- $(TAO_ROOT)/tao/ORB.h \
- $(TAO_ROOT)/tao/Services.h \
- $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/CORBA_String.h \
- $(TAO_ROOT)/tao/CORBA_String.inl \
- $(TAO_ROOT)/tao/ORB.i \
- ifr_service_export.h
-
-.obj/IFR_Service.o .obj/IFR_Service.so .shobj/IFR_Service.o .shobj/IFR_Service.so: IFR_Service.cpp IFR_Service.h \
- $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
- $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
- $(ACE_ROOT)/ace/OS_Errno.h \
- $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/OS_Dirent.inl \
- $(ACE_ROOT)/ace/OS_String.h \
- $(ACE_ROOT)/ace/OS_String.inl \
- $(ACE_ROOT)/ace/OS_Memory.h \
- $(ACE_ROOT)/ace/OS_Memory.inl \
- $(ACE_ROOT)/ace/OS_TLI.h \
- $(ACE_ROOT)/ace/OS_TLI.inl \
- $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/Time_Value.inl \
- $(ACE_ROOT)/ace/Default_Constants.h \
- $(ACE_ROOT)/ace/Global_Macros.h \
- $(ACE_ROOT)/ace/Min_Max.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Flag_Manip.h \
- $(ACE_ROOT)/ace/Flag_Manip.i \
- $(ACE_ROOT)/ace/Handle_Ops.h \
- $(ACE_ROOT)/ace/Handle_Ops.i \
- $(ACE_ROOT)/ace/Lib_Find.h \
- $(ACE_ROOT)/ace/Lib_Find.i \
- $(ACE_ROOT)/ace/Init_ACE.h \
- $(ACE_ROOT)/ace/Init_ACE.i \
- $(ACE_ROOT)/ace/Sock_Connect.h \
- $(ACE_ROOT)/ace/Sock_Connect.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Malloc_Allocator.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Malloc_Allocator.i \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Unbounded_Set.h \
- $(ACE_ROOT)/ace/Node.h \
- $(ACE_ROOT)/ace/Node.cpp \
- $(ACE_ROOT)/ace/Unbounded_Set.inl \
- $(ACE_ROOT)/ace/Unbounded_Set.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/CDR_Base.inl \
- $(ACE_ROOT)/ace/CORBA_macros.h \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/varbase.h \
- $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/Object.h \
- $(TAO_ROOT)/tao/Policy_ForwardC.h \
- $(TAO_ROOT)/tao/Sequence.h \
- $(TAO_ROOT)/tao/Managed_Types.h \
- $(TAO_ROOT)/tao/Managed_Types.i \
- $(TAO_ROOT)/tao/Sequence.i \
- $(TAO_ROOT)/tao/Sequence_T.h \
- $(TAO_ROOT)/tao/Sequence_T.i \
- $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
- $(TAO_ROOT)/tao/CDR.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/String_Base_Const.h \
- $(ACE_ROOT)/ace/String_Base.i \
- $(ACE_ROOT)/ace/String_Base.cpp \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
- $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- $(TAO_ROOT)/tao/CDR.i \
- $(TAO_ROOT)/tao/Policy_ForwardC.i \
- $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/Exception.h \
- $(TAO_ROOT)/tao/Exception.i \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
- $(TAO_ROOT)/tao/ORB.h \
- $(TAO_ROOT)/tao/Services.h \
- $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/CORBA_String.h \
- $(TAO_ROOT)/tao/CORBA_String.inl \
- $(TAO_ROOT)/tao/ORB.i \
- ifr_service_export.h ComponentRepository_i.h Repository_i.h \
- Container_i.h IRObject_i.h IFR_ExtendedS.h IFR_BasicS.h IFR_BaseS.h \
- $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
- $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Typecode.h \
- $(TAO_ROOT)/tao/Typecode.i \
- $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.i \
- $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
- $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
- $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
- $(ACE_ROOT)/ace/Atomic_Op.h \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp \
- $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
- $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
- $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
- $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
- $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
- $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
- $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
- $(ACE_ROOT)/ace/Configuration.h \
- $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Unbounded_Queue.h \
- $(ACE_ROOT)/ace/Unbounded_Queue.inl \
- $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Test_and_Set.h \
- $(ACE_ROOT)/ace/Test_and_Set.i \
- $(ACE_ROOT)/ace/Test_and_Set.cpp \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
- $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- IFR_macro.h \
- $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
- $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
- $(TAO_ROOT)/tao/Object_Loader.h \
- $(TAO_ROOT)/tao/Object_Loader.i \
- $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.h \
- $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
- IFR_ComponentsS.h \
- $(TAO_ROOT)/tao/IFR_Client/IFR_ComponentsC.h \
- $(TAO_ROOT)/tao/IFR_Client/IFR_ComponentsC.i \
- IFR_ComponentsS_T.h IFR_ComponentsS_T.i IFR_ComponentsS_T.cpp \
- IFR_ComponentsS.i Servant_Locator.h Options.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/Time_Value.inl \
+ $(ACE_ROOT)/ace/Default_Constants.h \
+ $(ACE_ROOT)/ace/Global_Macros.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Malloc_Allocator.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc_Allocator.i \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Unbounded_Set.h \
+ $(ACE_ROOT)/ace/Node.h \
+ $(ACE_ROOT)/ace/Node.cpp \
+ $(ACE_ROOT)/ace/Unbounded_Set.inl \
+ $(ACE_ROOT)/ace/Unbounded_Set.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/Policy_ForwardC.h \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/Policy_ForwardC.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -5745,6 +5609,19 @@ realclean: clean
  $(TAO_ROOT)/tao/OctetSeqC.h \
  $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
+ $(TAO_ROOT)/tao/ORB.h \
+ $(TAO_ROOT)/tao/Services.h \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/CORBA_String.h \
+ $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/ValueBase.h \
@@ -5767,10 +5644,110 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+ IFR_Service/ifr_service_export.h \
+ IFR_Service/ComponentRepository_i.h \
+ IFR_Service/Repository_i.h \
+ IFR_Service/Container_i.h \
+ IFR_Service/IRObject_i.h \
+ IFR_Service/IFR_ExtendedS.h \
+ IFR_Service/IFR_BasicS.h \
+ IFR_Service/IFR_BaseS.h \
+ $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
+ $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
+ $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.i \
+ $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
+ $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
+ $(ACE_ROOT)/ace/Atomic_Op.h \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Atomic_Op.cpp \
+ $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
+ $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+ $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+ IFR_Service/IFR_BaseS_T.h \
+ IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp \
+ IFR_Service/IFR_BaseS.i \
+ $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
+ $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
+ IFR_Service/IFR_BasicS_T.h \
+ IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp \
+ IFR_Service/IFR_BasicS.i \
+ $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
+ $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
+ IFR_Service/IFR_ExtendedS_T.h \
+ IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp \
+ IFR_Service/IFR_ExtendedS.i \
+ $(ACE_ROOT)/ace/Configuration.h \
+ $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Test_and_Set.h \
+ $(ACE_ROOT)/ace/Test_and_Set.i \
+ $(ACE_ROOT)/ace/Test_and_Set.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
+ IFR_Service/ifr_service_export.h \
+ IFR_Service/IFR_macro.h \
+ $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
+ $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
+ $(TAO_ROOT)/tao/Object_Loader.h \
+ $(TAO_ROOT)/tao/Object_Loader.i \
+ $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.h \
+ $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
+ IFR_Service/IFR_ComponentsS.h \
+ $(TAO_ROOT)/tao/IFR_Client/IFR_ComponentsC.h \
+ $(TAO_ROOT)/tao/IFR_Client/IFR_ComponentsC.i \
+ IFR_Service/IFR_ComponentsS_T.h \
+ IFR_Service/IFR_ComponentsS_T.i \
+ IFR_Service/IFR_ComponentsS_T.cpp \
+ IFR_Service/IFR_ComponentsS.i \
+ IFR_Service/Servant_Locator.h \
+ IFR_Service/Options.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ IOR_Multicast.h \
+ svc_utils_export.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
@@ -5835,7 +5812,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(TAO_ROOT)/tao/ORB_Core.i
 
-.obj/IFR_Service_Loader.o .obj/IFR_Service_Loader.so .shobj/IFR_Service_Loader.o .shobj/IFR_Service_Loader.so: IFR_Service_Loader.cpp IFR_Service_Loader.h \
+.obj/IFR_Service_Loader.o .obj/IFR_Service_Loader.so .shobj/IFR_Service_Loader.o .shobj/IFR_Service_Loader.so: IFR_Service/IFR_Service_Loader.cpp \
+ IFR_Service/IFR_Service_Loader.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/Exception.h \
@@ -5948,10 +5926,17 @@ realclean: clean
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Object_Loader.i \
- IFR_Service.h \
- $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
- $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(TAO_ROOT)/tao/CurrentC.h \
+ IFR_Service/IFR_Service_Utils.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Policy_ForwardC.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -5961,28 +5946,63 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
- $(TAO_ROOT)/tao/CDR.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Policy_ForwardC.i \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/Encodable.h \
- $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/NVList.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+ $(TAO_ROOT)/tao/NVList.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
+ $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+ $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
- ifr_service_export.h \
+ $(TAO_ROOT)/tao/BoundsC.h \
+ $(TAO_ROOT)/tao/BoundsC.i \
+ $(TAO_ROOT)/tao/ValueBase.h \
+ $(TAO_ROOT)/tao/ValueBase.i \
+ $(TAO_ROOT)/tao/ValueFactory.h \
+ $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/WrongTransactionC.i \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/ObjectIDList.h \
+ $(TAO_ROOT)/tao/ObjectIDList.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+ $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+ $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+ IFR_Service/ifr_service_export.h \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
@@ -5990,10 +6010,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Argv_Type_Converter.h \
  $(ACE_ROOT)/ace/Argv_Type_Converter.inl
 
-.obj/InterfaceDef_i.o .obj/InterfaceDef_i.so .shobj/InterfaceDef_i.o .shobj/InterfaceDef_i.so: InterfaceDef_i.cpp InterfaceDef_i.h Container_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/InterfaceDef_i.o .obj/InterfaceDef_i.so .shobj/InterfaceDef_i.o .shobj/InterfaceDef_i.so: IFR_Service/InterfaceDef_i.cpp \
+ IFR_Service/InterfaceDef_i.h IFR_Service/Container_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -6144,14 +6165,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -6187,8 +6210,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h Contained_i.h IDLType_i.h Repository_i.h \
- IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/Contained_i.h \
+ IFR_Service/IDLType_i.h IFR_Service/Repository_i.h \
+ IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -6197,11 +6221,13 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- AttributeDef_i.h OperationDef_i.h Servant_Factory.h
+ IFR_Service/AttributeDef_i.h IFR_Service/OperationDef_i.h \
+ IFR_Service/Servant_Factory.h
 
-.obj/IRObject_i.o .obj/IRObject_i.so .shobj/IRObject_i.o .shobj/IRObject_i.so: IRObject_i.cpp IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/IRObject_i.o .obj/IRObject_i.so .shobj/IRObject_i.o .shobj/IRObject_i.so: IFR_Service/IRObject_i.cpp IFR_Service/IRObject_i.h \
+ IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -6352,14 +6378,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -6395,12 +6423,14 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h
+ IFR_Service/ifr_service_export.h
 
-.obj/LocalInterfaceDef_i.o .obj/LocalInterfaceDef_i.so .shobj/LocalInterfaceDef_i.o .shobj/LocalInterfaceDef_i.so: LocalInterfaceDef_i.cpp LocalInterfaceDef_i.h \
- InterfaceDef_i.h Container_i.h IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/LocalInterfaceDef_i.o .obj/LocalInterfaceDef_i.so .shobj/LocalInterfaceDef_i.o .shobj/LocalInterfaceDef_i.so: IFR_Service/LocalInterfaceDef_i.cpp \
+ IFR_Service/LocalInterfaceDef_i.h IFR_Service/InterfaceDef_i.h \
+ IFR_Service/Container_i.h IFR_Service/IRObject_i.h \
+ IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -6551,14 +6581,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -6594,8 +6626,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h Contained_i.h IDLType_i.h Repository_i.h \
- IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/Contained_i.h \
+ IFR_Service/IDLType_i.h IFR_Service/Repository_i.h \
+ IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -6605,10 +6638,11 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl
 
-.obj/ModuleDef_i.o .obj/ModuleDef_i.so .shobj/ModuleDef_i.o .shobj/ModuleDef_i.so: ModuleDef_i.cpp ModuleDef_i.h Container_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/ModuleDef_i.o .obj/ModuleDef_i.so .shobj/ModuleDef_i.o .shobj/ModuleDef_i.so: IFR_Service/ModuleDef_i.cpp IFR_Service/ModuleDef_i.h \
+ IFR_Service/Container_i.h IFR_Service/IRObject_i.h \
+ IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -6759,14 +6793,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -6802,7 +6838,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h Contained_i.h Repository_i.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/Contained_i.h \
+ IFR_Service/Repository_i.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -6812,10 +6849,11 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl
 
-.obj/NativeDef_i.o .obj/NativeDef_i.so .shobj/NativeDef_i.o .shobj/NativeDef_i.so: NativeDef_i.cpp NativeDef_i.h TypedefDef_i.h \
- Contained_i.h IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/NativeDef_i.o .obj/NativeDef_i.so .shobj/NativeDef_i.o .shobj/NativeDef_i.so: IFR_Service/NativeDef_i.cpp IFR_Service/NativeDef_i.h \
+ IFR_Service/TypedefDef_i.h IFR_Service/Contained_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -6966,14 +7004,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -7009,8 +7049,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IDLType_i.h Repository_i.h Container_i.h \
- IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IDLType_i.h \
+ IFR_Service/Repository_i.h IFR_Service/Container_i.h \
+ IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -7020,10 +7061,11 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl
 
-.obj/OperationDef_i.o .obj/OperationDef_i.so .shobj/OperationDef_i.o .shobj/OperationDef_i.so: OperationDef_i.cpp OperationDef_i.h Contained_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/OperationDef_i.o .obj/OperationDef_i.so .shobj/OperationDef_i.o .shobj/OperationDef_i.so: IFR_Service/OperationDef_i.cpp \
+ IFR_Service/OperationDef_i.h IFR_Service/Contained_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -7174,14 +7216,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -7217,7 +7261,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h Repository_i.h Container_i.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/Repository_i.h \
+ IFR_Service/Container_i.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -7226,9 +7271,10 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- IDLType_i.h ExceptionDef_i.h Servant_Factory.h
+ IFR_Service/IDLType_i.h IFR_Service/ExceptionDef_i.h \
+ IFR_Service/Servant_Factory.h
 
-.obj/Options.o .obj/Options.so .shobj/Options.o .shobj/Options.so: Options.cpp Options.h \
+.obj/Options.o .obj/Options.so .shobj/Options.o .shobj/Options.so: IFR_Service/Options.cpp IFR_Service/Options.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -7291,7 +7337,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- ifr_service_export.h \
+ IFR_Service/ifr_service_export.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -7343,10 +7389,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/PrimaryKeyDef_i.o .obj/PrimaryKeyDef_i.so .shobj/PrimaryKeyDef_i.o .shobj/PrimaryKeyDef_i.so: PrimaryKeyDef_i.cpp Repository_i.h Container_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/PrimaryKeyDef_i.o .obj/PrimaryKeyDef_i.so .shobj/PrimaryKeyDef_i.o .shobj/PrimaryKeyDef_i.so: IFR_Service/PrimaryKeyDef_i.cpp \
+ IFR_Service/Repository_i.h IFR_Service/Container_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -7497,14 +7544,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -7540,7 +7589,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -7549,12 +7598,13 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- PrimaryKeyDef_i.h Contained_i.h
+ IFR_Service/PrimaryKeyDef_i.h IFR_Service/Contained_i.h
 
-.obj/PrimitiveDef_i.o .obj/PrimitiveDef_i.so .shobj/PrimitiveDef_i.o .shobj/PrimitiveDef_i.so: PrimitiveDef_i.cpp Repository_i.h Container_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/PrimitiveDef_i.o .obj/PrimitiveDef_i.so .shobj/PrimitiveDef_i.o .shobj/PrimitiveDef_i.so: IFR_Service/PrimitiveDef_i.cpp \
+ IFR_Service/Repository_i.h IFR_Service/Container_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -7705,14 +7755,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -7748,7 +7800,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -7757,12 +7809,13 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- PrimitiveDef_i.h IDLType_i.h
+ IFR_Service/PrimitiveDef_i.h IFR_Service/IDLType_i.h
 
-.obj/ProvidesDef_i.o .obj/ProvidesDef_i.so .shobj/ProvidesDef_i.o .shobj/ProvidesDef_i.so: ProvidesDef_i.cpp Repository_i.h Container_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/ProvidesDef_i.o .obj/ProvidesDef_i.so .shobj/ProvidesDef_i.o .shobj/ProvidesDef_i.so: IFR_Service/ProvidesDef_i.cpp \
+ IFR_Service/Repository_i.h IFR_Service/Container_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -7913,14 +7966,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -7956,7 +8011,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -7965,12 +8020,13 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- ProvidesDef_i.h Contained_i.h
+ IFR_Service/ProvidesDef_i.h IFR_Service/Contained_i.h
 
-.obj/PublishesDef_i.o .obj/PublishesDef_i.so .shobj/PublishesDef_i.o .shobj/PublishesDef_i.so: PublishesDef_i.cpp Repository_i.h Container_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/PublishesDef_i.o .obj/PublishesDef_i.so .shobj/PublishesDef_i.o .shobj/PublishesDef_i.so: IFR_Service/PublishesDef_i.cpp \
+ IFR_Service/Repository_i.h IFR_Service/Container_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -8121,14 +8177,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -8164,7 +8222,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -8173,12 +8231,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- PublishesDef_i.h EventDef_i.h Contained_i.h
+ IFR_Service/PublishesDef_i.h IFR_Service/EventDef_i.h \
+ IFR_Service/Contained_i.h
 
-.obj/Repository_i.o .obj/Repository_i.so .shobj/Repository_i.o .shobj/Repository_i.so: Repository_i.cpp Repository_i.h Container_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/Repository_i.o .obj/Repository_i.so .shobj/Repository_i.o .shobj/Repository_i.so: IFR_Service/Repository_i.cpp \
+ IFR_Service/Repository_i.h IFR_Service/Container_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -8329,14 +8389,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -8372,7 +8434,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -8381,7 +8443,8 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- IDLType_i.h ExceptionDef_i.h Contained_i.h Options.h \
+ IFR_Service/IDLType_i.h IFR_Service/ExceptionDef_i.h \
+ IFR_Service/Contained_i.h IFR_Service/Options.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
@@ -8390,15 +8453,17 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- Servant_Factory.h $(TAO_ROOT)/tao/ORB.h \
+ IFR_Service/Servant_Factory.h \
+ $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/ORB.i
 
-.obj/SequenceDef_i.o .obj/SequenceDef_i.so .shobj/SequenceDef_i.o .shobj/SequenceDef_i.so: SequenceDef_i.cpp SequenceDef_i.h IDLType_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/SequenceDef_i.o .obj/SequenceDef_i.so .shobj/SequenceDef_i.o .shobj/SequenceDef_i.so: IFR_Service/SequenceDef_i.cpp \
+ IFR_Service/SequenceDef_i.h IFR_Service/IDLType_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -8549,14 +8614,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -8592,7 +8659,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h Repository_i.h Container_i.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/Repository_i.h \
+ IFR_Service/Container_i.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -8601,9 +8669,10 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- Servant_Factory.h
+ IFR_Service/Servant_Factory.h
 
-.obj/Servant_Factory.o .obj/Servant_Factory.so .shobj/Servant_Factory.o .shobj/Servant_Factory.so: Servant_Factory.cpp Servant_Factory.h \
+.obj/Servant_Factory.o .obj/Servant_Factory.so .shobj/Servant_Factory.o .shobj/Servant_Factory.so: IFR_Service/Servant_Factory.cpp \
+ IFR_Service/Servant_Factory.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -8737,7 +8806,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Encodable.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
- ifr_service_export.h \
+ IFR_Service/ifr_service_export.h \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -8773,8 +8842,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- concrete_classes.h ComponentRepository_i.h Repository_i.h \
- Container_i.h IRObject_i.h IFR_ExtendedS.h IFR_BasicS.h IFR_BaseS.h \
+ IFR_Service/concrete_classes.h IFR_Service/ComponentRepository_i.h \
+ IFR_Service/Repository_i.h IFR_Service/Container_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -8793,14 +8864,17 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i IFR_macro.h \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
+ IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -8809,22 +8883,33 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- IFR_ComponentsS.h \
+ IFR_Service/IFR_ComponentsS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ComponentsC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ComponentsC.i \
- IFR_ComponentsS_T.h IFR_ComponentsS_T.i IFR_ComponentsS_T.cpp \
- IFR_ComponentsS.i PrimitiveDef_i.h IDLType_i.h StringDef_i.h \
- WstringDef_i.h SequenceDef_i.h ArrayDef_i.h FixedDef_i.h EnumDef_i.h \
- TypedefDef_i.h Contained_i.h AliasDef_i.h NativeDef_i.h \
- ValueBoxDef_i.h UnionDef_i.h StructDef_i.h ConsumesDef_i.h \
- EventDef_i.h PublishesDef_i.h EmitsDef_i.h PrimaryKeyDef_i.h \
- ProvidesDef_i.h UsesDef_i.h ValueMemberDef_i.h FactoryDef_i.h \
- OperationDef_i.h FinderDef_i.h AttributeDef_i.h ConstantDef_i.h \
- ComponentDef_i.h InterfaceDef_i.h HomeDef_i.h ValueDef_i.h \
- ExceptionDef_i.h ModuleDef_i.h AbstractInterfaceDef_i.h \
- LocalInterfaceDef_i.h
+ IFR_Service/IFR_ComponentsS_T.h IFR_Service/IFR_ComponentsS_T.i \
+ IFR_Service/IFR_ComponentsS_T.cpp IFR_Service/IFR_ComponentsS.i \
+ IFR_Service/PrimitiveDef_i.h IFR_Service/IDLType_i.h \
+ IFR_Service/StringDef_i.h IFR_Service/WstringDef_i.h \
+ IFR_Service/SequenceDef_i.h IFR_Service/ArrayDef_i.h \
+ IFR_Service/FixedDef_i.h IFR_Service/EnumDef_i.h \
+ IFR_Service/TypedefDef_i.h IFR_Service/Contained_i.h \
+ IFR_Service/AliasDef_i.h IFR_Service/NativeDef_i.h \
+ IFR_Service/ValueBoxDef_i.h IFR_Service/UnionDef_i.h \
+ IFR_Service/StructDef_i.h IFR_Service/ConsumesDef_i.h \
+ IFR_Service/EventDef_i.h IFR_Service/PublishesDef_i.h \
+ IFR_Service/EmitsDef_i.h IFR_Service/PrimaryKeyDef_i.h \
+ IFR_Service/ProvidesDef_i.h IFR_Service/UsesDef_i.h \
+ IFR_Service/ValueMemberDef_i.h IFR_Service/FactoryDef_i.h \
+ IFR_Service/OperationDef_i.h IFR_Service/FinderDef_i.h \
+ IFR_Service/AttributeDef_i.h IFR_Service/ConstantDef_i.h \
+ IFR_Service/ComponentDef_i.h IFR_Service/InterfaceDef_i.h \
+ IFR_Service/HomeDef_i.h IFR_Service/ValueDef_i.h \
+ IFR_Service/ExceptionDef_i.h IFR_Service/ModuleDef_i.h \
+ IFR_Service/AbstractInterfaceDef_i.h \
+ IFR_Service/LocalInterfaceDef_i.h
 
-.obj/Servant_Locator.o .obj/Servant_Locator.so .shobj/Servant_Locator.o .shobj/Servant_Locator.so: Servant_Locator.cpp Servant_Locator.h \
+.obj/Servant_Locator.o .obj/Servant_Locator.so .shobj/Servant_Locator.o .shobj/Servant_Locator.so: IFR_Service/Servant_Locator.cpp \
+ IFR_Service/Servant_Locator.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -8958,7 +9043,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Encodable.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
- ifr_service_export.h Servant_Factory.h \
+ IFR_Service/ifr_service_export.h IFR_Service/Servant_Factory.h \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -8994,8 +9079,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- Repository_i.h Container_i.h IRObject_i.h IFR_ExtendedS.h \
- IFR_BasicS.h IFR_BaseS.h \
+ IFR_Service/Repository_i.h IFR_Service/Container_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -9014,14 +9100,17 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i IFR_macro.h \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
+ IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -9031,10 +9120,11 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl
 
-.obj/StringDef_i.o .obj/StringDef_i.so .shobj/StringDef_i.o .shobj/StringDef_i.so: StringDef_i.cpp Repository_i.h Container_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/StringDef_i.o .obj/StringDef_i.so .shobj/StringDef_i.o .shobj/StringDef_i.so: IFR_Service/StringDef_i.cpp IFR_Service/Repository_i.h \
+ IFR_Service/Container_i.h IFR_Service/IRObject_i.h \
+ IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -9185,14 +9275,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -9228,7 +9320,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -9237,12 +9329,13 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- StringDef_i.h IDLType_i.h
+ IFR_Service/StringDef_i.h IFR_Service/IDLType_i.h
 
-.obj/StructDef_i.o .obj/StructDef_i.so .shobj/StructDef_i.o .shobj/StructDef_i.so: StructDef_i.cpp StructDef_i.h TypedefDef_i.h \
- Contained_i.h IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/StructDef_i.o .obj/StructDef_i.so .shobj/StructDef_i.o .shobj/StructDef_i.so: IFR_Service/StructDef_i.cpp IFR_Service/StructDef_i.h \
+ IFR_Service/TypedefDef_i.h IFR_Service/Contained_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -9393,14 +9486,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -9436,8 +9531,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IDLType_i.h Container_i.h Repository_i.h \
- IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IDLType_i.h \
+ IFR_Service/Container_i.h IFR_Service/Repository_i.h \
+ IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -9446,12 +9542,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- Servant_Factory.h
+ IFR_Service/Servant_Factory.h
 
-.obj/tmplinst.o .obj/tmplinst.so .shobj/tmplinst.o .shobj/tmplinst.so: tmplinst.cpp concrete_classes.h ComponentRepository_i.h \
- Repository_i.h Container_i.h IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/tmplinst.o .obj/tmplinst.so .shobj/tmplinst.o .shobj/tmplinst.so: IFR_Service/tmplinst.cpp IFR_Service/concrete_classes.h \
+ IFR_Service/ComponentRepository_i.h IFR_Service/Repository_i.h \
+ IFR_Service/Container_i.h IFR_Service/IRObject_i.h \
+ IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -9602,14 +9700,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -9645,7 +9745,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -9654,25 +9754,36 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- IFR_ComponentsS.h \
+ IFR_Service/IFR_ComponentsS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ComponentsC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ComponentsC.i \
- IFR_ComponentsS_T.h IFR_ComponentsS_T.i IFR_ComponentsS_T.cpp \
- IFR_ComponentsS.i PrimitiveDef_i.h IDLType_i.h StringDef_i.h \
- WstringDef_i.h SequenceDef_i.h ArrayDef_i.h FixedDef_i.h EnumDef_i.h \
- TypedefDef_i.h Contained_i.h AliasDef_i.h NativeDef_i.h \
- ValueBoxDef_i.h UnionDef_i.h StructDef_i.h ConsumesDef_i.h \
- EventDef_i.h PublishesDef_i.h EmitsDef_i.h PrimaryKeyDef_i.h \
- ProvidesDef_i.h UsesDef_i.h ValueMemberDef_i.h FactoryDef_i.h \
- OperationDef_i.h FinderDef_i.h AttributeDef_i.h ConstantDef_i.h \
- ComponentDef_i.h InterfaceDef_i.h HomeDef_i.h ValueDef_i.h \
- ExceptionDef_i.h ModuleDef_i.h AbstractInterfaceDef_i.h \
- LocalInterfaceDef_i.h
+ IFR_Service/IFR_ComponentsS_T.h IFR_Service/IFR_ComponentsS_T.i \
+ IFR_Service/IFR_ComponentsS_T.cpp IFR_Service/IFR_ComponentsS.i \
+ IFR_Service/PrimitiveDef_i.h IFR_Service/IDLType_i.h \
+ IFR_Service/StringDef_i.h IFR_Service/WstringDef_i.h \
+ IFR_Service/SequenceDef_i.h IFR_Service/ArrayDef_i.h \
+ IFR_Service/FixedDef_i.h IFR_Service/EnumDef_i.h \
+ IFR_Service/TypedefDef_i.h IFR_Service/Contained_i.h \
+ IFR_Service/AliasDef_i.h IFR_Service/NativeDef_i.h \
+ IFR_Service/ValueBoxDef_i.h IFR_Service/UnionDef_i.h \
+ IFR_Service/StructDef_i.h IFR_Service/ConsumesDef_i.h \
+ IFR_Service/EventDef_i.h IFR_Service/PublishesDef_i.h \
+ IFR_Service/EmitsDef_i.h IFR_Service/PrimaryKeyDef_i.h \
+ IFR_Service/ProvidesDef_i.h IFR_Service/UsesDef_i.h \
+ IFR_Service/ValueMemberDef_i.h IFR_Service/FactoryDef_i.h \
+ IFR_Service/OperationDef_i.h IFR_Service/FinderDef_i.h \
+ IFR_Service/AttributeDef_i.h IFR_Service/ConstantDef_i.h \
+ IFR_Service/ComponentDef_i.h IFR_Service/InterfaceDef_i.h \
+ IFR_Service/HomeDef_i.h IFR_Service/ValueDef_i.h \
+ IFR_Service/ExceptionDef_i.h IFR_Service/ModuleDef_i.h \
+ IFR_Service/AbstractInterfaceDef_i.h \
+ IFR_Service/LocalInterfaceDef_i.h
 
-.obj/TypedefDef_i.o .obj/TypedefDef_i.so .shobj/TypedefDef_i.o .shobj/TypedefDef_i.so: TypedefDef_i.cpp Repository_i.h Container_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/TypedefDef_i.o .obj/TypedefDef_i.so .shobj/TypedefDef_i.o .shobj/TypedefDef_i.so: IFR_Service/TypedefDef_i.cpp \
+ IFR_Service/Repository_i.h IFR_Service/Container_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -9823,14 +9934,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -9866,7 +9979,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -9875,12 +9988,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- TypedefDef_i.h Contained_i.h IDLType_i.h
+ IFR_Service/TypedefDef_i.h IFR_Service/Contained_i.h \
+ IFR_Service/IDLType_i.h
 
-.obj/UnionDef_i.o .obj/UnionDef_i.so .shobj/UnionDef_i.o .shobj/UnionDef_i.so: UnionDef_i.cpp UnionDef_i.h TypedefDef_i.h Contained_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/UnionDef_i.o .obj/UnionDef_i.so .shobj/UnionDef_i.o .shobj/UnionDef_i.so: IFR_Service/UnionDef_i.cpp IFR_Service/UnionDef_i.h \
+ IFR_Service/TypedefDef_i.h IFR_Service/Contained_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -10031,14 +10146,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -10074,8 +10191,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IDLType_i.h Container_i.h Repository_i.h \
- IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IDLType_i.h \
+ IFR_Service/Container_i.h IFR_Service/Repository_i.h \
+ IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -10084,11 +10202,13 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- Servant_Factory.h
+ IFR_Service/Servant_Factory.h
 
-.obj/UsesDef_i.o .obj/UsesDef_i.so .shobj/UsesDef_i.o .shobj/UsesDef_i.so: UsesDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+.obj/UsesDef_i.o .obj/UsesDef_i.so .shobj/UsesDef_i.o .shobj/UsesDef_i.so: IFR_Service/UsesDef_i.cpp IFR_Service/Repository_i.h \
+ IFR_Service/Container_i.h IFR_Service/IRObject_i.h \
+ IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -10239,14 +10359,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -10282,7 +10404,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -10291,12 +10413,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- UsesDef_i.h Contained_i.h
+ IFR_Service/UsesDef_i.h IFR_Service/Contained_i.h
 
-.obj/ValueBoxDef_i.o .obj/ValueBoxDef_i.so .shobj/ValueBoxDef_i.o .shobj/ValueBoxDef_i.so: ValueBoxDef_i.cpp ValueBoxDef_i.h TypedefDef_i.h \
- Contained_i.h IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/ValueBoxDef_i.o .obj/ValueBoxDef_i.so .shobj/ValueBoxDef_i.o .shobj/ValueBoxDef_i.so: IFR_Service/ValueBoxDef_i.cpp \
+ IFR_Service/ValueBoxDef_i.h IFR_Service/TypedefDef_i.h \
+ IFR_Service/Contained_i.h IFR_Service/IRObject_i.h \
+ IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -10447,14 +10571,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -10490,8 +10616,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IDLType_i.h Repository_i.h Container_i.h \
- IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IDLType_i.h \
+ IFR_Service/Repository_i.h IFR_Service/Container_i.h \
+ IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -10500,11 +10627,13 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- Servant_Factory.h
+ IFR_Service/Servant_Factory.h
 
-.obj/ValueDef_i.o .obj/ValueDef_i.so .shobj/ValueDef_i.o .shobj/ValueDef_i.so: ValueDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+.obj/ValueDef_i.o .obj/ValueDef_i.so .shobj/ValueDef_i.o .shobj/ValueDef_i.so: IFR_Service/ValueDef_i.cpp IFR_Service/Repository_i.h \
+ IFR_Service/Container_i.h IFR_Service/IRObject_i.h \
+ IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -10655,14 +10784,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -10698,7 +10829,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -10707,12 +10838,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- ValueDef_i.h Contained_i.h IDLType_i.h
+ IFR_Service/ValueDef_i.h IFR_Service/Contained_i.h \
+ IFR_Service/IDLType_i.h
 
-.obj/ValueMemberDef_i.o .obj/ValueMemberDef_i.so .shobj/ValueMemberDef_i.o .shobj/ValueMemberDef_i.so: ValueMemberDef_i.cpp Repository_i.h Container_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/ValueMemberDef_i.o .obj/ValueMemberDef_i.so .shobj/ValueMemberDef_i.o .shobj/ValueMemberDef_i.so: IFR_Service/ValueMemberDef_i.cpp \
+ IFR_Service/Repository_i.h IFR_Service/Container_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -10863,14 +10996,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -10906,7 +11041,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -10915,12 +11050,13 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- ValueMemberDef_i.h Contained_i.h
+ IFR_Service/ValueMemberDef_i.h IFR_Service/Contained_i.h
 
-.obj/WstringDef_i.o .obj/WstringDef_i.so .shobj/WstringDef_i.o .shobj/WstringDef_i.so: WstringDef_i.cpp Repository_i.h Container_i.h \
- IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
- IFR_BaseS.h \
+.obj/WstringDef_i.o .obj/WstringDef_i.so .shobj/WstringDef_i.o .shobj/WstringDef_i.so: IFR_Service/WstringDef_i.cpp \
+ IFR_Service/Repository_i.h IFR_Service/Container_i.h \
+ IFR_Service/IRObject_i.h IFR_Service/IFR_ExtendedS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IFR_Service/IFR_BasicS.h IFR_Service/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -11071,14 +11207,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- IFR_BaseS_T.h IFR_BaseS_T.i IFR_BaseS_T.cpp IFR_BaseS.i \
+ IFR_Service/IFR_BaseS_T.h IFR_Service/IFR_BaseS_T.i \
+ IFR_Service/IFR_BaseS_T.cpp IFR_Service/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- IFR_BasicS_T.h IFR_BasicS_T.i IFR_BasicS_T.cpp IFR_BasicS.i \
+ IFR_Service/IFR_BasicS_T.h IFR_Service/IFR_BasicS_T.i \
+ IFR_Service/IFR_BasicS_T.cpp IFR_Service/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- IFR_ExtendedS_T.h IFR_ExtendedS_T.i IFR_ExtendedS_T.cpp \
- IFR_ExtendedS.i \
+ IFR_Service/IFR_ExtendedS_T.h IFR_Service/IFR_ExtendedS_T.i \
+ IFR_Service/IFR_ExtendedS_T.cpp IFR_Service/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -11114,7 +11252,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- ifr_service_export.h IFR_macro.h \
+ IFR_Service/ifr_service_export.h IFR_Service/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
@@ -11123,6 +11261,6 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- WstringDef_i.h IDLType_i.h
+ IFR_Service/WstringDef_i.h IFR_Service/IDLType_i.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
