@@ -1,3 +1,8 @@
+Tue Jul 13 11:57:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-win32.h: Changed CApplication to CWinApp.  Thanks to
+	  John Morey <jmorey@tbi.com> for pointing this out.
+
 Tue Jul 13 11:13:52 1999  Steve Huston  <shuston@riverace.com>
 
         * ACE_INSTALL.html: Added some info for building on AIX with
