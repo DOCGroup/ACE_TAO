@@ -3,7 +3,7 @@ Mon Sep  6 22:59:11 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* TAO_IDL/be/be_codegen.cpp (gen_stub_src_includes):
 
           The UserException::_tao_{en,de}code() methods can throw a
-	  CORBA::MARSHAL exception make sure that system exception is
+	  CORBA::MARSHAL exception so make sure that system exception is
 	  fully declared/defined by including
 	  "tao/SystemException.h".  However, only include
 	  "tao/SystemException.h" if a user exception was encountered and
