@@ -82,7 +82,8 @@ public:
             int protocol,
             ACE_Protocol_Info *protocolinfo,
             ACE_SOCK_GROUP g,
-            u_long flags);
+            u_long flags,
+            int reuse_addr);
   // Wrapper around the QoS-enabled <WSASocket> function.
 
 protected:
@@ -98,7 +99,8 @@ protected:
             int protocol,
             ACE_Protocol_Info *protocolinfo,
             ACE_SOCK_GROUP g,
-            u_long flags);
+            u_long flags,
+            int reuse_addr);
   // Constructor with arguments to call the QoS-enabled <WSASocket>
   // function.
 

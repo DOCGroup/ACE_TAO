@@ -136,8 +136,17 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
                                 const ACE_QoS_Params &qos_params,
                                 int protocol_family, 
                                 int protocol,
+                                ACE_Protocol_Info *protocolinfo,
+                                ACE_SOCK_GROUP g,
+                                u_long flags,
                                 int reuse_addr)
-  : ACE_SOCK (SOCK_DGRAM, protocol_family, protocol, reuse_addr)
+  : ACE_SOCK (SOCK_DGRAM,
+              protocol_family,
+              protocol,
+              protocolinfo,
+              g,
+              flags,
+              reuse_addr)
 {
   ACE_UNUSED_ARG (qos_params);
   ACE_UNUSED_ARG (local);
@@ -148,12 +157,18 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
                       const ACE_QoS_Params &qos_params,
                       int protocol_family, 
                       int protocol,
+                      ACE_Protocol_Info *protocolinfo,
+                      ACE_SOCK_GROUP g,
+                      u_long flags,
                       int reuse_addr)
 {
   ACE_UNUSED_ARG (local);
   ACE_UNUSED_ARG (qos_params);
   ACE_UNUSED_ARG (protocol_family);
   ACE_UNUSED_ARG (protocol);
+  ACE_UNUSED_ARG (protocolinfo);
+  ACE_UNUSED_ARG (g);
+  ACE_UNUSED_ARG (flags);
   ACE_UNUSED_ARG (reuse_addr);
 
   // Under construction...

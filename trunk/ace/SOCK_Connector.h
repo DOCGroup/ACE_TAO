@@ -72,8 +72,10 @@ public:
 		      ACE_QoS_Params qos_params,
                       ACE_Time_Value *timeout = 0,
                       const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                      ACE_Protocol_Info *protocolinfo = 0,
+                      ACE_SOCK_GROUP g = 0,
+                      u_long flags = 0,
                       int reuse_addr = 0,
-                      int flags = 0,
                       int perms = 0,
                       int protocol_family = PF_INET,
                       int protocol = 0);
@@ -121,8 +123,10 @@ public:
 	       ACE_QoS_Params qos_params,
 	       ACE_Time_Value *timeout = 0,
 	       const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               ACE_Protocol_Info *protocolinfo = 0,
+               ACE_SOCK_GROUP g = 0,
+               u_long flags = 0,
 	       int reuse_addr = 0,
-	       int flags = 0,
 	       int perms = 0,
 	       int protocol_family = PF_INET,
 	       int protocol = 0);
