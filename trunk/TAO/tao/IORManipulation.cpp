@@ -68,7 +68,7 @@ TAO_IOR_Manipulation_impl::merge_iors (
   if (Merged_Profiles.add_profiles (tmp_pfiles.get ())< 0)
     ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (),
                       CORBA::Object::_nil ());
-  CORBA::String_var type_id = iors[0]->_stubobj ()->type_id;
+  CORBA::String id = CORBA::string_dup (iors[0]->_stubobj ()->type_id);
 
   for (i = 1; i < iors.length () ; i++)
     {
@@ -86,10 +86,9 @@ TAO_IOR_Manipulation_impl::merge_iors (
         ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Duplicate (),
                           CORBA::Object::_nil ());
 
-      // If the object type_is's differ then raise an exception.
-      if (type_id.in () && iors[i]->_stubobj ()->type_id.in () &&
-          ACE_OS::strcmp (type_id.in (),
-                          iors[i]->_stubobj ()->type_id.in ()))
+      // If the object type_id's differ then raise an exception.
+      if (id && iors[i]->_stubobj ()->type_id.in () &&
+          ACE_OS::strcmp (id, iors[i]->_stubobj ()->type_id.in ()))
         ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (),
                           CORBA::Object::_nil ());
 
@@ -107,7 +106,7 @@ TAO_IOR_Manipulation_impl::merge_iors (
   // @@ need some sort of auto_ptr here
   TAO_Stub *stub;
   ACE_NEW_THROW_EX (stub,
-                    TAO_Stub (type_id,
+                    TAO_Stub (id,  // give the id string to stub
                               Merged_Profiles,
                               orb_core),
                     CORBA::NO_MEMORY ());
@@ -167,10 +166,9 @@ TAO_IOR_Manipulation_impl::remove_profiles (
       ))
 {
   // First verify they are the same type!
-  CORBA::String_var type_id = ior1->_stubobj ()->type_id;
-  if (type_id.in () && ior2->_stubobj ()->type_id.in () &&
-      ACE_OS::strcmp (type_id.in (),
-                      ior2->_stubobj ()->type_id.in ()))
+  CORBA::String id = CORBA::string_dup (ior1->_stubobj ()->type_id);
+  if (id && ior2->_stubobj ()->type_id.in () &&
+      ACE_OS::strcmp (id, ior2->_stubobj ()->type_id.in ()))
     ACE_THROW_RETURN (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR (),
                       CORBA::Object::_nil ());
 
@@ -207,7 +205,7 @@ TAO_IOR_Manipulation_impl::remove_profiles (
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
   TAO_Stub *stub;
   ACE_NEW_THROW_EX (stub,
-                    TAO_Stub (type_id,
+                    TAO_Stub (id, // give id string to stub
                               Diff_Profiles,
                               orb_core),
                     CORBA::NO_MEMORY ());
