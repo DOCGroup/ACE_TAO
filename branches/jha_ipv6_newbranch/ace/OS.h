@@ -4160,8 +4160,15 @@ typedef fd_set ACE_FD_SET_TYPE;
 # endif /* INET6_ADDRSTRLEN */
 
 #if defined (ACE_HAS_IPV6)
+
+#if defined (ACE_USES_IPV4_IPV6_MIGRATION)
+#define ACE_ADDRESS_FAMILY_INET ACE_INET_Addr::address_family()
+#define ACE_PROTOCOL_FAMILY_INET ACE_INET_Addr::protocol_family()
+#else
 #define ACE_ADDRESS_FAMILY_INET AF_INET6
 #define ACE_PROTOCOL_FAMILY_INET PF_INET6
+#endif /* ACE_USES_IPV4_IPV6_MIGRATION */
+
 #else
 #define ACE_ADDRESS_FAMILY_INET AF_INET
 #define ACE_PROTOCOL_FAMILY_INET PF_INET

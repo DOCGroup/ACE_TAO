@@ -47,6 +47,24 @@ ACE_INET_Addr::get_addr (void) const
 #endif
 }
 
+ACE_INLINE int
+ACE_INET_Addr::get_addr_size (void) const
+{
+  ACE_TRACE ("ACE_INET_Addr::get_addr_size");
+#if defined (ACE_HAS_IPV6)
+
+#if defined (ACE_USES_IPV4_IPV6_MIGRATION)
+  if(ACE_INET_Addr::protocol_family() == PF_INET)
+    return sizeof this->inet_addr4_;
+  else
+#endif
+    return sizeof this->inet_addr6_;
+#else
+  return sizeof this->inet_addr4_;
+#endif
+}
+
+
 ACE_INLINE u_long
 ACE_INET_Addr::hash (void) const
 {

@@ -188,6 +188,7 @@ public:
 
   /// Return a pointer to the underlying network address.
   virtual void *get_addr (void) const;
+  int get_addr_size(void) const;
 
   /// Set a pointer to the address.
   virtual void set_addr (void *, int len);
@@ -293,6 +294,7 @@ public:
 
 #if defined (ACE_USES_IPV4_IPV6_MIGRATION)
   static int protocol_family(void);
+  static int address_family(void);
 #endif
 
   /// Dump the state of an object.

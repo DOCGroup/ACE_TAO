@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Addr.h"
+#include "ace/INET_Addr.h"
 
 /**
  * @class ACE_SOCK_CODgram
