@@ -87,13 +87,13 @@ TAO::Out_BD_String_Argument_T<S,S_out,to_S,from_S,BOUND>::demarshal (
   return cdr >> to_S (this->x_, BOUND);
 }
 
+#if TAO_HAS_INTERCEPTORS == 1
+
 template<typename S, 
          typename S_out, 
          typename to_S, 
          typename from_S, 
          size_t BOUND>
-#if TAO_HAS_INTERCEPTORS == 1
-
 void
 TAO::Out_BD_String_Argument_T<S,S_out,to_S,from_S,BOUND>::interceptor_param (
     Dynamic::Parameter & p

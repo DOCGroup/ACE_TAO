@@ -1,3 +1,10 @@
+Mon Aug  9 12:16:50 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/BD_String_Argument_T.cpp:
+        
+          Fixed incorrect placement of #if TAO_HAS_INTERCEPTORS == 1
+          guard.
+
 Mon Aug  9 15:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
