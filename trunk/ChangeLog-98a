@@ -1,3 +1,13 @@
+Mon Jan 26 02:31:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_dll.dsp: Added WinCE x86 emulation mode project
+ 	  definition.
+
+	* ace/OS.{h.i} (ACE_OS): Added Windows CE macros madness.
+
+	* ace/config-win32-common.h: Ifdef'ed out ACE_HAS_SIG_ATOMIC_T for
+ 	  WinCE.  Prevent repeat definition of STRICT.
+
 Sun Jan 25 17:31:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-win32.h: Disabled setting ACE_ORBIX_HAS_NAMESPACES by
