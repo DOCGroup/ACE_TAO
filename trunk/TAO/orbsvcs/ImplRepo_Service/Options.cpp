@@ -275,6 +275,7 @@ Options::run_service_command (ACE_TCHAR *command)
   return -1;
 
 #else /* ACE_WIN32 */
+  ACE_UNUSED_ARG (command);
   ACE_ERROR ((LM_ERROR, "Service not supported on this platform"));
   
   return -1;
