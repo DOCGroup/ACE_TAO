@@ -45,22 +45,22 @@ class Worker : public ACE_Task_Base
   //
 public:
   Worker (void);
-  // ctor
+  // Constructor.
 
   void orb (CORBA::ORB_ptr orb);
 
   virtual int svc (void);
   // The thread entry point.
 
-        void done (void);
-        // set done flag.
+  void done (void);
+  // Set done flag.
 
 private:
   CORBA::ORB_var orb_;
   // The orb
 
-        CORBA::Boolean done_;
-        // Flag to tell that we're done servicing.
+  CORBA::Boolean done_;
+  // Flag to tell that we're done servicing.
 };
 
 class RedGreen_Test
@@ -71,16 +71,19 @@ class RedGreen_Test
   //   Shows how consumers RedGreen_Test for events.
 
  public:
-  // = Initialization and Termination
+  // = Initialization and Termination.
   RedGreen_Test (void);
-  ~RedGreen_Test ();
+  ~RedGreen_Test (void);
 
-  int parse_args(int argc, char *argv[]);
+  int parse_args (int argc, 
+                  char *argv[]);
 
   void dump_results (void);
 
-  void init (int argc, char *argv [] TAO_ENV_ARG_DECL);
-  // Init the Client.
+  void init (int argc, 
+             char *argv [] 
+             TAO_ENV_ARG_DECL);
+  // Initialize the Client.
 
   void run (TAO_ENV_SINGLE_ARG_DECL);
   // Run the demo.
@@ -89,12 +92,13 @@ class RedGreen_Test
   // Called when all events we are waiting for have occured.
 
   int burst_size_;
-
   Worker worker_;
   int nthreads_;
 
  protected:
-  void init_ORB (int argc, char *argv [] TAO_ENV_ARG_DECL);
+  void init_ORB (int argc, 
+                 char *argv [] 
+                 TAO_ENV_ARG_DECL);
   // Initializes the ORB.
 
   void resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL);
@@ -121,7 +125,7 @@ class RedGreen_Test
   void send_events (TAO_ENV_SINGLE_ARG_DECL);
   // send the events.
 
-  // = Data Members
+  // = Data Members.
   PortableServer::POA_var root_poa_;
   // Reference to the root poa.
 
@@ -173,14 +177,17 @@ class RedGreen_Test_StructuredPushConsumer : public POA_CosNotifyComm::Structure
   RedGreen_Test_StructuredPushConsumer (RedGreen_Test* RedGreen_Test);
   // Constructor.
 
-  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin TAO_ENV_ARG_DECL);
+  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin 
+                TAO_ENV_ARG_DECL);
   // Connect the Consumer to the EventChannel.
   // Creates a new proxy supplier and connects to it.
 
   virtual void disconnect (TAO_ENV_SINGLE_ARG_DECL);
   // Disconnect from the supplier.
 
-  CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr get_proxy_supplier (void);
+  CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr get_proxy_supplier (
+      void
+    );
   // Accessor for the Proxy that we're connected to.
 
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
@@ -213,32 +220,26 @@ protected:
   // Destructor
 
   // = NotifyPublish method
-    virtual void offer_change (
-        const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-        TAO_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosNotifyComm::InvalidEventType
-      ));
+  virtual void offer_change (
+      const CosNotification::EventTypeSeq & added,
+      const CosNotification::EventTypeSeq & removed
+      TAO_ENV_ARG_DECL
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosNotifyComm::InvalidEventType));
 
   // = StructuredPushSupplier methods
   virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification
-        TAO_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosEventComm::Disconnected
-       ));
+      const CosNotification::StructuredEvent & notification
+      TAO_ENV_ARG_DECL
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosEventComm::Disconnected));
 
   virtual void disconnect_structured_push_consumer (
-        TAO_ENV_SINGLE_ARG_DECL
-        )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+      TAO_ENV_SINGLE_ARG_DECL
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 /*****************************************************************/
@@ -249,18 +250,18 @@ public:
   SlowConsumer (RedGreen_Test* RedGreen_Test);
 
   virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification
-        TAO_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosEventComm::Disconnected
-       ));
+      const CosNotification::StructuredEvent & notification
+      TAO_ENV_ARG_DECL
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosEventComm::Disconnected));
 };
 
 
 /*****************************************************************/
-class RedGreen_Test_StructuredPushSupplier : public POA_CosNotifyComm::StructuredPushSupplier, public PortableServer::RefCountServantBase
+class RedGreen_Test_StructuredPushSupplier 
+  : public POA_CosNotifyComm::StructuredPushSupplier, 
+  public PortableServer::RefCountServantBase
 {
   // = TITLE
   //   RedGreen_Test_StructuredPushSupplier
@@ -308,22 +309,18 @@ protected:
 
   // = NotifyRedGreen_Test
   virtual void subscription_change (
-        const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-        TAO_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosNotifyComm::InvalidEventType
-      ));
+      const CosNotification::EventTypeSeq & added,
+      const CosNotification::EventTypeSeq & removed
+      TAO_ENV_ARG_DECL
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosNotifyComm::InvalidEventType));
 
   // = StructuredPushSupplier method
-    virtual void disconnect_structured_push_supplier (
-        TAO_ENV_SINGLE_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+  virtual void disconnect_structured_push_supplier (
+      TAO_ENV_SINGLE_ARG_DECL
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 /*****************************************************************/

@@ -1,4 +1,6 @@
+/* -*- C++ -*- */
 // $Id$
+
 #include "Notify_Push_Consumer.h"
 
 CORBA::Short Notify_Push_Consumer::event_count = 0;
@@ -53,13 +55,10 @@ Any_String (const CORBA::Any& any)
 #if defined (ACE_LACKS_LONGLONG_T)
       ACE_OS_String::strcpy (out, ull.as_string (out));
 #else
-      double temp =
-# if defined (ACE_CONFIG_WIN32_H)
-      ACE_static_cast(double, ACE_static_cast (CORBA::LongLong, ull));
-# else
-              ull;
-# endif /* ACE_CONFIG_WIN32_H */
-
+      // @@@@ (JP) Need to cast to signed int64 to cast to
+      // double on Win32, but this hack may not fly on 
+      // other platforms.
+      double temp = (double) (CORBA::LongLong) ull;
       ACE_OS::sprintf (out, "%.0f", temp);
 #endif /* ACE_LACKS_LONGLONG_T */
     }
@@ -75,8 +74,7 @@ Any_String (const CORBA::Any& any)
 void
 Notify_Push_Consumer::push_structured_event (
                           const CosNotification::StructuredEvent& event
-                          TAO_ENV_ARG_DECL_NOT_USED /*TAO_ENV_SINGLE_ARG_PARAMETER*/)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+                          TAO_ENV_ARG_NOT_USED)
 {
   ACE_DEBUG ((LM_DEBUG,
               "%s %d (sent recv) %s %s\n",

@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "Structured_Consumer"=.\Structured_Consumer.dsp - Package Owner=<4>
+Project: "Structured_Multi_Filter_Consumer"=.\Structured_Multi_Filter_Consumer.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -15,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Structured_Supplier"=.\Structured_Supplier.dsp - Package Owner=<4>
+Project: "Structured_Multi_Filter_Supplier"=.\Structured_Multi_Filter_Supplier.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

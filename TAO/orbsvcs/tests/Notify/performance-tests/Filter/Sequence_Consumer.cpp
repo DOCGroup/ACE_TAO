@@ -25,7 +25,7 @@ static unsigned int consumers = 2;
 static unsigned int batch_size = 10;
 static unsigned int expected = 50;  // 50 sets of 10
 
-#define GRAMMAR "TCL"
+#define GRAMMAR "ETCL"
 
 // ******************************************************************
 // Subroutine Section

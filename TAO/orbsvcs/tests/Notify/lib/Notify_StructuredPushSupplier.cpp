@@ -11,7 +11,7 @@ TAO_Notify_StructuredPushSupplier::TAO_Notify_StructuredPushSupplier (void)
 
 TAO_Notify_StructuredPushSupplier::~TAO_Notify_StructuredPushSupplier ()
 {
-  // release all resources ...
+  // Release all resources.
   this->default_POA_ = PortableServer::POA::_nil ();
 
   this->proxy_consumer_ =
@@ -32,21 +32,31 @@ TAO_Notify_StructuredPushSupplier::get_proxy_consumer (void)
 }
 
 void
-TAO_Notify_StructuredPushSupplier::connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin TAO_ENV_ARG_DECL)
+TAO_Notify_StructuredPushSupplier::connect (
+    CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin 
+    TAO_ENV_ARG_DECL
+  )
 {
   CosNotifyComm::StructuredPushSupplier_var supplier_ref =
     this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CosNotifyChannelAdmin::ProxyConsumer_var proxyconsumer =
-    supplier_admin->obtain_notification_push_consumer (CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_consumer_id_ TAO_ENV_ARG_PARAMETER);
+    supplier_admin->obtain_notification_push_consumer (
+                        CosNotifyChannelAdmin::STRUCTURED_EVENT, 
+                        proxy_consumer_id_ 
+                        TAO_ENV_ARG_PARAMETER
+                      );
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxyconsumer.in ()));
 
-  // narrow
+  // Narrow.
   this->proxy_consumer_ =
-    CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow (proxyconsumer.in () TAO_ENV_ARG_PARAMETER);
+    CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow (
+        proxyconsumer.in () 
+        TAO_ENV_ARG_PARAMETER
+      );
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxy_consumer_.in ()));
@@ -55,7 +65,7 @@ TAO_Notify_StructuredPushSupplier::connect (CosNotifyChannelAdmin::SupplierAdmin
                                                      TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  // give ownership to POA
+  // Give ownership to POA.
   this->_remove_ref ();
 }
 
@@ -64,7 +74,9 @@ TAO_Notify_StructuredPushSupplier::disconnect (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
-  this->proxy_consumer_->disconnect_structured_push_consumer(TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->proxy_consumer_->disconnect_structured_push_consumer (
+                             TAO_ENV_SINGLE_ARG_PARAMETER
+                           );
   ACE_CHECK;
 
   this->deactivate (TAO_ENV_SINGLE_ARG_PARAMETER);
@@ -75,16 +87,16 @@ TAO_Notify_StructuredPushSupplier::subscription_change
    (const CosNotification::EventTypeSeq & /*added*/,
     const CosNotification::EventTypeSeq & /*removed */
     TAO_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosNotifyComm::InvalidEventType
-      ))
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosNotifyComm::InvalidEventType))
 {
   //No-Op.
 }
 
 PortableServer::POA_ptr
-TAO_Notify_StructuredPushSupplier::_default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /* env */)
+TAO_Notify_StructuredPushSupplier::_default_POA (
+    TAO_ENV_SINGLE_ARG_DECL_NOT_USED
+  )
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
@@ -92,8 +104,7 @@ TAO_Notify_StructuredPushSupplier::_default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USE
 void
 TAO_Notify_StructuredPushSupplier::deactivate (TAO_ENV_SINGLE_ARG_DECL)
 {
-  PortableServer::POA_var poa =
-        this->_default_POA ();
+  PortableServer::POA_var poa = this->_default_POA ();
 
   PortableServer::ObjectId_var id =
     poa->servant_to_id (this
@@ -107,19 +118,22 @@ TAO_Notify_StructuredPushSupplier::deactivate (TAO_ENV_SINGLE_ARG_DECL)
 
 void
 TAO_Notify_StructuredPushSupplier::disconnect_structured_push_supplier (
-        TAO_ENV_SINGLE_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
+    TAO_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->proxy_consumer_->disconnect_structured_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->proxy_consumer_->disconnect_structured_push_consumer (
+                             TAO_ENV_SINGLE_ARG_PARAMETER
+                           );
   ACE_CHECK;
   this->deactivate (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_StructuredPushSupplier::send_event (const CosNotification::StructuredEvent& event TAO_ENV_ARG_DECL)
+TAO_Notify_StructuredPushSupplier::send_event (
+    const CosNotification::StructuredEvent& event 
+    TAO_ENV_ARG_DECL
+  )
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 

@@ -1,24 +1,24 @@
-# Microsoft Developer Studio Project File - Name="Structured_Supplier" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Structured_Multi_Filter_Supplier" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Structured_Supplier - Win32 Debug
+CFG=Structured_Multi_Filter_Supplier - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "Structured_Supplier.mak".
+!MESSAGE NMAKE /f "Structured_Multi_Filter_Supplier.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Structured_Supplier.mak" CFG="Structured_Supplier - Win32 Debug"
+!MESSAGE NMAKE /f "Structured_Multi_Filter_Supplier.mak" CFG="Structured_Multi_Filter_Supplier - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Structured_Supplier - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Structured_Supplier - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Structured_Multi_Filter_Supplier - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Structured_Multi_Filter_Supplier - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=Structured_Supplier - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Structured_Supplier - Win32 Release"
+!IF  "$(CFG)" == "Structured_Multi_Filter_Supplier - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -50,9 +50,9 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAO_NotifyTests.lib TAO_ETCL.lib TAO_CosNotification.lib TAO_CosNaming.lib TAO_Svc_Utils.lib TAO_PortableServer.lib TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /out:"Release/Structured_Supplier.exe" /libpath:"..\lib" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\orbsvcs\ETCL" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 TAO_NotifyTests.lib TAO_CosNotification.lib TAO_CosNaming.lib TAO_Svc_Utils.lib TAO_PortableServer.lib TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /out:"Release/Supplier.exe" /libpath:"..\lib" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
 
-!ELSEIF  "$(CFG)" == "Structured_Supplier - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Structured_Multi_Filter_Supplier - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -74,21 +74,17 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAO_NotifyTestsd.lib TAO_ETCLd.lib TAO_CosNotificationd.lib TAO_CosNamingd.lib TAO_Svc_Utilsd.lib TAO_PortableServerd.lib TAOd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /out:"Structured_Supplier.exe" /pdbtype:sept /libpath:"..\lib" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\orbsvcs\ETCL" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 TAO_NotifyTestsd.lib TAO_CosNotificationd.lib TAO_CosNamingd.lib TAO_Svc_Utilsd.lib TAO_PortableServerd.lib TAOd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /out:"Supplier.exe" /pdbtype:sept /libpath:"..\lib" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
 
 !ENDIF 
 
 # Begin Target
 
-# Name "Structured_Supplier - Win32 Release"
-# Name "Structured_Supplier - Win32 Debug"
+# Name "Structured_Multi_Filter_Supplier - Win32 Release"
+# Name "Structured_Multi_Filter_Supplier - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
-# Begin Source File
-
-SOURCE=.\Notify_Push_Supplier.cpp
-# End Source File
 # Begin Source File
 
 SOURCE=.\controlC.cpp
@@ -96,6 +92,10 @@ SOURCE=.\controlC.cpp
 # Begin Source File
 
 SOURCE=.\controlS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify_Push_Supplier.cpp
 # End Source File
 # Begin Source File
 
@@ -107,15 +107,15 @@ SOURCE=.\Structured_Supplier.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\Notify_Push_Supplier.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\controlC.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\controlS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify_Push_Supplier.h
 # End Source File
 # End Group
 # Begin Group "Inline Files"
@@ -137,24 +137,26 @@ SOURCE=.\controlS.i
 
 SOURCE=.\control.idl
 
-!IF  "$(CFG)" == "Structured_Supplier - Win32 Release"
+!IF  "$(CFG)" == "Structured_Multi_Filter_Supplier - Win32 Release"
 
-# Begin Custom Build
+USERDEP__CONTR="..\..\..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputPath)
 InputPath=.\control.idl
 InputName=control
 
-"$(InputName)C.h": $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	..\..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	..\..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "Structured_Supplier - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Structured_Multi_Filter_Supplier - Win32 Debug"
 
-# Begin Custom Build
+USERDEP__CONTR="..\..\..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputPath)
 InputPath=.\control.idl
 InputName=control
 
-"$(InputName)C.h": $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
 	..\..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 # End Custom Build
