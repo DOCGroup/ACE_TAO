@@ -26,15 +26,15 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from
-// be\be_codegen.cpp:631
+// TAO_IDL - Generated from 
+// be\be_codegen.cpp:605
 
 #ifndef _TAO_IDL_ORIG_SERVICESS_CPP_
 #define _TAO_IDL_ORIG_SERVICESS_CPP_
 
 
 #include "ServicesS.h"
-#include "tao/PortableServer/Object_Adapter.h"
+#include "tao/PortableServer/Servant_Upcall.h"
 #include "tao/PortableServer/Operation_Table.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Core.h"
@@ -44,12 +44,13 @@
 #include "tao/Object_T.h"
 #include "tao/Typecode.h"
 #include "tao/DynamicC.h"
+#include "tao/CDR.h"
 #include "tao/PortableInterceptor.h"
 #if TAO_HAS_INTERCEPTORS == 1
-#include "tao/RequestInfo_Util.h"
 #include "tao/PortableServer/PICurrent_Guard.h"
 #include "tao/PortableServer/ServerRequestInfo.h"
 #include "tao/PortableServer/ServerInterceptorAdapter.h"
+#include "tao/RequestInfo_Util.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #include "ace/Dynamic_Service.h"
@@ -61,7 +62,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "ServicesS.i"
+#include "ServicesS.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
@@ -74,13 +75,13 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1680
+// be\be_visitor_root/root.cpp:1683
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* ifndef */
 

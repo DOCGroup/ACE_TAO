@@ -26,14 +26,14 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:411
+// be\be_codegen.cpp:389
 
 #ifndef _TAO_IDL_ORIG_SERVICESS_H_
 #define _TAO_IDL_ORIG_SERVICESS_H_
 
 #include /**/ "ace/pre.h"
 
-#include "OctetSeqS.h"
+#include "tao/OctetSeqS.h"
 #include "ServicesC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -45,9 +45,7 @@
 #include "tao/PortableServer/Servant_Base.h"
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -68,15 +66,15 @@ namespace POA_CORBA
 } // module CORBA
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:1014
+// be\be_codegen.cpp:994
 
 #include "ServicesS_T.h"
 
 #if defined (__ACE_INLINE__)
-#include "ServicesS.i"
+#include "ServicesS.inl"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
@@ -86,3 +84,4 @@ namespace POA_CORBA
 
 #include /**/ "ace/post.h"
 #endif /* ifndef */
+

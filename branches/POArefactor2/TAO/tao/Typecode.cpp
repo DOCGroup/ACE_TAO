@@ -3681,7 +3681,7 @@ namespace TAO
 // ****************************************************************
 
 CORBA::Boolean
-operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode_ptr x)
+operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
 {
   if (x == 0)
     {
@@ -3779,7 +3779,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode_ptr x)
 }
 
 CORBA::Boolean
-operator>> (TAO_InputCDR& cdr, CORBA::TypeCode_ptr &x)
+operator>> (TAO_InputCDR& cdr, CORBA::TypeCode *&x)
 {
   ACE_TRY_NEW_ENV
     {

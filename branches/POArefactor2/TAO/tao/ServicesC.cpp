@@ -26,11 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:323
+// be\be_codegen.cpp:301
 
 
 #include "ServicesC.h"
 #include "tao/CDR.h"
+#include "tao/ORB_Core.h"
 #include "tao/Typecode.h"
 
 #if defined (__BORLANDC__)
@@ -38,7 +39,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "ServicesC.i"
+#include "ServicesC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
@@ -59,7 +60,7 @@ CORBA::ServiceDetail::_tao_any_destructor (
   )
 {
   ServiceDetail *_tao_tmp_pointer =
-    ACE_static_cast (ServiceDetail *, _tao_void_pointer);
+    static_cast<ServiceDetail *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -110,7 +111,7 @@ void CORBA::ServiceOptionSeq::_tao_any_destructor (
   )
 {
   ServiceOptionSeq * _tao_tmp_pointer =
-    ACE_static_cast (ServiceOptionSeq *, _tao_void_pointer);
+    static_cast<ServiceOptionSeq *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -163,7 +164,7 @@ void CORBA::ServiceDetailSeq::_tao_any_destructor (
   )
 {
   ServiceDetailSeq * _tao_tmp_pointer =
-    ACE_static_cast (ServiceDetailSeq *, _tao_void_pointer);
+    static_cast<ServiceDetailSeq *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -178,7 +179,7 @@ CORBA::ServiceInformation::_tao_any_destructor (
   )
 {
   ServiceInformation *_tao_tmp_pointer =
-    ACE_static_cast (ServiceInformation *, _tao_void_pointer);
+    static_cast<ServiceInformation *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -216,7 +217,7 @@ CORBA::Boolean operator<< (
     const CORBA::ServiceOptionSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
@@ -274,7 +275,7 @@ CORBA::Boolean operator<< (
     const CORBA::ServiceDetailSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
@@ -359,7 +360,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1628
+// be\be_visitor_root/root.cpp:1629
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -526,4 +527,3 @@ CORBA::Boolean operator>> (
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-

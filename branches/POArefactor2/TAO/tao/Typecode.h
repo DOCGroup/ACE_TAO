@@ -633,9 +633,9 @@ namespace TAO
 // --------------------------------------------------------------
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR& cdr,
-                                      const CORBA::TypeCode_ptr x);
+                                      const CORBA::TypeCode *x);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR& cdr,
-                                      CORBA::TypeCode_ptr &x);
+                                      CORBA::TypeCode *&x);
 
 #if defined (__ACE_INLINE__)
 # include "tao/Typecode.i"
