@@ -1,3 +1,16 @@
+Tue Oct 22 18:17:59 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Notify/Notify_FilterFactory_i.cpp:
+        * tests/Notify/MT_Dispatching/Structured_Consumer.cpp:
+        * tests/Notify/MT_Dispatching/Structured_Supplier.cpp:
+        * tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.cpp:
+        * tests/Notify/Structured_Filter/Structured_Consumer.cpp:
+        * tests/Notify/performance-tests/Filter/Sequence_Consumer.cpp:
+
+          Changed the string selecting the Extended Trader Constraint Language
+          grammar from "ETCL" to EXTENDED_TCL" as required by the spec. Thanks
+          to Dmitry Khrapov <yavannadil@yahoo.com> for reporting the oversight.
+
 Tue Oct 22 17:53:58 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
