@@ -2,6 +2,7 @@
 // $Id$
 
 #include "IFR_Service.h"
+#include "tao/Environment.h"
 
 ACE_RCSID(IFR_Service, IFR_Server, "$Id$")
 
