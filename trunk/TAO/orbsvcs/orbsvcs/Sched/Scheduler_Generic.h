@@ -22,6 +22,7 @@
 #include "ace/pre.h"
 
 #include "Scheduler.h"
+#include "ace/Unbounded_Set.h"
 
 class TAO_RTSched_Export Scheduler_Generic : public ACE_Scheduler
   // = TITLE

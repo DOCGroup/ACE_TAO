@@ -76,7 +76,7 @@ TAO_IOR_Multicast::init (const char *ior,
       length_addr = this->mcast_nic_ - mcast_addr + 1;
       actual_mcast_addr = CORBA::string_alloc (length_addr);
 
-      ACE_OS::strncpy (actual_mcast_addr,
+      ACE_OS::strncpy (actual_mcast_addr.inout (),
                        mcast_addr,
                        length_addr - 1);
 
@@ -170,13 +170,13 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   // name string we should receive.
   ssize_t n = this->mcast_dgram_.recv (&header,
                                        sizeof (header),
-				       remote_addr,
+                                       remote_addr,
                                        MSG_PEEK);
   if (n <= 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "TAO_IOR_Multicast::handle_input - peek %d\n",
-		       n),
-		      0);
+                       n),
+                      0);
   else if (ACE_NTOHS (header) <= 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Header value < 1\n"),
@@ -200,16 +200,16 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   if (n <= 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "TAO_IOR_Multicast::handle_input recv = %d\n",
-		       n),
-		      0);
+                       n),
+                      0);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-		"(%P|%t) Received multicast.\n"
-		"Service Name received : %s\n"
-		"Port received : %u\n",
-		service_name,
-		ACE_NTOHS (remote_port)));
+                "(%P|%t) Received multicast.\n"
+                "Service Name received : %s\n"
+                "Port received : %u\n",
+                service_name,
+                ACE_NTOHS (remote_port)));
 
   // Our reply data.
   ACE_CString ior (this->ior_);
@@ -233,15 +233,15 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   // Reply to the multicast message.
   ACE_SOCK_Connector connector;
   ACE_INET_Addr peer_addr (ACE_NTOHS (remote_port),
-			   remote_addr.get_host_addr ());
+                           remote_addr.get_host_addr ());
   ACE_SOCK_Stream stream;
 
   // Connect.
   if (connector.connect (stream,
                          peer_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "IOR_Multicast::connect failed\n"),
-		      0);
+                       "IOR_Multicast::connect failed\n"),
+                      0);
   // Send the IOR back to the client.  (Send iovec, which contains ior
   // length as the first element, and ior itself as the second.)
 
@@ -277,7 +277,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                 "result from send = %d\n",
                 ior.c_str (),
                 peer_addr.get_host_name (),
-		peer_addr.get_port_number (),
+                peer_addr.get_port_number (),
                 result));
   return 0;
 }

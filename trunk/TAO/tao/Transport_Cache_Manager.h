@@ -29,12 +29,15 @@
 // #include "tao/Connection_Purging_Strategy.h"
 
 
-class TAO_ORB_Core;
 class ACE_Handle_Set;
+class ACE_Event_Handler;
+class TAO_ORB_Core;
 class TAO_Resource_Factory;
 class TAO_Connection_Purging_Strategy;
 
 template <class ACE_COND_MUTEX> class TAO_Condition;
+template <class T> class ACE_Unbounded_Set;
+template <class T> class ACE_Unbounded_Set_Iterator;
 
 typedef ACE_Unbounded_Set<ACE_Event_Handler*> TAO_EventHandlerSet;
 typedef ACE_Unbounded_Set_Iterator<ACE_Event_Handler*>

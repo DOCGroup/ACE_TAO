@@ -20,6 +20,8 @@
 #include "nsconf.h"
 #include "tao/PortableServer/PortableServer.h"
 
+#include "ace/Malloc.h"
+
 /**
  * @class TAO_Persistent_Context_Index
  *
