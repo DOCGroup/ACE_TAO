@@ -1,3 +1,9 @@
+Fri May 23 02:44:23 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/config-win32-common.h:
+          Added ACE_HAS_VSWPRINTF define.  This should clear up some
+          the tests/Malloc_Test failures for WCHAR builds.
+
 Thu May 22 10:53:43 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/TemplateParser.pm:
