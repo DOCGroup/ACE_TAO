@@ -478,7 +478,8 @@ protected:
   // pre-fetched TSS resources, this minimizes the number of calls to
   // them.
 
-  int open (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  int open (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Set up the ORB Core's acceptor to listen on the
   // previously-specified port for requests.  Returns -1 on failure,
   // else 0.
