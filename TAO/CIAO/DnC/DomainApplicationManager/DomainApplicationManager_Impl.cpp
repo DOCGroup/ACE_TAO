@@ -25,8 +25,8 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
     deployment_config_ (orb)
 {
   ACE_NEW_THROW_EX (this->all_connections_,
-		    Deployment::Connections (),
-		    CORBA::NO_MEMORY ());
+		                Deployment::Connections (),
+		                CORBA::NO_MEMORY ());
   ACE_CHECK;
 }
 
@@ -253,9 +253,6 @@ split_plan (void)
       child_plan->implementation.length (++index_imp);
       child_plan->implementation[index_imp-1] = my_implementation;
 
-      // @@TODO: Create a ULong sequence of artifactRef, which will be
-      // as the new artifactRef field for the implementation struct.
-
       // Initialize with the correct sequence length.
       CORBA::ULongSeq ulong_seq;
       ulong_seq.length (my_implementation.artifactRef.length ());
@@ -282,18 +279,6 @@ split_plan (void)
       // Change the <artifactRef> field of the "implementation".
       child_plan->implementation[index_imp-1].artifactRef = ulong_seq;
 
-      //ACE_DEBUG ((LM_DEBUG, "artifaceRef length %i",
-      //           child_plan->implementation[index_imp-1].artifactRef.length ()));
-
-
-      //ACE_DEBUG ((LM_DEBUG, "Implementation field in Child plan"));
-
-      //Deployment::DnC_Dump::dump (child_plan);
-
-
-      // Dump for debug purpose.
-      //Deployment::DnC_Dump::dump (child_plan->implementation[index_imp-1]);
-
       // Append the "InstanceDeploymentDescription instance" field with
       // a new "instance", which is almost the same as the "instance" in
       // the global plan except the <implementationRef> field.
@@ -304,6 +289,8 @@ split_plan (void)
 
       // Change the <implementationRef> field of the "instance".
       // @@ The implementationRef starts from 0.
+      // @@TODO: Below logic needs to be changed once we want to avoid
+      // duplicate <implementation> for the optimization.
       child_plan->instance[index_ins-1].implementationRef = index_ins-1;
     }
 
@@ -429,7 +416,7 @@ finishLaunch (::CORBA::Boolean start
             ACE_THROW (Deployment::StartError ()); // Should never happen!
 
 	  //@@ Note: Don't delete the below debugging helpers.
-          // Dump the connections for debug purpose.
+    // Dump the connections for debug purpose.
 	  //ACE_DEBUG ((LM_DEBUG, "==============================================\n"));
 	  //ACE_DEBUG ((LM_DEBUG, "dump incomming connection for child plan:%d\n", i));
           //dump_connections (this->all_connections_.in ());
@@ -438,23 +425,23 @@ finishLaunch (::CORBA::Boolean start
 
           // Get the Connections variable.
           Deployment::Connections * my_connections =
-	    this->get_outgoing_connections ((entry->int_id_).child_plan_);
+	          this->get_outgoing_connections ((entry->int_id_).child_plan_);
 
-	  if (my_connections == 0)
-	    ACE_THROW (Deployment::StartError ());
+	        if (my_connections == 0)
+	          ACE_THROW (Deployment::StartError ());
 
-	  Deployment::Connections_var safe (my_connections);
+	        Deployment::Connections_var safe (my_connections);
 
           // Dump the connections for debug purpose.
-	  //ACE_DEBUG ((LM_DEBUG, "==============================================\n"));
-	  //ACE_DEBUG ((LM_DEBUG, "dump outgoingcomming connection for child plan:%d\n", i));
+	        //ACE_DEBUG ((LM_DEBUG, "==============================================\n"));
+	        //ACE_DEBUG ((LM_DEBUG, "dump outgoingcomming connection for child plan:%d\n", i));
           //dump_connections (safe.in ());
-	  //ACE_DEBUG ((LM_DEBUG, "==============================================\n"));
+	        //ACE_DEBUG ((LM_DEBUG, "==============================================\n"));
 
           // Invoke finishLaunch() operation on NodeApplication.
           entry->int_id_.node_application_->finishLaunch (safe.in (),
-							  start
-							  ACE_ENV_ARG_PARAMETER);
+							                                            start
+							                                            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -491,8 +478,9 @@ start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
                                         entry) != 0)
             ACE_THROW (Deployment::StartError ()); // Should never happen!
 
+          // @@TODO: This might cause problem!
           ::Deployment::NodeApplication_var my_na =
-	      (entry->int_id_).node_application_.in ();
+	          (entry->int_id_).node_application_.in ();
 
           my_na->start (ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -535,7 +523,7 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 	      (entry->int_id_).node_application_manager_.in ();
 
           // Invoke destoryManager() operation on the NodeManger.
-	  // Since we have the first arg is not used by NAM anyway.
+	        // Since we have the first arg is not used by NAM anyway.
           my_node_application_manager->destroyApplication (0
 							   ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -573,9 +561,9 @@ destroyManager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
             ACE_THROW (Deployment::StopError ()); // Should never happen!
 
           ::Deployment::NodeManager_ptr my_node_manager =
-	      (entry->int_id_).node_manager_.in ();
+    	      (entry->int_id_).node_manager_.in ();
 
-	  // Since we have the first arg is not used by NM anyway.
+	        // Since we have the first arg is not used by NM anyway.
           my_node_manager->destroyManager (0
 					   ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -647,72 +635,69 @@ get_outgoing_connections_i (const char * instname,
     //The modeling tool should make sure there are always 2 endpoints
     //in a connection.
     for (CORBA::ULong p_index = 0;
-	 p_index < curr_conn.internalEndpoint.length ();
-	 ++p_index)
+         p_index < curr_conn.internalEndpoint.length ();
+	       ++p_index)
     {
-      //ACE_DEBUG ((LM_DEBUG, "step2\n"));
-
       const Deployment::PlanSubcomponentPortEndpoint & endpoint
-	= curr_conn.internalEndpoint[p_index];
+	      = curr_conn.internalEndpoint[p_index];
 
       // If the component name matches the name of one of the endpoints in the connection.
       if (ACE_OS::strcmp (this->plan_.instance[endpoint.instanceRef].name.in (),
-			  instname) == 0 )
+			                    instname) == 0 )
       {
-	//Look at the port kind to make sure it's what we are interested in.
-	if (endpoint.kind != Deployment::Facet &&
-	    endpoint.kind != Deployment::EventConsumer)
-	{
-	  // The other endpoints in this connection is what we want.
-	  CORBA::ULong index = (p_index +1)%2;
+	      //Look at the port kind to make sure it's what we are interested in.
+	      if (endpoint.kind != Deployment::Facet &&
+	          endpoint.kind != Deployment::EventConsumer)
+	        {
+	          // The other endpoints in this connection is what we want.
+	          CORBA::ULong index = (p_index +1)%2;
 
-	  //Cache the name of the other component for later usage (search).
-	  ACE_CString name =
-	    this->plan_.instance[curr_conn.internalEndpoint[index].instanceRef].name.in ();
+	          //Cache the name of the other component for later usage (search).
+	          ACE_CString name =
+	            this->plan_.instance[curr_conn.internalEndpoint[index].instanceRef].name.in ();
 
-	  //Cache the name of the port from the other component for searching later.
-	  ACE_CString port_name =
-	    curr_conn.internalEndpoint[index].portName.in ();
+	          //Cache the name of the port from the other component for searching later.
+	          ACE_CString port_name =
+	            curr_conn.internalEndpoint[index].portName.in ();
 
-	  bool found = false;
+	          bool found = false;
 
-	  //ACE_DEBUG ((LM_DEBUG, "step3\n"));
+	          //ACE_DEBUG ((LM_DEBUG, "step3\n"));
 
-	  // Now we have to search in the received connections to get the objRef.
-	  for (CORBA::ULong conn_index = 0;
-	       conn_index < this->all_connections_->length ();
-	       ++conn_index)
-	  {
-	    //ACE_DEBUG ((LM_DEBUG, "step4\n"));
+	          // Now we have to search in the received connections to get the objRef.
+	          for (CORBA::ULong conn_index = 0;
+	              conn_index < this->all_connections_->length ();
+	              ++conn_index)
+	            {
+	              //ACE_DEBUG ((LM_DEBUG, "step4\n"));
 
-	    const Deployment::Connection curr_rev_conn = this->all_connections_[conn_index];
+	              const Deployment::Connection curr_rev_conn = this->all_connections_[conn_index];
 
-	    // We need to look at the instance name and the port name to confirm.
-	    if (ACE_OS::strcmp (curr_rev_conn.instanceName.in (),
-				name.c_str ()) == 0
-		&&
-		ACE_OS::strcmp (curr_rev_conn.portName.in (),
-				port_name.c_str ()) == 0)
-	    {
-	      //ACE_DEBUG ((LM_DEBUG, "step5\n"));
+	              // We need to look at the instance name and the port name to confirm.
+	              if (ACE_OS::strcmp (curr_rev_conn.instanceName.in (),
+				                            name.c_str ()) == 0 &&
+		                ACE_OS::strcmp (curr_rev_conn.portName.in (),
+				                            port_name.c_str ()) == 0)
+	                {
+	                  //ACE_DEBUG ((LM_DEBUG, "step5\n"));
 
-	      retv.length (len+1);
-	      retv[len].instanceName = instname;
-	      retv[len].portName = endpoint.portName.in ();
-	      retv[len].kind = endpoint.kind;
-	      retv[len].endpoint = CORBA::Object::_duplicate(curr_rev_conn.endpoint.in ());
-	      ++len;
-	      found = true;
-	      break;             // Since we know there is only 2 endpoints in a connection.
-	                         // so we dont have to worry about multiplex Receptacle etc.
-	    }
-	 }
+	                  retv.length (len+1);
+	                  retv[len].instanceName = instname;
+	                  retv[len].portName = endpoint.portName.in ();
+	                  retv[len].kind = endpoint.kind;
+	                  retv[len].endpoint = CORBA::Object::_duplicate(curr_rev_conn.endpoint.in ());
+	                  ++len;
+	                  found = true;
+	                  break;             // Since we know there is only 2 endpoints in a connection.
+	                                    // so we dont have to worry about multiplex Receptacle etc.
+	                }
+              }
 
-	 // We didnt find the counter part connection even we are sure there must be 1.
-	 if (!found) return false;
-	 break; // We know we have found the connection so even we are still on
-	        // internalpoint 0 we can skip internalpoint 1.
-	}
+	          // We didnt find the counter part connection even we are sure there must be 1.
+	          if (!found) return false;
+	          break; // We know we have found the connection so even we are still on
+	                // internalpoint 0 we can skip internalpoint 1.
+          }
       }
     }  /* close for loop on internal endpoints */
   }  /* close for loop on all connections in the plan */
