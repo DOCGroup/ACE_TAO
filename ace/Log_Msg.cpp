@@ -1376,8 +1376,10 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                 case 'I': // Indent with nesting_depth*width spaces
                   // Caller can do %*I to override nesting indent, and
                   // if %*I was done, wp has the extracted width.
+#if defined (ACE_HAS_TRACE)
                   if (0 == wp)
                     wp = ACE_Trace::get_nesting_indent ();
+#endif /* ACE_HAS_TRACE */
                   wp *= this->trace_depth_;
                   if (ACE_static_cast (size_t, wp) > bspace)
                     wp = ACE_static_cast (int, bspace);

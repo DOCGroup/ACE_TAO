@@ -21,7 +21,6 @@ ACE_RCSID(ace, Asynch_Acceptor, "$Id$")
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Sock_Connect.h"
-#include "ace/Trace.h"
 
 template <class HANDLER>
 ACE_Asynch_Acceptor<HANDLER>::ACE_Asynch_Acceptor (void)

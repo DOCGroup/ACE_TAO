@@ -179,7 +179,9 @@ Options::parse_args (int argc, char *argv[])
 	  this->spawn_count_ = ACE_OS::atoi (get_opt.opt_arg ());
 	  break;
 	case 'T':
+#if defined (ACE_HAS_TRACE)
           ACE_Trace::start_tracing ();
+#endif /* ACE_HAS_TRACE */
 	  break;
 	default:
 	  this->print_usage_and_die ();

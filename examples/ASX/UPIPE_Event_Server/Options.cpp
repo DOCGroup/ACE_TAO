@@ -137,10 +137,12 @@ Options::parse_args (int argc, char *argv[])
 	this->supplier_port (getopt.opt_arg ());
 	break;
       case 'T':
+#if defined (ACE_HAS_TRACE)
 	if (ACE_OS::strcasecmp (getopt.opt_arg (), "ON") == 0)
 	  ACE_Trace::start_tracing ();
 	else if (ACE_OS::strcasecmp (getopt.opt_arg (), "OFF") == 0)
 	  ACE_Trace::stop_tracing ();
+#endif /* ACE_HAS_TRACE */
 	break;
       case 't':
 	this->thr_count (ACE_OS::atoi (getopt.opt_arg ()));
