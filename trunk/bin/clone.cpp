@@ -1,8 +1,12 @@
 // $Id$
 
-#include "ace/OS.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_dirent.h"
+#include "ace/OS_NS_string.h"
 
-ACE_RCSID(bin, clone, "$Id$")
+ACE_RCSID (bin,
+           clone,
+           "$Id$")
 
 #if 0
 #if defined (USG)
@@ -171,7 +175,7 @@ path_concat (const char* s1, const char* s2)
 
 /* Decide if the given path (which may be relative to . or absolute) designa
 tes
-   a point within the original "src_path" directory, and return non-zero if 
+   a point within the original "src_path" directory, and return non-zero if
 it
    does, or zero otherwise.  */
 
@@ -241,7 +245,7 @@ remove_item (char* s_path, char* d_path)
 	  pname, containing_dir, sys_errlist[errno]);
       return -1;
     }
-  
+
   switch (dst_stat_buf.st_mode & S_IFMT)
     {
       case  S_IFDIR:
@@ -255,7 +259,7 @@ remove_item (char* s_path, char* d_path)
 	if (access (d_path, X_OK) != 0)
 	  {
 	    if (!quiet_flag)
-              fprintf (stderr, 
+              fprintf (stderr,
                 "%s: error: don't have search permission for directory %s\n",
 	        pname, d_path);
             return -1;
@@ -263,7 +267,7 @@ remove_item (char* s_path, char* d_path)
 	if (access (d_path, W_OK) != 0)
 	  {
 	    if (!quiet_flag)
-              fprintf (stderr, 
+              fprintf (stderr,
                 "%s: error: don't have write permission for directory %s\n",
 	        pname, d_path);
             return -1;
@@ -271,7 +275,7 @@ remove_item (char* s_path, char* d_path)
 	if ((dirp = opendir (d_path)) == NULL)
 	  {
 	    if (!quiet_flag)
-              fprintf (stderr, 
+              fprintf (stderr,
                 "%s: error: can't open directory %s for reading: %s\n",
 	        pname, d_path, sys_errlist[errno]);
             return -1;
@@ -338,7 +342,7 @@ mk_symbolic_link (const char *s_path,
                   int level)
 {
   int result = 0;
- 
+
   if (s_path[0] == '/' || level < 2)
     result = symlink (s_path, d_path);
   else
@@ -347,7 +351,7 @@ mk_symbolic_link (const char *s_path,
       char *new_s_path = (char *) malloc (len = strlen(s_path) + 3 * level);
       int i;
       char *cp = new_s_path;
-       
+
       for (i = 0; i < level-1; i++)
         {
  	  strcpy (cp, "../");
@@ -565,7 +569,7 @@ symlink_SCCS (char* s_path, char* d_path)
 	    }
 	}
     }
-   
+
   if (symlink (s_path, d_path))
     {
       if (!quiet_flag)
@@ -589,7 +593,7 @@ clone_dir (char* s_path, char* d_path, int level)
     {
       if (!quiet_flag)
         {
-          fprintf (stderr, 
+          fprintf (stderr,
             "%s: error: don't have read permission for input directory %s\n"
 ,
 	    pname, s_path);
@@ -603,7 +607,7 @@ clone_dir (char* s_path, char* d_path, int level)
     {
       if (!quiet_flag)
         {
-           fprintf (stderr, 
+           fprintf (stderr,
              "%s: error: don't have search permission for input directory %s\n",
 	     pname, s_path);
            fprintf (stderr, "%s: input directory %s will be ignored\n",
@@ -629,8 +633,6 @@ clone_dir (char* s_path, char* d_path, int level)
       struct dirent* dir_entry_p;
       char* new_s_path;
       char* new_d_path;
-      char  symlink_buf[MAXPATHLEN + 1];
-      int   len;
 
       if ((dir_entry_p = readdir (dirp)) == NULL)
         break;
@@ -675,7 +677,7 @@ clone_symbolic_link (char* s_path,char* d_path)
       if (in_original_tree (symlink_buf))
         {
            if (!quiet_flag)
-	     fprintf (stderr, 
+	     fprintf (stderr,
 	       "%s: warning: absolute symlink points into source tree %s -> %s\n",
 	       pname, s_path, symlink_buf);
 	}
@@ -689,7 +691,7 @@ clone_symbolic_link (char* s_path,char* d_path)
       if (!in_orig)
         {
           if (!quiet_flag)
-	    fprintf (stderr, 
+	    fprintf (stderr,
               "%s: warning: relative symlink points out of source tree %s -> %s\n",
 	      pname, s_path, symlink_buf);
 	}
@@ -736,7 +738,7 @@ clone (char* s_path, char* d_path, int sroot_flag, int level)
 	        pname, s_path, sys_errlist[errno]);
               fprintf (stderr, "%s: input entity %s will be ignored\n",
 	        pname, s_path);
-            }	
+            }
           return;
 	}
     }
@@ -786,7 +788,7 @@ clone (char* s_path, char* d_path, int sroot_flag, int level)
 	    {
 	      if (!quiet_flag)
 		{
-	          fprintf (stderr, 
+	          fprintf (stderr,
                     "%s: error: too few permissions for existing directory %s\n",
 	            pname, d_path);
 		  fprintf (stderr, "%s: input directory %s will be ignored\n",
@@ -822,9 +824,9 @@ clone (char* s_path, char* d_path, int sroot_flag, int level)
 
         if (!dir_already_exists)
           {
-            /* Don't let others sneak in. 
+            /* Don't let others sneak in.
                Only we can write the new directory (for now).  */
-      
+
             if (mkdir (d_path, 0700))
               {
                 if (!quiet_flag)
@@ -886,7 +888,7 @@ clone (char* s_path, char* d_path, int sroot_flag, int level)
 }
 
 int
-main (int argc, char *argv[])
+main (int /* argc */, char *argv[])
 {
   char **argn;
 
@@ -946,7 +948,7 @@ main (int argc, char *argv[])
 		if (symlink_flag)
 		  errors++;
 
-		if (sccs_flag) 
+		if (sccs_flag)
 		  errors++;
 #endif
 		break;
