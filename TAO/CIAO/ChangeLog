@@ -1,3 +1,15 @@
+Wed Jan  7 11:20:13 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED.mpc:
+        * examples/OEP/BasicSP/BMDevice/BMDevice.mpc:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay.mpc:
+        * examples/OEP/BasicSP/EC/EC.mpc:
+        * examples/OEP/Display/GPS/GPS.mpc:
+        * examples/OEP/Display/NavDisplay/NavDisplay.mpc:
+        * examples/OEP/Display/RateGen/RateGen.mpc:
+        
+          Added include path command line options for the CIDL compiler.
+
 Wed Jan  7 09:56:39 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/Documentation/Build.html:
