@@ -1,7 +1,17 @@
+Sat Jun 05 16:23:12 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/corbafwd.h,Exception.cpp: added TAO_EPIPE_MINOR_CODE,
+          TAO_ECONNREFUSED_MINOR_CODE, and TAO_UNSPECIFIED_MINOR_CODE,
+          and TAO_INVOCATION_RECV_REQUEST_MINOR_CODE.
+
+        * tao/Invocation.cpp (invoke_i): set
+          TAO_INVOCATION_RECV_REQUEST_MINOR_CODE if proper reply is
+          not received.
+
 Sat Jun  5 15:27:24 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp: Put an ACE_UNUSED_ARG around at Line 1069 to
-	remove warning in Linux egcs. 
+	remove warning in Linux egcs.
 
 Sat Jun  5 12:58:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -10,7 +20,7 @@ Sat Jun  5 12:58:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/GIOP.h:
 	* tao/IIOP_Connect.cpp:
 	* tao/IIOP_Connect.h:
-	* tao/IIOP_Transport.cpp:	
+	* tao/IIOP_Transport.cpp:
 	* tao/UIOP_Connect.cpp:
 	* tao/UIOP_Connect.h:
 	* tao/UIOP_Transport.cpp:
@@ -47,14 +57,14 @@ Sat Jun  5 03:54:27 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  The new dispatch_servant now uses the class.  dispatch_servant_i
 	  is no longer needed.  Also gone are Single_Threaded_POA_Lock and
 	  Outstanding_Request because they are only used in the original
-	  dispatch_servant_i.  
+	  dispatch_servant_i.
 
 	  The Servant_Upcall class'es implementation is exception safe
 	  regardless a platform supports native C++ exception or not.
 	  With this class, we can fix the collocated object's behave so
 	  that they obey the POA's state and policies without bloating the
 	  generated code.
-	
+
 	* tao/POA.{h,i,cpp}:  Moved TAO_POA_Current_Impl to
 	  Object_Adapter.* to avoid circular dependency.
 
@@ -70,9 +80,9 @@ Fri Jun  4 23:48:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  working (such as MVS).
 	  Many thanks to Jim Rogers <jrogers@viasoft.com> for his
 	  cooperation on this task.
-	  The acceptor registry is initialized on demand, not on the class 
+	  The acceptor registry is initialized on demand, not on the class
 	  construction.
-	  Removed methods to set the protocol factories, acceptor registry 
+	  Removed methods to set the protocol factories, acceptor registry
 	  and connector registry, this objects do not change after
 	  initialization.
 
@@ -93,13 +103,13 @@ Fri Jun  4 23:48:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/CDR.h:
 	* tao/CDR.i:
 	* tao/CDR.cpp:
-	  Added support for code set translators, they are either provided 
+	  Added support for code set translators, they are either provided
 	  as a parameter (for the OutputCDR streams) or obtained from the
 	  ORB_Core. Needs some cleanup, but the basics are there.
 
 	* tao/Typecode_Constants.cpp:
 	  Re-generated the typecodes for CORBA::Object,
-	  CORBA::TypeCode::BadKind and CORBA::TypeCode::Bounds. I used the 
+	  CORBA::TypeCode::BadKind and CORBA::TypeCode::Bounds. I used the
 	  IDL compiler this time to obtain a consistent and platform
 	  independent mapping.
 
@@ -121,7 +131,7 @@ Fri Jun  4 23:48:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h:
 	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
 	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp:
-	  Some improvements to the propagation of exceptions, but it needs 
+	  Some improvements to the propagation of exceptions, but it needs
 	  a major rework.
 
 	* tao/Object_Adapter.cpp:
