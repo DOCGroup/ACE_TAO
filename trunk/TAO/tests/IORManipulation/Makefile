@@ -189,8 +189,7 @@ realclean: clean
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
- $(TAO_ROOT)/tao/Typecode.h \
- $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/IORManipulation/IORManip_Loader.h \

@@ -276,6 +276,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -285,25 +286,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -311,12 +293,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -342,16 +351,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/TAO_Singleton.h \
- $(TAO_ROOT)/tao/TAO_Singleton.inl \
- $(TAO_ROOT)/tao/TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
@@ -403,7 +402,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
- $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -428,12 +426,16 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  $(TAO_ROOT)/tao/target_specification.h \
  $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/operation_details.i \
  $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.h \
  $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.i \
  $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/ClientRequestInfo.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/RequestInfo_Util.h
 
 .obj/param_testSer.o .obj/param_testSer.so .shobj/param_testSer.o .shobj/param_testSer.so: param_testSer.cpp param_testSer.h param_testCli.h \
@@ -579,6 +581,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -588,25 +591,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -614,12 +598,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -636,8 +647,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
  param_testSer_T.h param_testSer_T.i param_testSer_T.cpp \
  param_testSer.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
@@ -693,18 +702,10 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PortableServer/Active_Object_Map.i \
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
- $(TAO_ROOT)/tao/TAO_Singleton.h \
- $(TAO_ROOT)/tao/TAO_Singleton.inl \
- $(TAO_ROOT)/tao/TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
  $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
@@ -741,7 +742,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/RT_Policy_i.h \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
- $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -765,7 +765,14 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/Stub.i \
- $(TAO_ROOT)/tao/RequestInfo_Util.h
+ $(TAO_ROOT)/tao/IFR_Client_Adapter.h \
+ $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
+ $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
+ $(TAO_ROOT)/tao/RequestInfo_Util.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp param_test_i.h param_testSer.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -910,6 +917,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -919,25 +927,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -945,12 +934,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -967,8 +983,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
  param_testSer_T.h param_testSer_T.i param_testSer_T.cpp \
  param_testSer.i \
  $(TAO_ROOT)/tao/debug.h \
@@ -1119,6 +1133,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -1128,25 +1143,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -1154,12 +1150,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -1176,8 +1199,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
- $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
  param_testSer_T.h param_testSer_T.i param_testSer_T.cpp \
  param_testSer.i \
  $(TAO_ROOT)/tao/debug.h
@@ -1325,6 +1346,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -1334,25 +1356,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -1360,12 +1363,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i
 
 .obj/param_testCli.o .obj/param_testCli.so .shobj/param_testCli.o .shobj/param_testCli.so: param_testCli.cpp param_testCli.h \
@@ -1511,6 +1541,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -1520,25 +1551,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -1546,12 +1558,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -1577,16 +1616,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/TAO_Singleton.h \
- $(TAO_ROOT)/tao/TAO_Singleton.inl \
- $(TAO_ROOT)/tao/TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
@@ -1638,7 +1667,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
- $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -1663,12 +1691,16 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  $(TAO_ROOT)/tao/target_specification.h \
  $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/operation_details.i \
  $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.h \
  $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.i \
  $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/ClientRequestInfo.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/RequestInfo_Util.h
 
 .obj/driver.o .obj/driver.so .shobj/driver.o .shobj/driver.so: driver.cpp driver.h options.h \
@@ -1822,6 +1854,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -1831,25 +1864,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -1857,19 +1871,41 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.h param_testCli.i results.h \
  $(ACE_ROOT)/ace/Profile_Timer.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(ACE_ROOT)/ace/Profile_Timer.i client.h \
- client.cpp \
+ $(ACE_ROOT)/ace/Profile_Timer.i \
+ client.h client.cpp \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -2060,6 +2096,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -2069,25 +2106,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -2095,18 +2113,41 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- results.h $(ACE_ROOT)/ace/Profile_Timer.h \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
+ results.h \
+ $(ACE_ROOT)/ace/Profile_Timer.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(ACE_ROOT)/ace/Profile_Timer.i client.h \
- param_testCli.h param_testCli.i client.cpp \
+ $(ACE_ROOT)/ace/Profile_Timer.i \
+ client.h param_testCli.h param_testCli.i client.cpp \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
  $(TAO_ROOT)/tao/Dynamic_Adapter.h \
@@ -2287,6 +2328,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -2296,25 +2338,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -2322,12 +2345,34 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  $(TAO_ROOT)/tao/debug.h \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i \
@@ -2477,6 +2522,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -2486,25 +2532,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -2512,12 +2539,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  $(ACE_ROOT)/ace/Profile_Timer.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
@@ -2668,6 +2722,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -2677,25 +2732,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -2703,12 +2739,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -2740,12 +2803,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/DynamicInterface/Request.inl \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp
+ $(ACE_ROOT)/ace/Singleton.cpp
 
 .obj/tmplinst.o .obj/tmplinst.so .shobj/tmplinst.o .shobj/tmplinst.so: tmplinst.cpp param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -2890,6 +2948,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -2899,25 +2958,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -2925,12 +2965,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i
 
 .obj/any.o .obj/any.so .shobj/any.o .shobj/any.so: any.cpp helper.h param_testCli.h \
@@ -3076,6 +3143,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -3085,25 +3153,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -3111,12 +3160,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -3148,12 +3224,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/DynamicInterface/Request.inl \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp any.h \
+ $(ACE_ROOT)/ace/Singleton.cpp any.h \
  $(TAO_ROOT)/tao/debug.h
 
 .obj/bd_long_seq.o .obj/bd_long_seq.so .shobj/bd_long_seq.o .shobj/bd_long_seq.so: bd_long_seq.cpp helper.h param_testCli.h \
@@ -3299,6 +3370,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -3308,25 +3380,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -3334,12 +3387,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -3372,11 +3452,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  bd_long_seq.h
 
 .obj/bd_short_seq.o .obj/bd_short_seq.so .shobj/bd_short_seq.o .shobj/bd_short_seq.so: bd_short_seq.cpp helper.h param_testCli.h \
@@ -3522,6 +3597,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -3531,25 +3607,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -3557,12 +3614,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -3595,11 +3679,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  bd_short_seq.h
 
 .obj/bd_str_seq.o .obj/bd_str_seq.so .shobj/bd_str_seq.o .shobj/bd_str_seq.so: bd_str_seq.cpp helper.h param_testCli.h \
@@ -3745,6 +3824,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -3754,25 +3834,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -3780,12 +3841,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -3818,11 +3906,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  bd_str_seq.h
 
 .obj/bd_wstr_seq.o .obj/bd_wstr_seq.so .shobj/bd_wstr_seq.o .shobj/bd_wstr_seq.so: bd_wstr_seq.cpp helper.h param_testCli.h \
@@ -3968,6 +4051,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -3977,25 +4061,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -4003,12 +4068,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -4041,11 +4133,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  bd_wstr_seq.h
 
 .obj/bd_string.o .obj/bd_string.so .shobj/bd_string.o .shobj/bd_string.so: bd_string.cpp helper.h param_testCli.h \
@@ -4191,6 +4278,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -4200,25 +4288,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -4226,12 +4295,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -4264,11 +4360,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  bd_string.h
 
 .obj/bd_wstring.o .obj/bd_wstring.so .shobj/bd_wstring.o .shobj/bd_wstring.so: bd_wstring.cpp helper.h param_testCli.h \
@@ -4414,6 +4505,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -4423,25 +4515,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -4449,12 +4522,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -4487,11 +4587,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  bd_wstring.h
 
 .obj/bd_struct_seq.o .obj/bd_struct_seq.so .shobj/bd_struct_seq.o .shobj/bd_struct_seq.so: bd_struct_seq.cpp helper.h param_testCli.h \
@@ -4637,6 +4732,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -4646,25 +4742,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -4672,12 +4749,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -4710,11 +4814,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  bd_struct_seq.h
 
 .obj/bd_array_seq.o .obj/bd_array_seq.so .shobj/bd_array_seq.o .shobj/bd_array_seq.so: bd_array_seq.cpp helper.h param_testCli.h \
@@ -4860,6 +4959,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -4869,25 +4969,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -4895,12 +4976,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -4933,11 +5041,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  bd_array_seq.h
 
 .obj/fixed_array.o .obj/fixed_array.so .shobj/fixed_array.o .shobj/fixed_array.so: fixed_array.cpp helper.h param_testCli.h \
@@ -5083,6 +5186,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -5092,25 +5196,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -5118,12 +5203,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -5156,11 +5268,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  fixed_array.h
 
 .obj/fixed_struct.o .obj/fixed_struct.so .shobj/fixed_struct.o .shobj/fixed_struct.so: fixed_struct.cpp helper.h param_testCli.h \
@@ -5306,6 +5413,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -5315,25 +5423,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -5341,12 +5430,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -5379,11 +5495,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  fixed_struct.h
 
 .obj/nested_struct.o .obj/nested_struct.so .shobj/nested_struct.o .shobj/nested_struct.so: nested_struct.cpp helper.h param_testCli.h \
@@ -5529,6 +5640,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -5538,25 +5650,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -5564,12 +5657,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -5602,11 +5722,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  nested_struct.h
 
 .obj/objref_struct.o .obj/objref_struct.so .shobj/objref_struct.o .shobj/objref_struct.so: objref_struct.cpp helper.h param_testCli.h \
@@ -5752,6 +5867,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -5761,25 +5877,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -5787,12 +5884,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -5825,11 +5949,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  objref_struct.h
 
 .obj/objref.o .obj/objref.so .shobj/objref.o .shobj/objref.so: objref.cpp helper.h param_testCli.h \
@@ -5975,6 +6094,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -5984,25 +6104,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -6010,12 +6111,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -6047,13 +6175,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/DynamicInterface/Request.inl \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- objref.h
+ $(ACE_ROOT)/ace/Singleton.cpp objref.h
 
 .obj/short.o .obj/short.so .shobj/short.o .shobj/short.so: short.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -6198,6 +6320,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -6207,25 +6330,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -6233,12 +6337,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -6270,13 +6401,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/DynamicInterface/Request.inl \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- short.h
+ $(ACE_ROOT)/ace/Singleton.cpp short.h
 
 .obj/ulonglong.o .obj/ulonglong.so .shobj/ulonglong.o .shobj/ulonglong.so: ulonglong.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -6421,6 +6546,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -6430,25 +6556,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -6456,12 +6563,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -6494,11 +6628,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  ulonglong.h
 
 .obj/typecode.o .obj/typecode.so .shobj/typecode.o .shobj/typecode.so: typecode.cpp helper.h param_testCli.h \
@@ -6644,6 +6773,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -6653,25 +6783,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -6679,12 +6790,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -6717,11 +6855,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  typecode.h
 
 .obj/ub_any_seq.o .obj/ub_any_seq.so .shobj/ub_any_seq.o .shobj/ub_any_seq.so: ub_any_seq.cpp helper.h param_testCli.h \
@@ -6867,6 +7000,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -6876,25 +7010,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -6902,12 +7017,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -6940,12 +7082,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- ub_any_seq.h $(TAO_ROOT)/tao/debug.h
+ ub_any_seq.h \
+ $(TAO_ROOT)/tao/debug.h
 
 .obj/ub_long_seq.o .obj/ub_long_seq.so .shobj/ub_long_seq.o .shobj/ub_long_seq.so: ub_long_seq.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -7090,6 +7228,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -7099,25 +7238,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -7125,12 +7245,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -7163,11 +7310,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  ub_long_seq.h
 
 .obj/ub_objref_seq.o .obj/ub_objref_seq.so .shobj/ub_objref_seq.o .shobj/ub_objref_seq.so: ub_objref_seq.cpp helper.h param_testCli.h \
@@ -7313,6 +7455,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -7322,25 +7465,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -7348,12 +7472,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -7386,11 +7537,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  ub_objref_seq.h
 
 .obj/ub_short_seq.o .obj/ub_short_seq.so .shobj/ub_short_seq.o .shobj/ub_short_seq.so: ub_short_seq.cpp helper.h param_testCli.h \
@@ -7536,6 +7682,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -7545,25 +7692,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -7571,12 +7699,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -7609,11 +7764,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  ub_short_seq.h
 
 .obj/ub_str_seq.o .obj/ub_str_seq.so .shobj/ub_str_seq.o .shobj/ub_str_seq.so: ub_str_seq.cpp helper.h param_testCli.h \
@@ -7759,6 +7909,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -7768,25 +7919,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -7794,12 +7926,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -7832,11 +7991,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  ub_str_seq.h
 
 .obj/ub_wstr_seq.o .obj/ub_wstr_seq.so .shobj/ub_wstr_seq.o .shobj/ub_wstr_seq.so: ub_wstr_seq.cpp helper.h param_testCli.h \
@@ -7982,6 +8136,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -7991,25 +8146,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -8017,12 +8153,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -8055,11 +8218,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  ub_wstr_seq.h
 
 .obj/ub_string.o .obj/ub_string.so .shobj/ub_string.o .shobj/ub_string.so: ub_string.cpp helper.h param_testCli.h \
@@ -8205,6 +8363,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -8214,25 +8373,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -8240,12 +8380,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -8278,11 +8445,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  ub_string.h
 
 .obj/ub_wstring.o .obj/ub_wstring.so .shobj/ub_wstring.o .shobj/ub_wstring.so: ub_wstring.cpp helper.h param_testCli.h \
@@ -8428,6 +8590,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -8437,25 +8600,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -8463,12 +8607,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -8501,11 +8672,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  ub_wstring.h
 
 .obj/ub_struct_seq.o .obj/ub_struct_seq.so .shobj/ub_struct_seq.o .shobj/ub_struct_seq.so: ub_struct_seq.cpp helper.h param_testCli.h \
@@ -8651,6 +8817,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -8660,25 +8827,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -8686,12 +8834,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -8724,11 +8899,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  ub_struct_seq.h
 
 .obj/ub_array_seq.o .obj/ub_array_seq.so .shobj/ub_array_seq.o .shobj/ub_array_seq.so: ub_array_seq.cpp helper.h param_testCli.h \
@@ -8874,6 +9044,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -8883,25 +9054,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -8909,12 +9061,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -8947,11 +9126,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  ub_array_seq.h
 
 .obj/var_array.o .obj/var_array.so .shobj/var_array.o .shobj/var_array.so: var_array.cpp helper.h param_testCli.h \
@@ -9097,6 +9271,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -9106,25 +9281,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -9132,12 +9288,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -9170,11 +9353,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  var_array.h
 
 .obj/var_struct.o .obj/var_struct.so .shobj/var_struct.o .shobj/var_struct.so: var_struct.cpp helper.h param_testCli.h \
@@ -9320,6 +9498,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -9329,25 +9508,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -9355,12 +9515,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -9393,11 +9580,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  var_struct.h
 
 .obj/recursive_struct.o .obj/recursive_struct.so .shobj/recursive_struct.o .shobj/recursive_struct.so: recursive_struct.cpp recursive_struct.h \
@@ -9544,6 +9726,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -9553,25 +9736,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -9579,12 +9743,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i helper.h \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -9616,12 +9807,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/DynamicInterface/Request.inl \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp
+ $(ACE_ROOT)/ace/Singleton.cpp
 
 .obj/except.o .obj/except.so .shobj/except.o .shobj/except.so: except.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -9766,6 +9952,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -9775,25 +9962,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -9801,12 +9969,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -9838,13 +10033,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/DynamicInterface/Request.inl \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- except.h $(TAO_ROOT)/tao/debug.h \
+ $(ACE_ROOT)/ace/Singleton.cpp except.h \
+ $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/DynamicInterface/Unknown_User_Exception.h
 
 .obj/big_union.o .obj/big_union.so .shobj/big_union.o .shobj/big_union.so: big_union.cpp helper.h param_testCli.h \
@@ -9990,6 +10180,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -9999,25 +10190,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -10025,12 +10197,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -10063,11 +10262,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  big_union.h
 
 .obj/small_union.o .obj/small_union.so .shobj/small_union.o .shobj/small_union.so: small_union.cpp helper.h param_testCli.h \
@@ -10213,6 +10407,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -10222,25 +10417,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -10248,12 +10424,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -10286,11 +10489,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  small_union.h
 
 .obj/recursive_union.o .obj/recursive_union.so .shobj/recursive_union.o .shobj/recursive_union.so: recursive_union.cpp recursive_union.h \
@@ -10437,6 +10635,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -10446,25 +10645,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -10472,12 +10652,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i helper.h \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -10509,12 +10716,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/DynamicInterface/Request.inl \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp
+ $(ACE_ROOT)/ace/Singleton.cpp
 
 .obj/multdim_array.o .obj/multdim_array.so .shobj/multdim_array.o .shobj/multdim_array.so: multdim_array.cpp helper.h param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -10659,6 +10861,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -10668,25 +10871,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -10694,12 +10878,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -10732,11 +10943,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  multdim_array.h
 
 .obj/complex_any.o .obj/complex_any.so .shobj/complex_any.o .shobj/complex_any.so: complex_any.cpp helper.h param_testCli.h \
@@ -10882,6 +11088,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -10891,25 +11098,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -10917,12 +11105,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/DynamicInterface/Request.h \
  $(TAO_ROOT)/tao/DynamicInterface/Dynamic_Adapter_Impl.h \
@@ -10955,12 +11170,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- complex_any.h $(TAO_ROOT)/tao/debug.h
+ complex_any.h \
+ $(TAO_ROOT)/tao/debug.h
 
 .obj/param_testCli.o .obj/param_testCli.so .shobj/param_testCli.o .shobj/param_testCli.so: param_testCli.cpp param_testCli.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -11105,6 +11316,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -11114,25 +11326,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -11140,12 +11333,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -11171,16 +11391,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/TAO_Singleton.h \
- $(TAO_ROOT)/tao/TAO_Singleton.inl \
- $(TAO_ROOT)/tao/TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
@@ -11232,7 +11442,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
- $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -11257,12 +11466,16 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
  $(TAO_ROOT)/tao/target_specification.h \
  $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/operation_details.i \
  $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.h \
  $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.i \
  $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/ClientRequestInfo.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/RequestInfo_Util.h
 
 .obj/anyop.o .obj/anyop.so .shobj/anyop.o .shobj/anyop.so: anyop.cpp param_testCli.h \
@@ -11408,6 +11621,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/BoundsC.h \
@@ -11417,25 +11631,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PollableC.h \
- $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/MessagingC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -11443,12 +11638,39 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
+ $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  param_testCli.i \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/Stub.h \
@@ -11475,16 +11697,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/TAO_Singleton.h \
- $(TAO_ROOT)/tao/TAO_Singleton.inl \
- $(TAO_ROOT)/tao/TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
@@ -11536,7 +11748,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/RT_Policy_i.i \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
- $(TAO_ROOT)/tao/BiDir_Adapter.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \

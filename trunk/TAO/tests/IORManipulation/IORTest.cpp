@@ -56,6 +56,8 @@ main (int argc, char *argv[])
                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      cout << "Amba " <<endl;
+
       TAO_IOP::TAO_IOR_Manipulation_var iorm =
                TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in (),
                                                        ACE_TRY_ENV);

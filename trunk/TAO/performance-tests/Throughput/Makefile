@@ -56,8 +56,7 @@ realclean: clean
 
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Receiver_Factory.h \
- $(ACE_ROOT)/ace/pre.h \
- TestS.h TestC.h \
+ $(ACE_ROOT)/ace/pre.h TestS.h TestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -463,12 +462,13 @@ realclean: clean
  $(TAO_ROOT)/tao/StringSeqC.h \
  $(TAO_ROOT)/tao/StringSeqC.i \
  TestC.i \
+ $(ACE_ROOT)/ace/High_Res_Timer.h \
+ $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
 .obj/Receiver.o .obj/Receiver.so .shobj/Receiver.o .shobj/Receiver.so: Receiver.cpp Receiver.h \
- $(ACE_ROOT)/ace/pre.h \
- TestS.h TestC.h \
+ $(ACE_ROOT)/ace/pre.h TestS.h TestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -681,8 +681,7 @@ realclean: clean
  $(ACE_ROOT)/ace/High_Res_Timer.i
 
 .obj/Receiver_Factory.o .obj/Receiver_Factory.so .shobj/Receiver_Factory.o .shobj/Receiver_Factory.so: Receiver_Factory.cpp Receiver_Factory.h \
- $(ACE_ROOT)/ace/pre.h \
- TestS.h TestC.h \
+ $(ACE_ROOT)/ace/pre.h TestS.h TestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1085,8 +1084,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/StringSeqC.h \
  $(TAO_ROOT)/tao/StringSeqC.i \
- TestC.i \
- $(TAO_ROOT)/tao/Stub.h \
+ TestC.i $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \

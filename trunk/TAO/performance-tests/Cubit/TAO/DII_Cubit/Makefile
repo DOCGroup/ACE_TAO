@@ -242,21 +242,34 @@ realclean: clean
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
- $(TAO_ROOT)/tao/Typecode.h \
- $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/MessagingC.h \
- $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/ValueBase.h \
  $(TAO_ROOT)/tao/ValueBase.i \
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
@@ -274,16 +287,6 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/PortableInterceptorC.h \
- $(TAO_ROOT)/tao/DynamicC.h \
- $(TAO_ROOT)/tao/DynamicC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/tao/StringSeqC.h \
- $(TAO_ROOT)/tao/StringSeqC.i \
- $(TAO_ROOT)/tao/Service_Context.h \
- $(TAO_ROOT)/tao/Service_Context.inl \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -291,12 +294,18 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.h \
+ $(TAO_ROOT)/tao/DynamicC.h \
+ $(TAO_ROOT)/tao/DynamicC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  $(TAO_ROOT)/tao/debug.h \
  $(ACE_ROOT)/ace/Profile_Timer.h \
  $(ACE_ROOT)/ace/Time_Value.h \
