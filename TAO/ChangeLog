@@ -1,3 +1,51 @@
+Mon Aug 12 07:16:39 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Component.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Component.cpp:
+
+	  New Service Object that servers can use to transparently add
+	  load balancing via the ACE_Service_Configurator.
+
+	* orbsvsc/orbsvcs/LoadBalancing/LB_IORInterceptor.h:
+
+	  Cache the ORBid of the ORB this IORInterceptor is registered
+	  with.
+
+	* orbsvsc/orbsvcs/LoadBalancing/LB_IORInterceptor.cpp
+	  (components_established):
+
+	  Pass a pseudo-reference to the ORB to the
+	  LB_ObjectReferenceFactory constructor.
+	  
+	* orbsvsc/orbsvcs/LoadBalancing/LB_ORBInitializer.h:
+
+	  Cache the options passed to the LB_Components object.  They are
+	  required to configure the LB_ObjectReferenceFactory.
+
+	* orbsvsc/orbsvcs/LoadBalancing/LB_ORBInitializer.cpp (pre_init):
+
+	  This method is now a no-op.  No pre-initialization work is
+	  necessary.
+
+	  (post_init):
+
+	  Removed dead code and replaced it with the code that was
+	  intended to be there.  In particular, create and register the
+	  IORInterceptor that contributes to the server side load
+	  balancing transparency.
+
+	* orbsvsc/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.h:
+
+	  Added a member that is used to keep track of whether or not a
+	  given member was registered with the LoadManager.
+
+	* orbsvsc/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp
+	  (make_object):
+
+	  Prevent attempts to register a member's object reference each
+	  time make_object() is called.  Registration should only be
+	  performed once.
+
 Sun Aug 11 23:17:47 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvsc/orbsvcs/LoadBalancing/LB_ORT.idl:

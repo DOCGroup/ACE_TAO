@@ -29,6 +29,9 @@
 #endif /* _MSC_VER */
 
 
+#include "ace/Array_Base.h"
+
+
 /**
  * @class TAO_LB_ObjectReferenceFactory
  *
@@ -49,7 +52,12 @@ class TAO_LB_ObjectReferenceFactory
   /// Constructor
   TAO_LB_ObjectReferenceFactory (
     PortableInterceptor::ObjectReferenceFactory * old_orf,
-    const char * repository_ids);
+    const CORBA::StringSeq & object_groups,
+    const CORBA::StringSeq & repository_ids,
+    const char * location,
+    CORBA::ORB_ptr orb,
+    CosLoadBalancing::LoadManager_ptr lm,
+    CosLoadBalancing::LoadAlert_ptr la);
 
   /**
    * @name PortableInterceptor::ObjectReferenceFactory Methods
@@ -64,6 +72,17 @@ class TAO_LB_ObjectReferenceFactory
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
+
+
+  typedef ACE_Hash_Map_Manager_Ex<
+    ACE_CString,
+    PortableGroup::ObjectGroup_var,
+    ACE_Hash<ACE_CString>,
+    ACE_Equal_To<ACE_CString>,
+    ACE_Null_Mutex> Table;
+
+  typedef ACE_Array_Base<
+    PortableGroup::GenericFactory::FactoryCreationId_var> fcid_list;
 
 protected:
 
@@ -83,16 +102,58 @@ private:
    */
   PortableInterceptor::ObjectReferenceFactory_var old_orf_;
 
-  /// Space separated list of RepositoryIds corresponding to objects
-  /// that will be load balanced.
-  /**
-   * @note The actual storage for this string is controlled by the
-   *       TAO_LB_ORBInitializer.
-   */
-  const char * repository_ids_;
 
-  /// Table that maps repository ID to object group reference.
+  /// List of stringified object group references.
+  /**
+   * All stringified object groups in this sequence have a one-to-one
+   * correspondence to the repository IDs found in the repository_ids_
+   * member below.
+   *
+   * @par
+   *
+   * The special string "CREATE" denotes that creation of a new object
+   * group should be performed.
+   */
+  const CORBA::StringSeq object_groups_;
+
+  /// List of RepositoryIds for object that will be load
+  /// managed/balanced.
+  /**
+   * All RepositoryIds in this sequence have a one-to-one
+   * correspondence to the stringified object references found in the
+   * object_groups_ member above.
+   */
+  const CORBA::StringSeq repository_ids_;
+
+  /// The configured location for the server within which this
+  /// ObjectReferenceFactory resides.
+  PortableGroup::Location location_;
+
+  /// Table that maps repository ID to (non-stringified) object group
+  /// reference.
   Table table_;
+
+  /// List of FactoryCreationIds that will later be used to destroy
+  /// object groups.
+  fcid_list fcids_;
+
+  /// Pseudo-reference to the ORB.
+  CORBA::ORB_var orb_;
+
+  /// Reference to the LoadManager object.
+  CosLoadBalancing::LoadManager_var lm_;
+
+  /// Reference to the LoadAlert object for this location.
+  CosLoadBalancing::LoadAlert_ptr load_alert_;
+
+  /// Array of flags that denotes whether or not an object group
+  /// member of a given RepositoryId has been registered with the
+  /// LoadManager.
+  /**
+   * The values are cached here to avoid querying the LoadManager,
+   * which can be costly.
+   */
+  CORBA::Boolean * registered_members_;
 
 };
 
