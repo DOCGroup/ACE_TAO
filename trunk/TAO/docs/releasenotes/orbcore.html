@@ -456,6 +456,21 @@
       </li>
 
 
+      <li>Potential Optimizations:
+	<ol>
+	  <LI>There is a certain amount of overhead introduced by the
+              use of TSS Singletons. TSS singletons are very
+              convenient as the variable does not have to be passed
+              from function to function. Even though sort of access is
+              generally acceptable, the overhead of this approach
+              maybe too high when used in code which is executed
+              frequently (e.g., during an upcall). This critical code
+              may have to be restructured not to use TSS Singletons
+              because of the high overhead associated with it. </LI>
+	</ol>
+      </li>
+
+
     </UL>
 
   </body>

@@ -58,14 +58,28 @@ main (int argc, char **argv)
       return -1;
     }
 
-  // CORBA::PolicyList policies (2); Policies for the firstPOA to be
-  // created.
+  // Policies for the firstPOA to be created.
+  // CORBA::PolicyList policies (2); 
   PortableServer::PolicyList policies (2);
   policies.length (2);
+
+  // Id Assignment Policy
   policies[0] =
     root_poa->create_id_assignment_policy (PortableServer::USER_ID, env);
+  if (env.exception () != 0)
+    {
+      env.print_exception ("PortableServer::POA::create_id_assignment_policy");
+      return -1;
+    }
+
+  // Lifespan policy
   policies[1] = 
     root_poa->create_lifespan_policy (PortableServer::PERSISTENT, env);
+  if (env.exception () != 0)
+    {
+      env.print_exception ("PortableServer::POA::create_lifespan_policy");
+      return -1;
+    }
 
   // Create the firstPOA under the RootPOA.
   ACE_CString name = "firstPOA";
@@ -81,15 +95,14 @@ main (int argc, char **argv)
     }
 
   // Creation of firstPOA is over. Destroy the Policy objects.
-
   for (CORBA::ULong i = 0;
        i < policies.length () && env.exception () == 0;
        ++i)
     {
+      // CORBA::Policy_ptr policy = policies[i];
       PortableServer::Policy_ptr policy = policies[i];
       policy->destroy (env);
     }
-
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::create_POA");

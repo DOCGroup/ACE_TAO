@@ -53,16 +53,51 @@ main (int argc, char **argv)
   // CORBA::PolicyList policies (5);
   PortableServer::PolicyList policies (5);
   policies.length (5);  
+
+  // ID Assignment Policy
   policies[0] =
     root_poa->create_id_assignment_policy (PortableServer::USER_ID, env);
+  if (env.exception () != 0)
+    {
+      env.print_exception ("PortableServer::POA::create_id_assignment_policy");
+      return -1;
+    }
+
+  // Lifespan Policy
   policies[1] =
     root_poa->create_lifespan_policy (PortableServer::PERSISTENT, env);
+  if (env.exception () != 0)
+    {
+      env.print_exception ("PortableServer::POA::create_lifespan_policy");
+      return -1;
+    }
+  
+  // Request Processing Policy
   policies[2] =
     root_poa->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT, env);
+  if (env.exception () != 0)
+    {
+      env.print_exception ("PortableServer::POA::create_request_processing_policy");
+      return -1;
+    }
+  
+  // Servant Retention Policy
   policies[3] =
     root_poa->create_servant_retention_policy (PortableServer::RETAIN, env);
+  if (env.exception () != 0)
+    {
+      env.print_exception ("PortableServer::POA::create_servant_retention_policy");
+      return -1;
+    }
+
+  // Id Uniqueness Policy
   policies[4] =
     root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID, env);
+  if (env.exception () != 0)
+    {
+      env.print_exception ("PortableServer::POA::create_id_uniqueness_policy");
+      return -1;
+    }
 
   ACE_CString name = "firstPOA";
   PortableServer::POA_var first_poa = root_poa->create_POA (name.c_str (),
@@ -79,6 +114,7 @@ main (int argc, char **argv)
        i < policies.length () && env.exception () == 0;
        ++i)
     {
+      // CORBA::Policy_ptr policy = policies[i];
       PortableServer::Policy_ptr policy = policies[i];
       policy->destroy (env);
     }  

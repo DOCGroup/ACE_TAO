@@ -51,13 +51,30 @@ main (int argc, char **argv)
       return -1;
     }
 
-  // CORBA::PolicyList policies (2); Policies for the new POAs
+  // Policies for the new POAs
+  // CORBA::PolicyList policies (2);
   PortableServer::PolicyList policies (2);
   policies.length (2);
+
+  // Threading policy
   policies[0] =
     root_poa->create_thread_policy (PortableServer::ORB_CTRL_MODEL, env);
+
+  if (env.exception () != 0)
+    {
+      env.print_exception ("PortableServer::POA::create_thread_policy");
+      return -1;
+    }
+
+  // Lifespan policy
   policies[1] =
     root_poa->create_lifespan_policy (PortableServer::TRANSIENT, env);
+
+  if (env.exception () != 0)
+    {
+      env.print_exception ("PortableServer::POA::create_lifespan_policy");
+      return -1;
+    }
 
   // Creation of the firstPOA
   ACE_CString name = "firstPOA";
@@ -110,6 +127,7 @@ main (int argc, char **argv)
        i < policies.length () && env.exception () == 0;
        ++i)
     {
+      // CORBA::Policy_ptr policy = policies[i];
       PortableServer::Policy_ptr policy = policies[i];
       policy->destroy (env);
     }

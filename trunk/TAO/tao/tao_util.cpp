@@ -93,14 +93,18 @@ TAO_ORB_Manager::init_child_poa (int argc,
 
   // Create the default policies - user-supplied ID, and persistent
   // objects.
+  // CORBA::PolicyList policies (2);
   PortableServer::PolicyList policies (2);
   policies.length (2);
+
+  // Id Assignment policy
   policies[0] =
     this->poa_->create_id_assignment_policy (PortableServer::USER_ID,
                                              env);
   // @@ Must destroy the policies created to avoid memory leaks!
   TAO_CHECK_ENV_RETURN (env, -1);
 
+  // Lifespan policy
   policies[1] =
     this->poa_->create_lifespan_policy (PortableServer::PERSISTENT,
                                         env);
@@ -115,18 +119,20 @@ TAO_ORB_Manager::init_child_poa (int argc,
                             this->poa_manager_.in (),
                             policies,
                             env);
-  TAO_CHECK_ENV_RETURN (env, -1);
   // @@ Warning!  If create_POA fails, then the policies won't be
   // destroyed and there will be hell to pay in memory leaks!
+  TAO_CHECK_ENV_RETURN (env, -1);
 
   // Creation of the new POAs over, so destroy the Policy_ptr's.
   for (CORBA::ULong i = 0;
        i < policies.length () && env.exception () == 0;
        ++i)
     {
+      // CORBA::Policy_ptr policy = policies[i];
       PortableServer::Policy_ptr policy = policies[i];
       policy->destroy (env);
     }
+  TAO_CHECK_ENV_RETURN (env, -1);
 
   return 0;
 }

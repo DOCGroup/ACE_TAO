@@ -55,19 +55,47 @@ main (int argc, char **argv)
       return -1;
     }
 
+  // CORBA::PolicyList policies (4);
+  PortableServer::PolicyList policies (4);
+  policies.length (4);
+
+    // ID Assignment Policy
+  policies[0] =
+    root_poa->create_id_assignment_policy (PortableServer::USER_ID, env);
+  if (env.exception () != 0)
+    {
+      env.print_exception ("PortableServer::POA::create_id_assignment_policy");
+      return -1;
+    }
+
+  // Lifespan Policy
+  policies[1] =
+    root_poa->create_lifespan_policy (PortableServer::PERSISTENT, env);
+  if (env.exception () != 0)
+    {
+      env.print_exception ("PortableServer::POA::create_lifespan_policy");
+      return -1;
+    }
+  
+  // Request Processing Policy
+  policies[2] =
+    root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER, env);
+  if (env.exception () != 0)
+    {
+      env.print_exception ("PortableServer::POA::create_request_processing_policy");
+      return -1;
+    }
+  
   PortableServer::POA_var first_poa;
   {
-    // CORBA::PolicyList policies (4);
-    PortableServer::PolicyList policies (4);
-    policies.length (4);
-    policies[0] =
-      root_poa->create_id_assignment_policy (PortableServer::USER_ID, env);
-    policies[1] =
-      root_poa->create_lifespan_policy (PortableServer::PERSISTENT, env);
-    policies[2] =
-      root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER, env);
+    // Servant Retention Policy
     policies[3] =
       root_poa->create_servant_retention_policy (PortableServer::RETAIN, env);
+    if (env.exception () != 0)
+      {
+        env.print_exception ("PortableServer::POA::create_servant_retention_policy");
+        return -1;
+      }
 
     ACE_CString name = "firstPOA";
 
@@ -82,38 +110,18 @@ main (int argc, char **argv)
         env.print_exception ("PortableServer::POA::create_POA");
         return -1;
       }
-
-    // Destroy the policy objects as they have been passed to
-    // create_POA and no longer needed.
-
-    for (CORBA::ULong i = 0;
-         i < policies.length () && env.exception () == 0;
-         ++i)
-      {
-        PortableServer::Policy_ptr policy = policies[i];
-        policy->destroy (env);
-      }
-
-    if (env.exception () != 0)
-      {
-        env.print_exception ("PortableServer::POA::create_POA");
-        return -1;
-      }
   }
 
   PortableServer::POA_var second_poa;
   {
-    // CORBA::PolicyList policies (4);
-    PortableServer::PolicyList policies (4);
-    policies.length (4);
-    policies[0] =
-      root_poa->create_id_assignment_policy (PortableServer::USER_ID, env);
-    policies[1] =
-      root_poa->create_lifespan_policy (PortableServer::PERSISTENT, env);
-    policies[2] =
-      root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER, env);
+    // Servant Retention Policy
     policies[3] =
       root_poa->create_servant_retention_policy (PortableServer::NON_RETAIN, env);
+    if (env.exception () != 0)
+      {
+        env.print_exception ("PortableServer::POA::create_servant_retention_policy");
+        return -1;
+      }
 
     ACE_CString name = "secondPOA";
 
@@ -129,24 +137,23 @@ main (int argc, char **argv)
         env.print_exception ("PortableServer::POA::create_POA");
         return -1;
       }
-
-    // Destroy the policy objects as they have been passed to
-    // create_POA and no longer needed.
-
-    for (CORBA::ULong i = 0;
-         i < policies.length () && env.exception () == 0;
-         ++i)
-      {
-        PortableServer::Policy_ptr policy = policies[i];
-        policy->destroy (env);
-      }
-
-    if (env.exception () != 0)
-      {
-        env.print_exception ("PortableServer::POA::create_POA");
-        return -1;
-      }
   }
+
+  // Destroy the policy objects as they have been passed to
+  // create_POA and no longer needed.
+  for (CORBA::ULong i = 0;
+       i < policies.length () && env.exception () == 0;
+       ++i)
+    {
+      // CORBA::Policy_ptr policy = policies[i];
+      PortableServer::Policy_ptr policy = policies[i];
+      policy->destroy (env);
+    }
+  if (env.exception () != 0)
+    {
+      env.print_exception ("PortableServer::POA::create_POA");
+      return -1;
+    }
 
   MyFooServantActivator servant_activator_impl;
   PortableServer::ServantActivator_var servant_activator =

@@ -116,14 +116,21 @@ Cubit_Task::initialize_orb (void)
         this->root_poa_->the_POAManager (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      // CORBA::PolicyList policies (2);
       PortableServer::PolicyList policies (2);
       policies.length (2);
+
+      // Id Assignment policy
       policies[0] =
         this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID,
                                                       TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      // Lifespan policy
       policies[1] =
         this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT,
                                                  TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       // We use a different POA, otherwise the user would have to
       // change the object key each time it invokes the server.
@@ -132,6 +139,17 @@ Cubit_Task::initialize_orb (void)
                                      this->poa_manager_.in (),
                                      policies,
                                      TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      // Creation of the new POAs over, so destroy the Policy_ptr's.
+      for (CORBA::ULong i = 0;
+           i < policies.length () && TAO_TRY_ENV.exception () == 0;
+           ++i)
+        {
+          // CORBA::Policy_ptr policy = policies[i];
+          PortableServer::Policy_ptr policy = policies[i];
+          policy->destroy (TAO_TRY_ENV);
+        }
       TAO_CHECK_ENV;
 
       CORBA::Object_var naming_obj =
@@ -423,14 +441,21 @@ Cubit_Factory_Task::initialize_orb (void)
         this->root_poa_->the_POAManager (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      // CORBA::PolicyList policies (2);
       PortableServer::PolicyList policies (2);
       policies.length (2);
+
+      // Id Assignment policy
       policies[0] =
         this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID,
                                                       TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      // Lifespan policy
       policies[1] =
         this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT,
                                                  TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       // We use a different POA, otherwise the user would have to
       // change the object key each time it invokes the server.
@@ -439,6 +464,17 @@ Cubit_Factory_Task::initialize_orb (void)
                                      this->poa_manager_.in (),
                                      policies,
                                      TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      // Creation of the new POAs over, so destroy the Policy_ptr's.
+      for (CORBA::ULong i = 0;
+           i < policies.length () && TAO_TRY_ENV.exception () == 0;
+           ++i)
+        {
+          // CORBA::Policy_ptr policy = policies[i];
+          PortableServer::Policy_ptr policy = policies[i];
+          policy->destroy (TAO_TRY_ENV);
+        }
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
