@@ -1,3 +1,10 @@
+Tue Aug 25 10:45:50 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tests/Aio_Platform_Test.cpp: Fixed the SunCC errors about
+		missing function prototypes. Also put the various
+		<sysconf> routines under "#if defined <SYMBOL>"
+		statements. 
+
 Tue Aug 25 07:42:40 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Memory_Pool.cpp: changed ACE_Auto_Basic_Array_Ptr<char *>
