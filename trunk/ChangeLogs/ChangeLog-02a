@@ -1,3 +1,9 @@
+Thu Nov 15 20:44:40 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* etc/Svc_Conf_l.cpp.diff: Updated.  Thanks to Kitty for reporting it.
+	* etc/Svc_Conf_y.cpp.diff: Added.  We need it for uses of ACE_LIB_TEXT.
+	* ace/Makefile: Added rule to apply patch to Svc_Conf_y.cpp. 
+
 Thu Nov 15 08:26:57 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/*.cpp: Changed all remaining uses of ACE_TEXT to ACE_LIB_TEXT
