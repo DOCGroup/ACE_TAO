@@ -1,3 +1,16 @@
+Tue Feb 09 16:07:32 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Synch.{h,i,cpp}: Removed classes ACE_Null_Mutex_Guard and
+	  ACE_Thread_Mutex_Guard since there doesn't seem any need for
+	  them any more.  They should be replaced by
+	  ACE_Guard<ACE_Null_Mutex> and ACE_Guard<ACE_Thread_Mutex>.  If
+	  by any chance you still need to use them, add
+	  ACE_USES_OBSOLETE_GUARD_CLASSES into your config.h file.
+
+	* ace/Local_Tokens.h: Replaced ACE_Null_Mutex_Guard and
+	  ACE_Thread_Mutex_Guard with ACE_Guard<ACE_Null_Mutex> and
+	  ACE_Guard<ACE_Thread_Mutex>.
+
 Tue Feb  9 16:12:42 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
         * docs/tutorials/{010|011}/task.{h|cpp} : barrier_ doesn't need to be a
