@@ -21,6 +21,8 @@
 #include "ace/Sched_Params.h"
 #include "test_config.h"
 
+#if defined (ACE_HAS_THREADS)
+
 class Priority_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
