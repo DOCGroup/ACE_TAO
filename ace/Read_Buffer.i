@@ -19,3 +19,10 @@ ACE_Read_Buffer::replaced (void) const
   return this->occurrences_;
 }
 
+ACE_INLINE ACE_Allocator *
+ACE_Read_Buffer::alloc (void) const
+{
+  ACE_TRACE ("ACE_Read_Buffer::alloc");
+  return this->allocator_;
+}
+
