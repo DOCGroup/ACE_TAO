@@ -422,6 +422,27 @@ TAO_GIOP_Message_Generator_Parser_10::parse_reply (
                                                       params) == -1)
     return -1;
 
+  // Steal rest of the contents in to the reply params
+  params.input_cdr_.steal_from (stream);
+
+  return 0;
+}
+
+
+int
+TAO_GIOP_Message_Generator_Parser_10::parse_locate_reply (
+    TAO_InputCDR &cdr,
+    TAO_Pluggable_Reply_Params &params
+  )
+{
+  if (TAO_GIOP_Message_Generator_Parser::parse_locate_reply (cdr,
+                                                             params) == -1)
+
+    return -1;
+
+  // Steal the contents in to the reply CDR
+  params.input_cdr_.steal_from (cdr);
+
   return 0;
 }
 

@@ -51,7 +51,8 @@ TAO_GIOP_Twoway_Asynch_Invocation::TAO_GIOP_Twoway_Asynch_Invocation (
   // hold a pointer to it.
   ACE_NEW (this->rd_,
 	   TAO_Asynch_Reply_Dispatcher (reply_handler_skel,
-					reply_handler_ptr));
+					reply_handler_ptr,
+                                        orb_core));
 }
 
 #endif /* (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1) == 0 */

@@ -434,6 +434,9 @@ TAO_GIOP_Message_Generator_Parser_12::parse_reply (
       cdr.align_read_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR);
     }
 
+  // Steal the contents in to the reply CDR
+  params.input_cdr_.steal_from (cdr);
+
   return 0;
 }
 
@@ -443,8 +446,8 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_reply (
     TAO_Pluggable_Reply_Params &params
   )
 {
-  if (TAO_GIOP_Message_Generator_Parser::parse_reply (cdr,
-                                                      params) == -1)
+  if (TAO_GIOP_Message_Generator_Parser::parse_locate_reply (cdr,
+                                                             params) == -1)
 
     return -1;
 
@@ -453,6 +456,9 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_reply (
       // Align the read pointer on an 8-byte boundary
       cdr.align_read_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR);
     }
+
+  // Steal the contents in to the reply CDR
+  params.input_cdr_.steal_from (cdr);
 
   return 0;
 }
