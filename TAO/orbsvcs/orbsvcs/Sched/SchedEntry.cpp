@@ -45,7 +45,18 @@ u_long gcd (u_long x, u_long y)
 // calculate the minimum frame size that
 u_long minimum_frame_size (u_long period1, u_long period2)
 {
-  // first, find the greatest common divisor of the two periods
+  // if one of the periods is zero, treat it as though it as
+  // uninitialized and return the other period as the frame size
+  if (0 == period1)
+  {
+    return period2;
+  } 
+  if (0 == period2)
+  {
+    return period1;
+  } 
+
+  // if neither is zero, find the greatest common divisor of the two periods
   u_long greatest_common_divisor = gcd (period1, period2);
 
   // explicitly consider cases to reduce risk of possible overflow errors
@@ -331,6 +342,7 @@ Task_Entry::conjunctive_merge (
     u_long arrival = 0;
     u_long deadline = 0;
     long priority = 0;
+    long OS_priority = 0;
 
     for (conj_set_iter.first ();
          conj_set_iter.done () == 0;
@@ -340,6 +352,7 @@ Task_Entry::conjunctive_merge (
       arrival = 0;
       deadline = 0;
       priority = 0;
+      OS_priority = 0;
 
       // Policy: conjunctively dispatched operations get the latest deadline of any
       //         of the dispatches in the conjunction at the time they were dispatched
@@ -361,12 +374,19 @@ Task_Entry::conjunctive_merge (
       }
 
       // use latest arrival, latest deadline, lowest priority (0 is highest)
-      arrival = (arrival < (*proxy_iter)->arrival ())
-        ? arrival : (*proxy_iter)->arrival ();
-      deadline = (deadline < (*proxy_iter)->deadline ())
-        ? deadline : (*proxy_iter)->deadline ();
-      priority = (priority < (*proxy_iter)->priority ())
-        ? priority : (*proxy_iter)->priority ();
+      if (arrival <= (*proxy_iter)->arrival ())
+      {
+        arrival = (*proxy_iter)->arrival ();
+      }
+      if (deadline <= (*proxy_iter)->deadline ())
+      {
+        deadline = (*proxy_iter)->deadline ();
+      }
+      if (priority <= (*proxy_iter)->priority ())
+      {
+        priority = (*proxy_iter)->priority ();
+        OS_priority = (*proxy_iter)->OS_priority ();
+      }
 
       (*proxy_iter)->advance ();
       if ((*proxy_iter)->done ())
@@ -381,7 +401,7 @@ Task_Entry::conjunctive_merge (
     const TimeBase::ulonglong arrival_tb = {arrival, 0};
     const TimeBase::ulonglong deadline_tb = {deadline, 0};
     ACE_NEW_RETURN (entry_ptr,
-                    Dispatch_Entry (arrival_tb, deadline_tb, priority, *this),
+                    Dispatch_Entry (arrival_tb, deadline_tb, priority, OS_priority, *this),
                     -1);
 
     // if even one new dispatch was inserted, result is "something happened".
@@ -422,45 +442,53 @@ Task_Entry::reframe (
   ACE_Ordered_MultiSet <Dispatch_Entry_Link> &set,
   u_long &set_period, u_long new_period)
 {
-  // make sure the new period is greater than the current
-  // set period, and that they are harmonically related
-  if (new_period <= set_period)
-  {
-    // return an error if they're not harmonically related,
-    // do nothing if set's frame is a multiple of the new frame
-    return (set_period % new_period) ? -1 : 0;
-  }
-  else if (new_period % set_period)
-  {
-    return -1;
-  }
+  int result = 0;
 
-  // make a shallow copy of the set in a new ordered
-  // multiset using the Dispatch_Entry_Link smart pointers
-  ACE_Ordered_MultiSet <Dispatch_Entry_Link> new_set;
-  ACE_Ordered_MultiSet_Iterator <Dispatch_Entry_Link> new_iter (new_set);
-  ACE_Ordered_MultiSet_Iterator <Dispatch_Entry_Link> set_iter (set);
-
-  for (set_iter.first (); set_iter.done () == 0; set_iter.advance ())
+  // if the set period is zero, treat it as uninitialized, 
+  // and simply value the set period with the new period
+  if (set_period)
   {
-    Dispatch_Entry_Link *link;
-    if (set_iter.next (link) == 0)
+    // make sure the new period is greater than the current
+    // set period, and that they are harmonically related
+    if (new_period <= set_period)
+    {
+      // return an error if they're not harmonically related,
+      // do nothing if set's frame is a multiple of the new frame
+      return (set_period % new_period) ? -1 : 0;
+    }
+    else if (new_period % set_period)
     {
       return -1;
     }
 
-    if (new_set.insert (*link, new_iter) < 0)
-    {
-      return -1;
-    }
-  }
+    // make a shallow copy of the set in a new ordered
+    // multiset using the Dispatch_Entry_Link smart pointers
+    ACE_Ordered_MultiSet <Dispatch_Entry_Link> new_set;
+    ACE_Ordered_MultiSet_Iterator <Dispatch_Entry_Link> new_iter (new_set);
+    ACE_Ordered_MultiSet_Iterator <Dispatch_Entry_Link> set_iter (set);
 
-  // do a deep copy merge back into the set using the new period and starting
-  // after the 0th sub-frame: this puts all dispatches after the 0th
-  // sub-frame of the new period into the set, and leaves existing dispatches
-  // in the 0th sub-frame of the new period in the set as well.
-  int result = merge_frames (dispatch_entries, owner, set,
-                         new_set, new_period, set_period, 1, 1);
+    for (set_iter.first (); set_iter.done () == 0; set_iter.advance ())
+    {
+      Dispatch_Entry_Link *link;
+      if (set_iter.next (link) == 0)
+      {
+        return -1;
+      }
+  
+      if (new_set.insert (*link, new_iter) < 0)
+      {
+        return -1;
+      }
+    }
+
+    // do a deep copy merge back into the set using the new period and starting
+    // after the 0th sub-frame: this puts all dispatches after the 0th
+    // sub-frame of the new period into the set, and leaves existing dispatches
+    // in the 0th sub-frame of the new period in the set as well.
+    result = merge_frames (dispatch_entries, owner, set,
+                           new_set, new_period, set_period, 1, 1);
+
+  }
 
   // update the set's period to be the new frame
   set_period = new_period;
@@ -497,7 +525,7 @@ Task_Entry::merge_frames (
   // use iterator for efficient insertion into the destination set
   ACE_Ordered_MultiSet_Iterator <Dispatch_Entry_Link> dest_iter (dest);
 
-  // do virutal iteration over the source set in the new frame,
+  // do virtual iteration over the source set in the new frame,
   // adding adjusted dispatch entries to the destination
   Dispatch_Proxy_Iterator src_iter (src, src_period, dest_period,
                                     number_of_calls,
@@ -520,7 +548,9 @@ Task_Entry::merge_frames (
     ACE_NEW_RETURN (entry_ptr,
                     Dispatch_Entry (arrival_tb,
                                     deadline_tb,
-                                    src_iter.priority (), owner),
+                                    src_iter.priority (), 
+									src_iter.OS_priority (),
+									owner),
                     -1);
 
     // if even one new dispatch was inserted, status is "something happened".
@@ -574,12 +604,13 @@ Dispatch_Entry::Dispatch_Id Dispatch_Entry::next_id_ = 0;
 Dispatch_Entry::Dispatch_Entry (
       Time arrival,
       Time deadline,
-           Preemption_Priority priority,
+      Preemption_Priority priority,
+      OS_Priority os_priority,
       Task_Entry &task_entry,
       Dispatch_Entry *original_dispatch)
 
   : priority_ (priority)
-  , OS_priority_ (0)
+  , OS_priority_ (os_priority)
   , dynamic_subpriority_ (0)
   , static_subpriority_ (0)
   , arrival_ (arrival)
@@ -851,6 +882,18 @@ Dispatch_Proxy_Iterator::priority () const
 }
   // returns the scheduler priority of the virtual entry
 
+Dispatch_Proxy_Iterator::OS_Priority
+Dispatch_Proxy_Iterator::OS_priority () const
+{
+  Dispatch_Entry_Link *link;
+  if ((iter_.done ()) || (iter_.next(link) == 0) || (! link))
+  {
+    return 0;
+  }
+
+  return link->dispatch_entry ().OS_priority ();
+}
+  // returns the OS priority of the virtual entry
 
 
 //////////////////////////
