@@ -97,6 +97,8 @@ ACE_Logging_Strategy::tokenize (ACE_TCHAR *flag_string)
         ACE_SET_BITS (this->flags_, ACE_Log_Msg::VERBOSE_LITE);
       else if (ACE_OS::strcmp (flag, ACE_LIB_TEXT ("SILENT")) == 0)
         ACE_SET_BITS (this->flags_, ACE_Log_Msg::SILENT);
+      else if (ACE_OS::strcmp (flag, ACE_LIB_TEXT ("SYSLOG")) == 0)
+        ACE_SET_BITS (this->flags_, ACE_Log_Msg::SYSLOG);
     }
 }
 
@@ -250,7 +252,8 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
                                           | ACE_Log_Msg::OSTREAM
                                           | ACE_Log_Msg::VERBOSE
                                           | ACE_Log_Msg::VERBOSE_LITE
-                                          | ACE_Log_Msg::SILENT);
+                                          | ACE_Log_Msg::SILENT
+                                          | ACE_Log_Msg::SYSLOG);
       // Check if OSTREAM bit is set
       if (ACE_BIT_ENABLED (this->flags_,
                            ACE_Log_Msg::OSTREAM))

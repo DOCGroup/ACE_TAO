@@ -28,3 +28,11 @@ BEGIN
         VALUE "Translation", 0x409, 1200
     END
 END
+
+/*
+ * The following resource is used by the ACE logger to write messages
+ * to the NT event log. If you are statically linking to the ACE
+ * library, and you wish to use the NT event log, you should copy this
+ * message table to your application's resource script.
+ */
+1 MESSAGETABLE ace_message_table.bin

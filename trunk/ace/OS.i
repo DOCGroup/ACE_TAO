@@ -12148,4 +12148,16 @@ ACE_OS::get_win32_versioninfo ()
 {
   return ACE_OS::win32_versioninfo_;
 }
+
+ACE_INLINE HINSTANCE
+ACE_OS::get_win32_resource_module ()
+{
+  return ACE_OS::win32_resource_module_;
+}
+
+ACE_INLINE void
+ACE_OS::set_win32_resource_module (HINSTANCE instance)
+{
+  ACE_OS::win32_resource_module_ = instance;
+}
 #endif /* ACE_WIN32 */
