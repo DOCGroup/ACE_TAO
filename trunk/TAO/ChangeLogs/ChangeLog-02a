@@ -1,3 +1,38 @@
+Tue Mar 27 19:54:49 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * utils/NamingViewer/ViewIORDialog.cpp:
+	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.h:
+	* orbsvcs/tests/Notify/Basic/Events_Test.h:
+	* orbsvcs/tests/Notify/Basic/Simple.h:
+	* orbsvcs/tests/Notify/Basic/Updates.h:
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.h:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h:
+	* orbsvcs/tests/Event_Latency/Event_Latency.h:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/receiver.cpp:
+	* orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.cpp:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.cpp:
+	* orbsvcs/tests/AVStreams/benchmark/child.cpp:
+	* orbsvcs/tests/AVStreams/benchmark/client.cpp:
+	* orbsvcs/Examples/Notify/Filter/Filter.h:
+	* orbsvcs/Examples/Notify/Subscribe/Subscribe.h:
+	* tao/Examples/POA/Forwarding/MyFooServant.h:
+
+	  Minor fixes to eliminate build errors on MSVC, such as adding #include 
+	  file, adding disable of MSVC inheritance via dominance warning, or
+	  adjusting a signed/unsigned mismatch.
+
+	* orbsvcs/tests/Notify/Basic/Simple.dsp:
+	* orbsvcs/tests/Notify/Basic/Updates.dsp:
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.dsp:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.dsp:
+	* orbsvcs/Examples/Notify/Filter/Filter.dsp:
+	* orbsvcs/Examples/Notify/Subscribe/Subscribe.dsp:
+	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.dsp:
+	* orbsvcs/tests/Notify/Basic/Events_Test.dsp:
+
+	  Added header files to these projects, for easier future editing.
+
 Tue Mar 27 17:01:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Wait_On_Leader_Follower.cpp (wait): Reverted a change to
