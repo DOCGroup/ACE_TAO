@@ -1,3 +1,8 @@
+Tue Jun  9 14:59:15 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* ace/OS.cpp:  Made it so both Borland and Microsoft use the 
+	  x.wProcessorArchitecture structure for system info.
+
 Tue Jun 09 14:35:28 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Tokens_Test.cpp,UPIPE_SAP_Test.cpp: only need the
