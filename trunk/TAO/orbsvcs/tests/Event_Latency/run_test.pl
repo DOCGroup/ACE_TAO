@@ -7,24 +7,32 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 unshift @INC, '../../../../bin';
 require Process;
+require ACEutils;
 
 $NS_ior = "NameService.ior";
 $sleeptime = 3;
+$status = 0;
 
 $NS = Process::Create ("../../Naming_Service/Naming_Service".$EXE_EXT,
 		       " -o $NS_ior ");
 
 sleep $sleeptime;
 
-$ES = Process::Create ("../../Event_Service/Event_Service".$EXE_EXT);
+$ES = Process::Create ("../../Event_Service/Event_Service".$EXE_EXT, "");
 
 sleep $sleeptime;
 
-$status = system ($EXEPREFIX."Event_Latency".$EXE_EXT.
+$TEST = Process::Create ($EXEPREFIX."Event_Latency".$EXE_EXT,
                   " -j -m 100");
 
-$NS->Kill ();
-$ES->Kill ();
+if ($TEST->TimedWait (60) == -1) {
+  print STDERR "ERROR: test timedout\n";
+  $status = 1;
+  $TEST->Kill (); $TEST->TimedWait (1);
+}
+
+$NS->Kill (); $NS->TimedWait (1);
+$ES->Kill (); $ES->TimedWait (1);
 
 unlink ($NS_ior);
 
