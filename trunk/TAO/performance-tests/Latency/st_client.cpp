@@ -110,10 +110,6 @@ main (int argc, char *argv[])
 
   ACE_TRY_NEW_ENV
     {
-      ACE_DEBUG ((LM_DEBUG, "High res. timer calibration...."));
-      ACE_High_Res_Timer::calibrate ();
-      ACE_DEBUG ((LM_DEBUG, "done\n"));
-
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -143,7 +139,10 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "test finished\n"));
 
+      ACE_DEBUG ((LM_DEBUG, "High res. timer calibration...."));
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+      ACE_DEBUG ((LM_DEBUG, "done\n"));
+
       client.dump_stats ("Single thread", gsf);
 
       if (do_shutdown)

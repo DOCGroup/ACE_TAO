@@ -9,14 +9,15 @@
 ACE_RCSID(Latency, dii_client, "$Id$")
 
 const char *ior = "file://test.ior";
-CORBA::ULong niterations = 100;
+size_t niterations = 100;
+size_t burst = 1;
 int period = -1;
-int do_shutdown = 0;
+int do_shutdown = 1;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:i:p:");
+  ACE_Get_Opt get_opts (argc, argv, "k:i:b:p:x");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -27,6 +28,9 @@ parse_args (int argc, char *argv[])
         break;
       case 'i':
         niterations = ACE_OS::atoi (get_opts.optarg);
+        break;
+      case 'b':
+        burst = ACE_OS::atoi (get_opts.optarg);
         break;
       case 'p':
         period = ACE_OS::atoi (get_opts.optarg);
@@ -40,6 +44,7 @@ parse_args (int argc, char *argv[])
                            "usage:  %s "
                            "-k <ior> "
                            "-i <niterations> "
+                           "-b <burst> "
                            "-p <period> "
                            "-x (disable shutdown) "
                            "\n",
@@ -64,7 +69,7 @@ public:
   ~DII_Client (void);
   // dtor
 
-  void set (Test_ptr server, int niterations);
+  void set (Test_ptr server);
   // Set the test attributes.
 
   void prep_stats (const char* msg, ACE_UINT32 gsf);
@@ -80,17 +85,17 @@ private:
   Test_var server_;
   // The server.
 
-  CORBA::ULong niterations_;
-  // The number of iterations.
-
   ACE_Throughput_Stats request_prep_;
   // Keep statistics on time to prepare a DII request.
+
+  ACE_Throughput_Stats roundtrip_;
+  // Keep statistics about roundrip delays.
 
   ACE_hrtime_t base_, sent_now_, roundtrip_now_;
   // Holders for calculating total send and roundtrip time.
 
   CORBA::Request_ptr *req_array_;
-  // Holder for niterations_ request pointers
+  // Holder for <burst> request pointers
 };
 
 int
@@ -118,10 +123,6 @@ main (int argc, char *argv[])
 
   ACE_TRY_NEW_ENV
     {
-      ACE_DEBUG ((LM_DEBUG, "High res. timer calibration...."));
-      ACE_High_Res_Timer::calibrate ();
-      ACE_DEBUG ((LM_DEBUG, "done\n"));
-
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -146,12 +147,15 @@ main (int argc, char *argv[])
         }
 
       DII_Client client;
-      client.set (server.in (), niterations);
+      client.set (server.in ());
       client.svc ();
 
       ACE_DEBUG ((LM_DEBUG, "test finished\n"));
 
+      ACE_DEBUG ((LM_DEBUG, "High res. timer calibration...."));
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+      ACE_DEBUG ((LM_DEBUG, "done\n"));
+
       client.prep_stats ("Deferred req prep", gsf);
       client.other_stats (gsf);
 
@@ -184,14 +188,12 @@ DII_Client::~DII_Client (void)
 }
 
 void
-DII_Client::set (Test_ptr server, int niterations)
+DII_Client::set (Test_ptr server)
 {
   this->server_ = Test::_duplicate (server);
 
-  this->niterations_ = niterations;
-
   ACE_NEW (this->req_array_,
-           CORBA::Request_ptr[niterations]);
+           CORBA::Request_ptr[burst]);
 }
 
 int
@@ -211,41 +213,53 @@ DII_Client::svc (void)
 
       this->base_ = ACE_OS::gethrtime ();
 
-      for (i = 0; i < this->niterations_; ++i)
+      for (i = 0; i < niterations; ++i)
         {
-          ACE_hrtime_t prep_base = ACE_OS::gethrtime ();
+          size_t j;
 
-          CORBA::Request_ptr req = this->server_->_request ("test_method",
-                                                            ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          for (j = 0; j != burst; ++j)
+            {
+              ACE_hrtime_t prep_base = ACE_OS::gethrtime ();
+              CORBA::Request_ptr req =
+                this->server_->_request ("test_method",
+                                         ACE_TRY_ENV);
+              ACE_TRY_CHECK;
 
-          req->add_in_arg () <<= 0; // Doesn't matter in this test.
+              req->add_in_arg () <<= prep_base;
 
-          req->set_return_type (CORBA::_tc_ulonglong); 
+              req->set_return_type (CORBA::_tc_ulonglong);
 
-          ACE_hrtime_t prep_now = ACE_OS::gethrtime ();
+              ACE_hrtime_t prep_now = ACE_OS::gethrtime ();
 
-          this->request_prep_.sample (prep_now - this->base_,
-                                      prep_now - prep_base);
+              this->req_array_[j] = req;
 
-          this->req_array_[i] = req;
+              req->send_deferred (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
 
-          req->send_deferred (ACE_TRY_ENV);
+              this->request_prep_.sample (prep_now - this->base_,
+                                          prep_now - prep_base);
+            }
 
-          ACE_TRY_CHECK;
-        }
+          this->sent_now_ = ACE_OS::gethrtime ();
 
-      this->sent_now_ = ACE_OS::gethrtime ();
+          for (j = 0; j != burst; ++j)
+            {
+              this->req_array_[j]->get_response (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
 
-      for (i = 0; i < this->niterations_; ++i)
-        {
-          this->req_array_[i]->get_response (ACE_TRY_ENV);
+              if ((this->req_array_[j]->return_value () >>= retval) == 0)
+                ACE_ERROR ((LM_ERROR,
+                            "return value extraction failed\n"));
 
-          ACE_TRY_CHECK;
-
-          if ((this->req_array_[i]->return_value () >>= retval) == 0)
-            ACE_ERROR ((LM_ERROR,
-                        "return value extraction failed\n"));
+              ACE_hrtime_t now = ACE_OS::gethrtime ();
+              this->roundtrip_.sample (now - this->base_,
+                                       now - retval);
+            }
+          if (period != -1)
+            {
+              ACE_Time_Value tv (0, period * 1000);
+              ACE_OS::sleep (tv);
+            }
         }
 
       this->roundtrip_now_ = ACE_OS::gethrtime ();
@@ -268,11 +282,13 @@ DII_Client::prep_stats (const char* msg, ACE_UINT32 gsf)
 void
 DII_Client::other_stats (ACE_UINT32 gsf)
 {
+  this->roundtrip_.dump_results ("Roundtrip", gsf);
+
   ACE_UINT64 time = this->sent_now_ - this->base_;
 
   double latency = ACE_CU64_TO_CU32 (time) / gsf;
 
-  latency /= this->niterations_;
+  latency /= niterations * burst;
 
   double throughput = 1000000.0 / latency;
 
@@ -286,7 +302,7 @@ DII_Client::other_stats (ACE_UINT32 gsf)
 
   latency = ACE_CU64_TO_CU32 (time) / gsf;
 
-  latency /= this->niterations_;
+  latency /= niterations * burst;
 
   throughput = 1000000.0 / latency;
 
@@ -296,4 +312,3 @@ DII_Client::other_stats (ACE_UINT32 gsf)
               latency,
               throughput));
 }
-
