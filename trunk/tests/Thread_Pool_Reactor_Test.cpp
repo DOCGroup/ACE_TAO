@@ -56,7 +56,7 @@ USELIB("..\ace\aced.lib");
 #if defined (ACE_HAS_THREADS)
 
 #include "tests/Thread_Pool_Reactor_Test.h"
-typedef ACE_Strategy_Acceptor <Acceptor_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
+typedef ACE_Strategy_Acceptor <Request_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
 
 static ASYS_TCHAR *rendezvous = ASYS_TEXT ("127.0.0.1:10010");
 // Accepting end point.  This is actually "localhost:10010",
@@ -73,7 +73,7 @@ static size_t svr_thrno = ACE_MAX_THREADS;
 #define ACE_LOAD_FACTOR
 #endif
 
-static size_t cli_thrno =  ACE_MAX_ITERATIONS ACE_LOAD_FACTOR;
+static size_t cli_thrno =  ACE_MAX_THREADS ACE_LOAD_FACTOR;
 // Total number of client threads.
 
 static size_t cli_conn_no = ACE_MAX_ITERATIONS ACE_LOAD_FACTOR;
@@ -124,13 +124,16 @@ parse_arg (int argc, ASYS_TCHAR *argv[])
           break;
         default:
           ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("Invalid command line argument: %c\n"), c));
+                      ASYS_TEXT ("Usage: Thread_Pool_Reactor_Test [-r <hostname:port#>]")
+                      ASYS_TEXT ("\t[-s <server thr#>] [-c <client thr#>] [-d <delay>]")
+                      ASYS_TEXT ("\t[-i <client conn attempt#>]")
+                      ASYS_TEXT ("[-n <client request# per conn>]\n")));
           break;
         }
     }
 }
 
-Acceptor_Handler::Acceptor_Handler (ACE_Thread_Manager *thr_mgr)
+Request_Handler::Request_Handler (ACE_Thread_Manager *thr_mgr)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH> (thr_mgr),
     nr_msgs_rcvd_(0)
 {
@@ -140,7 +143,7 @@ Acceptor_Handler::Acceptor_Handler (ACE_Thread_Manager *thr_mgr)
 }
 
 int
-Acceptor_Handler::handle_input (ACE_HANDLE fd)
+Request_Handler::handle_input (ACE_HANDLE fd)
 {
   ASYS_TCHAR buffer[BUFSIZ];
   ASYS_TCHAR len = 0;
@@ -167,13 +170,13 @@ Acceptor_Handler::handle_input (ACE_HANDLE fd)
     }
   else
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("(%t) Acceptor_Handler: end handle input (0x%x)\n"),
+                ASYS_TEXT ("(%t) Request_Handler: end handle input (0x%x)\n"),
                 fd));
   return -1;
 }
 
 int
-Acceptor_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
+Request_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%t) svr close; fd: 0x%x, rcvd %d msgs\n"),
@@ -347,20 +350,20 @@ main (int argc, ASYS_TCHAR *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Accept_Strategy<Acceptor_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Concurrency_Strategy<Acceptor_Handler>;
-template class ACE_Creation_Strategy<Acceptor_Handler>;
-template class ACE_Scheduling_Strategy<Acceptor_Handler>;
-template class ACE_Acceptor<Acceptor_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Strategy_Acceptor<Acceptor_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Accept_Strategy<Request_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Concurrency_Strategy<Request_Handler>;
+template class ACE_Creation_Strategy<Request_Handler>;
+template class ACE_Scheduling_Strategy<Request_Handler>;
+template class ACE_Acceptor<Request_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Strategy_Acceptor<Request_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate  ACE_Accept_Strategy<Acceptor_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate  ACE_Concurrency_Strategy<Acceptor_Handler>
-#pragma instantiate  ACE_Creation_Strategy<Acceptor_Handler>
-#pragma instantiate  ACE_Scheduling_Strategy<Acceptor_Handler>
-#pragma instantiate  ACE_Acceptor<Acceptor_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate  ACE_Strategy_Acceptor<Acceptor_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate  ACE_Accept_Strategy<Request_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate  ACE_Concurrency_Strategy<Request_Handler>
+#pragma instantiate  ACE_Creation_Strategy<Request_Handler>
+#pragma instantiate  ACE_Scheduling_Strategy<Request_Handler>
+#pragma instantiate  ACE_Acceptor<Request_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate  ACE_Strategy_Acceptor<Request_Handler, ACE_SOCK_ACCEPTOR>
 #pragma instantiate  ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
