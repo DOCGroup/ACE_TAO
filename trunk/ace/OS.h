@@ -672,52 +672,9 @@ typedef int key_t;
 
 # if defined (ACE_PSOS)
 
-    // remap missing error numbers for system functions
-#   define EPERM        1        /* Not super-user                        */
-#   define ENOENT       2        /* No such file or directory             */
-#   define ESRCH        3        /* No such process                       */
-#   if ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM)
-#     define EINTR        4        /* interrupted system call               */
-#   endif /* ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM) */
-#   define EBADF        9        /* Bad file number                       */
-#   define EAGAIN       11       /* Resource temporarily unavailable      */
-#   if ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM)
-#     define EWOULDBLOCK  EAGAIN   /* Blocking resource request would block */
-#     define ENOMEM       12       /* Not enough core                       */
-#   endif /* ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM) */
-#   define EACCES       13       /* Permission denied                     */
-#   define EFAULT       14       /* Bad access                            */
-#   if ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM)
-#     define EEXIST       17       /* File exists                           */
-#   endif /* ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM) */
-#   define ENOSPC       28       /* No space left on device               */
-#   if ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM)
-#     define EPIPE        32       /* Broken pipe                           */
-#   endif /* ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM) */
-#   define ETIME        62       /* timer expired                         */
-#   define ENAMETOOLONG 78       /* path name is too long                 */
-#   define ENOSYS       89       /* Unsupported file system operation     */
-#   if ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM)
-#     define EADDRINUSE   125      /* Address already in use                */
-#     define ENETUNREACH  128      /* Network is unreachable                */
-#     define EISCONN      133      /* Socket is already connected           */
-#     define ESHUTDOWN    143      /* Can't send after socket shutdown      */
-#     define ECONNREFUSED 146      /* Connection refused                    */
-#     define EINPROGRESS  150      /* operation now in progress             */
-#   endif /* ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM) */
-#   define ERRMAX       151      /* Last error number                     */
-
-#   if ! defined (NSIG)
-#     define NSIG 32
-#   endif /* NSIG */
-
-#   if ! defined (TCP_NODELAY)
-#     define TCP_NODELAY  1
-#   endif /* TCP_NODELAY */
-
-#if defined (ACE_LACKS_ASSERT_MACRO)
- #define assert(expr)
-#endif
+#   if defined (ACE_LACKS_ASSERT_MACRO)
+#     define assert(expr)
+#   endif
 
 #   if defined (ACE_PSOSIM)
 
@@ -755,16 +712,24 @@ typedef int key_t;
 
 #     if defined (ACE_PSOS_CANT_USE_SYS_TYPES)
       // these are missing from the pSOS types.h file, and the compiler
-      // supplied types.h file collides with the pSOS version
-      typedef unsigned char  u_char;
-      typedef unsigned short u_short;
-      typedef unsigned int   u_int;
-      typedef unsigned long  u_long;
-      typedef unsigned char  uchar_t;
-      typedef unsigned short ushort_t;
-      typedef unsigned int   uint_t;
-      typedef unsigned long  ulong_t;
-      typedef char *         caddr_t;
+      // supplied types.h file collides with the pSOS version.
+#       if !defined (ACE_SHOULD_NOT_DEFINE_SYS_TYPES)
+      typedef unsigned char     u_char;
+      typedef unsigned short    u_short;
+#       endif /* ACE_SHOULD_NOT_DEFINE_SYS_TYPES */
+      typedef unsigned int      u_int;
+#       if !defined (ACE_SHOULD_NOT_DEFINE_SYS_TYPES)
+      typedef unsigned long     u_long;
+#       endif /* ACE_SHOULD_NOT_DEFINE_SYS_TYPES */
+
+      // These are defined in types.h included by (among others) pna.h
+#       if 0
+      typedef unsigned char     uchar_t;
+      typedef unsigned short    ushort_t;
+      typedef unsigned int      uint_t;
+      typedef unsigned long     ulong_t;
+#       endif /* 0 */
+      typedef char *            caddr_t;
 
 #       if defined (ACE_PSOS_DIAB_PPC)
       typedef unsigned long pid_t;
@@ -775,7 +740,7 @@ typedef int key_t;
 #       endif /* defined (ACE_PSOS_DIAB_PPC) */
 
 //      typedef unsigned char wchar_t;
-#     endif
+#     endif /* ACE_PSOS_CANT_USE_SYS_TYPES */
 
 #     include /**/ "ace/sys_conf.h" /* system configuration file */
 #     include /**/ <configs.h>   /* includes all pSOS headers */
@@ -795,18 +760,26 @@ typedef int key_t;
 // This collides with phile.h
 //    #include /**/ <sys/stat.h>    /* Diab Data supplied header file */
 
-  // missing preprocessor definitions
-#     define AF_UNIX 0x1
+// Some versions have missing preprocessor definitions
+#     if !defined (AF_UNIX)
+#       define AF_UNIX 0x1
+#     endif /* AF_UNIX */
 #     define PF_UNIX AF_UNIX
 #     define PF_INET AF_INET
-#     define AF_MAX AF_INET
-#     define IFF_LOOPBACK IFF_EXTLOOPBACK
+#     if !defined (AF_MAX)
+#       define AF_MAX AF_INET
+#     endif /* AF_MAX */
+#     if !defined (IFF_LOOPBACK)
+#       define IFF_LOOPBACK IFF_EXTLOOPBACK
+#     endif /* IFF_LOOPBACK */
 
   typedef long fd_mask;
 #     define IPPORT_RESERVED       1024
 #     define IPPORT_USERRESERVED   5000
 
-#     define howmany(x, y) (((x)+((y)-1))/(y))
+#     if !defined (howmany)
+#       define howmany(x, y) (((x)+((y)-1))/(y))
+#     endif /* howmany */
 
   extern "C"
   {
@@ -820,6 +793,89 @@ typedef int key_t;
 
 #   endif /* defined (ACE_PSOSIM) */
 
+// Some versions of pSOS do not define error numbers, but newer
+// versions do. So, include errno.h and then see which ones are not
+// yet defined.
+#   include /**/ <errno.h>
+
+#   if !defined (EPERM)
+#     define EPERM        1        /* Not super-user                        */
+#   endif /* EPERM */
+#   if !defined (ENOENT)
+#     define ENOENT       2        /* No such file or directory             */
+#   endif /* ENOENT */
+#   if !defined (ESRCH)
+#     define ESRCH        3        /* No such process                       */
+#   endif /* ESRCH */
+#   if ! defined (EINTR)
+#     define EINTR        4        /* interrupted system call               */
+#   endif /* EINTR */
+#   if !defined (EBADF)
+#     define EBADF        9        /* Bad file number                       */
+#   endif /* EBADF */
+#   if !defined (EAGAIN)
+#     define EAGAIN       11       /* Resource temporarily unavailable      */
+#   endif /* EAGAIN */
+#   if !defined (EWOULDBLOCK)
+#     define EWOULDBLOCK  EAGAIN   /* Blocking resource request would block */
+#   endif /* EWOULDBLOCK */
+#   if !defined (ENOMEM)
+#     define ENOMEM       12       /* Not enough core                       */
+#   endif /* ENOMEM */
+#   if !defined (EACCESS)
+#     define EACCES       13       /* Permission denied                     */
+#   endif /* EACCESS */
+#   if !defined (EFAULT)
+#     define EFAULT       14       /* Bad access                            */
+#   endif /* EFAULT */
+#   if !defined (EEXIST)
+#     define EEXIST       17       /* File exists                           */
+#   endif /* EEXIST */
+#   if !defined (ENOSPC)
+#     define ENOSPC       28       /* No space left on device               */
+#   endif /* ENOSPC */
+#   if !defined (EPIPE)
+#     define EPIPE        32       /* Broken pipe                           */
+#   endif /* EPIPE */
+#   if !defined (ETIME)
+#     define ETIME        62       /* timer expired                         */
+#   endif /* ETIME */
+#   if !defined (ENAMETOOLONG)
+#     define ENAMETOOLONG 78       /* path name is too long                 */
+#   endif /* ENAMETOOLONG */
+#   if !defined (ENOSYS)
+#     define ENOSYS       89       /* Unsupported file system operation     */
+#   endif /* ENOSYS */
+#   if !defined (EADDRINUSE)
+#     define EADDRINUSE   125      /* Address already in use                */
+#   endif /* EADDRINUSE */
+#   if !defined (ENETUNREACH)
+#     define ENETUNREACH  128      /* Network is unreachable                */
+#   endif /* ENETUNREACH */
+#   if !defined (EISCONN)
+#     define EISCONN      133      /* Socket is already connected           */
+#   endif /* EISCONN */
+#   if !defined (ESHUTDOWN)
+#     define ESHUTDOWN    143      /* Can't send after socket shutdown      */
+#   endif /* ESHUTDOWN */
+#   if !defined (ECONNREFUSED)
+#     define ECONNREFUSED 146      /* Connection refused                    */
+#   endif /* ECONNREFUSED */
+#   if !defined (EINPROGRESS)
+#     define EINPROGRESS  150      /* operation now in progress             */
+#   endif /* EINPROGRESS */
+#   if !defined (ERRMAX)
+#     define ERRMAX       151      /* Last error number                     */
+#   endif /* ERRMAX */
+
+#   if ! defined (NSIG)
+#     define NSIG 32
+#   endif /* NSIG */
+
+#   if ! defined (TCP_NODELAY)
+#     define TCP_NODELAY  1
+#   endif /* TCP_NODELAY */
+
 // For general purpose portability
 
 #   define ACE_BITS_PER_ULONG (8 * sizeof (u_long))
@@ -828,6 +884,11 @@ typedef u_long ACE_idtype_t;
 typedef u_long ACE_id_t;
 #   define ACE_SELF (0)
 typedef u_long ACE_pri_t;
+
+// pHILE+ calls the DIR struct XDIR instead
+#    if !defined (ACE_PSOS_DIAB_PPC)
+typedef XDIR DIR;
+#    endif /* !defined (ACE_PSOS_DIAB_PPC) */
 
 // Use pSOS semaphores, wrapped . . .
 typedef struct
