@@ -28,18 +28,18 @@
 #define TEST_MAX_CONSUMERS 10
 
 /**
- * @class TAO_Notify_Supplier
+ * @class TAO_Notify_ThreadPool_Supplier
  *
  * @brief Implement a Structured Supplier.
  *
  */
-class TAO_Notify_Supplier : public POA_CosNotifyComm::StructuredPushSupplier, public PortableServer::RefCountServantBase
+class TAO_Notify_ThreadPool_Supplier : public POA_CosNotifyComm::StructuredPushSupplier, public PortableServer::RefCountServantBase
 {
 public:
   // = Initialization and Termination code
 
   /// Constructor.
-  TAO_Notify_Supplier (TAO_Notify_ORB_Objects& orb_objects);
+  TAO_Notify_ThreadPool_Supplier (TAO_Notify_ORB_Objects& orb_objects);
 
   /// Init
   void init (CosNotifyChannelAdmin::SupplierAdmin_var& admin, int expected_consumer_count, int max_events,
@@ -65,7 +65,7 @@ protected:
   virtual void send_event (const CosNotification::StructuredEvent& event ACE_ENV_ARG_DECL);
 
   /// Destructor
-  virtual ~TAO_Notify_Supplier ();
+  virtual ~TAO_Notify_ThreadPool_Supplier ();
 
   // = NotifySubscribe
   virtual void subscription_change (

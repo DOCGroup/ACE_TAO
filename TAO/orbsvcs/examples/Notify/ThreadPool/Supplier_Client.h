@@ -18,22 +18,22 @@
 #include "tao/corba.h"
 #include "ace/SString.h"
 
-class TAO_Notify_Supplier;
+class TAO_Notify_ThreadPool_Supplier;
 
 /**
- * @class TAO_Notify_Supplier_Client
+ * @class TAO_Notify_ThreadPool_Supplier_Client
  *
  * @brief Supplier Client
  *
  */
-class TAO_Notify_Supplier_Client : public ACE_Task_Base
+class TAO_Notify_ThreadPool_Supplier_Client : public ACE_Task_Base
 {
 public:
   /// Constuctor
-  TAO_Notify_Supplier_Client (TAO_Notify_ORB_Objects& orb_objects);
+  TAO_Notify_ThreadPool_Supplier_Client (TAO_Notify_ORB_Objects& orb_objects);
 
   /// Destructor
-  ~TAO_Notify_Supplier_Client ();
+  ~TAO_Notify_ThreadPool_Supplier_Client ();
 
   /// Init
   void init (ACE_ENV_SINGLE_ARG_DECL);
@@ -58,7 +58,7 @@ protected:
   TAO_Notify_ORB_Objects orb_objects_;
 
   /// Supplier that sends events.
-  TAO_Notify_Supplier* supplier_;
+  TAO_Notify_ThreadPool_Supplier* supplier_;
 
   /// The Number of consumers that we expect to send an event to.
   int consumer_count_;

@@ -1,3 +1,19 @@
+Sat Aug 16 14:13:02 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+ 	* orbsvcs/examples/Notify/ThreadPool/Consumer.cpp:
+ 	* orbsvcs/examples/Notify/ThreadPool/Consumer.h:
+ 	* orbsvcs/examples/Notify/ThreadPool/Consumer_Client.cpp:
+ 	* orbsvcs/examples/Notify/ThreadPool/Consumer_Client.h:
+ 	* orbsvcs/examples/Notify/ThreadPool/Supplier.cpp:
+ 	* orbsvcs/examples/Notify/ThreadPool/Supplier.h:
+ 	* orbsvcs/examples/Notify/ThreadPool/Supplier_Client.cpp:
+ 	* orbsvcs/examples/Notify/ThreadPool/Supplier_Client.h:
+
+	  Renamed classnames to resolve Solaris 9 compiler symbol conflicts with
+	  simile in the obsvcs Notify lib. 
+	  Thanks to Don Hinton  <dhinton @ dresystems.com> for reporting
+	  this.
+
 Sat Aug 16 10:29:54 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/IORTable/IORTableC.h (_raise):
