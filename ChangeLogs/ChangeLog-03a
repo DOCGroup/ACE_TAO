@@ -1,6 +1,18 @@
+Mon Apr 22 15:20:02 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/DLL_Test.h:
+	* tests/DLL_Test.cpp: Removed the destroy method as it didn't help
+	  ensuring allocating/deallocating the DLL object with consistent
+	  heap.  Instead, we reverted back to use auto_ptr and relied on
+	  the overloaded new/delete operators.
+
+	* tests/DLL_Test_Impl.h:
+	* tests/DLL_Test_Impl.cpp: Added the aforementioned overloaded
+	  new/delete operator implementations.
+
 Mon Apr 22 12:33:30 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	
+
 	* tests/MT_Reactor_Upcall_Test: This is a test that shows how to
 	  handle upcalls from the TP_Reactor and the WFMO_Reactor when the
 	  event loop is being run by multiple threads.
