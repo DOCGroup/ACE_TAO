@@ -388,7 +388,7 @@ module Deployment {
 
   struct SubcomponentPortEndpoint {
     string portName;
-    unsigned long instanceRef;
+    SubcomponentInstantiationDescriptions instance;
   };
 
   typedef sequence < SubcomponentPortEndpoint > SubcomponentPortEndpoints;
