@@ -180,8 +180,8 @@ main (int, ACE_TCHAR *[])
     Tester tester;
     Task task (&tester);
     if (task.activate (THR_NEW_LWP|THR_JOINABLE, 4) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, 
-                         ACE_TEXT ("Cannot activate the threads\n")), 
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Cannot activate the threads\n")),
                         1);
     ACE_Thread_Manager::instance ()->wait ();
   }
@@ -248,8 +248,8 @@ Tester::join (ACE_RMCast::Join &join)
       return 0;
     }
   // Not found
-  ACE_ERROR_RETURN ((LM_ERROR, 
-                     ACE_TEXT ("Unknown proxy in Tester::join\n")), 
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     ACE_TEXT ("Unknown proxy in Tester::join\n")),
                     -1);
 }
 
@@ -274,8 +274,8 @@ Tester::leave (ACE_RMCast::Leave &leave)
       return 0;
     }
   // Not found
-  ACE_ERROR_RETURN ((LM_ERROR, 
-                     ACE_TEXT ("Unknown proxy in Tester::leave\n")), 
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     ACE_TEXT ("Unknown proxy in Tester::leave\n")),
                     -1);
 }
 
@@ -297,8 +297,8 @@ Tester::ack (ACE_RMCast::Ack &ack)
 
   // Assume the lock is held, verify that the ack message satisfy the
   // invariants...
-  ACE_UINT32 next_expected;
-  ACE_UINT32 highest_received;
+  ACE_UINT32 next_expected = 0;
+  ACE_UINT32 highest_received = 0;
   int set = 0;
   for (size_t i = 0; i != nproxy; ++i)
     {
