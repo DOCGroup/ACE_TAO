@@ -788,6 +788,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name RTSched
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Messaging
+    End Project Dependency
 }}}
 
 ###############################################################################
