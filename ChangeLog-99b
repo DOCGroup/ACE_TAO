@@ -1,3 +1,15 @@
+Fri Mar 19 15:03:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/CDR_Stream.h:
+	* ace/CDR_Stream.i:
+	* ace/CDR_Stream.cpp: 
+	  Changed CDR to ACE_CDR.
+	  Fixed ACE_InputCDR constructor when receiving a linked list of
+	  Message_Blocks.
+
+	* tests/CDR_Test.cpp:
+	  Added a test for the constructor above.
+
 Fri Mar 19 10:29:17 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Singleton.cpp (instance): removed at_exit () calls

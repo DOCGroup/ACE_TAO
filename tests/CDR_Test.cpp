@@ -35,18 +35,21 @@ struct CDR_Test_Types
 {
   CDR_Test_Types (void);
 
-  CDR::Octet o;
-  CDR::Short s;
-  CDR::Long l;
-  const CDR::Char *str;
-  CDR::Double d;
+  ACE_CDR::Octet o;
+  ACE_CDR::Short s;
+  ACE_CDR::Long l;
+  const ACE_CDR::Char *str;
+  ACE_CDR::Double d;
+
+  int test_put (ACE_OutputCDR& cdr);
+  int test_get (ACE_InputCDR& cdr) const;
 
   enum
   {
     ARRAY_SIZE = 10
   };
 
-  CDR::Short a[ARRAY_SIZE];
+  ACE_CDR::Short a[ARRAY_SIZE];
 };
 
 CDR_Test_Types::CDR_Test_Types (void)
@@ -63,124 +66,6 @@ CDR_Test_Types::CDR_Test_Types (void)
 }
 
 static int
-test_put (ACE_OutputCDR &cdr,
-          CDR_Test_Types &test_types)
-{
-  for (int i = 0; i < n; ++i)
-    {
-      if (cdr.write_octet (test_types.o) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "write_octet[%d] failed\n",
-                           i),
-                          1);
-      if (cdr.write_short (test_types.s) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "write_short[%d] failed\n",
-                           i),
-                          1);
-      if (cdr.write_octet (test_types.o) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "write_octet-2[%d] failed\n",
-                           i),
-                          1);
-      if (cdr.write_long (test_types.l) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "write_long[%d] failed\n",
-                           i),
-                          1);
-      if (cdr.write_long (test_types.l) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "write_long-2[%d] failed\n",
-                           i),
-                          1);
-
-      if (cdr.write_string (test_types.str) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "write_string[%d] failed\n",
-                           i),
-                          1);
-
-    }
-
-  return 0;
-}
-
-static int
-test_get (ACE_InputCDR &cdr, const CDR_Test_Types &test_types)
-{
-  CDR::Octet xo;
-  CDR::Short xs;
-  CDR::Long xl;
-
-  for (int i = 0; i < n; ++i)
-    {
-      if (cdr.read_octet (xo) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "read_octet[%d] failed\n",
-                           i),
-                          1);
-      if (xo != test_types.o)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "octet[%d] differs\n",
-                           i),
-                          1);
-      if (cdr.read_short (xs) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "read_short[%d] failed\n",
-                           i), 1);
-      if (xs != test_types.s)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "short[%d] differs\n",
-                           i),
-                          1);
-      if (cdr.read_octet (xo) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "read_octet-2[%d] failed\n",
-                           i),
-                          1);
-      if (xo != test_types.o)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "octet-2[%d] differs\n",
-                           i),
-                          1);
-      if (cdr.read_long (xl) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "read_long[%d] failed\n",
-                           i),
-                          1);
-      if (xl != test_types.l)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "long[%d] differs\n",
-                           i),
-                          1);
-      if (cdr.read_long (xl) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "read_long-2[%d] failed\n",
-                           i),
-                          1);
-      if (xl != test_types.l)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "long-2[%d] differs\n",
-                           i),
-                          1);
-
-      CDR::Char *xstr;
-      if (cdr.read_string (xstr) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "read_string2[%d] failed\n",
-                           i),
-                          1);
-      ACE_Auto_Basic_Array_Ptr<CDR::Char> auto_xstr (xstr);
-      if (ACE_OS::strcmp (auto_xstr.get (), test_types.str) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "string[%d] differs\n",
-                           i),
-                          1);
-    }
-  return 0;
-}
-
-static int
 short_stream (void)
 {
   // counter
@@ -190,20 +75,20 @@ short_stream (void)
   ACE_OutputCDR os;
 
   // Basic types for output
-  CDR::Char ch = 'A';
+  ACE_CDR::Char ch = 'A';
   ACE_CString str ("Test String");
-  CDR::Short s = -123;
-  CDR::UShort us =  123;
-  CDR::Long l = -65800L;
-  CDR::ULong ul =  65800UL;
-  CDR::Float f =  1.23f;
-  CDR::Double d =  123.456789;
+  ACE_CDR::Short s = -123;
+  ACE_CDR::UShort us =  123;
+  ACE_CDR::Long l = -65800L;
+  ACE_CDR::ULong ul =  65800UL;
+  ACE_CDR::Float f =  1.23f;
+  ACE_CDR::Double d =  123.456789;
 
   // Arrays for output
-  CDR::Short s_array[3] = { -1, 0, 1 };
-  CDR::Long l_array[3] = { -345678, 0, 345678 };
-  CDR::Float f_array[3] = { -1.23f, 0.0f, 1.23f };
-  CDR::Double d_array[3] = { -123.456789, 0.0, 123.456789 };
+  ACE_CDR::Short s_array[3] = { -1, 0, 1 };
+  ACE_CDR::Long l_array[3] = { -345678, 0, 345678 };
+  ACE_CDR::Float f_array[3] = { -1.23f, 0.0f, 1.23f };
+  ACE_CDR::Double d_array[3] = { -123.456789, 0.0, 123.456789 };
 
   ACE_OutputCDR::from_char fc (ch);
   os << fc;
@@ -246,20 +131,20 @@ short_stream (void)
     }
 
   // Basic types for input
-  CDR::Char ch1 = '\0';
+  ACE_CDR::Char ch1 = '\0';
   ACE_CString str1;
-  CDR::Short s1 = 0;
-  CDR::UShort us1 = 0;
-  CDR::Long l1 = 0L;
-  CDR::ULong ul1 = 0UL;
-  CDR::Float f1 = 0.0f;
-  CDR::Double d1 = 0.0;
+  ACE_CDR::Short s1 = 0;
+  ACE_CDR::UShort us1 = 0;
+  ACE_CDR::Long l1 = 0L;
+  ACE_CDR::ULong ul1 = 0UL;
+  ACE_CDR::Float f1 = 0.0f;
+  ACE_CDR::Double d1 = 0.0;
 
   // Arrays for input
-  CDR::Short s_array1[3];
-  CDR::Long l_array1[3];
-  CDR::Float f_array1[3];
-  CDR::Double d_array1[3];
+  ACE_CDR::Short s_array1[3];
+  ACE_CDR::Long l_array1[3];
+  ACE_CDR::Float f_array1[3];
+  ACE_CDR::Double d_array1[3];
 
   ACE_DEBUG ((LM_DEBUG,
               "Checking operators and arrays\n\n"));
@@ -357,14 +242,6 @@ short_stream (void)
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-// Not necessary here, because it's instantiated in ace/Memory_Pool.cpp.
-// template class ACE_Auto_Basic_Array_Ptr<CDR::Char>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-// Not necessary here, because it's instantiated in ace/Memory_Pool.cpp.
-// #pragma instantiate ACE_Auto_Basic_Array_Ptr<CDR::Char>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 int
 main (int argc, ASYS_TCHAR *argv[])
 {
@@ -419,7 +296,7 @@ main (int argc, ASYS_TCHAR *argv[])
       ACE_OutputCDR output;
       CDR_Test_Types test_types;
 
-      if (test_put (output, test_types) != 0)
+      if (test_types.test_put (output) != 0)
         return 1;
 
       ACE_InputCDR input (output);
@@ -437,14 +314,178 @@ main (int argc, ASYS_TCHAR *argv[])
                          64));
         }
 
-      if (test_get (input, test_types) != 0)
+      if (test_types.test_get (input) != 0)
         return 1;
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "Long stream - no errors\n\n"));
+              "Long stream - no errors\n\n"
+              "Testing basic types - long stream[2]\n\n"));
+
+  for (int j = 0; j < nloops; ++j)
+    {
+      ACE_OutputCDR output;
+      CDR_Test_Types test_types;
+
+      if (test_types.test_put (output) != 0)
+        return 1;
+
+      ACE_InputCDR input (output.begin ());
+      if (debug > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Output CDR: \n"));
+          ACE_HEX_DUMP ((LM_DEBUG,
+                         input.rd_ptr(),
+                         64));
+          ACE_DEBUG ((LM_DEBUG,
+                      "Input CDR: \n"));
+          ACE_HEX_DUMP ((LM_DEBUG,
+                         input.rd_ptr(),
+                         64));
+        }
+
+      if (test_types.test_get (input) != 0)
+        return 1;
+    }
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Long stream[2] - no errors\n\n"));
 
   ACE_END_TEST;
 
   return 0;
 }
+
+// ****************************************************************
+
+int
+CDR_Test_Types::test_put (ACE_OutputCDR &cdr)
+{
+  for (int i = 0; i < n; ++i)
+    {
+      if (cdr.write_octet (this->o) == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "write_octet[%d] failed\n",
+                           i),
+                          1);
+      if (cdr.write_short (this->s) == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "write_short[%d] failed\n",
+                           i),
+                          1);
+      if (cdr.write_octet (this->o) == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "write_octet-2[%d] failed\n",
+                           i),
+                          1);
+      if (cdr.write_long (this->l) == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "write_long[%d] failed\n",
+                           i),
+                          1);
+      if (cdr.write_long (this->l) == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "write_long-2[%d] failed\n",
+                           i),
+                          1);
+
+      if (cdr.write_string (this->str) == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "write_string[%d] failed\n",
+                           i),
+                          1);
+
+    }
+
+  return 0;
+}
+
+int
+CDR_Test_Types::test_get (ACE_InputCDR &cdr) const
+{
+  ACE_CDR::Octet xo;
+  ACE_CDR::Short xs;
+  ACE_CDR::Long xl;
+
+  for (int i = 0; i < n; ++i)
+    {
+      if (cdr.read_octet (xo) == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "read_octet[%d] failed\n",
+                           i),
+                          1);
+      if (xo != this->o)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "octet[%d] differs\n",
+                           i),
+                          1);
+      if (cdr.read_short (xs) == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "read_short[%d] failed\n",
+                           i), 1);
+      if (xs != this->s)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "short[%d] differs\n",
+                           i),
+                          1);
+      if (cdr.read_octet (xo) == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "read_octet-2[%d] failed\n",
+                           i),
+                          1);
+      if (xo != this->o)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "octet-2[%d] differs\n",
+                           i),
+                          1);
+      if (cdr.read_long (xl) == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "read_long[%d] failed\n",
+                           i),
+                          1);
+      if (xl != this->l)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "long[%d] differs\n",
+                           i),
+                          1);
+      if (cdr.read_long (xl) == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "read_long-2[%d] failed\n",
+                           i),
+                          1);
+      if (xl != this->l)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "long-2[%d] differs\n",
+                           i),
+                          1);
+
+      ACE_CDR::Char *xstr;
+      if (cdr.read_string (xstr) == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "read_string2[%d] failed\n",
+                           i),
+                          1);
+      ACE_Auto_Basic_Array_Ptr<ACE_CDR::Char> auto_xstr (xstr);
+      if (ACE_OS::strcmp (auto_xstr.get (), this->str) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "string[%d] differs\n",
+                           i),
+                          1);
+    }
+  return 0;
+}
+
+// ****************************************************************
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+// Not necessary here, because it's instantiated in ace/Memory_Pool.cpp.
+// template class ACE_Auto_Basic_Array_Ptr<ACE_CDR::Char>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+// Not necessary here, because it's instantiated in ace/Memory_Pool.cpp.
+// #pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_CDR::Char>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
