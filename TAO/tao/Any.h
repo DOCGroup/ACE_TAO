@@ -446,6 +446,9 @@ public:
   CORBA_Any *operator-> (void);
 
   /// cast
+  operator CORBA_Any &();
+
+  /// cast
   operator const CORBA_Any *() const;
 
   /// cast

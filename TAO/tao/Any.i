@@ -83,6 +83,12 @@ CORBA_Any_var::~CORBA_Any_var (void)
 }
 
 ACE_INLINE
+CORBA_Any_var::operator CORBA_Any &()
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
 CORBA_Any_var::operator CORBA_Any *&()
 {
   return this->ptr_;
