@@ -43,13 +43,15 @@ public:
   virtual ~TAO_Servant_Dispatcher (void);
 
   /// Pre_invoke remote request.
-  virtual void pre_invoke_remote_request (TAO_POA &poa,
-                                          CORBA::Short servant_priority,
-                                          //TAO_Service_Context &request_service_context,
-                                          //TAO_Service_Context &reply_service_context,
-										  TAO_ServerRequest &req,
-                                          TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
-                                          ACE_ENV_ARG_DECL) = 0;
+  virtual void pre_invoke_remote_request (
+      TAO_POA &poa,
+      CORBA::Short servant_priority,
+      //TAO_Service_Context &request_service_context,
+      //TAO_Service_Context &reply_service_context,
+			TAO_ServerRequest &req,
+      TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
+      ACE_ENV_ARG_DECL
+    ) = 0;
 
   /// Pre_invoke collocated request.
   virtual void pre_invoke_collocated_request (TAO_POA &poa,
