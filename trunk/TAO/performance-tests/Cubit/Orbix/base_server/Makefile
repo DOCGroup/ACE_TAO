@@ -62,12 +62,6 @@ realclean: clean
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/cubitS.o .obj/cubitS.so .shobj/cubitS.o .shobj/cubitS.so: cubitS.cpp cubit.hh cubitC.cpp
-.obj/cubit_impl.o .obj/cubit_impl.so .shobj/cubit_impl.o .shobj/cubit_impl.so: cubit_impl.cpp cubit_impl.h cubit.hh
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h cubit_impl.h \
- cubit.hh
+
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

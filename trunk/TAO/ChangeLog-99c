@@ -1,3 +1,9 @@
+Thu Feb 25 12:41:08 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* TAO/performance-tests/Cubit/Orbix: Updated the Makefiles to
+	  use the newer dependencies.  Thanks to Uma Markandu
+	  <umam@nortelnetworks.com> for reporting this.
+
 Thu Feb 25 11:38:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/default_server.cpp (parse_args): Still allow the use of
