@@ -1,3 +1,11 @@
+Sun May 30 13:47:27 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/Acceptor_Registry.cpp:
+	* tao/Connector_Registry.cpp:
+	* tao/Protocol_Factory.cpp:
+
+	  Removed semi-colons at end of pragma template instantiations.
+
 Sun May 30 13:39:47 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* docs/compiler.html:
