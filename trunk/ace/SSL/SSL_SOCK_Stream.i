@@ -355,6 +355,12 @@ ACE_SSL_SOCK_Stream::close (void)
           // ACE_SSL_SOCK_Stream::set_handle() does.
           this->ACE_SSL_SOCK::set_handle (ACE_INVALID_HANDLE);
 
+          // Reset the SSL object to allow another connection to be
+          // made using this ACE_SSL_SOCK_Stream instance.  This
+          // prevents the previous SSL session state from being
+          // associated with the new SSL session/connection.
+          (void) ::SSL_clear (this->ssl_);
+
           return this->stream_.close ();
 
         case SSL_ERROR_WANT_READ:
