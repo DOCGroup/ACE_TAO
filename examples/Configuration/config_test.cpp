@@ -1,5 +1,6 @@
-#include "ace/Configuration.h"
 // $Id$
+
+#include "ace/Configuration.h"
 
 int
 test (ACE_Configuration* config)
