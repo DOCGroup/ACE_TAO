@@ -1,3 +1,14 @@
+Mon Jan  7 19:55:39 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
+        * ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect): Added extra check
+          for SSL_accept/connect status failure to avoid looping on a bad
+          socket if the socket closes during handshake. Thanks for Vlado
+          Chovanec <Vladimir.CHOVANEC@asset.sk> for this fix.
+
+          Also added timeout countdown support for SSL_SOCK_Connector, same
+          as in: Sun Jan  6 09:37:02 2002  Ossama Othman  <ossama@uci.edu>
+
 Mon Jan  7 15:55:26 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/INET_Addr.cpp (set):
