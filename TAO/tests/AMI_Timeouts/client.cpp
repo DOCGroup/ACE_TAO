@@ -138,6 +138,10 @@ main (int argc, char *argv[])
                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      // Wait for all the threads to finish before destroying the
+      // ORB.
+      (void) client.thr_mgr ()->wait ();
+
       orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
