@@ -34,16 +34,13 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/**
+ * @class TAO_Client_Priority_Policy
+ */
 class TAO_Export TAO_Client_Priority_Policy
   : public TAO::ClientPriorityPolicy,
     public TAO_Local_RefCounted_Object
 {
-  // = TITLE
-  //
-  //
-  // = DESCRIPTION
-  //
-  //
 public:
   /// Constructor.
   TAO_Client_Priority_Policy (const TAO::PrioritySpecification &priority_spec);
