@@ -1,3 +1,15 @@
+Mon Oct 26 09:57:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp: 
+	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp: 
+	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp: 
+	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp: 
+	* TAO_IDL/be/be_visitor_enum/any_op_cs.cpp: 
+	* TAO_IDL/be/be_visitor_structure/any_op_cs.cpp: 
+	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp: 
+	  Removed a redundant "return 0;" found on each >>= operator. This
+	  was causing nasty warnings in some compilers.
+
 Mon Oct 26 09:34:32 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): While scanning
