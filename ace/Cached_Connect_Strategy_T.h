@@ -68,6 +68,11 @@ public:
   // Mark as closed (non-locking version). This is used during the cleanup of the
   // connections purged.
 
+  void cleanup (void);
+  // Since g++ version < 2.8 arent happy with templates, this special
+  // method had to be devised to avoid memory leaks and perform
+  // cleanup of the <connection_cache_>.
+
   // = Typedefs for managing the map
   typedef ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>
           REFCOUNTED_HASH_RECYCLABLE_ADDRESS;
@@ -166,11 +171,6 @@ protected:
   // from the CONNECTION_CACHE. This frees the descriptors which get
   // used in the connect process and hence the connect operation can
   // succeed.
-
-  void cleanup (void);
-  // Since g++ version < 2.8 arent happy with templates, this special
-  // method had to be devised to avoid memory leaks and perform
-  // cleanup of the <connection_cache_>.
 
   CONNECTION_CACHE connection_cache_;
   // Table that maintains the cache of connected <SVC_HANDLER>s.
