@@ -1,3 +1,23 @@
+Sun May 16 01:17:44 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Deployment.idl:
+
+          Changed the data structures needed by the Execution
+          data model, to conform to the model given in the
+          specification
+
+        * DnC/Config_Handlers/Plan_Handler.cpp:
+        * DnC/Config_Handlers/Plan_Handler.h:
+        * DnC/Config_Handlers/Config_Handlers.mpc:
+        * DnC/Config_Handlers/Domain_Handler.cpp:
+
+          Added a new top level handler for the DeploymentPlan.
+
+          Since the IDL changed, i had to change 11 other handlers
+          and included them within the top level handler.
+
+          Updated the .mpc file accordingly.
+
 Fri May 14 20:53:37 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Deployment.idl:
