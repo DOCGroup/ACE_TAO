@@ -25,7 +25,11 @@ typedef struct
 {
   char name[15];
   WIND_TCB *tcb;
+#if (CPU_FAMILY == PPC)
+  INSTR pc;
+#else
   INSTR *pc;
+#endif
 } task_info;
 
 const u_int SWITCHES = 25000;

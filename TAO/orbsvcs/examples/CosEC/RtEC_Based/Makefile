@@ -21,6 +21,13 @@ endif
 #----------------------------------------------------------------------------
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+ifdef VXWORKS   
+DIRS  =
+all clean realclean:
+	@echo These examples do not currently link under VxWorks.
+endif
+
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
