@@ -14,6 +14,8 @@ ifeq (,$(optimize))
   optimize = 0
 endif
 
+static_libs_only = 1
+
 CC      = /usr/gcc/bin/i386-nto-gcc
 CXX     = /usr/gcc/bin/i386-nto-g++
 CFLAGS  += -pipe   #### -Wall -Wpointer-arith -Winline -bntox86
