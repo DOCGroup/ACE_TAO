@@ -1,184 +1,190 @@
+Tue Sep 26 10:10:55 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * TAO_IDL/Makefile.dependencies:
+          When compiling with static libraries the tao_idl compiler should
+          not be touch'ed unless the static libraries change.
+
 Mon Sep 25 22:34:47 2000  Marina Spivak  <marina@cs.wustl.edu>
 
         * tao/uiop_endpoints.cpp
-	* tao/uiop_endpoints.h
-	* tao/uiop_endpoints.i
-	* tao/iiop_endpoints.cpp
-	* tao/iiop_endpoints.h
-	* tao/iiop_endpoints.i
-	* tao/ssl_endpoints.cpp
-	* tao/ssl_endpoints.h
-	* tao/ssl_endpoints.i:
+        * tao/uiop_endpoints.h
+        * tao/uiop_endpoints.i
+        * tao/iiop_endpoints.cpp
+        * tao/iiop_endpoints.h
+        * tao/iiop_endpoints.i
+        * tao/ssl_endpoints.cpp
+        * tao/ssl_endpoints.h
+        * tao/ssl_endpoints.i:
 
-	  Trimmed down these files by removing generated classes/functions
-	  we do not use.  In particular,  removed all any operators, *_out
-	  classes and *info*_var classes.
+          Trimmed down these files by removing generated classes/functions
+          we do not use.  In particular,  removed all any operators, *_out
+          classes and *info*_var classes.
 
-	* tao/SSLIOP_Profile.cpp (encode)
-	* tao/IIOP_Profile.cpp (create_profile_body)
-	* tao/UIOP_Profile.cpp (create_profile_body)
-	* tao/SHMIOP_Profile.cpp (create_profile_body):
+        * tao/SSLIOP_Profile.cpp (encode)
+        * tao/IIOP_Profile.cpp (create_profile_body)
+        * tao/UIOP_Profile.cpp (create_profile_body)
+        * tao/SHMIOP_Profile.cpp (create_profile_body):
 
-	  Added TAO_HAS_RT_CORBA protection: create TAO_TAG_ENDPOINTS
-	  component only when RTCORBA is enabled.
+          Added TAO_HAS_RT_CORBA protection: create TAO_TAG_ENDPOINTS
+          component only when RTCORBA is enabled.
 
-	* tao/corbafwd.h:
+        * tao/corbafwd.h:
 
-	  Updated Tagged Components tag ids.  Assigned a new id to
-	  TAO_TAG_ENDPOINTS rather than reusing TAO_TAG_PRIORITY to avoid
-	  interoperability problems with older versions of TAO (old
-	  server/new client).
+          Updated Tagged Components tag ids.  Assigned a new id to
+          TAO_TAG_ENDPOINTS rather than reusing TAO_TAG_PRIORITY to avoid
+          interoperability problems with older versions of TAO (old
+          server/new client).
 
 Mon Sep 25 20:03:11 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/PortableServer/POA.cpp (locate_servant_i): The incarnate()
-	  implementation is supposed to hand to the POA the ownership of
-	  the servant reference.  This means that the POA should not call
-	  _add_ref() after the return of incarnate().  Thanks to Bruce
-	  Trask <btrask@contactsystems.com> and Jon Biggar
-	  <jon@biggar.org> for pointing out this bug.
+        * tao/PortableServer/POA.cpp (locate_servant_i): The incarnate()
+          implementation is supposed to hand to the POA the ownership of
+          the servant reference.  This means that the POA should not call
+          _add_ref() after the return of incarnate().  Thanks to Bruce
+          Trask <btrask@contactsystems.com> and Jon Biggar
+          <jon@biggar.org> for pointing out this bug.
 
 Mon Sep 25 16:17:01 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile.CosNotification:
-	  Added Notify_Command.cpp to files.
-	* orbsvcs/orbsvcs/Notify_AdminProperties.cpp:
-	* orbsvcs/orbsvcs/Notify_Default_Collection_Factory.cpp:
-	* orbsvcs/orbsvcs/Notify_Default_EMO_Factory.cpp:
-	  Fixes for various compilation problems - thanks to Wei Chiang
-	  <Wei.Chiang@nokia.com> for providing missing code for template instantiation.
-	* orbsvcs/Notify_Service/README:
-	  Added a svc.conf option to show how show available options.
+        * orbsvcs/orbsvcs/Makefile.CosNotification:
+          Added Notify_Command.cpp to files.
+        * orbsvcs/orbsvcs/Notify_AdminProperties.cpp:
+        * orbsvcs/orbsvcs/Notify_Default_Collection_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify_Default_EMO_Factory.cpp:
+          Fixes for various compilation problems - thanks to Wei Chiang
+          <Wei.Chiang@nokia.com> for providing missing code for template instantiation.
+        * orbsvcs/Notify_Service/README:
+          Added a svc.conf option to show how show available options.
 
 Mon Sep 25 13:51:43 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/SECIOP.idl:
-	* orbsvcs/orbsvcs/Security.idl:
-	* orbsvcs/orbsvcs/SecurityLevel1.idl:
-	* orbsvcs/orbsvcs/SecurityLevel2.idl:
-	* orbsvcs/orbsvcs/SecurityReplaceable.idl:
+        * orbsvcs/orbsvcs/SECIOP.idl:
+        * orbsvcs/orbsvcs/Security.idl:
+        * orbsvcs/orbsvcs/SecurityLevel1.idl:
+        * orbsvcs/orbsvcs/SecurityLevel2.idl:
+        * orbsvcs/orbsvcs/SecurityReplaceable.idl:
 
-	  Security Service 1.8 updates.
+          Security Service 1.8 updates.
 
 Mon Sep 25 11:09:20 2000  Ossama Othman  <ossama@uci.edu>
 
-	* TAO_IDL/be/be_helper.cpp (copyright):
+        * TAO_IDL/be/be_helper.cpp (copyright):
 
-	  Cosmetic update for the RCS ID in generated files.  Updated the
-	  copyright information to include the UCI wing of the DOC group.
+          Cosmetic update for the RCS ID in generated files.  Updated the
+          copyright information to include the UCI wing of the DOC group.
 
-	* tao/params.h:
-	* tao/params.cpp:
-	* tao/params.i:
+        * tao/params.h:
+        * tao/params.cpp:
+        * tao/params.i:
 
-	  Removed unused "init_ref_" attribute.  The new IOR table
-	  obviates the need for this attribute.
+          Removed unused "init_ref_" attribute.  The new IOR table
+          obviates the need for this attribute.
 
-	  Changed "mcast_discovery_endpoint_" attribute from an
-	  ACE_CString to a CORBA::String_var.  This get around an access
-	  violation that was occuring when allocating space for a string
-	  inside the ACE_CString assignment operator.  A fix for thThe
-	  reason for the access violation itself will be committed soon.
-	  [Bug 665]
+          Changed "mcast_discovery_endpoint_" attribute from an
+          ACE_CString to a CORBA::String_var.  This get around an access
+          violation that was occuring when allocating space for a string
+          inside the ACE_CString assignment operator.  A fix for thThe
+          reason for the access violation itself will be committed soon.
+          [Bug 665]
 
-	* tao/corbafwd.cpp (string_dup, wstring_dup):
+        * tao/corbafwd.cpp (string_dup, wstring_dup):
 
-	  Set e rrno to EINVAL if a null pointer was passed as an
-	  argument.
+          Set e rrno to EINVAL if a null pointer was passed as an
+          argument.
 
-	* tao/corbafwd.h:
-	* tao/CORBA_String.cpp:
+        * tao/corbafwd.h:
+        * tao/CORBA_String.cpp:
 
-	  Removed CORBA::string_copy() TAO extension.  The standard
-	  CORBA::string_dup() should be used instead.
+          Removed CORBA::string_copy() TAO extension.  The standard
+          CORBA::string_dup() should be used instead.
 
-	* tao/corbafwd.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+        * tao/corbafwd.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
 
-	  Moved macro definition of TAO_TAG_SSL_ENDPOINTS to
-	  SSLIOP_Endpoint.h.  Security-specific code should not be placed
-	  anywhere within the ORB core.
+          Moved macro definition of TAO_TAG_SSL_ENDPOINTS to
+          SSLIOP_Endpoint.h.  Security-specific code should not be placed
+          anywhere within the ORB core.
 
-	* tao/IOP.pidl:
+        * tao/IOP.pidl:
 
-	  Removed all security related tags.  They are superseded by those
-	  in the SSLIOP and SECIOP modules in the Security Service IDL.
+          Removed all security related tags.  They are superseded by those
+          in the SSLIOP and SECIOP modules in the Security Service IDL.
 
-	* tao/IOPC.cpp:
-	* tao/IOPC.h:
-	* tao/IOPC.i:
-	* tao/IOPS.cpp:
-	* tao/IOPS.h:
-	* tao/IOPS.i:
-	* tao/IOPS_T.cpp:
-	* tao/IOPS_T.h:
-	* tao/IOPS_T.i:
+        * tao/IOPC.cpp:
+        * tao/IOPC.h:
+        * tao/IOPC.i:
+        * tao/IOPS.cpp:
+        * tao/IOPS.h:
+        * tao/IOPS.i:
+        * tao/IOPS_T.cpp:
+        * tao/IOPS_T.h:
+        * tao/IOPS_T.i:
 
-	  Regenerated these files from newly modified `IOP.pidl'.
+          Regenerated these files from newly modified `IOP.pidl'.
 
-	* tao/diffs/IOP.diff:
+        * tao/diffs/IOP.diff:
 
-	  Added a patch file for the hand modified IOP stubs and
-	  skeletons.
+          Added a patch file for the hand modified IOP stubs and
+          skeletons.
 
-	* tao/Tagged_Components.i (unique_tag):
+        * tao/Tagged_Components.i (unique_tag):
 
-	  Removed references to all security related tags.  Those tags are
-	  now in defined in the Security Service IDL sources, and
-	  supersede the ones formerly in `IOP.pidl.'  Again, no security
-	  related code should exist in the ORB core.
+          Removed references to all security related tags.  Those tags are
+          now in defined in the Security Service IDL sources, and
+          supersede the ones formerly in `IOP.pidl.'  Again, no security
+          related code should exist in the ORB core.
 
-	* tao/IIOP_Acceptor.h:
-	* tao/IIOP_Acceptor.cpp (hostname, create_mprofile,
-	  create_rt_mprofile, open_i):
-	* orbsvcs/orbsvcs/SSLIOP_Acceptor.cpp (create_mprofile,
-	  create_rt_mprofile, open_i):
+        * tao/IIOP_Acceptor.h:
+        * tao/IIOP_Acceptor.cpp (hostname, create_mprofile,
+          create_rt_mprofile, open_i):
+        * orbsvcs/orbsvcs/SSLIOP_Acceptor.cpp (create_mprofile,
+          create_rt_mprofile, open_i):
 
-	  Use "char *" in place of "ACE_CString" since the latter is
-	  lighter weight, and since the additional functionality provided
-	  by the ACE_CString class is not needed.
+          Use "char *" in place of "ACE_CString" since the latter is
+          lighter weight, and since the additional functionality provided
+          by the ACE_CString class is not needed.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp
-	  (create_mprofile, create_rt_mprofile):
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp (decode):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp
+          (create_mprofile, create_rt_mprofile):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp (decode):
 
-	  Use SSL tag value from the SSLIOP module instead of the one in
-	  the IOP module since security service 1.7 specification
-	  explicitly states that the tag in the SSLIOP module should be
-	  used to identify an SSLIOP tagged component.
+          Use SSL tag value from the SSLIOP module instead of the one in
+          the IOP module since security service 1.7 specification
+          explicitly states that the tag in the SSLIOP module should be
+          used to identify an SSLIOP tagged component.
 
-	* orbsvcs/orbsvcs/Security.idl:
-	* orbsvcs/orbsvcs/SecurityLevel1.idl:
-	* orbsvcs/orbsvcs/SecurityLevel2.idl:
-	* orbsvcs/orbsvcs/SecurityAdmin.idl:
-	* orbsvcs/orbsvcs/SecurityReplaceable.idl:
-	* orbsvcs/orbsvcs/SSLIOP.idl:
-	* orbsvcs/orbsvcs/SECIOP.idl:
+        * orbsvcs/orbsvcs/Security.idl:
+        * orbsvcs/orbsvcs/SecurityLevel1.idl:
+        * orbsvcs/orbsvcs/SecurityLevel2.idl:
+        * orbsvcs/orbsvcs/SecurityAdmin.idl:
+        * orbsvcs/orbsvcs/SecurityReplaceable.idl:
+        * orbsvcs/orbsvcs/SSLIOP.idl:
+        * orbsvcs/orbsvcs/SECIOP.idl:
 
-	  Added '#pragma prefix ""' to the end of these IDL sources to
-	  to prevent the prefix pragma specific to each of these IDL
-	  sources from being unintentionally used in other IDL sources
-	  that include them.
+          Added '#pragma prefix ""' to the end of these IDL sources to
+          to prevent the prefix pragma specific to each of these IDL
+          sources from being unintentionally used in other IDL sources
+          that include them.
 
-	* orbsvcs/examples/Security/Send_File/Send_File_Client.dsp:
-	* orbsvcs/examples/Security/Send_File/Send_File_Server.dsp:
+        * orbsvcs/examples/Security/Send_File/Send_File_Client.dsp:
+        * orbsvcs/examples/Security/Send_File/Send_File_Server.dsp:
 
-	  Changed binary names to match those used in the `run_test.pl'
-	  script so that the script may be used to run them.
+          Changed binary names to match those used in the `run_test.pl'
+          script so that the script may be used to run them.
 
 Mon Sep 25 12:44:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Makefile.bor:
-	* tao/PortableServer/Makefile.bor: Removed some files that were
-	  removed longback from the repository.
+        * tao/Makefile.bor:
+        * tao/PortableServer/Makefile.bor: Removed some files that were
+          removed longback from the repository.
 
 Sun Sep 24 12:20:00 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/Abstract_ServantBase.cpp
-	* tao/PortableServer/Direct_Object_Proxy_Impl.cpp:
+        * tao/Abstract_ServantBase.cpp
+        * tao/PortableServer/Direct_Object_Proxy_Impl.cpp:
 
-	  Removed ";" at the end of the ACE_RCSID entry, to avoid
-	  having this notified as extra ";" on OSF1 builds.
+          Removed ";" at the end of the ACE_RCSID entry, to avoid
+          having this notified as extra ";" on OSF1 builds.
 
 Sat Sep 23 22:30:05 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
@@ -199,12 +205,12 @@ Sat Sep 23 22:30:05 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
         * orbsvcs/orbsvcs/Notify/Notify_Factory.cpp:
           Debug messages print if TAO_debug_level > 0
 
-	* orbsvcs/orbsvcs/Notify/Notify_Event.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Event.cpp:
           Fixed a race condition in _decr_refcnt
 
 Sat Sep 23 13:37:37 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/MProfile_Forwarding/Manager.cpp: Fixed a compile error.
+        * tests/MProfile_Forwarding/Manager.cpp: Fixed a compile error.
 
 Sat Sep 23 10:29:14 2000  Carlos O'Ryan  <coryan@uci.edu>
 
