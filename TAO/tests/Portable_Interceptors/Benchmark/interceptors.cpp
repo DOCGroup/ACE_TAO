@@ -66,7 +66,7 @@ Vault_Client_Request_Interceptor::send_request (
       CORBA::Octet *buf = 0;
       ACE_NEW (buf,
                CORBA::Octet [string_len]);
-      ACE_OS::strcpy (ACE_reinterpret_cast (char *, buf), passwd);
+      ACE_OS::strcpy (reinterpret_cast<char *> (buf), passwd);
 
       sc.context_data.replace (string_len, string_len, buf, 1);
 
@@ -199,8 +199,7 @@ Vault_Server_Request_Interceptor::receive_request (
       ACE_CHECK;
 
       const char *buf =
-        ACE_reinterpret_cast (const char *,
-                              sc->context_data.get_buffer ());
+        reinterpret_cast<const char *> (sc->context_data.get_buffer ());
 
       if (ACE_OS::strcmp (buf, "root123") != 0)
         ACE_THROW (CORBA::NO_PERMISSION ());
@@ -317,7 +316,7 @@ Vault_Client_Request_Context_Interceptor::send_request (
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
-  ACE_OS::strcpy (ACE_reinterpret_cast (char *, buf), passwd);
+  ACE_OS::strcpy (reinterpret_cast<char *> (buf), passwd);
 
   sc.context_data.replace (string_len, string_len, buf, 1);
 
@@ -420,8 +419,7 @@ Vault_Server_Request_Context_Interceptor::receive_request (
     ri->get_request_service_context (id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  const char *buf = ACE_reinterpret_cast (const char *,
-                                          sc->context_data.get_buffer ());
+  const char *buf = reinterpret_cast<const char *> (sc->context_data.get_buffer ());
 
   if (ACE_OS::strcmp (buf, "root123") !=0)
     ACE_THROW (CORBA::NO_PERMISSION ());

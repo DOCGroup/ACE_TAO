@@ -102,7 +102,7 @@ AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
           delete handler;
 
           // send a no-op to the client
-          _tao_rh->test_method (ACE_static_cast (Test::Timestamp, 0));
+          _tao_rh->test_method (static_cast<Test::Timestamp> (0));
 
           // just in case we add code later on after this if stmt
           return;

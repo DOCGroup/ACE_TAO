@@ -93,12 +93,12 @@ Object_Group_Factory_i::unbind_round_robin (const char * id
   char *int_id = 0;
 
   // Throw an exception if not found in the HASH MAP
-  if (this->rr_groups_->find (ACE_const_cast (char *, id),
+  if (this->rr_groups_->find (const_cast<char *> (id),
                               this->mem_pool_) < 0)
     ACE_THROW (Load_Balancer::no_such_group ());
 
   // Unbind the entry
-  this->rr_groups_->unbind (ACE_const_cast (char *, id),
+  this->rr_groups_->unbind (const_cast<char *> (id),
                             int_id,
                             this->mem_pool_);
 
@@ -166,12 +166,12 @@ Object_Group_Factory_i::unbind_random (const char * id
   char *int_id = 0;
 
   // Throw an exception if not found in the HASH MAP
-  if (this->random_groups_->find (ACE_const_cast (char *, id),
+  if (this->random_groups_->find (const_cast<char *> (id),
                                   this->mem_pool_) < 0)
     ACE_THROW (Load_Balancer::no_such_group ());
 
   // Unbind the entry
-  this->random_groups_->unbind (ACE_const_cast (char *, id),
+  this->random_groups_->unbind (const_cast<char *> (id),
                                 int_id,
                                 this->mem_pool_);
 
@@ -208,14 +208,14 @@ Object_Group_Factory_i::make_group (int random,
 
   if (random)
     {
-      if (this->random_groups_->find (ACE_const_cast (char *,id),
+      if (this->random_groups_->find (const_cast<char *> (id),
                                       this->mem_pool_) == 0)
         ACE_THROW_RETURN (Load_Balancer::duplicate_group (),
                           Load_Balancer::Object_Group::_nil ());
     }
   else
     {
-      if (this->rr_groups_->find (ACE_const_cast (char *,id),
+      if (this->rr_groups_->find (const_cast<char *> (id),
                                   this->mem_pool_) == 0)
         ACE_THROW_RETURN (Load_Balancer::duplicate_group (),
                           Load_Balancer::Object_Group::_nil ());
@@ -364,10 +364,10 @@ Object_Group_Factory_i::resolve (const char * id
 
   char *ior = 0;
 
-  if (rr_groups_->find (ACE_const_cast (char *, id),
+  if (rr_groups_->find (const_cast<char *> (id),
                         ior,
                         this->mem_pool_) == -1
-      && random_groups_->find (ACE_const_cast (char *, id),
+      && random_groups_->find (const_cast<char *> (id),
                                ior,
                                this->mem_pool_) == -1)
     ACE_THROW_RETURN (Load_Balancer::no_such_group (),
@@ -631,8 +631,7 @@ Object_Group_i::bind (const Load_Balancer::Member & member
     }
 
   // Check whether the element already exists..
-  if (this->members_->find (ACE_const_cast (char *,
-                                            (const char *) member.id),
+  if (this->members_->find (const_cast<char *> ((const char *) member.id),
                             this->allocator_) == 0)
     ACE_THROW (Load_Balancer::duplicate_member ());
 
@@ -718,12 +717,12 @@ Object_Group_i::unbind (const char * id
         }
     }
   // Check to make sure we have it.
-  if (this->members_->find (ACE_const_cast (char *, id),
+  if (this->members_->find (const_cast<char *> (id),
                             this->allocator_) == -1)
     ACE_THROW (Load_Balancer::no_such_member ());
 
   // Remove all entries for this member.
-  this->members_->unbind (ACE_const_cast(char *, id),
+  this->members_->unbind (const_cast<char *> (id),
                           this->allocator_);
 
   if (this->member_id_list_ == 0)
@@ -760,8 +759,7 @@ Object_Group_i::resolve_with_id (const char * id
   CORBA::String_var ior;
 
 
-  if (this->members_->find (ACE_const_cast (char *,
-                                            id),
+  if (this->members_->find (const_cast<char *> (id),
                       ior.out (), this->allocator_) == -1)
     ACE_THROW_RETURN (Load_Balancer::no_such_member (),
                       0);
@@ -969,12 +967,12 @@ RR_Object_Group::unbind (const char *id
     }
 
   // Check to make sure we have it.
-  if (this->members_->find (ACE_const_cast (char *,id),
+  if (this->members_->find (const_cast<char *> (id),
                             this->allocator_) == -1)
     ACE_THROW (Load_Balancer::no_such_member ());
 
   // Remove all entries for this member.
-  this->members_->unbind (ACE_const_cast (char *, id),
+  this->members_->unbind (const_cast<char *> (id),
                           this->allocator_);
 
   // As we remove the id from the <member_id_list>, we note the

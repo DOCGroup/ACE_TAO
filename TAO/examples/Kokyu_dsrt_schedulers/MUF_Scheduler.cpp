@@ -332,8 +332,7 @@ MUF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
       sc_qos_as_any <<= sc_qos;
 
       sc.context_data =
-        ACE_reinterpret_cast(CORBA::OctetSeq &,
-                             *codec_->encode (sc_qos_as_any));
+        reinterpret_cast<CORBA::OctetSeq &> (*codec_->encode (sc_qos_as_any));
       
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG,
@@ -540,8 +539,7 @@ MUF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
       CORBA::Any sc_qos_as_any;
       sc_qos_as_any <<= sc_qos;
 
-      sc.context_data = ACE_reinterpret_cast(CORBA::OctetSeq &,
-                                             *codec_->encode (sc_qos_as_any));
+      sc.context_data = reinterpret_cast<CORBA::OctetSeq &> (*codec_->encode (sc_qos_as_any));
 
       // Add this context to the service context list.
       ri->add_reply_service_context (sc, 1 ACE_ENV_ARG_PARAMETER);

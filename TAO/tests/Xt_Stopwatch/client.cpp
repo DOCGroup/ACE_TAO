@@ -108,7 +108,7 @@ Client::parse_args (int argc,
 void
 Client::add_callback (Control &ctrl)
 {
-  XtPointer client_data = ACE_static_cast (XtPointer, this);
+  XtPointer client_data = static_cast<XtPointer> (this);
 
   // Register callbacks, specifying the object's instance pointer as
   // client data.
@@ -128,8 +128,7 @@ Client::start_callback (Widget /*widget*/,
                         XtPointer client_data,
                         XtPointer)
 {
-  Client *self = ACE_static_cast (Client *,
-                                  client_data);
+  Client *self = static_cast<Client *> (client_data);
   self->start_hook ();
 }
 
@@ -138,8 +137,7 @@ Client::stop_callback (Widget /*widget*/,
                        XtPointer client_data,
                        XtPointer )
 {
-  Client *self = ACE_static_cast (Client *,
-                                  client_data);
+  Client *self = static_cast<Client *> (client_data);
   self->stop_hook ();
 }
 

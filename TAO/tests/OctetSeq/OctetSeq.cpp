@@ -128,13 +128,13 @@ run (char* buf, size_t bufsize,
       ACE_Time_Value wtv;
       writing.elapsed_time_incr (wtv);
       ACE_hrtime_t wusecs = wtv.sec ();
-      wusecs *= ACE_static_cast (ACE_UINT32, ACE_ONE_SECOND_IN_USECS);
+      wusecs *= static_cast<ACE_UINT32> (ACE_ONE_SECOND_IN_USECS);
       wusecs += wtv.usec ();
 
       ACE_Time_Value rtv;
       reading.elapsed_time_incr (rtv);
       ACE_hrtime_t rusecs = rtv.sec ();
-      rusecs *= ACE_static_cast (ACE_UINT32, ACE_ONE_SECOND_IN_USECS);
+      rusecs *= static_cast<ACE_UINT32> (ACE_ONE_SECOND_IN_USECS);
       rusecs += rtv.usec ();
 
       double write_average = ACE_U64_TO_U32(wusecs) / m;

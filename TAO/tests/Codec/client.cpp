@@ -123,7 +123,7 @@ main (int argc, char *argv[])
                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if ((ACE_reinterpret_cast (ptrdiff_t, encoded_data->get_buffer ())
+      if ((reinterpret_cast<ptrdiff_t> (encoded_data->get_buffer ())
 	     % ACE_CDR::MAX_ALIGNMENT) == 0)
 	    ACE_DEBUG ((LM_DEBUG,
 		        "\nData for decoding are already aligned"
@@ -160,7 +160,7 @@ main (int argc, char *argv[])
                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if ((ACE_reinterpret_cast (ptrdiff_t, encoded_data->get_buffer ())
+      if ((reinterpret_cast<ptrdiff_t> (encoded_data->get_buffer ())
 	     % ACE_CDR::MAX_ALIGNMENT) == 0)
 	    ACE_DEBUG ((LM_WARNING,
                         "\n"

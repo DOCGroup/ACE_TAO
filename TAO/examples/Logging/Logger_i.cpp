@@ -85,10 +85,9 @@ Logger_i::priority_conversion (Logger::Log_Priority priority)
     return LM_MAX;
   else
     {
-      int pval = ACE_static_cast (int, priority);
+      int pval = static_cast<int> (priority);
 
-      return ACE_static_cast (ACE_Log_Priority,
-                              1 << pval);
+      return static_cast<ACE_Log_Priority> (1 << pval);
       // (1 << pval) == 2^pval. <ACE_Log_Priority> are powers of 2.
     }
 }
@@ -169,9 +168,8 @@ Logger_i::logv (const Logger::Log_Record &log_rec,
 
   // The constructor for <ACE_INET_Addr> requires a port number, which
   // is not relevant in this context, so we give it 0.
-  ACE_INET_Addr addy (ACE_static_cast (u_short, 0),
-                      ACE_static_cast (ACE_UINT32,
-                                       addr));
+  ACE_INET_Addr addy (static_cast<u_short> (0),
+                      static_cast<ACE_UINT32> (addr));
 
   // Create a buffer and fill it with the host name of the logger
   ACE_TCHAR namebuf[MAXHOSTNAMELEN + 1];
