@@ -97,6 +97,16 @@
 #     endif /* defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) */
 #     define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 
+#     if defined (ACE_NEW_THROWS_EXCEPTIONS)
+#       undef ACE_NEW_THROWS_EXCEPTIONS
+#     endif /* defined (ACE_NEW_THROWS_EXCEPTIONS) */
+#     define ACE_NEW_THROWS_EXCEPTIONS 1
+
+#     if defined (ACE_HAS_ANSI_CASTS)
+#       undef ACE_HAS_ANSI_CASTS
+#     endif /* defined (ACE_HAS_ANSI_CASTS) */
+#     define ACE_HAS_ANSI_CASTS 1
+
 #   endif /* (__BORLANDC__ >= 0x0530) */
 
 /*
@@ -147,6 +157,12 @@
 #     if defined (ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR)
 #       undef ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 #     endif /* defined (ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR) */
+
+      /* include only forward declaration of iostreams */
+#     if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
+#       undef ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION
+#     endif /* defined (ACE_HAS_STDCPP_STL_INCLUDES) */
+#     define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION 1
 
       /* need to ensure these are included before <iomanip> */
 #     include <time.h>
