@@ -1,3 +1,11 @@
+Wed Dec 24 11:42:16 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/FaultTolerance.bor:
+	* orbsvcs/orbsvcs/FT_ClientORB.bor:
+	* orbsvcs/orbsvcs/FT_ServerORB.bor:
+	* orbsvcs/orbsvcs/FTORB_Utils.bor:
+	  Added missing libraries
+
 Wed Dec 24 11:18:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/ORT/ORT.mpc:
