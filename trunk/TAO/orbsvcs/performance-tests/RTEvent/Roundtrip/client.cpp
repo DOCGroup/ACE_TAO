@@ -25,6 +25,7 @@
 #include "ace/Basic_Stats.h"
 #include "ace/Stats.h"
 #include "ace/Sched_Params.h"
+#include "ace/Barrier.h"
 
 ACE_RCSID(TAO_RTEC_PERF_Roundtrip, client, "$Id$")
 
