@@ -32,8 +32,6 @@ Demux_Test_Server::Demux_Test_Server (void)
 // destructor
 Demux_Test_Server::~Demux_Test_Server (void)
 {
-  CORBA::ULong i, j;
-
   ACE_OS::fclose (this->poa_fp_);
   ACE_OS::fclose (this->ior_fp_);
 }

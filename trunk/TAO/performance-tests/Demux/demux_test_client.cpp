@@ -347,15 +347,15 @@ Demux_Test_Client::run_random_test (CORBA::Environment &env)
 
   m = 0;
   // set the random number generator seed
-  srand48 (ACE_OS::time ());
+  ACE_OS::srand (ACE_OS::time ());
   for (i = 0; i < this->loop_count_; ++i)
     for (j = 0; j < this->num_POAs_; ++j)
       for (k = 0; k < this->num_objs_; ++k)
         for (l = 0; l < this->num_ops_; ++l)
           {
-            p = lrand48 () % this->num_POAs_;
-            q = lrand48 () % this->num_objs_;
-            r = lrand48 () % this->num_ops_;
+            p = ACE_OS::rand () % this->num_POAs_;
+            q = ACE_OS::rand () % this->num_objs_;
+            r = ACE_OS::rand () % this->num_ops_;
             start = ACE_OS::gethrtime ();
 
             // invoke the method
