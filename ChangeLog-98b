@@ -1,22 +1,29 @@
+Thu Jul 09 09:37:43 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Basic_Types: for LONG_LONG size determination, don't use
+          ULONGLONG_MAX ifdef __GNUG__.  This change should fix a build
+          problem on g++/Irix 6.4.  Thanks to Johan Lundin <johan@lundin.com>
+          for reporting the problem.
+
 Wed Jul 08 17:47:48 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Strategies_T (ACE_Scheduling_Strategy,
- 	  ACE_Schedule_All_Reactive_Strategy, and
- 	  ACE_Schedule_All_Threaded_Strategy): The code in these classes
- 	  was screwed up. The base class (ACE_Scheduling_Strategy) was
- 	  keeping a pointer to the SVC_HANDLER in order to enable the
- 	  derived classes to get to the Reactor and Thread Manager. Also,
- 	  if the user did not pass in an instance of SVC_HANDLER, one was
- 	  created dynamically ;-( Another problem was that the Reactor
- 	  field was set on the SVC_HANDLER, but the SVC_HANDLER was never
- 	  registered with the Reactor. So when the SVC_HANDLER was
- 	  deleted, it tried to remove itself from a potentially
- 	  non-existent Reactor.
+        * ace/Strategies_T (ACE_Scheduling_Strategy,
+          ACE_Schedule_All_Reactive_Strategy, and
+          ACE_Schedule_All_Threaded_Strategy): The code in these classes
+          was screwed up. The base class (ACE_Scheduling_Strategy) was
+          keeping a pointer to the SVC_HANDLER in order to enable the
+          derived classes to get to the Reactor and Thread Manager. Also,
+          if the user did not pass in an instance of SVC_HANDLER, one was
+          created dynamically ;-( Another problem was that the Reactor
+          field was set on the SVC_HANDLER, but the SVC_HANDLER was never
+          registered with the Reactor. So when the SVC_HANDLER was
+          deleted, it tried to remove itself from a potentially
+          non-existent Reactor.
 
-	  Solution: Removed scheduler_ as protected member of the base
- 	  class.  Added thr_mgr_ to ACE_Schedule_All_Threaded_Strategy and
- 	  reactor_ to ACE_Schedule_All_Reactive_Strategy.  Now these
- 	  classes do not need the scheduler_ member anymore.
+          Solution: Removed scheduler_ as protected member of the base
+          class.  Added thr_mgr_ to ACE_Schedule_All_Threaded_Strategy and
+          reactor_ to ACE_Schedule_All_Reactive_Strategy.  Now these
+          classes do not need the scheduler_ member anymore.
 
 Wed Jul  8 13:47:02 1998  David L. Levine  <levine@cs.wustl.edu>
 
