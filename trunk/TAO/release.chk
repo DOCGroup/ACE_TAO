@@ -55,11 +55,11 @@ Legend:
 [11xxx ] 	DII short
 [11xxx ] 	DII ubstring
 [11xxx ] 	DII fixed_struct
-[x0xxx ] 	DII strseq
-[x0xxx ] 	DII var_struct
-[x0xxx ] 	DII nested_struct
-[x0xxx ] 	DII struct_seq
-[x0xxx ] 	DII objref
+[00xxx ] 	DII strseq
+[00xxx ] 	DII var_struct
+[00xxx ] 	DII nested_struct
+[00xxx ] 	DII struct_seq
+[00xxx ] 	DII objref
 
 [0x0x0 ] Thruput/TAO compiles
 
