@@ -153,7 +153,7 @@ TAO_FT_Service_Callbacks::object_is_nil (CORBA::Object_ptr obj)
 CORBA::Policy_ptr
 TAO_FT_Service_Callbacks::service_create_policy (
     CORBA::PolicyType type,
-    CORBA::Any &val,
+    const CORBA::Any &val,
     CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
