@@ -1,3 +1,12 @@
+Fri Mar 02 08:13:34 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/ForwardRequest/Makefile
+	  (TAO_IDLFLAGS):
+
+	  Define the "CORBA3" preprocessor macro to make sure that the
+	  "local" keyword is enabled in the `tao/PortableInterceptor.pidl'
+	  file included by `ServerRequestInterceptor.idl'.
+
 Fri Mar 02 07:40:28 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/ForwardRequest/ServerRequestInterceptor.idl:
