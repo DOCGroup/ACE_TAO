@@ -92,7 +92,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/BankC.o .obj/BankC.o .obj/BankC.o .obj/BankC.o: BankC.cpp BankC.h \
+.obj/BankC.o .obj/BankC.so .shobj/BankC.o .shobj/BankC.so: BankC.cpp BankC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -366,7 +366,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  BankC.i
 
-.obj/BankS.o .obj/BankS.o .obj/BankS.o .obj/BankS.o: BankS.cpp BankS.h BankC.h \
+.obj/BankS.o .obj/BankS.so .shobj/BankS.o .shobj/BankS.so: BankS.cpp BankS.h BankC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -670,7 +670,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp Bank_Client_i.h ../Simple_util.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Bank_Client_i.h ../Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -987,7 +987,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IORTable/IORTableC.i \
  BankC.h BankC.i
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp ../Simple_util.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp ../Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -1305,7 +1305,7 @@ realclean: clean
  AccountManager_i.h BankS.h BankC.h BankC.i BankS_T.h BankS_T.i \
  BankS_T.cpp BankS.i Account_i.h
 
-.obj/Account_i.o .obj/Account_i.o .obj/Account_i.o .obj/Account_i.o: Account_i.cpp Account_i.h BankS.h BankC.h \
+.obj/Account_i.o .obj/Account_i.so .shobj/Account_i.o .shobj/Account_i.so: Account_i.cpp Account_i.h BankS.h BankC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1588,7 +1588,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  BankS_T.h BankS_T.i BankS_T.cpp BankS.i
 
-.obj/AccountManager_i.o .obj/AccountManager_i.o .obj/AccountManager_i.o .obj/AccountManager_i.o: AccountManager_i.cpp AccountManager_i.h \
+.obj/AccountManager_i.o .obj/AccountManager_i.so .shobj/AccountManager_i.o .shobj/AccountManager_i.so: AccountManager_i.cpp AccountManager_i.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1873,7 +1873,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  BankS_T.h BankS_T.i BankS_T.cpp BankS.i Account_i.h
 
-.obj/Bank_Client_i.o .obj/Bank_Client_i.o .obj/Bank_Client_i.o .obj/Bank_Client_i.o: Bank_Client_i.cpp Bank_Client_i.h ../Simple_util.h \
+.obj/Bank_Client_i.o .obj/Bank_Client_i.so .shobj/Bank_Client_i.o .shobj/Bank_Client_i.so: Bank_Client_i.cpp Bank_Client_i.h ../Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -2190,7 +2190,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IORTable/IORTableC.i \
  BankC.h BankC.i
 
-.obj/Simple_util.o .obj/Simple_util.o .obj/Simple_util.o .obj/Simple_util.o: ../Simple_util.cpp ../Simple_util.h \
+.obj/Simple_util.o .obj/Simple_util.so .shobj/Simple_util.o .shobj/Simple_util.so: ../Simple_util.cpp ../Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \

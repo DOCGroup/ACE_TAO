@@ -63,7 +63,7 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Disconnect.o .obj/Disconnect.o .obj/Disconnect.o .obj/Disconnect.o: Disconnect.cpp ../lib/Counting_Supplier.h \
+.obj/Disconnect.o .obj/Disconnect.so .shobj/Disconnect.o .shobj/Disconnect.so: Disconnect.cpp ../lib/Counting_Supplier.h \
  ../lib/cectest_export.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -383,7 +383,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.i
 
-.obj/MT_Disconnect.o .obj/MT_Disconnect.o .obj/MT_Disconnect.o .obj/MT_Disconnect.o: MT_Disconnect.cpp MT_Disconnect.h \
+.obj/MT_Disconnect.o .obj/MT_Disconnect.so .shobj/MT_Disconnect.o .shobj/MT_Disconnect.so: MT_Disconnect.cpp MT_Disconnect.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -698,7 +698,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.i
 
-.obj/Push_Event.o .obj/Push_Event.o .obj/Push_Event.o .obj/Push_Event.o: Push_Event.cpp ../lib/Counting_Consumer.h \
+.obj/Push_Event.o .obj/Push_Event.so .shobj/Push_Event.o .shobj/Push_Event.so: Push_Event.cpp ../lib/Counting_Consumer.h \
  ../lib/cectest_export.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -1013,7 +1013,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.i
 
-.obj/Pull_Push_Event.o .obj/Pull_Push_Event.o .obj/Pull_Push_Event.o .obj/Pull_Push_Event.o: Pull_Push_Event.cpp ../lib/Counting_Consumer.h \
+.obj/Pull_Push_Event.o .obj/Pull_Push_Event.so .shobj/Pull_Push_Event.o .shobj/Pull_Push_Event.so: Pull_Push_Event.cpp ../lib/Counting_Consumer.h \
  ../lib/cectest_export.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -1328,7 +1328,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.i
 
-.obj/Shutdown.o .obj/Shutdown.o .obj/Shutdown.o .obj/Shutdown.o: Shutdown.cpp ../lib/Counting_Consumer.h \
+.obj/Shutdown.o .obj/Shutdown.so .shobj/Shutdown.o .shobj/Shutdown.so: Shutdown.cpp ../lib/Counting_Consumer.h \
  ../lib/cectest_export.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -1643,7 +1643,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.i
 
-.obj/Random.o .obj/Random.o .obj/Random.o .obj/Random.o: Random.cpp Random.h \
+.obj/Random.o .obj/Random.so .shobj/Random.o .shobj/Random.so: Random.cpp Random.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \

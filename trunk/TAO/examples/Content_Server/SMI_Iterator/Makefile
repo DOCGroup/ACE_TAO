@@ -78,7 +78,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Content_Iterator_i.o .obj/Content_Iterator_i.o .obj/Content_Iterator_i.o .obj/Content_Iterator_i.o: Content_Iterator_i.cpp \
+.obj/Content_Iterator_i.o .obj/Content_Iterator_i.so .shobj/Content_Iterator_i.o .shobj/Content_Iterator_i.so: Content_Iterator_i.cpp \
  $(ACE_ROOT)/ace/FILE_Connector.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/FILE_IO.h \
@@ -374,7 +374,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  Web_ServerS_T.h Web_ServerS_T.i Web_ServerS_T.cpp Web_ServerS.i
 
-.obj/Iterator_Factory_i.o .obj/Iterator_Factory_i.o .obj/Iterator_Factory_i.o .obj/Iterator_Factory_i.o: Iterator_Factory_i.cpp Content_Iterator_i.h \
+.obj/Iterator_Factory_i.o .obj/Iterator_Factory_i.so .shobj/Iterator_Factory_i.o .shobj/Iterator_Factory_i.so: Iterator_Factory_i.cpp Content_Iterator_i.h \
  $(ACE_ROOT)/ace/FILE_Addr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Addr.h \
@@ -669,7 +669,7 @@ realclean: clean
  Web_ServerS_T.h Web_ServerS_T.i Web_ServerS_T.cpp Web_ServerS.i \
  Iterator_Factory_i.h
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -956,7 +956,7 @@ realclean: clean
  Web_ServerS_T.h Web_ServerS_T.i Web_ServerS_T.cpp Web_ServerS.i \
  Iterator_Factory_i.h
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(ACE_ROOT)/ace/FILE_Connector.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/FILE_IO.h \

@@ -122,11 +122,11 @@ Notify_Service::startup (int argc, char *argv[],
       CORBA::Object_var table_object =
         this->orb_->resolve_initial_references ("IORTable",
                                                 ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
 
       IORTable::Table_var adapter =
         IORTable::Table::_narrow (table_object.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
       if (CORBA::is_nil (adapter.in ()))
         {
           ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
@@ -136,10 +136,10 @@ Notify_Service::startup (int argc, char *argv[],
           CORBA::String_var ior =
             this->orb_->object_to_string (this->notify_factory_.in (),
                                           ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          ACE_CHECK;
           adapter->bind (this->notify_factory_name_.c_str (), ior.in (),
                          ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          ACE_CHECK;
         }
     }
 

@@ -55,7 +55,7 @@ CPPFLAGS += -I$(TAO_ROOT)
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/IORC.o .obj/IORC.o .obj/IORC.o .obj/IORC.o: IORC.cpp IORC.h \
+.obj/IORC.o .obj/IORC.so .shobj/IORC.o .shobj/IORC.so: IORC.cpp IORC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -206,7 +206,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i
 
-.obj/IORManip_Loader.o .obj/IORManip_Loader.o .obj/IORManip_Loader.o .obj/IORManip_Loader.o: IORManip_Loader.cpp IORManip_Loader.h \
+.obj/IORManip_Loader.o .obj/IORManip_Loader.so .shobj/IORManip_Loader.o .shobj/IORManip_Loader.so: IORManip_Loader.cpp IORManip_Loader.h \
  $(ACE_ROOT)/ace/pre.h \
  ior_manip_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -339,7 +339,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i
 
-.obj/IORManipulation.o .obj/IORManipulation.o .obj/IORManipulation.o .obj/IORManipulation.o: IORManipulation.cpp IORManipulation.h \
+.obj/IORManipulation.o .obj/IORManipulation.so .shobj/IORManipulation.o .shobj/IORManipulation.so: IORManipulation.cpp IORManipulation.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/corbafwd.h \

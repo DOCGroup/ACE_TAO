@@ -58,7 +58,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp Admin_Client.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Admin_Client.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -331,7 +331,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i
 
-.obj/Admin_Client.o .obj/Admin_Client.o .obj/Admin_Client.o .obj/Admin_Client.o: Admin_Client.cpp Admin_Client.h \
+.obj/Admin_Client.o .obj/Admin_Client.so .shobj/Admin_Client.o .shobj/Admin_Client.so: Admin_Client.cpp Admin_Client.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \

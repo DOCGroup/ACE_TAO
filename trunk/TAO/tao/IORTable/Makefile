@@ -53,7 +53,7 @@ CPPFLAGS += -I$(TAO_ROOT)
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/IORTable.o .obj/IORTable.o .obj/IORTable.o .obj/IORTable.o: IORTable.cpp IORTable.h \
+.obj/IORTable.o .obj/IORTable.so .shobj/IORTable.o .shobj/IORTable.so: IORTable.cpp IORTable.h \
  $(ACE_ROOT)/ace/pre.h \
  iortable_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -329,7 +329,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/BoundsC.i \
  IORTableC.i Table_Adapter.h
 
-.obj/IORTableC.o .obj/IORTableC.o .obj/IORTableC.o .obj/IORTableC.o: IORTableC.cpp IORTableC.h \
+.obj/IORTableC.o .obj/IORTableC.so .shobj/IORTableC.o .shobj/IORTableC.so: IORTableC.cpp IORTableC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -603,7 +603,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/BoundsC.i \
  iortable_export.h IORTableC.i
 
-.obj/Table_Adapter.o .obj/Table_Adapter.o .obj/Table_Adapter.o .obj/Table_Adapter.o: Table_Adapter.cpp Table_Adapter.h \
+.obj/Table_Adapter.o .obj/Table_Adapter.so .shobj/Table_Adapter.o .shobj/Table_Adapter.so: Table_Adapter.cpp Table_Adapter.h \
  $(ACE_ROOT)/ace/pre.h \
  iortable_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -879,7 +879,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/BoundsC.i \
  IORTableC.i
 
-.obj/IOR_Table_Impl.o .obj/IOR_Table_Impl.o .obj/IOR_Table_Impl.o .obj/IOR_Table_Impl.o: IOR_Table_Impl.cpp IOR_Table_Impl.h \
+.obj/IOR_Table_Impl.o .obj/IOR_Table_Impl.so .shobj/IOR_Table_Impl.o .shobj/IOR_Table_Impl.so: IOR_Table_Impl.cpp IOR_Table_Impl.h \
  $(ACE_ROOT)/ace/pre.h \
  IORTable.h iortable_export.h \
  $(ACE_ROOT)/ace/post.h \
