@@ -33,6 +33,13 @@ be_visitor_amh_interface_sh::~be_visitor_amh_interface_sh (void)
 int
 be_visitor_amh_interface_sh::visit_interface (be_interface *node)
 {
+  if (node->srv_hdr_gen () || node->imported () || node->is_local ())
+    return 0;
+
+  // Do not generate AMH classes for any sort of implied IDL.
+  if (node->original_interface () != 0)
+    return 0;
+
   TAO_OutStream *os = this->ctx_->stream (); // output stream
 
   ACE_CString class_name; // holds the class name
@@ -40,8 +47,6 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
   os->indent ();
 
   // We shall have a POA_ prefix only if we are at the topmost level.
-  // In AMH, only interfaces are Asynchronous, not modules, so this 
-  // should be unnecessary but we retain it anyways.
   if (!node->is_nested ())
     {
       // We are outermost.
@@ -358,13 +363,14 @@ be_visitor_amh_interface_sh::this_method (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  ACE_CString non_amh_name = "    ";
-  non_amh_name += node->client_enclosing_scope ();
-  non_amh_name += node->original_interface ()->local_name ();
+  ACE_CString non_amh_name = node->client_enclosing_scope ();
+  non_amh_name += node->local_name ();
 
-  // Print out the _this() method.
-  *os << "// Special _this method for AMH! \n"
-      << non_amh_name.c_str () << " *_this (" << be_idt << be_idt_nl
+  // Print out the _this() method.  The _this() method for AMH
+  // interfaces is "special", because the returned type is not exactly
+  // the type of the class, but the original class that "implied" the
+  // AMH one.
+  *os << non_amh_name.c_str () << " *_this (" << be_idt << be_idt_nl
       << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
       << "TAO_default_environment ()"
       << be_uidt << be_uidt_nl

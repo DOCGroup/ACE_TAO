@@ -77,8 +77,8 @@
 #include "be_visitor_operation/direct_proxy_impl_ss.cpp"
 
 // AMH
-//#include "be_visitor_operation/amh_ss.cpp"
-//#include "be_visitor_operation/amh_sh.cpp"
+#include "be_visitor_operation/amh_ss.cpp"
+#include "be_visitor_operation/amh_sh.cpp"
 #include "be_visitor_operation/amh_rh_ss.cpp"
 #include "be_visitor_operation/amh_rh_sh.cpp"
 

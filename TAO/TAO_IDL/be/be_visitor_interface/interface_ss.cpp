@@ -23,7 +23,7 @@
 #include        "be.h"
 
 #include "be_visitor_interface.h"
-
+#include "ace/SString.h"
 
 ACE_RCSID(be_visitor_interface, interface_ss, "$Id$")
 
@@ -47,12 +47,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   if (node->srv_skel_gen () || node->imported () || node->is_local ())
     return 0;
 
-  // if we are to generate AMH classes, do it now
-  if (be_global->gen_amh_classes ())
-    {
-      //be_visitor_amh_interface_ss amh_intf (this->ctx_);
-      //amh_intf.visit_interface (node);
-    }
+  if (this->generate_amh_classes (node) == -1)
+    return -1;
 
   // Generate the normal skeleton as usual
 
@@ -71,143 +67,27 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                         -1);
     }
 
-  // Strategized Proxy Broker Implementation
-  be_visitor *visitor = 0;
-  be_visitor_context ctx;
+  if (this->generate_proxy_classes (node) == -1)
+    return -1;
 
-  // Interceptor classes
-
-  ctx = *this->ctx_;
-  visitor = 0;
-
-  ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (node->accept (visitor) == -1))
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_cs::"
-                         "visit_interface - "
-                         "codegen for interceptors classes failed\n"),
-                        -1);
-    }
-  delete visitor;
-  visitor = 0;
-
-  if (be_global->gen_thru_poa_collocation () ||
-      be_global->gen_direct_collocation ())
-    {
-      ctx =  (*this->ctx_);
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_STRATEGIZED_PROXY_BROKER_SS);
-      visitor = tao_cg->make_visitor (&ctx);
-
-      if (!visitor || (node->accept (visitor) == -1))
-        {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_cs::"
-                             "visit_interface - "
-                             "codegen for Base Proxy Broker class failed\n"),
-                            -1);
-        }
-      delete visitor;
-
-      // Proxy Broker  Factory Function.
-      *os << be_nl
-          << node->full_base_proxy_broker_name () << " *" << be_nl
-          << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
-          << "_Factory_function (CORBA::Object_ptr obj)" << be_nl
-          << "{" << be_idt_nl // idt = 1
-          << "ACE_UNUSED_ARG (obj);" << be_nl
-          << "return ::"
-          << node->full_strategized_proxy_broker_name ()
-          << "::" <<"the"
-          << node->strategized_proxy_broker_name ()
-          << "();" << be_uidt_nl // idt = 0
-          << "}" << be_nl << be_nl;
-
-      // Proxy Broker Function Pointer Initializer.
-      *os << "int" << be_nl
-          << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
-          << "_Factory_Initializer (long)" << be_nl
-          << "{" << be_idt_nl // idt = 1
-          << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
-          << "_Factory_function_pointer = "
-          << be_idt_nl  // idt = 2
-          << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
-          << "_Factory_function;"
-          << be_uidt_nl // idt = 1
-          << be_nl
-          << "return 0;" << be_uidt_nl // idt = 0
-          << "}" << be_nl << be_nl;
-
-
-      *os << "static int " <<  node->flat_client_enclosing_scope ()
-          << node->base_proxy_broker_name ()
-          << "_Stub_Factory_Initializer_Scarecrow = " << be_idt_nl
-          << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
-          << "_Factory_Initializer (ACE_reinterpret_cast (long, "
-          << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
-          << "_Factory_Initializer));"
-          << be_uidt_nl << be_nl;
-    }
-
-
-  // Proxy Impl Implementations.
-  if (be_global->gen_thru_poa_collocation ())
-    {
-      visitor = 0;
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SS);
-      visitor = tao_cg->make_visitor (&ctx);
-
-      if (!visitor || (node->accept (visitor) == -1))
-        {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_cs::"
-                             "visit_interface - "
-                             "codegen for Base Proxy Broker class failed\n"),
-                            -1);
-        }
-      delete visitor;
-    }
-  if (be_global->gen_direct_collocation ())
-    {
-      visitor = 0;
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS);
-      visitor = tao_cg->make_visitor (&ctx);
-
-      if (!visitor || (node->accept (visitor) == -1))
-        {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_cs::"
-                             "visit_interface - "
-                             "codegen for Base Proxy Broker class failed\n"),
-                            -1);
-        }
-      delete visitor;
-    }
-
-  os->decr_indent (0);
-
-  // constructor
-  *os << "// skeleton constructor\n";
-  // find if we are at the top scope or inside some module
+  *os << "// TAO_IDL - Generated from " << __FILE__ << ":" << __LINE__ << "\n";
+  
+  // Find if we are at the top scope or inside some module,
+  // pre-compute the prefix that must be added to the local name in
+  // each case.
+  const char *local_name_prefix = "";
   if (!node->is_nested ())
     {
-      // we are outermost. So the POA_ prefix is prepended to our name
-      *os << node->full_skel_name () << "::POA_" << node->local_name ()
-          << " (void)\n";
+      local_name_prefix = "POA_";
     }
-  else
-    {
-      // the POA_ prefix is prepended to our outermost module name
-      *os << node->full_skel_name () << "::" << node->local_name ()
-          << " (void)\n";
-    }
+
+  ACE_CString node_local_name_holder =
+    this->generate_local_name (node);
+  const char *node_local_name = node_local_name_holder.c_str ();
+
+  *os << node->full_skel_name () << "::"
+      << local_name_prefix << node_local_name
+      << " (void)\n";
 
   // Generate optable
   *os << "{" << be_idt_nl
@@ -215,24 +95,13 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "_optable;" << be_uidt_nl
       << "}\n\n";
 
-  *os << "// copy ctor\n";
   // find if we are at the top scope or inside some module
-  if (!node->is_nested ())
-    {
-      // we are outermost. So the POA_ prefix is prepended to our name
-      *os << node->full_skel_name () << "::POA_"
-          << node->local_name () << " ("
-          << "const POA_" << node->local_name () << "& rhs)";
-    }
-  else
-    {
-      // the POA_ prefix is prepended to our outermost module name
-      *os << node->full_skel_name () << "::"
-          << node->local_name () << " (const "
-          << node->local_name () << "& rhs)";
-    }
+  *os << node->full_skel_name () << "::"
+      << local_name_prefix << node_local_name << " ("
+      << "const " << local_name_prefix << node_local_name << "& rhs)";
   *os << be_idt_nl
       << ": ";
+
   if (node->traverse_inheritance_graph
       (be_interface::copy_ctor_helper, os) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -241,20 +110,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "  TAO_ServantBase (rhs)" << be_uidt_nl
       << "{}" << be_nl << be_nl;
 
-  *os << "// skeleton destructor" << be_nl;
-
-  if (!node->is_nested ())
-    {
-      // we are outermost. So the POA_ prefix is prepended to our name
-      *os << node->full_skel_name () << "::~POA_" << node->local_name () <<
-        " (void)" << be_nl;
-    }
-  else
-    {
-      // the POA_ prefix is prepended to our outermost module name
-      *os << node->full_skel_name () << "::~" << node->local_name () <<
-        " (void)" << be_nl;
-    }
+  *os << node->full_skel_name () << "::~"
+      << local_name_prefix << node_local_name
+      << " (void)" << be_nl;
   *os << "{" << be_nl;
   *os << "}\n\n";
 
@@ -436,62 +294,6 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   this->this_method (node);
 
-  // the _create_collocated_objref method.  If the idl compiler does
-  // not generate the type of collocated stub but the orb is asking
-  // for it, simply return null so a remote stub will be used.
-  // generate the collocated class impl
-
-  /*
-  if (be_global->gen_thru_poa_collocation ())
-    {
-      be_visitor_context ctx (*this->ctx_);
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_ss::"
-                             "visit_interface - "
-                             "Bad visitor for thru_poa collocated class\n"),
-                            -1);
-        }
-
-      if (node->accept (visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_ss::"
-                             "visit_interface - "
-                             "codegen for thru_poa collocated class failed\n"),
-                            -1);
-        }
-      delete visitor;
-    }
-
-  if (be_global->gen_direct_collocation ())
-    {
-      be_visitor_context ctx (*this->ctx_);
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_ss::"
-                             "visit_interface - "
-                             "Bad visitor for direct collocated class\n"),
-                            -1);
-        }
-
-      if (node->accept (visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_ss::"
-                             "visit_interface - "
-                             "codegen for direct collocated class failed\n"),
-                            -1);
-        }
-      delete visitor;
-    }
-  */
   *os << "\n\n";
 
   return 0;
@@ -562,4 +364,145 @@ be_visitor_interface_ss::dispatch_method (be_interface *node)
 //  *os << "else" << be_idt_nl;
 //  *os << "skel (req, this, context TAO_ENV_ARG_PARAMETER);" << be_uidt << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
+}
+
+int
+be_visitor_interface_ss::generate_amh_classes (be_interface *node)
+{
+  // if we are to generate AMH classes, do it now
+  if (be_global->gen_amh_classes ())
+    {
+      be_visitor_amh_interface_ss amh_intf (this->ctx_);
+      return amh_intf.visit_interface (node);
+    }
+  return 0;
+}
+
+int
+be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  // Strategized Proxy Broker Implementation
+  be_visitor_context ctx = *this->ctx_;
+
+  ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS);
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor || (node->accept (visitor) == -1))
+    {
+      delete visitor;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_cs::"
+                         "generate_proxy_classes - "
+                         "codegen for interceptors classes failed\n"),
+                        -1);
+    }
+  delete visitor;
+  visitor = 0;
+
+  if (be_global->gen_thru_poa_collocation () ||
+      be_global->gen_direct_collocation ())
+    {
+      ctx =  (*this->ctx_);
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_STRATEGIZED_PROXY_BROKER_SS);
+      visitor = tao_cg->make_visitor (&ctx);
+
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_cs::"
+                             "generate_proxy_classes - "
+                             "codegen for Base Proxy Broker class failed\n"),
+                            -1);
+        }
+      delete visitor;
+
+      // Proxy Broker  Factory Function.
+      *os << be_nl
+          << node->full_base_proxy_broker_name () << " *" << be_nl
+          << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
+          << "_Factory_function (CORBA::Object_ptr obj)" << be_nl
+          << "{" << be_idt_nl // idt = 1
+          << "ACE_UNUSED_ARG (obj);" << be_nl
+          << "return ::"
+          << node->full_strategized_proxy_broker_name ()
+          << "::" <<"the"
+          << node->strategized_proxy_broker_name ()
+          << "();" << be_uidt_nl // idt = 0
+          << "}" << be_nl << be_nl;
+
+      // Proxy Broker Function Pointer Initializer.
+      *os << "int" << be_nl
+          << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
+          << "_Factory_Initializer (long)" << be_nl
+          << "{" << be_idt_nl // idt = 1
+          << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
+          << "_Factory_function_pointer = "
+          << be_idt_nl  // idt = 2
+          << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
+          << "_Factory_function;"
+          << be_uidt_nl // idt = 1
+          << be_nl
+          << "return 0;" << be_uidt_nl // idt = 0
+          << "}" << be_nl << be_nl;
+
+
+      *os << "static int " <<  node->flat_client_enclosing_scope ()
+          << node->base_proxy_broker_name ()
+          << "_Stub_Factory_Initializer_Scarecrow = " << be_idt_nl
+          << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
+          << "_Factory_Initializer (ACE_reinterpret_cast (long, "
+          << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
+          << "_Factory_Initializer));"
+          << be_uidt_nl << be_nl;
+    }
+
+
+  // Proxy Impl Implementations.
+  if (be_global->gen_thru_poa_collocation ())
+    {
+      visitor = 0;
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SS);
+      visitor = tao_cg->make_visitor (&ctx);
+
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_cs::"
+                             "generate_proxy_classes - "
+                             "codegen for Base Proxy Broker class failed\n"),
+                            -1);
+        }
+      delete visitor;
+    }
+  if (be_global->gen_direct_collocation ())
+    {
+      visitor = 0;
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS);
+      visitor = tao_cg->make_visitor (&ctx);
+
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_cs::"
+                             "generate_proxy_classes - "
+                             "codegen for Base Proxy Broker class failed\n"),
+                            -1);
+        }
+      delete visitor;
+    }
+
+  os->decr_indent (0);
+  return 0;
+}
+
+ACE_CString
+be_visitor_interface_ss::generate_local_name (be_interface *node)
+{
+  return ACE_CString (node->local_name ());
 }

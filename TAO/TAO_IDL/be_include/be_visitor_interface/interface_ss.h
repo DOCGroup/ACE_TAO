@@ -29,8 +29,8 @@ class be_visitor_interface_ss : public be_visitor_interface
   //   be_visitor_interface_ss
   //
   // = DESCRIPTION
-  //   This is a concrete visitor to generate the server skeletons for interface
-  //
+  //   This is a concrete visitor to generate the server skeletons for
+  //   interface
   //
 public:
   be_visitor_interface_ss (be_visitor_context *ctx);
@@ -45,6 +45,10 @@ public:
 protected:
   virtual void this_method (be_interface *node);
   virtual void dispatch_method (be_interface *node);
+
+  virtual int generate_amh_classes (be_interface *node);
+  virtual int generate_proxy_classes (be_interface *node);
+  virtual ACE_CString generate_local_name (be_interface *node);
 };
 
 #endif /* _BE_INTERFACE_INTERFACE_SS_H_ */
