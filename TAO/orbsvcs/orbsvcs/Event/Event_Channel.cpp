@@ -7,6 +7,7 @@
 #include "Dispatching_Modules.h"
 #include "Memory_Pools.h"
 #include "EC_Gateway.h"
+#include "Module_Factory.h"
 #include "Event_Channel.h"
 
 // These are to save space.
@@ -218,48 +219,6 @@ public:
     { ::delete [] buf; }
 
   ACE_EventChannel *channel_;
-};
-
-// ************************************************************
-
-class TAO_ORBSVCS_Export ACE_ES_Priority_Timer : public ACE_Event_Handler
-// = TITLE
-//    Event Service Timer
-//
-// = DESCRIPTION
-//    Manages a thread per priority, each of which sits on its own
-//    ReactorEx dispatching the timers for its given priority.
-{
-public:
-  ACE_ES_Priority_Timer (ACE_Task_Manager* task_manager);
-  // Default construction.
-
-  int connected (RtecScheduler::handle_t rt_info);
-  // This allows the Priority Timer to prespawn threads.  Returns 0 on
-  // success, -1 on failure.
-
-  int schedule_timer (RtecScheduler::handle_t rt_info,
-                      const ACE_ES_Timer_ACT *act,
-                      RtecScheduler::OS_Priority preemption_priority,
-                      const RtecScheduler::Time& delta,
-                      const RtecScheduler::Time& interval = ORBSVCS_Time::zero);
-  // Schedule a timer at the appropriate priority for <preemption_priority>.
-  // Returns the preemption priority used on success, -1 on failure.
-
-  int cancel_timer (RtecScheduler::OS_Priority preemption_priority,
-                    int id, ACE_ES_Timer_ACT *&act);
-  // Cancel the timer associated with the priority of
-  // <preemption_priority> and <id>.  <act> is filled in with the
-  // Timer_ACT used when scheduling the timer.  Returns 0 on success,
-  // -1 on failure.
-
-private:
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *act);
-  // Casts <act> to ACE_ES_Timer_ACT and calls execute.
-
-  ACE_Task_Manager* task_manager_;
-  // The pointer to the manager for the timer threads.
 };
 
 // ************************************************************
@@ -610,24 +569,38 @@ ACE_Push_Consumer_Proxy::shutdown (void)
 // ************************************************************
 
 ACE_EventChannel::ACE_EventChannel (CORBA::Boolean activate_threads,
-				    u_long type)
+				    u_long type,
+				    TAO_Module_Factory* factory)
   : rtu_manager_ (0),
     type_ (type),
     state_ (INITIAL_STATE),
-    destroyed_ (0)
+    destroyed_ (0),
+    own_factory_ (0),
+    module_factory_ (factory)
 {
-  consumer_module_ = new ACE_ES_Consumer_Module (this);
-  // RtecEventChannelAdmin::ConsumerAdmin_duplicate(consumer_module_);
+  if (this->module_factory_ == 0)
+    {
+      this->own_factory_ = 1;
+      ACE_NEW (this->module_factory_, TAO_Default_Module_Factory);
+    }
 
-  ACE_NEW (this->task_manager_, ACE_Task_Manager);
+  consumer_module_ =
+    this->module_factory_->create_consumer_module (this);
 
-  ACE_NEW (this->dispatching_module_,
-	   ACE_ES_Priority_Dispatching(this, THREADS_PER_DISPATCH_QUEUE));
+  this->task_manager_ = 
+    this->module_factory_->create_task_manager (this);
 
-  correlation_module_ = new ACE_ES_Correlation_Module (this);
-  subscription_module_ = new ACE_ES_Subscription_Module (this);
-  supplier_module_ = new ACE_ES_Supplier_Module (this);
-  ACE_NEW (this->timer_, ACE_ES_Priority_Timer (this->task_manager_));
+  this->dispatching_module_ = 
+    this->module_factory_->create_dispatching_module(this);
+
+  this->correlation_module_ =
+    this->module_factory_->create_correlation_module (this);
+  this->subscription_module_ =
+    this->module_factory_->create_subscription_module (this);
+  this->supplier_module_ =
+    this->module_factory_->create_supplier_module (this);
+  this->timer_ =
+    this->module_factory_->create_timer_module (this);
 
   consumer_module_->open (dispatching_module_);
   dispatching_module_->open (consumer_module_, correlation_module_);
@@ -658,17 +631,17 @@ ACE_EventChannel::~ACE_EventChannel (void)
   this->dispatching_module_->shutdown ();
   this->task_manager_->shutdown ();
 
-  // @@ TODO: Some of this objects are servants, IMHO we should
-  // deactivate them (there is no implicit deactivation in the POA).
-  delete rtu_manager_;
-  delete consumer_module_;
-  delete dispatching_module_;
-  delete correlation_module_;
-  delete subscription_module_;
-  delete supplier_module_;
-  delete timer_;
 
-  delete this->task_manager_;
+  this->module_factory_->destroy_timer_module (this->timer_);
+  this->module_factory_->destroy_supplier_module (this->supplier_module_);
+  this->module_factory_->destroy_subscription_module (this->subscription_module_);
+  this->module_factory_->destroy_correlation_module (this->correlation_module_);
+  this->module_factory_->destroy_dispatching_module(this->dispatching_module_);
+  this->module_factory_->destroy_task_manager (this->task_manager_);
+  this->module_factory_->destroy_consumer_module (this->consumer_module_);
+
+  if (this->own_factory_)
+    delete this->module_factory_;
 }
 
 void
@@ -717,7 +690,7 @@ ACE_EventChannel::destroy (CORBA::Environment &)
 void
 ACE_EventChannel::activate (void)
 {
-  this->dispatching_module_->activate ();
+  this->dispatching_module_->activate (THREADS_PER_DISPATCH_QUEUE);
   this->task_manager_->activate ();
 }
 

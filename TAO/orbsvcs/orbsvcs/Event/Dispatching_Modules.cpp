@@ -93,7 +93,7 @@ ACE_ES_Dispatch_Request::operator delete (void *mem)
 // ************************************************************
 
 void
-ACE_ES_Dispatching_Base::activate (void)
+ACE_ES_Dispatching_Base::activate (int)
 {
 }
 
@@ -106,13 +106,12 @@ ACE_ES_Dispatching_Base::shutdown (void)
 
 // ************************************************************
 
-ACE_ES_Priority_Dispatching::ACE_ES_Priority_Dispatching (ACE_EventChannel *channel,
-                                                          int threads_per_queue)
+ACE_ES_Priority_Dispatching::ACE_ES_Priority_Dispatching (ACE_EventChannel *channel)
   : ACE_ES_Dispatching_Base (channel),
     notification_strategy_ (this, channel->task_manager ()),
     highest_priority_ (0),
     shutdown_ (0),
-    threads_per_queue_ (threads_per_queue)
+    threads_per_queue_ (0)
 {
   // If we're single threaded, then we need to use the notification strategy.
   if ((threads_per_queue_ == 0) &&
@@ -377,8 +376,9 @@ ACE_ES_Priority_Dispatching::handle_input (ACE_HANDLE)
 }
 
 void
-ACE_ES_Priority_Dispatching::activate (void)
+ACE_ES_Priority_Dispatching::activate (int threads_per_queue)
 {
+  this->threads_per_queue_ = threads_per_queue;
   this->initialize_queues ();
 }
 
@@ -610,7 +610,7 @@ ACE_ES_EFD_Dispatching::push (ACE_ES_Dispatch_Request *request,
 // ************************************************************
 
 ACE_ES_RTU_Dispatching::ACE_ES_RTU_Dispatching (ACE_EventChannel *channel)
-  : ACE_ES_Priority_Dispatching (channel, 0)
+  : ACE_ES_Priority_Dispatching (channel)
 {
 }
 

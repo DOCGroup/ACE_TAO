@@ -86,7 +86,7 @@ public:
   virtual void dispatch_queue_closed (ACE_ES_Dispatch_Queue *q);
   // Called when all the threads of a <q> have exited.
 
-  virtual void activate (void);
+  virtual void activate (int threads_per_queue);
   // This is called by the Event Channel. It will create all the
   // threads and only return once they are all up and running.
 
@@ -371,11 +371,8 @@ class TAO_ORBSVCS_Export ACE_ES_Priority_Dispatching : public ACE_ES_Dispatching
 //    does priority dispatching without preemption.
 {
 public:
-  ACE_ES_Priority_Dispatching (ACE_EventChannel *channel,
-			       int threads_per_queue);
-  // Store <channel>.  Spawns <threads_per_queue> thread for each
-  // dispatch queue.  If != 0, then the channel is an MT_CHANNEL.  If
-  // == 0, then the channel is an ST_CHANNEL.
+  ACE_ES_Priority_Dispatching (ACE_EventChannel *channel);
+  // Store <channel>.
 
   ~ACE_ES_Priority_Dispatching (void);
   // Delete queues.
@@ -396,8 +393,11 @@ public:
 		     CORBA::Environment &);
   // Enqueues the request on the appropriate Dispatch Queue.
 
-  virtual void activate (void);
+  virtual void activate (int threads_per_queue);
   // Open all queues.
+  // Spawns <threads_per_queue> thread for each dispatch queue.
+  // If != 0, then the channel is an MT_CHANNEL.
+  // If == 0, then the channel is an ST_CHANNEL.
 
   virtual void shutdown (void);
   // Closes all queues "asynchronously."  When all queues are closed,
