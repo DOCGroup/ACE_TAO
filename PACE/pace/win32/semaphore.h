@@ -24,9 +24,6 @@ extern "C" {
 
 #ifndef PACE_SEM_T
 #define PACE_SEM_T
-  /* Temporary fix until we emulate these funcs.
-     typedef mqd_t pace_mqd_t;
-   */
   typedef HANDLE pace_sem_t;
 #endif /* PACE_SEM_T */
 
@@ -40,6 +37,10 @@ extern "C" {
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
   int sem_init (pace_sem_t * sem, int pshared, unsigned int value);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  pace_sem_t * sem_open (const char * name, int oflag, ...);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)

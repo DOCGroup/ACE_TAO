@@ -367,9 +367,7 @@ PACE_INLINE
 int
 pace_pthread_equal (pace_pthread_t t1, pace_pthread_t t2)
 {
-  PACE_UNUSED_ARG (t1);
-  PACE_UNUSED_ARG (t2);
-  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
+  return t1 == t2;
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 

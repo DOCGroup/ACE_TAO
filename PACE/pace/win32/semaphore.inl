@@ -48,10 +48,21 @@ pace_sem_getvalue (pace_sem_t * sem, int * sval)
 PACE_INLINE
 int
 pace_sem_init (pace_sem_t * sem,
-                             int pshared,
-                             unsigned int value)
+               int pshared,
+               unsigned int value)
 {
   return sem_init (sem, pshared, value);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+pace_sem_t *
+pace_sem_open (const char * name, int oflag, ...)
+{
+  PACE_UNUSED_ARG (name);
+  PACE_UNUSED_ARG (oflag);
+  return (pace_sem_t)NULL;
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
