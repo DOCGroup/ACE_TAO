@@ -1,3 +1,28 @@
+Mon Dec 23 12:13:51 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv1/Process_Per_Connection_Logging_Server.h: Add
+          'public' keyword to Process_Per_Connection_Logging_Server's
+          inheritance from Logging_Server.
+
+        * examples/C++NPv2/Makefile: Add a $(RM) -rf tempinc after each
+          mkfile make to clean up template instantiations for Visual Age C++
+          on AIX.
+
+        * examples/C++NPv2/Makefile.SLD: Add Logging_Handler to the files
+          comprising this service.
+
+        * examples/C++NPv2/Makefile.SLDex: Added Logging_Acceptor,
+          Logging_Event_Handler, and Logging_Handler to the files for this
+          service. Removed the TEMPINC trick for Visual Age C++ to keep the
+          templates from each compile around for the link stage where they're
+          needed.
+
+        * examples/C++NPv2/Makefile.CLD: Added Logging_Handler to files. Remove
+          TEMPINC destruction from each compile.
+
+        * examples/C++NPv2/Makefile.TPLS: Add Logging_Handler to files. Remove
+          TEMPINC destruction from each compile.
+
 Mon Dec 23 14:05:21 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32-common.h:

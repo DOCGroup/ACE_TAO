@@ -35,10 +35,12 @@ endif # ssl
 .NOTPARALLEL:
 
 ## Makefile.Reactive_Logging_Server.mkfile is a dummy target which will cause
-## $(MAKE) -f Makefile.Reactive_Logging_Server to be invoked
+## $(MAKE) -f Makefile.Reactive_Logging_Server to be invoked, then it cleans
+## up tempinc when needed for AIX Visual Age C++.
 %.mkfile: %
 	@echo $(MAKE) -f $< $(MKFILE_TARGET)
 	@$(MAKE) -f $< $(MKFILE_TARGET)
+	-@$(RM) -rf tempinc
 
 # This rule invokes make again with the list of .mkfile targets as a
 # parameter.  For example, if the all target is being made, make is invoked

@@ -33,7 +33,7 @@ private:
 };
 
 
-class Process_Per_Connection_Logging_Server : Logging_Server
+class Process_Per_Connection_Logging_Server : public Logging_Server
 {
 protected:
   char prog_name_[MAXPATHLEN + 1];
