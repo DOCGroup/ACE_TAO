@@ -34,6 +34,8 @@ Tue Feb 09 10:21:33 1999  David L. Levine  <levine@cs.wustl.edu>
           shared_libs and static_libs enabled, so that individual Makefiles
           don't need a BUILD line.
 
+        * docs/ACE-subsets.html: updated to reflect current ACE status.
+
 Mon Feb 08 14:32:43 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * docs/exceptions.html: Added guidelines of switching from TAO try
