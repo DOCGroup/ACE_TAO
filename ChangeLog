@@ -1,3 +1,16 @@
+Thu Nov 13 17:37:04 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/DEV_Addr.{cpp,i}:
+          Moved #include os_socket.h from .cpp to .i since it is needed
+          there, removed #include SString.h from .i and added
+          OS_NS_string.h and Global_Macros.h, then moved the #include's in
+          .cpp to below the #include of .i so that the inlined and
+          non-inlined builds would behave the same.
+
+        * ace/SString.i:
+          Added #include ACE.h if not already included, e.g., when
+          ACE_TEMPLATES_REQUIRE_SOURCE isn't defined.
+
 Thu Nov 13 17:39:19 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/config-freebsd.h:
