@@ -98,7 +98,7 @@ main (int argc, char *argv[])
           ACE_ERROR ((LM_ERROR, "Error activating server task\n"));
         }
 
-      ACE_Thread_Manager::instance ()->wait ();
+      server_task.thr_mgr ()->wait ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
