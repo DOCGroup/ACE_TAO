@@ -82,13 +82,6 @@ ACE_Strategy_Scheduler::assign_priorities (Dispatch_Entry **dispatches,
   // value the OS and scheduler priorities in 0th dispatch entry
   dispatches[0]->OS_priority (current_OS_priority);
   dispatches[0]->priority (current_scheduler_priority);
-  // set OS priority and Scheduler priority of underlying RT_Info
-  // TBD - assign values into a map of priorities and RT_Infos:
-  // an RT_Info can be dispatched at multiple priorities
-  dispatches [0]->task_entry ().rt_info ()->priority = 
-    current_OS_priority;
-  dispatches [0]->task_entry ().rt_info ()->preemption_priority = 
-    current_scheduler_priority;
 
   // traverse ordered dispatch entry array, assigning priority
   // (array is sorted from highest to lowest priority)
@@ -149,14 +142,6 @@ ACE_Strategy_Scheduler::assign_priorities (Dispatch_Entry **dispatches,
 
     // set scheduler priority of the current dispatch entry
     dispatches[i]->priority (current_scheduler_priority);
-
-    // set OS priority and Scheduler priority of underlying RT_Info
-    // TBD - assign values into a map of priorities and RT_Infos:
-    // an RT_Info can be dispatched at multiple priorities
-    dispatches [i]->task_entry ().rt_info ()->priority = 
-      current_OS_priority;
-    dispatches [i]->task_entry ().rt_info ()->preemption_priority = 
-      current_scheduler_priority;
   }
 
   return status;
@@ -176,12 +161,6 @@ ACE_Strategy_Scheduler::assign_subpriorities (Dispatch_Entry **dispatches,
   u_int static_subpriority_elements = 1;
   dispatches [0]->dynamic_subpriority (dynamic_subpriority_level);
   dispatches [0]->static_subpriority (static_subpriority_level);
-
-  // set static subpriority of underlying RT_Info
-  // TBD - assign values into a map of priorities and RT_Infos:
-  // an RT_Info can be dispatched at multiple priorities
-  dispatches [0]->task_entry ().rt_info ()->preemption_subpriority = 
-    static_subpriority_level;
 
   // advance the static subpriority level
   static_subpriority_level++;
@@ -210,12 +189,6 @@ ACE_Strategy_Scheduler::assign_subpriorities (Dispatch_Entry **dispatches,
           dispatches [i - j]->
                           static_subpriority (static_subpriority_level -
                                   dispatches [i - j]-> static_subpriority () - 1);
-
-          // set static subpriority of underlying RT_Info
-          // TBD - assign values into a map of priorities and RT_Infos:
-          // an RT_Info can be dispatched at multiple priorities
-          dispatches [i - j]->task_entry ().rt_info ()->preemption_subpriority =
-            dispatches [i - j]-> static_subpriority ();
         }
 
         // reset the subpriority counters, set these values in the
@@ -227,13 +200,7 @@ ACE_Strategy_Scheduler::assign_subpriorities (Dispatch_Entry **dispatches,
         dispatches [i]->dynamic_subpriority (dynamic_subpriority_level);
         dispatches [i]->static_subpriority (static_subpriority_level);
 
-        // set static subpriority of underlying RT_Info
-        // TBD - assign values into a map of priorities and RT_Infos:
-        // an RT_Info can be dispatched at multiple priorities
-        dispatches [i]->task_entry ().rt_info ()->preemption_subpriority = 
-          static_subpriority_level;
-
-		  // advance the static subpriority level
+	// advance the static subpriority level
         static_subpriority_level++;
 
         break;
@@ -255,10 +222,6 @@ ACE_Strategy_Scheduler::assign_subpriorities (Dispatch_Entry **dispatches,
             // dispatches line up with identical dynamic subpriority that
             // were considered different with respect to the critical instant
             dispatches [i]->static_subpriority (static_subpriority_level);
-            // TBD - assign values into a map of priorities and RT_Infos:
-            // an RT_Info can be dispatched at multiple priorities
-            dispatches [i]->task_entry ().rt_info ()->preemption_subpriority = 
-              static_subpriority_level;
             static_subpriority_level++;
             static_subpriority_elements++;
 
@@ -280,10 +243,6 @@ ACE_Strategy_Scheduler::assign_subpriorities (Dispatch_Entry **dispatches,
                 // even if the dynamic subpriorities happen to align due to
                 // run-time variation
                 dispatches [i]->static_subpriority (static_subpriority_level);
-                // TBD - assign values into a map of priorities and RT_Infos:
-                // an RT_Info can be dispatched at multiple priorities
-                dispatches [i]->task_entry ().rt_info ()->preemption_subpriority = 
-                  static_subpriority_level;
                 static_subpriority_level++;
                 static_subpriority_elements++;
                 break;
@@ -344,11 +303,6 @@ ACE_Strategy_Scheduler::assign_subpriorities (Dispatch_Entry **dispatches,
     dispatches [i - j]->
       static_subpriority (static_subpriority_level -
                           dispatches [i - j]->static_subpriority () - 1);
-
-    // TBD - assign values into a map of priorities and RT_Infos:
-    // an RT_Info can be dispatched at multiple priorities
-    dispatches [i - j]->task_entry ().rt_info ()->preemption_subpriority = 
-      dispatches [i - j]->static_subpriority ();
   }
 
   return ACE_DynScheduler::SUCCEEDED;
