@@ -132,6 +132,8 @@ TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                                     TAO_MProfile &mprofile)
 {
 #if (TAO_HAS_RT_CORBA == 1)
+  ACE_UNUSED_ARG (object_key);
+  ACE_UNUSED_ARG (mprofile);
 
   // @@ RTCORBA_SUBSETTING
   ACE_DEBUG ((LM_DEBUG,
