@@ -1,3 +1,12 @@
+Fri Apr 23 14:49:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.pl:
+          Changed the way we integrate with Codeguard. Removed the -g
+          commandline option and use "-Config Codeguard" to enable
+          inspection of codeguard logs. This is much easier to maintain
+          and this way the bin/auto_run_tests.pl doesn't need to be
+          modified.
+
 Fri Apr 23 10:30:31 2004  Steve Huston  <shuston@riverace.com>
 
 	* tests/Recursive_Condition_Test.cpp: Missed a variable change.
