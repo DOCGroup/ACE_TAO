@@ -65,13 +65,14 @@ y.tab.h y.tab.cpp: idl.yy
 	$(YACC) $(YFLAGS) idl.yy
 	@mv -f y.tab.c y.tab.cpp
 	@patch < y.tab.cpp.diff
+	@-$(RM) -f y.tab.cpp.orig
 
 lex.yy.cpp: idl.ll y.tab.h
 	$(LEX) $(LFLAGS) idl.ll > $@
 	@sed -e "s/unistd/stdio/g" -e "s@#include <@#include /**/ <@" -e "s/ECHO/TAO_ECHO/g" < $@ >> /tmp/$@
 	@cp /tmp/$@ $@
-	@(RM) -f /tmp/$@
 	@patch < lex.yy.cpp.diff
+	@-(RM) -f /tmp/$@ lex.yy.cpp.orig
 
 #----------------------------------------------------------------------------
 #	Dependencies
