@@ -1,70 +1,78 @@
+Tue Jun  6 12:18:41 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Reply_Dispatcher.h:
+        * tao/Reply_Dispatcher.cpp:
+          The ORB should duplicate the ReplyHandler_ptr obtained as part
+          of the sendc_* call.  Otherwise the caller may destroy it and we
+          are left with a stale pointer.
+
 Tue Jun  6 14:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tao/CurrentC.cpp: 
-	* tao/ DomainC.cpp:
-	  Removed smart proxy support since Current and Domain are 
-	  local objects.
-	
+        * tao/CurrentC.cpp:
+        * tao/DomainC.cpp:
+          Removed smart proxy support since Current and Domain are
+          local objects.
+
 Tue Jun  6 10:19:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/append.cpp:
-	* tao/skip.cpp:
-	  Cosmetic changes - removing code commented out for
-	  months, shortening long lines, etc.
+        * tao/append.cpp:
+        * tao/skip.cpp:
+          Cosmetic changes - removing code commented out for
+          months, shortening long lines, etc.
 
 Tue Jun  6 09:42:39 2000  Chris Kohlhoff <chris@kohlhoff.com>
 
         * orbsvcs/orbsvcs/Makefile.bor:
-	* orbsvcs/orbsvcs/RTEvent.bor:
-	* orbsvcs/orbsvcs/Svc_Utils.bor:
-	* orbsvcs/orbsvcs/RTSchedEvent.bor:
-	* orbsvcs/orbsvcs/RTOLDEvent.bor:
-	* orbsvcs/Event_Service/Makefile.bor:
-	  Added new orbsvcs libraries RTSchedEvent and RTOLDEvent.
+        * orbsvcs/orbsvcs/RTEvent.bor:
+        * orbsvcs/orbsvcs/Svc_Utils.bor:
+        * orbsvcs/orbsvcs/RTSchedEvent.bor:
+        * orbsvcs/orbsvcs/RTOLDEvent.bor:
+        * orbsvcs/Event_Service/Makefile.bor:
+          Added new orbsvcs libraries RTSchedEvent and RTOLDEvent.
 
-	* tests/Param_Test/client.bor:
-	  Added missing file small_union.cpp.
+        * tests/Param_Test/client.bor:
+          Added missing file small_union.cpp.
 
 Tue Jun 06 01:20:37 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/POA.cpp (client_exposed_policies): Some of the client
-	  exposed policies in the POA are fixed at creation time (protocol
-	  policies).  Other are more "dynamic" since they depend on the
-	  object in question (priority policy).  Therefore, the client
-	  exposed policies were split into fixed and dynamic policies.
+        * tao/POA.cpp (client_exposed_policies): Some of the client
+          exposed policies in the POA are fixed at creation time (protocol
+          policies).  Other are more "dynamic" since they depend on the
+          object in question (priority policy).  Therefore, the client
+          exposed policies were split into fixed and dynamic policies.
 
-	  Also added accessors and set methods for priority model and
-	  server priority in the POA policies.
+          Also added accessors and set methods for priority model and
+          server priority in the POA policies.
 
-	* tao/Active_Object_Map: Added the ability to fish out the
-	  priority of the object while looking it up.  Changes occured in:
+        * tao/Active_Object_Map: Added the ability to fish out the
+          priority of the object while looking it up.  Changes occured in:
 
-	  - find_system_id_using_servant ()
-	  - find_servant_and_system_id_using_user_id ()
+          - find_system_id_using_servant ()
+          - find_servant_and_system_id_using_user_id ()
 
-	  Also, made the POA current keep track of the priority of the
-	  current upcall.  This is useful in creating the object
-	  reference for the target upcall.
+          Also, made the POA current keep track of the priority of the
+          current upcall.  This is useful in creating the object
+          reference for the target upcall.
 
-	* tao/ORB:
-	* tao/ORB_Core:
+        * tao/ORB:
+        * tao/ORB_Core:
 
-	  Changed the following interfaces to improve memory management of
-	  the policy list that is being passed around:
+          Changed the following interfaces to improve memory management of
+          the policy list that is being passed around:
 
-	  - CORBA_ORB::key_to_object ()
-	  - CORBA_ORB::create_stub_object ()
-	  - CORBA_ORB_Core::create_stub_object ()
+          - CORBA_ORB::key_to_object ()
+          - CORBA_ORB::create_stub_object ()
+          - CORBA_ORB_Core::create_stub_object ()
 
-	* tao/Servant_Base.cpp (_create_stub): Accessed the client exposed
-	  policies from the POA so that the object reference can be made
-	  properly.
+        * tao/Servant_Base.cpp (_create_stub): Accessed the client exposed
+          policies from the POA so that the object reference can be made
+          properly.
 
-	* tao/corbafwd.h (TAO_DEFAULT_PRIORITY): Added new #define so that
-	  it is easy to find default priorities.
+        * tao/corbafwd.h (TAO_DEFAULT_PRIORITY): Added new #define so that
+          it is easy to find default priorities.
 
-	* tao/GIOP_Server_Request.cpp (objref): Further fixed/hacked the
-	  hack - this method should be removed soon.
+        * tao/GIOP_Server_Request.cpp (objref): Further fixed/hacked the
+          hack - this method should be removed soon.
 
 Mon Jun  5 15:48:35 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -79,10 +87,10 @@ Mon Jun  5 15:48:35 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Mon Jun  5 17:39:16 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/tests/Notify/lib/Notify_Test_Client.{h, cpp}:
-	* orbsvcs/tests/Notify/Basic/Updates.cpp:
-	  Renamed Notify_Test_Client::main to Notify_Test_Client::test_main
-	  to fix compile errors.
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.{h, cpp}:
+        * orbsvcs/tests/Notify/Basic/Updates.cpp:
+          Renamed Notify_Test_Client::main to Notify_Test_Client::test_main
+          to fix compile errors.
 
 Mon Jun  5 15:08:27 2000  Carlos O'Ryan  <coryan@uci.edu>
 

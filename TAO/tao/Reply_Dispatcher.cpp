@@ -139,10 +139,11 @@ TAO_Synch_Reply_Dispatcher::leader_follower_condition_variable (TAO_Transport *t
 #if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
 // Constructor.
-TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (const TAO_Reply_Handler_Skeleton &reply_handler_skel,
-                                                          Messaging::ReplyHandler_ptr reply_handler_ptr)
+TAO_Asynch_Reply_Dispatcher::
+    TAO_Asynch_Reply_Dispatcher (const TAO_Reply_Handler_Skeleton &reply_handler_skel,
+                                 Messaging::ReplyHandler_ptr reply_handler)
   : reply_handler_skel_ (reply_handler_skel),
-    reply_handler_ (reply_handler_ptr),
+    reply_handler_ (Messaging::ReplyHandler::_duplicate (reply_handler)),
     transport_ (0)
 {
 }
@@ -205,7 +206,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
     {
       // Call the Reply Handler's skeleton.
       reply_handler_skel_ (this->message_state_->cdr,
-                           this->reply_handler_,
+                           this->reply_handler_.in (),
                            reply_error,
                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
