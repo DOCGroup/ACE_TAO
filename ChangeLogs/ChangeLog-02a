@@ -1,3 +1,9 @@
+Sun Jun 23 14:51:48 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Synch.h: Put the class ACE_recursive_mutex_state inside
+	  the section ACE_HAS_THREADS.  Thanks to Craig Rodrigues
+	  for noticing the need for this.
+
 Sun Jun 23 14:05:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
 	* ACEXML/common/HttpCharStream.cpp:

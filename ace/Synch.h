@@ -1763,6 +1763,7 @@ public:
   void dump (void) const {}
 };
 
+#if defined (ACE_HAS_THREADS)
 /**
  * @class ACE_recursive_mutex_state
  *
@@ -1805,7 +1806,6 @@ private:
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
 };
 
-#if defined (ACE_HAS_THREADS)
 template <class ACE_LOCK>
 class ACE_Condition;
 
