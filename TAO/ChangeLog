@@ -3,6 +3,9 @@ Mon Jan 24 09:38:08 2005  Chad Elliott  <elliott_c@ociweb.com>
         * tests/GIOP_Fragments/PMB_With_Fragments/giop1.2_fragments_be.dat:
         * tests/GIOP_Fragments/PMB_With_Fragments/run_test.pl:
 
+          Added a data file for big endien servers and conditionally
+          determine which data file to use in the test script.
+
 Mon Jan 24 06:23:04 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/FT_App/FT_App.mpc:
