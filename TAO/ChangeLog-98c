@@ -1,3 +1,27 @@
+Thu Dec 11 21:28:09 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tao/poa.{h,cpp}: Moved handle_request to
+ 	TAO_Server_Connection_Handler and moved create to
+ 	CORBA::ORB::key_to_object.
+
+	* tao/orbobj.{h,cpp}: Added key_to_object as a method to create an
+ 	object reference from an object key and type id.  This code
+ 	actually used to live in POA::create.
+
+	* tao/object.h: Brief documentation twiddling, and renamed
+ 	get_subclass to get_most_derived, which is hopefully more
+ 	explicative.
+
+	* tao/{object,iiopobj,stub}.{h,cpp}: Renamed _get_name to 'key'
+ 	and have it return a TAO_ObjectKey_ptr rather than a const char*.
+
+	* tao/corbacom.h: Added typedef for TAO_ObjectKey, which
+ 	represents an object key in GIOP.
+
+	* tao/connect.{h,cpp}: Moved handle_request from the POA into
+ 	here, thereby helping confine IIOP-ness to the ORB Core and
+ 	keeping the POA pristine.
+
 Thu Dec 11 00:01:41 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* TAO version 0.0.42, released Thu Dec 11 00:01:41 1997.
