@@ -154,6 +154,7 @@ int TAO::FT_DefaultFaultAnalyzer::validate_event_type (
 int TAO::FT_DefaultFaultAnalyzer::analyze_fault_event (
   const CosNotification::StructuredEvent & event)
 {
+  ACE_UNUSED_ARG (event);
   if (TAO_debug_level > 6)
   {
     ACE_DEBUG ((LM_DEBUG,
