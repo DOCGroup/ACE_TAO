@@ -783,6 +783,10 @@ need to do:<P>
 
 First, if you are upgrading from an older release, clean up everything
 and rebuild from scratch to ensure that everything is rebuilt correctly.
+You might have to manually go through the ACE directories and delete
+all *.obj, *.dll, *.lib, *.ilk, *.pdb, *.idb, *.ncb, *.opt, and *.exp
+files in order to start over from scratch (the Clean command in MSVC
+may not do this).  
 <P>
 
 ACE contains project files for Microsoft Visual C++ 4.x (*.mdp) and
