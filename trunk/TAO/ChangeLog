@@ -1,61 +1,73 @@
+Sun Nov 21 11:43:00 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.cpp:
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp:
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+          Unused ENV parameters
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Event.cpp:
+          method was defined in both .i and .cpp
+
+
 Sat Nov 20 09:45:44 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* tests/Sequence_Unit_Tests/run_test.pl:
-	* tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
-	* tests/Sequence_Unit_Tests/object_reference_sequence_element_ut.cpp:
-	  New unit test for elements in object reference sequences
-	  (i.e. the class returned by operator[])
+        * tests/Sequence_Unit_Tests/run_test.pl:
+        * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+        * tests/Sequence_Unit_Tests/object_reference_sequence_element_ut.cpp:
+          New unit test for elements in object reference sequences
+          (i.e. the class returned by operator[])
 
-	* tests/Sequence_Unit_Tests/object_reference_sequence_element.hpp:
-	  The class returned by operator[] in sequences of object
-	  references.
+        * tests/Sequence_Unit_Tests/object_reference_sequence_element.hpp:
+          The class returned by operator[] in sequences of object
+          references.
 
-	* tests/Sequence_Unit_Tests/mock_reference.hpp:
-	* tests/Sequence_Unit_Tests/mock_reference.cpp:
-	  Mock object reference class.  Implements the right interface,
-	  but it is not truly an object reference, makes it *much* easier
-	  to write real unit tests.
-	
-	* tests/Sequence_Unit_Tests/object_reference_traits.hpp:
-	* tests/Sequence_Unit_Tests/testing_object_reference_traits.hpp:
-	  Implement traits for object references.  Like all the other
-	  traits in the sequences the goal is to encapsulate sources of
-	  variation away from the generic_sequence class.
+        * tests/Sequence_Unit_Tests/mock_reference.hpp:
+        * tests/Sequence_Unit_Tests/mock_reference.cpp:
+          Mock object reference class.  Implements the right interface,
+          but it is not truly an object reference, makes it *much* easier
+          to write real unit tests.
 
-	* tests/Sequence_Unit_Tests/string_sequence_element.hpp:
-	* tests/Sequence_Unit_Tests/string_sequence_element_ut.cpp:
-	* tests/Sequence_Unit_Tests/string_sequence_tester.hpp:
-	  Reimplemented string_sequence_element using String_var rather
-	  than explicit calls to duplicate(), I think this is more elegant
-	  and easier to understand.  I also believe it makes it easier to
-	  review and verify that the "same semantics as T_var"
-	  requirements are met.  Unfortunately it degrades the ability to
-	  perform certain tests, as some calls to duplicate() are not
-	  going through the mock interfaces.
+        * tests/Sequence_Unit_Tests/object_reference_traits.hpp:
+        * tests/Sequence_Unit_Tests/testing_object_reference_traits.hpp:
+          Implement traits for object references.  Like all the other
+          traits in the sequences the goal is to encapsulate sources of
+          variation away from the generic_sequence class.
 
-	* tests/Sequence_Unit_Tests/testing_counters.hpp:
-	  Cosmetic fixes.
+        * tests/Sequence_Unit_Tests/string_sequence_element.hpp:
+        * tests/Sequence_Unit_Tests/string_sequence_element_ut.cpp:
+        * tests/Sequence_Unit_Tests/string_sequence_tester.hpp:
+          Reimplemented string_sequence_element using String_var rather
+          than explicit calls to duplicate(), I think this is more elegant
+          and easier to understand.  I also believe it makes it easier to
+          review and verify that the "same semantics as T_var"
+          requirements are met.  Unfortunately it degrades the ability to
+          perform certain tests, as some calls to duplicate() are not
+          going through the mock interfaces.
+
+        * tests/Sequence_Unit_Tests/testing_counters.hpp:
+          Cosmetic fixes.
 
 Fri Nov 19 17:50:00 2004 Huang-Ming Huang <hh1@cse.wustl.edu>
 
         * orbsvcs\orbsvcs\FtRtEvent\EventChannel\Dynamic_Bitset.h
           Remove include <memory.h>
-          
+
         * orbsvcs\orbsvcs\FtRtEvent\EventChannel\FtEventServiceInterceptor.cpp
           Changed to use ACE_OS::strdup() instead of strdup() in standard C library.
-          
+
         * orbsvcs\orbsvcs\FtRtEvent\EventChannel\GroupInfoPublisher.h
         * orbsvcs\orbsvcs\FtRtEvent\EventChannel\GroupInfoPublisher.cpp
-          Changed to use plain pointer instead of auto_ptr<> as function return type. 
-           
+          Changed to use plain pointer instead of auto_ptr<> as function return type.
+
         * orbsvcs\orbsvcs\FtRtEvent\EventChannel\Request_Context_Repository.cpp
-          Fixed the problem of getting corrent object id. Thanks to  Thia Chang Chao 
+          Fixed the problem of getting corrent object id. Thanks to  Thia Chang Chao
           <tchangch@dso.org.sg> for reporting the problem.
-          
+
         * orbsvcs\orbsvcs\FtRtEvent\Utils\UUID.cpp
           Fixed warning in g++ 3.3.
-        
-        
+
+
 Thu Nov 18 12:39:59 2004  Ciju John  <john_c@ociweb.com>
 
         * TAO-INSTALL.html:
@@ -824,31 +836,31 @@ Fri Nov 19 12:46:00 2004    Gary Maxey  <gary.maxey@hp.com>
 Fri Nov 19 14:44:12 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
-        
+
           Changed call passing scope to use existing local variable
           rather than accessing the scope again.
-          
+
         * TAO_IDL/be/be_interface.cpp:
         * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
         * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
-        
+
           Fixed several errors in the computation of repository ids for
           AMI/AMH reply handlers/exception holders. Thanks to Carlos
           O'Ryan <coryan@atdesk.com> for reporting the problem with
           AMI reply handler repo ids.
-          
+
         * tests/IDL_Test/main.cpp:
         * tests/IDL_Test/nested_scope.idl:
-        
-          Added test code contributed by Carlos O'Ryan for the 
+
+          Added test code contributed by Carlos O'Ryan for the
           problem he reported. These fixes close [BUGID:1985].
 
 Fri Nov 19 10:59:00 2004    Gary Maxey  <gary.maxey@hp.com>
 
         * utils/catior/catior.cpp
-        
+
           Add ability to decode two new profile types (NSKFS and
-          NSKPW). 
+          NSKPW).
 
 Fri Nov 19 10:55:03 2004    Gary Maxey  <gary.maxey@hp.com>
 
@@ -856,10 +868,10 @@ Fri Nov 19 10:55:03 2004    Gary Maxey  <gary.maxey@hp.com>
 
           In switch statements do not include case for CORBA::tk_ulonglong
           when ACE_LACKS_LONGLONG_T.
-        
+
         * tao/Any_Basic_Impl.h
 
-          Leave "CORBA::ULongLong ull" out of "u_" union when 
+          Leave "CORBA::ULongLong ull" out of "u_" union when
           ACE_LACKS_LONGLONG_T.
 
         * tao/IIOP_Transport.cpp
@@ -872,7 +884,7 @@ Fri Nov 19 10:55:03 2004    Gary Maxey  <gary.maxey@hp.com>
 
           Conditionally compile constants for Tandem pluggable
           protocols.
-        
+
 Fri Nov 19 10:52:03 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * performance-tests/Latency/DII/run_test.pl:
