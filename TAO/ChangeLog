@@ -1,3 +1,8 @@
+Sun Nov 21 20:42:59 2004  Ciju John  <john_c@ociweb.com>
+
+        * notify_serv.mpb:
+          event_serv dependency was missing.
+
 Sun Nov 21 15:56:48 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h:
