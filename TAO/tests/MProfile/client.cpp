@@ -127,9 +127,11 @@ void run_test (Simple_Server_ptr server
       ACE_TRY
         {
           // Make a remote call
-          CORBA::Long ret=
+          CORBA::Long ret =
             server->remote_call (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
+
+	  ACE_UNUSED_ARG (ret);
 
           ACE_OS::sleep (25);
         }
