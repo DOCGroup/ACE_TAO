@@ -1,3 +1,20 @@
+Wed Nov 24 08:07:21 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        
+          Removed generation of ace/config-all.h include in the
+          skeleton source file, since it is already pulled in by
+          the stub header file.
+          
+        * TAO_IDL/be/be_visitor_root/root_sth.cpp:
+        
+          Removed generation of TAO_HAS_USING_KEYWORD guards - it is
+          a legacy of the days when we supported platforms without
+          namespaces.
+          
+          Thanks to Johhny Willemsen <jwillemsen@remedy.nl> for
+          pointing out the above redundant code generation.
+
 Wed Nov 24 14:03:11 2004  Martin Corino  <mcorino@remedy.nl>
 
 	* orbsvcs/orbsvcs/CosLoadBalancing.idl:
