@@ -119,7 +119,6 @@ Mon Dec 31 11:01:29 2001  Jeff Parsons <parsons@cs.wustl.edu>
 	  gathered from	the several files where they were
 	  previously located.
 
-
 	* TAO_IDL/ast/ast_factory.cpp:
 	* TAO_IDL/be/be_factory.cpp:
 	* TAO_IDL/be/be_visitor_valuetype/valuetype_init.cpp:

@@ -2,7 +2,8 @@
 rem run_tests.bat,v 4.71 1999/11/08 05:39:06 nanbor Exp
 
 rem
-rem    Note this batch file will not work on Win9X.
+rem    Note this batch file will not work on Win9X, so we suggest that
+rem    you install/use perl on Win9x and run the run_test.pl file.
 rem
 
 rem    To run this script, the first argument must be either bor
