@@ -1,3 +1,10 @@
+Thu Apr 15 11:56:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/diffs/Bounds.diff:
+        * tao/diffs/Dynamic.diff:
+          These diffs are not needed anymore. All other diffs will be updated
+          soon when everything builds and runs ok.
+
 Thu Apr 15 11:52:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.cpp:
