@@ -1221,7 +1221,7 @@ ACE::recv_n (ACE_HANDLE handle,
 }
 
 u_long
-is_prime (const u_long n,
+ACE::is_prime (const u_long n,
           const u_long min_factor,
           const u_long max_factor)
 {
