@@ -3061,7 +3061,7 @@ ACE_OS::mmap (void *addr,
               LPSECURITY_ATTRIBUTES sa)
 {
   ACE_OS_TRACE ("ACE_OS::mmap");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (__Lynx__)
   ACE_UNUSED_ARG (file_mapping);
   ACE_UNUSED_ARG (sa);
   ACE_OSCALL_RETURN ((void *) ::pace_mmap (addr,
