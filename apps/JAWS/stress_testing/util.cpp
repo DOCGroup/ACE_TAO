@@ -16,20 +16,20 @@ URL::URL(char *input_buf) {
   char *lasts;
 
   if((temp = ACE_OS::strtok_r(buffer,": ",&lasts)))  {
-	protocol_ = (char *) ACE_OS::malloc(strlen(temp));
+	protocol_ = (char *) ACE_OS::malloc(strlen(temp) + 1);
 	ACE_OS::strcpy(protocol_, temp);
   }
 
   if((temp = ACE_OS::strtok_r(NULL,"/",&lasts)))  {
-	hostname_ = (char *) ACE_OS::malloc(strlen(temp));  
+	hostname_ = (char *) ACE_OS::malloc(strlen(temp) + 1);
 	ACE_OS::strcpy(hostname_, temp);
   }
-  if((temp = ACE_OS::strtok_r(NULL,"\0",&lasts))) { 
-    filename_ = (char *) malloc(strlen(temp));
+  if((temp = ACE_OS::strtok_r(NULL,"\0",&lasts))) {
+    filename_ = (char *) malloc(strlen(temp) + 1);
 	ACE_OS::strcpy(filename_, temp);
   }
   else {
-    filename_ = (char *) malloc(strlen(INDEX_NAME));
+    filename_ = (char *) malloc(strlen(INDEX_NAME) + 1);
 	ACE_OS::strcpy(filename_,INDEX_NAME);
   }
 }
@@ -45,9 +45,9 @@ char *URL::get_hostname(void) {
 char *URL::get_filename(void) {
   return filename_;
 }
-  
 
- 
+
+
 
 
 void cleanup(void) {
@@ -58,7 +58,3 @@ void cleanup(void) {
 void sigint(int) {
   cleanup();
 }
- 
-
-
-
