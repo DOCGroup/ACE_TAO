@@ -265,32 +265,35 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::parse_args (int argc, char *argv[]
   return 0;
 }
 
-template<class SLH, class LMR, class SST> int
-ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::make_svc_handler (SLH *&handler)
+template<class SERVER_LOGGING_HANDLER, class LOG_MESSAGE_RECEIVER, class SCHEDULE_STRATEGY> int
+ACE_Server_Logging_Acceptor_T<SERVER_LOGGING_HANDLER,
+                              LOG_MESSAGE_RECEIVER,
+                              SCHEDULE_STRATEGY>
+    ::make_svc_handler (SERVER_LOGGING_HANDLER *&handler)
 {
   ACE_NEW_RETURN (handler,
-                  SLH (ACE_Thread_Manager::instance (),
-                       this->receiver()),
+                  SERVER_LOGGING_HANDLER (ACE_Thread_Manager::instance (),
+                                          this->receiver()),
                   -1);
   return 0;
 }
 
-template<class LMR>
-ACE_Server_Logging_Handler<LMR>::ACE_Server_Logging_Handler (ACE_Thread_Manager * tm,
-                                                             LMR const& receiver)
-  : ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, LMR>(tm,
+template<class LOG_MESSAGE_RECEIVER>
+ACE_Server_Logging_Handler<LOG_MESSAGE_RECEIVER>::ACE_Server_Logging_Handler (ACE_Thread_Manager * tm,
+                                                             LOG_MESSAGE_RECEIVER const& receiver)
+  : ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, LOG_MESSAGE_RECEIVER>(tm,
                                                                                    receiver)
 {
 }
 
-template<class LMR>
-ACE_Server_Logging_Handler<LMR>::ACE_Server_Logging_Handler(ACE_Thread_Manager * tm)
-  : ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, LMR>(tm, LMR())
+template<class LOG_MESSAGE_RECEIVER>
+ACE_Server_Logging_Handler<LOG_MESSAGE_RECEIVER>::ACE_Server_Logging_Handler(ACE_Thread_Manager * tm)
+  : ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, LOG_MESSAGE_RECEIVER>(tm, LOG_MESSAGE_RECEIVER())
 {
 }
 
-template<class LMR>  int
-ACE_Server_Logging_Handler<LMR>::open (void *)
+template<class LOG_MESSAGE_RECEIVER>  int
+ACE_Server_Logging_Handler<LOG_MESSAGE_RECEIVER>::open (void *)
 {
   // call base class open_common
   if (this->open_common () != 0)
@@ -304,20 +307,20 @@ ACE_Server_Logging_Handler<LMR>::open (void *)
   return 0;
 }
 
-template<class LMR>
-ACE_Thr_Server_Logging_Handler<LMR>::ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager *tm, LMR const &receiver)
-  : ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_LOGGER_SYNCH, LMR>(tm, receiver)
+template<class LOG_MESSAGE_RECEIVER>
+ACE_Thr_Server_Logging_Handler<LOG_MESSAGE_RECEIVER>::ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager *tm, LOG_MESSAGE_RECEIVER const &receiver)
+  : ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_LOGGER_SYNCH, LOG_MESSAGE_RECEIVER>(tm, receiver)
 {
 }
 
-template<class LMR>
-ACE_Thr_Server_Logging_Handler<LMR>::ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager *tm)
-  : ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_LOGGER_SYNCH, LMR>(tm, LMR ())
+template<class LOG_MESSAGE_RECEIVER>
+ACE_Thr_Server_Logging_Handler<LOG_MESSAGE_RECEIVER>::ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager *tm)
+  : ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_LOGGER_SYNCH, LOG_MESSAGE_RECEIVER>(tm, LOG_MESSAGE_RECEIVER ())
 {
 }
 
-template<class LMR> int
-ACE_Thr_Server_Logging_Handler<LMR>::open (void *)
+template<class LOG_MESSAGE_RECEIVER> int
+ACE_Thr_Server_Logging_Handler<LOG_MESSAGE_RECEIVER>::open (void *)
 {
   // call base class open_common
   if (this->open_common () != 0)
@@ -337,8 +340,8 @@ ACE_Thr_Server_Logging_Handler<LMR>::open (void *)
 
 // Process remote logging records.
 
-template<class LMR> int
-ACE_Thr_Server_Logging_Handler<LMR>::svc (void)
+template<class LOG_MESSAGE_RECEIVER> int
+ACE_Thr_Server_Logging_Handler<LOG_MESSAGE_RECEIVER>::svc (void)
 {
   int result = 0;
 
