@@ -12,8 +12,6 @@
 int 
 main (int argc, char *argv[])
 {
-  ACE_Service_Config daemon;
-
   // Create an adapter to end the event loop.
   ACE_Sig_Adapter sa ((ACE_Sig_Handler_Ex) ACE_Reactor::end_event_loop);
 
@@ -32,7 +30,7 @@ main (int argc, char *argv[])
 #endif /* ACE_WIN32 */  
 
   // Try to link in the svc.conf entries dynamically.
-  if (daemon.open (argc, argv) == -1)
+  if (ACE_Service_Config::open (argc, argv) == -1)
     {
       if (errno != ENOENT)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 1);
