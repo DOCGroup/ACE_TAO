@@ -93,17 +93,17 @@ unsigned char& Address::operator[]( const int position)
 
 //-----------------------------------------------------------------------
 // overloaded equivlence operator, are two addresses equal?
-int operator==( const Address &lhs, const Address &rhs)
+bool operator==( const Address &lhs, const Address &rhs)
 {
   if ( ACE_OS::strcmp( (const char*) lhs, (const char*)rhs)==0)
-    return 1;
+    return true;
   else
-    return 0;
+    return false;
 }
 
 //-----------------------------------------------------------------------
 // overloaded equivlence operator, are two addresses equal?
-int operator!=( const Address &lhs, const Address &rhs)
+bool operator!=( const Address &lhs, const Address &rhs)
 {
   return (!( lhs == rhs));
 }
@@ -111,109 +111,109 @@ int operator!=( const Address &lhs, const Address &rhs)
 
 //------------------------------------------------------------------
 // overloaded > operator, is a1 > a2
-int operator>( const Address &lhs, const Address &rhs)
+bool operator>( const Address &lhs, const Address &rhs)
 {
   if (ACE_OS::strcmp( (const char*) lhs, (const char*)rhs)>0)
-    return 1;
+    return true;
   else
-    return 0;
+    return false;
 }
 
 // overloaded >= operator, is a1 > a2
-int operator>=( const Address &lhs,const Address &rhs)
+bool operator>=( const Address &lhs,const Address &rhs)
 {
   if (( lhs > rhs) || ( lhs == rhs))
-    return 1;
+    return true;
   else
-    return 0;
+    return false;
 }
 
 // overloaded < operator, is a1 <= a2
-int operator<=( const Address &lhs,const Address &rhs)
+bool operator<=( const Address &lhs,const Address &rhs)
 {
   if (( lhs < rhs) || ( lhs == rhs))
-    return 1;
+    return true;
   else
-    return 0;
+    return false;
 
 }
 
 
 //-----------------------------------------------------------------
 // overloaded < operator, is a1 < a2
-int operator<( const Address &lhs, const Address &rhs)
+bool operator<( const Address &lhs, const Address &rhs)
 {
   if (ACE_OS::strcmp( (const char*) lhs, (const char*)rhs)<0)
-    return 1;
+    return true;
   else
-    return 0;
+    return false;
 }
 
 //------------------------------------------------------------------
 // equivlence operator overloaded, are an address and a string equal?
-int operator==( const Address &lhs,const char *rhs)
+bool operator==( const Address &lhs,const char *rhs)
 {
   if (!rhs && !lhs.valid())
-    return 1;
+    return true;
   if (ACE_OS::strcmp( (const char *) lhs, rhs)== 0)
-    return 1;
+    return true;
   else
-    return 0;
+    return false;
 }
 
 //------------------------------------------------------------------
 // not equal operator overloaded, are an address and a string not equal?
-int operator!=( const Address &lhs,const char *rhs)
+bool operator!=( const Address &lhs,const char *rhs)
 {
   return (!( lhs == rhs));
 }
 
 //------------------------------------------------------------------
 // overloaded > , is a > inaddr
-int operator>( const Address &lhs,const char *rhs)
+bool operator>( const Address &lhs,const char *rhs)
 {
   if (!rhs)
     return lhs.valid();  // if lhs valid then > 0, else invalid !> 0
   if (ACE_OS::strcmp( (const char *) lhs, rhs)> 0)
-    return 1;
+    return true;
   else
-    return 0;
+    return false;
 }
 
 //------------------------------------------------------------------
 // overloaded >= , is a >= inaddr
-int operator>=( const Address &lhs,const char *rhs)
+bool operator>=( const Address &lhs,const char *rhs)
 {
   if (!rhs)
-    return 1; // always >= 0
+    return true; // always >= 0
   if (ACE_OS::strcmp( (const char *) lhs, rhs)>= 0)
-    return 1;
+    return true;
   else
-    return 0;
+    return false;
 }
 
 //-----------------------------------------------------------------
 // overloaded < , are an address and a string equal?
-int operator<( const Address &lhs,const char *rhs)
+bool operator<( const Address &lhs,const char *rhs)
 {
   if (!rhs)
-    return 0; // always >= 0
+    return false; // always >= 0
   if (ACE_OS::strcmp( (const char *) lhs, rhs)< 0)
-    return 1;
+    return true;
   else
-    return 0;
+    return false;
 }
 
 //-----------------------------------------------------------------
 // overloaded <= , is a <= inaddr
-int operator<=( const Address &lhs,const char *rhs)
+bool operator<=( const Address &lhs,const char *rhs)
 {
   if (!rhs)
     return !lhs.valid(); // invalid == 0, else valid > 0
-  if (ACE_OS::strcmp( (const char *) lhs, rhs)<= 0)
-    return 1;
+  if (ACE_OS::strcmp( (const char *) lhs, rhs) <= 0)
+    return true;
   else
-    return 0;
+    return false;
 }
 
 

@@ -1,5 +1,7 @@
-/* -*-C++-*- */
+// -*-C++-*-
+
 // $Id$
+
 #ifndef OID_CLS_
 #define OID_CLS_
 // ============================================================================
@@ -70,22 +72,22 @@ public:
   Oid& operator=( const Oid &oid);
   // assignment to another oid object overloaded
 
-  friend ASNMP_Export int operator==( const Oid &lhs,const Oid &rhs);
+  friend ASNMP_Export bool operator==( const Oid &lhs,const Oid &rhs);
   // equal operator overloaded
 
-  friend ASNMP_Export int operator!=( const Oid &lhs,const Oid &rhs);
+  friend ASNMP_Export bool operator!=( const Oid &lhs,const Oid &rhs);
   // not equal operator overloaded
 
-  friend ASNMP_Export int operator<( const Oid &lhs,const Oid &rhs);
+  friend ASNMP_Export bool operator<( const Oid &lhs,const Oid &rhs);
   // less than < overloaded
 
-  friend ASNMP_Export int operator<=( const Oid &lhs,const Oid &rhs);
+  friend ASNMP_Export bool operator<=( const Oid &lhs,const Oid &rhs);
   // less than <= overloaded
 
-  friend ASNMP_Export int operator>( const Oid &lhs,const Oid &rhs);
+  friend ASNMP_Export bool operator>( const Oid &lhs,const Oid &rhs);
   // greater than > overloaded
 
-  friend ASNMP_Export int operator>=( const Oid &lhs,const Oid &rhs);
+  friend ASNMP_Export bool operator>=( const Oid &lhs,const Oid &rhs);
   // greater than >= overloaded
 
   Oid& operator+=( const char *a);

@@ -157,21 +157,21 @@ SnmpTarget& SnmpTarget::operator=(const SnmpTarget& lhs)
   return *this;
 }
 
-int operator==(const SnmpTarget& lhs, const SnmpTarget& rhs)
+bool operator==(const SnmpTarget& lhs, const SnmpTarget& rhs)
 {
   if (lhs.timeout_ != rhs.timeout_)
-     return 0;
+     return false;
 
   if (lhs.retries_ != rhs.retries_)
-     return 0;
+     return false;
 
   if (lhs.max_pdu_size_ != rhs.max_pdu_size_)
-    return 0;
+    return false;
 
   if (lhs.version_ != rhs.version_)
-    return 0;
+    return false;
 
-  return 1;
+  return true;
 }
 
 
@@ -299,23 +299,23 @@ ver: %d, timeout: %d, retries: %d max_pdu_size: %d]",
 
 //=============[ int operator == UdpTarget, UdpTarget ]===============
 // equivlence operator overloaded
-int operator==( const UdpTarget &lhs,const UdpTarget &rhs)
+bool operator==( const UdpTarget &lhs,const UdpTarget &rhs)
 {
   // need to compare all the members of a UdpTarget
   if ( lhs.read_community_ != rhs.read_community_)
-    return 0;  // !=
+    return false;  // !=
 
   if ( lhs.write_community_ != rhs.write_community_)
-    return 0;  // !=
+    return false;  // !=
 
   if ( lhs.udp_address_ != rhs.udp_address_)
-    return 0;
+    return false;
 
   if ( lhs.timeout_ != rhs.timeout_)
-    return 0;
+    return false;
 
   if ( lhs.retries_ != rhs.retries_)
-    return 0;
+    return false;
 
-  return 1;  // they are equal
+  return true;  // they are equal
 }
