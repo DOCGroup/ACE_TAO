@@ -1,3 +1,24 @@
+Thu Aug 12 11:56:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Transport.cpp:
+        * tao/Codeset_Manager.cpp:
+          Smaller debug message formatting so that things look the same and
+          that it is directly clear where the message is coming from when
+          reading a log.
+
+        * tao/IIOP_Transport.cpp (set_bidir_context_info):
+          After we retrieved all listen_points check that the list is
+          empty, if it is, we really have a problem and we report it.
+
+        * tao/IIOP_Connection_Handler.cpp (process_listen_point_list):
+          This method processes the listen_point_list, when we are here we
+          should have a list with something in it, when the client has a
+          misconfigured DNS, it can be that an empty list is send by the
+          client because in TAO_IIOP_Transport::get_listen_point we only
+          add endpoints there that match the local address and when we have
+          misconfigured this, this check could fail and we could send an
+          empty list.
+
 Thu Aug 12 10:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Big_Oneways/server.cpp:
