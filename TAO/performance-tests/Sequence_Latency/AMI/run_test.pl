@@ -11,18 +11,35 @@ use PerlACE::Run_Test;
 $status = 0;
 $iorfile = PerlACE::LocalFile ("test.ior");
 
-print STDERR "================ Thread AMI Latency Test -- octet sequence\n";
+print STDERR "================ Thread AMI Latency Test\n";
 
 unlink $iorfile;
+
+
+my $type = 'octet';
+
+for ($i = 0; $i <= $#ARGV; $i++) {
+    if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?") {
+        print "Run_Test Perl script for Performance Test\n\n";
+        print "run_test  [-t type] \n";
+        print "\n";
+        print "-t type             -- runs only one type of param test\n";
+        exit 0;
+    }
+    elsif ($ARGV[$i] eq "-t") {
+        $type = $ARGV[$i + 1];
+        $i++;
+    }
+}
 
 $SV = new PerlACE::Process ("server",
                             "-o $iorfile");
 
 $CL = new PerlACE::Process ("client",
-                            "-t octet "
-                            . "-k file://$iorfile "
-                            . " -i 10000");
+                            "-t $type -k file://$iorfile "
+                            . " -i 50000");
 
+print STDERR $CL->CommandLine () ;
 $SV->Spawn ();
 
 if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
@@ -31,145 +48,10 @@ if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
     exit 1;
 }
 
-$client = $CL->SpawnWaitKill (120);
-$server = $SV->WaitKill (40);
+$client = $CL->SpawnWaitKill (420);
+$server = $SV->WaitKill (20);
 
 unlink $iorfile;
-
-
-
-print STDERR "================ AMI Sequence Latency Test -- long sequence\n";
-
-unlink $iorfile;
-
-$SV = new PerlACE::Process ("server",
-                            "-o $iorfile");
-
-$CL = new PerlACE::Process ("client",
-                            "-t long "
-                            . "-k file://$iorfile "
-                            . " -i 10000");
-
-$SV->Spawn ();
-
-if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill ();
-    exit 1;
-}
-
-$client = $CL->SpawnWaitKill (120);
-$server = $SV->WaitKill (40);
-
-unlink $iorfile;
-
-print STDERR "================ AMI Sequence Latency Test -- short sequence\n";
-
-unlink $iorfile;
-
-$SV = new PerlACE::Process ("server",
-                            "-o $iorfile");
-
-$CL = new PerlACE::Process ("client",
-                            "-t short "
-                            . "-k file://$iorfile "
-                            . " -i 10000");
-
-$SV->Spawn ();
-
-if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill ();
-    exit 1;
-}
-
-$client = $CL->SpawnWaitKill (120);
-$server = $SV->WaitKill (40);
-
-unlink $iorfile;
-
-
-print STDERR "================ AMI Sequence Latency Test -- char sequence\n";
-
-unlink $iorfile;
-
-$SV = new PerlACE::Process ("server",
-                            "-o $iorfile");
-
-$CL = new PerlACE::Process ("client",
-                            "-t char "
-                            . "-k file://$iorfile "
-                            . " -i 10000");
-
-$SV->Spawn ();
-
-if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill ();
-    exit 1;
-}
-
-$client = $CL->SpawnWaitKill (120);
-$server = $SV->WaitKill (40);
-
-unlink $iorfile;
-
-
-
-print STDERR "================ AMI Sequence Latency Test -- longlong sequence\n";
-
-unlink $iorfile;
-
-$SV = new PerlACE::Process ("server",
-                            "-o $iorfile");
-
-$CL = new PerlACE::Process ("client",
-                            "-t longlong "
-                            . "-k file://$iorfile "
-                            . " -i 10000");
-
-$SV->Spawn ();
-
-if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill ();
-    exit 1;
-}
-
-$client = $CL->SpawnWaitKill (120);
-$server = $SV->WaitKill (40);
-
-unlink $iorfile;
-
-
-
-
-print STDERR "================ AMI Sequence Latency Test -- double sequence\n";
-
-unlink $iorfile;
-
-$SV = new PerlACE::Process ("server",
-                            "-o $iorfile");
-
-$CL = new PerlACE::Process ("client",
-                            "-t double "
-                            . "-k file://$iorfile "
-                            . " -i 10000");
-
-$SV->Spawn ();
-
-if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill ();
-    exit 1;
-}
-
-$client = $CL->SpawnWaitKill (120);
-$server = $SV->WaitKill (40);
-
-unlink $iorfile;
-
-
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";
