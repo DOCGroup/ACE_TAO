@@ -7,6 +7,7 @@
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/Svc_Handler.h"
+#include "ace/Service_Config.h"
 #include "ace/UPIPE_Stream.h"
 
 typedef ACE_Svc_Handler <ACE_UPIPE_STREAM, ACE_NULL_SYNCH> SVC_HANDLER;

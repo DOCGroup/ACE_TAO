@@ -2,6 +2,7 @@
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/Service_Config.h"
+#include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Thread.h"
 #include "ace/Signal.h"
@@ -21,7 +22,7 @@ class Thread_Handler : public ACE_Event_Handler
   // = TITLE
   //   Illustrate how the ACE_Reactor's thread-safe event notification
   //   mechanism works.
-  //     
+  //
   // = DESCRIPTION
   //   Handle timeouts in the main thread via the ACE_Reactor and I/O
   //   events in a separate thread.  Just before the separate I/O
@@ -51,7 +52,7 @@ public:
   virtual int handle_output (ACE_HANDLE);
   // Print data from main thread.
 
-  virtual int handle_timeout (const ACE_Time_Value &, 
+  virtual int handle_timeout (const ACE_Time_Value &,
 			      const void *);
   // Handle timeout events in the main thread.
 
@@ -108,14 +109,14 @@ Thread_Handler::~Thread_Handler (void)
   ACE_Reactor::instance ()->cancel_timer (this);
 }
 
-Thread_Handler::Thread_Handler (int delay, 
+Thread_Handler::Thread_Handler (int delay,
 				int interval,
 				size_t n_threads,
                                 size_t max_iterations)
     : iterations_ (max_iterations)
 {
   ACE_Sig_Set sig_set;
-  
+
   sig_set.sig_add (SIGQUIT);
   sig_set.sig_add (SIGINT);
 
@@ -134,7 +135,7 @@ Thread_Handler::Thread_Handler (int delay,
     ACE_ERROR ((LM_ERROR,
                 "(%t) %p\n",
                 "register_handler"));
-  else if (ACE_Reactor::instance ()->schedule_timer 
+  else if (ACE_Reactor::instance ()->schedule_timer
            (this,
             0,
             Thread_Handler::delay_,
@@ -142,7 +143,7 @@ Thread_Handler::Thread_Handler (int delay,
     ACE_ERROR ((LM_ERROR,
                 "(%t) %p\n",
                 "schedule_timer"));
-   
+
   // Set up this thread's signal mask to block all the signal in the
   // <sig_set>, which is inherited by the threads it spawns.
   ACE_Sig_Guard guard (&sig_set);
@@ -152,7 +153,7 @@ Thread_Handler::Thread_Handler (int delay,
   for (size_t i = 0; i < n_threads; i++)
     {
       Thread_Handler *th;
-      
+
       ACE_NEW (th,
                Thread_Handler (i + 1,
                                this->iterations_));
@@ -175,20 +176,20 @@ Thread_Handler::notify (ACE_Time_Value *timeout)
   // Just do something to test the ACE_Reactor's multi-thread
   // capabilities...
 
-  if (ACE_Reactor::instance ()->notify 
+  if (ACE_Reactor::instance ()->notify
       (this,
        ACE_Event_Handler::EXCEPT_MASK,
        timeout) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t) %p\n", 
+                       "(%t) %p\n",
 		       "notification::notify:exception"),
                       -1);
-  else if (ACE_Reactor::instance ()->notify 
+  else if (ACE_Reactor::instance ()->notify
 	   (this,
             ACE_Event_Handler::WRITE_MASK,
             timeout) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t) %p\n", 
+                       "(%t) %p\n",
 		       "notification::notify:write"),
                       -1);
   return 0;
@@ -206,21 +207,21 @@ Thread_Handler::handle_input (ACE_HANDLE handle)
   if (n > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "input to (%t) %*s", 
+                  "input to (%t) %*s",
 		  n,
                   buf));
 
       ACE_DEBUG ((LM_DEBUG,
-                  "%d more input to kill\n", 
+                  "%d more input to kill\n",
 		  this->iterations_));
 
       // Only wait up to 10 milliseconds to notify the Reactor.
       ACE_Time_Value timeout (0,
                               10 * 1000);
-	  
+
       if (this->notify (&timeout) == -1)
-	ACE_ERROR ((LM_DEBUG, 
-                    "(%t), %p\n", 
+	ACE_ERROR ((LM_DEBUG,
+                    "(%t), %p\n",
 		    "notification::handle_input:notify"));
       return 0;
     }
@@ -252,7 +253,7 @@ Thread_Handler::svc (void)
       ACE_Time_Value timeout (0,
                               10 * 1000);
       if (this->notify (&timeout) == -1)
-	ACE_ERROR ((LM_ERROR, 
+	ACE_ERROR ((LM_ERROR,
                     "(%t) %p\n",
                     "notify"));
     }
@@ -266,7 +267,7 @@ Thread_Handler::svc (void)
 
 // Test signal handling.
 
-int 
+int
 Thread_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
   // @@ Note that this code is not portable to all OS platforms since
@@ -279,8 +280,8 @@ Thread_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
     {
     case SIGINT:
     case SIGQUIT:
-      ACE_ERROR ((LM_ERROR, 
-		  "(%t) ******************** shutting down %n on signal %S\n", 
+      ACE_ERROR ((LM_ERROR,
+		  "(%t) ******************** shutting down %n on signal %S\n",
 		  signum));
       this->shutdown_ = 1;
       ACE_Reactor::end_event_loop();
@@ -288,7 +289,7 @@ Thread_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
   return 0;
 }
 
-int 
+int
 Thread_Handler::handle_timeout (const ACE_Time_Value &time,
 				const void *)
 {
@@ -310,7 +311,7 @@ Thread_Handler::handle_timeout (const ACE_Time_Value &time,
 int
 Thread_Handler::handle_exception (ACE_HANDLE)
 {
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "(%t) exception to id %d, iteration = %d\n",
 	      this->id_,
               this->iterations_));
@@ -322,8 +323,8 @@ Thread_Handler::handle_exception (ACE_HANDLE)
 int
 Thread_Handler::handle_output (ACE_HANDLE)
 {
-  ACE_DEBUG ((LM_DEBUG, 
-	      "(%t) output to id %d, iteration = %d\n", 
+  ACE_DEBUG ((LM_DEBUG,
+	      "(%t) output to id %d, iteration = %d\n",
 	      this->id_,
               // This decrement must come last since
               // <handle_exception> is called before <handle_output>!
@@ -336,7 +337,7 @@ Thread_Handler::handle_output (ACE_HANDLE)
 void *
 Thread_Handler::svc_run (void *eh)
 {
-  Thread_Handler *this_handler = 
+  Thread_Handler *this_handler =
     reinterpret_cast<Thread_Handler *> (eh);
 
   if (this_handler->svc () == 0)
@@ -345,14 +346,14 @@ Thread_Handler::svc_run (void *eh)
     return reinterpret_cast<void *> (-1);
 }
 
-int 
+int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_LOG_MSG->open (argv[0]);
 
   if (argc < 4)
     {
-      ACE_ERROR ((LM_ERROR, 
+      ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("usage: %s delay interval n_threads [iterations]\n"),
                   argv[0]));
       ACE_OS::exit (1);
@@ -375,10 +376,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 #else
-int 
+int
 main (int, char *[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, 
+  ACE_ERROR_RETURN ((LM_ERROR,
 		     "threads must be supported to run this application\n"), -1);
 }
 #endif /* ACE_HAS_THREADS */

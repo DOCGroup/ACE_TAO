@@ -7,6 +7,7 @@
 #define _HANDLE_L_DGRAM_H
 
 #include "ace/Service_Config.h"
+#include "ace/Reactor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

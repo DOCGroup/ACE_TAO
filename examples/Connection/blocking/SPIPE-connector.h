@@ -5,6 +5,7 @@
 #define SP_CONNECTOR_H
 
 #include "ace/Svc_Handler.h"
+#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

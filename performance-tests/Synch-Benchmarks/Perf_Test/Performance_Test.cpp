@@ -10,6 +10,7 @@
 #include "Benchmark_Performance.h"
 
 #include "ace/Service_Repository.h"
+#include "ace/Reactor.h"
 
 ACE_RCSID (Perf_Test,
            Performance_Test,

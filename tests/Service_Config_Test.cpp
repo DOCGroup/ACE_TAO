@@ -20,6 +20,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Object_Manager.h"
 #include "ace/Service_Config.h"
+#include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/ARGV.h"
 
