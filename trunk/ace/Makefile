@@ -17,6 +17,7 @@ UTILS_FILES = \
   Active_Map_Manager \
   Arg_Shifter \
   ARGV \
+  Capabilities \
   Containers \
   Dirent \
   Dynamic \
