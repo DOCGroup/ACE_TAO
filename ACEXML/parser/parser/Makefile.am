@@ -8,33 +8,33 @@
 ## MPC Command:
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
 
-## Makefile.direct_logging.am 
-noinst_PROGRAMS = direct_logging
+## Makefile.ACEXML_Parser.am 
+noinst_LTLIBRARIES = libACEXML_Parser.la
 
-direct_logging_CPPFLAGS = \
+libACEXML_Parser_la_CPPFLAGS = \
   -I$(top_builddir) \
   -I$(top_srcdir) \
-  -I$(top_srcdir)
-
-direct_logging_SOURCES = \
-  direct_logging.cpp
-
-direct_logging_LDADD = \
- $(top_builddir)/netsvcs/lib/libnetsvcs.la $(top_builddir)/ace/libACE.la
-
-## Makefile.indirect_logging.am 
-noinst_PROGRAMS += indirect_logging
-
-indirect_logging_CPPFLAGS = \
-  -I$(top_builddir) \
   -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -DACEXML_PARSER_BUILD_DLL
 
-indirect_logging_SOURCES = \
-  indirect_logging.cpp
+libACEXML_Parser_la_SOURCES = \
+  Entity_Manager.cpp \
+  Parser.cpp \
+  ParserContext.cpp \
+  ParserInternals.cpp
 
-indirect_logging_LDADD = \
- $(top_builddir)/netsvcs/lib/libnetsvcs.la $(top_builddir)/ace/libACE.la
+libACEXML_Parser_la_LIBADD = \
+ $(top_builddir)/ACEXML/libACEXML.la $(top_builddir)/ace/libACE.la
+
+noinst_HEADERS = \
+  Entity_Manager.h \
+  Parser.h \
+  ParserContext.h \
+  ParserInternals.h \
+  Parser_export.h \
+  Entity_Manager.i \
+  Parser.i \
+  ParserContext.inl
 
 ## Clean up template repositories, etc.
 clean-local:

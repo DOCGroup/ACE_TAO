@@ -8,15 +8,13 @@
 ## MPC Command:
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
 
-ACE_BUILDDIR = $(top_builddir)
-
 ## Makefile.Netsvsc_Client_Test_Lib.am 
 noinst_LTLIBRARIES = libClient_Test.la
 
 libClient_Test_la_CPPFLAGS = \
   -I$(top_builddir) \
   -I$(top_srcdir) \
-  -I$(ACE_BUILDDIR) \
+  -I$(top_srcdir) \
   -DACE_CLIENT_TEST_BUILD_DLL
 
 libClient_Test_la_SOURCES = \
@@ -34,7 +32,7 @@ noinst_PROGRAMS = main
 main_CPPFLAGS = \
   -I$(top_builddir) \
   -I$(top_srcdir) \
-  -I$(ACE_BUILDDIR)
+  -I$(top_srcdir)
 
 main_SOURCES = \
   main.cpp \
