@@ -237,3 +237,8 @@ main (int argc, char *argv[])
 
   return 0;
 }
+
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
