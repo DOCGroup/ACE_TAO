@@ -263,13 +263,18 @@ public:
   // globals functions
   int CmdRead (char *buf, int psize);
   int CmdWrite (char *buf, int size);
-  int SendPacket (int shtag, int gop, int frame, int timeToUse);
+  int SendPacket (int shtag, 
+                  int gop, 
+                  int frame, 
+                  int timeToUse, 
+                  int first_time = 0);
   int FBread (char *buf, int size);
   int PLAYliveVideo (PLAYpara * para);
   void ComputeFirstSendPattern (float limit);
   int FrameToGroup (int * frame);
   int SendReferences (int group, int frame);
   int send_to_network (int timeToUse);
+  int first_packet_send_to_network (int timeToUse);
   void GetFeedBack (void);
   int SendPicture (int *frame);
   int ReadInfoFromFile (void);

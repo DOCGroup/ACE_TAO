@@ -228,10 +228,47 @@ Video_Global::send_to_network (int timeToUse)
         int segsize, sentsize;
         int resent = 0;
    
-        if (msg == NULL) { /* first message for current this->packet */
+        if (msg == NULL) { /* first message for current this->packet
+                            */
           count = 0;
           msg = msghd;
           targetTime = get_usec ();
+          // send the header seperately first
+          segsize = sizeof (*msg);
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) Sending the header, of size %d\n",
+                      segsize));
+          // loop until the packet is written successfully
+          while (write (this->videoSocket, 
+                        (char *)msg,
+                        segsize) == -1)
+            {
+              if (errno == EINTR)
+                continue;
+              if (errno == ENOBUFS) {
+                if (resent) {
+                  perror ("Warning, pkt discarded because");
+                  sent = -1;
+                  break;
+                }
+                else {
+                  resent = 1;
+                  perror ("VS to sleep 5ms");
+                  usleep (5000);
+                  continue;
+                }
+              }
+              if (errno != EPIPE) {
+                fprintf (stderr, "VS error on send this->packet %d of size %d ",
+                         this->msgsn-1, min (size, this->msgsize)+sizeof (*msg));
+                perror ("");
+              }
+              exit (errno != EPIPE);
+            }
+          // increment the counters appropriately
+          size -= segsize;
+          offset += segsize;
+          
         }
         else {
 #if 0
@@ -326,7 +363,11 @@ Video_Global::send_to_network (int timeToUse)
 /* returns: 0 - this->packet sent, -1 - this->packet not sent (failed) */
 
 int
-Video_Global::SendPacket (int shtag, int gop, int frame, int timeToUse)
+Video_Global::SendPacket (int shtag, 
+                          int gop, 
+                          int frame, 
+                          int timeToUse, 
+                          int first_time)
 /* frame maybe out of range (PLAY, STEP), in this case, END_SEQ is sent
   to force display of last frame in VD */
 {
@@ -341,7 +382,6 @@ Video_Global::SendPacket (int shtag, int gop, int frame, int timeToUse)
 
   if (frame >= this->gopTable[gop].totalFrames)
     {
-      ACE_DEBUG ((LM_DEBUG,"(%P|%t)Reached line in %s %d",__FILE__,__LINE__));
       this->packet->cmd = htonl (this->cmd);
       this->packet->cmdsn = htonl (this->cmdsn);
       this->packet->sh = htonl (sh);
@@ -453,7 +493,15 @@ Video_Global::SendPacket (int shtag, int gop, int frame, int timeToUse)
   }
 
   {
-    int sent = send_to_network (timeToUse);
+    int sent;
+    if (first_time == 1)
+      {
+        ACE_DEBUG ((LM_DEBUG, 
+                    "(%P|%t) Sending first frame to client\n"));
+        sent = first_packet_send_to_network (timeToUse);
+      }
+    else
+      sent = send_to_network (timeToUse);
     if (!sent)
       {
         /*
@@ -2037,4 +2085,142 @@ Video_Timer_Global::timerHandler (int sig)
     }
     VIDEO_SINGLETON::instance ()->addedSignals = 0;
   }
+}
+
+// send the first packet, given by packet pointed by
+// 'this->packet' to the network.
+int
+Video_Global::first_packet_send_to_network (int timeToUse)
+{
+  int count = 0;
+  VideoMessage * msghd = (VideoMessage *) (((char *) this->packet) - sizeof (VideoMessage));
+  int sent = 0;
+  int packetSize = ntohl (this->packet->dataBytes);
+
+  msghd->packetsn = htonl (this->packetsn ++);
+  msghd->packetSize = htonl (packetSize + sizeof (* this->packet));
+  
+  fprintf (stderr, "VS to send FIRST pkt %d of size %d.\n",
+           ntohl (msghd->packetsn), ntohl (msghd->packetSize));
+  
+
+  {
+    VideoMessage * msg = NULL;
+    int size = packetSize + sizeof (* this->packet); /* msghd->this->packetSize */
+    int offset = 0;
+    int targetTime;
+  
+    if (size > this->msgsize)
+      {
+        if (!timeToUse)
+          {
+            timeToUse = (this->msgsize + sizeof (*msg) + 28) * 2;
+            /*
+              set the max network as 500KB.
+              28 - UDP header size
+              */
+            /*
+              fprintf (stderr, "computed timeToUse %d. ", timeToUse);
+              */
+          }
+        else
+          {
+            timeToUse = (timeToUse * 7) >> 3;
+            /*
+              fprintf (stderr, "preset timeToUse %d.", timeToUse);
+              */
+            timeToUse /= (size + this->msgsize - 1) / this->msgsize;
+            timeToUse = min (timeToUse, (this->msgsize + sizeof (*msg) + 28) * 100);
+            /* limit min network bandwidth = 10K */
+          }
+
+      }
+    while (size > 0)
+      {
+        int segsize, sentsize;
+        int resent = 0;
+   
+        if (msg == NULL) { /* first message for current this->packet */
+          count = 0;
+          msg = msghd;
+          targetTime = get_usec ();
+        }
+        else {
+#if 0
+          /* the select () is not precise enough for being used here*/
+          int sleepTime;
+          targetTime += timeToUse;
+          sleepTime = get_duration (get_usec (), targetTime);
+          if (sleepTime >= 5000) { /* resolution of timer is 10,000 usec */
+            usleep (sleepTime); /* not first message, wait for a while */
+          }
+#endif
+          /*
+            count ++;
+            if (! (count % 10)) usleep (10000);
+            */
+          msg = (VideoMessage *) ((char *)msg + this->msgsize);
+          memcpy ((char *)msg, (char *)msghd, sizeof (* msg));
+        }
+        msg->msgsn = htonl (this->msgsn++);
+        msg->msgOffset = htonl (offset);
+        msg->msgSize = htonl (min (size, this->msgsize));
+
+        segsize = min (size, this->msgsize)+sizeof (*msg);
+        if (this->conn_tag != 0) { /* this->packet stream */
+          cerr << "sending " << segsize  << " on fd = " << this->videoSocket << endl;
+          while ((sentsize = write (this->videoSocket, (char *)msg, segsize)) == -1) {
+            if (errno == EINTR)
+              continue;
+            if (errno == ENOBUFS) {
+              if (resent) {
+                perror ("Warning, pkt discarded because");
+                sent = -1;
+                break;
+              }
+              else {
+                resent = 1;
+                perror ("VS to sleep 5ms");
+                usleep (5000);
+                continue;
+              }
+            }
+            if (errno != EPIPE) {
+              fprintf (stderr, "VS error on send this->packet %d of size %d ",
+                       this->msgsn-1, min (size, this->msgsize)+sizeof (*msg));
+              perror ("");
+            }
+            exit (errno != EPIPE);
+          }
+        }
+        else {
+          sentsize = wait_write_bytes (this->videoSocket, (char *)msg, segsize);
+          if (sentsize == -1) {
+            if (errno != EPIPE) {
+              fprintf (stderr, "VS error on send this->packet %d of size %d ",
+                       this->msgsn-1, min (size, this->msgsize)+sizeof (*msg));
+              perror ("");
+            }
+            exit (errno != EPIPE);
+          }
+        }
+        if (sentsize < segsize) {
+          SFprintf (stderr, "VS warning: message size %dB, sent only %dB\n",
+                    segsize, sentsize);
+        }
+        if (sent == -1)
+          break;
+        /*
+          fprintf (stderr, "VS: message %d of size %d sent.\n",
+          this->msgsn-1, min (size, this->msgsize)+sizeof (*msg));
+          */
+        size -= this->msgsize;
+        offset += this->msgsize;
+      }
+  }
+  /*
+    fprintf (stderr, "sent = %d\n", sent);
+    */
+  if (!sent) this->pkts_sent ++;
+  return sent;
 }
