@@ -1,4 +1,3 @@
-// Singleton.cpp
 // $Id$
 
 #if !defined (ACE_SINGLETON_C)
@@ -151,10 +150,8 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
 #endif /* ACE_MT_SAFE */
           ACE_NEW_RETURN (singleton, (ACE_TSS_Singleton<TYPE, ACE_LOCK>), 0);
 
-#if 0  /* ACE_Object_Manager::at_thread_exit () is not implemented yet. */
           // Register for destruction with ACE_Object_Manager.
-          ACE_Object_Manager::at_thread_exit (singleton);
-#endif /* 0 */
+          ACE_Object_Manager::at_exit (singleton);
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
         }
       else
@@ -173,10 +170,8 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
               ACE_NEW_RETURN (singleton,
                               (ACE_TSS_Singleton<TYPE, ACE_LOCK>), 0);
 
-#if 0  /* ACE_Object_Manager::at_thread_exit () is not implemented yet. */
               // Register for destruction with ACE_Object_Manager.
-              ACE_Object_Manager::at_thread_exit (singleton);
-#endif /* 0 */
+              ACE_Object_Manager::at_exit (singleton);
             }
         }
 #endif /* ACE_MT_SAFE */
