@@ -358,10 +358,6 @@ protected:
   // Move backward by one element in the set.  Returns 0 when there's
   // no more item in the set before the current item, else 1.
   
-  void reset_i (int head);
-  // If head != 0, the iterator reset to the head  of the map else it
-  // is positioned to the end.
-  
   void dump_i (void) const;
   // Dump the state of an object.
   
@@ -394,9 +390,6 @@ public:
   int advance (void);
   // Move forward by one element in the set.  Returns 0 when all the
   // items in the set have been seen, else 1.
-  
-  void reset (int tail = 0);
-  // Resets the iterator to the begining, if one exists.
   
   void dump (void) const;
   // Dump the state of an object.
@@ -438,9 +431,6 @@ public:
   // Move forward by one element in the set.  Returns 0 when all the
   // items in the set have been seen, else 1.
   
-  void reset (int head = 0);
-  // Resets the iterator to the end again.
-
   void dump (void) const;
   // Dump the state of an object.
 
