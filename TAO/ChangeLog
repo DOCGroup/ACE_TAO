@@ -1,3 +1,10 @@
+Thu Aug  7 22:06:12 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: Added RTKokyuEvent to a one more place
+	  in the Makefile. Makefile.RTKokyuEvent was not appearing in the
+	  generated make command with .mkfiles and hence RTKokyuEvent was
+	  not getting built.
+	
 Thu Aug  7 15:48:59 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: Added RTKokyuEvent to the list of
