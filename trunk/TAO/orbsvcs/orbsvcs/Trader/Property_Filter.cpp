@@ -11,7 +11,7 @@ TAO_Property_Filter (const SPECIFIED_PROPS& desired_props,
 {
   if (this->policy_ == CosTrading::Lookup::some)
     {
-      const PropertyNameSeq& prop_seq = desired_props.prop_names ();
+    const CosTrading::PropertyNameSeq& prop_seq = desired_props.prop_names ();
       int length = prop_seq.length ();
 
       for (int i = 0; i < length; i++)
