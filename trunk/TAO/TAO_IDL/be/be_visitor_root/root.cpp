@@ -794,14 +794,18 @@ be_visitor_root::visit_valuetype (be_valuetype *node)
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS);
       break;
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CS);
+      break;
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_IH:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
     case TAO_CodeGen::TAO_ROOT_IS:
     case TAO_CodeGen::TAO_ROOT_TIE_SH:
-    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
-    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
       return 0;    // nothing to do, resp. not yet impl.
     default:
       {

@@ -513,13 +513,17 @@ be_visitor_module::visit_valuetype (be_valuetype *node)
     case TAO_CodeGen::TAO_MODULE_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS);
       break;
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_MODULE_ANY_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CS);
+      break;
     case TAO_CodeGen::TAO_MODULE_SH:
     case TAO_CodeGen::TAO_MODULE_IH:
     case TAO_CodeGen::TAO_MODULE_SI:
     case TAO_CodeGen::TAO_MODULE_SS:
     case TAO_CodeGen::TAO_MODULE_IS:
-    case TAO_CodeGen::TAO_MODULE_ANY_OP_CH:
-    case TAO_CodeGen::TAO_MODULE_ANY_OP_CS:
       return 0;    // nothing to do, resp. not yet impl.
     default:
       {

@@ -310,8 +310,9 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_valuetype_cdr_op_cs (new_ctx);
 
     case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CH:
+      return new be_visitor_valuetype_any_op_ch (new_ctx);
     case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CS:
-      return new be_visitor_decl (new_ctx);  // @@ TODO
+      return new be_visitor_valuetype_any_op_cs (new_ctx);
 
     case TAO_CodeGen::TAO_VALUETYPE_INIT_CH:
       return new be_visitor_valuetype_init_ch (new_ctx);
