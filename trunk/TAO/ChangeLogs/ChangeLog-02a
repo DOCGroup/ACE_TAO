@@ -1,3 +1,14 @@
+Thu Sep 20 13:23:59 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* orbsvcs/tests/IOR_MCast/server.bor: Added missing iortable
+	  library.
+
+	* orbsvcs/tests/IOR_MCast/MCast_Server_i.cpp (connect_server):
+	  Fixed missing throw spec. 
+
+	  Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for the above
+	  fixes.
+
 Thu Sep 20 12:40:34 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Thread_Pool/client.cpp: 
