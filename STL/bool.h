@@ -1,4 +1,4 @@
-K// $Id$
+// $Id$
 
 #if !defined (ACE_BOOL_H)
 #define ACE_BOOL_H
