@@ -77,7 +77,7 @@ private:
   TAO_Expression_Type type_;
 };
 
-class TAO_Tradng_Export TAO_Binary_Constraint : public TAO_Constraint
+class TAO_Trading_Export TAO_Binary_Constraint : public TAO_Constraint
 //
 // = TITLE
 //      TAO_Binary_Constraint represents an operation with left
