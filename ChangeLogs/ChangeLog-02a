@@ -1,6 +1,11 @@
+Thu Apr 11 13:29:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/String_Base.h:
+          Fixed some small typo in comment
+
 Thu Apr 11 08:30:11 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
-	* ace/OS_String.inl (strnlen): 
+	* ace/OS_String.inl (strnlen):
 	Fixed compile error.
 
 Thu Apr 11 08:16:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
