@@ -1,9 +1,18 @@
+Wed Oct 16 20:23:09 2002  Krishnakumar B  <kitty@cse.wustl.edu>
+
+        * ACEXML/common/FileCharStream.cpp (getchar_i):
+        * ACEXML/common/FileCharStream.h:
+
+          Borland defines getchar() as a macro. Rename it as getchar_i to
+          resolve the clash and fix compilation errors in the build.
+
+
 Wed Oct 16 18:47:44 2002  Stephen Torri <storri@cse.wustl.edu>
 
 	* examples/C++NPv1/Makefile:
 
 	  Replaced Makefile with non-for-loop version provided by
-	  Craig Rodrigues. 
+	  Craig Rodrigues.
 
 Wed Oct 16 16:52:52 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
