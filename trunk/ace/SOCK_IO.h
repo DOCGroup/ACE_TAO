@@ -61,16 +61,22 @@ public:
 
   ssize_t send (const iovec iov[],
                 size_t n) const;
-  // Send a vector of an <n> byte messages to the connected socket.
+  // Send an <iovec> of size <n> to the connected socket.
+
+  ssize_t send_n (const iovec iov[],
+                  size_t n) const;
+  // Send an <iovec> of size <n> to the connected socket (uses
+  // <ACE::sendv_n>).  Will block until all bytes are sent or an error
+  // occurs.
 
   ssize_t recv (iovec iov[],
                 size_t n) const;
-  // Recv a vector of an <n> byte messages to the connected socket.
+  // Receive an <iovec> of size <n> to the connected socket.
 
   ssize_t send (const void *buf,
                 size_t n,
                 int flags,
-                const ACE_Time_Value *timeout);
+                const ACE_Time_Value *timeout) const;
   // Wait to to <timeout> amount of time to send up to <n> bytes into
   // <buf> from <handle> (uses the <send> call).  If <send> times out
   // a -1 is returned with <errno == ETIME>.  If it succeeds the
@@ -79,7 +85,7 @@ public:
   ssize_t recv (void *buf,
                 size_t n,
                 int flags,
-                const ACE_Time_Value *timeout);
+                const ACE_Time_Value *timeout) const;
   // Wait up to <timeout> amount of time to receive up to <n> bytes
   // into <buf> from <handle> (uses the <recv> call).  If <recv> times
   // out a -1 is returned with <errno == ETIME>.  If it succeeds the
@@ -87,7 +93,7 @@ public:
 
   ssize_t send (const void *buf,
                 size_t n,
-                const ACE_Time_Value *timeout);
+                const ACE_Time_Value *timeout) const;
   // Wait to to <timeout> amount of time to send up to <n> bytes into
   // <buf> from <handle> (uses the <send> call).  If <send> times out
   // a -1 is returned with <errno == ETIME>.  If it succeeds the
@@ -95,7 +101,7 @@ public:
 
   ssize_t recv (void *buf,
                 size_t n,
-                const ACE_Time_Value *timeout);
+                const ACE_Time_Value *timeout) const;
   // Wait up to <timeout> amount of time to receive up to <n> bytes
   // into <buf> from <handle> (uses the <recv> call).  If <recv> times
   // out a -1 is returned with <errno == ETIME>.  If it succeeds the

@@ -1481,6 +1481,84 @@ ACE::writev (ACE_HANDLE handle,
 #endif /* ACE_HAS_WRITEV_TIMEDWAIT */
 }
 
+ssize_t
+ACE::writev_n (ACE_HANDLE h,
+               const iovec *i,
+               int iovcnt)
+{
+  ssize_t writelen = 0;
+  iovec *iov = ACE_const_cast (iovec *, i);
+
+  for (int s = 0;
+       s < iovcnt;
+       )
+    {
+      ssize_t n = ACE_OS::writev (h,
+                                  iov + s,
+                                  iovcnt - s);
+      if (n == -1)
+        return n;
+      else
+        {
+          for (writelen += n;
+               s < iovcnt 
+                 && n >= ACE_static_cast (ssize_t,
+                                          iov[s].iov_len);
+               s++)
+            n -= iov[s].iov_len;
+
+          if (n != 0)
+            {
+              char *base = ACE_reinterpret_cast (char *,
+                                                 iov[s].iov_base);
+              iov[s].iov_base = base + n;
+              iov[s].iov_len = iov[s].iov_len - n;
+            }
+        }
+    }
+
+  return writelen;
+}
+
+ssize_t
+ACE::sendv_n (ACE_HANDLE h,
+              const iovec *i,
+              int iovcnt)
+{
+  ssize_t writelen = 0;
+  iovec *iov = ACE_const_cast (iovec *, i);
+
+  for (int s = 0;
+       s < iovcnt;
+       )
+    {
+      ssize_t n = ACE_OS::sendv (h,
+                                 iov + s,
+                                 iovcnt - s);
+      if (n == -1)
+        return n;
+      else
+        {
+          for (writelen += n;
+               s < iovcnt 
+                 && n >= ACE_static_cast (ssize_t,
+                                          iov[s].iov_len);
+               s++)
+            n -= iov[s].iov_len;
+
+          if (n != 0)
+            {
+              char *base = ACE_reinterpret_cast (char *,
+                                                 iov[s].iov_base);
+              iov[s].iov_base = base + n;
+              iov[s].iov_len = iov[s].iov_len - n;
+            }
+        }
+    }
+
+  return writelen;
+}
+
 // Format buffer into printable format.  This is useful for debugging.
 // Portions taken from mdump by J.P. Knight (J.P.Knight@lut.ac.uk)
 // Modifications by Todd Montgomery.
@@ -3125,7 +3203,6 @@ ACE::strend (const char *s)
 
   return s;
 }
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && (defined (__unix) || defined (__Lynx__) || defined (_AIX))
 template class ACE_Auto_Array_Ptr<struct ifreq>;

@@ -68,6 +68,15 @@ ACE_SOCK_IO::send (const iovec iov[], size_t n) const
   return ACE_OS::sendv (this->get_handle (), iov, n);
 }
 
+ASYS_INLINE ssize_t  
+ACE_SOCK_IO::send_n (const iovec iov[], size_t n) const
+{
+  ACE_TRACE ("ACE_SOCK_IO::send");
+  return ACE::sendv_n (this->get_handle (),
+                       iov,
+                       n);
+}
+
 // Recv an n byte message from the connected socket.
 
 ASYS_INLINE ssize_t  
@@ -97,30 +106,38 @@ ACE_SOCK_IO::recv (void *buf, size_t n,
 }
 
 ASYS_INLINE ssize_t 
-ACE_SOCK_IO::send (const void *buf, size_t len, int flags,
-		   const ACE_Time_Value *timeout)
+ACE_SOCK_IO::send (const void *buf,
+                   size_t len,
+                   int flags,
+		   const ACE_Time_Value *timeout) const
 {
   ACE_TRACE ("ACE_SOCK_IO::send");
   return ACE::send (this->get_handle (), buf, len, flags, timeout);
 }
 
 ASYS_INLINE ssize_t 
-ACE_SOCK_IO::recv (void *buf, size_t len, const ACE_Time_Value *timeout)
+ACE_SOCK_IO::recv (void *buf,
+                   size_t len,
+                   const ACE_Time_Value *timeout) const
 {
   ACE_TRACE ("ACE_SOCK_IO::recv");
   return ACE::recv (this->get_handle (), buf, len, timeout);
 }
 
 ASYS_INLINE ssize_t 
-ACE_SOCK_IO::send (const void *buf, size_t len, const ACE_Time_Value *timeout)
+ACE_SOCK_IO::send (const void *buf,
+                   size_t len,
+                   const ACE_Time_Value *timeout) const
 {
   ACE_TRACE ("ACE_SOCK_IO::send");
   return ACE::send (this->get_handle (), buf, len, timeout);
 }
 
 ASYS_INLINE ssize_t 
-ACE_SOCK_IO::recv (void *buf, size_t len, int flags,
-		   const ACE_Time_Value *timeout)
+ACE_SOCK_IO::recv (void *buf,
+                   size_t len,
+                   int flags,
+		   const ACE_Time_Value *timeout) const
 {
   ACE_TRACE ("ACE_SOCK_IO::recv");
   return ACE::recv (this->get_handle (), buf, len, flags, timeout);
