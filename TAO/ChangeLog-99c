@@ -4,7 +4,7 @@ Thu Oct 21 14:55:02 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
           Added the LifeCycle Server to the workspace.
 
         * examples/Quoter/run_test.pl:
-          Cleaned up the perl code and made it use the new debug 
+          Cleaned up the perl code and made it use the new debug
           flag format
 
         * orbsvcs/LifeCycle_Service/Factory_Trader.h
@@ -16,7 +16,7 @@ Thu Oct 21 14:55:02 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
         * examples/Quoter/Generic_Factory_i.h:
         * examples/Quoter/client.h:
         * examples/Quoter/server.h:
-          Added the debug flag support.          
+          Added the debug flag support.
 
         * orbsvcs/LifeCycle_Service/Factory_Trader.cpp
         * orbsvcs/LifeCycle_Service/LifeCycle_Service.cpp
@@ -29,528 +29,528 @@ Thu Oct 21 14:55:02 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
         * examples/Quoter/server.cpp:
           Added such things as POA manager activation, better debug
           messages, debug flag support, and fixed other miscellaneous
-          problems.  
+          problems.
 
           Note, the Quoter test doesn't run successfully yet, but most of
           the problems have been cleared up.
 
 Thu Oct 21 14:19:29 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-        * docs/implrepo/index.html: Removed the discussion link and 
+        * docs/implrepo/index.html: Removed the discussion link and
           added a note about the paper.
 
 Thu Oct 21 13:14:59 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao: The following files were changed to fix #include such that
-	  they are prefixed by tao/.  This will prevent inclusion problems
-	  if users have files with the same names as the ones used in TAO.
+        * tao: The following files were changed to fix #include such that
+          they are prefixed by tao/.  This will prevent inclusion problems
+          if users have files with the same names as the ones used in TAO.
 
-	  - BoundsC.cpp
-	  - BoundsC.h
-	  - Buffering_Constraint_Policy.h
-	  - CONV_FRAMEC.cpp
-	  - CONV_FRAMEC.h
-	  - CONV_FRAMES.cpp
-	  - CONV_FRAMES.h
-	  - CONV_FRAMES_T.cpp
-	  - CONV_FRAMES_T.h
-	  - Client_Priority_Policy.h
-	  - CurrentC.h
-	  - DomainC.h
-	  - DomainS_T.cpp
-	  - DomainS_T.h
-	  - DynAnyC.cpp
-	  - DynAnyC.h
-	  - IOPS.cpp
-	  - IOPS.h
-	  - IOPS_T.cpp
-	  - IOPS_T.h
-	  - IORC.cpp
-	  - IORC.h
-	  - IORS.cpp
-	  - IORS.h
-	  - InterfaceC.cpp
-	  - InterfaceC.h
-	  - MessagingC.h
-	  - MessagingS.cpp
-	  - MessagingS.h
-	  - MessagingS_T.cpp
-	  - MessagingS_T.h
-	  - Messaging_Policy_i.h
-	  - ObjectIDList.cpp
-	  - ObjectIDList.h
-	  - POAC.h
-	  - POAS.h
-	  - PolicyC.h
-	  - PollableC.h
-	  - PollableS.cpp
-	  - PollableS.h
-	  - PollableS_T.cpp
-	  - PollableS_T.h
-	  - Services.h
-	  - TAOC.cpp
-	  - TAOC.h
-	  - TAOS.cpp
-	  - TAOS.h
-	  - TAOS_T.cpp
-	  - TAOS_T.h
-	  - TimeBaseC.cpp
-	  - TimeBaseS.cpp
-	  - TimeBaseS.h
-	  - TimeBaseS_T.cpp
-	  - TimeBaseS_T.h
-	  - qt_resource.h
+          - BoundsC.cpp
+          - BoundsC.h
+          - Buffering_Constraint_Policy.h
+          - CONV_FRAMEC.cpp
+          - CONV_FRAMEC.h
+          - CONV_FRAMES.cpp
+          - CONV_FRAMES.h
+          - CONV_FRAMES_T.cpp
+          - CONV_FRAMES_T.h
+          - Client_Priority_Policy.h
+          - CurrentC.h
+          - DomainC.h
+          - DomainS_T.cpp
+          - DomainS_T.h
+          - DynAnyC.cpp
+          - DynAnyC.h
+          - IOPS.cpp
+          - IOPS.h
+          - IOPS_T.cpp
+          - IOPS_T.h
+          - IORC.cpp
+          - IORC.h
+          - IORS.cpp
+          - IORS.h
+          - InterfaceC.cpp
+          - InterfaceC.h
+          - MessagingC.h
+          - MessagingS.cpp
+          - MessagingS.h
+          - MessagingS_T.cpp
+          - MessagingS_T.h
+          - Messaging_Policy_i.h
+          - ObjectIDList.cpp
+          - ObjectIDList.h
+          - POAC.h
+          - POAS.h
+          - PolicyC.h
+          - PollableC.h
+          - PollableS.cpp
+          - PollableS.h
+          - PollableS_T.cpp
+          - PollableS_T.h
+          - Services.h
+          - TAOC.cpp
+          - TAOC.h
+          - TAOS.cpp
+          - TAOS.h
+          - TAOS_T.cpp
+          - TAOS_T.h
+          - TimeBaseC.cpp
+          - TimeBaseS.cpp
+          - TimeBaseS.h
+          - TimeBaseS_T.cpp
+          - TimeBaseS_T.h
+          - qt_resource.h
 
 Thu Oct 21 12:07:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/QtTests/test_i.cpp (send_val):
-	* tests/QtTests/test_i.h: Made similar changes that could lead to
-	  an error in platforms like IRIX. The changes were nothing, but
-	  addition of the THROW_SPEC to the signature of the methods in
-	  the implementation class. This example has been tested sofar
-	  only on Linux as we have the libraries for Qt only on that
-	  platform.
+        * tests/QtTests/test_i.cpp (send_val):
+        * tests/QtTests/test_i.h: Made similar changes that could lead to
+          an error in platforms like IRIX. The changes were nothing, but
+          addition of the THROW_SPEC to the signature of the methods in
+          the implementation class. This example has been tested sofar
+          only on Linux as we have the libraries for Qt only on that
+          platform.
 
 Thu Oct 21 11:52:50 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Xt_Stopwatch/timer.h:
-	* tests/Xt_Stopwatch/client.cpp:
-	* tests/Xt_Stopwatch/Client.h:
-	* tests/Xt_Stopwatch/Control.h:
-	* tests/Xt_Stopwatch/test_i.cpp:
-	* tests/Xt_Stopwatch/test_i.h:
-	* tests/Xt_Stopwatch/Makefile: Fixed a compile error. Thanks to
-	  Thomas Groth <groth.th@stn-atlas.de> for reporting this. I also
-	  updated the Makefile dependencies & removed some warnings on
-	  Sun_Egcs.
+        * tests/Xt_Stopwatch/timer.h:
+        * tests/Xt_Stopwatch/client.cpp:
+        * tests/Xt_Stopwatch/Client.h:
+        * tests/Xt_Stopwatch/Control.h:
+        * tests/Xt_Stopwatch/test_i.cpp:
+        * tests/Xt_Stopwatch/test_i.h:
+        * tests/Xt_Stopwatch/Makefile: Fixed a compile error. Thanks to
+          Thomas Groth <groth.th@stn-atlas.de> for reporting this. I also
+          updated the Makefile dependencies & removed some warnings on
+          Sun_Egcs.
 
 Thu Oct 21 10:54:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Object.cpp (_is_a): Moved the local type_id checking up
-	  before the checking using the collocated object.  The original
-	  order was working when we only had directly collocation
-	  strategy.  We should always try to use the type_id in the stub
-	  first no matter what kind of collocation strategy we use, IMO.
-	  Thanks to Samuel <samuel@realestate.com.au> and Alok Gupta
-	  <alokg@ssind.stpn.soft.net> for reporting this.
+        * tao/Object.cpp (_is_a): Moved the local type_id checking up
+          before the checking using the collocated object.  The original
+          order was working when we only had directly collocation
+          strategy.  We should always try to use the type_id in the stub
+          first no matter what kind of collocation strategy we use, IMO.
+          Thanks to Samuel <samuel@realestate.com.au> and Alok Gupta
+          <alokg@ssind.stpn.soft.net> for reporting this.
 
 Thu Oct 21 09:20:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/GIOP_Server_Request.cpp:
-	  The optimizations for DSI gateways must be disabled if
-	  minimum_corba is set
+        * tao/GIOP_Server_Request.cpp:
+          The optimizations for DSI gateways must be disabled if
+          minimum_corba is set
 
 Wed Oct 20 17:30:03 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* rules.tao.GNU: <rt_corba> should default to 1. Also, added the
-	  default for <corba_messaging>.
+        * rules.tao.GNU: <rt_corba> should default to 1. Also, added the
+          default for <corba_messaging>.
 
-	* tao/Makefile: The defaulting of <corba_messaging> and <rt_corba>
-	  should happen in rules.tao.GNU and not in this Makefile.  Also,
-	  moved the files related to <corba_messaging> and <rt_corba> to
-	  after the inclusion of rules.tao.GNU (which itself was moved
-	  up).
+        * tao/Makefile: The defaulting of <corba_messaging> and <rt_corba>
+          should happen in rules.tao.GNU and not in this Makefile.  Also,
+          moved the files related to <corba_messaging> and <rt_corba> to
+          after the inclusion of rules.tao.GNU (which itself was moved
+          up).
 
-	* tao/orbconf.h (TAO_HAS_CORBA_MESSAGING): Added protection
-	  against redefinition (in case it was defined on the command
-	  line).
+        * tao/orbconf.h (TAO_HAS_CORBA_MESSAGING): Added protection
+          against redefinition (in case it was defined on the command
+          line).
 
-	* examples/Makefile: Moved the inclusion of
-	  $(TAO_ROOT)/rules.tao.GNU to the top of the file so that we get
-	  the correct definition of <corba_messaging> in the place we need
-	  it.
+        * examples/Makefile: Moved the inclusion of
+          $(TAO_ROOT)/rules.tao.GNU to the top of the file so that we get
+          the correct definition of <corba_messaging> in the place we need
+          it.
 
 Wed Oct 20 10:05:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tests/AMI/simple_client.cpp,
-	  tests/AMI/client.cpp:
-	  Fixed missing ACE_THROW_SPEC declarations, thanks to
-	  Thomas Groth <groth.th@stn-atlas.de> for reporting this.
+        * tests/AMI/simple_client.cpp,
+          tests/AMI/client.cpp:
+          Fixed missing ACE_THROW_SPEC declarations, thanks to
+          Thomas Groth <groth.th@stn-atlas.de> for reporting this.
 
 Wed Oct 20 09:21:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/corbafwd.h:
-	* tao/NVList.h:
-	* tao/NVList.cpp:
-	* tao/GIOP_Server_Request.cpp:
-	  Using a ServiceContext we can insert padding to ensure that the
-	  payload of the message is preserved in DSI gateways. This let us
-	  further reduce the number of data copies and memory
-	  allocations.
+        * tao/corbafwd.h:
+        * tao/NVList.h:
+        * tao/NVList.cpp:
+        * tao/GIOP_Server_Request.cpp:
+          Using a ServiceContext we can insert padding to ensure that the
+          payload of the message is preserved in DSI gateways. This let us
+          further reduce the number of data copies and memory
+          allocations.
 
-	* tests/DSI_Gateway/test_dsi.h:
-	* tests/DSI_Gateway/test_dsi.cpp:
-	  Use the new features to implement DSI forwarding of requests
-	  without *any* marshaling/demarshaling.
+        * tests/DSI_Gateway/test_dsi.h:
+        * tests/DSI_Gateway/test_dsi.cpp:
+          Use the new features to implement DSI forwarding of requests
+          without *any* marshaling/demarshaling.
 
-	* tests/DSI_Gateway/gateway.cpp:
-	  Removed debugging code.
+        * tests/DSI_Gateway/gateway.cpp:
+          Removed debugging code.
 
 Wed Oct 20 08:45:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
-	  The ACE_THROW_SPEC was missing on the method implementation of
-	  raise_xx methods of the execption holder. Thanks to Thomas
-	  Groth <groth.th@stn-atlas.de> for pointing out this fix.
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+          The ACE_THROW_SPEC was missing on the method implementation of
+          raise_xx methods of the execption holder. Thanks to Thomas
+          Groth <groth.th@stn-atlas.de> for pointing out this fix.
 
 Wed Oct 20 00:28:45 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* TAO_IDL/be/be_codegen.cpp (start_client_header):
-	  When compiling IDL with the -in option the include of
- 	  ace/streams.h was still using "" instead of <>, which caused
- 	  issues with make dependency generators.  Thanks to Chris
-	  Kohlhoff <chris@kohlhoff.com> for this fix.
+        * TAO_IDL/be/be_codegen.cpp (start_client_header):
+          When compiling IDL with the -in option the include of
+          ace/streams.h was still using "" instead of <>, which caused
+          issues with make dependency generators.  Thanks to Chris
+          Kohlhoff <chris@kohlhoff.com> for this fix.
 
 Tue Oct 19 19:15:06 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* docs/releasenotes/index.html:
-	  Updated RT CORBA section.
+        * docs/releasenotes/index.html:
+          Updated RT CORBA section.
 
 Tue Oct 19 19:20:47 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
-	  Fixed generation of 'set' function for an interface
-	  member of a valuetype. rhs was arg->duplicate ()
-	  instead of <scoped name>::_duplicate (arg).
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+          Fixed generation of 'set' function for an interface
+          member of a valuetype. rhs was arg->duplicate ()
+          instead of <scoped name>::_duplicate (arg).
 
-	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
-	  Turned up more cases where ACE_NESTED_CLASS
-	  should not be used.
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+          Turned up more cases where ACE_NESTED_CLASS
+          should not be used.
 
-	Thanks to Erik Johannes <ejohannes@oresis.com> for
-	sending in the example IDL file that turned up
-	these bugs.
+        Thanks to Erik Johannes <ejohannes@oresis.com> for
+        sending in the example IDL file that turned up
+        these bugs.
 
 Tue Oct 19 13:19:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
-	  Predicated the generation of the ACE_NESTED_CLASS
-	  macro for a member in the header file on whether
-	  or not the member was defined inside an interface
-	  or not. If it is not, the macro isn't needed, and
-	  causes problems when reused for code generation
-	  for valuetypes.
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+          Predicated the generation of the ACE_NESTED_CLASS
+          macro for a member in the header file on whether
+          or not the member was defined inside an interface
+          or not. If it is not, the macro isn't needed, and
+          causes problems when reused for code generation
+          for valuetypes.
 
-	* TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
-	  Removed generation of ACE_NESTED_CLASS macro in
-	  set/get methods. It is not needed in arguments
-	  or return types in the header file.
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+          Removed generation of ACE_NESTED_CLASS macro in
+          set/get methods. It is not needed in arguments
+          or return types in the header file.
 
-	Thanks to Brian Mason <bmason@oresis.com> for sending
-	in the example that exposed these bugs.
+        Thanks to Brian Mason <bmason@oresis.com> for sending
+        in the example that exposed these bugs.
 
 Tue Oct 19 10:24:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Sched/DynSched.cpp:
-	* orbsvcs/orbsvcs/Sched/Scheduler.cpp:
-	* orbsvcs/orbsvcs/Sched/Scheduler_Generic.cpp:
-	  Fixed several warnings about incorrect format strings
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp:
+        * orbsvcs/orbsvcs/Sched/Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/Scheduler_Generic.cpp:
+          Fixed several warnings about incorrect format strings
 
-	* orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
-	* tests/DSI_Gateway/test_dsi.cpp:
-	  Fixed several warnings about ambiguous conversions from T_var to
-	  T_ptr
+        * orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
+        * tests/DSI_Gateway/test_dsi.cpp:
+          Fixed several warnings about ambiguous conversions from T_var to
+          T_ptr
 
-	* tests/DSI_Gateway/run_test.pl:
-	  The test was not killing the right processes on a failure.
+        * tests/DSI_Gateway/run_test.pl:
+          The test was not killing the right processes on a failure.
 
 Mon Oct 18 13:47:42 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/UIOP_Connect.cpp (handle_timeout):
-	* tao/IIOP_Connect.cpp (handle_timeout):
+        * tao/UIOP_Connect.cpp (handle_timeout):
+        * tao/IIOP_Connect.cpp (handle_timeout):
 
-	  Fixed unused arg warnings.  Thanks to David for pointing them
-	  out.
+          Fixed unused arg warnings.  Thanks to David for pointing them
+          out.
 
 Mon Oct 18 11:51:40 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* docs/releasenotes/orbcore.html:
+        * docs/releasenotes/orbcore.html:
 
-	  Added CORBA::ORB::destroy() entry to "work completed" list.
-	  Fixed some broken links.
+          Added CORBA::ORB::destroy() entry to "work completed" list.
+          Fixed some broken links.
 
 Sun Oct 17 22:28:39 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* docs/releasenotes/index.html: Updated release notes on the
-	  Logging Service.
+        * docs/releasenotes/index.html: Updated release notes on the
+          Logging Service.
 
 Sun Oct 17 20:42:41 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/QtTests/Makefile:
-	* tests/QtTests/server.cpp:
-	* tests/QtTests/client.cpp:
-	* tests/QtTests/client.h:
-	* tests/QtTests/test_i.h:
-	* tests/QtTests/test_i.cpp:
-	* tests/QtTests/test_i.i:
-	* tests/QtTests/test_i.idl:
-	* tests/QtTests/svc.conf:
-	* tests/QtTests/README: This is a simple test that demonstrates
-	  how to use the QtReactor with the ORB event loop. Please refer
-	  to the README for details on how to build & run this test.
+        * tests/QtTests/Makefile:
+        * tests/QtTests/server.cpp:
+        * tests/QtTests/client.cpp:
+        * tests/QtTests/client.h:
+        * tests/QtTests/test_i.h:
+        * tests/QtTests/test_i.cpp:
+        * tests/QtTests/test_i.i:
+        * tests/QtTests/test_i.idl:
+        * tests/QtTests/svc.conf:
+        * tests/QtTests/README: This is a simple test that demonstrates
+          how to use the QtReactor with the ORB event loop. Please refer
+          to the README for details on how to build & run this test.
 
 Sun Oct 17 20:20:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/Param_Test/recursive_union.cpp:
-	  In methods that initialize the recursive unions,
-	  replaced use of the CORBA 2.3 anonymous sequence
-	  typedef to define temporaries with the TAO-specific
-	  type. LynxOS uses the older GNU compiler that doesn't
-	  handle the scoping of these typedefs correctly so
-	  that compiler does not see them in the generated code.
-	  Thanks to Dan Butler <daniel.g.butler@boeing.com>
-	  and David Levine for pointing this out.
+        * tests/Param_Test/recursive_union.cpp:
+          In methods that initialize the recursive unions,
+          replaced use of the CORBA 2.3 anonymous sequence
+          typedef to define temporaries with the TAO-specific
+          type. LynxOS uses the older GNU compiler that doesn't
+          handle the scoping of these typedefs correctly so
+          that compiler does not see them in the generated code.
+          Thanks to Dan Butler <daniel.g.butler@boeing.com>
+          and David Levine for pointing this out.
 
 Sun Oct 17 19:00:43 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp : Made changes to
-	  incorporate the -ORBMulticastDiscoveryEndpoint option to the
-	  ORB. The option is available now and has been tested. A sample
-	  usage of the option is
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp : Made changes to
+          incorporate the -ORBMulticastDiscoveryEndpoint option to the
+          ORB. The option is available now and has been tested. A sample
+          usage of the option is
 
-	  -ORBMulticastDiscoveryEndpoint "224.9.9.3:10014"
+          -ORBMulticastDiscoveryEndpoint "224.9.9.3:10014"
 
 Sat Oct 16 19:48:27 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp:
-	* orbsvcs/orbsvcs/IOR_Multicast.h:
-	* tao/params.h:
-	* tao/params.i:
-	* tao/ORB_Core.cpp:
-	* tao/ORB.cpp:
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp:
+        * orbsvcs/orbsvcs/IOR_Multicast.h:
+        * tao/params.h:
+        * tao/params.i:
+        * tao/ORB_Core.cpp:
+        * tao/ORB.cpp:
 
-	  Made changes towards re-incarnating the
-	  -ORBMulticastDiscoveryEndpoint option to the ORB. The option is
-	  not fully incorporated yet.
+          Made changes towards re-incarnating the
+          -ORBMulticastDiscoveryEndpoint option to the ORB. The option is
+          not fully incorporated yet.
 
 Sat Oct 16 14:30:16 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* docs/releasenotes/index.html: Updated release notes on AMI.
+        * docs/releasenotes/index.html: Updated release notes on AMI.
 
 Sat Oct 16 11:17:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* performance-tests/Latency/Makefile:
-	* performance-tests/Latency/ami-latency-client.cpp:
-	* performance-tests/Latency/ami-throughput-client.cpp:
-	* performance-tests/Latency/client-st-muxed.conf:
-	* performance-tests/Latency/client.cpp:
-	* performance-tests/Latency/dii_client.cpp:
-	* performance-tests/Latency/st_client.cpp:
-	* performance-tests/Latency/test_i.cpp:
-	  Updated the tests to support bursts of events, pacing, and
-	  better statitics.
+        * performance-tests/Latency/Makefile:
+        * performance-tests/Latency/ami-latency-client.cpp:
+        * performance-tests/Latency/ami-throughput-client.cpp:
+        * performance-tests/Latency/client-st-muxed.conf:
+        * performance-tests/Latency/client.cpp:
+        * performance-tests/Latency/dii_client.cpp:
+        * performance-tests/Latency/st_client.cpp:
+        * performance-tests/Latency/test_i.cpp:
+          Updated the tests to support bursts of events, pacing, and
+          better statitics.
 
-	* tao/MessagingS.i:
-	  The file was still using the old TAO_POLLER macro, instead of
-	  TAO_HAS_AMI_POLLER
+        * tao/MessagingS.i:
+          The file was still using the old TAO_POLLER macro, instead of
+          TAO_HAS_AMI_POLLER
 
-	* tao/Object.cpp:
-	  Minor cosmetic fixes
+        * tao/Object.cpp:
+          Minor cosmetic fixes
 
-	* */Makefile:
-	  Updated dependencies
+        * */Makefile:
+          Updated dependencies
 
 Fri Oct 15 19:25:37 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/ORB.cpp (key_to_object, _find_collocated_servant):
+        * tao/ORB.cpp (key_to_object, _find_collocated_servant):
 
-	  Do not duplicate the ORB when passing it as an argument to
-	  TAO_Stub::servant_orb() since the ORB is duplicated by it.
-	  This fixes a memory leak.  [Bug 363]
+          Do not duplicate the ORB when passing it as an argument to
+          TAO_Stub::servant_orb() since the ORB is duplicated by it.
+          This fixes a memory leak.  [Bug 363]
 
-	* tao/Stub.cpp (~TAO_Stub):
+        * tao/Stub.cpp (~TAO_Stub):
 
-	  Make sure TAO_ORB_Core pointer is not zero prior to calling
-	  reset_hint() in profile.  The hint in the profile relies on
-	  state stored in the ORB core.  [Bug 360]
+          Make sure TAO_ORB_Core pointer is not zero prior to calling
+          reset_hint() in profile.  The hint in the profile relies on
+          state stored in the ORB core.  [Bug 360]
 
-	  Removed unnecessary zero pointer check prior to deletion.
+          Removed unnecessary zero pointer check prior to deletion.
 
-	* tao/Stub.i:
+        * tao/Stub.i:
 
-	  Updated to conform to ACE style guidelines.
+          Updated to conform to ACE style guidelines.
 
 Fri Oct 15 17:47:24 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/qt_resource.cpp:
-	* tao/qt_resource.h:
-	* tao/qt_resource.i: The default resources that needs to be
-	  initialised by the application programmer  who intends to use
-	  the QtReactor. Thanks to Hamish Friedlander <ullexco@wave.co.nz>
-	  for donating this TAO.
+        * tao/qt_resource.cpp:
+        * tao/qt_resource.h:
+        * tao/qt_resource.i: The default resources that needs to be
+          initialised by the application programmer  who intends to use
+          the QtReactor. Thanks to Hamish Friedlander <ullexco@wave.co.nz>
+          for donating this TAO.
 
-	  An application that uses QtReactor is yet to be written. That
-	  should be available in the next couple of days.
+          An application that uses QtReactor is yet to be written. That
+          should be available in the next couple of days.
 
-	* tao/Makefile: Added the above files for the build.
+        * tao/Makefile: Added the above files for the build.
 
 Fri Oct 15 17:17:02 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Sync_Strategies.cpp (timer_check): We now support the
-	  timeout feature of BufferingConstraint policy.
+        * tao/Sync_Strategies.cpp (timer_check): We now support the
+          timeout feature of BufferingConstraint policy.
 
-	* tao/Pluggable.h (TAO_Transport): The base class now holds on to
-	  a timeout value <buffering_timeout_value_> and a timer id
-	  <buffering_timer_id_>.  These are used to implement automatic
-	  timed flushing of buffered oneways.
+        * tao/Pluggable.h (TAO_Transport): The base class now holds on to
+          a timeout value <buffering_timeout_value_> and a timer id
+          <buffering_timer_id_>.  These are used to implement automatic
+          timed flushing of buffered oneways.
 
-	* tao/IIOP_Transport.cpp (event_handler):
-	* tao/UIOP_Transport.cpp (event_handler):
+        * tao/IIOP_Transport.cpp (event_handler):
+        * tao/UIOP_Transport.cpp (event_handler):
 
-	  This method provides a way to gain access to the underlying
-	  event handler used by the reactor.
+          This method provides a way to gain access to the underlying
+          event handler used by the reactor.
 
-	* tao/UIOP_Connect.cpp (handle_timeout):
-	* tao/IIOP_Connect.cpp (handle_timeout):
+        * tao/UIOP_Connect.cpp (handle_timeout):
+        * tao/IIOP_Connect.cpp (handle_timeout):
 
-	  This new method is called when the buffering timer expires.
-	  Flush the buffered messages when this happens.
+          This new method is called when the buffering timer expires.
+          Flush the buffered messages when this happens.
 
-	* examples/Buffered_Oneways/client.cpp: Added testing for the
-	  implicit buffering timeout feature.
+        * examples/Buffered_Oneways/client.cpp: Added testing for the
+          implicit buffering timeout feature.
 
-	* examples/Buffered_Oneways/run_test.pl: Now checks for:
+        * examples/Buffered_Oneways/run_test.pl: Now checks for:
 
-	  (a) Flushing based on implicit message counts
-	  (b) Flushing based on implicit message bytes
-	  (c) Flushing based on implicit timeout
-	  (d) Explicit queue flushing (and server shutdown)
+          (a) Flushing based on implicit message counts
+          (b) Flushing based on implicit message bytes
+          (c) Flushing based on implicit timeout
+          (d) Explicit queue flushing (and server shutdown)
 
 Thu Oct 14 22:19:42 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/GIOP.cpp (send_reply_exception): A format code was missing
-	  in the ACE_DEBUG statement.  Thanks to Charles Frasch
- 	  <cfrasch@spawar.navy.mil> for reporting this.
+        * tao/GIOP.cpp (send_reply_exception): A format code was missing
+          in the ACE_DEBUG statement.  Thanks to Charles Frasch
+          <cfrasch@spawar.navy.mil> for reporting this.
 
-	* orbsvcs/orbsvcs/Makefile.bor,
-	  TAO_IDL/Makefile.bor,
-	  tao/Makefile.bor: Added several more files so that Borland C++
- 	  Builder will link TAO.  Thanks to Mogens Hansen
- 	  <mogens_h@dk-online.dk> for reporting this.
+        * orbsvcs/orbsvcs/Makefile.bor,
+          TAO_IDL/Makefile.bor,
+          tao/Makefile.bor: Added several more files so that Borland C++
+          Builder will link TAO.  Thanks to Mogens Hansen
+          <mogens_h@dk-online.dk> for reporting this.
 
 Thu Oct 14 18:31:02 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Active_Object_Map.cpp: In
-	  TAO_Transient_Strategy::find_servant_using_system_id_and_user_id
-	  and
-	  TAO_Persistent_Strategy::find_servant_using_system_id_and_user_id,
-	  if <result> is -1, reset <entry> to 0.  Thanks to Chris Hafey
-	  <chris@stentorsoft.com> for sending an example illustrating the
-	  bug.
+        * tao/Active_Object_Map.cpp: In
+          TAO_Transient_Strategy::find_servant_using_system_id_and_user_id
+          and
+          TAO_Persistent_Strategy::find_servant_using_system_id_and_user_id,
+          if <result> is -1, reset <entry> to 0.  Thanks to Chris Hafey
+          <chris@stentorsoft.com> for sending an example illustrating the
+          bug.
 
 Thu Oct 14 15:42:09 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/Direct_Priority_Mapping.cpp:
-	  Added missing range checks.
+        * tao/Direct_Priority_Mapping.cpp:
+          Added missing range checks.
 
-	* tao/Linear_Priority_Mapping.cpp:
-	  Fixed the formula in the <to_CORBA> method.  Thanks to Dennis
-	  Noll <Dennis.Noll@MW.Boeing.com> for reporting one of the
- 	  problems.  Also added range checking.
+        * tao/Linear_Priority_Mapping.cpp:
+          Fixed the formula in the <to_CORBA> method.  Thanks to Dennis
+          Noll <Dennis.Noll@MW.Boeing.com> for reporting one of the
+          problems.  Also added range checking.
 
-	* tao/Object.cpp:
-	  Fixed the warning for unused argument in case minimum_tao=1.
-	  Thanks to David for pointing this out.
+        * tao/Object.cpp:
+          Fixed the warning for unused argument in case minimum_tao=1.
+          Thanks to David for pointing this out.
 
-	* examples/Load_Balancing/Load_Balancer_i.cpp:
-	  Fixed the implementation of <Object_Group::destroy> to notify
-	  it's factory of destruction, so that the factory can update its
-	  records of object groups.
+        * examples/Load_Balancing/Load_Balancer_i.cpp:
+          Fixed the implementation of <Object_Group::destroy> to notify
+          it's factory of destruction, so that the factory can update its
+          records of object groups.
 
-	* examples/Load_Balancing/Identity_Client.cpp
-	* examples/Load_Balancing/Identity_Server.cpp
-	* examples/Load_Balancing/Load_Balancer_i.h
-	* examples/Load_Balancing/Load_Balancing_Service.cpp
-	* examples/Load_Balancing/run_test.pl:
-	  Enhanced demo to provide more detailed output.
+        * examples/Load_Balancing/Identity_Client.cpp
+        * examples/Load_Balancing/Identity_Server.cpp
+        * examples/Load_Balancing/Load_Balancer_i.h
+        * examples/Load_Balancing/Load_Balancing_Service.cpp
+        * examples/Load_Balancing/run_test.pl:
+          Enhanced demo to provide more detailed output.
 
 
 Wed Oct 13 17:10:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Sequence_T.i:
-	  In TAO_Unbounded_Sequence<T>::get_buffer (CORBA::Boolean orphan),
-	  if the orphan flag is 1 and the the sequence's release_ flag is 0,
-	  a null pointer is returned no matter what is actually in the
-	  sequence's buffer. This is in the non-const version of get_buffer(),
-	  so usually some  assignment (and allocation if necessary) is made
-	  to the return value. The caller can't, and the sequence won't
-	  release the original buffer, so there is a memory leak. These
-	  leaks were cropping up in calls to string_to_object().
-	  Thanks to Irfan for noticing the leak.
+        * tao/Sequence_T.i:
+          In TAO_Unbounded_Sequence<T>::get_buffer (CORBA::Boolean orphan),
+          if the orphan flag is 1 and the the sequence's release_ flag is 0,
+          a null pointer is returned no matter what is actually in the
+          sequence's buffer. This is in the non-const version of get_buffer(),
+          so usually some  assignment (and allocation if necessary) is made
+          to the return value. The caller can't, and the sequence won't
+          release the original buffer, so there is a memory leak. These
+          leaks were cropping up in calls to string_to_object().
+          Thanks to Irfan for noticing the leak.
 
 Wed Oct 13 16:34:11 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Reply_Dispatcher.cpp:
-	* tao/Request.cpp:
-	  Replace use of AMI reply error codes with GIOP reply
-	  error codes in deferred synchronous requests. Otherwise,
-	  if TAO_HAS_CORBA_MESSAGING is not defined, deferred
-	  synch can't be used.
+        * tao/Reply_Dispatcher.cpp:
+        * tao/Request.cpp:
+          Replace use of AMI reply error codes with GIOP reply
+          error codes in deferred synchronous requests. Otherwise,
+          if TAO_HAS_CORBA_MESSAGING is not defined, deferred
+          synch can't be used.
 
 Wed Oct 13 15:48:40 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Policy_Manager: The policy manager now holds on directly to
-	  the servant class instead of the skeletons.  This solves the
-	  problem of objects getting registered with the POA.
+        * tao/Policy_Manager: The policy manager now holds on directly to
+          the servant class instead of the skeletons.  This solves the
+          problem of objects getting registered with the POA.
 
-	* tao/Stub:
-	* tao/Sync_Strategies:
-	* tao/ORB_Core:
+        * tao/Stub:
+        * tao/Sync_Strategies:
+        * tao/ORB_Core:
 
-	  Changes to deal with the above skeleton to servant changes.
+          Changes to deal with the above skeleton to servant changes.
 
-	* tao/corba.h:
+        * tao/corba.h:
 
-	  Includes TAOC.h and MessagingC.h now that Policy_Manager
-	  doesn't.
+          Includes TAOC.h and MessagingC.h now that Policy_Manager
+          doesn't.
 
-	* tao/Messaging_Policy_i.h:
-	* tao/Client_Priority_Policy.h:
-	* tao/Buffering_Constraint_Policy.h:
+        * tao/Messaging_Policy_i.h:
+        * tao/Client_Priority_Policy.h:
+        * tao/Buffering_Constraint_Policy.h:
 
-	  Added a clone() method to the policy servants. Also changed the
-	  virtual inheritance from the base classes to normal multiple
-	  inheritance.  This will let us cast skeleton pointers to servant
-	  pointers without requiring the use of RTTI. As far as I can
-	  tell, there shouldn't be any negative side effects to this.
+          Added a clone() method to the policy servants. Also changed the
+          virtual inheritance from the base classes to normal multiple
+          inheritance.  This will let us cast skeleton pointers to servant
+          pointers without requiring the use of RTTI. As far as I can
+          tell, there shouldn't be any negative side effects to this.
 
-	* examples/Buffered_Oneways/client.cpp (main): The policies are
-	  now set on the policy current (i.e., thread specific) rather
-	  than on the policy manager (i.e., orb specific).  This use case
-	  is closer to the Boeing use case.
+        * examples/Buffered_Oneways/client.cpp (main): The policies are
+          now set on the policy current (i.e., thread specific) rather
+          than on the policy manager (i.e., orb specific).  This use case
+          is closer to the Boeing use case.
 
-	  Also, destroyed the POA at the end of main().  Even though this
-	  example is (mostly) client only, the POA is create as a side
-	  effect of creating the policy.  Therefore, destroying the POA at
-	  the end of main() avoids memory leaks.  We should probably come
-	  up with a better solution, but for now this is sufficient.
+          Also, destroyed the POA at the end of main().  Even though this
+          example is (mostly) client only, the POA is create as a side
+          effect of creating the policy.  Therefore, destroying the POA at
+          the end of main() avoids memory leaks.  We should probably come
+          up with a better solution, but for now this is sufficient.
 
 Tue Oct 12 16:32:16 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/MProfile_Forwarding/Servant_Locator.cpp :
-	* tests/MProfile_Forwarding/Servant_Locator.h:
-	* tests/MProfile_Forwarding/Manager.cpp:
-	* tests/MProfile_Forwarding/Manager.h:
-	* tests/MProfile_Forwarding/test.idl:
-	* tests/MProfile_Forwarding/test_i.cpp:
-	* tests/MProfile_Forwarding/test_i.h:
-	* tests/MProfile_Forwarding/test_i.i:
-	* tests/MProfile_Forwarding/server.cpp:
-	* tests/MProfile_Forwarding/client.cpp:
-	* tests/MProfile_Forwarding/README:
-	* tests/MProfile_Forwarding/Makefile: Added a test case to
-	  replicate the problem that Shalini Yajnik
- 	  <shalini@research.bell-labs.com> has reported and that was fixed
- 	  by Fred Kuhns.  This could serve as a test that would help us
- 	  verify this feature again. This test is basically an extension
- 	  of tests/MProfile. For more details, please refer to the README.
+        * tests/MProfile_Forwarding/Servant_Locator.cpp :
+        * tests/MProfile_Forwarding/Servant_Locator.h:
+        * tests/MProfile_Forwarding/Manager.cpp:
+        * tests/MProfile_Forwarding/Manager.h:
+        * tests/MProfile_Forwarding/test.idl:
+        * tests/MProfile_Forwarding/test_i.cpp:
+        * tests/MProfile_Forwarding/test_i.h:
+        * tests/MProfile_Forwarding/test_i.i:
+        * tests/MProfile_Forwarding/server.cpp:
+        * tests/MProfile_Forwarding/client.cpp:
+        * tests/MProfile_Forwarding/README:
+        * tests/MProfile_Forwarding/Makefile: Added a test case to
+          replicate the problem that Shalini Yajnik
+          <shalini@research.bell-labs.com> has reported and that was fixed
+          by Fred Kuhns.  This could serve as a test that would help us
+          verify this feature again. This test is basically an extension
+          of tests/MProfile. For more details, please refer to the README.
 
 Tue Oct 12 15:46:41 1999  Fred Kuhns  <fredk@cs.wustl.edu>
 
         * tao/Stub.cpp fixed a bug with location forwarding which caused
           all forwarding information to be discarded if a connect failed
- 	  on any of the forwarding profiles.  Thanks to Shalini Yajnik
- 	  <shalini@research.bell-labs.com> for reporting this bug.
+          on any of the forwarding profiles.  Thanks to Shalini Yajnik
+          <shalini@research.bell-labs.com> for reporting this bug.
 
 Tue Oct 12 14:23:40 1999  David L. Levine  <levine@cs.wustl.edu>
 
