@@ -58,6 +58,19 @@ Video_Server_StreamEndPoint::handle_connection_requested (AVStreams::StreamEndPo
   return 1;
 } 
 
+void
+fill_service_type (CosTradingRepos::ServiceTypeRepository::PropStructSeq& prop_seq)
+{
+  prop_seq.length (10);
+
+  for (int i = 0; i <= TAO_Machine_Properties::LOAD; i++)
+    {
+      prop_seq[i].name = TAO_Machine_Properties::PROP_NAMES[i];
+      prop_seq[i].value_type = TAO_Machine_Properties::PROP_TYPE;
+      prop_seq[i].mode = CosTradingRepos::ServiceTypeRepository::PROP_NORMAL;
+    }
+}
+
 int
 export_properties (CORBA::ORB_ptr orb,
 		   CORBA::Object_ptr mmdevice,
@@ -89,8 +102,12 @@ export_properties (CORBA::ORB_ptr orb,
 	CosPropertyService::PropertySet::_narrow (mmdevice, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // Instantiate the property exporter helper class. 
+      // Instantiate the property exporter helper class.
+#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+      TAO_Property_Exporter prop_exporter (lookup_if, prop_set, orb);
+#else
       TAO_Property_Exporter prop_exporter (lookup_if, prop_set);
+#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
       
       // Add properties to server description.
 
@@ -103,17 +120,30 @@ export_properties (CORBA::ORB_ptr orb,
 	  CORBA::Any extra_info;
 	  const char* name = TAO_Machine_Properties::PROP_NAMES[i];
 	  const CORBA::TypeCode_ptr prop_type = TAO_Machine_Properties::PROP_TYPE;
-	  
+
+#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+	  CosTradingDynamic::DynamicProp* dp_struct = 
+	    dprop.construct_dynamic_prop (name, prop_type, extra_info, orb);
+#else
 	  CosTradingDynamic::DynamicProp* dp_struct = 
 	    dprop.construct_dynamic_prop (name, prop_type, extra_info);
+#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
 	  
 	  dprop.register_handler (name, &mach_props);
 	  prop_exporter.add_dynamic_property (name, *dp_struct);
 	}
       
       ACE_DEBUG ((LM_ERROR, "Exporting to the Trader.\n"));
+      CosTradingRepos::ServiceTypeRepository::PropStructSeq prop_struct_seq;
+      CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq type_name_seq;
+
+      ::fill_service_type (prop_struct_seq);
       CosTrading::OfferId_var offer_id =
-	prop_exporter.export (mmdevice, "MMDevice", TAO_TRY_ENV);
+	prop_exporter.export (mmdevice,
+			      "MMDevice",
+			      prop_struct_seq,
+			      type_name_seq,
+			      TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY

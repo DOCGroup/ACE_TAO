@@ -1,3 +1,5 @@
+// $Id$
+
 #ifndef TAO_TRADER_TEST_UTILS_H
 #define TAO_TRADER_TEST_UTILS_H
 
@@ -8,8 +10,13 @@
 class TT_Info
 {
 public:
-  
+
+#if defined TAO_HAS_DYNAMIC_PROPERTY_BUG
+  static void dump_properties (const CosTrading::PropertySeq& prop_seq,
+			       CORBA::ORB_ptr orb);
+#else  
   static void dump_properties (const CosTrading::PropertySeq& prop_seq);
+#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
   // Dump the contents of this property sequence.
 
   enum INTERFACES
