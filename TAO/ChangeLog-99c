@@ -1,59 +1,62 @@
+Sun Mar 28 21:37:42 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Simple/grid/Grid_Client_i.cpp (run): fixed
+          typo in ACE_DECLARE_NEW_CORBA_ENV.
+
 Sun Mar 28 18:28:10 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-        * orbsvcs/tests/ImplRepo/nestea_i.cpp: Removed extra 
+        * orbsvcs/tests/ImplRepo/nestea_i.cpp: Removed extra
           ACE_File_Connector variables that were not being used.
 
 Sun Mar 28 17:55:10 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	Replaced the TAO exception macros with ACE exception macros.
-	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp (handle_timeout): 
-	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp
-	* orbsvcs/orbsvcs/Time/TAO_TIO.cpp
-	
+        Replaced the TAO exception macros with ACE exception macros.
+        * orbsvcs/orbsvcs/Time/Timer_Helper.cpp (handle_timeout):
+        * orbsvcs/orbsvcs/Time/TAO_UTO.cpp
+        * orbsvcs/orbsvcs/Time/TAO_TIO.cpp
+
 Sun Mar 28 14:58:50 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Param_Test/any.cpp 
-	* tests/Param_Test/bd_short_seq.cpp 
-	* tests/Param_Test/bd_str_seq.cpp 
-	* tests/Param_Test/client.cpp 
-	* tests/Param_Test/except.cpp    
-	* tests/Param_Test/objref.cpp 
-	* tests/Param_Test/server.cpp
-	Made cosmetic changes to these files. 
-	
-	
+        * tests/Param_Test/any.cpp
+        * tests/Param_Test/bd_short_seq.cpp
+        * tests/Param_Test/bd_str_seq.cpp
+        * tests/Param_Test/client.cpp
+        * tests/Param_Test/except.cpp
+        * tests/Param_Test/objref.cpp
+        * tests/Param_Test/server.cpp
+        Made cosmetic changes to these files.
 
 Sun Mar 28 14:27:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	*  orbsvcs/Event/EC_ConsumerAdmin.cpp:
-	*  orbsvcs/Event/EC_ObserverStrategy.cpp:
-	*  orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
-	*  orbsvcs/Event/EC_ProxyPushSupplier_Set_T.cpp:
-	*  orbsvcs/Event/EC_ProxySupplier.cpp:
-	*  orbsvcs/Event/EC_SupplierFiltering.cpp:
-	*  orbsvcs/Naming/Hash_Naming_Context.cpp: Replaced
-	   ACE_GRUAD_THROW* with ACE_GUARD_TRHOW_EX with appropriate
-	   ACE_CHECK*.
+        *  orbsvcs/Event/EC_ConsumerAdmin.cpp:
+        *  orbsvcs/Event/EC_ObserverStrategy.cpp:
+        *  orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+        *  orbsvcs/Event/EC_ProxyPushSupplier_Set_T.cpp:
+        *  orbsvcs/Event/EC_ProxySupplier.cpp:
+        *  orbsvcs/Event/EC_SupplierFiltering.cpp:
+        *  orbsvcs/Naming/Hash_Naming_Context.cpp: Replaced
+           ACE_GRUAD_THROW* with ACE_GUARD_TRHOW_EX with appropriate
+           ACE_CHECK*.
 
 Sun Mar 28 14:20:25 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DynAnyC.{h,i,cpp}:
-	* tao/DynAny_i.{h,cpp}:
-	* tao/DynArray_i.{h,cpp}:
-	* tao/DynEnum_i.{h,cpp}:
-	* tao/DynSequence_i.{h,cpp}:
-	* tao/DynStruct_i.{h,cpp}:
-	* tao/DynUnion_i.{h,cpp}:
-	  Changed over TAO_IN_ENV to ACE_TRY_ENV and
-	  ACE_NEW_THROW_RETURN to ACE_NEW_THROW_EX/ACE_CHECK_RETURN.
-	  Also replaced a few Any_ptr/delete pairs with Any_vars.
+        * tao/DynAnyC.{h,i,cpp}:
+        * tao/DynAny_i.{h,cpp}:
+        * tao/DynArray_i.{h,cpp}:
+        * tao/DynEnum_i.{h,cpp}:
+        * tao/DynSequence_i.{h,cpp}:
+        * tao/DynStruct_i.{h,cpp}:
+        * tao/DynUnion_i.{h,cpp}:
+          Changed over TAO_IN_ENV to ACE_TRY_ENV and
+          ACE_NEW_THROW_RETURN to ACE_NEW_THROW_EX/ACE_CHECK_RETURN.
+          Also replaced a few Any_ptr/delete pairs with Any_vars.
 
 Sun Mar 28 11:39:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/Simple/grid/Grid_Client_i.cpp: Added #include
-	  "ace/CORBA_macros.h".
+        * examples/Simple/grid/Grid_Client_i.cpp: Added #include
+          "ace/CORBA_macros.h".
 
-	* examples/Simple/bank/AccountManager_i.cpp (open): Fixed a typo.
+        * examples/Simple/bank/AccountManager_i.cpp (open): Fixed a typo.
 
 
 Sun Mar 28 07:40:45 1999  David L. Levine  <levine@cs.wustl.edu>
