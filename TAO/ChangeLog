@@ -1,3 +1,8 @@
+Mon Aug  2 14:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/AMH_Response_Handler.cpp:
+          Removed incorrect ACE_INLINE, fixes linker errors in the builds
+
 Mon Aug  2 08:40:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Collocated_Invocation.h:
