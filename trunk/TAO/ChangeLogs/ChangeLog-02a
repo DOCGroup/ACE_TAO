@@ -1,3 +1,8 @@
+Sun Mar 10 08:33:10 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Muxed_GIOP_Versions/test_i.cpp: Fixed a unused variable
+	  warning. 
+
 Sun Mar 10 08:05:36 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLUIOP_Transport.cpp: Pass the CDR
