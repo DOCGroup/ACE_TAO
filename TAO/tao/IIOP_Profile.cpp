@@ -393,6 +393,21 @@ TAO_IIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 int
 TAO_IIOP_Profile::encode_endpoints (void)
 {
+  CORBA::ULong actual_count = 0;
+
+  const TAO_IIOP_Endpoint *endpoint = &this->endpoint_;
+
+  // Count the number of endpoints that needs to be encoded
+  for (CORBA::ULong c = 0;
+       c != this->count_;
+       ++c)
+    {
+      if (endpoint->is_encodable_)
+        ++actual_count;
+
+      endpoint = endpoint->next_;
+    }
+
   // Create a data structure and fill it with endpoint info for wire
   // transfer.
   // We include information for the head of the list
@@ -401,17 +416,20 @@ TAO_IIOP_Profile::encode_endpoints (void)
   // priority is not!
 
   TAO::IIOPEndpointSequence endpoints;
-  endpoints.length (this->count_);
+  endpoints.length (actual_count);
 
-  const TAO_IIOP_Endpoint *endpoint = &this->endpoint_;
+  endpoint = &this->endpoint_;
+
   for (CORBA::ULong i = 0;
-       i < this->count_;
+       i < actual_count;
        ++i)
     {
-      endpoints[i].host = endpoint->host ();
-      endpoints[i].port = endpoint->port ();
-      endpoints[i].priority = endpoint->priority ();
-
+      if (endpoint->is_encodable_)
+        {
+          endpoints[i].host = endpoint->host ();
+          endpoints[i].port = endpoint->port ();
+          endpoints[i].priority = endpoint->priority ();
+        }
       endpoint = endpoint->next_;
     }
 

@@ -27,6 +27,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const ACE_INET_Addr &addr,
   , object_addr_ (addr)
   , object_addr_set_ (false)
   , preferred_path_ ()
+  , is_encodable_ (true)
   , next_ (0)
 {
   this->set (addr, use_dotted_decimal_addresses);
@@ -43,6 +44,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
   , object_addr_ (addr)
   , object_addr_set_ (false)
   , preferred_path_ ()
+  , is_encodable_ (true)
   , next_ (0)
 {
 }
@@ -54,6 +56,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (void)
   , object_addr_ ()
   , object_addr_set_ (false)
   , preferred_path_ ()
+  , is_encodable_ (true)
   , next_ (0)
 {
 }
@@ -67,6 +70,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
   , object_addr_ ()
   , object_addr_set_ (false)
   , preferred_path_ ()
+  , is_encodable_ (true)
   , next_ (0)
 {
   if (host != 0)
@@ -87,6 +91,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const TAO_IIOP_Endpoint &rhs)
   , object_addr_ (rhs.object_addr_)
   , object_addr_set_ (rhs.object_addr_set_)
   , preferred_path_  (rhs.preferred_path_)
+  , is_encodable_ (rhs.is_encodable_)
   , next_ (0)
 {
 }
@@ -290,6 +295,8 @@ TAO_IIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
 
           if (latest->next_ == 0) return count;
 
+          latest->is_encodable_ = true;
+
           latest = latest->next_;
           ++count;
         }
@@ -304,6 +311,8 @@ TAO_IIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
         dynamic_cast<TAO_IIOP_Endpoint *> (tmp_ep);
 
       if (latest->next_ == 0) return count;
+
+      latest->is_encodable_ = true;
 
       latest->next_->preferred_path_.host = (const char *) 0;
       ++count;
