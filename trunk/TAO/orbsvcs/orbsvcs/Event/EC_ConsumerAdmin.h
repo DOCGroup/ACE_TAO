@@ -62,8 +62,7 @@ class TAO_EC_ConsumerAdmin : public POA_RtecEventChannelAdmin::ConsumerAdmin
   //   is properly configured, we need to explore this...
   //
 public:
-  TAO_EC_ConsumerAdmin (TAO_EC_Dispatching* dispatching,
-                        TAO_EC_Filter_Builder* builder);
+  TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel* dispatching);
   // constructor...
 
   virtual ~TAO_EC_ConsumerAdmin (void);
