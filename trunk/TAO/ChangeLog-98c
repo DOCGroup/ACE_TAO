@@ -1,3 +1,25 @@
+Sun Dec  6 17:48:21 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * orbsvcs/tests/ImplRepo/IR_Helper.cpp:
+        * orbsvcs/tests/ImplRepo/Repository_Test.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+        * orbsvcs/ImplRepo_Service/ImplRepo.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo.idl:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.h:
+        * orbsvcs/ImplRepo_Service/Repository.cpp:
+          Redid all formating (mainly {} blocks) to be the common
+          ACE style.  Checked and fixed the base member init 
+          sections to be in the right order.  Made sure that all
+          methods threw the exceptions (and only the exceptions)
+          that were specified.  
+
+          Also changed how the -d debug flag works.  Unlike other
+          tests it now takes in a level with it (instead of the 
+          additive property.  This allows me to use a default of
+          1 and lets the user use -d 0 to quiet the IR altogether.
+
 1998-12-06  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	added the following files for the implementation of
