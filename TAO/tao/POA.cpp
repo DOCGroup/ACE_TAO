@@ -42,7 +42,7 @@ static const char *TAO_POA_Timeprobe_Description[] =
 
 enum
 {
-  // Timeprobe description table start key 
+  // Timeprobe description table start key
   TAO_POA_LOCATE_POA_I_START = 200,
   TAO_POA_LOCATE_POA_I_END,
 
@@ -3343,11 +3343,10 @@ template class ACE_Lock_Adapter<ACE_Thread_Mutex>;
 #endif /* ACE_HAS_THREADS */
 template class ACE_Map_Entry<TAO_Unbounded_Sequence<unsigned char>, TAO_ServantBase *>;
 template class ACE_Hash_Map_Entry<ACE_CString, TAO_POA *>;
+template class ACE_Hash_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<ACE_CString, TAO_POA *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, TAO_POA *, ACE_Null_Mutex>;
-template class ACE_Map_Iterator_Base<ACE_CString, TAO_POA *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base<ACE_CString, TAO_POA *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex>;
 template class ACE_Read_Guard<ACE_Lock>;
 template class ACE_Unbounded_Set<TAO_POA *>;
 template class ACE_Unbounded_Set_Iterator<TAO_POA *>;
@@ -3364,10 +3363,9 @@ template class auto_ptr<TAO_Request_Processing_Policy>;
 template class auto_ptr<TAO_Synchronization_Policy>;
 template class auto_ptr<TAO_Servant_Retention_Policy>;
 template class auto_ptr<TAO_Thread_Policy>;
-template class ACE_Map_Entry<ACE_CString, TAO_POA *>;
-template class ACE_Map_Reverse_Iterator<ACE_CString, TAO_POA *, ACE_Null_Mutex>;
 template class ACE_Node<TAO_POA *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Map_Entry<TAO_Unbounded_Sequence<unsigned char>, TAO_ServantBase *>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Assignment_Policy>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Uniqueness_Policy>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Implicit_Activation_Policy>
@@ -3383,13 +3381,11 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex>
 #pragma instantiate ACE_Lock_Adapter<ACE_Thread_Mutex>
 #endif /* ACE_HAS_THREADS */
-#pragma instantiate ACE_Hash_Map_Entry<TAO_Unbounded_Sequence<unsigned char>, TAO_ServantBase *>
 #pragma instantiate ACE_Hash_Map_Entry<ACE_CString, TAO_POA *>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator<ACE_CString, TAO_POA *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString, TAO_POA *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_CString, TAO_POA *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base<ACE_CString, TAO_POA *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex>
 #pragma instantiate ACE_Read_Guard<ACE_Lock>
 #pragma instantiate ACE_Unbounded_Set<TAO_POA *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<TAO_POA *>
@@ -3406,7 +3402,5 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate auto_ptr<TAO_Synchronization_Policy>
 #pragma instantiate auto_ptr<TAO_Servant_Retention_Policy>
 #pragma instantiate auto_ptr<TAO_Thread_Policy>
-#pragma instantiate ACE_Map_Entry<ACE_CString, TAO_POA *>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_CString, TAO_POA *, ACE_Null_Mutex>
 #pragma instantiate ACE_Node<TAO_POA *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
