@@ -1,3 +1,8 @@
+Sun Aug 26 08:13:12 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tests/test_config.h: Added a new ACE_CLOSE_TEST_LOG macro.  Thanks to
+	  Edan for this.
+  
 Sun Aug 26 09:07:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/TP_Reactor.cpp: Fixed a compile error with SunCC4.2
@@ -9,6 +14,32 @@ Sun Aug 26 08:28:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Sun Aug 26 08:13:12 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* tests/Logging_Strategy_Test.cpp: Applied the following fixes from
+	  Edan:
+  
+          - Included ace/Logging_Strategy.h
+	  - Addition of -w switch to enable initial wipeout of logfile
+	  - Removal of the redundant ACE_LOG_MSG->open()
+	  - Explicitly close the previous log before applying the changes to the
+	    ACE_LOG_MSG
+	  - Moved remove_files() call higher, just before logfile close
+  
+	* ace/Logging_Strategy.{h,cpp}: Added the following fixes from
+	  Edan Ayal:
+  
+          - Logging_Strategy now supports any ACE_Log_Msg, not just the
+	    ACE_LOG_MSG singleton.
+          - Added a check for success (ios::goodbit) of new ofstream
+	    creation.
+          - Changed default values for max_size and interval. Now the
+	    default interval is 10 minutes (instead of 0) and the default
+	    log file size is 0 (was 16K). The timer is now activated only
+	    if both are non-zero. 
+	  - Added a mutator to set the ACE_Log_Msg to work with, and a
+	    member variable
+          - Added definition for ACE_DEFAULT_LOGFILE_POLL_INTERVAL
+	  - Removed definition of ACE_DEFAULT_MAX_LOGFILE_SIZE
+  
 	* ace/Log_Record.{h,cpp}: Enhanced this implementation to (1)
 	  be consistent with recent changes to Log_Msg.h and (2) to
 	  replace problematic use of strncpy().  Thanks to Alain
