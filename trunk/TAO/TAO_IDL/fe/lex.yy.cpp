@@ -1981,9 +1981,14 @@ idl_parse_line_and_file(char *buf)
       for (i = 0, j = 0; h[j] != '\0'; i++, j++)
         {
           if (h[j] == '\\' && h[j + 1] == '\\')
-            j++;
-
-          h[i] = h[j];
+	    {
+	      j++;
+	      h[i] = '/';
+	    }
+	  else
+	    {
+	      h[i] = h[j];
+	    }
         }
       h[i] = '\0';
       idl_global->set_filename(new String(h));
