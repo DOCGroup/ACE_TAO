@@ -1,3 +1,10 @@
+Mon Dec  1 11:27:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/RTScheduling/VoidData/test_client.cpp (main):
+
+          Passed the address of the integer to the operation, instead
+          of its value, so it can be appropriately converted to void*.
+
 Mon Dec  1 17:18:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/POA/Explicit_Activation/Alt_Resources/Alt_Resource.mpc:
