@@ -14,7 +14,12 @@
 #if !defined (ACE_TEST_CONFIG_H)
 #define ACE_TEST_CONFIG_H
 
-#include "ace/stdcpp.h"
+#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
+# include /**/ <iostream.h>
+# include /**/ <fstream.h>
+#else
+# include "ace/stdcpp.h"
+#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
 
 #if !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 class KEY
