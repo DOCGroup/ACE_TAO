@@ -35,8 +35,8 @@ Consumer::push (const RtecEventComm::EventSet& events
   //when work triggered by event starts.
   //DSUI_EVENT_LOG (TEST_ONE_FAM, START_SERVICE, guid, 0, NULL);
   EC_Event_Counter::event_id eid;
-  eid.id = events[0].header.id_tag.id;
-  eid.tid = events[0].header.id_tag.tid;
+  eid.id = events[0].header.eid.id;
+  eid.tid = events[0].header.eid.tid;
   DSUI_EVENT_LOG (TEST_ONE_FAM, START_SERVICE, 0, sizeof(EC_Event_Counter::event_id), (char*)&eid);
 
   //TODO: do work on push()
