@@ -7,6 +7,7 @@
 #include "EC_SupplierAdmin.h"
 #include "EC_Timeout_Generator.h"
 #include "EC_ObserverStrategy.h"
+#include "ace/Dynamic_Service.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Event_Channel.i"
