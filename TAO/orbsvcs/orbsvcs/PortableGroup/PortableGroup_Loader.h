@@ -18,7 +18,8 @@
 
 #include "portablegroup_export.h"
 #include "ace/Service_Config.h"
-#include "tao/corbafwd.h"
+#include "ace/Service_Object.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,7 +33,8 @@
  * This class acts as a facade for the PortableGroup library to the
  * ORB.
  */
-class TAO_PortableGroup_Export TAO_PortableGroup_Loader : public ACE_Service_Object
+class TAO_PortableGroup_Export TAO_PortableGroup_Loader
+  : public ACE_Service_Object
 {
   friend class TAO_POA_Hooks;
 
@@ -42,7 +44,7 @@ public:
 
   /// Initialize the PortableGroup loader hooks.
   virtual int init (int argc,
-                    char* []);
+                    char *[]);
 
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);

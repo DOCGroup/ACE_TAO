@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -24,6 +24,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/CORBA_macros.h"
+
+
 class TAO_MProfile;
 class TAO_GIOP_Invocation;
 
@@ -37,9 +40,10 @@ class TAO_GIOP_Invocation;
  * Selects/reselects server endpoint for an Invocation.  Different
  * concrete strategies perform selection based on different
  * policies.
+ * @par
  * All endpoint selection strategies are stateless objects - any
  * necessary state is stored in Invocation's
- * <endpoint_selection_state_>.
+ * @c endpoint_selection_state_.
  */
 class TAO_Export TAO_Invocation_Endpoint_Selector
 {
@@ -50,20 +54,20 @@ public:
   /// Destructor.
   virtual ~TAO_Invocation_Endpoint_Selector (void);
 
-  /// Select the endpoint and set <invocation>'s <profile_> and
-  /// <endpoint_> data members accordingly.
+  /// Select the endpoint and set @a invocation's @c profile_ and
+  /// @c endpoint_ data members accordingly.
   virtual void select_endpoint (TAO_GIOP_Invocation *invocation
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                                ACE_ENV_ARG_DECL) = 0;
 
   /**
    * This method must be called if the invocation attempt on a
    * selected endpoint resulted in location forward.  This method
-   * performs the necessary state updates, so that next <select_endpoint>
-   * call picks a new endpoint.
+   * performs the necessary state updates, so that next @c
+   * select_endpoint call picks a new endpoint.
    */
   virtual void forward (TAO_GIOP_Invocation *invocation,
                         const TAO_MProfile &mprofile
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                        ACE_ENV_ARG_DECL) = 0;
 
   /// Update the state to indicate that the selected endpoint/profile
   /// were used successfully.

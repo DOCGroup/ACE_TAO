@@ -1,14 +1,14 @@
-// $Id$
-
 #include "tao/corbafwd.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/corbafwd.i"
 #endif /* ! __ACE_INLINE__ */
 
+
 ACE_RCSID (tao, 
            corbafwd, 
            "$Id$")
+
 
 char *
 CORBA::string_dup (const char *str)
@@ -61,48 +61,23 @@ CORBA::wstring_dup (const WChar *const str)
                         str);
 }
 
-// ****************************************************************
+namespace CORBA
+{
+  // ****************************************************************
 
-TAO_NAMESPACE_TYPE (const CORBA::ServiceType)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (const CORBA::ServiceType, Security, 1)
-TAO_NAMESPACE_END
+  const CORBA::ServiceType Security = 1;
 
-// ****************************************************************
+  // ****************************************************************
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Visibility, 0)
-TAO_NAMESPACE_END
+  CORBA::TypeCode_ptr _tc_Visibility = 0;
 
-TAO_NAMESPACE_TYPE (const CORBA::Visibility)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (const CORBA::Visibility, PRIVATE_MEMBER, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (const CORBA::Visibility)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (const CORBA::Visibility, PUBLIC_MEMBER, 1)
-TAO_NAMESPACE_END
+  const CORBA::Visibility PRIVATE_MEMBER = 0;
+  const CORBA::Visibility PUBLIC_MEMBER  = 1;
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ValueModifier, 0)
-TAO_NAMESPACE_END
+  CORBA::TypeCode_ptr _tc_ValueModifier = 0;
 
-TAO_NAMESPACE_TYPE (const CORBA::ValueModifier)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (const CORBA::ValueModifier, VM_NONE, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (const CORBA::ValueModifier)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (const CORBA::ValueModifier, VM_CUSTOM, 1)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (const CORBA::ValueModifier)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (const CORBA::ValueModifier, VM_ABSTRACT, 2)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (const CORBA::ValueModifier)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (const CORBA::ValueModifier, VM_TRUNCATABLE, 3)
-TAO_NAMESPACE_END
-
+  const CORBA::ValueModifier VM_NONE        = 0;
+  const CORBA::ValueModifier VM_CUSTOM      = 1;
+  const CORBA::ValueModifier VM_ABSTRACT    = 2;
+  const CORBA::ValueModifier VM_TRUNCATABLE = 3;
+}

@@ -4,7 +4,7 @@
 // Copyright 1997-2002 by Washington University
 // All Rights Reserved
 //
-// ORB:         CORBA_Object operations
+// ORB:         CORBA::Object operations
 
 #include "tao/Object.h"
 #include "tao/Stub.h"
@@ -27,9 +27,9 @@ ACE_RCSID (tao,
            Object,
            "$Id$")
 
-int CORBA_Object::_tao_class_id = 0;
+int CORBA::Object::_tao_class_id = 0;
 
-CORBA_Object::~CORBA_Object (void)
+CORBA::Object::~Object (void)
 {
   if (this->protocol_proxy_)
     (void) this->protocol_proxy_->_decr_refcnt ();
@@ -37,9 +37,9 @@ CORBA_Object::~CORBA_Object (void)
   delete this->refcount_lock_;
 }
 
-CORBA_Object::CORBA_Object (TAO_Stub * protocol_proxy,
-                            CORBA::Boolean collocated,
-                            TAO_Abstract_ServantBase * servant)
+CORBA::Object::Object (TAO_Stub * protocol_proxy,
+                       CORBA::Boolean collocated,
+                       TAO_Abstract_ServantBase * servant)
   : is_collocated_ (collocated),
     servant_ (servant),
     is_local_ (protocol_proxy == 0 ? 1 : 0),
@@ -69,7 +69,7 @@ CORBA_Object::CORBA_Object (TAO_Stub * protocol_proxy,
 }
 
 void
-CORBA_Object::_add_ref (void)
+CORBA::Object::_add_ref (void)
 {
   if (this->refcount_lock_ != 0)
     {
@@ -80,7 +80,7 @@ CORBA_Object::_add_ref (void)
 }
 
 void
-CORBA_Object::_remove_ref (void)
+CORBA::Object::_remove_ref (void)
 {
   if (this->refcount_lock_ != 0)
     {
@@ -98,14 +98,14 @@ CORBA_Object::_remove_ref (void)
 }
 
 void
-CORBA_Object::_tao_any_destructor (void *x)
+CORBA::Object::_tao_any_destructor (void *x)
 {
   CORBA::Object_ptr tmp = ACE_static_cast (CORBA::Object_ptr, x);
   CORBA::release (tmp);
 }
 
 TAO_Abstract_ServantBase*
-CORBA_Object::_servant (void) const
+CORBA::Object::_servant (void) const
 {
   return this->servant_;
 }
@@ -114,8 +114,8 @@ CORBA_Object::_servant (void) const
 // logical type ID is passed as a parameter.
 
 CORBA::Boolean
-CORBA_Object::_is_a (const char *type_id
-                     ACE_ENV_ARG_DECL)
+CORBA::Object::_is_a (const char *type_id
+                      ACE_ENV_ARG_DECL)
 {
   // NOTE: if istub->type_id is nonzero and we have local knowledge of
   // it, we can answer this question without a costly remote call.
@@ -131,7 +131,7 @@ CORBA_Object::_is_a (const char *type_id
   // common to have the "real type ID" not be directly understood
   // because it's more deeply derived than any locally known types.
   //
-  // XXX if type_id is that of CORBA_Object, "yes, we comply" :-)
+  // XXX if type_id is that of CORBA::Object, "yes, we comply" :-)
 
   if (this->protocol_proxy_ == 0)
     ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
@@ -156,26 +156,26 @@ CORBA_Object::_is_a (const char *type_id
 }
 
 const char*
-CORBA_Object::_interface_repository_id (void) const
+CORBA::Object::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/Object:1.0";
 }
 
 CORBA::Boolean
-CORBA_Object::_is_collocated (void) const
+CORBA::Object::_is_collocated (void) const
 {
   return this->is_collocated_;
 }
 
 CORBA::Boolean
-CORBA_Object::_is_local (void) const
+CORBA::Object::_is_local (void) const
 {
   return this->is_local_;
 }
 
 CORBA::ULong
-CORBA_Object::_hash (CORBA::ULong maximum
-                     ACE_ENV_ARG_DECL)
+CORBA::Object::_hash (CORBA::ULong maximum
+                      ACE_ENV_ARG_DECL)
 {
   if (this->protocol_proxy_ != 0)
     return this->protocol_proxy_->hash (maximum ACE_ENV_ARG_PARAMETER);
@@ -194,9 +194,9 @@ CORBA_Object::_hash (CORBA::ULong maximum
 }
 
 CORBA::Boolean
-CORBA_Object::_is_equivalent (CORBA_Object_ptr other_obj
-                              ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC (())
+CORBA::Object::_is_equivalent (CORBA::Object_ptr other_obj
+                               ACE_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC (())
 {
   if (other_obj == this)
     {
@@ -223,7 +223,7 @@ CORBA::Object::_key (ACE_ENV_SINGLE_ARG_DECL)
                 ACE_TEXT ("profile in use\n")));
 
   ACE_THROW_RETURN (CORBA::INTERNAL (
-                      CORBA_SystemException::_tao_minor_code (
+                      CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
                         EINVAL),
                       CORBA::COMPLETED_NO),
@@ -278,13 +278,13 @@ CORBA::Object::is_nil_i (CORBA::Object_ptr obj)
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
 void
-CORBA_Object::_create_request (CORBA::Context_ptr ctx,
-                               const char *operation,
-                               CORBA::NVList_ptr arg_list,
-                               CORBA::NamedValue_ptr result,
-                               CORBA::Request_ptr &request,
-                               CORBA::Flags req_flags
-                               ACE_ENV_ARG_DECL)
+CORBA::Object::_create_request (CORBA::Context_ptr ctx,
+                                const char *operation,
+                                CORBA::NVList_ptr arg_list,
+                                CORBA::NamedValue_ptr result,
+                                CORBA::Request_ptr &request,
+                                CORBA::Flags req_flags
+                                ACE_ENV_ARG_DECL)
 {
   // Since we don't really support Context, anything but a null pointer
   // is a no-no.
@@ -309,20 +309,20 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
                        0,
                        request,
                        req_flags
-                        ACE_ENV_ARG_PARAMETER
+                       ACE_ENV_ARG_PARAMETER
                      );
 }
 
 void
-CORBA_Object::_create_request (CORBA::Context_ptr ctx,
-                               const char *operation,
-                               CORBA::NVList_ptr arg_list,
-                               CORBA::NamedValue_ptr result,
-                               CORBA::ExceptionList_ptr exceptions,
-                               CORBA::ContextList_ptr,
-                               CORBA::Request_ptr &request,
-                               CORBA::Flags req_flags
-                               ACE_ENV_ARG_DECL)
+CORBA::Object::_create_request (CORBA::Context_ptr ctx,
+                                const char *operation,
+                                CORBA::NVList_ptr arg_list,
+                                CORBA::NamedValue_ptr result,
+                                CORBA::ExceptionList_ptr exceptions,
+                                CORBA::ContextList_ptr,
+                                CORBA::Request_ptr &request,
+                                CORBA::Flags req_flags
+                                ACE_ENV_ARG_DECL)
 {
   // Since we don't really support Context, anything but a null pointer
   // is a no-no.
@@ -347,13 +347,13 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
                        exceptions,
                        request,
                        req_flags
-                        ACE_ENV_ARG_PARAMETER
+                       ACE_ENV_ARG_PARAMETER
                      );
 }
 
 CORBA::Request_ptr
-CORBA_Object::_request (const char *operation
-                        ACE_ENV_ARG_DECL)
+CORBA::Object::_request (const char *operation
+                         ACE_ENV_ARG_DECL)
 {
   if (this->protocol_proxy_)
     {
@@ -366,7 +366,7 @@ CORBA_Object::_request (const char *operation
                                   this,
                                   this->protocol_proxy_->orb_core ()->orb (),
                                   operation
-                                   ACE_ENV_ARG_PARAMETER
+                                  ACE_ENV_ARG_PARAMETER
                                 );
     }
   else
@@ -381,51 +381,57 @@ CORBA_Object::_request (const char *operation
 // the latter case, return FALSE.
 
 CORBA::Boolean
-CORBA_Object::_non_existent (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Object::_non_existent (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Boolean _tao_retval = 0;
 
   // Get the right Proxy.
   TAO_Object_Proxy_Impl &the_proxy =
-    this->proxy_broker_->select_proxy (this ACE_ENV_ARG_PARAMETER);
+    this->proxy_broker_->select_proxy (this
+                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // Perform the Call.
-  _tao_retval = the_proxy._non_existent (this ACE_ENV_ARG_PARAMETER);
+  _tao_retval = the_proxy._non_existent (this
+                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return _tao_retval;
 }
 
 
-CORBA_InterfaceDef_ptr
-CORBA_Object::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::InterfaceDef_ptr
+CORBA::Object::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Get the right Proxy.
   TAO_Object_Proxy_Impl &the_proxy =
-    this->proxy_broker_->select_proxy (this ACE_ENV_ARG_PARAMETER);
+    this->proxy_broker_->select_proxy (this
+                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // Perform the Call.
-  return the_proxy._get_interface (this ACE_ENV_ARG_PARAMETER);
+  return the_proxy._get_interface (this
+                                   ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::ImplementationDef_ptr
-CORBA_Object::_get_implementation (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CORBA::Object::_get_implementation (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return 0;
 }
 
 CORBA::Object_ptr
-CORBA_Object::_get_component (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Object::_get_component (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Get the right Proxy.
   TAO_Object_Proxy_Impl &the_proxy =
-    this->proxy_broker_->select_proxy (this ACE_ENV_ARG_PARAMETER);
+    this->proxy_broker_->select_proxy (this
+                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // Perform the Call.
-  return the_proxy._get_component (this ACE_ENV_ARG_PARAMETER);
+  return the_proxy._get_component (this
+                                   ACE_ENV_ARG_PARAMETER);
 }
 
 
@@ -440,32 +446,34 @@ CORBA_Object::_get_component (ACE_ENV_SINGLE_ARG_DECL)
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 CORBA::Policy_ptr
-CORBA_Object::_get_policy (
-    CORBA::PolicyType type
-    ACE_ENV_ARG_DECL)
+CORBA::Object::_get_policy (
+  CORBA::PolicyType type
+  ACE_ENV_ARG_DECL)
 {
   if (this->protocol_proxy_)
-    return this->protocol_proxy_->get_policy (type ACE_ENV_ARG_PARAMETER);
+    return this->protocol_proxy_->get_policy (type
+                                              ACE_ENV_ARG_PARAMETER);
   else
     ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
 }
 
 CORBA::Policy_ptr
-CORBA_Object::_get_client_policy (
-    CORBA::PolicyType type
-    ACE_ENV_ARG_DECL)
+CORBA::Object::_get_client_policy (
+  CORBA::PolicyType type
+  ACE_ENV_ARG_DECL)
 {
   if (this->protocol_proxy_)
-    return this->_stubobj ()->get_client_policy (type ACE_ENV_ARG_PARAMETER);
+    return this->_stubobj ()->get_client_policy (type
+                                                 ACE_ENV_ARG_PARAMETER);
   else
     ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
 }
 
 CORBA::Object_ptr
-CORBA_Object::_set_policy_overrides (
-    const CORBA::PolicyList & policies,
-    CORBA::SetOverrideType set_add
-    ACE_ENV_ARG_DECL)
+CORBA::Object::_set_policy_overrides (
+  const CORBA::PolicyList & policies,
+  CORBA::SetOverrideType set_add
+  ACE_ENV_ARG_DECL)
 {
   if (!this->protocol_proxy_)
     ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
@@ -473,7 +481,7 @@ CORBA_Object::_set_policy_overrides (
   TAO_Stub* stub =
     this->protocol_proxy_->set_policy_overrides (policies,
                                                  set_add
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   TAO_Stub_Auto_Ptr safe_stub (stub);
@@ -481,10 +489,10 @@ CORBA_Object::_set_policy_overrides (
   CORBA::Object_ptr obj = CORBA::Object::_nil ();
 
   ACE_NEW_THROW_EX (obj,
-                    CORBA_Object (stub,
+                    CORBA::Object (stub,
                                   this->is_collocated_),
                     CORBA::NO_MEMORY (
-                      CORBA_SystemException::_tao_minor_code (
+                      CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
                         ENOMEM),
                       CORBA::COMPLETED_MAYBE));
@@ -496,18 +504,20 @@ CORBA_Object::_set_policy_overrides (
 }
 
 CORBA::PolicyList *
-CORBA_Object::_get_policy_overrides (const CORBA::PolicyTypeSeq & types
-                                     ACE_ENV_ARG_DECL)
+CORBA::Object::_get_policy_overrides (const CORBA::PolicyTypeSeq & types
+                                      ACE_ENV_ARG_DECL)
 {
   if (this->protocol_proxy_)
-    return this->protocol_proxy_->get_policy_overrides (types ACE_ENV_ARG_PARAMETER);
+    return this->protocol_proxy_->get_policy_overrides (types
+                                                        ACE_ENV_ARG_PARAMETER);
   else
     ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 CORBA::Boolean
-CORBA_Object::_validate_connection (CORBA::PolicyList_out inconsistent_policies
-                                    ACE_ENV_ARG_DECL)
+CORBA::Object::_validate_connection (
+  CORBA::PolicyList_out inconsistent_policies
+  ACE_ENV_ARG_DECL)
 {
   inconsistent_policies = 0;
 
@@ -524,7 +534,7 @@ CORBA_Object::_validate_connection (CORBA::PolicyList_out inconsistent_policies
 
   if (this->protocol_proxy_)
     return this->protocol_proxy_->validate_connection (inconsistent_policies
-                                                        ACE_ENV_ARG_PARAMETER);
+                                                       ACE_ENV_ARG_PARAMETER);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -536,7 +546,7 @@ CORBA_Object::_validate_connection (CORBA::PolicyList_out inconsistent_policies
 // ****************************************************************
 
 CORBA::Boolean
-operator<< (TAO_OutputCDR& cdr, const CORBA_Object* x)
+operator<< (TAO_OutputCDR& cdr, const CORBA::Object* x)
 {
   if (x == 0)
     {
@@ -574,7 +584,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA_Object* x)
 }
 
 CORBA::Boolean
-operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
+operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
 {
   CORBA::String_var type_hint;
 
@@ -678,10 +688,10 @@ TAO_Object_Proxy_Broker * (*_TAO_collocation_Object_Proxy_Broker_Factory_functio
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_Object_Manager<CORBA_Object,CORBA_Object_var>;
+template class TAO_Object_Manager<CORBA::Object, CORBA::Object_var>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_Object_Manager<CORBA_Object,CORBA_Object_var>
+#pragma instantiate TAO_Object_Manager<CORBA::Object, CORBA::Object_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -52,7 +52,7 @@ TAO_SSLIOP_ORBInitializer::pre_init (
   ACE_NEW_THROW_EX (current,
                     TAO_SSLIOP_Current (orb_core),
                     CORBA::NO_MEMORY (
-                      CORBA_SystemException::_tao_minor_code (
+                      CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
@@ -116,7 +116,7 @@ TAO_SSLIOP_ORBInitializer::post_init (
                       ssliop_current.in (),
                       this->qop_),
                     CORBA::NO_MEMORY (
-                      CORBA_SystemException::_tao_minor_code (
+                      CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
                         ENOMEM),
                       CORBA::COMPLETED_NO));

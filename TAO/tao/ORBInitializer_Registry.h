@@ -15,7 +15,7 @@
 
 #include "ace/pre.h"
 
-#include "TAO_Export.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,15 +38,15 @@
  *       MS Windows DLL environments due to the occurance of multiple
  *       singleton instances.  There should only be one!
  */
-class TAO_Export TAO_ORBInitializer_Registry
+class TAO_ORBInitializer_Registry
 {
   friend void PortableInterceptor::register_orb_initializer (
                   PortableInterceptor::ORBInitializer_ptr init
-                                  ACE_ENV_ARG_DECL_NOT_USED);
+                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   friend CORBA::ORB_ptr CORBA::ORB_init (int &,
                                          char *argv[],
                                          const char *,
-                                         CORBA_Environment &);
+                                         CORBA::Environment &);
 
 public:
 
@@ -57,9 +57,6 @@ public:
    *       why this constructor is not protected.
    */
   TAO_ORBInitializer_Registry (void);
-
-  /// Destructor.  Releases duplicated ORBInitializer references.
-  ~TAO_ORBInitializer_Registry (void);
 
 protected:
 
@@ -92,7 +89,7 @@ private:
 private:
 
   /// Dynamic array containing registered ORBInitializers.
-  ACE_Array_Base<PortableInterceptor::ORBInitializer_ptr> initializers_;
+  ACE_Array_Base<PortableInterceptor::ORBInitializer_var> initializers_;
 
 };
 

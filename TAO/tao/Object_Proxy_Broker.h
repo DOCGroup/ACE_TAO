@@ -1,3 +1,4 @@
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -9,7 +10,6 @@
  *  proxy brokers. Interface specific proxy broker are generated
  *  by the IDL compiler.
  *
- *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  */
 //=============================================================================
@@ -19,28 +19,36 @@
 #define TAO_OBJECT_PROXY_BROKER_H_
 
 #include "ace/pre.h"
-#include "tao/corbafwd.h"
 
-#include "tao/Object_Proxy_Impl.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/CORBA_macros.h"
+
+
+class TAO_Object_Proxy_Impl;
+
+/**
+ * @class TAO_Object_Proxy_Broker
+ *
+ * @brief TAO_Object_Proxy_Broker
+ *
+ * TAO_Object_Proxy_Broker
+ */
 class TAO_Export TAO_Object_Proxy_Broker
 {
 public:
 
-  // -- Ctor/Dtor --
+  /// Destructor
   virtual ~TAO_Object_Proxy_Broker (void);
 
   virtual TAO_Object_Proxy_Impl &select_proxy (CORBA::Object_ptr object
                                                ACE_ENV_ARG_DECL) = 0;
 
-protected:
-  TAO_Object_Proxy_Broker (void);
 };
-
 
 
 #include "ace/post.h"

@@ -14,14 +14,20 @@
 #define TAO_THREAD_LANE_RESOURCES_H
 
 #include "ace/pre.h"
-#include "tao/orbconf.h"
+
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
+#include "tao/orbconf.h"
+
 #include "ace/Synch_T.h"
+#include "ace/CORBA_macros.h"
+
+
+class ACE_Allocator;
 
 class TAO_ORB_Core;
 class TAO_Acceptor_Registry;
@@ -31,6 +37,7 @@ class TAO_MProfile;
 class TAO_New_Leader_Generator;
 class TAO_Connector_Registry;
 class TAO_Resource_Factory;
+
 /**
  * @class TAO_Thread_Lane_Resources
  *

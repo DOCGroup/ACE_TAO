@@ -32,6 +32,12 @@ class TAO_Base_var
 {
 public:
   TAO_Base_var (void) {}
+
+private:
+
+  TAO_Base_var (const TAO_Base_var &);
+  TAO_Base_var & operator= (const TAO_Base_var &);
+
 };
 
 #include "ace/post.h"

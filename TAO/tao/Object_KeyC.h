@@ -22,6 +22,8 @@
 
 #include "tao/Sequence.h"
 
+class TAO_ObjectKey_var;
+
 class TAO_Export TAO_ObjectKey : public TAO_Unbounded_Sequence<CORBA::Octet>
 {
   // = TITLE
