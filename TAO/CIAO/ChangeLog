@@ -1,3 +1,8 @@
+Sat May 31 10:54:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Makefile: We dont have any specila files like INSTALL that needs
+	  specila attention during the release.
+
 Fri May 30 19:33:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CCF/DesignNotes:
