@@ -1,3 +1,11 @@
+Mon May 15 16:06:01 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* ace/CORBA_macros.h: 
+
+	  Added Support for Exception::_downcast () by modifying _narrow
+	  to _downcast (). Thanks to William Horn <whorn1984@my-deja.com>.
+
+
 Mon May 15 15:49:37 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/run_all_list.pm:
@@ -59,6 +67,7 @@ Mon May 15 15:14:41 2000  Carlos O'Ryan  <coryan@uci.edu>
           The changes were tested using PA-RISC, Alphas, Sparcs and
           finally Pentiums in various forms and using several compilers.
 
+>>>>>>> 4.507
 Mon May 15 14:01:23 2000  Ossama Othman  <ossama@uci.edu>
 
         * ace/OS.h:
