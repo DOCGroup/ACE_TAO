@@ -1,5 +1,17 @@
 Mon Jun 21 17:06:32 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+	* tests/CDR/Makefile:
+	* tests/FL_Cube/Makefile:
+	* tests/InterOp-Naming/Makefile:
+	* tests/MT_Client/Makefile:
+	* tests/MT_Server/Makefile:
+	* tests/Multiple_Inheritance/Makefile:
+	* tests/Native_Exceptions/Makefile:
+	* tests//NestedUpcall/MT_Client_Test/Makefile:
+	* tests//NestedUpcall/Reactor/Makefile:
+	* tests//NestedUpcall/Triangle_Test/Makefile:
+	* tests//OctetSeq/Makefile:
+	* tests//Param_Test/Makefile:
 	* examples/Callback_Quoter/Makefile:
 	* examples/Event_Comm/Makefile:
 	* examples/OBV/Typed_Events/Makefile:
@@ -10,7 +22,8 @@ Mon Jun 21 17:06:32 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* examples/POA/FindPOA/Makefile:
 	* examples/POA/Forwarding/Makefile:
 	* examples/POA/Generic_Servant/Makefile:
-	* examples/POA/TIE/Makefile: Added -Ge 1 to these Makefiles
+	* examples/POA/TIE/Makefile: Added -Ge 1 to these Makefiles.
+	
 Mon Jun 21 16:11:02 1999 Fred Kuhns <fredk@cs.wustl.edu>
         * tao/IORManipultion.cpp
           Added workaround for the MS C++ lib which does not
