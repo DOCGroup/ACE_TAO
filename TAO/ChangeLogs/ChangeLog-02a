@@ -1,3 +1,10 @@
+Thu May 11 01:56:45 2001  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tao/GIOP_Message_Base.cpp
+
+          Changed an overlooked TAO_Pluggable_Reply_Params to
+          TAO_Pluggable_Reply_Params_Base.
+
 Thu May 10 10:56:33 2001  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/DynamicInterface/TAO_DynamicInterface.dsp:
