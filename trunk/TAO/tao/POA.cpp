@@ -238,6 +238,7 @@ TAO_POA::complete_destruction_i (CORBA::Environment &ACE_TRY_ENV)
     TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
     ACE_UNUSED_ARG (non_servant_upcall);
 
+#if (TAO_HAS_MINIMUM_POA == 0)
     this->adapter_activator_ = PortableServer::AdapterActivator::_nil ();
 
     this->servant_activator_ = PortableServer::ServantActivator::_nil ();
@@ -245,6 +246,8 @@ TAO_POA::complete_destruction_i (CORBA::Environment &ACE_TRY_ENV)
     this->servant_locator_ = PortableServer::ServantLocator::_nil ();
 
     this->default_servant_ = 0;
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
   }
 
   CORBA::release (this);
@@ -1020,6 +1023,8 @@ void
 TAO_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
                                    CORBA::Boolean wait_for_completion,
                                    CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::WrongPolicy))
 {
   this->deactivate_all_objects_i (etherealize_objects,
                                   ACE_TRY_ENV);
@@ -1071,6 +1076,8 @@ TAO_POA::check_for_valid_wait_for_completions (CORBA::Boolean wait_for_completio
 void
 TAO_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
                                    CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::WrongPolicy))
 {
   this->etherealize_objects_ = etherealize_objects;
 
