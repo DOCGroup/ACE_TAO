@@ -10,13 +10,13 @@
 ASYS_INLINE
 ACE_SOCK_Stream::ACE_SOCK_Stream (void)
 {
-  ACE_TRACE ("ACE_SOCK_Stream::ACE_SOCK_Stream");
+  // ACE_TRACE ("ACE_SOCK_Stream::ACE_SOCK_Stream");
 }
 
 ASYS_INLINE
 ACE_SOCK_Stream::~ACE_SOCK_Stream (void)
 {
-  ACE_TRACE ("ACE_SOCK_Stream::~ACE_SOCK_Stream");
+  // ACE_TRACE ("ACE_SOCK_Stream::~ACE_SOCK_Stream");
 }
 
 ASYS_INLINE int
