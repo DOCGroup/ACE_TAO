@@ -1,3 +1,14 @@
+Thu Jun  8 12:09:56 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+	* pace/pace/sunos/*.{c,inl}:
+          Removed files and put them in the posix subdirectory. 
+	* pace/pace/linux/*.{c,inl}:
+          Removed files and put them in the posix subdirectory. 
+	* pace/pace/posix/*.{c,inl}:
+          Added files from the linux/sunos subdirectories. (The files
+          were identical from both directories aside from the $Id$ macro,
+          i.e., the person who checked them in.)
+
 Wed Jun  7 12:27:13 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
 	* Makefile:
