@@ -1,3 +1,8 @@
+Wed May 13 11:29:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-g++-common.h (ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS): 
+	  Made this macro defined for all versions of g++.
+
 Wed May 13 09:26:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * many *.{h,i,cpp,idl} files:  inserted RCS keyword string.
