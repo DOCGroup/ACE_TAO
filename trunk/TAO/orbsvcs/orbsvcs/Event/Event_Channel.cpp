@@ -21,8 +21,8 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_Event_Channel_Timeprobe_Description[] = 
-{ 
+static const char *TAO_Event_Channel_Timeprobe_Description[] =
+{
   "Preemption_Priority - priority requested",
   "connected - priority obtained",
   "enter Push_Supplier_Proxy::push",
@@ -49,7 +49,7 @@ static const char *TAO_Event_Channel_Timeprobe_Description[] =
   "push_source_type"
 };
 
-enum 
+enum
 {
   TAO_EVENT_CHANNEL_PREEMPTION_PRIORITY_PRIORITY_REQUESTED = 5100,
   TAO_EVENT_CHANNEL_CONNECTED_PRIORITY_OBTAINED,
@@ -80,7 +80,7 @@ enum
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 // Setup Timeprobes
-ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Event_Channel_Timeprobe_Description, 
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Event_Channel_Timeprobe_Description,
                                   TAO_EVENT_CHANNEL_PREEMPTION_PRIORITY_PRIORITY_REQUESTED);
 
 // ************************************************************
@@ -520,14 +520,14 @@ ACE_Push_Consumer_Proxy::~ACE_Push_Consumer_Proxy (void)
 
 void
 ACE_Push_Consumer_Proxy::push (const RtecEventComm::EventSet &events,
-			       CORBA::Environment &_env)
+                               CORBA::Environment &_env)
 {
   ACE_TIMEPROBE (TAO_EVENT_CHANNEL_DELIVER_EVENT_TO_CONSUMER_PROXY);
 
   if (push_consumer_ == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "Push to disconnected consumer %s\n",
-		  ::ACE_ES_Consumer_Name (this->qos ())));
+                  ::ACE_ES_Consumer_Name (this->qos ())));
       // ACE_ES_DEBUG_ST (::dump_sequence (events));
       return;
     }
@@ -1216,25 +1216,25 @@ ACE_ES_Consumer_Module::obtain_push_supplier (CORBA::Environment &_env)
 
 void
 ACE_ES_Consumer_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos,
-				  RtecEventChannelAdmin::SupplierQOS& s_qos)
+                                  RtecEventChannelAdmin::SupplierQOS& s_qos)
 {
   ACE_GUARD (ACE_ES_MUTEX, ace_mon, this->lock_);
 
   c_qos.is_gateway = CORBA::B_TRUE;
   s_qos.is_gateway = CORBA::B_TRUE;
-  
+
   int count = 0;
   {
     for (Consumer_Iterator i = this->all_consumers_.begin ();
-	 i != this->all_consumers_.end ();
-	 ++i)
+         i != this->all_consumers_.end ();
+         ++i)
       {
-	ACE_Push_Consumer_Proxy *c = *i;
-	
-	if (c->qos ().is_gateway)
-	  continue;
-	
-	count += c->qos ().dependencies.length ();
+        ACE_Push_Consumer_Proxy *c = *i;
+
+        if (c->qos ().is_gateway)
+          continue;
+
+        count += c->qos ().dependencies.length ();
       }
   }
 
@@ -1256,34 +1256,34 @@ ACE_ES_Consumer_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos,
       ACE_Push_Consumer_Proxy *c = *i;
 
       if (c->qos ().is_gateway)
-	continue;
+        continue;
 
       CORBA::ULong count = c->qos ().dependencies.length ();
       for (CORBA::ULong j = 0; j < count; ++j)
-	{
+        {
           RtecEventComm::Event& event =
-	    c->qos ().dependencies[j].event;
+            c->qos ().dependencies[j].event;
 
-	  RtecEventComm::EventType type = event.type_;
-	  if (type <= ACE_ES_EVENT_UNDEFINED)
-	    continue;
+          RtecEventComm::EventType type = event.type_;
+          if (type <= ACE_ES_EVENT_UNDEFINED)
+            continue;
 
-	  c_qos.dependencies[cc].event.type_ = event.type_;
-	  c_qos.dependencies[cc].event.source_ = event.source_;
-	  c_qos.dependencies[cc].event.creation_time_ = ORBSVCS_Time::zero;
-	  // The RT_Info is filled up later.
-	  c_qos.dependencies[cc].rt_info = 0; 
-	  cc++;
+          c_qos.dependencies[cc].event.type_ = event.type_;
+          c_qos.dependencies[cc].event.source_ = event.source_;
+          c_qos.dependencies[cc].event.creation_time_ = ORBSVCS_Time::zero;
+          // The RT_Info is filled up later.
+          c_qos.dependencies[cc].rt_info = 0;
+          cc++;
 
-	  s_qos.publications[sc].event.type_ = event.type_;
-	  s_qos.publications[sc].event.source_ = event.source_;
-	  s_qos.publications[sc].event.creation_time_ = ORBSVCS_Time::zero;
-	  s_qos.publications[sc].dependency_info.dependency_type =
-	    RtecScheduler::TWO_WAY_CALL;
-	  s_qos.publications[sc].dependency_info.number_of_calls = 1;
-	  s_qos.publications[sc].dependency_info.rt_info = 0;
-	  sc++;
-	}
+          s_qos.publications[sc].event.type_ = event.type_;
+          s_qos.publications[sc].event.source_ = event.source_;
+          s_qos.publications[sc].event.creation_time_ = ORBSVCS_Time::zero;
+          s_qos.publications[sc].dependency_info.dependency_type =
+            RtecScheduler::TWO_WAY_CALL;
+          s_qos.publications[sc].dependency_info.number_of_calls = 1;
+          s_qos.publications[sc].dependency_info.rt_info = 0;
+          sc++;
+        }
     }
   c_qos.dependencies.length (cc);
   s_qos.publications.length (sc);
@@ -1373,7 +1373,7 @@ ACE_ES_Correlation_Module::schedule_timeout (ACE_ES_Consumer_Rep_Timeout *consum
   consumer->preemption_priority (::IntervalToPriority (interval));
 
   ACE_DEBUG ((LM_DEBUG, "Adding timer at preemption %d, rate = (%d,%d)\n",
-	      consumer->preemption_priority (), interval.low, interval.high));
+              consumer->preemption_priority (), interval.low, interval.high));
   // Register the timer.
   int id = channel_->timer ()->schedule_timer (consumer->dependency ()->rt_info,
                                                consumer,
@@ -2055,7 +2055,7 @@ ACE_ES_Subscription_Module::connected (ACE_Push_Supplier_Proxy *supplier,
           publications[index].event.type_;
 
         // @@ TODO we should throw something Check to make sure a type
-	// was specified.
+        // was specified.
         if (event_type == ACE_ES_EVENT_ANY)
           {
             ACE_ERROR ((LM_ERROR, "ACE_ES_Subscription_Module::connected: "
@@ -2112,10 +2112,10 @@ ACE_ES_Subscription_Module::connected (ACE_Push_Supplier_Proxy *supplier,
               }
           }
 #if 0
-	else
-	  {
-	    //ACE_DEBUG ((LM_DEBUG, "No consumers for type %d\n", event_type));
-	  }
+        else
+          {
+            //ACE_DEBUG ((LM_DEBUG, "No consumers for type %d\n", event_type));
+          }
 #endif
 
         // Put the new subscribers for this event type in the supplier
@@ -2211,7 +2211,7 @@ ACE_ES_Subscription_Module::subscribe_all (ACE_ES_Consumer_Rep *)
 // Forward <events> to all consumers subscribed to <source> only.
 int
 ACE_ES_Subscription_Module::push_source (ACE_Push_Supplier_Proxy *source,
-					 ACE_ES_Event_Container *event)
+                                         ACE_ES_Event_Container *event)
 {
   ACE_TIMEPROBE (TAO_EVENT_CHANNEL_ENTER_ACE_ES_SUBSCRIPTION_MODULE_PUSH);
   // If there are now source-based subscribers for this supplier,
@@ -2235,28 +2235,28 @@ ACE_ES_Subscription_Module::push_source (ACE_Push_Supplier_Proxy *source,
 
     TAO_TRY
       {
-	// Iterate through all subscribers.
-	for (ACE_ES_Consumer_Rep **consumer = 0;
-	     iter.next (consumer) != 0;
-	     iter.advance ())
-	  {
-	    // Only push the event if the consumer is not suspended
-	    // and not disconnected.
-	    if ((*consumer)->receiving_events ())
-	      {
-		up_->push (*consumer, event, TAO_TRY_ENV);
-		TAO_CHECK_ENV;
-	      }
-	    // If the consumer has disconnected, schedule it for
-	    // disconnection.  We can not modify our list now.  It
-	    // would mess up the iterator.
-	    if ((*consumer)->disconnected ())
-	      disconnect_list.insert (*consumer);
-	  }
+        // Iterate through all subscribers.
+        for (ACE_ES_Consumer_Rep **consumer = 0;
+             iter.next (consumer) != 0;
+             iter.advance ())
+          {
+            // Only push the event if the consumer is not suspended
+            // and not disconnected.
+            if ((*consumer)->receiving_events ())
+              {
+                up_->push (*consumer, event, TAO_TRY_ENV);
+                TAO_CHECK_ENV;
+              }
+            // If the consumer has disconnected, schedule it for
+            // disconnection.  We can not modify our list now.  It
+            // would mess up the iterator.
+            if ((*consumer)->disconnected ())
+              disconnect_list.insert (*consumer);
+          }
       }
     TAO_CATCHANY
       {
-	return -1;
+        return -1;
       }
     TAO_ENDTRY;
 
@@ -2269,23 +2269,23 @@ ACE_ES_Subscription_Module::push_source (ACE_Push_Supplier_Proxy *source,
     {
       ACE_ES_WGUARD ace_mon (source->subscription_info ().lock_);
       if (ace_mon.locked () == 0)
-	ACE_ERROR_RETURN ((LM_ERROR, "ACE_ES_Subscription_Module::push_source.\n"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "ACE_ES_Subscription_Module::push_source.\n"), -1);
 
       ACE_ES_CRSet_Iterator iter (disconnect_list.data (), disconnect_list.size ());
 
       // Iterate through the disconnecting consumers.
       for (ACE_ES_Consumer_Rep **consumer = 0;
-	   iter.next (consumer) != 0;
-	   iter.advance ())
-	{
-	  // Remove the consumer from subscriber list.
-	  if (set.remove (*consumer) == -1)
-	    ACE_ERROR ((LM_ERROR, "%p remove failed.\n",
-			"ACE_ES_Subscription_Module::push_source.\n"));
-	  else
-	    // Decrement the consumer rep's reference count.
-	    (*consumer)->_release ();
-	}
+           iter.next (consumer) != 0;
+           iter.advance ())
+        {
+          // Remove the consumer from subscriber list.
+          if (set.remove (*consumer) == -1)
+            ACE_ERROR ((LM_ERROR, "%p remove failed.\n",
+                        "ACE_ES_Subscription_Module::push_source.\n"));
+          else
+            // Decrement the consumer rep's reference count.
+            (*consumer)->_release ();
+        }
     }
 
   return 0;
@@ -2297,7 +2297,7 @@ ACE_ES_Subscription_Module::push_source (ACE_Push_Supplier_Proxy *source,
 
 int
 ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
-					      ACE_ES_Event_Container *event)
+                                              ACE_ES_Event_Container *event)
 {
   // Step through each event in the set.  For each event type, find
   // the corresponding set in the type collection.  Push the single
@@ -2328,11 +2328,11 @@ ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
 
     if (supplier_map.find (event->type_, subscribers) == -1)
       {
-	ACE_DEBUG ((LM_ERROR, "ACE_ES_Subscription_Module::push_source_type"
-		    " Warning: event type %d not registered.\n",
-		    event->type_));
+        ACE_DEBUG ((LM_ERROR, "ACE_ES_Subscription_Module::push_source_type"
+                    " Warning: event type %d not registered.\n",
+                    event->type_));
         ACE_TIMEPROBE (TAO_EVENT_CHANNEL_PUSH_SOURCE_TYPE);
-	return 0; // continue anyway
+        return 0; // continue anyway
       }
 
     if (subscribers->consumers_.size () == 0)
@@ -2349,23 +2349,23 @@ ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
 
     TAO_TRY
       {
-	for (ACE_ES_Consumer_Rep **consumer = 0;
-	     iter.next (consumer) != 0;
-	     iter.advance ())
-	  {
-	    if ((*consumer)->receiving_events ())
-	      {
-		up_->push (*consumer, event, TAO_TRY_ENV);
-		TAO_CHECK_ENV;
-	      }
-	    if ((*consumer)->disconnected ())
-	      disconnect_list.insert (*consumer);
-	  }
+        for (ACE_ES_Consumer_Rep **consumer = 0;
+             iter.next (consumer) != 0;
+             iter.advance ())
+          {
+            if ((*consumer)->receiving_events ())
+              {
+                up_->push (*consumer, event, TAO_TRY_ENV);
+                TAO_CHECK_ENV;
+              }
+            if ((*consumer)->disconnected ())
+              disconnect_list.insert (*consumer);
+          }
       }
     TAO_CATCHANY
       {
-	ACE_TIMEPROBE (TAO_EVENT_CHANNEL_PUSH_SOURCE_TYPE);
-	return -1;
+        ACE_TIMEPROBE (TAO_EVENT_CHANNEL_PUSH_SOURCE_TYPE);
+        return -1;
       }
     TAO_ENDTRY;
   }
@@ -2375,20 +2375,20 @@ ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
     {
       ACE_ES_WGUARD ace_mon (source->subscription_info ().lock_);
       if (ace_mon.locked () == 0)
-	ACE_ERROR_RETURN ((LM_ERROR, "ACE_ES_Subscription_Module::push_source.\n"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "ACE_ES_Subscription_Module::push_source.\n"), -1);
 
       ACE_ES_CRSet_Iterator iter (disconnect_list.data (), disconnect_list.size ());
 
       for (ACE_ES_Consumer_Rep **consumer = 0;
-	   iter.next (consumer) != 0;
-	   iter.advance ())
-	{
-	  if (set->remove (*consumer) == -1)
-	    ACE_ERROR ((LM_ERROR, "%p remove failed.\n",
-			"ACE_ES_Subscription_Module::push_source.\n"));
-	  else
-	    (*consumer)->_release ();
-	}
+           iter.next (consumer) != 0;
+           iter.advance ())
+        {
+          if (set->remove (*consumer) == -1)
+            ACE_ERROR ((LM_ERROR, "%p remove failed.\n",
+                        "ACE_ES_Subscription_Module::push_source.\n"));
+          else
+            (*consumer)->_release ();
+        }
     }
 
   ACE_TIMEPROBE (TAO_EVENT_CHANNEL_PUSH_SOURCE_TYPE);
@@ -2495,8 +2495,8 @@ ACE_ES_Subscription_Module::subscribe_type (ACE_ES_Consumer_Rep *consumer,
                                                     consumer, type) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-			 "Subscription_Module - insert_or_allocate failed\n"),
-			-1);
+                         "Subscription_Module - insert_or_allocate failed\n"),
+                        -1);
     }
 
   consumer->_duplicate ();
@@ -3178,10 +3178,6 @@ template class ACE_ES_Simple_Array<ACE_ES_Consumer_Rep *, 100>;
 
 template class ACE_CORBA_var<ACE_ES_Event_Container>;
 
-template class ACE_Node<ACE_EC_Gateway*>;
-template class ACE_Unbounded_Set<ACE_EC_Gateway*>;
-template class ACE_Unbounded_Set_Iterator<ACE_EC_Gateway*>;
-
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Atomic_Op<ACE_ES_MUTEX, int>
@@ -3215,9 +3211,5 @@ template class ACE_Unbounded_Set_Iterator<ACE_EC_Gateway*>;
 #pragma instantiate ACE_ES_Array_Iterator<ACE_ES_Consumer_Rep *>
 #pragma instantiate ACE_ES_Simple_Array<ACE_ES_Consumer_Rep *, 100>
 #pragma instantiate ACE_CORBA_var<ACE_ES_Event_Container>
-
-#pragma instantiate ACE_Node<ACE_EC_Gateway*>
-#pragma instantiate ACE_Unbounded_Set<ACE_EC_Gateway*>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_EC_Gateway*>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
