@@ -1,3 +1,10 @@
+Tue Sep 29 21:57:02 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/TAO_Examples.dsw: Removed incorrect dependency.	
+
+	* examples/POA/FindPOA/FindPOA.dsp: Renamed from FindPOA Server to
+	  simply FindPOA.
+
 Tue Sep 29 19:17:17 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
         * Tao/tests/DynAny_Test/server.dsp:

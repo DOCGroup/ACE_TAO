@@ -1,5 +1,5 @@
 # Microsoft Developer Studio Project File - Name="ACE dynamic library" - Package Owner=<4>
-# Microsoft Developer Studio Generated Build File, Format Version 6.00
+# Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
@@ -14,22 +14,30 @@ CFG=ACE dynamic library - Win32 Alpha Unicode Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "ace_dll.mak" CFG="ACE dynamic library - Win32 Alpha Unicode Debug"
+!MESSAGE NMAKE /f "ace_dll.mak"\
+ CFG="ACE dynamic library - Win32 Alpha Unicode Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "ACE dynamic library - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Unicode Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Unicode Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Alpha Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Alpha Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Alpha Unicode Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Alpha Unicode Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Debug" (based on\
+ "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Release" (based on\
+ "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Unicode Debug" (based on\
+ "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Unicode Release" (based on\
+ "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Alpha Debug" (based on\
+ "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Alpha Release" (based on\
+ "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Alpha Unicode Debug" (based on\
+ "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Alpha Unicode Release" (based on\
+ "Win32 (ALPHA) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 
@@ -171,13 +179,13 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\ /D" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /YX /FD /MTd WIN32" /c
 # ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /MDd WIN32" /c
 # SUBTRACT CPP /YX
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -204,13 +212,13 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
 CPP=cl.exe
 # ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /Ob2 /I "..\STL" /I "..\\ /D" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /YX /FD WIN32" /c
 # ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /Ob2 /I "..\\ /D" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD WIN32" /c
 # SUBTRACT CPP /YX
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
-# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -237,13 +245,13 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Unicode_Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\ /D" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /YX /FD /MTd WIN32" /c
 # ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /MDd WIN32" /c
 # SUBTRACT CPP /YX
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -270,13 +278,13 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Unicode_Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
 CPP=cl.exe
 # ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /Ob2 /I "..\STL" /I "..\\ /D" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /YX /FD WIN32" /c
 # ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /Ob2 /I "..\\ /D" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD WIN32" /c
 # SUBTRACT CPP /YX
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
-# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -921,145 +929,6 @@ SOURCE=.\Basic_Types.cpp
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Connector.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-DEP_CPP_CONNE=\
-	".\ACE.h"\
-	".\ACE.i"\
-	".\Atomic_Op.i"\
-	".\Auto_Ptr.cpp"\
-	".\Auto_Ptr.h"\
-	".\Auto_Ptr.i"\
-	".\config-win32-common.h"\
-	".\config-win32.h"\
-	".\Connector.h"\
-	".\Connector.i"\
-	".\Containers.cpp"\
-	".\Containers.h"\
-	".\Dynamic.h"\
-	".\Dynamic.i"\
-	".\Event_Handler.h"\
-	".\Event_Handler.i"\
-	".\Free_List.cpp"\
-	".\Free_List.h"\
-	".\Free_List.i"\
-	".\Handle_Set.h"\
-	".\Handle_Set.i"\
-	".\Hash_Map_Manager.cpp"\
-	".\Hash_Map_Manager.h"\
-	".\IO_Cntl_Msg.h"\
-	".\Log_Msg.h"\
-	".\Log_Priority.h"\
-	".\Log_Record.h"\
-	".\Log_Record.i"\
-	".\Malloc.h"\
-	".\Malloc.i"\
-	".\Malloc_T.cpp"\
-	".\Malloc_T.h"\
-	".\Malloc_T.i"\
-	".\Managed_Object.cpp"\
-	".\Managed_Object.h"\
-	".\Managed_Object.i"\
-	".\Map_Manager.cpp"\
-	".\Map_Manager.h"\
-	".\Map_Manager.i"\
-	".\Mem_Map.h"\
-	".\Mem_Map.i"\
-	".\Memory_Pool.h"\
-	".\Memory_Pool.i"\
-	".\Message_Block.h"\
-	".\Message_Block.i"\
-	".\Message_Queue.cpp"\
-	".\Message_Queue.h"\
-	".\Message_Queue.i"\
-	".\Module.cpp"\
-	".\Module.h"\
-	".\Module.i"\
-	".\Object_Manager.h"\
-	".\Object_Manager.i"\
-	".\OS.h"\
-	".\OS.i"\
-	".\Reactor.h"\
-	".\Reactor.i"\
-	".\Reactor_Impl.h"\
-	".\Service_Config.h"\
-	".\Service_Config.i"\
-	".\Service_Object.h"\
-	".\Service_Object.i"\
-	".\Service_Types.h"\
-	".\Service_Types.i"\
-	".\Shared_Object.h"\
-	".\Shared_Object.i"\
-	".\Signal.h"\
-	".\Signal.i"\
-	".\SString.h"\
-	".\SString.i"\
-	".\Strategies.h"\
-	".\Strategies_T.cpp"\
-	".\Strategies_T.h"\
-	".\Stream_Modules.cpp"\
-	".\Stream_Modules.h"\
-	".\Stream_Modules.i"\
-	".\SV_Semaphore_Complex.h"\
-	".\SV_Semaphore_Complex.i"\
-	".\SV_Semaphore_Simple.h"\
-	".\SV_Semaphore_Simple.i"\
-	".\Svc_Conf_Tokens.h"\
-	".\Svc_Handler.cpp"\
-	".\Svc_Handler.h"\
-	".\Svc_Handler.i"\
-	".\Synch.h"\
-	".\Synch.i"\
-	".\Synch_Options.h"\
-	".\Synch_T.cpp"\
-	".\Synch_T.h"\
-	".\Synch_T.i"\
-	".\Task.h"\
-	".\Task.i"\
-	".\Task_T.cpp"\
-	".\Task_T.h"\
-	".\Task_T.i"\
-	".\Thread.h"\
-	".\Thread.i"\
-	".\Thread_Manager.h"\
-	".\Thread_Manager.i"\
-	".\Timer_Queue.h"\
-	".\Timer_Queue_T.cpp"\
-	".\Timer_Queue_T.h"\
-	".\Timer_Queue_T.i"\
-	".\Trace.h"\
-	".\Version.h"\
-	".\WFMO_Reactor.h"\
-	".\WFMO_Reactor.i"\
-	".\ws2tcpip.h"\
-	
-NODEP_CPP_CONNE=\
-	".\config.h"\
-	".\Containers.i"\
-	".\stdcpp.h"\
-	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
 
@@ -13654,6 +13523,31 @@ SOURCE=.\Acceptor.cpp
 SOURCE=.\Auto_Ptr.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connector.cpp
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
