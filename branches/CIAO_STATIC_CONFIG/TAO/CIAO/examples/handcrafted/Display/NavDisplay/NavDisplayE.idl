@@ -1,0 +1,72 @@
+// $Id$
+
+// ===========================================================
+//
+// @file NavDisplayE.idl
+//
+// Handlecrafted "generated" code. :)
+//
+// @author Nanbor Wang <nanbor@cs.wustl.edu>
+//
+// ===========================================================
+
+#ifndef NAVDISPLAYE_IDL
+#define NAVDISPLAYE_IDL
+
+#include "CCM_Container.idl"    // Found in $(CIAO_ROOT)/ciao
+                                // For various definitions of container
+                                // internal/callback interfaces
+#include "NavDisplay.idl"       // Original component IDL definition
+#include "../HUDisplayE.idl"
+
+module HUDisplay {
+  // Component Main Executor Interface.  We currently do not
+  // support Executor-based implementation.
+
+  local interface CCM_NavDisplay_Executor
+  : Components::EnterpriseComponent
+  {
+  };
+
+  // Monolithic component executor.
+  // For implementing monolithic component call back interface.
+
+  local interface CCM_NavDisplay
+    : Components::EnterpriseComponent
+  {
+    void push_Refresh (in tick ev);
+  };
+
+  /**
+   * Component Context Interface
+   *
+   * Notice that we are taking a shortcut here to inherit the
+   * component-specific context from SessionContext directly instead
+   * of CCMContext.
+   */
+  local interface CCM_NavDisplay_Context
+    : Components::SessionContext
+  {
+    position get_connection_GPSLocation ();
+  };
+
+
+  local interface CCM_NavDisplayHomeExplicit
+    : Components::HomeExecutorBase
+  {
+  };
+
+  local interface CCM_NavDisplayHomeImplicit
+  {
+    ::Components::EnterpriseComponent create ()
+      raises (::Components::CCMException);
+  };
+
+  local interface CCM_NavDisplayHome
+    : CCM_NavDisplayHomeExplicit,
+      CCM_NavDisplayHomeImplicit
+  {
+  };
+};
+
+#endif /* NAVDISPLAYE_IDL */
