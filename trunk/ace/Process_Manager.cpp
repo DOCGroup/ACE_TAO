@@ -692,7 +692,7 @@ ACE_Process_Manager::wait (pid_t pid,
 {
   ACE_TRACE ("ACE_Process_Manager::wait");
 
-  int local_stat = 0;
+  ACE_exitcode local_stat = 0;
   if (status == 0) 
     status = &local_stat;
 
@@ -837,7 +837,7 @@ ACE_Process_Manager::wait (pid_t pid,
 
 int 
 ACE_Process_Manager::reap (pid_t pid,
-                           int *stat_loc,
+                           ACE_exitcode *stat_loc,
                            int options)
 {
   ACE_TRACE ("ACE_Process_Manager::reap");
@@ -856,7 +856,7 @@ ACE_Process_Manager::reap (pid_t pid,
 int
 ACE_Process_Manager::notify_proc_handler (ACE_HANDLE h,
                                           pid_t pid,
-                                          int exit_code)
+                                          ACE_exitcode exit_code)
 {
   ssize_t i = this->find_proc (pid);
 
