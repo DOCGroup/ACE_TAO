@@ -1,3 +1,7 @@
+Wed Oct 23 16:37:15 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* THANKS: Added Sandeep to the Hall of Fame.
+
 Wed Oct 23 17:20:18 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/Service_Object.{h,cpp} (suspend, resume, fini):
