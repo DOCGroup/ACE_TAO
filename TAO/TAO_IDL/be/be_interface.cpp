@@ -2088,7 +2088,10 @@ be_local_interface::be_local_interface (UTL_ScopedName *n,
                                         AST_Interface **ih_flat,
                                         long nih_flat,
                                         UTL_StrList *p)
-  : be_interface (n, ih, nih, ih_flat, nih_flat, p)
+  : be_interface (n, ih, nih, ih_flat, nih_flat, p),
+    AST_Interface (n, ih, nih, ih_flat, nih_flat, p),
+    AST_Decl (AST_Decl::NT_interface, n, p),
+    UTL_Scope (AST_Decl::NT_interface)
 {
 }
 
@@ -2104,7 +2107,10 @@ be_abstract_interface::be_abstract_interface (UTL_ScopedName *n,
                                               AST_Interface **ih_flat,
                                               long nih_flat,
                                               UTL_StrList *p)
-  : be_interface (n, ih, nih, ih_flat, nih_flat, p)
+  : be_interface (n, ih, nih, ih_flat, nih_flat, p),
+    AST_Interface (n, ih, nih, ih_flat, nih_flat, p),
+    AST_Decl (AST_Decl::NT_interface, n, p),
+    UTL_Scope (AST_Decl::NT_interface)
 {
 }
 
