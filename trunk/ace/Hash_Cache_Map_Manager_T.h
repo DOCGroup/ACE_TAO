@@ -27,7 +27,6 @@
 // Forward declaration.
 class ACE_Allocator;
 
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
 #define ACE_CACHE_MAP_MANAGER \
         ACE_Cache_Map_Manager<KEY, \
                               VALUE, \
@@ -36,14 +35,6 @@ class ACE_Allocator;
                               ACE_Hash_Map_Reverse_Iterator_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>, \
                               CACHING_STRATEGY, \
                               ATTRIBUTES>
-#else
-#define ACE_CACHE_MAP_MANAGER \
-        ACE_Cache_Map_Manager<KEY, \
-                              VALUE, \
-                              ACE_Hash_Map_Manager_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>, \
-                              CACHING_STRATEGY, \
-                              ATTRIBUTES>
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
 // For linkers that cant grok long names.
 #define ACE_Hash_Cache_Map_Manager AHCMM

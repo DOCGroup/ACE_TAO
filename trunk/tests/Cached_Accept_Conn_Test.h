@@ -71,13 +71,6 @@ typedef ACE_Recyclable_Handler_Caching_Utility<ACE_ADDR, CACHED_HANDLER, HASH_MA
 typedef ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
         LRU_CACHING_STRATEGY;
 
-#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-
-typedef LRU_CACHING_STRATEGY
-        CACHING_STRATEGY;
-
-#else
-
 typedef ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
         LFU_CACHING_STRATEGY;
 typedef ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
@@ -94,8 +87,6 @@ typedef ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, NULL_CACHING_S
         NULL_CACHING_STRATEGY_ADAPTER;
 typedef ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
         CACHING_STRATEGY;
-
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
 typedef ACE_Strategy_Acceptor<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>
         ACCEPTOR;

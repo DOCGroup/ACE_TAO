@@ -371,11 +371,6 @@ ACE_HAS_RLIMIT_RESOURCE_ENUM            Platform has enum instead of
 #define ACE_HAS_P_READ_WRITE
 					/*Platform has pread() and
                                         pwrite() support*/
-//#define ACE_HAS_64BIT_LONGS
-					/*Platform has 64bit longs and
-                                        32bit ints.  NOTE: this macro
-                                        is deprecated.  Instead, use
-                                        ACE_SIZEOF_LONG == 8.*/
 //#define ACE_HAS_AIX_BROKEN_SOCKET_HEADER
 					/*Platform, such as AIX4, needs
                                         to wrap #include of

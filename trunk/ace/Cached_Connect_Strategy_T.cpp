@@ -527,46 +527,8 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::cleanup (void)
 {
   // Excluded other threads from changing the cache while we cleanup
   ACE_GUARD (MUTEX, ace_mon, *this->lock_);
+
   // Close down all cached service handlers.
-#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-
-  typedef ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,
-                                   ACE_Pair<SVC_HANDLER *, ATTRIBUTES>,
-                                   ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
-                                   ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
-                                   ACE_Null_Mutex>
-    CONNECTION_MAP_ITERATOR;
-
-  // CONNECTION_MAP_ITERATOR end = this->connection_cache_.map ().end ();
-  CONNECTION_MAP_ITERATOR iter = this->connection_cache_.map ().begin ();
-
-
-  while (iter != this->connection_cache_.map ().end ())
-   {
-     if ((*iter).int_id_.first () != 0)
-       {
-         // save entry for future use
-         CONNECTION_CACHE_ENTRY *entry = (CONNECTION_CACHE_ENTRY *)
-           (*iter).int_id_.first ()->recycling_act ();
-
-         // close handler
-         (*iter).int_id_.first ()->recycler (0, 0);
-         (*iter).int_id_.first ()->close ();
-
-         // remember next iter
-         CONNECTION_MAP_ITERATOR next_iter = iter;
-         ++next_iter;
-
-         // purge the item from the hash
-         this->purge_i (entry);
-
-         // assign next iter
-         iter  = next_iter;
-     }
-     else
-       ++iter;
-   }
-#else  /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
   ACE_TYPENAME CONNECTION_CACHE::ITERATOR iter =
     this->connection_cache_.begin ();
   while (iter != this->connection_cache_.end ())
@@ -594,8 +556,6 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::cleanup (void)
      else
        ++iter;
     }
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
-
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Cached_Connect_Strategy_Ex)
