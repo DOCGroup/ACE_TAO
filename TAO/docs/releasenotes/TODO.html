@@ -28,13 +28,14 @@
     </P>
 
     <OL>
-      <LI><P>Implement an Implementation Repository for TAO.
-	  <BR>[ASSIGNED TO:] Darrell.
+      <LI><P>The ORB should support server side and client side
+	  interceptors
+	  <BR>[ASSIGNED TO:] Nanbor
 	</P>
       </LI>
-
-      <LI><P>Support the thread pool reactor in the ORB.
-	  <BR>[ASSIGNED TO:] Nanbor.
+      
+      <LI><P>Implement an Implementation Repository for TAO.
+	  <BR>[ASSIGNED TO:] Darrell.
 	</P>
       </LI>
 
@@ -288,6 +289,7 @@
 	    <CODE>Event_Latency</CODE>)
 	  </LI>
 	  <LI>A connection time test
+	    <BR>[DONE]
 	  </LI>
 	  <LI>A test to verify filtering and correlation
 	  </LI>
@@ -298,6 +300,7 @@
 	  <LI>A test to measure CPU scalability
 	  </LI>
 	  <LI>A stress test for gateways and observers
+	    <BR>[DONE]
 	  </LI>
 	  </UL>
         </P>
@@ -318,28 +321,13 @@
       </LI>
 
       <LI><P><B>EC:</B> We need some strategy in the EC to periodically 
-	  flush out mibehaving suppliers and consumers. Examples of
+	  flush out misbehaving suppliers and consumers. Examples of
 	  misbehavior include: suppliers flooding the EC;
 	  consumers or suppliers that are destroyed, but were not
 	  disconnected;
 	  consumers that are not accepting events (risking a
 	  dead-lock);
 	  etc.
-        </P>
-      </LI>
-
-      <LI><P><B>EC:</B>The observer in the <CODE>TAO_EC_Gateway</CODE> 
-	  class is not properly deactivated.
-        </P>
-      </LI>
-
-      <LI><P><B>EC:</B> Sometimes the Event Channel dead-locks during
-          shutdown. According to Ulf Jährig
-	  &lt;jaehrig@desys.com&gt;, an easy way to reproduce the
-	  problem is to run the EC_Throughput test under windows NT.
-	  <BR>[STATUS] The test in question works perfectly on NT; it
-	  looks like a race condition. Apparently this is only a
-	  problem with the old EC.
         </P>
       </LI>
 
@@ -446,16 +434,6 @@
 	</P>
       </LI>
       
-      <LI><P><B>ORB:</B>
-	  Support multiple endpoints in the ORB.
-	  Some interesting concurrency models (such as
-	  thread-per-endpoint or thread-pool-per-endpoint) require
-	  that we give an explicit name to each endpoint, and use
-	  policies to match the thread with the endpoints it will
-	  serve (and share).
-        </P>
-      </LI>
-
       <LI><B>EC:</B> Call ORB_init() in the EC threads?
 	[The dispatching threads for Boeing]
       <P></LI>
@@ -557,6 +535,7 @@
       <LI><P><B>ORB:</B>
 	  Is the client side in TAO handling a
 	  <CODE>CloseConnection</CODE> GIOP message properly?
+	  <BR>[STATUS] The code has been inspected and seems correct
 	</P>
       </LI>
 
@@ -614,22 +593,6 @@
           a generic function could be used, or at least we should add
           an option to gperf to it receives that generic function as
           an argument.
-        </P>
-      </LI>
-
-      <LI><P><B>IDL Compiler:</B> The TAO_IDL compiler does not handle
-          the following code sequence properly:
-<PRE>
-    // IDL
-    interface Foo;
-    typedef sequence<Foo> FooSeq;
-
-    interface Foo {
-      // anything here
-    }; 
-</PRE>
-        It may be necessary to have a multi-pass code generator to
-        solve this problem.
         </P>
       </LI>
 
@@ -699,6 +662,11 @@
 	</P>
       </LI>
 
+      <LI><P>Need to support CORBA::Bounds to be compliant with 2.3
+	  spec.
+	</P>
+      </LI>
+      
     <HR></HR>
 
   <!-- Things below this point are "big" tasks" that -->
@@ -773,13 +741,12 @@ encapsulation format.
         </P>
       </LI>
 
-      <LI><P>Add support for Smart Proxies to the ORB</P>
-      </LI>
+    <LI><P>Add support for Smart Proxies to the ORB
+	<BR>[STATUS] The new implementation of collocation has the
+	roots for this.
+      </P>
+    </LI>
 
-      <LI><P>The ORB should support server side and client side
-	  interceptors</P>
-      </LI>
-      
       <LI><P>The ORB does not have an interface repository</P>
       </LI>
 
@@ -793,6 +760,70 @@ encapsulation format.
 	each variant of a TypeCode; but initialization would be
 	complicated then.
       <P></LI>
+
+    <LI><P>Consider decompositions of the ORB that would allow
+	dynamically linked plug-ins, for example it should be easy to
+        dynamically load a pluggable protocol.
+        Other decompositions are harder, but still worthwhile looking
+        at: 
+      <UL>
+        <LI>Dynamically load the support for costly features, as the
+          ImplRepo or Location Forwarding.
+	  <P>
+        </LI>
+        <LI>Dynamically configure POA with or without support for
+          holding state.
+	  <P>
+        </LI>
+      </UL>
+    </P>
+    </LI>
+      
+    <LI><P><B>IDL Compiler:</B> Currently the IDL compiler creates an
+        operation table that 
+	includes all the base classes operations; this permits the
+	generation of efficient code that does not rely in
+	dynamic_cast or the _downcast() method for Servants (which
+	compare strings, hence it is slow).
+	It could be interesting to implement the alternative approach
+	were the class only looks its own operations and then tries
+	the parent. This will reduce code size, but will probably
+	decrease performance.
+      </P></LI>
+
+      <LI>Server_Request objects in TAO are magical, the _duplicate()
+	method returns 0 and release() does nothing.
+	The problem starts because Server_Request is allocated from the
+	stack (to speed up things), hence reference counting would be
+	useless. Adding a clone() method will work better, but the
+	Server_Request holds pointers to several positions in the CDR
+	stream, we could clone the CDR stream, but a normal
+	Server_Request does not own it....  In our opinion (Carlos and
+	Irfan) we need not worry about this until we find a use case for
+	it.
+      <P></LI>
+
+    </OL>
+
+<HR><P>
+      <H3>Completed Tasks</H3>
+
+    <OL> 
+      <LI><P>The current implementation of collocation is optimal for
+	  hard-real-time 
+	  applications, but in some cases it may be desirable to follow
+	  the normal execution path yet minize costs for collocated
+	  calls.
+	  An example would include an application that activates the
+	  objects on demand.
+	  It would be interesting to have a half-collocated stub
+	  implementation, that will marshall the request and then
+	  invokes the normal path on the "server" side, but without
+	  crossing the kernel boundary. Ideally even the serialization
+	  could be minimized or avoided.
+	  <BR>[DONE] The ORB supports collocation through the POA.
+	</P>
+      </LI>
 
       <LI><P>The CORBAlite RFP is very interesting IMHO we just need to
 	remove features from TAO to make it a CORBAlite
@@ -847,73 +878,63 @@ encapsulation format.
 	    interpretive marshalling in the CORBAlite framework (where
 	    TypeCodes don't have enough methods as to traverse them).
       </P>
+	<P>[STATUS] The ORB can be compiled with support for CORBAlite 
+	  (aka Minimum CORBA).
+	</P>
     </LI>
 
-    <LI><P>Consider decompositions of the ORB that would allow
-	dynamically linked plug-ins, for example it should be easy to
-        dynamically load a pluggable protocol.
-        Other decompositions are harder, but still worthwhile looking
-        at: 
-      <UL>
-        <LI>Dynamically load the support for costly features, as the
-          ImplRepo or Location Forwarding.
-	  <P>
-        </LI>
-        <LI>Dynamically configure POA with or without support for
-          holding state.
-	  <P>
-        </LI>
-      </UL>
-    </P>
-    </LI>
-      
-    <LI><P><B>IDL Compiler:</B> Currently the IDL compiler creates an
-        operation table that 
-	includes all the base classes operations; this permits the
-	generation of efficient code that does not rely in
-	dynamic_cast or the _downcast() method for Servants (which
-	compare strings, hence it is slow).
-	It could be interesting to implement the alternative approach
-	were the class only looks its own operations and then tries
-	the parent. This will reduce code size, but will probably
-	decrease performance.
-      </P></LI>
+      <LI><P>Support the thread pool reactor in the ORB.
+	  <BR>[ASSIGNED TO:] Nanbor.
+	  <BR>[DONE]
+	</P>
+      </LI>
 
-      <LI>Server_Request objects in TAO are magical, the _duplicate()
-	method returns 0 and release() does nothing.
-	The problem starts because Server_Request is allocated from the
-	stack (to speed up things), hence reference counting would be
-	useless. Adding a clone() method will work better, but the
-	Server_Request holds pointers to several positions in the CDR
-	stream, we could clone the CDR stream, but a normal
-	Server_Request does not own it....  In our opinion (Carlos and
-	Irfan) we need not worry about this until we find a use case for
-	it.
-      <P></LI>
+      <LI><P><B>IDL Compiler:</B> The TAO_IDL compiler does not handle
+          the following code sequence properly:
+<PRE>
+    // IDL
+    interface Foo;
+    typedef sequence<Foo> FooSeq;
 
-      <LI>
-	The current implementation of collocation is optimal for
-	hard-real-time 
-	applications, but in some cases it may be desirable to follow
-	the normal execution path yet minize costs for collocated
-	calls.
-	An example would include an application that activates the
-	objects on demand.
-	It would be interesting to have a half-collocated stub
-	implementation, that will marshall the request and then
-	invokes the normal path on the "server" side, but without
-	crossing the kernel boundary. Ideally even the serialization
-	could be minimized or avoided.
-      <P></LI>
+    interface Foo {
+      // anything here
+    }; 
+</PRE>
+        It may be necessary to have a multi-pass code generator to
+        solve this problem.
+	<BR>[DONE] Andy has completed the implementation of recursive
+	types.
+        </P>
+      </LI>
 
-      <LI>Need to support CORBA::Bounds to be compliant with 2.3 spec.</LI>
-      
-    </OL>
+      <LI><P><B>ORB:</B>
+	  Support multiple endpoints in the ORB.
+	  Some interesting concurrency models (such as
+	  thread-per-endpoint or thread-pool-per-endpoint) require
+	  that we give an explicit name to each endpoint, and use
+	  policies to match the thread with the endpoints it will
+	  serve (and share).
+	  <BR>[DONE] The ORB supports multiple-endpoints, mapping
+	  threads to endpoints is in another entry.
+        </P>
+      </LI>
 
-<HR><P>
-      <H3>Completed Tasks</H3>
+      <LI><P><B>EC:</B>The observer in the <CODE>TAO_EC_Gateway</CODE> 
+	  class is not properly deactivated.
+	  <BR>[DONE]
+        </P>
+      </LI>
 
-    <OL> 
+      <LI><P><B>EC:</B> Sometimes the Event Channel dead-locks during
+          shutdown. According to Ulf Jährig
+	  &lt;jaehrig@desys.com&gt;, an easy way to reproduce the
+	  problem is to run the EC_Throughput test under windows NT.
+	  <BR>[STATUS] The test in question works perfectly on NT; it
+	  looks like a race condition. Apparently this is only a
+	  problem with the old EC.
+        </P>
+      </LI>
+
       <LI><P>The <CODE>TAO_Object_Manager</CODE> class needs an
 	  assigment operator from <CODE>T_var</CODE>.
 	  Either change the class to have two arguments or 
