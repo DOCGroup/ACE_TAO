@@ -343,7 +343,7 @@ EOF
 
   if test "$ace_header_exists" = yes; then
     if test -z "$AWK"; then
-      AC_MSG_WARN([No awk program found.  "Real" function may not be found.])
+      AC_MSG_WARN([No awk program found.  Real $1 function may not be found.])
     fi
 
     if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
