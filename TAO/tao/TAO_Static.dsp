@@ -7,19 +7,19 @@
 CFG=TAO LIB - Win32 Static Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "TAO_Static.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "TAO_Static.mak" CFG="TAO LIB - Win32 Static Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "TAO LIB - Win32 Static Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "TAO LIB - Win32 Static Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -40,8 +40,8 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release"
 # PROP Target_Dir ""
-MTL=midl.exe
 LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /I "../" /D "_WINDOWS" /D "_CONSOLE" /D "NDEBUG" /D "WIN32" /D "TAO_AS_STATIC_LIBS" /D "ACE_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -66,8 +66,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug"
 # PROP Target_Dir ""
-MTL=midl.exe
 LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /GX /Zi /Od /I "../../" /I "../" /D "_WINDOWS" /D "_CONSOLE" /D "_DEBUG" /D "WIN32" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -80,7 +80,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo /out:"TAOsd.lib"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -339,15 +339,15 @@ SOURCE=.\GIOP_Message_Generator_Parser_Impl.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Handler.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Lite.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\GIOP_Message_Locate_Header.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Reactive_Handler.h
 # End Source File
 # Begin Source File
 
@@ -1103,15 +1103,15 @@ SOURCE=.\GIOP_Message_Generator_Parser_Impl.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Handler.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Lite.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\GIOP_Message_Locate_Header.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Reactive_Handler.inl
 # End Source File
 # Begin Source File
 
@@ -1763,15 +1763,15 @@ SOURCE=.\GIOP_Message_Generator_Parser_Impl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Handler.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Lite.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\GIOP_Message_Locate_Header.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Reactive_Handler.cpp
 # End Source File
 # Begin Source File
 

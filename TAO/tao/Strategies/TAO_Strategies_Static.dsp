@@ -40,6 +40,8 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release\Strategies"
 # PROP Target_Dir ""
+LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D "WIN32" /D "_MBCS" /D "TAO_AS_STATIC_LIBS" /D "ACE_AS_STATIC_LIBS" /D "TAO_STRATEGIES_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
@@ -64,6 +66,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug\Strategies"
 # PROP Target_Dir ""
+LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_WINDOWS" /D "_CONSOLE" /D "_DEBUG" /D "WIN32" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -92,6 +96,14 @@ SOURCE=.\advanced_resource.cpp
 # Begin Source File
 
 SOURCE=.\Direct_Priority_Mapping.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_NonReactive_Base.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_NonReactive_Handler.cpp
 # End Source File
 # Begin Source File
 
@@ -180,6 +192,14 @@ SOURCE=.\advanced_resource.h
 # Begin Source File
 
 SOURCE=.\Direct_Priority_Mapping.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_NonReactive_Base.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_NonReactive_Handler.h
 # End Source File
 # Begin Source File
 
@@ -272,6 +292,14 @@ SOURCE=.\advanced_resource.i
 # Begin Source File
 
 SOURCE=.\Direct_Priority_Mapping.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_NonReactive_Base.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_NonReactive_Handler.inl
 # End Source File
 # Begin Source File
 
