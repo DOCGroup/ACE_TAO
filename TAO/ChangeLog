@@ -2285,7 +2285,7 @@ Thu Apr 24 19:39:36 2003  Irfan Pyarali  <irfan@oomworks.com>
 
           - id_to_reference_i(): Added code so that the ORT is also
           invoked from this method.  Not sure why this method was left
-          out.
+          out.  [Bug 1418]
 
           - invoke_key_to_object(): Super simplified this method.  All
           params required to call create_object_key() and key_to_object()
