@@ -1,3 +1,9 @@
+Sat Sep 16 22:37:58 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* utils/NamingViewer/ViewIORDialog.cpp:
+
+	  Fixed comilation problems.
+
 Sat Sep 16 15:04:52 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Priority_Mapping_Manager.i: Removed unmatched #if #endif
