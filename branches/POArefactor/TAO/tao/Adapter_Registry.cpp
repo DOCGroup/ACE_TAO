@@ -3,21 +3,13 @@
 #include "Adapter.h"
 #include "SystemException.h"
 #include "debug.h"
-#include "Adapter_Registry.h"
 
-#include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
 ACE_RCSID (tao,
-           Adapter,
+           Adapter_Registry,
            "$Id$")
-
-TAO_Adapter::~TAO_Adapter (void)
-{
-}
-
-// ****************************************************************
 
 TAO_Adapter_Registry::TAO_Adapter_Registry (TAO_ORB_Core *oc)
   : orb_core_ (oc),
@@ -200,18 +192,3 @@ TAO_Adapter_Registry::find_adapter (const char *name) const
 
 }
 
-// ****************************************************************
-
-TAO_Adapter_Factory::~TAO_Adapter_Factory (void)
-{
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dynamic_Service<TAO_Adapter_Factory>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dynamic_Service<TAO_Adapter_Factory>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -36,7 +36,7 @@
 #include "tao/Messaging_SyncScopeC.h"
 #include "tao/Object.h"
 #include "tao/Invocation_Utils.h"
-#include "tao/Adapter.h"
+#include "tao/Adapter_Registry.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "Interceptor_List.h"
@@ -46,8 +46,8 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Lock_Adapter_T.h"
 
-
 // Forward declarations
+class TAO_Adapter;
 class TAO_Acceptor;
 class TAO_Connector;
 class TAO_Connector_Registry;
