@@ -161,7 +161,8 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   // the _create_collocated_objref method.
   *os << "virtual void* _create_collocated_objref"
-      << "(CORBA::ULong type, TAO_Stub *sobj);" << be_nl << be_nl;
+      << "(const char*, CORBA::ULong type, TAO_Stub *sobj);"
+      << be_nl << be_nl;
 
   // generate code for elements in the scope (e.g., operations).
   if (this->visit_scope (node) ==  -1)

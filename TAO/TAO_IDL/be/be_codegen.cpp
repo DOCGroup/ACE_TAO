@@ -278,7 +278,7 @@ TAO_CodeGen::start_client_stubs (const char *fname)
   *this->client_stubs_ << "#include \"" <<
     idl_global->be_get_client_hdr_fname (1) << "\"\n\n";
 
-#if 1 // Nanbor's collocation change
+#if 0 // Nanbor's collocation change
   *this->client_stubs_ << "#include \"" <<
     idl_global->be_get_server_hdr_fname (1) << "\"\n\n";
 #endif /* Nanbor */
