@@ -4,8 +4,8 @@
 // Constructor.
 
 template <class Servant>
-Server<Servant>::Server () // @@ Bala, please fix the "() -> (void)".
-  : ior_output_file_ (0)
+Server<Servant>::Server (void)
+    : ior_output_file_ (0)
 {
   // no-op.
 }
@@ -13,17 +13,17 @@ Server<Servant>::Server () // @@ Bala, please fix the "() -> (void)".
 // Destructor.
 
 template <class Servant>
-Server<Servant>::~Server ()
+Server<Servant>::~Server (void)
 {
 }
 
 // Parse the command-line arguments and set options.
 
 template <class Servant>
-int Server<Servant>::parse_args ()
+int Server<Servant>::parse_args (void)
 {
   ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:");
-  int c;
+  int c = 0;
   
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -93,21 +93,31 @@ int Server<Servant>::init (const char *servant_name,
 
   // Make sure that you check for failures here via the TAO_TRY
   // macros?!
-  CORBA::String_var str  =
-    this->orb_manager_.activate_under_child_poa (servant_name,
-                                                 &this->servant_,
-                                                 env);
-  ACE_DEBUG ((LM_DEBUG,
-              "The IOR is: <%s>\n",
-              str.in ()));
-
-  if (this->ior_output_file_)
+  TAO_TRY
     {
-      ACE_OS::fprintf (this->ior_output_file_,
-                       "%s",
-                       str.in ());
-      ACE_OS::fclose (this->ior_output_file_);
+      CORBA::String_var str  =
+        this->orb_manager_.activate_under_child_poa (servant_name,
+                                                     &this->servant_,
+                                                     env);
+      TAO_CHECK_ENV;
+
+     ACE_DEBUG ((LM_DEBUG,
+                  "The IOR is: <%s>\n",
+                  str.in ()));
+     if (this->ior_output_file_)
+       {
+         ACE_OS::fprintf (this->ior_output_file_,
+                          "%s",
+                          str.in ());
+         ACE_OS::fclose (this->ior_output_file_);
+       }
     }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("\tException in activation of POA");
+      return -1;
+    }
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -115,21 +125,19 @@ int Server<Servant>::init (const char *servant_name,
 template <class Servant>
 int Server<Servant>::run (CORBA::Environment &env)
 {
-  // @@ Bala, please indent..
-
-	// Run the main event loop for the ORB.
-	if (this->orb_manager_.run (env) == -1)
-		ACE_ERROR_RETURN ((LM_ERROR,
-			               "Server_i::run"),
-				          -1);
-
-	return 0;
+    // Run the main event loop for the ORB.
+  if (this->orb_manager_.run (env) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Server_i::run"),
+                      -1);
+  
+  return 0;
 }
 
 template <class Servant>
 void Server<Servant>::register_name ()
 {
-  namingClient.init(orb_manager_.orb());
+  namingClient.init (orb_manager_.orb());
   // create the name for the naming service
   
   CosNaming::Name bindName;
@@ -139,14 +147,12 @@ void Server<Servant>::register_name ()
   // (re)Bind the object.
   TAO_TRY
     {
-      // @@ Bala, please make sure to put a ' ' between this and '('
-      CORBA::Object_var object = servant_._this(TAO_TRY_ENV);
+      CORBA::Object_var object = servant_._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
-      // @@ Bala, please make sure to put a ' ' between this and '('
-      namingClient->bind(bindName,
-                         object.in(),       
-                         TAO_TRY_ENV);
+      namingClient->bind (bindName,
+                          object.in(),       
+                          TAO_TRY_ENV);
       TAO_CHECK_ENV;  
     }
   TAO_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
@@ -164,9 +170,10 @@ void Server<Servant>::register_name ()
 // Constructor.
 
 template <class InterfaceObj, class Var>
-Client<InterfaceObj, Var>::Client ()
+Client<InterfaceObj, Var>::Client (void)
   : ior_ (0)
 {
+  //no-op
 }
 
 // Reads the Server ior from a file
@@ -184,13 +191,13 @@ int Client<InterfaceObj, Var>::read_ior (char *filename)
                       -1);
   
   ACE_Read_Buffer ior_buffer (f_handle);
-  char *data = ior_buffer.read();
+  char *data = ior_buffer.read ();
 
   if (data == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to read ior: %p\n"),
                       -1);
-
+  
   this->ior_ = ACE_OS::strdup (data);
   ior_buffer.alloc ()->free (data);
 
@@ -202,7 +209,7 @@ int Client<InterfaceObj, Var>::read_ior (char *filename)
 // Parses the command line arguments and returns an error status.
 
 template <class InterfaceObj, class Var>
-int Client<InterfaceObj, Var>::parse_args ()
+int Client<InterfaceObj, Var>::parse_args (void)
 {
   ACE_Get_Opt get_opts (argc_, argv_, "df:k:x");
   int c = 0;
@@ -247,7 +254,7 @@ int Client<InterfaceObj, Var>::parse_args ()
 }
 
 template <class InterfaceObj, class Var>
-Client<InterfaceObj, Var>::~Client ()
+Client<InterfaceObj, Var>::~Client (void)
 {
   ACE_OS::free (this->ior_);
 }
@@ -266,7 +273,7 @@ int Client<InterfaceObj, Var>::init (int argc, char **argv)
                                     0,
                                     TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
+      
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
         return -1;
