@@ -133,7 +133,6 @@
 #    define ACE_HAS_TEMPLATE_SPECIALIZATION
 // ... and uses the template<> syntax
 #    define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
-#    define ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION
 
 // Preprocessor needs some help with data types
 #    if defined (__LP64__)
@@ -160,7 +159,6 @@
 // KCC Specific Section
 #if defined(__KCC)
 #  include "ace/config-kcc-common.h"
-#  undef ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION
 #  undef ACE_CC_PREPROCESSOR_ARGS
 #endif
 

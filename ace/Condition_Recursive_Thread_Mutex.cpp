@@ -17,7 +17,6 @@
 #  include "ace/Log_Msg.h"
 #endif /* ACE_HAS_DUMP */
 
-//ACE_TEMPLATE_METHOD_SPECIALIZATION
 int
 ACE_Condition<ACE_Recursive_Thread_Mutex>::remove (void)
 {
@@ -39,27 +38,23 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-//ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_Condition<ACE_Recursive_Thread_Mutex>::~ACE_Condition (void)
 {
   this->remove ();
 }
 
-//ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_Condition<ACE_Recursive_Thread_Mutex>::ACE_Condition (ACE_Recursive_Thread_Mutex &m)
   : mutex_ (m)
 {
   ACE_OS::cond_init (&this->cond_);
 }
 
-//ACE_TEMPLATE_METHOD_SPECIALIZATION
 int
 ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (const ACE_Time_Value *abstime)
 {
   return this->wait (this->mutex_, abstime);
 }
 
-//ACE_TEMPLATE_METHOD_SPECIALIZATION
 int
 ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (ACE_Recursive_Thread_Mutex &mutex,
                                                  const ACE_Time_Value *abstime)
@@ -102,21 +97,18 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (ACE_Recursive_Thread_Mutex &mut
   return result;
 }
 
-//ACE_TEMPLATE_METHOD_SPECIALIZATION
 int
 ACE_Condition<ACE_Recursive_Thread_Mutex>::signal (void)
 {
   return ACE_OS::cond_signal (&this->cond_);
 }
 
-//ACE_TEMPLATE_METHOD_SPECIALIZATION
 int
 ACE_Condition<ACE_Recursive_Thread_Mutex>::broadcast (void)
 {
   return ACE_OS::cond_broadcast (&this->cond_);
 }
 
-//ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_Recursive_Thread_Mutex &
 ACE_Condition<ACE_Recursive_Thread_Mutex>::mutex (void)
 {
