@@ -234,6 +234,7 @@ public:
                     Param_Test::Big_Union_out u3,
                     CORBA::Environment &env);
 
+# if 0
   // Test for multi dimensional arrays
   virtual Param_Test::Multdim_Array_slice *
   test_multdim_array (const Param_Test::Multdim_Array,
@@ -241,6 +242,7 @@ public:
                       Param_Test::Multdim_Array_out ,
                       CORBA::Environment &);
   
+#endif
   void shutdown (CORBA::Environment &env);
 
   

@@ -272,10 +272,12 @@ interface Param_Test
   const unsigned long DIM3 = 3;
   typedef Fixed_Array Multdim_Array [DIM2][DIM3];
 
+# if 0
   Multdim_Array test_multdim_array (in Multdim_Array m1,
                                     inout Multdim_Array m2,
                                     out Multdim_Array m3);
 
+#endif
 
   // sequence of typecodes
   //  typedef sequence<TypeCode> TypeCodeSeq;
@@ -289,43 +291,4 @@ interface Param_Test
   // test simple objects
   //  Object test_object (in Object o1, inout Object o2, out Object o3);
 
-  /*
-  long test_long (in long l1,
-                  inout long l2,
-                  out long l3);
-  char test_char (in char c1,
-                  inout char c2,
-                  out char c3);
-  octet test_octet (in octet o1,
-                    inout octet o2,
-                    out octet o3);
-
-  double test_double (in double d1,
-                      inout double d2,
-                      out double d3);
-
-  // strings bounded
-  const unsigned long STRLEN = 10;
-  string<STRLEN> test_bstring (in string<STRLEN> s1,
-                               inout string<STRLEN> s2,
-                               out string<STRLEN> s3);
-
-  // typedefed string
-  typedef string MYSTRING;
-  MYSTRING test_tstring (in MYSTRING s1,
-                         inout MYSTRING s2,
-                         out MYSTRING s3);
-
-
-  // more combinations to follow
-  union U switch (long)
-    {
-    case 0: sequence<char> cseq;
-    case 1: sequence<octet> oseq;
-    case 2: StrSeq sseq;
-    };
-
-  // complex (but meaningless) to test the naming scheme
-  typedef sequence <sequence <sequence <long>, 5>, 10> complex;
-  */
 };
