@@ -59,8 +59,9 @@ ACE_CString::ACE_CString (ACE_Allocator *alloc)
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Service_Config::alloc ();
 
+  this->len_ = 0;
   this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
-  this->rep_[this->len_] = '\0';
+  this->rep_[this->len_] = '\0';  
 }
 
 // Constructor that actually copies memory.
@@ -76,7 +77,8 @@ ACE_CString::ACE_CString (const char *s, ACE_Allocator *alloc)
   if (s == 0)
     {
       this->len_ = 0;
-      this->rep_ = 0;
+      this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
+      this->rep_[this->len_] = '\0';  
     }
   else
     {
@@ -101,7 +103,8 @@ ACE_CString::ACE_CString (const ACE_USHORT16 *s, ACE_Allocator *alloc)
   if (s == 0)
     {
       this->len_ = 0;
-      this->rep_ = 0;
+      this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
+      this->rep_[this->len_] = '\0';  
     }
   else
     {
@@ -131,7 +134,8 @@ ACE_CString::ACE_CString (const char *s,
   if (s == 0)
     {
       this->len_ = 0;
-      this->rep_ = 0;
+      this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
+      this->rep_[this->len_] = '\0';  
     }
   else
     {
@@ -255,8 +259,10 @@ ACE_SString::ACE_SString (ACE_Allocator *alloc)
 
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Service_Config::alloc ();
+
+  this->len_ = 0;
   this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
-  this->rep_[this->len_] = '\0';
+  this->rep_[this->len_] = '\0';  
 }
 
 int
@@ -323,7 +329,8 @@ ACE_SString::ACE_SString (const char *s,
   if (s == 0)
     {
       this->len_ = 0;
-      this->rep_ = 0;
+      this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
+      this->rep_[this->len_] = '\0';  
     }
   else
     {
@@ -348,7 +355,8 @@ ACE_SString::ACE_SString (const char *s,
   if (s == 0)
     {
       this->len_ = 0;
-      this->rep_ = 0;
+      this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
+      this->rep_[this->len_] = '\0';  
     }
   else
     {
@@ -399,8 +407,11 @@ ACE_WString::ACE_WString (ACE_Allocator *alloc)
 
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Service_Config::alloc ();
-  this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc ((this->len_ + 1) * sizeof (ACE_USHORT16));
-  this->rep_[this->len_] = 0;
+
+  this->len_ = 0;
+  this->rep_ = (ACE_USHORT16 *)  this->allocator_->malloc ((this->len_ + 1) * sizeof (ACE_USHORT16));
+  this->rep_[this->len_] = 0;  
+
 }
 
 /* static */
@@ -454,7 +465,8 @@ ACE_WString::ACE_WString (const char *s,
   if (s == 0)
     {
       this->len_ = 0;
-      this->rep_ = 0;
+      this->rep_ = (ACE_USHORT16 *)  this->allocator_->malloc ((this->len_ + 1) * sizeof (ACE_USHORT16));
+      this->rep_[this->len_] = 0;  
     }
   else
     {
@@ -485,7 +497,8 @@ ACE_WString::ACE_WString (const ACE_USHORT16 *s,
   if (s == 0)
     {
       this->len_ = 0;
-      this->rep_ = 0;
+      this->rep_ = (ACE_USHORT16 *)  this->allocator_->malloc ((this->len_ + 1) * sizeof (ACE_USHORT16));
+      this->rep_[this->len_] = 0;  
     }
   else
     {
@@ -514,7 +527,8 @@ ACE_WString::ACE_WString (const ACE_USHORT16 *s,
   if (s == 0)
     {
       this->len_ = 0;
-      this->rep_ = 0;
+      this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc ((this->len_ + 1) * sizeof (ACE_USHORT16));
+      this->rep_[this->len_] = 0;  
     }
   else
     {
