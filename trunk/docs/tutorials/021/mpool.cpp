@@ -3,7 +3,7 @@
 
 #include "mpool.h"
 
-#if ! defined(ACE_LACKS_SYSV_SHMEM)
+#if !defined (ACE_LACKS_SYSV_SHMEM)
 
 /*
   Set the values of all of the constants.  This guarantees that client
@@ -23,29 +23,25 @@ const char * Constants::RegionName = "Alphabet";
   has dynamically allocated it.  The pool_ is set to NULL & will be
   allocated by the accessor.
  */
-Allocator::Allocator( const char * _name )
-        : name_(ACE_OS::strdup(_name)),
-          pool_(0)
+Allocator::Allocator (const char *_name)
+  : name_ (ACE_OS::strdup (_name)),
+    pool_ (0)
 {
-    if( ! name_ )
-    {
-        ACE_ERROR ((LM_ERROR, "(%P) %p",
-                    "Allocator::Allocator cannot strdup pool name" ));
-    }
+  if (name_ == 0)
+    ACE_ERROR ((LM_ERROR, "(%P) %p",
+                "Allocator::Allocator cannot strdup pool name"));
 }
 
-Allocator::~Allocator(void)
+Allocator::~Allocator (void)
 {
-     /*
-       strdup() uses malloc(), so we must use free() to clean up.
-      */
-    if( name_ )
-    {
-        free(name_);
-    }
+  /*
+    strdup() uses malloc(), so we must use free() to clean up.
+    */
+  if (name_)
+    ACE_OS::free (name_);
 
-     // delete doesn't really care if you give it a NULL pointer.
-    delete pool_;
+  // delete doesn't really care if you give it a NULL pointer.
+  delete pool_;
 }
 
 /*
@@ -57,14 +53,14 @@ Allocator::~Allocator(void)
   Singleton because we want to have multiple Allocator instances.  The 
   Singleton techniques can be used though.
  */
-Allocator::pool_t & Allocator::pool(void)
-{
-    if( ! pool_ )
-    {
-        pool_ = new pool_t( name_ );
-    }
 
-    return *pool_;
+Allocator::pool_t & 
+Allocator::pool (void)
+{
+  if (pool_ == 0)
+    pool_ = new pool_t (name_);
+
+  return *pool_;
 }
 
-#endif // ACE_LACKS_SYSV_SHMEM
+#endif /* ACE_LACKS_SYSV_SHMEM */

@@ -1,4 +1,3 @@
-
 // $Id$
 
 #ifndef MMAP_H
@@ -24,16 +23,16 @@
 class SharedData
 {
 public:
-    SharedData(int _initialize = 1);
+  SharedData (int initialize = 1);
     
-    void set(void);
-    void show(void);
-    int available(void);
-    void available(int _available);
+  void set (void);
+  void show (void);
+  int available (void);
+  void available (int not_in_use);
         
 protected:
-    char buf_[128];
-    int available_;
+  char buf_[128];
+  int available_;
 };
 
-#endif // MMAP_H
+#endif /* MMAP_H */

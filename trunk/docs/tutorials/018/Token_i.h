@@ -1,4 +1,3 @@
-
 // $Id$
 
 #ifndef TOKEN_I_H
@@ -15,9 +14,7 @@
 class Token : public Test_T<ACE_Token>
 {
 public:
-    Token(void)
-            : Test_T<ACE_Token>("Token")
-    {}
+  Token (void): Test_T<ACE_Token> ("Token") {}
 };
 
-#endif // TOKEN_I_H
+#endif /* TOKEN_I_H */

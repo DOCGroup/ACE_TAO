@@ -1,4 +1,3 @@
-
 // $Id$
 
 #ifndef MUTEX_I_H
@@ -12,9 +11,7 @@
 class Mutex : public Test_T<ACE_Mutex>
 {
 public:
-    Mutex(void)
-            : Test_T<ACE_Mutex>("Mutex")
-    {}
+  Mutex (void) : Test_T<ACE_Mutex> ("Mutex") {}
 };
 
-#endif // MUTEX_I_H
+#endif /* MUTEX_I_H */

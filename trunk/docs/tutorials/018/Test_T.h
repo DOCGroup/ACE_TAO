@@ -1,4 +1,3 @@
-
 // $Id$
 
 #ifndef TEST_T_H
@@ -15,49 +14,52 @@
    templated class.  Generally, there is a non-templated class defined 
    also such as foobar.h that would be included instead of foobar_T.h.
  */
+
 template <class MUTEX>
 class Test_T : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-        // Allow our derivative to name the class so that we can tell
-        // the user what's going on as we test the lock.
-    Test_T( const char * _name );
+  // Allow our derivative to name the class so that we can tell the
+  // user what's going on as we test the lock.
+  Test_T (const char *name);
 
-        // This will run the entire test.  open() will be called to
-        // activate the task's threads.  We then add a number of
-        // messages to the queue for svc() to process.
-    int run(void);
+  // This will run the entire test.  open() will be called to activate
+  // the task's threads.  We then add a number of messages to the
+  // queue for svc() to process.
+  int run (void);
     
 protected:
 
-        // Activate a few threads
-    int open( void * _arg = 0 );
-        // Read some things from the message queue and exercise the
-        // lock.
-    int svc( void );
-        // Send a message block to svc().  If _message is 0 then send
-        // a shutdown request (e.g., MB_HANGUP)
-    int send( ACE_Message_Block * _message = 0 );
+  // Activate a few threads
+  int open (void *arg = 0);
 
-        // The object's name.  Typically provided by a derivative.
-    const char * name_;
-        // We want to barrier the svc() methods to give all of the
-        // threads a fair chance
-    ACE_Barrier  barrier_;
+  // Read some things from the message queue and exercise the lock.
+  int svc (void);
 
-        // As each thread enters svc() it will increment this.  While
-        // we have a thread id available to us, I wanted a simple
-        // value to display in debug messages.
-    ACE_Atomic_Op<ACE_Mutex,int> thread_num_;
+  // Send a message block to svc().  If _message is 0 then send a
+  // shutdown request (e.g., MB_HANGUP)
+  int send (ACE_Message_Block * message = 0);
 
-        // Set our mutex type based on the template parameter.  We
-        // then build a guard type based on that type.
-    typedef MUTEX mutex_t;
-    typedef ACE_Guard<mutex_t> guard_t;
+  // The object's name.  Typically provided by a derivative.
+  const char *name_;
 
-        // Our mutex.  We'll use this in svc() to protect imaginary
-        // shared resources.
-    mutex_t mutex_;
+  // We want to barrier the svc() methods to give all of the threads a
+  // fair chance
+  ACE_Barrier barrier_;
+
+  // As each thread enters svc() it will increment this.  While we
+  // have a thread id available to us, I wanted a simple value to
+  // display in debug messages.
+  ACE_Atomic_Op<ACE_Mutex,int> thread_num_;
+
+  // Set our mutex type based on the template parameter.  We then
+  // build a guard type based on that type.
+  typedef MUTEX mutex_t;
+  typedef ACE_Guard<mutex_t> guard_t;
+
+  // Our mutex.  We'll use this in svc() to protect imaginary shared
+  // resources.
+  mutex_t mutex_;
 };
 
 /* Although different compilers differ in their details, almost all of 
@@ -75,4 +77,4 @@ protected:
 #pragma implementation ("Test_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#endif // TEST_T_H
+#endif /* TEST_T_H */
