@@ -1,3 +1,470 @@
+Tue Feb 22 02:03:20 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Abstract_Servant_Base.h (_downcast):
+
+	  Removed this method.  The C++ mapping does not require a
+	  "_downcast()" method for servants.
+
+	* tao/Any_Arg_Traits.h:
+
+	  Moved skeleton-specific traits to the PortableServer library.
+
+	* tao/Argument.h:
+
+	  Added some Doxygen documentation.
+
+	* tao/BD_String_Argument_T.h:
+	* tao/Basic_Argument_T.h:
+	* tao/Fixed_Size_Argument_T.h:
+	* tao/Object_Argument_T.h:
+
+	  Removed unnecessary "mutable" keyword in class member
+	  declaration.
+
+	* tao/CDR.cpp (throw_skel_exception):
+	* tao/Fixed_Array_Argument_T.h:
+	* tao/Object_Argument_T.inl:
+	* tao/UB_String_Argument_T.h:
+	* tao/Var_Array_Argument_T.h:
+	* tao/Var_Array_Argument_T.inl:
+	* tao/Var_Size_Argument_T.h:
+	* tao/PortableServer/Servant_Base.i:
+	* TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+
+	  Minor cosmetic improvments.
+
+	* tao/Collocated_Invocation.cpp (invoke):
+
+	  Invoke thru-POA collocated calls through the POA, not the no
+	  longer existent thru-POA proxy brokers.
+
+	* tao/GIOP_Message_Generator_Parser_10.cpp:
+	* tao/GIOP_Message_Generator_Parser_12.cpp:
+	* tao/GIOP_Message_Lite.cpp:
+	* tao/DynamicInterface/Server_Request.cpp:
+	* tao/DynamicInterface/Server_Request.inl:
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+
+	  The TAO_ServerRequest CDR stream accessors now return a pointer
+	  to a CDR stream instead of a reference.  Updated accordingly.
+
+	* tao/Invocation_Adapter.cpp:
+	* tao/Invocation_Adapter.h:
+	* tao/Special_Basic_Argument_T.h:
+	* tao/Special_Basic_Argument_T.inl:
+	* tao/operation_details.h:
+	* tao/operation_details.i:
+
+	  Const-correctness improvements.
+
+	* tao/TAO_Server_Request.cpp:
+	* tao/TAO_Server_Request.h:
+	* tao/TAO_Server_Request.i:
+
+	  Added support code for thru-POA collocated invocations.  Entails
+	  introduction of a new constructor, operation details attribute,
+	  CDR stream attribute type changes, etc.
+
+	  Reordered class attributes to optimize padding alignment.
+
+	* tao/BD_String_SArgument_T.cpp:
+	* tao/BD_String_SArgument_T.h:
+	* tao/BD_String_SArgument_T.inl:
+	* tao/Basic_SArgument_T.cpp:
+	* tao/Basic_SArgument_T.h:
+	* tao/Basic_SArgument_T.inl:
+	* tao/Basic_SArguments.cpp:
+	* tao/Basic_SArguments.h:
+	* tao/Fixed_Array_SArgument_T.cpp:
+	* tao/Fixed_Array_SArgument_T.h:
+	* tao/Fixed_Array_SArgument_T.inl:
+	* tao/Fixed_Size_SArgument_T.cpp:
+	* tao/Fixed_Size_SArgument_T.h:
+	* tao/Fixed_Size_SArgument_T.inl:
+	* tao/Object_SArgument_T.cpp:
+	* tao/Object_SArgument_T.inl:
+	* tao/Special_Basic_SArgument_T.cpp:
+	* tao/Special_Basic_SArgument_T.h:
+	* tao/Special_Basic_SArgument_T.inl:
+	* tao/Special_Basic_SArguments.cpp:
+	* tao/Special_Basic_SArguments.h:
+	* tao/UB_String_SArgument_T.cpp:
+	* tao/UB_String_SArgument_T.h:
+	* tao/UB_String_SArgument_T.inl:
+	* tao/UB_String_SArguments.cpp:
+	* tao/UB_String_SArguments.h:
+	* tao/Var_Array_SArgument_T.cpp:
+	* tao/Var_Array_SArgument_T.h:
+	* tao/Var_Array_SArgument_T.inl:
+	* tao/Var_Size_SArgument_T.cpp:
+	* tao/Var_Size_SArgument_T.inl:
+
+	  Moved these server side argument class templates to the
+	  PortableServer library.
+
+	* tao/PortableServer/Any_SArg_Traits.h:
+	* tao/PortableServer/BD_String_SArgument_T.cpp:
+	* tao/PortableServer/BD_String_SArgument_T.h:
+	* tao/PortableServer/BD_String_SArgument_T.inl:
+	* tao/PortableServer/Basic_SArgument_T.cpp:
+	* tao/PortableServer/Basic_SArgument_T.h:
+	* tao/PortableServer/Basic_SArgument_T.inl:
+	* tao/PortableServer/Basic_SArguments.cpp:
+	* tao/PortableServer/Basic_SArguments.h:
+	* tao/PortableServer/Fixed_Array_SArgument_T.cpp:
+	* tao/PortableServer/Fixed_Array_SArgument_T.h:
+	* tao/PortableServer/Fixed_Array_SArgument_T.inl:
+	* tao/PortableServer/Fixed_Size_SArgument_T.cpp:
+	* tao/PortableServer/Fixed_Size_SArgument_T.h:
+	* tao/PortableServer/Fixed_Size_SArgument_T.inl:
+	* tao/PortableServer/Object_SArg_Traits.h:
+	* tao/PortableServer/Object_SArgument_T.cpp:
+	* tao/PortableServer/Object_SArgument_T.h:
+	* tao/PortableServer/Object_SArgument_T.inl:
+	* tao/PortableServer/Special_Basic_SArgument_T.cpp:
+	* tao/PortableServer/Special_Basic_SArgument_T.h:
+	* tao/PortableServer/Special_Basic_SArgument_T.inl:
+	* tao/PortableServer/Special_Basic_SArguments.cpp:
+	* tao/PortableServer/Special_Basic_SArguments.h:
+	* tao/PortableServer/UB_String_SArgument_T.cpp:
+	* tao/PortableServer/UB_String_SArgument_T.h:
+	* tao/PortableServer/UB_String_SArgument_T.inl:
+	* tao/PortableServer/UB_String_SArguments.cpp:
+	* tao/PortableServer/UB_String_SArguments.h:
+	* tao/PortableServer/Var_Array_SArgument_T.cpp:
+	* tao/PortableServer/Var_Array_SArgument_T.h:
+	* tao/PortableServer/Var_Array_SArgument_T.inl:
+	* tao/PortableServer/Var_Size_SArgument_T.cpp:
+	* tao/PortableServer/Var_Size_SArgument_T.h:
+	* tao/PortableServer/Var_Size_SArgument_T.inl:
+
+	  New source files containing classes that represent server-side
+	  operation arguments that were previously in the core TAO
+	  library.  Since they are only used by TAO_IDL generated
+	  skeletons, it is more appropriate for them to be in the
+	  TAO_PortableServer library.
+
+	  Fixed some minor problems (e.g. incorrect encapsulated argument
+	  type) that didn't appear previously since these classes were
+	  never used.
+
+	  Improved Doxygen documentation.
+
+	* tao/PortableServer/Object_Adapter.cpp (dispatch):
+
+	  Updated to use new TAO::ServerRequestInfo and
+	  TAO::ServerRequestInterceptor_Adapter constructor signatures.
+
+	* tao/PortableServer/Operation_Table.cpp:
+	* tao/PortableServer/Operation_Table.h:
+
+	  Removed thru-POA skeleton function pointer operation table
+	  structure field.  Thru-POA collocated invocations now actually
+	  go through the POA, meaning that a thru-POA specific skeleton
+	  function is no longer necessary.
+
+	* tao/PolicyA.cpp:
+	* tao/PolicyC.cpp:
+	* tao/PolicyC.h:
+	* tao/PolicyC.inl:
+	* tao/PortableServer/PolicyS.cpp:
+	* tao/PortableServer/PolicyS.h:
+	* tao/PortableServer/PolicyS.inl:
+	* tao/PortableServer/PolicyS_T.cpp:
+	* tao/PortableServer/PolicyS_T.h:
+	* tao/PortableServer/PolicyS_T.inl:
+
+	  Regenerated these stub and skeleton files to pull in new
+	  stub/skeleton changes (e.g. skeleton refactoring).
+
+	* tao/PortableServer/Servant_Base.cpp (_is_a):
+
+	  Declare the CORBA::Object repository ID string as a static
+	  constant character array, not as a non-static pointer to
+	  constant characters.  Gives the compiler additional
+	  opportunities for optimization.
+
+	* tao/PortableServer/Servant_Base.h (TAO_ServantBase):
+
+	  Unprotected TAO-specific "_interface_repository_id()" method.
+	  There is no reason for it to be protected since it is pure
+	  virtual and since the Servants generated by the TAO_IDL compiler
+	  declare it as public.  Allows TAO::ServerRequestInfo to call
+	  this method polymorphically through the
+	  PortableServer::ServantBase base class.
+
+	  (_downcast):
+
+	  Removed this method.  The C++ mapping does not require a
+	  "_downcast()" method for servants.
+
+	* tao/PortableServer/ServerRequestInfo.cpp:
+	* tao/PortableServer/ServerRequestInfo.h:
+	* tao/PortableServer/ServerRequestInfo.inl:
+
+	  Added a number of attributes (e.g. arguments, exception list,
+	  etc) that may be set through the constructor by the skeleton.
+	  Allows us to remove the operation-specific ServerRequestInfo
+	  subclasses from the skeletons, improving footprint for the
+	  TAO_HAS_INTERCEPTORS case.
+
+	  Made pointer to Servant_Upcall object const.  It's value should
+	  never change.
+
+	  (ServerRequestInfo):
+	* tao/PortableServer/ServerInterceptorAdapter.h
+	  (ServerRequestInterceptor_Adapter):
+
+	  No longer any need to export this class from a DLL.
+
+	* tao/PortableServer/ServerInterceptorAdapter.cpp:
+	* tao/PortableServer/ServerInterceptorAdapter.inl:
+
+	  Moved ServerRequestInterceptor_Adapter_Class into TAO
+	  namespace.
+
+	* tao/PortableServer/TypeCode_SArg_Traits.h:
+
+	  New header containing server side TypeCode argument traits
+	  template specialization.
+
+	* tao/PortableServer/Upcall_Command.h:
+
+	  The actual upcall into a servant is executed through a concrete
+          Upcall_Command object.  This is necessary to simplify upcall
+	  interactions in the presence of interceptors, such as when the
+	  send_exception() interception point must be invoked when the
+	  servant operation throws an exception.
+
+
+	* tao/PortableServer/Upcall_Wrapper.h:
+
+	  Rewrote the hitherto unused TAO_Upcall_Wrapper class draft.  It
+	  is also now in the TAO namespace, i.e., TAO::Upcall_Wrapper.
+	  The TAO::Upcall_Wrapper class wraps most of the
+	  operation-specific upcall processing incurred by a TAO_IDL
+	  generated skeleton.
+
+	* tao/PortableServer/Upcall_Wrapper.cpp:
+
+	  New source containing TAO::Upcall_Wrapper class implementation.
+
+	* TAO_IDL/be/be_codegen.cpp (gen_skel_src_includes):
+
+	  No longer any need to include server request interceptor related
+	  headers.
+
+	  Generate include directives for "TAO::SArg" related
+	  headers.
+
+	  Generate include directives for
+	  "tao/PortableServer/Upcall_{Command,Wrapper}.h" headers to pull
+	  in the corresponding class declarations.  The generated skeleton
+	  creates instances of these classes.
+
+	  (gen_skel_arg_file_includes)
+
+	  Generate include directive for new "TypeCode_SArg_Traits.h"
+	  header.  It is needed for the server side TypeCode argument
+	  traits in skeletons.
+
+	* TAO_IDL/be/be_interface.cpp:
+
+	  Removed thru-POA skeleton function optable entry from generated
+	  skeleton.  It no longer exists.  Thru-POA code now goes through
+	  the POA, meaning the remote skeleton function can now be used
+	  for thru-POA collocated calls.
+
+	  Removed thru-POA proxy implementation code.  It is no longer
+	  needed since thru-POA collocated now go through the POA.
+
+	  Updated gperf command line options to reflect new operation
+	  table entry structure.
+
+	  (downcast_helper):
+	* TAO_IDL/be_include/be_interface.h (downcast_helper):
+	* TAO_IDL/be_include/be_visitor_interface/amh_ss.h
+	  (generate_downcast_implementation):
+	* TAO_IDL/be_include/be_visitor_interface/interface_ss.h
+	  (generate_downcast_implementation):
+
+	  Removed this method.  The C++ mapping does not require a
+	  "_downcast()" method for servants.
+
+	* TAO_IDL/be/be_visitor_arg_traits.cpp:
+
+	  Fixed problem with server side valuetype argument trait usage,
+	  i.e removed extraneous template argument from generated skeleton
+	  code.
+
+	  Replaced usage of "ACE_TEMPLATE_SPECIALIZATION" macro with
+	  standard C++ "template<>".
+
+	  Enabled and fixed support for generation of "SArg_Traits"
+	  template specializations in generated skeleton sources.
+
+	* TAO_IDL/be/be_visitor_argument.cpp:
+	* TAO_IDL/be_include/be_visitor_argument.h:
+	* TAO_IDL/be/be_visitor_interface/interface.cpp:
+	* TAO_IDL/be_include/be_visitor_interface.h:
+
+	  Removed remaining vestiges of the now non-existent interceptor
+	  related visitors.
+
+	* TAO_IDL/be/be_visitor_operation.cpp:
+	* TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+	* TAO_IDL/be_include/be_visitor_operation.h:
+
+	  Likewise.
+
+	  Added support for new TAO::Upcall_Command concrete class
+	  generation visitors.
+
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	* TAO_IDL/be/be_visitor_module.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+
+	  Nuked trailing whitespace.
+
+	* TAO_IDL/be/be_visitor_traits.cpp:
+
+	  Replaced usage of "ACE_TEMPLATE_SPECIALIZATION" macro with
+	  standard C++ "template<>".
+
+	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_cs.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_result.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_exceptlist.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_info_rettype.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_result.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp:
+	* TAO_IDL/be_include/be_visitor_argument/request_info_arglist.h:
+	* TAO_IDL/be_include/be_visitor_argument/request_info_ch.h:
+	* TAO_IDL/be_include/be_visitor_argument/request_info_cs.h:
+	* TAO_IDL/be_include/be_visitor_argument/request_info_result.h:
+	* TAO_IDL/be_include/be_visitor_argument/request_info_sh.h:
+	* TAO_IDL/be_include/be_visitor_argument/request_info_ss.h:
+	* TAO_IDL/be_include/be_visitor_interface/interceptors_cs.h:
+	* TAO_IDL/be_include/be_visitor_interface/interceptors_ss.h:
+	* TAO_IDL/be_include/be_visitor_operation/interceptors_arglist.h:
+	* TAO_IDL/be_include/be_visitor_operation/interceptors_ch.h:
+	* TAO_IDL/be_include/be_visitor_operation/interceptors_cs.h:
+	* TAO_IDL/be_include/be_visitor_operation/interceptors_exceptlist.h:
+	* TAO_IDL/be_include/be_visitor_operation/interceptors_info_rettype.h:
+	* TAO_IDL/be_include/be_visitor_operation/interceptors_result.h:
+	* TAO_IDL/be_include/be_visitor_operation/interceptors_sh.h:
+	* TAO_IDL/be_include/be_visitor_operation/interceptors_ss.h:
+
+	  Removed all remaining interceptor related visitors.  They are no
+	  longer needed.  Sweet!
+
+	* TAO_IDL/be/be_visitor_array/array_ci.cpp:
+	* TAO_IDL/be/be_visitor_component/component_cs.cpp:
+
+	  Removed usage of "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION"
+	  macro.  It is no longer need for any of the TAO supported C++
+	  compilers.
+
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+
+	  Removed _downcast() method generation code.  The C++ mapping
+	  doesn't appear to require it for servants, so it shouldn't be
+	  necessary for TAO's AMH-ified servants.
+
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+
+	  Removed generation of thru-POA proxy implementations.  They are
+	  no longer needed.
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+
+	  Ported _is_a, _non_existent skeleton function generation to new
+	  skeleton refactoring upcall command based scheme.
+
+	* TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+
+	  Use dynamic_cast<> instead of a combination of
+	  reinterpret_cast<> and ServantBase::_downcast() when downcasting
+	  a servant pointer.  dynamic_cast<> is all that is needed.
+	  [Bug 1988]
+
+	* TAO_IDL/be/be_visitor_operation/exceptlist_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_operation/exceptlist_ss.h:
+
+	  New visitor that generates user exception TypeCode array for use
+	  by skeleton.  The generated array is lighter weight than the one
+	  generated for the stubs, and is meant for interceptor use.
+
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_operation/operation_ss.h:
+
+	  Overhauled generated skeleton to use new lightweight
+	  implementation (most of the code has been moved to the
+	  TAO_PortableServer library!).
+
+	  No longer any need to generate per-operation ServerRequestInfo
+	  classes.
+
+	* TAO_IDL/be/be_visitor_operation/upcall_command_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_operation/upcall_command_ss.h:
+
+	  New visitors that generate operation-specific concrete
+	  TAO::Upcall_Command classes.
+
+	* TAO_IDL/be/be_visitor_root/root.cpp:
+
+	  Enabled and fixed support for generation of "SArg_Traits"
+	  template specializations in generated skeleton sources
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp:
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+
+	  Declare generated TypeCode_ptr variables as "const".  Prevents
+	  users from inadvertently changing generated TypeCode constants.
+	  The new skeletons also expect const TypeCode_ptrs.
+
+	* TAO_IDL/be_include/be_codegen.h:
+
+	  Added new "gen_skel_arg_file_includes()" method that is
+	  responsible for generated "TAO::SArgument" related header
+	  include directives.
+
+	  Removed remaining vestiges of the now non-existent interceptor
+	  related visitors.
+
+	  Added new enumerator to the CG_STATE enumeration corresponding
+	  to the new Upcall_Command generation visitor.
+
+
+	* TAO_IDL/be_include/be_visitor_operation/operation.h
+	  (gen_stub_body_arglist):
+
+	  Made this method public so that upcall command generation code
+	  for _is_a, _non_existent, etc skeleton functions can take
+	  advantage of it.
+
+	From Carlos O'Ryan  <coryan@atdesk.com>
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+          Add a _tao_release() static operation to all interfaces.  With
+          this operation we can write sequences of object references as
+          templates that only depend on the template parameter.  This
+          greatly simplifies that lookup rules in the template code, and
+          make it possible to write unit tests for the templates.
+          Look in Pseudo_VarOut_T.h for a more detailed description of
+          the problem.
+
 Tue Feb 22 07:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ThreadStrategyORBControl.cpp:
