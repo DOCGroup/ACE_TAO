@@ -15,7 +15,7 @@ clean:
 	rm -rf *~
 
 realclean: clean  
-	rm -rf $(JACE_WRAPPER)/classes/*.class
+	rm -rf $(JACE_WRAPPER)/classes/imaging/filters/*.class
 
 files =	MedFilter.java \
 	Assert.java \
@@ -32,6 +32,5 @@ files =	MedFilter.java \
 	SharpenFilter.java \
 	SpatialFilter.java \
 	SpreadFilter.java \
-	UnsharpMaskFilter.java \
 	Timer.java 
 
