@@ -16,11 +16,11 @@
 
 #include "ace/Process.h"
 
-#include "JAWS/server/HTTP_Response.h"
-#include "JAWS/server/HTTP_Request.h"
-#include "JAWS/server/HTTP_Helpers.h"
-#include "JAWS/server/HTTP_Config.h"
-#include "JAWS/server/IO.h"
+#include "apps/JAWS/server/HTTP_Response.h"
+#include "apps/JAWS/server/HTTP_Request.h"
+#include "apps/JAWS/server/HTTP_Helpers.h"
+#include "apps/JAWS/server/HTTP_Config.h"
+#include "apps/JAWS/server/IO.h"
 
 HTTP_Response::HTTP_Response (JAWS_IO &io, HTTP_Request &request)
   : io_(io), request_(request)

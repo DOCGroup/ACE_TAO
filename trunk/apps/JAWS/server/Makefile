@@ -25,8 +25,6 @@ LSRC	= $(addsuffix .cpp,$(FILES))
 LOBJ	= $(addsuffix .o,$(FILES))
 SHOBJ	= $(addsuffix .so,$(FILES))
 
-INCLDIRS += -I../..
-
 LDLIBS	= $(addprefix .shobj/,$(SHOBJ))
  
 VLDLIBS = $(LDLIBS:%=%$(VAR))

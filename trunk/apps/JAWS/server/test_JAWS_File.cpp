@@ -1,6 +1,6 @@
 // test_JAWS_File.cpp
 
-#include "JAWS/server/JAWS_File.h"
+#include "apps/JAWS/server/JAWS_File.h"
 
 const char *message = "this is the contents of a new testfile\n";
 

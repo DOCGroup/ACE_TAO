@@ -2,9 +2,9 @@
 
 #include "ace/Message_Block.h"
 
-#include "JAWS/server/HTTP_Request.h"
-#include "JAWS/server/HTTP_Helpers.h"
-#include "JAWS/server/HTTP_Config.h"
+#include "apps/JAWS/server/HTTP_Request.h"
+#include "apps/JAWS/server/HTTP_Helpers.h"
+#include "apps/JAWS/server/HTTP_Config.h"
 
 const char * const
 HTTP_Request::static_header_strings_[HTTP_Request::NUM_HEADER_STRINGS]

@@ -20,7 +20,7 @@ private:
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "JAWS/server/HTTP_Server_T.cpp"
+#include "apps/JAWS/server/HTTP_Server_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

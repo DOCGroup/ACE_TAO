@@ -1,8 +1,8 @@
 // $Id$
 
-#include "JAWS/server/IO.h"
-#include "JAWS/server/HTTP_Helpers.h"
-#include "JAWS/server/JAWS_File.h"
+#include "apps/JAWS/server/IO.h"
+#include "apps/JAWS/server/HTTP_Helpers.h"
+#include "apps/JAWS/server/JAWS_File.h"
 #include "ace/Message_Block.h"
 #include "ace/SOCK_Stream.h"
 

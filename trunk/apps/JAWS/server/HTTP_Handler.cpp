@@ -4,10 +4,10 @@
 
 #include "ace/Message_Block.h"
 
-#include "JAWS/server/HTTP_Handler.h"
-#include "JAWS/server/HTTP_Helpers.h"
-#include "JAWS/server/IO.h"
-#include "JAWS/server/JAWS_File.h"
+#include "apps/JAWS/server/HTTP_Handler.h"
+#include "apps/JAWS/server/HTTP_Helpers.h"
+#include "apps/JAWS/server/IO.h"
+#include "apps/JAWS/server/JAWS_File.h"
 
 HTTP_Handler::HTTP_Handler (JAWS_IO &io,
 			    HTTP_Handler_Factory &factory)
