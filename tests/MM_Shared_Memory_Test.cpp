@@ -37,7 +37,7 @@ const int SHMSZ = 27;
 static TCHAR shm_key[] = ACE_TEMP_FILE_NAME ACE_TEXT ("XXXXXX");
 
 #if defined (ACE_LACKS_FORK)
-static ACE_Thread_Semaphore SYNCHRONIZER;
+typedef ACE_Thread_Semaphore SYNCHRONIZER;
 #else
 typedef ACE_Process_Semaphore SYNCHRONIZER; 
 #endif /* !defined (ACE_LACKS_FORK) */
