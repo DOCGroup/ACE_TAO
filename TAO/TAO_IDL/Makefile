@@ -20,6 +20,8 @@ DIRS	= driver fe ast util narrow be
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+ifndef CHORUS
+ifndef LYNXOS
 ifndef VXWORKS
   include $(ACE_ROOT)/include/makeinclude/macros.GNU
   include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -27,17 +29,17 @@ ifndef VXWORKS
   include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 endif # VXWORKS
+endif # LYNXOS
+endif # CHORUS
 
 
 #----------------------------------------------------------------------------
 #	Local targets
 #----------------------------------------------------------------------------
 
-ifdef VXWORKS
-default_vxworks:
-	@echo The IDL compiler won\'t run or build for VxWorks.
-else
-
+ifndef CHORUS
+ifndef LYNXOS
+ifndef VXWORKS
 IDL_CFE_VERSION	= \"1.3.0\"
 CPPFLAGS += -Iinclude -Ibe_include -DCPP_LOCATION=\"$(CXX)\" \
             -DIDL_CFE_VERSION=$(IDL_CFE_VERSION)
@@ -47,8 +49,18 @@ clean:
 
 realclean:
 	rm -f tao_idl TAGS
-
+else
+  default_embedded:
+	@echo The IDL compiler won\'t run or build for VxWorks.
 endif # VXWORKS
+else
+  default_embedded:
+	@echo The IDL compiler won\'t run or build for LynxOS.
+endif # LYNXOS
+else
+  default_embedded:
+	@echo The IDL compiler won\'t run or build for Chorus.
+endif # CHORUS
 
 tags:
 	rm -f TAGS
