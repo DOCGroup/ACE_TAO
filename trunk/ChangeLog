@@ -1,3 +1,12 @@
+Mon Apr 14 17:28:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32-common.h:
+          Removed commented out define ACE_HAS_BROKEN_SAP_ANY
+
+        * ace/config-win32-mingw.h:
+          Don't define ACE_HAS_BROKEN_SAP_ANY. It gives compile errors in the
+          Gateway app.
+
 Mon Apr 14 17:09:03 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks5.x_diab.GNU:

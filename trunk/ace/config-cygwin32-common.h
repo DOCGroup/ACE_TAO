@@ -51,7 +51,6 @@
 #define ACE_LACKS_SEEKDIR
 #define ACE_LACKS_TEMPNAM
 #define ACE_LACKS_MKTEMP
-// #define ACE_HAS_BROKEN_SAP_ANY
 
 #if ! defined (__ACE_INLINE__)
 # define __ACE_INLINE__
