@@ -86,7 +86,7 @@ public:
   // This is the method which looks at each ITEM's attributes  and
   // then decides on the one to remove.
 
-  void dump (void) const = 0;
+  virtual void dump (void) const = 0;
   // Dumps the state of the object.
 };
 
