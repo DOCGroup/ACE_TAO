@@ -65,6 +65,9 @@ public:
   TAO_IIOP_Profile (void);
   // All of the various creator methods ...
 
+  ~TAO_IIOP_Profile (void);
+  // Destructor is to be called only through _decr_refcnt()
+
   CORBA::ULong tag (void);
   // The tag, each concrete class will have a specific tag value.
   // for example we are TAO_IOP_TAG_INTERNET_IOP
@@ -150,8 +153,6 @@ private:
   void create_body (void);
   // does the work for add_profile.
 
-  ~TAO_IIOP_Profile (void);
-  // Destructor is to be called only through _decr_refcnt()
 private:
   CORBA::ULong tag_;
   // The tag, 
