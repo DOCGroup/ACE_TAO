@@ -1025,13 +1025,13 @@ ACE_OS::unlink (const char *path)
 ACE_INLINE int
 ACE_OS::rename (const char *old_name, const char *new_name)
 {
-# if 0
-  ACE_OSCALL_RETURN (::rename (old_name, new_name), int, -1);
-# else
+# if (ACE_LACKS_RENAME)
   ACE_UNUSED_ARG (old_name);
   ACE_UNUSED_ARG (new_name);
   ACE_NOTSUP_RETURN (-1);
-# endif /* 0 */
+# else
+  ACE_OSCALL_RETURN (::rename (old_name, new_name), int, -1);
+# endif /* ACE_LACKS_RENAME */
 }
 
 ACE_INLINE char *
