@@ -197,7 +197,7 @@ be_visitor_sequence_ch::gen_bounded_str_sequence (be_sequence *node)
       << "}" << be_nl
       << be_nl;
 
-  // deallocate_bufffer
+  // deallocate_buffer
   *os << "virtual void _deallocate_buffer (void)" << be_nl
       << "{" << be_idt_nl
       << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
@@ -205,6 +205,47 @@ be_visitor_sequence_ch::gen_bounded_str_sequence (be_sequence *node)
       << "char **tmp = ACE_reinterpret_cast (char **, this->buffer_);" << be_nl
       << "freebuf (tmp);" << be_nl
       << "this->buffer_ = 0;" << be_uidt_nl
+      << "}" << be_nl
+      << be_nl;
+
+  // get_buffer
+  *os << "char* *get_buffer (CORBA::Boolean orphan = 0)" << be_nl
+      << "{" << be_idt_nl
+      << "char **result = 0;" << be_nl
+      << "if (orphan == 0)" << be_nl
+      << "{" << be_idt_nl
+      << "// We retain ownership. " << be_nl
+      << "if (this->buffer_ == 0)" << be_nl
+      << "{" << be_idt_nl
+      << "result = allocbuf (this->maximum_);" << be_nl
+      << "this->buffer_ = result;" << be_uidt_nl
+      << "}" << be_nl
+      << "else" << be_nl
+      << "{" << be_idt_nl
+      << "result = ACE_reinterpret_cast (char **, this->buffer_);" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "}" << be_nl
+      << "else // if (orphan == 1)" << be_nl
+      << "{" << be_idt_nl
+      << "if (this->release_ != 0)" << be_nl
+      << "{" << be_idt_nl
+      << "// We set state back to default and relinquish" << be_nl
+      << "// ownership." << be_nl
+      << "result = ACE_reinterpret_cast (char **, this->buffer_);" << be_nl
+      << "this->maximum_ = 0;" << be_nl
+      << "this->length_ = 0;" << be_nl
+      << "this->buffer_ = 0;" << be_nl
+      << "this->release_ = 0;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "}" << be_nl
+      << "return result;" << be_uidt_nl
+      << "}" << be_nl
+      << be_nl;
+
+  // get_buffer
+  *os << "const char* *get_buffer (void) const" << be_nl
+      << "{" << be_idt_nl
+      << "return ACE_reinterpret_cast (const char ** ACE_CAST_CONST, this->buffer_);" << be_uidt_nl
       << "}" << be_nl
       << be_nl;
 

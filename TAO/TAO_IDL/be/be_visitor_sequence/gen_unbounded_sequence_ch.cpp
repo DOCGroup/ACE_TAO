@@ -251,14 +251,14 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "// We retain ownership." << be_nl
       << "if (this->buffer_ == 0)" << be_nl
-	    << "{" << be_idt_nl
-	    << "result = allocbuf (this->length_);" << be_nl
-	    << "this->buffer_ = result;" << be_uidt_nl
-	    << "}" << be_nl
+      << "{" << be_idt_nl
+      << "result = allocbuf (this->length_);" << be_nl
+      << "this->buffer_ = result;" << be_uidt_nl
+      << "}" << be_nl
       << "else" << be_nl
-	    << "{" << be_idt_nl
-	    << "result = ACE_reinterpret_cast ("; pt->accept (visitor); *os << "*, this->buffer_);" << be_uidt_nl
-	    << "}" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "result = ACE_reinterpret_cast ("; pt->accept (visitor); *os << "*, this->buffer_);" << be_uidt_nl
+      << "}" << be_uidt_nl
       << "}" << be_nl
       << "else // if (orphan == 1)" << be_nl
       << "{" << be_idt_nl
