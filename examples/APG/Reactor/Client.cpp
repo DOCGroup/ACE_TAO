@@ -23,7 +23,7 @@ int Client::open (void *p)
     (this, 0, ACE_Time_Value::zero, iter_delay);
 }
 // Listing 2
-    
+
 // Listing 3 code/ch07
 int Client::handle_input (ACE_HANDLE)
 {
@@ -101,7 +101,7 @@ int Client::handle_output (ACE_HANDLE)
 // Listing 6 code/ch07
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_INET_Addr port_to_connect ("HAStatus", ACE_LOCALHOST);
+  ACE_INET_Addr port_to_connect (ACE_TEXT ("HAStatus"), ACE_LOCALHOST);
   ACE_Connector<Client, ACE_SOCK_CONNECTOR> connector;
   Client client;
   Client *pc = &client;

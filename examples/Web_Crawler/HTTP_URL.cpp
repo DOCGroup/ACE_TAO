@@ -26,7 +26,7 @@ HTTP_URL::HTTP_URL (const ACE_URL_Addr &url_addr,
 ssize_t
 HTTP_URL::send_request (void)
 {
-  size_t commandsize = 
+  size_t commandsize =
     ACE_OS::strlen (this->url_addr ().get_path_name ())
     + ACE_OS::strlen (this->url_addr ().get_host_name ())
     + 20 // Extra
@@ -44,23 +44,23 @@ HTTP_URL::send_request (void)
   ACE_OS::sprintf (cmd_ptr.get (),
                    "GET /%s HTTP/1.1\r\n",
                    ACE_TEXT_ALWAYS_CHAR (this->url_addr ().get_path_name ()));
-  
+
   // Send the GET command to the connected server.
   if (this->stream ().send_n (cmd_ptr.get (),
                               ACE_OS::strlen (cmd_ptr.get ()),
-                              ACE_const_cast (ACE_Time_Value *,
-                                              OPTIONS::instance ()->timeout ()))  > 0)
+                              const_cast<ACE_Time_Value *>
+                                (OPTIONS::instance ()->timeout ()))  > 0)
     {
       ACE_OS::sprintf (cmd_ptr.get (),
                        "Host: %s\r\n\r\n",
-                       ACE_TEXT_ALWAYS_CHAR (this->url_addr ().get_host_name ()));
-  
+                       this->url_addr ().get_host_name ());
+
       // IMP: The length of teh command has to be sent!
       ssize_t retval =
         this->stream ().send_n (cmd_ptr.get (),
                                 ACE_OS::strlen (cmd_ptr.get ()),
-                                ACE_const_cast (ACE_Time_Value *,
-                                                OPTIONS::instance ()->timeout ()));
+                                const_cast<ACE_Time_Value *>
+                                  (OPTIONS::instance ()->timeout ()));
       this->stream ().svc_handler ()->idle (0);
       if (retval <= 0)
         return -1;
@@ -68,7 +68,7 @@ HTTP_URL::send_request (void)
         return retval;
     }
   else
-    return -1;  
+    return -1;
 }
 
 int
@@ -78,7 +78,7 @@ HTTP_URL::accept (URL_Visitor *visitor)
   return visitor->visit (*this);
 }
 
-int 
+int
 HTTP_URL::destroy (void)
 {
   delete this;

@@ -1,3 +1,27 @@
+Mon Jul 12 19:51:21 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/APG/Reactor/Client.cpp (ACE_TMAIN):
+	* examples/APG/Streams/Answerer.cpp (get_outgoing_message):
+	* examples/APG/Streams/Command.h:
+	* examples/APG/Streams/CommandStream.cpp (open):
+	* examples/APG/Streams/CommandTask.cpp (svc):
+	* examples/APG/Streams/CommandTasks.cpp:
+	* examples/APG/Streams/MessageInfo.h:
+	* examples/APG/Streams/RecordingDevice_Text.cpp:
+	* examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.i:
+	* examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.i:
+	* examples/Service_Configurator/Misc/main.cpp (ACE_TMAIN):
+	* examples/Shared_Malloc/Options.h:
+	* examples/Shared_Malloc/Options.cpp:
+	* examples/Shared_Malloc/test_persistence.cpp (main):
+	* examples/Shared_Memory/test_MM.cpp (main):
+	* examples/Web_Crawler/HTTP_URL.cpp (send_request):
+	* examples/Web_Crawler/URL_Addr.cpp (set):
+	* examples/Web_Crawler/URL_Visitor.cpp (execute):
+
+	  Addressed compile-time problems in "wchar" builds (generally
+	  incorrect conversion from wchar * to char * and/or vice versa).
+
 Mon Jul 12 18:29:12 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Dev_Poll_Reactor.h:

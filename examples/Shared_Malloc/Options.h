@@ -18,11 +18,11 @@ public:
   static Options *instance (void);
   // Return Singleton.
 
-  void parse_args (int argc, char *argv[]);
+  void parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse the arguments.
 
   // = Accessor methods.
-  char *program_name (void);
+  ACE_TCHAR *program_name (void);
   const char *slave_name (void);
   int debug (void);
   int exec_slave (void);
@@ -45,10 +45,10 @@ private:
   void print_usage_and_die (void);
   // Explain usage and exit.
 
-  char *program_name_;
+  ACE_TCHAR *program_name_;
   // Name of the program.
 
-  const char *slave_name_;
+  const ACE_TCHAR *slave_name_;
   // Name of slave process.
 
   int debug_;

@@ -6,7 +6,9 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(Shared_Malloc, Options, "$Id$")
+ACE_RCSID (Shared_Malloc,
+           Options,
+           "$Id$")
 
 // Static Singleton instance.
 Options *Options::instance_ = 0;
@@ -20,84 +22,84 @@ Options::instance (void)
   return Options::instance_;
 }
 
-char *
+ACE_TCHAR *
 Options::program_name (void)
-{ 
-  return this->program_name_; 
+{
+  return this->program_name_;
 }
 
-const char *
+const ACE_TCHAR *
 Options::slave_name (void)
-{ 
-  return this->slave_name_; 
+{
+  return this->slave_name_;
 }
 
-int 
+int
 Options::debug (void)
-{ 
-  return this->debug_; 
+{
+  return this->debug_;
 }
 
-int 
+int
 Options::exec_slave (void)
-{ 
-  return this->exec_slave_; 
+{
+  return this->exec_slave_;
 }
 
-size_t 
+size_t
 Options::iteration_count (void)
-{ 
-  return this->iteration_count_; 
+{
+  return this->iteration_count_;
 }
 
-int 
+int
 Options::use_sbrk (void)
-{ 
-  return this->use_sbrk_; 
+{
+  return this->use_sbrk_;
 }
 
-size_t 
+size_t
 Options::max_msg_size (void)
-{ 
-  return this->max_msg_size_; 
+{
+  return this->max_msg_size_;
 }
 
-size_t 
+size_t
 Options::spawn_count (void)
-{ 
-  return this->spawn_count_; 
+{
+  return this->spawn_count_;
 }
 
-int 
+int
 Options::spawn_threads (void)
-{ 
-  return this->spawn_threads_; 
+{
+  return this->spawn_threads_;
 }
 
-int 
+int
 Options::use_mmap (void)
-{ 
-  return this->use_mmap_; 
+{
+  return this->use_mmap_;
 }
 
-int 
+int
 Options::use_shmem (void)
-{ 
-  return this->use_shmem_; 
+{
+  return this->use_shmem_;
 }
 
-int 
+int
 Options::child (void)
-{ 
-  return this->child_; 
+{
+  return this->child_;
 }
 
 // Explain usage and exit.
 
-void 
+void
 Options::print_usage_and_die (void)
 {
-  ACE_ERROR ((LM_ERROR, "usage: %n"
+  ACE_ERROR ((LM_ERROR, ACE_TEXT ("usage: %n"
        "\n[-d] (run in debugging mode)\n"
        "[-e] (use exec(2) in addition to fork(2))\n"
        "[-l] (use C++ new operator rather than sbrk(2)\n"
@@ -107,13 +109,13 @@ Options::print_usage_and_die (void)
        "[-s] (use SysV shared memory rather than mmap)\n"
        "[-t number of threads or processes to spawn]\n"
        "[-T] (enable tracking)\n"
-       "[-n iteration_count]\n"));
+       "[-n iteration_count]\n")));
   ACE_OS::exit (1);
   /* NOTREACHED */
 }
 
 Options::Options (void)
-  : slave_name_ ("slave"),
+  : slave_name_ (ACE_TEXT ("slave")),
     debug_ (0),
     exec_slave_ (0),
     iteration_count_ (100),
@@ -128,9 +130,9 @@ Options::Options (void)
 }
 
 void
-Options::parse_args (int argc, char *argv[])
+Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "dehlL:mn:pst:T");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("dehlL:mn:pst:T"));
 
   this->program_name_ = argv[0];
   ACE_LOG_MSG->open (this->program_name_);

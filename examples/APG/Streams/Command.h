@@ -33,7 +33,7 @@ public:
   void *extra_data_;
 
   int numeric_result_;
-  ACE_CString result_;
+  ACE_TString result_;
 };
 // Listing 01
 

@@ -14,7 +14,9 @@
 
 #include "ace/Null_Mutex.h"
 
-ACE_RCSID(Shared_Malloc, test_persistence, "$Id$")
+ACE_RCSID (Shared_Malloc,
+           test_persistence,
+           "$Id$")
 
 typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> TEST_MALLOC;
 typedef ACE_Malloc_LIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC_LIFO_ITERATOR;
@@ -24,7 +26,7 @@ typedef ACE_Malloc_FIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC_F
 static TEST_MALLOC *shmem_allocator = 0;
 
 // Backing store name.
-static char backing_store[MAXPATHLEN + 1] = "";
+static ACE_TCHAR backing_store[MAXPATHLEN + 1] = ACE_TEXT ("");
 
 class Employee
 {
@@ -303,25 +305,25 @@ main (int argc, char *argv[])
 {
   parse_args (argc, argv);
 
-  if (ACE_OS::strcmp (backing_store, "") == 0)
+  if (ACE_OS::strcmp (backing_store, ACE_TEXT ("")) == 0)
     {
 #if defined (ACE_DEFAULT_BACKING_STORE)
       // Create a temporary file.
       ACE_OS::strcpy (backing_store,
                       ACE_DEFAULT_BACKING_STORE);
 #else /* ACE_DEFAULT_BACKING_STORE */
-      if (ACE::get_temp_dir (backing_store, 
+      if (ACE::get_temp_dir (backing_store,
                              MAXPATHLEN - 17) == -1) // -17 for ace-malloc-XXXXXX
         {
-          ACE_ERROR ((LM_ERROR, 
-                      "Temporary path too long, "
-                      "defaulting to current directory\n"));
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Temporary path too long, ")
+                      ACE_TEXT ("defaulting to current directory\n")));
           backing_store[0] = 0;
         }
 
       // Add the filename to the end
-      ACE_OS::strcat (backing_store, "ace-malloc-XXXXXX");
-  
+      ACE_OS::strcat (backing_store, ACE_TEXT ("ace-malloc-XXXXXX"));
+
 #endif /* ACE_DEFAULT_BACKING_STORE */
     }
 
@@ -335,7 +337,7 @@ main (int argc, char *argv[])
     if (handler.service () == -1)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    "closing down ....\n"));
+                    ACE_TEXT ("closing down ....\n")));
         break;
       }
 
