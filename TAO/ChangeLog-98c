@@ -1,3 +1,14 @@
+Sun Jan  4 13:49:21 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO/tao/nvlist.cpp: NamedValue::Release was calling delete, but
+	this was not correct since NamedValues are allocated using
+	calloc. So now we exclusively call the destructor and free the
+	memory using "free".
+
+	* TAO/tests/Param_Test/{client.cpp, tests.cpp}: Since we do not
+	pass the OUT_LIST_MEMORY flag to create_request, we cannot own the
+	return, inout, and out parameters and hence cannot free them.
+
 Sun Jan  4 13:41:41 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
 	* svr.cpp: Fixed prev_priority to previous_priority

@@ -162,8 +162,13 @@ Param_Test_Client<T>::run_dii_test (void)
                                           nvlist,
                                           retval->item (0, env),
                                           req,
-                                          0,
+                                          0, //CORBA::OUT_LIST_MEMORY,
                                           env);
+      // the OUT_LIST_MEMORY is to be used when the ORB assumes that we will
+      // provide the top-level storage. With 0, the returned values for ret,
+      // inout, and out parameters are all owned by the ORB and hence we must
+      // not free them explicitly
+
 
       if (opt->debug ())
         {
