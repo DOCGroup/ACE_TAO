@@ -1595,14 +1595,6 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
                       0);
   }
 
-
-  
-
-  ACE_NEW_THROW_EX (stub,
-                    TAO_Stub (id._retn (), mp, this),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-                                      CORBA::COMPLETED_MAYBE));
-
   //  Add the Polices contained in "policy_list" to each profile
   //  so that those policies will be exposed to the client in the IOR.
   //  In particular each CORBA::Policy has to be converted in to
@@ -1613,23 +1605,28 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
   //  (See orbos\98-05-05.pdf Section 5.4)
 
   if (policy_list->length () != 0)
-  {
-    // Set the "iterator" to the beginning of MProfile.
-    mp.rewind();
-    mp.policy_list (policy_list);
-    TAO_Profile * profile;
-    for (CORBA::ULong i = 0; i < mp.profile_count (); ++i)
     {
-      // Get the ith profile
-      profile = mp.get_next ();
-      profile->the_stub (stub);
-      profile->policies (policy_list);
-    }
+      // Set the "iterator" to the beginning of MProfile.
+      mp.rewind ();
+      TAO_Profile * profile;
+      
+      for (CORBA::ULong i = 0; i < mp.profile_count (); ++i)
+        {
+          // Get the ith profile
+          profile = mp.get_next ();
+          profile->the_stub (stub);
+          profile->policies (policy_list);
+        }
+    }  
 
-  }
-
+  ACE_NEW_THROW_EX (stub,
+                    TAO_Stub (id._retn (), mp, this),
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                      CORBA::COMPLETED_MAYBE));
   ACE_CHECK_RETURN (stub);
-
+  
+  stub->base_profiles ().policy_list (policy_list);
+  
   return stub;
 }
 
