@@ -45,12 +45,15 @@ server (void *arg)
     {
       char buf[BUFSIZ];
 
-      ssize_t r_bytes = new_stream.recv (buf, sizeof buf, 0);
+      ssize_t r_bytes = new_stream.recv (buf, sizeof buf);
 
       if (r_bytes == -1)
         {
-          ACE_ERROR ((LM_ERROR, "%p\n", "recv"));
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "recv"));
           break;
+
         }
       else if (r_bytes == 0)
         {
@@ -59,14 +62,20 @@ server (void *arg)
           break;
         }
       else if (verbose && ACE::write_n (ACE_STDOUT, buf, r_bytes) != r_bytes)
-        ACE_ERROR ((LM_ERROR, "%p\n", "ACE::write_n"));
+        ACE_ERROR ((LM_ERROR,
+                    "%p\n",
+                    "ACE::write_n"));
       else if (new_stream.send_n (buf, r_bytes) != r_bytes)
-        ACE_ERROR ((LM_ERROR, "%p\n", "send_n"));
+        ACE_ERROR ((LM_ERROR,
+                    "%p\n",
+                    "send_n"));
     }
 
   // Close new endpoint (listening endpoint stays open).
   if (new_stream.close () == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "close"));
+    ACE_ERROR ((LM_ERROR,
+                "%p\n",
+                "close"));
 
   return 0;
 }
@@ -110,7 +119,9 @@ run_event_loop (const char rendezvous[])
 
       if (peer_acceptor.accept (new_stream, 0, &timeout) == -1)
 	{
-	  ACE_ERROR ((LM_ERROR, "%p\n", "accept"));
+	  ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "accept"));
 	  continue;
 	}          
 
