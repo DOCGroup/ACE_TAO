@@ -1,3 +1,9 @@
+Wed Sep  1 20:41:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/run_tests.lst:
+	  Disabled the Time_Service_Test, it was crashing the parent
+	  process.
+
 Wed Sep 01 19:46:30 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/check_build_logs: allow log directory (-l option argument)
