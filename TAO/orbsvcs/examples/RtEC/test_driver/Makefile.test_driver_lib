@@ -29,7 +29,8 @@ FILES = \
   Test_Handler \
   Config_Factory \
   Timer_Event_Handler \
-  cpuload
+  cpuload \
+  ECConfig_Gateway
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
