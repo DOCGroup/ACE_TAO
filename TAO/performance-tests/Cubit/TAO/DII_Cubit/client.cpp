@@ -524,17 +524,13 @@ DII_Cubit_Client::cube_union_dii (void)
 
       ACE_TRY_CHECK;
 
-      Cubit::oneof arg_union, ret_union;
+      Cubit::oneof arg_union;
 
       arg_union._d(Cubit::e_3rd);
       arg_union.cm ().l = 5;
       arg_union.cm ().s = -7;
       arg_union.cm ().o = 3;
 
-      // A different discrim value than arg_ret, just to be ornery.
-      ret_union._d(Cubit::e_1st);
-      ret_union.s (0);
-   
       // Add the union to the request arg list and set the return type.
       req->add_in_arg () <<= arg_union;
 
@@ -549,12 +545,12 @@ DII_Cubit_Client::cube_union_dii (void)
       ACE_TRY_CHECK;
 
       // Extract the result and check validity.
-      Cubit::oneof* ret_ptr = &ret_union;
+      Cubit::oneof* ret_ptr;
       req->return_value () >>= ret_ptr;
 
-      if (ret_union.cm ().l != arg_union.cm ().l * arg_union.cm ().l * arg_union.cm ().l 
-          || ret_union.cm ().s != arg_union.cm ().s * arg_union.cm ().s * arg_union.cm ().s 
-          || ret_union.cm ().o != arg_union.cm ().o * arg_union.cm ().o * arg_union.cm ().o) 
+      if (ret_ptr->cm ().l != arg_union.cm ().l * arg_union.cm ().l * arg_union.cm ().l 
+          || ret_ptr->cm ().s != arg_union.cm ().s * arg_union.cm ().s * arg_union.cm ().s 
+          || ret_ptr->cm ().o != arg_union.cm ().o * arg_union.cm ().o * arg_union.cm ().o) 
         {
           ACE_ERROR ((LM_ERROR,
                       "cube_union_dii -- bad results\n"));
