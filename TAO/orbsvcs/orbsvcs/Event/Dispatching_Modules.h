@@ -330,7 +330,9 @@ class TAO_ORBSVCS_Export ACE_ES_Dispatch_Queue : public ACE_RT_Task
 {
 public:
   ACE_ES_Dispatch_Queue (ACE_ES_Dispatching_Base *dispatching_module,
-                         ACE_ES_Notification_Strategy *notification_strategy);
+                         ACE_ES_Notification_Strategy *notification_strategy,
+                         RtecScheduler::Scheduler_ptr scheduler = 
+                             RtecScheduler::Scheduler::_nil ());
   // Stores <dispatching_module> for this->threads_closed.  Stores
   // away <notification_strategy> for this->synch_threads.
 
@@ -448,6 +450,9 @@ protected:
 
   ACE_RT_Thread_Manager thr_mgr_;
   // The thread manager for the threads of this object.
+
+  RtecScheduler::Scheduler_var scheduler_;
+  // The scheduler.
 };
 
 // ************************************************************
