@@ -1,3 +1,11 @@
+Tue Feb 08 15:17:13 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Nested_Event_Loop: I was using a ulong to hold the value
+	  of a pointer.  This is problematic on platforms where the
+	  pointer is 64 bits and the ulong takes 32 bits.  Therefore, the
+	  new scheme uses an octet sequence to solve this size disparity.
+	  Thanks to Nanbor for the suggestion.
+
 Tue Feb  8 01:26:29 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.{h,cpp}:

@@ -19,8 +19,8 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void no_op (client_ptr remote_partner,
-              CORBA::ULong act_for_iterations,
-              CORBA::ULong act_for_flag,
+              const act &act_for_iterations,
+              const act &act_for_flag,
               CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -41,8 +41,8 @@ public:
              CORBA::Environment &)
     ACE_THROW_SPEC (());
 
-  void oneway_no_op (CORBA::ULong act_for_iterations,
-                     CORBA::ULong act_for_flag,
+  void oneway_no_op (const act &act_for_iterations,
+                     const act &act_for_flag,
                      CORBA::Environment &)
     ACE_THROW_SPEC (());
 
