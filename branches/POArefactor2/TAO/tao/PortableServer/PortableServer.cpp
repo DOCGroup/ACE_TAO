@@ -89,23 +89,23 @@ TAO_POA_Initializer::init (void)
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_Default_Servant_Request_Processing_Policy
+      TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyValueDefaultServant
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_Servant_Manager_Request_Processing_Policy
+      TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyValueServantManager
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_Active_Object_Map_Request_Processing_Policy
+      TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyValueAOMOnly
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_Non_Retain_Servant_Retention_Policy
+      TAO::Portable_Server::ace_svc_desc_ServantRetentionPolicyValueNonRetain
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_Retain_Servant_Retention_Policy
+      TAO::Portable_Server::ace_svc_desc_ServantRetentionPolicyValueRetain
     );
 
   // Policy Values
