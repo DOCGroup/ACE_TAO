@@ -1,3 +1,4 @@
+// $Id$
 
 // @ (#)iiopobj.cpp     1.9 95/11/04
 // Copyright 1995 by Sun Microsystems Inc.
@@ -324,6 +325,13 @@ IIOP_Object::QueryInterface (REFIID riid,
 
  (void) AddRef ();
   return TAO_NOERROR;
+}
+
+// TAO extensions
+TAO::ObjectKey*
+IIOP_Object::key (CORBA::Environment &)
+{
+  return new TAO::ObjectKey (this->profile.object_key);
 }
 
 // It will usually be used by the _bind call.
