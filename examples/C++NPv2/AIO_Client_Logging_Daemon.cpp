@@ -4,6 +4,8 @@
 ** Copyright 2002 Addison Wesley. All Rights Reserved.
 */
 
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS))
+
 #include "ace/OS_NS_string.h"
 #include "ace/Asynch_Acceptor.h"
 #include "ace/Asynch_Connector.h"
@@ -322,4 +324,30 @@ int AIO_Client_Logging_Daemon::svc (void) {
   return 0;
 }
 
+#else   /* There's no AIO support on this platform */
+
+#include "ace/Task.h"
+#include "ace/Synch_Traits.h"
+
+class AIO_Client_Logging_Daemon : public ACE_Task<ACE_NULL_SYNCH> {
+public:
+  // Service Configurator hook methods.
+  virtual int init (int argc, ACE_TCHAR *argv[]);
+  virtual int fini ();
+};
+
+int AIO_Client_Logging_Daemon::init
+      (int argc, ACE_TCHAR *argv[]) {
+
+  ACE_ERROR_RETURN
+    ((LM_ERROR, ACE_TEXT ("This service requires AIO support\n")), -1);
+}
+
+int AIO_Client_Logging_Daemon::fini () {
+  return 0;
+}
+
+#endif /* (ACE_WIN32 && !ACE_HAS_WINCE) || ACE_HAS_AIO_CALLS */
+
 ACE_FACTORY_DEFINE (AIO_CLD, AIO_Client_Logging_Daemon)
+

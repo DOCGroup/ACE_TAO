@@ -1,3 +1,9 @@
+Wed May 12 16:48:41 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: If built on
+	  a platform that doesn't offer AIO, display an error message on
+	  service load, and fail.
+
 Wed May 12 11:34:22 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-freebsd.h: Reverted this change:
