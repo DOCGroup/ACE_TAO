@@ -27,17 +27,17 @@ namespace
     os << n;
     return os.str ();
   }
-  
+
   string
   compute_repo_id (DeclarationPtr const& d)
   {
-    string middle = 
+    string middle =
       regex::perl_s (name_to_string (d->name ().in_file_scope ()),
                      "%::%/%",
                      '%');
     return "IDL:" + middle + ":1.0";
   }
-  
+
   typedef
   DeclarationOrderComparator<InterfaceDefPtr>
   InterfaceDefOrderComparator;
@@ -57,17 +57,17 @@ namespace
       {
         return false;
       }
-      
+
       for (InterfaceDef::Iterator iter = i->inherits_begin ();
            iter != i->inherits_end ();
            iter++)
         {
           add (iter->resolve ()->dynamic_type<UnconstrainedInterfaceDef> ());
         }
-        
+
       return true;
     }
-      
+
     InterfaceDefSet& unique_ifaces ()
     {
       return this->interfaces_;
@@ -76,7 +76,7 @@ namespace
   private:
     InterfaceDefSet interfaces_;
   };
-  
+
   class InterfaceCollector : public Traversal::UnconstrainedInterfaceDef
   {
   public:
@@ -113,7 +113,7 @@ namespace
       {
         interface_collector_->dispatch (i->resolve ());
       }
-      
+
       if (c->inherits ())
       {
         traverse (c->inherits ().resolve ());
@@ -148,11 +148,11 @@ namespace
     EmitterBase (fs::ofstream& ofs)
       : os (ofs)
     {}
-    
+
   protected:
     fs::ofstream& os;
   };
-  
+
   class ProvidesEmitter : public EmitterBase,
                           public Traversal::ProvidesDecl
   {
@@ -161,7 +161,7 @@ namespace
       : EmitterBase (ofs),
         facettag_ (1U)
     {}
-    
+
     virtual void
     traverse (ProvidesDeclPtr const& p)
     {
@@ -173,20 +173,20 @@ namespace
          << "facettag=\"" << facettag_
          << "\">" << endl
          << "</provides>" << endl;
-         
+
       ++facettag_;
     }
-    
+
     // Called for each composition.
     void reset ()
     {
       facettag_ = 1U;
     }
-    
+
   private:
     unsigned long facettag_;
   };
-  
+
   class UsesEmitter : public EmitterBase,
                       public Traversal::UsesDecl
   {
@@ -194,7 +194,7 @@ namespace
     UsesEmitter (fs::ofstream& ofs)
       : EmitterBase (ofs)
     {}
-    
+
     virtual void
     traverse (UsesDeclPtr const& u)
     {
@@ -206,7 +206,7 @@ namespace
          << "</uses>" << endl;
     }
   };
-  
+
   class EmitsEmitter : public EmitterBase,
                        public Traversal::EmitsDecl
   {
@@ -214,7 +214,7 @@ namespace
     EmitsEmitter (fs::ofstream& ofs)
       : EmitterBase (ofs)
     {}
-    
+
     virtual void
     traverse (EmitsDeclPtr const& e)
     {
@@ -227,7 +227,7 @@ namespace
          << "</emits>" << endl;
     }
   };
-  
+
   class PublishesEmitter : public EmitterBase,
                            public Traversal::PublishesDecl
   {
@@ -235,7 +235,7 @@ namespace
     PublishesEmitter (fs::ofstream& ofs)
       : EmitterBase (ofs)
     {}
-    
+
     virtual void
     traverse (PublishesDeclPtr const& p)
     {
@@ -248,7 +248,7 @@ namespace
          << "</publishes>" << endl;
     }
   };
-  
+
   class ConsumesEmitter : public EmitterBase,
                           public Traversal::ConsumesDecl
   {
@@ -256,7 +256,7 @@ namespace
     ConsumesEmitter (fs::ofstream& ofs)
       : EmitterBase (ofs)
     {}
-    
+
     virtual void
     traverse (ConsumesDeclPtr const& c)
     {
@@ -269,7 +269,7 @@ namespace
          << "</consumes>" << endl;
     }
   };
-  
+
   class ComponentEmitter : public EmitterBase,
                            public Traversal::ComponentDef
   {
@@ -277,23 +277,23 @@ namespace
     ComponentEmitter (fs::ofstream& ofs)
       : EmitterBase (ofs)
     {}
-    
+
     virtual void
     pre (ComponentDefPtr const& c)
     {
       os << "<componentfeatures" << endl
-         << "name=\"" << c->name ().simple () 
+         << "name=\"" << c->name ().simple ()
          << "\"" << endl
          << "repid=\"" << compute_repo_id (c)
          << "\">" << endl;
-         
+
       if (c->inherits ())
       {
         os << "<inheritscomponent repid=\""
            << compute_repo_id (c->inherits ().resolve ())
            << "\"/>" << endl;
       }
-      
+
       for (SyntaxTree::ComponentDef::Iterator i = c->supports_begin ();
            i != c->supports_end ();
            i++)
@@ -303,24 +303,24 @@ namespace
            << "\">" << endl
            << "</supportsinterface>" << endl;
       }
-      
+
       os << "<ports>" << endl;
     }
-  
+
     virtual void
     post (ComponentDefPtr const& c)
     {
       os << "</ports>" << endl
          << "</componentfeatures>" << endl << endl;
-     
-      // This will cause recursion as long as there are parents. 
+
+      // This will cause recursion as long as there are parents.
       if (c->inherits ())
       {
         dispatch (c->inherits ().resolve ());
       }
     }
   };
-  
+
   class HomeEmitter : public EmitterBase,
                       public Traversal::HomeDef
   {
@@ -328,7 +328,7 @@ namespace
     HomeEmitter (fs::ofstream& ofs)
       : EmitterBase (ofs)
     {}
-    
+
     virtual void
     pre (HomeDefPtr const& h)
     {
@@ -336,7 +336,7 @@ namespace
         << "name=\"" << h->name ().simple () << "\"" << endl
         << "repid=\"" << compute_repo_id (h)
         << "\">" << endl;
-        
+
       if (h->inherits ())
       {
         os << "<inheritshome repid=\""
@@ -344,20 +344,20 @@ namespace
            << "\"/>" << endl;
       }
     }
-    
+
     virtual void
     post (HomeDefPtr const& h)
     {
       os << "</homefeatures>" << endl << endl;
-     
-      // This will cause recursion as long as there are parents. 
+
+      // This will cause recursion as long as there are parents.
       if (h->inherits ())
       {
         dispatch (h->inherits ().resolve ());
       }
     }
   };
-  
+
   class HomeExecutorEmitter : public EmitterBase,
                               public Traversal::HomeExecutor
   {
@@ -369,24 +369,24 @@ namespace
         manages_emitter_ (component_emitter),
         implements_emitter_ (home_emitter)
     {}
-    
+
   virtual void
   pre (HomeExecutorPtr const& he)
   {
     os << "<corbacomponent>" << endl
        << "<corbaversion>3.0</corbaversion>" << endl
-       << "<componentrepid repid=\"" 
+       << "<componentrepid repid=\""
        << compute_repo_id (he->implements ()->manages ())
        << "\"/>" << endl
        << "<homerepid repid=\""
        << compute_repo_id (he->implements ())
        << "\"/>" << endl
        << "<componentkind>" << endl;
-  
-    // This can't be 0, a home executor can be defined only in a composition.     
+
+    // This can't be 0, a home executor can be defined only in a composition.
     CompositionPtr composition =
       he->scope ()->dynamic_type<Composition> ();
-      
+
     // Reasonable default values for CIAO.
     os << "<" << composition->category () << ">" << endl
        << "<servant lifetime=\"container\"/>" << endl
@@ -394,20 +394,20 @@ namespace
        << "</componentkind>" << endl
        << "<threading policy=\"multithread\"/>" << endl
        << "<configurationcomplete set=\"true\"/>" << endl << endl;
-       
+
     implements_emitter_->dispatch (he->implements ());
     manages_emitter_->dispatch (he->implements ()->manages ());
   }
-  
+
   private:
     Traversal::Dispatcher* manages_emitter_;
     Traversal::Dispatcher* implements_emitter_;
   };
-  
+
   class CompositionEmitter : public EmitterBase,
                              public Traversal::Composition
   {
-  public:  
+  public:
     CompositionEmitter (fs::ofstream& ofs,
                         CommandLine const& cl,
                         ProvidesEmitter &pe,
@@ -417,25 +417,26 @@ namespace
         pe_ (pe),
         declarations_ (declarations)
     {}
-  
+
     virtual void
     pre (CompositionPtr const& c)
     {
-      configure_stream (name_to_string (c->name ().in_file_scope ()));
-                                                 
+      string name = name_to_string (c->name ().in_file_scope ());
+      configure_stream (name);
+
       os << "<?xml version=\"1.0\"?>" << endl
-         << "<!DOCTYPE corbacomponent SYSTEM \"corbacomponent.dtd\">" 
+         << "<!DOCTYPE corbacomponent SYSTEM \"corbacomponent.dtd\">"
          << endl << endl;
-        
+
       pe_.reset ();
     }
-    
+
     virtual void
     post (CompositionPtr const&)
-    {        
+    {
       // Generate all the interfaces ported or supported.
       InterfaceDefSet& ifaces = declarations_.unique_ifaces ();
-      
+
       for (InterfaceDefSet::const_iterator i = ifaces.begin ();
            i != ifaces.end ();
            ++i)
@@ -445,7 +446,7 @@ namespace
            << "\"" << endl
            << "repid=\"" << compute_repo_id (*i)
            << "\">" << endl;
-        
+
         for (InterfaceDef::Iterator inh = (*i)->inherits_begin ();
               inh != (*i)->inherits_end ();
               ++inh)
@@ -454,26 +455,26 @@ namespace
              << compute_repo_id ((*inh).resolve ())
              << "\"/>" << endl;
         }
-        
+
         os << "</interface>" << endl;
       }
-      
+
       os << endl
          << "</corbacomponent>" << endl;
     }
-  
+
   private:
-    void configure_stream (string& scoped_name)
+    void configure_stream (string const& scoped_name)
     {
       string file_suffix = cl_.get_value ("desc-file-suffix",
                                           ".ccd");
-                                          
+
       string desc_file_name = regex::perl_s (scoped_name, "/::/_/");
 
       desc_file_name += file_suffix;
 
       fs::path desc_file_path (desc_file_name);
-      
+
       if (os.is_open ())
       {
         os.close ();
@@ -488,7 +489,7 @@ namespace
              << endl;
       }
     }
-    
+
   private:
     CommandLine const& cl_;
     ProvidesEmitter pe_;
@@ -498,7 +499,7 @@ namespace
 
 // ==========================================================
 
-void 
+void
 DescriptorGenerator::options (CL::Description& d)
 {
   d.add_option (CL::OptionDescription (
@@ -529,39 +530,39 @@ DescriptorGenerator::generate (CommandLine const& cl,
     InterfaceCollector iface (declarations);
     Traversal::ProvidesDecl provides (&iface);
     Traversal::UsesDecl uses (&iface);
-    
+
     ComponentCollector component (&iface);
     component.add_scope_delegate (&provides);
     component.add_scope_delegate (&uses);
-    
+
     HomeExecutorCollector home_executor (&component);
-  
+
     Traversal::Composition composition;
     composition.add_scope_delegate (&home_executor);
-  
+
     Traversal::Module module;
     module.add_scope_delegate (&composition);
     module.add_scope_delegate (&module);
-    
+
     Traversal::FileScope file_scope;
     file_scope.add_scope_delegate (&composition);
     file_scope.add_scope_delegate (&module);
-    
+
     Traversal::TranslationRegion region (&file_scope);
-    
+
     Traversal::TranslationUnit unit;
     unit.add_content_delegate (&region);
 
     unit.dispatch (u);
   }
-  
+
   {
     ProvidesEmitter provides (ofs_);
     UsesEmitter uses (ofs_);
     EmitsEmitter emits (ofs_);
     PublishesEmitter publishes (ofs_);
     ConsumesEmitter consumes (ofs_);
-    
+
     ComponentEmitter component (ofs_);
     component.add_scope_delegate (&provides);
     component.add_scope_delegate (&uses);
@@ -570,9 +571,9 @@ DescriptorGenerator::generate (CommandLine const& cl,
     component.add_scope_delegate (&consumes);
 
     HomeEmitter home (ofs_);
-    
+
     HomeExecutorEmitter home_executor (ofs_, &component, &home);
-    
+
     CompositionEmitter composition (ofs_, cl, provides, declarations);
     composition.add_scope_delegate (&home_executor);
 
@@ -583,13 +584,12 @@ DescriptorGenerator::generate (CommandLine const& cl,
     Traversal::FileScope file_scope;
     file_scope.add_scope_delegate (&module);
     file_scope.add_scope_delegate (&composition);
-    
+
     Traversal::TranslationRegion region (&file_scope);
 
     Traversal::TranslationUnit unit;
     unit.add_content_delegate (&region);
-    
+
     unit.dispatch (u);
   }
 }
-
