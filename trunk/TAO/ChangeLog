@@ -1,3 +1,12 @@
+Wed Aug 13 19:56:39 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.h: 
+
+	  Modifications to reflect changes in Kokyu classes. Added a
+	  Dispatcher_Attributes class to pass dispatcher setup
+	  information.
+	
 Wed Aug 13 16:50:56 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* tao/RTScheduling/RTScheduler_Manager.h: 
