@@ -389,10 +389,15 @@ DynamicAny::DynAny::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return DynAny::_nil ();
+    }
+  
   DynAny_ptr proxy =
     dynamic_cast<DynAny_ptr> (_tao_objref);
-  proxy->_add_ref ();
-  return proxy;
+  
+  return DynAny::_duplicate (proxy);
 }
 
 DynamicAny::DynAny_ptr
@@ -500,10 +505,15 @@ DynamicAny::DynFixed::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return DynFixed::_nil ();
+    }
+  
   DynFixed_ptr proxy =
     dynamic_cast<DynFixed_ptr> (_tao_objref);
-  proxy->_add_ref ();
-  return proxy;
+  
+  return DynFixed::_duplicate (proxy);
 }
 
 DynamicAny::DynFixed_ptr
@@ -615,10 +625,15 @@ DynamicAny::DynEnum::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return DynEnum::_nil ();
+    }
+  
   DynEnum_ptr proxy =
     dynamic_cast<DynEnum_ptr> (_tao_objref);
-  proxy->_add_ref ();
-  return proxy;
+  
+  return DynEnum::_duplicate (proxy);
 }
 
 DynamicAny::DynEnum_ptr
@@ -828,10 +843,15 @@ DynamicAny::DynStruct::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return DynStruct::_nil ();
+    }
+  
   DynStruct_ptr proxy =
     dynamic_cast<DynStruct_ptr> (_tao_objref);
-  proxy->_add_ref ();
-  return proxy;
+  
+  return DynStruct::_duplicate (proxy);
 }
 
 DynamicAny::DynStruct_ptr
@@ -943,10 +963,15 @@ DynamicAny::DynUnion::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return DynUnion::_nil ();
+    }
+  
   DynUnion_ptr proxy =
     dynamic_cast<DynUnion_ptr> (_tao_objref);
-  proxy->_add_ref ();
-  return proxy;
+  
+  return DynUnion::_duplicate (proxy);
 }
 
 DynamicAny::DynUnion_ptr
@@ -1149,10 +1174,15 @@ DynamicAny::DynSequence::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return DynSequence::_nil ();
+    }
+  
   DynSequence_ptr proxy =
     dynamic_cast<DynSequence_ptr> (_tao_objref);
-  proxy->_add_ref ();
-  return proxy;
+  
+  return DynSequence::_duplicate (proxy);
 }
 
 DynamicAny::DynSequence_ptr
@@ -1264,10 +1294,15 @@ DynamicAny::DynArray::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return DynArray::_nil ();
+    }
+  
   DynArray_ptr proxy =
     dynamic_cast<DynArray_ptr> (_tao_objref);
-  proxy->_add_ref ();
-  return proxy;
+  
+  return DynArray::_duplicate (proxy);
 }
 
 DynamicAny::DynArray_ptr
@@ -1379,10 +1414,15 @@ DynamicAny::DynValue::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return DynValue::_nil ();
+    }
+  
   DynValue_ptr proxy =
     dynamic_cast<DynValue_ptr> (_tao_objref);
-  proxy->_add_ref ();
-  return proxy;
+  
+  return DynValue::_duplicate (proxy);
 }
 
 DynamicAny::DynValue_ptr
@@ -1579,10 +1619,15 @@ DynamicAny::DynAnyFactory::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return DynAnyFactory::_nil ();
+    }
+  
   DynAnyFactory_ptr proxy =
     dynamic_cast<DynAnyFactory_ptr> (_tao_objref);
-  proxy->_add_ref ();
-  return proxy;
+  
+  return DynAnyFactory::_duplicate (proxy);
 }
 
 DynamicAny::DynAnyFactory_ptr

@@ -63,8 +63,6 @@ public:
       CORBA::Object_ptr obj
       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  virtual void *_tao_QueryInterface (ptrdiff_t type);
-
   // = Functions specific to DynStruct.
 
   virtual DynamicAny::FieldName current_member_name (

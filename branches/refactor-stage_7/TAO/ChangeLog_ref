@@ -1,3 +1,41 @@
+Fri Sep  5 11:38:25 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynAny_i.h:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynArray_i.h:
+        * tao/DynamicAny/DynEnum_i.cpp:
+        * tao/DynamicAny/DynEnum_i.h:
+        * tao/DynamicAny/DynSequence_i.cpp:
+        * tao/DynamicAny/DynSequence_i.h:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicAny/DynStruct_i.h:
+        * tao/DynamicAny/DynUnion_i.cpp:
+        * tao/DynamicAny/DynUnion_i.h:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.h:
+
+          Modified the _narrow() method, and removed
+          _tao_QueryInterface.
+
+        * tao/DynamicAny/DynamicAnyC.cpp:
+
+          Updated _narrow() method.
+
+        * tao/DynamicAny/DynamicAnyC.i:
+
+          Removed empty ifdef guards.
+
+        * tao/DynamicAny/TAO_DynamicAny.dsp:
+        * tao/DynamicInterface/TAO_DynamicInterface.dsp:
+        * tao/IFR_Client/TAO_IFR_Client.dsp:
+        * tao/IORInterceptor/TAO_IORInterceptor.dsp:
+        * tao/PortableServer/TAO_PortableServer.dsp:
+        * tao/TypeCodeFactory/TypeCodeFactory.dsp:
+        * tao/TAO.dsp:
+
+          Turned on RTTI for this projects.
+
 Fri Sep  5 11:37:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/CORBANAME_Parser.cpp: Provided a new implementation for

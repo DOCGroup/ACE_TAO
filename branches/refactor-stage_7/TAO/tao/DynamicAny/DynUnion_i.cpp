@@ -103,39 +103,15 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc
 // ****************************************************************
 
 TAO_DynUnion_i *
-TAO_DynUnion_i::_narrow (CORBA::Object_ptr obj
+TAO_DynUnion_i::_narrow (CORBA::Object_ptr _tao_objref
                          ACE_ENV_ARG_DECL_NOT_USED)
 {
-  if (CORBA::is_nil (obj))
+  if (CORBA::is_nil (_tao_objref))
     {
       return 0;
     }
-
-  return ACE_reinterpret_cast (
-             TAO_DynUnion_i*,
-             obj->_tao_QueryInterface (
-                      ACE_reinterpret_cast (
-                          ptrdiff_t,
-                          &TAO_DynUnion_i::_narrow
-                        )
-                    )
-           );
-}
-
-void*
-TAO_DynUnion_i::_tao_QueryInterface (ptrdiff_t type)
-{
-  ptrdiff_t mytype =
-    ACE_reinterpret_cast (ptrdiff_t,
-                          &TAO_DynUnion_i::_narrow);
-  if (type == mytype)
-    {
-      this->_add_ref ();
-      return this;
-    }
-
-  return
-    this->ACE_NESTED_CLASS (DynamicAny, DynUnion::_tao_QueryInterface) (type);
+  
+  return dynamic_cast<TAO_DynUnion_i *> (_tao_objref);
 }
 
 // This code is common to from_any() and the init() overload that takes
