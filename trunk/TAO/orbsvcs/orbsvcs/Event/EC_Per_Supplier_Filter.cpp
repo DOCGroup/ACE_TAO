@@ -57,15 +57,9 @@ TAO_EC_Per_Supplier_Filter::connected (TAO_EC_ProxyPushSupplier* supplier,
     {
       const RtecEventComm::Event& event =
         pub.publications[j].event;
-      RtecEventComm::EventType type = event.header.type;
 
-      // ACE_DEBUG ((LM_DEBUG, "In %x trying to match %d\n", this, type));
-
-      // if (0 <= type && type < ACE_ES_EVENT_UNDEFINED)
-      // continue;
       if (supplier->can_match (event.header))
         {
-          // ACE_DEBUG ((LM_DEBUG, "  Matches %x\n", supplier));
           this->supplier_set_->connected (supplier, ACE_TRY_ENV);
           return;
         }
