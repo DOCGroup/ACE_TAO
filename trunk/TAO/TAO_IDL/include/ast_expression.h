@@ -146,6 +146,7 @@ public:
       ACE_CDR::WChar      wcval;    // Contains wchar expression value
       unsigned char       oval;     // Contains unsigned char expr value
       UTL_String          *strval;  // Contains String * expr value
+      char                *wstrval; // Contains wide string expr value
       unsigned long       eval;     // Contains enumeration value
     } u;
     ExprType et;
@@ -169,6 +170,7 @@ public:
   AST_Expression(ACE_OutputCDR::from_wchar wc);
   AST_Expression(unsigned char  uc);
   AST_Expression(UTL_String     *s);
+  AST_Expression(char           *s);
   AST_Expression(UTL_ScopedName *n);
   virtual ~AST_Expression () {}
 
