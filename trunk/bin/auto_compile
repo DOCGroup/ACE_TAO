@@ -87,7 +87,7 @@ $date = localtime;
 print HIST $CMD, ': running at ', $date, ' ';
 
 if (-f $LOGDIR . '/.disable') {
-    print HIST 'DISABLED\n';
+    print HIST "DISABLED\n";
     exit 0;
 }
 

@@ -1,3 +1,8 @@
+Tue Mar 24 09:00:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/auto_compile: 
+	  Missing newline after the "DISABLED" message.
+
 Tue Mar 24 07:38:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.5-g++.h: replaced ACE_PAGE_SIZE with
