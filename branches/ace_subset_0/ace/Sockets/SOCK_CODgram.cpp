@@ -1,11 +1,12 @@
 // SOCK_CODgram.cpp
 // $Id$
 
-#include "ace/SOCK_CODgram.h"
-#include "ace/Log_Msg.h"
+#include "ace/Sockets/SOCK_CODgram.h"
+
+#include "ace/Logging/Log_Msg.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_CODgram.i"
+#include "ace/Sockets/SOCK_CODgram.i"
 #endif
 
 ACE_RCSID(ace, SOCK_CODgram, "$Id$")
@@ -25,9 +26,11 @@ ACE_SOCK_CODgram::ACE_SOCK_CODgram (const ACE_Addr &remote, const ACE_Addr &loca
 				    int reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK_CODgram::ACE_SOCK_CODgram");
+
   if (this->open (remote, local, 
 		  protocol_family, protocol, reuse_addr) == -1)
     ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("%p\n"), ACE_LIB_TEXT ("ACE_SOCK_CODgram")));
+
 }
 
 /* This is the general-purpose open routine.  Note that it performs

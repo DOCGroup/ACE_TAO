@@ -3,9 +3,7 @@
 
 #include "ace/Sockets/SOCK_Acceptor.h"
 
-#ifdef ACE_SUBSET_0
 #include "ace/Logging/Log_Msg.h"
-#endif
 
 #include "ace/OS/OS_QoS.h"
 
@@ -329,7 +327,6 @@ ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
                                       int backlog,
                                       int protocol)
 {
-#ifdef ACE_SUBSET_0
   ACE_TRACE ("ACE_SOCK_Acceptor::ACE_SOCK_Acceptor");
   if (this->open (local_sap,
                   protocolinfo,
@@ -342,7 +339,6 @@ ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_SOCK_Acceptor")));
-#else
   this->open (local_sap,
               protocolinfo,
               g,
@@ -351,7 +347,6 @@ ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
               protocol_family,
               backlog,
               protocol);
-#endif
 }
 
 // General purpose routine for performing server ACE_SOCK creation.
@@ -395,7 +390,6 @@ ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
                                       int backlog,
                                       int protocol)
 {
-#ifdef ACE_SUBET_0
   ACE_TRACE ("ACE_SOCK_Acceptor::ACE_SOCK_Acceptor");
   if (this->open (local_sap,
                   reuse_addr,
@@ -405,13 +399,6 @@ ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_SOCK_Acceptor")));
-#else
-  this->open (local_sap,
-              reuse_addr,
-              protocol_family,
-              backlog,
-              protocol;
-#endif
 }
 
 int

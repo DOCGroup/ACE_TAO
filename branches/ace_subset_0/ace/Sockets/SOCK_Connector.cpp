@@ -4,9 +4,7 @@
 #include "ace/Sockets/SOCK_Connector.h"
 #include "ace/IPC/INET_Addr.h"
 
-#ifdef ACE_SUBSET_0
 #include "ace/Logging/Log_Msg.h"
-#endif
 
 #include "ace/OS/OS_QoS.h"
 

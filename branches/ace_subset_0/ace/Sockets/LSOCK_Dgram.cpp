@@ -1,15 +1,15 @@
 // $Id$
 
-#include "ace/LSOCK_Dgram.h"
-#include "ace/Log_Msg.h"
+#include "ace/Sockets/LSOCK_Dgram.h"
 
+#include "ace/Logging/Log_Msg.h"
 
 ACE_RCSID(ace, LSOCK_Dgram, "$Id$")
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/LSOCK_Dgram.i"
+#include "ace/Sockets/LSOCK_Dgram.i"
 #endif
 
 ACE_ALLOC_HOOK_DEFINE(ACE_LSOCK_Dgram)
@@ -55,6 +55,7 @@ ACE_LSOCK_Dgram::ACE_LSOCK_Dgram (const ACE_Addr &local,
 				  int protocol)
 {
   ACE_TRACE ("ACE_LSOCK_Dgram::ACE_LSOCK_Dgram");
+
   if (this->open (local, 
                   protocol_family, 
 		  protocol) == -1)

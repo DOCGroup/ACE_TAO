@@ -15,14 +15,14 @@
 #define ACE_LOCAL_SOCK_CODGRAM_H
 #include "ace/pre.h"
 
-#include "ace/LSOCK.h"
+#include "ace/Sockets/LSOCK.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SOCK_CODgram.h"
-#include "ace/Addr.h"
+#include "ace/Sockets/SOCK_CODgram.h"
+#include "ace/IPC/Addr.h"
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
@@ -65,7 +65,7 @@ public:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/LSOCK_CODgram.i"
+#include "ace/Sockets/LSOCK_CODgram.i"
 #endif
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */

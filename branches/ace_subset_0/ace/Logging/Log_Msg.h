@@ -12,6 +12,20 @@
 
 #ifndef ACE_LOG_MSG_H
 #define ACE_LOG_MSG_H
+
+
+#ifdef ACE_SUBSET_0
+#define ACE_ASSERT(x) do {} while (0)
+#define ACE_HEX_DUMP(X) do {} while (0)
+#define ACE_RETURN(Y) do { return (Y); } while (0)
+#define ACE_ERROR_RETURN(X, Y) return (Y)
+#define ACE_ERROR_BREAK(X) { break; }
+#define ACE_ERROR(X) do {} while (0)
+#define ACE_DEBUG(X) do {} while (0)
+#define ACE_ERROR_INIT(VALUE, FLAGS)
+
+#else
+
 #include "ace/pre.h"
 
 // This stuff must come first to avoid problems with circular
@@ -19,6 +33,7 @@
 // ... but ACE_NDEBUG and ACE_NLOGGING can come from the config.h file, so
 // pull that one early.
 #include "ace/config-all.h"
+
 
 // The following ASSERT macro is courtesy of Alexandre Karev
 // <akg@na47sun05.cern.ch>.
@@ -662,4 +677,7 @@ ACE_TSS_cleanup (void *ptr);
 #endif /* ACE_LEGACY_MODE */
 
 #include "ace/post.h"
+
+#endif /* ACE_SUBSET_0 */
+
 #endif /* ACE_LOG_MSG_H */

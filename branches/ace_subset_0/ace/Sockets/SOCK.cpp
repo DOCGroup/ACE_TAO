@@ -3,9 +3,7 @@
 
 #include "ace/Sockets/SOCK.h"
 
-#ifdef ACE_SUBSET_0
 #include "ace/Logging/Log_Msg.h"
-#endif
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/Sockets/SOCK.i"
@@ -120,7 +118,6 @@ ACE_SOCK::ACE_SOCK (int type,
                     int reuse_addr)
 {
   // ACE_TRACE ("ACE_SOCK::ACE_SOCK");
-#ifdef ACE_SUBSET_0
   if (this->open (type,
                   protocol_family, 
                   protocol,
@@ -128,12 +125,6 @@ ACE_SOCK::ACE_SOCK (int type,
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_SOCK::ACE_SOCK")));
-#else
-  this-open (type,
-	     protocol_family,
-	     protocol,
-	     reuse_addr);
-#endif /* ACE_SUBSET_0 */
 }
 
 int
@@ -179,7 +170,6 @@ ACE_SOCK::ACE_SOCK (int type,
                     int reuse_addr)
 {
   // ACE_TRACE ("ACE_SOCK::ACE_SOCK");
-#ifdef ACE_SUBSET_0
   if (this->open (type,
                   protocol_family,
                   protocol,
@@ -190,14 +180,4 @@ ACE_SOCK::ACE_SOCK (int type,
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_SOCK::ACE_SOCK")));
-#else
-  this->open (type,
-              protocol_family,
-              protocol,
-              protocolinfo,
-              g,
-              flags,
-              reuse_addr);
-#endif /* ACE_SUBSET_0 */
-
 }

@@ -14,14 +14,14 @@
 #define ACE_LOCAL_SOCK_CONNECTOR_H
 #include "ace/pre.h"
 
-#include "ace/SOCK_Connector.h"
+#include "ace/Sockets/SOCK_Connector.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/LSOCK_Stream.h"
-#include "ace/UNIX_Addr.h"
+#include "ace/Sockets/LSOCK_Stream.h"
+#include "ace/IPC/UNIX_Addr.h"
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
@@ -100,7 +100,7 @@ public:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/LSOCK_Connector.i"
+#include "ace/Sockets/LSOCK_Connector.i"
 #endif
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */

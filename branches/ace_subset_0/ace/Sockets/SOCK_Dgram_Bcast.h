@@ -15,13 +15,13 @@
 #define ACE_SOCK_DGRAM_BCAST_H
 #include "ace/pre.h"
 
-#include "ace/INET_Addr.h"
+#include "ace/IPC/INET_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SOCK_Dgram.h"
+#include "ace/Sockets/SOCK_Dgram.h"
 
 /**
  * @class ACE_Bcast_Node
@@ -126,7 +126,7 @@ private:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_Dgram_Bcast.i"
+#include "ace/Sockets/SOCK_Dgram_Bcast.i"
 #endif
 
 #include "ace/post.h"
