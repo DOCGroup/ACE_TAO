@@ -110,10 +110,9 @@ public:
 class MMDevice_Exporter_i
   : public POA_MMDevice_Exporter,
     public TAO_Exportable,
-    public TAO_PropertySet
+    public TAO_PropertySet<POA_CosPropertyService::PropertySet>
 {
-
-  public:
+public:
   CORBA_Object_ptr audio_mmdevice_;
   CORBA_Object_ptr video_mmdevice_;
 
@@ -126,9 +125,9 @@ class MMDevice_Exporter_i
   CORBA::ULong connections (void) const;
   // Retrieve the number of connections.
 
-//   virtual CORBA::Object_ptr audio_mmdevice_reference_ (CORBA_Environment &_env = CORBA_Environment::default_environment ());
+  //   virtual CORBA::Object_ptr audio_mmdevice_reference_ (CORBA_Environment &_env = CORBA_Environment::default_environment ()); 
 
-//   virtual CORBA::Object_ptr video_mmdevice_reference_ (CORBA_Environment &_env = CORBA_Environment::default_environment ());
+  //   virtual CORBA::Object_ptr video_mmdevice_reference_ (CORBA_Environment &_env = CORBA_Environment::default_environment ()); 
 
   virtual CORBA::Object_ptr get_audio_mmdevice (CORBA_Environment &_env = CORBA_Environment::default_environment ());
   virtual CORBA::Object_ptr get_video_mmdevice (CORBA_Environment &_env = CORBA_Environment::default_environment ());
@@ -137,9 +136,8 @@ class MMDevice_Exporter_i
 
   virtual int define_properties (CosTradingRepos::ServiceTypeRepository::PropStructSeq& prop_seq,
                                  CORBA::ULong offset = 0) const;
-
-  private:
-
+private:
+  
   CORBA::ULong connections_;
   // Number of active connections
 

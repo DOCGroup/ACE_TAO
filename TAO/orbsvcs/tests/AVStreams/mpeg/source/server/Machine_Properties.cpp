@@ -23,8 +23,15 @@ const char* TAO_Machine_Properties::PROP_NAMES[] =
   "Load"
 };
 
-TAO_Machine_Properties::
-TAO_Machine_Properties (void)
+// XXX:hack to avoid CC errors. 
+// Redefine xdr_void. Always return true.
+int xdr_void (XDR *,void *)
+{
+  return 1;
+}
+
+
+TAO_Machine_Properties::TAO_Machine_Properties (void)
   : timeout_ (ACE_Time_Value (DEFAULT_TIMEOUT_SEC, DEFAULT_TIMEOUT_USEC)),
     timestamp_ (0),
     sample_time_ (0)
