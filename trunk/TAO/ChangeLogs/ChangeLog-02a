@@ -1,3 +1,9 @@
+Mon Aug 27 07:36:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tests/Makefile.bor: added new File_IO test
+        * examples/simple/time-date/time-date.bor: changed targetdir
+          to ./ to that svc.conf can find the dll
+
 Sun Aug 26 08:20:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.inl:
@@ -11,7 +17,7 @@ Sat Aug 25 23:38:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* orbsvcs/performance-tests/EC_Latency/server.cpp:
 	* orbsvcs/performance-tests/EC_Latency/client.cpp: #included
 	  "tao/Messaging.h". Fixes build problems in no interceptors
-	  build. 
+	  build.
 
 Sat Aug 25 09:49:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 

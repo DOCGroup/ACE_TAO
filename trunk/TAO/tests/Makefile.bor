@@ -26,6 +26,7 @@ DIRS = \
 	Explicit_Event_Loop \
         Exposed_Policies \
 	Faults \
+        File_IO \
         FL_Cube \
         Forwarding \
         Hello \
