@@ -5,15 +5,23 @@ Mon Aug 31 12:25:15 1998  David L. Levine  <levine@cs.wustl.edu>
           the data structures used to support Singleton
           registration for destruction.
 
+        * ace/ACE.{h,cpp}: added init () and fini ().  These
+          currently just call the ACE_Object_Manager's init ()
+          and fini ().  The might be useful for applications
+          that use ACE_HAS_NONSTATIC_OBJECT_MANAGER and
+          ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER, and
+          therefore need to explicitly initialize and finalize
+          the ACE_Object_Manager singleton.
+
 Sun Aug 30 23:05:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Select_Reactor_T.cpp: Should include ace/Thread.h also.
-	  Thanks to J. Russell Noseworthy <rnosewor@objectsciences.com>
-	  for reporting this.
+        * ace/Select_Reactor_T.cpp: Should include ace/Thread.h also.
+          Thanks to J. Russell Noseworthy <rnosewor@objectsciences.com>
+          for reporting this.
 
-	* ace/Select_Reactor.cpp: Added explicit template instantiation
-	  for ACE_Lock_Adapter<ACE_Select_Reactor_Token_T<ACE_Noop_Token>>.
-	  Thanks to Eric C. Newton <ecn@smart.net> for reporting this.
+        * ace/Select_Reactor.cpp: Added explicit template instantiation
+          for ACE_Lock_Adapter<ACE_Select_Reactor_Token_T<ACE_Noop_Token>>.
+          Thanks to Eric C. Newton <ecn@smart.net> for reporting this.
 
 Sun Aug 30 07:44:54 1998  David L. Levine  <levine@cs.wustl.edu>
 
