@@ -31,7 +31,7 @@ $brace="\#\#\#\#\#";
 
 # The client is run for all tests
 @clientarglist = ("-f server2 -i 5",
-                  "-g server2 -i 5",
+                  "-f server2 -i 5",
                   "-f server3 -i 8");
 
 # Descriptions of the tests
@@ -73,6 +73,9 @@ sub cleanup_ior
 sub run_test
 {
     print STDERR "\n$brace Test of $testtype BEGUN\n";
+
+    # Remove stale IOR files...
+    cleanup_ior ();
 
     # Run the servers
     $SRV1 = Process::Create  (".".$DIR_SEPARATOR."server".$Process::EXE_EXT,
@@ -136,7 +139,6 @@ sub run_test
     } else {
       print STDERR ("\n$brace Test of $testtype SUCCEEDED\n");
     }
-    cleanup_ior ();
     return $status;
 }
 
@@ -151,3 +153,5 @@ for ($q = 0; $q < 3; $q++)
         sleep ($ACE::sleeptime);
     }
 }
+
+cleanup_ior ();

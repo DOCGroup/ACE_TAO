@@ -1,3 +1,9 @@
+Wed Jun 16 19:11:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/POA/Forwarding/run_test.pl:
+	  Fixed run-time errors, thanks to Irfan for helping out with
+	  this.
+
 Wed Jun 16 19:08:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Simple/time/Time_i.h:
