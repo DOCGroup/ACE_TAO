@@ -5,12 +5,12 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Channel_Clients_T
 //
 // = AUTHOR
-//    Tim Harrison (harrison@cs.wustl.edu) and 
+//    Tim Harrison (harrison@cs.wustl.edu) and
 //    Douglas Schmidt (schmidt@cs.wustl.edu)
 //
 // = DESCRIPTION
@@ -41,7 +41,7 @@ public:
   // Forwards all calls to <owner>.
 
   virtual void push (const RtecEventComm::EventSet& events,
-		     CORBA::Environment &_env);
+                     CORBA::Environment &_env);
   // Forwards to target_.
 
   virtual void disconnect_push_consumer (CORBA::Environment &);
@@ -49,6 +49,8 @@ public:
 
 private:
   TARGET *target_;
+
+  ACE_UNIMPLEMENTED_FUNC (ACE_PushConsumer_Adapter (const ACE_PushConsumer_Adapter &))
 };
 
 // ************************************************************
@@ -70,6 +72,8 @@ public:
 
 private:
   TARGET *target_;
+
+  ACE_UNIMPLEMENTED_FUNC (ACE_PushSupplier_Adapter (const ACE_PushSupplier_Adapter &))
 };
 
 #if defined (__ACE_INLINE__)
@@ -85,4 +89,3 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_CHANNEL_CLIENTS_T_H */
-
