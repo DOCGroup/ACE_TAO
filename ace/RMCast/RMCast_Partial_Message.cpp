@@ -33,6 +33,9 @@ ACE_RMCast_Partial_Message::fragment_received (ACE_UINT32 message_size,
                                                ACE_UINT32 offset,
                                                ACE_Message_Block *mb)
 {
+  if (this->message_body_.length () != message_size)
+    return -1;
+
   // Just copy the data...
   char *rd_ptr = this->message_body_.rd_ptr () + offset;
   size_t total_length = mb->length () - 12;
