@@ -95,10 +95,10 @@ Token_Strategy_Test::Token_Strategy_Test (ACE_Token::QUEUEING_STRATEGY strategy,
   this->token_.queueing_strategy (this->strategy_);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT (" (tid = %t) Token_Test::Token_Test (\n"
+              ACE_TEXT (" (tid = %t) Token_Test::Token_Test (\n")
               ACE_TEXT ("    token_type = %s\n")
               ACE_TEXT ("        thread = %d\n")
-              ACE_TEXT ("   invocations = %d\n")),
+              ACE_TEXT ("   invocations = %d\n"),
               this->strategy_ == ACE_Token::FIFO ? ACE_TEXT ("FIFO") : ACE_TEXT ("LIFO"),
               this->threads_,
               this->invocations_));
@@ -137,8 +137,8 @@ Token_Strategy_Test::svc (void)
       // Turn this on to watch each thread grab the token.  LIFO has the interesting
       // behavior that two thread seem to take turns while all the other threads wait.
       if (0)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (tid = %t) token count = %d, "
-                              ACE_TEXT ("waiters = %d, loop: %d/%d\n")),
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (tid = %t) token count = %d, ")
+                              ACE_TEXT ("waiters = %d, loop: %d/%d\n"),
                   this->counter_.value (),
                   this->token_.waiters (), i + 1,
                   this->invocations_));
