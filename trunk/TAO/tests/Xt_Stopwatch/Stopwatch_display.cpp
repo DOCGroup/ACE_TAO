@@ -2,6 +2,8 @@
 
 #include "Stopwatch_display.h"
 
+#if defined (ACE_HAS_XT)
+
 Stopwatch_display::Stopwatch_display (Widget &parent)
 {
   // Instantiate the  sub-components of the Stopwatch_display
@@ -23,7 +25,7 @@ Stopwatch_display::~Stopwatch_display (void)
   //No-op
 }
 
-void 
+void
 Stopwatch_display::manage (void)
 {
   XtManageChild (this->frame_);
@@ -34,7 +36,7 @@ void
 Stopwatch_display::set_time (CORBA::Float time)
 {
   char buf[50];
-  
+
   // Format value as a string
   ACE_OS::sprintf (buf, "%6.3f", time);
 
@@ -43,11 +45,10 @@ Stopwatch_display::set_time (CORBA::Float time)
 
   // Display the string in the Label widget
   XtVaSetValues (this->label_, XmNlabelString, xmstr, NULL);
-  //??Can use XtSetValues with ac and al values.. 
+  //??Can use XtSetValues with ac and al values..
 
   // The compound string can be freed once passed to the widget
   XmStringFree (xmstr);
 }
 
-
-
+#endif /*ACE_HAS_XT*/
