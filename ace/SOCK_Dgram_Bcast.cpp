@@ -308,7 +308,7 @@ ACE_SOCK_Dgram_Bcast::send (const iovec iov[],
 
   for (ACE_Bcast_Node *temp = this->if_list_;
        temp != 0;
-       temp++)
+       temp = temp->next_)
     if (ACE_SOCK_Dgram::send (iov,
                               n,
                               temp->bcast_addr_,

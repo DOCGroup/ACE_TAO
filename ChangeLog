@@ -1,3 +1,9 @@
+Tue Oct  8 09:22:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_Dgram_Bcast.cpp (send): Use next_ to find next
+          ACE_Bcast_Node in if_list_ rather than incrementing pointer.
+          Thanks to <k2@biogate.com> for this fix.
+
 Mon Oct  7 17:29:14 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Proactor_Scatter_Gather_Test.cpp (initiate_read_file):
