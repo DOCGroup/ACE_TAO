@@ -47,7 +47,7 @@ Mpeg_Svc_Handler::svc (void)
 
 int
 Mpeg_Svc_Handler::handle_input (ACE_HANDLE)
-{  
+{
   int junk;
   int result;
   u_short port;
