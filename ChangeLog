@@ -1,3 +1,15 @@
+Mon Jun 21 07:07:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/Process_Unix.pl:
+          Added the option to use valgrind as memory test tool. This can
+          be enabled by setting the environment variable ACE_RUN_VALGRIND_CMD
+          to the valgrind version you want to start. If this is set, then
+          valgrind is used with the default options "-q --leak-check=yes
+          --trace-children=yes". This can be overruled by setting the
+          environment variable ACE_RUN_VALGRIND_OPT, if that is set
+          we use those options, if the default options are not complete,
+          feel free to add new ones.
+
 Mon Jun 21 23:19:38 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/ftorbutils.mpb:
