@@ -1,3 +1,45 @@
+Sun Aug 10 08:56:20 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* CORBA_ to CORBA:: transformation complete. All the files in the
+	TAO/tao distribution have been affected. The most notable changes
+	are:
+	(1) A file called "tao/corba.h" is now the master file. All *.cpp
+	files include *just* this file and nothing else.
+
+	(2) "tao/corbacom.h" is the file that defines the CORBA namespace
+	i.e., class CORBA. Individual CORBA classes such as TypeCode, BOA,
+	etc are now defined inside the CORBA namespace. This will allow
+	users and developers to use CORBA::TypeCode as opposed to the
+	previous CORBA_TypeCode. Instead of nesting the classes, however,
+	we use typedefs to define individual CORBA classes inside class
+	CORBA e.g., typedef CORBA_TypeCode TypeCode;
+
+	(3) All *.i files are included at the end of "tao/corba.h" and
+	nowhere else. However, if __ACE_INLINE__ isnot defined, then each
+	individual *.i file is not yet included in their corresponding
+	.cpp file. This will be done next.
+
+	* TAO/tests/Demux_Test: Included code that tests various
+	demultiplexing strategies in TAO. At this point, however, the code
+	will not work because of changes in TAO. This will be done
+	next. A README file provides additional details. 
+
+	* TAO/Benchmark: A suite of benchmarking tests have been
+	included. This is still in the preliminary stages of
+	development. The idea is to compare various aspects of CORBA such
+	as marshaling overhead, demux costs, throughput, latency, and
+	others for a range of ORBs including TAO. Since there are
+	differences in programming different ORBs, this suite tries to
+	abstract out all the common features or atleast provide a uniform
+	interface so that minimal efforts are required to port an
+	application from one ORB to another.
+
+	Benchmark/benchmark: This directory contains thecommon features
+	Benchmark/Marshal_Test: Tests marshaling overhead in 3 ORBs -
+	Orbix, VisiBroker, and TAO. More will be added. There are a few
+	problems getting DSI to work. The tech support at IONA and
+	VisiBroker have been contacted.
+
 Sat Aug  9 14:05:08 1997  Douglas C. Schmidt  <schmidt@merengue.cs.wustl.edu>
 
 	* tao: Continued to clean up all the code so that it is more
