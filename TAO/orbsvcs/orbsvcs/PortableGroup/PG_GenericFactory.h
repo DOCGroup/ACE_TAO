@@ -152,7 +152,8 @@ public:
                      PortableGroup::ObjectNotCreated,
                      PortableGroup::InvalidCriteria,
                      PortableGroup::InvalidProperty,
-                     PortableGroup::CannotMeetCriteria));
+                     PortableGroup::CannotMeetCriteria,
+		     PortableGroup::MemberAlreadyPresent));
 
 private:
 
