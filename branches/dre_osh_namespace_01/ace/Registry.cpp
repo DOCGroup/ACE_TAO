@@ -6,6 +6,8 @@ ACE_RCSID(ace, Registry, "$Id$")
 
 #if defined (ACE_WIN32)
 
+#  include "ace/os_include/os_netdb.h"
+
 // Funky macro to deal with strange error passing semantics
 // of Win32 Reg*() functions
 #define ACE_REGISTRY_CALL_RETURN(X) \

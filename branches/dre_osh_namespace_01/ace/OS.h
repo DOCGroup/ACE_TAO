@@ -365,26 +365,6 @@ namespace ACE_OS
 {
 
 
-# if defined (ACE_WIN32)
-  // = Default Win32 Security Attributes definition.
-  LPSECURITY_ATTRIBUTES default_win32_security_attributes (LPSECURITY_ATTRIBUTES);
-
-  // = Win32 OS version determination function.
-  /// Return the win32 OSVERSIONINFO structure.
-  const OSVERSIONINFO &get_win32_versioninfo (void);
-
-  // = A pair of functions for modifying ACE's Win32 resource usage.
-  /// Return the handle of the module containing ACE's resources. By
-  /// default, for a DLL build of ACE this is a handle to the ACE DLL
-  /// itself, and for a static build it is a handle to the executable.
-  HINSTANCE get_win32_resource_module (void);
-
-  /// Allow an application to modify which module contains ACE's
-  /// resources. This is mainly useful for a static build of ACE where
-  /// the required resources reside somewhere other than the executable.
-  void set_win32_resource_module (HINSTANCE);
-
-# endif /* ACE_WIN32 */
 
   // = A set of wrappers for miscellaneous operations.
 

@@ -9,6 +9,10 @@ ACE_RCSID(ace, OS_NS_sys_socket, "$Id$")
 # include "ace/OS_NS_sys_socket.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
+#if defined (ACE_WIN32)
+int ACE_OS::socket_initialized_;
+#endif /* ACE_WIN32 */
+
 #if !defined (ACE_HAS_WINCE)
 ACE_HANDLE
 ACE_OS::accept (ACE_HANDLE handle,

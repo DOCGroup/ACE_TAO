@@ -26,12 +26,14 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 # include "ace/Global_Macros.h"
+# include "ace/Basic_Types.h"
 # include "ace/Default_Constants.h"
 # include "ace/os_include/os_pthread.h"
 # include "ace/Base_Thread_Adapter.h"
 # include "ace/os_include/sys/os_sem.h"
 # include "ace/os_include/os_semaphore.h"
 # include "ace/OS_Memory.h"
+# include "ace/OS_NS_signal.h"
 
 # if defined (ACE_HAS_PRIOCNTL)
   // Need to #include thread.h before #defining THR_BOUND, etc.,
@@ -389,7 +391,7 @@ public:
   /// Returns the number of waiters.
   long waiters (void) const;
 
-protected:
+//protected:
   /// Number of waiting threads.
   long waiters_;
 
@@ -445,7 +447,8 @@ struct ACE_OS_Export ACE_mutexattr_t
  */
 struct ACE_OS_Export ACE_rwlock_t
 {
-protected:
+public:
+//protected:
 
   ACE_mutex_t lock_;
   // Serialize access to internal state.
@@ -1030,8 +1033,10 @@ extern "C" ACE_OS_Export void ace_mutex_lock_cleanup_adapter (void *args);
 #   define ACE_PTHREAD_CLEANUP_POP(A)
 # endif /* ACE_HAS_THR_C_FUNC */
 
+#if !defined (ACE_WIN32)
 // forward decl's
 class ACE_event_t;
+#endif
 
 namespace ACE_OS {
 
@@ -1558,6 +1563,7 @@ namespace ACE_OS {
 
 } /* namespace ACE_OS */
 
+#if !defined (ACE_WIN32)
 /**
  * @class ACE_event_t
  *
@@ -1589,30 +1595,9 @@ protected:
   /// Number of waiting threads.
   unsigned long waiting_threads_;
 };
+#endif /* ACE_WIN32 */
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-# if defined (ACE_WIN32)
-OSVERSIONINFO ACE_OS::win32_versioninfo_;
-// Cached win32 version information.
-
-HINSTANCE ACE_OS::win32_resource_module_;
-
-#   if defined (ACE_OS_HAS_DLL) && (ACE_OS_HAS_DLL == 1) && !defined (ACE_HAS_WINCE)
-// This function is called by the OS when the ACE DLL is loaded. We
-// use it to determine the default module containing ACE's resources.
-BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID)
-{
-  if (reason == DLL_PROCESS_ATTACH)
-    {
-#     if defined (ACE_DISABLES_THREAD_LIBRARY_CALLS) && (ACE_DISABLES_THREAD_LIBRARY_CALLS == 1)
-      ::DisableThreadLibraryCalls (instance);
-#     endif /* ACE_DISABLES_THREAD_LIBRARY_CALLS */
-      ACE_OS::set_win32_resource_module(instance);
-    }
-  return TRUE;
-}
-#   endif /* ACE_OS_HAS_DLL && ACE_OS_HAS_DLL == 1 */
-# endif /* ACE_WIN32 */
 
 /**
  * @class ACE_OS_Thread_Mutex_Guard

@@ -206,17 +206,36 @@ namespace ACE_OS {
 
   FILE *fopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode);
 
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 # if defined (ACE_WIN32)
+  // = Default Win32 Security Attributes definition.
+  LPSECURITY_ATTRIBUTES default_win32_security_attributes (LPSECURITY_ATTRIBUTES);
+
+  // = Win32 OS version determination function.
+  /// Return the win32 OSVERSIONINFO structure.
+  const OSVERSIONINFO &get_win32_versioninfo (void);
+
+  // = A pair of functions for modifying ACE's Win32 resource usage.
+  /// Return the handle of the module containing ACE's resources. By
+  /// default, for a DLL build of ACE this is a handle to the ACE DLL
+  /// itself, and for a static build it is a handle to the executable.
+  HINSTANCE get_win32_resource_module (void);
+
+  /// Allow an application to modify which module contains ACE's
+  /// resources. This is mainly useful for a static build of ACE where
+  /// the required resources reside somewhere other than the executable.
+  void set_win32_resource_module (HINSTANCE);
 
   /// Translate fopen's mode char to open's mode.  This helper function
   /// is here to avoid maintaining several pieces of identical code.
   void fopen_mode_to_open_mode_converter (ACE_TCHAR x, int &hmode);
 
-  OSVERSIONINFO win32_versioninfo_;
+  extern OSVERSIONINFO win32_versioninfo_;
 
-  HINSTANCE win32_resource_module_;
+  extern HINSTANCE win32_resource_module_;
 
 # endif /* ACE_WIN32 */
+#endif
 
   int fprintf (FILE *fp, const char *format, ...);
 
