@@ -29,7 +29,7 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-#if !defined (ACE_LACKS_FORK) || defined (ACE_WIN32)
+#if !defined (__Lynx__) || !defined (ACE_LACKS_FORK) || defined (ACE_WIN32)
 
 typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 
@@ -288,4 +288,4 @@ main (int, ASYS_TCHAR *[])
   ACE_END_TEST;
   return 0;
 }
-#endif /* !defined (ACE_LACKS_FORK) || defined (ACE_WIN32) */
+#endif /* !defined (__Lynx__) || !defined (ACE_LACKS_FORK) || defined (ACE_WIN32) */
