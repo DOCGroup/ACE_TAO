@@ -46,6 +46,7 @@ TAO/tests/IORManipulation/run_test.pl
 TAO/tests/Policies/run_test.pl: !MINIMUM !ST
 TAO/tests/Timeout/run_test.pl: !MINIMUM
 TAO/tests/Timed_Buffered_Oneways/run_test.pl: !MINIMUM
+TAO/tests/Codec/run_test.pl
 TAO/tests/IDL_Test/run_test.pl
 TAO/tests/ORB_init/run_test.pl
 TAO/tests/ORB_destroy/run_test.pl
