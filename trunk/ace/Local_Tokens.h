@@ -170,7 +170,7 @@ class ACE_Export ACE_TSS_TPQ_Entry : public ACE_TPQ_ENTRY
 {
   // = TITLE
   //     ACE_TSS_TPQ_Entry
-  // 
+  //
   // = DESCRIPTION
   //     Not a public interface.
 public:
@@ -330,7 +330,7 @@ public:
   ACE_Tokens (void);
   // Null constructor.
 
-  ~ACE_Tokens (void);
+  virtual ~ACE_Tokens (void);
   // Destructor
 
   virtual int acquire (ACE_TPQ_Entry *caller,
