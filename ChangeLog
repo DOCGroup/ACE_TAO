@@ -1,3 +1,9 @@
+Mon May 26 21:14:54 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/PerlACE/Process.pm: Added a new "static" function
+	  "Normalize_Executable_Name" so that we can figure out the
+	  correct location of a "release" build executables.
+
 Mon May 26 18:23:41 2003  Steve Huston  <shuston@riverace.com>
 
 	* ace/MEM_Acceptor.cpp (accept): Replace a C-style cast with
