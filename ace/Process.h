@@ -307,10 +307,10 @@ public:
 
   int wait (int *status = 0);
   // Perform a blocking wait for the process we just created to exit.
-  // The return value is platform dependent (0/-1 on UNIX and some
-  // Win32 defined values on Win32).  If <status> != 0, it points to
-  // an integer where the function store the exit status of child
-  // process to.
+  // A return value of -1 represents the wait operation failed,
+  // otherwise, the child process id is returned.  If <status> != 0,
+  // it points to an integer where the function store the exit status
+  // of child process to.
 
   int wait (const ACE_Time_Value &tv);
   // Timed wait for the process we just created to exit.  This
