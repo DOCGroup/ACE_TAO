@@ -1,3 +1,7 @@
+Sat Mar 15 13:50:18 2003  Steve Huston  <shuston@riverace.com>
+
+	* tests/tests.mpc: Added Recursive_Condition_Bug_Test.
+
 Sat Mar 15 12:20:45 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/tests.dsw:
