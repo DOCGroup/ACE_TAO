@@ -3,7 +3,7 @@
 #include "tao/Typecode.h"
 #include "tao/Environment.h"
 #include "tao/NVList.h"
-#include "ORB.h"
+#include "tao/ORB.h"
 #include "tao/Context.h"
 
 #if !defined (__ACE_INLINE__)
