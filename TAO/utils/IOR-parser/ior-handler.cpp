@@ -367,10 +367,10 @@ IorHandler::interpretIor (char *thisIor, struct IOR_Manager *thisIorInfo)
   ulongValue = getOctet2Field((char *)(thisIor + numHexCharsRead),
                               &numCharsToSkip);
 
-  if ((ulongValue != 0) && (ulongValue != 1))
+  if ((ulongValue != 0) && (ulongValue != 1) && (ulongValue != 2))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "IIOP minor version != 0 or 1\n"));
+                  "IIOP minor version != 0, 1, or 2\n"));
      ACE_OS::exit (1);
     }
 
