@@ -106,9 +106,24 @@ typedef size_t KEY;
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "set_output failed"), -1); \
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting %s test at %T\n", program));
 
+#if defined (ACE_HAS_THREADS)
+  // Give all threads a chance to terminate gracefully.  This
+  // shouldn't be necessary, but see the comment in
+  // ACE_Thread_Manager::wait ().  The problem arises because the
+  // threads that signalled the ACE_Thread_Manager may not have had a
+  // chance to run after that, and therefore may not have finished
+  // cleaning themselves up.  This hack does seem to avoid this
+  // occasional anomaly in tests/Buffer_Stream_Test:
+  // ACE_ASSERT: file /project/merengue/levine/ACE_wrappers/build/SunOS5_sunc++/ace/Module.cpp, line 230 assertion failed for 'task->thr_count () == 0'.
+# define ACE_DELAY_FOR_THREAD_TERMINATION ACE_OS::sleep (1);
+#else  /* ! ACE_HAS_THREADS */
+# define ACE_DELAY_FOR_THREAD_TERMINATION
+#endif /* ! ACE_HAS_THREADS */
+
 #define ACE_END_TEST \
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Ending %s test at %T\n", program)); \
-  ace_file_stream.close ();
+  ace_file_stream.close (); \
+  ACE_DELAY_FOR_THREAD_TERMINATION
 
 #define ACE_APPEND_LOG(NAME) \
   const char *program = NAME; \
@@ -175,20 +190,12 @@ ACE_Test_Output::set_output (const char *filename, int append)
 		   ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR_A),
 		   ".log");
 
-#if defined (VXWORKS)
-  // This is the only way I could figure out to avoid a console warning
-  // about opening an existing file (w/o O_CREAT), or attempting to unlink
-  // a non-existant one.
-  int fd;
-  if ((fd = ACE_OS::open (temp, O_WRONLY | O_CREAT, 0x644)) != ERROR)
-    {
-      ACE_OS::close (fd);
-      ACE_OS::unlink (temp);
-    }
-#else
+#if ! defined (VXWORKS)
   // This doesn't seem to work on VxWorks if the directory doesn't
-  // exist, and causes a wierd console error message about
-  // "cat: input error on standard input: Is a directory" if it does.
+  // exist:  it creates a plain file instead of a directory.  If the
+  // directory does exist, it causes a wierd console error message
+  // about "cat: input error on standard input: Is a directory".  So,
+  // VxWorks users must create the directory manually.
   ACE_OS::mkdir (ACE_LOG_DIRECTORY_A);
 #endif /* ! VXWORKS */
 
