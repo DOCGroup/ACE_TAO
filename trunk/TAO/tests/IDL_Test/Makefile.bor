@@ -103,6 +103,9 @@ $(IDLDIR)\constantsC.cpp $(IDLDIR)\constantsS.cpp: $(IDLDIR)\constants.idl
 $(IDLDIR)\enum_in_structC.cpp $(IDLDIR)\enum_in_structS.cpp: $(IDLDIR)\enum_in_struct.idl
 	$(TAO_IDL) $**
 
+$(IDLDIR)\fullC.cpp $(IDLDIR)\fullS.cpp: $(IDLDIR)\full.idl
+	$(TAO_IDL) $**
+
 $(IDLDIR)\generic_objectC.cpp $(IDLDIR)\generic_objectS.cpp: $(IDLDIR)\generic_object.idl
 	$(TAO_IDL) $**
 
