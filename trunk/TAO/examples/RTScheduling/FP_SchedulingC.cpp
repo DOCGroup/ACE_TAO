@@ -48,7 +48,7 @@
 // Arg traits specializations.
 namespace TAO
 {
-};
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
@@ -87,7 +87,7 @@ TAO::Objref_Traits<FP_Scheduling::SegmentSchedulingParameterPolicy>::tao_marshal
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*FP_Scheduling__TAO_SegmentSchedulingParameterPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -98,7 +98,7 @@ FP_Scheduling::SegmentSchedulingParameterPolicy::SegmentSchedulingParameterPolic
 FP_Scheduling::SegmentSchedulingParameterPolicy::~SegmentSchedulingParameterPolicy (void)
 {}
 
-void 
+void
 FP_Scheduling::SegmentSchedulingParameterPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   SegmentSchedulingParameterPolicy *_tao_tmp_pointer =
@@ -116,10 +116,10 @@ FP_Scheduling::SegmentSchedulingParameterPolicy::_narrow (
     {
       return SegmentSchedulingParameterPolicy::_nil ();
     }
-  
+
   SegmentSchedulingParameterPolicy_ptr proxy =
     dynamic_cast<SegmentSchedulingParameterPolicy_ptr> (_tao_objref);
-  
+
   return SegmentSchedulingParameterPolicy::_duplicate (proxy);
 }
 
@@ -130,7 +130,7 @@ FP_Scheduling::SegmentSchedulingParameterPolicy::_duplicate (SegmentSchedulingPa
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -185,19 +185,19 @@ static const CORBA::Long _oc_FP_Scheduling_SegmentSchedulingParameterPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   55,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x46505f53), 
-  ACE_NTOHL (0x63686564), 
-  ACE_NTOHL (0x756c696e), 
-  ACE_NTOHL (0x672f5365), 
-  ACE_NTOHL (0x676d656e), 
-  ACE_NTOHL (0x74536368), 
-  ACE_NTOHL (0x6564756c), 
-  ACE_NTOHL (0x696e6750), 
-  ACE_NTOHL (0x6172616d), 
-  ACE_NTOHL (0x65746572), 
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63793a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x46505f53),
+  ACE_NTOHL (0x63686564),
+  ACE_NTOHL (0x756c696e),
+  ACE_NTOHL (0x672f5365),
+  ACE_NTOHL (0x676d656e),
+  ACE_NTOHL (0x74536368),
+  ACE_NTOHL (0x6564756c),
+  ACE_NTOHL (0x696e6750),
+  ACE_NTOHL (0x6172616d),
+  ACE_NTOHL (0x65746572),
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63793a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:FP_Scheduling/SegmentSchedulingParameterPolicy:1.0
     33,
   ACE_NTOHL (0x5365676d), 
