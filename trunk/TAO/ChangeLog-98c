@@ -8,6 +8,9 @@ Mon Apr 06 09:59:22 1998  David L. Levine  <levine@cs.wustl.edu>
         * TAO_IDL/Makefile: moved include of rules.local.GNU to after
           include of rules.bin.GNU.  Without this change, tao_idl doesn't
           get build on LynxOS.
+ 
+        * TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): ACE_OS::mktemp ()
+          instead of mktemp ().
 
 Sun Apr 05 18:05:26 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
