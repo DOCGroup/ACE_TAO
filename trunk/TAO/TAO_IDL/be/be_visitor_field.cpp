@@ -17,9 +17,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 
 #include "be_visitor_field.h"
 
@@ -642,6 +642,7 @@ be_visitor_field_cs::visit_enum (be_enum *node)
   return 0;
 }
 
+int
 be_visitor_field_cs::visit_sequence (be_sequence *node)
 {
   if (node->node_type () != AST_Decl::NT_typedef // not a typedef
