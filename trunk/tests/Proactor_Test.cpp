@@ -41,6 +41,7 @@ ACE_RCSID (tests,
 #include "ace/Task.h"
 #include "ace/Thread_Semaphore.h"
 #include "ace/OS_NS_signal.h"
+#include "ace/OS_NS_errno.h"
 #include "ace/os_include/netinet/os_tcp.h"
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
