@@ -1,6 +1,72 @@
-Fri Jul  2 16:28:08 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
-
-		
+Fri Jul  2 16:28:08 1999 Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+  
+	  Another big step generating code for AMI. Done with sendc
+	  methods and Reply Handler call back methods. Both header files
+	  and cpp files contents. 
+  	 
+  	  TO-DO: Reply Handler skeletons. Reply Handler servants. 
+  
+	* tao/Asynch_Invocation.h
+	* tao/Asynch_Invocation.i
+	* tao/Makefile
+	* tao/MessagingC.h
+	* tao/MessagingS.cpp
+	* tao/Reply_Dispatcher.cpp
+	* tao/Reply_Dispatcher.h
+  
+	* TAO_IDL/Makefile
+	* TAO_IDL/ast/ast_decl.cpp
+	* TAO_IDL/be/be_codegen.cpp
+	* TAO_IDL/be/be_decl.cpp
+	* TAO_IDL/be/be_interface.cpp
+	* TAO_IDL/be/be_type.cpp
+	* TAO_IDL/be/be_visitor_argument.cpp
+	* TAO_IDL/be/be_visitor_factory.cpp
+	* TAO_IDL/be/be_visitor_interface.cpp
+	* TAO_IDL/be/be_visitor_operation.cpp
+	* TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp
+	* TAO_IDL/be/be_visitor_interface/ami_handler_stub_ch.cpp
+	* TAO_IDL/be/be_visitor_interface/interface.cpp
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+	* TAO_IDL/be/be_visitor_operation/ami_arglist.cpp
+	* TAO_IDL/be/be_visitor_operation/ami_ch.cpp
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp
+	* TAO_IDL/be/be_visitor_operation/ami_handler_arglist.cpp
+	* TAO_IDL/be/be_visitor_operation/ami_handler_operation_ch.cpp
+	* TAO_IDL/be/be_visitor_operation/argument.cpp
+	* TAO_IDL/be/be_visitor_operation/argument_invoke.cpp
+	* TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp
+	* TAO_IDL/be/be_visitor_operation/rettype.cpp
+	* TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp
+	* TAO_IDL/be_include/be_codegen.h
+	* TAO_IDL/be_include/be_decl.h
+	* TAO_IDL/be_include/be_interface.h
+	* TAO_IDL/be_include/be_type.h
+	* TAO_IDL/be_include/be_visitor_argument.h
+	* TAO_IDL/be_include/be_visitor_interface.h
+	* TAO_IDL/be_include/be_visitor_operation.h
+	* TAO_IDL/include/ast_decl.h
+  
+  	  Added the following files for the changes mentioned above.
+  
+	* TAO_IDL/be/be_visitor_rettype.cpp
+	* TAO_IDL/be/be_visitor_argument/ami_handler_result_arg.cpp
+	* TAO_IDL/be/be_visitor_interface/ami_handler_servant_ch.cpp
+	* TAO_IDL/be/be_visitor_interface/ami_handler_stub_cs.cpp
+	* TAO_IDL/be/be_visitor_interface/collocated_ami_handler_ch.cpp
+	* TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp
+	* TAO_IDL/be/be_visitor_operation/ami_handler_result_arg.cpp
+	* TAO_IDL/be/be_visitor_operation/ami_handler_operation.cpp
+	* TAO_IDL/be_include/be_visitor_argument/ami_handler_result_arg.h
+	* TAO_IDL/be_include/be_visitor_interface/collocated_ami_handler_ch.h
+	* TAO_IDL/be_include/be_visitor_interface/ami_handler_servant_ch.h
+	* TAO_IDL/be_include/be_visitor_interface/ami_handler_stub_cs.h
+	* TAO_IDL/be_include/be_visitor_operation/ami_handler_operation_cs.h
+	* TAO_IDL/be_include/be_visitor_operation/ami_handler_result_arg.h
+	* TAO_IDL/be_include/be_visitor_operation/ami_handler_operation.h
 
 Wed Jun 23 23:19:34 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
   
