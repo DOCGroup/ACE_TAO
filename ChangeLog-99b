@@ -1,5 +1,9 @@
 Mon Jun 14 19:33:04 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/SOCK_Acceptor.cpp (accept): Fixed a bizarre problem with
+ 	  Win32 where it's imperative that the third parameter to <accept>
+ 	  must be a NULL pointer if we want to ignore the client address.
+
 	* ace/OS.i: Cleaned up warnings in join_leaf() and ioctl() due to
  	  unused args.  Thanks to Marina for reporting this.
 
