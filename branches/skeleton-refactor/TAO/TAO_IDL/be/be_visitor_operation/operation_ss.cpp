@@ -252,11 +252,16 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   // Upcall_Command instantiation.
   *os << be_nl
       << "Upcall_Command command (" << be_idt_nl
-      << "  impl";
+      << "impl";
 
   if (!node->void_return_type () || node->argument_count () > 0)
     {
-      *os << ", args";
+      // server_request.operations_details () will be non-zero in the
+      // thru-POA collocation case.  Use them if available.
+      *os << "," << be_nl
+          << "server_request.operations_details ()" << be_nl
+          << "? server_request.operations_details ()->args ()" << be_nl
+          << ": args";
     }
 
   *os << ");" << be_uidt_nl << be_nl;
