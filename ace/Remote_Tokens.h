@@ -42,7 +42,7 @@ class ACE_Export ACE_Remote_Token_Proxy : public ACE_Token_Proxy
   //    ACE_Token_Proxy.
   //
   // = BUGS
-  //   Distributed sleep_hooks have not been implemented.  owner_id ()
+  //   Distributed sleep_hooks have not been implemented.  <owner_id>
   //   is not implemented.
 public:
   ACE_Remote_Token_Proxy (void);
@@ -89,14 +89,14 @@ public:
   // Renew the token by offering to release it if there are any other
   // waiters, otherwise get the token back immediately.  This renew
   // has the same semantics as ACE_Local_Mutex release.  It is
-  // semantically equivalent to <this->release()> followed by
-  // <this->acquire()>, but it is faster.  options contains the
-  // timeout value used if renew blocks.  As with acquire, the timer
-  // is maintained at the token server.  If there are waiters and
-  // requeue_position == -1, the caller is queued at the rear of the
-  // waiter list.  Otherwise, requeue_position specifies the number of
-  // waiters to "let by" before reacquiring the token (effectively,
-  // the position in the waiter list.)
+  // semantically equivalent to <release> followed by <acquire>, but
+  // it is faster.  options contains the timeout value used if renew
+  // blocks.  As with acquire, the timer is maintained at the token
+  // server.  If there are waiters and requeue_position == -1, the
+  // caller is queued at the rear of the waiter list.  Otherwise,
+  // requeue_position specifies the number of waiters to "let by"
+  // before reacquiring the token (effectively, the position in the
+  // waiter list.)
 
   virtual int release (ACE_Synch_Options &options =
                        ACE_Synch_Options::synch);

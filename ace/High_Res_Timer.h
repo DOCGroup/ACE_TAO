@@ -33,9 +33,9 @@ class ACE_Export ACE_High_Res_Timer
   // = DESCRIPTION
   //     Most of the member functions don't return values.  The only
   //     reason that one would fail is if high-resolution time isn't
-  //     supported on the platform.  To avoid impacting performance and
-  //     complicating the interface, in that case, ACE_OS::gettimeofday ()
-  //     is used instead.
+  //     supported on the platform.  To avoid impacting performance
+  //     and complicating the interface, in that case,
+  //     <ACE_OS::gettimeofday> is used instead.
   //
   //     The global scale factor is required for platforms that have
   //     high-resolution timers that return units other than
@@ -44,7 +44,7 @@ class ACE_Export ACE_High_Res_Timer
   //     and is used by all instances of High Res Timer.  The member
   //     functions that return or print times use the global scale
   //     factor.  They divide the "time" that they get from
-  //     ACE_OS::gethrtime () by global_scale_factor_ to obtain the
+  //     <ACE_OS::gethrtime> by global_scale_factor_ to obtain the
   //     time in microseconds.  Its units are therefore 1/microsecond.
   //     On Solaris, a scale factor of 1000 should be used because its
   //     high-resolution timer returns nanoseconds.  However, on Intel
@@ -56,11 +56,11 @@ class ACE_Export ACE_High_Res_Timer
   //     NOTE:  the elapsed time calculations in the print methods use
   //     ACE_hrtime_t values.  Those methods do _not_ check for overflow!
   //
-  //     NOTE:  Gabe <begeddov@proaxis.com> raises this issue
-  //     regarding ACE_OS::gethrtime ():  on multi-processors, the
-  //     processor that you query for your timer.stop () value might
-  //     not be the one you queried for timer.start ().  Its not clear
-  //     how much divergence there would be, if any.
+  //     NOTE: Gabe <begeddov@proaxis.com> raises this issue regarding
+  //     <ACE_OS::gethrtime>: on multi-processors, the processor that
+  //     you query for your <timer.stop> value might not be the one
+  //     you queried for <timer.start>.  Its not clear how much
+  //     divergence there would be, if any.
   //
   //     This issue is not mentioned in the Solaris 2.5.1 gethrtime
   //     man page.
@@ -149,8 +149,8 @@ public:
   void print_total (const char *message,
                     const int iterations = 1,
                     ACE_HANDLE handle = ACE_STDOUT) const;
-  // Print total time.  NOTE:  only use print_total ()
-  // if incremental timings had been used!
+  // Print total time.  NOTE: only use <print_total> if incremental
+  // timings had been used!
 
   void print_ave (const char *message,
                   const int iterations = 1,
@@ -166,17 +166,17 @@ public:
 
   static ACE_Time_Value gettimeofday (const ACE_OS::ACE_HRTimer_Op =
                                         ACE_OS::ACE_HRTIMER_GETTIME);
-  // THIS FUNCTION IS DEPRECATED.  PLEASE USE ACE_OS::gettimeofday ()
-  // INSTEAD!
-  // Calls ACE_High_Res_Timer::hrtime_to_tv passing ACE_OS::gethrtime.
-  // This function can be used to parameterize objects such as
-  // ACE_Timer_Queue::gettimeofday.  If global_scale_factor_ is not
-  // set, and we're on a platform that requires global_scale_factor_
-  // (e.g., Win32), ACE_OS::gettimeofday will be used instead of
-  // ACE_OS::gethrtime.  This allows applications on Intel to use
-  // High_Res_Timer even when global_scale_factor is not set.
-  // However, setting the global_scale_factor_ appropriately will
-  // result in the finest resolution possible.
+  // THIS FUNCTION IS DEPRECATED.  PLEASE USE <ACE_OS::gettimeofday>
+  // INSTEAD!  Calls <ACE_High_Res_Timer::hrtime_to_tv> passing
+  // <ACE_OS::gethrtime>.  This function can be used to parameterize
+  // objects such as <ACE_Timer_Queue::gettimeofday>.  If
+  // <global_scale_factor_> is not set, and we're on a platform that
+  // requires <global_scale_factor_> (e.g., Win32),
+  // ACE_OS::gettimeofday will be used instead of <ACE_OS::gethrtime>.
+  // This allows applications on Intel to use <High_Res_Timer> even
+  // when <global_scale_factor> is not set.  However, setting the
+  // <global_scale_factor_> appropriately will result in the finest
+  // resolution possible.
 
   static void hrtime_to_tv (ACE_Time_Value &tv,
                             const ACE_hrtime_t hrt);
@@ -193,9 +193,9 @@ private:
   static ACE_hrtime_t gettime (const ACE_OS::ACE_HRTimer_Op =
                                  ACE_OS::ACE_HRTIMER_GETTIME);
   // For internal use: gets the high-resolution time using
-  // ACE_OS::gethrtime ().  Except on platforms that require that the
-  // global_scale_factor_ be set, such as ACE_WIN32, uses the
-  // low-resolution clock if the global_scale_factor_ has not been
+  // <ACE_OS::gethrtime>.  Except on platforms that require that the
+  // <global_scale_factor_> be set, such as ACE_WIN32, uses the
+  // low-resolution clock if the <global_scale_factor_> has not been
   // set.
 
   ACE_hrtime_t start_;

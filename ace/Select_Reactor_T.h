@@ -209,15 +209,16 @@ public:
   virtual int register_handler (ACE_Event_Handler *eh,
                                 ACE_Reactor_Mask mask);
   // Register a <eh> with a particular <mask>.  Note that the
-  // <Select_Reactor> will call eh->get_handle() to extract the
-  // underlying I/O handle.
+  // <Select_Reactor> will call <ACE_Event_Handler::get_handle> to
+  // extract the underlying I/O handle.
 
   virtual int register_handler (ACE_HANDLE handle,
                                 ACE_Event_Handler *eh,
                                 ACE_Reactor_Mask mask);
   // Register a <eh> with a particular <mask>.  Note that since the
   // <handle> is given the Select_Reactor will *not* call
-  // eh->get_handle() to extract the underlying I/O handle.
+  // <ACE_Event_Handler::get_handle> to extract the underlying I/O
+  // handle.
 
 #if defined (ACE_WIN32)
 
@@ -265,7 +266,8 @@ public:
   // Removes the <mask> binding of <eh> from the Select_Reactor.  If
   // there are no more bindings for this <eh> then it is removed from
   // the Select_Reactor.  Note that the Select_Reactor will call
-  // eh->get_handle() to extract the underlying I/O handle.
+  // <ACE_Event_Handler::get_handle> to extract the underlying I/O
+  // handle.
 
   virtual int remove_handler (ACE_HANDLE handle,
                               ACE_Reactor_Mask);
@@ -388,7 +390,7 @@ public:
                       ACE_Time_Value * = 0);
   // Called by a thread when it wants to unblock the Select_Reactor.
   // This wakeups the <ACE_Select_Reactor> if currently blocked in
-  // select()/poll().  Pass over both the <Event_Handler> *and* the
+  // <select>/<poll>.  Pass over both the <Event_Handler> *and* the
   // <mask> to allow the caller to dictate which <Event_Handler>
   // method the <Select_Reactor> will invoke.  The <ACE_Time_Value>
   // indicates how long to blocking trying to notify the
@@ -414,11 +416,11 @@ public:
 
   virtual void requeue_position (int);
   // Set position that the main ACE_Select_Reactor thread is requeued in the
-  // list of waiters during a notify() callback.
+  // list of waiters during a <notify> callback.
 
   virtual int requeue_position (void);
   // Get position that the main ACE_Select_Reactor thread is requeued in the
-  // list of waiters during a notify() callback.
+  // list of waiters during a <notify> callback.
 
   // = Low-level wait_set mask manipulation methods.
   virtual int mask_ops (ACE_Event_Handler *eh,

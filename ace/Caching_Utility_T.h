@@ -32,14 +32,14 @@ class ACE_Pair_Caching_Utility
   //    Defines a helper class for the Caching Strategies.
   //
   // = DESCRIPTION
-  //    This class defines the methods commonly used by the different
-  //    caching strategies. For instance: clear_cache () method which
-  //    decides and purges the entry from the container.  Note: This
-  //    class helps in the caching_strategies using a container
-  //    containing entries of <KEY, ACE_Pair<VALUE, attributes>>
-  //    kind. The attributes helps in deciding the entries to be
-  //    purged. The Cleanup_Strategy is the callback class to which
-  //    the entries to be cleaned up will be delegated.
+  //   This class defines the methods commonly used by the different
+  //   caching strategies. For instance: <clear_cache> method which
+  //   decides and purges the entry from the container.  Note: This
+  //   class helps in the caching_strategies using a container
+  //   containing entries of <KEY, ACE_Pair<VALUE, attributes>>
+  //   kind. The attributes helps in deciding the entries to be
+  //   purged. The Cleanup_Strategy is the callback class to which the
+  //   entries to be cleaned up will be delegated.
 public:
 
   typedef ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
@@ -84,7 +84,7 @@ class ACE_Recyclable_Handler_Caching_Utility
   //
   // = DESCRIPTION
   //    This class defines the methods commonly used by the different
-  //    caching strategies. For instance: clear_cache () method which
+  //    caching strategies. For instance: <clear_cache> method which
   //    decides and purges the entry from the container.  Note: This
   //    class helps in the caching_strategies using a container
   //    containing entries of <KEY, Svc_Handler> kind. The attributes
@@ -136,7 +136,7 @@ class ACE_Handler_Caching_Utility
   //
   // = DESCRIPTION
   //    This class defines the methods commonly used by the different
-  //    caching strategies. For instance: clear_cache () method which
+  //    caching strategies. For instance: <clear_cache> method which
   //    decides and purges the entry from the container.  Note: This
   //    class helps in the caching_strategies using a container
   //    containing entries of <KEY, HANDLER> kind where the HANDLER
@@ -190,7 +190,7 @@ class ACE_Null_Caching_Utility
   //
   // = DESCRIPTION
   //    This class defines the methods commonly used by the different
-  //    caching strategies. For instance: clear_cache () method which
+  //    caching strategies. For instance: <clear_cache> method which
   //    decides and purges the entry from the container.  Note: This
   //    class is be used with the Null_Caching_Strategy. The
   //    Cleanup_Strategy is the callback class to which the entries to

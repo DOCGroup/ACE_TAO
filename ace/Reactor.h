@@ -309,7 +309,7 @@ public:
 
   virtual int suspend_handler (ACE_Event_Handler *event_handler);
   // Suspend <event_handler> temporarily.  Use
-  // <event_handler->get_handle()> to get the handle.
+  // <ACE_Event_Handler::get_handle> to get the handle.
 
   virtual int suspend_handler (ACE_HANDLE handle);
   // Suspend <handle> temporarily.
@@ -321,8 +321,8 @@ public:
   // Suspend all <handles> temporarily.
 
   virtual int resume_handler (ACE_Event_Handler *event_handler);
-  // Resume <event_handler>. Use <event_handler->get_handle()> to get
-  // the handle.
+  // Resume <event_handler>. Use <ACE_Event_Handler::get_handle> to
+  // get the handle.
 
   virtual int resume_handler (ACE_HANDLE handle);
   // Resume <handle>.

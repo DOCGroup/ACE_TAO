@@ -479,19 +479,17 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind (const char *name,
                         (ACE_Name_Node *)
                         this->shared_malloc (sizeof (ACE_Name_Node) + ACE_OS::strlen (name) + 1),
                         -1);
+  char *name_ptr = (char *) (new_node + 1);
 
-  // This is a clever trick that skips over the <ACE_Name_Node> chunk
-  // and points to where the string name goes.
-  new_node->name_ = (char *) (new_node + 1);
-
-  // Insert new node at the head of the list.  Note that (new_node) is
-  // *not* a cast, it's operator placement new.
-  ACE_NEW_RETURN (this->cb_ptr_->name_head_,
-                  (new_node) ACE_Name_Node (name,
-                                            ACE_reinterpret_cast (char *,
-                                                                  pointer),
-                                            ACE_POINTER_CAST (this->cb_ptr_->name_head_)),
-                  -1);
+  // Use operator placement new to insert <new_node> at the head of
+  // the linked list of <ACE_Name_Node>s.
+  ACE_Name_Node *result =
+    new (new_node) ACE_Name_Node (name,
+                                  name_ptr,
+                                  ACE_reinterpret_cast (char *,
+                                                        pointer),
+                                  ACE_POINTER_CAST (this->cb_ptr_->name_head_));
+  this->cb_ptr_->name_head_ = result;
   return 0;
 }
 

@@ -245,7 +245,7 @@ protected:
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler);
   // Bridge method for activating a <svc_handler> with the appropriate
   // concurrency strategy.  The default behavior of this method is to
-  // activate the SVC_HANDLER by calling its open() method (which
+  // activate the SVC_HANDLER by calling its <open> method (which
   // allows the SVC_HANDLER to define its own concurrency strategy).
   // However, subclasses can override this strategy to do more
   // sophisticated concurrency activations (such as creating the
@@ -311,7 +311,7 @@ protected:
                          int reuse_addr,
                          int flags,
                          int perms);
-  // Implementation the connect() methods
+  // Implementation the <connect> methods.
 
   MAP_MANAGER handler_map_;
   // Lookup table that maps an I/O handle to a SVC_HANDLER *.

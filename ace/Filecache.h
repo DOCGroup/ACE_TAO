@@ -143,7 +143,7 @@ private:
   // A reference to the low level instance.
 
   ACE_HANDLE handle_;
-  // A dup()'d version of the one from this->file_.
+  // A <dup>'d version of the one from <file_>.
 
   int mapit_;
 };

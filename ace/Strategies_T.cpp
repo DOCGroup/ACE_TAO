@@ -28,10 +28,24 @@ ACE_Singleton_Strategy<SVC_HANDLER>::open (SVC_HANDLER *sh,
 {
   ACE_TRACE ("ACE_Singleton_Strategy<SVC_HANDLER>::open");
 
-  if (this->svc_handler_ != 0)
+  if (this->delete_svc_handler_ 
+      && this->svc_handler_ != 0)
     delete this->svc_handler_;
 
-  this->svc_handler_ = sh;
+  // If <sh> is NULL then create a new <SVC_HANDLER>.
+  if (sh == 0)
+    {
+      ACE_NEW_RETURN (this->svc_handler_,
+                      SVC_HANDLER,
+                      -1);
+      this->delete_svc_handler_ = 1;
+    }
+  else
+    {
+      this->svc_handler_ = sh;
+      this->delete_svc_handler_ = 0;
+    }
+
   return 0;
 }
 
@@ -218,20 +232,22 @@ ACE_Thread_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handler
 {
   ACE_TRACE ("ACE_Thread_Strategy<SVC_HANDLER>::activate_svc_handler");
   // Call up to our parent to do the SVC_HANDLER initialization.
-  if (this->inherited::activate_svc_handler (svc_handler, arg) == -1)
+  if (this->inherited::activate_svc_handler (svc_handler,
+                                             arg) == -1)
     return -1;
   else
     // Turn the <svc_handler> into an active object (if it isn't
     // already one as a result of the first activation...)
-    return svc_handler->activate (this->thr_flags_, this->n_threads_);
+    return svc_handler->activate (this->thr_flags_,
+                                  this->n_threads_);
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Accept_Strategy
-(const ACE_PEER_ACCEPTOR_ADDR &local_addr,
- int restart,
- ACE_Reactor *reactor)
-  : reactor_ (reactor)
+  (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
+   int restart,
+   ACE_Reactor *reactor)
+    : reactor_ (reactor)
 {
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Accept_Strategy");
 
@@ -395,7 +411,9 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::ACE_Cache
   ACE_NEW (this->reverse_lock_,
            REVERSE_MUTEX (*this->lock_));
 
-  if (this->open (cre_s, con_s, rec_s) == -1)
+  if (this->open (cre_s,
+                  con_s,
+                  rec_s) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("ACE_Cached_Connect_Strategy::ACE_Cached_Connect_Strategy")));

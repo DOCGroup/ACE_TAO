@@ -86,7 +86,7 @@ class ACE_Export ACE_Select_Reactor_Notify : public ACE_Reactor_Notify
   // = DESCRIPTION
   //     This implementation is necessary for cases where the
   //     <ACE_Select_Reactor> is run in a multi-threaded program.  In
-  //     this case, we need to be able to unblock select() or poll()
+  //     this case, we need to be able to unblock <select> or <poll>
   //     when updates occur other than in the main
   //     <ACE_Select_Reactor> thread.  To do this, we signal an
   //     auto-reset event the <ACE_Select_Reactor> is listening on.
@@ -112,7 +112,7 @@ public:
                           ACE_Time_Value * = 0);
   // Called by a thread when it wants to unblock the
   // <ACE_Select_Reactor>.  This wakeups the <ACE_Select_Reactor> if
-  // currently blocked in select()/poll().  Pass over both the
+  // currently blocked in <select>/<poll>.  Pass over both the
   // <Event_Handler> *and* the <mask> to allow the caller to dictate
   // which <Event_Handler> method the <ACE_Select_Reactor> will
   // invoke.  The <ACE_Time_Value> indicates how long to blocking
@@ -321,7 +321,7 @@ public:
     // Default size of the Select_Reactor's handle table.
   };
 
-  ACE_Select_Reactor_Impl ();
+  ACE_Select_Reactor_Impl (void);
 
   friend class ACE_Select_Reactor_Notify;
   friend class ACE_Select_Reactor_Handler_Repository;
@@ -341,14 +341,14 @@ protected:
   // Table that maps <ACE_HANDLEs> to <ACE_Event_Handler *>'s.
 
   ACE_Select_Reactor_Handle_Set wait_set_;
-  // Tracks handles that are waited for by select().
+  // Tracks handles that are waited for by <select>.
 
   ACE_Select_Reactor_Handle_Set suspend_set_;
   // Tracks handles that are currently suspended.
 
   ACE_Select_Reactor_Handle_Set ready_set_;
   // Track HANDLES we are interested in for various events that must
-  // be dispatched *without* going through select().
+  // be dispatched *without* going through <select>.
 
   ACE_Timer_Queue *timer_queue_;
   // Defined as a pointer to allow overriding by derived classes...
@@ -378,7 +378,7 @@ protected:
 
   int requeue_position_;
   // Position that the main ACE_Select_Reactor thread is requeued in
-  // the list of waiters during a notify() callback.  If this value ==
+  // the list of waiters during a <notify> callback.  If this value ==
   // -1 we are requeued at the end of the list.  Else if it's 0 then
   // we are requeued at the front of the list.  Else if it's > 1 then
   // that indicates the number of waiters to skip over.

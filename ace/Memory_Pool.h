@@ -193,7 +193,7 @@ protected:
   virtual int commit_backing_store_name (size_t rounded_bytes,
                                     off_t &offset);
   // Commits a new shared memory segment if necessary after an
-  // acquire() or a signal.  <offset> is set to the new offset into
+  // <acquire> or a signal.  <offset> is set to the new offset into
   // the backing store.
 
   // = Keeps track of all the segments being used.
@@ -487,7 +487,7 @@ class ACE_Export ACE_Lite_MMAP_Memory_Pool : public ACE_MMAP_Memory_Pool
   // = DESCRIPTION
   //     This implementation allows memory to be shared between
   //     processes.  However, unlike the <ACE_MMAP_Memory_Pool>
-  //     the sync() methods are no-ops, which means that we don't pay
+  //     the <sync> methods are no-ops, which means that we don't pay
   //     for the price of flushing the memory to the backing store on
   //     every update.  Naturally, this trades off increased
   //     performance for less reliability if the machine crashes.

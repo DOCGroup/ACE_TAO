@@ -154,7 +154,7 @@ private:
     // Max micro seconds to wait for token if not blocking forever.
 
     ACE_UINT32 arg_;
-    // value returned in Token_Reply::arg ();
+    // value returned in <Token_Reply::arg>;
 
     char data_[ACE_MAXTOKENNAMELEN + ACE_MAXCLIENTIDLEN + 3];
     // The data portion contains the <tokenName_> including a 0 terminator,

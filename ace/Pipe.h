@@ -49,8 +49,8 @@ public:
   int open (ACE_HANDLE handles[2]);
   // Open the pipe and initialize the handles.
 
-  int open (void);
-  // Open the pipe.
+  int open (int buffer_size = ACE_DEFAULT_MAX_SOCKET_BUFSIZ);
+  // Open the pipe, setting the buffer size to the maximum.
 
   int close (void);
   // Close down the pipe HANDLEs;
@@ -76,6 +76,6 @@ private:
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/Pipe.i"
-#endif
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #endif /* ACE_PIPE_H */

@@ -96,7 +96,7 @@ public:
   void active (int);
 
   void fini (void);
-  // Calls fini() on <type_>
+  // Calls <fini> on <type_>
 
   int fini_called (void) const;
   // Check if the service has been fini'ed.
@@ -127,7 +127,7 @@ private:
   // 1 if svc is currently active, otherwise 0.
 
   int fini_already_called_;
-  // 1 if fini() on <type_> has already been called, otherwise 0.
+  // 1 if <fini> on <type_> has already been called, otherwise 0.
 };
 
 class ACE_Export ACE_Service_Object_Ptr
