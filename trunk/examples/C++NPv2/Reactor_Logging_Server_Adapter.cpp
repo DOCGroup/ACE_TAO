@@ -4,7 +4,9 @@
 ** Copyright 2002 Addison Wesley. All Rights Reserved.
 */
 
-#include "ace/ace_wchar.h"
+#ifndef _REACTOR_LOGGING_SERVER_ADAPTER_C
+#define _REACTOR_LOGGING_SERVER_ADAPTER_C
+
 #include "ace/ACE.h"
 #include "Reactor_Logging_Server_Adapter.h"
 
@@ -12,13 +14,14 @@ template <class ACCEPTOR> int
 Reactor_Logging_Server_Adapter<ACCEPTOR>::init (int argc,
                                                 ACE_TCHAR *argv[]) {
   int i;
-  char *char_argv[argc];
-  for (i = 0; i < argc; ++i)
+  const int MAX_ARGS = 10;
+  char *char_argv[MAX_ARGS];
+  for (i = 0; i < argc && i < MAX_ARGS; ++i)
     char_argv[i] = ACE::strnew (ACE_TEXT_ALWAYS_CHAR (argv[i]));
   ACE_NEW_RETURN (server_,
                   Reactor_Logging_Server<ACCEPTOR>
-                    (argc, char_argv, ACE_Reactor::instance ()), -1);
-  for (i = 0; i < argc; ++i)
+                    (i, char_argv, ACE_Reactor::instance ()), -1);
+  for (i = 0; i < argc && i < MAX_ARGS; ++i)
     ACE::strdelete (char_argv[i]);
   return 0;
 }
@@ -57,3 +60,5 @@ Reactor_Logging_Server_Adapter<ACCEPTOR>::suspend ()
 template <class ACCEPTOR> int
 Reactor_Logging_Server_Adapter<ACCEPTOR>::resume () 
 { return server_->reactor ()->resume_handler (server_); }
+
+#endif /* _REACTOR_LOGGING_SERVER_ADAPTER_C */
