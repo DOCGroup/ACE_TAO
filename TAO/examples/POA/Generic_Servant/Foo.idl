@@ -18,6 +18,9 @@ interface Foo
   // A simple oneway operation, the idea is to measure any differences
   // to the previous one.
 
+  void timed_operation (in unsigned long timeout);
+  // A timed operation.
+
   void shutdown ();
   // Shutdown the server.
 };

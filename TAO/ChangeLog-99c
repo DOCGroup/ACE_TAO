@@ -1,3 +1,15 @@
+Wed Apr 28 01:45:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/Generic_Servant/MyFooServant.cpp (timed_operation):
+	  Added a timed operation.  This can be used to see how the POA
+	  dispatches multiple upcalls simultaneously.
+
+	* examples/POA/Reference_Counted_Servant/server.cpp
+	  (Reference_Counted_Foo): There is no need to completely redefine
+	  Reference_Counted_Foo.  Simply use the magic of multiple
+	  inheritance and inherit from PortableServer::RefCountServantBase
+	  and MyFooServant.
+
 Wed Apr 28 00:44:59 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/CosEvent_Service/CosEvent_Service.{h,cpp}:
