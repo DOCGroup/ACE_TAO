@@ -10,6 +10,7 @@
 
 #include "orbsvcs/FT_NotifierS.h"
 #include <orbsvcs/Notify/Notify_EventChannelFactory_i.h>
+#include <ace/Vector_t.h>
 
 /////////////////////
 // Forward references
@@ -67,55 +68,39 @@ public:
   virtual void push_structured_fault (
       const CosNotification::StructuredEvent & event
     )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void push_sequence_fault (
     const CosNotification::EventBatch & events
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ));
+  ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual ::CosNotifyFilter::Filter_ptr create_subscription_filter (
     const char * constraint_grammar
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , CosNotifyFilter::InvalidGrammar
-  ));
+  ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyFilter::InvalidGrammar));
 
   virtual FT::FaultNotifier::ConsumerId connect_structured_fault_consumer (
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
     CosNotifyFilter::Filter_ptr filter
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ));
+  ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual FT::FaultNotifier::ConsumerId connect_sequence_fault_consumer (
     CosNotifyComm::SequencePushConsumer_ptr push_consumer,
     CosNotifyFilter::Filter_ptr filter
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ));
+  ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void disconnect_consumer (
     FT::FaultNotifier::ConsumerId connection
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , CosEventComm::Disconnected
-  ));
+  ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected));
 
   //////////////////////////////////////////
   // CORBA interface PullMonitorable methods
   virtual CORBA::Boolean is_alive ()
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ));
+  ACE_THROW_SPEC ((CORBA::SystemException));
 
   /////////////////////////
   // Implementation methods
@@ -174,15 +159,35 @@ private:
    */
   ACE_CString identity_;
 
+  /////////////////////////////
+  //
+  struct ProxyInfo
+  {
+    ::CosNotifyChannelAdmin::ProxyID proxyId_;
+    ::CosNotifyChannelAdmin::ProxySupplier_var proxyVar_;
+
+    ProxyInfo ();
+    ProxyInfo (const ProxyInfo & rhs);
+  };
+
+  typedef ACE_Vector <ProxyInfo> ProxyInfoVec;
+
+  ProxyInfoVec proxyInfos_;
 
 /////////////////////
   ::CosNotifyChannelAdmin::ChannelID channelId_;
   ::CosNotifyChannelAdmin::EventChannel_var notify_channel_;
+  ::CosNotifyFilter::FilterFactory_var filter_factory_;
   ::CosNotifyChannelAdmin::SupplierAdmin_var supplierAdmin_;
   ::CosNotifyChannelAdmin::ConsumerAdmin_var consumerAdmin_;
 
   ::CosNotifyChannelAdmin::StructuredProxyPushConsumer_var structuredProxyPushConsumer_;
   ::CosNotifyChannelAdmin::SequenceProxyPushConsumer_var sequenceProxyPushConsumer_;
+
+  /**
+    * boolean true means display debug messages (default is false)
+    */
+  int verbose_;
 
 };
 
