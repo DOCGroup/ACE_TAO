@@ -265,20 +265,26 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << ");" << be_uidt_nl << be_uidt_nl;
   *os << "if (_tao_adapter == 0)" << be_idt_nl
       << "{" << be_idt_nl
-      << "ACE_THROW (CORBA::INTF_REPOS ());" << be_uidt_nl
+      << "ACE_THROW (CORBA::INTF_REPOS (CORBA::OMGVMCID | 1," << be_nl
+      << "                              CORBA::COMPLETED_NO));" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
-  *os << full_skel_name << " *_tao_impl =" << be_idt_nl
-      << "static_cast<" << full_skel_name
-      << " *> (_tao_servant);" << be_uidt_nl << be_nl;
+
+  // Get the right object implementation.
+  *os << node->full_skel_name () << " * const impl =" << be_idt_nl
+      << "static_cast<" << be_idt_nl
+      << node->full_skel_name () << " *> (" << be_idt_nl
+      << "static_cast<TAO_Object_Adapter::Servant_Upcall *> (" << be_idt_nl
+      << "servant_upcall)->servant ()" << be_uidt_nl
+      << ");" << be_uidt << be_uidt << be_uidt_nl << be_nl;
 
   *os << "CORBA::InterfaceDef_ptr _tao_retval = " << be_idt_nl
-      << "_tao_impl->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);"
+      << "impl->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);"
       << be_uidt_nl
       << "ACE_CHECK;" << be_nl << be_nl
       << "server_request.init_reply ();" << be_nl
       << "TAO_OutputCDR &_tao_out = *server_request.outgoing ();"
       << be_nl << be_nl
-      << "CORBA::Boolean _tao_result =" << be_idt_nl
+      << "CORBA::Boolean const _tao_result =" << be_idt_nl
       << "_tao_adapter->interfacedef_cdr_insert (" << be_idt << be_idt_nl
       << "_tao_out," << be_nl
       << "_tao_retval" << be_uidt_nl
