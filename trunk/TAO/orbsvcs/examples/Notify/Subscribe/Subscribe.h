@@ -3,18 +3,18 @@
 // ==========================================================================
 //
 // = FILENAME
-//   Filter.h
+//   Subscribe.h
 //
 // = DESCRIPTION
-//   Class to demo structured event filtering.
+//   Class to demo structured event subscription.
 //
 // = AUTHOR
 //    Pradeep Gore <pradeep@cs.wustl.edu>
 //
 // ==========================================================================
 
-#ifndef NOTIFY_FILTER_CLIENT_H
-#define NOTIFY_FILTER_CLIENT_H
+#ifndef NOTIFY_SUBSCRIBE_CLIENT_H
+#define NOTIFY_SUBSCRIBE_CLIENT_H
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/CosNotifyCommC.h"
@@ -181,7 +181,7 @@ class Subscribe_StructuredPushSupplier : public POA_CosNotifyComm::StructuredPus
   //   Subscribe_StructuredPushSupplier
   //
   // = DESCRIPTION
-  //   Supplier for the filter example.
+  //   Supplier for the SUBSCRIBE example.
   //
  public:
   // = Initialization and Termination code
@@ -233,4 +233,4 @@ protected:
 };
 
 /*****************************************************************/
-#endif /* NOTIFY_FILTER_CLIENT_H */
+#endif /* NOTIFY_SUBSCRIBE_CLIENT_H */
