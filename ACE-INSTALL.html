@@ -947,7 +947,7 @@ option available with
       The default behavior of the ACE Makefiles is to enable native
       exception support.  To disable exception handling, add
       <code>exceptions=0</code> to your <code>make</code> command line
-      invocation, or to your 
+      invocation, or to your
       <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code> file.<p>
 
   <li>egcs may have trouble linking some executables, such as the ACE
@@ -1204,14 +1204,14 @@ Makefile.bor files to compile ACE, the ACE one-button tests, and TAO
 with Borland C++ Builder. <P>
 
 <P><hr align=left width="50%"><P>
-<H4><A NAME="borland">Building and Installing ACE on Win32 with Borland 
+<H4><A NAME="borland">Building and Installing ACE on Win32 with Borland
 C++Builder</A></H4>
 
 If you are building for a machine without a network card, you may want
 to check <A HREF="#win32nonic">here</A> first. <P>
 
 <OL>
-  <LI>Uncompress the ACE distribution into a directory, where it will 
+  <LI>Uncompress the ACE distribution into a directory, where it will
 create an
       ACE_wrappers directory containing the source.  The ACE_wrappers
       directory will be referred to as ACE_ROOT in the following steps -- so
@@ -1239,20 +1239,25 @@ create an
       <BR>
       <CODE>set ACE_ROOT=C:\ACE_wrappers</CODE><BR>
       <BR>
+  <LI>Set the BCBVER environment vairable to the main version of your BCB compiler.
+      Currently 4, 5, and 6 are supported. For example:<BR>
+      <BR>
+      <CODE>set BCBVER=5</CODE><BR>
+      <BR>
   <LI>Change to the ACE_ROOT\ace directory.<BR>
       <BR>
   <LI>Build release DLLs for ACE by going:<BR>
       <BR>
       <CODE>make -f Makefile.bor</CODE><BR>
       <BR>
-  <LI>You can build debug DLLs for ACE by setting the DEBUG environment 
+  <LI>You can build debug DLLs for ACE by setting the DEBUG environment
 variable
       before you run make:<BR>
       <BR>
       <CODE>set DEBUG=1<BR>
       make -f Makefile.bor</CODE><BR>
       <BR>
-  <LI>Optionally install the ACE header files, libraries and executables 
+  <LI>Optionally install the ACE header files, libraries and executables
 for use
       in your applications. Here we are installing them into C:\ACETAO: <BR>
       <BR>
@@ -1260,7 +1265,7 @@ for use
       <BR>
 </OL>
 
-These instructions do not cover all possible build configurations. Please 
+These instructions do not cover all possible build configurations. Please
 see <A
 HREF="http://www.tenermerx.com/tao_bcb/index.html">http://www.tenermerx.com/tao_bcb/index.html</A>
 for more detailed information on building and using ACE+TAO with Borland C++
