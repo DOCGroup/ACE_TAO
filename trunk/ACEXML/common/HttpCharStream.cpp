@@ -75,7 +75,7 @@ ACEXML_HttpCharStream::open (const ACEXML_Char *url)
                        "Refer HTTP/1.1 for details"), -1);
   }
 
-  this->size_ = len;
+  this->size_ = ACE_static_cast (off_t, len);
   return 0;
 }
 
@@ -245,11 +245,11 @@ ACEXML_HttpCharStream::send_request (void)
 {
   char* path = ACE::strnew (ACE_TEXT_ALWAYS_CHAR (this->url_addr_->get_path_name()));
   ACE_Auto_Basic_Array_Ptr<char> path_ptr (path);
-  int commandsize = ACE_OS::strlen (path)
-                    + ACE_OS::strlen (this->url_addr_->get_host_name ())
-                    + 20     // Extra
-                    + 1      // NUL byte
-                    + 16 ;   // Protocol filler...
+  size_t commandsize = ACE_OS::strlen (path)
+                       + ACE_OS::strlen (this->url_addr_->get_host_name ())
+                       + 20     // Extra
+                       + 1      // NUL byte
+                       + 16 ;   // Protocol filler...
 
   char* command;
   ACE_NEW_RETURN (command, char[commandsize], -1);
@@ -275,7 +275,7 @@ ACEXML_HttpCharStream::send_request (void)
 int
 ACEXML_HttpCharStream::available (void)
 {
-  return this->stream_->available();
+  return ACE_static_cast (int, this->stream_->available());
 }
 
 int
@@ -316,7 +316,7 @@ ACEXML_HttpCharStream::read (ACEXML_Char *str,
   str = ACE_TEXT_CHAR_TO_TCHAR (temp);
   if (str == 0)
     return -1;
-  return len;
+  return ACE_static_cast (int, len);
 }
 
 int

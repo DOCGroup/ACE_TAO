@@ -203,7 +203,7 @@ ACEXML_Transcoder::utf82ucs4 (const ACEXML_UTF8 *the_src,
   else
     return NON_UNICODE;
 
-  return forward;
+  return ACE_static_cast (int, forward);
 }
 
 ACEXML_INLINE int
@@ -230,5 +230,5 @@ ACEXML_Transcoder::utf162ucs4 (const ACEXML_UTF16 *src,
       dst = *src;
     }
 
-  return forward;
+  return ACE_static_cast (int, forward);
 }

@@ -208,12 +208,12 @@ ACEXML_NamespaceSupport::processName (const ACEXML_Char *qName,
                                       const ACEXML_Char *&name,
                                       int is_attribute) const
 {
-  int qlen = ACE_OS_String::strlen (qName);
+  size_t qlen = ACE_OS_String::strlen (qName);
   int len = -1;
-  for (int i = 0; i < qlen; ++i)
+  for (size_t i = 0; i < qlen; ++i)
     if (qName [i] == ':')
       {
-        len = i;
+        len = ACE_static_cast (int, i);
         break;
       }
 
