@@ -9,6 +9,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Stream.h"
+#include "ace/Log_Msg.h"
 #include "ace/Log_Record.h"
 #include "ace/streams.h"
 
