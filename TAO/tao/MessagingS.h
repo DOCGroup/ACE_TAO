@@ -1999,7 +1999,8 @@ private:
 #endif /* ACE_HAS_USING_KEYWORD */
 #endif /* TAO_POLLER */
 
-};
+}
+TAO_NAMESPACE_CLOSE
 
 // #include "MessagingS_T.h"
 

@@ -568,8 +568,8 @@ TAO_NAMESPACE  IOP
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong UnknownExceptionInfo;
 
-
-}; // module IOP
+}
+TAO_NAMESPACE_CLOSE // module IOP
 
 void TAO_Export operator<<= (CORBA::Any &, const IOP::TaggedProfile &); // copying version
 void TAO_Export operator<<= (CORBA::Any &, IOP::TaggedProfile*); // noncopying version

@@ -1,4 +1,3 @@
-//
 // $Id$
 //
 
@@ -18,9 +17,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_module.h"
 
@@ -57,7 +56,7 @@ be_visitor_module_ch::visit_module (be_module *node)
       os->indent (); // start from whatever indentation level we were at
       // now generate the class definition
       *os << "TAO_NAMESPACE " // << idl_global->stub_export_macro ()
-	  << " " << node->local_name () << be_nl
+          << " " << node->local_name () << be_nl
           << "{\n";
       os->incr_indent (0);
 
@@ -73,7 +72,7 @@ be_visitor_module_ch::visit_module (be_module *node)
         }
 
       *os << be_uidt_nl
-          << "}; // module " << node->name () << "\n\n";
+          << "}\nTAO_NAMESPACE_CLOSE // module " << node->name () << "\n\n";
 
     }
   return 0;

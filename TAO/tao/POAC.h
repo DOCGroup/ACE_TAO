@@ -2284,7 +2284,8 @@ TAO_NAMESPACE PortableServer{
   TAO_NAMESPACE_STORAGE_CLASS PortableServer::ObjectId *string_to_ObjectId (const char *id);
   TAO_NAMESPACE_STORAGE_CLASS PortableServer::ObjectId *wstring_to_ObjectId (const CORBA::WChar *id);
 
-};
+}
+TAO_NAMESPACE_CLOSE
 
 #if defined (__ACE_INLINE__)
 #include "POAC.i"

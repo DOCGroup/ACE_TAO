@@ -456,7 +456,8 @@ TAO_NAMESPACE  TAO_IOP
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_TAO_IOR_Manipulation;
 
 
-}; // module TAO_IOP
+}
+TAO_NAMESPACE_CLOSE // module TAO_IOP
 
 // Any operators for interface TAO_IOP::TAO_IOR_Manipulation
 void TAO_Export operator<<= (CORBA::Any &, TAO_IOP::TAO_IOR_Manipulation_ptr);
