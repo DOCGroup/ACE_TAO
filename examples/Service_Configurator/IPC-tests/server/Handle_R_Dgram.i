@@ -68,20 +68,20 @@ Handle_R_Dgram::fini (void)
     (this, ACE_Event_Handler::ACCEPT_MASK);
 }
 
-ACE_INLINE int 
+ACE_INLINE ACE_HANDLE
 Handle_R_Dgram::get_handle (void) const
 { 
   return ACE_SOCK_Dgram::get_handle (); 
 }
 
 ACE_INLINE int 
-Handle_R_Dgram::handle_input (int)
+Handle_R_Dgram::handle_input (ACE_HANDLE)
 {
   ACE_INET_Addr sa;
-  char		buf[0x2000]; /* 8 k buffer */
-  int		n;
+  char buf[8 * 1024]; /* 8 k buffer */
+  ssize_t n = this->recv (buf, sizeof buf, sa);
 
-  if ((n = this->recv (buf, sizeof buf, sa)) == -1)
+  if (n == -1)
     return -1;
   else
     ACE_DEBUG ((LM_INFO, "received datagram from host %s on port %d\n",
@@ -99,7 +99,7 @@ Handle_R_Dgram::handle_input (int)
 }
 
 ACE_INLINE int
-Handle_R_Dgram::handle_close (int, ACE_Reactor_Mask)
+Handle_R_Dgram::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   return this->ACE_SOCK_Dgram::close ();
 }

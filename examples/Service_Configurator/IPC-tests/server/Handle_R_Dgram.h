@@ -27,11 +27,11 @@ public:
 
 private:
   int open (const ACE_INET_Addr &r, int async = 0);
-  virtual int get_handle (void) const;
-  virtual int handle_input (int fd);
-  virtual int handle_close (int fd, ACE_Reactor_Mask);
+  virtual ACE_HANDLE get_handle (void) const;
+  virtual int handle_input (ACE_HANDLE fd);
+  virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask);
 
-  static unsigned short DEFAULT_PORT;
+  static u_short DEFAULT_PORT;
 };
 
 extern ACE_Service_Object_Type rd;

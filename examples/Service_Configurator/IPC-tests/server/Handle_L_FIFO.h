@@ -27,9 +27,9 @@ public:
 
 private:
   int open (const char *rendezvous_fifo);
-  virtual int get_handle (void) const;
-  virtual int handle_input (int fd);
-  virtual int handle_close (int fd, ACE_Reactor_Mask);
+  virtual ACE_HANDLE get_handle (void) const;
+  virtual int handle_input (ACE_HANDLE fd);
+  virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask);
 
   static const char *DEFAULT_RENDEZVOUS;
 };

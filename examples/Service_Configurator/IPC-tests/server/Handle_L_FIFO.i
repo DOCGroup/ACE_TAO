@@ -21,7 +21,7 @@ Handle_L_FIFO::open (const char *rendezvous_fifo)
 ACE_INLINE int 
 Handle_L_FIFO::info (char **strp, size_t length) const
 {
-  char       buf[BUFSIZ];
+  char buf[BUFSIZ];
   const char *rendezvous_fifo;
 
   this->get_local_addr (rendezvous_fifo);
@@ -69,14 +69,14 @@ Handle_L_FIFO::fini (void)
     (this, ACE_Event_Handler::ACCEPT_MASK);
 }
 
-ACE_INLINE int 
+ACE_INLINE ACE_HANDLE
 Handle_L_FIFO::get_handle (void) const
 {
   return this->ACE_FIFO::get_handle ();
 }
 
 ACE_INLINE int 
-Handle_L_FIFO::handle_input (int)
+Handle_L_FIFO::handle_input (ACE_HANDLE)
 {
   char buf[PIPE_BUF];
   ACE_Str_Buf msg (buf, 0, sizeof buf);
@@ -91,7 +91,7 @@ Handle_L_FIFO::handle_input (int)
 }
 
 ACE_INLINE int
-Handle_L_FIFO::handle_close (int, ACE_Reactor_Mask)
+Handle_L_FIFO::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   return this->ACE_FIFO::remove ();
 }
