@@ -1,3 +1,13 @@
+Tue Jul 10 15:59:31 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableInterceptorC.h:
+
+	  Include "PolicyC.h" to pull in some policy related exception
+	  definitions.  This fixed a problem with some minimum CORBA
+	  builds with native exception support enabled.  Thanks to
+	  Sangeetha Ramadurai <Sangeetha.Ramadurai@geind.ge.com> for
+	  reporting the problem and providing a fix.
+
 Tue Jul 10 15:56:13 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* tao/GIOP_Message_Lite.h:
