@@ -108,9 +108,13 @@ private:
   // critical path.
 };
 
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+
 // Convenient ostream operator.
-ostream& operator<< (ostream &os, 
+ostream& operator<< (ostream &os,
                      const CORBA_Exception &e);
+
+#endif // (ACE_LACKS_IOSTREAM_TOTALLY)
 
 class TAO_Export CORBA_UserException : public CORBA_Exception
 {
