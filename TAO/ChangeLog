@@ -1,3 +1,12 @@
+Thu Sep 26 12:41:51 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Dynamic.pidl:
+	* tao/PortableIntercepor.pidl:
+	* tao/ObjectReferenceTemplate.pidl:
+
+	  CORBA 3.0 adds the missing "omg.org" typeprefix to the "Dynamic"
+	  and "PortableInterceptor" modules.
+
 Thu Sep 26 13:50:26 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Transport.cpp (close_connection_shared):  Make a check for

@@ -1,4 +1,5 @@
 // -*- IDL -*-
+
 /**
  * @file PortableInterceptor.pidl
  *
@@ -21,7 +22,7 @@
  * The command used to generate code is:
  *
  *  tao_idl
- *     -o orig -Gp -Gd -Ge 1 -Gv -DCORBA3
+ *     -o orig -Gp -Gd -Ge 1 -Gv
  *          -Wb,export_macro=TAO_Export
  *          -Wb,export_include="tao/corbafwd.h"
  *          -Wb,pre_include="ace/pre.h"
@@ -36,10 +37,6 @@
 #ifndef _PORTABLE_INTERCEPTOR_IDL_
 #define _PORTABLE_INTERCEPTOR_IDL_
 
-#ifndef CORBA3
-#define local
-#endif
-
 #include <Current.pidl>
 #include <Dynamic.pidl>
 #include <ObjectReferenceTemplate.pidl>
@@ -47,6 +44,8 @@
 #include <IOP.pidl>
 
 module PortableInterceptor {
+
+  typeprefix PortableInterceptor "omg.org";
 
   local interface Interceptor {
     readonly attribute string name;
@@ -65,8 +64,9 @@ module PortableInterceptor {
   const ReplyStatus SYSTEM_EXCEPTION = 1;
   const ReplyStatus USER_EXCEPTION = 2;
   const ReplyStatus LOCATION_FORWARD = 3;
-  const ReplyStatus LOCATION_FORWARD_PERMANENT = 4;
-  const ReplyStatus TRANSPORT_RETRY = 5;
+  const ReplyStatus LOCATION_FORWARD_PERMANENT = 4;  // @@ TO BE REMOVED
+  const ReplyStatus TRANSPORT_RETRY = 5;  // @@ TO BE RENUMBERED to 4
+  const ReplyStatus UNKNOWN = 6;          // @@ TO BE RENUMBERED to 5
 
   typedef unsigned long SlotId;
 
@@ -108,22 +108,16 @@ module PortableInterceptor {
       in boolean replace);
   };
 
-
-  // new from orbos/01-01-04 ORT
-  //typedef string ServerId ;
-  //typedef string ORBId ;
-  //typedef CORBA::StringSeq AdapterName ;
-  //  typedef CORBA::OctetSeq ObjectId ;
+  // typedef string ServerId;
+  // typedef string ORBId;
+  // typedef CORBA::StringSeq AdapterName;
+  // typedef CORBA::OctetSeq ObjectId;
 
   local interface ServerRequestInfo : RequestInfo {
-    //    #pragma version ServerRequestInfo x.y
     readonly attribute any sending_exception;
-
-    // new from orbos/01-01-04 ORT
-    readonly attribute ServerId server_id ;
-    readonly attribute ORBId orb_id ;
-    readonly attribute AdapterName adapter_name ;
-
+    readonly attribute ServerId server_id;
+    readonly attribute ORBId orb_id;
+    readonly attribute AdapterName adapter_name;
     readonly attribute CORBA::OctetSeq object_id;
     readonly attribute CORBA::OctetSeq adapter_id;
     readonly attribute CORBA::RepositoryId target_most_derived_interface;
@@ -150,33 +144,28 @@ module PortableInterceptor {
     void send_exception (in ServerRequestInfo ri) raises (ForwardRequest);
     void send_other (in ServerRequestInfo ri) raises (ForwardRequest);
   };
-  
-  local interface IORInfo {
-    // #pragma version IORInfo x.y
-    CORBA::Policy get_effective_policy (in CORBA::PolicyType type);
-    void add_ior_component (in IOP::TaggedComponent _component);
-    void add_ior_component_to_profile (
-      in IOP::TaggedComponent _component,
-      in IOP::ProfileId profile_id);
 
-    // new from orbos/01-01-04 ORT
-    readonly attribute AdapterManagerId manager_id ;
-    readonly attribute AdapterState state ;
-    readonly attribute ObjectReferenceTemplate adapter_template ;
-    attribute ObjectReferenceFactory current_factory ;
+  local interface IORInfo {
+    CORBA::Policy get_effective_policy (in CORBA::PolicyType type);
+    void add_ior_component (in IOP::TaggedComponent a_component);
+    void add_ior_component_to_profile (
+      in IOP::TaggedComponent a_component,
+      in IOP::ProfileId profile_id);
+    readonly attribute AdapterManagerId manager_id;
+    readonly attribute AdapterState state;
+    readonly attribute ObjectReferenceTemplate adapter_template;
+    attribute ObjectReferenceFactory current_factory;
     };
 
   local interface IORInterceptor : Interceptor {
-    // #pragma version IORInterceptor x.y
     void establish_components (in IORInfo info);
-    
-    // new from orbos/01-01-04 ORT
-    void components_established( in IORInfo info ) ;
+
+    void components_established (in IORInfo info);
     void adapter_manager_state_changed(
-       in AdapterManagerId id, in AdapterState state ) ;
-    void adapter_state_changed(
+       in AdapterManagerId id, in AdapterState state);
+    void adapter_state_changed (
        in ObjectReferenceTemplateSeq templates,
-       in AdapterState state ) ;
+       in AdapterState state);
   };
 
   local interface PolicyFactory
