@@ -63,12 +63,6 @@ ifeq ($(findstring g++,$(CXX)),g++)
   endif # g++ < 2.8
 endif # g++
 
-ifeq ($(exceptions),1)
-  ifeq ($(include_env),1)
-    CPPFLAGS += -DTAO_ENV_BKWD_COMPAT
-  endif
-endif
-
 ifeq ($(minimum_corba),1)
   ifndef rt_corba
     rt_corba = 0

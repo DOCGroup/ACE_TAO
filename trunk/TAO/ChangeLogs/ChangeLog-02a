@@ -1,3 +1,9 @@
+Tue Jan 29 23:31:14 2002  Oliver Kellogg <oliver.kellogg@sysde.eads.net>
+
+	* rules.tao.GNU:
+	  Removed the include_env switch, it now lives in
+          $ACE_ROOT/include/makeinclude/wrapper_macros.GNU.
+
 Tue Jan 29 21:34:20 2002  Oliver Kellogg <oliver.kellogg@sysde.eads.net>
 
 	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
