@@ -30,7 +30,8 @@ class TAO_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
   // = TITLE
   //     Creates a Svc_Handler and set the ORB_Core pointer on it.
 public:
-  TAO_Creation_Strategy (TAO_ORB_Core *orb_core);
+  TAO_Creation_Strategy (TAO_ORB_Core *orb_core,
+                         CORBA::Boolean flag = 0);
   // Constructor.
 
   int make_svc_handler (SVC_HANDLER *&sh);
@@ -39,6 +40,9 @@ public:
 protected:
   TAO_ORB_Core *orb_core_;
   // Pointer to the ORB Core.
+  
+  CORBA::Boolean lite_flag_;
+  // Should we use the Lite version for any protocol?
 };
 
 template <class SVC_HANDLER>
