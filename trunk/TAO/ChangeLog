@@ -11,7 +11,7 @@ Wed Mar 24 14:27:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           under the "attrs" subsection of a component entry in the IFR.
           Thanks to Vincent Seignole <vincent.seignole@wanadoo.fr> for
           reporting the problem in accessing the name and repository id of 
-          component attributes.
+          component attributes. This fix closes [BUGID:1771].
 
 Wed Mar 24 11:02:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
