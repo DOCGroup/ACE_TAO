@@ -7,6 +7,9 @@ Fri Apr 03 09:01:00 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (run_tests):
           added default case to switch statement.
 
+        * tao/Sequence*.{i,cpp}: use ACE_CAST_CONST instead of const
+          in reinterpret casts, to keep all compilers happy.
+
 Thu Apr 02 15:49:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tao/tests/Cubit/TAO/MT_Cubit/client.dsp:
