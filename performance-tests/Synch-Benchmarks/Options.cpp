@@ -278,10 +278,12 @@ void
 Options::print_results (void)
 {
   ACE_Profile_Timer::ACE_Elapsed_Time et;
-  ACE_Profile_Timer::Rusage rusage;
-
   this->_itimer.elapsed_time (et);
+
+#if defined (ACE_HAS_PRUSAGE_T)
+  ACE_Profile_Timer::Rusage rusage;
   this->_itimer.elapsed_rusage (rusage);
+#endif /* ACE_HAS_PRUSAGE_T */
 
   size_t total    = this->count ();
   double nbytes   = total * this->msg_size ();
