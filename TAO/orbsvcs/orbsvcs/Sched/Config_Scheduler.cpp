@@ -255,7 +255,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
       ACE_ERROR ((LM_ERROR, "schedule failed\n"));
       return;
     }
-  if (infos == 0)
+  if (infos.ptr () == 0)
     {
       infos = new RtecScheduler::RT_Info_Set(impl->tasks ());
     }
