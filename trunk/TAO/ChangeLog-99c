@@ -1,332 +1,338 @@
+Thu May 20 21:49:42 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * all run_test*pl scripts: moved comment line(s) from head
+          of file so that it is not interpreted as a csh file.  Thanks
+          to Gregory W Ross <gwross@notes.west.raytheon.com> for
+          reporting problems with the comment lines.
+
 Thu May 20 21:28:25 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: 
-	  Fixed a few MSVC warnings and prefixed the Direction enumeration
-	  to DIR_ since IN,OUT and INOUT are MSVC keywords. 
-
+        * orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}:
+          Fixed a few MSVC warnings and prefixed the Direction enumeration
+          to DIR_ since IN,OUT and INOUT are MSVC keywords.
 
 Thu May 20 21:09:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DomainC.cpp:
-	  Added #include "tao/POA_CORBA.h" so we can compile on
-	  IBM OpenEdition. Thanks to Jim Rogers <jrogers@viasoft.com>
-	  for pointing this out.
+        * tao/DomainC.cpp:
+          Added #include "tao/POA_CORBA.h" so we can compile on
+          IBM OpenEdition. Thanks to Jim Rogers <jrogers@viasoft.com>
+          for pointing this out.
 
 Thu May 20 20:29:16 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/ORB.i (orb_core): Added accessor.
+        * tao/ORB.i (orb_core): Added accessor.
 
-	* tao/POA.cpp (implementation): Removed extra semi-colon.
+        * tao/POA.cpp (implementation): Removed extra semi-colon.
 
-	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (invoke): Needed fixing
-	  since the POA Current changed.
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (invoke): Needed fixing
+          since the POA Current changed.
 
 Thu May 20 20:34:35 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile:
-	  Added sfp to Makefile and updated dependencies.
+        * orbsvcs/orbsvcs/Makefile:
+          Added sfp to Makefile and updated dependencies.
 
 Thu May 20 20:00:08 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/decode.cpp:
-	  Added a typecode release call to TAO_Marshal_Any::decode()
-	  to plug a memory leak occurring with inout Any parameters.
+        * tao/decode.cpp:
+          Added a typecode release call to TAO_Marshal_Any::decode()
+          to plug a memory leak occurring with inout Any parameters.
 
 Thu May 20 19:52:49 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}:
-	  Changed TAO_StreamEndPoint from a template to non-template and
-	  added MSVC dominance warning disabling pragma and moved it from
-	  AVStreams_i_T.{h,cpp} to these files. Also Added a flowspec
-	  class to parse the flowSpec string into different components.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}:
+          Changed TAO_StreamEndPoint from a template to non-template and
+          added MSVC dominance warning disabling pragma and moved it from
+          AVStreams_i_T.{h,cpp} to these files. Also Added a flowspec
+          class to parse the flowSpec string into different components.
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i_T.{h,cpp}:
-	  Removed the AVStreams_i_T.{h,cpp} as they're no longer needed.
+        * orbsvcs/orbsvcs/AV/AVStreams_i_T.{h,cpp}:
+          Removed the AVStreams_i_T.{h,cpp} as they're no longer needed.
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.{h,cpp}:
-	  Changed TAO_PropertySet from a template to non-template and
-	  added MSVC dominance warning disabling pragma and moved it from
-	  CosPropertyService_i_T.{h,cpp} to these files.
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.{h,cpp}:
+          Changed TAO_PropertySet from a template to non-template and
+          added MSVC dominance warning disabling pragma and moved it from
+          CosPropertyService_i_T.{h,cpp} to these files.
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i_T.{h,cpp}:
-	  Removed these files as they're no longer needed.
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i_T.{h,cpp}:
+          Removed these files as they're no longer needed.
 
-	* orbsvcs/orbsvcs/Makefile:
-	  Updated dependencies.
+        * orbsvcs/orbsvcs/Makefile:
+          Updated dependencies.
 
 Thu May 20 18:46:44 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/examples/CosEC/Factory/Makefile:
-	  updated dependencies.
+        * orbsvcs/examples/CosEC/Factory/Makefile:
+          updated dependencies.
 
-	* orbsvcs/orbsvcs/CosEC_Utility_Methods_T.{h,cpp}:
-	  Removed this file. templates seem to be an overkill here.
+        * orbsvcs/orbsvcs/CosEC_Utility_Methods_T.{h,cpp}:
+          Removed this file. templates seem to be an overkill here.
 
-	* orbsvcs/orbsvcs/CosEvent_Utilities.h:
-	  added TAO_ORBSVCS_Export.
-	  added a #pragma for msvc warning 4250
+        * orbsvcs/orbsvcs/CosEvent_Utilities.h:
+          added TAO_ORBSVCS_Export.
+          added a #pragma for msvc warning 4250
 
-	* orbsvcs/orbsvcs/Makefile:
-   	  removed CosEC_Utility_Methods_T
+        * orbsvcs/orbsvcs/Makefile:
+          removed CosEC_Utility_Methods_T
 
-	* orbsvcs/orbsvcs/CosEvent_Utilities.cpp:
-	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp
-	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
-	  removed CosEC_Utility_Methods usage.
+        * orbsvcs/orbsvcs/CosEvent_Utilities.cpp:
+        * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp
+        * orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
+          removed CosEC_Utility_Methods usage.
 
-	* orbsvcs/CosEvent_Service/CosEvent_Service.h
-	  added a <locate_rtec> method.
+        * orbsvcs/CosEvent_Service/CosEvent_Service.h
+          added a <locate_rtec> method.
 
-	* orbsvcs/CosEvent_Service/README
-	  modified the README to reflect the change in parameter options.
+        * orbsvcs/CosEvent_Service/README
+          modified the README to reflect the change in parameter options.
 
 Thu May 20 17:39:50 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO/tao/TAO.dsp:
-	* TAO/TAO_IDL/tao_idl.dsp:
-	* orbsvcs/orbsvcs/orbsvcs.dsp: Fixed Alpha configurations.  Thanks
-	  to Christian Schuderer <Christian.Schuderer@erl9.siemens.de> for
-	  reporting this.
+        * TAO/tao/TAO.dsp:
+        * TAO/TAO_IDL/tao_idl.dsp:
+        * orbsvcs/orbsvcs/orbsvcs.dsp: Fixed Alpha configurations.  Thanks
+          to Christian Schuderer <Christian.Schuderer@erl9.siemens.de> for
+          reporting this.
 
-	* TAO/TAO_IDL/tao_idl_static.dsp: Removed definitions of
-	  IDL_CFE_VERSION.
+        * TAO/TAO_IDL/tao_idl_static.dsp: Removed definitions of
+          IDL_CFE_VERSION.
 
 Thu May 20 17:11:02 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Typecode_Constants.cpp:
-	  Added _tc_Pollable, _tc_DIIPollable, and
-	  _tc_PollableSet to fini().
+        * tao/Typecode_Constants.cpp:
+          Added _tc_Pollable, _tc_DIIPollable, and
+          _tc_PollableSet to fini().
 
 Thu May 20 15:22:49 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/default_resource.cpp (get_reactor): The problem was that
-	  when the reactor implementation was given to the reactor
-	  interface class, it was not instructed to delete the
-	  implementation.  Once this was fixed, the change below by Carlos
-	  was not necessary.
+        * tao/default_resource.cpp (get_reactor): The problem was that
+          when the reactor implementation was given to the reactor
+          interface class, it was not instructed to delete the
+          implementation.  Once this was fixed, the change below by Carlos
+          was not necessary.
 
         * tao/POA_Current: Changed the POA Current from a TSS specific
-	  object to a global object owned by the ORB.  Its state, however,
-	  is still managed by a TSS object (this new object is called
-	  TAO_POA_Current_Impl).  All the POA, Object_Adapter,
-	  TSS_Resources, and Servant Base classes were changed to use this
-	  new class.
+          object to a global object owned by the ORB.  Its state, however,
+          is still managed by a TSS object (this new object is called
+          TAO_POA_Current_Impl).  All the POA, Object_Adapter,
+          TSS_Resources, and Servant Base classes were changed to use this
+          new class.
 
-	  Also, cleaned up the POA Current implementation class.  There
-	  were many extra methods that not used in the new scheme.
+          Also, cleaned up the POA Current implementation class.  There
+          were many extra methods that not used in the new scheme.
 
-	  Thanks to Jon Biggar <jon@biggar.org> for pointing out that the
-	  original scheme was not compliant.
+          Thanks to Jon Biggar <jon@biggar.org> for pointing out that the
+          original scheme was not compliant.
 
-	* examples/POA/DSI:
+        * examples/POA/DSI:
 
-	  - Changed access to POA Current.  Previously, we use to ask the
-	    ORB everytime.  Now we only ask once and keep it around as a
-	    state variable.
+          - Changed access to POA Current.  Previously, we use to ask the
+            ORB everytime.  Now we only ask once and keep it around as a
+            state variable.
 
-	  - Added shutdown() method.
+          - Added shutdown() method.
 
-	  - Fixed exception handling.
+          - Fixed exception handling.
 
-	  - Added more debugging info to the server.
+          - Added more debugging info to the server.
 
 Thu May 20 15:00:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Pluggable.h:
-	* tao/IIOP_Acceptor.h:
-	* tao/IIOP_Acceptor.cpp:
-	* tao/default_resource.cpp:
-	  Added a close() method to the TAO_Acceptor class to orderly
-	  cleanup the resources on shutdown.
+        * tao/Pluggable.h:
+        * tao/IIOP_Acceptor.h:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/default_resource.cpp:
+          Added a close() method to the TAO_Acceptor class to orderly
+          cleanup the resources on shutdown.
 
 Thu May 20 13:53:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/Event/Basic/Makefile:
-	* orbsvcs/tests/Event/Basic/Observer.h:
-	* orbsvcs/tests/Event/Basic/Observer.cpp:
-	* orbsvcs/tests/Event/Basic/observer.conf:
-	* orbsvcs/tests/Event/lib/Consumer.h:
-	* orbsvcs/tests/Event/lib/Consumer.cpp:
-	* orbsvcs/tests/Event/lib/Driver.h:
-	* orbsvcs/tests/Event/lib/Driver.cpp:
-	  New test for the observers and dynamic
-	  connection/reconnections. It compiles, but needs more testing
-	  and I cannot do that on Linux.
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/Basic/Observer.h:
+        * orbsvcs/tests/Event/Basic/Observer.cpp:
+        * orbsvcs/tests/Event/Basic/observer.conf:
+        * orbsvcs/tests/Event/lib/Consumer.h:
+        * orbsvcs/tests/Event/lib/Consumer.cpp:
+        * orbsvcs/tests/Event/lib/Driver.h:
+        * orbsvcs/tests/Event/lib/Driver.cpp:
+          New test for the observers and dynamic
+          connection/reconnections. It compiles, but needs more testing
+          and I cannot do that on Linux.
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway.h:
-	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
-	  Minor fixes to support configurations without an scheduling
-	  service.
+        * orbsvcs/orbsvcs/Event/EC_Gateway.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+          Minor fixes to support configurations without an scheduling
+          service.
 
 Thu May 20 12:17:36 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Any.h:
-	* tao/Any.cpp:
-	* tao/GIOP_Server_Request.cpp:
-	* tao/NVList.cpp:
-	  Changed the signature of
+        * tao/Any.h:
+        * tao/Any.cpp:
+        * tao/GIOP_Server_Request.cpp:
+        * tao/NVList.cpp:
+          Changed the signature of
 
-	    void _tao_replace (CORBA::TypeCode_ptr,
+            void _tao_replace (CORBA::TypeCode_ptr,
                      const ACE_Message_Block *mb,
-		     CORBA::Boolean any_owns_data,
+                     CORBA::Boolean any_owns_data,
                      CORBA::Environment &TAO_IN_ENV =
                        CORBA::default_environment ());
 
-	  to
+          to
 
-	    void _tao_replace (CORBA::TypeCode_ptr,
+            void _tao_replace (CORBA::TypeCode_ptr,
                      const ACE_Message_Block *mb,
                      CORBA::Environment &TAO_IN_ENV =
                        CORBA::default_environment ());
 
-	  Also modified Any's copy contructor and assignment
-	  operator to set any_own_data_ to 0. In all these cases,
-	  the void* value_ is freed, but not set to anything.
-	  Also changed the calls to _tao_replace() in the last
-	  two files to reflect the new signature.
+          Also modified Any's copy contructor and assignment
+          operator to set any_own_data_ to 0. In all these cases,
+          the void* value_ is freed, but not set to anything.
+          Also changed the calls to _tao_replace() in the last
+          two files to reflect the new signature.
 
 
 Thu May 20 12:14:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
-	  Added missing template instantiations.
+        * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
+          Added missing template instantiations.
 
 Thu May 20 11:06:25 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosEvent_Utilities.cpp:
-	  Fixed a bug in parsing QOS parameters - thanks to Paul Calabrese
-	  <calabrese_p@ociweb.com> for reporting this and providing a fix.
-	* orbsvcs/orbsvcs/CosEC_Utility_Methods_T.cpp:
-	  removed an extra ";"
+        * orbsvcs/orbsvcs/CosEvent_Utilities.cpp:
+          Fixed a bug in parsing QOS parameters - thanks to Paul Calabrese
+          <calabrese_p@ociweb.com> for reporting this and providing a fix.
+        * orbsvcs/orbsvcs/CosEC_Utility_Methods_T.cpp:
+          removed an extra ";"
 
 Wed May 19 18:14:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
-	* performance-tests/Cubit/TAO/IDL_Cubit/client.dsp
-	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp
-	* performance-tests/Cubit/TAO/IDL_Cubit/server.dsp: Fixed Release
-	  configuations.
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/client.dsp
+        * performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp
+        * performance-tests/Cubit/TAO/IDL_Cubit/server.dsp: Fixed Release
+          configuations.
 
 Wed May 19 16:21:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/default_resource.cpp:
-	  Fixed incorrect use of ACE_WIN32, ACE_HAS_FL and ACE_HAS_XT
-	  macros, thanks to Jeff Parsons for reporting this.
+        * tao/default_resource.cpp:
+          Fixed incorrect use of ACE_WIN32, ACE_HAS_FL and ACE_HAS_XT
+          macros, thanks to Jeff Parsons for reporting this.
 
 Wed May 19 15:54:53 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Typecode_Constants.cpp:
-	  Added some typecodes to fini() that I had forgotten to
-	  add before.
+        * tao/Typecode_Constants.cpp:
+          Added some typecodes to fini() that I had forgotten to
+          add before.
 
 Wed May 19 15:25:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/corbafwd.h:
-	* tao/corbafwd.i:
-	* tao/ORB.h:
-	* tao/ORB.i:
-	* tao/ORB.cpp:
-	* tao/CDR_Interpreter.cpp:
-	* tao/Managed_Types.cpp:
-	* tao/Managed_Types.h:
-	* tao/Managed_Types.i:
-	* tao/Marshal.i:
-	* tao/POA.cpp:
-	* tao/POA.h:
-	* tao/Request.cpp:
-	* tao/Typecode_Constants.cpp:
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
-	* orbsvcs/tests/Logger/Logging_Test_i.cpp:
-	* orbsvcs/tests/Logger/client_i.cpp:
-	* orbsvcs/tests/Property/client.cpp:
-	* orbsvcs/tests/Property/main.cpp:
-	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
-	* tests/Param_Test/options.cpp:
-	  Added support for CORBA::WString_var and CORBA::WString_out,
-	  also did a quick cleanup for the WString_Manager classes.
-	  Thanks to Lothar Werzinger <lwerzinger@krones.de> for providing
-	  this fixes.
-	  Also removed all uses of string_copy which is a non-standard TAO
-	  extension.
+        * tao/corbafwd.h:
+        * tao/corbafwd.i:
+        * tao/ORB.h:
+        * tao/ORB.i:
+        * tao/ORB.cpp:
+        * tao/CDR_Interpreter.cpp:
+        * tao/Managed_Types.cpp:
+        * tao/Managed_Types.h:
+        * tao/Managed_Types.i:
+        * tao/Marshal.i:
+        * tao/POA.cpp:
+        * tao/POA.h:
+        * tao/Request.cpp:
+        * tao/Typecode_Constants.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+        * orbsvcs/tests/Logger/Logging_Test_i.cpp:
+        * orbsvcs/tests/Logger/client_i.cpp:
+        * orbsvcs/tests/Property/client.cpp:
+        * orbsvcs/tests/Property/main.cpp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
+        * tests/Param_Test/options.cpp:
+          Added support for CORBA::WString_var and CORBA::WString_out,
+          also did a quick cleanup for the WString_Manager classes.
+          Thanks to Lothar Werzinger <lwerzinger@krones.de> for providing
+          this fixes.
+          Also removed all uses of string_copy which is a non-standard TAO
+          extension.
 
-	* docs/releasenotes/TODO.html:
-	  More EC updates
+        * docs/releasenotes/TODO.html:
+          More EC updates
 
-	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
-	  Added copy-on-read to avoid dead-locks during dispatch.
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+          Added copy-on-read to avoid dead-locks during dispatch.
 
 Wed May 19 15:12:26 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
-	* orbsvcs/CosEvent_Service/svc.conf:
-	  Use the TAO_EC_Default_Factory for the Rtec Event Channel and
-	  configure it using a svc.conf file.
+        * orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
+        * orbsvcs/CosEvent_Service/svc.conf:
+          Use the TAO_EC_Default_Factory for the Rtec Event Channel and
+          configure it using a svc.conf file.
 
-	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
-	  Fixed more template instantiation problems.
+        * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
+          Fixed more template instantiation problems.
 
 Wed May 19 13:07:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosEvent_Utilities.cpp:
-	  Fixed several syntax errors, at least it compiles now.
+        * orbsvcs/orbsvcs/CosEvent_Utilities.cpp:
+          Fixed several syntax errors, at least it compiles now.
 
 Wed May 19 00:20:08 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosEvent_Utilities.{h,cpp}:
-	* orbsvcs/orbsvcs/CosEC_Utility_Methods_T.{h,cpp}:
-	  Added these files to provide utility base classes and
-	  useful methods for implementing CosEC applications.
+        * orbsvcs/orbsvcs/CosEvent_Utilities.{h,cpp}:
+        * orbsvcs/orbsvcs/CosEC_Utility_Methods_T.{h,cpp}:
+          Added these files to provide utility base classes and
+          useful methods for implementing CosEC applications.
 
-	* orbsvcs/orbsvcs/Makefile:
-	  added CosEvent_Utilities and CosEC_Utility_Methods_T
-	  to the CosEvent section.
+        * orbsvcs/orbsvcs/Makefile:
+          added CosEvent_Utilities and CosEC_Utility_Methods_T
+          to the CosEvent section.
 
-	* orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i{h,cpp}:
-	  Removed these files - All the functionality of this implementation
-	  has been moved to the <CosEC_ServantBase> class defined in
-	  orbsvcs/orbsvcs/CosEvent_Utilities.h
+        * orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i{h,cpp}:
+          Removed these files - All the functionality of this implementation
+          has been moved to the <CosEC_ServantBase> class defined in
+          orbsvcs/orbsvcs/CosEvent_Utilities.h
 
-	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp
-	  modified to use the <CosEC_ServantBase> class.
+        * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp
+          modified to use the <CosEC_ServantBase> class.
 
-	* orbsvcs/examples/CosEC/Factory/FactoryClient.cpp
+        * orbsvcs/examples/CosEC/Factory/FactoryClient.cpp
           Added an extra debug message in the <create> method.
 
-	* orbsvcs/examples/CosEC/Factory/Makefile
+        * orbsvcs/examples/CosEC/Factory/Makefile
           removed FactoryCosEventChannel_i.
 
-	* orbsvcs/CosEvent_Service/CosEvent_Service.{h,cpp}:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.{h,cpp}:
           All redone now to use the <CosEC_ServantBase> class.
 
 Tue May 18 22:19:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Resource_Factory.h:
-	* tao/Resource_Factory.cpp:
-	* tao/default_resource.h:
-	* tao/default_resource.i:
-	* tao/default_resource.cpp:
-	* docs/Options.html:
-	  The default resource factory can select any of the "exotic" ACE
-	  reactors (XtReactor, FlReactor, WFMO_Reactor, Msg_WFMO_Reactor)
-	  as well as the regular Select reactor (with or without locking).
-	  The old option (-ORBreactorlock) is obsolete and should be
-	  removed after a couple of beta kits.
+        * tao/Resource_Factory.h:
+        * tao/Resource_Factory.cpp:
+        * tao/default_resource.h:
+        * tao/default_resource.i:
+        * tao/default_resource.cpp:
+        * docs/Options.html:
+          The default resource factory can select any of the "exotic" ACE
+          reactors (XtReactor, FlReactor, WFMO_Reactor, Msg_WFMO_Reactor)
+          as well as the regular Select reactor (with or without locking).
+          The old option (-ORBreactorlock) is obsolete and should be
+          removed after a couple of beta kits.
 
-	* tests/Makefile:
-	* tests/FL_Cube/Makefile:
-	* tests/FL_Cube/client.cpp:
-	* tests/FL_Cube/server.cpp:
-	* tests/FL_Cube/svc.conf:
-	* tests/FL_Cube/test.idl:
-	* tests/FL_Cube/test_i.cpp:
-	* tests/FL_Cube/test_i.h:
-	* tests/FL_Cube/test_i.i:
-	  A small example that illustrates how TAO can work with the
-	  FlReactor.  A simple server displays a cube using the FL toolkit
-	  for the GUI elements and OpenGL for the graphics, its CORBA
-	  interface lets the client control the viewpoint for the cube.
-	  A simple client uses GUI elements to let the user control the
-	  remote cube displayer.
+        * tests/Makefile:
+        * tests/FL_Cube/Makefile:
+        * tests/FL_Cube/client.cpp:
+        * tests/FL_Cube/server.cpp:
+        * tests/FL_Cube/svc.conf:
+        * tests/FL_Cube/test.idl:
+        * tests/FL_Cube/test_i.cpp:
+        * tests/FL_Cube/test_i.h:
+        * tests/FL_Cube/test_i.i:
+          A small example that illustrates how TAO can work with the
+          FlReactor.  A simple server displays a cube using the FL toolkit
+          for the GUI elements and OpenGL for the graphics, its CORBA
+          interface lets the client control the viewpoint for the cube.
+          A simple client uses GUI elements to let the user control the
+          remote cube displayer.
 
 Tue May 18 11:05:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -344,12 +350,12 @@ Mon May 17 19:41:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
         * tao/DynArray_i.{h,cpp}:
         * tao/DynSequence_i.{h,cpp}:
         * tao/DynStruct_i.{h,cpp}: Moved AnySeq, FieldName, NameValuePair,
- 	  and NameValuePairSeq to the CORBA namespace. They had previously
- 	  been in the global namespace.  Generated new typecodes for
- 	  these, to reflect the new scoping, and moved the typecodes to
- 	  Typecode_Constants.cpp. Thanks to Serge Du <du@lal.in2p3.fr> for
- 	  pointing out a namespace clash with AnySeq in his application
- 	  that led to all this.
+          and NameValuePairSeq to the CORBA namespace. They had previously
+          been in the global namespace.  Generated new typecodes for
+          these, to reflect the new scoping, and moved the typecodes to
+          Typecode_Constants.cpp. Thanks to Serge Du <du@lal.in2p3.fr> for
+          pointing out a namespace clash with AnySeq in his application
+          that led to all this.
 
 Mon May 17 18:17:42 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
