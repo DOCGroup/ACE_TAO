@@ -61,3 +61,32 @@ FOO_IORInterceptor::establish_components (
               "(%P|%t) containing the string: %s\n",
               name.in ()));
 }
+
+void
+FOO_IORInterceptor::components_established (
+    PortableInterceptor::IORInfo_ptr
+    TAO_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return;
+}
+
+void
+FOO_IORInterceptor::adapter_manager_state_changed (
+    PortableInterceptor::AdapterManagerId ,
+    PortableInterceptor::AdapterState
+    TAO_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return;
+}
+
+void
+FOO_IORInterceptor:: adapter_state_changed (
+    const PortableInterceptor::ObjectReferenceTemplateSeq &,
+    PortableInterceptor::AdapterState
+    TAO_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return;
+}
