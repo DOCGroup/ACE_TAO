@@ -3,6 +3,10 @@ Mon Oct 26 08:22:18 1998  David L. Levine  <levine@cs.wustl.edu>
         * docs/ACE-guidelines.html: added recommendation and
           explanation re. use of #pragma once.
 
+        * ace/config-lynxos.h: added ACE_LACKS_FORK, on PowerPC only.
+          For unknown reasons, all of the ACE tests that fork fail on
+          our PowerPC platform.
+
         * tests/SV_Shared_Memory_Test.cpp: don't try to run this
           test if ACE_LACKS_FORK, because it uses ACE_OS::fork ().
           It allocates the shared memory segment before the fork,
@@ -12,13 +16,12 @@ Mon Oct 26 08:22:18 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/Pipe_Test.cpp,Process_Mutex_Test.cpp: don't try
           to run these tests if ACE_LACKS_FORK, either.
 
+        * tests/run_tests.sh: run Timer_Queue_Test and Upgradeable_RW_Test
+          on LynxOS.
+
         * tests/run_tests.vxworks: changed
           Message_Queue_Notifications_Test.cpp to
           Message_Queue_Notifications_Test.
-
-        * ace/config-lynxos.h: added ACE_LACKS_FORK, on PowerPC only.
-          For unknown reasons, all of the ACE tests that fork fail on
-          our PowerPC platform.
 
 Mon Oct 26 01:49:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
