@@ -248,6 +248,25 @@ class ACE_Strategy_Acceptor
 {
 public:
 
+  // Useful STL-style traits.
+  typedef ACE_Creation_Strategy<SVC_HANDLER>
+          creation_strategy_type;
+  typedef ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> 
+          accept_strategy_type;
+  typedef ACE_Concurrency_Strategy<SVC_HANDLER>
+          concurrency_strategy_type;
+  typedef ACE_Scheduling_Strategy<SVC_HANDLER> scheduling_strategy_type;
+  typedef ACE_Acceptor <SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
+          base_type;
+
+  // = Define some useful (old style) traits.
+  typedef ACE_Creation_Strategy<SVC_HANDLER> CREATION_STRATEGY;
+  typedef ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> ACCEPT_STRATEGY;
+  typedef ACE_Concurrency_Strategy<SVC_HANDLER> CONCURRENCY_STRATEGY;
+  typedef ACE_Scheduling_Strategy<SVC_HANDLER> SCHEDULING_STRATEGY;
+
+
+
   /// Default constructor.
   ACE_Strategy_Acceptor (const ACE_TCHAR service_name[] = 0,
                          const ACE_TCHAR service_description[] = 0,
@@ -409,12 +428,6 @@ protected:
 
   // = These data members are "logically private" but are put in the
   // protected part in case subclasses want to access them.
-
-  // = Define some useful typedefs.
-  typedef ACE_Creation_Strategy<SVC_HANDLER> CREATION_STRATEGY;
-  typedef ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> ACCEPT_STRATEGY;
-  typedef ACE_Concurrency_Strategy<SVC_HANDLER> CONCURRENCY_STRATEGY;
-  typedef ACE_Scheduling_Strategy<SVC_HANDLER> SCHEDULING_STRATEGY;
 
   // = Strategy objects.
 

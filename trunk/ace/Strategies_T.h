@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -12,6 +12,7 @@
 
 #ifndef ACE_STRATEGIES_T_H
 #define ACE_STRATEGIES_T_H
+
 #include "ace/pre.h"
 
 #include "ace/Hash_Map_Manager.h"
@@ -45,6 +46,12 @@ template<class SVC_HANDLER>
 class ACE_Recycling_Strategy
 {
 public:
+
+  // Useful STL-style traits.
+  typedef ACE_TYPENAME SVC_HANDLER::addr_type    addr_type;
+  typedef SVC_HANDLER                            handler_type;
+  typedef ACE_TYPENAME SVC_HANDLER::stream_type  stream_type;
+
   /// Virtual Destructor
   virtual ~ACE_Recycling_Strategy (void);
 
@@ -74,6 +81,12 @@ template <class SVC_HANDLER>
 class ACE_Creation_Strategy
 {
 public:
+
+  // Useful STL-style traits.
+  typedef ACE_TYPENAME SVC_HANDLER::addr_type    addr_type;
+  typedef SVC_HANDLER                            handler_type;
+  typedef ACE_TYPENAME SVC_HANDLER::stream_type  stream_type;
+
   // = Initialization and termination methods.
 
   /// Default constructor.
@@ -125,6 +138,10 @@ template <class SVC_HANDLER>
 class ACE_Singleton_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
 {
 public:
+
+  // Useful STL-style traits.
+  typedef ACE_Creation_Strategy<SVC_HANDLER> base_type;
+
   // = Initialization and termination methods.
   ACE_Singleton_Strategy (SVC_HANDLER * = 0,
                           ACE_Thread_Manager * = 0);
@@ -161,6 +178,10 @@ template <class SVC_HANDLER>
 class ACE_DLL_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
 {
 public:
+
+  // Useful STL-style traits.
+  typedef ACE_Creation_Strategy<SVC_HANDLER> base_type;
+
   // = Intialization and termination methods.
 
   /// "Do-nothing" constructor.
@@ -227,6 +248,12 @@ template <class SVC_HANDLER>
 class ACE_Concurrency_Strategy
 {
 public:
+
+  // Useful STL-style traits.
+  typedef ACE_TYPENAME SVC_HANDLER::addr_type    addr_type;
+  typedef SVC_HANDLER                            handler_type;
+  typedef ACE_TYPENAME SVC_HANDLER::stream_type  stream_type;
+
   /// Constructor
   ACE_Concurrency_Strategy (int flags = 0);
 
@@ -268,6 +295,10 @@ template <class SVC_HANDLER>
 class ACE_Reactive_Strategy : public ACE_Concurrency_Strategy <SVC_HANDLER>
 {
 public:
+
+  // Useful STL-style traits.
+  typedef ACE_Concurrency_Strategy<SVC_HANDLER> base_type;
+
   // = Intialization and termination methods.
   /// "Do-nothing constructor"
   ACE_Reactive_Strategy (int flags = 0);
@@ -324,6 +355,10 @@ template <class SVC_HANDLER>
 class ACE_Thread_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
 {
 public:
+
+  // Useful STL-style traits.
+  typedef ACE_Concurrency_Strategy<SVC_HANDLER> base_type;
+
   // = Intialization and termination methods.
   /// "Do-nothing constructor"
   ACE_Thread_Strategy (int flags = 0);
@@ -387,6 +422,10 @@ template <class SVC_HANDLER>
 class ACE_Process_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
 {
 public:
+
+  // Useful STL-style traits.
+  typedef ACE_Concurrency_Strategy<SVC_HANDLER> base_type;
+
   // = Intialization and termination methods.
 
   /// Initialize the strategy.  If <avoid_zombies> is non-0 then set a
@@ -455,6 +494,13 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class ACE_Accept_Strategy
 {
 public:
+
+  // Useful STL-style traits.
+  typedef ACE_PEER_ACCEPTOR_ADDR                 addr_type;
+  typedef ACE_PEER_ACCEPTOR                      acceptor_type;
+  typedef SVC_HANDLER                            handler_type;
+  typedef ACE_TYPENAME SVC_HANDLER::stream_type  stream_type;
+
   // = Initialization and termination methods.
   /// Default constructor.
   ACE_Accept_Strategy (ACE_Reactor *reactor = ACE_Reactor::instance ());
@@ -515,6 +561,13 @@ template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
 class ACE_Connect_Strategy
 {
 public:
+
+  // Useful STL-style traits.
+  typedef ACE_PEER_CONNECTOR_ADDR                addr_type;
+  typedef ACE_PEER_CONNECTOR                     connector_type;
+  typedef SVC_HANDLER                            handler_type;
+  typedef ACE_TYPENAME SVC_HANDLER::stream_type  stream_type;
+
   // = Initialization and termination methods.
   /// Default constructor.
   ACE_Connect_Strategy (void);
@@ -574,6 +627,12 @@ template <class SVC_HANDLER>
 class ACE_Scheduling_Strategy
 {
 public:
+
+  // Useful STL-style traits.
+  typedef ACE_TYPENAME SVC_HANDLER::addr_type    addr_type;
+  typedef SVC_HANDLER                            handler_type;
+  typedef ACE_TYPENAME SVC_HANDLER::stream_type  stream_type;
+
   // = Initialization and termination methods.
 
   /// Constructor
@@ -604,9 +663,14 @@ public:
  * the Event_Handlers in a Reactor in one fell swoop.
  */
 template <class SVC_HANDLER>
-class ACE_Schedule_All_Reactive_Strategy : public ACE_Scheduling_Strategy<SVC_HANDLER>
+class ACE_Schedule_All_Reactive_Strategy
+  : public ACE_Scheduling_Strategy<SVC_HANDLER>
 {
 public:
+
+  // Useful STL-style traits.
+  typedef ACE_Scheduling_Strategy<SVC_HANDLER> base_type;  
+
   // = Initialization and termination methods.
   /// Constructor
   ACE_Schedule_All_Reactive_Strategy (SVC_HANDLER * = 0);
@@ -638,9 +702,14 @@ protected:
  * the Event_Handlers controlled by a Thread_Manager in one fell swoop.
  */
 template <class SVC_HANDLER>
-class ACE_Schedule_All_Threaded_Strategy : public ACE_Scheduling_Strategy<SVC_HANDLER>
+class ACE_Schedule_All_Threaded_Strategy
+  : public ACE_Scheduling_Strategy<SVC_HANDLER>
 {
 public:
+
+  // Useful STL-style traits.
+  typedef ACE_Scheduling_Strategy<SVC_HANDLER> base_type;
+
   // = Initialization and termination methods.
   /// Constructor
   ACE_Schedule_All_Threaded_Strategy (SVC_HANDLER * = 0);
@@ -677,6 +746,10 @@ template <class SVC_HANDLER>
 class ACE_NOOP_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
 {
 public:
+
+  // Useful STL-style traits.
+  typedef ACE_Creation_Strategy<SVC_HANDLER> base_type;
+
   /// This is a no-op.
   virtual int make_svc_handler (SVC_HANDLER *&);
 };
@@ -693,9 +766,14 @@ public:
  * svc_handler more than once.
  */
 template <class SVC_HANDLER>
-class ACE_NOOP_Concurrency_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
+class ACE_NOOP_Concurrency_Strategy
+  : public ACE_Concurrency_Strategy<SVC_HANDLER>
 {
 public:
+
+  // Useful STL-style traits.
+  typedef ACE_Concurrency_Strategy<SVC_HANDLER> base_type;
+
   // = Factory method.
   /// This is a no-op.
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
@@ -744,9 +822,33 @@ protected:
  * It's added value is re-use of established connections.
  */
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX>
-class ACE_Cached_Connect_Strategy : public ACE_Connection_Recycling_Strategy, public ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
+class ACE_Cached_Connect_Strategy
+  : public ACE_Connection_Recycling_Strategy,
+    public ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
 {
 public:
+
+  // Useful STL-style traits.
+  typedef ACE_Creation_Strategy<SVC_HANDLER>
+          creation_strategy_type;
+  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> 
+          connect_strategy_type;
+  typedef ACE_Concurrency_Strategy<SVC_HANDLER>
+          concurrency_strategy_type;
+  typedef ACE_Recycling_Strategy<SVC_HANDLER> recycling_strategy_type;
+
+  // = Define some useful (old style) traits.
+  typedef ACE_Creation_Strategy<SVC_HANDLER>
+          CREATION_STRATEGY;
+  typedef ACE_Concurrency_Strategy<SVC_HANDLER>
+          CONCURRENCY_STRATEGY;
+  typedef ACE_Recycling_Strategy<SVC_HANDLER>
+          RECYCLING_STRATEGY;
+
+  // = Super class
+  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
+          CONNECT_STRATEGY;
+
 
   typedef ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX> SELF;
 
@@ -835,18 +937,6 @@ public:
   /// Cleanup hint and reset <*act_holder> to zero if <act_holder != 0>.
   virtual int cleanup_hint (const void *recycling_act,
                             void **act_holder = 0);
-
-  // = Define some useful typedefs.
-  typedef ACE_Creation_Strategy<SVC_HANDLER>
-          CREATION_STRATEGY;
-  typedef ACE_Concurrency_Strategy<SVC_HANDLER>
-          CONCURRENCY_STRATEGY;
-  typedef ACE_Recycling_Strategy<SVC_HANDLER>
-          RECYCLING_STRATEGY;
-
-  // = Super class
-  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
-          CONNECT_STRATEGY;
 
   // = Typedefs for managing the map
   typedef ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>
@@ -976,4 +1066,6 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
+
+
 #endif /* ACE_STRATEGIES_T_H */
