@@ -3,11 +3,11 @@
 CC		= cxvxppc
 #### CXX		= cxvxppc -I. -D__INLINE__
 CXX		= cxvxppc -I.
+CCFLAGS		+= --no_rtti
 DLD		= $(CXX) 
 INCLDIRS	+= -I$(WRAPPER_ROOT) -I.
-LD		= lx
-LDFLAGS		+= -r -I/appl/newgreen/vxworks/ccincl -I/appl/newgreen/vxworks/include	-I/appl/newgreen/ansi -I/appl/newgreen/vxworks/usrinc -L$(WRAPPER_ROOT)/ace -L./
-LIBS            += /appl/newgreen/vxppc603/indlib.o	
+LD		= $(CXX)
+LDFLAGS		+= -L$(WRAPPER_ROOT)/ace -L./
 PIC		=
 AR		= ax 
 ARFLAGS		= rv
