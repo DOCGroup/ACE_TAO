@@ -677,7 +677,7 @@ TAO_DynAny_i::get_string (CORBA::Environment &ACE_TRY_ENV)
   if (!(this->value_ >>= val))
     {
       ACE_THROW_RETURN (CORBA_DynAny::TypeMismatch (),
-                        val);
+                        ACE_const_cast (char *, val));
     }
 
   return CORBA::string_dup (val);
