@@ -1,3 +1,9 @@
+Wed Jan  8 12:17:10 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/ace-install: Fixed the improper usage of "or" in the "find "
+	  command used to find the inlined files with extensions .i and
+	  .inl. Thanks to Oliver Kellog for providing the patch.
+
 Tue Jan  7 13:08:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACEXML/common/Makefile:
