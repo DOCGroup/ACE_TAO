@@ -190,6 +190,12 @@ typedef int key_t;
 // configuration file (e.g., config-sunos5-sunc++-4.x.h).  
 #include "ace/config.h"
 
+#if defined (ACE_HAS_CHARPTR_SPRINTF)
+#define ACE_SPRINTF_ADAPTER(X) ::strlen (X)
+#else
+#define ACE_SPRINTF_ADAPTER(X) X
+#endif /* ACE_HAS_CHARPTR_SPRINTF */
+
 #if defined (__ACE_INLINE__)
 #define ACE_INLINE inline
 #if !defined (ACE_HAS_INLINED_OSCALLS)

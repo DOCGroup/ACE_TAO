@@ -11,7 +11,7 @@
 #define ACE_HAS_SYSV_SPRINTF
 
 #define ACE_CONFIG_H
-
+#define ACE_HAS_CHARPTR_SPRINTF
 #define ACE_HAS_SYS_ERRLIST
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
