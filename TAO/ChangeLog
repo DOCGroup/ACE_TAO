@@ -1,3 +1,25 @@
+Sat Sep 11 12:25:07 2004  Steve Totten  <totten_s@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * utils/NamingViewer/NamingViewer.mpc:
+        * utils/nslist/nslist.mpc:
+          Modified MPC files for the following TAO utilities to make
+          sure the executables are installed in $ACE_ROOT/bin:
+          - tao_imr
+          - nslist
+          - nsdel
+          - nsadd
+          - NamingViewer
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+        * orbsvcs/tests/ImplRepo/NameService/run_test.pl:
+        * orbsvcs/tests/ImplRepo/locked/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/run_test.pl:
+        * utils/nslist/run_test.pl:
+          Also modified various test scripts that invoke these
+          utilities to get them from $ACE_ROOT/bin.
+
+
 Sat Sep 11 08:47:58 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Properties.h:

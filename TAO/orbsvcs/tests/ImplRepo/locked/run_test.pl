@@ -17,7 +17,7 @@ $pfile = PerlACE::LocalFile ("persistence.dat");
 
 $IMR_LOCATOR = new PerlACE::Process ("../../../ImplRepo_Service/ImplRepo_Service");
 $IMR_ACTIVATOR = new PerlACE::Process ("../../../ImplRepo_Service/ImR_Activator");
-$TAO_IMR = new PerlACE::Process ("../../../ImplRepo_Service/tao_imr");
+$TAO_IMR = new PerlACE::Process ("../../../../../bin/tao_imr");
 
 ################################################################################
 
