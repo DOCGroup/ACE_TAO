@@ -31,7 +31,7 @@ TAO_POA_Hooks::create_id_for_reference (
 
   // Get the RepositoryId from the Group reference so
   // we know what kind of reference to make.
-  const char* repository_id = the_ref->_stubobj ()->type_id;
+  const char* repository_id = the_ref->_stubobj ()->type_id.in ();
 
   // Create a temporary object reference and then get the
   // ObjectId out of it.
@@ -147,7 +147,7 @@ PortableServer::IDs *
 TAO_POA_Hooks::reference_to_ids (
   TAO_POA &/*the_poa*/,
   CORBA::Object_ptr /*the_ref*/
-    TAO_ENV_ARG_DECL)
+    TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       PortableServer::NotAGroupObject

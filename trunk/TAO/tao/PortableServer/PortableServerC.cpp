@@ -44,7 +44,7 @@ PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::_allocate
 {
   PortableServer::POA **tmp = 0;
   tmp = _TAO_Unbounded_Object_Sequence_PortableServer_POAList::allocbuf (length);
-  
+
   if (this->buffer_ != 0)
   {
     PortableServer::POA **old = ACE_reinterpret_cast (PortableServer::POA**, this->buffer_);
@@ -59,7 +59,7 @@ PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::_allocate
             tmp[i] = old[i];
           }
       }
-    
+
     if (this->release_)
       {
         delete[] old;
@@ -74,13 +74,13 @@ PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::_dealloca
   if (this->buffer_ == 0 || this->release_ == 0)
     return;
   PortableServer::POA **tmp = ACE_reinterpret_cast (PortableServer::POA**, this->buffer_);
-  
+
   for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
       CORBA::release (tmp[i]);
       tmp[i] = PortableServer::POA::_nil ();
     }
-  
+
   _TAO_Unbounded_Object_Sequence_PortableServer_POAList::freebuf (tmp);
   this->buffer_ = 0;
 }
@@ -94,7 +94,7 @@ void
 PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
 {
   PortableServer::POA **tmp = ACE_reinterpret_cast (PortableServer::POA**, this->buffer_);
-  
+
   for (CORBA::ULong i = nl; i < ol; ++i)
     {
       CORBA::release (tmp[i]);
@@ -102,7 +102,7 @@ PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::_shrink_b
     }
 }
 
-void 
+void
 PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::_downcast (
     void* target,
     CORBA_Object *src
@@ -124,7 +124,7 @@ PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::_upcast (
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_PORTABLESERVER_POALIST_CS_)
 #define _PORTABLESERVER_POALIST_CS_
@@ -136,30 +136,30 @@ PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::_upcast (
 PortableServer::POAList::POAList (void)
 {}
 PortableServer::POAList::POAList (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 _TAO_Unbounded_Object_Sequence_PortableServer_POAList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
 TAO_Unbounded_Object_Sequence<PortableServer::POA,PortableServer::POA_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 PortableServer::POAList::POAList (CORBA::ULong max, CORBA::ULong length, PortableServer::POA_ptr *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 _TAO_Unbounded_Object_Sequence_PortableServer_POAList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
 TAO_Unbounded_Object_Sequence<PortableServer::POA,PortableServer::POA_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 PortableServer::POAList::POAList (const POAList &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 _TAO_Unbounded_Object_Sequence_PortableServer_POAList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
 TAO_Unbounded_Object_Sequence<PortableServer::POA,PortableServer::POA_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 PortableServer::POAList::~POAList (void) // dtor
@@ -184,30 +184,30 @@ void PortableServer::POAList::_tao_any_destructor (void *_tao_void_pointer)
 PortableServer::ObjectId::ObjectId (void)
 {}
 PortableServer::ObjectId::ObjectId (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
 TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 PortableServer::ObjectId::ObjectId (CORBA::ULong max, CORBA::ULong length, CORBA::Octet *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
 TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 PortableServer::ObjectId::ObjectId (const ObjectId &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
 TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 PortableServer::ObjectId::~ObjectId (void) // dtor
@@ -225,19 +225,19 @@ static const CORBA::Long _oc_PortableServer_ObjectId[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   40,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f4f), 
-  ACE_NTOHL (0x626a6563), 
-  ACE_NTOHL (0x7449643a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f4f),
+  ACE_NTOHL (0x626a6563),
+  ACE_NTOHL (0x7449643a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableServer/ObjectId:1.0
   9,
-  ACE_NTOHL (0x4f626a65), 
-  ACE_NTOHL (0x63744964), 
+  ACE_NTOHL (0x4f626a65),
+  ACE_NTOHL (0x63744964),
   ACE_NTOHL (0x0),  // name = ObjectId
   CORBA::tk_sequence, // typecode kind
   12, // encapsulation length
@@ -324,7 +324,7 @@ void PortableServer::ForwardRequest::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -337,7 +337,7 @@ void PortableServer::ForwardRequest::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -361,44 +361,44 @@ static const CORBA::Long _oc_PortableServer_ForwardRequest[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   46,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f46), 
-  ACE_NTOHL (0x6f727761), 
-  ACE_NTOHL (0x72645265), 
-  ACE_NTOHL (0x71756573), 
-  ACE_NTOHL (0x743a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f46),
+  ACE_NTOHL (0x6f727761),
+  ACE_NTOHL (0x72645265),
+  ACE_NTOHL (0x71756573),
+  ACE_NTOHL (0x743a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/PortableServer/ForwardRequest:1.0
   15,
-  ACE_NTOHL (0x466f7277), 
-  ACE_NTOHL (0x61726452), 
-  ACE_NTOHL (0x65717565), 
+  ACE_NTOHL (0x466f7277),
+  ACE_NTOHL (0x61726452),
+  ACE_NTOHL (0x65717565),
   ACE_NTOHL (0x73740000),  // name = ForwardRequest
   1, // member count
   18,
-  ACE_NTOHL (0x666f7277), 
-  ACE_NTOHL (0x6172645f), 
-  ACE_NTOHL (0x72656665), 
-  ACE_NTOHL (0x72656e63), 
+  ACE_NTOHL (0x666f7277),
+  ACE_NTOHL (0x6172645f),
+  ACE_NTOHL (0x72656665),
+  ACE_NTOHL (0x72656e63),
   ACE_NTOHL (0x65000000),  // name = forward_reference
   CORBA::tk_objref,
   52, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     29,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f4f62), 
-    ACE_NTOHL (0x6a656374), 
-    ACE_NTOHL (0x3a312e30), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f4f62),
+    ACE_NTOHL (0x6a656374),
+    ACE_NTOHL (0x3a312e30),
     ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Object:1.0
     7,
-    ACE_NTOHL (0x4f626a65), 
+    ACE_NTOHL (0x4f626a65),
     ACE_NTOHL (0x63740000),  // name = Object
 
 };
@@ -422,6 +422,10 @@ CORBA::TypeCode_ptr PortableServer::ForwardRequest::_type (void) const
 {
   return ::PortableServer::_tc_ForwardRequest;
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 // Default constructor.
 PortableServer::NotAGroupObject::NotAGroupObject (void)
@@ -482,7 +486,7 @@ void PortableServer::NotAGroupObject::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -495,7 +499,7 @@ void PortableServer::NotAGroupObject::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -511,22 +515,22 @@ static const CORBA::Long _oc_PortableServer_NotAGroupObject[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   47,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f4e), 
-  ACE_NTOHL (0x6f744147), 
-  ACE_NTOHL (0x726f7570), 
-  ACE_NTOHL (0x4f626a65), 
-  ACE_NTOHL (0x63743a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f4e),
+  ACE_NTOHL (0x6f744147),
+  ACE_NTOHL (0x726f7570),
+  ACE_NTOHL (0x4f626a65),
+  ACE_NTOHL (0x63743a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableServer/NotAGroupObject:1.0
   16,
-  ACE_NTOHL (0x4e6f7441), 
-  ACE_NTOHL (0x47726f75), 
-  ACE_NTOHL (0x704f626a), 
+  ACE_NTOHL (0x4e6f7441),
+  ACE_NTOHL (0x47726f75),
+  ACE_NTOHL (0x704f626a),
   ACE_NTOHL (0x65637400),  // name = NotAGroupObject
   0, // member count
 };
@@ -562,17 +566,17 @@ PortableServer::_TAO_Unbounded_Sequence_PortableServer_IDs::_allocate_buffer (CO
 {
   PortableServer::ObjectId* tmp = 0;
   tmp = _TAO_Unbounded_Sequence_PortableServer_IDs::allocbuf (length);
-  
+
   if (this->buffer_ != 0)
   {
     PortableServer::ObjectId *old = ACE_reinterpret_cast (PortableServer::ObjectId *,this->buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp[i] = old[i];
-    
+
     if (this->release_)
       _TAO_Unbounded_Sequence_PortableServer_IDs::freebuf (old);
-    
+
   }
   this->buffer_ = tmp;
 }
@@ -582,12 +586,12 @@ PortableServer::_TAO_Unbounded_Sequence_PortableServer_IDs::_deallocate_buffer (
 {
   if (this->buffer_ == 0 || this->release_ == 0)
     return;
-  
+
   PortableServer::ObjectId *tmp = ACE_reinterpret_cast (PortableServer::ObjectId *,this->buffer_);
-  
+
   _TAO_Unbounded_Sequence_PortableServer_IDs::freebuf (tmp);
   this->buffer_ = 0;
-} 
+}
 
 PortableServer::_TAO_Unbounded_Sequence_PortableServer_IDs::~_TAO_Unbounded_Sequence_PortableServer_IDs (void) // Dtor.
 {
@@ -598,7 +602,7 @@ PortableServer::_TAO_Unbounded_Sequence_PortableServer_IDs::~_TAO_Unbounded_Sequ
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_PORTABLESERVER_IDS_CS_)
 #define _PORTABLESERVER_IDS_CS_
@@ -610,30 +614,30 @@ PortableServer::_TAO_Unbounded_Sequence_PortableServer_IDs::~_TAO_Unbounded_Sequ
 PortableServer::IDs::IDs (void)
 {}
 PortableServer::IDs::IDs (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 _TAO_Unbounded_Sequence_PortableServer_IDs
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
 TAO_Unbounded_Sequence<PortableServer::ObjectId>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 PortableServer::IDs::IDs (CORBA::ULong max, CORBA::ULong length, PortableServer::ObjectId *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 _TAO_Unbounded_Sequence_PortableServer_IDs
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
 TAO_Unbounded_Sequence<PortableServer::ObjectId>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 PortableServer::IDs::IDs (const IDs &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 _TAO_Unbounded_Sequence_PortableServer_IDs
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
 TAO_Unbounded_Sequence<PortableServer::ObjectId>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 PortableServer::IDs::~IDs (void) // dtor
@@ -651,14 +655,14 @@ static const CORBA::Long _oc_PortableServer_IDs[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   35,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f49), 
-  ACE_NTOHL (0x44733a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f49),
+  ACE_NTOHL (0x44733a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableServer/IDs:1.0
   4,
   ACE_NTOHL (0x49447300),  // name = IDs
@@ -669,19 +673,19 @@ static const CORBA::Long _oc_PortableServer_IDs[] =
     84, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       40,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x506f7274), 
-      ACE_NTOHL (0x61626c65), 
-      ACE_NTOHL (0x53657276), 
-      ACE_NTOHL (0x65722f4f), 
-      ACE_NTOHL (0x626a6563), 
-      ACE_NTOHL (0x7449643a), 
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x506f7274),
+      ACE_NTOHL (0x61626c65),
+      ACE_NTOHL (0x53657276),
+      ACE_NTOHL (0x65722f4f),
+      ACE_NTOHL (0x626a6563),
+      ACE_NTOHL (0x7449643a),
       ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableServer/ObjectId:1.0
       9,
-      ACE_NTOHL (0x4f626a65), 
-      ACE_NTOHL (0x63744964), 
+      ACE_NTOHL (0x4f626a65),
+      ACE_NTOHL (0x63744964),
       ACE_NTOHL (0x0),  // name = ObjectId
       CORBA::tk_sequence, // typecode kind
       12, // encapsulation length
@@ -708,7 +712,7 @@ TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_IDs, &_tc_TAO_tc_PortableServer_IDs)
 TAO_NAMESPACE_END
 
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (PortableServer)
@@ -745,36 +749,36 @@ static const CORBA::Long _oc_PortableServer_ThreadPolicyValue[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   49,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f54), 
-  ACE_NTOHL (0x68726561), 
-  ACE_NTOHL (0x64506f6c), 
-  ACE_NTOHL (0x69637956), 
-  ACE_NTOHL (0x616c7565), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f54),
+  ACE_NTOHL (0x68726561),
+  ACE_NTOHL (0x64506f6c),
+  ACE_NTOHL (0x69637956),
+  ACE_NTOHL (0x616c7565),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableServer/ThreadPolicyValue:1.0
   18,
-  ACE_NTOHL (0x54687265), 
-  ACE_NTOHL (0x6164506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x56616c75), 
+  ACE_NTOHL (0x54687265),
+  ACE_NTOHL (0x6164506f),
+  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x56616c75),
   ACE_NTOHL (0x65000000),  // name = ThreadPolicyValue
   2, // member count
   15,
-  ACE_NTOHL (0x4f52425f), 
-  ACE_NTOHL (0x4354524c), 
-  ACE_NTOHL (0x5f4d4f44), 
+  ACE_NTOHL (0x4f52425f),
+  ACE_NTOHL (0x4354524c),
+  ACE_NTOHL (0x5f4d4f44),
   ACE_NTOHL (0x454c0000),  // name = ORB_CTRL_MODEL
   20,
-  ACE_NTOHL (0x53494e47), 
-  ACE_NTOHL (0x4c455f54), 
-  ACE_NTOHL (0x48524541), 
-  ACE_NTOHL (0x445f4d4f), 
+  ACE_NTOHL (0x53494e47),
+  ACE_NTOHL (0x4c455f54),
+  ACE_NTOHL (0x48524541),
+  ACE_NTOHL (0x445f4d4f),
   ACE_NTOHL (0x44454c00),  // name = SINGLE_THREAD_MODEL
 };
 
@@ -841,7 +845,7 @@ PortableServer::ThreadPolicy_var::operator const ::PortableServer::ThreadPolicy_
   return this->ptr_;
 }
 
-PortableServer::ThreadPolicy_var::operator ::PortableServer::ThreadPolicy_ptr &() // cast 
+PortableServer::ThreadPolicy_var::operator ::PortableServer::ThreadPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -982,7 +986,7 @@ PortableServer::ThreadPolicy::ThreadPolicy (void)
   // destructor
   PortableServer::ThreadPolicy::~ThreadPolicy (void)
   {}
-  
+
   PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL
@@ -990,7 +994,7 @@ PortableServer::ThreadPolicy::ThreadPolicy (void)
   {
     return ThreadPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
   }
-  
+
   PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_unchecked_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL_NOT_USED
@@ -1043,7 +1047,7 @@ void *PortableServer::ThreadPolicy::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -1060,33 +1064,33 @@ static const CORBA::Long _oc_PortableServer_LifespanPolicyValue[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   51,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f4c), 
-  ACE_NTOHL (0x69666573), 
-  ACE_NTOHL (0x70616e50), 
-  ACE_NTOHL (0x6f6c6963), 
-  ACE_NTOHL (0x7956616c), 
-  ACE_NTOHL (0x75653a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f4c),
+  ACE_NTOHL (0x69666573),
+  ACE_NTOHL (0x70616e50),
+  ACE_NTOHL (0x6f6c6963),
+  ACE_NTOHL (0x7956616c),
+  ACE_NTOHL (0x75653a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableServer/LifespanPolicyValue:1.0
   20,
-  ACE_NTOHL (0x4c696665), 
-  ACE_NTOHL (0x7370616e), 
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63795661), 
+  ACE_NTOHL (0x4c696665),
+  ACE_NTOHL (0x7370616e),
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63795661),
   ACE_NTOHL (0x6c756500),  // name = LifespanPolicyValue
   2, // member count
   10,
-  ACE_NTOHL (0x5452414e), 
-  ACE_NTOHL (0x5349454e), 
+  ACE_NTOHL (0x5452414e),
+  ACE_NTOHL (0x5349454e),
   ACE_NTOHL (0x54000000),  // name = TRANSIENT
   11,
-  ACE_NTOHL (0x50455253), 
-  ACE_NTOHL (0x49535445), 
+  ACE_NTOHL (0x50455253),
+  ACE_NTOHL (0x49535445),
   ACE_NTOHL (0x4e540000),  // name = PERSISTENT
 };
 
@@ -1153,7 +1157,7 @@ PortableServer::LifespanPolicy_var::operator const ::PortableServer::LifespanPol
   return this->ptr_;
 }
 
-PortableServer::LifespanPolicy_var::operator ::PortableServer::LifespanPolicy_ptr &() // cast 
+PortableServer::LifespanPolicy_var::operator ::PortableServer::LifespanPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1294,7 +1298,7 @@ PortableServer::LifespanPolicy::LifespanPolicy (void)
   // destructor
   PortableServer::LifespanPolicy::~LifespanPolicy (void)
   {}
-  
+
   PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL
@@ -1302,7 +1306,7 @@ PortableServer::LifespanPolicy::LifespanPolicy (void)
   {
     return LifespanPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
   }
-  
+
   PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_unchecked_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL_NOT_USED
@@ -1355,7 +1359,7 @@ void *PortableServer::LifespanPolicy::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -1370,35 +1374,35 @@ static const CORBA::Long _oc_PortableServer_IdUniquenessPolicyValue[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   55,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f49), 
-  ACE_NTOHL (0x64556e69), 
-  ACE_NTOHL (0x7175656e), 
-  ACE_NTOHL (0x65737350), 
-  ACE_NTOHL (0x6f6c6963), 
-  ACE_NTOHL (0x7956616c), 
-  ACE_NTOHL (0x75653a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f49),
+  ACE_NTOHL (0x64556e69),
+  ACE_NTOHL (0x7175656e),
+  ACE_NTOHL (0x65737350),
+  ACE_NTOHL (0x6f6c6963),
+  ACE_NTOHL (0x7956616c),
+  ACE_NTOHL (0x75653a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableServer/IdUniquenessPolicyValue:1.0
   24,
-  ACE_NTOHL (0x4964556e), 
-  ACE_NTOHL (0x69717565), 
-  ACE_NTOHL (0x6e657373), 
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63795661), 
+  ACE_NTOHL (0x4964556e),
+  ACE_NTOHL (0x69717565),
+  ACE_NTOHL (0x6e657373),
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63795661),
   ACE_NTOHL (0x6c756500),  // name = IdUniquenessPolicyValue
   2, // member count
   10,
-  ACE_NTOHL (0x554e4951), 
-  ACE_NTOHL (0x55455f49), 
+  ACE_NTOHL (0x554e4951),
+  ACE_NTOHL (0x55455f49),
   ACE_NTOHL (0x44000000),  // name = UNIQUE_ID
   12,
-  ACE_NTOHL (0x4d554c54), 
-  ACE_NTOHL (0x49504c45), 
+  ACE_NTOHL (0x4d554c54),
+  ACE_NTOHL (0x49504c45),
   ACE_NTOHL (0x5f494400),  // name = MULTIPLE_ID
 };
 
@@ -1465,7 +1469,7 @@ PortableServer::IdUniquenessPolicy_var::operator const ::PortableServer::IdUniqu
   return this->ptr_;
 }
 
-PortableServer::IdUniquenessPolicy_var::operator ::PortableServer::IdUniquenessPolicy_ptr &() // cast 
+PortableServer::IdUniquenessPolicy_var::operator ::PortableServer::IdUniquenessPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1606,7 +1610,7 @@ PortableServer::IdUniquenessPolicy::IdUniquenessPolicy (void)
   // destructor
   PortableServer::IdUniquenessPolicy::~IdUniquenessPolicy (void)
   {}
-  
+
   PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL
@@ -1614,7 +1618,7 @@ PortableServer::IdUniquenessPolicy::IdUniquenessPolicy (void)
   {
     return IdUniquenessPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
   }
-  
+
   PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_unchecked_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL_NOT_USED
@@ -1667,7 +1671,7 @@ void *PortableServer::IdUniquenessPolicy::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -1682,34 +1686,34 @@ static const CORBA::Long _oc_PortableServer_IdAssignmentPolicyValue[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   55,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f49), 
-  ACE_NTOHL (0x64417373), 
-  ACE_NTOHL (0x69676e6d), 
-  ACE_NTOHL (0x656e7450), 
-  ACE_NTOHL (0x6f6c6963), 
-  ACE_NTOHL (0x7956616c), 
-  ACE_NTOHL (0x75653a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f49),
+  ACE_NTOHL (0x64417373),
+  ACE_NTOHL (0x69676e6d),
+  ACE_NTOHL (0x656e7450),
+  ACE_NTOHL (0x6f6c6963),
+  ACE_NTOHL (0x7956616c),
+  ACE_NTOHL (0x75653a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableServer/IdAssignmentPolicyValue:1.0
   24,
-  ACE_NTOHL (0x49644173), 
-  ACE_NTOHL (0x7369676e), 
-  ACE_NTOHL (0x6d656e74), 
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63795661), 
+  ACE_NTOHL (0x49644173),
+  ACE_NTOHL (0x7369676e),
+  ACE_NTOHL (0x6d656e74),
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63795661),
   ACE_NTOHL (0x6c756500),  // name = IdAssignmentPolicyValue
   2, // member count
   8,
-  ACE_NTOHL (0x55534552), 
+  ACE_NTOHL (0x55534552),
   ACE_NTOHL (0x5f494400),  // name = USER_ID
   10,
-  ACE_NTOHL (0x53595354), 
-  ACE_NTOHL (0x454d5f49), 
+  ACE_NTOHL (0x53595354),
+  ACE_NTOHL (0x454d5f49),
   ACE_NTOHL (0x44000000),  // name = SYSTEM_ID
 };
 
@@ -1776,7 +1780,7 @@ PortableServer::IdAssignmentPolicy_var::operator const ::PortableServer::IdAssig
   return this->ptr_;
 }
 
-PortableServer::IdAssignmentPolicy_var::operator ::PortableServer::IdAssignmentPolicy_ptr &() // cast 
+PortableServer::IdAssignmentPolicy_var::operator ::PortableServer::IdAssignmentPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1917,7 +1921,7 @@ PortableServer::IdAssignmentPolicy::IdAssignmentPolicy (void)
   // destructor
   PortableServer::IdAssignmentPolicy::~IdAssignmentPolicy (void)
   {}
-  
+
   PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL
@@ -1925,7 +1929,7 @@ PortableServer::IdAssignmentPolicy::IdAssignmentPolicy (void)
   {
     return IdAssignmentPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
   }
-  
+
   PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_unchecked_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL_NOT_USED
@@ -1978,7 +1982,7 @@ void *PortableServer::IdAssignmentPolicy::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -1995,44 +1999,44 @@ static const CORBA::Long _oc_PortableServer_ImplicitActivationPolicyValue[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   61,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f49), 
-  ACE_NTOHL (0x6d706c69), 
-  ACE_NTOHL (0x63697441), 
-  ACE_NTOHL (0x63746976), 
-  ACE_NTOHL (0x6174696f), 
-  ACE_NTOHL (0x6e506f6c), 
-  ACE_NTOHL (0x69637956), 
-  ACE_NTOHL (0x616c7565), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f49),
+  ACE_NTOHL (0x6d706c69),
+  ACE_NTOHL (0x63697441),
+  ACE_NTOHL (0x63746976),
+  ACE_NTOHL (0x6174696f),
+  ACE_NTOHL (0x6e506f6c),
+  ACE_NTOHL (0x69637956),
+  ACE_NTOHL (0x616c7565),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/PortableServer/ImplicitActivationPolicyValue:1.0
   30,
-  ACE_NTOHL (0x496d706c), 
-  ACE_NTOHL (0x69636974), 
-  ACE_NTOHL (0x41637469), 
-  ACE_NTOHL (0x76617469), 
-  ACE_NTOHL (0x6f6e506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x56616c75), 
+  ACE_NTOHL (0x496d706c),
+  ACE_NTOHL (0x69636974),
+  ACE_NTOHL (0x41637469),
+  ACE_NTOHL (0x76617469),
+  ACE_NTOHL (0x6f6e506f),
+  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x56616c75),
   ACE_NTOHL (0x65000000),  // name = ImplicitActivationPolicyValue
   2, // member count
   20,
-  ACE_NTOHL (0x494d504c), 
-  ACE_NTOHL (0x49434954), 
-  ACE_NTOHL (0x5f414354), 
-  ACE_NTOHL (0x49564154), 
+  ACE_NTOHL (0x494d504c),
+  ACE_NTOHL (0x49434954),
+  ACE_NTOHL (0x5f414354),
+  ACE_NTOHL (0x49564154),
   ACE_NTOHL (0x494f4e00),  // name = IMPLICIT_ACTIVATION
   23,
-  ACE_NTOHL (0x4e4f5f49), 
-  ACE_NTOHL (0x4d504c49), 
-  ACE_NTOHL (0x4349545f), 
-  ACE_NTOHL (0x41435449), 
-  ACE_NTOHL (0x56415449), 
+  ACE_NTOHL (0x4e4f5f49),
+  ACE_NTOHL (0x4d504c49),
+  ACE_NTOHL (0x4349545f),
+  ACE_NTOHL (0x41435449),
+  ACE_NTOHL (0x56415449),
   ACE_NTOHL (0x4f4e0000),  // name = NO_IMPLICIT_ACTIVATION
 };
 
@@ -2099,7 +2103,7 @@ PortableServer::ImplicitActivationPolicy_var::operator const ::PortableServer::I
   return this->ptr_;
 }
 
-PortableServer::ImplicitActivationPolicy_var::operator ::PortableServer::ImplicitActivationPolicy_ptr &() // cast 
+PortableServer::ImplicitActivationPolicy_var::operator ::PortableServer::ImplicitActivationPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -2240,7 +2244,7 @@ PortableServer::ImplicitActivationPolicy::ImplicitActivationPolicy (void)
   // destructor
   PortableServer::ImplicitActivationPolicy::~ImplicitActivationPolicy (void)
   {}
-  
+
   PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationPolicy::_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL
@@ -2248,7 +2252,7 @@ PortableServer::ImplicitActivationPolicy::ImplicitActivationPolicy (void)
   {
     return ImplicitActivationPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
   }
-  
+
   PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationPolicy::_unchecked_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL_NOT_USED
@@ -2301,7 +2305,7 @@ void *PortableServer::ImplicitActivationPolicy::_tao_QueryInterface (ptr_arith_t
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -2316,36 +2320,36 @@ static const CORBA::Long _oc_PortableServer_ServantRetentionPolicyValue[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   59,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f53), 
-  ACE_NTOHL (0x65727661), 
-  ACE_NTOHL (0x6e745265), 
-  ACE_NTOHL (0x74656e74), 
-  ACE_NTOHL (0x696f6e50), 
-  ACE_NTOHL (0x6f6c6963), 
-  ACE_NTOHL (0x7956616c), 
-  ACE_NTOHL (0x75653a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f53),
+  ACE_NTOHL (0x65727661),
+  ACE_NTOHL (0x6e745265),
+  ACE_NTOHL (0x74656e74),
+  ACE_NTOHL (0x696f6e50),
+  ACE_NTOHL (0x6f6c6963),
+  ACE_NTOHL (0x7956616c),
+  ACE_NTOHL (0x75653a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/PortableServer/ServantRetentionPolicyValue:1.0
   28,
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x616e7452), 
-  ACE_NTOHL (0x6574656e), 
-  ACE_NTOHL (0x74696f6e), 
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63795661), 
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x616e7452),
+  ACE_NTOHL (0x6574656e),
+  ACE_NTOHL (0x74696f6e),
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63795661),
   ACE_NTOHL (0x6c756500),  // name = ServantRetentionPolicyValue
   2, // member count
   7,
-  ACE_NTOHL (0x52455441), 
+  ACE_NTOHL (0x52455441),
   ACE_NTOHL (0x494e0000),  // name = RETAIN
   11,
-  ACE_NTOHL (0x4e4f4e5f), 
-  ACE_NTOHL (0x52455441), 
+  ACE_NTOHL (0x4e4f4e5f),
+  ACE_NTOHL (0x52455441),
   ACE_NTOHL (0x494e0000),  // name = NON_RETAIN
 };
 
@@ -2412,7 +2416,7 @@ PortableServer::ServantRetentionPolicy_var::operator const ::PortableServer::Ser
   return this->ptr_;
 }
 
-PortableServer::ServantRetentionPolicy_var::operator ::PortableServer::ServantRetentionPolicy_ptr &() // cast 
+PortableServer::ServantRetentionPolicy_var::operator ::PortableServer::ServantRetentionPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -2553,7 +2557,7 @@ PortableServer::ServantRetentionPolicy::ServantRetentionPolicy (void)
   // destructor
   PortableServer::ServantRetentionPolicy::~ServantRetentionPolicy (void)
   {}
-  
+
   PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolicy::_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL
@@ -2561,7 +2565,7 @@ PortableServer::ServantRetentionPolicy::ServantRetentionPolicy (void)
   {
     return ServantRetentionPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
   }
-  
+
   PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolicy::_unchecked_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL_NOT_USED
@@ -2614,7 +2618,7 @@ void *PortableServer::ServantRetentionPolicy::_tao_QueryInterface (ptr_arith_t t
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -2629,50 +2633,50 @@ static const CORBA::Long _oc_PortableServer_RequestProcessingPolicyValue[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   60,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f52), 
-  ACE_NTOHL (0x65717565), 
-  ACE_NTOHL (0x73745072), 
-  ACE_NTOHL (0x6f636573), 
-  ACE_NTOHL (0x73696e67), 
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63795661), 
-  ACE_NTOHL (0x6c75653a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f52),
+  ACE_NTOHL (0x65717565),
+  ACE_NTOHL (0x73745072),
+  ACE_NTOHL (0x6f636573),
+  ACE_NTOHL (0x73696e67),
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63795661),
+  ACE_NTOHL (0x6c75653a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/PortableServer/RequestProcessingPolicyValue:1.0
   29,
-  ACE_NTOHL (0x52657175), 
-  ACE_NTOHL (0x65737450), 
-  ACE_NTOHL (0x726f6365), 
-  ACE_NTOHL (0x7373696e), 
-  ACE_NTOHL (0x67506f6c), 
-  ACE_NTOHL (0x69637956), 
-  ACE_NTOHL (0x616c7565), 
+  ACE_NTOHL (0x52657175),
+  ACE_NTOHL (0x65737450),
+  ACE_NTOHL (0x726f6365),
+  ACE_NTOHL (0x7373696e),
+  ACE_NTOHL (0x67506f6c),
+  ACE_NTOHL (0x69637956),
+  ACE_NTOHL (0x616c7565),
   ACE_NTOHL (0x0),  // name = RequestProcessingPolicyValue
   3, // member count
   27,
-  ACE_NTOHL (0x5553455f), 
-  ACE_NTOHL (0x41435449), 
-  ACE_NTOHL (0x56455f4f), 
-  ACE_NTOHL (0x424a4543), 
-  ACE_NTOHL (0x545f4d41), 
-  ACE_NTOHL (0x505f4f4e), 
+  ACE_NTOHL (0x5553455f),
+  ACE_NTOHL (0x41435449),
+  ACE_NTOHL (0x56455f4f),
+  ACE_NTOHL (0x424a4543),
+  ACE_NTOHL (0x545f4d41),
+  ACE_NTOHL (0x505f4f4e),
   ACE_NTOHL (0x4c590000),  // name = USE_ACTIVE_OBJECT_MAP_ONLY
   20,
-  ACE_NTOHL (0x5553455f), 
-  ACE_NTOHL (0x44454641), 
-  ACE_NTOHL (0x554c545f), 
-  ACE_NTOHL (0x53455256), 
+  ACE_NTOHL (0x5553455f),
+  ACE_NTOHL (0x44454641),
+  ACE_NTOHL (0x554c545f),
+  ACE_NTOHL (0x53455256),
   ACE_NTOHL (0x414e5400),  // name = USE_DEFAULT_SERVANT
   20,
-  ACE_NTOHL (0x5553455f), 
-  ACE_NTOHL (0x53455256), 
-  ACE_NTOHL (0x414e545f), 
-  ACE_NTOHL (0x4d414e41), 
+  ACE_NTOHL (0x5553455f),
+  ACE_NTOHL (0x53455256),
+  ACE_NTOHL (0x414e545f),
+  ACE_NTOHL (0x4d414e41),
   ACE_NTOHL (0x47455200),  // name = USE_SERVANT_MANAGER
 };
 
@@ -2739,7 +2743,7 @@ PortableServer::RequestProcessingPolicy_var::operator const ::PortableServer::Re
   return this->ptr_;
 }
 
-PortableServer::RequestProcessingPolicy_var::operator ::PortableServer::RequestProcessingPolicy_ptr &() // cast 
+PortableServer::RequestProcessingPolicy_var::operator ::PortableServer::RequestProcessingPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -2880,7 +2884,7 @@ PortableServer::RequestProcessingPolicy::RequestProcessingPolicy (void)
   // destructor
   PortableServer::RequestProcessingPolicy::~RequestProcessingPolicy (void)
   {}
-  
+
   PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPolicy::_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL
@@ -2888,7 +2892,7 @@ PortableServer::RequestProcessingPolicy::RequestProcessingPolicy (void)
   {
     return RequestProcessingPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
   }
-  
+
   PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPolicy::_unchecked_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL_NOT_USED
@@ -2941,7 +2945,7 @@ void *PortableServer::RequestProcessingPolicy::_tao_QueryInterface (ptr_arith_t 
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -3004,7 +3008,7 @@ PortableServer::POAManager_var::operator const ::PortableServer::POAManager_ptr 
   return this->ptr_;
 }
 
-PortableServer::POAManager_var::operator ::PortableServer::POAManager_ptr &() // cast 
+PortableServer::POAManager_var::operator ::PortableServer::POAManager_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -3145,7 +3149,7 @@ PortableServer::POAManager::POAManager (void)
   // destructor
   PortableServer::POAManager::~POAManager (void)
   {}
-  
+
   PortableServer::POAManager_ptr PortableServer::POAManager::_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL
@@ -3153,7 +3157,7 @@ PortableServer::POAManager::POAManager (void)
   {
     return POAManager::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
   }
-  
+
   PortableServer::POAManager_ptr PortableServer::POAManager::_unchecked_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL_NOT_USED
@@ -3194,7 +3198,7 @@ void *PortableServer::POAManager::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -3325,7 +3329,7 @@ PortableServer::AdapterActivator_var::operator const ::PortableServer::AdapterAc
   return this->ptr_;
 }
 
-PortableServer::AdapterActivator_var::operator ::PortableServer::AdapterActivator_ptr &() // cast 
+PortableServer::AdapterActivator_var::operator ::PortableServer::AdapterActivator_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -3466,7 +3470,7 @@ PortableServer::AdapterActivator::AdapterActivator (void)
   // destructor
   PortableServer::AdapterActivator::~AdapterActivator (void)
   {}
-  
+
   PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL
@@ -3474,7 +3478,7 @@ PortableServer::AdapterActivator::AdapterActivator (void)
   {
     return AdapterActivator::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
   }
-  
+
   PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_unchecked_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL_NOT_USED
@@ -3515,7 +3519,7 @@ void *PortableServer::AdapterActivator::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -3576,7 +3580,7 @@ PortableServer::ServantManager_var::operator const ::PortableServer::ServantMana
   return this->ptr_;
 }
 
-PortableServer::ServantManager_var::operator ::PortableServer::ServantManager_ptr &() // cast 
+PortableServer::ServantManager_var::operator ::PortableServer::ServantManager_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -3717,7 +3721,7 @@ PortableServer::ServantManager::ServantManager (void)
   // destructor
   PortableServer::ServantManager::~ServantManager (void)
   {}
-  
+
   PortableServer::ServantManager_ptr PortableServer::ServantManager::_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL
@@ -3725,7 +3729,7 @@ PortableServer::ServantManager::ServantManager (void)
   {
     return ServantManager::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
   }
-  
+
   PortableServer::ServantManager_ptr PortableServer::ServantManager::_unchecked_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL_NOT_USED
@@ -3766,7 +3770,7 @@ void *PortableServer::ServantManager::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -3827,7 +3831,7 @@ PortableServer::ServantActivator_var::operator const ::PortableServer::ServantAc
   return this->ptr_;
 }
 
-PortableServer::ServantActivator_var::operator ::PortableServer::ServantActivator_ptr &() // cast 
+PortableServer::ServantActivator_var::operator ::PortableServer::ServantActivator_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -3968,7 +3972,7 @@ PortableServer::ServantActivator::ServantActivator (void)
   // destructor
   PortableServer::ServantActivator::~ServantActivator (void)
   {}
-  
+
   PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL
@@ -3976,7 +3980,7 @@ PortableServer::ServantActivator::ServantActivator (void)
   {
     return ServantActivator::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
   }
-  
+
   PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_unchecked_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL_NOT_USED
@@ -4029,7 +4033,7 @@ void *PortableServer::ServantActivator::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -4090,7 +4094,7 @@ PortableServer::ServantLocator_var::operator const ::PortableServer::ServantLoca
   return this->ptr_;
 }
 
-PortableServer::ServantLocator_var::operator ::PortableServer::ServantLocator_ptr &() // cast 
+PortableServer::ServantLocator_var::operator ::PortableServer::ServantLocator_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -4231,7 +4235,7 @@ PortableServer::ServantLocator::ServantLocator (void)
   // destructor
   PortableServer::ServantLocator::~ServantLocator (void)
   {}
-  
+
   PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL
@@ -4239,7 +4243,7 @@ PortableServer::ServantLocator::ServantLocator (void)
   {
     return ServantLocator::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
   }
-  
+
   PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_unchecked_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL_NOT_USED
@@ -4292,7 +4296,7 @@ void *PortableServer::ServantLocator::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -4355,7 +4359,7 @@ PortableServer::POA_var::operator const ::PortableServer::POA_ptr &() const // c
   return this->ptr_;
 }
 
-PortableServer::POA_var::operator ::PortableServer::POA_ptr &() // cast 
+PortableServer::POA_var::operator ::PortableServer::POA_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -4496,7 +4500,7 @@ PortableServer::POA::POA (void)
   // destructor
   PortableServer::POA::~POA (void)
   {}
-  
+
   PortableServer::POA_ptr PortableServer::POA::_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL
@@ -4504,7 +4508,7 @@ PortableServer::POA::POA (void)
   {
     return POA::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
   }
-  
+
   PortableServer::POA_ptr PortableServer::POA::_unchecked_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL_NOT_USED
@@ -4545,7 +4549,7 @@ void *PortableServer::POA::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -5300,7 +5304,7 @@ PortableServer::Current_var::operator const ::PortableServer::Current_ptr &() co
   return this->ptr_;
 }
 
-PortableServer::Current_var::operator ::PortableServer::Current_ptr &() // cast 
+PortableServer::Current_var::operator ::PortableServer::Current_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -5441,7 +5445,7 @@ PortableServer::Current::Current (void)
   // destructor
   PortableServer::Current::~Current (void)
   {}
-  
+
   PortableServer::Current_ptr PortableServer::Current::_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL
@@ -5449,7 +5453,7 @@ PortableServer::Current::Current (void)
   {
     return Current::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
   }
-  
+
   PortableServer::Current_ptr PortableServer::Current::_unchecked_narrow (
       CORBA::Object_ptr obj
       TAO_ENV_ARG_DECL_NOT_USED
@@ -5502,7 +5506,7 @@ void *PortableServer::Current::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -5649,13 +5653,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::Ob
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (PortableServer::_tc_ObjectId TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -5737,13 +5741,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::Fo
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (PortableServer::_tc_ForwardRequest TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (PortableServer::ForwardRequest *)_tao_any.value ();
@@ -5788,6 +5792,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::Fo
   return 0;
 }
 
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 void operator<<= (CORBA::Any &_tao_any, const PortableServer::NotAGroupObject &_tao_elem) // copying
 {
   TAO_OutputCDR stream;
@@ -5827,13 +5835,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::No
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (PortableServer::_tc_NotAGroupObject TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = (PortableServer::NotAGroupObject *)_tao_any.value ();
@@ -5922,13 +5930,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::ID
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (PortableServer::_tc_IDs TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -5969,7 +5977,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::ID
   return 0;
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -5989,13 +5997,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ThreadPo
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (PortableServer::_tc_ThreadPolicyValue TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -6038,13 +6046,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::Lifespan
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (PortableServer::_tc_LifespanPolicyValue TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -6085,13 +6093,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::IdUnique
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (PortableServer::_tc_IdUniquenessPolicyValue TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -6132,13 +6140,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::IdAssign
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (PortableServer::_tc_IdAssignmentPolicyValue TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -6181,13 +6189,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::Implicit
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (PortableServer::_tc_ImplicitActivationPolicyValue TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -6228,13 +6236,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ServantR
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (PortableServer::_tc_ServantRetentionPolicyValue TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -6275,13 +6283,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::RequestP
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (PortableServer::_tc_RequestProcessingPolicyValue TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -6369,20 +6377,20 @@ CORBA::Boolean operator<< (
   if (strm << _tao_sequence.length ())
   {
     // encode all elements
-    
+
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     {
-      TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
+      TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
         ACE_static_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (PortableServer::ObjectId *)&_tao_sequence);
       if (oseq->mb ())
         return strm.write_octet_array_mb (oseq->mb ());
       else
         return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
     }
-    
+
 #else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
     return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-  
+
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
   }
   return 0; // error
@@ -6399,10 +6407,15 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
+    // Add a check to the length of the sequence
+    // to make sure it does not exceed the length
+    // of the stream. (See bug 58.)
+    if (_tao_seq_len > strm.length())
+      return 0;
     // retrieve all the elements
-    
+
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     if (ACE_BIT_DISABLED (strm.start ()->flags (),
     ACE_Message_Block::DONT_DELETE))
@@ -6412,7 +6425,7 @@ CORBA::Boolean operator>> (
       strm.orb_core ()->resource_factory ()->
       input_cdr_allocator_type_locked () == 1)
       {
-        TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
+        TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
           ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &_tao_sequence);
         oseq->replace (_tao_seq_len, strm.start ());
         oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
@@ -6423,11 +6436,13 @@ CORBA::Boolean operator>> (
     return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
 #else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
     return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-  
+
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
   }
   return 0; // error
 }
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -6458,7 +6473,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // Add a check to the length of the sequence
     // to make sure it does not exceed the length
@@ -6476,3 +6491,4 @@ CORBA::Boolean operator>> (
   return 0; // error
 }
 
+#endif /* TAO_HAS_MINIMUM_POA == 0 */

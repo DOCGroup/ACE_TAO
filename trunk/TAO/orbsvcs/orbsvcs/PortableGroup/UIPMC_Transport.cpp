@@ -338,7 +338,7 @@ TAO_UIPMC_Transport::send_i (iovec *iov, int iovcnt,
         }
 
       // Go to the next fragment.
-      *packet_number++;
+      (*packet_number)++;
       ++current_fragment;
       --num_fragments;
     }
