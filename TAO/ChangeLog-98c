@@ -1,3 +1,10 @@
+Sun Mar 22 01:52:01 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/CORBA.cpp: Moved TAO_Exceptions::init_standard_exceptions()
+ 	  to the beginning of ORB_init() so that we can use exceptions
+ 	  later within that function.  Thanks to Sergio for reporting
+ 	  this.
+
 Sat Mar 21 11:00:40 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tao: Renamed a bunch of files so that the names and
