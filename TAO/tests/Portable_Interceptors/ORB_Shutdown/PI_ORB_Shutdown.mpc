@@ -4,7 +4,6 @@
 
 project(*Server): taoexe, portableserver {
   requires += interceptors
-  idlflags += -I$(TAO_ROOT)
 
   Source_Files {
     test_i.cpp
@@ -15,7 +14,6 @@ project(*Server): taoexe, portableserver {
 }
 
 project(*Client): taoexe {
-  idlflags += -I$(TAO_ROOT)
 
   Source_Files {
     testC.cpp
