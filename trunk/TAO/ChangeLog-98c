@@ -1,3 +1,23 @@
+Fri Apr 17 12:12:04 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation.cpp: There was an error in the
+	way the return Any type was passed to the demarshal and marshal
+	routines of the generated skeleton code.
+
+	* tao/Any.cpp: Error in the assignment operator for Any fixed. For
+	the Any owns case, we were copying the data from the value_ field
+	instead of the cdr_ field.
+
+	* tao/decode.cpp: In Any::decode, we were setting the value_ field
+	of the Any to the ACE_Message_Block rather than setting the cdr_
+	field.
+
+	* tao/encode.cpp: In Any::encode, we were reading from the value_
+	field of the Any rather than the cdr_ field.
+
+	* tests/Param_Test: Added code for the Any test. This is still
+	under test.
+
 Fri Apr 17 02:38:13 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/{be_visitor_exception, be_visitor_sequence,

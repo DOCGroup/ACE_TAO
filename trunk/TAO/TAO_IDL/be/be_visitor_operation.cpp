@@ -2661,8 +2661,11 @@ visit_predefined_type (be_predefined_type *node)
       os->indent ();
       *os << "0";
       break;
-    case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_any:
+      os->indent ();
+      *os << "_tao_retval";
+      break;
+    case AST_PredefinedType::PT_pseudo:
     default:
       os->indent ();
       *os << "&_tao_retval";

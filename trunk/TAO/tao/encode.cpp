@@ -124,7 +124,7 @@ TAO_Marshal_Any::encode (CORBA::TypeCode_ptr,
     // append the CDR stream
     if (any->any_owns_data_)
       {
-        TAO_InputCDR in_strm ((ACE_Message_Block *) any->value_);
+        TAO_InputCDR in_strm (any->cdr_);
         retval = stream->append (elem_tc, &in_strm, env);
       }
     else

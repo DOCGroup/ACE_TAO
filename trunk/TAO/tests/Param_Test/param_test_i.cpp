@@ -381,5 +381,9 @@ Param_Test_i::test_any (const CORBA::Any &a1,
                         CORBA::Any_out a3,
                         CORBA::Environment &env)
 {
-  return 0;
+  CORBA::Any *ret;
+  a2 = a1;
+  a3 = new CORBA::Any (a1);
+  ret = new CORBA::Any (a1);
+  return ret;
 }
