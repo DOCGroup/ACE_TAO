@@ -1,3 +1,11 @@
+Tue Jun  8 14:15:31 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DnC/DomainApplicationManager_Impl.cpp
+
+          Tested it and it could split plan well and also contact
+          NodeDaemon without problem.
+
+
 Tue Jun  8 17:18:28 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/NodeApplication/NodeApplication.mpc:

@@ -67,6 +67,9 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
           Chained_Artifacts artifacts = entry->int_id_;
 
+          // Dump plans
+          Deployment::DnC_Dump::dump (artifacts.child_plan_);
+
           // Call preparePlan() method on the NodeManager with the
           // corresponding child plan as input, which returns a
           // NodeApplicationManager object reference.  @@TODO: Does
@@ -109,6 +112,9 @@ int
 CIAO::DomainApplicationManager_Impl::
 get_plan_info (void)
 {
+  if ( this->deployment_config_.init (this->deployment_file_) == -1 )
+    return 0;
+
   CORBA::ULong length = this->plan_.instance.length ();
 
   // Error: If there are no nodes in the plan => No nodes to deploy the
@@ -619,4 +625,27 @@ get_outgoing_connections_i (const char * instname,
     }  /* close for loop on internal endpoints */
   }  /* close for loop on all connections in the plan */
   return 1;
+}
+
+void 
+CIAO::DomainApplicationManager_Impl::
+dump_connections (const ::Deployment::Connections & connections)
+{
+  for (CORBA::ULong i = 0; i < connections.length (); i++)
+  {
+    ACE_DEBUG ((LM_DEBUG, "instanceName: %s\n", connections[i].instanceName.in ()));
+    ACE_DEBUG ((LM_DEBUG, "portName: %s\n", connections[i].portName.in ()));
+    ACE_DEBUG ((LM_DEBUG, "portkind: "));
+    switch (connections[i].kind) {
+    case Deployment::Facet: ACE_DEBUG ((LM_DEBUG, "Facet\n")); break;
+    case Deployment::SimplexReceptacle: ACE_DEBUG ((LM_DEBUG, "SimplexReceptacle\n")); break;
+    case Deployment::MultiplexReceptacle: ACE_DEBUG ((LM_DEBUG, "MultiplexReceptacle\n")); break;
+    case Deployment::EventEmitter: ACE_DEBUG ((LM_DEBUG, "EventEmitter\n")); break;
+    case Deployment::EventPublisher: ACE_DEBUG ((LM_DEBUG, "EventPublisher\n")); break;
+    case Deployment::EventConsumer: ACE_DEBUG ((LM_DEBUG, "EventConsumer\n")); break;
+    }
+
+    // object reference.
+    ACE_DEBUG ((LM_DEBUG, "endpoint: \n"));
+  }
 }
