@@ -2,6 +2,14 @@
 
 [Current difficulties]
 
+  [Non-static object manager problem]
+     CE uses non-static object manager.  However, there seems to be
+     another global object manager hanging somewhere and it gets
+     deleted when a windows program is shutting down.  As the real
+     object manager has already been destructed when the ACE worker
+     thread exits, this causes Access Violations.  So far, this
+     doesn't really affect my work so I'll defer it to a later point. 
+
   [Bugs in cross compiler for SH series CPU]
      
     [Inline functions]
@@ -30,6 +38,7 @@
         will happen (otherwise, I'll call this a feature.)
 
 [Hints on writing portable code using ACE]
+
 
   [Testing Non-Window based ACE programs]
      Rumor has it that Microsoft will provide a DOS shell in their
@@ -134,6 +143,106 @@
      everytime a conversion is necessary.  This, of course, doesn't
      seem to be a good choice.
 
+
+
+[Status of one-button tests]
+   [Convention of project files settings]
+        
+      Procedures:
+        
+      * Create a new "Win32 Application" project file. It should
+        support the following platforms: WCE x86em, WCE MIPS, and WCE
+        SH3. Notice the project location should Be under
+        $ACE_ROOT/tests/WinCE. 
+        
+      * Add the cpp file(s) along with all .cpp and .rc files under
+        $ACE_ROOT/WindozeCE.
+
+      * Open Project settings.  
+
+      * General Settings are:
+        "Using MFC in a Shared DLL" for all platforms.
+        Both "Intermediate files" and "Output files" should be the
+        same path.  They should be one of "x86emDbg", "WMIPSDbg", and
+        "WCESHDbg" depend on the target platform.
+        
+      * "C/C++" Settings:
+        Add "ACE_HAS_DLL=1", "ACE_HAS_WINCE" to preprocessor
+        definitions for all target platforms.
+        Set "Code Generation" -> "Use run-time library" to "Debug
+        Multithreaded". 
+        Add to "Preprocessor" -> "Additional include directories" the
+        following: "..\,..\..\,..\..\WindozeCE\".
+
+      * "Link" Settings:
+        Added "aced.lib" into "Input" -> "Object/library modules".
+        Set "Input" -> "Additional library path" according to the
+        target platform.  It should one of the following: 
+                "..\..\ace\WCE\x86em",
+                "..\..\ace\WCE\MIPS", or,
+                "..\..\ace\WCE\SH".
+
+      * You are all done.
+        
+   [Legend:] X - test working properly
+             . - work pending
+             N - Not supported by CE
+
+    [ ] Aio_Platform_Test
+    [X] Atomic_Op_Test
+    [X] Barrier_Test
+    [X] Basic_Types_Test
+    [ ] Buffer_Stream_Test
+    [ ] Conn_Test
+    [ ] Enum_Interfaces_Test
+    [N] Env_Value_Test
+    [ ] Future_Test
+    [ ] Handle_Set_Test
+    [ ] Hash_Map_Manager_Test
+    [ ] IOStream_Test
+    [ ] MM_Shared_Memory_Test
+    [ ] MT_Reactor_Timer_Test
+    [ ] MT_SOCK_Test
+    [X] Map_Manager_Test
+    [ ] Mem_Map_Test
+    [ ] Message_Block_Test
+    [ ] Message_Queue_Notifications_Test
+    [ ] Message_Queue_Test
+    [ ] Naming_Test
+    [ ] Notify_Performance_Test
+    [ ] OrdMultiSet_Test
+    [ ] Pipe_Test
+    [ ] Priority_Buffer_Test
+    [ ] Priority_Reactor_Test
+    [ ] Priority_Task_Test
+    [ ] Process_Mutex_Test
+    [ ] Process_Strategy_Test
+    [ ] Reactor_Exceptions_Test
+    [ ] Reactor_Notify_Test
+    [ ] Reactor_Performance_Test
+    [ ] Reactor_Timer_Test
+    [ ] Reactors_Test
+    [ ] Reader_Writer_Test
+    [ ] Recursive_Mutex_Test
+    [ ] SOCK_Connector_Test
+    [ ] SOCK_Test
+    [ ] SPIPE_Test
+    [ ] SString_Test
+    [ ] SV_Shared_Memory_Test
+    [ ] Semaphore_Test
+    [ ] Service_Config_Test
+    [ ] Sigset_Ops_Test
+    [ ] Simple_Message_Block_Test
+    [ ] TSS_Test
+    [ ] Task_Test
+    [ ] Thread_Manager_Test
+    [ ] Thread_Mutex_Test
+    [ ] Thread_Pool_Test
+    [ ] Time_Service_Test
+    [ ] Time_Value_Test
+    [ ] Timer_Queue_Test
+    [ ] Tokens_Test
+    [ ] UPIPE_SAP_Test
 
 
 [ACE File list]
