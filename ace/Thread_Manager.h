@@ -282,7 +282,7 @@ protected:
 		       long flags, 
 		       ACE_thread_t * = 0, 
 		       ACE_hthread_t *t_handle = 0,
-		       u_int priority = 0,
+		       long priority = 0,
 		       int grp_id = -1,
 		       void *stack = 0, 
 		       size_t stack_size = 0,
