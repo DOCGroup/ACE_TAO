@@ -25,6 +25,26 @@
 
 #include "ace/OS.h"
 
+// The default arguments of the resource factory for the fake service 
+// configurator
+#if !defined (TAO_DEFAULT_RESOURCE_FACTORY_ARGS)
+#define TAO_DEFAULT_RESOURCE_FACTORY_ARGS { "-ORBresources", "tss" }
+#endif /* TAO_DEFAULT_RESOURCE_FACTORY_ARGS */
+
+// The default arguments of the client strategy factory for the fake service 
+// configurator
+#if !defined (TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS)
+#define TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS { 0 }
+#endif /* TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS */
+
+// The default arguments of the server strategy factory for the fake service 
+// configurator
+#if !defined (TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS)
+#define TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS { "-ORBconcurrency", "reactive", \
+                                                   "-ORBdemuxstrategy", "dynamic", \
+                                                   "-ORBtablesize", "128" }
+#endif /* TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS */
+
 // The default size of TAO's server object table.
 #if !defined (TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE)
 #define TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE 64

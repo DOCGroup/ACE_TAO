@@ -28,22 +28,19 @@ TAO_Internal::fake_service_entries_i (void)
     }\
   while (0) //;
 
-  char *rfactory_args[] = { "-ORBresources", "tss" };
+  char *rfactory_args[] = TAO_DEFAULT_RESOURCE_FACTORY_ARGS;
   FAKE_SVC_ENTRY ("Resource_Factory",
                   TAO_Resource_Factory,
                   sizeof rfactory_args / sizeof rfactory_args[0],
                   rfactory_args);
 
-  char *client_args[] = { 0 };
+  char *client_args[] = TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS;
   FAKE_SVC_ENTRY ("Client_Strategy_Factory",
                   TAO_Default_Client_Strategy_Factory,
                   0,
                   client_args);
 
-  char* server_args[] = {
-    "-ORBconcurrency", "reactive",
-    "-ORBdemuxstrategy", "dynamic",
-    "-ORBtablesize", "128" };
+  char* server_args[] = TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS;
   FAKE_SVC_ENTRY ("Server_Strategy_Factory",
                   TAO_Default_Server_Strategy_Factory,
                   sizeof server_args / sizeof server_args[0],

@@ -1,3 +1,10 @@
+Fri Apr  3 17:07:18 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
+
+	* tao/TAO_Internal.cpp (FAKE_SVC_ENTRY): 	
+	* tao/orbconf.h: Made minor changes to have the fake service
+ 	configurator receive its values through macros, instead of
+ 	changing the ".cpp" file.  Seems cleaner this way.
+
 Fri Apr  3 15:35:39 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/client.h, client.cpp: All PropertySet
