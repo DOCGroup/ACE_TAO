@@ -1,11 +1,11 @@
 // $Id$
 
-#include "ImplicitActivationPolicyFactory.h"
+#include "ImplicitActivationPolicyFactoryImpl.h"
 #include "ace/Dynamic_Service.h"
 #include "ImplicitActivationPolicy.h"
 
 ACE_RCSID (PortableServer,
-           ImplicitActivationPolicyFactory,
+           ImplicitActivationPolicyFactoryImpl,
            "$Id$")
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -14,12 +14,12 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    ImplicitActivationPolicyFactory::~ImplicitActivationPolicyFactory (void)
+    ImplicitActivationPolicyFactoryImpl::~ImplicitActivationPolicyFactoryImpl (void)
     {
     }
 
     ::PortableServer::ImplicitActivationPolicy_ptr
-    ImplicitActivationPolicyFactory::create (
+    ImplicitActivationPolicyFactoryImpl::create (
       ::PortableServer::ImplicitActivationPolicyValue value)
     {
       ImplicitActivationPolicy* policy = 0;
@@ -34,7 +34,7 @@ namespace TAO
     }
 
     ::PortableServer::ImplicitActivationPolicy_ptr
-    ImplicitActivationPolicyFactory::create (
+    ImplicitActivationPolicyFactoryImpl::create (
       const CORBA::Any &value
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::PolicyError))
@@ -52,23 +52,23 @@ namespace TAO
     }
 
     ACE_STATIC_SVC_DEFINE (
-        ImplicitActivationPolicyFactory,
-        ACE_TEXT ("ImplicitActivationPolicyFactory"),
+        ImplicitActivationPolicyFactoryImpl,
+        ACE_TEXT ("ImplicitActivationPolicyFactoryImpl"),
         ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (ImplicitActivationPolicyFactory),
+        &ACE_SVC_NAME (ImplicitActivationPolicyFactoryImpl),
         ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
         0
       )
 
-    ACE_FACTORY_DEFINE (TAO_PortableServer, ImplicitActivationPolicyFactory)
+    ACE_FACTORY_DEFINE (TAO_PortableServer, ImplicitActivationPolicyFactoryImpl)
 
     #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-    template class ACE_Dynamic_Service<ImplicitActivationPolicyFactory>;
+    template class ACE_Dynamic_Service<ImplicitActivationPolicyFactoryImpl>;
 
     #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-    #pragma instantiate ACE_Dynamic_Service<ImplicitActivationPolicyFactory>
+    #pragma instantiate ACE_Dynamic_Service<ImplicitActivationPolicyFactoryImpl>
 
     #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
   }

@@ -301,9 +301,9 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
             TAO::Portable_Server::ImplicitActivationPolicyFactory,
             CORBA::Policy_ptr,
             PortableServer::ImplicitActivationPolicyValue>::create (
-              "ImplicitActivationPolicyFactory",
+              "ImplicitActivationPolicyFactoryImpl",
               ACE_TEXT("dynamic ImplicitActivationPolicyFactory Service_Object *")
-              ACE_TEXT("TAO_PortableServer:_make_ImplicitActivationPolicyFactory()"),
+              ACE_TEXT("TAO_PortableServer:_make_ImplicitActivationPolicyFactoryImpl()"),
               PortableServer::NO_IMPLICIT_ACTIVATION);
   policies.merge_policy (implicit_activation_policy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

@@ -141,9 +141,9 @@ TAO_POA::create_implicit_activation_policy (PortableServer::ImplicitActivationPo
           TAO::Portable_Server::ImplicitActivationPolicyFactory,
           ::PortableServer::ImplicitActivationPolicy_ptr,
           ::PortableServer::ImplicitActivationPolicyValue>::create (
-            "ImplicitActivationPolicyFactory",
+            "ImplicitActivationPolicyFactoryImpl",
             ACE_TEXT("dynamic ImplicitActivationPolicyFactory Service_Object *")
-            ACE_TEXT("TAO_PortableServer:_make_ImplicitActivationPolicyFactory()"),
+            ACE_TEXT("TAO_PortableServer:_make_ImplicitActivationPolicyFactoryImpl()"),
             value);
 }
 

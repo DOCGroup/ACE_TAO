@@ -79,9 +79,9 @@ TAO_PortableServer_PolicyFactory::create_policy (
             TAO::Portable_Server::ImplicitActivationPolicyFactory,
             CORBA::Policy_ptr,
             PortableServer::ImplicitActivationPolicyValue>::create (
-              "ImplicitActivationPolicyFactory",
+              "ImplicitActivationPolicyFactoryImpl",
               ACE_TEXT("dynamic ImplicitActivationPolicyFactory Service_Object *")
-              ACE_TEXT("TAO_PortableServer:_make_ImplicitActivationPolicyFactory()"),
+              ACE_TEXT("TAO_PortableServer:_make_ImplicitActivationPolicyFactoryImpl()"),
               value ACE_ENV_ARG_PARAMETER);
 
   if (type == PortableServer::SERVANT_RETENTION_POLICY_ID)
