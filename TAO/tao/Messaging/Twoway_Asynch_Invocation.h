@@ -27,7 +27,7 @@
 #include "Asynch_Reply_Dispatcher.h"
 #include "tao/Asynch_Invocation.h"
 
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+#if (TAO_HAS_AMI_CALLBACK == 1)
 
 /**
  * @class TAO_GIOP_Twoway_Asynch_Invocation
@@ -62,7 +62,7 @@ protected:
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
-#endif /* (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1) == 0 */
+#endif /* (TAO_HAS_AMI_CALLBACK == 1*/
 
 #if defined (__ACE_INLINE__)
 #  include "Twoway_Asynch_Invocation.i"

@@ -14,7 +14,7 @@
 
 ACE_RCSID(Messaging, Twoway_Asynch_Invocation, "$Id$")
 
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+#if (TAO_HAS_AMI_CALLBACK == 1)
 
 int
 TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (ACE_ENV_SINGLE_ARG_DECL)
@@ -78,4 +78,4 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (ACE_ENV_SINGLE_ARG_DECL)
   return TAO_INVOKE_OK;
 }
 
-#endif /* (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1) == 0 */
+#endif /* (TAO_HAS_AMI_CALLBACK == 1)*/
