@@ -1,3 +1,10 @@
+Fri Sep  4 18:56:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Name_Proxy.cpp: 
+	  Fixed spurious double assignment (int foo = foo = bar;), thanks
+	  to thanks to John Mulhern <9107@mn3.lawson.lawson.com> for
+	  reporting this.
+
 Fri Sep 04 18:54:32 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Select_Reactor_T.cpp (ACE_Select_Reactor_T): Made sure that
