@@ -67,7 +67,6 @@ main (int, char *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Capabilities_Test"));
 
-  int result = 0;
 
   // --------------------------------------------------------
   // Create config file
@@ -91,20 +90,20 @@ main (int, char *[])
   if (ACE_OS::write (fd, file_contents, sizeof(file_contents)) !=
       sizeof(file_contents))
     {
-      ACE_ERROR ((LM_ERROR, "%p\n", "ACE_OS::write"));
       ACE_OS::unlink (config);
-      result = -1;
+      ACE_OS::close (fd);
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::write"), -1);
     }
 
   if (close (fd) != 0)
     {
-      ACE_ERROR ((LM_ERROR, "%p\n", "ACE_OS::close"));
       ACE_OS::unlink (config);
-      result = -1;
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::close"), -1);
     }
   // --------------------------------------------------------
 
-  result = load_config ();
+
+  int result = load_config ();
 
   ACE_OS::unlink (config);
 
