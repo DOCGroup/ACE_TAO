@@ -5,67 +5,73 @@ ACE_BUILDDIR = $(top_builddir)/..
 TAO_ROOT = $(top_srcdir)
 TAO_BUILDDIR = $(top_builddir)
 
-## Makefile.Time_Service_Clerk.am 
+## Makefile.NT_Notify_Service.am 
 
-noinst_PROGRAMS = Time_Service_Clerk
+noinst_PROGRAMS = NT_Notify_Service
 
-Time_Service_Clerk_CPPFLAGS = \
+NT_Notify_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs/orbsvcs
 
-Time_Service_Clerk_SOURCES = \
-  Clerk_i.cpp \
-  Time_Service_Clerk.cpp
+NT_Notify_Service_SOURCES = \
+  Notify_Service.cpp \
+  NT_Notify_Server.cpp \
+  NT_Notify_Service.cpp
 
-Time_Service_Clerk_LDADD = \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTime.la \
+NT_Notify_Service_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
   $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 noinst_HEADERS = \
-  Clerk_i.h
+  Notify_Service.h \
+  NT_Notify_Service.h
 
-## Makefile.Time_Service_Server.am 
+## Makefile.Notify_Service.am 
 
-noinst_PROGRAMS += Time_Service_Server
+noinst_PROGRAMS += Notify_Service
 
-Time_Service_Server_CPPFLAGS = \
+Notify_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs/orbsvcs
 
-Time_Service_Server_SOURCES = \
-  Server_i.cpp \
-  Time_Service_Server.cpp
+Notify_Service_SOURCES = \
+  Notify_Server.cpp \
+  Notify_Service.cpp
 
-Time_Service_Server_LDADD = \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTime.la \
+Notify_Service_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
   $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 noinst_HEADERS += \
-  Server_i.h
+  Notify_Service.h
 
 ## Clean up template repositories, etc.
 clean-local:

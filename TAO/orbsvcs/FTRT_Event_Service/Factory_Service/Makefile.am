@@ -5,22 +5,31 @@ ACE_BUILDDIR = $(top_builddir)/..
 TAO_ROOT = $(top_srcdir)
 TAO_BUILDDIR = $(top_builddir)
 
-## Makefile.Scheduling_Service.am 
+## Makefile.FTRTEC_Factory_Service.am 
 
-noinst_PROGRAMS = Scheduling_Service
+noinst_PROGRAMS = ftrtec_factory_service
 
-Scheduling_Service_CPPFLAGS = \
+ftrtec_factory_service_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs/orbsvcs
 
-Scheduling_Service_SOURCES = \
-  Scheduling_Service.cpp
+ftrtec_factory_service_SOURCES = \
+  EventChannelFactory_i.cpp \
+  FTRTEC_Factory_Service.cpp
 
-Scheduling_Service_LDADD = \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTSched.la \
+ftrtec_factory_service_LDADD = \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FaultTolerance.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ServerORB.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ClientORB.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTORB_Utils.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -33,7 +42,7 @@ Scheduling_Service_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 noinst_HEADERS = \
-  Scheduling_Service.h
+  EventChannelFactory_i.h
 
 ## Clean up template repositories, etc.
 clean-local:

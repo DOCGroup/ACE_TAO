@@ -167,9 +167,33 @@ AC_CONFIG_FILES([
   Makefile
   TAO_IDL/Makefile
   tao/Makefile
+  orbsvcs/Concurrency_Service/Makefile
+  orbsvcs/CosEvent_Service/Makefile
+  orbsvcs/Dump_Schedule/Makefile
+  orbsvcs/Event_Service/Makefile
+  orbsvcs/FTRT_Event_Service/Event_Service/Makefile
+  orbsvcs/FTRT_Event_Service/Factory_Service/Makefile
+  orbsvcs/FTRT_Event_Service/Gateway_Service/Makefile
+  orbsvcs/FTRT_Event_Service/Makefile
+  orbsvcs/FT_ReplicationManager/Makefile
+  orbsvcs/Fault_Detector/Makefile
+  orbsvcs/Fault_Notifier/Makefile
+  orbsvcs/IFR_Service/Makefile
+  orbsvcs/LifeCycle_Service/Makefile
+  orbsvcs/LoadBalancer/Makefile
+  orbsvcs/Logging_Service/Basic_Logging_Service/Makefile
+  orbsvcs/Logging_Service/Event_Logging_Service/Makefile
+  orbsvcs/Logging_Service/Makefile
+  orbsvcs/Logging_Service/Notify_Logging_Service/Makefile
+  orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile
   orbsvcs/Makefile
+  orbsvcs/Naming_Service/Makefile
+  orbsvcs/Notify_Service/Makefile
   orbsvcs/PSS/Makefile
+  orbsvcs/Scheduling_Service/Makefile
   orbsvcs/TAO_Service/Makefile
+  orbsvcs/Time_Service/Makefile
+  orbsvcs/Trading_Service/Makefile
   orbsvcs/orbsvcs/Makefile
  ])
 
