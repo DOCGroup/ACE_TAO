@@ -1,3 +1,8 @@
+Fri Feb 25 14:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/wait_for_completion/wait_for_completion.mpc:
+          Simplified this mpc file
+
 Fri Feb 25 12:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/BiDirectional_NestedUpcall/BiDirectional_NestedUpcall.mpc:
