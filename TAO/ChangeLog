@@ -1,3 +1,10 @@
+Tue Nov 25 09:15:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Xt_Stopwatch/Makefile:
+	* tests/Xt_Stopwatch/Xt_Stopwatch.mpc:
+
+	  Do not build if xt_reactor is set to zero.
+
 Tue Nov 25 14:13:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/Kokyu_dsrt_schedulers/FP_SchedulingC.cpp:
