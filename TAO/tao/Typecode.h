@@ -397,7 +397,7 @@ namespace CORBA
       OFFSET_MAP_ITERATOR;
 
     OFFSET_MAP *offset_map (void) const;
-    void offset_map (OFFSET_MAP *map);
+    void offset_map (OFFSET_MAP *new_map);
 
     typedef CORBA::TypeCode_ptr _ptr_type;
     typedef CORBA::TypeCode_var _var_type;
