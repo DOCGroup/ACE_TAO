@@ -196,6 +196,9 @@ class ACE_Concurrency_Strategy
   //     object via multi-threading or multi-processing).
 {
 public:
+  ACE_Concurrency_Strategy (int flags = 0);
+  // Constructor
+
   // = Factory method.
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
 				    void *arg = 0);
@@ -211,6 +214,12 @@ public:
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
+
+protected:
+
+  int flags_;
+  // Flags that are parsed to set options for the connected
+  // <SVC_HANDLER>.
 };
 
 template <class SVC_HANDLER>
@@ -225,7 +234,7 @@ class ACE_Reactive_Strategy : public ACE_Concurrency_Strategy <SVC_HANDLER>
 {
 public:
   // = Intialization and termination methods.
-  ACE_Reactive_Strategy (void);
+  ACE_Reactive_Strategy (int flags = 0);
   // "Do-nothing constructor"
 
   ACE_Reactive_Strategy (ACE_Reactor *reactor,
@@ -262,10 +271,6 @@ protected:
   ACE_Reactor_Mask mask_;
   // The mask that we pass to the <Reactor> when we register the
   // <SVC_HANDLER>.
-
-  int flags_;
-  // Flags that are parsed to set options for the connected
-  // <SVC_HANDLER>.
 };
 
 template <class SVC_HANDLER>
@@ -283,17 +288,19 @@ class ACE_Thread_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
 {
 public:
   // = Intialization and termination methods.
-  ACE_Thread_Strategy (void);
+  ACE_Thread_Strategy (int flags = 0);
   // "Do-nothing constructor"
 
   ACE_Thread_Strategy (ACE_Thread_Manager *tm,
 		       long thr_flags,
-		       size_t n_threads = 1);
+		       size_t n_threads = 1,
+                       int flags = 0);
   // Initialize the strategy.
 
   virtual int open (ACE_Thread_Manager *tm,
 		    long thr_flags,
-		    size_t n_threads = 1);
+		    size_t n_threads = 1,
+                    int flags = 0);
   // Initialize the strategy.
 
   virtual ~ACE_Thread_Strategy (void);
@@ -343,12 +350,14 @@ public:
 
   ACE_Process_Strategy (size_t n_processes = 1,
 			ACE_Event_Handler *acceptor = 0,
-			ACE_Reactor * = 0);
+			ACE_Reactor * = 0,
+                        int flags = 0);
   // Initialize the strategy.
 
   virtual int open (size_t n_processes = 1,
 		    ACE_Event_Handler *acceptor = 0,
-		    ACE_Reactor * = 0);
+		    ACE_Reactor * = 0,
+                    int flag = 0);
   // Initialize the strategy.
 
   virtual ~ACE_Process_Strategy (void);

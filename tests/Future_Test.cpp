@@ -195,7 +195,7 @@ Scheduler::open (void *)
 	      "(%t) Scheduler %s open\n",
 	      this->name_));
   // Become an Active Object.
-  return this->activate (THR_BOUND);
+  return this->activate (THR_BOUND | THR_DETACHED);
 }
 
 // close

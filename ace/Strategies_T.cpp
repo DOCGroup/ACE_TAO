@@ -238,17 +238,31 @@ ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_ha
 							     void *arg)
 {
   ACE_TRACE ("ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler");
-  // Delegate control to the application-specific service
-  // handler.
 
-  if (svc_handler->open (arg) == -1)
+  // See if we should enable non-blocking I/O on the <svc_handler>'s
+  // peer.
+  if (ACE_BIT_ENABLED (this->flags_, ACE_NONBLOCK) != 0)
     {
-      // Close down handler to avoid resource leaks.
-      svc_handler->close (0); 
-      return -1;
+      if (svc_handler->peer ().enable (ACE_NONBLOCK) == -1)
+        goto failure;
     }
-  else
+  // Otherwise, make sure it's disabled by default.
+  else if (svc_handler->peer ().disable (ACE_NONBLOCK) == -1)
+    goto failure;
+
+  if (svc_handler->open ((void *) this) != -1)
     return 0;
+
+failure:
+  svc_handler->close (0);
+  return -1;
+}
+
+template <class SVC_HANDLER> 
+ACE_Concurrency_Strategy<SVC_HANDLER>::ACE_Concurrency_Strategy (int flags)
+  : flags_ (flags)
+{
+  ACE_TRACE ("ACE_Concurrency_Strategy<SVC_HANDLER>::~ACE_Concurrency_Strategy");
 }
 
 template <class SVC_HANDLER> 
@@ -295,10 +309,10 @@ ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy (ACE_Reactor *reactor,
 }
 
 template <class SVC_HANDLER> 
-ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy (void)
-  : reactor_ (0),
-    mask_ (ACE_Event_Handler::NULL_MASK),
-    flags_ (0)
+ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy (int flags)
+  : ACE_Concurrency_Strategy<SVC_HANDLER> (flags),
+    reactor_ (0),
+    mask_ (ACE_Event_Handler::NULL_MASK)
 {
   ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy");
 }
@@ -314,34 +328,34 @@ ACE_Reactive_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handl
 							  void *arg)
 {
   ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::activate_svc_handler");
-
+  
   if (this->reactor_ == 0)
-    return -1;
-
-  // See if we should enable non-blocking I/O on the <svc_handler>'s
-  // peer.
-  else if (ACE_BIT_ENABLED (this->flags_, ACE_NONBLOCK) != 0)
-    {
-      if (svc_handler->peer ().enable (ACE_NONBLOCK) == -1)
-	return -1;
-    }
-  // Otherwise, make sure it's disabled by default.
-  else if (svc_handler->peer ().disable (ACE_NONBLOCK) == -1)
-    return -1;
-
+    goto failure;
+  
   // Register with the Reactor with the appropriate <mask>.
   if (this->reactor_->register_handler (svc_handler, this->mask_) == -1)
-    return -1;
-
-    // Call up to our parent to do the SVC_HANDLER initialization.
-  else if (this->inherited::activate_svc_handler (svc_handler, arg) == -1)
+    goto failure;
+  
+  // If the implementation of the reactor uses event associations
+  if (this->reactor_->uses_event_associations ())
     {
-      // Make sure to remove the <svc_handler> from the <Reactor>.
-      this->reactor_->remove_handler (svc_handler, this->mask_);
-      return -1;
+      // If we don't have non-block on, it won't work with
+      // WFMO_Reactor
+      // This maybe too harsh
+      // if (!ACE_BIT_ENABLED (this->flags_, ACE_NONBLOCK))
+      // goto failure;
+      if (svc_handler->open ((void *) this) != -1)
+        return 0;      
+      else
+        goto failure;
     }
   else
-    return 0;
+    // Call up to our parent to do the SVC_HANDLER initialization.
+    return this->inherited::activate_svc_handler (svc_handler, arg);
+  
+failure:
+  svc_handler->close (0);
+  return -1;
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Strategy)
@@ -355,13 +369,15 @@ ACE_Thread_Strategy<SVC_HANDLER>::dump (void) const
 template <class SVC_HANDLER> int
 ACE_Thread_Strategy<SVC_HANDLER>::open (ACE_Thread_Manager *thr_mgr,
 					long thr_flags,
-					size_t n_threads)
+					size_t n_threads,
+                                        int flags)
 {
   ACE_TRACE ("ACE_Thread_Strategy<SVC_HANDLER>::open");
   this->thr_mgr_ = thr_mgr;
   this->n_threads_ = n_threads;
   this->thr_flags_ = thr_flags;
-
+  this->flags_ = flags;
+  
   // Must have a thread manager!
   if (this->thr_mgr_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR, 
@@ -373,18 +389,20 @@ ACE_Thread_Strategy<SVC_HANDLER>::open (ACE_Thread_Manager *thr_mgr,
 template <class SVC_HANDLER> 
 ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy (ACE_Thread_Manager *thr_mgr,
 						       long thr_flags,
-						       size_t n_threads)
+						       size_t n_threads,
+                                                       int flags)
 {
   ACE_TRACE ("ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy");
 
-  if (this->open (thr_mgr, thr_flags, n_threads) == -1)
+  if (this->open (thr_mgr, thr_flags, n_threads, flags) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", 
 		"ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy"));
 }
 
 template <class SVC_HANDLER> 
-ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy (void)
-  : thr_mgr_ (0),
+ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy (int flags)
+  : ACE_Concurrency_Strategy<SVC_HANDLER> (flags),
+    thr_mgr_ (0),
     thr_flags_ (0),
     n_threads_ (1)
 {
@@ -555,12 +573,14 @@ ACE_Process_Strategy<SVC_HANDLER>::dump (void) const
 template <class SVC_HANDLER> int
 ACE_Process_Strategy<SVC_HANDLER>::open (size_t n_processes,
 					 ACE_Event_Handler *acceptor,
-					 ACE_Reactor *reactor)
+					 ACE_Reactor *reactor,
+                                         int flags)
 {
   ACE_TRACE ("ACE_Process_Strategy<SVC_HANDLER>::open");
   this->n_processes_ = n_processes;
   this->acceptor_ = acceptor;
   this->reactor_ = reactor;
+  this->flags_ = flags;
 
   return 0;
 }
@@ -568,10 +588,11 @@ ACE_Process_Strategy<SVC_HANDLER>::open (size_t n_processes,
 template <class SVC_HANDLER> 
 ACE_Process_Strategy<SVC_HANDLER>::ACE_Process_Strategy (size_t n_processes,
 							 ACE_Event_Handler *acceptor,
-							 ACE_Reactor *reactor)
+							 ACE_Reactor *reactor,
+                                                         int flags)
 {
   ACE_TRACE ("ACE_Process_Strategy<SVC_HANDLER>::ACE_Process_Strategy");
-  this->open (n_processes, acceptor, reactor);
+  this->open (n_processes, acceptor, reactor, flags);
 }
 
 template <class SVC_HANDLER> 

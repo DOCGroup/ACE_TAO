@@ -46,8 +46,6 @@
 #include "ace/Singleton.h"
 #include "Process_Strategy_Test.h"	// Counting_Service and Options in here
 
-// Use this to show down the process gracefully.
-static u_int shutting_down = 0;
 
 // Define a <Strategy_Acceptor> that's parameterized by the
 // <Counting_Service>.
@@ -57,6 +55,19 @@ typedef ACE_Strategy_Acceptor <Counting_Service, ACE_SOCK_ACCEPTOR>
 
 // Create an Options Singleton.
 typedef ACE_Singleton<Options, ACE_Null_Mutex> OPTIONS;
+
+// counter for connections
+int connections = 0;
+
+// Use this to show down the process gracefully.
+int 
+done (void)
+{
+  if (OPTIONS::instance ()->concurrency_type () == Options::PROCESS)
+    return connections == 1;
+  else 
+    return connections == ACE_MAX_ITERATIONS + 1;
+}
 
 ACE_File_Lock &
 Options::file_lock (void)
@@ -342,9 +353,18 @@ Counting_Service::svc (void)
   return 0;
 }
 
+Counting_Service::handle_close (ACE_HANDLE,
+                                ACE_Reactor_Mask)
+{
+  // Done with another connection
+  connections++;
+ 
+  // Call down to base class
+  return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::handle_close ();
+}
+
 // This method is called back by the <Acceptor> once the client has
 // connected and the process is forked or spawned.
-
 int
 Counting_Service::open (void *)
 {
@@ -446,6 +466,9 @@ client (void *arg)
   if (stream.close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), 0);
 
+  // Remove the filename.
+  ACE_OS::unlink (OPTIONS::instance ()->filename ());
+
   return 0;
 }
 
@@ -454,16 +477,15 @@ client (void *arg)
 static void *
 server (void *)
 {
-  ACE_Time_Value timeout (3);
-
-  // Run the main event loop, but only wait for up to 3 seconds (this
-  // is used to shutdown the server.
-  ACE_Reactor::instance()->owner (ACE_Thread::self ());
-  ACE_Reactor::run_event_loop(timeout);
-
-  // Remove the filename.
-  ACE_OS::unlink (OPTIONS::instance ()->filename ());
-
+  int result = 0;
+  while (!done () && result != -1)
+    {
+      // Run the main event loop, but only wait for up to 3 seconds (this
+      // is used to shutdown the server.
+      ACE_Reactor::instance ()->owner (ACE_Thread::self ());
+      result = ACE_Reactor::instance ()->handle_events ();
+    }
+  
   return 0;
 }
 
@@ -534,8 +556,6 @@ main (int argc, char *argv[])
       "(%P|%t) only one thread may be run in a process on this platform\n%a", 1));
 #endif /* ACE_HAS_THREADS */
     }
-
-  shutting_down = 1;
 
   ACE_END_TEST;
   return 0;
