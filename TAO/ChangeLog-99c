@@ -1,3 +1,10 @@
+Thu Jan 14 15:52:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/tests/Simulator/README
+          orbsvcs/tests/Simulator/DOVEBrowser/Makefile
+          orbsvcs/tests/Simulator/DOVEMIB/Makefile
+          orbsvcs/tests/Simulator/Event_Supplier/Makefile
+
 Thu Jan 14 14:07:17 1999  Jeff Parsons <jp4@cs.wustl.edu>
 
         * tao/Request.{h,i,cpp}:

@@ -81,7 +81,7 @@ Requirements:
 
 Parts of the Demo:
 
-        * DOVE Browser (implemented in Java using Visibroker 3.2 for Java)
+        * DOVE Browser (implemented in Java using Visibroker 3.2/3.3 for Java)
 
         * Event Supplier, can be seen as a monitored object, called
           DOVE Application (implemented in C++ using TAO)
@@ -152,6 +152,7 @@ Compiling:
                 "compile $TAO_ROOT/orbsvcs/Scheduling_Service"
 
         UNIX platforms:
+
                 Then, just run "make" in top level Simulator
                 directory.  The DOVEBrowser requires VisiJava's
                 idl2java and vbjc.  If they are not on your PATH,
@@ -166,11 +167,14 @@ Compiling:
                 Event_Supplier directory in MSVC++ 5.0+
                 and build the Event_Sup and Logging_Sup projects.
 
-                Change to the DOVEBrowser directory and run
-                "make vb" to build the browser using Visibroker
-                (you may first want to do a "make realclean").
+                From a console window, change to the DOVEBrowser 
+                directory and run "make vb" to build the browser using 
+                Visibroker (you may first want to do a "make realclean" 
+                each time you rebuild in case there were changes to IDL 
+                files).
 
 Starting:
+
         Start in the following order on different ORB ports:
                 * Naming Service
                 * Event Service
@@ -194,7 +198,8 @@ Starting:
 
         DOVE Browser:
                 vbj DOVEBrowser
-                (also supported: vbj DOVEBrowser -ORBnameserviceior <IOR> )
+                (also supported: vbj DOVEBrowser -ORBnameserviceior <IOR> 
+                                 vbj DOVEBrowser -ORBnameserviceport <port>)
 
                 or
 
