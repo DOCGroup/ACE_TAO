@@ -578,31 +578,30 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
 }
 
 // Method to squish leading and trailing whitespaces from a string.
-// Whitespace is defined as: spaces (' '), tabs ('\t') or end-of-line (cr/lf).
-// The terminating nul is moved up to expunge trailing whitespace and the
-// returned pointer points at the first non-whitespace character in the
-// string, which may be the nul terminator if the string is all whitespace.
+// Whitespace is defined as: spaces (' '), tabs ('\t') or end-of-line
+// (cr/lf).  The terminating nul is moved up to expunge trailing
+// whitespace and the returned pointer points at the first
+// non-whitespace character in the string, which may be the nul
+// terminator if the string is all whitespace.
 
 ACE_TCHAR *
 ACE_Ini_ImpExp::squish (ACE_TCHAR *src)
 {
   ACE_TCHAR *cp;
 
+  if (src == 0)
+    return 0;
+
   // Start at the end and work backwards over all whitespace.
   for (cp = src + ACE_OS::strlen (src) - 1;
        cp != src;
        --cp)
-    if (*cp != ' ' && *cp != '\t' && *cp != '\n' && *cp != '\r')
+    if (!isspace (*cp))
       break;
-  *(cp + 1) = '\0';          // Chop trailing whitespace
+  cp[1] = '\0';          // Chop trailing whitespace
 
   // Now start at the beginning and move over all whitespace.
-  for (cp = src;
-       (*cp != '\0') && ((*cp == ' ') 
-                         || (*cp == '\t') 
-                         || (*cp == '\n') 
-                         || (*cp == '\r'));
-       cp++)
+  for (cp = src; isspace (*cp); cp++)
     continue;
 
   return cp;
