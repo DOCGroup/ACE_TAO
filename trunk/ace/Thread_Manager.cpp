@@ -136,8 +136,13 @@ ACE_Thread_Manager::resize (size_t size)
   
   ACE_NEW_RETURN (temp, ACE_Thread_Descriptor[size], -1);
 
-  for (size_t i = 0; i < this->max_table_size_; i++)
+  size_t i;
+
+  for (i = 0; i < this->max_table_size_; i++)
     temp[i] = this->thr_table_[i]; // Structure assignment.
+
+  for (; i < size; i++)
+    temp[i].cleanup_info_.cleanup_hook_ = 0;  // Zero unused table slots.
 
   this->max_table_size_ = size;
 
@@ -426,11 +431,6 @@ ace_thread_manager_adapter (void *args)
   // Invoke the user-supplied function with the args.
   void *status = thread_args->invoke ();
 
-  // Set the exit hook status.
-  // ???? Can't do this if the exit_hook is in TSS, because it was
-  // deleted by the call to invoke.  Do we need it, anyways?
-  // exit_hook.status (status);
-
 #if defined (ACE_HAS_TSS_EMULATION)
   // Lastly, close the thread's local TS storage.
   ACE_TSS_Emulation::tss_close (ts_storage);
@@ -695,9 +695,12 @@ ACE_Thread_Manager::run_thread_exit_hooks (int i)
 {
   ACE_TRACE ("ACE_Thread_Manager::run_thread_exit_hooks");
 
-  (*this->thr_table_[i].cleanup_info_.cleanup_hook_) 
-    (this->thr_table_[i].cleanup_info_.object_,
-     this->thr_table_[i].cleanup_info_.param_);
+  if (this->thr_table_[i].cleanup_info_.cleanup_hook_ != 0)
+    {
+      (*this->thr_table_[i].cleanup_info_.cleanup_hook_) 
+        (this->thr_table_[i].cleanup_info_.object_,
+         this->thr_table_[i].cleanup_info_.param_);
+    }
 }
 
 // Remove a thread from the pool.  Must be called with locks held.
@@ -1089,10 +1092,7 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
 
   if (i != -1)
     {
-      // Run all the exit hooks.
-      // ???? This reads from unitialized memory, and doesn't seem
-      //      to be necessary?
-      // ???? this->run_thread_exit_hooks (i);
+      this->run_thread_exit_hooks (i);
 
       // Remove thread descriptor from the table.
       this->remove_thr (i);
