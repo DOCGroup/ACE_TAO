@@ -137,9 +137,15 @@ IDL_GlobalData::IDL_GlobalData()
       // Set it to the default value.
       ACE_NEW (this->perfect_hasher_, 
                char [strlen (ace_root) + strlen ("/bin/gperf") + 1]);
+#if defined (ACE_WIN32)
+      ACE_OS::sprintf (this->perfect_hasher_,
+                       "%s\bin\gperf",
+                       ace_root);
+#else /* Not ACE_WIN32 */
       ACE_OS::sprintf (this->perfect_hasher_,
                        "%s/bin/gperf",
                        ace_root);
+#endif /* ACE_WIN32 */
     }
 }
 
