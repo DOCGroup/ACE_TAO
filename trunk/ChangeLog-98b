@@ -1,3 +1,9 @@
+Sat Jan 02 08:34:27 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/ASX/Event_Server/Event_Server/event_server.cpp
+          (handle_input): added ACE_UNUSED_ARG (n), to avoid compile
+          warning with ACE_NDEBUG.
+
 Fri Jan 01 18:57:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Containers_T.i (ACE_Array,ACE_Array::operator=):
