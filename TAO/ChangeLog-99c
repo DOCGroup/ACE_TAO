@@ -1,30 +1,36 @@
+Mon Feb 22 12:34:31 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/be/be_codegen.cpp (start_client_header,start_client_stubs,
+          start_server_header,start_server_skeletons): added #pragma once
+          directives to generated code.  Thanks to Doug for suggesting this.
+
 Mon Feb 22 10:32:09 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Quoter/Factory_Finder.cpp
-	* examples/Quoter/Factory_Finder_i.cpp
-	* examples/Quoter/Generic_Factory.cpp
-	* examples/Quoter/Generic_Factory_i.cpp
-	* examples/Quoter/Quoter.cpp
-	Changed the TAO_TRY macros to ACE_TRY macros.
+        * examples/Quoter/Factory_Finder.cpp
+        * examples/Quoter/Factory_Finder_i.cpp
+        * examples/Quoter/Generic_Factory.cpp
+        * examples/Quoter/Generic_Factory_i.cpp
+        * examples/Quoter/Quoter.cpp
+        Changed the TAO_TRY macros to ACE_TRY macros.
 
 Mon Feb 22 09:38:29 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
-	* orbsvcs/orbsvcs/Event/Module_Factory.cpp:
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
-	* orbsvcs/orbsvcs/Sched/Scheduler_Generic.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
-	* orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
-	* performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
-	* tao/IIOP_Profile.cpp:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+        * orbsvcs/orbsvcs/Event/Module_Factory.cpp:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+        * orbsvcs/orbsvcs/Sched/Scheduler_Generic.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+        * orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+        * tao/IIOP_Profile.cpp:
 
-	Added some ACE_UNUSED_ARGs to prevent g++ 2.7.x from warning
-	about unused arguments.
+        Added some ACE_UNUSED_ARGs to prevent g++ 2.7.x from warning
+        about unused arguments.
 
 Sun Feb 21 21:48:12 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/POA/
-	Changed TAO_TRY macros to ACE_TRY macros.
+        * examples/POA/
+        Changed TAO_TRY macros to ACE_TRY macros.
 
 Sun Feb 21 18:59:15 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -32,22 +38,22 @@ Sun Feb 21 18:59:15 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Feb 21 17:29:28 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/bank/server.cpp: 
-	* examples/Simple/bank/AccountManager_i.cpp:
-	Fixed compilation error in EGCS compiler
+        * examples/Simple/bank/server.cpp:
+        * examples/Simple/bank/AccountManager_i.cpp:
+        Fixed compilation error in EGCS compiler
 
 Sun Feb 21 16:54:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/MProfile.i:
-	  Modifed TAO_MProfile::get_prev() and 
-	  TAO_MProfile::get_current_profile() to always return a value -
-	  warning turned up in VC 6.0.
+        * tao/MProfile.i:
+          Modifed TAO_MProfile::get_prev() and
+          TAO_MProfile::get_current_profile() to always return a value -
+          warning turned up in VC 6.0.
 
 Sun Feb 21 16:38:15 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Took care of
-	#includes with <>'s  in the idl files. Thanks to Mark Little
-	<M.C.Little@ncl.ac.uk> for pointing this out.
+        * TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Took care of
+        #includes with <>'s  in the idl files. Thanks to Mark Little
+        <M.C.Little@ncl.ac.uk> for pointing this out.
 
 Sun Feb 21 09:07:38 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -95,14 +101,14 @@ Fri Feb 19 22:53:19 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 Fri Feb 19 21:52:45 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tao/Invocation.cpp: The Twoway_Invocation class was re-fetching
- 	  the profile and transport objects *after* sending the
- 	  request. But during a nested upcall the transport hint in the
- 	  current profile can change (if an invocation over the same
- 	  object reference is required).  The solution is to keep a
- 	  reference to the transport object in the stack and pass it down
- 	  to the invoke_i() method of the GIOP_Invocation class.  Thanks
- 	  to Hans Horsmann <Hans.Horsmann@icn.siemens.de> for reporting
- 	  this bug.
+          the profile and transport objects *after* sending the
+          request. But during a nested upcall the transport hint in the
+          current profile can change (if an invocation over the same
+          object reference is required).  The solution is to keep a
+          reference to the transport object in the stack and pass it down
+          to the invoke_i() method of the GIOP_Invocation class.  Thanks
+          to Hans Horsmann <Hans.Horsmann@icn.siemens.de> for reporting
+          this bug.
 
 Thu Feb 18 20:07:10 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
