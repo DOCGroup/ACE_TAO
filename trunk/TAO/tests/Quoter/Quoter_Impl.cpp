@@ -147,8 +147,15 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
 void
 Quoter_Impl::move (CosLifeCycle::FactoryFinder_ptr there,
                    const CosLifeCycle::Criteria & the_criteria,
-                   CORBA::Environment &_tao_environment) {
-
+                   CORBA::Environment &_env_there) {
+  // for later
+  // this->copy (there, the_criteria, _env_there);
+  
+  // the move operation is not implemented yet, because of the issue,
+  // that the object reference has to stay the same. But if it has
+  // to stay the same this object. the old object, has to forward
+  // further calls.
+  _env_there.exception (new CosLifeCycle::NotMovable());
 }
 
 void
