@@ -1,14 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(* seq server): server, strategies {
+project(* seq server): taoserver, strategies {
   Source_Files {
     Roundtrip.cpp
     server.cpp
   }
 }
 
-project(* seq client): taoexe, strategies {
+project(* seq client): taoclient, strategies {
   Source_Files {
     TestC.cpp
     Client_Task.cpp
