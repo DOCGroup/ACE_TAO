@@ -1,3 +1,8 @@
+Thu Mar 28 12:29:00 2002  Si Mong Park  <spark@ociweb.com>
+
+        * orbsvcs/Event_Service/Event_Service.cpp:
+          Fixed incorrect string comparison that caused event service to crash.
+
 Thu Mar 28 06:46:55 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* docs/configurations.html: Fixed a broken link.  Thanks to

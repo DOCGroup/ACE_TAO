@@ -190,9 +190,9 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
         this->orb_->object_to_string (ec.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (this->ior_file_name_.c_str() != 0)
+      if (ACE_OS::strcmp(this->ior_file_name_.c_str(), "") != 0)
         {
-	  FILE *output_file= ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(this->ior_file_name_.c_str()), ACE_LIB_TEXT("w"));
+          FILE *output_file= ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(this->ior_file_name_.c_str()), ACE_LIB_TEXT("w"));
           if (output_file == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
@@ -202,7 +202,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
           ACE_OS::fclose (output_file);
         }
 
-      if (this->pid_file_name_.c_str() != 0)
+      if (ACE_OS::strcmp(this->pid_file_name_.c_str(), "") != 0)
         {
           FILE *pidf = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(this->pid_file_name_.c_str()), ACE_LIB_TEXT("w"));
           if (pidf != 0)
