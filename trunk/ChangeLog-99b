@@ -1,3 +1,15 @@
+Thu Apr 22 21:39:44 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tests/Makefile.am: 
+
+	  Added support to create the `tests/log' directory after
+	  the tests have been built.
+
+	* tests/log/Makefile.am
+
+	  The above change deprecates this Makefile.am file.  Thanks to
+	  Nanbor for motivating this change.
+
 Thu Apr 22 20:50:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* ace/CDR_Stream.i:
