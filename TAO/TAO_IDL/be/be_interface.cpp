@@ -1800,7 +1800,7 @@ be_interface::queryinterface_helper (be_interface *derived,
   // emit the comparison code
   *os << "(type == ACE_reinterpret_cast" << be_idt_nl
       << "(ptr_arith_t," << be_idt_nl
-      << "&" << ancestor->full_name () << "::_narrow" << be_uidt
+      << "&" << ancestor->local_name () << "::_narrow" << be_uidt
       << "))" << be_nl;
   if (derived == ancestor)
     *os << "retv = ACE_reinterpret_cast (void*, this);" << be_uidt_nl;
