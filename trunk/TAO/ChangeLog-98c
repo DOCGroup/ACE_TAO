@@ -1,3 +1,8 @@
+Tue Sep 01 19:28:28 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/POA/Generic_Servant/client.cpp and
+ 	  tests/POA/TIE/client.cpp (main): Fixed incorrect test condition.
+
 Tue Sep  1 19:06:44 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_global.cpp : Fixed "strdup + delete"

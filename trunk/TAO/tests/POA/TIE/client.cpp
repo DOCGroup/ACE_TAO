@@ -140,7 +140,7 @@ public:
 
         CORBA::Long result = 0;
         int i = 0;
-        for (i = 0; i < iterations; i++ && env.exception () == 0)
+        for (i = 0; i < iterations && env.exception () == 0; i++)
           {
             // Invoke the doit() method on the reference.
             result = foo->doit (env);
