@@ -268,6 +268,8 @@ static table_element table [CORBA::TC_KIND_COUNT] =
     }
 
 #else	// "Fixed" byte alignment
+// Have a bogus one
+#define declare_entry(x,t) struct align_struct_ ## t { }
 #define setup_entry(x,t) \
     { \
 	table [t].size = sizeof (x); \
