@@ -100,6 +100,7 @@ class TAO_Export CORBA_UserException : public CORBA_Exception
   //   using OMG-IDL.
 public:
   // = Initialization and termination methods.
+
   CORBA_UserException (const CORBA_UserException &src);
   // Copy ctor.
 
@@ -123,7 +124,7 @@ public:
   virtual int _is_a (const char *interface_id) const;
   // Used for narrowing
 
-protected:
+  //protected:
   CORBA_UserException (void);
   // Default constructor.
 };
@@ -138,6 +139,9 @@ class TAO_Export CORBA_SystemException : public CORBA_Exception
   //   defines these.
 public:
   // = Initialization and termination methods.
+
+  CORBA_SystemException (void);
+  // Default Ctor
 
   CORBA_SystemException (const CORBA_SystemException &src);
   // Copy ctor.
