@@ -1,3 +1,10 @@
+Thu Dec 11 23:35:04 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i. The code was always calling dlsum for the _init()
+ 	  hook, even if dlopen() failed.  In addition to fixing this, I
+ 	  also removed a potential handle leak. Thanks to Patrick
+ 	  J. McNerthney <pat@thememedia.com> for reporting this.
+
 Thu Dec 11 13:13:17 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/LSOCK.cpp (recv_handle): fixed to remove compile errors and
