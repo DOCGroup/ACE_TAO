@@ -1190,7 +1190,7 @@ ACE_TSS_Cleanup::dump (void)
 
 #endif /* WIN32 */
 
-#if !defined (VXWORKS) && ( defined (ACE_WIN32) || defined (ACE_HAS_THR_C_FUNC) || !defined (ACE_THREAD_DONT_INHERIT_LOG_MSG))
+#if !defined (VXWORKS) && ( defined (ACE_WIN32) || defined (ACE_HAS_THR_C_FUNC) || !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG))
 class ACE_Thread_Adapter
   // = TITLE
   //     Converts a C++ function into a function <ace_thread_adapter>
@@ -1214,7 +1214,7 @@ public:
   void *arg_;
   // Argument to thread startup function.
 
-#if !defined (ACE_THREAD_DONT_INHERIT_LOG_MSG)
+#if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)
   ostream *ostream_;
   // Ostream where the new TSS Log_Msg will use.
 
@@ -1230,7 +1230,7 @@ public:
 
   int trace_depth_;
   // Depth of the nesting for printing traces.
-#endif /* ACE_THREAD_DONT_INHERIT_LOG_MSG */
+#endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG */
 };
 
 // Run the thread exit point.  This must be an extern "C" to make
@@ -1247,7 +1247,7 @@ ace_thread_adapter (void *args)
   // Inherit the logging feature if the parent 
   // has got an ACE_Log_Msg.
   ACE_Log_Msg *new_log = ACE_LOG_MSG;
-#if !defined (ACE_THREAD_DONT_INHERIT_LOG_MSG)
+#if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)
   if (thread_args->ostream_)
     {
 	new_log->msg_ostream (thread_args->ostream_);
@@ -1257,7 +1257,7 @@ ace_thread_adapter (void *args)
 	new_log->restart (thread_args->restart_);
 	new_log->trace_depth (thread_args->trace_depth_);
     }
-#endif /* ACE_THREAD_DONT_INHERIT_LOG_MSG */  
+#endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG */  
   void *arg = thread_args->arg_;
 
   delete thread_args;
@@ -1288,17 +1288,17 @@ ace_thread_adapter (void *args)
 
 ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC f, void *a)
   : func_(f), 
-#if !defined (ACE_THREAD_DONT_INHERIT_LOG_MSG)
+#if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)
     ostream_ (NULL),
     priority_mask_ (0),
     tracing_enabled_ (0),
     restart_ (1),
     trace_depth_ (0),
-#endif /* ACE_THREAD_DONT_INHERIT_LOG_MSG */
+#endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG */
     arg_(a)
 {
 // ACE_TRACE ("Ace_Thread_Adapter::Ace_Thread_Adapter");
-#if !defined (ACE_THREAD_DONT_INHERIT_LOG_MSG)
+#if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)
   if ( ACE_Log_Msg::exists() )
     {
       ACE_Log_Msg *inherit_log_ = ACE_LOG_MSG;
@@ -1308,9 +1308,9 @@ ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC f, void *a)
       this->restart_ = inherit_log_->restart ();
       this->trace_depth_ = inherit_log_->trace_depth ();
     }
-#endif /* ACE_THREAD_DONT_INHERIT_LOG_MSG */
+#endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG */
 }
-#endif /* VXWORKS */
+#endif /* VXWORKS && ACE_THREADS_DONT_INHERIT_LOG_MSG ... */
 
 int
 ACE_OS::thr_create (ACE_THR_FUNC func,
@@ -1324,7 +1324,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 {
   // ACE_TRACE ("ACE_OS::thr_create");
 
-#if defined (VXWORKS) || (defined (ACE_THREAD_DONT_INHERIT_LOG_MSG) && (!defined (ACE_WIN32) || !defined (ACE_HAS_THR_C_FUNC)))
+#if defined (VXWORKS) || (defined (ACE_THREADS_DONT_INHERIT_LOG_MSG) && (!defined (ACE_WIN32) || !defined (ACE_HAS_THR_C_FUNC)))
 #define  ACE_THREAD_FUNCTION  func
 #define  ACE_THREAD_ARGUMENT  args
 #else
@@ -1334,7 +1334,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   ACE_Thread_Adapter *thread_args;
   ACE_NEW_RETURN (thread_args, ACE_Thread_Adapter (func, args), -1);
 
-#endif /* VXWORKS || ACE_THREAD_DONT_INHERIT_LOG_MSG ... */
+#endif /* VXWORKS || ACE_THREADS_DONT_INHERIT_LOG_MSG ... */
 
 #if defined (ACE_HAS_THREADS)
   ACE_thread_t tmp_thr;
