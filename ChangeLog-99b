@@ -1,3 +1,8 @@
+Thu Jun 10 12:44:22 1999  Steve Huston  <shuston@riverace.com>
+
+        * tests/UPIPE_SAP_Test.cpp: Disable for Win32 if !ACE_HAS_WINNT4.
+          The test relies on ACE_SPIPE_Acceptor which requires NT4 to work.
+
 Thu Jun 10 12:47:52 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-linux-lxpthreads.h: removed ACE_HAS_AIO_CALLS.
