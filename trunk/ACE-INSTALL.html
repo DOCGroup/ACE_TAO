@@ -24,8 +24,9 @@ code.  In addition, you should check out our <A
 HREF="docs/ACE-development-process.html">development
 process</A>.  As you start working with ACE, we suggest you get copies
 of the <A
-HREF="http://www.cs.wustl.edu/~schmidt/ACE/book1/">C++NPv1</A> and <A
-HREF="http://www.cs.wustl.edu/~schmidt/ACE/book2/">C++NPv2</A> books
+HREF="http://www.cs.wustl.edu/~schmidt/ACE/book1/">C++NPv1</A>, <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE/book2/">C++NPv2</A>, and <A
+HREF="http://www.amazon.com/exec/obidos/tg/detail/-/0201699710/qid=1066059513/sr=8-1/ref=sr_8_1/103-7740325-3955843?v=glance&s=books&n=507846">APG</A> books
 to help guide you after you've built and installed ACE.  You should
 also consult the <a href="docs/ACE-FMM.html">ACE Frequently Made
 Mistakes page</a>.  If you encounter any problems or would like to
@@ -61,7 +62,7 @@ HREF="http://www.cs.wustl.edu/~doc/">DOC group</A>, <A
 HREF="http://www.riverace.com/">Riverace</A>, <A
 HREF="http://www.theaceorb.com">OCI</A>, and members of the ACE user
 community have all contributed ports to make ACE the successful and
-far-reaching toolkit it is today.  Any UNIX/POSIX/Win32 variation is a
+far-reaching toolkit it is today.  Any UNIX/POSIX/Windows variation is a
 potential target platform for ACE.  If you have <A
 HREF="docs/ACE-porting.html">porting questions</A> or have a problem
 compiling the ACE source distribution, please contact one of the
@@ -165,14 +166,14 @@ supported by the DOC group, Riverace, or OCI. <P>
 <H3><A NAME="installnotes">Installation Notes</A></H3>
 
 <UL>
-  <LI><B>Win32 (Windows NT, Windows 2000 and Windows '9x/ME) </B><P>
+  <LI><B>Windows (Windows NT, 2000, XP, 2003, etc., and Windows '9x/ME) </B><P>
 
       All of ACE has been ported to the Win32 API (which includes
-      Windows NT, Windows 2000, and Windows '95/98/ME).  The entire
-      release now compiles using the Microsoft Visual C++ 5.0, and
-      6.0 compilers.  ACE can be built as both a static (LIB) and
-      dynamic (DLL) library, using the Win32 installation process
-      described below.<P>
+      Windows NT, Windows 2000, and Windows '95/98/ME) and Win64.  The entire
+      release now compiles using the Microsoft Visual C++ 6.0, and
+      7.1 (aka Visual C++ .NET 2003) compilers.  ACE can be built as both
+      a static (LIB) and dynamic (DLL) library, using the Win32 installation
+      process described below.<P>
 
       Please see the <A HREF="#Non-static Object Manager">Non-static
       ACE_Object_Manager</A> discussion below.<p>
@@ -189,7 +190,7 @@ supported by the DOC group, Riverace, or OCI. <P>
   <li><b>Windows CE</b><p>
 
       Take a look at (<a href="docs/CE-status.txt">CE-status.txt</a>) for
-      up-to-date information about ACE on CE.  <P>
+      up-to-date information about ACE on CE.<P>
 
   <LI><B> Solaris 2.6, 7, 8, and 9 using Sun
       Sun 5.x, Forte 6 and 7, Centerline C++ 2.x, GNU gcc 2.7.x
@@ -744,8 +745,8 @@ supported by the DOC group, Riverace, or OCI. <P>
       ToolSuite (ETS) version 9.1. The port is being tested with
       Microsoft Visual C++ 6.<p> To build for PharLap, use the
       ace/config-pharlap.h configuration file, and the instructions
-      for building on Win32. Building the ACE library is the same as
-      for regular Win32 platforms, except you choose one of the PharLap
+      for building on Windows. Building the ACE library is the same as
+      for regular Windows platforms, except you choose one of the PharLap
       ETS configurations to build within Visual C++. Only static
       library configurations are available for PharLap at this time.
       For an example of how to build
@@ -1063,7 +1064,7 @@ option available with
 <H3><A NAME="aceinstall">Building and Installing ACE</A></H3>
 
 The following explains how to build ACE on <A HREF="#unix">UNIX</A>
-and <A HREF="#win32">Win32</A>.
+and <A HREF="#win32">Windows</A>.
 
 <h4>General Rules</h4>
 <UL>
@@ -1082,9 +1083,107 @@ and <A HREF="#win32">Win32</A>.
 <hr align=left width="50%">
 <H4><A NAME="unix">Building and Installing ACE on UNIX</A></H4>
 
-Building and installing ACE on UNIX is relatively simple (the <A
-HREF="#win32">process</A> for Win32 is different).  Here's what you
-need to do:<P>
+As of ACE 5.4, you can choose between two methods of building ACE on
+UNIX:
+<OL>
+  <LI><A HREF="#unix_autoconf">GNU Autoconf</A></LI>
+  <LI><A HREF="#unix_traditional">Traditional ACE/GNU Make Configuration</A></LI>
+</OL>
+The <A HREF="#win32">build process</A> for Windows is different from both of
+the UNIX methods.
+
+<H5><A NAME="unix_autoconf">Building ACE with GNU Autoconf</A></H5>
+<P>
+GNU Autoconf support has been partially present in a number of ACE versions.
+However, ACE 5.4 was the first version that supported it in earnest. There
+are still a few problems with this method, so you should be careful to test
+the resulting ACE library before using it in your applications. The
+traditional configuration method is still more reliable. Any help you can
+lend to improve the ACE build process using GNU Autoconf would be very much
+appreciated. Please send any fixes to the
+<A HREF="mailto:ace-users@cs.wustl.edu">ACE users</A>mailing list.</P>
+<P>
+The ACE kit has been bootstrapped so you do not need to install the GNU
+Autotools (autoconf, automake, libtool) unless you want to participate in
+testing and developing this process further. To simply configure and build
+ACE, do:
+<OL>
+  <LI><CODE>cd</CODE> to the top-level <CODE>ACE_wrappers</CODE> directory.</LI>
+  <LI>Configure ACE for your platform by issuing the following command:
+       <pre>
+       ./configure [options]
+       </pre>
+      <code>options</code> can be a variable setting (such as setting
+      <code>CXX</code> to your C++ compiler command) any standard GNU
+      configure options, or any of the following ACE configure options
+      (default values are in parentheses):
+      <UL>
+        <LI><code>--enable-alloca</code> (no): Enable <code>alloca()</code>
+          support.</LI>
+        <LI><code>--enable-debug</code> (yes): Build ACE with debugging
+          support.</LI>
+        <LI><code>--enable-exceptions</code> (yes): Build ACE with C++
+          exception support compiled in.</LI>
+        <LI><code>--enable-fast</code> (no): Use the Sun C++ <code>-fast</code>
+          option to build. Only used on Solaris.</LI>
+        <LI><code>--enable-inline</code> (yes): Enable inline functions.</LI>
+        <LI><code>--enable-optimize</code> (yes): Enable building optimized.</LI>
+        <LI><code>--enable-prof</code> (no): Enable profiling support.</LI>
+        <LI><code>--enable-purify</code> (no): Build with support for
+          IBM Rational Purify.</LI>
+        <LI><code>--enable-quantify</code> (no): Build with support for
+          IBM Rational Quantify.</LI>
+        <LI><code>--enable-repo</code> (no): Enable the GNU g++
+          <code>-frepo</code> option. Only useful for pre-3.0 g++ and egcs.</LI>
+        <LI><code>--enable-rtti</code> (yes): Compile with C++ run-time type
+          information RTTI support.</LI>
+        <LI><code>--enable-stdcpplib</code> (yes): Build with support for the
+          standard C++ library, as opposed to the older iostreams library.</LI>
+        <LI><code>--enable-log-msg-prop</code> (yes): Enable
+          <code>ACE_Log_Msg</code> property propagation to ACE-created
+          threads.</LI>
+        <LI><code>--enable-logging</code> (yes): Enable the ACE logging
+          macros.</LI>
+        <LI><code>--enable-malloc-stats</code> (no): Compile in additional code
+          for collecting memory allocation statistics.</LI>
+        <LI><code>--enable-pi-pointers</code> (yes): Enable
+          position-independent pointers for shared memory classes.</LI>
+        <LI><code>--enable-probe</code> (no): Enable the
+          <code>ACE_Timeprobe</code> class.</LI>
+        <LI><code>--enable-reentrant</code> (yes): Enable use of platform's
+          reentrant functions.</LI>
+        <LI><code>--enable-static-obj-mgr</code> (yes): Enable use of a
+          static <code>ACE_Object_Manager</code>.</LI>
+        <LI><code>--enable-threads</code> (yes): Enable threading support.</LI>
+        <LI><code>--enable-verb-not-sup</code> (no): Enable verbose ENOTSUP
+          reports at run time.</LI>
+        <LI><code>--enable-trace</code> (no): Enable ACE execution tracing
+          support.</LI>
+        <LI><code>--enable-xt-reactor</code> (no): Enable support for the
+          <code>ACE_XtReactor</code> class.</LI>
+        <LI><code>--enable-fl-reactor</code> (no): Enable support for the
+          <code>ACE_FlReactor</code> class.</LI>
+        <LI><code>--with-gperf</code> (yes): Build the implementation of
+          gperf that comes with ACE.</LI>
+        <LI><code>--with-rmcast</code> (yes): Include the ACE_RMCast library
+          when building ACE.</LI>
+        <LI><code>--with-qos</code> (no): Include the ACE_QoS library when
+          building ACE.</LI>
+        <LI><code>--with-ssl</code> (yes): Include the ACE_SSL library when
+          building ACE. Requires the SSL components to be available using the
+          compiler's and linker's default search directories.</LI>
+        <LI><code>--with-tli-device/code> (/dev/tcp): Specifies the device
+          name for opening a TLI device at run time.</LI>
+      </UL>
+  </LI>
+  <LI>Build ACE by typing <code>make</code>.
+  <LI>(Optional) Install ACE by typing <code>make install</code>.
+</OL>
+
+<H5><A NAME="unix_traditional">Using the Traditional ACE/GNU Configuration</A></H5>
+<P>
+Here's what you need to do to build ACE using GNU Make and ACE's traditional
+per-platform configuration method:</P>
 
 <OL>
   <LI>Install <A HREF="ftp://prep.ai.mit.edu/pub/gnu/make/">GNU make</A>
@@ -1194,7 +1293,7 @@ need to do:<P>
 
 
 <P><hr align=left width="50%"><P>
-<H4><A NAME="win32">Building and Installing ACE on Win32</A></H4>
+<H4><A NAME="win32">Building and Installing ACE on Windows</A></H4>
 
 Below are instructions for building ACE with <A
 HREF="#borland">Borland C++Builder</A>, <A HREF="#msvc">Microsoft
@@ -1213,7 +1312,7 @@ Makefile.bor files to compile ACE, the ACE one-button tests, and TAO
 with Borland C++ Builder. <P>
 
 <P><hr align=left width="50%"><P>
-<H4><A NAME="borland">Building and Installing ACE on Win32 with Borland
+<H4><A NAME="borland">Building and Installing ACE on Windows with Borland
 C++</A></H4>
 
 If you are building for a machine without a network card, you may want
@@ -1336,7 +1435,7 @@ sure the ACE bin directory (in this case ACE_ROOT\bin\Dynamic\Release)
 is on the path before you try to run the tests.<p>
 
 <P><hr align=left width="50%"><P>
-<H4><A NAME="msvc">Building and Installing ACE on Win32 with
+<H4><A NAME="msvc">Building and Installing ACE on Windows with
 Microsoft Visual C++</A></H4>
 
 <EM>Note concerning MSVC 5.0 and Service Pack 3:</EM> There has been
@@ -1392,9 +1491,9 @@ with these compilers but probably not without a bit of effort. <P>
       in your PATH whenever you run programs that uses ACE.  Otherwise
       you may experience problems finding ace.dll or aced.dll.<BR>
       <BR>
-  <LI>If you are building for Windows NT or Windows 2K then you can start building
-      without anymore changes.  If you are building on Windows 9x/Me,
-      then you should add the line <BR>
+  <LI>If you are building for Windows NT 4 or later (Windows 2000, XP, etc.)
+      then you can start building without anymore changes. If you are building
+      on Windows 9x/Me, then you should add the line <BR>
       <BR>
       <CODE>#define ACE_HAS_WINNT4 0</CODE><BR>
       <BR>
