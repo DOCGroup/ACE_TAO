@@ -1,3 +1,9 @@
+Fri Sep  6 01:29:04 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile:
+	* orbsvcs/tests/AVStreams/Component_Switching/Makefile:
+	  Remove obsoleted macro ACE_HAS_GNUG_PRE_2_8.
+
 Thu Sep  5 23:28:29 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/Makefile: Instead of iterating through
