@@ -129,7 +129,10 @@ Task_Entry::~Task_Entry ()
 // update relevant scheduling characteristics for this entry.
 
 Task_Entry::Propagation_Status
-Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries)
+Task_Entry::merge_dispatches (
+  ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
+  ACE_CString & unresolved_locals,
+  ACE_CString & unresolved_remotes)
 {
   Task_Entry::Propagation_Status result = SUCCEEDED;
   switch (info_type ())
@@ -145,7 +148,10 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
         {
           result = TWO_WAY_DISJUNCTION; 
         }
-      if (disjunctive_merge (RtecScheduler::ONE_WAY_CALL, dispatch_entries) < 0)
+      if (disjunctive_merge (RtecScheduler::ONE_WAY_CALL, 
+                             dispatch_entries,
+                             unresolved_locals,
+                             unresolved_remotes) < 0)
         {
           result = INTERNAL_ERROR; 
         }
@@ -165,7 +171,10 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
         {
           result = TWO_WAY_CONJUNCTION; 
         }
-      if (conjunctive_merge (RtecScheduler::ONE_WAY_CALL, dispatch_entries) < 0)
+      if (conjunctive_merge (RtecScheduler::ONE_WAY_CALL, 
+                             dispatch_entries,
+                             unresolved_locals,
+                             unresolved_remotes) < 0)
         {
           result = INTERNAL_ERROR; 
         }
@@ -176,11 +185,17 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
 
       // Disjunctively merge the operation's two-way dispatches,
       // and conjunctively merge its one-way dispatches.
-      if (disjunctive_merge (RtecScheduler::TWO_WAY_CALL, dispatch_entries) < 0)
+      if (disjunctive_merge (RtecScheduler::TWO_WAY_CALL, 
+                             dispatch_entries,
+                             unresolved_locals,
+                             unresolved_remotes) < 0)
         {
           result = INTERNAL_ERROR; 
         }
-      if (conjunctive_merge (RtecScheduler::ONE_WAY_CALL, dispatch_entries) < 0)
+      if (conjunctive_merge (RtecScheduler::ONE_WAY_CALL, 
+                             dispatch_entries,
+                             unresolved_locals,
+                             unresolved_remotes) < 0)
         {
           result = INTERNAL_ERROR; 
         }
@@ -232,8 +247,12 @@ Task_Entry::prohibit_dispatches (Dependency_Type dt)
 int
 Task_Entry::disjunctive_merge (
   Dependency_Type dt,
-  ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries)
+  ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
+  ACE_CString & unresolved_locals,
+  ACE_CString & unresolved_remotes)
 {
+  char string_buffer [BUFSIZ];
+
   // Iterate over the set of dependencies, merging dispatches
   // of the callers over the enclosing frame size.
   ACE_Unbounded_Set_Iterator <Task_Entry_Link *> iter (callers_);
@@ -262,6 +281,13 @@ Task_Entry::disjunctive_merge (
               "Warning: an operation identified by "
               "\"%s\" has unresolved remote dependencies.\n",
               (const char*) this->rt_info ()->entry_point));
+
+          // Record entry point in list of unresolved remote dependencies
+          ACE_OS::sprintf (string_buffer, "// %s\n",
+                           (const char*) this->rt_info ()->entry_point);
+          unresolved_remotes +=
+            ACE_CString (string_buffer);
+
         }
 
       // Check for and warn about unresolved local
@@ -278,6 +304,12 @@ Task_Entry::disjunctive_merge (
               "Warning: an operation identified by "
               "\"%s\" has unresolved local dependencies.\n",
               (const char*) this->rt_info ()->entry_point));
+
+          // Record entry point in list of unresolved local dependencies
+          ACE_OS::sprintf (string_buffer, "// %s\n",
+                           (const char*) this->rt_info ()->entry_point);
+          unresolved_locals +=
+            ACE_CString (string_buffer);
         }
 
       // Merge the caller's dispatches into the current set.
@@ -306,9 +338,12 @@ Task_Entry::disjunctive_merge (
 int
 Task_Entry::conjunctive_merge (
   Dependency_Type dt,
-  ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries)
+  ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
+  ACE_CString & unresolved_locals,
+  ACE_CString & unresolved_remotes)
 {
   int result = 0;
+  char string_buffer [BUFSIZ];
 
   // Iterate over the dependencies, and determine the total frame size.
   u_long frame_size = 1;
@@ -338,6 +373,12 @@ Task_Entry::conjunctive_merge (
               "Warning: an operation identified by "
               "\"%s\" has unresolved remote dependencies.\n",
               (const char*) this->rt_info ()->entry_point));
+
+          // Record entry point in list of unresolved remote dependencies
+          ACE_OS::sprintf (string_buffer, "// %s\n",
+                           (const char*) this->rt_info ()->entry_point);
+          unresolved_remotes +=
+            ACE_CString (string_buffer);
         }
 
       // Check for and warn about unresolved local 
@@ -354,6 +395,12 @@ Task_Entry::conjunctive_merge (
               "Warning: an operation identified by "
               "\"%s\" has unresolved local dependencies.\n",
               (const char*) this->rt_info ()->entry_point));
+
+          // Record entry point in list of unresolved local dependencies
+          ACE_OS::sprintf (string_buffer, "// %s\n",
+                           (const char*) this->rt_info ()->entry_point);
+          unresolved_locals +=
+            ACE_CString (string_buffer);
         }
 
       frame_size = minimum_frame_size (frame_size, (*link)->caller ().effective_period_);

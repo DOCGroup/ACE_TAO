@@ -425,7 +425,8 @@ private:
 
   // identify thread delimiters
   status_t 
-    identify_threads (ACE_Unbounded_Set<Scheduling_Anomaly *> &anomaly_set);
+    identify_threads (ACE_CString & unresolved_locals,
+                      ACE_CString & unresolved_remotes);
 
   // checks for cycles in the dependency graph
   status_t check_dependency_cycles (void);
@@ -446,7 +447,10 @@ private:
   void update_priority_level_params ();
 
   status_t 
-    propagate_dispatches (ACE_Unbounded_Set<Scheduling_Anomaly *> &anomaly_set);
+    propagate_dispatches (
+      ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set,
+      ACE_CString & unresolved_locals,
+      ACE_CString & unresolved_remotes);
   // propagate the dispatch information from the
   // threads throughout the call graph
 

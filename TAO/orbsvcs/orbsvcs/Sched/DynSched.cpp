@@ -690,6 +690,7 @@ ACE_DynScheduler::schedule (
   RtecScheduler::Anomaly_Severity temp_severity = RtecScheduler::ANOMALY_NONE;
   status_t temp_status = SUCCEEDED;
   Scheduling_Anomaly *anomaly = 0;
+  ACE_CString unresolved_locals (""), unresolved_remotes ("");
 
   ACE_Guard<LOCK> ace_mon (lock_);
 
@@ -774,7 +775,8 @@ ACE_DynScheduler::schedule (
     }
 
   // task entries are related, now threads can be found
-  temp_status = identify_threads (anomaly_set);
+  temp_status = identify_threads (unresolved_locals,
+                                  unresolved_remotes);
   if (temp_status != SUCCEEDED)
     {
       temp_severity = anomaly_severity (temp_status);
@@ -833,7 +835,9 @@ ACE_DynScheduler::schedule (
 
   // propagate the dispatch information from the
   // threads throughout the call graph
-  temp_status = propagate_dispatches (anomaly_set);
+  temp_status = propagate_dispatches (anomaly_set, 
+                                      unresolved_locals, 
+                                      unresolved_remotes);
   if (temp_status != SUCCEEDED)
     {
       temp_severity = anomaly_severity (temp_status);
@@ -860,6 +864,60 @@ ACE_DynScheduler::schedule (
             break;
         }
     }
+
+    // log anomalies for unresolved local dependencies 
+    if (unresolved_locals.length () > 0)
+      {
+        // Create an anomaly, add it to anomaly set
+        anomaly = create_anomaly (ST_UNRESOLVED_LOCAL_DEPENDENCIES);
+        if (anomaly)
+          {
+            anomaly_set.insert (anomaly);
+          }
+        else
+          {
+            return ST_VIRTUAL_MEMORY_EXHAUSTED;
+          }
+
+        ACE_NEW_RETURN (anomaly, ACE_DynScheduler::Scheduling_Anomaly, 
+                        ST_VIRTUAL_MEMORY_EXHAUSTED);
+    
+        ACE_CString temp_str ("The following entry points have "
+                            "unresolved local dependencies:\n");
+        temp_str += unresolved_locals; 
+
+        anomaly->severity = 
+          anomaly_severity (ST_UNRESOLVED_LOCAL_DEPENDENCIES);
+        anomaly->description = temp_str.c_str ();
+        anomaly_set.insert (anomaly);
+      }
+
+    // log anomalies for unresolved remote dependencies 
+    if (unresolved_remotes.length () > 0)
+      {
+        // Create an anomaly, add it to anomaly set
+        anomaly = create_anomaly (ST_UNRESOLVED_REMOTE_DEPENDENCIES);
+        if (anomaly)
+          {
+            anomaly_set.insert (anomaly);
+          }
+        else
+          {
+            return ST_VIRTUAL_MEMORY_EXHAUSTED;
+          }
+
+        ACE_NEW_RETURN (anomaly, ACE_DynScheduler::Scheduling_Anomaly, 
+                        ST_VIRTUAL_MEMORY_EXHAUSTED);
+    
+        ACE_CString temp_str ("The following entry points have "
+                              "unresolved remote dependencies:\n");
+        temp_str += unresolved_remotes; 
+
+        anomaly->severity = 
+          anomaly_severity (ST_UNRESOLVED_REMOTE_DEPENDENCIES);
+        anomaly->description = temp_str.c_str ();
+        anomaly_set.insert (anomaly);
+      }
 
   // invoke the internal dispatch scheduling method of the strategy
   temp_status = schedule_dispatches (anomaly_set);
@@ -1075,7 +1133,9 @@ ACE_DynScheduler::schedule (
 
 ACE_DynScheduler::status_t
 ACE_DynScheduler::propagate_dispatches (
-  ACE_Unbounded_Set<ACE_DynScheduler::Scheduling_Anomaly *> &anomaly_set)
+  ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set,
+  ACE_CString & unresolved_locals,
+  ACE_CString & unresolved_remotes)
 {
   u_long i;
   frame_size_ = 1;
@@ -1088,7 +1148,9 @@ ACE_DynScheduler::propagate_dispatches (
   // the dispatches propagate top down through the call DAG
   for (i = 0; i < tasks (); ++i)
   {
-    switch (ordered_task_entries_ [i]->merge_dispatches (*dispatch_entries_))
+    switch (ordered_task_entries_ [i]->merge_dispatches (*dispatch_entries_,
+                                                         unresolved_locals,
+                                                         unresolved_remotes))
     {                      
       case Task_Entry::INTERNAL_ERROR :
         // Create an anomaly, add it to anomaly set
@@ -1404,12 +1466,12 @@ ACE_DynScheduler::relate_task_entries_recurse (long &time, Task_Entry &entry)
 }
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::identify_threads (
-  ACE_Unbounded_Set<ACE_DynScheduler::Scheduling_Anomaly *> &anomaly_set)
+ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
+                                    ACE_CString & unresolved_remotes)
 {
   u_int i, j;
   ACE_DynScheduler::status_t result = SUCCEEDED;
-  Scheduling_Anomaly * anomaly = 0;
+  char string_buffer [BUFSIZ];
 
   // walk array of task entries, picking out thread delineators
   for (i = 0; i < tasks_; i++)
@@ -1463,22 +1525,19 @@ ACE_DynScheduler::identify_threads (
                    : result;
 
           task_entries_ [i].has_unresolved_remote_dependencies (1);
+
           ACE_DEBUG (
              (LM_DEBUG,
               "Warning: an operation identified by "
               "\"%s\" has unresolved remote dependencies.\n",
               (const char*) task_entries_ [i].rt_info ()->entry_point));
 
-          // Create an anomaly, add it to anomaly set
-          anomaly = create_anomaly (ST_UNRESOLVED_REMOTE_DEPENDENCIES);
-          if (anomaly)
-            {
-              anomaly_set.insert (anomaly);
-            }
-          else
-            {
-              return ST_VIRTUAL_MEMORY_EXHAUSTED;
-            }
+          // Record entry point in list of unresolved remote dependencies
+          ACE_OS::sprintf (string_buffer, "// %s\n",
+                           (const char*) task_entries_ [i].rt_info ()->
+                                                               entry_point);
+          unresolved_remotes +=
+            ACE_CString (string_buffer);
         }
       else
         {
@@ -1494,16 +1553,12 @@ ACE_DynScheduler::identify_threads (
 
           task_entries_ [i].has_unresolved_local_dependencies (1);
 
-          // Create an anomaly, add it to anomaly set
-          anomaly = create_anomaly (ST_UNRESOLVED_LOCAL_DEPENDENCIES);
-          if (anomaly)
-            {
-              anomaly_set.insert (anomaly);
-            }
-          else
-            {
-              return ST_VIRTUAL_MEMORY_EXHAUSTED;
-            }
+          // Record entry point in list of unresolved local dependencies
+          ACE_OS::sprintf (string_buffer, "// %s\n",
+                           (const char*) task_entries_ [i].rt_info ()->
+                                                               entry_point);
+          unresolved_locals +=
+            ACE_CString (string_buffer);
         }
     }
   }
@@ -1597,8 +1652,6 @@ ACE_DynScheduler::check_dependency_cycles_recurse (Task_Entry &entry)
 ACE_DynScheduler::status_t
 ACE_DynScheduler::schedule_threads (ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set)
 {
-  Scheduling_Anomaly * anomaly = 0;
-
   // make sure there are as many thread delineator
   // entries in the set as the counter indicates
   if (threads_ != thread_delineators_->size ())

@@ -126,7 +126,9 @@ public:
   // relevant scheduling characteristics for this entry.
   // Returns 0 if all is well, or -1 if an error occurred.
   Propagation_Status merge_dispatches (
-    ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries);
+    ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
+    ACE_CString & unresolved_locals,
+    ACE_CString & unresolved_remotes);
 
   // Gets the pointer to the underlying RT_Info.
   RT_Info *rt_info () const;
@@ -207,7 +209,9 @@ private:
   // Returns 0 if all is well, or -1 if an error has occurred.
   int disjunctive_merge (
     Dependency_Type dt,
-    ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries);
+    ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
+    ACE_CString & unresolved_locals,
+    ACE_CString & unresolved_remotes);
 
   // Performs a conjunctive merge of arrival times of calls of the given
   // type: all arrival times of all callers of that type are duplicated
@@ -218,8 +222,9 @@ private:
   // all is well, or -1 if an error has occurred.
   int conjunctive_merge (
     Dependency_Type dt,
-    ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries);
-
+    ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
+    ACE_CString & unresolved_locals,
+    ACE_CString & unresolved_remotes);
 
   // This static method is used to reframe an existing dispatch set
   // to the given new period multiplier, creating new instances of
