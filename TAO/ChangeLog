@@ -1,3 +1,19 @@
+Thu Dec 11 23:10:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/OBV/Typed_Events/Typed_Events.mpc
+	* examples/POA/DSI/POA_DSI.mpc:
+	* examples/POA/Generic_Servant/POA_Generic_Servant.mpc:
+	* examples/POA/On_Demand_Loading/POA_On_Demand_Loading.mpc:
+	* examples/POA/TIE/POA_TIE.mpc:
+	* tests/POA/Excessive_Object_Deactivations/Excessive_Object_Deactivations.mpc:
+	* tests/RTCORBA/Explicit_Binding/RTCORBA_Explicit_Binding.mpc:
+	* tests/RTCORBA/Persistent_IOR/RTCORBA_Persistent_IOR.mpc:
+	* tests/RTCORBA/Profile_And_Endpoint_Selection/Profile_And_Endpoint_Selection.mpc:
+	* performance-tests/RTCorba/Multiple_Endpoints/Common/Common.mpc:
+	* orbsvcs/examples/ORT/ORT.mpc:
+	
+	  Do not compile the above tests when minimum_corba is disabled.
+
 Thu Dec 11 22:22:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/RTScheduling/VoidData/Makefile:
