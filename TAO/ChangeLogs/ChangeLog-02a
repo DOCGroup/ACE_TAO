@@ -1,3 +1,19 @@
+Thu Dec 13 21:17:09 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/Security/Callback/client_i.h (client_i):
+	* orbsvcs/tests/Security/Callback/server_i.h (server_i):
+
+	  Inherit from the PortableServer::RefCountServantBase mix-in
+	  class to improve the memory management of these servants by
+	  making it possible for the POA to control their lifetime.
+
+	* orbsvcs/tests/Security/Callback/client.cpp (main):
+	* orbsvcs/tests/Security/Callback/server.cpp (main):
+
+	  Assign the dynamically allocated servants to
+	  PortableServer::ServantBase_var to transfer ownership to the
+	  POA.  This also improves the exception safety of this code.
+
 Thu Dec 13 22:22:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* Updated dependencies of many Makefile's.
