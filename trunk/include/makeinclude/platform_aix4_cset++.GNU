@@ -72,5 +72,4 @@ OCCFLAGS    += -qarch=com
 RANLIB	    = ranlib
 SOFLAGS	    = -p 0
 TEMPINCDIR  = tempinc
-TMPL_OBJS := $(TEMPINCDIR)/*.o
 SOBUILD = 
