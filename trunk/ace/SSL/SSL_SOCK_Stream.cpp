@@ -89,9 +89,9 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
 
   for (size_t i = 0; i < n; ++i)
     {
-      ssize_t result = this->send (iov[i].iov_base,
-                                   iov[i].iov_len,
-                                   timeout);
+      const ssize_t result = this->send (iov[i].iov_base,
+                                         iov[i].iov_len,
+                                         timeout);
 
       if (result == -1)
         {
@@ -99,7 +99,6 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
           // whether or not any data was sent.  If no data was sent,
           // then always return -1.  Otherwise return bytes_sent.
           // This gives the caller an opportunity to keep track of
-          // which data was actually sent.
           if (bytes_sent > 0)
             break;
           else
@@ -224,7 +223,7 @@ ACE_SSL_SOCK_Stream::send (size_t n, ...) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::send");
 
-  size_t total_tuples = n / 2;
+  const size_t total_tuples = n / 2;
 
   va_list argp;
   va_start (argp, n);
@@ -238,8 +237,9 @@ ACE_SSL_SOCK_Stream::send (size_t n, ...) const
   //       scatter writes over SSL.
   for (size_t i = 0; i < total_tuples; ++i)
     {
-      ssize_t result = this->send (va_arg (argp, char *),
-                                   va_arg (argp, ssize_t));
+      const ssize_t data_len = va_arg (argp, ssize_t);
+      const ssize_t result = this->send (va_arg (argp, char *),
+                                         data_len);
 
       if (result == -1)
         {
@@ -257,7 +257,18 @@ ACE_SSL_SOCK_Stream::send (size_t n, ...) const
             }
         }
       else
-        bytes_sent += result;
+        {
+          bytes_sent += result;
+
+          // Do not continue on to the next loop iteration if the
+          // amount of data sent was less than the amount of data
+          // given.  This avoids a subtle problem where "holes" in the
+          // data stream would occur if partial sends of a given
+          // buffer in the varargs occured.
+          if (result < data_len)
+            break;
+
+        }
     }
 
   va_end (argp);
@@ -270,7 +281,7 @@ ACE_SSL_SOCK_Stream::recv (size_t n, ...) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv");
 
-  size_t total_tuples = n / 2;
+  const size_t total_tuples = n / 2;
 
   va_list argp;
   va_start (argp, n);
@@ -279,8 +290,9 @@ ACE_SSL_SOCK_Stream::recv (size_t n, ...) const
 
   for (size_t i = 0; i < total_tuples; ++i)
     {
-      ssize_t result = this->recv (va_arg (argp, char *),
-                                   va_arg (argp, ssize_t));
+      const ssize_t data_len = va_arg (argp, ssize_t);
+      const ssize_t result = this->recv (va_arg (argp, char *),
+                                         data_len);
 
       if (result == -1)
         {
@@ -298,7 +310,18 @@ ACE_SSL_SOCK_Stream::recv (size_t n, ...) const
             }
         }
       else
-        bytes_recv += result;
+        {
+          bytes_recv += result;
+
+          // Do not continue on to the next loop iteration if the
+          // amount of data received was less than the amount of data
+          // desired.  This avoids a subtle problem where "holes" in
+          // the data stream would occur if partial receives of a
+          // given buffer in the varargs occured.
+          if (result < data_len)
+            break;
+
+        }
     }
 
   va_end (argp);
@@ -337,16 +360,16 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf,
                       timeout);
 
       if (n < 0)
-	{
+        {
           if (errno == EWOULDBLOCK)
             {
               // If blocked, try again.
-	      n = 0;
-	      continue;
+              n = 0;
+              continue;
             }
           else
             return -1;
-	}
+        }
       else if (n == 0)
         break;
     }
@@ -384,16 +407,16 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf,
                       timeout);
 
       if (n < 0)
-	{
+        {
           if (errno == EWOULDBLOCK)
             {
               // If blocked, try again.
-	      n = 0;
-	      continue;
+              n = 0;
+              continue;
             }
           else
             return -1;
-	}
+        }
       else if (n == 0)
         break;
     }
@@ -424,18 +447,18 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf, int len, int flags) const
                       flags);
 
       if (n < 0)
-	{
+        {
           if (errno == EWOULDBLOCK)
             {
               // If blocked, try again.
-	      n = 0;
-	      continue;
+              n = 0;
+              continue;
             }
           else
             return -1;
-	}
+        }
       else if (n == 0)
-	break;
+        break;
     }
 
   return bytes_transferred;
@@ -463,16 +486,16 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf, int len, int flags) const
                       flags);
 
       if (n < 0)
-	{
+        {
           if (errno == EWOULDBLOCK)
             {
               // If blocked, try again.
-	      n = 0;
-	      continue;
+              n = 0;
+              continue;
             }
           else
             return -1;
-	}
+        }
       else if (n == 0)
         break;
     }

@@ -103,6 +103,23 @@ friend class ace_dewarn_gplusplus
 
 // ----------------------------------------------------------------
 
+#if defined (ACE_HAS_NO_THROW_SPEC)
+#   define ACE_THROW_SPEC(X)
+#else
+# if defined (ACE_HAS_EXCEPTIONS)
+#   define ACE_THROW_SPEC(X) throw X
+#   if defined (ACE_WIN32) && defined(_MSC_VER) && !defined (ghs)
+// @@ MSVC "supports" the keyword but doesn't implement it (Huh?).
+//    Therefore, we simply supress the warning for now.
+#     pragma warning( disable : 4290 )
+#   endif /* ACE_WIN32 */
+# else  /* ! ACE_HAS_EXCEPTIONS */
+#   define ACE_THROW_SPEC(X)
+# endif /* ! ACE_HAS_EXCEPTIONS */
+#endif /*ACE_HAS_NO_THROW_SPEC*/
+
+// ----------------------------------------------------------------
+
 // Deal with MSVC++ 6 (or less) insanity for CORBA...
 # if defined (ACE_HAS_BROKEN_NAMESPACES)
 #   define ACE_CORBA_1(NAME) CORBA_##NAME

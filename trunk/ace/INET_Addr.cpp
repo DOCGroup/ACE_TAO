@@ -883,6 +883,9 @@ ACE_INET_Addr::get_host_addr (char *dst, int size) const
 #endif /* ACE_HAS_IPV6 */
 
 #if defined (VXWORKS)
+  ACE_UNUSED_ARG (dst);
+  ACE_UNUSED_ARG (size);
+
   // It would be nice to be able to encapsulate this into
   // ACE_OS::inet_ntoa(), but that would lead to either inefficiencies
   // on vxworks or lack of thread safety.

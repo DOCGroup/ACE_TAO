@@ -638,9 +638,9 @@ ACE_SSL_Asynch_Stream::do_SSL_read (void)
   ACE_Message_Block & mb = this->ext_read_result_->message_block ();
   size_t bytes_req = this->ext_read_result_->bytes_to_read ();
 
-  int bytes_trn = ::SSL_read (this->ssl_,
-                              mb.rd_ptr (),
-                              bytes_req);
+  const int bytes_trn = ::SSL_read (this->ssl_,
+                                    mb.wr_ptr (),
+                                    bytes_req);
 
   int status = ::SSL_get_error (this->ssl_, bytes_trn);
 
@@ -695,9 +695,9 @@ ACE_SSL_Asynch_Stream::do_SSL_write (void)
   ACE_Message_Block & mb = this->ext_write_result_->message_block ();
   size_t       bytes_req = this->ext_write_result_->bytes_to_write ();
 
-  int bytes_trn = ::SSL_write (this->ssl_,
-                               mb.rd_ptr (),
-                               bytes_req);
+  const int bytes_trn = ::SSL_write (this->ssl_,
+                                     mb.rd_ptr (),
+                                     bytes_req);
 
   int status = ::SSL_get_error (this->ssl_, bytes_trn);
 

@@ -21,8 +21,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
+#include "ace/Default_Constants.h"
+#include "ace/Global_Macros.h"
+#include "ace/Time_Value.h"
 
+#include <stdlib.h>
 
 // Forward declaration.
 class ACE_Allocator;
@@ -112,7 +115,7 @@ public:
   };
 
   typedef int ACE_Message_Type;
-  typedef u_long Message_Flags;
+  typedef unsigned long Message_Flags;
 
   enum
   {
@@ -145,7 +148,7 @@ public:
    */
   ACE_Message_Block (const char *data,
                      size_t size = 0,
-                     u_long priority = ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY);
+                     unsigned long priority = ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY);
 
   /**
    * Create an initialized message of type <type> containing <size>
@@ -176,7 +179,7 @@ public:
                      const char *data = 0,
                      ACE_Allocator *allocator_strategy = 0,
                      ACE_Lock *locking_strategy = 0,
-                     u_long priority = ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY,
+                     unsigned long priority = ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY,
                      const ACE_Time_Value &execution_time = ACE_Time_Value::zero,
                      const ACE_Time_Value &deadline_time = ACE_Time_Value::max_time,
                      ACE_Allocator *data_block_allocator = 0,
@@ -226,7 +229,7 @@ public:
             const char *data = 0,
             ACE_Allocator *allocator_strategy = 0,
             ACE_Lock *locking_strategy = 0,
-            u_long priority = ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY,
+            unsigned long priority = ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY,
             const ACE_Time_Value &execution_time = ACE_Time_Value::zero,
             const ACE_Time_Value &deadline_time = ACE_Time_Value::max_time,
             ACE_Allocator *data_block_allocator = 0,
@@ -285,10 +288,10 @@ public:
   Message_Flags self_flags (void) const;
 
   /// Get priority of the message.
-  u_long msg_priority (void) const;
+  unsigned long msg_priority (void) const;
 
   /// Set priority of the message.
-  void msg_priority (u_long priority);
+  void msg_priority (unsigned long priority);
 
   /// Get execution time associated with the message.
   const ACE_Time_Value &msg_execution_time (void) const;
@@ -585,7 +588,7 @@ protected:
                      ACE_Allocator *allocator_strategy,
                      ACE_Lock *locking_strategy,
                      Message_Flags flags,
-                     u_long priority,
+                     unsigned long priority,
                      const ACE_Time_Value &execution_time,
                      const ACE_Time_Value &deadline_time,
                      ACE_Data_Block *db,
@@ -604,7 +607,7 @@ protected:
               ACE_Allocator *allocator_strategy,
               ACE_Lock *locking_strategy,
               Message_Flags flags,
-              u_long priority,
+              unsigned long priority,
               const ACE_Time_Value &execution_time,
               const ACE_Time_Value &deadline_time,
               ACE_Data_Block *db,
@@ -618,7 +621,7 @@ protected:
   size_t wr_ptr_;
 
   /// Priority of message.
-  u_long priority_;
+  unsigned long priority_;
 
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
   /// Execution time associated with the message.
@@ -886,10 +889,10 @@ public:
   };
 
   /// Constructor.
-  ACE_Dynamic_Message_Strategy (u_long static_bit_field_mask,
-                                u_long static_bit_field_shift,
-                                u_long dynamic_priority_max,
-                                u_long dynamic_priority_offset);
+  ACE_Dynamic_Message_Strategy (unsigned long static_bit_field_mask,
+                                unsigned long static_bit_field_shift,
+                                unsigned long dynamic_priority_max,
+                                unsigned long dynamic_priority_offset);
 
   /// Virtual destructor.
   virtual ~ACE_Dynamic_Message_Strategy (void);
@@ -899,28 +902,28 @@ public:
                                    const ACE_Time_Value &tv);
 
   /// Get static bit field mask.
-  u_long static_bit_field_mask (void) const;
+  unsigned long static_bit_field_mask (void) const;
 
   /// Set static bit field mask.
-  void static_bit_field_mask (u_long);
+  void static_bit_field_mask (unsigned long);
 
   /// Get left shift value to make room for static bit field.
-  u_long static_bit_field_shift (void) const;
+  unsigned long static_bit_field_shift (void) const;
 
   /// Set left shift value to make room for static bit field.
-  void static_bit_field_shift (u_long);
+  void static_bit_field_shift (unsigned long);
 
   /// Get maximum supported priority value.
-  u_long dynamic_priority_max (void) const;
+  unsigned long dynamic_priority_max (void) const;
 
   /// Set maximum supported priority value.
-  void dynamic_priority_max (u_long);
+  void dynamic_priority_max (unsigned long);
 
   /// Get offset to boundary between signed range and unsigned range.
-  u_long dynamic_priority_offset (void) const;
+  unsigned long dynamic_priority_offset (void) const;
 
   /// Set offset to boundary between signed range and unsigned range.
-  void dynamic_priority_offset (u_long);
+  void dynamic_priority_offset (unsigned long);
 
   /// Dump the state of the strategy.
   virtual void dump (void) const;
@@ -931,20 +934,20 @@ protected:
                                  const ACE_Message_Block &mb) = 0;
 
   /// This is a bit mask with all ones in the static bit field.
-  u_long static_bit_field_mask_;
+  unsigned long static_bit_field_mask_;
 
   /**
    * This is a left shift value to make room for static bit field:
    * this value should be the logarithm base 2 of
    * (static_bit_field_mask_ + 1).
    */
-  u_long static_bit_field_shift_;
+  unsigned long static_bit_field_shift_;
 
   /// Maximum supported priority value.
-  u_long dynamic_priority_max_;
+  unsigned long dynamic_priority_max_;
 
   /// Offset to boundary between signed range and unsigned range.
-  u_long dynamic_priority_offset_;
+  unsigned long dynamic_priority_offset_;
 
   /// Maximum late time value that can be represented.
   ACE_Time_Value max_late_;
@@ -974,10 +977,10 @@ class ACE_Export ACE_Deadline_Message_Strategy : public ACE_Dynamic_Message_Stra
 {
 public:
   /// Ctor, with all arguments defaulted.
-  ACE_Deadline_Message_Strategy (u_long static_bit_field_mask = 0x3FFUL,       // 2^(10) - 1
-                                 u_long static_bit_field_shift = 10,           // 10 low order bits
-                                 u_long dynamic_priority_max = 0x3FFFFFUL,     // 2^(22)-1
-                                 u_long dynamic_priority_offset = 0x200000UL); // 2^(22-1)
+  ACE_Deadline_Message_Strategy (unsigned long static_bit_field_mask = 0x3FFUL,       // 2^(10) - 1
+                                 unsigned long static_bit_field_shift = 10,           // 10 low order bits
+                                 unsigned long dynamic_priority_max = 0x3FFFFFUL,     // 2^(22)-1
+                                 unsigned long dynamic_priority_offset = 0x200000UL); // 2^(22-1)
 
   /// Virtual dtor.
   virtual ~ACE_Deadline_Message_Strategy (void);
@@ -1009,10 +1012,10 @@ class ACE_Export ACE_Laxity_Message_Strategy : public ACE_Dynamic_Message_Strate
 {
 public:
   /// Ctor, with all arguments defaulted.
-  ACE_Laxity_Message_Strategy (u_long static_bit_field_mask = 0x3FFUL,       // 2^(10) - 1
-                               u_long static_bit_field_shift = 10,           // 10 low order bits
-                               u_long dynamic_priority_max = 0x3FFFFFUL,     // 2^(22)-1
-                               u_long dynamic_priority_offset = 0x200000UL); // 2^(22-1)
+  ACE_Laxity_Message_Strategy (unsigned long static_bit_field_mask = 0x3FFUL,       // 2^(10) - 1
+                               unsigned long static_bit_field_shift = 10,           // 10 low order bits
+                               unsigned long dynamic_priority_max = 0x3FFFFFUL,     // 2^(22)-1
+                               unsigned long dynamic_priority_offset = 0x200000UL); // 2^(22-1)
 
   /// virtual dtor.
   virtual ~ACE_Laxity_Message_Strategy (void);
@@ -1030,6 +1033,7 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Message_Block_T.h"
+
 #include "ace/post.h"
 
 #endif /* ACE_MESSAGE_BLOCK_H */

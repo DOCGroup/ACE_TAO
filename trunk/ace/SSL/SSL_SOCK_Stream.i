@@ -31,9 +31,9 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
   if (flags != 0)
     ACE_NOTSUP_RETURN (-1);
 
-  int bytes_sent = ::SSL_write (this->ssl_,
-                                ACE_static_cast (const char *, buf),
-                                n);
+  const int bytes_sent = ::SSL_write (this->ssl_,
+                                      ACE_static_cast (const char *, buf),
+                                      n);
 
   switch (::SSL_get_error (this->ssl_, bytes_sent))
     {
@@ -137,7 +137,7 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
                                n);
     }
 
-  int status = ::SSL_get_error (this->ssl_, bytes_read);
+  const int status = ::SSL_get_error (this->ssl_, bytes_read);
   switch (status)
     {
     case SSL_ERROR_NONE:
@@ -271,7 +271,7 @@ ACE_SSL_SOCK_Stream::close (void)
 
   // SSL_shutdown() returns 1 on successful shutdown of the SSL
   // connection, not 0.
-  int status = ::SSL_shutdown (this->ssl_);
+  const int status = ::SSL_shutdown (this->ssl_);
 
   switch (::SSL_get_error (this->ssl_, status))
     {
