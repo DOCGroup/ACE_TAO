@@ -35,22 +35,14 @@
 #define TAO_TRY_ENV __env
 // The first "do" scope is for the env.
 // The second "do" scope is for the TAO_CHECK_ENV continues.
-#define TAO_TRY \
-do { \
-CORBA_Environment TAO_TRY_ENV; \
-try {
+// These are all on one line so the keywords don't confuse compilers.
+#define TAO_TRY do { CORBA_Environment TAO_TRY_ENV; try {
 
-#define TAO_TRY_EX(LABEL) \
-do { \
-CORBA_Environment TAO_TRY_ENV; \
-try {
+#define TAO_TRY_EX(LABEL) do { CORBA_Environment TAO_TRY_ENV; try {
 
-#define TAO_CATCH(TYPE,VAR) \
-} catch (TYPE & VAR) { \
-ACE_UNUSED_ARG (VAR);
+#define TAO_CATCH(TYPE,VAR) } catch (TYPE & VAR) { ACE_UNUSED_ARG (VAR);
 
-#define TAO_CATCHANY \
-} catch (...) {
+#define TAO_CATCHANY } catch (...) {
 #define TAO_ENDTRY }} while (0)
 
 // Use this macro if there's a return statement following TAO_ENDTRY
