@@ -22,11 +22,12 @@ class Logrec_Module : public ACE_Module<ACE_MT_SYNCH>
 {
 public:
   Logrec_Module (ACE_TCHAR *name)
-    : ACE_Module<ACE_MT_SYNCH> (name, 
-                                &task_, // Initialize writer-side task.
-                                0,      // Ignore reader-side task.
-                                0,
-                                ACE_Module<ACE_MT_SYNCH>::M_DELETE_READER) {}
+    : ACE_Module<ACE_MT_SYNCH>
+                    (name,
+                     &task_, // Initialize writer-side task.
+                     0,      // Ignore reader-side task.
+                     0,
+                     ACE_Module<ACE_MT_SYNCH>::M_DELETE_READER) {}
 private:
   TASK task_;
 };
@@ -78,13 +79,13 @@ public:
       // extract what's needed, crunch the block to move all remaining
       // data to the beginning and read more from the file.
       for (;;) {
-        size_t name_len =
-          ACE_OS_String::strnlen (mblk.rd_ptr (), mblk.length ());
+        size_t name_len = ACE_OS_String::strnlen
+                             (mblk.rd_ptr (), mblk.length ());
         if (name_len == mblk.length ()) break;
 
         ACE_Message_Block *rec, *head, *temp;
-
-        ACE_NEW_RETURN (head, ACE_Message_Block (name_len, MB_CLIENT), 0);
+        ACE_NEW_RETURN
+          (head, ACE_Message_Block (name_len, MB_CLIENT), 0);
         head->copy (mblk.rd_ptr (), name_len);
         mblk.rd_ptr (name_len + 1);   // Skip nul also
 
@@ -110,37 +111,50 @@ public:
         if (!cdr.read_ulong (length)) {
           head->release (); rec->release (); break;
         }
-
         if (length > rec->length ()) {
           head->release (); rec->release (); break;
         }
 
         // The complete record is in rec... grab all the fields into
         // separate, chained message blocks.
-        ACE_NEW_RETURN (temp, \
-          ACE_Message_Block (length, MB_TEXT), 0);
-        ACE_NEW_RETURN (temp, \
-          ACE_Message_Block (2 * sizeof (ACE_CDR::Long), MB_TIME, temp), 0);
-        ACE_NEW_RETURN (temp, \
-          ACE_Message_Block (sizeof (ACE_CDR::Long), MB_PID, temp), 0);
-        ACE_NEW_RETURN (temp, \
-          ACE_Message_Block (sizeof (ACE_CDR::Long), MB_TYPE, temp), 0);
+        ACE_NEW_RETURN (temp,
+                        ACE_Message_Block (length, MB_TEXT),
+                        0);
+        ACE_NEW_RETURN
+          (temp,
+           ACE_Message_Block (2 * sizeof (ACE_CDR::Long),
+                              MB_TIME, temp),
+           0);
+        ACE_NEW_RETURN
+          (temp,
+           ACE_Message_Block (sizeof (ACE_CDR::Long),
+                              MB_PID, temp),
+           0);
+        ACE_NEW_RETURN
+          (temp,
+           ACE_Message_Block (sizeof (ACE_CDR::Long),
+                              MB_TYPE, temp),
+           0);
 
         // Demarshal the type
         head->cont (temp);
-        ACE_CDR::Long *lp = ACE_reinterpret_cast (ACE_CDR::Long*, temp->wr_ptr ());
+        ACE_CDR::Long *lp;
+        lp = ACE_reinterpret_cast
+          (ACE_CDR::Long*, temp->wr_ptr ());
         cdr >> *lp;
         temp->wr_ptr (sizeof (ACE_CDR::Long));
         temp = temp->cont ();
 
         // Demarshal the pid
-        lp = ACE_reinterpret_cast (ACE_CDR::Long*, temp->wr_ptr ());
+        lp = ACE_reinterpret_cast
+          (ACE_CDR::Long*, temp->wr_ptr ());
         cdr >> *lp;
         temp->wr_ptr (sizeof (ACE_CDR::Long));
         temp = temp->cont ();
 
         // Demarshal the time (2 Longs)
-        lp = ACE_reinterpret_cast (ACE_CDR::Long*, temp->wr_ptr ());
+        lp = ACE_reinterpret_cast
+          (ACE_CDR::Long*, temp->wr_ptr ());
         cdr >> *lp; ++lp; cdr >> *lp;
         temp->wr_ptr (2 * sizeof (ACE_CDR::Long));
         temp = temp->cont ();
@@ -166,7 +180,9 @@ public:
     // Now that the file is done, send a block down the stream to tell
     // the other modules to stop.
     ACE_Message_Block *stop;
-    ACE_NEW_RETURN (stop, ACE_Message_Block (0, ACE_Message_Block::MB_STOP), 0);
+    ACE_NEW_RETURN
+      (stop, ACE_Message_Block (0, ACE_Message_Block::MB_STOP),
+       0);
     put_next (stop);
     return 0;
   }
@@ -176,11 +192,12 @@ class Logrec_Reader_Module : public ACE_Module<ACE_MT_SYNCH>
 {
 public:
   Logrec_Reader_Module (const ACE_TString &filename)
-    : ACE_Module<ACE_MT_SYNCH> (ACE_TEXT ("Logrec Reader"),
-                                &task_, // Initialize writer-side.
-                                0,      // Ignore reader-side.
-                                0,
-                                ACE_Module<ACE_MT_SYNCH>::M_DELETE_READER),
+    : ACE_Module<ACE_MT_SYNCH>
+                    (ACE_TEXT ("Logrec Reader"),
+                     &task_, // Initialize writer-side.
+                     0,      // Ignore reader-side.
+                     0,
+                     ACE_Module<ACE_MT_SYNCH>::M_DELETE_READER),
       task_ (filename) {}
 private:
   Logrec_Reader task_;
@@ -222,7 +239,8 @@ public:
       for (ACE_Message_Block *temp = mblk;
            temp != 0;
            temp = temp->cont ()) {
-        int mb_type = temp->msg_type () - ACE_Message_Block::MB_USER;
+        int mb_type =
+          temp->msg_type () - ACE_Message_Block::MB_USER;
         (*format_[mb_type])(temp);
       }
     return put_next (mblk);
@@ -286,11 +304,12 @@ public:
                    ACE_Time_Value *) {
     if (mblk->msg_type () != ACE_Message_Block::MB_STOP) {
       ACE_Message_Block *separator;
-      ACE_NEW_RETURN (separator,
-                      ACE_Message_Block (ACE_OS::strlen ("|") + 1,
-                                         ACE_Message_Block::MB_DATA,
-                                         0, 0, 0, &lock_strategy_),
-                      -1);
+      ACE_NEW_RETURN
+        (separator,
+         ACE_Message_Block (ACE_OS::strlen ("|") + 1,
+                            ACE_Message_Block::MB_DATA,
+                            0, 0, 0, &lock_strategy_),
+         -1);
       separator->copy ("|");
 
       ACE_Message_Block *dup;
@@ -321,10 +340,14 @@ int main (int argc, char *argv[])
   ACE_TString logfile (ACE_TEXT_CHAR_TO_TCHAR (argv[1]));
   ACE_Stream<ACE_MT_SYNCH> stream;
 
-  if (stream.push (new Logrec_Writer_Module (ACE_TEXT ("Writer"))) != -1
-      && stream.push (new Logrec_Separator_Module (ACE_TEXT ("Separator"))) != -1
-      && stream.push (new Logrec_Formatter_Module (ACE_TEXT ("Formatter"))) != -1
-      && stream.push (new Logrec_Reader_Module (logfile)) != -1)
+  if (stream.push
+      (new Logrec_Writer_Module (ACE_TEXT ("Writer"))) != -1
+      && stream.push
+      (new Logrec_Separator_Module (ACE_TEXT ("Separator"))) != -1
+      && stream.push
+      (new Logrec_Formatter_Module (ACE_TEXT ("Formatter"))) != -1
+      && stream.push
+      (new Logrec_Reader_Module (logfile)) != -1)
     return ACE_Thread_Manager::instance ()->wait () == 0 ? 0 : 1;
   return 1;
 }
