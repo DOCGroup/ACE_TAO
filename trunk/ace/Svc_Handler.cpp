@@ -401,7 +401,7 @@ ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::flush (void)
       // continuations.
       for (ACE_Message_Block *temp = entry;
            temp != 0;
-           temp = entry->cont ())
+           temp = temp->cont ())
         {
           iov[i].iov_len = temp->length ();
           iov[i].iov_base = temp->rd_ptr ();

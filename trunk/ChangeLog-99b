@@ -1,5 +1,11 @@
 Wed Jun  9 21:45:24 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tests/Svc_Handler_Test.cpp (main): Revised the test a bit to
+	  make it more clear what's going on.
+
+	* ace/Svc_Handler.cpp: Fixed a typo in flush() -- we need to
+ 	  update the temp pointer with temp->cont() *not* entry->cont().
+
 	* ace/Svc_Handler.cpp (dump): Fixed a typo -- I wasn't
 	  comparing the pointer to 0, I was comparing the
 	  ACE_Time_Value!
