@@ -35,7 +35,7 @@ my($indsc)           = 0;
 my(%argsList)        = ();
 my($shortString)     = 256;
 my($unknownArgCount) = 20;
-my($defaultTimeout)  = 30;
+my($defaultTimeout)  = 60;
 my($status)          = 0;
 my($lineCount)       = 0;
 my($needReadLine)    = 1;
@@ -276,7 +276,8 @@ sub addParameterToCurrentSub {
 
 sub getTop {
   my($os) = "OSNAME";
-  my($top) = "#include <ace/OS.h>\n" .
+  my($top) = "// \$Id\$\n\n" .
+             "#include <ace/OS.h>\n" .
              "#include <ace/Get_Opt.h>\n" .
              "#include <tao/debug.h>\n" .
              "#include <tests/TestUtils/TestCombinedThreads.h>\n\n" .

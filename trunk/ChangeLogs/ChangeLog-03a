@@ -1,3 +1,10 @@
+Tue Aug 28 13:16:31 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/vxworks_modify.pl:
+        * bin/perltest2cpp.pl:
+
+          Generated c++ files now pass the fuzz check.
+
 Tue Aug 28 11:02:08 2001  Ossama Othman  <ossama@uci.edu>
 
 	* bin/nightlybuilds/builds.lst:
