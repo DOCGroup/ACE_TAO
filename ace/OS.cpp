@@ -872,19 +872,15 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
   // has only been tested for POSIX 1003.1c threads, and may cause problems
   // with other PThreads flavors!
 
-  int result;
   struct sched_param param;
 
   param.sched_priority = sched_params.priority ();
 
   if (sched_params.scope () == ACE_SCOPE_PROCESS)
     {
-      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sched_setscheduler (
-                                             0,    // this process
-                                             sched_params.policy (),
-                                             &param),
-                                           result),
-                         int, -1);
+      return (::sched_setscheduler(0, // this process
+                                   sched_params.policy (),
+                                   &param) == -1 ? -1 : 0);
     }
   else if (sched_params.scope () == ACE_SCOPE_THREAD)
     {
@@ -895,6 +891,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
                                      sched_params.policy (),
                                      sched_params.priority()) == -1 ? -1 : 0);
 #   else
+      int result;
       ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (
                                              thr_id,
                                              sched_params.policy (),
