@@ -6764,6 +6764,7 @@ public:
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
       ACE_OS_MONITOR_LOCK,
       ACE_TSS_CLEANUP_LOCK,
+      ACE_LOG_MSG_INSTANCE_LOCK,
 #   if defined (ACE_HAS_TSS_EMULATION)
       ACE_TSS_KEY_LOCK,
 #     if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
@@ -6798,6 +6799,7 @@ private:
   friend class ACE_OS_Object_Manager_Manager;
   friend class ACE_TSS_Cleanup;
   friend class ACE_TSS_Emulation;
+  friend class ACE_Log_Msg;
   friend void ACE_OS_Object_Manager_Internal_Exit_Hook ();
   // This class is for internal use by ACE_OS, etc., only.
 

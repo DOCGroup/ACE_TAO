@@ -201,8 +201,6 @@ ACE_Object_Manager::init (void)
 #     endif /* ACE_HAS_THREADS */
 #     if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
           ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex,
-                                  ACE_LOG_MSG_INSTANCE_LOCK)
-          ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex,
                                   ACE_MT_CORBA_HANDLER_LOCK)
           ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_DUMP_LOCK)
           ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex,
@@ -660,8 +658,6 @@ ACE_Object_Manager::fini (void)
                                       ACE_STATIC_OBJECT_LOCK)
 #endif /* ACE_HAS_THREADS */
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-      ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex,
-                                      ACE_LOG_MSG_INSTANCE_LOCK)
       ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex,
                                       ACE_MT_CORBA_HANDLER_LOCK)
       ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_DUMP_LOCK)
