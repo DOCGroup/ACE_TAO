@@ -7,10 +7,11 @@
 ACE_RCSID(ImplRepo, airplane_server_i, "$Id$")
 
 Airplane_Server_i::Airplane_Server_i (void)
-  : ior_output_file_ (0),
+  : server_impl_ (0),
+    ior_output_file_ (0),
     ir_helper_ (0),
     register_with_ir_ (0),
-    server_impl (1)
+    use_ir_ (0)
 {
   // Nothing
 }
@@ -18,7 +19,7 @@ Airplane_Server_i::Airplane_Server_i (void)
 int
 Airplane_Server_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:r");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:ir");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -27,8 +28,11 @@ Airplane_Server_i::parse_args (void)
       case 'd':  // debug flag.
         TAO_debug_level++;
         break;
-      case 'r':
+      case 'r':  // Register restart information with the IR.
         this->register_with_ir_ = 1;
+        break;
+      case 'i':  // Use the IR
+        this->use_ir_ = 1;
         break;
       case 'o':  // output the IOR to a file.
         this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
@@ -42,6 +46,8 @@ Airplane_Server_i::parse_args (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " [-d]"
+                           " [-i]"
+                           " [-r]"
                            " [-o] <ior_output_file>"
                            "\n",
                            argv_ [0]),
@@ -73,34 +79,41 @@ Airplane_Server_i::init (int argc, char** argv, CORBA::Environment& _env)
 
       if (retval != 0)
         return retval;
-   
+
+      ACE_NEW_RETURN (this->server_impl_, Airplane_i (this->use_ir_), -1);
+
       CORBA::String_var server_str  =
         this->orb_manager_.activate_under_child_poa ("server",
-                                                     &this->server_impl,
+                                                     this->server_impl_,
                                                      TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // = IR Stuff
-      ACE_NEW_RETURN (this->ir_helper_, IR_Helper (poa_name,
-                                                   this->orb_manager_.child_poa (),
-                                                   this->orb_manager_.orb (),
-                                                   TAO_debug_level),
-                      -1);
+      if (this->use_ir_ == 1)
+        {
+          ACE_NEW_RETURN (this->ir_helper_, IR_Helper (poa_name,
+                                                       this->orb_manager_.child_poa (),
+                                                       this->orb_manager_.orb (),
+                                                       TAO_debug_level),
+                          -1);
 
-      if (this->register_with_ir_ == 1)
-        this->ir_helper_->register_server ("airplane_server.exe");
+          if (this->register_with_ir_ == 1)
+            this->ir_helper_->register_server ("airplane_server -i");
+        }
 
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId ("server");
 
       CORBA::Object_var server_obj =
         this->orb_manager_.child_poa ()->id_to_reference (id.in (),
-                                           TAO_TRY_ENV);
+                                                          TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      this->ir_helper_->change_object (server_obj, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
+      if (this->use_ir_ == 1)
+        {
+          this->ir_helper_->change_object (server_obj, TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+        }
+       
       server_str =
         this->orb_manager_.orb ()->object_to_string (server_obj.in (),
                                                      TAO_TRY_ENV);
@@ -130,14 +143,20 @@ Airplane_Server_i::run (CORBA::Environment& env)
 {
   TAO_TRY
   {
-    this->ir_helper_->notify_startup (TAO_TRY_ENV);
-    TAO_CHECK_ENV;
+    if (this->use_ir_ == 1)
+      {
+        this->ir_helper_->notify_startup (TAO_TRY_ENV);
+        TAO_CHECK_ENV;
+      }
 
     this->orb_manager_.run (TAO_TRY_ENV);
     TAO_CHECK_ENV;
 
-    this->ir_helper_->notify_shutdown (TAO_TRY_ENV);
-    TAO_CHECK_ENV;
+    if (this->use_ir_ == 1)
+      {
+        this->ir_helper_->notify_shutdown (TAO_TRY_ENV);
+        TAO_CHECK_ENV;
+      }
   }
   TAO_CATCHANY
   {
@@ -151,5 +170,6 @@ Airplane_Server_i::run (CORBA::Environment& env)
 
 Airplane_Server_i::~Airplane_Server_i (void)
 {
-  // Nothing
+  delete this->ir_helper_;
+  delete this->server_impl_;
 }
