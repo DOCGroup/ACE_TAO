@@ -18,6 +18,7 @@
 #define TAO_PARAMS_H
 
 #include "tao/corbafwd.h"
+#include "tao/IOR_LookupTable.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -157,10 +158,12 @@ public:
   // default we use the full ascii names.
 
   TAO_IOR_LookupTable * ior_lookup_table (void);
-  void ior_lookup_table (TAO_IOR_LookupTable *table);
   // The table used by the ORB for looking up the ObjectID:IOR mappings
   // specified on the commandline through the -ORBInitRef and
   // -ORBDefaultInitRef parameters.
+
+  int add_to_ior_table (ACE_CString init_ref);
+  // Add the init_ref (objectID->IOR) to the Lookup Table
 
   char *default_init_ref (void) const;
   void default_init_ref (const ACE_CString &default_init_ref);
@@ -217,7 +220,7 @@ private:
   ACE_CString init_ref_;
   // Initial Reference supplied as <ObjectID>:<IOR>
 
-  TAO_IOR_LookupTable *ior_lookup_table_;
+  TAO_IOR_LookupTable ior_lookup_table_;
   // Table that has the mapping <ObjectID>:<IOR>
   // The IOR could be in any of the following formats :
   // IOR: ...  / iiop: ...  / iioploc: ... / iiopname: ...
