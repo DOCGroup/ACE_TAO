@@ -4,6 +4,7 @@
 #include "ace/Local_Memory_Pool.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_Memory.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, Local_Memory_Pool, "$Id$")
 

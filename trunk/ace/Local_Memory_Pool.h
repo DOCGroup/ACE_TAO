@@ -15,6 +15,7 @@
 #define ACE_LOCAL_MEMORY_POOL_H
 #include /**/ "ace/pre.h"
 
+#include "ace/os_include/sys/os_mman.h"   /* Need PROT_RDWR */
 #include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
