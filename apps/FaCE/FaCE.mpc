@@ -1,0 +1,9 @@
+project: aceexe {
+  exename   = FaCE
+  requires += wince
+
+  Source_Files {
+    FaCE.cpp
+    Main.cpp
+  }
+}

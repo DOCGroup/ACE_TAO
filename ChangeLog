@@ -1,3 +1,23 @@
+Wed Sep  1 07:00:39 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/global.features:
+
+          Disable the wince feature setting.
+
+        * apps/FaCE/FaCE.mpc:
+        * apps/FaCE/FaCENOACE.mpc:
+
+          Adding mpc files to replace the vcp files.  These projects will
+          only build on wince so they require the wince feature which is
+          disabled by default.
+
+        * apps/FaCE/FaCE.vcp:
+        * apps/FaCE/FaCE.vcw:
+        * apps/FaCE/FaCENOACE.vcp:
+        * apps/FaCE/FaCENOACE.vcw:
+
+          Removed these files.
+
 Wed Sep  1 06:48:34 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/Mem_Map/file-reverse/Mem_Map_File_Reverse.mpc:
