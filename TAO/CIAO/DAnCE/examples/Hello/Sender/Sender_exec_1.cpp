@@ -33,7 +33,7 @@ Hello::CCM_ReadMessage_ptr
 Sender_Impl::Sender_exec_1_i::get_push_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "Sender_Impl::Sender_exec.i::get_push_message called\n "));
   return ( new Message_Impl_1 (*this) );
 }
@@ -48,7 +48,7 @@ Sender_Impl::Sender_exec_1_i::start (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Sender_Impl::Sender_exec_1_i::set_session_context 
+Sender_Impl::Sender_exec_1_i::set_session_context
    (Components::SessionContext_ptr ctx
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -110,24 +110,18 @@ Sender_Impl::Sender_exec_1_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     sender->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
 
-  ::Components::FacetDescriptions_var facet_desc =
-    sender->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-
   ACE_DEBUG ((LM_DEBUG, "i am here\n"));
 
   CORBA::ULong cons_len = cons_desc->length ();
-  CORBA::ULong facet_len = facet_desc->length ();
+
   ACE_DEBUG ((LM_DEBUG, "cons length is %d\n", cons_len));
-  ACE_DEBUG ((LM_DEBUG, "facet length is %d\n", facet_len));
+
   for (CORBA::ULong i = 0; i < cons_len; ++i)
     {
       ACE_DEBUG ((LM_DEBUG, "consumer name is %s\n", cons_desc[i]->name ()));
     }
-  for (CORBA::ULong i = 0; i < facet_len; ++i)
-    {
-      ACE_DEBUG ((LM_DEBUG, "facet name is %s\n", facet_desc[i]->name ()));
-    }
+
+  this->base_exec_->consumers (cons_desc._retn ());
 }
 
 void
