@@ -43,6 +43,7 @@ static int VERBOSE = 0;
 static int logfile = 0;
 static int server = 0;
 static int client = 0;
+static u_int use_reactor = 0;
 ACE_hrtime_t max_allow = 0;
 ACE_hrtime_t total_ltime;
 ACE_hrtime_t ltime;
@@ -63,6 +64,7 @@ usage (void)
               "  [-t]\n"
               "  [-r]\n"
               "  [-x max_sample_allowed]\n"
+              "  [-a to use the ACE reactor]\n"
               "  targethost \n",
               *cmd));
 }
@@ -116,10 +118,13 @@ Client::Client (const ACE_INET_Addr &addr,
   : endpoint_ (addr),
     remote_addr_ (remote_addr)
 {
-  if (ACE_Reactor::instance ()->register_handler
-      (this, ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "ACE_Reactor::register_handler: Client\n"));
+  if (use_reactor)
+    {
+      if (ACE_Reactor::instance ()->register_handler
+          (this, ACE_Event_Handler::READ_MASK) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "ACE_Reactor::register_handler: Client\n"));
+    }
 }
 
 Client::~Client (void)
@@ -458,11 +463,15 @@ Client::shutdown (void)
   const char buf = 'S';
   const int n = endpoint_.send (&buf, 1u, remote_addr_);
 
-  if (ACE_Reactor::instance ()->remove_handler
-      (this, ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_Reactor::remove_handler: Client\n"),
-                      -1);
+  if (use_reactor)
+    {
+      if (ACE_Reactor::instance ()->remove_handler
+          (this, ACE_Event_Handler::READ_MASK) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "ACE_Reactor::remove_handler: Client\n"),
+                          -1);
+    }
+
   return n;
 }
 
@@ -491,11 +500,14 @@ private:
 Server::Server (const ACE_INET_Addr &addr)
   :  endpoint_ (addr)
 {
-  if (ACE_Reactor::instance ()->register_handler
-      (this,
-       ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "ACE_Reactor::register_handler: Server\n"));
+  if (use_reactor)
+    {
+      if (ACE_Reactor::instance ()->register_handler
+          (this,
+           ACE_Event_Handler::READ_MASK) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "ACE_Reactor::register_handler: Server\n"));
+    }
 }
 
 Server::~Server (void)
@@ -526,13 +538,21 @@ Server::handle_input (ACE_HANDLE)
     {
       if (n == 1 && buf[0] == 'S')
         {
-          if (ACE_Reactor::instance ()->remove_handler
-              (this, ACE_Event_Handler::READ_MASK) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "ACE_Reactor::remove_handler: server\n"),
-                              -1);
+          if (use_reactor)
+            {
+              if (ACE_Reactor::instance ()->remove_handler
+                  (this, ACE_Event_Handler::READ_MASK) == -1)
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "ACE_Reactor::remove_handler: server\n"),
+                                  -1);
 
-          ACE_Reactor::end_event_loop ();
+              ACE_Reactor::end_event_loop ();
+            }
+          else
+            {
+              // Indicate done by returning 1.
+              return 1;
+            }
         }
 
       return 0;
@@ -563,7 +583,7 @@ main (int argc, char *argv[])
 
   cmd = argv;
 
-  ACE_Get_Opt getopt (argc, argv, "x:w:f:vs:I:p:rtn:b:");
+  ACE_Get_Opt getopt (argc, argv, "x:w:f:vs:I:p:rtn:b:a");
 
   while ((c = getopt ()) != -1)
     {
@@ -600,6 +620,9 @@ main (int argc, char *argv[])
             ACE_ERROR_RETURN ((LM_ERROR,
                                "\nIterations must be greater than 0!\n\n"),
                               1);
+          break;
+        case 'a':
+          use_reactor = 1;
           break;
         case 's':
           so_bufsz = ACE_OS::atoi (getopt.optarg);
@@ -652,7 +675,16 @@ main (int argc, char *argv[])
     {
       Server server (addr);
 
-      ACE_Reactor::run_event_loop ();
+      if (use_reactor)
+        {
+          ACE_Reactor::run_event_loop ();
+        }
+      else
+        {
+          // Handle input in the current thread.
+          while (server.handle_input (0) != 1)
+            continue;
+        }
     }
   else
     {
