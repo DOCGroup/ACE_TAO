@@ -1,3 +1,21 @@
+Thu Jan  4 15:33:19 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/tmplinst.cpp:
+
+          Added ACE_Write_Guard<ACE_Lock> and 
+          ACE_Read_Guard<ACE_Lock> to the instantiation list.
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
+
+          Added explicit template instantiations for the tao_ifr
+          project at the bottom of this file.
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.h:
+
+          Cosmetic changes.
+
 Thu Jan  4 14:14:23 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/Makefile.tao_ifr:
