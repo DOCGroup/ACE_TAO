@@ -1,18 +1,25 @@
+Tue Jan 18 13:04:24 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+          Fixed warnings on platforms without native C++ exception
+          support.
+
 Tue Jan 18 12:08:00 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DynStruct_i.cpp:
-	  Added patches to from_any() and to_any() sent in by
-	  Philippe Merle <Philippe.Merle@lifl.fr>.These 
-	  patches (de)marshal the repository ID if the Any
-	  contains an exception.
+        * tao/DynStruct_i.cpp:
+          Added patches to from_any() and to_any() sent in by
+          Philippe Merle <Philippe.Merle@lifl.fr>.These
+          patches (de)marshal the repository ID if the Any
+          contains an exception.
 
 Tue Jan 18 11:37:31 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/MT_Client/client.cpp (parse_args): Only shutdown server
-	  when specified by the user.
+        * tests/MT_Client/client.cpp (parse_args): Only shutdown server
+          when specified by the user.
 
-	* tests/MT_Client/run_test.pl: Added explicit shutdown of the
-	  server.
+        * tests/MT_Client/run_test.pl: Added explicit shutdown of the
+          server.
 
 Tue Jan 18 08:56:20 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -22,12 +29,12 @@ Tue Jan 18 08:56:20 2000  Carlos O'Ryan  <coryan@uci.edu>
         * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
         * orbsvcs/orbsvcs/Event/EC_ProxySupplier.i:
           Added a protected modified for the supplier (or consumer in the
- 	  ProxySupplier case), this is useful for users that inherit from
- 	  the ProxySupplier or ProxyConsumer and change the policies used
- 	  to communicate with the peer.  Notice that this changes should
- 	  only be made once the connection is complete, i.e. after
- 	  connect_push_XXX() has completed.  Thanks to Dave Meyer
- 	  <dmeyer@std.saic.com> for suggesting this.
+          ProxySupplier case), this is useful for users that inherit from
+          the ProxySupplier or ProxyConsumer and change the policies used
+          to communicate with the peer.  Notice that this changes should
+          only be made once the connection is complete, i.e. after
+          connect_push_XXX() has completed.  Thanks to Dave Meyer
+          <dmeyer@std.saic.com> for suggesting this.
 
 Mon Jan 17 22:13:05 2000  Darrell Brunsch <brunsch@uci.edu>
 

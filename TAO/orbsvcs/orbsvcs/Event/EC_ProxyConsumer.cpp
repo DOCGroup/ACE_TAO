@@ -40,7 +40,7 @@ TAO_EC_ProxyPushConsumer::supplier_non_existent (
         ACE_Lock, ace_mon, *this->lock_,
         CORBA::INTERNAL ());
     // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   disconnected = 0;
   if (this->is_connected_i () == 0)
