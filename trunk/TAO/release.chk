@@ -60,7 +60,7 @@ Legend:
 [  x x ] orbsvcs/tests compiles
         [xx1x1x] Simple_Naming compiles
         [xxxxxx] Simple_Naming runs
-        [xx0x0x] Logger compiles
+        [0x0x0x] Logger compiles
         [xxxxxx] Logger runs
         [xx1x1x] Event_Latency compiles
         [xxxxxx] Event_Latency runs
