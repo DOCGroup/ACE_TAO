@@ -40,6 +40,9 @@ namespace TAO
 
       virtual int exit ();
     };
+
+    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ThreadStrategyORBControl)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, ThreadStrategyORBControl)
   }
 }
 

@@ -33,6 +33,9 @@
 #include "tao/PortableServer/ThreadPolicyValueORBControl.h"
 #include "tao/PortableServer/ThreadPolicyValueSingle.h"
 
+#include "tao/PortableServer/ThreadStrategyORBControl.h"
+#include "tao/PortableServer/ThreadStrategySingle.h"
+
 #include "tao/PortableServer/LifespanPolicyValueTransient.h"
 #include "tao/PortableServer/LifespanPolicyValuePersistent.h"
 
@@ -147,7 +150,7 @@ TAO_POA_Initializer::init (void)
       TAO::Portable_Server::ace_svc_desc_Implicit_Implicit_Activation_Policy
     );
 
-  // Strategies
+  // Strategy factories
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ThreadStrategyFactoryImpl
@@ -175,6 +178,16 @@ TAO_POA_Initializer::init (void)
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ServantRetentionStrategyFactoryImpl
+    );
+
+  // Strategy implementations
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_ThreadStrategyORBControl
+    );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_ThreadStrategySingle
     );
 
   return

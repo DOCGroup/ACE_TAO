@@ -49,6 +49,9 @@ namespace TAO
     private:
       TAO_SYNCH_RECURSIVE_MUTEX lock_;
     };
+
+    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ThreadStrategySingle)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, ThreadStrategySingle)
   }
 }
 
