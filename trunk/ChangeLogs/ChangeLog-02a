@@ -1,3 +1,8 @@
+Fri Apr 07 23:32:16 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp: Added QoS_Manager.* into project files.
+
 Thu Apr  6 07:29:48 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Token.h (ACE_Token): Clarified the recursive semantics of
@@ -18,13 +23,13 @@ Tue Apr  4 23:50:02 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Mon Apr  3 11:09:26 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ace/QoS_Manager.cpp: Added the #if defined 
+	* ace/QoS_Manager.cpp: Added the #if defined
 	  (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION).
 
 Mon Apr  3 08:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* bin/auto_compile: Added <smart_proxies> flag.
-	
+
 Mon Apr  3 04:07:47 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/config-freebsd-pthread.h: Added a #define for
@@ -34,25 +39,25 @@ Mon Apr  3 04:07:47 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Sun Apr  2 21:32:20 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ace/SOCK.cpp: removed the extra #ifdef 
+	* ace/SOCK.cpp: removed the extra #ifdef
 	  ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
 	* ace/QoS_Manager.{h,cpp}: removed the obsolete #pragma once.
 	* ace/QoS_Session_Impl.i: fully qualified the ACE_End_Point_Type.
-	* ace/Makefile: Added the QoS_Manager.  
+	* ace/Makefile: Added the QoS_Manager.
 
 Sun Apr  2 20:19:36 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* ace/QoS_Manager.{h,cpp}: Added these two files. They define
-	  a QoS Manager that manages the QoS for a socket. This was being 
+	  a QoS Manager that manages the QoS for a socket. This was being
 	  done earlier by the ACE_SOCK classes.
 
 	  Changed the following files to accomodate the new classes added
-	  above.  
+	  above.
 	* ace/SOCK.{h,cpp}:  Removed the heavy container from ACE_SOCK.
 	* ace/SOCK_Dgram_Mcast.{h,cpp}: Changed the QoS management from
 	  ACE_SOCK to ACE_QoS_Manager.
-	
-	* ace/QoS_Session_Impl.{h,cpp}: 
+
+	* ace/QoS_Session_Impl.{h,cpp}:
 	* ace/QoS_Session.h: Changed the interface to use the
 	  ACE_QoS_Manager class
 
