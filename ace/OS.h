@@ -5719,6 +5719,20 @@ public:
   static int mutex_trylock (ACE_mutex_t *m,
                             int &abandoned);
 
+  /// This method attempts to acquire a lock, but gives up if the lock
+  /// has not been acquired by the given time.
+  /**
+   * If the lock is not acquired within the given amount of time, then
+   * this method returns with an ETIMEDOUT errno on platforms that
+   * actually support timed mutexes.  Otherwise it simply does a
+   * mutex_trylock().  If the timeout pointer, then it will block
+   * indefinitely.  The timeout should be an absolute time.  Note that
+   * the mutex should not be a recursive one, i.e., it should only be
+   * a standard mutex or an error checking mutex.
+   */
+  static int mutex_timedlock (ACE_mutex_t *m,
+                              ACE_Time_Value *timeout);
+
   static int mutex_unlock (ACE_mutex_t *m);
   //@}
 

@@ -444,6 +444,14 @@ public:
   int acquire (void);
 
   /**
+   * Block the thread until <tv> times out.  Note that <tv> is assumed
+   * to be in "absolute" rather than "relative" time.  The value of
+   * <tv> is updated upon return to show the actual (absolute)
+   * acquisition time.
+   */
+  int acquire (ACE_Time_Value &tv);
+
+  /**
    * Conditionally acquire lock (i.e., don't wait on queue).  Returns
    * -1 on failure.  If we "failed" because someone else already had
    * the lock, <errno> is set to <EBUSY>.
@@ -930,6 +938,14 @@ public:
 
   /// Acquire lock ownership (wait on queue if necessary).
   int acquire (void);
+
+  /**
+   * Block the thread until <tv> times out.  Note that <tv> is assumed
+   * to be in "absolute" rather than "relative" time.  The value of
+   * <tv> is updated upon return to show the actual (absolute)
+   * acquisition time.
+   */
+  int acquire (ACE_Time_Value &tv);
 
   /**
    * Conditionally acquire lock (i.e., don't wait on queue).  Returns

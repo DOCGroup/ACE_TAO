@@ -165,6 +165,13 @@ ACE_Mutex::acquire (void)
 }
 
 ACE_INLINE int
+ACE_Mutex::acquire (ACE_Time_Value &tv)
+{
+  // ACE_TRACE ("ACE_Mutex::acquire");
+  return ACE_OS::mutex_timedlock (&this->lock_, &tv);
+}
+
+ACE_INLINE int
 ACE_Mutex::tryacquire (void)
 {
 // ACE_TRACE ("ACE_Mutex::tryacquire");
@@ -323,10 +330,10 @@ ACE_Semaphore::tryacquire_write (void)
   return this->tryacquire ();
 }
 
-// This is only here to make the <ACE_Semaphore>
-// interface consistent with the other synchronization APIs.
-// Assumes the caller has already acquired the semaphore using one of
-// the above calls, and returns 0 (success) always.
+// This is only here to make the <ACE_Semaphore> interface consistent
+// with the other synchronization APIs.  Assumes the caller has
+// already acquired the semaphore using one of the above calls, and
+// returns 0 (success) always.
 ACE_INLINE int
 ACE_Semaphore::tryacquire_write_upgrade (void)
 {
@@ -469,6 +476,13 @@ ACE_Thread_Mutex::acquire (void)
 {
 // ACE_TRACE ("ACE_Thread_Mutex::acquire");
   return ACE_OS::thread_mutex_lock (&this->lock_);
+}
+
+ACE_INLINE int
+ACE_Thread_Mutex::acquire (ACE_Time_Value &tv)
+{
+  // ACE_TRACE ("ACE_Thread_Mutex::acquire");
+  return ACE_OS::mutex_timedlock (&this->lock_, &tv);
 }
 
 ACE_INLINE int
