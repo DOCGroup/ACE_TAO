@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Id_Uniqueness_Strategy.h"
+#include "ServantRetentionStrategy.h"
 #include "POA.h"
 
 ACE_RCSID (PortableServer,
@@ -52,7 +53,7 @@ namespace TAO
       // already in the Active Object Map, the ServantAlreadyActive
       // exception is raised.
       int result =
-        this->poa_->is_servant_in_map (servant,
+        this->poa_->active_policy_strategies().servant_retention_strategy()->is_servant_in_map (servant,
                                        wait_occurred_restart_call);
 
       if (result)

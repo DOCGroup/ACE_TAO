@@ -10,6 +10,7 @@
 //=============================================================================
 
 #include "Request_Processing_Strategy.h"
+#include "ServantRetentionStrategy.h"
 #include "Lifespan_Strategy.h"
 #include "ServantActivatorC.h"
 #include "ServantLocatorC.h"
@@ -498,7 +499,7 @@ namespace TAO
       if (this->poa_->cached_policies().id_uniqueness () == PortableServer::UNIQUE_ID)
         {
           int result =
-            this->poa_->is_servant_in_map (servant,
+            this->poa_->active_policy_strategies().servant_retention_strategy()->is_servant_in_map (servant,
                                      wait_occurred_restart_call);
           if (result)
             error = 1;

@@ -573,10 +573,6 @@ protected:
                                 TAO_Acceptor_Registry &acceptor_registry
                                 ACE_ENV_ARG_DECL);
 
-// @todo made public so that request_processing_strategy can retrieve it
-public:
-  int is_servant_in_map (PortableServer::Servant servant,
-                         int &wait_occurred_restart_call);
 protected:
   PortableServer::ObjectId *activate_object_i (
       PortableServer::Servant p_servant,

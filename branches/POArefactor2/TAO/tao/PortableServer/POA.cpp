@@ -1004,14 +1004,6 @@ TAO_POA::adapter_state_changed (
     }
 }
 
-int
-TAO_POA::is_servant_in_map (PortableServer::Servant servant,
-                            int &wait_occurred_restart_call)
-{
-  return this->active_policy_strategies_.servant_retention_strategy()->
-    is_servant_in_map (servant, wait_occurred_restart_call ACE_ENV_ARG_PARAMETER);
-}
-
 PortableServer::ObjectId *
 TAO_POA::activate_object_i (PortableServer::Servant servant,
                             CORBA::Short priority,
