@@ -54,6 +54,12 @@ CORBA::Boolean operator>> (
 // TAO_IDL - Generated from
 // be/be_visitor_sequence/cdr_op_ci.cpp:81
 
+#if defined (HPUX) && defined (IOR)
+   /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
+      and we don't want that definition.  See IOP_IORC.h. */
+# undef IOR
+#endif /* HPUX && IOR */
+
 #if !defined _TAO_CDR_OP_IOP_IOR__tao_seq_TaggedProfile_profiles_I_
 #define _TAO_CDR_OP_IOP_IOR__tao_seq_TaggedProfile_profiles_I_
 
@@ -233,4 +239,3 @@ CORBA::Boolean TAO_Export operator>> (
   );
 
 #endif /* _TAO_CDR_OP_IOP_ServiceContextList_I_ */
-
