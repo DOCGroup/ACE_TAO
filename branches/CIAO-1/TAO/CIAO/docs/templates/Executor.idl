@@ -17,8 +17,8 @@
 // properly support C++ mapping for features such as interface
 // narrowing.)
 //
-// What are missing in the executor mappings are the exception
-// specifications for most operations.
+// What are missing in the template for executor mappings are the
+// exception specifications for most operations.
 //
 // @author Nanbor Wang <nanbor@cs.wustl.edu>
 //
