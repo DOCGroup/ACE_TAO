@@ -1,3 +1,9 @@
+Tue Sep 15 10:08:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO-INSTALL.html (NOTE): Revised adding IDL files into your MSVC
+	  project setion to all IDL generated files should be put into
+	  both client and server projects.
+
 Tue Sep 15 00:21:39 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (init): Added new option
