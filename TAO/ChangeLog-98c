@@ -1,6 +1,6 @@
 Tue Oct 20 11:07:18 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* tests/Param_Test/param_test_i.cpp: A re-check in... 
+	* tests/Param_Test/param_test_i.cpp: A re-check in...
 
 Tue Oct 20 11:17:01 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
@@ -30,15 +30,15 @@ Tue Oct 20 11:17:01 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 	  code in the inline file. However, since the code for the child
 	  nodes were tightly coupled with the client stubs file, it
 	  resulted in errors.
-	  
+
 	  The best way to hide which output stream we are currently
 	  dealing with is to use the "stream" accessor of the
 	  visitor_context class. The desired stream gets set at the root
 	  level and this information is passed to all the children via the
-	  context. 
+	  context.
 
 	  Affected files are:
-	
+
 	  be_visitor_array/any_op_ch.cpp
 	  be_visitor_array/any_op_cs.cpp
 	  be_visitor_array/cdr_op_ch.cpp
@@ -88,7 +88,7 @@ Tue Oct 20 11:17:01 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 
 	  Read the README files in both the directories to see how to use
 	  this test suite. We need to experiment with this to see how TAo
-	  performs. 
+	  performs.
 
 	  Newly added files are:
 
@@ -98,13 +98,13 @@ Tue Oct 20 11:17:01 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 	  ./CodeGen/codegen.{h, cpp}
 	  ./CodeGen/debug.cpp
 	  ./CodeGen/demux.cpp
-	  ./CodeGen/gen_names.cpp  
-	  ./CodeGen/idl.cpp  
-	  ./CodeGen/servant_hdr.cpp  
-	  ./CodeGen/servant_impl.cpp  
-	
+	  ./CodeGen/gen_names.cpp
+	  ./CodeGen/idl.cpp
+	  ./CodeGen/servant_hdr.cpp
+	  ./CodeGen/servant_impl.cpp
+
 	   Files removed are:
-	
+
 	  ./CodeGen/gen.cpp
 	  ./CodeGen/impl.cpp
 	  ./CodeGen/objcreate.cpp
@@ -114,7 +114,7 @@ Tue Oct 20 11:17:01 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 	  ./CodeGen/stub.cpp
 	  ./CodeGen/tao.{h, cpp}
 
-	
+
 Mon Oct 19 21:40:56 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * *.h: changed include protection from #if !defined to ifndef.
@@ -131,6 +131,9 @@ Mon Oct 19 21:40:56 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp (disconnect_push_supplier):
           added ACE_UNUSED_ARG (_env).
+
+        * utils/catior/catior.cpp: added #include of ace/streams.h
+          because this file uses ifstreams.
 
 Mon Oct 19 15:37:53 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
