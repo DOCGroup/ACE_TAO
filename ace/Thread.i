@@ -160,16 +160,17 @@ ACE_Thread::disablecancel (struct cancel_state *old_state)
 {
   ACE_TRACE ("ACE_Thread::disablecancel");
   int old_cstate = 0;
-  int retval;
-  if ((retval = ACE_OS::thr_setcancelstate (THR_CANCEL_DISABLE,
-					    &old_cstate)) == 0)
-  if (old_state != 0)
+  int result = ACE_OS::thr_setcancelstate (THR_CANCEL_DISABLE,
+                                           &old_cstate);
+  if (result == 0 && old_state != 0)
     {
-      ACE_OS::memset (old_state, 0, sizeof(old_state));
+      ACE_OS::memset (old_state,
+                      0,
+                      sizeof (old_state));
       old_state->cancelstate = old_cstate;
     }
 
-  return retval;
+  return result;
 }
 
 ACE_INLINE int
@@ -179,17 +180,17 @@ ACE_Thread::enablecancel (struct cancel_state *old_state,
   ACE_TRACE ("ACE_Thread::enablecancel");
   int old_cstate = 0;
   int old_ctype = 0;
-  int retval;
+  int result;
 
-  retval = ACE_OS::thr_setcancelstate (THR_CANCEL_ENABLE, &old_cstate);
+  result = ACE_OS::thr_setcancelstate (THR_CANCEL_ENABLE,
+                                       &old_cstate);
+  if (result != 0)
+    return result;
 
-  if (retval != 0)
-    return retval;
-
-  retval = ACE_OS::thr_setcanceltype (flag, &old_ctype);
-
-  if (retval != 0)
-    return retval;
+  result = ACE_OS::thr_setcanceltype (flag,
+                                      &old_ctype);
+  if (result != 0)
+    return result;
 
   if (old_state != 0)
     {
@@ -210,12 +211,12 @@ ACE_Thread::setcancelstate (struct cancel_state &new_state,
 
   if (new_state.cancelstate != 0
       && ACE_OS::thr_setcancelstate (new_state.cancelstate,
-				     &old_cstate) == 0)
+				     &old_cstate) != 0)
     return -1;
 
   if (new_state.canceltype != 0
       && ACE_OS::thr_setcanceltype (new_state.canceltype,
-				    &old_ctype) == 0)
+				    &old_ctype) != 0)
     {
       int o_cstate;
 

@@ -1,3 +1,11 @@
+Wed Mar 22 10:19:47 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Thread.i: In ACE_Thread::setcancelstate() the code is
+	  checking to see if thr_setcancelstate and thr_setcanceltype
+ 	  return 0 and if so returning an error condition to the user.
+  	  Instead, both of these routines should be checked to see if they
+ 	  return -1 on failure.  Thanks to Umar Syyid for reporting this.
+
 Wed Mar 22 09:29:09 2000  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/config-chorus.h, ace/ACE.cpp
