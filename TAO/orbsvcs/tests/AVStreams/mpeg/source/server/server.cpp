@@ -3,6 +3,9 @@
 #include "server.h"
 #include "ace/Process.h"
 
+int AV_Server::done_;
+pid_t AV_Server::current_pid_;
+
 // Initialize the svc_handler, and the acceptor. 
 
 AV_Svc_Handler::AV_Svc_Handler (ACE_Thread_Manager *t)
@@ -73,9 +76,11 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
         // ORBport of 0 makes the video server pick a port for itself
         
         ACE_Process video_process;
-        pid_t child_pid;
+        
+        AV_Server::done_ = 0;
 
-        if ((child_pid = video_process.spawn (video_process_options)) == -1)
+        if ((AV_Server::current_pid_ = 
+             video_process.spawn (video_process_options)) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%P|%t) ACE_Process:: spawn failed: %p\n",
                              "spawn"),
@@ -89,7 +94,7 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
         ::sprintf (sem_str,
                    "%s:%d",
                    "Video_Server_Semaphore",
-                   child_pid);
+                   AV_Server::current_pid_);
 
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) semaphore is %s\n",
@@ -100,12 +105,23 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
                                          sem_str);
 
         // %% wait until the child finishes booting
-        if (semaphore.acquire () == -1)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%P|%t) semaphore acquire failed: %p\n",
-                             "acquire"),
-                            -1);
-        // ~~?? remove the semaphore.
+        while (AV_Server::done_ == 0)
+          {
+            if (semaphore.acquire () == -1)
+              {
+                if (errno != EINTR)
+                  break;
+              }
+            else
+              break;
+          }
+
+        if (semaphore.remove () == -1)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%P|%t) semaphore remove failed: %p\n",
+                               "remove"),
+                              -1);
+        
         // Wait until a ACE_SV_Semaphore's value is greater than 0, the
         // decrement it by 1 and return. Dijkstra's P operation, Tannenbaums
         // DOWN operation.
@@ -319,6 +335,13 @@ AV_Server_Sig_Handler::clear_child (int sig)
                                  &status, 
                                  WNOHANG)) > 0)
   {
+    if (pid == AV_Server::current_pid_)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) The child currently being waited for has died.\n"));
+        AV_Server::done_ = 1;
+      }
+
     // decrement the count of number of active children
     Mpeg_Global::session_num --;
     
