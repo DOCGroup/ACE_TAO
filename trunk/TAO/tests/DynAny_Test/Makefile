@@ -33,9 +33,6 @@ BASIC_TEST_OBJS = $(addsuffix .o, $(BASIC_TEST_FILES))
 SRC = $(addsuffix .cpp, $(BASIC_TEST_FILES))
 
 BIN = basic_test
-BUILD = $(BIN)
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------

@@ -18,9 +18,6 @@ CUBIT_SVR_OBJS = cubit.o cubit_s.o svr.o cubit_i.o
 CUBIT_CLT_OBJS = cubit.o clnt.o
 
 BIN = svr clnt
-BUILD = $(BIN)
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

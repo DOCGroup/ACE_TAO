@@ -31,9 +31,6 @@ OCTET_SEQUENCE_OBJS = octet_sequence.o
 ALLOCATOR_OBJS = allocator.o
 
 BIN = basic_types tc growth octet_sequence allocator
-BUILD = $(BIN)
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------

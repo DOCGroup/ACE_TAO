@@ -18,8 +18,6 @@ CLT_OBJS = client.o ttcp.o utils.o
 
 LDLIBS	 = -lm -lOrb-mt -lposix4
 
-VLDLIBS	 = $(LDLIBS:%=%$(VAR))
-
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------

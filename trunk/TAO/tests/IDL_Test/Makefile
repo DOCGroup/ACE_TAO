@@ -39,9 +39,6 @@ IDL_TEST_OBJS = $(addsuffix .o, $(IDL_TEST_FILES))
 SRC = $(addsuffix .cpp, $(IDL_TEST_FILES))
 
 BIN = main
-BUILD = $(BIN)
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------

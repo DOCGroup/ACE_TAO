@@ -26,9 +26,6 @@ CC_CLT_OBJS = CC_client.o CC_tests.o tmplinst.o CC_naming_service.o \
                 CC_command.tab.o lex.CC_command.o \
                 CC_command.o CC_test_utils.o
 
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
-
 BIN2 = CC_client
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,

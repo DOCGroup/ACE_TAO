@@ -14,7 +14,6 @@ endif # ! TAO_ROOT
 
 BIN     = tao_idl
 LDLIBS = -lACE
-BUILD   = $(BIN)
 
 VPATH=.:driver:fe:ast:util:narrow:be
 

@@ -61,8 +61,6 @@ SIMPLE_SVR_OBJS = \
                 ConsumerS.o\
                 notifier.o
 
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-
 BIN2 = notifier \
        consumer\
        supplier

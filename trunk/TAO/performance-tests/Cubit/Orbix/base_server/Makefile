@@ -14,8 +14,6 @@ SVR_OBJS = cubitS.o cubit_impl.o server.o
 
 LDLIBS	 = -lorbixmt
 
-VLDLIBS	 = $(LDLIBS:%=%$(VAR))
-
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------

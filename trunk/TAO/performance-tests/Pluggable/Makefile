@@ -34,9 +34,6 @@ PP_TEST_CLT_OBJS = PP_TestC.o \
 
 BIN = server \
       client
-BUILD = $(BIN)
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------

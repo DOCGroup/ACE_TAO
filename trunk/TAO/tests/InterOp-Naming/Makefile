@@ -38,14 +38,6 @@ SIMPLE_SERVER_OBJS = \
 		Server_i.o \
 		INS_test_server.o
 
-BIN = \
-	INS_test_server \
-	INS_test_client
-
-BUILD = $(BIN)
-
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-
 BIN2 = \
 	INS_test_server \
         INS_test_client

@@ -44,9 +44,6 @@ SIMPLE_SVR_OBJS = \
 BIN = server \
       client
 
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
-
 TAO_IDLFLAGS += -Ge 1
 
 #----------------------------------------------------------------------------

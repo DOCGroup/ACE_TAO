@@ -1,3 +1,19 @@
+Fri Jul 16 15:16:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* */Makefile:
+	  Remved the definitions for VLDLIBS and VBIN, these macros are
+	  defined in wrapper_macros.GNU and depend on the platform. Thanks 
+	  to Steve Huston for pointing this out.
+	  Also removed the definitions for the BUILD macro for similar
+	  reasons.
+
+	* orbsvcs/orbsvcs/Makefile:
+	  Do not compile the AV/Streaming service on AIX until we figure
+	  out what the problem is
+
+	* docs/releasenotes/TODO.html:
+	  Several tasks have been completed or moved to the BTS
+
 Fri Jul 16 14:22:01 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/tests/Simple_Naming/run_test.pl: Fixed the location of

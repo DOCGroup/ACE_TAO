@@ -12,10 +12,6 @@ SRC = $(addsuffix .cpp, $(BIN))
 
 LDLIBS  = -lorbsvcs -lTAO
 
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-
-FILES = Naming_Service
-
 BIN2 = Naming_Server
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,

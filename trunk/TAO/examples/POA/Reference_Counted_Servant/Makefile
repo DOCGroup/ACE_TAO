@@ -9,10 +9,6 @@ endif
 BIN = server
 SERVER_OBJS = server.o
 
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
-BUILD = $(VBIN)
-
 CPPFLAGS += -I$(TAO_ROOT) -I../Generic_Servant
 
 LDLIBS  =  -lGeneric_Servant -lTAO
