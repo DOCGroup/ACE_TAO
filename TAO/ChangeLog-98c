@@ -15,6 +15,9 @@ Tue Jul 28 16:43:22 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/tests/Simple_Naming/run_test.pl: 
 	  Added and updated the one-button tests for this directories.
 
+	* tests/Param_Test/bd_string.cpp: 
+	  The name of the test was wrong.
+
 Tue Jul 28 16:25:11 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
       * tao/Sequence_T.i : Reversed the order of 2 args in 
