@@ -1,8 +1,14 @@
+Thu Feb 01 18:52:27 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* RTJava:
+	  Added Directory for RTJava related research. Check the
+	  ChangeLog included in the newly directory for more info.
+
 Thu Feb 01 18:23:17 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
         * tests/Log_Msg_Test.dsp:
         * tests/Config_Test.dsp:
-          
+
           Added these files.
         * tests/tests.dsw:
 
@@ -45,9 +51,9 @@ Thu Feb  1 09:57:41 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * ace/SString.i:
 
           Changed behavior of ACE_WString::rep to be the same
-          as ACE_CString::rep, that is, to return an empty 
-          (w)string rather than a null (w)string when the length 
-          is 0. Thanks to Johnny Willemsen <johnny.willemsen@meco.nl> 
+          as ACE_CString::rep, that is, to return an empty
+          (w)string rather than a null (w)string when the length
+          is 0. Thanks to Johnny Willemsen <johnny.willemsen@meco.nl>
           for pointing out this discrepancy.
 
 Thu Feb  1 09:42:41 2001  Chad Elliott  <elliott_c@ociweb.com>
