@@ -68,7 +68,8 @@ public:
                      CORBA::InvalidPolicies));
 
   /// Obtain a single cached policy.
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
+                                       ACE_ENV_ARG_DECL);
 
 private:
   /// Protect access
@@ -102,7 +103,8 @@ public:
                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Obtain a single cached policy.
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
+                                       ACE_ENV_ARG_DECL);
 
 private:
   /// The implementation.
@@ -142,7 +144,8 @@ public:
                      CORBA::InvalidPolicies));
 
   /// Obtain a single cached policy.
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
+                                       ACE_ENV_ARG_DECL);
 
   // = Set and get the implementation.
   TAO_Policy_Current_Impl &implementation (void) const;

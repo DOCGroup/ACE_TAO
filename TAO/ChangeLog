@@ -1,3 +1,13 @@
+Fri Oct  1 18:41:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Policy_Manager.h:
+	* tao/Policy_Manager.i:
+	* tao/Policy_Set.cpp:
+	* tao/Policy_Set.h:
+
+	  The get_cached_policy () did not have the environment variables
+	  populated. This is essential to get things to be very sane. 
+
 Fri Oct  1 11:40:44 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:

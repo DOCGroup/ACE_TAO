@@ -353,7 +353,8 @@ TAO_Policy_Set::get_cached_const_policy (TAO_Cached_Policy_Type type) const
 }
 
 CORBA::Policy_ptr
-TAO_Policy_Set::get_cached_policy (TAO_Cached_Policy_Type type)
+TAO_Policy_Set::get_cached_policy (TAO_Cached_Policy_Type type
+                                   ACE_ENV_ARG_DECL_NOT_USED)
 {
   if (type != TAO_CACHED_POLICY_UNCACHED
       && type < TAO_CACHED_POLICY_MAX_CACHED)
