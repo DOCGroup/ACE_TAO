@@ -660,7 +660,8 @@ protected:
 
   /// Process the message by sending it to the higher layers of the
   /// ORB.
-  int process_parsed_messages (TAO_Queued_Data *qd);
+  int process_parsed_messages (TAO_Queued_Data *qd,
+                               TAO_Resume_Handle &rh);
 
   /// Make a queued data from the <incoming> message block
   TAO_Queued_Data *make_queued_data (ACE_Message_Block &incoming);
