@@ -1,12 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-ACE_INLINE const char 
-TAO_IIOP_Profile::get_object_key_delimiter (void)
-{
-  return TAO_IIOP_Profile::object_key_delimiter;
-}
-
 ACE_INLINE const TAO_ObjectKey &
 TAO_IIOP_Profile::object_key (void) const
 {
