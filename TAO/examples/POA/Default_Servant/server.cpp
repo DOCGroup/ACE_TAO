@@ -22,7 +22,7 @@
 
 ACE_RCSID(Default_Servant, server, "$Id$")
 
-static char *ior_output_file = "ior";
+static const char *ior_output_file = "ior";
 
 static int
 parse_args (int argc, char **argv)
