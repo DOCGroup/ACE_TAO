@@ -373,17 +373,10 @@ protected:
   // because streambuf_ will be buffering IO on the STREAM
   // object.  If these functions were used in your program,
   // there is a danger of getting the datastream out of sync.
-
-  ssize_t send (const void *buf, size_t n) const;
-  // send upto <n> bytes in <buf>.
-
-  ssize_t recv (void *buf, size_t n) const;
-  // Recv upto <n> bytes in <buf>.
-
-  ssize_t send_n (const void *buf, size_t n) const; 
-  // Send n bytes, keep trying until n are sent. 
-
-  ssize_t recv_n (void *buf, size_t n) const;	      
+  ssize_t send (...);
+  ssize_t recv (...);
+  ssize_t send_n (...);
+  ssize_t recv_n (...);
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
