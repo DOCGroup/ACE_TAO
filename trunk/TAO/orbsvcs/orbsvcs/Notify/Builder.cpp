@@ -419,7 +419,7 @@ TAO_NS_Builder::apply_thread_pool_concurrency (TAO_NS_Object& object, const Noti
 }
 
 void
-TAO_NS_Builder::apply_lane_concurrency (TAO_NS_Object& object, const NotifyExt::ThreadPoolLanesParams& /*tpl_params*/ ACE_ENV_ARG_DECL)
+TAO_NS_Builder::apply_lane_concurrency (TAO_NS_Object& /*object*/, const NotifyExt::ThreadPoolLanesParams& /*tpl_params*/ ACE_ENV_ARG_DECL)
 {
   // No lane support
   ACE_THROW (CORBA::NO_IMPLEMENT ());
