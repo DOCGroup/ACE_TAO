@@ -52,7 +52,7 @@ endif
 CC      = gcc
 CXX     = g++
 
-MODEL_FLAGS += -m$(TCPU)
+MODEL_FLAGS += -mcpu=$(TCPU)
 
 # Never use -pipe with 95/98. On NT/2000, not sure if it helps.
 CFLAGS  += -W -Wall -Wpointer-arith
