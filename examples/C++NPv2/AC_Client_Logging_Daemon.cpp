@@ -89,6 +89,14 @@ protected:
      const ACE_SOCK_Connector::PEER_ADDR &local_addr,
      int reuse_addr, int flags, int perms);
 
+  virtual int connect_svc_handler
+    (AC_Output_Handler *&svc_handler,
+     AC_Output_Handler *&sh_copy,
+     const ACE_SOCK_Connector::PEER_ADDR &remote_addr,
+     ACE_Time_Value *timeout,
+     const ACE_SOCK_Connector::PEER_ADDR &local_addr,
+     int reuse_addr, int flags, int perms);
+
   // Pointer to <AC_Output_Handler> we're connecting.
   AC_Output_Handler *handler_;
 
@@ -335,6 +343,18 @@ int AC_CLD_Connector::connect_svc_handler
       || SSL_shutdown (ssl_) == -1) return -1;
   remote_addr_ = remote_addr;
   return 0;
+}
+
+int AC_CLD_Connector::connect_svc_handler
+    (AC_Output_Handler *&svc_handler,
+     AC_Output_Handler *&sh_copy,
+     const ACE_SOCK_Connector::PEER_ADDR &remote_addr,
+     ACE_Time_Value *timeout,
+     const ACE_SOCK_Connector::PEER_ADDR &local_addr,
+     int reuse_addr, int flags, int perms) {
+  sh_copy = svc_handler;
+  return this->connect_svc_handler (svc_handler, remote_addr, timeout,
+                                    local_addr, reuse_addr, flags, perms);
 }
 
 int AC_CLD_Connector::reconnect () {

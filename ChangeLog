@@ -1,3 +1,11 @@
+Tue Nov  2 14:09:57 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
+
+          Handle the alternate version of
+          ACE_Connector<>::connect_svc_handler and in the process remove a
+          SunCC warning.
+
 Tue Nov  2 13:51:15 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ASNMP/asnmp/asn1.cpp:
