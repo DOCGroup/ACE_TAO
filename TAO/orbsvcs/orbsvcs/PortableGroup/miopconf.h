@@ -37,4 +37,5 @@
 #define TAO_DEF_MIOP_MINOR 0
 #endif /* TAO_DEF_MIOP_MINOR */
 
+#include "ace/post.h"
 #endif /*TAO_MIOPCONF_H*/
