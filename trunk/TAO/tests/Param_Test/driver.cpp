@@ -229,7 +229,7 @@ Driver::run (void)
         Param_Test_Client<Test_Any> *client = new
           Param_Test_Client<Test_Any> (this->orb_ptr_,
                                        this->objref_.in(),
-                                       new Test_ObjRef);
+                                       new Test_Any);
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
