@@ -65,7 +65,7 @@ CPPFLAGS += -I$(TAO_ROOT)
 .PHONY:	maverick
 
 maverick:
-	$(TAO_ROOT)/TAO_IDL/tao_idl -Ge 1 reopened_modules.idl
+	$(TAO_ROOT)/TAO_IDL/tao_idl -w -Ge 1 reopened_modules.idl
 
 main:	$(addprefix $(VDIR),$(IDL_TEST_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)

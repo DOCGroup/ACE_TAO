@@ -1,3 +1,19 @@
+Mon Aug  2 12:23:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_module.cpp:
+	  Use the -w flag (to disable warnings) when complaining about
+	  reopened modules in platforms without namespaces.
+
+	* tests/IDL_Test/Makefile:
+	  Added -w for the compilation of reopened_modules.idl, the
+	  generated code is not compiled in platforms without namespaces,
+	  so there is no real problem.
+
+	* orbsvcs/examples/RtEC/Schedule/Makefile:
+	  Added -I$TAO_ROOT/orbsvcs/orbsvcs/Sched to CPPFLAGS so the
+	  DU/CXX compiler can find all the files to instantiate
+	  templates.
+
 Mon Aug  2 11:44:03 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/IIOP_Connector.cpp (open):

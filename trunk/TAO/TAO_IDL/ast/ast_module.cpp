@@ -209,7 +209,8 @@ AST_Module *AST_Module::fe_add_module(AST_Module *t)
     // as an error
 
 #ifndef ACE_HAS_USING_KEYWORD
-    if (referenced(d))
+    if (referenced(d)
+        && !ACE_BIT_ENABLED (idl_global->compile_flags (), IDL_CF_NOWARNINGS))
       {
         UTL_String *s = t->file_name ();
         long lineno = t->line ();
