@@ -1,3 +1,18 @@
+Tue May 11 12:33:49 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-freebsd.h: If FreeBSD 5, change the Proactor default
+	  implementation to not be ACE_POSIX_AIOCB_Proactor. Apparantly,
+	  FreeBSD 5 removed the SIGEV_THREAD notification method.
+
+	* ace/POSIX_CB_Proactor.{h cpp}: Added __FreeBSD_version > 500000 as
+	  a condition that prevents this class from being compiled.
+
+	  Thanks to Bill Cassanova for reporting this issue and to
+	  Matthew Corey for digging through the FreeBSD headers to find
+	  out what's going on.
+
+	* THANKS: Added Bill Cassanova and Matthew Corey to the Hall of Fame.
+
 Tue May 11 08:58:33 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/ace.mpc:
