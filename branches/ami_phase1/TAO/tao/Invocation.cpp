@@ -765,7 +765,6 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   //    Client_Strategy_Factory or something later. (Alex).
 
   // Wait for the reply.
-
   this->transport_->wait_for_reply ();
 
   // @@ Alex: the old version of this had some error handling code,
