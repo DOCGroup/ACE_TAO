@@ -85,6 +85,12 @@ ACE_Adaptive_Lock::tryacquire_write (void)
   return this->lock_->tryacquire_write ();
 }
 
+int
+ACE_Adaptive_Lock::tryacquire_write_upgrade (void)
+{
+  return this->lock_->tryacquire_write_upgrade ();
+}
+
 void
 ACE_Adaptive_Lock::dump (void) const
 {
