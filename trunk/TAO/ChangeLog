@@ -1,3 +1,9 @@
+Thu Oct 17 12:19:32 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile: 
+	  
+	  Added the Naming library to the link line.
+
 Thu Oct 17 11:58:49 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * TAO_IDL/be/be_valuetype.cpp:
