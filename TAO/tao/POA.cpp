@@ -3699,6 +3699,9 @@ orbkey:
 void 
 TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
 {
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Notifing IMR of Startup\n"));
+
   CORBA::Object_var imr = this->orb_core ().implrepo_service ();
 
   if (CORBA::is_nil (imr.in ()))
@@ -3708,9 +3711,25 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
                     ServerObject_i (this->orb_core_.orb ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
+ 
+  // @@ (brunsch) The server should really be in the root poa, but
+  // there are locking issues...
 
-  ImplementationRepository::ServerObject_ptr svr = 
-    this->server_object_->_this (ACE_TRY_ENV);
+  PortableServer::ObjectId_var id =
+    PortableServer::string_to_ObjectId ("_tao_imr_server_object");
+      
+  this->activate_object_with_id_i (id.in (),
+				   this->server_object_,
+				   ACE_TRY_ENV);
+  ACE_CHECK;
+
+  CORBA::Object_var obj = this->id_to_reference_i (id.in (),
+						   ACE_TRY_ENV);
+  ACE_CHECK;
+
+  ImplementationRepository::ServerObject_ptr svr 
+    = ImplementationRepository::ServerObject::_narrow (obj.in (), 
+						       ACE_TRY_ENV);
   ACE_CHECK;
 
   if (!svr->_stubobj () || !svr->_stubobj ()->profile_in_use ())
@@ -3745,16 +3764,26 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
     ImplementationRepository::Administration::_narrow (imr.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Informing IMR that we are running at: %s\n", curr_addr.in ()));
+
   imr_admin->server_is_running (this->the_name (),
                                curr_addr.in (),
                                svr,
                                ACE_TRY_ENV);
   ACE_CHECK;
+
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Successfully notified IMR of Startup\n"));
+
 }
 
 void 
 TAO_POA::imr_notify_shutdown (void)
 {
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Notifing IMR of Shutdown\n"));
+
   // Notify the Implementation Repository about shutting down.
   CORBA::Object_var imr = this->orb_core ().implrepo_service ();
 
