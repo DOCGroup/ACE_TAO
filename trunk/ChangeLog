@@ -1,3 +1,9 @@
+Sat Aug 14 19:34:02 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Sock_Connect.cpp (ipv6_enabled_):
+
+	  Fixed syntax error.
+
 Sat Aug 14 13:07:50 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/QoS/SOCK_Dgram_Mcast_QoS.cpp (subscribe_ifs):
