@@ -127,7 +127,7 @@ ACE_Obstack_T<CHAR>::ACE_Obstack_T (size_t size,
 template <class CHAR>
 ACE_Obstack_T<CHAR>::~ACE_Obstack_T (void)
 {
-  ACE_TRACE ("ACE_Obstack_T<CHAR>::~ACE_Obstack");
+  ACE_TRACE ("ACE_Obstack_T<CHAR>::~ACE_Obstack_T");
 
   ACE_Obchunk *temp = this->head_;
 
