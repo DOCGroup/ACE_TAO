@@ -1,0 +1,7 @@
+Thu Oct 09 00:59:26 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/RTCCM/Priority_Test/Priority_Test.idl:
+	* tests/RTCCM/Priority_Test/Priority_Test.mpc:
+	* tests/RTCCM/Priority_Test/Priority_Test_stub_export.h:
+	* tests/RTCCM/Priority_Test/Priority_Test_svnt_export.h: Added
+	  files for RTCCM Priority_Test project.
