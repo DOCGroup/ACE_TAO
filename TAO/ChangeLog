@@ -30,6 +30,7 @@ Fri Apr 23 20:28:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.h:
 	* orbsvcs/orbsvcs/Sched/SchedEntry.h:
 	* orbsvcs/orbsvcs/Sched/SchedEntry.i:
+	* orbsvcs/orbsvcs/Sched/SchedEntry.cpp:
 	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
 	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.h:
 	* orbsvcs/orbsvcs/Trader/Interpreter_Utils.cpp:

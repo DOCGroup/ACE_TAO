@@ -85,7 +85,7 @@ public:
     // = DESCRIPTION
     //   Saves the Receiver_var and user nickname.
   public:
-    int operator == (const Receiver_Data &receiver_data) const;
+    bool operator == (const Receiver_Data &receiver_data) const;
     // The == op required by the ACE_Unbounded set.
 
     Receiver_var receiver_;
