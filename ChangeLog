@@ -1,3 +1,9 @@
+Sat Jan  3 14:08:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/tao_other_tests.lst:
+
+	  Added the ior_corbaloc test to be run in the daily builds.
+
 Sat Jan  3 11:02:32 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/Makefile:
