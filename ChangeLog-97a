@@ -1,3 +1,16 @@
+Wed Mar 12 21:31:51 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* examples/Reactor/Ntalker/ntalker.cpp: Made changes to the
+	  program which allows it to run under Win32. 
+
+	* ace/SOCK_Dgram_Mcast.cpp: Made changes to the setting of the
+ 	  interface address so that it works correctly under Win32. 
+	  Thanks to Todd L. Montgomery (tmont@cs.wvu.edu), Anton van
+ 	  Straaten (anton@appsolutions.com), Ole O. Johnsen
+	  (Ole.Johnsen@gpi.telemax.no), Mike Flinn
+	  (mike.flinn@smtpgate.aws.waii.com), Steve Weismuller
+ 	  (spweismu@rsoc.rockwell.com) and others who helped out.
+
 Wed Mar 12 17:05:52 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* ace/config-linux-lxpthreads.h: Added ACE_HAS_IP_MULTICAST.
