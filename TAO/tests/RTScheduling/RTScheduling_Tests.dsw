@@ -27,6 +27,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Scheduler_Interceptor_Client"=.\Scheduling_Interceptor\Scheduler_Interceptor_Client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Scheduler_Interceptor_Server"=.\Scheduling_Interceptor\Scheduler_Interceptor_Server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Thread_Cancel"=.\Thread_Cancel\Thread_Cancel.dsp - Package Owner=<4>
 
 Package=<5>

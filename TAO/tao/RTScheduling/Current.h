@@ -16,6 +16,7 @@
 class TAO_RTScheduler_Current_i;
 class TAO_TSS_Resources;
 
+
 /**
  * @class TAO_DTId_Hash
  *
@@ -41,6 +42,10 @@ typedef ACE_Hash_Map_Manager_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Eq
 typedef ACE_Hash_Map_Iterator_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex> DT_Hash_Map_Iterator;
 typedef ACE_Hash_Map_Entry <IdType,CORBA::Object_ptr> DT_Hash_Map_Entry;
 
+class TAO_RTScheduler_Current;
+class TAO_RTScheduler_Current_var;
+
+typedef TAO_RTScheduler_Current* TAO_RTScheduler_Current_ptr;
 
 class TAO_RTScheduler_Export TAO_RTScheduler_Current: 
 public RTScheduling::Current,
@@ -121,11 +126,90 @@ public RTScheduling::Current,
 
   TAO_RTScheduler_Current_i* implementation (TAO_RTScheduler_Current_i*);
 
+
+  /**
+   * @name Reference Related Methods
+   */
+  //@{
+#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+  typedef TAO_RTScheduler_Current_ptr _ptr_type;
+  typedef TAO_RTScheduler_Current_var _var_type;
+#endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static TAO_RTScheduler_Current_ptr _duplicate (TAO_RTScheduler_Current_ptr obj);
+
+  static TAO_RTScheduler_Current_ptr _narrow (
+      CORBA::Object_ptr obj
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
+
+  static TAO_RTScheduler_Current_ptr _unchecked_narrow (
+      CORBA::Object_ptr obj
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
+
+  static TAO_RTScheduler_Current_ptr _nil (void)
+    {
+      return (TAO_RTScheduler_Current_ptr)0;
+    }
+
+  virtual void *_tao_QueryInterface (ptr_arith_t type);
+
+  virtual const char* _interface_repository_id (void) const;
+  //@}
+
  private:
   RTCORBA::Current_var rt_current_;
   TAO_ORB_Core* orb_;
   DT_Hash_Map dt_hash_;
   
+};
+
+
+
+/**
+ * @class TAO_RTScheduler_Current_var
+ */
+class TAO_RTScheduler_Export TAO_RTScheduler_Current_var : public TAO_Base_var
+{
+public:
+
+  TAO_RTScheduler_Current_var (void); // default constructor
+  TAO_RTScheduler_Current_var (TAO_RTScheduler_Current_ptr p) : ptr_ (p) {}
+  TAO_RTScheduler_Current_var (const TAO_RTScheduler_Current_var &); // copy constructor
+  ~TAO_RTScheduler_Current_var (void); // destructor
+
+  TAO_RTScheduler_Current_var &operator= (TAO_RTScheduler_Current_ptr);
+  TAO_RTScheduler_Current_var &operator= (const TAO_RTScheduler_Current_var &);
+  TAO_RTScheduler_Current_ptr operator-> (void) const;
+
+  operator const TAO_RTScheduler_Current_ptr &() const;
+  operator TAO_RTScheduler_Current_ptr &();
+  // in, inout, out, _retn
+  TAO_RTScheduler_Current_ptr in (void) const;
+  TAO_RTScheduler_Current_ptr &inout (void);
+  TAO_RTScheduler_Current_ptr &out (void);
+  TAO_RTScheduler_Current_ptr _retn (void);
+  TAO_RTScheduler_Current_ptr ptr (void) const;
+
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static TAO_RTScheduler_Current_ptr duplicate (TAO_RTScheduler_Current_ptr);
+  static void release (TAO_RTScheduler_Current_ptr);
+  static TAO_RTScheduler_Current_ptr nil (void);
+  static TAO_RTScheduler_Current_ptr narrow (
+      CORBA::Object *
+      ACE_ENV_ARG_DECL_NOT_USED
+    );
+  static CORBA::Object * upcast (void *);
+
+private:
+
+  TAO_RTScheduler_Current_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  TAO_RTScheduler_Current_var (const TAO_Base_var &rhs);
+  TAO_RTScheduler_Current_var &operator= (const TAO_Base_var &rhs);
+
 };
 
 
