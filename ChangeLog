@@ -1,3 +1,34 @@
+Wed Nov  7 20:54:23 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Makefile: Added String_Base into the list of template
+	  files.
+
+	* ace/Basic_Types.h: Added definitions of ACE_WCHAR_T and
+	  ACE_WINT_T which are defined to wchat_t and wint_t when
+	  ACE_HAS_WCHAR are defined, and ACE_USHORT16 otherwise.  They are
+	  needed to support various "wide character" string operations
+	  that we need to support the templatized ACE_WString, which uses
+	  ACE_USHORT16 as the wide char type when wchar_t is not
+	  supported.
+
+	* ace/OS_String.h:
+	* ace/OS_String.inl:
+	* ace/OS_String.cpp: Made several wchar version string functions
+	  available no matter ACE_HAS_WCHAR is defined or not.  There are
+	  more functions (the ones that have *_emulation helpers
+	  available) that can be made availabe at all time, but I just
+	  fixed the ones that ACE_WString needed for now.  We can add more
+	  later.
+
+	* ace/SString.h: Changed the definition of ACE_WSTRING_TYPE to
+	  ACE_WCHAR_T.  ACE_WCHAR_T is defined in the same fashion as
+	  ACE_WSTRING_TYPE was originally defined.
+
+	* ace/Local_Name_Space.cpp: ACE_NS_WString::char_rep works just
+	  fine.  We don't need to use ACE_Wide_To_Ascii::convert
+	  explicitly since it is not available when ACE_HAS_WCHAR isn't
+	  defined.
+
 Tue Oct 16 01:55:44 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/SString.cpp (operator<<): Avoided the problem of printing

@@ -43,7 +43,7 @@ ACE_NS_String::char_rep (void) const
   ACE_TRACE ("ACE_NS_String::char_rep");
   ACE_NS_WString w_string (this->rep_,
                            (this->len_ / sizeof (ACE_USHORT16)) - 1);
-  return ACE_Wide_To_Ascii::convert (w_string.fast_rep ());
+  return w_string.char_rep ();
 }
 
 ACE_NS_String::ACE_NS_String (void)

@@ -20,11 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_WCHAR)
-typedef wchar_t ACE_WSTRING_TYPE;
-#else /* ACE_HAS_WCHAR */
-typedef ACE_USHORT16 ACE_WSTRING_TYPE;
-#endif /* ACE_HAS_WCHAR */
+typedef ACE_WCHAR_T ACE_WSTRING_TYPE;
 
 #if !defined (ACE_DEFAULT_GROWSIZE)
 #define ACE_DEFAULT_GROWSIZE 32

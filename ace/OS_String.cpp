@@ -45,9 +45,8 @@ ACE_OS_String::strnstr (const char *s1, const char *s2, size_t len2)
   return 0;
 }
 
-#if defined (ACE_HAS_WCHAR)
-const wchar_t *
-ACE_OS_String::strnstr (const wchar_t *s1, const wchar_t *s2, size_t len2)
+const ACE_WCHAR_T *
+ACE_OS_String::strnstr (const ACE_WCHAR_T *s1, const ACE_WCHAR_T *s2, size_t len2)
 {
   // Substring length
   size_t len1 = ACE_OS_String::strlen (s1);
@@ -61,14 +60,13 @@ ACE_OS_String::strnstr (const wchar_t *s1, const wchar_t *s2, size_t len2)
 
   for (size_t i = 0; i <= len; i++)
     {
-      if (ACE_OS_String::memcmp (s1 + i, s2, len2 * sizeof (wchar_t)) == 0)
+      if (ACE_OS_String::memcmp (s1 + i, s2, len2 * sizeof (ACE_WCHAR_T)) == 0)
         // Found a match!  Return the index.
         return s1 + i;
     }
 
   return 0;
 }
-#endif /* ACE_HAS_WCHAR */
 
 char *
 ACE_OS_String::strdup (const char *s)
@@ -155,17 +153,15 @@ ACE_OS_String::strnchr (const char *s, int c, size_t len)
   return 0;
 }
 
-#if defined (ACE_HAS_WCHAR)
-const wchar_t *
-ACE_OS_String::strnchr (const wchar_t *s, wint_t c, size_t len)
+const ACE_WCHAR_T *
+ACE_OS_String::strnchr (const ACE_WCHAR_T *s, ACE_WINT_T c, size_t len)
 {
   for (size_t i = 0; i < len; i++)
-    if (s[i] == ACE_static_cast(wchar_t, c))
+    if (s[i] == ACE_static_cast(ACE_WCHAR_T, c))
       return s + i;
 
   return 0;
 }
-#endif /* ACE_HAS_WCHAR */
 
 #if defined (ACE_LACKS_STRRCHR)
 char *
@@ -688,27 +684,27 @@ ACE_OS_String::wcsstr_emulation (const wchar_t *string,
 }
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSSTR */
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSLEN)
+#if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSLEN)
 size_t
-ACE_OS_String::wcslen_emulation (const wchar_t *string)
+ACE_OS_String::wcslen_emulation (const ACE_WCHAR_T *string)
 {
-  const wchar_t *s;
+  const ACE_WCHAR_T *s;
 
   for (s = string; *s; ++s);
     return s - string;
 }
-#endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSLEN */
+#endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSLEN */
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSNCPY)
-wchar_t *
-ACE_OS_String::wcsncpy_emulation (wchar_t *destination,
-                                  const wchar_t *source,
+#if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSNCPY)
+ACE_WCHAR_T *
+ACE_OS_String::wcsncpy_emulation (ACE_WCHAR_T *destination,
+                                  const ACE_WCHAR_T *source,
                                   size_t len)
 {
   if (len != 0)
     {
-      wchar_t *d = destination;
-      const wchar_t *s = source;
+      ACE_WCHAR_T *d = destination;
+      const ACE_WCHAR_T *s = source;
 
       do
         {
@@ -724,19 +720,19 @@ ACE_OS_String::wcsncpy_emulation (wchar_t *destination,
 
   return destination;
 }
-#endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSNCPY */
+#endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSNCPY */
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSCMP)
+#if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSCMP)
 int
-ACE_OS_String::wcscmp_emulation (const wchar_t *string1,
-                                 const wchar_t *string2)
+ACE_OS_String::wcscmp_emulation (const ACE_WCHAR_T *string1,
+                                 const ACE_WCHAR_T *string2)
 {
   while (*string1 == *string2++)
     if (*string1++ == 0)
       return (0);
   return (*string1 - *--string2);
 }
-#endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSCMP */
+#endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSCMP */
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSCPY)
 wchar_t *
@@ -829,10 +825,10 @@ ACE_OS_String::wcschr_emulation (const wchar_t *string, wint_t c)
 }
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSCHR */
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSNCMP)
+#if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSNCMP)
 int
-ACE_OS_String::wcsncmp_emulation (const wchar_t *s1,
-                                  const wchar_t *s2,
+ACE_OS_String::wcsncmp_emulation (const ACE_WCHAR_T *s1,
+                                  const ACE_WCHAR_T *s2,
                                   size_t len)
 {
   if (len == 0)
@@ -848,7 +844,7 @@ ACE_OS_String::wcsncmp_emulation (const wchar_t *s1,
 
   return 0;
 }
-#endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSNCMP */
+#endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSNCMP */
 
 #if defined (ACE_LACKS_STRTOL)
 long
