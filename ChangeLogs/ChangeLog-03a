@@ -1,3 +1,8 @@
+Wed Apr 19 07:04:13 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Containers_T.cpp (copy_nodes): insert_head() should have
+	  been insert_tail().  Thanks to Umar for clarifying this.
+
 Wed Apr 19 15:00:44 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * apps/Makefile:

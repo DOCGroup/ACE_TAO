@@ -1178,7 +1178,7 @@ ACE_Double_Linked_List<T>::copy_nodes (ACE_Double_Linked_List<T> &c)
     {
       T* temp = (T *) this->allocator_->malloc (sizeof (T));
       new (temp) T (*iter.next ());
-      this->insert_head (temp);
+      this->insert_tail (temp);
     }
 }
 
