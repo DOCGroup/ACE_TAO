@@ -15,7 +15,6 @@
 //
 //====================================================================
 
-#include "ace/streams.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "Multiple_InheritanceC.h"

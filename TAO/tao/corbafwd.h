@@ -42,10 +42,6 @@
 # include "tao/corbafwd.i"
 #endif /* ! __ACE_INLINE__ */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_CORBAFWD_H */

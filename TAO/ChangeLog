@@ -1,3 +1,19 @@
+Sat Nov  8 23:58:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/File_IO/client.cpp
+	* tests/IDL_Test/main.cpp
+	* tests/MProfile/client.cpp:
+	* tests/MT_BiDir/Sender_i.cpp:
+	* tests/Multiple_Inheritance/client.cpp
+	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Server_Task.cpp:
+	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/test_i.cpp:
+	* tests/Two_Objects/server.cpp:
+	* tao/corbafwd.h:
+	* utils/catior/catior.cpp:
+	* utils/catior/catior.mpc:
+
+	  Fixed fuzz errors.
+
 Sun Nov  9 05:53:59 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
