@@ -1,3 +1,11 @@
+Tue Dec 17 20:56:56 1996  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.{h,i}: on VxWorks: implemented ACE_OS::gethostbyname (),
+	  and fixed inet_ntoa () to return -1 on failure
+
+	* ace/OS.cpp: in ::spa () for VxWorks, zero out unused argv[]
+	  slots to overwrite args from previous invocations OS.cpp
+
 Tue Dec 17 04:27:07 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/ReactorEx: Added a new feature to the ReactorEx.  If we
@@ -1052,6 +1060,7 @@ Sun Dec  1 19:19:02 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
           enqueue_tail().  Updated the test programs to reflect this.
 
 Sun Dec  1 12:06:46 1996  David L. Levine  <levine@cs.wustl.edu>
+
         * ace/config-vxworks*.h: Removed #define ACE_HAS_STRBUF_T:
           copy and paste error
 
