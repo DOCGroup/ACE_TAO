@@ -53,10 +53,6 @@ public:
   virtual char *get_plane (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns a random plane.
-
-private:
-  int shutdown_;
-  // Shutdown flag
 };
 
 #endif /* AIRPLANE_I_H */
