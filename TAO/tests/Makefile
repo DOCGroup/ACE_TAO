@@ -67,6 +67,7 @@ DIRS  = CDR \
 	Queued_Message_Test \
 	Big_Oneways \
 	Big_Twoways \
+	Big_Reply \
 	Big_Request_Muxing \
 	AMI_Buffering
 
