@@ -107,7 +107,7 @@ create_node_application (const ACE_CString & options
 
   PortableServer::ServantBase_var servant_var (callback_servant);
   PortableServer::ObjectId_var cb_id
-    = this->callback_poa_->activate_object (callback_servant 
+    = this->callback_poa_->activate_object (callback_servant
                                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::_nil ());
 
@@ -259,6 +259,7 @@ startLaunch (const Deployment::Properties & configProperty,
 		   Deployment::InvalidProperty))
 {
   ACE_UNUSED_ARG (configProperty);
+  ACE_UNUSED_ARG (start);
   /**
    *  1. First Map properties to TAO/CIAO specific property/configurations
    *  2. Necessary property checking (needed?)
@@ -320,8 +321,8 @@ startLaunch (const Deployment::Properties & configProperty,
   if (providedReference == 0 )
   ACE_THROW_RETURN (Deployment::StartError () ,0);
 
-  if (start) this->nodeapp_->start (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  //if (start) this->nodeapp_->start (ACE_ENV_SINGLE_ARG_PARAMETER);
+  //ACE_CHECK_RETURN (0);
 
   return Deployment::NodeApplication::_duplicate (this->nodeapp_.in ());
 }

@@ -26,6 +26,13 @@ namespace CIAO
 
 	CORBA::ULong artifact_num = impl.artifactRef.length ();
 
+	// Copy Component instance related Properties if there is any.
+	if (inst.configProperty.length () > 0)
+	  {
+	    info[i].component_config = inst.configProperty;
+	  }
+
+	// For svnt artifact
 	for (CORBA::ULong j = 0; j < artifact_num; ++j)
 	  {
 	    const Deployment::ArtifactDeploymentDescription & arti =
@@ -68,6 +75,7 @@ namespace CIAO
 		  }
 	      }
 	    // As one can see, code is duplicated here. I will come back for this later.
+	    // For exec artifact
 	    if ((pos  = tmp.find ("_exec")) != ACE_CString::npos ||
 		(pos  = tmp.find ("_Exec")) != ACE_CString::npos)
 	      {
