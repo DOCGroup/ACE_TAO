@@ -170,10 +170,25 @@ TAO_Transport::~TAO_Transport (void)
 }
 
 void
-TAO_Transport::provide_handler (TAO_Connection_Handler_Set &handlers)
+TAO_Transport::provide_handler (TAO::Connection_Handler_Set &handlers)
 {
-  this->add_reference ();
+  ACE_Event_Handler::Reference_Count cnt =
+    this->add_reference ();
+
   handlers.insert (this->connection_handler_i ());
+}
+
+void
+TAO_Transport::provide_blockable_handler (TAO::Connection_Handler_Set &h)
+{
+  if (this->ws_->non_blocking () ||
+      this->opening_connection_role_ == TAO::TAO_SERVER_ROLE)
+    return;
+
+  ACE_Event_Handler::Reference_Count cnt =
+    this->add_reference ();
+
+  h.insert (this->connection_handler_i ());
 }
 
 bool
@@ -2306,7 +2321,7 @@ TAO_Transport::notify_reactor (void)
   return 1;
 }
 
-TAO_Transport_Cache_Manager &
+TAO::Transport_Cache_Manager &
 TAO_Transport::transport_cache_manager (void)
 {
   return this->orb_core_->lane_resources ().transport_cache ();

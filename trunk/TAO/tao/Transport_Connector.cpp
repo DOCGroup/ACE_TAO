@@ -250,7 +250,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
 
   TAO_Transport *base_transport = 0;
 
-  TAO_Transport_Cache_Manager &tcm =
+  TAO::Transport_Cache_Manager &tcm =
     this->orb_core ()->lane_resources ().transport_cache ();
 
   // Check the Cache first for connections

@@ -38,7 +38,7 @@ TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (
 {
   // Create the transport cache.
   ACE_NEW (this->transport_cache_,
-           TAO_Transport_Cache_Manager (orb_core));
+           TAO::Transport_Cache_Manager (orb_core));
 
 }
 
@@ -47,7 +47,7 @@ TAO_Thread_Lane_Resources::~TAO_Thread_Lane_Resources (void)
 
 }
 
-TAO_Transport_Cache_Manager &
+TAO::Transport_Cache_Manager &
 TAO_Thread_Lane_Resources::transport_cache (void)
 {
   return *this->transport_cache_;
@@ -391,7 +391,7 @@ TAO_Thread_Lane_Resources::finalize (void)
     }
 
   // Set of handlers still in the connection cache.
-  TAO_Connection_Handler_Set handlers;
+  TAO::Connection_Handler_Set handlers;
 
   // Close the transport cache and return the handlers that were still
   // registered.  The cache will decrease the #REFCOUNT# on the
@@ -404,7 +404,7 @@ TAO_Thread_Lane_Resources::finalize (void)
   // the references.
   TAO_Connection_Handler **handler = 0;
 
-  for (TAO_Connection_Handler_Set::iterator iter (handlers);
+  for (TAO::Connection_Handler_Set::iterator iter (handlers);
        iter.next (handler);
        iter.advance ())
     {
@@ -494,10 +494,13 @@ TAO_Thread_Lane_Resources::shutdown_reactor (void)
              ace_mon,
              leader_follower.lock ());
 
+
+  ACE_Reactor *reactor = leader_follower.reactor ();
+
+
   // Wakeup all the threads waiting blocked in the event loop, this
   // does not guarantee that they will all go away, but reduces the
   // load on the POA....
-  ACE_Reactor *reactor = leader_follower.reactor ();
 
   // If there are some client threads running we have to wait until
   // they finish, when the last one does it will shutdown the reactor
@@ -510,6 +513,37 @@ TAO_Thread_Lane_Resources::shutdown_reactor (void)
       return;
     }
 
-  // Wake up all waiting threads in the reactor.
+  // End the reactor if we want shutdown dropping replies along the
+  // way.
   reactor->end_reactor_event_loop ();
+}
+
+void
+TAO_Thread_Lane_Resources::cleanup_rw_transports (void)
+{
+  // If we have no-drop-reply strategy simply return.
+  if (!this->orb_core_.resource_factory ()->drop_replies_during_shutdown ())
+    return;
+
+  // Set of handlers still in the connection cache.
+  TAO::Connection_Handler_Set handlers;
+
+  this->transport_cache_->blockable_client_transports (handlers);
+
+  // Go through the handler set, closing the connections and removing
+  // the references.
+  TAO_Connection_Handler **handler = 0;
+
+  for (TAO::Connection_Handler_Set::iterator iter (handlers);
+       iter.next (handler);
+       iter.advance ())
+    {
+      // Connection is closed. There will be a double closure but that
+      // is okay.
+      (*handler)->release_os_resources ();
+
+      // #REFCOUNT# related to the handler set decreases.
+      ACE_Event_Handler::Reference_Count cnt =
+        (*handler)->transport ()->remove_reference ();
+    }
 }

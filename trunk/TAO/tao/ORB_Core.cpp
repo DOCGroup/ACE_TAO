@@ -1958,6 +1958,9 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
       // Shutdown reactor.
       this->thread_lane_resources_manager ().shutdown_reactor ();
 
+      // Cleanup transports that use the RW strategies
+      this->thread_lane_resources_manager ().cleanup_rw_transports ();
+
       // Grab the thread manager
       ACE_Thread_Manager *tm = this->thr_mgr ();
 

@@ -48,6 +48,9 @@ public:
   /// Shutdown reactor.
   void shutdown_reactor (void);
 
+  /// Shutdown reactor.
+  virtual void cleanup_rw_transports (void);
+
   /// Does @a mprofile belong to us?
   int is_collocated (const TAO_MProfile &mprofile);
 

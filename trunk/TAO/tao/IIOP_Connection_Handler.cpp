@@ -270,7 +270,7 @@ TAO_IIOP_Connection_Handler::add_transport_to_cache (void)
   // Construct a property object
   TAO_Base_Transport_Property prop (&endpoint);
 
-  TAO_Transport_Cache_Manager &cache =
+  TAO::Transport_Cache_Manager &cache =
     this->orb_core ()->lane_resources ().transport_cache ();
 
   // Idle the transport..

@@ -54,6 +54,11 @@ public:
   /// Shutdown reactor.
   void shutdown_reactor (void);
 
+  /// Certain ORB policies such as dropping replies on shutdown with
+  /// RW connection handlers would need cleanup of transports to wake
+  /// threads up.
+  void cleanup_rw_transports (void);
+
   /// Does @a mprofile belong to us?
   int is_collocated (const TAO_MProfile &mprofile);
 
