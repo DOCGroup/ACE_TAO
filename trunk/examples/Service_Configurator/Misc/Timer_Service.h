@@ -13,6 +13,9 @@ class Timer_Service_1 : public ACE_Service_Object
   //   Demonstrates a simple timer service that can be configured
   //   statically.
 public:
+  Timer_Service_1 (void);
+  // Default constructor.
+
   virtual int init (int argc, char *argv[]);
   // Initialization hook.
 
@@ -22,6 +25,10 @@ public:
 
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
   // Close hook.
+
+protected:
+  char name_[BUFSIZ];
+  // Keep track of which service this is!
 
 private:
   enum
@@ -39,10 +46,20 @@ private:
 
 class Timer_Service_2 : public Timer_Service_1
 {
+public:
+  Timer_Service_2 (void);
+  // Default constructor.
+};
+
+class Timer_Service_3 : public Timer_Service_1
+{
+public:
+  Timer_Service_3 (void);
+  // Default constructor.
 };
 
 // Declare both static and dynamic services.
 ACE_STATIC_SVC_DECLARE (Timer_Service_1)
 ACE_SVC_FACTORY_DECLARE (Timer_Service_1)
 ACE_SVC_FACTORY_DECLARE (Timer_Service_2)
-
+ACE_SVC_FACTORY_DECLARE (Timer_Service_3)

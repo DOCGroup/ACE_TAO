@@ -365,7 +365,7 @@ test_ostream (void)
   // Allocate the input buffer
   char *buffer;
   ACE_NEW_RETURN (buffer,
-                  char[info.size_],
+                  char[info.size_ + 1],
                   -1);
   // Make sure <buffer> is released automagically.
   ACE_Auto_Basic_Array_Ptr<char> b (buffer);

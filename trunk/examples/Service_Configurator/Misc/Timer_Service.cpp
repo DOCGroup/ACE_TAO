@@ -4,6 +4,12 @@
 
 ACE_RCSID(Misc, Timer_Service, "$Id$")
 
+Timer_Service_1::Timer_Service_1 (void)
+{
+  ACE_OS::strcpy (this->name_,
+                  "Timer_Service_1");
+}
+ 
 int
 Timer_Service_1::init (int argc, char *argv[])
 {
@@ -13,7 +19,9 @@ Timer_Service_1::init (int argc, char *argv[])
 
   // Printout the <argv> values for sanity's sake.
   for (int i = 0; i < argc; i++)
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("argv[%d] = %s\n"), i, argv[i]));
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("argv[%d] = %s\n"),
+                i, argv[i]));
 
   int interval = Timer_Service_1::TIMEOUT;
 
@@ -64,9 +72,10 @@ Timer_Service_1::handle_timeout (const ACE_Time_Value &tv,
                                  const void *)
 {
   ACE_DEBUG ((LM_DEBUG, 
-	      ASYS_TEXT ("(%x) in Timer_Service::handle_timeout sec = %d, usec = %d")
+	      ASYS_TEXT ("(%x) in %s::handle_timeout sec = %d, usec = %d")
 	      ASYS_TEXT (" cur_timeouts = %d, max_timeouts = %d\n"),
               this,
+              this->name_,
 	      tv.sec (),
               tv.usec (),
 	      this->cur_timeouts_,
@@ -91,6 +100,18 @@ Timer_Service_1::handle_close (ACE_HANDLE,
   return 0;
 }
 
+Timer_Service_2::Timer_Service_2 (void)
+{
+  ACE_OS::strcpy (this->name_,
+                  "Timer_Service_2");
+}
+
+Timer_Service_3::Timer_Service_3 (void)
+{
+  ACE_OS::strcpy (this->name_,
+                  "Timer_Service_3");
+}
+
 // Define the object that describes the service.
 ACE_STATIC_SVC_DEFINE (Timer_Service_1,
 		       ASYS_TEXT ("Timer_Service_1"),
@@ -104,3 +125,4 @@ ACE_STATIC_SVC_DEFINE (Timer_Service_1,
 // Services.
 ACE_SVC_FACTORY_DEFINE (Timer_Service_1)
 ACE_SVC_FACTORY_DEFINE (Timer_Service_2)
+ACE_SVC_FACTORY_DEFINE (Timer_Service_3)
