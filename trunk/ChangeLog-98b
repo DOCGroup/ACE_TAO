@@ -1,3 +1,27 @@
+Fri Jul 31 19:15:58 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.cpp (pwrite and pread): There were many bugs in these two
+ 	  methods.
+
+	  - It was assumed that it is ok to call WriteFile/ReadFile with
+ 	    an OVERLAPPED structure.  This is not true on Windows95.
+  	    Therefore, code had to be added to make sure that on
+ 	    Windows95, WriteFile and ReadFile were called without an
+ 	    OVERLAPPED struct.
+
+	  - We were assuming that if we used the OVERLAPPED struct, the
+ 	    file pointer would not move.  It turns out that the OVERLAPPED
+ 	    struct has nothing with whether the file pointer moves or not.
+  	    It has to do with whether the file was opened with
+ 	    FILE_FLAG_OVERLAPPED or not.  Since it is not possible to
+ 	    figure whether the file handle we got was opened with this
+ 	    flag or not, we have to program defensively and reset the file
+ 	    pointer in any case.
+	    
+	  - Also the !ACE_HAS_P_READ_WRITE implementation was not
+ 	    restoring the file pointer to its original position.  This was
+	    also fixed.
+
 Fri Jul 31 18:33:39 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
 	* apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp: 
