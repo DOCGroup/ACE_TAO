@@ -25,3 +25,9 @@ ACE_Array<T>::operator[] (size_t index)
 {
   return this->array_[index];
 }
+
+template <class T> ACE_INLINE const T &
+ACE_Array<T>::operator[] (size_t index) const
+{
+  return this->array_[index];
+}
