@@ -136,7 +136,7 @@ namespace TAO
     typedef Out_Object_SArgument_T<T_ptr,T_var,T_out>     out_arg_val;
     typedef Ret_Object_SArgument_T<T_ptr,T_var>           ret_val;
   };
-};
+}
 
 #if defined (__ACE_INLINE__)
 #include "tao/PortableServer/Object_SArgument_T.inl"
