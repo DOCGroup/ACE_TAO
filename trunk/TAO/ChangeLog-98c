@@ -1,3 +1,27 @@
+Thu Sep 24 20:55:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway.h: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp: 
+	  Completed the implementation of (potentially) remote observers
+	  for the subcription and/or publication list of an Event
+	  Channel.
+
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
+	  Fixed yet another error message.
+
+	* orbsvcs/orbsvcs/RtecEventChannelAdmin.idl: 
+	  The observer handle can be an unsigned long.
+	  Added exceptions to report problems when adding and/or removing
+	  observers.
+
+	* orbsvcs/orbsvcs/RtecEventComm.idl: 
+	  Added a "#pragma prefix" to cancel the "omg.org" prefix.
+
+	* orbsvcs/orbsvcs/Makefile: 
+	  Updated dependencies.
+
 Thu Sep 24 18:01:47 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao (Current.pidl Object_Key.pidl POA.pidl Policy.pidl): The

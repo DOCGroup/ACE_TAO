@@ -302,7 +302,8 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
   // Make sure that a queue exists for this priority.
   if (queues_[preemption_priority] == 0)
     {
-      ACE_ERROR ((LM_ERROR, "Push to closed queue %d, dropping event.\n", preemption_priority));
+      ACE_ERROR ((LM_ERROR, "EC (%t): Push to closed queue %d,"
+		  " dropping event.\n", preemption_priority));
       return;
 #if 0
       TAO_THROW (SYNC_ERROR (0, CORBA::COMPLETED_NO, "ACE_ES_Priority_Dispatching::push"));

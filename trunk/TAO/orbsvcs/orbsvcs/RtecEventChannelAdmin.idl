@@ -121,7 +121,7 @@ module RtecEventChannelAdmin {
     // of the publications (and its equivalent form for suppliers).
   };
 
-  typedef unsigned long long Observer_Handle;
+  typedef unsigned long Observer_Handle;
   // This is used as an opaque ID to control the addition and removal
   // of handles from an event channel.
 
@@ -139,6 +139,8 @@ module RtecEventChannelAdmin {
     exception SUBSCRIPTION_ERROR {};
     exception CORRELATION_ERROR {};
     exception DISPATCH_ERROR {};
+    exception CANT_APPEND_OBSERVER {};
+    exception CANT_REMOVE_OBSERVER {};
 
     ConsumerAdmin for_consumers();
     // Consumers call this method to gain access to the
@@ -153,11 +155,13 @@ module RtecEventChannelAdmin {
     // for it and actually shutdown the server where the Event Channel
     // is running.
 
-    Observer_Handle append_observer (in Observer gw);
+    Observer_Handle append_observer (in Observer gw)
+      raises (SYNCHRONIZATION_ERROR,CANT_APPEND_OBSERVER);
     // Add a gateway to the Event Channel, the handle returned must be
     // used to remove the gateway from the ORB.
 
-    void remove_observer (in Observer_Handle gw);
+    void remove_observer (in Observer_Handle gw)
+      raises (CANT_REMOVE_OBSERVER);
     // Remove the observer.
     // @@ TODO: We should raise something if the handle is invalid.
   };

@@ -33,12 +33,12 @@
 #ifndef TAO_EC_GATEWAY_H
 #define TAO_EC_GATEWAY_H
 
-#include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/Channel_Clients_T.h"
 #include "orbsvcs/orbsvcs_export.h"
 
-class TAO_ORBSVCS_Export TAO_EC_Gateway
+class TAO_ORBSVCS_Export TAO_EC_Gateway : public POA_RtecEventChannelAdmin::Observer
 {
   // = TITLE
   //   Event Channel Gateway
@@ -56,6 +56,9 @@ class TAO_ORBSVCS_Export TAO_EC_Gateway
   //   strategies for EC distribution.
   //
 public:
+  TAO_EC_Gateway (void);
+  // Default constructor.
+
   virtual ~TAO_EC_Gateway (void);
   // Destructor
 
@@ -68,21 +71,14 @@ public:
   // The gateway must disconnect from all the relevant event channels,
   // or any other communication media (such as multicast groups).
 
-  virtual void update_consumer (RtecEventChannelAdmin::ConsumerQOS& sub,
-                                RtecEventChannelAdmin::SupplierQOS& pub,
-                                CORBA::Environment& env) = 0;
-  // The subscription list in the managing EC has changed, thus the
-  // gateway must reconnect (or update its connection) to the remote
-  // EC.  The SupplierQOS can be used if the gateway also connect as a
-  // consumer.
+private:
+  friend class ACE_EventChannel;
+  void observer_handle (RtecEventChannelAdmin::Observer_Handle h);
+  RtecEventChannelAdmin::Observer_Handle observer_handle (void) const;
+  // Obtain and modify the observer handle.
 
-  virtual void update_supplier (RtecEventChannelAdmin::ConsumerQOS& sub,
-                                RtecEventChannelAdmin::SupplierQOS& pub,
-                                CORBA::Environment& env) = 0;
-  // The publication list in the managing EC has changed, thus the
-  // gateway must reconnect (or update its connection) to the remote
-  // EC.  The ConsumerQOS can be used if the gateway also connect as a
-  // consumer.
+private:
+  RtecEventChannelAdmin::Observer_Handle handle_;
 };
 
 // ****************************************************************
@@ -151,11 +147,9 @@ public:
                      const RtecEventChannelAdmin::SupplierQOS& publications,
                      CORBA::Environment &_env);
   virtual void close (CORBA::Environment& _env);
-  virtual void update_consumer (RtecEventChannelAdmin::ConsumerQOS& sub,
-                                RtecEventChannelAdmin::SupplierQOS& pub,
+  virtual void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub,
                                 CORBA::Environment& env);
-  virtual void update_supplier (RtecEventChannelAdmin::ConsumerQOS& sub,
-                                RtecEventChannelAdmin::SupplierQOS& pub,
+  virtual void update_supplier (const RtecEventChannelAdmin::SupplierQOS& pub,
                                 CORBA::Environment& env);
 
 private:

@@ -4,6 +4,11 @@
 
 #include "CosTimeBase.idl"
 
+// Remove the prefix definition...
+// @@ TODO Is this the "Right Thing"? AFAIK the spec does not mention
+// if pragmas should survive the file scope...
+#pragma prefix ""
+
 module RtecEventComm {
 
   // = TITLE

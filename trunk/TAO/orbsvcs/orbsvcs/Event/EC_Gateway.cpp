@@ -6,8 +6,25 @@
 
 ACE_RCSID(Event, EC_Gateway, "$Id$")
 
+TAO_EC_Gateway::TAO_EC_Gateway (void)
+  :  handle_ (0)
+{
+}
+
 TAO_EC_Gateway::~TAO_EC_Gateway (void)
 {
+}
+
+void
+TAO_EC_Gateway::observer_handle (RtecEventChannelAdmin::Observer_Handle h)
+{
+  this->handle_ = h;
+}
+
+RtecEventChannelAdmin::Observer_Handle
+TAO_EC_Gateway::observer_handle (void) const
+{
+  return this->handle_;
 }
 
 // ****************************************************************
@@ -157,16 +174,19 @@ TAO_EC_Gateway_IIOP::close (CORBA::Environment &env)
 }
 
 void
-TAO_EC_Gateway_IIOP::update_consumer (RtecEventChannelAdmin::ConsumerQOS& sub,
-				      RtecEventChannelAdmin::SupplierQOS& pub,
+TAO_EC_Gateway_IIOP::update_consumer (const RtecEventChannelAdmin::ConsumerQOS& c_qos,
 				      CORBA::Environment& env)
 {
   this->close (env);
-  if (env.exception () != 0) return;
+  TAO_CHECK_ENV_RETURN_VOID (env);
 
-  if (sub.dependencies.length () == 0
-      || pub.publications.length () == 0)
+  if (c_qos.dependencies.length () <= 1)
     return;
+
+  RtecEventChannelAdmin::ConsumerQOS sub = c_qos;
+  RtecEventChannelAdmin::SupplierQOS pub;
+  pub.publications.length (sub.dependencies.length () - 1);
+  pub.is_gateway = 1;
 
   for (CORBA::ULong i = 0; i < sub.dependencies.length (); ++i)
     {
@@ -175,6 +195,11 @@ TAO_EC_Gateway_IIOP::update_consumer (RtecEventChannelAdmin::ConsumerQOS& sub,
 
   for (CORBA::ULong j = 0; j < pub.publications.length (); ++j)
     {
+      pub.publications[j].event.header = sub.dependencies[j + 1].event.header;
+      pub.publications[j].event.header.creation_time = ORBSVCS_Time::zero;
+      pub.publications[j].dependency_info.dependency_type =
+	RtecScheduler::TWO_WAY_CALL;
+      pub.publications[j].dependency_info.number_of_calls = 1;
       pub.publications[j].dependency_info.rt_info = this->lcl_info_;
     }
 
@@ -182,9 +207,8 @@ TAO_EC_Gateway_IIOP::update_consumer (RtecEventChannelAdmin::ConsumerQOS& sub,
 }
 
 void
-TAO_EC_Gateway_IIOP::update_supplier (RtecEventChannelAdmin::ConsumerQOS& sub,
-				      RtecEventChannelAdmin::SupplierQOS& pub,
-				      CORBA::Environment& env)
+TAO_EC_Gateway_IIOP::update_supplier (const RtecEventChannelAdmin::SupplierQOS&,
+				      CORBA::Environment&)
 {
   // Do nothing...
 }

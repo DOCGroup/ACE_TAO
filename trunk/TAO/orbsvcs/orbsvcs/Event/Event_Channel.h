@@ -278,10 +278,40 @@ private:
   int destroyed_;
   // Ensures this->destory is executed only once.
 
-  typedef ACE_Unbounded_Set<TAO_EC_Gateway*> Gateway_Set;
-  typedef ACE_Unbounded_Set_Iterator<TAO_EC_Gateway*> Gateway_Set_Iterator;
+  struct Observer_Entry
+  {
+    // = TITLE
+    //   The data kept for each observer.
+    //
+    // = DESCRIPTION
+    //   The observer and its handle are kept in a simple structure.
+    //   In the future this structure could contain QoS information,
+    //   such as:
+    //   + how often do we update the observer?
+    //   + When was the last update.
+    //   + Does it want to receive all changes?
+    //
+    
+    Observer_Entry (void);
+    Observer_Entry (RtecEventChannelAdmin::Observer_Handle h,
+		    RtecEventChannelAdmin::Observer_ptr o);
 
-  Gateway_Set gwys_;
+    RtecEventChannelAdmin::Observer_Handle handle;
+    // The handle
+
+    RtecEventChannelAdmin::Observer_var observer;
+    // The observer
+
+  };
+
+  typedef ACE_Map_Manager<RtecEventChannelAdmin::Observer_Handle,Observer_Entry,ACE_Null_Mutex> Observer_Map;
+  typedef ACE_Map_Iterator<RtecEventChannelAdmin::Observer_Handle,Observer_Entry,ACE_Null_Mutex> Observer_Map_Iterator;
+
+  RtecEventChannelAdmin::Observer_Handle handle_generator_;
+  // The handles are generated in sequential order, but are opaque to
+  // the client.
+
+  Observer_Map observers_;
   // Keep the set of Gateways, i.e. connections to peer EC.
 
   ACE_Task_Manager* task_manager_;
@@ -955,8 +985,7 @@ public:
   void shutdown (void);
   // Actively disconnect from all consumers.
 
-  void fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos,
-		 RtecEventChannelAdmin::SupplierQOS& s_qos);
+  void fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos);
   // Fill the QoS with the disjuction off all the subscriptions in
   // this EC. 
   // It leaves the gateways out of the list.
@@ -1227,8 +1256,7 @@ public:
   void shutdown (void);
   // Actively disconnect from all suppliers.
 
-  void fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos,
-		 RtecEventChannelAdmin::SupplierQOS& s_qos);
+  void fill_qos (RtecEventChannelAdmin::SupplierQOS& s_qos);
   // Fill the QoS with the disjuction off all the publications in
   // this EC. 
   // It leaves the gateways out of the list.
