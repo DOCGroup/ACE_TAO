@@ -11,11 +11,11 @@ project (FtRtEvent) : orbsvcslib, core, ftorbutils, rtevent, naming {
     idlflags += -GC
     FTRT.idl
     FtRtecEventComm.idl
+    FTRT_GroupManager.idl
   }
 
   IDL_Files  {
     FtRtecEventChannelAdmin.idl
-    FTRT_GroupManager.idl
   }
 
   Source_Files (ORBSVCS_COMPONENTS) {
