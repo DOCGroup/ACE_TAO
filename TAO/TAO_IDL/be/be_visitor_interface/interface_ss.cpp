@@ -76,7 +76,10 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   const char *flat_name = flat_name_holder.c_str ();
 
-  if (node->gen_operation_table () == -1)
+  int status = node->gen_operation_table (flat_name,
+                                          full_skel_name);
+
+  if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_ss::"

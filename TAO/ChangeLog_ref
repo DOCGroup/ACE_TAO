@@ -1,3 +1,24 @@
+Thu Sep  4 11:33:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+
+          Restored the flat name and skeleton name string arguments to
+          be_interface::gen_operation_table(). In the AMH implementation,
+          for each class foo, there is a class AMH_foo, which is NOT
+          added to the AST as implied IDL. This means that there must
+          be special visitors and overridden virtual methods to ensure
+          that the AMH_ prefix is added in this special case when a
+          callback into the node class is made to generate code, since
+          in both cases it is the same node.
+
+        * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+
+          Fixed the generation of the _this() method to call
+          TAO::Narrow_Utils<>::unchecked_narrow(), similarly to code
+          generation in be_visitor_interface/interface_ss.cpp.
+
 Thu Sep  4 09:41:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp: Added missing

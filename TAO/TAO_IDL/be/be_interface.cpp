@@ -664,11 +664,9 @@ TAO_IDL_Gen_OpTable_Worker::emit (be_interface *derived_interface,
 }
 
 int
-be_interface::gen_operation_table (void)
+be_interface::gen_operation_table (const char *flat_name,
+                                   const char *skeleton_class_name)
 {
-  const char *flat_name = this->flat_name_;
-  const char *skeleton_class_name = this->full_skel_name ();
-
   // Check out the op_lookup_strategy.
   switch (be_global->lookup_strategy ())
   {
