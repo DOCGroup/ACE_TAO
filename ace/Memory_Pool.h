@@ -507,6 +507,142 @@ public:
   // Overwrite the default sync behavior with no-op
 };
 
+#if defined (ACE_WIN32)
+
+class ACE_Export ACE_Pagefile_Memory_Pool_Options
+{
+  // = TITLE
+  //     Helper class for Pagefile Memory Pool constructor options.
+  //
+  // = DESCRIPTION
+  //     This should be a nested class, but that breaks too many
+  //     compilers.
+public:
+  // Initialization method.
+  ACE_Pagefile_Memory_Pool_Options (void *base_addr = ACE_DEFAULT_PAGEFILE_POOL_BASE,
+                                    size_t max_size = ACE_DEFAULT_PAGEFILE_POOL_SIZE);
+  
+  void *base_addr_;
+  // Base address of the memory-mapped backing store.
+
+  size_t max_size_;
+  // Maximum size the pool may grow.
+};
+
+class ACE_Export ACE_Pagefile_Memory_Pool
+{
+  // = TITLE
+  //     Make a memory pool that is based on "anonymous" memory
+  //     regions allocated from the Win32 page file.
+public:
+  typedef ACE_Pagefile_Memory_Pool_Options OPTIONS;
+
+  ACE_Pagefile_Memory_Pool (LPCTSTR backing_store_name = 0,
+                            const OPTIONS *options = 0);
+  // Initialize the pool.
+
+  void *init_acquire (size_t nbytes,
+                      size_t &rounded_bytes, 
+                      int &first_time);
+  // Ask system for initial chunk of shared memory. 
+
+  void *acquire (size_t nbytes,
+                 size_t &rounded_bytes);
+  // Acquire at least <nbytes> from the memory pool.  <rounded_bytes>
+  // is the actual number of bytes allocated.
+
+  int release (void);
+  // Instruct the memory pool to release all of its resources.
+
+  int remap (void *addr);
+  // Try to extend the virtual address space so that <addr> is now
+  // covered by the address mapping.  The method succeeds and returns
+  // 0 if the backing store has adequate memory to cover this address.
+  // Otherwise, it returns -1.  This method is typically called by an
+  // exception handler for a Win32 structured exception when another
+  // process has grown the backing store (and its mapping) and our
+  // process now incurs a fault because our mapping isn't in range
+  // (yet).
+
+  size_t round_to_page_size (size_t nbytes);
+  // Round up to system page size.
+
+  size_t round_to_chunk_size (size_t nbytes);
+  // Round up to the chunk size required by the operation system
+
+  // = Don't need this methods here ...
+  int sync (ssize_t len = -1, int flags = MS_SYNC) { return 0; }
+  int sync (void *addr, size_t len, int flags = MS_SYNC) { return 0; }
+  int protect (ssize_t len = -1, int prot = PROT_RDWR) { return 0; };
+  int protect (void *addr, size_t len, int prot = PROT_RDWR) { return 0; }
+  void dump (void) const {}
+
+protected:
+
+  int map (int &firstTime, int appendBytes = 0);
+  // Map portions or the entire pool into the local virtual address
+  // space.  To do this, we compute the new <file_offset> of the
+  // backing store and commit the memory.
+
+  int unmap (void);
+  // Release the mapping.
+
+private:
+
+  class Control_Block
+  {
+    // = TITLE
+    //   Attributes that are meaningful in local storage only.
+  public:
+    void *req_base_; 
+    // required base address 
+
+    void *mapped_base_;        
+    // Base address returned from system call
+
+    class Shared_Control_Block 
+    {
+      // = TITLE
+      //   Pool statistics
+    public:
+      size_t max_size_;            
+      // Maximum size the pool may grow
+
+      int mapped_size_;         
+      // Size of mapped shared memory segment
+
+      int free_offset_;         
+      // Offset to mapped but not yet acquired address space
+
+      int free_size_;           
+      // Size of mapped but not yet acquired address space
+    };
+    
+    Shared_Control_Block sh_;
+  };
+
+  // Base of mapped region.  If this has the value of 0 then the OS is
+  // free to select any address to map the file, otherwise this value
+  // is what the OS must try to use to mmap the file.
+
+  Control_Block local_cb_;      
+  // Description of what our process mapped.
+
+  Control_Block *shared_cb_;     
+  // Shared memory pool statistics.
+
+  ACE_HANDLE object_handle_; 
+  // File mapping handle.
+
+  size_t page_size_; 
+  // System page size.
+
+  TCHAR backing_store_name_[MAXPATHLEN];
+  // Name of the backing store where the shared memory pool is kept.
+};
+
+#endif /* ACE_WIN32 */
+
 #if defined (__ACE_INLINE__)
 #include "ace/Memory_Pool.i"
 #endif /* __ACE_INLINE__ */
