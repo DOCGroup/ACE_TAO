@@ -1,0 +1,15 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Server): taoexe, messaging {
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoexe, messaging {
+  Source_Files {
+    client.cpp
+  }
+}

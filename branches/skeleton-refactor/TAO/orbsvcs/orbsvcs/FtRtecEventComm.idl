@@ -1,0 +1,32 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ *  @file    FtRtecEventComm.idl
+ *
+ *  $Id$
+ *
+ *  @author Huang-Ming Huang
+ */
+//=============================================================================
+
+#ifndef FTRTECEVNETCOMM_H
+#define FTRTECEVNETCOMM_H
+
+#include "orbsvcs/RtecEventComm.idl"
+
+module FtRtecEventComm {
+
+  typedef sequence<octet> ObjectId;
+
+  exception InvalidObjectID {
+  };
+
+  interface PushConsumer {
+    void push(in ObjectId oid, in RtecEventComm::EventSet data)
+      raises(InvalidObjectID);
+  };
+
+};
+
+#endif

@@ -1,0 +1,15 @@
+$Id$
+
+This directory contains the ComponentServer implementation and a
+simple test program called ComponentServer_test_client.
+
+ComponentServer supports the following command line flags:
+
+  * -n : Do not try to call back ServerActivator.  This is only useful
+         when testing the server and the server is not created by a
+         ServerActivator.
+
+  * -o <filename> : Specify the filename ComponentServer will write
+                    IOR to.  This is only useful when debugging also.
+
+  * -d <IOR> : Specify the IOR to the ServerActivator.
