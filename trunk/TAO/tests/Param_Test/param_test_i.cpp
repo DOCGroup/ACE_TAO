@@ -178,6 +178,29 @@ Param_Test_i::test_nested_struct (const Param_Test::Nested_Struct &s1,
   return ret;
 }
 
+// test for struct sequences
+Param_Test::StructSeq *
+Param_Test_i::test_struct_sequence (const Param_Test::StructSeq &s1,
+                                    Param_Test::StructSeq &s2,
+                                    Param_Test::StructSeq_out s3,
+                                    CORBA::Environment &env)
+{
+  ACE_UNUSED_ARG (env);
+  // we copy the "in" sequences into all the inout, out and return sequences.
+
+  Param_Test::StructSeq
+    *ret = new Param_Test::StructSeq,
+
+    *out = new Param_Test::StructSeq;
+
+  // now copy all elements of s1 into the others using the assignment operator
+  s2 = s1;
+  *out = s1;
+  *ret = s1;
+  s3 = out;
+  return ret;
+}
+
 // make a Coffee object
 Coffee_ptr
 Param_Test_i::make_coffee (CORBA::Environment & /*env*/)

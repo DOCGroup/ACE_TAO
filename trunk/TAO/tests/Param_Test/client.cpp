@@ -75,7 +75,7 @@ Param_Test_Client<T>::run_sii_test (void)
       if (opt->debug ())
         {
           ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
-          this->test_object_->print_values ();
+          //          this->test_object_->print_values ();
         }
 
       // start the timing
@@ -195,7 +195,7 @@ Param_Test_Client<T>::run_dii_test (void)
       if (opt->debug ())
         {
           ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
-          this->test_object_->print_values ();
+          //          this->test_object_->print_values ();
         }
 
       // Make the invocation, verify the result.

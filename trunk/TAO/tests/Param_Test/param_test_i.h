@@ -99,6 +99,13 @@ public:
                       CORBA::Environment &env);
   // test for nested structs
 
+  virtual Param_Test::StructSeq *
+  test_struct_sequence (const Param_Test::StructSeq &s1,
+                        Param_Test::StructSeq &s2,
+                        Param_Test::StructSeq_out s3,
+                        CORBA::Environment &env);
+  // test for struct sequences
+
   virtual Coffee_ptr
   make_coffee (CORBA::Environment &env);
   // make a coffee object

@@ -734,12 +734,13 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
 {
   CORBA::Boolean continue_encoding = CORBA::B_TRUE;
   CDR *stream = (CDR *) context;
-  CORBA::OctetSeq *seq = (CORBA::OctetSeq *) data;
+  //  CORBA::OctetSeq *seq = (CORBA::OctetSeq *) data;
+  TAO_Base_Sequence *seq = (TAO_Base_Sequence *)data;
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;  // return status
   CORBA::TypeCode_ptr    tc2;  // typecode of the element
   size_t  size; // size of element
-  CORBA::ULong  len = seq ? seq->length : 0;
+  CORBA::ULong  len = seq ? seq->length_ : 0;
   char *value;
 
   // First marshal the sequence length, verifying that it's within the
@@ -756,8 +757,8 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
           if (bounds == 0 || len <= bounds)
             {
               bounds = len;  // number of times you encode
-              continue_encoding = stream->put_ulong (seq->length);
-              if (continue_encoding && seq->length != 0)
+              continue_encoding = stream->put_ulong (seq->length_);
+              if (continue_encoding && seq->length_ != 0)
                 {
                   // get element typecode
                   tc2 = tc->content_type (env);
@@ -766,7 +767,7 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
                       size = tc2->size (env);
                       if (env.exception () == 0)
                         {
-                          value = (char *) seq->buffer;
+                          value = (char *) seq->buffer_;
                           switch (tc2->kind_)
                             {
                             case CORBA::tk_null:

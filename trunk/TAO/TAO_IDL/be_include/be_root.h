@@ -3,7 +3,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_root.h
 //
@@ -12,15 +12,15 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #if !defined (TAO_BE_ROOT_H)
 #define TAO_BE_ROOT_H
 
-class be_root : public virtual AST_Root, 
+class be_root : public virtual AST_Root,
                 public virtual be_scope,
                 public virtual be_decl
 {
@@ -41,13 +41,13 @@ public:
   // generates the IDL to C++ mapping
 
   virtual int gen_client_header (void);
-  // Generates the client-side header information for the root 
+  // Generates the client-side header information for the root
 
   virtual int gen_client_stubs (void);
   // Generates the client-side stubs for the root
 
   virtual int gen_server_header (void);
-  // Generates the server-side header information for the root 
+  // Generates the server-side header information for the root
 
   virtual int gen_server_skeletons (void);
   // Generates the server-side skeletons for the root
