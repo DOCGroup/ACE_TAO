@@ -107,16 +107,31 @@ int TAO::FT_FaultConsumer::init (
 int TAO::FT_FaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Disconnect from the FaultNotifier.
-  this->fault_notifier_->disconnect_consumer (this->consumer_id_
-                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  // Swallow any exception.
+  ACE_TRY_NEW_ENV
+  {
+    if (!CORBA::is_nil (this->fault_notifier_.in()))
+    {
+      this->fault_notifier_->disconnect_consumer (
+        this->consumer_id_ ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
 
-  //@@ Should this fini() method deactivate the consumer from the POA, or
-  // should the application do that?
-  //
-  // Deactivate ourselves from the POA.
-  this->poa_->deactivate_object (this->object_id_.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    // Deactivate ourself from the POA.
+    this->poa_->deactivate_object (
+      this->object_id_.in() ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_TEXT (
+        "TAO::FT_FaultConsumer::fini: "
+        "Error disconnecting from notifier (ignored).\n")
+    );
+  }
+  ACE_ENDTRY;
+  ACE_CHECK;
 
   this->consumer_ref_ = CosNotifyComm::StructuredPushConsumer::_nil ();
 

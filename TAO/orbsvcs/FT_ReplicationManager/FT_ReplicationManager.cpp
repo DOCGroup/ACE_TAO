@@ -35,6 +35,7 @@ ACE_RCSID (FT_ReplicationManager,
 TAO::FT_ReplicationManager::FT_ReplicationManager ()
   : internals_()
   , orb_(CORBA::ORB::_nil())
+  , poa_(PortableServer::POA::_nil())
   , iorm_(TAO_IOP::TAO_IOR_Manipulation::_nil())
   , ior_output_file_(0)
   , ns_name_(0)
@@ -43,9 +44,10 @@ TAO::FT_ReplicationManager::FT_ReplicationManager ()
   , object_group_manager_()
   , property_manager_ (this->object_group_manager_)
   , generic_factory_ (this->object_group_manager_, this->property_manager_)
-  , fault_notifier_(TAO::FT_FaultNotifier::_nil())
+  , fault_notifier_(FT::FaultNotifier::_nil())
+  , fault_notifier_ior_file_(0)
   , fault_consumer_()
-  , test_iogr_(FT::ObjectGroup::_nil())
+  , test_iogr_(CORBA::Object::_nil())
 {
   //@@Note: this->init() is not called here (in the constructor)
   // since it may throw an exception.  Throwing an exception in
@@ -65,7 +67,7 @@ TAO::FT_ReplicationManager::~FT_ReplicationManager (void)
 
 int TAO::FT_ReplicationManager::parse_args (int argc, char * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "n:o:");
+  ACE_Get_Opt get_opts (argc, argv, "n:o:f:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -78,6 +80,10 @@ int TAO::FT_ReplicationManager::parse_args (int argc, char * argv[])
 
       case 'n':
         this->ns_name_ = get_opts.opt_arg ();
+        break;
+
+      case 'f':
+        this->fault_notifier_ior_file_ = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -127,27 +133,35 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   CORBA::Object_var poa_obj = this->orb_->resolve_initial_references (
     TAO_OBJID_ROOTPOA ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-  PortableServer::POA_var poa =
-    PortableServer::POA::_narrow (poa_obj.in() ACE_ENV_ARG_PARAMETER);
+  this->poa_ = PortableServer::POA::_narrow (
+    poa_obj.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Initialize the Object Group Manager.
-  this->object_group_manager_.init (this->orb_in(), poa.in());
+  result = this->object_group_manager_.init (
+    this->orb_.in(), this->poa_.in());
+  if (result != 0)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_TEXT (
+        "TAO::FT_ReplicationManager::init: "
+        "Could not initialize the Object Group Manager.\n")),
+      -1);
+  }
 
-  // Get an object reference for the ORBs IORManipulation object.
+  // Get an object reference for the ORB's IORManipulation object.
   CORBA::Object_var iorm_obj = this->orb_->resolve_initial_references (
     TAO_OBJID_IORMANIPULATION ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-
   this->iorm_ = TAO_IOP::TAO_IOR_Manipulation::_narrow (
     iorm_obj.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  // Activate ourselves in the POA.
-  PortableServer::ObjectId_var oid = poa->activate_object (
+  // Activate ourself in the POA.
+  PortableServer::ObjectId_var oid = this->poa_->activate_object (
     this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-  CORBA::Object_var this_obj = poa->id_to_reference (
+  CORBA::Object_var this_obj = this->poa_->id_to_reference (
     oid.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
   this->replication_manager_ref_ = FT::ReplicationManager::_narrow (
@@ -171,30 +185,63 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     this->identity_ = "name:";
     this->identity_ += this->ns_name_;
 
-    CORBA::Object_var naming_obj =
-      this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    CORBA::Object_var naming_obj = this->orb_->resolve_initial_references (
+        TAO_OBJID_NAMESERVICE ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
 
-    if (CORBA::is_nil(naming_obj.in ())){
+    if (CORBA::is_nil(naming_obj.in ()))
+    {
       ACE_ERROR_RETURN ((LM_ERROR,
-                        "%T %n (%P|%t) Unable to find the Naming Service\n"),
-                        1);
+        ACE_TEXT ("%T %n (%P|%t) Unable to find the Naming Service.\n")),
+        -1);
     }
 
     this->naming_context_ =
-      CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      CosNaming::NamingContext::_narrow (
+        naming_obj.in () ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
 
     this->this_name_.length (1);
     this->this_name_[0].id = CORBA::string_dup (this->ns_name_);
 
-    //@@ Do NOT use _this() here.  Need to use the POA with which we
-    // were activated to get the IOR.  Another reason not to use the
-    // TAO_ORB_Manager; it does not give us much flexibility w.r.t.
-    // POA usage.  -- Steve Totten
-    this->naming_context_->rebind (this->this_name_, _this()
-                            ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    this->naming_context_->rebind (
+      this->this_name_,
+      replication_manager_ref_.in()
+      ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
+  }
+
+  // If we were given an initial IOR string for a Fault Notifier on the
+  // command line, convert it to an IOR.
+  if (this->fault_notifier_ior_file_ != 0)
+  {
+    CORBA::String_var notifierIOR;
+    if (this->readIORFile (this->fault_notifier_ior_file_, notifierIOR))
+    {
+      CORBA::Object_var notifier_obj = this->orb_->string_to_object (
+        notifierIOR.in() ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+      this->fault_notifier_ = FT::FaultNotifier::_narrow (
+        notifier_obj.in() ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+      if (CORBA::is_nil (this->fault_notifier_.in()))
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+          ACE_TEXT (
+            "TAO::FT_ReplicationManager::init: "
+            "Bad Fault Notifier object reference provided on command line.\n")),
+          -1);
+      }
+    }
+    else
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_TEXT (
+          "TAO::FT_ReplicationManager::init: "
+          "Could not read %s.\n"),
+        this->fault_notifier_ior_file_),
+        -1);
+    }
   }
 
   return result;
@@ -217,8 +264,7 @@ int TAO::FT_ReplicationManager::fini (ACE_ENV_SINGLE_ARG_DECL)
   }
   if (this->ns_name_ != 0)
   {
-    this->naming_context_->unbind (this->this_name_
-                            ACE_ENV_ARG_PARAMETER);
+    this->naming_context_->unbind (this->this_name_ ACE_ENV_ARG_PARAMETER);
     this->ns_name_ = 0;
   }
   return 0;
@@ -255,22 +301,60 @@ int TAO::FT_ReplicationManager::write_ior()
 /// Registers the Fault Notifier with the Replication Manager.
 void
 TAO::FT_ReplicationManager::register_fault_notifier (
-    FT::FaultNotifier_ptr fault_notifier
-    ACE_ENV_ARG_DECL)
-ACE_THROW_SPEC ((CORBA::SystemException))
+  FT::FaultNotifier_ptr fault_notifier
+  ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // Cache new Fault Notifier object reference.
   this->fault_notifier_ = FT::FaultNotifier::_duplicate (fault_notifier);
+
+  // Re-initialize our consumer.
+  // Swallow any exception.
+  int result = 0;
+  ACE_TRY_NEW_ENV
+  {
+    result = this->fault_consumer_.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    result = this->fault_consumer_.init (
+      this->poa_.in(),
+      this->fault_notifier_.in(),
+      this->replication_manager_ref_.in()
+      ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_TEXT (
+        "TAO::FT_ReplicationManager::register_fault_notifier: "
+        "Error reinitializing FT_FaultConsumer.\n")
+    );
+  }
+  ACE_ENDTRY;
+
+  if (result != 0)
+  {
+    ACE_ERROR((LM_ERROR,
+      ACE_TEXT (
+        "TAO::FT_ReplicationManager::register_fault_notifier: "
+        "Could not re-initialize FT_FaultConsumer.\n")
+    ));
+
+    ACE_THROW (CORBA::INTERNAL (
+      CORBA::SystemException::_tao_minor_code (
+        TAO_DEFAULT_MINOR_CODE,
+        EINVAL),
+      CORBA::COMPLETED_NO));
+  }
 }
 
 
 /// Returns the reference of the Fault Notifier.
 FT::FaultNotifier_ptr
 TAO::FT_ReplicationManager::get_fault_notifier (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-ACE_THROW_SPEC ((
-    CORBA::SystemException
-  , FT::InterfaceNotFound
-))
+  ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException, FT::InterfaceNotFound))
 {
   return FT::FaultNotifier::_duplicate (this->fault_notifier_.in());
 }
@@ -280,8 +364,8 @@ ACE_THROW_SPEC ((
 
 void
 TAO::FT_ReplicationManager::set_default_properties (
-    const PortableGroup::Properties & props
-    ACE_ENV_ARG_DECL)
+  const PortableGroup::Properties & props
+  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::InvalidProperty,
                    PortableGroup::UnsupportedProperty))
@@ -390,23 +474,22 @@ TAO::FT_ReplicationManager::get_properties (
 /// Sets the primary member of a group.
 PortableGroup::ObjectGroup_ptr
 TAO::FT_ReplicationManager::set_primary_member (
-    FT::ObjectGroup_ptr object_group,
-    const FT::Location & the_location
-    ACE_ENV_ARG_DECL)
-ACE_THROW_SPEC ((
+  FT::ObjectGroup_ptr object_group,
+  const FT::Location & the_location
+  ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
     CORBA::SystemException
-  , PortableGroup::ObjectGroupNotFound
-  , PortableGroup::MemberNotFound
-  , FT::PrimaryNotSet
-  , FT::BadReplicationStyle
-))
+    , PortableGroup::ObjectGroupNotFound
+    , PortableGroup::MemberNotFound
+    , FT::PrimaryNotSet
+    , FT::BadReplicationStyle
+  ))
 {
-	// not yes implemented
-	{
-		int _TODO_must_implement_set_primary_;
-	}
+  // Not yet implemented.
+  {
+    int _TODO_must_implement_set_primary_;
+  }
   return (FT::ObjectGroup::_nil ());
-
 }
 
 PortableGroup::ObjectGroup_ptr
@@ -547,11 +630,10 @@ TAO::FT_ReplicationManager::get_member_ref (
 
 CORBA::Object_ptr
 TAO::FT_ReplicationManager::create_object (
-    const char * type_id,
-    const PortableGroup::Criteria & the_criteria,
-    PortableGroup::GenericFactory::FactoryCreationId_out
-      factory_creation_id
-    ACE_ENV_ARG_DECL)
+  const char * type_id,
+  const PortableGroup::Criteria & the_criteria,
+  PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
+  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::NoFactory,
                    PortableGroup::ObjectNotCreated,
@@ -559,25 +641,21 @@ TAO::FT_ReplicationManager::create_object (
                    PortableGroup::InvalidProperty,
                    PortableGroup::CannotMeetCriteria))
 {
-  PortableGroup::Criteria new_criteria (the_criteria);
-
-  //@@ I've corrected the following code.  -- Steve Totten
-  //@@ Also, can we really use the TAO_PG_GenericFactory
+  //@@ Can we really use the TAO_PG_GenericFactory
   // implementation to create an object group?
-  CORBA::Object_var obj = CORBA::Object::_nil ();
-  obj = this->generic_factory_.create_object (type_id,
-                                          new_criteria,
-                                          factory_creation_id
-                                          ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj = this->generic_factory_.create_object (
+    type_id,
+    the_criteria,
+    factory_creation_id
+    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
   return obj._retn();
 }
 
 void
 TAO::FT_ReplicationManager::delete_object (
-    const PortableGroup::GenericFactory::FactoryCreationId &
-      factory_creation_id
-    ACE_ENV_ARG_DECL)
+  const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
+  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::ObjectNotFound))
 {
@@ -588,118 +666,123 @@ TAO::FT_ReplicationManager::delete_object (
 
 // Returns a dummy IOGR for unit tests
 CORBA::Object_ptr
-TAO::FT_ReplicationManager::create_test_iogr (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+TAO::FT_ReplicationManager::create_test_iogr (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG, "---------------------------------------------\n"));
   ACE_DEBUG ((LM_DEBUG, "Creating an IOGR for the Unit Tests.\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  ACE_TRY_NEW_ENV
+  {
+    // Domain id
+    const char * domain_id = "TestFTDomains";
+
+    // Object group id
+    this->test_iogr_group_id_ = (CORBA::ULongLong) 10;
+
+    // create a property set
+    TAO_PG::Properties_Encoder encoder;
+    PortableGroup::Value value;
+
+    value <<= 99;
+    encoder.add(::FT::FT_MINIMUM_NUMBER_REPLICAS, value);
+
+    // allocate and populate the criteria
+    FT::Properties * props_in;
+    FT::Properties_var props;
+    ACE_NEW_NORETURN (props_in, FT::Properties);
+    if (props_in == 0)
     {
-
-      // Domain id
-      const char * domain_id = "TestFTDomains";
-
-      // Object group id
-      this->test_iogr_group_id_ = (CORBA::ULongLong) 10;
-
-      // create a property set
-      TAO_PG::Properties_Encoder encoder;
-      PortableGroup::Value value;
-
-      value <<= 99;
-      encoder.add(::FT::FT_MINIMUM_NUMBER_REPLICAS, value);
-
-      // allocate and populate the criteria
-      FT::Properties_var props_in;
-      ACE_NEW_NORETURN (props_in, FT::Properties);
-      if (props_in.ptr() == 0)
-      {
-        ACE_ERROR((LM_ERROR, "Error cannot allocate properties.\n" ));
-      }
-      else
-      {
-        encoder.encode(props_in);
-      }
-
-      // Create a few fictitious IORs
-      //@@ Corrected to use corbaloc ObjectURL syntax.  -- Steve Totten
-      CORBA::Object_var name1 =
-        this->orb_->string_to_object ("corbaloc:iiop:acme.cs.wustl.edu:6060/xyz"
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      CORBA::Object_var name2 =
-        this->orb_->string_to_object ("corbaloc::iiop:tango.cs.wustl.edu:7070/xyz"
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      // Create IOR list for use with merge_iors.
-      TAO_IOP::TAO_IOR_Manipulation::IORList iors (3);
-      iors.length (3);
-      iors [0] = this->object_group_manager_.create_object_group(
-                         this->test_iogr_group_id_,
-                         domain_id,
-                         "my-dummy-type-id",
-                         props_in);
-      iors [1] = name1;
-      iors [2] = name2;
-
-      this->test_iogr_ = this->iorm_->merge_iors (iors ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      // we only need this so we can call IORManipulation's set_primary
-      FT::TagFTGroupTaggedComponent ft_tag_component;
-      TAO_FT_IOGR_Property ft_prop (ft_tag_component);
-
-      // set primary
-      CORBA::Boolean retval =
-        this->iorm_->set_primary (&ft_prop, name2.in (), this->test_iogr_.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (retval != 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("\tThe primary has been set\n")));
-      else
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("\tError in setting primary\n")));
-        }
+      ACE_ERROR((LM_ERROR, "Error cannot allocate properties.\n"));
     }
-  ACE_CATCH (TAO_IOP::NotFound, userex)
+    else
     {
-      ACE_PRINT_EXCEPTION (userex,
-                          ACE_TEXT ("Unexpected NotFound Exception!\n"));
+      props = props_in;
+      encoder.encode(props);
     }
-  ACE_CATCH (TAO_IOP::Duplicate, userex)
+
+    // Create a few fictitious IORs
+    CORBA::Object_var name1 =
+      this->orb_->string_to_object (
+        "corbaloc:iiop:acme.cs.wustl.edu:6060/xyz" ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+    CORBA::Object_var name2 =
+      this->orb_->string_to_object (
+        "corbaloc::iiop:tango.cs.wustl.edu:7070/xyz" ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    // Create IOR list for use with merge_iors.
+    TAO_IOP::TAO_IOR_Manipulation::IORList iors (3);
+    iors.length (3);
+    iors [0] = this->object_group_manager_.create_object_group (
+      this->test_iogr_group_id_,
+      "my-dummy-type-id",
+      domain_id,
+      props.in()
+      ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+    iors [1] = name1;
+    iors [2] = name2;
+
+    this->test_iogr_ = this->iorm_->merge_iors (iors ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    // We only need this so we can call IORManipulation's set_primary.
+    FT::TagFTGroupTaggedComponent ft_tag_component;
+    TAO_FT_IOGR_Property ft_prop (ft_tag_component);
+
+    // set primary
+    CORBA::Boolean retval =
+      this->iorm_->set_primary (
+        &ft_prop, name2.in (),
+        this->test_iogr_.in () ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    if (retval != 0)
     {
-      ACE_PRINT_EXCEPTION (userex,
-                          "Unexpected Duplicate Exception!\n");
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("\tThe primary has been set\n")));
     }
-  ACE_CATCH (TAO_IOP::Invalid_IOR, userex)
+    else
     {
-      ACE_PRINT_EXCEPTION (userex,
-                          "Unexpected Invalid_IOR Exception!\n");
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("\tError in setting primary\n")));
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
-    {
-      ACE_PRINT_EXCEPTION (sysex,
-                          "Unexpected system Exception!!\n");
-    }
+  }
   ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                          "Unexpected ACE_CATCHANY Exception!\n");
-    }
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception!\n");
+  }
   ACE_ENDTRY;
-
-  //@@ Add a final ACE_CHECK_RETURN in case there was an "exception".
-  // -- Steve Totten
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   ACE_DEBUG ((LM_DEBUG, "---------------------------------------------\n"));
 
-  //@@ Object_var (this->test_iogr_) must give up ownership to return IOGR
-  // as an Object_ptr.  -- Steve Totten
   return this->test_iogr_._retn();
+}
+
+int TAO::FT_ReplicationManager::readIORFile (
+  const char * filename,
+  CORBA::String_var & ior)
+{
+  int result = 0;
+  FILE *in = ACE_OS::fopen (filename, "r");
+  ACE_OS::fseek(in, 0, SEEK_END);
+  size_t fileSize = ACE_OS::ftell(in);
+  ACE_OS::fseek(in, 0, SEEK_SET);
+  char * buffer;
+  ACE_NEW_NORETURN (buffer,
+    char[fileSize+1]);
+  if (buffer != 0)
+  {
+    if( fileSize == ACE_OS::fread(buffer, 1, fileSize, in))
+    {
+      buffer[fileSize] = '\0';
+      ior = CORBA::string_dup(buffer);
+      ACE_TRY_CHECK;
+      result = 1; // success
+    }
+    delete[] buffer;
+  }
+  return result;
 }
 
