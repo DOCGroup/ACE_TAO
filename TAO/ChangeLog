@@ -1,3 +1,20 @@
+Fri Mar 21 17:16:42 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/lib/Periodic_Consumer.cpp:
+	* orbsvcs/tests/Notify/lib/Periodic_Consumer.h:
+	  Added an option to check if the thread priority matches the
+	  priority specified in the event received.
+	
+	* orbsvcs/tests/Notify/ThreadPool/consumer.conf:
+	* orbsvcs/tests/Notify/Lanes/consumer.conf:
+	  Added the "-Check_Priority" option to the Periodic Consumers.
+	
+Fri Mar 21 11:35:15 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/Default_Factory.cpp:
+	* orbsvcs/orbsvcs/Notify/RT_Factory.cpp:
+	  Corrected to ACE_FACTORY_DEFINE macro.  
+	
 Wed Mar 19 08:42:45 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/NotifyExt.idl:
@@ -19,6 +36,13 @@ Wed Mar 19 08:42:45 2003  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/orbsvcs/Notify/Proxy.cpp:
 	  Overload the <activate> and <deactivate> methods to use the <proxy_poa_>.
 
+	* orbsvcs/orbsvcs/RT_Notification.dsp:
+	* orbsvcs/orbsvcs/RT_Notification_Static.dsp:
+	* orbsvcs/orbsvcs/RT_Notification.rc:
+	* orbsvcs/orbsvcs/RT_Notification.bor:
+	* orbsvcs/orbsvcs/Makefile.RT_Notification:
+	  Added RT_Notification specific files.
+	
 	* orbsvcs/tests/Notify/lib/Activation_Manager.cpp:
 	* orbsvcs/tests/Notify/lib/Activation_Manager.h:
 	* orbsvcs/tests/Notify/lib/Activation_Manager.idl:
