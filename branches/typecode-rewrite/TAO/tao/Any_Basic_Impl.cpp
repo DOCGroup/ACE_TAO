@@ -1,7 +1,7 @@
 // $Id$
 
 #include "tao/Any_Basic_Impl.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 #include "tao/Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
@@ -18,8 +18,15 @@ namespace TAO
   Any_Basic_Impl::Any_Basic_Impl (CORBA::TypeCode_ptr tc,
                                   void *value)
     : Any_Impl (0, tc),
-      kind_ (tc ? tc->kind_ : CORBA::tk_null)
+      kind_ (CORBA::tk_null)
   {
+    if (!CORBA::is_nil (tc))
+      {
+        ACE_DECLARE_NEW_CORBA_ENV;
+        this->kind_ = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK;
+      }
+
     CORBA::TCKind const tckind = static_cast<CORBA::TCKind> (this->kind_);
 
     switch (tckind)
@@ -137,7 +144,7 @@ namespace TAO
         // Get the kind of the type where we are extracting in ie. the
         // aliased  type if there are any. Passing the aliased kind
         // will not help.
-        CORBA::TCKind tck = tc->kind ();
+        CORBA::TCKind const tck = tc->kind ();
         
         // We don't want the rd_ptr of unk to move, in case it is
         // shared by another Any. This copies the state, not the buffer.
@@ -151,7 +158,7 @@ namespace TAO
           {
             Any_Basic_Impl::assign_value (_tao_elem,
                                           replacement,
-					                                tck);
+                                          tck);
             const_cast<CORBA::Any &> (any).replace (replacement);
             replacement_safety.release ();
             return 1;
@@ -268,7 +275,10 @@ namespace TAO
   Any_Basic_Impl *
   Any_Basic_Impl::create_empty (CORBA::TypeCode_ptr tc)
   {
-    CORBA::TCKind const kind = static_cast<CORBA::TCKind> (tc->kind_);
+    ACE_DECLARE_NEW_CORBA_ENV;
+    CORBA::TCKind const kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+
     TAO::Any_Basic_Impl * retval = 0;
 
     switch (kind)

@@ -3,7 +3,7 @@
 // $Id$
 
 #include "RequestInfo_Util.h"
-#include "Typecode.h"
+#include "TypeCode.h"
 #include "ORB_Constants.h"
 #include "StringSeqC.h"
 #include "DynamicC.h"

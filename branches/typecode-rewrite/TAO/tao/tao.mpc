@@ -80,6 +80,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Dynamic_ParameterC.cpp
     DynamicA.cpp
     DynamicC.cpp
+    Empty_Param_TypeCode.cpp
     Encodable.cpp
     Endpoint.cpp
     Endpoint_Selector_Factory.cpp
@@ -256,7 +257,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Transport_Mux_Strategy.cpp
     Transport_Timer.cpp
     TSS_Resources.cpp
-    Typecode.cpp
+    TypeCode.cpp
     Typecode_typesC.cpp
     Typecode_Constants.cpp
     TypeCodeFactory_Adapter.cpp
@@ -588,7 +589,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     TSS_Resources.h
     Typecode_Constants.h
     TypeCodeFactory_Adapter.h
-    Typecode.h
+    TypeCode.h
     Typecode_typesC.h
     Typecode_typesS.h
     UB_String_Arguments.h
