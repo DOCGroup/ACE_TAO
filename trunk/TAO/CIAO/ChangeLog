@@ -1,3 +1,27 @@
+Thu Jul  1 15:51:14 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
+        * DAnCE/DomainApplicationManager/Deployment_Configuration.h:
+        * DAnCE/DomainApplicationManager/Deployment_Configuration.inl:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc:
+        *
+          DAnCE/DomainApplicationManager/DomainApplicationManager_Export.h:
+        *
+          DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h:
+        *
+          DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.inl:
+        * DAnCE/ExecutionManager/ExecutionManager.idl:
+        * DAnCE/ExecutionManager/ExecutionManager.mpc:
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.cpp:
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.h:
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.inl:
+        * DAnCE/ExecutionManager/ExecutionManager_stub_export.h:
+        * DAnCE/ExecutionManager/Execution_Manager.cpp:
+
+          Checking in the DomainApplicationManager and ExecutionManager
+          interfaces.
+
 Thu Jul  1 15:47:45 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication.cpp:
