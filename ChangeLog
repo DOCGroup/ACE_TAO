@@ -1,3 +1,24 @@
+Mon Sep  2 13:17:26 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Memory_Pool.{h cpp}:
+         (ACE_MMAP_Memory_Pool_Options): Added optional file_mode arg
+          to set the protection mode on the mapped file, if it is
+          created; defaults to ACE_DEFAULT_FILE_PERMS.
+          (ACE_MMAP_Memory_Pool): Added file_mode_ member that can be set
+          by the ACE_MMAP_Memory_Pool_Options. Defaults to
+          ACE_DEFAULT_FILE_PERMS. It's used for call to ACE_Mem_Map::open()
+          and ACE_Mem_Map::map().
+
+        * ace/Process_Mutex.{h cpp}: ACE_Process_Mutex ctor takes an optional
+          mode_t arg to set the backing store mode (for ACE_Mutex use) or the
+          mode for the System V semaphore, when it's used.
+
+        * ace/Synch.{h cpp} (ACE_Mutex): Constructor takes an optional mode
+          to set backing store protection for Pthreads process mutex case,
+          where memory must be allocated to hold the mutex.
+
+        These are laying the groundwork for fixing Bugzilla #1219.
+
 Mon Sep  2 14:07:12 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/Exception_Macros.h:
@@ -17,7 +38,6 @@ Mon Sep  2 14:07:12 2002  Krishnakumar B  <kitty@cs.wustl.edu>
           Changed the definition of ctime_buf_size to const so that gcc
           doesn't complain about using variable-sized array which is
           non-ISO C++.
-
 
 Mon Sep  2 10:00:40 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
