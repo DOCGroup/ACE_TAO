@@ -1,3 +1,16 @@
+Tue Sep 22 19:18:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* utils/IOR-parser/ior-handler.cpp: 
+	  Fixed out-of-bounds error in an array.
+	  the IorHander::hexChar2int() function was not returning a value
+	  on every execution path.
+
+	* examples/Simple/bank/Server_i.cpp: 
+	  Removed unreached statement.
+
+	* examples/Simple/bank/Client_i.cpp: 
+	  Removed unused variable.
+
 Tue Sep 22 18:19:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/IIOP_Object.cpp: 

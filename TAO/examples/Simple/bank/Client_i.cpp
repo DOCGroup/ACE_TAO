@@ -255,8 +255,6 @@ Client_i::check_accounts (void)
 int
 Client_i::run (void)
 {
-  u_int i;
-
   this->check_accounts ();
 
   TAO_TRY
