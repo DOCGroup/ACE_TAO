@@ -55,10 +55,10 @@ namespace ACE_RMCast
 
     ACE_Unbounded_Queue<Message_ptr> queue_;
 
-    auto_ptr<Acknowledge> acknowledge_;
-    auto_ptr<Retransmit> retransmit_;
-    auto_ptr<Simulator> simulator_;
-    auto_ptr<Link> link_;
+    ACE_Auto_Ptr<Acknowledge> acknowledge_;
+    ACE_Auto_Ptr<Retransmit> retransmit_;
+    ACE_Auto_Ptr<Simulator> simulator_;
+    ACE_Auto_Ptr<Link> link_;
   };
 }
 

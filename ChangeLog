@@ -1,3 +1,11 @@
+Wed Feb 23 19:48:59 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/ace/RMCast/Bits.h:
+	* protocols/ace/RMCast/Link.cpp:
+	* protocols/ace/RMCast/Socket.cpp:
+	* protocols/ace/RMCast/Socket.h: Replaced auto_ptr with
+	ACE_Auto_Ptr.
+
 Tue Feb 22 18:03:41 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Ping_Socket.cpp: Rather than try to use struct ip, which can
