@@ -62,7 +62,7 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
                              size_t n,
                              int flags) const
 {
-  ACE_TRACE ("ACE_SSL_SOCK_Stream::send");
+  ACE_TRACE ("ACE_SSL_SOCK_Stream::send_i");
 
   // @@ FIXME: Not thread safe!
 
@@ -119,7 +119,7 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
                              size_t n,
                              int flags) const
 {
-  ACE_TRACE ("ACE_SSL_SOCK_Stream::recv");
+  ACE_TRACE ("ACE_SSL_SOCK_Stream::recv_i");
 
   // @@ FIXME: Not thread safe!
 
