@@ -1,7 +1,19 @@
+Tue Nov 23 00:59:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp (gen_marshal_and_invoke):
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp (gen_marshal_and_invoke):
+	* tao/Stub.cpp (do_static_call,do_dynamic_call): Changed to store
+	  the enum value into a CORBA::Long and then casted it to Octet
+	  before passing it to prepare_header.  This is a solution that
+	  KCC and CC 4.2 both agree on.
+
+	* tao/Invocation.cpp (invoke): Removed a unreachable return
+	  statement.
+
 Mon Nov 22 21:48:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp: 
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp: 
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
 	  Fixed the project files too.
 
 Mon Nov 22 20:47:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
