@@ -37,8 +37,11 @@ Thu Nov 12 14:03:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
           orbsvcs/orbsvcs/Sched/Scheduler.h
           orbsvcs/orbsvcs/Sched/Strategy_Scheduler.{cpp, h}:
 	  Changed RtecScheduler type names to remove non-portable IDL 
-	  definitions like Priority priority.
-	
+	  declarations like "Priority priority;" where identifiers only
+          differ by case.  Thanks to Martin Renner (Martin.Renner@pp-ulm.de) 
+          for pointing out the problem and the appropriate snippet of the
+          CORBA spec.
+
 Thu Nov 12 14:01:47 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * tao/try_macros.h: Made the native exception macros fit 
