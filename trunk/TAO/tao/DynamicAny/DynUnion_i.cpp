@@ -328,23 +328,8 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value,
       ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
     }
 
-  // Does the value match the current discriminator value?
-  // If so, we do nothing.
-  CORBA_Any_var disc_any = this->discriminator_->to_any (ACE_TRY_ENV);
-  ACE_CHECK;
-
   CORBA_Any_var value_any = value->to_any (ACE_TRY_ENV);
   ACE_CHECK;
-
-  CORBA::Boolean match = this->label_match (disc_any.in (),
-                                            value_any.in (),
-                                            ACE_TRY_ENV);
-  ACE_CHECK;
-
-  if (match)
-    {
-      return;
-    }
 
   CORBA::ULong length = this->type_->member_count (ACE_TRY_ENV);
   ACE_CHECK;
@@ -353,15 +338,17 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value,
   CORBA::ULong i;
 
   // member_label() does not work with aliased type codes.
-  CORBA::TypeCode_var ulaliased_tc =
+  CORBA::TypeCode_var unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in (),
                                     ACE_TRY_ENV);
   ACE_CHECK;
 
+  CORBA::Boolean match;
+
   for (i = 0; i < length; ++i)
     {
-      label_any = this->type_->member_label (i,
-                                             ACE_TRY_ENV);
+      label_any = unaliased_tc->member_label (i,
+                                              ACE_TRY_ENV);
       ACE_CHECK;
 
       match = this->label_match (*label_any,
@@ -377,17 +364,19 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value,
 
   if (match)
     {
+      // If the incoming label value matches the one we already 
+      // have, we do nothing.
+      if (i == this->member_slot_)
+        {
+          return;
+        }
+
       // If we got a match, a named member will be active.
       this->discriminator_->from_any (*label_any,
                                       ACE_TRY_ENV);
       ACE_CHECK;
 
       // member_type() does not work with aliased type codes.
-      CORBA::TypeCode_var unaliased_tc =
-        TAO_DynAnyFactory::strip_alias (this->type_.in (),
-                                        ACE_TRY_ENV);
-      ACE_CHECK;
-
       CORBA::TypeCode_var member_tc = 
         unaliased_tc->member_type (i,
                                    ACE_TRY_ENV);
@@ -432,7 +421,7 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value,
           ACE_CHECK;
 
           this->member_slot_ = ACE_static_cast (CORBA::ULong,
-                                               default_index);
+                                                default_index);
         }
     }
 
@@ -924,7 +913,8 @@ TAO_DynUnion_i::label_match (const CORBA_Any &my_any,
   // member_label() calls.
   CORBA::TypeCode_var tc = my_any.type ();
 
-  CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
+  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc,
+                                                   ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   // No need to do any type checking - it was done before this

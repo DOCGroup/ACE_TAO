@@ -2677,13 +2677,17 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
   }
 
   if (default_label == 1)
-    this->repo_->config ()->set_string_value (key,
-                                              "label",
-                                              "default");
+    {
+      this->repo_->config ()->set_string_value (key,
+                                                "label",
+                                                "default");
+    }
   else
-    this->repo_->config ()->set_integer_value (key,
-                                               "label",
-                                               result);
+    {
+      this->repo_->config ()->set_integer_value (key,
+                                                 "label",
+                                                 result);
+    }
 }
 
 void

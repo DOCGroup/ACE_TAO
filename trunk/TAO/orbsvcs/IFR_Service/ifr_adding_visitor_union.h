@@ -76,12 +76,6 @@ private:
   ACE_Unbounded_Queue<CORBA_Contained_ptr> move_queue_;
   // IR objects that must be moved into the scope (struct or
   // exception) where they were declared in the IDL file.
-
-  void load_any_with_default (AST_Union::DefaultValue &dv,
-                              AST_Union *u,
-                              CORBA::Any &any);
-  // Insert the default case label into an Any, used to initialize
-  // a UnionMember struct.
 };
 
 #endif /* TAO_IFR_ADDING_VISITOR_UNION_H */
