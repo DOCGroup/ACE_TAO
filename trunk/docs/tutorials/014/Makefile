@@ -33,7 +33,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 
 HTML : #
-	../combine *.html
+	perl ../combine *.html
 
 rename : #
 	for i in *.cxx ; do	\

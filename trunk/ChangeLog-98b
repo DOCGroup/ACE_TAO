@@ -1,3 +1,54 @@
+Sun Oct 18 16:51:43 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/combine: A perl script for combining several
+	"source" files into an HTML.  It was designed to combine comment
+	files with .cpp and .h files in the creation of tutorials.  The
+	HTML output is commited to the repository, I haven't decided yet
+	if it's worth saving the input.
+
+        * docs/tutorials/fix.Makefile:  This was pulled out of one of the
+	old tutorials and made a bit more useful.  It's purpose is to pull 
+	dependency information out of a Makefile and create a .depend file 
+	instead.  This keeps makfiles cleaner and less confusing.
+	
+        * docs/tutorials/014/Makefile
+        * docs/tutorials/014/Task.cpp
+	Minor changes.  I attempted to add THR_JOINABLE to the activate()
+	call but that resulted in a permanent hangup on Linux when trying
+	to exit the application
+	
+        * docs/tutorials/015/Client.cpp
+        * docs/tutorials/015/Client.h
+        * docs/tutorials/015/Compressor.cpp
+        * docs/tutorials/015/Compressor.h
+        * docs/tutorials/015/Crypt.cpp
+        * docs/tutorials/015/Crypt.h
+        * docs/tutorials/015/Handler.cpp
+        * docs/tutorials/015/Handler.h
+        * docs/tutorials/015/Makefile
+        * docs/tutorials/015/Makefile.client
+        * docs/tutorials/015/Makefile.server
+        * docs/tutorials/015/Protocol_Stream.cpp
+        * docs/tutorials/015/Protocol_Stream.h
+        * docs/tutorials/015/Protocol_Task.cpp
+        * docs/tutorials/015/Protocol_Task.h
+        * docs/tutorials/015/Recv.cpp
+        * docs/tutorials/015/Recv.h
+        * docs/tutorials/015/Server.cpp
+        * docs/tutorials/015/Server.h
+        * docs/tutorials/015/Xmit.cpp
+        * docs/tutorials/015/Xmit.h
+        * docs/tutorials/015/client.cpp
+        * docs/tutorials/015/page01.html
+        * docs/tutorials/015/page02.html
+        * docs/tutorials/015/page03.html
+        * docs/tutorials/015/page04.html
+        * docs/tutorials/015/page05.html
+        * docs/tutorials/015/page06.html
+        * docs/tutorials/015/server.cpp
+	The beginnings of a protocol stream tutorial. The code is done but 
+	the tutorializing (eg -- HTML and comments) isn't complete.
+	
 Sat Oct 17 21:20:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (gethrtime): updated comments on Alpha rpcc

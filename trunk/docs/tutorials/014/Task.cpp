@@ -44,8 +44,7 @@ int Task::open(void *arg)
   // since the Task waits for all of its threads to rejoin.
   // 
 
-  return this->activate(THR_NEW_LWP,
-			d_numberOfThreads);
+  return this->activate(THR_NEW_LWP, d_numberOfThreads);
 }
 
 int Task::put(ACE_Message_Block *message,
