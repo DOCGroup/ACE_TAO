@@ -11,7 +11,7 @@ use PerlACE::Run_Test;
 $status = 0;
 $iorfile = PerlACE::LocalFile ("test.ior");
 
-print STDERR "================ Thread Pool Sequence Latency Test -- octet sequence\n";
+print STDERR "================ Thread Per Connection Sequence Latency Test -- octet sequence\n";
 
 unlink $iorfile;
 
@@ -47,7 +47,7 @@ if ($server != 0) {
 }
 
 
-print STDERR "================ Thread Pool Sequence Latency Test -- long sequence\n";
+print STDERR "================ Thread Per Connection Sequence Latency Test -- long sequence\n";
 
 unlink $iorfile;
 
@@ -73,7 +73,7 @@ $server = $SV->WaitKill (10);
 unlink $iorfile;
 
 
-print STDERR "================ Thread Pool Sequence Latency Test -- short sequence\n";
+print STDERR "================ Thread Per Connection Sequence Latency Test -- short sequence\n";
 
 unlink $iorfile;
 
@@ -99,7 +99,7 @@ $server = $SV->WaitKill (10);
 unlink $iorfile;
 
 
-print STDERR "================ Thread Pool Sequence Latency Test -- char sequence\n";
+print STDERR "================ Thread Per Connection Sequence Latency Test -- char sequence\n";
 
 unlink $iorfile;
 
@@ -125,7 +125,7 @@ $server = $SV->WaitKill (10);
 unlink $iorfile;
 
 
-print STDERR "================ Thread Pool Sequence Latency Test -- longlong sequence\n";
+print STDERR "================ Thread Per Connection Sequence Latency Test -- longlong sequence\n";
 
 unlink $iorfile;
 
@@ -151,7 +151,7 @@ $server = $SV->WaitKill (10);
 unlink $iorfile;
 
 
-print STDERR "================ Thread Pool Sequence Latency Test -- double sequence\n";
+print STDERR "================ Thread Per Connection Sequence Latency Test -- double sequence\n";
 
 unlink $iorfile;
 
