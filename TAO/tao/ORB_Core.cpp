@@ -1672,11 +1672,8 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
             TAO_Adapter_Registry *ar =
               other_core->adapter_registry ();
 
-             x = ar->create_collocated_object (stub,
-                                               mprofile);
-
-             if (x != 0)
-               return x;
+            return ar->create_collocated_object (stub,
+                                                 mprofile);
           }
       }
   }
