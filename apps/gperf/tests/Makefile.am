@@ -14,6 +14,7 @@ ACE_ROOT = $(top_srcdir)
 noinst_PROGRAMS =
 CLEANFILES =
 BUILT_SOURCES =
+
 ## Makefile.adainset.am 
 
 if !BUILD_USES_WCHAR
@@ -22,14 +23,10 @@ BUILT_SOURCES += \
   ada.cpp
 
 CLEANFILES += \
-  ada.cpp \
-  ada-stamp
+  ada.cpp
 
-ada.cpp: ada-stamp
-
-ada-stamp: $(srcdir)/ada.gperf
+ada.cpp: $(srcdir)/ada.gperf
 	../src/gperf -a -k1,4,$$ $(srcdir)/ada.gperf> $@
-	@touch $@
 
 noinst_PROGRAMS += aout
 
@@ -54,14 +51,10 @@ BUILT_SOURCES += \
   c.cpp
 
 CLEANFILES += \
-  c.cpp \
-  c-stamp
+  c.cpp
 
-c.cpp: c-stamp
-
-c-stamp: $(srcdir)/c.gperf
+c.cpp: $(srcdir)/c.gperf
 	../src/gperf -a -p -c -l -S1 -o $(srcdir)/c.gperf> $@
-	@touch $@
 
 noinst_PROGRAMS += cout
 
@@ -86,14 +79,10 @@ BUILT_SOURCES += \
   cpp.cpp
 
 CLEANFILES += \
-  cpp.cpp \
-  cpp-stamp
+  cpp.cpp
 
-cpp.cpp: cpp-stamp
-
-cpp-stamp: $(srcdir)/cpp.gperf
+cpp.cpp: $(srcdir)/cpp.gperf
 	../src/gperf -a -D $(srcdir)/cpp.gperf> $@
-	@touch $@
 
 noinst_PROGRAMS += cppout
 
@@ -118,14 +107,10 @@ BUILT_SOURCES += \
   idl.cpp
 
 CLEANFILES += \
-  idl.cpp \
-  idl-stamp
+  idl.cpp
 
-idl.cpp: idl-stamp
-
-idl-stamp: $(srcdir)/idl.gperf
+idl.cpp: $(srcdir)/idl.gperf
 	../src/gperf -m -M -c -C -D -S1 -E -T -a -o -p $(srcdir)/idl.gperf> $@
-	@touch $@
 
 noinst_PROGRAMS += iout
 
@@ -150,14 +135,10 @@ BUILT_SOURCES += \
   idl.cpp
 
 CLEANFILES += \
-  idl.cpp \
-  idl-stamp
+  idl.cpp
 
-idl.cpp: idl-stamp
-
-idl-stamp: $(srcdir)/idl.gperf
+idl.cpp: $(srcdir)/idl.gperf
 	../src/gperf -m -M -c -C -D -E -T -a -o -p $(srcdir)/idl.gperf> $@
-	@touch $@
 
 noinst_PROGRAMS += iout2
 
@@ -182,14 +163,10 @@ BUILT_SOURCES += \
   modula3.cpp
 
 CLEANFILES += \
-  modula3.cpp \
-  modula3-stamp
+  modula3.cpp
 
-modula3.cpp: modula3-stamp
-
-modula3-stamp: $(srcdir)/modula3.gperf
+modula3.cpp: $(srcdir)/modula3.gperf
 	../src/gperf -a -k1,2,$$ $(srcdir)/modula3.gperf> $@
-	@touch $@
 
 noinst_PROGRAMS += m3out
 
@@ -214,14 +191,10 @@ BUILT_SOURCES += \
   pascal.cpp
 
 CLEANFILES += \
-  pascal.cpp \
-  pascal-stamp
+  pascal.cpp
 
-pascal.cpp: pascal-stamp
-
-pascal-stamp: $(srcdir)/pascal.gperf
+pascal.cpp: $(srcdir)/pascal.gperf
 	../src/gperf -a -o -S2 -p $(srcdir)/pascal.gperf> $@
-	@touch $@
 
 noinst_PROGRAMS += pout
 
@@ -246,14 +219,10 @@ BUILT_SOURCES += \
   adadefs.cpp
 
 CLEANFILES += \
-  adadefs.cpp \
-  adadefs-stamp
+  adadefs.cpp
 
-adadefs.cpp: adadefs-stamp
-
-adadefs-stamp: $(srcdir)/adadefs.gperf
+adadefs.cpp: $(srcdir)/adadefs.gperf
 	../src/gperf -a -p -D -k1,$$ -s 2 -o $(srcdir)/adadefs.gperf> $@
-	@touch $@
 
 noinst_PROGRAMS += preout
 
@@ -278,14 +247,10 @@ BUILT_SOURCES += \
   tao.cpp
 
 CLEANFILES += \
-  tao.cpp \
-  tao-stamp
+  tao.cpp
 
-tao.cpp: tao-stamp
-
-tao-stamp: $(srcdir)/tao.gperf
+tao.cpp: $(srcdir)/tao.gperf
 	../src/gperf -c -C -D -E -f 0 -a -o $(srcdir)/tao.gperf> $@
-	@touch $@
 
 noinst_PROGRAMS += taoout
 
@@ -310,14 +275,10 @@ BUILT_SOURCES += \
   corba.cpp
 
 CLEANFILES += \
-  corba.cpp \
-  corba-stamp
+  corba.cpp
 
-corba.cpp: corba-stamp
-
-corba-stamp: $(srcdir)/corba.gperf
+corba.cpp: $(srcdir)/corba.gperf
 	../src/gperf -a -o $(srcdir)/corba.gperf> $@
-	@touch $@
 
 noinst_PROGRAMS += tout
 
