@@ -692,7 +692,7 @@ at your peril.  If you really need to call your entry point something
 other than <code>main</code>, you'll need to construct an
 ACE_Object_Manager.  Please see the <code>#define</code> of <code>main
 (int, char *[])</code> in <code>ace/OS.h</code> to see how ACE does
-that for entry points named <code>main</code>.
+that for entry points named <code>main</code>.<p>
 
 You can spawn a new task to run <code>ace_main</code>, using either
 VxWorks <code>sp</code>, or ACE'S <A NAME="spa"><code>spa</code></A>.
@@ -704,6 +704,16 @@ to <code>ace_main</code>.  Its usage is:
 </code></pre>
 
 All arguments must be quoted, even numbers.<p>
+
+By default, the ACE Makefiles link the ACE library into every
+executable.  If you want to run multiple ACE executables but just use
+a single ACE library, it should be possible, though I haven't tried
+it.  Just link the first executable to be loaded onto the target with
+the ACE library, as usual.  All other executables can be linked
+without the ACE library by added <code>ACELIB=</code> to the make
+invocation when building them.  When they are loaded onto the target,
+the should load against the symbols from the ACE library from the
+first executable that was loaded.<p>
 
 <HR>
 <H3><A NAME="svcsinstall">Building and Installing ACE Network Services</A></H3>
