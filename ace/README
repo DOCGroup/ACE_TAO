@@ -40,7 +40,7 @@ ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER
                                         Usually used with MFC
                                         applications.
 ACE_FINI_HOOK                           Can be #defined as executable code,
-                                        to be called at program termination.
+                                        to be executed at program termination.
 ACE_MAIN                                Renames "main (int, char *[])",
                                         for platforms such as g++/VxWorks
                                         that don't allow "main".  Requires
