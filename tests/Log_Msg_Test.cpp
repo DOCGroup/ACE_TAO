@@ -372,13 +372,15 @@ test_ostream (void)
 
   // Read the file into the buffer.
   ssize_t size = file.recv (buffer,
-                                info.size_);
+                            info.size_);
   if (size != info.size_)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("Read %d bytes, rather than expected %d bytes\n"),
                        size,
                        info.size_),
                       -1);
+  // Make sure to NUL-terminate this turkey!
+  buffer[size] = '\0';
 
   // Set the ostream back to NULL to prevent "confusion".
   ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
