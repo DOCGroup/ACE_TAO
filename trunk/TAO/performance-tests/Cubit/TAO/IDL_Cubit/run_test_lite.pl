@@ -19,14 +19,14 @@ $status = 0;
 $iorfile = PerlACE::LocalFile ("cubit.ior");
 $iiop_lite_conf = PerlACE::LocalFile ("iiop_lite.conf");
 $uiop_lite_conf = PerlACE::LocalFile ("uiop_lite.conf");
-$server_shmiop_conf = PerlACE::LocalFile ("server_shmiop.conf");
-
+#$server_shmiop_conf = PerlACE::LocalFile ("server_shmiop_lite.conf");
+#$client_shmiop_conf = PerlACE::LocalFile ("client_shmiop_lite.conf");
 $svnsflags = " -f $iorfile";
 $clnsflags = " -f $iorfile";
 $clflags = "";
 $svflags = "";
 $quietflag = " -q ";
-$giopliteflag = 0;
+
 
 ###############################################################################
 # Parse the arguments
@@ -99,33 +99,42 @@ if (! (-x $SV->Executable () && -x $CL->Executable)) {
 unlink $iorfile;
 
 print STDERR "============================================================\n";
-print STDERR "Running IDL_Cubit with the default ORB protocol.\n\n";
+print STDERR "Running IDL_Cubit with the IIOP Lite ORB protocol.\n\n";
 
 $SV->Arguments ($svflags . $svnsflags);
 $CL->Arguments ($clflags . $clnsflags . $quietflag . " -x ");
+
+$SV->Arguments ($SV->Arguments () . " -ORBSvcConf $iiop_lite_conf ");
+$CL->Arguments ($CL->Arguments () . " -ORBSvcConf $iiop_lite_conf ");
 
 run_test_helper ();
 
 if ($OSNAME ne "MSWin32") {
     print STDERR "============================================================\n";
-    print STDERR "Running IDL_Cubit with the UIOP protocol.\n\n";
+    print STDERR "Running IDL_Cubit with the UIOP Lite protocol.\n\n";
 
     $SV->Arguments ($svflags . $svnsflags . " -ORBEndpoint uiop:// ");
     $CL->Arguments ($clflags . $clnsflags . $quietflag . " -x ");
 
+    $SV->Arguments ($SV->Arguments () . " -ORBSvcConf $uiop_lite_conf ");
+    $CL->Arguments ($CL->Arguments () . " -ORBSvcConf $uiop_lite_conf ");
+
     run_test_helper ();
 }
 
-print STDERR "============================================================\n";
-print STDERR "Running IDL_Cubit with the SHMIOP protocol.\n\n";
+# This portions needs to be enabled once we have an SHMIOP_Lite in
+# place..
 
-$SV->Arguments ($svflags . $svnsflags
-                . " -ORBEndpoint shmiop:// -ORBSvcconf $server_shmiop_conf ");
-$CL->Arguments ($clflags . $clnsflags . $quietflag . " -x ");
+#print STDERR "============================================================\n";
+#print STDERR "Running IDL_Cubit with the SHMIOP Lite protocol.\n\n";
 
-run_test_helper ();
+#$SV->Arguments ($svflags . $svnsflags
+#                . " -ORBEndpoint shmiop:// -ORBSvcconf $server_shmiop_conf ");
+#$CL->Arguments ($clflags . $clnsflags . $quietflag . "-ORBSvcConf $client_shmiop_conf -x ");
+
+#run_test_helper ();
 
 # Clean up SHMIOP files
-PerlACE::check_n_cleanup_files ("server_shmiop_*");
+#PerlACE::check_n_cleanup_files ("server_shmiop_*");
 
 exit $status;
