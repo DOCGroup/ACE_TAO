@@ -1,56 +1,62 @@
+Sun Jan 28 08:03:08 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/tests.dsw:
+        * tests/Message_Queue_Test_Ex.dsp:
+          Add NT project files for the new test
+
 Sun Jan 28 08:32:07 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* netsvcs/lib/Client_Logging_Handler.cpp: Fixed the order in which
-	  the iostream messages are logged so that we don't bomb out when
- 	  the VERBOSE option is enabled.  Thanks to Craig Rodrigues
- 	  <crodrigu@bbn.com> for helping find this problem.
+        * netsvcs/lib/Client_Logging_Handler.cpp: Fixed the order in which
+          the iostream messages are logged so that we don't bomb out when
+          the VERBOSE option is enabled.  Thanks to Craig Rodrigues
+          <crodrigu@bbn.com> for helping find this problem.
 
-	* ace/Message_Queue_T.h: Make sure the lock() forwarding method
-	  forwards to queue_.lock().
+        * ace/Message_Queue_T.h: Make sure the lock() forwarding method
+          forwards to queue_.lock().
 
-	* ace/Message_Queue_T.{h,i,cpp}: There's no reason to dynamically 
-	  allocate the implementation of ACE_Message_Queue_Ex -- instead
- 	  it can be simply an instance of ACE_Message_Queue.
+        * ace/Message_Queue_T.{h,i,cpp}: There's no reason to dynamically
+          allocate the implementation of ACE_Message_Queue_Ex -- instead
+          it can be simply an instance of ACE_Message_Queue.
 
-	* ace/Message_Queue_T.h: Make sure that the methods on
-	  ACE_Message_Queue_Ex are properly virtual.  Thanks to Kitty for
- 	  pointing this out.
+        * ace/Message_Queue_T.h: Make sure that the methods on
+          ACE_Message_Queue_Ex are properly virtual.  Thanks to Kitty for
+          pointing this out.
 
 Sat Jan 27 19:40:36 2001  Ossama Othman  <ossama@uci.edu>
 
-	* bin/auto_run_tests.lst:
+        * bin/auto_run_tests.lst:
 
-	  Added TAO's Portable Interceptor "Service_Context_Manipulation"
-	  test to the list of tests to run.
+          Added TAO's Portable Interceptor "Service_Context_Manipulation"
+          test to the list of tests to run.
 
 Sat Jan 27 19:34:20 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tests/Config_Test.{h,cpp}: Fixed the use of "bool," which is
-	  not supported on older compilers.  Thanks to Kitty for reporting
- 	  this.
+        * tests/Config_Test.{h,cpp}: Fixed the use of "bool," which is
+          not supported on older compilers.  Thanks to Kitty for reporting
+          this.
 
 Sat Jan 27 15:22:03 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Thread_Mutex_Test.cpp (test):
+        * tests/Thread_Mutex_Test.cpp (test):
 
-	  Added code that tests mutex timeout functionality.
+          Added code that tests mutex timeout functionality.
 
 Sat Jan 27 15:16:33 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/POSIX_Proactor.h: Replace ACE_Thread_Mutex with ACE_SYNCH_MUTEX 
-	  to avoid the need for conditional compilation.
+        * ace/POSIX_Proactor.h: Replace ACE_Thread_Mutex with ACE_SYNCH_MUTEX
+          to avoid the need for conditional compilation.
 
-	* ace/SUN_Proactor.h: Don't use ACE_Condition<ACE_Thread_Mutex>
-	  but instead use the ACE_SYNCH_CONDITION, which also avoids the
- 	  need to conditionally compile for threaded platforms.
+        * ace/SUN_Proactor.h: Don't use ACE_Condition<ACE_Thread_Mutex>
+          but instead use the ACE_SYNCH_CONDITION, which also avoids the
+          need to conditionally compile for threaded platforms.
 
 Sat Jan 27 13:29:51 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/config-linux.h:
+        * ace/config-linux.h:
 
-	  Declare the pthread_mutex_timedlock() prototype as an
-	  'extern "C"' function.  This fixes an "unresolved symbol" link
-	  error.
+          Declare the pthread_mutex_timedlock() prototype as an
+          'extern "C"' function.  This fixes an "unresolved symbol" link
+          error.
 
 Sat Jan 27 10:39:28 2001  Carlos O'Ryan  <coryan@uci.edu>
 
