@@ -1,3 +1,12 @@
+Tue Nov 23 12:47:39 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Malloc_Test: Updated the Malloc_Test so that it'll
+	  allocate and test doubles to make sure they work correctly.
+
+	* ace/Malloc.h: Modified the alignment logic to make things 
+	  work properly for datatypes like doubles.  Thanks to Alexander
+ 	  Belopolsky <belopolsky@my-deja.com> for working this out.
+
 Tue Nov 23 12:02:53 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/OS.i: Moved the inline methods for sec()/usec()/msec() so

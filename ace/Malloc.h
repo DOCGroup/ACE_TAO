@@ -78,6 +78,13 @@ struct ACE_Export ACE_Malloc_Stats
 #define ACE_MALLOC_PADDING 1
 #endif /* ACE_MALLOC_PADDING */
 
+#if !defined (ACE_MALLOC_ALIGN)
+// Align to an address that's a multiple of a double.  Notice the
+// casting to int for <sizeof> since otherwise unsigned int arithmetic
+// is used and some awful things may happen.
+#define ACE_MALLOC_ALIGN (int (sizeof (double)))
+#endif /* ACE_MALLOC_ALIGN */
+
 #if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
 #define ACE_MALLOC_HEADER_PTR ACE_Based_Pointer<ACE_Malloc_Header>
 #define ACE_NAME_NODE_PTR ACE_Based_Pointer<ACE_Name_Node>
@@ -105,7 +112,7 @@ public:
 
 #if (ACE_MALLOC_PADDING > 1)
 #define ACE_MALLOC_PADDING_SIZE ((ACE_MALLOC_PADDING - \
-                                  (sizeof (ACE_Malloc_Header)) / sizeof (long)))
+                                  (sizeof (ACE_Malloc_Header)) / ACE_MALLOC_ALIGN))
   long padding_[ACE_MALLOC_PADDING_SIZE < 1 : ACE_MALLOC_PADDING_SIZE];
 #endif /* ACE_MALLOC_PADDING > 0 */
 
@@ -193,23 +200,21 @@ public:
 #if defined (ACE_HAS_MALLOC_STATS)
   // Keep statistics about ACE_Malloc state and performance.
   ACE_Malloc_Stats malloc_stats_;
-#define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof (ACE_Name_Node *) \
+#define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof (ACE_NAME_NODE_PTR) \
                                       + sizeof (ACE_Malloc_Header *) \
                                       + MAXNAMELEN  \
                                       + sizeof (ACE_Malloc_Stats)))
 #else
-#define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof (ACE_Name_Node *) \
+#define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof (ACE_NAME_NODE_PTR) \
                                       + sizeof (ACE_Malloc_Header *) \
                                       + MAXNAMELEN))
 #endif /* ACE_HAS_MALLOC_STATS */
 
-// Notice the casting to int for <sizeof> otherwise unsigned int
-// arithmetic is used and some awful things may happen.
-#define ACE_CONTROL_BLOCK_ALIGN_LONGS ((ACE_CONTROL_BLOCK_SIZE % ACE_MALLOC_PADDING != 0 \
-                                        ? ACE_MALLOC_PADDING - (ACE_CONTROL_BLOCK_SIZE) \
-                                        : ACE_MALLOC_PADDING) / int (sizeof (long)))
+#define ACE_CONTROL_BLOCK_ALIGN ((ACE_CONTROL_BLOCK_SIZE % ACE_MALLOC_ALIGN != 0 \
+                                        ? ACE_MALLOC_ALIGN - (ACE_CONTROL_BLOCK_SIZE) \
+                                        : ACE_MALLOC_ALIGN) / ACE_MALLOC_ALIGN)
 
-  long align_[ACE_CONTROL_BLOCK_ALIGN_LONGS < 1 ? 1 : ACE_CONTROL_BLOCK_ALIGN_LONGS];
+  long align_[ACE_CONTROL_BLOCK_ALIGN < 1 ? 1 : ACE_CONTROL_BLOCK_ALIGN];
   // Force alignment.
 
   ACE_Malloc_Header base_;
