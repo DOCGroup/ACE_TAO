@@ -1,7 +1,6 @@
 // $Id$
 
 #include "EC_Event_Channel_Base.h"
-#include "EC_Factory.h"
 #include "EC_Dispatching.h"
 #include "EC_ConsumerAdmin.h"
 #include "EC_SupplierAdmin.h"

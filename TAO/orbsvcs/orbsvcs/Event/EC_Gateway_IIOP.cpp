@@ -215,7 +215,6 @@ TAO_EC_Gateway_IIOP::cleanup_consumer_proxies_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USE
     }
 }
 
-
 void
 TAO_EC_Gateway_IIOP::update_consumer_i (
     const RtecEventChannelAdmin::ConsumerQOS& c_qos
@@ -230,6 +229,15 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
 
   // ACE_DEBUG ((LM_DEBUG, "ECG (%t) update_consumer_i \n"));
 
+  this->open_i (c_qos ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+}
+
+void
+TAO_EC_Gateway_IIOP::open_i (
+    const RtecEventChannelAdmin::ConsumerQOS& c_qos
+    ACE_ENV_ARG_DECL)
+{
   // = Connect as a supplier to the consumer EC
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
     this->consumer_ec_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
