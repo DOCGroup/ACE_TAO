@@ -652,6 +652,21 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
                       ? dest->write_ulong (bounds)
                       : 0);
 
+  if (!continue_append)
+    {
+      ACE_DEBUG ((
+          LM_DEBUG,
+          ACE_TEXT ("TAO_Marshal_Sequence::append detected error\n")
+        ));
+      ACE_THROW_RETURN (CORBA::MARSHAL (),
+                        CORBA::TypeCode::TRAVERSE_STOP);
+    }
+
+  if (bounds == 0)
+    {
+      return CORBA::TypeCode::TRAVERSE_CONTINUE;
+    }
+
   if (continue_append)
     {
       // Get element typecode.
