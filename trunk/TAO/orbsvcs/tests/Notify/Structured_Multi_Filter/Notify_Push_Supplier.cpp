@@ -16,7 +16,7 @@ Notify_Push_Supplier::connect (
   CosNotifyChannelAdmin::ProxyConsumer_var proxyconsumer =
     supplier_admin->obtain_notification_push_consumer (
       CosNotifyChannelAdmin::STRUCTURED_EVENT,
-      proxy_consumer_id_
+      proxy_id_
       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -51,12 +51,12 @@ Notify_Push_Supplier::connect (
       proxyconsumer->add_filter (filter.in ());
     }
 
-  this->proxy_consumer_ =
+  this->proxy_ =
     CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow (
       proxyconsumer.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->proxy_consumer_->connect_structured_push_supplier (objref.in ()
+  this->proxy_->connect_structured_push_supplier (objref.in ()
                                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 

@@ -1,3 +1,32 @@
+Thu Jun 19 14:08:22 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/.depend.Makefile.RT_Notification:
+	* orbsvcs/tests/Notify/RT_lib/.depend.Makefile:
+	* orbsvcs/tests/Notify/Test_Filter/.depend.Makefile:
+	* orbsvcs/tests/Notify/lib/.depend.Makefile:
+
+	  Updated dependencies.
+
+	* orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Supplier.cpp:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Notify_Sequence_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Notify_Structured_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+
+	  Use <proxy_id_> instead of <supplier_proxy_id_> and
+	  <consumer_proxy_id_>.
+	  Use <proxy_> instead of <supplier_proxy_> and
+	  <consumer_proxy_>.
+	  This is required due to changes to implementation of Test
+	  Supplier and Consumers.
+
 Thu Jun 19 11:54:31 2003  Gan Deng <gan.deng@vanderbilt.edu>
 
         * performance-tests/Sequence_Latency/Makefile:

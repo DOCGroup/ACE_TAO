@@ -172,7 +172,7 @@ Throughput_StructuredPushSupplier::svc (void)
           // Any.
           event.filterable_data[0].value <<= Throughput_base;
 
-          this->proxy_consumer_->push_structured_event (event
+          this->proxy_->push_structured_event (event
                                                         ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
