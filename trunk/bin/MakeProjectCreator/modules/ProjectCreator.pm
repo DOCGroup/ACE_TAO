@@ -1530,7 +1530,7 @@ sub remove_duplicated_files {
   my($dest)   = shift;
   my($source) = shift;
   my($names)  = $self->{$dest};
-  my(@slist)  = $self->get_component_list($source);
+  my(@slist)  = $self->get_component_list($source, 1);
   my(%shash)  = ();
 
   ## Convert the array into keys for a hash table
@@ -1880,10 +1880,11 @@ sub exe_target {
 
 
 sub get_component_list {
-  my($self)  = shift;
-  my($tag)   = shift;
-  my($names) = $self->{$tag};
-  my(@list)  = ();
+  my($self)      = shift;
+  my($tag)       = shift;
+  my($noconvert) = shift;
+  my($names)     = $self->{$tag};
+  my(@list)      = ();
 
   foreach my $name (keys %$names) {
     my($comps)  = $$names{$name};
@@ -1893,7 +1894,11 @@ sub get_component_list {
     }
   }
 
-  if ($self->{'convert_slashes'}) {
+  ## By default, if 'convert_slashes' is true, then we convert slashes
+  ## to backslashes.  There are cases where we do not want to convert
+  ## the slashes, in that case get_component_list() was called with
+  ## an additional parameter indicating this.
+  if (!$noconvert && $self->{'convert_slashes'}) {
     for(my $i = 0; $i <= $#list; $i++) {
       $list[$i] = $self->slash_to_backslash($list[$i]);
     }
