@@ -1,3 +1,10 @@
+Fri Sep 21 22:11:53 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/ACE_SSL_LIB.dsp:
+
+	  Removed hardcoded user-specific include paths, and user-specific
+	  preprocessor macro definitions.
+
 Thu Sep 20 18:15:49 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/Config_Test.cpp: Added some more tests to verify correct
