@@ -1014,7 +1014,7 @@ Mon Jun 12 15:41:51 2000  Luther J Baker  <luther@cs.wustl.edu>
 
         * pace/defines.h:
 
-          Removed #include "codes.h" from reposistory.
+          Removed #include "codes.h" from repository.
 
 Fri Jun  9 14:05:25 2000  Luther J Baker  <luther@cs.wustl.edu>
 
@@ -1137,7 +1137,7 @@ Mon Jun  5 17:22:23 2000  Luther J Baker  <luther@cs.wustl.edu>
         * pace/paces.dsp
         * pace/pacesd.dsp
 
-          Removed from the respository.
+          Removed from the repository.
           These files are generated (ie: paces.lib),
           not project files.
 
