@@ -839,10 +839,14 @@ TAO_CodeGen::start_implementation_header (const char *fname)
       this->implementation_header_->print ("#ifndef %s\n", macro_name);
       this->implementation_header_->print ("#define %s\n\n", macro_name);
 
-      // We must include all the skeleton headers corresponding to
+      // @@ (JP) I think the code below can be safely left out. It has
+      // been modified but not checked, so I'll leave it here for a 
+      // while to make sure it's really safe to leave out. 2000/01/22
+#if 0
+      // We must include all the client headers corresponding to
       // IDL files included by the current IDL file.
       // We will use the included IDL file names as they appeared
-      // in the original main IDL file, not the one  which went
+      // in the original main IDL file, not the ones which went
       // thru CC preprocessor.
       for (size_t j = 0;
            j < idl_global->n_included_idl_files ();
@@ -855,11 +859,12 @@ TAO_CodeGen::start_implementation_header (const char *fname)
               UTL_String idl_name_str (idl_name);
 
               const char* implementation_hdr =
-                IDL_GlobalData::be_get_implementation_hdr (&idl_name_str, 1);
+                IDL_GlobalData::be_get_client_hdr (&idl_name_str, 1);
 
               this->implementation_header_->print ("#include \"%s\"\n",
-                                           implementation_hdr);
+                                                   implementation_hdr);
             }
+#endif
 
       *this->implementation_header_
         << "#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
