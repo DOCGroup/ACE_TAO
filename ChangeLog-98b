@@ -1,5 +1,9 @@
 Fri Oct 16 15:45:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace: Replaced all #if !defined (ACE_FOO_H) with #ifndef
+ 	  ACE_FOO_H since many C++ preprocessors can recognize this idiom
+ 	  and optimize for it.
+
 	* tests/Upgradable_RW_Test.cpp: Revised the programming style ;-).
 
 	* tests/Map_Manager_Test.cpp: Replaced all uses of postfix ++
