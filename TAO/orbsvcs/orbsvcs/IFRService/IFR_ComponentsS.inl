@@ -29,17 +29,17 @@
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_get_def_kind_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::IRObject::_get_def_kind_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -50,17 +50,17 @@ POA_CORBA::ComponentIR::EventDef::_get_def_kind_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::destroy_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::IRObject::destroy_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -71,17 +71,17 @@ POA_CORBA::ComponentIR::EventDef::destroy_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::lookup_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Container::lookup_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -92,17 +92,17 @@ POA_CORBA::ComponentIR::EventDef::lookup_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::contents_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Container::contents_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -113,17 +113,17 @@ POA_CORBA::ComponentIR::EventDef::contents_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::lookup_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Container::lookup_name_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -134,17 +134,17 @@ POA_CORBA::ComponentIR::EventDef::lookup_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::describe_contents_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Container::describe_contents_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -155,17 +155,17 @@ POA_CORBA::ComponentIR::EventDef::describe_contents_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::create_module_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Container::create_module_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -176,17 +176,17 @@ POA_CORBA::ComponentIR::EventDef::create_module_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::create_constant_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Container::create_constant_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -197,17 +197,17 @@ POA_CORBA::ComponentIR::EventDef::create_constant_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::create_struct_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Container::create_struct_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -218,17 +218,17 @@ POA_CORBA::ComponentIR::EventDef::create_struct_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::create_union_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Container::create_union_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -239,17 +239,17 @@ POA_CORBA::ComponentIR::EventDef::create_union_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::create_enum_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Container::create_enum_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -260,17 +260,17 @@ POA_CORBA::ComponentIR::EventDef::create_enum_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::create_alias_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Container::create_alias_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -281,17 +281,17 @@ POA_CORBA::ComponentIR::EventDef::create_alias_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::create_interface_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Container::create_interface_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -302,17 +302,17 @@ POA_CORBA::ComponentIR::EventDef::create_interface_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::create_value_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Container::create_value_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -323,17 +323,17 @@ POA_CORBA::ComponentIR::EventDef::create_value_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::create_value_box_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Container::create_value_box_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -344,17 +344,17 @@ POA_CORBA::ComponentIR::EventDef::create_value_box_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::create_exception_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Container::create_exception_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -365,17 +365,17 @@ POA_CORBA::ComponentIR::EventDef::create_exception_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::create_native_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Container::create_native_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -386,17 +386,17 @@ POA_CORBA::ComponentIR::EventDef::create_native_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::create_abstract_interface_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Container::create_abstract_interface_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -407,17 +407,17 @@ POA_CORBA::ComponentIR::EventDef::create_abstract_interface_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::create_local_interface_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Container::create_local_interface_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -428,17 +428,17 @@ POA_CORBA::ComponentIR::EventDef::create_local_interface_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::create_ext_value_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Container::create_ext_value_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -446,17 +446,17 @@ POA_CORBA::ComponentIR::EventDef::create_ext_value_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_get_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Contained::_get_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -464,17 +464,17 @@ POA_CORBA::ComponentIR::EventDef::_get_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_set_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Contained::_set_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -482,17 +482,17 @@ POA_CORBA::ComponentIR::EventDef::_set_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_get_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Contained::_get_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -500,17 +500,17 @@ POA_CORBA::ComponentIR::EventDef::_get_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_set_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Contained::_set_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -518,17 +518,17 @@ POA_CORBA::ComponentIR::EventDef::_set_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_get_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Contained::_get_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -536,17 +536,17 @@ POA_CORBA::ComponentIR::EventDef::_get_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_set_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Contained::_set_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -554,17 +554,17 @@ POA_CORBA::ComponentIR::EventDef::_set_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_get_defined_in_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Contained::_get_defined_in_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -572,17 +572,17 @@ POA_CORBA::ComponentIR::EventDef::_get_defined_in_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_get_absolute_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Contained::_get_absolute_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -590,17 +590,17 @@ POA_CORBA::ComponentIR::EventDef::_get_absolute_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_get_containing_repository_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Contained::_get_containing_repository_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -611,17 +611,17 @@ POA_CORBA::ComponentIR::EventDef::_get_containing_repository_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::describe_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Contained::describe_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -632,17 +632,17 @@ POA_CORBA::ComponentIR::EventDef::describe_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::move_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::Contained::move_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -650,17 +650,17 @@ POA_CORBA::ComponentIR::EventDef::move_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_get_type_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IDLType_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::IDLType * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::IDLType::_get_type_skel (
-      req,
-      (POA_CORBA::IDLType_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -668,17 +668,17 @@ POA_CORBA::ComponentIR::EventDef::_get_type_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_get_supported_interfaces_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ValueDef_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::ValueDef::_get_supported_interfaces_skel (
-      req,
-      (POA_CORBA::ValueDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -686,17 +686,17 @@ POA_CORBA::ComponentIR::EventDef::_get_supported_interfaces_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_set_supported_interfaces_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ValueDef_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::ValueDef::_set_supported_interfaces_skel (
-      req,
-      (POA_CORBA::ValueDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -704,17 +704,17 @@ POA_CORBA::ComponentIR::EventDef::_set_supported_interfaces_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_get_initializers_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ValueDef_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::ValueDef::_get_initializers_skel (
-      req,
-      (POA_CORBA::ValueDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -722,17 +722,17 @@ POA_CORBA::ComponentIR::EventDef::_get_initializers_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_set_initializers_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ValueDef_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::ValueDef::_set_initializers_skel (
-      req,
-      (POA_CORBA::ValueDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -740,17 +740,17 @@ POA_CORBA::ComponentIR::EventDef::_set_initializers_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_get_base_value_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ValueDef_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::ValueDef::_get_base_value_skel (
-      req,
-      (POA_CORBA::ValueDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -758,17 +758,17 @@ POA_CORBA::ComponentIR::EventDef::_get_base_value_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_set_base_value_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ValueDef_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::ValueDef::_set_base_value_skel (
-      req,
-      (POA_CORBA::ValueDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -776,17 +776,17 @@ POA_CORBA::ComponentIR::EventDef::_set_base_value_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_get_abstract_base_values_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ValueDef_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::ValueDef::_get_abstract_base_values_skel (
-      req,
-      (POA_CORBA::ValueDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -794,17 +794,17 @@ POA_CORBA::ComponentIR::EventDef::_get_abstract_base_values_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_set_abstract_base_values_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ValueDef_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::ValueDef::_set_abstract_base_values_skel (
-      req,
-      (POA_CORBA::ValueDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -812,17 +812,17 @@ POA_CORBA::ComponentIR::EventDef::_set_abstract_base_values_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_get_is_abstract_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ValueDef_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::ValueDef::_get_is_abstract_skel (
-      req,
-      (POA_CORBA::ValueDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -830,17 +830,17 @@ POA_CORBA::ComponentIR::EventDef::_get_is_abstract_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_set_is_abstract_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ValueDef_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::ValueDef::_set_is_abstract_skel (
-      req,
-      (POA_CORBA::ValueDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -848,17 +848,17 @@ POA_CORBA::ComponentIR::EventDef::_set_is_abstract_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_get_is_custom_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ValueDef_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::ValueDef::_get_is_custom_skel (
-      req,
-      (POA_CORBA::ValueDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -866,17 +866,17 @@ POA_CORBA::ComponentIR::EventDef::_get_is_custom_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_set_is_custom_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ValueDef_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::ValueDef::_set_is_custom_skel (
-      req,
-      (POA_CORBA::ValueDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -884,17 +884,17 @@ POA_CORBA::ComponentIR::EventDef::_set_is_custom_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_get_is_truncatable_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ValueDef_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::ValueDef::_get_is_truncatable_skel (
-      req,
-      (POA_CORBA::ValueDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -902,17 +902,17 @@ POA_CORBA::ComponentIR::EventDef::_get_is_truncatable_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_set_is_truncatable_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ValueDef_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::ValueDef::_set_is_truncatable_skel (
-      req,
-      (POA_CORBA::ValueDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -923,17 +923,17 @@ POA_CORBA::ComponentIR::EventDef::_set_is_truncatable_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::is_a_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ValueDef_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::ValueDef::is_a_skel (
-      req,
-      (POA_CORBA::ValueDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -944,17 +944,17 @@ POA_CORBA::ComponentIR::EventDef::is_a_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::describe_value_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ValueDef_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::ValueDef::describe_value_skel (
-      req,
-      (POA_CORBA::ValueDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -965,17 +965,17 @@ POA_CORBA::ComponentIR::EventDef::describe_value_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::create_value_member_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ValueDef_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::ValueDef::create_value_member_skel (
-      req,
-      (POA_CORBA::ValueDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -986,17 +986,17 @@ POA_CORBA::ComponentIR::EventDef::create_value_member_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::create_attribute_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ValueDef_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::ValueDef::create_attribute_skel (
-      req,
-      (POA_CORBA::ValueDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1007,17 +1007,17 @@ POA_CORBA::ComponentIR::EventDef::create_attribute_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::create_operation_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ValueDef_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::ValueDef::create_operation_skel (
-      req,
-      (POA_CORBA::ValueDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1025,17 +1025,17 @@ POA_CORBA::ComponentIR::EventDef::create_operation_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_get_ext_initializers_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ExtValueDef_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::ExtValueDef * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::ExtValueDef::_get_ext_initializers_skel (
-      req,
-      (POA_CORBA::ExtValueDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1043,17 +1043,17 @@ POA_CORBA::ComponentIR::EventDef::_get_ext_initializers_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::_set_ext_initializers_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ExtValueDef_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::ExtValueDef * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::ExtValueDef::_set_ext_initializers_skel (
-      req,
-      (POA_CORBA::ExtValueDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1064,17 +1064,17 @@ POA_CORBA::ComponentIR::EventDef::_set_ext_initializers_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::describe_ext_value_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ExtValueDef_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::ExtValueDef * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::ExtValueDef::describe_ext_value_skel (
-      req,
-      (POA_CORBA::ExtValueDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1085,17 +1085,17 @@ POA_CORBA::ComponentIR::EventDef::describe_ext_value_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventDef::create_ext_attribute_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ExtValueDef_ptr impl = (POA_CORBA::ComponentIR::EventDef_ptr) obj;
+  POA_CORBA::ExtValueDef * const impl = static_cast<POA_CORBA::ComponentIR::EventDef *> (servant);
   POA_CORBA::ExtValueDef::create_ext_attribute_skel (
-      req,
-      (POA_CORBA::ExtValueDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1103,17 +1103,17 @@ POA_CORBA::ComponentIR::EventDef::create_ext_attribute_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Container::_get_def_kind_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::Container_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::Container *> (servant);
   POA_CORBA::IRObject::_get_def_kind_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1124,17 +1124,17 @@ POA_CORBA::ComponentIR::Container::_get_def_kind_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Container::destroy_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::Container_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::Container *> (servant);
   POA_CORBA::IRObject::destroy_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1145,17 +1145,17 @@ POA_CORBA::ComponentIR::Container::destroy_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Container::lookup_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Container_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Container *> (servant);
   POA_CORBA::Container::lookup_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1166,17 +1166,17 @@ POA_CORBA::ComponentIR::Container::lookup_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Container::contents_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Container_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Container *> (servant);
   POA_CORBA::Container::contents_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1187,17 +1187,17 @@ POA_CORBA::ComponentIR::Container::contents_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Container::lookup_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Container_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Container *> (servant);
   POA_CORBA::Container::lookup_name_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1208,17 +1208,17 @@ POA_CORBA::ComponentIR::Container::lookup_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Container::describe_contents_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Container_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Container *> (servant);
   POA_CORBA::Container::describe_contents_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1229,17 +1229,17 @@ POA_CORBA::ComponentIR::Container::describe_contents_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Container::create_module_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Container_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Container *> (servant);
   POA_CORBA::Container::create_module_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1250,17 +1250,17 @@ POA_CORBA::ComponentIR::Container::create_module_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Container::create_constant_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Container_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Container *> (servant);
   POA_CORBA::Container::create_constant_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1271,17 +1271,17 @@ POA_CORBA::ComponentIR::Container::create_constant_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Container::create_struct_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Container_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Container *> (servant);
   POA_CORBA::Container::create_struct_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1292,17 +1292,17 @@ POA_CORBA::ComponentIR::Container::create_struct_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Container::create_union_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Container_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Container *> (servant);
   POA_CORBA::Container::create_union_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1313,17 +1313,17 @@ POA_CORBA::ComponentIR::Container::create_union_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Container::create_enum_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Container_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Container *> (servant);
   POA_CORBA::Container::create_enum_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1334,17 +1334,17 @@ POA_CORBA::ComponentIR::Container::create_enum_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Container::create_alias_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Container_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Container *> (servant);
   POA_CORBA::Container::create_alias_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1355,17 +1355,17 @@ POA_CORBA::ComponentIR::Container::create_alias_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Container::create_interface_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Container_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Container *> (servant);
   POA_CORBA::Container::create_interface_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1376,17 +1376,17 @@ POA_CORBA::ComponentIR::Container::create_interface_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Container::create_value_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Container_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Container *> (servant);
   POA_CORBA::Container::create_value_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1397,17 +1397,17 @@ POA_CORBA::ComponentIR::Container::create_value_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Container::create_value_box_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Container_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Container *> (servant);
   POA_CORBA::Container::create_value_box_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1418,17 +1418,17 @@ POA_CORBA::ComponentIR::Container::create_value_box_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Container::create_exception_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Container_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Container *> (servant);
   POA_CORBA::Container::create_exception_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1439,17 +1439,17 @@ POA_CORBA::ComponentIR::Container::create_exception_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Container::create_native_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Container_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Container *> (servant);
   POA_CORBA::Container::create_native_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1460,17 +1460,17 @@ POA_CORBA::ComponentIR::Container::create_native_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Container::create_abstract_interface_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Container_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Container *> (servant);
   POA_CORBA::Container::create_abstract_interface_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1481,17 +1481,17 @@ POA_CORBA::ComponentIR::Container::create_abstract_interface_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Container::create_local_interface_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Container_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Container *> (servant);
   POA_CORBA::Container::create_local_interface_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1502,17 +1502,17 @@ POA_CORBA::ComponentIR::Container::create_local_interface_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Container::create_ext_value_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Container_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Container *> (servant);
   POA_CORBA::Container::create_ext_value_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1520,17 +1520,17 @@ POA_CORBA::ComponentIR::Container::create_ext_value_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::_get_def_kind_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::IRObject::_get_def_kind_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1541,17 +1541,17 @@ POA_CORBA::ComponentIR::ModuleDef::_get_def_kind_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::destroy_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::IRObject::destroy_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1562,17 +1562,17 @@ POA_CORBA::ComponentIR::ModuleDef::destroy_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::lookup_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Container::lookup_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1583,17 +1583,17 @@ POA_CORBA::ComponentIR::ModuleDef::lookup_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::contents_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Container::contents_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1604,17 +1604,17 @@ POA_CORBA::ComponentIR::ModuleDef::contents_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::lookup_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Container::lookup_name_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1625,17 +1625,17 @@ POA_CORBA::ComponentIR::ModuleDef::lookup_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::describe_contents_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Container::describe_contents_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1646,17 +1646,17 @@ POA_CORBA::ComponentIR::ModuleDef::describe_contents_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::create_module_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Container::create_module_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1667,17 +1667,17 @@ POA_CORBA::ComponentIR::ModuleDef::create_module_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::create_constant_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Container::create_constant_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1688,17 +1688,17 @@ POA_CORBA::ComponentIR::ModuleDef::create_constant_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::create_struct_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Container::create_struct_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1709,17 +1709,17 @@ POA_CORBA::ComponentIR::ModuleDef::create_struct_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::create_union_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Container::create_union_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1730,17 +1730,17 @@ POA_CORBA::ComponentIR::ModuleDef::create_union_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::create_enum_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Container::create_enum_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1751,17 +1751,17 @@ POA_CORBA::ComponentIR::ModuleDef::create_enum_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::create_alias_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Container::create_alias_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1772,17 +1772,17 @@ POA_CORBA::ComponentIR::ModuleDef::create_alias_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::create_interface_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Container::create_interface_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1793,17 +1793,17 @@ POA_CORBA::ComponentIR::ModuleDef::create_interface_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::create_value_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Container::create_value_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1814,17 +1814,17 @@ POA_CORBA::ComponentIR::ModuleDef::create_value_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::create_value_box_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Container::create_value_box_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1835,17 +1835,17 @@ POA_CORBA::ComponentIR::ModuleDef::create_value_box_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::create_exception_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Container::create_exception_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1856,17 +1856,17 @@ POA_CORBA::ComponentIR::ModuleDef::create_exception_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::create_native_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Container::create_native_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1877,17 +1877,17 @@ POA_CORBA::ComponentIR::ModuleDef::create_native_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::create_abstract_interface_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Container::create_abstract_interface_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1898,17 +1898,17 @@ POA_CORBA::ComponentIR::ModuleDef::create_abstract_interface_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::create_local_interface_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Container::create_local_interface_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1919,17 +1919,17 @@ POA_CORBA::ComponentIR::ModuleDef::create_local_interface_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::create_ext_value_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Container::create_ext_value_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1937,17 +1937,17 @@ POA_CORBA::ComponentIR::ModuleDef::create_ext_value_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::_get_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Contained::_get_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1955,17 +1955,17 @@ POA_CORBA::ComponentIR::ModuleDef::_get_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::_set_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Contained::_set_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1973,17 +1973,17 @@ POA_CORBA::ComponentIR::ModuleDef::_set_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::_get_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Contained::_get_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -1991,17 +1991,17 @@ POA_CORBA::ComponentIR::ModuleDef::_get_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::_set_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Contained::_set_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2009,17 +2009,17 @@ POA_CORBA::ComponentIR::ModuleDef::_set_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::_get_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Contained::_get_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2027,17 +2027,17 @@ POA_CORBA::ComponentIR::ModuleDef::_get_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::_set_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Contained::_set_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2045,17 +2045,17 @@ POA_CORBA::ComponentIR::ModuleDef::_set_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::_get_defined_in_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Contained::_get_defined_in_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2063,17 +2063,17 @@ POA_CORBA::ComponentIR::ModuleDef::_get_defined_in_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::_get_absolute_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Contained::_get_absolute_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2081,17 +2081,17 @@ POA_CORBA::ComponentIR::ModuleDef::_get_absolute_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::_get_containing_repository_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Contained::_get_containing_repository_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2102,17 +2102,17 @@ POA_CORBA::ComponentIR::ModuleDef::_get_containing_repository_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::describe_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Contained::describe_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2123,17 +2123,17 @@ POA_CORBA::ComponentIR::ModuleDef::describe_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::move_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::Contained::move_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2144,17 +2144,17 @@ POA_CORBA::ComponentIR::ModuleDef::move_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::create_component_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ComponentIR::Container_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::ComponentIR::Container * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::ComponentIR::Container::create_component_skel (
-      req,
-      (POA_CORBA::ComponentIR::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2165,17 +2165,17 @@ POA_CORBA::ComponentIR::ModuleDef::create_component_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::create_home_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ComponentIR::Container_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::ComponentIR::Container * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::ComponentIR::Container::create_home_skel (
-      req,
-      (POA_CORBA::ComponentIR::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2186,17 +2186,17 @@ POA_CORBA::ComponentIR::ModuleDef::create_home_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ModuleDef::create_event_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ComponentIR::Container_ptr impl = (POA_CORBA::ComponentIR::ModuleDef_ptr) obj;
+  POA_CORBA::ComponentIR::Container * const impl = static_cast<POA_CORBA::ComponentIR::ModuleDef *> (servant);
   POA_CORBA::ComponentIR::Container::create_event_skel (
-      req,
-      (POA_CORBA::ComponentIR::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2204,17 +2204,17 @@ POA_CORBA::ComponentIR::ModuleDef::create_event_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::_get_def_kind_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::IRObject::_get_def_kind_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2225,17 +2225,17 @@ POA_CORBA::ComponentIR::Repository::_get_def_kind_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::destroy_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::IRObject::destroy_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2246,17 +2246,17 @@ POA_CORBA::ComponentIR::Repository::destroy_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::lookup_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Container::lookup_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2267,17 +2267,17 @@ POA_CORBA::ComponentIR::Repository::lookup_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::contents_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Container::contents_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2288,17 +2288,17 @@ POA_CORBA::ComponentIR::Repository::contents_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::lookup_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Container::lookup_name_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2309,17 +2309,17 @@ POA_CORBA::ComponentIR::Repository::lookup_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::describe_contents_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Container::describe_contents_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2330,17 +2330,17 @@ POA_CORBA::ComponentIR::Repository::describe_contents_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::create_module_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Container::create_module_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2351,17 +2351,17 @@ POA_CORBA::ComponentIR::Repository::create_module_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::create_constant_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Container::create_constant_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2372,17 +2372,17 @@ POA_CORBA::ComponentIR::Repository::create_constant_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::create_struct_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Container::create_struct_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2393,17 +2393,17 @@ POA_CORBA::ComponentIR::Repository::create_struct_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::create_union_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Container::create_union_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2414,17 +2414,17 @@ POA_CORBA::ComponentIR::Repository::create_union_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::create_enum_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Container::create_enum_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2435,17 +2435,17 @@ POA_CORBA::ComponentIR::Repository::create_enum_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::create_alias_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Container::create_alias_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2456,17 +2456,17 @@ POA_CORBA::ComponentIR::Repository::create_alias_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::create_interface_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Container::create_interface_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2477,17 +2477,17 @@ POA_CORBA::ComponentIR::Repository::create_interface_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::create_value_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Container::create_value_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2498,17 +2498,17 @@ POA_CORBA::ComponentIR::Repository::create_value_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::create_value_box_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Container::create_value_box_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2519,17 +2519,17 @@ POA_CORBA::ComponentIR::Repository::create_value_box_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::create_exception_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Container::create_exception_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2540,17 +2540,17 @@ POA_CORBA::ComponentIR::Repository::create_exception_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::create_native_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Container::create_native_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2561,17 +2561,17 @@ POA_CORBA::ComponentIR::Repository::create_native_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::create_abstract_interface_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Container::create_abstract_interface_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2582,17 +2582,17 @@ POA_CORBA::ComponentIR::Repository::create_abstract_interface_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::create_local_interface_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Container::create_local_interface_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2603,17 +2603,17 @@ POA_CORBA::ComponentIR::Repository::create_local_interface_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::create_ext_value_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Container::create_ext_value_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2624,17 +2624,17 @@ POA_CORBA::ComponentIR::Repository::create_ext_value_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::lookup_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Repository_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Repository * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Repository::lookup_id_skel (
-      req,
-      (POA_CORBA::Repository_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2645,17 +2645,17 @@ POA_CORBA::ComponentIR::Repository::lookup_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::get_canonical_typecode_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Repository_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Repository * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Repository::get_canonical_typecode_skel (
-      req,
-      (POA_CORBA::Repository_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2666,17 +2666,17 @@ POA_CORBA::ComponentIR::Repository::get_canonical_typecode_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::get_primitive_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Repository_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Repository * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Repository::get_primitive_skel (
-      req,
-      (POA_CORBA::Repository_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2687,17 +2687,17 @@ POA_CORBA::ComponentIR::Repository::get_primitive_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::create_string_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Repository_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Repository * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Repository::create_string_skel (
-      req,
-      (POA_CORBA::Repository_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2708,17 +2708,17 @@ POA_CORBA::ComponentIR::Repository::create_string_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::create_wstring_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Repository_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Repository * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Repository::create_wstring_skel (
-      req,
-      (POA_CORBA::Repository_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2729,17 +2729,17 @@ POA_CORBA::ComponentIR::Repository::create_wstring_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::create_sequence_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Repository_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Repository * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Repository::create_sequence_skel (
-      req,
-      (POA_CORBA::Repository_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2750,17 +2750,17 @@ POA_CORBA::ComponentIR::Repository::create_sequence_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::create_array_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Repository_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Repository * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Repository::create_array_skel (
-      req,
-      (POA_CORBA::Repository_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2771,17 +2771,17 @@ POA_CORBA::ComponentIR::Repository::create_array_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::create_fixed_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Repository_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::Repository * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::Repository::create_fixed_skel (
-      req,
-      (POA_CORBA::Repository_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2792,17 +2792,17 @@ POA_CORBA::ComponentIR::Repository::create_fixed_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::create_component_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ComponentIR::Container_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::ComponentIR::Container * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::ComponentIR::Container::create_component_skel (
-      req,
-      (POA_CORBA::ComponentIR::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2813,17 +2813,17 @@ POA_CORBA::ComponentIR::Repository::create_component_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::create_home_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ComponentIR::Container_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::ComponentIR::Container * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::ComponentIR::Container::create_home_skel (
-      req,
-      (POA_CORBA::ComponentIR::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2834,17 +2834,17 @@ POA_CORBA::ComponentIR::Repository::create_home_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::Repository::create_event_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ComponentIR::Container_ptr impl = (POA_CORBA::ComponentIR::Repository_ptr) obj;
+  POA_CORBA::ComponentIR::Container * const impl = static_cast<POA_CORBA::ComponentIR::Repository *> (servant);
   POA_CORBA::ComponentIR::Container::create_event_skel (
-      req,
-      (POA_CORBA::ComponentIR::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2852,17 +2852,17 @@ POA_CORBA::ComponentIR::Repository::create_event_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ProvidesDef::_get_def_kind_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::ProvidesDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::ProvidesDef *> (servant);
   POA_CORBA::IRObject::_get_def_kind_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2873,17 +2873,17 @@ POA_CORBA::ComponentIR::ProvidesDef::_get_def_kind_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ProvidesDef::destroy_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::ProvidesDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::ProvidesDef *> (servant);
   POA_CORBA::IRObject::destroy_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2891,17 +2891,17 @@ POA_CORBA::ComponentIR::ProvidesDef::destroy_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ProvidesDef::_get_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ProvidesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ProvidesDef *> (servant);
   POA_CORBA::Contained::_get_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2909,17 +2909,17 @@ POA_CORBA::ComponentIR::ProvidesDef::_get_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ProvidesDef::_set_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ProvidesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ProvidesDef *> (servant);
   POA_CORBA::Contained::_set_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2927,17 +2927,17 @@ POA_CORBA::ComponentIR::ProvidesDef::_set_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ProvidesDef::_get_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ProvidesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ProvidesDef *> (servant);
   POA_CORBA::Contained::_get_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2945,17 +2945,17 @@ POA_CORBA::ComponentIR::ProvidesDef::_get_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ProvidesDef::_set_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ProvidesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ProvidesDef *> (servant);
   POA_CORBA::Contained::_set_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2963,17 +2963,17 @@ POA_CORBA::ComponentIR::ProvidesDef::_set_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ProvidesDef::_get_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ProvidesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ProvidesDef *> (servant);
   POA_CORBA::Contained::_get_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2981,17 +2981,17 @@ POA_CORBA::ComponentIR::ProvidesDef::_get_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ProvidesDef::_set_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ProvidesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ProvidesDef *> (servant);
   POA_CORBA::Contained::_set_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -2999,17 +2999,17 @@ POA_CORBA::ComponentIR::ProvidesDef::_set_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ProvidesDef::_get_defined_in_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ProvidesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ProvidesDef *> (servant);
   POA_CORBA::Contained::_get_defined_in_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3017,17 +3017,17 @@ POA_CORBA::ComponentIR::ProvidesDef::_get_defined_in_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ProvidesDef::_get_absolute_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ProvidesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ProvidesDef *> (servant);
   POA_CORBA::Contained::_get_absolute_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3035,17 +3035,17 @@ POA_CORBA::ComponentIR::ProvidesDef::_get_absolute_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ProvidesDef::_get_containing_repository_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ProvidesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ProvidesDef *> (servant);
   POA_CORBA::Contained::_get_containing_repository_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3056,17 +3056,17 @@ POA_CORBA::ComponentIR::ProvidesDef::_get_containing_repository_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ProvidesDef::describe_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ProvidesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ProvidesDef *> (servant);
   POA_CORBA::Contained::describe_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3077,17 +3077,17 @@ POA_CORBA::ComponentIR::ProvidesDef::describe_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ProvidesDef::move_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ProvidesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ProvidesDef *> (servant);
   POA_CORBA::Contained::move_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3095,17 +3095,17 @@ POA_CORBA::ComponentIR::ProvidesDef::move_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::UsesDef::_get_def_kind_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::UsesDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::UsesDef *> (servant);
   POA_CORBA::IRObject::_get_def_kind_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3116,17 +3116,17 @@ POA_CORBA::ComponentIR::UsesDef::_get_def_kind_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::UsesDef::destroy_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::UsesDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::UsesDef *> (servant);
   POA_CORBA::IRObject::destroy_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3134,17 +3134,17 @@ POA_CORBA::ComponentIR::UsesDef::destroy_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::UsesDef::_get_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::UsesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::UsesDef *> (servant);
   POA_CORBA::Contained::_get_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3152,17 +3152,17 @@ POA_CORBA::ComponentIR::UsesDef::_get_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::UsesDef::_set_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::UsesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::UsesDef *> (servant);
   POA_CORBA::Contained::_set_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3170,17 +3170,17 @@ POA_CORBA::ComponentIR::UsesDef::_set_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::UsesDef::_get_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::UsesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::UsesDef *> (servant);
   POA_CORBA::Contained::_get_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3188,17 +3188,17 @@ POA_CORBA::ComponentIR::UsesDef::_get_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::UsesDef::_set_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::UsesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::UsesDef *> (servant);
   POA_CORBA::Contained::_set_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3206,17 +3206,17 @@ POA_CORBA::ComponentIR::UsesDef::_set_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::UsesDef::_get_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::UsesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::UsesDef *> (servant);
   POA_CORBA::Contained::_get_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3224,17 +3224,17 @@ POA_CORBA::ComponentIR::UsesDef::_get_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::UsesDef::_set_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::UsesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::UsesDef *> (servant);
   POA_CORBA::Contained::_set_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3242,17 +3242,17 @@ POA_CORBA::ComponentIR::UsesDef::_set_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::UsesDef::_get_defined_in_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::UsesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::UsesDef *> (servant);
   POA_CORBA::Contained::_get_defined_in_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3260,17 +3260,17 @@ POA_CORBA::ComponentIR::UsesDef::_get_defined_in_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::UsesDef::_get_absolute_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::UsesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::UsesDef *> (servant);
   POA_CORBA::Contained::_get_absolute_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3278,17 +3278,17 @@ POA_CORBA::ComponentIR::UsesDef::_get_absolute_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::UsesDef::_get_containing_repository_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::UsesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::UsesDef *> (servant);
   POA_CORBA::Contained::_get_containing_repository_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3299,17 +3299,17 @@ POA_CORBA::ComponentIR::UsesDef::_get_containing_repository_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::UsesDef::describe_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::UsesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::UsesDef *> (servant);
   POA_CORBA::Contained::describe_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3320,17 +3320,17 @@ POA_CORBA::ComponentIR::UsesDef::describe_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::UsesDef::move_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::UsesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::UsesDef *> (servant);
   POA_CORBA::Contained::move_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3338,17 +3338,17 @@ POA_CORBA::ComponentIR::UsesDef::move_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventPortDef::_get_def_kind_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::EventPortDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::EventPortDef *> (servant);
   POA_CORBA::IRObject::_get_def_kind_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3359,17 +3359,17 @@ POA_CORBA::ComponentIR::EventPortDef::_get_def_kind_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventPortDef::destroy_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::EventPortDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::EventPortDef *> (servant);
   POA_CORBA::IRObject::destroy_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3377,17 +3377,17 @@ POA_CORBA::ComponentIR::EventPortDef::destroy_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventPortDef::_get_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EventPortDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EventPortDef *> (servant);
   POA_CORBA::Contained::_get_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3395,17 +3395,17 @@ POA_CORBA::ComponentIR::EventPortDef::_get_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventPortDef::_set_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EventPortDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EventPortDef *> (servant);
   POA_CORBA::Contained::_set_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3413,17 +3413,17 @@ POA_CORBA::ComponentIR::EventPortDef::_set_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventPortDef::_get_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EventPortDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EventPortDef *> (servant);
   POA_CORBA::Contained::_get_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3431,17 +3431,17 @@ POA_CORBA::ComponentIR::EventPortDef::_get_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventPortDef::_set_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EventPortDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EventPortDef *> (servant);
   POA_CORBA::Contained::_set_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3449,17 +3449,17 @@ POA_CORBA::ComponentIR::EventPortDef::_set_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventPortDef::_get_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EventPortDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EventPortDef *> (servant);
   POA_CORBA::Contained::_get_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3467,17 +3467,17 @@ POA_CORBA::ComponentIR::EventPortDef::_get_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventPortDef::_set_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EventPortDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EventPortDef *> (servant);
   POA_CORBA::Contained::_set_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3485,17 +3485,17 @@ POA_CORBA::ComponentIR::EventPortDef::_set_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventPortDef::_get_defined_in_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EventPortDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EventPortDef *> (servant);
   POA_CORBA::Contained::_get_defined_in_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3503,17 +3503,17 @@ POA_CORBA::ComponentIR::EventPortDef::_get_defined_in_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventPortDef::_get_absolute_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EventPortDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EventPortDef *> (servant);
   POA_CORBA::Contained::_get_absolute_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3521,17 +3521,17 @@ POA_CORBA::ComponentIR::EventPortDef::_get_absolute_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventPortDef::_get_containing_repository_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EventPortDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EventPortDef *> (servant);
   POA_CORBA::Contained::_get_containing_repository_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3542,17 +3542,17 @@ POA_CORBA::ComponentIR::EventPortDef::_get_containing_repository_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventPortDef::describe_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EventPortDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EventPortDef *> (servant);
   POA_CORBA::Contained::describe_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3563,17 +3563,17 @@ POA_CORBA::ComponentIR::EventPortDef::describe_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EventPortDef::move_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EventPortDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EventPortDef *> (servant);
   POA_CORBA::Contained::move_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3581,17 +3581,17 @@ POA_CORBA::ComponentIR::EventPortDef::move_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EmitsDef::_get_def_kind_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::EmitsDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::EmitsDef *> (servant);
   POA_CORBA::IRObject::_get_def_kind_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3602,17 +3602,17 @@ POA_CORBA::ComponentIR::EmitsDef::_get_def_kind_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EmitsDef::destroy_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::EmitsDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::EmitsDef *> (servant);
   POA_CORBA::IRObject::destroy_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3620,17 +3620,17 @@ POA_CORBA::ComponentIR::EmitsDef::destroy_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EmitsDef::_get_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EmitsDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EmitsDef *> (servant);
   POA_CORBA::Contained::_get_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3638,17 +3638,17 @@ POA_CORBA::ComponentIR::EmitsDef::_get_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EmitsDef::_set_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EmitsDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EmitsDef *> (servant);
   POA_CORBA::Contained::_set_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3656,17 +3656,17 @@ POA_CORBA::ComponentIR::EmitsDef::_set_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EmitsDef::_get_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EmitsDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EmitsDef *> (servant);
   POA_CORBA::Contained::_get_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3674,17 +3674,17 @@ POA_CORBA::ComponentIR::EmitsDef::_get_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EmitsDef::_set_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EmitsDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EmitsDef *> (servant);
   POA_CORBA::Contained::_set_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3692,17 +3692,17 @@ POA_CORBA::ComponentIR::EmitsDef::_set_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EmitsDef::_get_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EmitsDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EmitsDef *> (servant);
   POA_CORBA::Contained::_get_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3710,17 +3710,17 @@ POA_CORBA::ComponentIR::EmitsDef::_get_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EmitsDef::_set_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EmitsDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EmitsDef *> (servant);
   POA_CORBA::Contained::_set_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3728,17 +3728,17 @@ POA_CORBA::ComponentIR::EmitsDef::_set_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EmitsDef::_get_defined_in_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EmitsDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EmitsDef *> (servant);
   POA_CORBA::Contained::_get_defined_in_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3746,17 +3746,17 @@ POA_CORBA::ComponentIR::EmitsDef::_get_defined_in_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EmitsDef::_get_absolute_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EmitsDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EmitsDef *> (servant);
   POA_CORBA::Contained::_get_absolute_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3764,17 +3764,17 @@ POA_CORBA::ComponentIR::EmitsDef::_get_absolute_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EmitsDef::_get_containing_repository_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EmitsDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EmitsDef *> (servant);
   POA_CORBA::Contained::_get_containing_repository_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3785,17 +3785,17 @@ POA_CORBA::ComponentIR::EmitsDef::_get_containing_repository_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EmitsDef::describe_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EmitsDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EmitsDef *> (servant);
   POA_CORBA::Contained::describe_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3806,17 +3806,17 @@ POA_CORBA::ComponentIR::EmitsDef::describe_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EmitsDef::move_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::EmitsDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::EmitsDef *> (servant);
   POA_CORBA::Contained::move_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3824,17 +3824,17 @@ POA_CORBA::ComponentIR::EmitsDef::move_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EmitsDef::_get_event_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ComponentIR::EventPortDef_ptr impl = (POA_CORBA::ComponentIR::EmitsDef_ptr) obj;
+  POA_CORBA::ComponentIR::EventPortDef * const impl = static_cast<POA_CORBA::ComponentIR::EmitsDef *> (servant);
   POA_CORBA::ComponentIR::EventPortDef::_get_event_skel (
-      req,
-      (POA_CORBA::ComponentIR::EventPortDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3842,17 +3842,17 @@ POA_CORBA::ComponentIR::EmitsDef::_get_event_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EmitsDef::_set_event_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ComponentIR::EventPortDef_ptr impl = (POA_CORBA::ComponentIR::EmitsDef_ptr) obj;
+  POA_CORBA::ComponentIR::EventPortDef * const impl = static_cast<POA_CORBA::ComponentIR::EmitsDef *> (servant);
   POA_CORBA::ComponentIR::EventPortDef::_set_event_skel (
-      req,
-      (POA_CORBA::ComponentIR::EventPortDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3863,17 +3863,17 @@ POA_CORBA::ComponentIR::EmitsDef::_set_event_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::EmitsDef::is_a_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ComponentIR::EventPortDef_ptr impl = (POA_CORBA::ComponentIR::EmitsDef_ptr) obj;
+  POA_CORBA::ComponentIR::EventPortDef * const impl = static_cast<POA_CORBA::ComponentIR::EmitsDef *> (servant);
   POA_CORBA::ComponentIR::EventPortDef::is_a_skel (
-      req,
-      (POA_CORBA::ComponentIR::EventPortDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3881,17 +3881,17 @@ POA_CORBA::ComponentIR::EmitsDef::is_a_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::PublishesDef::_get_def_kind_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::PublishesDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::PublishesDef *> (servant);
   POA_CORBA::IRObject::_get_def_kind_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3902,17 +3902,17 @@ POA_CORBA::ComponentIR::PublishesDef::_get_def_kind_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::PublishesDef::destroy_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::PublishesDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::PublishesDef *> (servant);
   POA_CORBA::IRObject::destroy_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3920,17 +3920,17 @@ POA_CORBA::ComponentIR::PublishesDef::destroy_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::PublishesDef::_get_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::PublishesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::PublishesDef *> (servant);
   POA_CORBA::Contained::_get_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3938,17 +3938,17 @@ POA_CORBA::ComponentIR::PublishesDef::_get_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::PublishesDef::_set_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::PublishesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::PublishesDef *> (servant);
   POA_CORBA::Contained::_set_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3956,17 +3956,17 @@ POA_CORBA::ComponentIR::PublishesDef::_set_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::PublishesDef::_get_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::PublishesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::PublishesDef *> (servant);
   POA_CORBA::Contained::_get_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3974,17 +3974,17 @@ POA_CORBA::ComponentIR::PublishesDef::_get_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::PublishesDef::_set_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::PublishesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::PublishesDef *> (servant);
   POA_CORBA::Contained::_set_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -3992,17 +3992,17 @@ POA_CORBA::ComponentIR::PublishesDef::_set_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::PublishesDef::_get_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::PublishesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::PublishesDef *> (servant);
   POA_CORBA::Contained::_get_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4010,17 +4010,17 @@ POA_CORBA::ComponentIR::PublishesDef::_get_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::PublishesDef::_set_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::PublishesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::PublishesDef *> (servant);
   POA_CORBA::Contained::_set_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4028,17 +4028,17 @@ POA_CORBA::ComponentIR::PublishesDef::_set_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::PublishesDef::_get_defined_in_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::PublishesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::PublishesDef *> (servant);
   POA_CORBA::Contained::_get_defined_in_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4046,17 +4046,17 @@ POA_CORBA::ComponentIR::PublishesDef::_get_defined_in_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::PublishesDef::_get_absolute_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::PublishesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::PublishesDef *> (servant);
   POA_CORBA::Contained::_get_absolute_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4064,17 +4064,17 @@ POA_CORBA::ComponentIR::PublishesDef::_get_absolute_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::PublishesDef::_get_containing_repository_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::PublishesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::PublishesDef *> (servant);
   POA_CORBA::Contained::_get_containing_repository_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4085,17 +4085,17 @@ POA_CORBA::ComponentIR::PublishesDef::_get_containing_repository_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::PublishesDef::describe_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::PublishesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::PublishesDef *> (servant);
   POA_CORBA::Contained::describe_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4106,17 +4106,17 @@ POA_CORBA::ComponentIR::PublishesDef::describe_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::PublishesDef::move_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::PublishesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::PublishesDef *> (servant);
   POA_CORBA::Contained::move_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4124,17 +4124,17 @@ POA_CORBA::ComponentIR::PublishesDef::move_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::PublishesDef::_get_event_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ComponentIR::EventPortDef_ptr impl = (POA_CORBA::ComponentIR::PublishesDef_ptr) obj;
+  POA_CORBA::ComponentIR::EventPortDef * const impl = static_cast<POA_CORBA::ComponentIR::PublishesDef *> (servant);
   POA_CORBA::ComponentIR::EventPortDef::_get_event_skel (
-      req,
-      (POA_CORBA::ComponentIR::EventPortDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4142,17 +4142,17 @@ POA_CORBA::ComponentIR::PublishesDef::_get_event_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::PublishesDef::_set_event_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ComponentIR::EventPortDef_ptr impl = (POA_CORBA::ComponentIR::PublishesDef_ptr) obj;
+  POA_CORBA::ComponentIR::EventPortDef * const impl = static_cast<POA_CORBA::ComponentIR::PublishesDef *> (servant);
   POA_CORBA::ComponentIR::EventPortDef::_set_event_skel (
-      req,
-      (POA_CORBA::ComponentIR::EventPortDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4163,17 +4163,17 @@ POA_CORBA::ComponentIR::PublishesDef::_set_event_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::PublishesDef::is_a_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ComponentIR::EventPortDef_ptr impl = (POA_CORBA::ComponentIR::PublishesDef_ptr) obj;
+  POA_CORBA::ComponentIR::EventPortDef * const impl = static_cast<POA_CORBA::ComponentIR::PublishesDef *> (servant);
   POA_CORBA::ComponentIR::EventPortDef::is_a_skel (
-      req,
-      (POA_CORBA::ComponentIR::EventPortDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4181,17 +4181,17 @@ POA_CORBA::ComponentIR::PublishesDef::is_a_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ConsumesDef::_get_def_kind_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::ConsumesDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::ConsumesDef *> (servant);
   POA_CORBA::IRObject::_get_def_kind_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4202,17 +4202,17 @@ POA_CORBA::ComponentIR::ConsumesDef::_get_def_kind_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ConsumesDef::destroy_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::ConsumesDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::ConsumesDef *> (servant);
   POA_CORBA::IRObject::destroy_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4220,17 +4220,17 @@ POA_CORBA::ComponentIR::ConsumesDef::destroy_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ConsumesDef::_get_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ConsumesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ConsumesDef *> (servant);
   POA_CORBA::Contained::_get_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4238,17 +4238,17 @@ POA_CORBA::ComponentIR::ConsumesDef::_get_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ConsumesDef::_set_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ConsumesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ConsumesDef *> (servant);
   POA_CORBA::Contained::_set_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4256,17 +4256,17 @@ POA_CORBA::ComponentIR::ConsumesDef::_set_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ConsumesDef::_get_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ConsumesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ConsumesDef *> (servant);
   POA_CORBA::Contained::_get_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4274,17 +4274,17 @@ POA_CORBA::ComponentIR::ConsumesDef::_get_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ConsumesDef::_set_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ConsumesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ConsumesDef *> (servant);
   POA_CORBA::Contained::_set_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4292,17 +4292,17 @@ POA_CORBA::ComponentIR::ConsumesDef::_set_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ConsumesDef::_get_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ConsumesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ConsumesDef *> (servant);
   POA_CORBA::Contained::_get_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4310,17 +4310,17 @@ POA_CORBA::ComponentIR::ConsumesDef::_get_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ConsumesDef::_set_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ConsumesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ConsumesDef *> (servant);
   POA_CORBA::Contained::_set_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4328,17 +4328,17 @@ POA_CORBA::ComponentIR::ConsumesDef::_set_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ConsumesDef::_get_defined_in_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ConsumesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ConsumesDef *> (servant);
   POA_CORBA::Contained::_get_defined_in_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4346,17 +4346,17 @@ POA_CORBA::ComponentIR::ConsumesDef::_get_defined_in_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ConsumesDef::_get_absolute_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ConsumesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ConsumesDef *> (servant);
   POA_CORBA::Contained::_get_absolute_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4364,17 +4364,17 @@ POA_CORBA::ComponentIR::ConsumesDef::_get_absolute_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ConsumesDef::_get_containing_repository_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ConsumesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ConsumesDef *> (servant);
   POA_CORBA::Contained::_get_containing_repository_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4385,17 +4385,17 @@ POA_CORBA::ComponentIR::ConsumesDef::_get_containing_repository_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ConsumesDef::describe_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ConsumesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ConsumesDef *> (servant);
   POA_CORBA::Contained::describe_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4406,17 +4406,17 @@ POA_CORBA::ComponentIR::ConsumesDef::describe_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ConsumesDef::move_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ConsumesDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ConsumesDef *> (servant);
   POA_CORBA::Contained::move_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4424,17 +4424,17 @@ POA_CORBA::ComponentIR::ConsumesDef::move_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ConsumesDef::_get_event_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ComponentIR::EventPortDef_ptr impl = (POA_CORBA::ComponentIR::ConsumesDef_ptr) obj;
+  POA_CORBA::ComponentIR::EventPortDef * const impl = static_cast<POA_CORBA::ComponentIR::ConsumesDef *> (servant);
   POA_CORBA::ComponentIR::EventPortDef::_get_event_skel (
-      req,
-      (POA_CORBA::ComponentIR::EventPortDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4442,17 +4442,17 @@ POA_CORBA::ComponentIR::ConsumesDef::_get_event_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ConsumesDef::_set_event_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ComponentIR::EventPortDef_ptr impl = (POA_CORBA::ComponentIR::ConsumesDef_ptr) obj;
+  POA_CORBA::ComponentIR::EventPortDef * const impl = static_cast<POA_CORBA::ComponentIR::ConsumesDef *> (servant);
   POA_CORBA::ComponentIR::EventPortDef::_set_event_skel (
-      req,
-      (POA_CORBA::ComponentIR::EventPortDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4463,17 +4463,17 @@ POA_CORBA::ComponentIR::ConsumesDef::_set_event_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ConsumesDef::is_a_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::ComponentIR::EventPortDef_ptr impl = (POA_CORBA::ComponentIR::ConsumesDef_ptr) obj;
+  POA_CORBA::ComponentIR::EventPortDef * const impl = static_cast<POA_CORBA::ComponentIR::ConsumesDef *> (servant);
   POA_CORBA::ComponentIR::EventPortDef::is_a_skel (
-      req,
-      (POA_CORBA::ComponentIR::EventPortDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4481,17 +4481,17 @@ POA_CORBA::ComponentIR::ConsumesDef::is_a_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::_get_def_kind_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::IRObject::_get_def_kind_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4502,17 +4502,17 @@ POA_CORBA::ComponentIR::ComponentDef::_get_def_kind_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::destroy_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::IRObject::destroy_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4523,17 +4523,17 @@ POA_CORBA::ComponentIR::ComponentDef::destroy_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::lookup_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Container::lookup_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4544,17 +4544,17 @@ POA_CORBA::ComponentIR::ComponentDef::lookup_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::contents_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Container::contents_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4565,17 +4565,17 @@ POA_CORBA::ComponentIR::ComponentDef::contents_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::lookup_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Container::lookup_name_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4586,17 +4586,17 @@ POA_CORBA::ComponentIR::ComponentDef::lookup_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::describe_contents_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Container::describe_contents_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4607,17 +4607,17 @@ POA_CORBA::ComponentIR::ComponentDef::describe_contents_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::create_module_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Container::create_module_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4628,17 +4628,17 @@ POA_CORBA::ComponentIR::ComponentDef::create_module_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::create_constant_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Container::create_constant_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4649,17 +4649,17 @@ POA_CORBA::ComponentIR::ComponentDef::create_constant_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::create_struct_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Container::create_struct_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4670,17 +4670,17 @@ POA_CORBA::ComponentIR::ComponentDef::create_struct_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::create_union_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Container::create_union_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4691,17 +4691,17 @@ POA_CORBA::ComponentIR::ComponentDef::create_union_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::create_enum_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Container::create_enum_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4712,17 +4712,17 @@ POA_CORBA::ComponentIR::ComponentDef::create_enum_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::create_alias_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Container::create_alias_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4733,17 +4733,17 @@ POA_CORBA::ComponentIR::ComponentDef::create_alias_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::create_interface_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Container::create_interface_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4754,17 +4754,17 @@ POA_CORBA::ComponentIR::ComponentDef::create_interface_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::create_value_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Container::create_value_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4775,17 +4775,17 @@ POA_CORBA::ComponentIR::ComponentDef::create_value_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::create_value_box_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Container::create_value_box_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4796,17 +4796,17 @@ POA_CORBA::ComponentIR::ComponentDef::create_value_box_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::create_exception_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Container::create_exception_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4817,17 +4817,17 @@ POA_CORBA::ComponentIR::ComponentDef::create_exception_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::create_native_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Container::create_native_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4838,17 +4838,17 @@ POA_CORBA::ComponentIR::ComponentDef::create_native_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::create_abstract_interface_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Container::create_abstract_interface_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4859,17 +4859,17 @@ POA_CORBA::ComponentIR::ComponentDef::create_abstract_interface_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::create_local_interface_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Container::create_local_interface_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4880,17 +4880,17 @@ POA_CORBA::ComponentIR::ComponentDef::create_local_interface_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::create_ext_value_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Container::create_ext_value_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4898,17 +4898,17 @@ POA_CORBA::ComponentIR::ComponentDef::create_ext_value_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::_get_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Contained::_get_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4916,17 +4916,17 @@ POA_CORBA::ComponentIR::ComponentDef::_get_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::_set_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Contained::_set_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4934,17 +4934,17 @@ POA_CORBA::ComponentIR::ComponentDef::_set_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::_get_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Contained::_get_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4952,17 +4952,17 @@ POA_CORBA::ComponentIR::ComponentDef::_get_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::_set_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Contained::_set_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4970,17 +4970,17 @@ POA_CORBA::ComponentIR::ComponentDef::_set_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::_get_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Contained::_get_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -4988,17 +4988,17 @@ POA_CORBA::ComponentIR::ComponentDef::_get_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::_set_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Contained::_set_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5006,17 +5006,17 @@ POA_CORBA::ComponentIR::ComponentDef::_set_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::_get_defined_in_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Contained::_get_defined_in_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5024,17 +5024,17 @@ POA_CORBA::ComponentIR::ComponentDef::_get_defined_in_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::_get_absolute_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Contained::_get_absolute_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5042,17 +5042,17 @@ POA_CORBA::ComponentIR::ComponentDef::_get_absolute_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::_get_containing_repository_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Contained::_get_containing_repository_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5063,17 +5063,17 @@ POA_CORBA::ComponentIR::ComponentDef::_get_containing_repository_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::describe_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Contained::describe_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5084,17 +5084,17 @@ POA_CORBA::ComponentIR::ComponentDef::describe_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::move_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::Contained::move_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5102,17 +5102,17 @@ POA_CORBA::ComponentIR::ComponentDef::move_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::_get_type_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IDLType_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::IDLType * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::IDLType::_get_type_skel (
-      req,
-      (POA_CORBA::IDLType_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5120,17 +5120,17 @@ POA_CORBA::ComponentIR::ComponentDef::_get_type_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::_get_base_interfaces_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::InterfaceDef * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::InterfaceDef::_get_base_interfaces_skel (
-      req,
-      (POA_CORBA::InterfaceDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5138,17 +5138,17 @@ POA_CORBA::ComponentIR::ComponentDef::_get_base_interfaces_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::_set_base_interfaces_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::InterfaceDef * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::InterfaceDef::_set_base_interfaces_skel (
-      req,
-      (POA_CORBA::InterfaceDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5159,17 +5159,17 @@ POA_CORBA::ComponentIR::ComponentDef::_set_base_interfaces_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::is_a_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::InterfaceDef * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::InterfaceDef::is_a_skel (
-      req,
-      (POA_CORBA::InterfaceDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5180,17 +5180,17 @@ POA_CORBA::ComponentIR::ComponentDef::is_a_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::describe_interface_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::InterfaceDef * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::InterfaceDef::describe_interface_skel (
-      req,
-      (POA_CORBA::InterfaceDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5201,17 +5201,17 @@ POA_CORBA::ComponentIR::ComponentDef::describe_interface_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::create_attribute_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::InterfaceDef * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::InterfaceDef::create_attribute_skel (
-      req,
-      (POA_CORBA::InterfaceDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5222,17 +5222,17 @@ POA_CORBA::ComponentIR::ComponentDef::create_attribute_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::create_operation_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::InterfaceDef * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::InterfaceDef::create_operation_skel (
-      req,
-      (POA_CORBA::InterfaceDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5243,17 +5243,17 @@ POA_CORBA::ComponentIR::ComponentDef::create_operation_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::describe_ext_interface_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::InterfaceAttrExtension_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::InterfaceAttrExtension * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::InterfaceAttrExtension::describe_ext_interface_skel (
-      req,
-      (POA_CORBA::InterfaceAttrExtension_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5264,17 +5264,17 @@ POA_CORBA::ComponentIR::ComponentDef::describe_ext_interface_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::ComponentDef::create_ext_attribute_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::InterfaceAttrExtension_ptr impl = (POA_CORBA::ComponentIR::ComponentDef_ptr) obj;
+  POA_CORBA::InterfaceAttrExtension * const impl = static_cast<POA_CORBA::ComponentIR::ComponentDef *> (servant);
   POA_CORBA::InterfaceAttrExtension::create_ext_attribute_skel (
-      req,
-      (POA_CORBA::InterfaceAttrExtension_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5282,17 +5282,17 @@ POA_CORBA::ComponentIR::ComponentDef::create_ext_attribute_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::_get_def_kind_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::IRObject::_get_def_kind_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5303,17 +5303,17 @@ POA_CORBA::ComponentIR::FactoryDef::_get_def_kind_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::destroy_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::IRObject::destroy_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5321,17 +5321,17 @@ POA_CORBA::ComponentIR::FactoryDef::destroy_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::_get_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::Contained::_get_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5339,17 +5339,17 @@ POA_CORBA::ComponentIR::FactoryDef::_get_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::_set_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::Contained::_set_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5357,17 +5357,17 @@ POA_CORBA::ComponentIR::FactoryDef::_set_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::_get_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::Contained::_get_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5375,17 +5375,17 @@ POA_CORBA::ComponentIR::FactoryDef::_get_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::_set_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::Contained::_set_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5393,17 +5393,17 @@ POA_CORBA::ComponentIR::FactoryDef::_set_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::_get_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::Contained::_get_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5411,17 +5411,17 @@ POA_CORBA::ComponentIR::FactoryDef::_get_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::_set_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::Contained::_set_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5429,17 +5429,17 @@ POA_CORBA::ComponentIR::FactoryDef::_set_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::_get_defined_in_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::Contained::_get_defined_in_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5447,17 +5447,17 @@ POA_CORBA::ComponentIR::FactoryDef::_get_defined_in_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::_get_absolute_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::Contained::_get_absolute_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5465,17 +5465,17 @@ POA_CORBA::ComponentIR::FactoryDef::_get_absolute_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::_get_containing_repository_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::Contained::_get_containing_repository_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5486,17 +5486,17 @@ POA_CORBA::ComponentIR::FactoryDef::_get_containing_repository_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::describe_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::Contained::describe_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5507,17 +5507,17 @@ POA_CORBA::ComponentIR::FactoryDef::describe_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::move_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::Contained::move_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5525,17 +5525,17 @@ POA_CORBA::ComponentIR::FactoryDef::move_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::_get_result_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::OperationDef_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::OperationDef * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::OperationDef::_get_result_skel (
-      req,
-      (POA_CORBA::OperationDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5543,17 +5543,17 @@ POA_CORBA::ComponentIR::FactoryDef::_get_result_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::_get_result_def_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::OperationDef_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::OperationDef * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::OperationDef::_get_result_def_skel (
-      req,
-      (POA_CORBA::OperationDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5561,17 +5561,17 @@ POA_CORBA::ComponentIR::FactoryDef::_get_result_def_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::_set_result_def_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::OperationDef_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::OperationDef * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::OperationDef::_set_result_def_skel (
-      req,
-      (POA_CORBA::OperationDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5579,17 +5579,17 @@ POA_CORBA::ComponentIR::FactoryDef::_set_result_def_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::_get_params_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::OperationDef_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::OperationDef * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::OperationDef::_get_params_skel (
-      req,
-      (POA_CORBA::OperationDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5597,17 +5597,17 @@ POA_CORBA::ComponentIR::FactoryDef::_get_params_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::_set_params_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::OperationDef_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::OperationDef * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::OperationDef::_set_params_skel (
-      req,
-      (POA_CORBA::OperationDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5615,17 +5615,17 @@ POA_CORBA::ComponentIR::FactoryDef::_set_params_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::_get_mode_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::OperationDef_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::OperationDef * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::OperationDef::_get_mode_skel (
-      req,
-      (POA_CORBA::OperationDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5633,17 +5633,17 @@ POA_CORBA::ComponentIR::FactoryDef::_get_mode_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::_set_mode_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::OperationDef_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::OperationDef * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::OperationDef::_set_mode_skel (
-      req,
-      (POA_CORBA::OperationDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5651,17 +5651,17 @@ POA_CORBA::ComponentIR::FactoryDef::_set_mode_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::_get_contexts_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::OperationDef_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::OperationDef * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::OperationDef::_get_contexts_skel (
-      req,
-      (POA_CORBA::OperationDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5669,17 +5669,17 @@ POA_CORBA::ComponentIR::FactoryDef::_get_contexts_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::_set_contexts_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::OperationDef_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::OperationDef * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::OperationDef::_set_contexts_skel (
-      req,
-      (POA_CORBA::OperationDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5687,17 +5687,17 @@ POA_CORBA::ComponentIR::FactoryDef::_set_contexts_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::_get_exceptions_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::OperationDef_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::OperationDef * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::OperationDef::_get_exceptions_skel (
-      req,
-      (POA_CORBA::OperationDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5705,17 +5705,17 @@ POA_CORBA::ComponentIR::FactoryDef::_get_exceptions_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FactoryDef::_set_exceptions_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::OperationDef_ptr impl = (POA_CORBA::ComponentIR::FactoryDef_ptr) obj;
+  POA_CORBA::OperationDef * const impl = static_cast<POA_CORBA::ComponentIR::FactoryDef *> (servant);
   POA_CORBA::OperationDef::_set_exceptions_skel (
-      req,
-      (POA_CORBA::OperationDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5723,17 +5723,17 @@ POA_CORBA::ComponentIR::FactoryDef::_set_exceptions_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::_get_def_kind_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::IRObject::_get_def_kind_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5744,17 +5744,17 @@ POA_CORBA::ComponentIR::FinderDef::_get_def_kind_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::destroy_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::IRObject::destroy_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5762,17 +5762,17 @@ POA_CORBA::ComponentIR::FinderDef::destroy_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::_get_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::Contained::_get_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5780,17 +5780,17 @@ POA_CORBA::ComponentIR::FinderDef::_get_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::_set_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::Contained::_set_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5798,17 +5798,17 @@ POA_CORBA::ComponentIR::FinderDef::_set_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::_get_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::Contained::_get_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5816,17 +5816,17 @@ POA_CORBA::ComponentIR::FinderDef::_get_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::_set_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::Contained::_set_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5834,17 +5834,17 @@ POA_CORBA::ComponentIR::FinderDef::_set_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::_get_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::Contained::_get_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5852,17 +5852,17 @@ POA_CORBA::ComponentIR::FinderDef::_get_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::_set_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::Contained::_set_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5870,17 +5870,17 @@ POA_CORBA::ComponentIR::FinderDef::_set_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::_get_defined_in_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::Contained::_get_defined_in_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5888,17 +5888,17 @@ POA_CORBA::ComponentIR::FinderDef::_get_defined_in_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::_get_absolute_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::Contained::_get_absolute_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5906,17 +5906,17 @@ POA_CORBA::ComponentIR::FinderDef::_get_absolute_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::_get_containing_repository_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::Contained::_get_containing_repository_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5927,17 +5927,17 @@ POA_CORBA::ComponentIR::FinderDef::_get_containing_repository_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::describe_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::Contained::describe_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5948,17 +5948,17 @@ POA_CORBA::ComponentIR::FinderDef::describe_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::move_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::Contained::move_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5966,17 +5966,17 @@ POA_CORBA::ComponentIR::FinderDef::move_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::_get_result_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::OperationDef_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::OperationDef * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::OperationDef::_get_result_skel (
-      req,
-      (POA_CORBA::OperationDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -5984,17 +5984,17 @@ POA_CORBA::ComponentIR::FinderDef::_get_result_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::_get_result_def_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::OperationDef_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::OperationDef * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::OperationDef::_get_result_def_skel (
-      req,
-      (POA_CORBA::OperationDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6002,17 +6002,17 @@ POA_CORBA::ComponentIR::FinderDef::_get_result_def_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::_set_result_def_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::OperationDef_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::OperationDef * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::OperationDef::_set_result_def_skel (
-      req,
-      (POA_CORBA::OperationDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6020,17 +6020,17 @@ POA_CORBA::ComponentIR::FinderDef::_set_result_def_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::_get_params_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::OperationDef_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::OperationDef * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::OperationDef::_get_params_skel (
-      req,
-      (POA_CORBA::OperationDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6038,17 +6038,17 @@ POA_CORBA::ComponentIR::FinderDef::_get_params_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::_set_params_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::OperationDef_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::OperationDef * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::OperationDef::_set_params_skel (
-      req,
-      (POA_CORBA::OperationDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6056,17 +6056,17 @@ POA_CORBA::ComponentIR::FinderDef::_set_params_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::_get_mode_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::OperationDef_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::OperationDef * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::OperationDef::_get_mode_skel (
-      req,
-      (POA_CORBA::OperationDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6074,17 +6074,17 @@ POA_CORBA::ComponentIR::FinderDef::_get_mode_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::_set_mode_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::OperationDef_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::OperationDef * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::OperationDef::_set_mode_skel (
-      req,
-      (POA_CORBA::OperationDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6092,17 +6092,17 @@ POA_CORBA::ComponentIR::FinderDef::_set_mode_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::_get_contexts_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::OperationDef_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::OperationDef * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::OperationDef::_get_contexts_skel (
-      req,
-      (POA_CORBA::OperationDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6110,17 +6110,17 @@ POA_CORBA::ComponentIR::FinderDef::_get_contexts_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::_set_contexts_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::OperationDef_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::OperationDef * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::OperationDef::_set_contexts_skel (
-      req,
-      (POA_CORBA::OperationDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6128,17 +6128,17 @@ POA_CORBA::ComponentIR::FinderDef::_set_contexts_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::_get_exceptions_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::OperationDef_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::OperationDef * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::OperationDef::_get_exceptions_skel (
-      req,
-      (POA_CORBA::OperationDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6146,17 +6146,17 @@ POA_CORBA::ComponentIR::FinderDef::_get_exceptions_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::FinderDef::_set_exceptions_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::OperationDef_ptr impl = (POA_CORBA::ComponentIR::FinderDef_ptr) obj;
+  POA_CORBA::OperationDef * const impl = static_cast<POA_CORBA::ComponentIR::FinderDef *> (servant);
   POA_CORBA::OperationDef::_set_exceptions_skel (
-      req,
-      (POA_CORBA::OperationDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6164,17 +6164,17 @@ POA_CORBA::ComponentIR::FinderDef::_set_exceptions_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::_get_def_kind_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::IRObject::_get_def_kind_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6185,17 +6185,17 @@ POA_CORBA::ComponentIR::HomeDef::_get_def_kind_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::destroy_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::IRObject::destroy_skel (
-      req,
-      (POA_CORBA::IRObject_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6206,17 +6206,17 @@ POA_CORBA::ComponentIR::HomeDef::destroy_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::lookup_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Container::lookup_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6227,17 +6227,17 @@ POA_CORBA::ComponentIR::HomeDef::lookup_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::contents_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Container::contents_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6248,17 +6248,17 @@ POA_CORBA::ComponentIR::HomeDef::contents_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::lookup_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Container::lookup_name_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6269,17 +6269,17 @@ POA_CORBA::ComponentIR::HomeDef::lookup_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::describe_contents_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Container::describe_contents_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6290,17 +6290,17 @@ POA_CORBA::ComponentIR::HomeDef::describe_contents_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::create_module_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Container::create_module_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6311,17 +6311,17 @@ POA_CORBA::ComponentIR::HomeDef::create_module_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::create_constant_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Container::create_constant_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6332,17 +6332,17 @@ POA_CORBA::ComponentIR::HomeDef::create_constant_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::create_struct_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Container::create_struct_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6353,17 +6353,17 @@ POA_CORBA::ComponentIR::HomeDef::create_struct_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::create_union_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Container::create_union_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6374,17 +6374,17 @@ POA_CORBA::ComponentIR::HomeDef::create_union_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::create_enum_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Container::create_enum_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6395,17 +6395,17 @@ POA_CORBA::ComponentIR::HomeDef::create_enum_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::create_alias_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Container::create_alias_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6416,17 +6416,17 @@ POA_CORBA::ComponentIR::HomeDef::create_alias_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::create_interface_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Container::create_interface_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6437,17 +6437,17 @@ POA_CORBA::ComponentIR::HomeDef::create_interface_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::create_value_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Container::create_value_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6458,17 +6458,17 @@ POA_CORBA::ComponentIR::HomeDef::create_value_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::create_value_box_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Container::create_value_box_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6479,17 +6479,17 @@ POA_CORBA::ComponentIR::HomeDef::create_value_box_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::create_exception_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Container::create_exception_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6500,17 +6500,17 @@ POA_CORBA::ComponentIR::HomeDef::create_exception_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::create_native_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Container::create_native_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6521,17 +6521,17 @@ POA_CORBA::ComponentIR::HomeDef::create_native_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::create_abstract_interface_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Container::create_abstract_interface_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6542,17 +6542,17 @@ POA_CORBA::ComponentIR::HomeDef::create_abstract_interface_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::create_local_interface_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Container::create_local_interface_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6563,17 +6563,17 @@ POA_CORBA::ComponentIR::HomeDef::create_local_interface_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::create_ext_value_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Container_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Container * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Container::create_ext_value_skel (
-      req,
-      (POA_CORBA::Container_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6581,17 +6581,17 @@ POA_CORBA::ComponentIR::HomeDef::create_ext_value_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::_get_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Contained::_get_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6599,17 +6599,17 @@ POA_CORBA::ComponentIR::HomeDef::_get_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::_set_id_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Contained::_set_id_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6617,17 +6617,17 @@ POA_CORBA::ComponentIR::HomeDef::_set_id_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::_get_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Contained::_get_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6635,17 +6635,17 @@ POA_CORBA::ComponentIR::HomeDef::_get_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::_set_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Contained::_set_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6653,17 +6653,17 @@ POA_CORBA::ComponentIR::HomeDef::_set_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::_get_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Contained::_get_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6671,17 +6671,17 @@ POA_CORBA::ComponentIR::HomeDef::_get_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::_set_version_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Contained::_set_version_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6689,17 +6689,17 @@ POA_CORBA::ComponentIR::HomeDef::_set_version_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::_get_defined_in_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Contained::_get_defined_in_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6707,17 +6707,17 @@ POA_CORBA::ComponentIR::HomeDef::_get_defined_in_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::_get_absolute_name_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Contained::_get_absolute_name_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6725,17 +6725,17 @@ POA_CORBA::ComponentIR::HomeDef::_get_absolute_name_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::_get_containing_repository_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Contained::_get_containing_repository_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6746,17 +6746,17 @@ POA_CORBA::ComponentIR::HomeDef::_get_containing_repository_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::describe_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Contained::describe_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6767,17 +6767,17 @@ POA_CORBA::ComponentIR::HomeDef::describe_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::move_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::Contained_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::Contained::move_skel (
-      req,
-      (POA_CORBA::Contained_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6785,17 +6785,17 @@ POA_CORBA::ComponentIR::HomeDef::move_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::_get_type_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::IDLType_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::IDLType * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::IDLType::_get_type_skel (
-      req,
-      (POA_CORBA::IDLType_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6803,17 +6803,17 @@ POA_CORBA::ComponentIR::HomeDef::_get_type_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::_get_base_interfaces_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::InterfaceDef * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::InterfaceDef::_get_base_interfaces_skel (
-      req,
-      (POA_CORBA::InterfaceDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6821,17 +6821,17 @@ POA_CORBA::ComponentIR::HomeDef::_get_base_interfaces_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::_set_base_interfaces_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::InterfaceDef * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::InterfaceDef::_set_base_interfaces_skel (
-      req,
-      (POA_CORBA::InterfaceDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6842,17 +6842,17 @@ POA_CORBA::ComponentIR::HomeDef::_set_base_interfaces_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::is_a_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::InterfaceDef * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::InterfaceDef::is_a_skel (
-      req,
-      (POA_CORBA::InterfaceDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6863,17 +6863,17 @@ POA_CORBA::ComponentIR::HomeDef::is_a_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::describe_interface_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::InterfaceDef * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::InterfaceDef::describe_interface_skel (
-      req,
-      (POA_CORBA::InterfaceDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6884,17 +6884,17 @@ POA_CORBA::ComponentIR::HomeDef::describe_interface_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::create_attribute_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::InterfaceDef * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::InterfaceDef::create_attribute_skel (
-      req,
-      (POA_CORBA::InterfaceDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6905,17 +6905,17 @@ POA_CORBA::ComponentIR::HomeDef::create_attribute_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::create_operation_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::InterfaceDef * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::InterfaceDef::create_operation_skel (
-      req,
-      (POA_CORBA::InterfaceDef_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6926,17 +6926,17 @@ POA_CORBA::ComponentIR::HomeDef::create_operation_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::describe_ext_interface_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::InterfaceAttrExtension_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::InterfaceAttrExtension * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::InterfaceAttrExtension::describe_ext_interface_skel (
-      req,
-      (POA_CORBA::InterfaceAttrExtension_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }
@@ -6947,17 +6947,17 @@ POA_CORBA::ComponentIR::HomeDef::describe_ext_interface_skel (
 ACE_INLINE
 void
 POA_CORBA::ComponentIR::HomeDef::create_ext_attribute_skel (
-    TAO_ServerRequest &req,
-    void *obj,
-    void *context
+    TAO_ServerRequest & server_request,
+    void * servant_upcall,
+    void * servant
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA::InterfaceAttrExtension_ptr impl = (POA_CORBA::ComponentIR::HomeDef_ptr) obj;
+  POA_CORBA::InterfaceAttrExtension * const impl = static_cast<POA_CORBA::ComponentIR::HomeDef *> (servant);
   POA_CORBA::InterfaceAttrExtension::create_ext_attribute_skel (
-      req,
-      (POA_CORBA::InterfaceAttrExtension_ptr) impl,
-      context
+      server_request,
+      servant_upcall,
+      impl
       ACE_ENV_ARG_PARAMETER
     );
 }

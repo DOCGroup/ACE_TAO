@@ -82,7 +82,7 @@ namespace TAO
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:690
+  // be\be_visitor_arg_traits.cpp:702
 
 #if !defined (_CORBA_DEFINITIONKIND__SARG_TRAITS_SS_)
 #define _CORBA_DEFINITIONKIND__SARG_TRAITS_SS_
@@ -163,7 +163,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:480
+  // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_CORBA_INTERFACEDEFSEQ__SARG_TRAITS_SS_)
 #define _CORBA_INTERFACEDEFSEQ__SARG_TRAITS_SS_
@@ -198,7 +198,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:480
+  // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_CORBA_VALUEDEFSEQ__SARG_TRAITS_SS_)
 #define _CORBA_VALUEDEFSEQ__SARG_TRAITS_SS_
@@ -217,7 +217,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:480
+  // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_CORBA_INITIALIZERSEQ__SARG_TRAITS_SS_)
 #define _CORBA_INITIALIZERSEQ__SARG_TRAITS_SS_
@@ -236,7 +236,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:480
+  // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_CORBA_EXTINITIALIZERSEQ__SARG_TRAITS_SS_)
 #define _CORBA_EXTINITIALIZERSEQ__SARG_TRAITS_SS_
@@ -255,7 +255,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:480
+  // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_CORBA_EXCEPTIONDEFSEQ__SARG_TRAITS_SS_)
 #define _CORBA_EXCEPTIONDEFSEQ__SARG_TRAITS_SS_
@@ -274,7 +274,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:690
+  // be\be_visitor_arg_traits.cpp:702
 
 #if !defined (_CORBA_OPERATIONMODE__SARG_TRAITS_SS_)
 #define _CORBA_OPERATIONMODE__SARG_TRAITS_SS_
@@ -291,7 +291,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:480
+  // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_CORBA_PARDESCRIPTIONSEQ__SARG_TRAITS_SS_)
 #define _CORBA_PARDESCRIPTIONSEQ__SARG_TRAITS_SS_
@@ -310,7 +310,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:480
+  // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_CORBA_CONTEXTIDSEQ__SARG_TRAITS_SS_)
 #define _CORBA_CONTEXTIDSEQ__SARG_TRAITS_SS_
@@ -498,7 +498,7 @@ namespace TAO
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:690
+  // be\be_visitor_arg_traits.cpp:702
 
 #if !defined (_CORBA_DEFINITIONKIND__ARG_TRAITS_SS_)
 #define _CORBA_DEFINITIONKIND__ARG_TRAITS_SS_
@@ -583,7 +583,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:480
+  // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_CORBA_INTERFACEDEFSEQ__ARG_TRAITS_SS_)
 #define _CORBA_INTERFACEDEFSEQ__ARG_TRAITS_SS_
@@ -619,7 +619,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:480
+  // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_CORBA_VALUEDEFSEQ__ARG_TRAITS_SS_)
 #define _CORBA_VALUEDEFSEQ__ARG_TRAITS_SS_
@@ -638,7 +638,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:480
+  // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_CORBA_INITIALIZERSEQ__ARG_TRAITS_SS_)
 #define _CORBA_INITIALIZERSEQ__ARG_TRAITS_SS_
@@ -657,7 +657,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:480
+  // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_CORBA_EXTINITIALIZERSEQ__ARG_TRAITS_SS_)
 #define _CORBA_EXTINITIALIZERSEQ__ARG_TRAITS_SS_
@@ -676,7 +676,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:480
+  // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_CORBA_EXCEPTIONDEFSEQ__ARG_TRAITS_SS_)
 #define _CORBA_EXCEPTIONDEFSEQ__ARG_TRAITS_SS_
@@ -695,7 +695,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:690
+  // be\be_visitor_arg_traits.cpp:702
 
 #if !defined (_CORBA_OPERATIONMODE__ARG_TRAITS_SS_)
 #define _CORBA_OPERATIONMODE__ARG_TRAITS_SS_
@@ -712,7 +712,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:480
+  // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_CORBA_PARDESCRIPTIONSEQ__ARG_TRAITS_SS_)
 #define _CORBA_PARDESCRIPTIONSEQ__ARG_TRAITS_SS_
@@ -731,7 +731,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:480
+  // be\be_visitor_arg_traits.cpp:492
 
 #if !defined (_CORBA_CONTEXTIDSEQ__ARG_TRAITS_SS_)
 #define _CORBA_CONTEXTIDSEQ__ARG_TRAITS_SS_
@@ -1327,7 +1327,7 @@ POA_CORBA::ComponentIR::EventDef::~EventDef (void)
 
 void POA_CORBA::ComponentIR::EventDef::_is_a_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -1425,7 +1425,7 @@ void POA_CORBA::ComponentIR::EventDef::_is_a_skel (
 
 void POA_CORBA::ComponentIR::EventDef::_non_existent_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -1563,7 +1563,7 @@ void POA_CORBA::ComponentIR::EventDef::_interface_skel (
 
 void POA_CORBA::ComponentIR::EventDef::_component_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -2049,7 +2049,7 @@ POA_CORBA::ComponentIR::Container::~Container (void)
 
 void POA_CORBA::ComponentIR::Container::create_component_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -2186,7 +2186,7 @@ void POA_CORBA::ComponentIR::Container::create_component_skel (
 
 void POA_CORBA::ComponentIR::Container::create_home_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -2341,7 +2341,7 @@ void POA_CORBA::ComponentIR::Container::create_home_skel (
 
 void POA_CORBA::ComponentIR::Container::create_event_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -2523,7 +2523,7 @@ void POA_CORBA::ComponentIR::Container::create_event_skel (
 
 void POA_CORBA::ComponentIR::Container::_is_a_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -2621,7 +2621,7 @@ void POA_CORBA::ComponentIR::Container::_is_a_skel (
 
 void POA_CORBA::ComponentIR::Container::_non_existent_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -2759,7 +2759,7 @@ void POA_CORBA::ComponentIR::Container::_interface_skel (
 
 void POA_CORBA::ComponentIR::Container::_component_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -3244,7 +3244,7 @@ POA_CORBA::ComponentIR::ModuleDef::~ModuleDef (void)
 
 void POA_CORBA::ComponentIR::ModuleDef::_is_a_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -3342,7 +3342,7 @@ void POA_CORBA::ComponentIR::ModuleDef::_is_a_skel (
 
 void POA_CORBA::ComponentIR::ModuleDef::_non_existent_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -3480,7 +3480,7 @@ void POA_CORBA::ComponentIR::ModuleDef::_interface_skel (
 
 void POA_CORBA::ComponentIR::ModuleDef::_component_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -3975,7 +3975,7 @@ POA_CORBA::ComponentIR::Repository::~Repository (void)
 
 void POA_CORBA::ComponentIR::Repository::_is_a_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -4073,7 +4073,7 @@ void POA_CORBA::ComponentIR::Repository::_is_a_skel (
 
 void POA_CORBA::ComponentIR::Repository::_non_existent_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -4211,7 +4211,7 @@ void POA_CORBA::ComponentIR::Repository::_interface_skel (
 
 void POA_CORBA::ComponentIR::Repository::_component_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -4680,7 +4680,7 @@ POA_CORBA::ComponentIR::ProvidesDef::~ProvidesDef (void)
 
 void POA_CORBA::ComponentIR::ProvidesDef::_get_interface_type_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -4772,7 +4772,7 @@ void POA_CORBA::ComponentIR::ProvidesDef::_get_interface_type_skel (
 
 void POA_CORBA::ComponentIR::ProvidesDef::_set_interface_type_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -4866,7 +4866,7 @@ void POA_CORBA::ComponentIR::ProvidesDef::_set_interface_type_skel (
 
 void POA_CORBA::ComponentIR::ProvidesDef::_is_a_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -4964,7 +4964,7 @@ void POA_CORBA::ComponentIR::ProvidesDef::_is_a_skel (
 
 void POA_CORBA::ComponentIR::ProvidesDef::_non_existent_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -5102,7 +5102,7 @@ void POA_CORBA::ComponentIR::ProvidesDef::_interface_skel (
 
 void POA_CORBA::ComponentIR::ProvidesDef::_component_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -5565,7 +5565,7 @@ POA_CORBA::ComponentIR::UsesDef::~UsesDef (void)
 
 void POA_CORBA::ComponentIR::UsesDef::_get_interface_type_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -5657,7 +5657,7 @@ void POA_CORBA::ComponentIR::UsesDef::_get_interface_type_skel (
 
 void POA_CORBA::ComponentIR::UsesDef::_set_interface_type_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -5751,7 +5751,7 @@ void POA_CORBA::ComponentIR::UsesDef::_set_interface_type_skel (
 
 void POA_CORBA::ComponentIR::UsesDef::_get_is_multiple_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -5843,7 +5843,7 @@ void POA_CORBA::ComponentIR::UsesDef::_get_is_multiple_skel (
 
 void POA_CORBA::ComponentIR::UsesDef::_set_is_multiple_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -5937,7 +5937,7 @@ void POA_CORBA::ComponentIR::UsesDef::_set_is_multiple_skel (
 
 void POA_CORBA::ComponentIR::UsesDef::_is_a_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -6035,7 +6035,7 @@ void POA_CORBA::ComponentIR::UsesDef::_is_a_skel (
 
 void POA_CORBA::ComponentIR::UsesDef::_non_existent_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -6173,7 +6173,7 @@ void POA_CORBA::ComponentIR::UsesDef::_interface_skel (
 
 void POA_CORBA::ComponentIR::UsesDef::_component_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -6635,7 +6635,7 @@ POA_CORBA::ComponentIR::EventPortDef::~EventPortDef (void)
 
 void POA_CORBA::ComponentIR::EventPortDef::_get_event_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -6727,7 +6727,7 @@ void POA_CORBA::ComponentIR::EventPortDef::_get_event_skel (
 
 void POA_CORBA::ComponentIR::EventPortDef::_set_event_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -6821,7 +6821,7 @@ void POA_CORBA::ComponentIR::EventPortDef::_set_event_skel (
 
 void POA_CORBA::ComponentIR::EventPortDef::is_a_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -6922,7 +6922,7 @@ void POA_CORBA::ComponentIR::EventPortDef::is_a_skel (
 
 void POA_CORBA::ComponentIR::EventPortDef::_is_a_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -7020,7 +7020,7 @@ void POA_CORBA::ComponentIR::EventPortDef::_is_a_skel (
 
 void POA_CORBA::ComponentIR::EventPortDef::_non_existent_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -7158,7 +7158,7 @@ void POA_CORBA::ComponentIR::EventPortDef::_interface_skel (
 
 void POA_CORBA::ComponentIR::EventPortDef::_component_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -7621,7 +7621,7 @@ POA_CORBA::ComponentIR::EmitsDef::~EmitsDef (void)
 
 void POA_CORBA::ComponentIR::EmitsDef::_is_a_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -7719,7 +7719,7 @@ void POA_CORBA::ComponentIR::EmitsDef::_is_a_skel (
 
 void POA_CORBA::ComponentIR::EmitsDef::_non_existent_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -7857,7 +7857,7 @@ void POA_CORBA::ComponentIR::EmitsDef::_interface_skel (
 
 void POA_CORBA::ComponentIR::EmitsDef::_component_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -8324,7 +8324,7 @@ POA_CORBA::ComponentIR::PublishesDef::~PublishesDef (void)
 
 void POA_CORBA::ComponentIR::PublishesDef::_is_a_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -8422,7 +8422,7 @@ void POA_CORBA::ComponentIR::PublishesDef::_is_a_skel (
 
 void POA_CORBA::ComponentIR::PublishesDef::_non_existent_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -8560,7 +8560,7 @@ void POA_CORBA::ComponentIR::PublishesDef::_interface_skel (
 
 void POA_CORBA::ComponentIR::PublishesDef::_component_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -9027,7 +9027,7 @@ POA_CORBA::ComponentIR::ConsumesDef::~ConsumesDef (void)
 
 void POA_CORBA::ComponentIR::ConsumesDef::_is_a_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -9125,7 +9125,7 @@ void POA_CORBA::ComponentIR::ConsumesDef::_is_a_skel (
 
 void POA_CORBA::ComponentIR::ConsumesDef::_non_existent_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -9263,7 +9263,7 @@ void POA_CORBA::ComponentIR::ConsumesDef::_interface_skel (
 
 void POA_CORBA::ComponentIR::ConsumesDef::_component_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -9771,7 +9771,7 @@ POA_CORBA::ComponentIR::ComponentDef::~ComponentDef (void)
 
 void POA_CORBA::ComponentIR::ComponentDef::_get_base_component_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -9863,7 +9863,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_get_base_component_skel (
 
 void POA_CORBA::ComponentIR::ComponentDef::_set_base_component_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -9957,7 +9957,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_set_base_component_skel (
 
 void POA_CORBA::ComponentIR::ComponentDef::_get_supported_interfaces_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -10049,7 +10049,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_get_supported_interfaces_skel (
 
 void POA_CORBA::ComponentIR::ComponentDef::_set_supported_interfaces_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -10143,7 +10143,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_set_supported_interfaces_skel (
 
 void POA_CORBA::ComponentIR::ComponentDef::create_provides_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -10271,7 +10271,7 @@ void POA_CORBA::ComponentIR::ComponentDef::create_provides_skel (
 
 void POA_CORBA::ComponentIR::ComponentDef::create_uses_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -10408,7 +10408,7 @@ void POA_CORBA::ComponentIR::ComponentDef::create_uses_skel (
 
 void POA_CORBA::ComponentIR::ComponentDef::create_emits_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -10536,7 +10536,7 @@ void POA_CORBA::ComponentIR::ComponentDef::create_emits_skel (
 
 void POA_CORBA::ComponentIR::ComponentDef::create_publishes_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -10664,7 +10664,7 @@ void POA_CORBA::ComponentIR::ComponentDef::create_publishes_skel (
 
 void POA_CORBA::ComponentIR::ComponentDef::create_consumes_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -10792,7 +10792,7 @@ void POA_CORBA::ComponentIR::ComponentDef::create_consumes_skel (
 
 void POA_CORBA::ComponentIR::ComponentDef::_is_a_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -10890,7 +10890,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_is_a_skel (
 
 void POA_CORBA::ComponentIR::ComponentDef::_non_existent_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -11028,7 +11028,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_interface_skel (
 
 void POA_CORBA::ComponentIR::ComponentDef::_component_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -11572,7 +11572,7 @@ POA_CORBA::ComponentIR::FactoryDef::~FactoryDef (void)
 
 void POA_CORBA::ComponentIR::FactoryDef::_is_a_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -11670,7 +11670,7 @@ void POA_CORBA::ComponentIR::FactoryDef::_is_a_skel (
 
 void POA_CORBA::ComponentIR::FactoryDef::_non_existent_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -11808,7 +11808,7 @@ void POA_CORBA::ComponentIR::FactoryDef::_interface_skel (
 
 void POA_CORBA::ComponentIR::FactoryDef::_component_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -12336,7 +12336,7 @@ POA_CORBA::ComponentIR::FinderDef::~FinderDef (void)
 
 void POA_CORBA::ComponentIR::FinderDef::_is_a_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -12434,7 +12434,7 @@ void POA_CORBA::ComponentIR::FinderDef::_is_a_skel (
 
 void POA_CORBA::ComponentIR::FinderDef::_non_existent_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -12572,7 +12572,7 @@ void POA_CORBA::ComponentIR::FinderDef::_interface_skel (
 
 void POA_CORBA::ComponentIR::FinderDef::_component_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -13082,7 +13082,7 @@ POA_CORBA::ComponentIR::HomeDef::~HomeDef (void)
 
 void POA_CORBA::ComponentIR::HomeDef::_get_base_home_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -13174,7 +13174,7 @@ void POA_CORBA::ComponentIR::HomeDef::_get_base_home_skel (
 
 void POA_CORBA::ComponentIR::HomeDef::_set_base_home_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -13268,7 +13268,7 @@ void POA_CORBA::ComponentIR::HomeDef::_set_base_home_skel (
 
 void POA_CORBA::ComponentIR::HomeDef::_get_supported_interfaces_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -13360,7 +13360,7 @@ void POA_CORBA::ComponentIR::HomeDef::_get_supported_interfaces_skel (
 
 void POA_CORBA::ComponentIR::HomeDef::_set_supported_interfaces_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -13454,7 +13454,7 @@ void POA_CORBA::ComponentIR::HomeDef::_set_supported_interfaces_skel (
 
 void POA_CORBA::ComponentIR::HomeDef::_get_managed_component_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -13546,7 +13546,7 @@ void POA_CORBA::ComponentIR::HomeDef::_get_managed_component_skel (
 
 void POA_CORBA::ComponentIR::HomeDef::_set_managed_component_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -13640,7 +13640,7 @@ void POA_CORBA::ComponentIR::HomeDef::_set_managed_component_skel (
 
 void POA_CORBA::ComponentIR::HomeDef::_get_primary_key_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -13732,7 +13732,7 @@ void POA_CORBA::ComponentIR::HomeDef::_get_primary_key_skel (
 
 void POA_CORBA::ComponentIR::HomeDef::_set_primary_key_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -13826,7 +13826,7 @@ void POA_CORBA::ComponentIR::HomeDef::_set_primary_key_skel (
 
 void POA_CORBA::ComponentIR::HomeDef::create_factory_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -13963,7 +13963,7 @@ void POA_CORBA::ComponentIR::HomeDef::create_factory_skel (
 
 void POA_CORBA::ComponentIR::HomeDef::create_finder_skel (
     TAO_ServerRequest & server_request,
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -14100,7 +14100,7 @@ void POA_CORBA::ComponentIR::HomeDef::create_finder_skel (
 
 void POA_CORBA::ComponentIR::HomeDef::_is_a_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -14198,7 +14198,7 @@ void POA_CORBA::ComponentIR::HomeDef::_is_a_skel (
 
 void POA_CORBA::ComponentIR::HomeDef::_non_existent_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
@@ -14336,7 +14336,7 @@ void POA_CORBA::ComponentIR::HomeDef::_interface_skel (
 
 void POA_CORBA::ComponentIR::HomeDef::_component_skel (
     TAO_ServerRequest & server_request, 
-    void * servant_upcall,
+    void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
