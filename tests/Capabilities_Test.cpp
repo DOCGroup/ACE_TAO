@@ -27,11 +27,11 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
+static const char config[] = "Capabilities_Test.cfg";
+
 static int
 load_config (void)
 {
-  const char *config = "Capabilities_Test.cfg";
-
   ACE_Capabilities caps;
   if (caps.getent (config,
                    "Config") == -1)
@@ -67,7 +67,46 @@ main (int, char *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Capabilities_Test"));
 
-  int result = load_config ();
+  int result = 0;
+
+  // --------------------------------------------------------
+  // Create config file
+  // --------------------------------------------------------
+
+  // A config file is created within the test so that the test is
+  // completely self contained.
+
+  const char file_contents[] =
+    "Config|Esta entrada reservada para la configuracion,\n"
+    "   bool,\n"
+    "   integer#2,\n"
+    "   string=000030,\n\n";
+
+  int fd = ACE_OS::open (config, O_RDWR | O_CREAT | O_TRUNC, 0600);
+
+  if (fd == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::open"), -1);
+
+
+  if (ACE_OS::write (fd, file_contents, sizeof(file_contents)) !=
+      sizeof(file_contents))
+    {
+      ACE_ERROR ((LM_ERROR, "%p\n", "ACE_OS::write"));
+      ACE_OS::unlink (config);
+      result = -1;
+    }
+
+  if (close (fd) != 0)
+    {
+      ACE_ERROR ((LM_ERROR, "%p\n", "ACE_OS::close"));
+      ACE_OS::unlink (config);
+      result = -1;
+    }
+  // --------------------------------------------------------
+
+  result = load_config ();
+
+  ACE_OS::unlink (config);
 
   ACE_END_TEST;
   return result;
