@@ -2,7 +2,10 @@
 #       Macros
 #----------------------------------------------------------------------------
 <%marker(top)%>
-SOEXT         = so
+<%foreach(configurations)%>
+CXX           = <%cxx%>
+<%endfor%>
+CCC           = $(CXX)
 MAKEFILE      = <%project_file%>
 <%if(exename)%>
 BIN           = <%exename%>
@@ -12,7 +15,13 @@ LIB           = lib<%staticname%>.a
 <%endif%>
 <%if(sharedname)%>
 SHLIB         = lib<%sharedname%>.$(SOEXT)
-CPPFLAGS     += -KPIC
+<%foreach(platforms)%>
+SOEXT         = <%soext%>
+<%endfor%>
+<%foreach(configurations)%>
+CPPFLAGS     += <%pic%>
+SHFLAGS       = <%shflags%>
+<%endfor%>
 <%endif%>
 <%if(idl_files)%>
 IDL_FILES     =<%foreach(idl_files)%> <%noextension(idl_file)%><%endfor%>
@@ -26,6 +35,9 @@ CPPFLAGS     +=<%foreach(includes)%> -I<%include%><%endfor%>
 <%if(libpaths)%>
 LDFLAGS      +=<%foreach(libpaths)%> -L<%libpath%><%endfor%>
 <%endif%>
+<%foreach(platforms)%>
+LDLIBS       += <%ldlibs%>
+<%endfor%>
 <%if(libs)%>
 LDLIBS       +=<%foreach(libs)%> -l<%lib%><%endfor%>
 <%endif%>
@@ -38,7 +50,6 @@ LDLIBS       +=<%foreach(lit_libs)%> -l<%lit_lib%><%endfor%>
 <%if(ssl)%>
 LDLIBS       +=<%foreach(ssl_libs)%> -l<%ssl_lib%><%endfor%>
 <%endif%>
-SHFLAGS       = -G
 OUTPUT_OPTION = -o $@
 <%marker(macros)%>
 
@@ -92,7 +103,7 @@ clean:
 	-$(RM) $(OBJS)
 
 realclean: clean
-	-$(RM) <%if(exename)%>$(BIN)<%else%>$(SHLIB) $(LIB)<%endif%>
+	-$(RM) <%if(exename)%>$(BIN)<%else%>$(SHLIB) $(LIB)<%endif%><%if(install)%> <%install%>/$(INSTARGET)<%endif%>
 
 #----------------------------------------------------------------------------
 #       Dependencies
