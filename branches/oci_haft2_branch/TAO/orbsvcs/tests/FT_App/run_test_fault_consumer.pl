@@ -134,12 +134,15 @@ unlink $notifier_ior;
 unlink $ready_file;
 unlink $client_data;
 
+my ($rm_endpoint) = "-ORBEndpoint iiop://localhost:2833";
+my ($rm_initref) = "-ORBInitRef ReplicationManager=corbaloc::localhost:2833/ReplicationManager";
+
 my($status) = 0;
 
-my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_ior -t $replica1_ior -l loc1 -i type1 -q");
-my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -t $replica2_ior -l loc2 -i type1 -q");
-my($DET) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector$build_directory/Fault_Detector", "-o $detector_ior -q");
-my($NOT) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Notifier$build_directory/Fault_Notifier", "-o $notifier_ior -v -q");
+my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-f none -o $factory1_ior -t $replica1_ior -l loc1 -i type1 -q");
+my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-f none -o $factory2_ior -t $replica2_ior -l loc2 -i type1 -q");
+my($DET) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector$build_directory/Fault_Detector", "$rm_initref -o $detector_ior -q");
+my($NOT) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Notifier$build_directory/Fault_Notifier", "$rm_initref -o $notifier_ior -q");
 my($CONS) = new PerlACE::Process (".$build_directory/ft_fault_consumer", "-o $ready_file -n file://$notifier_ior -q -d file://$detector_ior -r file://$replica1_ior -r file://$replica2_ior");
 
 my($CL);

@@ -51,12 +51,39 @@ action  (i.e. "fire the retro rockets" or "expose the patient to
 theraputic radiation.")
 
 Unit Tests based on this application:
- run_test_basic.pl tests this application, thereby answering the question,
-       "who will test the tester?".
- run_test_detector.pl uses this application plus a "stub" fault notifier
-       to test the fault detectors and the fault detector factory.
- run_test_notifier.pl uses this application, the fault detectors+factory,
-       and a stub fault analyzer to test the fault notifier.
- run_test_factory.pl uses this application, et. al. to test the GenericFactory
-       implementation in FT_Replica.
+
+ run_test_basic.pl
+    tests ft_client and ft_replica, thereby answering the question,
+    "who will test the tester?".
+
+ run_test_detector.pl
+    uses ft_client, ft_replica, and ft_notifier (a "stub" fault notifier)
+    to test the Fault_Detector (from orbsvcs)
+
+ run_test_notifier.pl
+     uses ft_client, ft_replica, Fault_Detector and ft_analyzer (a "stub" fault analyzer)
+     to test the Fault_Notifier (from orbsvcs)
+
+ run_test_fault_consumer.pl
+     uses ft_client, ft_replica, Fault_Detector, Fault_Notifier to test
+     ft_fault_consumer (the implementation of a fault consumer)
+
+ run_test_registry.pl
+    uses ft_client, ft_replica, and ft_creator to test ft_registry
+    (i.e. to test the implementation of PortableServer::FactoryRegistry)
+
+ run_test_rmregistry.pl
+    uses ft_client, ft_replica, and ft_creator to test the FactoryRegistery
+    implementation in the ReplicationManager.
+
+
+// todo: DOCUMENT AND TEST THESE
+
+[]run_test_replication_mgr.pl
+[]run_test_rmnotifier.pl
+
+[]  demo.pl
+     tests the entire FT system.
+
+
 See the internal documentation of the .pl files for more details.
