@@ -304,9 +304,8 @@ ACE_Sig_Handler::dispatch (int signum,
 {
   ACE_TRACE ("ACE_Sig_Handler::dispatch");
   ACE_MT (ACE_Recursive_Thread_Mutex *lock =
-    ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::get_preallocated_object
-      (ACE_Object_Manager::ACE_SIG_HANDLER_LOCK);
-    ACE_TSS_Guard<ACE_Recursive_Thread_Mutex> m (*lock));
+          ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::get_preallocated_object (ACE_Object_Manager::ACE_SIG_HANDLER_LOCK);
+          ACE_TSS_Guard<ACE_Recursive_Thread_Mutex> m (*lock));
 
   // Preserve errno across callbacks!
   int old_errno = errno;
