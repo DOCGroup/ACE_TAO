@@ -198,16 +198,13 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name CosEvent
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name CosTrading
+    Project_Dep_Name ETCL DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DynamicAny
     End Project Dependency
 }}}
 
@@ -370,6 +367,21 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ETCL DLL"=.\orbsvcs\orbsvcs\ETCL\ETCL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
     End Project Dependency
 }}}
 

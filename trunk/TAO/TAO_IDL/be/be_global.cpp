@@ -66,6 +66,7 @@ BE_GlobalData::BE_GlobalData (void)
       use_raw_throw_ (I_FALSE),
       opt_tc_ (I_FALSE),
       ami_call_back_ (I_FALSE),
+      gen_amh_classes_ (I_FALSE),
       gen_tie_classes_ (I_TRUE),
       gen_smart_proxies_ (I_FALSE),
       lookup_strategy_ (TAO_PERFECT_HASH)
