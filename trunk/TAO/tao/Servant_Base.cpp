@@ -200,7 +200,7 @@ TAO_DynamicImplementation::_dispatch (CORBA::ServerRequest &request,
   if (request.response_expected ())
     {
       CORBA::Environment env2;
-      this->init_reply (env2);
-      this->dsi_marshal (env2);
+      request.init_reply (env2);
+      request.dsi_marshal (env2);
     }
 }
