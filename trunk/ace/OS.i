@@ -1394,6 +1394,7 @@ ACE_OS::_exit (int status)
 {
   ACE_OS_TRACE ("ACE_OS::_exit");
 #if defined (ACE_HAS_PACE)
+  // This call should be to something like ::pace__exit() since ::pace_exit() calls exit(), not _exit()!
   ::pace_exit (status);
 #elif defined (VXWORKS)
   ::exit (status);
