@@ -1,3 +1,9 @@
+Tue Feb 13 11:37:03 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/ORB.cpp:
+	  Changed ACE_CHECK_RETURN macros to be ACE_CHECK in
+	  ORB::run() and ORB::perform_work().
+
 Tue Feb 13 09:17:30 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/ORB.h:
