@@ -12,20 +12,29 @@
 //      This is a simple test of Timeprobes.
 //
 // = AUTHOR
-//    Irfan Pyarali 
+//    Irfan Pyarali
 //
 // ============================================================================
 
-#define ACE_COMPILE_TIMEPROBES
-#define ACE_ENABLE_TIMEPROBES
+#if !defined (ACE_ENABLE_TIMEPROBES)
+# define ACE_ENABLE_TIMEPROBES
+#endif /* ! ACE_ENABLE_TIMEPROBES */
+
+#if !defined (ACE_COMPILE_TIMEPROBES)
+  // #include Timeprobe.cpp so that we get any necessary template
+  // instantiations.
+# define ACE_COMPILE_TIMEPROBES
+# include "ace/Timeprobe.cpp"
+#endif /* ! ACE_COMPILE_TIMEPROBES */
+
 //#define ACE_MT_TIMEPROBES
 //#define ACE_TSS_TIMEPROBES
 
 #include "tests/test_config.h"
 #include "ace/Timeprobe.h"
 
-static const char *events_descriptions_0[] = 
-{ 
+static const char *events_descriptions_0[] =
+{
   "Event Zero",
   "Event One",
   "Event Two",
@@ -38,8 +47,8 @@ static const char *events_descriptions_0[] =
   "Event Nine",
 };
 
-static const char *events_descriptions_1[] = 
-{ 
+static const char *events_descriptions_1[] =
+{
   "Work start",
   "Work end"
 };
@@ -63,7 +72,7 @@ main (int, ASYS_TCHAR *[])
       work (i);
       ACE_TIMEPROBE (i);
     }
-  
+
   ACE_TIMEPROBE ("Ending Test");
 
   ACE_TIMEPROBE_EVENT_DESCRIPTIONS (events_descriptions_1, 100);
@@ -75,4 +84,3 @@ main (int, ASYS_TCHAR *[])
 
   return 0;
 }
-
