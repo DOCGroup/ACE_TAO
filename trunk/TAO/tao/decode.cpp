@@ -341,11 +341,10 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
             break;
 
             // Indirected typecodes, illegal at "top level" but we
-            // allow unmarshaling of them here because we use the
-            // same code to read "off the wire" (where they're
-            // illegal) and to read out of an encapsulation
-            // stream.  We distinguish the case where this is
-            // legal as described above.
+            // allow unmarshaling of them here because we use the same
+            // code to read "off the wire" (where they're illegal) and
+            // to read out of an encapsulation stream.  We distinguish
+            // the case where this is legal as described above.
             case ~0:
               {
                 if (parent_typecode == 0)
@@ -473,15 +472,14 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
               }
             } // end of switch
         }
-          else // bad kind_ value to be decoded
-            {
-              env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-              dmsg ("TAO_Marshal_TypeCode: Bad kind_ value in CDR stream");
-              return CORBA::TypeCode::TRAVERSE_STOP;
-            }
+      else // bad kind_ value to be decoded
+        {
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+          dmsg ("TAO_Marshal_TypeCode: Bad kind_ value in CDR stream");
+          return CORBA::TypeCode::TRAVERSE_STOP;
         }
-
     }
+
   if (continue_decoding == CORBA::B_TRUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
@@ -492,7 +490,8 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
     }
 }
 
-// encode Principal
+// Encode Principal.
+
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Principal::decode (CORBA::TypeCode_ptr,
                                const void *data,
@@ -501,7 +500,10 @@ TAO_Marshal_Principal::decode (CORBA::TypeCode_ptr,
                                CORBA::Environment &env)
 {
   CORBA::Boolean continue_decoding = CORBA::B_TRUE;
-  CDR *stream = (CDR *) context;  // context is the CDR stream
+
+  // Context is the CDR stream.
+  CDR *stream = (CDR *) context;  
+
   CORBA::Principal_ptr *pp = (CORBA::Principal_ptr *) data;
   CORBA::ULong len;
 
@@ -510,9 +512,13 @@ TAO_Marshal_Principal::decode (CORBA::TypeCode_ptr,
     *pp = 0;  // null principal
   else
     {
-      // allocate storage for Principal and its buffer
-      *pp = new CORBA::Principal;
-      (*pp)->id.buffer = new CORBA::Octet [ (size_t) len];
+      // Allocate storage for Principal and its buffer.
+      ACE_NEW_RETURN (*pp,
+                      CORBA::Principal,
+                      CORBA::TypeCode::TRAVERSE_CONTINUE);
+      ACE_NEW_RETURN ((*pp)->id.buffer,
+                      CORBA::Octet [(size_t) len],
+                      CORBA::TypeCode::TRAVERSE_CONTINUE);
       (*pp)->id.maximum = (*pp)->id.length = len;
 
       for (u_int i = 0;
@@ -531,7 +537,7 @@ TAO_Marshal_Principal::decode (CORBA::TypeCode_ptr,
     }
 }
 
-// decode obj ref
+// Decode obj ref.
 CORBA::TypeCode::traverse_status
 TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
                             const void *data, // where the result will go
@@ -540,7 +546,9 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
                             CORBA::Environment &env)
 {
   CORBA::Boolean continue_decoding = CORBA::B_TRUE;
-  CDR *stream = (CDR *) context;  // context is the CDR stream
+
+  // Context is the CDR stream.
+  CDR *stream = (CDR *) context;  
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::String type_hint;
 
@@ -572,98 +580,100 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
       type_hint = 0;
     }
   else
-    {
-      while (profiles-- != 0 && continue_decoding)
-        {
-          CORBA::ULong tmp;
+    while (profiles-- != 0 && continue_decoding)
+      {
+        CORBA::ULong tmp;
 
-          // get the profile ID tag
-          stream->get_ulong (tmp);
+        // get the profile ID tag
+        stream->get_ulong (tmp);
 
-          if (tmp != TAO_IOP_TAG_INTERNET_IOP || objdata != 0)
-            {
-              continue_decoding = stream->skip_string ();
-              continue;
-            }
+        if (tmp != TAO_IOP_TAG_INTERNET_IOP || objdata != 0)
+          {
+            continue_decoding = stream->skip_string ();
+            continue;
+          }
 
-          // OK, we've got an IIOP profile.  It's going to be
-          // encapsulated ProfileData.  Create a new decoding stream
-          // and context for it, and tell the "parent" stream that
-          // this data isn't part of it any more.
+        // OK, we've got an IIOP profile.  It's going to be
+        // encapsulated ProfileData.  Create a new decoding stream and
+        // context for it, and tell the "parent" stream that this data
+        // isn't part of it any more.
 
-          // ProfileData is encoded as a sequence of octet. So first get the
-          // length of the sequence
-          char* buf;
-          continue_decoding = stream->get_encapsulation (buf, tmp);
-          assert (continue_decoding == CORBA::B_TRUE);
+        // ProfileData is encoded as a sequence of octet. So first get
+        // the length of the sequence.
+        char* buf;
+        continue_decoding = stream->get_encapsulation (buf, tmp);
+        assert (continue_decoding == CORBA::B_TRUE);
 
-          // Create the decoding stream from the encapsulation in
-          // the buffer, and skip the encapsulation.
-          CDR str;
+        // Create the decoding stream from the encapsulation in the
+        // buffer, and skip the encapsulation.
+        CDR str;
 
-          str.setup_encapsulation (ACE_reinterpret_cast(char*,buf), tmp);
+        str.setup_encapsulation (ACE_reinterpret_cast(char*,buf), tmp);
 
-          // @@ (CJC) Does IIOP_Object duplicate 'type_hint' below so that
-          // we can safely free it?  It does now!
-          objdata = new IIOP_Object (type_hint);
+        // @@ (CJC) Does IIOP_Object duplicate 'type_hint' below so
+        // that we can safely free it?  It does now!
+        ACE_NEW_RETURN (objdata,
+                        IIOP_Object (type_hint),
+                        CORBA::TypeCode::TRAVERSE_STOP);
 
-          // @@ (coryan) The IIOP_Object created here has a String_var
-          // member to keep the string, this member is constructed
-          // using type_hint, at that time a plain (char*). Hence the
-          // string is *not* copied and it cannot be released, so the
-          // following line is commented out:
-          // CORBA::string_free (type_hint);
+        // @@ (coryan) The IIOP_Object created here has a String_var
+        // member to keep the string, this member is constructed using
+        // type_hint, at that time a plain (char*). Hence the string
+        // is *not* copied and it cannot be released, so the following
+        // line is commented out: CORBA::string_free (type_hint);
 
-          IIOP::Profile     *profile = &objdata->profile;
+        IIOP::Profile *profile = &objdata->profile;
 
-          // Read and verify major, minor versions, ignoring IIOP
-          // profiles whose versions we don't understand.
-          //
-          // XXX this doesn't actually go back and skip the whole
-          // encapsulation...
-          if (! (str.get_octet (profile->iiop_version.major)
-                && profile->iiop_version.major == IIOP::MY_MAJOR
-                && str.get_octet (profile->iiop_version.minor)
-                && profile->iiop_version.minor <= IIOP::MY_MINOR))
-            {
-              dmsg2 ("detected new v%d.%d IIOP profile",
-                     profile->iiop_version.major,
-                     profile->iiop_version.minor);
-              objdata->type_id = (const char *) 0;
-              objdata->Release ();
-              objdata = 0;
-              continue;
-            }
+        // Read and verify major, minor versions, ignoring IIOP
+        // profiles whose versions we don't understand.
+        //
+        // XXX this doesn't actually go back and skip the whole
+        // encapsulation...
+        if (!(str.get_octet (profile->iiop_version.major)
+              && profile->iiop_version.major == IIOP::MY_MAJOR
+              && str.get_octet (profile->iiop_version.minor)
+              && profile->iiop_version.minor <= IIOP::MY_MINOR))
+          {
+            dmsg2 ("detected new v%d.%d IIOP profile",
+                   profile->iiop_version.major,
+                   profile->iiop_version.minor);
+            objdata->type_id = (const char *) 0;
+            objdata->Release ();
+            objdata = 0;
+            continue;
+          }
 
-          // Get host and port
-          if (str.decode (CORBA::_tc_string, &profile->host, 0, env)
-              != CORBA::TypeCode::TRAVERSE_CONTINUE
-              || !str.get_ushort (profile->port))
-            {
-              env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-              dmsg ("error decoding IIOP host/port");
-              objdata->Release ();
-              return CORBA::TypeCode::TRAVERSE_STOP;
-            }
+        // Get host and port
+        if (str.decode (CORBA::_tc_string,
+                        &profile->host,
+                        0,
+                        env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+            || !str.get_ushort (profile->port))
+          {
+            env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+            dmsg ("error decoding IIOP host/port");
+            objdata->Release ();
+            return CORBA::TypeCode::TRAVERSE_STOP;
+          }
 
-          profile->object_addr (0);
+        profile->object_addr (0);
 
-          // ... and object key
+        // ... and object key.
 
-          continue_decoding = str.decode (&TC_opaque,
-                                          &profile->object_key,
-                                          0,
-                                          env) == CORBA::TypeCode::TRAVERSE_CONTINUE;
+        continue_decoding = str.decode (&TC_opaque,
+                                        &profile->object_key,
+                                        0,
+                                        env) == CORBA::TypeCode::TRAVERSE_CONTINUE;
 
-          if (str.length () != 0)
-            {
-              env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-              dmsg ("extra data at end of IIOP profile data");
-              objdata->Release ();
-              return CORBA::TypeCode::TRAVERSE_STOP;
-            }
-        }
-    }
+        if (str.length () != 0)
+          {
+            env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+            dmsg ("extra data at end of IIOP profile data");
+            objdata->Release ();
+            return CORBA::TypeCode::TRAVERSE_STOP;
+          }
+      }
+
   if (objdata == 0)
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
@@ -675,7 +685,12 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
     {
       // Create a new CORBA_Object and give it the IIOP_Object just
       // created.
-      CORBA_Object *corba_proxy = new CORBA_Object (objdata);
+      CORBA_Object *corba_proxy;
+      
+      ACE_NEW_RETURN (corba_proxy,
+                      CORBA_Object (objdata),
+                      CORBA::TypeCode::TRAVERSE_CONTINUE);
+
       if (corba_proxy)
         *(CORBA_Object **)data = corba_proxy;
       else
@@ -692,7 +707,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
     }
 }
 
-// decode structs
+// Decode structs.
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
                             const void *data,
@@ -701,104 +716,110 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
                             CORBA::Environment &env)
 {
   CDR *stream = (CDR *) context;
-  CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
+  CORBA::TypeCode::traverse_status retval =
+    CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::Boolean continue_decoding = CORBA::B_TRUE;
   CORBA::TypeCode_ptr param;
   CORBA::Long size, alignment, align_offset;
 
   void *start_addr = (void *)data;
 
-  // number of fields in the struct
+  // Number of fields in the struct.
   int member_count = tc->member_count (env);
 
   if (env.exception () == 0)
-    {
-      for (int i = 0; i < member_count
-             && retval == CORBA::TypeCode::TRAVERSE_CONTINUE
-             && continue_decoding == CORBA::B_TRUE;
-           i++)
-        {
-          param = tc->member_type (i, env);
-          if (env.exception () == 0)
-            {
-              size = param->size (env);
-              if (env.exception () == 0)
-                {
-                  alignment = param->alignment (env);
-                  if (env.exception () == 0)
-                    {
-                      align_offset =
-                        (ptr_arith_t) ptr_align_binary (data, alignment)
-                        - (ptr_arith_t) data
-                        + (ptr_arith_t) ptr_align_binary (start_addr, alignment)
-                        - (ptr_arith_t) start_addr;
-                      // if both the start_addr and data are not aligned as per
-                      // the alignment, we do not add the offset
-                      data = (const void *) ((ptr_arith_t) data +
-                                             ((align_offset == alignment) ?
-                                              0 : align_offset));
-                      switch (param->kind_)
-                        {
-                        case CORBA::tk_null:
-                        case CORBA::tk_void:
-                          break;
-                        case CORBA::tk_short:
-                        case CORBA::tk_ushort:
-                          continue_decoding = stream->get_short (*(CORBA::Short *) data);
-                          break;
-                        case CORBA::tk_long:
-                        case CORBA::tk_ulong:
-                        case CORBA::tk_float:
-                        case CORBA::tk_enum:
-                          continue_decoding = stream->get_long (*(CORBA::Long *) data);
-                          break;
-                        case CORBA::tk_double:
-                        case CORBA::tk_longlong:
-                        case CORBA::tk_ulonglong:
-                          continue_decoding = stream->get_longlong (*(CORBA::LongLong *) data);
-                          break;
-                        case CORBA::tk_boolean:
-                          continue_decoding = stream->get_boolean (*(CORBA::Boolean *) data);
-                          break;
-                        case CORBA::tk_char:
-                        case CORBA::tk_octet:
-                          continue_decoding = stream->get_char (*(CORBA::Char *) data);
-                          break;
-                        case CORBA::tk_longdouble:
-                          continue_decoding = stream->get_longdouble (*(CORBA::LongDouble *) data);
-                          break;
-                        case CORBA::tk_wchar:
-                          continue_decoding = stream->get_wchar (*(CORBA::WChar *) data);
-                          break;
-                        case CORBA::tk_string:
-                        case CORBA::tk_wstring:
-                        case CORBA::tk_any:
-                        case CORBA::tk_TypeCode:
-                        case CORBA::tk_Principal:
-                        case CORBA::tk_objref:
-                        case CORBA::tk_struct:
-                        case CORBA::tk_union:
-                        case CORBA::tk_sequence:
-                        case CORBA::tk_array:
-                        case CORBA::tk_alias:
-                        case CORBA::tk_except:
-                          retval = stream->decode (param, data, 0, env);
-                          break;
-                        default:
-                          break;
-                        }
-                      data = (char *) data + size;
-                    }
-                  else
-                    return CORBA::TypeCode::TRAVERSE_STOP;
-                }
-              else
-                return CORBA::TypeCode::TRAVERSE_STOP;
-            }
-          else
-            return CORBA::TypeCode::TRAVERSE_STOP;
-        }
-    }
+    for (int i = 0; i < member_count
+           && retval == CORBA::TypeCode::TRAVERSE_CONTINUE
+           && continue_decoding == CORBA::B_TRUE;
+         i++)
+      {
+        param = tc->member_type (i, env);
+        if (env.exception () == 0)
+          {
+            size = param->size (env);
+            if (env.exception () == 0)
+              {
+                alignment = param->alignment (env);
+                if (env.exception () == 0)
+                  {
+                    align_offset =
+                      (ptr_arith_t) ptr_align_binary (data, alignment)
+                      - (ptr_arith_t) data
+                      + (ptr_arith_t) ptr_align_binary (start_addr, alignment)
+                      - (ptr_arith_t) start_addr;
+                    // if both the start_addr and data are not aligned as per
+                    // the alignment, we do not add the offset
+                    data = (const void *) ((ptr_arith_t) data +
+                                           ((align_offset == alignment) ?
+                                            0 : align_offset));
+                    switch (param->kind_)
+                      {
+                      case CORBA::tk_null:
+                      case CORBA::tk_void:
+                        break;
+                      case CORBA::tk_short:
+                      case CORBA::tk_ushort:
+                        continue_decoding =
+                          stream->get_short (*(CORBA::Short *) data);
+                        break;
+                      case CORBA::tk_long:
+                      case CORBA::tk_ulong:
+                      case CORBA::tk_float:
+                      case CORBA::tk_enum:
+                        continue_decoding =
+                          stream->get_long (*(CORBA::Long *) data);
+                        break;
+                      case CORBA::tk_double:
+                      case CORBA::tk_longlong:
+                      case CORBA::tk_ulonglong:
+                        continue_decoding = 
+                          stream->get_longlong (*(CORBA::LongLong *) data);
+                        break;
+                      case CORBA::tk_boolean:
+                        continue_decoding =
+                          stream->get_boolean (*(CORBA::Boolean *) data);
+                        break;
+                      case CORBA::tk_char:
+                      case CORBA::tk_octet:
+                        continue_decoding =
+                          stream->get_char (*(CORBA::Char *) data);
+                        break;
+                      case CORBA::tk_longdouble:
+                        continue_decoding =
+                          stream->get_longdouble (*(CORBA::LongDouble *) data);
+                        break;
+                      case CORBA::tk_wchar:
+                        continue_decoding =
+                          stream->get_wchar (*(CORBA::WChar *) data);
+                        break;
+                      case CORBA::tk_string:
+                      case CORBA::tk_wstring:
+                      case CORBA::tk_any:
+                      case CORBA::tk_TypeCode:
+                      case CORBA::tk_Principal:
+                      case CORBA::tk_objref:
+                      case CORBA::tk_struct:
+                      case CORBA::tk_union:
+                      case CORBA::tk_sequence:
+                      case CORBA::tk_array:
+                      case CORBA::tk_alias:
+                      case CORBA::tk_except:
+                        retval = stream->decode (param, data, 0, env);
+                        break;
+                      default:
+                        break;
+                      }
+                    data = (char *) data + size;
+                  }
+                else
+                  return CORBA::TypeCode::TRAVERSE_STOP;
+              }
+            else
+              return CORBA::TypeCode::TRAVERSE_STOP;
+          }
+        else
+          return CORBA::TypeCode::TRAVERSE_STOP;
+      }
   else
     return CORBA::TypeCode::TRAVERSE_STOP;
 
@@ -813,7 +834,7 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
     }
 }
 
-// encode unions
+// Encode unions.
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
                            const void *data,
@@ -821,8 +842,11 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
                            void *context,
                            CORBA::Environment &env)
 {
-  CDR *stream = (CDR *) context;  // context is the CDR stream
-  CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
+  // Context is the CDR stream.
+  CDR *stream = (CDR *) context;  
+
+  CORBA::TypeCode::traverse_status retval =
+    CORBA::TypeCode::TRAVERSE_CONTINUE;
 
   CORBA::TypeCode_ptr discrim_tc;
   CORBA::TypeCode_ptr member_tc;
@@ -978,7 +1002,8 @@ TAO_Marshal_String::decode (CORBA::TypeCode_ptr,
                             CORBA::Environment &env)
 {
   CORBA::Boolean continue_decoding = CORBA::B_TRUE;
-  CDR *stream = (CDR *) context;  // context is the CDR stream
+  // Context is the CDR stream.
+  CDR *stream = (CDR *) context;  
   CORBA::ULong len = 0;
   CORBA::String str;
 
@@ -993,11 +1018,12 @@ TAO_Marshal_String::decode (CORBA::TypeCode_ptr,
   continue_decoding = stream->get_ulong (len);
   if (len != 0)
     {
-      // note that the encoded length is 1 more than the length of the string
-      // because it also accounts for the terminating NULL character
+      // Note that the encoded length is 1 more than the length of the
+      // string because it also accounts for the terminating NULL
+      // character.
 
       str = (*(char **) data) = CORBA::string_alloc (len - 1);
-      // only allocate the string *after* the length was validated.
+      // Only allocate the string *after* the length was validated.
 
 #if 0
       while (continue_decoding != CORBA::B_FALSE && len-- != 0)
@@ -1018,7 +1044,8 @@ TAO_Marshal_String::decode (CORBA::TypeCode_ptr,
     }
 }
 
-// decode sequence
+// Decode sequence.
+
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                               const void *data,
@@ -1029,12 +1056,14 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
   CORBA::Boolean continue_decoding = CORBA::B_TRUE;
   CDR *stream = (CDR *) context;
   TAO_Base_Sequence *seq = (TAO_Base_Sequence *)data;
-
+  // Return status.
   CORBA::TypeCode::traverse_status retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE;  // return status
-  CORBA::TypeCode_ptr    tc2;  // typecode of the element
-  size_t  size; // size of element
-  CORBA::ULong  bounds;
+    CORBA::TypeCode::TRAVERSE_CONTINUE;  
+  // Typecode of the element.
+  CORBA::TypeCode_ptr tc2;
+  // Size of element.
+  size_t size; 
+  CORBA::ULong bounds;
   char *value;
 
   // First unmarshal the sequence length ... we trust it to be right
@@ -1048,10 +1077,10 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
 
   if (continue_decoding)
     {
-      // no point decoding an empty sequence
+      // No point decoding an empty sequence.
       if (seq->length_ > 0)
         {
-          // get element typecode
+          // Get element typecode.
           tc2 = tc->content_type (env);
 
           if (env.exception () == 0)
@@ -1065,10 +1094,9 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                   // Allocate the buffer using the virtual
                   // _allocate_buffer method, hence the right
                   // constructors are invoked and size for the array
-                  // is OK.
-                  // @@ Who will free this memory?
-                  // (coryan): the sequence will release it, since its
-                  // release_ field is 1.
+                  // is OK.  @@ Who will free this memory?  (coryan):
+                  // the sequence will release it, since its release_
+                  // field is 1.
                   seq->_allocate_buffer (bounds);
 
                   value = (char *) seq->buffer_;
@@ -1096,23 +1124,25 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                       // For primitives, compute the size only once
                       while (bounds-- && continue_decoding == CORBA::B_TRUE)
                         {
-                          continue_decoding = stream->get_long (*(CORBA::Long *) value);
+                          continue_decoding =
+                            stream->get_long (*(CORBA::Long *) value);
                           value += size;
                         }
-                      //                      CORBA::release (tc2);
-                                          if (continue_decoding == CORBA::B_TRUE)
-                                                return CORBA::TypeCode::TRAVERSE_CONTINUE;
-                                          break;
+                      // CORBA::release (tc2);
+                      if (continue_decoding == CORBA::B_TRUE)
+                        return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                      break;
                     case CORBA::tk_double:
                     case CORBA::tk_longlong:
                     case CORBA::tk_ulonglong:
                       // For primitives, compute the size only once
                       while (bounds-- && continue_decoding == CORBA::B_TRUE)
                         {
-                          continue_decoding = stream->get_longlong (*(CORBA::LongLong *) value);
+                          continue_decoding =
+                            stream->get_longlong (*(CORBA::LongLong *) value);
                           value += size;
                         }
-                      //                      CORBA::release (tc2);
+                      // CORBA::release (tc2);
                       if (continue_decoding == CORBA::B_TRUE)
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
@@ -1120,10 +1150,11 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                       // For primitives, compute the size only once
                       while (bounds-- && continue_decoding == CORBA::B_TRUE)
                         {
-                          continue_decoding = stream->get_boolean (*(CORBA::Boolean *) value);
+                          continue_decoding =
+                            stream->get_boolean (*(CORBA::Boolean *) value);
                           value += size;
                         }
-                      //                      CORBA::release (tc2);
+                      // CORBA::release (tc2);
                       if (continue_decoding == CORBA::B_TRUE)
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
@@ -1132,10 +1163,11 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                       // For primitives, compute the size only once
                       while (bounds-- && continue_decoding == CORBA::B_TRUE)
                         {
-                          continue_decoding = stream->get_char (*(CORBA::Char *) value);
+                          continue_decoding =
+                            stream->get_char (*(CORBA::Char *) value);
                           value += size;
                         }
-                      //                      CORBA::release (tc2);
+                      // CORBA::release (tc2);
                       if (continue_decoding == CORBA::B_TRUE)
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
@@ -1143,10 +1175,11 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                       // For primitives, compute the size only once
                       while (bounds-- && continue_decoding == CORBA::B_TRUE)
                         {
-                          continue_decoding = stream->get_longdouble (*(CORBA::LongDouble *) value);
+                          continue_decoding =
+                            stream->get_longdouble (*(CORBA::LongDouble *) value);
                           value += size;
                         }
-                      //                      CORBA::release (tc2);
+                      // CORBA::release (tc2);
                       if (continue_decoding == CORBA::B_TRUE)
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
@@ -1154,10 +1187,11 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                       // For primitives, compute the size only once
                       while (bounds-- && continue_decoding == CORBA::B_TRUE)
                         {
-                          continue_decoding = stream->get_wchar (*(CORBA::WChar *) value);
+                          continue_decoding =
+                            stream->get_wchar (*(CORBA::WChar *) value);
                           value += size;
                         }
-                      //                      CORBA::release (tc2);
+                      // CORBA::release (tc2);
                       if (continue_decoding == CORBA::B_TRUE)
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
@@ -1165,11 +1199,12 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                       // For primitives, compute the size only once
                       while (bounds-- && continue_decoding == CORBA::B_TRUE)
                         {
-                          continue_decoding = stream->get_long (*(CORBA::Long *) value);
+                          continue_decoding =
+                            stream->get_long (*(CORBA::Long *) value);
                           value += size;
 
                         }
-                      //                      CORBA::release (tc2);
+                      // CORBA::release (tc2);
                       if (continue_decoding == CORBA::B_TRUE)
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
@@ -1186,14 +1221,14 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                     case CORBA::tk_array:
                     case CORBA::tk_alias:
                     case CORBA::tk_except:
-                      // For those aggregate types whose size is constant, we
-                      // compute it only once
+                      // For those aggregate types whose size is
+                      // constant, we compute it only once.
                       while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                         {
                           retval = stream->decode (tc2, value, 0, env);
                           value += size;
                         }
-                      //                      CORBA::release (tc2);
+                      // CORBA::release (tc2);
                       if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
@@ -1212,7 +1247,8 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
-// decode array
+// Decode array.
+
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Array::decode (CORBA::TypeCode_ptr  tc,
                            const void *data,
@@ -1222,10 +1258,16 @@ TAO_Marshal_Array::decode (CORBA::TypeCode_ptr  tc,
 {
   CORBA::Boolean continue_decoding = CORBA::B_TRUE;
   CDR *stream = (CDR *) context;
+
+  // Return status.
   CORBA::TypeCode::traverse_status retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE;  // return status
-  CORBA::TypeCode_ptr    tc2;  // typecode of the element
-  size_t  size; // size of element
+    CORBA::TypeCode::TRAVERSE_CONTINUE;  
+
+  // Typecode of the element.
+  CORBA::TypeCode_ptr tc2;
+
+  // Size of element.
+  size_t  size; 
   CORBA::ULong  bounds;
   char *value = (char *) data;
 
@@ -1248,13 +1290,15 @@ TAO_Marshal_Array::decode (CORBA::TypeCode_ptr  tc,
                   return CORBA::TypeCode::TRAVERSE_CONTINUE;
                 case CORBA::tk_short:
                 case CORBA::tk_ushort:
+
                   // For primitives, compute the size only once
                   while (bounds-- && continue_decoding == CORBA::B_TRUE)
                     {
-                      continue_decoding = stream->get_short (*(CORBA::Short *) value);
+                      continue_decoding =
+                        stream->get_short (*(CORBA::Short *) value);
                       value += size;
                     }
-                  //              CORBA::release (tc2);
+                  // CORBA::release (tc2);
                   if (continue_decoding == CORBA::B_TRUE)
                     return CORBA::TypeCode::TRAVERSE_CONTINUE;
                   break;
@@ -1264,10 +1308,11 @@ TAO_Marshal_Array::decode (CORBA::TypeCode_ptr  tc,
                   // For primitives, compute the size only once
                   while (bounds-- && continue_decoding == CORBA::B_TRUE)
                     {
-                      continue_decoding = stream->get_long (*(CORBA::Long *) value);
+                      continue_decoding =
+                        stream->get_long (*(CORBA::Long *) value);
                       value += size;
                     }
-                  //              CORBA::release (tc2);
+                  // CORBA::release (tc2);
                   if (continue_decoding == CORBA::B_TRUE)
                     return CORBA::TypeCode::TRAVERSE_CONTINUE;
                   break;
@@ -1277,10 +1322,11 @@ TAO_Marshal_Array::decode (CORBA::TypeCode_ptr  tc,
                   // For primitives, compute the size only once
                   while (bounds-- && continue_decoding == CORBA::B_TRUE)
                     {
-                      continue_decoding = stream->get_longlong (*(CORBA::LongLong *) value);
+                      continue_decoding =
+                        stream->get_longlong (*(CORBA::LongLong *) value);
                       value += size;
                     }
-                  //              CORBA::release (tc2);
+                  // CORBA::release (tc2);
                   if (continue_decoding == CORBA::B_TRUE)
                     return CORBA::TypeCode::TRAVERSE_CONTINUE;
                   break;
@@ -1288,10 +1334,11 @@ TAO_Marshal_Array::decode (CORBA::TypeCode_ptr  tc,
                   // For primitives, compute the size only once
                   while (bounds-- && continue_decoding == CORBA::B_TRUE)
                     {
-                      continue_decoding = stream->get_boolean (*(CORBA::Boolean *) value);
+                      continue_decoding =
+                        stream->get_boolean (*(CORBA::Boolean *) value);
                       value += size;
                     }
-                  //              CORBA::release (tc2);
+                  // CORBA::release (tc2);
                   if (continue_decoding == CORBA::B_TRUE)
                     return CORBA::TypeCode::TRAVERSE_CONTINUE;
                   break;
@@ -1300,10 +1347,11 @@ TAO_Marshal_Array::decode (CORBA::TypeCode_ptr  tc,
                   // For primitives, compute the size only once
                   while (bounds-- && continue_decoding == CORBA::B_TRUE)
                     {
-                      continue_decoding = stream->get_char (*(CORBA::Char *) value);
+                      continue_decoding =
+                        stream->get_char (*(CORBA::Char *) value);
                       value += size;
                     }
-                  //              CORBA::release (tc2);
+                  // CORBA::release (tc2);
                   if (continue_decoding == CORBA::B_TRUE)
                     return CORBA::TypeCode::TRAVERSE_CONTINUE;
                   break;
@@ -1311,10 +1359,11 @@ TAO_Marshal_Array::decode (CORBA::TypeCode_ptr  tc,
                   // For primitives, compute the size only once
                   while (bounds-- && continue_decoding == CORBA::B_TRUE)
                     {
-                      continue_decoding = stream->get_longdouble (*(CORBA::LongDouble *) value);
+                      continue_decoding =
+                        stream->get_longdouble (*(CORBA::LongDouble *) value);
                       value += size;
                     }
-                  //              CORBA::release (tc2);
+                  // CORBA::release (tc2);
                   if (continue_decoding == CORBA::B_TRUE)
                     return CORBA::TypeCode::TRAVERSE_CONTINUE;
                   break;
@@ -1322,10 +1371,11 @@ TAO_Marshal_Array::decode (CORBA::TypeCode_ptr  tc,
                   // For primitives, compute the size only once
                   while (bounds-- && continue_decoding == CORBA::B_TRUE)
                     {
-                      continue_decoding = stream->get_wchar (*(CORBA::WChar *) value);
+                      continue_decoding =
+                        stream->get_wchar (*(CORBA::WChar *) value);
                       value += size;
                     }
-                  //              CORBA::release (tc2);
+                  // CORBA::release (tc2);
                   if (continue_decoding == CORBA::B_TRUE)
                     return CORBA::TypeCode::TRAVERSE_CONTINUE;
                   break;
@@ -1333,10 +1383,11 @@ TAO_Marshal_Array::decode (CORBA::TypeCode_ptr  tc,
                   // For primitives, compute the size only once
                   while (bounds-- && continue_decoding == CORBA::B_TRUE)
                     {
-                      continue_decoding = stream->get_long (*(CORBA::Long *) value);
+                      continue_decoding =
+                        stream->get_long (*(CORBA::Long *) value);
                       value += size;
                     }
-                  //              CORBA::release (tc2);
+                  // CORBA::release (tc2);
                   if (continue_decoding == CORBA::B_TRUE)
                     return CORBA::TypeCode::TRAVERSE_CONTINUE;
                   break;
@@ -1360,7 +1411,7 @@ TAO_Marshal_Array::decode (CORBA::TypeCode_ptr  tc,
                       retval = stream->decode (tc2, value, 0, env);
                       value += size;
                     }
-                  //              CORBA::release (tc2);
+                  // CORBA::release (tc2);
                   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                     return CORBA::TypeCode::TRAVERSE_CONTINUE;
                   break;
@@ -1376,7 +1427,7 @@ TAO_Marshal_Array::decode (CORBA::TypeCode_ptr  tc,
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
-// decode alias
+// Decode alias.
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Alias::decode (CORBA::TypeCode_ptr  tc,
                            const void *data,
@@ -1384,18 +1435,23 @@ TAO_Marshal_Alias::decode (CORBA::TypeCode_ptr  tc,
                            void *context,
                            CORBA::Environment &env)
 {
-  CORBA::TypeCode_ptr    tc2;  // typecode of the aliased type
+  // Typecode of the aliased type.
+  CORBA::TypeCode_ptr tc2;  
   CORBA::Boolean continue_decoding = CORBA::B_TRUE;
-  CDR *stream = (CDR *) context;  // context is the CDR stream
-  CORBA::TypeCode::traverse_status   retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE; // status of decode operation
+
+  // Context is the CDR stream.
+  CDR *stream = (CDR *) context;  
+
+  // Status of decode operation.
+  CORBA::TypeCode::traverse_status retval =
+    CORBA::TypeCode::TRAVERSE_CONTINUE; 
   char *value = (char *) data;
 
   tc2 = tc->content_type (env);
   if (env.exception () == 0)
     {
-    // switch on the data type and handle the cases for primitives here for
-    // efficiency rather than calling
+    // Switch on the data type and handle the cases for primitives
+    // here for efficiency rather than calling.
     switch (tc2->kind_)
       {
       case CORBA::tk_null:
@@ -1403,31 +1459,38 @@ TAO_Marshal_Alias::decode (CORBA::TypeCode_ptr  tc,
         break;
       case CORBA::tk_short:
       case CORBA::tk_ushort:
-        continue_decoding = stream->get_short (*(CORBA::Short *) value);
+        continue_decoding =
+          stream->get_short (*(CORBA::Short *) value);
         break;
       case CORBA::tk_long:
       case CORBA::tk_ulong:
       case CORBA::tk_float:
       case CORBA::tk_enum:
-        continue_decoding = stream->get_long (*(CORBA::Long *) value);
+        continue_decoding =
+          stream->get_long (*(CORBA::Long *) value);
         break;
       case CORBA::tk_double:
       case CORBA::tk_longlong:
       case CORBA::tk_ulonglong:
-        continue_decoding = stream->get_longlong (*(CORBA::LongLong *) value);
+        continue_decoding =
+          stream->get_longlong (*(CORBA::LongLong *) value);
         break;
       case CORBA::tk_boolean:
-        continue_decoding = stream->get_boolean (*(CORBA::Boolean *) value);
+        continue_decoding =
+          stream->get_boolean (*(CORBA::Boolean *) value);
         break;
       case CORBA::tk_char:
       case CORBA::tk_octet:
-        continue_decoding = stream->get_char (*(CORBA::Char *) value);
+        continue_decoding =
+          stream->get_char (*(CORBA::Char *) value);
         break;
       case CORBA::tk_longdouble:
-        continue_decoding = stream->get_longdouble (*(CORBA::LongDouble *) value);
+        continue_decoding =
+          stream->get_longdouble (*(CORBA::LongDouble *) value);
         break;
       case CORBA::tk_wchar:
-        continue_decoding = stream->get_wchar (*(CORBA::WChar *) value);
+        continue_decoding =
+          stream->get_wchar (*(CORBA::WChar *) value);
         break;
       case CORBA::tk_string:
       case CORBA::tk_wstring:
@@ -1460,29 +1523,30 @@ TAO_Marshal_Alias::decode (CORBA::TypeCode_ptr  tc,
     }
 }
 
-// decode exception For exceptions, the "hidden" type ID near the
+// Decode exception For exceptions, the "hidden" type ID near the
 // front of the on-wire representation was previously unmarshaled and
 // mapped to the "tc" typcode we're using to traverse the memory ...
 // at the same time its vtable, refcount, and other state was
 // established.
 //
-// NOTE:  This is asymmetric with respect to encoding exceptions.
+// NOTE: This is asymmetric with respect to encoding exceptions.
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Except::decode (CORBA::TypeCode_ptr  tc,
                             const void *data,
                             const void *,
                             void *context,
-                            CORBA::Environment   &env)
+                            CORBA::Environment &env)
 {
   CDR *stream = (CDR *) context;
-  CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
+  CORBA::TypeCode::traverse_status retval = 
+    CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::Boolean continue_decoding = CORBA::B_TRUE;
   CORBA::TypeCode_ptr param;
   CORBA::Long size, alignment;
 
   data = (char *) data + sizeof (CORBA::Exception);
 
-  // number of fields in the struct
+  // Number of fields in the struct.
   int member_count = tc->member_count (env);
   if (env.exception () == 0)
     {
@@ -1507,31 +1571,38 @@ TAO_Marshal_Except::decode (CORBA::TypeCode_ptr  tc,
                           break;
                         case CORBA::tk_short:
                         case CORBA::tk_ushort:
-                          continue_decoding = stream->get_short (*(CORBA::Short *) data);
+                          continue_decoding =
+                            stream->get_short (*(CORBA::Short *) data);
                           break;
                         case CORBA::tk_long:
                         case CORBA::tk_ulong:
                         case CORBA::tk_float:
                         case CORBA::tk_enum:
-                          continue_decoding = stream->get_long (*(CORBA::Long *) data);
+                          continue_decoding =
+                            stream->get_long (*(CORBA::Long *) data);
                           break;
                         case CORBA::tk_double:
                         case CORBA::tk_longlong:
                         case CORBA::tk_ulonglong:
-                          continue_decoding = stream->get_longlong (*(CORBA::LongLong *) data);
+                          continue_decoding =
+                            stream->get_longlong (*(CORBA::LongLong *) data);
                           break;
                         case CORBA::tk_boolean:
-                          continue_decoding = stream->get_boolean (*(CORBA::Boolean *) data);
+                          continue_decoding =
+                            stream->get_boolean (*(CORBA::Boolean *) data);
                           break;
                         case CORBA::tk_char:
                         case CORBA::tk_octet:
-                          continue_decoding = stream->get_char (*(CORBA::Char *) data);
+                          continue_decoding =
+                            stream->get_char (*(CORBA::Char *) data);
                           break;
                         case CORBA::tk_longdouble:
-                          continue_decoding = stream->get_longdouble (*(CORBA::LongDouble *) data);
+                          continue_decoding =
+                            stream->get_longdouble (*(CORBA::LongDouble *) data);
                           break;
                         case CORBA::tk_wchar:
-                          continue_decoding = stream->get_wchar (*(CORBA::WChar *) data);
+                          continue_decoding =
+                            stream->get_wchar (*(CORBA::WChar *) data);
                           break;
                         case CORBA::tk_any:
                         case CORBA::tk_TypeCode:
@@ -1599,7 +1670,10 @@ TAO_Marshal_WString::decode (CORBA::TypeCode_ptr,
 
   continue_decoding = stream->get_ulong (len);
 
-  *((CORBA::WChar **) data) = str = new CORBA::WChar [(size_t) (len)];
+  ACE_NEW_RETURN (str,
+                  CORBA::WChar [(size_t) (len)],
+                  CORBA::TypeCode::TRAVERSE_CONTINUE);
+  *((CORBA::WChar **) data) = str;
 
   if (len != 0)
     while (continue_decoding != CORBA::B_FALSE && len--)
@@ -1609,7 +1683,7 @@ TAO_Marshal_WString::decode (CORBA::TypeCode_ptr,
       }
 
   if (continue_decoding == CORBA::B_TRUE)
-      return CORBA::TypeCode::TRAVERSE_CONTINUE;
+    return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));

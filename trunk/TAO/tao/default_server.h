@@ -22,11 +22,11 @@
 #include "tao/strategy_T.h"
 
 class TAO_Default_Server_Strategy_Factory : public TAO_Server_Strategy_Factory
+{
   // = TITLE
   //   This is the default strategy factory for CORBA servers.  It
   //   allows developers to choose strategies via argument flags.
   //   This design gives substantial freedom for experimentation.
-{
 public:
   // = Initialization and termination methods.
   TAO_Default_Server_Strategy_Factory (void);

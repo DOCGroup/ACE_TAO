@@ -1,18 +1,3 @@
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-// 
-// = FILENAME
-//     default_client.cpp
-//
-// = AUTHOR
-//     Chris Cleeland
-//
-// = VERSION
-//     $Id$
-// ============================================================================
-
 #include "tao/default_client.h"
 #include "tao/orb_core.h"
 

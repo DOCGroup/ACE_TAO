@@ -19,8 +19,6 @@
 //   types don't hold any memory.  For a few, it calls other deep_free methods
 //   to free the memory
 //
-
-//
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems Inc.
 //     and

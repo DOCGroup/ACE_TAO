@@ -1,15 +1,3 @@
-// ============================================================================
-//
-// = FILENAME
-//     default_server.cpp
-//
-// = AUTHOR
-//     Chris Cleeland
-//
-// = VERSION
-//     $Id$
-// ============================================================================
-
 #include "tao/default_server.h"
 #include "tao/orb_core.h"
 
@@ -200,78 +188,77 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
   ACE_TRACE ("TAO_Default_Server_Strategy_Factory::parse_args");
 
   int curarg;
+
   for (curarg = 0; curarg < argc && argv[curarg]; curarg++)
-    {
-      if (ACE_OS::strcmp (argv[curarg], "-ORBconcurrency") == 0)
-        {
-          curarg++;
-          if (curarg < argc)
-            {
-              char *name = argv[curarg];
+    if (ACE_OS::strcmp (argv[curarg], "-ORBconcurrency") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
 
-              if (ACE_OS::strcasecmp (name, "reactive") == 0)
-                this->concurrency_strategy_ = &reactive_strategy_;
-              else if (ACE_OS::strcasecmp (name, "thread-per-connection") == 0)
-                this->concurrency_strategy_ = &threaded_strategy_;
-            }
-        }
-      else if (ACE_OS::strcmp (argv[curarg], "-ORBtablesize") == 0)
-        {
-          curarg++;
-          if (curarg < argc)
-            this->object_table_size_ = ACE_OS::strtoul (argv[curarg], 0, 10);
-        }
-      else if (ACE_OS::strcmp (argv[curarg], "-ORBdemuxstrategy") == 0)
-        {
-          curarg++;
-          if (curarg < argc)
-            {
-              char *name = argv[curarg];
+            if (ACE_OS::strcasecmp (name, "reactive") == 0)
+              this->concurrency_strategy_ = &reactive_strategy_;
+            else if (ACE_OS::strcasecmp (name, "thread-per-connection") == 0)
+              this->concurrency_strategy_ = &threaded_strategy_;
+          }
+      }
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBtablesize") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          this->object_table_size_ = ACE_OS::strtoul (argv[curarg], 0, 10);
+      }
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBdemuxstrategy") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
 
-              if (ACE_OS::strcasecmp (name, "dynamic") == 0)
-                this->object_lookup_strategy_ = TAO_DYNAMIC_HASH;
-              else if (ACE_OS::strcasecmp (name, "linear") == 0)
-                this->object_lookup_strategy_ = TAO_LINEAR;
-              else if (ACE_OS::strcasecmp (name, "active") == 0)
-                this->object_lookup_strategy_ = TAO_ACTIVE_DEMUX;
-              else if (ACE_OS::strcasecmp (name, "user") == 0)
-                this->object_lookup_strategy_ = TAO_USER_DEFINED;
-            }
-        }
-      else if (ACE_OS::strcmp (argv[curarg], "-ORBpoalock") == 0)
-        {
-          curarg++;
-          if (curarg < argc)
-            {
-              char *name = argv[curarg];
+            if (ACE_OS::strcasecmp (name, "dynamic") == 0)
+              this->object_lookup_strategy_ = TAO_DYNAMIC_HASH;
+            else if (ACE_OS::strcasecmp (name, "linear") == 0)
+              this->object_lookup_strategy_ = TAO_LINEAR;
+            else if (ACE_OS::strcasecmp (name, "active") == 0)
+              this->object_lookup_strategy_ = TAO_ACTIVE_DEMUX;
+            else if (ACE_OS::strcasecmp (name, "user") == 0)
+              this->object_lookup_strategy_ = TAO_USER_DEFINED;
+          }
+      }
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBpoalock") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
 
-              if (ACE_OS::strcasecmp (name, "thread") == 0)
-                this->poa_lock_type_ = TAO_THREAD_LOCK;
-              else if (ACE_OS::strcasecmp (name, "null") == 0)
-                this->poa_lock_type_ = TAO_NULL_LOCK;
-            }
-        }
-      else if (ACE_OS::strcmp (argv[curarg], "-ORBpoamgrlock") == 0)
-        {
-          curarg++;
-          if (curarg < argc)
-            {
-              char *name = argv[curarg];
+            if (ACE_OS::strcasecmp (name, "thread") == 0)
+              this->poa_lock_type_ = TAO_THREAD_LOCK;
+            else if (ACE_OS::strcasecmp (name, "null") == 0)
+              this->poa_lock_type_ = TAO_NULL_LOCK;
+          }
+      }
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBpoamgrlock") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
 
-              if (ACE_OS::strcasecmp (name, "thread") == 0)
-                this->poa_mgr_lock_type_ = TAO_THREAD_LOCK;
-              else if (ACE_OS::strcasecmp (name, "null") == 0)
-                this->poa_mgr_lock_type_ = TAO_NULL_LOCK;
-            }
-        }
-      else if (ACE_OS::strcmp (argv[curarg], "-ORBthreadflags") == 0)
-        {
-          curarg++;
+            if (ACE_OS::strcasecmp (name, "thread") == 0)
+              this->poa_mgr_lock_type_ = TAO_THREAD_LOCK;
+            else if (ACE_OS::strcasecmp (name, "null") == 0)
+              this->poa_mgr_lock_type_ = TAO_NULL_LOCK;
+          }
+      }
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBthreadflags") == 0)
+      {
+        curarg++;
 
-          if (curarg < argc)
-            this->tokenize (argv[curarg]);
-        }
-    }
+        if (curarg < argc)
+          this->tokenize (argv[curarg]);
+      }
 
   return 0;
 }
