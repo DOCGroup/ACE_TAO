@@ -10,6 +10,10 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
   . ONGOING - ETA 10/10
 
+- (JTC/Ossama) autoconf support for TAO
+
+  . ONGOING - ETA unknown
+
 PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
 ============================================
 
@@ -24,10 +28,6 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
 - (Ossama/Jeff) Skeleton refactoring
 
   . ONGOING - ETA 10/30
-
-- (JTC/Ossama) autoconf support for TAO
-
-  . ONGOING - ETA unknown
 
 - (Bala) Implementation Repository enhancements
 
