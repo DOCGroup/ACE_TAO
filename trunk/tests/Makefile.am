@@ -246,6 +246,7 @@ noinst_PROGRAMS = \
   Thread_Pool_Reactor_Test \
   Thread_Pool_Reactor_Resume_Test \
   TkReactor_Test \
+  UUIDTest \
   $(CDR_ARRAY_TEST) \
   $(CODECS_TEST) \
   $(FRAMEWORK_COMPONENT_TEST) \
@@ -549,6 +550,9 @@ Upgradable_RW_Test_SOURCES = Upgradable_RW_Test.cpp \
 Unbounded_Set_Test_Ex_SOURCES = \
   Unbounded_Set_Test_Ex.cpp \
   Unbounded_Set_Test_Ex.h
+
+UUIDTest_SOURCES = \
+  UUIDTest.cpp
 
 Vector_Test_SOURCES = Vector_Test.cpp
 
