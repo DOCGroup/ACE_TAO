@@ -1,3 +1,18 @@
+Thu Sep 11 10:40:38 1997  Carlos O'Ryan  <coryan@polka.cs.wustl.edu>
+
+	* server/HTTP_Request.cpp: 
+	  I checked the use of MAXNAMELEN vs. MAXPATHLEN; all buffers
+	  intended to keep full filenames should have at least
+	  MAXPATHLEN+1 chars.
+	  Only buffers that will keep basenames (without any directories)
+	  should have MAXNAMELEN+1 bytes.
+	  I also added a new macro ACE_MAX_FULLY_QUALIFIED_NAME_LEN which
+	  is the maximum number of characters for a fully qualified
+	  internet hostname.
+	  There remain one obscure usage of these macros in ace/Malloc.h
+	  and Local_Naming_Space_T.{h,cpp}, but a quick fix broke
+	  something, I will try again soon.
+
 Tue Sep  9 22:08:36 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 	* server/HTTP_Server.{cpp,h}:  Changes which answer questions
