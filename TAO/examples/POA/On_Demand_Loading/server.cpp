@@ -2,13 +2,13 @@
 
 //============================================================================
 //
-//  =FILENAME
+// = FILENAME
 //     server.cpp
 //
-//  =DESCRIPTION
+// = DESCRIPTION
 //     Server to test the Servant Activator and Servant Locator for a POA.
 //
-//  =AUTHOR
+// = AUTHOR
 //     Kirthika Parameswaran <kirthika@cs.wustl.edu>
 //
 //=============================================================================
@@ -64,311 +64,270 @@ write_iors_to_file (const char *first_ior,
 
   FILE *output_file_1 = ACE_OS::fopen (ior_output_file_1, "w");
   FILE *output_file_2 = ACE_OS::fopen (ior_output_file_2, "w");
-  
-  if (output_file_1 == 0 || 
+
+  if (output_file_1 == 0 ||
       output_file_2 == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %s, %s\n", 
+    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %s, %s\n",
                        ior_output_file_1,
-                       ior_output_file_2), 
+                       ior_output_file_2),
                       -1);
 
   int result = ACE_OS::fprintf (output_file_1,
-				"%s", 
+				"%s",
 				first_ior);
   if (result <= 0
-      || ACE_static_cast(size_t,result) != ACE_OS::strlen (first_ior))
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "ACE_OS::fprintf failed while writing %s to %s\n", 
+      || ACE_static_cast (size_t,result) != ACE_OS::strlen (first_ior))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "ACE_OS::fprintf failed while writing %s to %s\n",
                        first_ior,
                        ior_output_file_1),
                       -1);
-  
+
   result = ACE_OS::fprintf (output_file_2,
-                            "%s", 
+                            "%s",
                             second_ior);
   if (result <= 0
-      || ACE_static_cast(size_t,result) != ACE_OS::strlen (second_ior))
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "ACE_OS::fprintf failed while writing %s to %s\n", 
+      || ACE_static_cast (size_t,result) != ACE_OS::strlen (second_ior))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "ACE_OS::fprintf failed while writing %s to %s\n",
                        second_ior,
                        ior_output_file_2),
                       -1);
-  
   ACE_OS::fclose (output_file_1);
   ACE_OS::fclose (output_file_2);
-
   return 0;
 }
 
 int
 main (int argc, char **argv)
 {
-  CORBA::Environment env;
+  CORBA::Environment TAO_TRY_ENV;
 
-  // Initialize the ORB.
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, env);
-
-  if (env.exception () != 0)
+  TAO_TRY
     {
-      env.print_exception ("CORBA::ORB_init");
-      return -1;
-    }
 
-  int result = parse_args (argc, argv);
-  if (result != 0)
-    return result;
+      // Initialize the ORB.
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, TAO_TRY_ENV); 
+
+      TAO_CHECK_ENV;
+
+      int result = parse_args (argc, argv);
+      if (result != 0)
+        return result;
+
+      // Get an Object reference to RootPOA.
+      CORBA::Object_var obj =
+        orb->resolve_initial_references ("RootPOA");
+
+      // Narrow the Object reference to a POA reference
+      PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (obj.in (), TAO_TRY_ENV);  
+      TAO_CHECK_ENV;
   
-  // Get an Object reference to RootPOA.
-  CORBA::Object_var obj =
-    orb->resolve_initial_references ("RootPOA");
+      // Get the POAManager of RootPOA
 
-  // Narrow the Object reference to a POA reference
-  PortableServer::POA_var root_poa =
-    PortableServer::POA::_narrow (obj.in (), env);
-
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::_narrow");
-      return -1;
-    }
-
-  // Get the POAManager of RootPOA
-
-  PortableServer::POAManager_var poa_manager =
-    root_poa->the_POAManager (env);
-
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::the_POAManager");
-      return -1;
-    }
-
-  CORBA::PolicyList policies (4);
-  policies.length (4);
-
-    // ID Assignment Policy
-  policies[0] =
-    root_poa->create_id_assignment_policy (PortableServer::USER_ID, env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::create_id_assignment_policy");
-      return -1;
-    }
-
-  // Lifespan Policy
-  policies[1] =
-    root_poa->create_lifespan_policy (PortableServer::PERSISTENT, env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::create_lifespan_policy");
-      return -1;
-    }
+      PortableServer::POAManager_var poa_manager =
+        root_poa->the_POAManager (TAO_TRY_ENV);
   
-  // Request Processing Policy
-  policies[2] =
-    root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER, env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::create_request_processing_policy");
-      return -1;
-    }
+      TAO_CHECK_ENV;
+
+      CORBA::PolicyList policies (4);
+      policies.length (4);
+
+      // ID Assignment Policy
+      policies[0] =
+        root_poa->create_id_assignment_policy (PortableServer::USER_ID, TAO_TRY_ENV);
   
-  PortableServer::POA_var first_poa;
-  {
-    // Servant Retention Policy
-    policies[3] =
-      root_poa->create_servant_retention_policy (PortableServer::RETAIN, env);
-    if (env.exception () != 0)
+      TAO_CHECK_ENV;
+
+      // Lifespan Policy
+      policies[1] =
+        root_poa->create_lifespan_policy (PortableServer::PERSISTENT, TAO_TRY_ENV);
+  
+      TAO_CHECK_ENV;
+  
+      // Request Processing Policy
+      policies[2] =
+        root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER, TAO_TRY_ENV);
+  
+      TAO_CHECK_ENV;
+
+  
+      // These are the changes we wish to implement for the POA level granularity in using the Servant_Manager.
+#if 0
+  
+      // Request Processing Policy
+      policies[i] =
+        root_poa->create_servant_configurator_policy (PortableServer::USE_SERVANT_CONFIGURATOR,
+                                                      dll_name,
+                                                      factory_function,
+                                                      TAO_TRY_ENV);
+#endif
+
+
+      PortableServer::POA_var first_poa;
       {
-        env.print_exception ("PortableServer::POA::create_servant_retention_policy");
-        return -1;
+        // Servant Retention Policy
+        policies[3] =
+          root_poa->create_servant_retention_policy (PortableServer::RETAIN, TAO_TRY_ENV);
+
+
+        TAO_CHECK_ENV;
+
+        ACE_CString name ("firstPOA");
+
+        // Create firstPOA as the child of RootPOA with the above policies
+        // firstPOA will use SERVANT_ACTIVATOR because of RETAIN policy.
+        first_poa = root_poa->create_POA (name.c_str (),
+                                          poa_manager.in (),
+                                          policies,
+                                          TAO_TRY_ENV);
+
+        TAO_CHECK_ENV;
+
       }
 
-    ACE_CString name = "firstPOA";
-
-    // Create firstPOA as the child of RootPOA with the above policies
-    // firstPOA will use SERVANT_ACTIVATOR because of RETAIN policy.
-    first_poa = root_poa->create_POA (name.c_str (),
-                                      poa_manager.in (),
-                                      policies,
-                                      env);
-    if (env.exception () != 0)
+      PortableServer::POA_var second_poa;
       {
-        env.print_exception ("PortableServer::POA::create_POA");
-        return -1;
-      }
-  }
+        // Servant Retention Policy
+        policies[3] =
+          root_poa->create_servant_retention_policy (PortableServer::NON_RETAIN, TAO_TRY_ENV);
 
-  PortableServer::POA_var second_poa;
-  {
-    // Servant Retention Policy
-    policies[3] =
-      root_poa->create_servant_retention_policy (PortableServer::NON_RETAIN, env);
-    if (env.exception () != 0)
-      {
-        env.print_exception ("PortableServer::POA::create_servant_retention_policy");
-        return -1;
-      }
+        TAO_CHECK_ENV;
+  
+        ACE_CString name ("secondPOA");
 
-    ACE_CString name = "secondPOA";
+        // Create secondPOA as child of RootPOA with the above policies
+        // secondPOA will use a SERVANT_LOCATOR because of NON_RETAIN
+        // policy.
+        second_poa = root_poa->create_POA (name.c_str (),
+                                           poa_manager.in (),
+                                           policies,
+                                           TAO_TRY_ENV);
+        TAO_CHECK_ENV;
+   
+        // Destroy the policy objects as they have been passed to
+        // create_POA and no longer needed.
+        for (CORBA::ULong i = 0;
+             i < policies.length () && TAO_TRY_ENV.exception () == 0;
+             ++i)
+          {
+            CORBA::Policy_ptr policy = policies[i];
+            policy->destroy (TAO_TRY_ENV);
+          }
 
-    // Create secondPOA as child of RootPOA with the above policies
-    // secondPOA will use a SERVANT_LOCATOR because of NON_RETAIN
-    // policy.
-    second_poa = root_poa->create_POA (name.c_str (),
-                                      poa_manager.in (),
-                                      policies,
-                                      env);
-    if (env.exception () != 0)
-      {
-        env.print_exception ("PortableServer::POA::create_POA");
-        return -1;
-      }
-  }
+        TAO_CHECK_ENV;
+  
+        MyFooServantActivator servant_activator_impl (orb.in ());
+        PortableServer::ServantActivator_var servant_activator =
+          servant_activator_impl._this (TAO_TRY_ENV);
 
-  // Destroy the policy objects as they have been passed to
-  // create_POA and no longer needed.
-  for (CORBA::ULong i = 0;
-       i < policies.length () && env.exception () == 0;
-       ++i)
-    {
-      CORBA::Policy_ptr policy = policies[i];
-      policy->destroy (env);
-    }
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::create_POA");
-      return -1;
-    }
-
-  MyFooServantActivator servant_activator_impl (orb.in ());
-  PortableServer::ServantActivator_var servant_activator =
-    servant_activator_impl._this (env);
-
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POAManager::_this");
-      return -1;
-    }
-
-  // Set MyFooServantActivator object as the servant_manager of
-  // firstPOA.
-
-  first_poa->set_servant_manager (servant_activator.in (), env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POAManager::set_servant_manager");
-      return -1;
-    }
-
-  // Create a reference with user created ID in firstPOA which uses
-  // the MyFooServantActivator.
-
-  PortableServer::ObjectId_var first_foo_oid =
-    servant_activator_impl.create_objectId ("MyFoo","create_MyFoo");
-
-  CORBA::Object_var first_foo =
-    first_poa->create_reference_with_id (first_foo_oid.in (), "IDL:Foo:1.0", env);
-
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::create_reference_with_id");
-      return -1;
-    }
-
-   MyFooServantLocator servant_locator_impl (orb.in ());
-   PortableServer::ServantLocator_var servant_locator =
-     servant_locator_impl._this (env);
-
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POAManager::_this");
-      return -1;
-    }
-
-  // Set MyFooServantLocator object as the servant Manager of
-  // secondPOA.
-
-  second_poa->set_servant_manager (servant_locator.in (), env);
-
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POAManager::set_servant_manager");
-      return -1;
-    }
+        TAO_CHECK_ENV;
  
-  // Try to create a reference with user created ID in second_poa
-  // which uses MyFooServantLocator.
+        // Set MyFooServantActivator object as the servant_manager of
+        // firstPOA.
 
-  PortableServer::ObjectId_var second_foo_oid =
-   servant_locator_impl.create_objectId ("MyFoo","create_MyFoo");
+        first_poa->set_servant_manager (servant_activator.in (), TAO_TRY_ENV);
 
-  CORBA::Object_var second_foo =
-    second_poa->create_reference_with_id (second_foo_oid.in (),
-                                          "IDL:Foo:1.0", env);
+        TAO_CHECK_ENV;
+  
+        // Create a reference with user created ID in firstPOA which uses
+        // the MyFooServantActivator. The servant dll name as well as the
+        // factory function in the dll are used in creating the objectId.
 
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::create_reference_with_id");
-      return -1;
+        // *done*@@ Kirthika, please make it clear that this is a TAO extension
+        // and also explain that <MyFoo> is the DLL and <create_MyFoo> is
+        // the factory function in the DLL that creates a Servant.
+        PortableServer::ObjectId_var first_foo_oid =
+          // *done*x@@ Kirthika, perhaps you should change the name of this method
+          // to make it more clear that there's dynamic linking etc. going
+          // on here.  For instance, you could call it
+          // create_dll_object_id().  Please check with Irfan for
+          // suggestions on this name.
+          servant_activator_impl.create_dll_object_id ("MyFoo",
+                                                       "create_MyFoo");
+
+        CORBA::Object_var first_foo =
+          first_poa->create_reference_with_id (first_foo_oid.in (), "IDL:Foo:1.0", TAO_TRY_ENV);
+
+        TAO_CHECK_ENV;
+  
+        MyFooServantLocator servant_locator_impl (orb.in ());
+        PortableServer::ServantLocator_var servant_locator =
+          servant_locator_impl._this (TAO_TRY_ENV);
+
+        TAO_CHECK_ENV;
+
+   
+        // Set MyFooServantLocator object as the servant Manager of
+        // secondPOA.
+
+        second_poa->set_servant_manager (servant_locator.in (), TAO_TRY_ENV);
+
+        TAO_CHECK_ENV;
+
+        // Try to create a reference with user created ID in second_poa
+        // which uses MyFooServantLocator. The servant dll name as well as the
+        // factory function in the dll are used in creating the objectId.
+
+        PortableServer::ObjectId_var second_foo_oid =
+          servant_locator_impl.create_dll_object_id ("MyFoo",
+                                                     "create_MyFoo");
+
+        CORBA::Object_var second_foo =
+          second_poa->create_reference_with_id (second_foo_oid.in (),
+                                                "IDL:Foo:1.0", TAO_TRY_ENV);
+
+        TAO_CHECK_ENV;
+
+        // Invoke object_to_string on the references created in firstPOA and
+        // secondPOA.
+
+        CORBA::String_var first_foo_ior =
+          orb->object_to_string (first_foo.in (), TAO_TRY_ENV);
+
+        TAO_CHECK_ENV;
+  
+        CORBA::String_var second_foo_ior =
+          orb->object_to_string (second_foo.in (), TAO_TRY_ENV);
+
+        TAO_CHECK_ENV;
+  
+        // Print the ior's of first_foo and second_foo.
+
+        ACE_DEBUG((LM_DEBUG,"%s\n%s\n",
+                   first_foo_ior.in (),
+                   second_foo_ior.in ()));
+
+        int write_result = write_iors_to_file (first_foo_ior.in (),
+                                               second_foo_ior.in ());
+        if (write_result != 0)
+          return write_result;
+
+        // Set the poa_manager state to active, ready to process requests.
+        poa_manager->activate (TAO_TRY_ENV);
+
+        TAO_CHECK_ENV;
+  
+        // Run the ORB.
+        if (orb->run () == -1)
+          ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CORBA::ORB::run"), -1);
+
+        // Destroy the root_poa and also first_poa and second_poa
+
+        root_poa->destroy (1,
+                           1,
+                           TAO_TRY_ENV);
+        TAO_CHECK_ENV;
+
+      }
     }
-
-  // Invoke object_to_string on the references created in firstPOA and
-  // secondPOA.
-
-  CORBA::String_var first_foo_ior = 
-    orb->object_to_string (first_foo.in (), env);
-
-  if (env.exception () != 0)
+  TAO_CATCHANY 
     {
-      env.print_exception ("CORBA::ORB::object_to_string");
-      return -1;
+      TAO_TRY_ENV.print_exception ("server:main ()");
+      return 1;
     }
-
-  CORBA::String_var second_foo_ior = 
-    orb->object_to_string (second_foo.in (), env);
-
-  if (env.exception () != 0)
-    {
-      env.print_exception ("CORBA::ORB::object_to_string");
-      return -1;
-    }
-
-  // Print the ior's of first_foo and second_foo.
-
-  ACE_DEBUG((LM_DEBUG,"%s\n%s\n",
-	     first_foo_ior.in (),
-	     second_foo_ior.in ()));
-
-  int write_result = write_iors_to_file (first_foo_ior.in (),
-                                         second_foo_ior.in ());
-  if (write_result != 0)
-    return write_result;
-
-  // Set the poa_manager state to active, ready to process requests.
-  poa_manager->activate (env);
-
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POAManager::activate");
-      return -1;
-    }
-
-  // Run the ORB.
-  if (orb->run () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CORBA::ORB::run"), -1);
-
-  // Destroy the root_poa and also first_poa and second_poa
-
-  root_poa->destroy (1,
-                     1,
-                     env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::destroy");
-      return -1;
-    }
-
+  TAO_ENDTRY;
+  
   return 0;
 }
-
