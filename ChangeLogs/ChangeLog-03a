@@ -39,7 +39,7 @@ Mon Nov 27 09:56:09 2000  Ossama Othman  <ossama@uci.edu>
 	* docs/tutorials/020/server2.cpp:
 
 	  Include "ace/Log_Msg.h" to pull in the ACE_{DEBUG,ERROR}
-	  macros.  The examples code in the HTML files was also updated.
+	  macros.  The example code in the HTML files was also updated.
 
 	* docs/tutorials/011/message_queue.cpp:
 	* docs/tutorials/011/page02.html:
