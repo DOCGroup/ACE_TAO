@@ -1,9 +1,0 @@
-#
-# $Id$
-#
-# Makefile for building the Nested_Upcall_Crash test executables
-#
-
-MAKEFILES = server.bor client.bor scavenger.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

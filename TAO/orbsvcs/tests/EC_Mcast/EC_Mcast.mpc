@@ -1,5 +1,0 @@
-project: rteventexe {
-  depends += Messaging
-  libs    += TAO_Messaging
-  exename  = EC_Mcast
-}

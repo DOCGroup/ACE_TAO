@@ -1,6 +1,0 @@
-project(IOGRTest): server, orbsvcsexe {
-  depends += FTORB IORManip
-  libs    += TAO_FTORB TAO_IORManip
-  exename  = IOGRTest
-  comps   += FTORB
-}
