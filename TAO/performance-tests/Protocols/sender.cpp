@@ -426,7 +426,7 @@ Worker::print_stats (void)
                   "%Q bits sent in %5.1f seconds at a rate of %5.2f Mbps\n",
                   bits,
                   seconds,
-                  bits / seconds / 1000 / 1000));
+                  ACE_UINT64_DBLCAST_ADAPTER (bits / seconds / 1000 / 1000)));
     }
 }
 
