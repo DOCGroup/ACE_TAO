@@ -1,3 +1,15 @@
+Sun Jul 29 10:15:13 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/TAO_Internal.cpp (open_services_i):
+
+	  Reverted my change that prevented the default resource factory
+	  from being inserted into the Service Repository.  The resource
+	  factory must be inserted into the Service Repository so that
+	  Service Configurator directives such as 'static Resource_Factory
+	  "-ORBResources global"' actually work properly.  An alternative
+	  solution for the dynamic loading problem related the default
+	  resource factory is necessary.
+
 Sun Jul 29 00:59:28 2001  Ossama Othman  <ossama@uci.edu>
 
 	* docs/Options.html:
