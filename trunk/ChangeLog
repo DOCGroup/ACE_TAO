@@ -1,3 +1,8 @@
+Mon Dec 06 11:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+          Added ACE_LACKS_SIGSET_DEFINITIONS
+
 Mon Dec 06 10:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-mingw.h:
