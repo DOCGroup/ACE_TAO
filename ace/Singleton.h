@@ -79,20 +79,21 @@ protected:
 template <class TYPE, class LOCK>
 class ACE_TSS_Singleton : public ACE_Cleanup
   // = TITLE
-  //     A thread-specific storage Singleton Adapter the uses the
-  //     Adapter pattern to turn ordinary classes into Singletons
-  //     optimized with the Double-Checked Locking optimization
-  //     pattern.
+  //     This class uses the Adapter pattern to turn ordinary classes
+  //     into Thread-specific Singletons optimized with the
+  //     Double-Checked Locking optimization pattern.
   //   
   // = DESCRIPTION
   //     This implementation is another variation on the GoF Singleton
-  //     pattern.  In this case, a single <ACE_Singleton<TYPE, LOCK> >
-  //     instance is allocated here, not a <TYPE> instance.  The
-  //     reason for this is to allow registration with the
-  //     <ACE_Object_Manager>, so that the Singleton can be cleaned up
-  //     when the process exits.  For this scheme to work, a (static)
-  //     <cleanup> function must be provided.  <ACE_Singleton>
-  //     provides one so that TYPE doesn't need to.
+  //     pattern.  In this case, a single <ACE_TSS_Singleton<TYPE,
+  //     LOCK> > instance is allocated here, not a <TYPE> instance.
+  //     Each call to the <instance> static method returns a Singleton
+  //     whose pointer resides in thread-specific storage.  As with
+  //     <ACE_Singleton>, we use the <ACE_Object_Manager> so that the
+  //     Singleton can be cleaned up when the process exits.  For this
+  //     scheme to work, a (static) <cleanup> function must be
+  //     provided.  <ACE_Singleton> provides one so that TYPE doesn't
+  //     need to.
 {
 public:
   static TYPE *instance (void);
