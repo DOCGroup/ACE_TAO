@@ -67,6 +67,7 @@ call %0 %dopure% Reactor_Timer_Test
 call %0 %dopure% Reader_Writer_Test
 call %0 %dopure% Thread_Pool_Reactor_Test
 call %0 %dopure% Recursive_Mutex_Test
+call %0 %dopure% Reverse_Lock_Test
 call %0 %dopure% Semaphore_Test
 call %0 %dopure% Service_Config_Test
 call %0 %dopure% Sigset_Ops_Test

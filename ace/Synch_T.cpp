@@ -35,6 +35,16 @@ ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::ACE_Lock_Adapter (void)
   ACE_NEW (this->lock_, ACE_LOCKING_MECHANISM);
 }
 
+// This constructor isn't inlined, because SunPRO C++ 4.2 + patch
+// 104631-07 has trouble compiling TAO with it inline.
+template <class ACE_LOCKING_MECHANISM>
+ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::ACE_Reverse_Lock (void)
+  : lock_ (0),
+    delete_lock_ (1)
+{
+  ACE_NEW (this->lock_, ACE_LOCKING_MECHANISM);
+}
+
 template <class ACE_LOCK, class TYPE>
 ACE_Test_and_Set<ACE_LOCK, TYPE>::ACE_Test_and_Set (TYPE initial_value)
   : is_set_ (initial_value)
