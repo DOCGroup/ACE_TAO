@@ -85,6 +85,7 @@ typedef ACE_Unbounded_Queue<ACE_TString>
 typedef ACE_Unbounded_Queue_Iterator<ACE_TString>
         ACE_SVC_QUEUE_ITERATOR;
 
+#define ACE_Component_Config ACE_Service_Config
 class ACE_Export ACE_Service_Config
 {
   // = TITLE
