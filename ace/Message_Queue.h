@@ -433,6 +433,12 @@ public:
   virtual int deactivated (void);
   // Returns true if <deactivated_> is enabled.
 
+  // = Not currently implemented...
+  int peek_dequeue_head (ACE_Message_Block *&first_item,
+                         ACE_Time_Value *timeout = 0);
+  ACE_Notification_Strategy *notification_strategy (void);
+  void notification_strategy (ACE_Notification_Strategy *s);
+
   // = Notification hook.
 
   virtual void dump (void) const;

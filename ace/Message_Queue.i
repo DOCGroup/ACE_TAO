@@ -201,4 +201,21 @@ ACE_Message_Queue_NT::completion_port (void)
   return this->completion_port_;
 }
 
+ACE_INLINE int 
+ACE_Message_Queue_NT::peek_dequeue_head (ACE_Message_Block *&first_item,
+                                         ACE_Time_Value *timeout = 0)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+ACE_INLINE ACE_Notification_Strategy *
+ACE_Message_Queue_NT::notification_strategy (void)
+{
+  ACE_NOTSUP_RETURN (0);
+}
+
+ACE_INLINE void 
+ACE_Message_Queue_NT::notification_strategy (ACE_Notification_Strategy *)
+{
+}
 #endif /* ACE_WIN32 && ACE_HAS_WINNT4 != 0 */

@@ -1,3 +1,9 @@
+Wed Jun  7 20:41:33 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Message_Queue: Added some "no-op" impls for the new
+	  pure virtual methods added to ACE_Message_Queue recently.
+  	  Thanks to Darrell for pointing this out.
+
 Wed Jun  7 13:24:22 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/OS.h:
