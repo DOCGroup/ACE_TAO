@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// $Id$ 
+// $Id$
   
 #define ACE_BUILD_DLL
 #include "ace/POSIX_Proactor.h"
@@ -196,6 +196,69 @@ ACE_POSIX_Proactor::create_asynch_write_file_result (ACE_Handler &handler,
                   0);
   return implementation;
 }
+
+
+
+ACE_Asynch_Read_Dgram_Result_Impl *
+ACE_POSIX_Proactor::create_asynch_read_dgram_result(ACE_Handler &handler,
+                                                    ACE_HANDLE handle,
+                                                    ACE_Message_Block *message_block,
+                                                    size_t bytes_to_read,
+                                                    int flags,
+                                                    int protocol_family,
+                                                    const void* act,
+                                                    ACE_HANDLE event ,
+                                                    int priority ,
+                                                    int signal_number)
+
+{
+	ACE_Asynch_Read_Dgram_Result_Impl *implementation=0;
+	/*
+    ACE_NEW_RETURN (implementation,
+		ACE_POSIX_Asynch_Read_Dgram_Result(handler,
+											handle,		
+											bytes_to_read,
+											flags,
+											addr,
+											act,
+											event,
+											priority,
+											signal_number),
+											0);
+                                            */
+	return implementation;
+}
+
+ACE_Asynch_Write_Dgram_Result_Impl *
+ACE_POSIX_Proactor::create_asynch_write_dgram_result (ACE_Handler &handler,
+                                                      ACE_HANDLE handle,
+                                                      ACE_Message_Block *message_block,
+                                                      size_t bytes_to_write,
+                                                      int flags,
+                                                      const void* act,
+                                                      ACE_HANDLE event,
+                                                      int priority ,
+                                                      int signal_number) 
+{
+	ACE_Asynch_Write_Dgram_Result_Impl *implementation=0;
+	/*
+
+	ACE_NEW_RETURN (implementation,
+		ACE_POSIX_Asynch_Write_Dgram_Result(handler,
+											handle,		
+											bytes_to_write,
+											flags,
+											addr,
+											act,
+											event,
+											priority,
+											signal_number),
+											0);
+	*/										
+
+	return implementation;
+}
+
 
 ACE_Asynch_Accept_Result_Impl *
 ACE_POSIX_Proactor::create_asynch_accept_result (ACE_Handler &handler,
@@ -693,6 +756,27 @@ ACE_POSIX_AIOCB_Proactor::create_asynch_write_stream (void)
                   ACE_POSIX_AIOCB_Asynch_Write_Stream (this),
                   0);
   return implementation;
+}
+ 
+ACE_Asynch_Read_Dgram_Impl *
+ACE_POSIX_AIOCB_Proactor::create_asynch_read_dgram (void)
+{
+    ACE_Asynch_Read_Dgram_Impl *implementation = 0;
+    ACE_NEW_RETURN (implementation,
+		ACE_POSIX_AIOCB_Asynch_Read_Dgram (this),
+		0);
+    return implementation;
+}
+
+ACE_Asynch_Write_Dgram_Impl *
+ACE_POSIX_AIOCB_Proactor::create_asynch_write_dgram (void)
+{
+	ACE_Asynch_Write_Dgram_Impl *implementation = 0;
+	ACE_NEW_RETURN (implementation,
+		ACE_POSIX_AIOCB_Asynch_Write_Dgram (this),
+		0);
+	
+    return implementation;
 }
 
 ACE_Asynch_Read_File_Impl *
@@ -1325,6 +1409,29 @@ ACE_POSIX_SIG_Proactor::create_asynch_write_stream (void)
                   ACE_POSIX_SIG_Asynch_Write_Stream (this),
                   0);
   return  implementation;
+}
+
+ACE_Asynch_Read_Dgram_Impl *
+ACE_POSIX_SIG_Proactor::create_asynch_read_dgram (void)
+{
+    ACE_Asynch_Read_Dgram_Impl *implementation = 0;
+	ACE_NEW_RETURN (implementation,
+		ACE_POSIX_SIG_Asynch_Read_Dgram(this),
+		0);
+
+    return implementation;
+}
+
+ACE_Asynch_Write_Dgram_Impl *
+ACE_POSIX_SIG_Proactor::create_asynch_write_dgram (void)
+{
+    ACE_Asynch_Write_Dgram_Impl *implementation = 0;
+	ACE_NEW_RETURN (implementation,
+		ACE_POSIX_SIG_Asynch_Write_Dgram(this),
+		0);
+	
+
+    return implementation;
 }
 
 ACE_Asynch_Read_File_Impl *

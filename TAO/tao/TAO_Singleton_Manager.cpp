@@ -18,7 +18,6 @@ ACE_RCSID (tao,
            TAO_Singleton_Manager,
            "$Id$")
 
-
 extern "C" void
 TAO_Singleton_Manager_cleanup_destroyer (void *, void *)
 {
@@ -183,6 +182,7 @@ TAO_Singleton_Manager::init (int register_with_object_manager)
 // other than The Instance.  This can happen if a user creates one for some
 // reason.  All objects clean up their per-object information and managed
 // objects, but only The Instance cleans up the static preallocated objects.
+
 int
 TAO_Singleton_Manager::fini (void)
 {

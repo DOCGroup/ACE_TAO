@@ -1,3 +1,25 @@
+Thu May 17 06:23:59 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu> 
+
+	* ace/Asynch_IO.cpp
+	  ace/Asynch_IO.h
+	  ace/Asynch_IO_Impl.cpp
+	  ace/Asynch_IO_Impl.h
+	  ace/Asynch_IO_Impl.i
+	  ace/POSIX_Asynch_IO.cpp
+	  ace/POSIX_Asynch_IO.h
+	  ace/POSIX_Asynch_IO.i
+	  ace/POSIX_Proactor.cpp
+	  ace/POSIX_Proactor.h
+	  ace/POSIX_Proactor.i
+	  ace/Proactor.cpp
+	  ace/Proactor.h
+	  ace/WIN32_Asynch_IO.cpp
+	  ace/WIN32_Asynch_IO.h
+	  ace/WIN32_Proactor.cpp
+	  ace/WIN32_Proactor.h: Added Async IO support for UDP dgrams
+	  on NT so they can be used via the Proactor.  Thanks to
+	  Roger Tragin <rtragin@cuseeme.com> for contributing this.
+  
 Wed May 16 22:43:19 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Synch.i (ACE_Mutex::remove): Properly clean up the shared
@@ -22,6 +44,16 @@ Wed May 16 17:05:29 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
         * tests/CDR_Test.cpp:
 
           Added test for writing and reading ACE_CDR::WChar.
+
+Wed May 16 14:51:37 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* tests/Config_Test.cpp: Updated this test to include Chris
+	  Hafey's improvements.
+
+	* ace/Configuration.{h,cpp},
+  	* ace/Configuration_Import_Export.cpp: Added a number of fixes from
+	  Chris Hafey and Jonathan Reis that had been lost when Jerry
+ 	  Odenwelder added his changes.
 
 Wed May 16 09:49:29 2001  Steve Huston  <shuston@riverace.com>
 

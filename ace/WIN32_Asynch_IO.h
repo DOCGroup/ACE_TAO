@@ -14,12 +14,12 @@
  *  defined or you are on WinNT 4.0 or higher.
  *
  *
- *  @author Irfan Pyarali (irfan@cs.wustl.edu)
- *  @author Tim Harrison (harrison@cs.wustl.edu)
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ *  @author Tim Harrison <harrison@cs.wustl.edu>
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ *  @author Roger Tragin <rtragin@cuseeme.com>
  */
 //=============================================================================
-
 
 #ifndef ACE_WIN32_ASYNCH_IO_H
 #define ACE_WIN32_ASYNCH_IO_H
@@ -34,6 +34,7 @@
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
 
 #include "ace/Asynch_IO_Impl.h"
+#include "ace/Addr.h"
 
 // Forward declaration
 class ACE_WIN32_Proactor;
@@ -1241,6 +1242,355 @@ public:
 
   /// Return the underlying proactor.
   ACE_Proactor* proactor (void) const;
+};
+
+/**
+ * @class ACE_WIN32_Asynch_Read_Dgram_Result
+ *
+ * @brief This is class provides concrete implementation for
+ * ACE_Asynch_Read_Dgram::Result class. 
+ */
+class ACE_Export ACE_WIN32_Asynch_Read_Dgram_Result : public virtual ACE_Asynch_Read_Dgram_Result_Impl,
+                                                      public virtual ACE_WIN32_Asynch_Result
+{
+
+  /// Factory class will have special permissions.
+  friend class ACE_WIN32_Asynch_Read_Dgram;
+
+  /// Proactor class has special permission.
+  friend class ACE_WIN32_Proactor;
+
+public:
+  /// The number of bytes which were requested at the start of the
+  /// asynchronous read.
+  u_long bytes_to_read (void) const;
+
+  /// Message block which contains the read data
+  ACE_Message_Block *message_block (void) const;
+  
+  /// The address of where the packet came from
+  int remote_address (ACE_Addr& addr) const;
+
+  sockaddr *saddr () const;
+
+  /// The flags used in the read
+  int flags (void) const;
+
+  /// I/O handle used for reading.
+  ACE_HANDLE handle (void) const;
+
+  // Base class operations. These operations are here to kill
+  // dominance warnings. These methods call the base class methods.
+
+  /// Number of bytes transferred by the operation.
+  u_long bytes_transferred (void) const;
+
+  /// ACT associated with the operation.
+  const void *act (void) const;
+
+  /// Did the operation succeed?
+  int success (void) const;
+
+  /**
+   * This returns the ACT associated with the handle when it was
+   * registered with the I/O completion port.  This ACT is not the
+   * same as the ACT associated with the asynchronous operation.
+   */
+  const void *completion_key (void) const;
+
+  /// Error value if the operation fail.
+  u_long error (void) const;
+
+  /// Event associated with the OVERLAPPED structure.
+  ACE_HANDLE event (void) const;
+
+  /// This really make sense only when doing file I/O.
+  u_long offset (void) const;
+
+  /// Offset_high associated with the OVERLAPPED structure.
+  u_long offset_high (void) const;
+
+  /// The priority of the asynchronous operation. Currently, this is
+  /// not supported on Win32.
+  int priority (void) const;
+
+  /// No-op. Returns 0.
+  int signal_number (void) const;
+
+  /// Post <this> to the Proactor's completion port.
+  int post_completion (ACE_Proactor_Impl *proactor);
+
+protected:
+  ACE_WIN32_Asynch_Read_Dgram_Result (ACE_Handler &handler,
+                                      ACE_HANDLE handle,
+                                      ACE_Message_Block *message_block,
+                                      u_long bytes_to_read,
+                                      int flags,
+                                      int protocol_family,
+                                      const void* act,
+                                      ACE_HANDLE event,
+                                      int priority,
+                                      int signal_number = 0);
+  // Constructor is protected since creation is limited to
+  // ACE_Asynch_Read_Dgram factory.
+
+  /// Proactor will call this method when the read completes.
+  virtual void complete (u_long bytes_transferred,
+                         int success,
+                         const void *completion_key,
+                         u_long error);
+
+  /// Destructor.
+  virtual ~ACE_WIN32_Asynch_Read_Dgram_Result (void);
+
+  /// Bytes requested when the asynchronous read was initiated.
+  u_long bytes_to_read_;
+
+  /// Message block for reading the data into.
+  ACE_Message_Block *message_block_;
+
+  /// The address of where the packet came from
+  ACE_Addr *remote_address_;
+
+  int addr_len_;
+
+  /// The flags used in the read
+  int flags_;
+
+  /// I/O handle used for reading.
+  ACE_HANDLE handle_;
+};
+
+
+/**
+ * @class ACE_WIN32_Asynch_Read_Dgram
+ *
+ * @brief This class is a factory for starting off asynchronous reads
+ *     on a UDP socket.
+ *
+ *     Once <open> is called, multiple asynchronous <read>s can be
+ *     started using this class.  An ACE_Asynch_Read_Dgram::Result
+ *     will be passed back to the <handler> when the asynchronous
+ *     reads completes through the <ACE_Handler::handle_read_stream>
+ *     callback.
+ *
+ */
+class ACE_Export ACE_WIN32_Asynch_Read_Dgram : public virtual ACE_Asynch_Read_Dgram_Impl,
+                                               public ACE_WIN32_Asynch_Operation
+{
+public:
+  /// Constructor.
+  ACE_WIN32_Asynch_Read_Dgram (ACE_WIN32_Proactor *win32_proactor);
+  virtual ~ACE_WIN32_Asynch_Read_Dgram (void);
+
+  /// Recv <buffer_count> worth of <buffers> from <addr> using
+  /// overlapped I/O (uses <WSARecvFrom>).  Returns 0 on success.
+  virtual ssize_t recv (ACE_Message_Block *message_block,
+                        size_t &number_of_bytes_recvd,
+                        int flags,
+                        int protocol_family,
+                        const void *act,
+                        int priority,
+                        int signal_number);
+
+  // Methods belong to ACE_WIN32_Asynch_Operation base class. These
+  // methods are defined here to avoid VC++ warnings. They route the
+  // call to the ACE_WIN32_Asynch_Operation base class.
+
+  /**
+   * Initializes the factory with information which will be used with
+   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
+   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * correct handle.
+   */
+  int open (ACE_Handler &handler,
+            ACE_HANDLE handle,
+            const void *completion_key,
+            ACE_Proactor *proactor);
+
+  /**
+   * This cancels all pending accepts operations that were issued by
+   * the calling thread.  The function does not cancel asynchronous
+   * operations issued by other threads.
+   */
+  int cancel (void);
+
+  /// Return the underlying proactor.
+  ACE_Proactor* proactor (void) const;
+
+protected:
+  /// Do-nothing constructor.
+  ACE_WIN32_Asynch_Read_Dgram (void);
+};
+
+
+/**
+ * @class ACE_WIN32_Asynch_Write_Dgram_Result
+ *
+ * @brief This is class provides concrete implementation for
+ *    ACE_Asynch_Write_Dgram::Result class. 
+ */
+class ACE_Export ACE_WIN32_Asynch_Write_Dgram_Result : public virtual ACE_Asynch_Write_Dgram_Result_Impl,
+                                                       public ACE_WIN32_Asynch_Result
+{
+  /// Factory class willl have special permissions.
+  friend class ACE_WIN32_Asynch_Write_Dgram;
+  
+  /// Proactor class has special permission.
+  friend class ACE_WIN32_Proactor;
+
+public:
+  /// The number of bytes which were requested at the start of the
+  /// asynchronous write.
+  u_long bytes_to_write (void) const;
+
+  /// Message block which contains the sent data
+  ACE_Message_Block *message_block (void) const;
+
+  /// The flags using in the write
+  int flags (void) const;
+
+  /// I/O handle used for writing.
+  ACE_HANDLE handle (void) const;
+
+  // = Base class operations. These operations are here to kill some
+  //   warnings. These methods call the base class methods.
+
+  /// Number of bytes transferred by the operation.
+  u_long bytes_transferred (void) const;
+
+  /// ACT associated with the operation.
+  const void *act (void) const;
+
+  /// Did the operation succeed?
+  int success (void) const;
+
+  /**
+   * This returns the ACT associated with the handle when it was
+   * registered with the I/O completion port.  This ACT is not the
+   * same as the ACT associated with the asynchronous operation.
+   */
+  const void *completion_key (void) const;
+
+  /// Error value if the operation fail.
+  u_long error (void) const;
+
+  /// Event associated with the OVERLAPPED structure.
+  ACE_HANDLE event (void) const;
+
+  /// This really make sense only when doing file I/O.
+  u_long offset (void) const;
+
+  /// Offset_high associated with the OVERLAPPED structure.
+  u_long offset_high (void) const;
+
+  /// The priority of the asynchronous operation. Currently, this is
+  /// not supported on Win32.
+  int priority (void) const;
+
+  /// No-op. Returns 0.
+  int signal_number (void) const;
+
+  /// Post <this> to the Proactor's completion port.
+  int post_completion (ACE_Proactor_Impl *proactor);
+
+protected:
+  ACE_WIN32_Asynch_Write_Dgram_Result (ACE_Handler &handler,
+                                       ACE_HANDLE handle,
+                                       ACE_Message_Block *message_block,
+                                       size_t bytes_to_write,
+                                       int flags,
+                                       const void* act,
+                                       ACE_HANDLE event,
+                                       int priority,
+                                       int signal_number = 0);
+  // Constructor is protected since creation is limited to
+  // ACE_Asynch_Write_Stream factory.
+
+  /// ACE_Proactor will call this method when the write completes.
+  virtual void complete (u_long bytes_transferred,
+                         int success,
+                         const void *completion_key,
+                         u_long error);
+
+  /// Destructor.
+  virtual ~ACE_WIN32_Asynch_Write_Dgram_Result (void);
+
+  /// The number of bytes which were requested at the start of the
+  /// asynchronous write.
+  u_long bytes_to_write_;
+
+  /// Message block used for the send.
+  ACE_Message_Block *message_block_;
+
+  /// The flags using in the write
+  int flags_;
+
+  /// I/O handle used for writing.
+  ACE_HANDLE handle_;
+};
+
+
+/**
+ * @class ACE_WIN32_Asynch_Write_Dgram
+ *
+ * @brief This class is a factory for starting off asynchronous writes
+ *    on a UDP socket.
+ *
+ *
+ *     Once <open> is called, multiple asynchronous <writes>s can
+ *     started using this class.  A ACE_Asynch_Write_Stream::Result
+ *     will be passed back to the <handler> when the asynchronous
+ *     write completes through the
+ *     <ACE_Handler::handle_write_stream> callback.
+ */
+class ACE_Export ACE_WIN32_Asynch_Write_Dgram : public virtual ACE_Asynch_Write_Dgram_Impl,
+                                                public ACE_WIN32_Asynch_Operation
+{
+public:
+  /// Constructor.
+  ACE_WIN32_Asynch_Write_Dgram (ACE_WIN32_Proactor *win32_proactor);
+  virtual ~ACE_WIN32_Asynch_Write_Dgram (void);
+
+  /// Send <buffer_count> worth of <buffers> to <addr> using overlapped
+  /// I/O (uses <WSASentTo>).  Returns 0 on success.
+  virtual ssize_t send (ACE_Message_Block *message_block,
+                        size_t &number_of_bytes_sent,
+                        int flags,
+                        const ACE_Addr &addr,
+                        const void *act,
+                        int priority,
+                        int signal_number);
+
+  // = Methods belonging to <ACE_WIN32_Asynch_Operation> base class.
+
+  // These methods are defined here to avoid VC++ warnings. They route
+  // the call to the <ACE_WIN32_Asynch_Operation> base class.
+
+  /**
+   * Initializes the factory with information which will be used with
+   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
+   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * correct handle.
+   */
+  int open (ACE_Handler &handler,
+            ACE_HANDLE handle,
+            const void *completion_key,
+            ACE_Proactor *proactor);
+
+  /**
+   * This cancels all pending accepts operations that were issued by
+   * the calling thread.  The function does not cancel asynchronous
+   * operations issued by other threads.
+   */
+  int cancel (void);
+
+  /// Return the underlying proactor.
+  ACE_Proactor* proactor (void) const;
+
+protected:
+  /// Do-nothing constructor.
+  ACE_WIN32_Asynch_Write_Dgram (void);
 };
 
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */

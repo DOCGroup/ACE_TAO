@@ -15,9 +15,9 @@
  *  @author Irfan Pyarali (irfan@cs.wustl.edu)
  *  @author Tim Harrison (harrison@cs.wustl.edu)
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ *  @author Roger Tragin <rtragin@cuseeme.com>
  */
 //=============================================================================
-
 
 #ifndef ACE_ASYNCH_IO_IMPL_H
 #define ACE_ASYNCH_IO_IMPL_H
@@ -503,6 +503,132 @@ public:
 protected:
   /// Do-nothing constructor.
   ACE_Asynch_Transmit_File_Result_Impl (void);
+};
+
+
+/**
+ * @class ACE_Asynch_Read_Dgram_Impl
+ *
+ * @brief Abstract base class for all the concrete implementation
+ * classes that provide different implementations for the
+ * ACE_Asynch_Read_Dgram
+ *
+ */
+class ACE_Export ACE_Asynch_Read_Dgram_Impl : public virtual ACE_Asynch_Operation_Impl
+{
+public:
+  virtual ~ACE_Asynch_Read_Dgram_Impl (void);
+
+  /// Recv <buffer_count> worth of <buffers> from <addr> using
+  /// overlapped I/O (uses <WSARecvFrom>).  Returns 0 on success.
+  virtual ssize_t recv (ACE_Message_Block *message_block,
+                        size_t &number_of_bytes_recvd,
+                        int flags,
+                        int protocol_family,
+                        const void *act,
+                        int priority,
+                        int signal_number) = 0;
+
+protected:
+  /// Do-nothing constructor.
+  ACE_Asynch_Read_Dgram_Impl (void);
+};
+
+
+/**
+ * @class ACE_Asynch_Read_Dgram_Result_Impl
+ *
+ * @brief Abstract base class for all the concrete implementation
+ * classes that provide different implementations for the
+ * ACE_Asynch_Read_Dgram::Result class.
+ *
+ */
+class ACE_Export ACE_Asynch_Read_Dgram_Result_Impl : public virtual ACE_Asynch_Result_Impl
+{
+public:
+  virtual ~ACE_Asynch_Read_Dgram_Result_Impl (void);
+
+  /// Message block which contains the read data
+  virtual ACE_Message_Block *message_block (void) const = 0;
+
+  /// The number of bytes which were requested at the start of the
+  /// asynchronous read.
+  virtual u_long bytes_to_read (void) const = 0;
+
+  /// The address of where the packet came from
+  virtual int remote_address (ACE_Addr& addr) const = 0;
+
+  /// The flags used in the read
+  virtual int flags (void) const = 0;
+
+  /// I/O handle used for reading.
+  virtual ACE_HANDLE handle (void) const = 0;
+
+protected:
+  /// Do-nothing constructor.
+  ACE_Asynch_Read_Dgram_Result_Impl (void);
+};
+
+
+
+/**
+ * @class ACE_Asynch_Write_Dgram_Impl
+ *
+ * @brief Abstract base class for all the concrete implementation
+ * classes that provide different implementations for the
+ * ACE_Asynch_Write_Dgram class.
+ *
+ */
+class ACE_Export ACE_Asynch_Write_Dgram_Impl : public virtual ACE_Asynch_Operation_Impl
+{
+public:
+  virtual ~ACE_Asynch_Write_Dgram_Impl (void);
+
+  /// Send <buffer_count> worth of <buffers> to <addr> using overlapped
+  /// I/O (uses <WSASentTo>).  Returns 0 on success.
+  virtual ssize_t send (ACE_Message_Block *message_block,
+                        size_t &number_of_bytes_sent,
+                        int flags,
+                        const ACE_Addr &addr,
+                        const void *act,
+                        int priority,
+                        int signal_number) = 0;
+
+protected:
+  /// Do-nothing constructor.
+  ACE_Asynch_Write_Dgram_Impl (void);
+};
+
+
+/**
+ * @class ACE_Asynch_Write_Dgram_Result_Impl
+ *
+ * @brief Abstract base class for all the concrete implementation
+ * classes that provide different implementations for the
+ * ACE_Asynch_Write_Dgram::Result class.
+ *
+ */
+class ACE_Export ACE_Asynch_Write_Dgram_Result_Impl : public virtual ACE_Asynch_Result_Impl
+{
+public:
+  virtual ~ACE_Asynch_Write_Dgram_Result_Impl (void);
+
+  /// The number of bytes which were requested at the start of the
+  /// asynchronous write.
+  virtual u_long bytes_to_write (void) const = 0;
+
+  /// Message block which contains the sent data
+  virtual ACE_Message_Block *message_block (void) const = 0;
+
+  /// The flags using in the write
+  virtual int flags (void) const = 0;
+
+  /// I/O handle used for writing.
+  virtual ACE_HANDLE handle (void) const = 0;
+
+protected:
+  /// Do-nothing constructor.
+  ACE_Asynch_Write_Dgram_Result_Impl (void);
 };
 
 #if defined (__ACE_INLINE__)
