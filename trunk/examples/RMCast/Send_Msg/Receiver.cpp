@@ -2,20 +2,16 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
 // cvs-id    : $Id$
 
-#include "ace/OS_NS_string.h"
-#include "ace/RMCast/Socket.h"
+#include <ace/Vector_T.h>
+#include <ace/Log_Msg.h>
+#include <ace/OS_NS_string.h>
+
+#include <ace/RMCast/Socket.h>
 
 #include "Protocol.h"
 
-#include <vector>
-#include <iostream>
-
-using std::cout;
-using std::cerr;
-using std::endl;
-
 typedef
-std::vector<unsigned char>
+ACE_Vector<unsigned char, ACE_VECTOR_DEFAULT_SIZE>
 Status_List;
 
 class args {};
@@ -44,9 +40,21 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       }
     }
 
-    Status_List received (message_count, 0);
-    Status_List damaged (message_count, 0);
-    Status_List duplicate (message_count, 0);
+    Status_List received (message_count);
+    Status_List damaged (message_count);
+    Status_List duplicate (message_count);
+
+    // VC6 does not know about new rules.
+    //
+    {
+      for (unsigned long i = 0; i < message_count; ++i)
+      {
+        received.push_back (0);
+        damaged.push_back (0);
+        duplicate.push_back (0);
+      }
+    }
+
 
     Message msg;
 
@@ -74,30 +82,46 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     unsigned long lost_count (0), damaged_count (0), duplicate_count (0);
 
     {
-      for (Status_List::iterator i (received.begin ()), end (received.end ());
-           i != end;
-           ++i) if (*i == 0) ++lost_count;
+      for (Status_List::Iterator i (received); !i.done (); i.advance ())
+      {
+        unsigned char* e;
+        i.next (e);
+
+        if (*e == 0) ++lost_count;
+      }
     }
 
 
     {
-      for (Status_List::iterator i (damaged.begin ()), end (damaged.end ());
-           i != end;
-           ++i) if (*i == 1) ++damaged_count;
+      for (Status_List::Iterator i (damaged); !i.done (); i.advance ())
+      {
+        unsigned char* e;
+        i.next (e);
+
+        if (*e == 1) ++damaged_count;
+      }
     }
 
 
     {
-      for (Status_List::iterator i (duplicate.begin ()), end (duplicate.end ());
-           i != end;
-           ++i) if (*i == 1) ++duplicate_count;
+      for (Status_List::Iterator i (duplicate); !i.done (); i.advance ())
+      {
+        unsigned char* e;
+        i.next (e);
+
+        if (*e == 1) ++duplicate_count;
+      }
     }
 
+    ACE_DEBUG ((LM_DEBUG,
+                "lost      : %d\n"
+                "damaged   : %d\n"
+                "duplicate : %d\n",
+                lost_count,
+                damaged_count,
+                duplicate_count));
 
-    cout << "lost      : " << lost_count << endl
-         << "damaged   : " << damaged_count << endl
-         << "duplicate : " << duplicate_count << endl << endl;
-
+    /*
     cout << "lost message dump:" << endl;
 
     unsigned long total = 0;
@@ -123,12 +147,14 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     }
 
     if (total != lost_count) cerr << "trouble" << endl;
+    */
 
     return 0;
   }
   catch (args const&)
   {
-    cerr << "usage: " << argv[0] << " <IPv4 Multicast Address>" << endl;
+    ACE_ERROR ((LM_ERROR,
+                "usage: %s <IPv4 multicast address>:<port>\n", argv[0]));
   }
 
   return 1;
