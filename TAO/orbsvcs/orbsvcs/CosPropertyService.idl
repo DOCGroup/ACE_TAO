@@ -22,6 +22,8 @@
 #ifndef TAO_PROPERTY_IDL
 #define TAO_PROPERTY_IDL
 
+#include <orb.idl>
+
 #pragma prefix "omg.org"
 
 module CosPropertyService
@@ -71,7 +73,7 @@ module CosPropertyService
   typedef sequence<Property> Properties;
   typedef sequence<PropertyDef> PropertyDefs;
   typedef sequence<PropertyMode> PropertyModes;
-  typedef sequence<TypeCode> PropertyTypes;
+  typedef sequence<CORBA::TypeCode> PropertyTypes;
 
   interface PropertyNamesIterator;
   interface PropertiesIterator;
