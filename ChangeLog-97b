@@ -1,3 +1,7 @@
+Tue Sep 30 21:42:58 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ACE version 4.3.9, released Tue Sep 30 21:42:58 1997.
+
 Tue Sep 30 17:15:14 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 	* ace/Filecache.{h,cpp}: I removed the static locks in the
