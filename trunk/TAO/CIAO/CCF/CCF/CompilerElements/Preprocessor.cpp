@@ -270,29 +270,32 @@ namespace CCF
             // Check if it is a PP directive
             //
 
-            copy_ = line_;
-            ls_buffer_.clear ();
-            copy_.push_back (Token::eos); // add eos
-
-            try
+            if (!line_.empty ())
             {
-              Token t (ls_get_ns ());
+              copy_ = line_;
+              ls_buffer_.clear ();
+              copy_.push_back (Token::eos); // add eos
 
-              // cerr << "t = \'" << t << '\'' << endl;
-
-              if (t == '#')
+              try
               {
-                scan_directive ();
-              }
-            }
-            catch (EOS const&)
-            {
-              cerr << "EOS" << endl;
+                Token t (ls_get_ns ());
 
-              // error condition?
-              Token t ('\n', line_.front ().line ());
-              line_.clear ();
-              line_.push_back (t);
+                // cerr << "t = \'" << t << '\'' << endl;
+
+                if (t == '#')
+                {
+                  scan_directive ();
+                }
+              }
+              catch (EOS const&)
+              {
+                // cerr << "EOS" << endl;
+
+                // error condition?
+                Token t ('\n', line_.front ().line ());
+                line_.clear ();
+                line_.push_back (t);
+              }
             }
           }
 
@@ -416,8 +419,9 @@ namespace CCF
           }
           catch (EOS const&)
           {
-            return Token::eos;
           }
+
+          return Token::eos;
         }
 
         Token

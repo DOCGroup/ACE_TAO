@@ -1,3 +1,13 @@
+Fri Jan  2 13:44:06 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/CompilerElements/Preprocessor.cpp:
+
+	  Removed debug print.
+	
+	* CCF/Documentation/TODO:
+
+	  Updated.
+
 Fri Jan  2 12:59:05 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * performance-tests/Benchmark/Benchmark.mpc:
