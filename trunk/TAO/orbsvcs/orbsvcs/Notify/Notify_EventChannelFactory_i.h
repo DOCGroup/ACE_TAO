@@ -1,15 +1,14 @@
-/* -*- C++ -*- */
 // $Id$
 // ==========================================================================
 //
 // = LIBRARY
-//   orbsvcs
+//   Orbsvcs
 //
 // = FILENAME
-//
+//   Notify_EventChannelFactory_i
 //
 // = DESCRIPTION
-//
+//   Implements the CosNotifyChannelAdmin::EventChannelFactory interface.
 //
 // = AUTHOR
 //    Pradeep Gore <pradeep@cs.wustl.edu>
@@ -19,65 +18,39 @@
 #ifndef NOTIFY_EVENTCHANNELFACTORY_I_H
 #define NOTIFY_EVENTCHANNELFACTORY_I_H
 
-// @@ Pradeep: it is recommended to #include local files first, then
-// files in orbsvcs, then in tao and then in ace, check "Large Scale
-// Software Development with C++" by John Lakos.
-
-#include "ace/Hash_Map_Manager.h"
-#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
-#include "orbsvcs/orbsvcs/Notify/ID_Pool_T.h"
+#include "Notify_ID_Pool_T.h"
+#include "orbsvcs/CosNotifyChannelAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_Notify_EventChannel_i;
+class TAO_Notify_Resource_Manager;
 
-//
-// @@ Pradeep: we always put the class declaration in a single line,
-// it is ugly, but otherwise the documentation tools get confused.
-//
-// @@ Pradeep: please consider using RefCountedServantBase, or
-// implement the add_ref(), remove_ref() methods required by the POA
-// to manage memory.  Otherwise it is almost impossible to deactivate
-// the object safely.
-//
-class TAO_ORBSVCS_Export TAO_Notify_EventChannelFactory_i :
-public virtual POA_CosNotifyChannelAdmin::EventChannelFactory
+class TAO_ORBSVCS_Export TAO_Notify_EventChannelFactory_i : public virtual POA_CosNotifyChannelAdmin::EventChannelFactory, public virtual PortableServer::RefCountServantBase
 {
-public:
   // = TITLE
   //   TAO_Notify_EventChannelFactory_i
   //
   // = DESCRIPTION
-  //   @@ Pradeep, please include the description.
-  //   @@ Pradeep, i tend to put this comment before the public: line,
-  //   but i'm not sure if there is a guideline about it, please check
-  //   it up.
+  //   The EventChannelFactory_i creates Event Channel objects and asigns
+  //   IDs to it.
+  //   It also has methods to get a previously created channel based on its
+  //   ID.
   //
-  //
-
-  TAO_Notify_EventChannelFactory_i (void);
-  // Constructor
-
+public:
   virtual ~TAO_Notify_EventChannelFactory_i (void);
   // Destructor
 
-  void activate (CORBA::Environment &ACE_TRY_ENV);
-  // Activate the servant in the default POA.
-  // @@ Pradeep: you should let thge user pick how is this object
-  // activated in the POA, after all you don't know how the
-  // application will use this....
-  // You may want to have an activate() method to create internal
-  // threads and stuff like that.
+  static CosNotifyChannelAdmin::EventChannelFactory_ptr create (PortableServer::POA_ptr default_POA, CORBA::Environment &ACE_TRY_ENV);
+  // Create a factory servant and activates it with the default POA.
+  // Also creates a resource factory and assigns it this default_POA.
 
-  CosNotifyChannelAdmin::EventChannelFactory_ptr get_ref (CORBA::Environment &ACE_TRY_ENV);
-  // Transform to object ref.
-  // @@ Pradeep: _this() does the same thing, and again it is better
-  // for the user to select the right POA.
+  TAO_Notify_Resource_Manager* get_resource_manager (void);
+  // Get the resource manager;
 
   // = CosNotifyChannelAdmin::EventChannelFactory methods.
-  virtual CosNotifyChannelAdmin::EventChannel_ptr create_channel (
+virtual CosNotifyChannelAdmin::EventChannel_ptr create_channel (
     const CosNotification::QoSProperties & initial_qos,
     const CosNotification::AdminProperties & initial_admin,
     CosNotifyChannelAdmin::ChannelID_out id,
@@ -89,7 +62,6 @@ public:
     CosNotification::UnsupportedAdmin
   ));
 
-  // @@ Pradeep: indentation is busted here, please fix it....
 virtual CosNotifyChannelAdmin::ChannelIDSeq * get_all_channels (
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -107,27 +79,32 @@ virtual CosNotifyChannelAdmin::EventChannel_ptr get_event_channel (
   ));
 
  protected:
-  CosNotifyChannelAdmin::EventChannelFactory_var self_;
-  // Reference to the CORBA Object associated with this servant.
+  TAO_Notify_EventChannelFactory_i (void);
+  // Constructor
 
-  // @@ Pradeep: ID_Pool should have some prefix, TAO_Notify or
-  // something similar.
-  ID_Pool<CosNotifyChannelAdmin::AdminID> ec_ids;
-  // Id generator for event channels
+  void init_i (PortableServer::POA_ptr default_POA, CORBA::Environment &ACE_TRY_ENV);
+  // Initializes this object.
 
-  // @@ Pradeep: using a SYNCH_MUTEX here will not help much, usually
-  // you need an external lock to avoid changes to the collection, for
-  // example your get_all_channels() method needs to lock the
-  // collection while the complete iteration is performed.
-  typedef
-  ACE_Hash_Map_Manager <CosNotifyChannelAdmin::ChannelID,
-                                               TAO_Notify_EventChannel_i*,
-                                               ACE_SYNCH_MUTEX>
-  EC_MAP;
+  void cleanup_i (void);
+  // Cleanup this object.
 
-  EC_MAP ec_map_;
-  // Mapping of channel id's to EC's.
+  // = Data members
+ TAO_Notify_Resource_Manager* resource_manager_;
+ // This factory is owned by the Event Channel Factory.
 
+ CosNotifyChannelAdmin::EventChannelFactory_var my_ref_;
+ // My CORBA object.
+
+ PortableServer::POA_var my_POA_;
+ // The POA in which we live.
+
+ PortableServer::POA_var ec_POA_;
+ // The POA in which we should activate EC's in.
+ // We create and own this.
+
+ TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::ChannelID,
+   CosNotifyChannelAdmin::ChannelIDSeq> ec_ids_;
+ // Id generator for event channels
 };
 
 #endif /* NOTIFY_EVENTCHANNELFACTORY_I_H */

@@ -9,28 +9,24 @@
 //   Notify_SupplierAdmin_i.h
 //
 // = DESCRIPTION
-//
+//   Implements the CosNotifyChannelAdmin::SupplierAdmin interface.
 //
 // = AUTHOR
 //    Pradeep Gore <pradeep@cs.wustl.edu>
 //
 // ==========================================================================
 
-#ifndef NOTIFY_SUPPLIERADMIN_I_H
-#define NOTIFY_SUPPLIERADMIN_I_H
+#ifndef TAO_NOTIFY_SUPPLIERADMIN_I_H
+#define TAO_NOTIFY_SUPPLIERADMIN_I_H
 
-#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
-#include "orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h"
-#include "orbsvcs/orbsvcs/Notify/NotifyPublish_i.h"
-#include "orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.h"
-#include "orbsvcs/orbsvcs/Notify/ID_Pool_T.h"
-#include "ace/Hash_Map_Manager.h"
-
-#include "ace/Auto_Ptr.h"
-#include "Notify_Dispatcher.h"
+#include "Notify_ID_Pool_T.h"
+#include "Notify_QoSAdmin_i.h"
+#include "Notify_FilterAdmin_i.h"
+#include "orbsvcs/CosNotifyChannelAdminS.h"
 
 class TAO_Notify_EventChannel_i;
-class TAO_Notify_ProxyConsumer_i;
+class TAO_Notify_Resource_Manager;
+class TAO_Notify_Event_Manager;
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -39,36 +35,33 @@ class TAO_Notify_ProxyConsumer_i;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_ORBSVCS_Export TAO_Notify_SupplierAdmin_i :
-  public virtual POA_CosNotifyChannelAdmin::SupplierAdmin,
-  public virtual TAO_Notify_QoSAdmin_i,
-  public virtual TAO_NotifyPublish_i,
-  public virtual TAO_Notify_FilterAdmin_i
+class TAO_ORBSVCS_Export TAO_Notify_SupplierAdmin_i : public POA_CosNotifyChannelAdmin::SupplierAdmin, public PortableServer::RefCountServantBase
 {
   // = TITLE
   //   TAO_Notify_SupplierAdmin_i
+  //
   // = DESCRIPTION
   //
   //
 
 public:
-  TAO_Notify_SupplierAdmin_i (TAO_Notify_EventChannel_i& myChannel);
+  TAO_Notify_SupplierAdmin_i (TAO_Notify_EventChannel_i* myChannel, TAO_Notify_Resource_Manager* resource_manager);
   // Constructor
+  // <myChannel> is this objects parent.
 
   virtual ~TAO_Notify_SupplierAdmin_i (void);
   // Destructor
 
-
   void init (CosNotifyChannelAdmin::AdminID myID,
              CosNotifyChannelAdmin::InterFilterGroupOperator myOperator,
+             PortableServer::POA_ptr my_POA,
              CORBA::Environment &ACE_TRY_ENV);
-  //
+  //Initialize the Supplier Admin.
 
-  TAO_Notify_Dispatcher& get_dispatcher (void);
-  //
+  void deactivate_proxy_pushconsumer (PortableServer::Servant servant, CORBA::Environment &ACE_TRY_ENV);
+  // Deactivate servant from <proxy_pushconsumer_POA_>.
 
-  CosNotifyChannelAdmin::SupplierAdmin_ptr get_ref (CORBA::Environment &ACE_TRY_ENV);
-
+  // = Interface methods
   virtual CosNotifyChannelAdmin::AdminID MyID (
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -76,35 +69,41 @@ public:
     CORBA::SystemException
   ));
 
-  virtual CosNotifyChannelAdmin::EventChannel_ptr MyChannel (
+  CosNotifyChannelAdmin::SupplierAdmin_ptr get_ref (CORBA::Environment &ACE_TRY_ENV);
+  // Return the CORBA object for this servant.
+
+  TAO_Notify_Event_Manager* get_event_manager (void);
+  // Accesor for the event manager.
+
+virtual CosNotifyChannelAdmin::EventChannel_ptr MyChannel (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
-  virtual CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator (
+virtual CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
-  virtual CosNotifyChannelAdmin::ProxyIDSeq * pull_consumers (
+virtual CosNotifyChannelAdmin::ProxyIDSeq * pull_consumers (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
-  virtual CosNotifyChannelAdmin::ProxyIDSeq * push_consumers (
+virtual CosNotifyChannelAdmin::ProxyIDSeq * push_consumers (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
-  virtual CosNotifyChannelAdmin::ProxyConsumer_ptr get_proxy_consumer (
+virtual CosNotifyChannelAdmin::ProxyConsumer_ptr get_proxy_consumer (
     CosNotifyChannelAdmin::ProxyID proxy_id,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -113,7 +112,7 @@ public:
     CosNotifyChannelAdmin::ProxyNotFound
   ));
 
-  virtual CosNotifyChannelAdmin::ProxyConsumer_ptr obtain_notification_pull_consumer (
+virtual CosNotifyChannelAdmin::ProxyConsumer_ptr obtain_notification_pull_consumer (
     CosNotifyChannelAdmin::ClientType ctype,
     CosNotifyChannelAdmin::ProxyID_out proxy_id,
     CORBA::Environment &ACE_TRY_ENV
@@ -123,7 +122,7 @@ public:
     CosNotifyChannelAdmin::AdminLimitExceeded
   ));
 
-  virtual CosNotifyChannelAdmin::ProxyConsumer_ptr obtain_notification_push_consumer (
+virtual CosNotifyChannelAdmin::ProxyConsumer_ptr obtain_notification_push_consumer (
     CosNotifyChannelAdmin::ClientType ctype,
     CosNotifyChannelAdmin::ProxyID_out proxy_id,
     CORBA::Environment &ACE_TRY_ENV
@@ -133,14 +132,89 @@ public:
     CosNotifyChannelAdmin::AdminLimitExceeded
   ));
 
-  virtual void destroy (
+virtual void destroy (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
-  // = CosEventChannelAdmin::SupplierAdmin method
+virtual CosNotification::QoSProperties * get_qos (
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ));
+
+virtual void set_qos (
+    const CosNotification::QoSProperties & qos,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotification::UnsupportedQoS
+  ));
+
+virtual void validate_qos (
+    const CosNotification::QoSProperties & required_qos,
+    CosNotification::NamedPropertyRangeSeq_out available_qos,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotification::UnsupportedQoS
+  ));
+
+virtual void offer_change (
+    const CosNotification::EventTypeSeq & added,
+    const CosNotification::EventTypeSeq & removed,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotifyComm::InvalidEventType
+  ));
+
+virtual CosNotifyFilter::FilterID add_filter (
+    CosNotifyFilter::Filter_ptr new_filter,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ));
+
+virtual void remove_filter (
+    CosNotifyFilter::FilterID filter,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotifyFilter::FilterNotFound
+  ));
+
+virtual CosNotifyFilter::Filter_ptr get_filter (
+    CosNotifyFilter::FilterID filter,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotifyFilter::FilterNotFound
+  ));
+
+virtual CosNotifyFilter::FilterIDSeq * get_all_filters (
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ));
+
+virtual void remove_all_filters (
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ));
+
 virtual CosEventChannelAdmin::ProxyPushConsumer_ptr obtain_push_consumer (
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -156,33 +230,52 @@ virtual CosEventChannelAdmin::ProxyPullConsumer_ptr obtain_pull_consumer (
   ));
 
 protected:
-  CosNotifyChannelAdmin::InterFilterGroupOperator myOperator_;
-  //
+  // = Helper methods
+ void cleanup_i (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  // Cleanup all resources used by this object.
 
-  TAO_Notify_EventChannel_i& myChannel_;
+  CORBA::Object_ptr obtain_struct_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id, CORBA::Environment &ACE_TRY_ENV);
+  // Obtain a proxy pushconsumer object
+
+  CORBA::Object_ptr obtain_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id, CORBA::Environment &ACE_TRY_ENV);
+  // Obtain a structured proxy pushconsumer object.
+
+ // = Data members
+  TAO_Notify_EventChannel_i* my_channel_;
   // The channel to which we belong.
+
+  TAO_Notify_Resource_Manager* resource_manager_;
+  // The resource factory that we use.
+
+  CosNotifyChannelAdmin::InterFilterGroupOperator myOperator_;
+  // The inter filter operator to use.
 
   CosNotifyChannelAdmin::AdminID myID_;
   // My ID.
 
-  ID_Pool<CosNotifyChannelAdmin::ProxyID> proxy_consumer_ids;
-  // Id generator for proxy suppliers.
+  PortableServer::POA_var my_POA_;
+  // This is the POA in which we live.
 
-  typedef
-  ACE_Hash_Map_Manager <CosNotifyChannelAdmin::ProxyID,
-                                               TAO_Notify_ProxyConsumer_i*,
-                                               ACE_SYNCH_MUTEX>
-  PROXYCONSUMER_MAP;
+  PortableServer::POA_var proxy_pushconsumer_POA_;
+  // The POA in which all our push consumers live.
+  // We create and own this POA.
 
-  PROXYCONSUMER_MAP proxyconsumer_map_;
-  // Store mappings between proxyid and proxy consumers.
+  TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::ProxyID,
+    CosNotifyChannelAdmin::ProxyIDSeq> proxy_pushconsumer_ids_;
+  // Id generator for proxy push consumers.
 
-  TAO_Notify_Dispatcher *dispatcher_;
-  //
+  CORBA::Boolean is_destroyed_;
+  // Are we dead?
+
+  TAO_Notify_QoSAdmin_i qos_admin_;
+  // Handle QoS admin methods.
+
+  TAO_Notify_FilterAdmin_i filter_admin_;
+  // Handles the Filter Admin methods.
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#endif /* NOTIFY_SUPPLIERADMIN_I_H */
+#endif /* TAO_NOTIFY_SUPPLIERADMIN_I_H */

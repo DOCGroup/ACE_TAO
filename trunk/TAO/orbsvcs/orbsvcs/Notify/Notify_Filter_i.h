@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 // ==========================================================================
 //
@@ -19,11 +18,11 @@
 #ifndef TAO_NOTIFY_FILTER_I_H
 #define TAO_NOTIFY_FILTER_I_H
 
-#include "ace/Containers.h"
-#include "ace/Hash_Map_Manager.h"
-#include "orbsvcs/orbsvcs/CosNotifyFilterS.h"
 #include "Notify_Constraint_Interpreter.h"
-#include "ID_Pool_T.h"
+#include "Notify_ID_Pool_T.h"
+#include "orbsvcs/CosNotifyFilterS.h"
+#include "ace/Containers_T.h"
+#include "ace/Hash_Map_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -180,7 +179,7 @@ private:
       // Constraint Interpreter.
     };
 
-  ID_Pool<CosNotifyFilter::ConstraintID> constraint_expr_ids_;
+  TAO_Notify_ID_Pool<CosNotifyFilter::ConstraintID> constraint_expr_ids_;
   // Id generator for ConstraintInfo's.
 
   ACE_Hash_Map_Manager <CosNotifyFilter::ConstraintID,

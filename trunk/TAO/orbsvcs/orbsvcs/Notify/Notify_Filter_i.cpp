@@ -2,7 +2,7 @@
 
 #include "ace/Auto_Ptr.h"
 #include "Notify_Filter_i.h"
-#include "orbsvcs/Notify/Notify_Constraint_Visitors.h"
+#include "Notify_Constraint_Visitors.h"
 
 // Implementation skeleton constructor
 TAO_Notify_Filter_i::TAO_Notify_Filter_i (void)
@@ -73,7 +73,7 @@ TAO_Notify_Filter_i::add_constraints_i (
               bind (constraint_info_seq[index].constraint_id,
                     notify_constr_expr) == -1)
             ACE_THROW (CORBA::NO_RESOURCES ());
-          
+
           ACE_UNUSED_ARG (constr_exp);
         }
       ACE_CATCHANY
