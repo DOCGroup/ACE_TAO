@@ -155,6 +155,14 @@
 
 // ---------------- platform features or lack of them -------------
 
+// By default WIN32 has FD_SETSIZE of 64, which places the limit
+// between 61 and 64 on the number of clients a server using the
+// Select Reactor can support at the same time (i.e., 64 - standard in,
+// out, error).  He we raise the limit to 1024.  Adjust the definition
+// below if you need to raise or lower it.
+//
+#define FD_SETSIZE 1024
+
 // Windows doesn't like 65536 ;-) If 65536 is specified, it is
 // listenly ignored by the OS, i.e., setsockopt does not fail, and you
 // get stuck with the default size of 8k.
