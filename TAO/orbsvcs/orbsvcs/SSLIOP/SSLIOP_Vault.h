@@ -31,14 +31,7 @@
 extern "C"
 {
   typedef struct x509_st X509;
-
-#ifndef NO_RSA
-  typedef struct rsa_st RSA;
-#endif  /* !NO_RSA */
-
-// #ifndef NO_DSA
-//   typedef struct dsa_st DSA;
-// #endif  /* !NO_DSA */
+  typedef struct evp_pkey_st EVP_PKEY;
 }
 
 
@@ -148,17 +141,9 @@ protected:
   /// authentication data.
   X509 * make_X509 (const SSLIOP::File &certificate);
 
-#ifndef NO_RSA
-  /// Create an OpenSSL RSA structure using the provided
+  /// Create an OpenSSL EVP_PKEY structure using the provided
   /// authentication data.
-  RSA * make_RSA (const SSLIOP::File &key);
-#endif  /* !NO_RSA */
-
-// #ifndef NO_DSA
-//   /// Create an OpenSSL DSA structure using the provided
-//   /// authentication data.
-//   DSA * make_DSA (const SSLIOP::File &key);
-// #endif  /* !NO_DSA */
+  EVP_PKEY * make_EVP_PKEY (const SSLIOP::File &key);
 
 };
 

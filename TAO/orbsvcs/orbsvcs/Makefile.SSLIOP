@@ -58,7 +58,7 @@ FILES = \
   SSLIOP/SSLIOP_Connection_Handler \
   SSLIOP/SSLIOP_Util \
   SSLIOP/SSLIOP_X509 \
-  SSLIOP/SSLIOP_RSA \
+  SSLIOP/SSLIOP_EVP_PKEY \
   SSLIOP/ssl_endpoints
 
 LSRC    = $(addsuffix .cpp,$(FILES)) $(notdir $(IDL_SRC))
@@ -1707,7 +1707,7 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.inl \
  SSLIOP/SSLIOP_X509.h \
  $(TAO_ROOT)/tao/varbase.h \
- SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_RSA.h SSLIOP/SSLIOP_RSA.inl \
+ SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h SSLIOP/SSLIOP_EVP_PKEY.inl \
  SecurityLevel2C.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -1916,7 +1916,7 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.inl \
  SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h \
  $(TAO_ROOT)/tao/varbase.h \
- SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_RSA.h SSLIOP/SSLIOP_RSA.inl \
+ SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h SSLIOP/SSLIOP_EVP_PKEY.inl \
  SecurityLevel2C.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -2125,7 +2125,7 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.inl \
  SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h \
  $(TAO_ROOT)/tao/varbase.h \
- SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_RSA.h SSLIOP/SSLIOP_RSA.inl \
+ SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h SSLIOP/SSLIOP_EVP_PKEY.inl \
  SecurityLevel2C.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -2529,8 +2529,8 @@ realclean: clean
  SSLIOP/SSLIOP_Export.h \
  SSLIOPC.i \
  SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_Export.h \
- SSLIOP/SSLIOP_X509.h SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_RSA.h \
- SSLIOP/SSLIOP_RSA.inl SSLIOP/SSLIOP_Credentials.inl
+ SSLIOP/SSLIOP_X509.h SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h \
+ SSLIOP/SSLIOP_EVP_PKEY.inl SSLIOP/SSLIOP_Credentials.inl
 
 .obj/SSLIOP_Current.o .obj/SSLIOP_Current.so .shobj/SSLIOP_Current.o .shobj/SSLIOP_Current.so: SSLIOP/SSLIOP_Current.cpp SSLIOP/SSLIOP_Current.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -3102,7 +3102,7 @@ realclean: clean
  SSLIOP/SSLIOP_Current_Impl.inl SSLIOP/SSLIOP_X509.h \
  SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_ReceivedCredentials.h \
  SSLIOP/SSLIOP_Export.h SSLIOP/SSLIOP_Credentials.h \
- SSLIOP/SSLIOP_RSA.h SSLIOP/SSLIOP_RSA.inl \
+ SSLIOP/SSLIOP_EVP_PKEY.h SSLIOP/SSLIOP_EVP_PKEY.inl \
  SSLIOP/SSLIOP_Credentials.inl
 
 .obj/SSLIOP_Invocation_Interceptor.o .obj/SSLIOP_Invocation_Interceptor.so .shobj/SSLIOP_Invocation_Interceptor.o .shobj/SSLIOP_Invocation_Interceptor.so: \
@@ -4240,7 +4240,7 @@ realclean: clean
  SecurityC.i \
  SSLIOPC.i \
  SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h \
- SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_RSA.h SSLIOP/SSLIOP_RSA.inl \
+ SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h SSLIOP/SSLIOP_EVP_PKEY.inl \
  SecurityLevel2C.h \
  SecurityLevel1C.h \
  SecurityLevel1C.i \
@@ -4470,7 +4470,7 @@ realclean: clean
  SecurityC.i \
  SSLIOPC.i \
  SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h \
- SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_RSA.h SSLIOP/SSLIOP_RSA.inl \
+ SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h SSLIOP/SSLIOP_EVP_PKEY.inl \
  SecurityLevel2C.h \
  SecurityLevel1C.h \
  SecurityLevel1C.i \
@@ -5038,7 +5038,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Endpoint.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.i \
  SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h \
- SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_RSA.h SSLIOP/SSLIOP_RSA.inl \
+ SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h SSLIOP/SSLIOP_EVP_PKEY.inl \
  SSLIOP/SSLIOP_Credentials.inl SSLIOP/SSLIOP_Endpoint.i \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/Profile.h \
@@ -5502,7 +5502,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Connector_Impl.inl \
  $(TAO_ROOT)/tao/Connector_Impl.cpp \
  SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h \
- SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_RSA.h SSLIOP/SSLIOP_RSA.inl \
+ SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h SSLIOP/SSLIOP_EVP_PKEY.inl \
  SSLIOP/SSLIOP_Credentials.inl SSLIOP/SSLIOP_Profile.h \
  SSLIOP/SSLIOP_Endpoint.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.h \
@@ -5947,7 +5947,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Endpoint.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.i \
  SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h \
- SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_RSA.h SSLIOP/SSLIOP_RSA.inl \
+ SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h SSLIOP/SSLIOP_EVP_PKEY.inl \
  SSLIOP/SSLIOP_Credentials.inl SSLIOP/SSLIOP_Endpoint.i \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/Profile.h \
@@ -6348,7 +6348,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Endpoint.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.i \
  SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h \
- SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_RSA.h SSLIOP/SSLIOP_RSA.inl \
+ SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h SSLIOP/SSLIOP_EVP_PKEY.inl \
  SSLIOP/SSLIOP_Credentials.inl SSLIOP/SSLIOP_Endpoint.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
@@ -6760,7 +6760,7 @@ realclean: clean
  $(TAO_ROOT)/tao/varbase.h \
  SSLIOP/SSLIOP_X509.inl
 
-.obj/SSLIOP_RSA.o .obj/SSLIOP_RSA.so .shobj/SSLIOP_RSA.o .shobj/SSLIOP_RSA.so: SSLIOP/SSLIOP_RSA.cpp SSLIOP/SSLIOP_RSA.h \
+.obj/SSLIOP_EVP_PKEY.o .obj/SSLIOP_EVP_PKEY.so .shobj/SSLIOP_EVP_PKEY.o .shobj/SSLIOP_EVP_PKEY.so: SSLIOP/SSLIOP_EVP_PKEY.cpp SSLIOP/SSLIOP_EVP_PKEY.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -6771,7 +6771,7 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
  $(TAO_ROOT)/tao/varbase.h \
- SSLIOP/SSLIOP_RSA.inl
+ SSLIOP/SSLIOP_EVP_PKEY.inl
 
 .obj/ssl_endpoints.o .obj/ssl_endpoints.so .shobj/ssl_endpoints.o .shobj/ssl_endpoints.so: SSLIOP/ssl_endpoints.cpp SSLIOP/ssl_endpoints.h \
  $(ACE_ROOT)/ace/pre.h \

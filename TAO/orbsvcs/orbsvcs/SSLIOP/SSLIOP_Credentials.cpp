@@ -20,23 +20,7 @@ const Security::AssociationOptions TAO_SSLIOP_DISALLOWED_ASSOCIATIONS =
   | Security::SimpleDelegation
   | Security::CompositeDelegation;
 
-
-TAO_SSLIOP_Credentials::TAO_SSLIOP_Credentials (X509 *cert)
-  : accepting_options_supported_ (Security::Integrity
-                                  | Security::Confidentiality
-                                  | Security::EstablishTrustInTarget
-                                  | Security::NoDelegation),
-    accepting_options_required_ (Security::Integrity
-                                 | Security::Confidentiality
-                                 | Security::NoDelegation),
-    invocation_options_supported_ (accepting_options_supported_),
-    invocation_options_required_ (Security::NoDelegation),
-    x509_ (TAO_SSLIOP_X509::_duplicate (cert))
-{
-}
-
-#ifndef NO_RSA
-TAO_SSLIOP_Credentials::TAO_SSLIOP_Credentials (X509 *cert, RSA *rsa)
+TAO_SSLIOP_Credentials::TAO_SSLIOP_Credentials (X509 *cert, EVP_PKEY *evp)
   : accepting_options_supported_ (Security::Integrity
                                   | Security::Confidentiality
                                   | Security::EstablishTrustInTarget
@@ -47,27 +31,9 @@ TAO_SSLIOP_Credentials::TAO_SSLIOP_Credentials (X509 *cert, RSA *rsa)
     invocation_options_supported_ (accepting_options_supported_),
     invocation_options_required_ (Security::NoDelegation),
     x509_ (TAO_SSLIOP_X509::_duplicate (cert)),
-    rsa_ (TAO_SSLIOP_RSA::_duplicate (rsa))
+    evp_ (TAO_SSLIOP_EVP_PKEY::_duplicate (evp))
 {
 }
-#endif  /* !NO_RSA */
-
-// #ifndef NO_DSA
-// TAO_SSLIOP_Credentials::TAO_SSLIOP_Credentials (X509 *cert, DSA *dsa)
-//   : accepting_options_supported_ (Security::Integrity
-//                                   | Security::Confidentiality
-//                                   | Security::EstablishTrustInTarget
-//                                   | Security::NoDelegation),
-//     accepting_options_required_ (Security::Integrity
-//                                  | Security::Confidentiality
-//                                  | Security::NoDelegation),
-//     invocation_options_supported_ (accepting_options_supported_),
-//     invocation_options_required_ (Security::NoDelegation),
-//     x509_ (TAO_SSLIOP_X509::_duplicate (cert)),
-//     dsa_ (TAO_SSLIOP_DSA::_duplicate (dsa))
-// {
-// }
-// #endif  /* !NO_DSA */
 
 TAO_SSLIOP_Credentials::~TAO_SSLIOP_Credentials (void)
 {
@@ -78,43 +44,9 @@ TAO_SSLIOP_Credentials::copy (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_SSLIOP_Credentials *c = 0;
-
-#ifndef NO_RSA
-  if (this->rsa_.in () != 0)
-    {
-      ACE_NEW_THROW_EX (c,
-                        TAO_SSLIOP_Credentials (this->x509_.in (),
-                                                this->rsa_.in ()),
-                        CORBA::NO_MEMORY (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
-                            ENOMEM),
-                          CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (SecurityLevel2::Credentials::_nil ());
-
-      return c;
-    }
-#endif  /* !NO_RSA */
-
-// #ifndef NO_DSA
-//   if (this->dsa_.in () != 0)
-//     {
-//       ACE_NEW_THROW_EX (c,
-//                         TAO_SSLIOP_Credentials (this->x509_.in (),
-//                                                 this->dsa_.in ()),
-//                         CORBA::NO_MEMORY (
-//                           CORBA::SystemException::_tao_minor_code (
-//                             TAO_DEFAULT_MINOR_CODE,
-//                             ENOMEM),
-//                           CORBA::COMPLETED_NO));
-//       ACE_CHECK_RETURN (SecurityLevel2::Credentials::_nil ());
-
-//       return c;
-//     }
-// #endif  /* !NO_DSA */
-
   ACE_NEW_THROW_EX (c,
-                    TAO_SSLIOP_Credentials (this->x509_.in ()),
+                    TAO_SSLIOP_Credentials (this->x509_.in (),
+                                            this->evp_.in ()),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
@@ -452,22 +384,26 @@ TAO_SSLIOP_Credentials::refresh (const CORBA::Any & /* refresh_data */
 CORBA::Boolean
 TAO_SSLIOP_Credentials::operator== (const TAO_SSLIOP_Credentials &rhs)
 {
+  const X509 *xa = this->x509_.in ();
+  const X509 *xb = rhs.x509_.in ();
+  const EVP_PKEY *ea = this->evp_.in ();
+  const EVP_PKEY *eb = rhs.evp_.in ();
+
   return
     this->accepting_options_supported_ == rhs.accepting_options_supported_
     && this->accepting_options_required_ == rhs.accepting_options_required_
     && this->invocation_options_supported_ == invocation_options_supported_
     && this->invocation_options_required_ == this->invocation_options_required_
-    && ::X509_cmp (this->x509_.in (), rhs.x509_.in ()) == 0
-#ifndef NO_RSA
-    && this->rsa_.in () == rhs.rsa_.in ()  // @@ weak test?
-#endif  /* NO_RSA */
-    ;
+    && (xa! == 0 && xb !== 0 && ::X509_cmp (xa, xb) == 0)
+    && (ea! == 0 && eb !== 0 && ::EVP_PKEY_cmp (ea, eb) == 0);
 }
 
 CORBA::ULong
 TAO_SSLIOP_Credentials::hash (void) const
 {
-  return ::X509_issuer_name_hash (this->x509_.in ());
+  X509 *x509 = this->x509_.in ();
+
+  return (x509 == 0 ? 0 : ::X509_issuer_name_hash (x509));
 }
 
 TAO_SSLIOP_Credentials_ptr
