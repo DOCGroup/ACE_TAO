@@ -304,7 +304,9 @@ dnl    AC_DEFINE(ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL)
     CPPFLAGS="$CPPFLAGS -D_POSIX_PATH_MAX=256" dnl Num. bytes in
                                                dnl pathname (excl. NULL)
     case $target in
+changequote(, )dnl
       i[3456]86*)
+changequote([, ])dnl
         if test -n "$GXX"; then
           dnl Neutrino defines memcpy as a macro on x86, which then
           dnl hoses the ACE_OS::memcpy() method.  Undefining
