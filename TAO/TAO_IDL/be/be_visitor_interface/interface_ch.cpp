@@ -103,7 +103,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // now generate the class definition
       os->indent ();
       *os << "class " << idl_global->export_macro ()
-	  << " " << node->local_name ();
+	        << " " << node->local_name ();
 
       if (node->n_inherits () > 0)  // node interface inherits from other
                                     // interfaces
@@ -144,17 +144,20 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
       *os << "{" << be_nl
           << "public:" << be_idt_nl
-        // generate the static _duplicate, _narrow, and _nil operations
+          // generate the _ptr_type and _var_type typedefs
+          << "typedef " << node->local_name () << "_ptr _ptr_type;" << be_nl
+          << "typedef " << node->local_name () << "_var _var_type;" << be_nl
+          // generate the static _duplicate, _narrow, and _nil operations
           << "// the static operations" << be_nl
           << "static " << node->local_name () << "_ptr " << "_duplicate ("
           << node->local_name () << "_ptr obj);" << be_nl
           << "static " << node->local_name () << "_ptr "
-	  << "_narrow (" << be_idt << be_idt_nl
+	        << "_narrow (" << be_idt << be_idt_nl
           << "CORBA::Object_ptr obj," << be_nl
-	  << "CORBA::Environment &env = " << be_idt_nl
-	  << "CORBA::Environment::default_environment ()"
-	  << be_uidt << be_uidt_nl
-	  << ");" << be_uidt_nl
+	        << "CORBA::Environment &env = " << be_idt_nl
+	        << "CORBA::Environment::default_environment ()"
+	        << be_uidt << be_uidt_nl
+	        << ");" << be_uidt_nl
           << "static " << node->local_name () << "_ptr " << "_nil (void);\n\n";
 
       // generate code for the interface definition by traversing thru the
