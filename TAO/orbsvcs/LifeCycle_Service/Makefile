@@ -32,7 +32,9 @@ BIN2 = LifeCycle_Service
 #### don't try to build here.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (LifeCycle,$(findstring LifeCycle,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
+  ifeq ($(minimum_corba),0)
+    BIN = $(BIN2)
+  endif # minimum_corba
 endif # LifeCycle
 
 #----------------------------------------------------------------------------
