@@ -1,10 +1,10 @@
-Welcome to the latest release of The ACE ORB (TAO).  TAO is an
-implementation of a CORBA 2.x-compliant ORB that supports real-time
-extensions.  Please see http://www.cs.wustl.edu/~schmidt/TAO.html for
-more information on TAO.
+Welcome to the latest release of The ACE ORB (TAO).  TAO is a freely
+available, open-source implementation of a CORBA 2.x-compliant ORB
+that supports real-time extensions.  Please see
+www.cs.wustl.edu/~schmidt/TAO.html for more information on TAO.
 
-Some detailed information on this version of TAO is available in the
-'docs' subdirectory in HTML format.
+Detailed information on this version of TAO is available in the 'docs'
+subdirectory in HTML format.
 
 The current alpha release of TAO contains the following:
 
@@ -19,9 +19,9 @@ The current alpha release of TAO contains the following:
      * An implementation of the Portable Object Adapter (POA)
        specification. 
 
-     * A prototype IDL compiler, based on the SunSoft IDL
-       compiler.  This IDL compiler generates stubs and skeletons that
-       utilize the SunSoft IIOP protocol engine.
+     * An IDL compiler, based on the SunSoft IDL compiler.  This IDL
+       compiler generates stubs and skeletons that use TAO's
+       optimized IIOP protocol engine.
 
      * A Real-time Scheduling Service that determines the priority at
        which Client requests are dispatched by the ORB.
@@ -29,35 +29,30 @@ The current alpha release of TAO contains the following:
      * A Real-time Event Service that dispatches CORBA events in
        real-time.
 
-     * Implementations of the CORBA COS Naming service and Trader
-       service, as well as a logging service.
+     * Implementations of the CORBA Naming Service, Trading
+       Service, Concurrency Service, Audio/Video Streaming
+       Service, Property Service, and a Logging Service.
        
-     * Various tests illustrating how to use TAO.
+     * Many tests illustrating how to use TAO and measuring
+       TAO's performance.
        
-The current version of TAO contains source code and tests that are
-around 1.5 Megabytes when compressed using GNU gzip.
-
 We've gotten TAO to interoperate with other ORBs (e.g., Orbix,
 VisiBroker, miniCOOL, and CORBAplus), so we're confident that its
 implementation of IIOP is robust.  We're currently working on the
 following features for TAO:
    
      * An IDL compiler that generates optimized compiled stubs and
-       skeletons. For this, we're planning to use the Flick IDL
-       compiler from University of Utah.
+       skeletons.
 
      * A highly extensible, highly optimized set of request
        demultiplexing strategies that provide constant time lookup of
        servants based on object keys and operation names contained in
        CORBA requests.
 
-     * An implementation of the new OMG Audio/Video Streaming
-       service, as well as the Property service.
- 
-We plan to release these features throughout the spring of 1998.  You
+We plan to release these features throughout the fall of 1998.  You
 can keep track of our progress online at URL
 
-http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/releasenotes/
+www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/releasenotes/
 
 A quick build note for users who have used ACE with other ORBs:
 linking TAO with a version of ACE that must also be linked against
@@ -68,8 +63,8 @@ We welcome suggestions for improvement, bug fixes, portability
 enhancements, etc. and will strive to integrate correct bug fixes
 quickly!  If you have any questions or problems with TAO, please post
 them to the ACE mailing list (ace-users@cs.wustl.edu) or send email to
-Douglas C. Schmidt (schmidt@cs.wustl.edu) and Chris Cleeland
-(cleeland@cs.wustl.edu).
+Douglas C. Schmidt (schmidt@cs.wustl.edu) and Nanbor Wang
+(nanbor@cs.wustl.edu).
 
 Thanks,
 

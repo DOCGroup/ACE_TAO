@@ -1,3 +1,15 @@
+========================================
+
+This file contains the original README file that came with the SunSoft
+IDL compiler release.  This information in this file is historical in
+nature and the much of the specific information probably is inaccurate
+with respect to the current state of TAO IDL.  Please see the
+../docs/index.html documentation that comes with TAO for up-to-date
+information on TAO IDL compiler design and implementation.
+
+Specifically, some of the files referred to below have been renamed in
+TAO IDL.
+
 INTERFACE DEFINITION LANGUAGE COMPILER FRONT END
 -==============================================-
 
