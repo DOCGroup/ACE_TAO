@@ -1,3 +1,9 @@
+Fri Jul 21 12:19:06 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/config/utility.h:
+
+	  Typo. ACE_ADAPT_RETVAL ... PACE_ADAPT_RETVAL.
+
 Thu Jul 20 22:58:16 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* pace/stdlib.h
