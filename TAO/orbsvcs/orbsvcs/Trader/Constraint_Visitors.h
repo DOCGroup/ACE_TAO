@@ -17,7 +17,7 @@
 #ifndef TAO_CONSTRAINT_VISITOR_H
 #define TAO_CONSTRAINT_VISITOR_H
 
-#include "Trader.h"
+#include "Trader_T.h"
 
   // *************************************************************
   // TAO_Constraint_Visitor
@@ -84,9 +84,6 @@ public:
   virtual int visit_literal (TAO_Literal_Constraint* literal) = 0;
   virtual int visit_property (TAO_Property_Constraint* literal) = 0;
 };
-
-
-CORBA::Boolean TAO_find_string (CosTradingSequences::StringSeq& sequence, const char* element);
 
   // *************************************************************
   // TAO_Constraint_Validator
@@ -360,6 +357,90 @@ private:
 
   Operand_Queue queue_;
   // The result of a non_boolean operation.
+};
+
+  // *************************************************************
+  // Utilities
+  // *************************************************************
+
+class TAO_Element_Equal<CORBA::Short>
+{
+public:
+  int operator () (TAO_DynSequence_i& dyn_any,
+                   CORBA::Short element) const;
+  // Calls the correct method on dyn_seq to extract the element type, then
+  // uses the appropriate form of equals comparison.
+
+};
+
+class TAO_Element_Equal<CORBA::UShort>
+{
+public:
+  int operator () (TAO_DynSequence_i& dyn_any,
+                   CORBA::UShort element) const;
+  // Calls the correct method on dyn_seq to extract the element type, then
+  // uses the appropriate form of equals comparison.
+
+};
+
+class TAO_Element_Equal<CORBA::Long>
+{
+public:
+  int operator () (TAO_DynSequence_i& dyn_any,
+                   CORBA::Long element) const;
+  // Calls the correct method on dyn_seq to extract the element type, then
+  // uses the appropriate form of equals comparison.
+
+};
+
+class TAO_Element_Equal<CORBA::ULong>
+{
+public:
+  int operator () (TAO_DynSequence_i& dyn_any,
+                   CORBA::ULong element) const;
+  // Calls the correct method on dyn_seq to extract the element type, then
+  // uses the appropriate form of equals comparison.
+
+};
+
+class TAO_Element_Equal<CORBA::Float>
+{
+public:
+  int operator () (TAO_DynSequence_i& dyn_any,
+                   CORBA::Float element) const;
+  // Calls the correct method on dyn_seq to extract the element type, then
+  // uses the appropriate form of equals comparison.
+
+};
+
+class TAO_Element_Equal<CORBA::Double>
+{
+public:
+  int operator () (TAO_DynSequence_i& dyn_any,
+                   CORBA::Double element) const;
+  // Calls the correct method on dyn_seq to extract the element type, then
+  // uses the appropriate form of equals comparison.
+
+};
+
+class TAO_Element_Equal<CORBA::Boolean>
+{
+public:
+  int operator () (TAO_DynSequence_i& dyn_any,
+                   CORBA::Boolean element) const;
+  // Calls the correct method on dyn_seq to extract the element type, then
+  // uses the appropriate form of equals comparison.
+
+};
+
+class TAO_Element_Equal<const char*>
+{
+public:
+  int operator () (TAO_DynSequence_i& dyn_any,
+                   const char* element) const;
+  // Calls the correct method on dyn_seq to extract the element type, then
+  // uses the appropriate form of equals comparison.
+
 };
 
 
