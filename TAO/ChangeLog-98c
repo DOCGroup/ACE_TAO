@@ -1,3 +1,9 @@
+Tue Sep 15 21:37:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/IIOP_Object.cpp: 
+	  Fixed Sun/CC warning, a local variable named <host> was hiding
+	  the class field with the same name in IIOP::Profile::set()
+
 Tue Sep 15 20:10:37 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* Makefile: Completely revised TAO's directory structure so that
