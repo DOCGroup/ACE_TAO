@@ -1,16 +1,22 @@
+Sat Nov 16 20:43:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* */Maefile: Updated dependency.
+
 Sat Nov 16 20:11:13 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
-	- Modified threadpool creation flags to ACE_Task::activate.
-	- Corrected decrement of <queue_length_>.
+	  - Modified threadpool creation flags to ACE_Task::activate. 
+	  - Corrected decrement of <queue_length_>. 
 
 Fri Nov 15 15:29:24 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/Basic/run_test.pl:
 	  Modified to run the basic tests with a reactive and
 	  multithreaded Notification.
+	
 	* orbsvcs/tests/Notify/Basic/notify.mt.conf:
 	  Added MT conf for the Basic test.
+	
 	* orbsvcs/tests/Notify/Basic/notify.reactive.conf:	
 	  Added reactive conf for the Basic test.
 
@@ -25,27 +31,26 @@ Fri Nov 15 15:29:24 2002  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/tests/Notify/performance-tests/RedGreen/lookup.conf
 	* orbsvcs/tests/Notify/performance-tests/RedGreen/reactive.conf
 	* orbsvcs/logging_service/notify_logging_service/svc.conf:
-	* orbsvcs/Notify_Service/svc.conf:
-	  Reverted factory back to
-	  Notify_Default_Event_Manager_Objects_Factory.
- 	  I have decided not to introduce any changes for Notify Options in
-	  TAO 1.3.
-	  Better replacements will be introduced gradually in subsequent releases.	
+	* orbsvcs/Notify_Service/svc.conf: Reverted factory back to
+	  Notify_Default_Event_Manager_Objects_Factory. I have decided not
+	  to introduce any changes for Notify Options in TAO 1.3. Better
+	  replacements will be introduced gradually in subsequent
+	  releases.
 
 	* orbsvcs/Notify_Service/Notify_Server.cpp:
- 	  Not handling signals. 
-	  The shutdown code and event handler is maintained in case we want to address this in the future.
+ 	  Not handling signals. The shutdown code and event handler is
+	  maintained in case we want to address this in the future. 
 
 	* orbsvcs/tests/Notify/performance-tests/RedGreen/run_test.pl:
 	  - Modified to run all 3 test cases described in the README.   	    
 	* orbsvcs/tests/Notify/performance-tests/RedGreen/Red
 	 
 	* orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp:
-	  Changed hardcoded "10" to the expected number of events that can
+	  Changed hardcoded "10" to the expected number of events that can 
 	  be specified on the command line.
 	
 	* orbsvcs/tests/Notify/Discarding/Sequence_Consumer.cpp:	  
-	  - Changed low=2 and high=20. Here is the explaination:
+	  - Changed low=2 and high=20. Here is the explanation:
 	  The Supplier sends 96 events as 6 batches of 16 events.
 	  The Notification is run with 1 dispatching thread. The Discarding
 	  Policy is set and the MaxEventsPerConsumer is set to 2 (Event
@@ -56,6 +61,7 @@ Fri Nov 15 15:29:24 2002  Pradeep Gore  <pradeep@oomworks.com>
 	  consumer starts *after* the supplier has send all the events to
 	  the Notification. This means that only 2 batches are queued and
 	  all others are discarded. Hence low = 2.
+	
 	  - Changed the sleep time that the consumer was polling fior
 	  excess events, from 3 to 1 sec. otherwise the perl script was
 	  timing out.
