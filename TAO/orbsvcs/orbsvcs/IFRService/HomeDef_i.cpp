@@ -780,7 +780,7 @@ TAO_HomeDef_i::fill_op_desc_seq (ACE_Configuration_Section_Key &key,
 void 
 TAO_HomeDef_i::fill_op_desc (ACE_Configuration_Section_Key &key,
                              CORBA::OperationDescription &od,
-                             char *sub_section
+                             const char *sub_section
                              ACE_ENV_ARG_DECL)
 {
   ACE_Configuration_Section_Key op_key;
@@ -913,7 +913,7 @@ TAO_HomeDef_i::fill_param_desc (ACE_Configuration_Section_Key &key,
 void 
 TAO_HomeDef_i::fill_exc_desc_seq (ACE_Configuration_Section_Key &key,
                                   CORBA::ExcDescriptionSeq &eds,
-                                  char *sub_section
+                                  const char *sub_section
                                   ACE_ENV_ARG_DECL)
 {
   eds.length (0);
@@ -950,7 +950,7 @@ TAO_HomeDef_i::fill_exc_desc_seq (ACE_Configuration_Section_Key &key,
 void 
 TAO_HomeDef_i::fill_exc_desc (ACE_Configuration_Section_Key &key,
                               CORBA::ExceptionDescription &ed,
-                              char *sub_section
+                              const char *sub_section
                               ACE_ENV_ARG_DECL)
 {
   ACE_TString path;

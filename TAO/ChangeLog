@@ -1,3 +1,15 @@
+Mon Jun  9 16:17:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/HomeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/HomeDef_i.h:
+
+          Added 'const' qualifier to operation parameters where only
+          constant strings are passed in.
+
+        * orbsvcs/orbsvcs/IFRService/tmplinst.cpp:
+
+          Added explicit template instantiations for recent changes.
+
 Mon Jun 09 15:34:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* performance-tests/Latency/Single_Threaded/svc.conf.xml: 
