@@ -1765,29 +1765,44 @@ ACE_Configuration_Heap::remove_value (const ACE_Configuration_Section_Key& key,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, int>;
-template class ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, int, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
+template class ACE_Allocator_Adapter<ACE_Malloc<ACE_Local_Memory_Pool, ACE_Thread_Mutex> >;
+template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_Memory_Pool, ACE_Thread_Mutex> >;
+template class ACE_Hash_Map_Entry<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId>;
+template class ACE_Hash_Map_Entry<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId>;
+template class ACE_Hash_Map_Entry<ACE_Configuration_ExtId, int>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_Configuration_ExtId, int, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_Configuration_ExtId, int, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
-template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_Memory_Pool, ACE_Thread_Mutex> >;
+template class ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, int, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<ACE_Configuration_ExtId, int, ACE_Null_Mutex>;
 template class ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId>;
 template class ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, int>;
 template class ACE_Malloc<ACE_MMAP_Memory_Pool, ACE_Thread_Mutex>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, int>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, int, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>
+#pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_Local_Memory_Pool, ACE_Thread_Mutex> >
+#pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_Memory_Pool, ACE_Thread_Mutex> >
+#pragma instantiate ACE_Hash_Map_Entry<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_Configuration_ExtId, int>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_Configuration_ExtId, int, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_Configuration_ExtId, int, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>
-#pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_Memory_Pool, ACE_Thread_Mutex> >
-#pragma instantiate ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, int, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_Configuration_ExtId, int, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId>
 #pragma instantiate ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, int>
 #pragma instantiate ACE_Malloc<ACE_MMAP_Memory_Pool, ACE_Thread_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
