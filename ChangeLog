@@ -1,3 +1,16 @@
+Wed Dec  3 23:37:59 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
+
+	* ace/Task_Ex_T.h:
+	Add remark about the idea of merging ACE_Task and ACE_Task_Ex.
+	Add remark about sibling alwasy returning 0
+	
+	* ace/Task_Ex_T.cpp (ACE_Task_Ex::sibling):
+	ACE_Task_Ex::sibling cannot call mod_->sibling(this) because it
+	is not typed as ACE_Task<>. Return 0 alwasy when calling sibling.
+	TODO: That can be fixed if ACE_Task and ACE_Task_Ex can be merged so
+	ACE_Task_Ex can have the Module ability - aka the Stream model.
+	See ACE_Task_Ex.h for more info on that.
+
 Wed Dec  3 12:14:51 2003  Steve Huston  <shuston@riverace.com>
 
 	Pulled in these changes from the 5.3 stream:
