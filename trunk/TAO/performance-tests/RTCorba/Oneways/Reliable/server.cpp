@@ -18,9 +18,12 @@ main (int argc, char *argv[])
      + ACE_Sched_Params::priority_max (policy)) / 2;
 
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
-  if (ACE_OS::sched_params (ACE_Sched_Params (policy,
-                                              priority,
-                                              ACE_SCOPE_PROCESS)) != 0)
+  int result =
+    ACE_OS::sched_params (ACE_Sched_Params (policy,
+                                            priority,
+                                            ACE_SCOPE_PROCESS));
+
+  if (result != 0)
     {
       if (ACE_OS::last_error () == EPERM)
         {
@@ -31,8 +34,9 @@ main (int argc, char *argv[])
           flags = THR_NEW_LWP|THR_JOINABLE;
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "server (%P|%t): sched_params failed\n"));
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "server (%P|%t): sched_params failed\n"),
+                          1);
     }
 
   ACE_hthread_t self;
