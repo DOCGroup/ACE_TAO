@@ -5,6 +5,7 @@
 
 #include "ace/TLI_Stream.h"
 #include "ace/ACE.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(ace, TLI_Stream, "$Id$")
 

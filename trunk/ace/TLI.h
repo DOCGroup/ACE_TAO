@@ -15,16 +15,17 @@
 #define ACE_TLI_H
 #include /**/ "ace/pre.h"
 
-#include "ace/IPC_SAP.h"
+#include "ace/OS_TLI.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Addr.h"
-#include "ace/OS_TLI.h"
-
 #if defined (ACE_HAS_TLI)
+
+#include "ace/IPC_SAP.h"
+#include "ace/Addr.h"
+#include "ace/os_include/os_fcntl.h"
 
 // There's not a universal device name for TLI devices.  If the platform
 // needs something other than /dev/tcp, it needs to be set up in the config.h
