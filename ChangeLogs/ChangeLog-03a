@@ -1,3 +1,11 @@
+Wed Oct  2 20:44:19 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Proactor_Scatter_Gather_Test.cpp: Added some more diagnostic
+          info and removed ACE_ASSERT on file not compared correctly - just
+          note the error and return. When about to writev a chain of blocks,
+          update the odd/even chains before writing in case the write fails;
+          fixes a crash on NT4... test still fails, but doesn't crash.
+
 Wed Oct  2 10:50:49 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Basic_Types.h:
