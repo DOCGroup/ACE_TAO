@@ -1464,6 +1464,8 @@ TAO_DynArray_i::get_arg_length (CORBA::TypeCode_ptr tc,
     {
       tc = tc->content_type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
+      kind = tc->kind (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
     }
 
   CORBA::ULong retval = tc->length (ACE_TRY_ENV);
