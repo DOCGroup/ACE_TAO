@@ -70,7 +70,7 @@ Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReques
 
   // Add this context to the service context list.
   ri->add_request_service_context (sc, 0);
-
+ 
   if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
     {
       Dynamic::ParameterList_var paramlist = ri->arguments ();
@@ -78,7 +78,7 @@ Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReques
       (*paramlist)[0].argument >>= param;
       
       cout << "the arg is " << param <<endl;
-    }
+      }
 }
 
 void 
@@ -92,6 +92,7 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
               ri->operation (ACE_TRY_ENV),
               this->orb_->object_to_string (ri->target ())));
 
+  // ACE_CHECK;
   // ServiceID? is hacked and set to 1 for now
   IOP::ServiceId id = reply_ctx_id;
   IOP::ServiceContext * sc = ri->get_reply_service_context (id);
@@ -103,15 +104,14 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
   ACE_DEBUG ((LM_DEBUG,
               "  Received reply service context: %s\n",
               buf));
-
-  if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
+   if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
     {
       Dynamic::ParameterList_var paramlist = ri->arguments ();
       CORBA::Long param;
       (*paramlist)[0].argument >>= param;
       
       cout << "the arg is " << param <<endl;
-    }
+      }
 
 }
 
@@ -195,8 +195,8 @@ Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerReq
 
   // Add this context to the service context list.
   ri->add_reply_service_context (scc, 0);
-
-
+  
+  
   if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
     {
       Dynamic::ParameterList_var paramlist = ri->arguments ();
@@ -204,8 +204,8 @@ Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerReq
       (*paramlist)[0].argument >>= param;
       
       cout << "the arg is " << param <<endl;
-    }  
-  
+      }
+   
 }
 
 void 
@@ -232,7 +232,7 @@ Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestI
               "  Replying service context: %s\n",
               buf));
 
-
+ 
   if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
     {
       Dynamic::ParameterList_var paramlist = ri->arguments ();
@@ -240,7 +240,7 @@ Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestI
       (*paramlist)[0].argument >>= param;
       
       cout << "the arg is " << param <<endl;
-    } 
+      }
 }
 
 void 
