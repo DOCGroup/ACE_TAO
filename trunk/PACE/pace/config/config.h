@@ -191,4 +191,31 @@
 # endif /* ! PACE_HAS_POSIX_NONUOF_FUNCS */
 #endif /* PACE_HAS_ALL_POSIX_FUNCS */
 
+#if (PACE_WIN32)
+
+# if defined (PACE_AS_STATIC_LIBS)
+#   if !defined (PACE_HAS_DLL)
+#     define PACE_HAS_DLL 0
+#   endif /* ! PACE_HAS_DLL */
+# else
+#   if !defined (PACE_HAS_DLL)
+#     define PACE_HAS_DLL 1
+#   endif /* ! PACE_HAS_DLL */
+# endif /* PACE_AS_STATIC_LIBS */
+
+#define PACE_Proper_Export_Flag __declspec (dllexport)
+#define PACE_Proper_Import_Flag __declspec (dllimport)
+
+#endif /* PACE_WIN32 */
+
+#if defined (PACE_HAS_DLL) && (PACE_HAS_DLL == 1)
+#  if defined (PACE_BUILD_DLL)
+#    define PACE_Export PACE_Proper_Export_Flag
+#  else /* PACE_BUILD_DLL */
+#    define PACE_Export PACE_Proper_Import_Flag
+#  endif /* PACE_BUILD_DLL */
+#else /* PACE_HAS_DLL != 1 */
+#  define PACE_Export
+#endif /* PACE_HAS_DLL != 1 */
+
 #endif /* PACE_CONFIG_CONFIG_H */

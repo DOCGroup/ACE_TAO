@@ -36,7 +36,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE int pace_isalnum (int c);
+  PACE_Export PACE_INLINE int pace_isalnum (int c);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -45,7 +45,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE int pace_isalpha (int c);
+  PACE_Export PACE_INLINE int pace_isalpha (int c);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -54,7 +54,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE int pace_iscntrl (int c);
+  PACE_Export PACE_INLINE int pace_iscntrl (int c);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -63,7 +63,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE int pace_isdigit (int c);
+  PACE_Export PACE_INLINE int pace_isdigit (int c);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -72,7 +72,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE int pace_isgraph (int c);
+  PACE_Export PACE_INLINE int pace_isgraph (int c);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -81,7 +81,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE int pace_islower (int c);
+  PACE_Export PACE_INLINE int pace_islower (int c);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -90,7 +90,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE int pace_isprint (int c);
+  PACE_Export PACE_INLINE int pace_isprint (int c);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -99,7 +99,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE int pace_ispunct (int c);
+  PACE_Export PACE_INLINE int pace_ispunct (int c);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -108,7 +108,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE int pace_isspace (int c);
+  PACE_Export PACE_INLINE int pace_isspace (int c);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -117,7 +117,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE int pace_isupper (int c);
+  PACE_Export PACE_INLINE int pace_isupper (int c);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -126,7 +126,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE int pace_isxdigit (int c);
+  PACE_Export PACE_INLINE int pace_isxdigit (int c);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -135,7 +135,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE int pace_tolower (int c);
+  PACE_Export PACE_INLINE int pace_tolower (int c);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -144,7 +144,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE int pace_toupper (int c);
+  PACE_Export PACE_INLINE int pace_toupper (int c);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
 #if defined (PACE_HAS_INLINE)

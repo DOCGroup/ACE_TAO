@@ -56,7 +56,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.3.1.
    */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE void pace_longjmp (pace_jmp_buf env, int val);
+  PACE_Export PACE_INLINE void pace_longjmp (pace_jmp_buf env, int val);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -65,7 +65,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.3.1.
    */
 #if (PACE_HAS_POSIX_SIG_UOF)
-  PACE_INLINE void pace_siglongjmp (pace_sigjmp_buf env, int val);
+  PACE_Export PACE_INLINE void pace_siglongjmp (pace_sigjmp_buf env, int val);
 #endif /* PACE_HAS_POSIX_SIG_UOF */
 
 #if defined (PACE_HAS_INLINE)

@@ -37,7 +37,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 15.2.2.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_mq_close (pace_mqd_t mqdes);
+  PACE_Export PACE_INLINE int pace_mq_close (pace_mqd_t mqdes);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -46,8 +46,8 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 15.2.8.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_mq_getattr (pace_mqd_t mqdes,
-                                   pace_mq_attr * mqstat);
+  PACE_Export PACE_INLINE int pace_mq_getattr (pace_mqd_t mqdes,
+                                               pace_mq_attr * mqstat);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -56,8 +56,8 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 15.2.6.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_mq_notify (pace_mqd_t mqdes,
-                                  const pace_sigevent * notification);
+  PACE_Export PACE_INLINE int pace_mq_notify (pace_mqd_t mqdes,
+                                              const pace_sigevent * notification);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -76,10 +76,10 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 15.2.5.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE pace_ssize_t pace_mq_receive (pace_mqd_t mqdes,
-                                            char * msg_ptr,
-                                            pace_size_t msg_len,
-                                            unsigned int * nmsg_prio);
+  PACE_Export PACE_INLINE pace_ssize_t pace_mq_receive (pace_mqd_t mqdes,
+                                                        char * msg_ptr,
+                                                        pace_size_t msg_len,
+                                                        unsigned int * nmsg_prio);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -88,10 +88,10 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 15.2.4.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_mq_send (pace_mqd_t mqdes,
-                                const char * mst_ptr,
-                                pace_size_t msg_len,
-                                unsigned int psg_prio);
+  PACE_Export PACE_INLINE int pace_mq_send (pace_mqd_t mqdes,
+                                            const char * mst_ptr,
+                                            pace_size_t msg_len,
+                                            unsigned int psg_prio);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -100,9 +100,9 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 15.2.7.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_mq_setattr (pace_mqd_t mqdes,
-                                   const pace_mq_attr * mqstat,
-                                   pace_mq_attr * omqstat);
+  PACE_Export PACE_INLINE int pace_mq_setattr (pace_mqd_t mqdes,
+                                               const pace_mq_attr * mqstat,
+                                               pace_mq_attr * omqstat);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -111,7 +111,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 15.2.3.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_mq_unlink (const char * name);
+  PACE_Export PACE_INLINE int pace_mq_unlink (const char * name);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 #if defined (PACE_HAS_INLINE)

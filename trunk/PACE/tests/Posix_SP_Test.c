@@ -27,6 +27,10 @@
 const char * success = "SUCCEEDED";
 const char * failure = "***FAILED***";
 
+#if defined (PACE_VXWORKS) && PACE_VXWORKS != 0
+#include "vxworks_stub.c"
+#endif /* VXWORKS */
+
 void
 check_sysconf ()
 {

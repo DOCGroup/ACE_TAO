@@ -23,8 +23,15 @@ int
 pace_uname (pace_utsname * name)
 {
   size_t maxnamelen = sizeof name->nodename;
+
+  PACE_TRACE("pace_uname");
+
   pace_strcpy (name->sysname, "VxWorks");
-  pace_strcpy (name->release, "???");
+#if (PACE_VXWORKS == 531)
+  pace_strcpy (name->release, "5.3.1");
+#elif (PACE_VXWORKS == 540)
+  pace_strcpy (name->release, "5.4.0");
+#endif /* PACE_VXWORKS != 531 */
   pace_strcpy (name->version, sysBspRev ());
   pace_strcpy (name->machine, sysModel ());
  

@@ -36,7 +36,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 3.2.1.
      */
 #if (PACE_HAS_POSIX_MP_UOF)
-  PACE_INLINE pace_pid_t pace_wait (int * statloc);
+  PACE_Export PACE_INLINE pace_pid_t pace_wait (int * statloc);
 #endif /* PACE_HAS_POSIX_MP_UOF */
 
   /**
@@ -45,9 +45,9 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 3.2.1.
      */
 #if (PACE_HAS_POSIX_MP_UOF)
-  PACE_INLINE pace_pid_t pace_waitpid (pace_pid_t pid,
-                                       int * statloc,
-                                       int options);
+  PACE_Export PACE_INLINE pace_pid_t pace_waitpid (pace_pid_t pid,
+                                                   int * statloc,
+                                                   int options);
 #endif /* PACE_HAS_POSIX_MP_UOF */
 
 #if defined (PACE_HAS_INLINE)

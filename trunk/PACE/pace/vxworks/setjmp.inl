@@ -18,6 +18,8 @@ PACE_INLINE
 void
 pace_longjmp (pace_jmp_buf env, int val)
 {
+  PACE_TRACE("pace_longjmp");
+
   longjmp (env, val);
   return;
 }
@@ -28,6 +30,8 @@ PACE_INLINE
 void
 pace_siglongjmp (pace_sigjmp_buf env, int val)
 {
+  PACE_TRACE("pace_siglongjmp");
+
   siglongjmp (env, val);
   return;
 }
