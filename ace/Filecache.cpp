@@ -140,7 +140,7 @@ ACE_Filecache_Handle::size (void) const
 #define ACE_Filecache_Hash_Entry \
         ACE_Hash_Map_Entry<const ACE_TCHAR *, ACE_Filecache_Object *>
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION
+ACE_TEMPLATE_SPECIALIZATION
 ACE_Filecache_Hash_Entry::ACE_Hash_Map_Entry (const ACE_TCHAR *const &ext_id,
                                               ACE_Filecache_Object *const &int_id,
                                               ACE_Filecache_Hash_Entry *next,

@@ -1,3 +1,25 @@
+Thu Jun 20 14:32:03 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Synch.cpp (ACE_recursive_mutex_state): Replaced the
+	  ACE_OS::mutex_lock/unlock calls with
+ 	  ACE_OS::thread_mutex_lock/unlock so things will work on NT.
+  	  Thanks to Jeff Parsons for reporting this.
+
+	* ace/Synch.{h,cpp}: Only compile the new
+	  ACE_Condition<ACE_Recursive_Thread_Mutex> template
+ 	  specialization if ACE_HAS_THREADS.  Thanks to Craig Rodrigues
+ 	  for motivating this.
+
+	* include/makeinclude/platform_sunos5_sunc++.GNU (CC_VERSION): Added
+	  additional cases for SunC++ 5.2 and 5.3.  Thanks to Carsten
+ 	  Tonsberg Nielsen <ctn@maerskdatadefence.dk> for reporting this.
+
+	* ace/ATM_Stream.cpp (get_peer_name): 
+	* ace/Log_Msg_UNIX_Syslog.cpp (log): 
+	* ace/Logging_Strategy.cpp: Replaced the use of ACE_OS::strtok() with
+	  ACE_OS::strtok_r().  Thanks to Eugene Alterman
+ 	  <eugalt@myrealbox.com> for motivating this.
+
 Thu Jun 20 16:02:22 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/config-sunos5.5.h: Commented out the below addition for now.
