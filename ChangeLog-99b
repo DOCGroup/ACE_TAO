@@ -1,5 +1,10 @@
 Tue Aug 17 20:02:55 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tests/Reactor_Timer_Test.cpp: Enhanced this test to exercise
+	  the new reset_timer_interval() feature that Darrell added.  It
+ 	  appears to work quite well.  Also, make the test easier to
+ 	  understand by adding more structure.
+
         * ace/WFMO_Reactor.h,
         * ace/WFMO_Reactor.cpp,
         * ace/XtReactor.h,

@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -11,7 +10,7 @@
 //    Trace.h
 //
 // = AUTHOR
-//    Doug Schmidt
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -31,7 +30,8 @@ class ACE_Export ACE_Trace
 public:
   // = Initialization and termination methods.
 
-  ACE_Trace (const ASYS_TCHAR *n, int line = 0,
+  ACE_Trace (const ASYS_TCHAR *n,
+             int line = 0,
              const ASYS_TCHAR *file = ASYS_TEXT (""));
   // Perform the first part of the trace, which prints out the string
   // N, the LINE, and the ACE_FILE as the function is entered.
