@@ -1,3 +1,7 @@
+Fri Jan 26 11:18:15 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* tests/Makefile.bor (TESTS): Added Message_Queue_Test_Ex.cpp.
+
 Fri Jan 26 13:37:30 2001  Luther J Baker  <luther@cs.wustl.edu>
 
 	* ace/OS.h:
