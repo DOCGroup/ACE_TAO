@@ -553,7 +553,9 @@ idl_store_pragma (char *buf)
 
           if (depth > 1)
             {
-              idl_global->scopes ().top ()->has_prefix (1);
+              UTL_Scope *top_scope = idl_global->scopes ().top ();
+              top_scope->has_prefix (1);
+              top_scope->prefix_scope (top_scope);
             }
 
           idl_global->pragma_prefixes ().push (new_prefix);

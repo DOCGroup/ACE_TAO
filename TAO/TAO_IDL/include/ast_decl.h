@@ -351,7 +351,8 @@ private:
   void compute_full_name (UTL_ScopedName *n);
   // Compute the full name of an AST node.
 
-  void set_prefix_with_typeprefix_r (char *value);
+  void set_prefix_with_typeprefix_r (char *value,
+                                     UTL_Scope *appeared_in);
   // Non-top-level version of set_prefix_with_typeprefix.
 };
 

@@ -251,7 +251,8 @@ UTL_Scope::UTL_Scope (void)
     pd_name_referenced (0),
     pd_name_referenced_allocated (0),
     pd_name_referenced_used (0),
-    has_prefix_ (0)
+    has_prefix_ (0),
+    prefix_scope_ (0)
 {
 }
 
@@ -269,7 +270,8 @@ UTL_Scope::UTL_Scope (AST_Decl::NodeType nt)
     pd_name_referenced (0),
     pd_name_referenced_allocated (0),
     pd_name_referenced_used (0),
-    has_prefix_ (0)
+    has_prefix_ (0),
+    prefix_scope_ (0)
 {
 }
 
@@ -2149,6 +2151,18 @@ void
 UTL_Scope::has_prefix (idl_bool val)
 {
   this->has_prefix_ = val;
+}
+
+UTL_Scope *
+UTL_Scope::prefix_scope (void)
+{
+  return this->prefix_scope_;
+}
+
+void
+UTL_Scope::prefix_scope (UTL_Scope *s)
+{
+  this->prefix_scope_ = s;
 }
 
 // Redefinition of inherited virtual operations.

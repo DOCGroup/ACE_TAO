@@ -252,7 +252,8 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
 }
 
 void
-AST_Decl::set_prefix_with_typeprefix_r (char *value)
+AST_Decl::set_prefix_with_typeprefix_r (char *value,
+                                        UTL_Scope *appeared_in)
 {
   if (this->typeid_set_)
     {
@@ -263,6 +264,7 @@ AST_Decl::set_prefix_with_typeprefix_r (char *value)
   this->repoID_ = 0;
   this->prefix (value);
 
+  // This will recursively catch all previous openings of a module.
   if (this->node_type () == AST_Decl::NT_module)
     {
       AST_Decl *d = DeclAsScope (this)->lookup_by_name (this->name (),
@@ -270,7 +272,8 @@ AST_Decl::set_prefix_with_typeprefix_r (char *value)
 
       if (d != this)
         {
-          d->set_prefix_with_typeprefix_r (value);
+          d->set_prefix_with_typeprefix_r (value,
+                                           appeared_in);
         }
     }
 
@@ -279,21 +282,30 @@ AST_Decl::set_prefix_with_typeprefix_r (char *value)
 
   if (s != 0)
     {
+      s->prefix_scope (appeared_in);
       AST_Decl *d = 0;
+      AST_Decl *prefix_scope = 0;
 
       for (UTL_ScopeActiveIterator i (s, UTL_Scope::IK_decls); 
            !i.is_done (); 
            i.next ())
         {
           d = i.item ();
+          prefix_scope = ScopeAsDecl (DeclAsScope (d)->prefix_scope ());
 
-          if (d->typeid_set_)
+          // This will let a prefix set in an inner scope override one set in
+          // an outer scope, even if the outer scope typeprefix directive
+          // appears later in the IDL file.
+          if (d->typeid_set_ 
+              || prefix_scope != 0
+                 && prefix_scope->has_ancestor (ScopeAsDecl (appeared_in)) != 0)
             {
               continue;
             }
           else
             {
-              d->set_prefix_with_typeprefix_r (value);
+              d->set_prefix_with_typeprefix_r (value,
+                                               appeared_in);
             }
         }
     }
@@ -661,12 +673,29 @@ AST_Decl::has_ancestor (AST_Decl *s)
       return I_TRUE;
     }
 
-  if (pd_defined_in == NULL)
+  if (s->node_type () == AST_Decl::NT_module)
+    {
+      UTL_Scope *enclosing = s->defined_in ();
+      AST_Decl *other_opening = s;
+
+      for (int index = 1; other_opening != 0; ++index)
+        {
+          if (this == other_opening)
+            {
+              return I_TRUE;
+            }
+
+          other_opening = enclosing->lookup_by_name_local (s->local_name (),
+                                                           index);
+        }
+    }
+
+  if (this->pd_defined_in == 0)
     {
       return I_FALSE;
     }
 
-  return ScopeAsDecl (pd_defined_in)->has_ancestor (s);
+  return ScopeAsDecl (this->pd_defined_in)->has_ancestor (s);
 }
 
 idl_bool
@@ -957,7 +986,8 @@ AST_Decl::set_prefix_with_typeprefix (char *value)
       return;
   }
 
-  this->set_prefix_with_typeprefix_r (value);
+  this->set_prefix_with_typeprefix_r (value,
+                                      DeclAsScope (this));
 }
 
 idl_bool
