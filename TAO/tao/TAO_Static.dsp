@@ -183,6 +183,10 @@ SOURCE=.\Direct_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DLL_ORB.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\DomainC.cpp
 # End Source File
 # Begin Source File
@@ -467,10 +471,6 @@ SOURCE=.\POA.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\PortableServerC.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\POAManager.cpp
 # End Source File
 # Begin Source File
@@ -500,6 +500,10 @@ SOURCE=.\PollableS.cpp
 # Begin Source File
 
 SOURCE=.\Pool_Per_Endpoint.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableServerC.cpp
 # End Source File
 # Begin Source File
 
@@ -652,6 +656,10 @@ SOURCE=.\TAO.cpp
 # Begin Source File
 
 SOURCE=.\TAO_Internal.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\TAO_Singleton_Manager.cpp
 # End Source File
 # Begin Source File
 
@@ -848,6 +856,10 @@ SOURCE=.\DII_Reply_Dispatcher.h
 # Begin Source File
 
 SOURCE=.\Direct_Priority_Mapping.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DLL_ORB.h
 # End Source File
 # Begin Source File
 
@@ -1107,10 +1119,6 @@ SOURCE=.\poa_macros.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\PortableServerC.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\POAManager.h
 # End Source File
 # Begin Source File
@@ -1132,6 +1140,10 @@ SOURCE=.\PollableS.h
 # Begin Source File
 
 SOURCE=.\Pool_Per_Endpoint.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableServerC.h
 # End Source File
 # Begin Source File
 
@@ -1283,7 +1295,19 @@ SOURCE=.\TAO.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\TAO_Export.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\TAO_Internal.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TAO_Singleton.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TAO_Singleton_Manager.h
 # End Source File
 # Begin Source File
 
@@ -1436,6 +1460,10 @@ SOURCE=.\default_server.i
 # Begin Source File
 
 SOURCE=.\Direct_Priority_Mapping.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\DLL_ORB.inl
 # End Source File
 # Begin Source File
 
@@ -1595,10 +1623,6 @@ SOURCE=.\params.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\PortableServerC.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\POAManager.i
 # End Source File
 # Begin Source File
@@ -1612,6 +1636,10 @@ SOURCE=.\PolicyC.i
 # Begin Source File
 
 SOURCE=.\Pool_Per_Endpoint.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableServerC.i
 # End Source File
 # Begin Source File
 
@@ -1723,6 +1751,14 @@ SOURCE=.\TAO_Internal.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\TAO_Singleton.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\TAO_Singleton_Manager.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\TAOC.i
 # End Source File
 # Begin Source File
@@ -1768,6 +1804,14 @@ SOURCE=.\ValueFactory_Map.i
 # Begin Source File
 
 SOURCE=.\tao.rc
+# End Source File
+# End Group
+# Begin Group "Template Files"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\TAO_Singleton.cpp
 # End Source File
 # End Group
 # End Target
