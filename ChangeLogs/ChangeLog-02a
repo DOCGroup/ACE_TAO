@@ -1,3 +1,23 @@
+Mon Apr 23 13:36:27 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp (ACE::handle_timed_complete): Winsock (ACE_WIN32) sets
+          the exception bit (not the read bit) for a failed async connect.
+          So on fail, don't bother to do the recv trick to see if the socket
+          really did fail.
+
+        * ace/Connector.cpp (ACE_Connector::handle_output):
+        * ace/SOCK_Connector.cpp (complete): Apparantly, Win2000 has
+          fixed the problem where a connection succeeds but can't be used
+          for a time. So, the sleep workaround is restructured for ACE_WIN32
+          to try the new socket first, and only do the sleep if it fails.
+          Don't try to do this check (e.g. building on Win2000) at compile
+          time, since we want to be able to build on NT and run on Win2000.
+
+        * ace/README:
+        * ace/config-win32-common.h: Removed the macro,
+          ACE_HAS_BROKEN_NONBLOCKING_CONNECTS. It was only used in the two
+          cases above, and is not needed any longer.
+
 Mon Apr 23 07:08:09 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Based_Pointer_T.h: Updated the documentation to 

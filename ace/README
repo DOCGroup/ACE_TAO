@@ -218,9 +218,6 @@ ACE_HAS_BROKEN_MMAP_H                   HP/UX does not wrap the
 ACE_HAS_BROKEN_NESTED_TEMPLATES         MSVC has trouble with defining
                                         STL containers for nested
                                         structs and classes
-ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS    Platform has a bug with
-                                        non-blocking connects (e.g.,
-                                        WinNT 4.0)
 ACE_HAS_BROKEN_POSIX_TIME               Platform defines struct
                                         timespec in <sys/timers.h>
 ACE_HAS_BROKEN_RANDR                    OS/compiler's header files are

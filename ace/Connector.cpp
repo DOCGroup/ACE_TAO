@@ -339,20 +339,24 @@ ACE_Connector<SH, PR_CO_2>::handle_output (ACE_HANDLE handle)
 
   PR_AD raddr;
 
-#if defined (ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS)
-  // Win32 has a timing problem - if you check to see if the
-  // connection has completed too fast, it will fail - so wait 35
-  // millisecond to let it catch up.
-  ACE_Time_Value tv (0, ACE_NON_BLOCKING_BUG_DELAY);
-  ACE_OS::sleep (tv);
-#endif /* ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS */
-
   // Check to see if we're connected.
   if (ast->svc_handler ()->peer ().get_remote_addr (raddr) != -1)
     this->activate_svc_handler (ast->svc_handler ());
   else // Somethings gone wrong, so close down...
-    ast->svc_handler ()->close (0);
-
+    {
+#if defined (ACE_WIN32)
+      ACE_DEBUG ((LM_DEBUG, "errno %d; Sleeping to retry get_remote_addr\n", errno));
+      // Win32 (at least prior to Windows 2000) has a timing problem.
+      // If you check to see if the connection has completed too fast,
+      // it will fail - so wait 35 milliseconds to let it catch up.
+      ACE_Time_Value tv (0, ACE_NON_BLOCKING_BUG_DELAY);
+      ACE_OS::sleep (tv);
+      if (ast->svc_handler ()->peer ().get_remote_addr (raddr) != -1)
+        this->activate_svc_handler (ast->svc_handler ());
+      else // do the svc handler close below...
+#endif /* ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS */
+       ast->svc_handler ()->close (0);
+    }
   delete ast;
   return 0;
 }
