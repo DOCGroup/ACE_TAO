@@ -1,3 +1,8 @@
+Fri Jul  9 16:44:49 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp:
+	  Fixed several typos and misleading ACE_ERROR messages.
+
 Fri Jul  9 16:41:32 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Persistent_Grid/Grid_i.cpp:
