@@ -23,6 +23,7 @@ struct Options
 {
   ACE_Time_Value timer_interval;
   int num_iterations;
+  int num_events;
   ACE_CString proxy_consumer_file;
 };
 

@@ -14,6 +14,7 @@ ACE_RCSID (FtRtEvent,
 
 
 PushConsumer_impl::PushConsumer_impl()
+: num_events_recevied_(0)
 {
 }
 
@@ -23,6 +24,8 @@ int PushConsumer_impl::init(CORBA::ORB_ptr orb,
 {
   orb_ = orb;
   num_iterations_ = options.num_iterations;
+  num_events_to_end_ = options.num_events;
+
   run_times_.assign(options.num_iterations, -1);
 
   RtecEventChannelAdmin::ConsumerQOS qos;
@@ -74,7 +77,10 @@ PushConsumer_impl::push (const RtecEventComm::EventSet & event
       time_val.sec () * 10000000 + time_val.usec ()* 10 - event[0].header.ec_send_time;
     event[0].data.any_value >>= x;
 
-    if ( num_iterations_ > static_cast<int>(x) ) {
+    num_events_recevied_ ++;
+
+    if ( num_iterations_ > static_cast<int>(x) && 
+         num_events_recevied_ < num_events_to_end_ ) {
       run_times_[x] = static_cast<int>(elaps/10);
       TAO_FTRTEC::Log(3, "received event %d\n", x);
     }

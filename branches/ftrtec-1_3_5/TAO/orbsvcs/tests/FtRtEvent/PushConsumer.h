@@ -46,6 +46,8 @@ private:
   void output_result();
   CORBA::ORB_var orb_;
   int num_iterations_;
+  int num_events_to_end_;
+  int num_events_recevied_;
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_;
   std::vector<int> run_times_;
 
