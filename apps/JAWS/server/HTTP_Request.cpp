@@ -78,7 +78,8 @@ HTTP_Request::parse_request (ACE_Message_Block &mb)
 
   mb.wr_ptr (strlen(mb.rd_ptr ()) - mb.length ());
 
-  return ((this->headers_.end_of_headers () || this->version () == 0)
+  return ((this->headers_.end_of_headers ()
+           || (this->got_request_line () && this->version () == 0))
           ? this->init (mb.rd_ptr (), mb.length ())
           : 0);
 }
@@ -250,7 +251,7 @@ HTTP_Request::header_values (int index) const
       hv = this->headers_[hs];
     }
 
-  return hs;
+  return hv;
 }
 
 char *
@@ -519,6 +520,7 @@ HTTP_Request::path (const char *uri_string)
 #endif /* NOT ACE_WIN32 AND NOT VXWORKS */
             }
  
+          ACE_OS::strcat (buf, "/");
           ACE_OS::strcat (buf, HTTP_Config::instance ()->user_dir ());
           ACE_OS::strcat (buf, file_name);
         }
