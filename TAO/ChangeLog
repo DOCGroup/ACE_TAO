@@ -1,3 +1,18 @@
+Mon Jul 28 12:34:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Any_SystemException.h:
+	* tao/Any_SystemException.cpp: New Any_Impl classes to be used by
+	  different concrete CORBA::SystemException  types. The way it was
+	  done before added a lot of footprint.
+	
+	* tao/Exception.cpp: Use TAO::Any_SystemException class for Any
+	  extraction and insertion operators. 
+
+	* tao/Makefile.tao:
+	* tao/tao.mpc:
+	* tao/makefile.bor: Added the new file to the following Makefiles
+	  and project files.
+
 Mon Jul 28 13:25:00 2003  Stephen Torri <storri@cse.wustl.edu>
 
 	* orbsvcs/orbsvcs/Metrics.idl:
