@@ -28,7 +28,7 @@
 class IOR_Multicast : public ACE_Event_Handler
 {
 public:
-  // constructor
+   // constructor
   IOR_Multicast (char * ior,
 		u_short port,
 		const char *mcast_addr);
@@ -70,3 +70,7 @@ private:
 };
 
 #endif /* NAMING_SERVICE_H */
+
+
+
+
