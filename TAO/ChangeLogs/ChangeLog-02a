@@ -1,3 +1,9 @@
+Sat Apr  1 10:20:12 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/Notify_Service/Notify_Service.cpp:
+	  Moved the call to <resolve_naming_service> in the correct place
+	  to detect if the naming service is available or not.
+
 Fri Mar 31 20:59:31 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Object_Adapter.cpp (activate_poa): AdapterNonExistent
