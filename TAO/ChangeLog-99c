@@ -1,3 +1,9 @@
+Thu Apr 29 19:58:03 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Simple: Added the new time-date example, which
+	  will illustrate how to dynamically link an ORB via the
+	  svc.conf!
+
 Thu Apr 29 19:53:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/TAO.dsp:
