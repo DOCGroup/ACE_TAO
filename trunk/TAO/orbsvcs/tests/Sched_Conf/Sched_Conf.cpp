@@ -16,10 +16,10 @@ ACE_RCSID(Sched_Conf, Sched_Conf, "$Id$")
 const char* service_name = "ScheduleService";
 
 const char* format_string = "{%-12s, %d, %d, %d, %d, %8d, "
-                            "(RtecScheduler::Criticality_t) %d, "
-                            "(RtecScheduler::Importance_t) %d, "
+                            "ACE_static_cast (RtecScheduler::Criticality_t, %d), "
+                            "ACE_static_cast (RtecScheduler::Importance_t, %d), "
                             "%d, %d, %3d, %d, %d, "
-                            "(RtecScheduler::Info_Type_t) %d}\n";
+                            "ACE_static_cast (RtecScheduler::Info_Type_t, %d)}\n";
 
 int
 parse_args (int argc, char *argv [])

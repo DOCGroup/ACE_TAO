@@ -1,3 +1,13 @@
+Sat Jan 30 11:55:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * TAO/orbsvcs/tests/Sched_Conf/Sched_Conf.cpp
+          TAO/orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp
+          TAO/orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies_Runtime.h
+          TAO/orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.{cpp, h}: updated
+	  types that had been changed in RtecScheduler.idl.  Thanks to gwross 
+	  <gwross@west.raytheon.com> for providing this ix, which solves a
+	  compilation problem with MSVC++ 6.0.
+	
 Sat Jan 30 10:08:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/POA/Generic_Servant/Makefile: 
