@@ -25,6 +25,28 @@ Wed Jun 21 18:42:22 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	  Removed deprecated definitions and non-posix functions.
 
+Wed Jun 21 16:44:24 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * pace/Makefile:
+          Changed to define the PACE_`platform' values
+          Change include directories to -I.. to resolve problems.
+
+       	* tests/Makefile:
+          Change include directories to -I.. to resolve problems.
+
+       	* pace/config/platform.h:
+          Modified platform #defines to PACE_`platform' (e.g., PACE_POSIX)
+
+       	* pace/posix/math.{h,inl}:
+          Fixed pace_pow arguments
+
+       	* pace/posix/mman.{h,inl}:
+       	* pace/posix/aio.h:
+       	* pace/posix/locale.h:
+       	* pace/posix/pthread.{h,inl}:
+       	* pace/posix/stdio.h:
+	  Fixed syntax errors and typos
+
 Wed Jun 21 13:15:47 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/posix/stdio.inl (pace_setbuf):
