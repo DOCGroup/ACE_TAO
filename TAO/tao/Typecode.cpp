@@ -650,7 +650,7 @@ TC_Private_State::~TC_Private_State (void)
 
 // Point of recursion for equal() and equivalent().
 CORBA::Boolean 
-CORBA_TypeCode::equ_common (const CORBA::TypeCode_ptr tc,
+CORBA_TypeCode::equ_common (CORBA::TypeCode_ptr tc,
                             CORBA::Boolean equiv_only,
                             CORBA::Environment &ACE_TRY_ENV) const
 {
