@@ -27,7 +27,7 @@ public class PushConsumerFactory {
   private Weapons weapons_;
 
 
-  public PushConsumerFactory (DataHandler dataHandler) //, String name_service_ior, java.applet.Applet applet)
+  public PushConsumerFactory (DataHandler dataHandler, String nameServiceIOR) //, java.applet.Applet applet)
     {
       try {      
 	dataHandler_ = dataHandler;
@@ -35,12 +35,15 @@ public class PushConsumerFactory {
 	boa_ = orb_.BOA_init ();
 	
 	// Get the Naming Service initial reference
-	 
-        //naming_service_object_ = orb_.string_to_object (name_service_ior);
+	
+	if (nameServiceIOR == null) {      
+	  NS_Resolve ns_resolve_ = new NS_Resolve ();
+     	  naming_service_object_ = ns_resolve_.resolve_name_service (orb_);
+	}
+	else {
+	  naming_service_object_ = orb_.string_to_object (nameServiceIOR);
+	}
 
-	NS_Resolve ns_resolve_ = new NS_Resolve ();
-     
-	naming_service_object_ = ns_resolve_.resolve_name_service (orb_);
       } 
       catch(org.omg.CORBA.SystemException e) {
 	System.err.println ("Client constructur: Failure");
