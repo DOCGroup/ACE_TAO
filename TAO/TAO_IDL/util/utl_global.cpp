@@ -146,18 +146,39 @@ IDL_GlobalData::IDL_GlobalData (void)
     }
   else
     {
+#if defined (ACE_GPERF)
+      const char ace_gperf[] = ACE_GPERF;
+      ACE_NEW (this->gperf_path_,
+               char [ACE_OS::strlen (ace_root) 
+                     + ACE_OS::strlen (ace_gperf) 
+                     + 1]);
+#  if defined (ACE_WIN32)
+      ACE_OS::sprintf (this->gperf_path_,
+                       "%s\\bin\\%s",
+                       ace_root, 
+                       ace_gperf);
+#  else /* Not ACE_WIN32 */
+      ACE_OS::sprintf (this->gperf_path_,
+                       "%s/bin/%s",
+                       ace_root,
+                       ace_gperf);
+#  endif /* ACE_WIN32 */
+#else /* Not ACE_GPERF */
       // Set it to the default value.
       ACE_NEW (this->gperf_path_,
-               char [ACE_OS::strlen (ace_root) + ACE_OS::strlen ("/bin/gperf") + 1]);
-#if defined (ACE_WIN32)
+               char [ACE_OS::strlen (ace_root) 
+                     + ACE_OS::strlen ("/bin/gperf") 
+                     + 1]);
+#  if defined (ACE_WIN32)
       ACE_OS::sprintf (this->gperf_path_,
                        "%s\\bin\\gperf",
                        ace_root);
-#else /* Not ACE_WIN32 */
+#  else /* Not ACE_WIN32 */
       ACE_OS::sprintf (this->gperf_path_,
                        "%s/bin/gperf",
                        ace_root);
-#endif /* ACE_WIN32 */
+#  endif /* ACE_WIN32 */
+#endif /* ACE_GPERF */
     }
 }
 
