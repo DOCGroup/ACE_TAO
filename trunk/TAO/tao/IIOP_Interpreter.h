@@ -125,7 +125,7 @@ public:
   // traversal.
 
   // = Static visitor methods.
-  
+
   // These methods manipulate CDR-encapsulated TypeCode parameter
   // lists, calculating the size and alignment of the data type being
   // described.  The TCKind value has always been removed from the CDR
@@ -187,40 +187,11 @@ public:
   // may specify a multidimensional array ... such arrays are treated
   // as nested single dimensional arrays.)
 
-  static CORBA::TypeCode::traverse_status
-  struct_traverse (CDR *stream,
-                   const void *value1,
-                   const void *value2,
-                   CORBA::TypeCode::traverse_status (_FAR *visit)
-                   (CORBA::TypeCode_ptr tc,
-                    const void *value1,
-                    const void *value2,
-                    void *context,
-                    CORBA::Environment &env),
-                   void *context,
-                   CORBA::Environment &env);
-  // Visit each of the elements of a structure.
-
   static CORBA::Boolean match_value (CORBA::TCKind kind,
                                      CDR *tc_stream,
                                      const void *value,
                                      CORBA::Environment &env);
   // Cast the discriminant values to the right type and compare them.
-
-  static CORBA::TypeCode::traverse_status
-  union_traverse (CDR *stream,
-                  const void *value1,
-                  const void *value2,
-                  CORBA::TypeCode::traverse_status (_FAR *visit)
-                  (CORBA::TypeCode_ptr tc,
-                   const void *value1,
-                   const void *value2,
-                   void *context,
-                   CORBA::Environment &env),
-                  void *context,
-                  CORBA::Environment &env);
-    // Visit the two elements of the union: the discrminant, and then
-    // any specific value as indicated by the discriminant of value1.
 
   static size_t
   calc_key_union_attributes (CDR *stream,

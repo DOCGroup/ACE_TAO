@@ -207,7 +207,9 @@ public:
     TAO_OPERATION_RETVAL_POST_DOCALL_CS,     // processing  of return type
                                              //   after do_static_call
     TAO_OPERATION_ARG_POST_DOCALL_CS,        // processing of arg after do_static_call
-    TAO_OPERATION_RETVAL_RETURN_CS,          // returning the return type variable
+    TAO_OPERATION_RETVAL_RETURN_CS,          // returning the return type
+                                             // variable
+    TAO_OPERATION_EXCEPTLIST_CS,             // generating the exception list
     TAO_OPERATION_RETVAL_DECL_SS,            // return type decl in skeleton
     TAO_OPERATION_ARG_DECL_SS,               // argument decl in skeleton
     TAO_OPERATION_RETVAL_DEMARSHAL_SS,       // passing return type variable

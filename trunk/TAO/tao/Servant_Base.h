@@ -62,11 +62,11 @@ protected:
   // results and out parameters (if any) or the exceptions thrown into
   // <request>.
 
-  virtual int _find (const CORBA::String &opname,
+  virtual int _find (const char *opname,
                      TAO_Skeleton &skelfunc);
   // Find an operation in the operation table.
 
-  virtual int _bind (const CORBA::String &opname,
+  virtual int _bind (const char *opname,
                      const TAO_Skeleton skel_ptr);
   // Register a CORBA IDL operation name.
 

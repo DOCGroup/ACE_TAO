@@ -179,45 +179,6 @@ public:
   };
   // these are used to indicate the status of marshaling
 
-  // = The following traverse function is unused in TAO.
-  typedef traverse_status (_FAR * VisitRoutine) (CORBA::TypeCode_ptr tc,
-                                                 const void *value1,
-                                                 const void *value2,
-                                                 void *context,
-                                                 CORBA::Environment &env);
-
-  traverse_status traverse (const void *value1,
-                            const void *value2,
-                            VisitRoutine visit,
-                            void *context,
-                            CORBA::Environment &env);
-  // This routine calls visit () on each component of one (or two)
-  // structurally equivalent data values.  "Components" are either
-  // primitive (long, string, ...) or constructed (struct, ...)  data
-  // elements.
-  //
-  // It will NOT descend into those nodes if they're constructed; it's
-  // the job of the visit () routine to do that as needed.
-  //
-  // "Context" can be used to hold state used by the visit () routine.
-  // To terminate traversal "early", visit () returns TRAVERSE_STOP.
-  //
-  // The "value1" and "value2" parameters are pointers to data values
-  // of the structure described by the TypeCode.  Using the normal
-  // size, alignment, and padding rules used by the compilers on a
-  // given platform, the visit () routine is called with pointers to
-  // subsidiary elements.
-  //
-  // As all this routine does is appropriate pointer adjustments, it
-  // any value at all can be passed in as "value1" or "value2".  You
-  // could ignore one value and examine a data structure; copy from
-  // one to the other; compare one to the other; and more.
-  //
-  // Normal usage is to have application code call its visit () routine
-  // directly, and have that decide whether to use the typecode
-  // interpereter's knowledge of data structure layout through mutual
-  // recursion.
-
   size_t size (CORBA::Environment &env);
   // returns the size. Used by the IIOP marshaling engine.
 

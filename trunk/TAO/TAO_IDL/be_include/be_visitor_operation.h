@@ -512,6 +512,33 @@ public:
 
 };
 
+// ******************************************************************************
+// Visitor for
+// ******************************************************************************
+
+class be_visitor_operation_exceptlist_cs : public be_visitor_decl
+{
+  //
+  // = TITLE
+  //   be_visitor_operaion_exceptlist_cs
+  //
+  // = DESCRIPTION
+  //   This is a visitor to generate operation exception list to be provided to
+  //   the do_static_call
+  //
+  //
+public:
+  be_visitor_operation_exceptlist_cs (be_visitor_context *ctx);
+  // constructor
+
+  ~be_visitor_operation_exceptlist_cs (void);
+  // destructor
+
+  int visit_operation (be_operation *node);
+  // visit the operation
+
+};
+
 // ************************************************************
 // generic operation visitor for docall, upcall, pre/post
 // ************************************************************

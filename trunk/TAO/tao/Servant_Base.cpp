@@ -44,14 +44,14 @@ TAO_ServantBase::_is_a (const char* logical_type_id,
 }
 
 int
-TAO_ServantBase::_find (const CORBA::String &opname,
+TAO_ServantBase::_find (const char *opname,
                         TAO_Skeleton& skelfunc)
 {
   return optable_->find (opname, skelfunc);
 }
 
 int
-TAO_ServantBase::_bind (const CORBA::String &opname,
+TAO_ServantBase::_bind (const char *opname,
                         const TAO_Skeleton skel_ptr)
 {
   return optable_->bind (opname, skel_ptr);
@@ -64,7 +64,7 @@ TAO_ServantBase::_dispatch (CORBA::ServerRequest &req,
 {
   // @@ (ASG) - we should check here if the call was for _non_existant, else
   // issue an error. For the time being we issue an error
-  CORBA::String opname = req.op_name ();
+  const char *opname = req.operation ();
   ACE_UNUSED_ARG (context);
 
   // Something really bad happened: the operation was not

@@ -261,21 +261,17 @@ TAO_Server_Connection_Handler::handle_request (const TAO_GIOP_RequestHeader &hdr
   TAO_POA *the_poa =
     TAO_ORB_Core_instance ()->root_poa ();
 
-  IIOP_ServerRequest svr_req (&request_body,
+  IIOP_ServerRequest svr_req (hdr,
+                              &request_body,
                               &response,
-                              hdr.request_id,
                               TAO_ORB_Core_instance ()->orb (),
                               the_poa);
-
-  // Why are we copying this when we can just pass in a handle to the
-  // hdr?
-  svr_req.opname_ = hdr.operation;
 
   the_poa->dispatch_servant (hdr.object_key,
                              svr_req,
                              0, // this is SunSoft IIOP residue
                              env);
-  svr_req.release ();
+
 #if 0
   // @@ (ASG) - this commented out code must remain here since the DSI will use
   // it. Please keep it here until I have figured out the best way out 03/22/98.

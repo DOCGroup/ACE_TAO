@@ -168,11 +168,11 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           << be_nl;
     }
 
-  *os << node->local_name () << " (";
+  *os << node->local_name () << " (" << be_idt_nl;
   if (node->unbounded ())
     {
       // unbounded seq takes this extra parameter
-      *os << "CORBA::ULong max, " << be_idt << be_idt_nl;
+      *os << "CORBA::ULong max, " << be_nl;
     }
   *os << "CORBA::ULong length, " << be_nl;
   // generate the base type for the buffer

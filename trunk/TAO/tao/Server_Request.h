@@ -15,13 +15,14 @@
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems, Inc. and Chris Cleeland.
-//
+//     Modifications by Aniruddha Gokhale based on CORBAv2.2 Feb 98
 // ============================================================================
 
 #if !defined (TAO_SERVER_REQUEST_H)
 #define TAO_SERVER_REQUEST_H
 
 class TAO_POA;
+class TAO_GIOP_RequestHeader;
 
 class TAO_Param_Data_Skel
 {
@@ -98,23 +99,28 @@ class TAO_Export CORBA_ServerRequest : public TAO_IUnknown
   //   This is not supposed to be IIOP-specific, or to expose quite so
   //   many implementation details, but right now does.
 public:
-  virtual void params (CORBA::NVList_ptr list,
-                       CORBA::Environment &env) = 0;
+  static CORBA_ServerRequest *_duplicate (CORBA_ServerRequest *req);
+  // the duplicate method for Pseudo Objects
+
+  static CORBA_ServerRequest *_nil (void);
+  // the standard _nil method on pseudo objects
+
+  virtual void arguments (CORBA::NVList_ptr &list,
+                          CORBA::Environment &env) = 0;
   // Implementation uses this to provide the ORB with the operation's
   // parameter list ... on return, their values are available; the
   // list fed in has typecodes and (perhap) memory assigned.
 
-  virtual void result (CORBA::Any_ptr value,
-                       CORBA::Environment &env) = 0;
+  virtual void set_result (const CORBA::Any &value,
+                           CORBA::Environment &env) = 0;
   // Implementation uses this to provide the operation result
   // ... illegal if exception() was called or params() was not called.
   //
   // XXX Implementation should be able to assume response has been
   // sent when this returns, and reclaim memory it allocated.
 
-  virtual void exception (CORBA::ExceptionType	type,
-                          CORBA::Any_ptr value,
-                          CORBA::Environment &env) = 0;
+  virtual void set_exception (const CORBA::Any &value,
+                              CORBA::Environment &env) = 0;
   // Implementation uses this to provide the exception value which is
   // the only result of this particular invocation.
   //
@@ -129,19 +135,31 @@ public:
   // NOTE: none of these report exceptions; unavailability of any of
   // this stuff is a catastrophic error since this is all part of the
   // basic CORBA Object Model.
-  virtual CORBA::Principal_ptr caller (void) = 0;
-  virtual CORBA::Object_ptr target (void) = 0;
-  virtual CORBA::String op_name (void) = 0;
-  virtual TAO_POA *oa (void) = 0;
-  virtual CORBA::ORB_ptr  orb (void) = 0;
 
-  // Extensions.
+  virtual const char *operation (void) const = 0;
+  // get the operation name
+
+  //  CORBA::Context_ptr ctx (void) = 0;
+  // return the context pointer
+
+  // = Extensions.
+
+  virtual TAO_POA *oa (void) = 0;
+  // get the Object Adapter
+
+  virtual CORBA::ORB_ptr  orb (void) = 0;
+  // get the underlying ORB
+
   virtual void demarshal (CORBA::Environment &env,
                           const TAO_Call_Data_Skel *info,
                           ...) = 0;
+  // demarshal incoming parameters
+
   virtual void marshal (CORBA::Environment &env,
                         const TAO_Call_Data_Skel *info,
                         ...) = 0;
+  // marshal outgoing parameters
+
   virtual void init_reply (CORBA::Environment &env) = 0;
   // Start a Reply message.
 
@@ -158,9 +176,9 @@ class TAO_Export IIOP_ServerRequest : public CORBA_ServerRequest
   //    Class representing an IIOP ServerRequest object.
 public:
   // = Initialization and termination methods.
-  IIOP_ServerRequest (CDR *req,
+  IIOP_ServerRequest (const TAO_GIOP_RequestHeader &hdr,
+                      CDR *req,
                       CDR *resp,
-                      CORBA::ULong reqid,
 		      CORBA::ORB_ptr the_orb,
 		      TAO_POA *the_poa);
   // Constructor
@@ -169,37 +187,41 @@ public:
   // Destructor.
 
   // = General ServerRequest operations
-  void params (CORBA::NVList_ptr list,
-               CORBA::Environment &env);
-
-  void result (CORBA::Any_ptr value,
-               CORBA::Environment &env);
-
-  void exception (CORBA::ExceptionType type,
-                  CORBA::Any_ptr value,
+  void arguments (CORBA::NVList_ptr &list,
                   CORBA::Environment &env);
+
+  void set_result (const CORBA::Any &value,
+                   CORBA::Environment &env);
+
+  void set_exception (const CORBA::Any &value,
+                      CORBA::Environment &env);
 
   // = Request attributes.
 
-  CORBA::String  op_name (void);
-  CORBA::Principal_ptr 	caller (void);
-  CORBA::Object_ptr  target (void);
+  const char *operation (void) const;
+  // return the operation name
+
+  //  CORBA::Context_ptr ctx (void);
+  // return the context pointer
+
+  // = TAO extensions
+
   CORBA::ORB_ptr  orb (void);
+  // return the underlying ORB
+
   TAO_POA *oa (void);
+  // retturn the Object Adapter
 
-  // = Stuff required for memory management.
-  ULONG  AddRef (void);
-  ULONG  Release (void);
-  TAO_HRESULT  QueryInterface (REFIID riid,
-                               void **ppv);
-
-  // @@ Please document me.
   virtual void demarshal (CORBA::Environment &env,
                           const TAO_Call_Data_Skel *info,
                           ...);
+  // demarshal incoming parameters
+
   virtual void marshal (CORBA::Environment &env,
                         const TAO_Call_Data_Skel *info,
                         ...);
+  // marshal outgoing parameters and return value
+
   virtual void init_reply (CORBA::Environment &env);
   // start a Reply message
 
@@ -209,36 +231,34 @@ public:
   virtual CDR &outgoing (void);
   // Retrieve the outgoing stream.
 
-  // private:
-  CORBA::String opname_;        
-  // Operation name.
-
-  CDR *incoming_;               
-  // Incoming stream.
-
-  CDR *outgoing_;               
-  // Outgoing stream.
-
-  CORBA::ULong reqid_;          
-  // request ID
-
-  CORBA::NVList_ptr params_;    
-  // Incoming parameters.
-
-  CORBA::Any_ptr retval_;       
-  // Return value.
-
-  CORBA::Any_ptr exception_;    
-  // Any exception which might be raised.
-
-  CORBA::ExceptionType ex_type_; 
-  // The type of <exception_>.
-
-  void release (void);
-  // Just drop the refcount, don't destroy the object; most of these
-  // are stack-allocated.
+  // = Stuff required for memory management and COM
+  ULONG  AddRef (void);
+  ULONG  Release (void);
+  TAO_HRESULT  QueryInterface (REFIID riid,
+                               void **ppv);
 
 private:
+  CORBA::String_var opname_;
+  // Operation name.
+
+  CDR *incoming_;
+  // Incoming stream.
+
+  CDR *outgoing_;
+  // Outgoing stream.
+
+  CORBA::ULong reqid_;
+  // request ID
+
+  CORBA::NVList_ptr params_;
+  // Incoming parameters.
+
+  CORBA::Any_ptr retval_;
+  // Return value.
+
+  CORBA::Any_ptr exception_;
+  // Any exception which might be raised.
+
   u_int refcount_;
   // Number of things hold references to here.
 
