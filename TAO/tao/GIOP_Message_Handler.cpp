@@ -275,7 +275,6 @@ TAO_GIOP_Message_Handler::is_message_ready (void)
 
       cout << "The length is " << len <<endl;
 
-      int retval = 0;
       if (len == this->message_state_.message_size)
 
         {
