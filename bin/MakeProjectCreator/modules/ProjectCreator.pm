@@ -1958,7 +1958,9 @@ sub check_features {
   my($self)     = shift;
   my($requires) = shift;
   my($avoids)   = shift;
+  my($info)     = shift;
   my($status)   = 1;
+  my($why)      = undef;
 
   if (defined $requires) {
     foreach my $require (split(/\s+/, $requires)) {
@@ -1966,6 +1968,7 @@ sub check_features {
 
       ## By default, if the feature is not listed, then it is enabled.
       if (defined $fval && !$fval) {
+        $why = "requires $require";
         $status = 0;
         last;
       }
@@ -1980,11 +1983,17 @@ sub check_features {
 
         ## By default, if the feature is not listed, then it is enabled.
         if (!defined $fval || $fval) {
+          $why = "avoids $avoid";
           $status = 0;
           last;
         }
       }
     }
+  }
+
+  if ($info && !$status) {
+    print "Skipping " . $self->get_assignment('project_name') .
+          " (" . $self->get_current_input() . "), it $why.\n";
   }
 
   return $status;
@@ -2137,7 +2146,8 @@ sub write_project {
   }
 
   if ($self->check_features($self->get_assignment('requires'),
-                            $self->get_assignment('avoids'))) {
+                            $self->get_assignment('avoids'),
+                            1)) {
     if ($self->need_to_write_project()) {
       ($status, $error) = $self->write_output_file($file_name);
     }
