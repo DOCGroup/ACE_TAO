@@ -60,7 +60,7 @@ class ACE_Managed_Object
   //     that it holds in calls to get_object ().
 {
 public:
-  static int get_object (u_int &id, TYPE *&object);
+  static int get_object (int &id, TYPE *&object);
   // Get the object identified by "id".  If "id" is 0, allocates a new
   // instance, and sets "id" to the new identifier for that instance.
   // Returns 0 on success.  On failure, returns -1 and sets errno to:
@@ -69,11 +69,11 @@ public:
   //   ENOSPC if no more table slots are available:  see the
   //      ACE_MAX_MANAGED_OBJECTS config variable.
 
-  static TYPE *get_object (u_int &id);
+  static TYPE *get_object (int id);
   // Get the object identified by "id".  Returns a pointer to the
-  // object, or 0 if any error was encountered.  Because no other
-  // error indication is provided, it should _only_ be used for
-  // accessing preallocated objects.
+  // object, or 0 if any error was encountered (and sets errno to
+  // ENOENT).  Because no other error indication is provided, it
+  // should _only_ be used for accessing preallocated objects.
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
