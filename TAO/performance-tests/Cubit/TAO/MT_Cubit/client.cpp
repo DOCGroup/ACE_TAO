@@ -1,18 +1,5 @@
 // $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests
-//
-// = FILENAME
-//    client.cpp
-//
-// = AUTHOR
-//    Andy Gokhale, Brian Mendel, Sumedh Mungee, and Sergio Flores-Gaitan
-//
-// ============================================================================
-
 #include "ace/Sched_Params.h"
 #include "server.h"
 #include "client.h"

@@ -10,7 +10,8 @@
 //    client.h
 //
 // = AUTHOR
-//    Andy Gokhale, Brian Mendel, Sumedh Mungee, and Sergio Flores-Gaitan
+//    Andy Gokhale, Brian Mendel, Sumedh Mungee, Sergio Flores-Gaitan
+//    and Nagarajan Surendran.
 //
 // ============================================================================
 
