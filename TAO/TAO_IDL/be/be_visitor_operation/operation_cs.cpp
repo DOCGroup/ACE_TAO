@@ -753,7 +753,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
     }
 
   *os << be_nl
-      << "TAO_GIOP_ReplyStatusType _invoke_status;" << be_nl
+      << "TAO_GIOP_ReplyStatusType _invoke_status = TAO_GIOP_NO_EXCEPTION;" << be_nl
       << "ACE_TRY_EX (_tao_INVOKE_FAILED)" << be_idt_nl
       << "{" << be_idt_nl;
 

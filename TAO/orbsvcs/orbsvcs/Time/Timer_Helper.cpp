@@ -34,7 +34,8 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
   // in synchronization.
 
   #if defined (ACE_LACKS_LONGLONG_T)
-    CORBA::ULongLong lowest_time (ACE_UINT64_LITERAL(0xFFFFFFFFFFFFFFFF));
+  // CORBA::ULongLong lowest_time (ACE_UINT64_LITERAL(0xFFFFFFFFFFFFFFFF));
+    CORBA::ULongLong lowest_time (0);
   #else
     CORBA::ULongLong lowest_time = ACE_UINT64_LITERAL(0xFFFFFFFFFFFFFFFF);
   #endif
