@@ -20,12 +20,13 @@ main (int argc, char *argv[])
 
   TAO_Notify_Service notify_service;
 
-  if (notify_service.init (argc, argv) == -1)
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  if (notify_service.init (argc, argv TAO_ENV_ARG_PARAMETER) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Failed to start the Notification Service.\n"),
                       1);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       notify_service.run (TAO_ENV_SINGLE_ARG_PARAMETER);
