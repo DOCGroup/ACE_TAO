@@ -365,10 +365,10 @@ typedef void (*TAO_GIOP_RequestHandler) (TAO_GIOP_RequestHeader &,
                                          CORBA::Environment &);
 class TAO_GIOP
   // = TITLE
-  // 
+  //   A namespace for GIOP-related operations.
   //
   // = DESCRIPTION
-  //   Only put static methods within this scope
+  //   Only put static methods within this scope.
 {
 public:
   // = Close a connection, first sending GIOP::CloseConnection
@@ -399,6 +399,11 @@ public:
   static void make_error (CDR &msg, ...);
   // Construct a message containing an error so that it can be sent as
   // a response to a request.
+
+private:
+  TAO_GIOP();
+  TAO_GIOP(TAO_GIOP&);
+  ~TAO_GIOP();
 };
 
 #endif /* TAO_GIOP_H */
