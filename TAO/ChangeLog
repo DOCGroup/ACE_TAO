@@ -14,7 +14,7 @@ Thu Aug  8 13:35:27 2002  Jeff Parsons <parsons@cs.wustl.edu>
         * tao/sequence.h:
 
           Made the release() method public as required by the spec.
-          Thanks to Tommy Andreason <tommy.andreasen@radiometer.dk>
+          Thanks to Tommy Andreasen <tommy.andreasen@radiometer.dk>
           for pointing out the oversight.
 
 Thu Aug  8 18:31:00 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
