@@ -1,10 +1,17 @@
+Fri Feb  6 09:35:13 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/rteventlogadmin.mpb:
+
+          Changed to inherit from dslogadmin and rtoldevent instead of
+          dseventlogadmin.
+
 Fri Feb  6 09:31:30 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* include/makeinclude/platform_sunos5_sunc++.GNU (CPPFLAGS): 
-	* include/makeinclude/platform_sunos5_g++.GNU (CPPFLAGS):
-	  
-	   Added -D_XOPEN_SOURCE -D_XOPEN_SOURCE_EXTENDED=1 to
-	  CPPFLAGS. This should fix the compile errors in Solaris builds.
+        * include/makeinclude/platform_sunos5_sunc++.GNU (CPPFLAGS):
+        * include/makeinclude/platform_sunos5_g++.GNU (CPPFLAGS):
+
+          Added -D_XOPEN_SOURCE -D_XOPEN_SOURCE_EXTENDED=1 to
+          CPPFLAGS. This should fix the compile errors in Solaris builds.
 
 Fri Feb  6 09:04:50 2004  Chad Elliott  <elliott_c@ociweb.com>
 
