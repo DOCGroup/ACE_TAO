@@ -1,3 +1,16 @@
+Mon May  5 16:37:26 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAOACE_Static.dsp:
+        * tao/TAO_Static.dsp:
+
+          Added the new projects below and updated dependencies.
+
+        * tao/TAO_IORInterceptor_Static.dsp:
+        * tao/TAO_ObjRefTemplate_Static.dsp:
+        * tao/TAO_Valuetype_Static.dsp:
+
+          New project building the corresponding static libraries.
+
 Mon May  5 16:17:49 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/RTPortableServer/Makefile:
