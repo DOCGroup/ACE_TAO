@@ -7,7 +7,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Object_KeyC.h"
 #include "tao/Tagged_Components.h"
-#include <algorithm>
 #include "../Utils/resolve_init.h"
 #include "../Utils/Safe_InputCDR.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
@@ -71,23 +70,11 @@ IOGR_Maker::make_iogr(const TAO_IOP::TAO_IOR_Manipulation::IORList& list
   return obj._retn();
 }
 
-
 void replace_key(char* ior, char* end_ior,
                 const TAO::ObjectKey& oldkey,
-                const TAO::ObjectKey& newkey)
-{
-  size_t keylen = oldkey.length();
-  ACE_ASSERT(keylen == newkey.length());
-
-  char* pos = ior;
-  const char* oldkey_begin = (const char*)oldkey.get_buffer();
-  const char* oldkey_end = oldkey_begin + keylen;
-
-  while ((pos = std::search(pos, end_ior,oldkey_begin, oldkey_end)) != end_ior) {
-    memcpy(pos, newkey.get_buffer(), keylen);
-    pos+= keylen;
-  }
-}
+                const TAO::ObjectKey& newkey);
+/// the definition of replace_key() is moved
+/// to replace_key.cpp.
 
 
 CORBA::Object_ptr
@@ -236,7 +223,7 @@ IOGR_Maker::set_ref_version(CORBA::ULong version)
 CORBA::ULong
 IOGR_Maker::increment_ref_version()
 {
-  ACE_DEBUG((LM_DEBUG, "new object_group_ref_version = %d\n", ft_tag_component_.object_group_ref_version+1));
+  ACE_DEBUG((LM_DEBUG, "new object_group_ref_version = %d\n", ft_tag_component_.            object_group_ref_version+1));
   return ++ft_tag_component_.object_group_ref_version;
 }
 
