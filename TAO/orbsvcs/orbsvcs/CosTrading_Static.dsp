@@ -173,12 +173,13 @@ SOURCE=.\CosTrading.idl
 
 !IF  "$(CFG)" == "CosTrading_Static - Win32 Static Release"
 
-# Begin Custom Build
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL on $(InputPath)
 InputPath=.\CosTrading.idl
 InputName=CosTrading
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Trading_Export -Wb,export_include=Trader/trading_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Trading_Export -Wb,export_include=Trader/trading_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -210,12 +211,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "CosTrading_Static - Win32 Static Debug"
 
-# Begin Custom Build
+# PROP Ignore_Default_Tool 1
+USERDEP__COSTR="..\..\..\bin\tao_idl_static.exe"	
+# Begin Custom Build - Invoking TAO_IDL on $(InputPath)
 InputPath=.\CosTrading.idl
 InputName=CosTrading
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Trading_Export -Wb,export_include=Trader/trading_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Trading_Export -Wb,export_include=Trader/trading_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -254,12 +257,13 @@ SOURCE=.\CosTradingDynamic.idl
 
 !IF  "$(CFG)" == "CosTrading_Static - Win32 Static Release"
 
-# Begin Custom Build
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL on $(InputPath)
 InputPath=.\CosTradingDynamic.idl
 InputName=CosTradingDynamic
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Trading_Export -Wb,export_include=Trader/trading_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Trading_Export -Wb,export_include=Trader/trading_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -291,12 +295,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "CosTrading_Static - Win32 Static Debug"
 
-# Begin Custom Build
+# PROP Ignore_Default_Tool 1
+USERDEP__COSTRA="..\..\..\bin\tao_idl_static.exe"	
+# Begin Custom Build - Invoking TAO_IDL on $(InputPath)
 InputPath=.\CosTradingDynamic.idl
 InputName=CosTradingDynamic
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Trading_Export -Wb,export_include=Trader/trading_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Trading_Export -Wb,export_include=Trader/trading_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -335,12 +341,13 @@ SOURCE=.\CosTradingRepos.idl
 
 !IF  "$(CFG)" == "CosTrading_Static - Win32 Static Release"
 
-# Begin Custom Build
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL on $(InputPath)
 InputPath=.\CosTradingRepos.idl
 InputName=CosTradingRepos
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Trading_Export -Wb,export_include=Trader/trading_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Trading_Export -Wb,export_include=Trader/trading_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -372,12 +379,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "CosTrading_Static - Win32 Static Debug"
 
-# Begin Custom Build
+# PROP Ignore_Default_Tool 1
+USERDEP__COSTRAD="..\..\..\bin\tao_idl_static.exe"	
+# Begin Custom Build - Invoking TAO_IDL on $(InputPath)
 InputPath=.\CosTradingRepos.idl
 InputName=CosTradingRepos
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Trading_Export -Wb,export_include=Trader/trading_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Trading_Export -Wb,export_include=Trader/trading_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

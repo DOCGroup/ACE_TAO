@@ -108,12 +108,13 @@ SOURCE=.\CosPropertyService.idl
 
 !IF  "$(CFG)" == "CosProperty_Static - Win32 Static Release"
 
-# Begin Custom Build
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL on $(InputPath)
 InputPath=.\CosPropertyService.idl
 InputName=CosPropertyService
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Property_Export -Wb,export_include=Property/property_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Property_Export -Wb,export_include=Property/property_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -145,12 +146,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "CosProperty_Static - Win32 Static Debug"
 
-# Begin Custom Build
+# PROP Ignore_Default_Tool 1
+USERDEP__COSPR="..\..\..\bin\tao_idl_static.exe"	
+# Begin Custom Build - Invoking TAO_IDL on $(InputPath)
 InputPath=.\CosPropertyService.idl
 InputName=CosPropertyService
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Property_Export -Wb,export_include=Property/property_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Property_Export -Wb,export_include=Property/property_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

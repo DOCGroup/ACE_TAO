@@ -115,12 +115,13 @@ SOURCE=.\RtecDefaultEventData.idl
 
 !IF  "$(CFG)" == "RTEvent_Static - Win32 Static Release"
 
-# Begin Custom Build
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL on $(InputPath)
 InputPath=.\RtecDefaultEventData.idl
 InputName=RtecDefaultEventData
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event\event_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event\event_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -152,12 +153,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "RTEvent_Static - Win32 Static Debug"
 
-# Begin Custom Build
+# PROP Ignore_Default_Tool 1
+USERDEP__RTECD="..\..\..\bin\tao_idl_static.exe"	
+# Begin Custom Build - Invoking TAO_IDL on $(InputPath)
 InputPath=.\RtecDefaultEventData.idl
 InputName=RtecDefaultEventData
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event\event_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event\event_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -196,12 +199,13 @@ SOURCE=.\RtecEventChannelAdmin.idl
 
 !IF  "$(CFG)" == "RTEvent_Static - Win32 Static Release"
 
-# Begin Custom Build
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL on $(InputPath)
 InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event\event_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event\event_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -233,12 +237,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "RTEvent_Static - Win32 Static Debug"
 
-# Begin Custom Build
+# PROP Ignore_Default_Tool 1
+USERDEP__RTECE="..\..\..\bin\tao_idl_static.exe"	
+# Begin Custom Build - Invoking TAO_IDL on $(InputPath)
 InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event\event_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event\event_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -277,12 +283,13 @@ SOURCE=.\RtecEventComm.idl
 
 !IF  "$(CFG)" == "RTEvent_Static - Win32 Static Release"
 
-# Begin Custom Build
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL on $(InputPath)
 InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event\event_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event\event_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -314,12 +321,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "RTEvent_Static - Win32 Static Debug"
 
-# Begin Custom Build
+# PROP Ignore_Default_Tool 1
+USERDEP__RTECEV="..\..\..\bin\tao_idl_static.exe"	
+# Begin Custom Build - Invoking TAO_IDL on $(InputPath)
 InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event\event_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event\event_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -358,12 +367,13 @@ SOURCE=.\RtecUDPAdmin.idl
 
 !IF  "$(CFG)" == "RTEvent_Static - Win32 Static Release"
 
-# Begin Custom Build
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL on $(InputPath)
 InputPath=.\RtecUDPAdmin.idl
 InputName=RtecUDPAdmin
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event\event_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl_static -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event\event_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -395,12 +405,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "RTEvent_Static - Win32 Static Debug"
 
-# Begin Custom Build
+# PROP Ignore_Default_Tool 1
+USERDEP__RTECU="..\..\..\bin\tao_idl_static.exe"	
+# Begin Custom Build - Invoking TAO_IDL on $(InputPath)
 InputPath=.\RtecUDPAdmin.idl
 InputName=RtecUDPAdmin
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event\event_export.h $(InputName).idl
+	..\..\..\bin\tao_idl_static -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event\event_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

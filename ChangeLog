@@ -1,3 +1,9 @@
+Tue Jun 13 09:47:25 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/msvc_auto_compile.pl:
+
+          Fixed some typos related to the static build core.
+
 Mon Jun 12 20:45:18 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/Process_Win32.pm:
