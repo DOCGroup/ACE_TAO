@@ -868,8 +868,7 @@ TAO_Marshal_WString::skip (CORBA::TypeCode_ptr,
                            TAO_InputCDR *stream,
                            CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::Boolean continue_skipping = 1;
-  CORBA::ULong len;
+  ACE_CDR::Boolean continue_skipping = 1;
 
   // On decode, omit the check against specified wstring bounds, and
   // cope with illegal "zero length" strings (all lengths on the wire
@@ -879,13 +878,9 @@ TAO_Marshal_WString::skip (CORBA::TypeCode_ptr,
   // don't generate messages that fail to comply with protocol specs,
   // but we will accept them when it's clear how to do so.
 
-  continue_skipping = stream->read_ulong (len);
+  // "zero length" wstrings are legal in GIOP 1.2.
 
-  if (len != 0)
-    while (continue_skipping != 0 && len--)
-      {
-        continue_skipping = stream->skip_wchar ();
-      }
+  continue_skipping = stream->skip_wstring ();
 
   if (continue_skipping == 1)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
