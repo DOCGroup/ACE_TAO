@@ -1,3 +1,9 @@
+Mon Mar  1 17:31:57 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/sfp.cpp: Added the flowProtocol:: class
+	specifier for frameHeader so that it compiles on win32. Thanks to
+	David Hooker <DHooker@uniview.net> for the fix.
+
 Mon Mar 01 17:19:04 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 0.3.8 released.
