@@ -4384,7 +4384,7 @@ dnl    int comparator (const void * d1, const void * d2)
 dnl instead of:
 dnl    int comparator (const dirent ** d1, const dirent ** d2)
 dnl
-dnl AC_CHECK_FUNC([scandir], [AC_DEFINE([ACE_HAS_SCANDIR])], [])
+dnl ACE_CHECK_HAS_FUNCS([scandir])
 
 ACE_CHECK_LACKS_FUNCS(seekdir telldir)
 
