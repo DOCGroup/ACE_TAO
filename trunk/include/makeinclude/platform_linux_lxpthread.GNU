@@ -35,8 +35,15 @@ ifndef PRELIB
   PRELIB = @true
 endif
 
-#### as appears to have a string limit of about 4096 characters.
-#### Suppressing the -g for a few files helps.  It really only
-#### needs to be suppressed on Alphas, so you can comment this line
-#### out if you're on an Intel platform.
-SUPPRESS_DASH_G = 1
+
+#### GNU gas has a string limit of 4096 characters.  On Alphas,
+#### builds will fail due to running over that limit.  There are
+#### at least two workarounds:
+#### 1) Change the limit to 8192 characters and rebuild gas.  See
+####    ACE-INSTALL.html for more information.
+#### 2) Don't use -g when compiling those files.
+#### If you're building on an Alpha and you haven't hacked and
+#### rebuilt gas, you might need to uncomment the following.
+#### ifeq ($(debug),1)
+####   SUPPRESS_DASH_G = 1
+#### fi # $debug
