@@ -1,33 +1,45 @@
+Sun Dec 31 09:23:09 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_tru64_cxx.GNU: added
+          support for Tru64 5.1 (DIGITAL_UNIX 0x510).
+
+        * ace/config-tru64.h: added ACE_LACKS_CUSERID with
+          DIGITAL_UNIX >= 0x510, because cuserid () is a macro
+          in Tru64 5.1.
+
+        Thanks to Carlos for tracking down this source of compilation
+        failure.
+
 Sat Dec 30 16:21:49 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Hash_Map_Manager_T.h:
-	* ace/Map_T.i: Fixed errors in g++ that were introduced while
-	  applying the patches.
+        * ace/Hash_Map_Manager_T.h:
+        * ace/Map_T.i: Fixed errors in g++ that were introduced while
+          applying the patches.
 
 Sat Dec 30 15:10:00 2000  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/RB_Tree.{cpp, h, i}:
           tests/RB_Tree_Test.cpp: Fixed a bug in RB_delete_fixup that
-	  occurs when the pointer to be fixed up is zero - solution is to
-	  pass in a pointer to its parent, and maintain the parent pointer
-	  and fixup pointer in tandem during the fixup function.  Also
-	  added a few functions to test the red-black invariant(s) at each
-	  node of the tree, and added an invariant test call after each
-	  bind and unbind in a new stress test in RB_Tree_Test.cpp. 
-	
+          occurs when the pointer to be fixed up is zero - solution is to
+          pass in a pointer to its parent, and maintain the parent pointer
+          and fixup pointer in tandem during the fixup function.  Also
+          added a few functions to test the red-black invariant(s) at each
+          node of the tree, and added an invariant test call after each
+          bind and unbind in a new stress test in RB_Tree_Test.cpp.
+
           Thanks to Klaus H. Wolf <hw@cyland.com> for pointing out the
-	  problem and for contributing the stress test (which in a
-	  slightly modified form is now part of the RB_Tree_Test.cpp code)
-	  that reproduced the problem. 
+          problem and for contributing the stress test (which in a
+          slightly modified form is now part of the RB_Tree_Test.cpp code)
+          that reproduced the problem.
 
 Sat Dec 30 11:12:08 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Hash_Map_Manager_T.h:
-	* ace/Map_T.i:
-	* ace/Message_Block_T.cpp: Added patches provided by J. Russell
-	  Noseworthy <rnosewor@objectsciences.com> for SPRO 5.1. The patch
-	  to confi-sunos-5.5.h has not been applaed as it breaks builds at
-	  WashU on SunCC 5.0.
+        * ace/Hash_Map_Manager_T.h:
+        * ace/Map_T.i:
+        * ace/Message_Block_T.cpp: Added patches provided by J. Russell
+          Noseworthy <rnosewor@objectsciences.com> for SPRO 5.1. The patch
+          to confi-sunos-5.5.h has not been applaed as it breaks builds at
+          WashU on SunCC 5.0.
 
 Fri Dec 29 17:08:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -38,16 +50,16 @@ Fri Dec 29 17:08:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Dec 29 16:53:22 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp (main),
-	* performance-tests/TTCP/C/new-ttcp.cpp (main),
-	* tests/Conn_Test.cpp: Incorrect use of %r, which caused 
-	  problems...  Thanks to Mike Curtis <mccurry@my-deja.com> for
- 	  pointing this out.	
-  
+        * performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp (main),
+        * performance-tests/TTCP/C/new-ttcp.cpp (main),
+        * tests/Conn_Test.cpp: Incorrect use of %r, which caused
+          problems...  Thanks to Mike Curtis <mccurry@my-deja.com> for
+          pointing this out.
+
 Fri Dec 29 14:21:01 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/MEM_SAP.cpp: Fixed incorrect ACE_RCSID identifier.  Thanks
-	  to Jerry Odenwelder <jerryo@atl.fundtech.com> for noticing this.
+        * ace/MEM_SAP.cpp: Fixed incorrect ACE_RCSID identifier.  Thanks
+          to Jerry Odenwelder <jerryo@atl.fundtech.com> for noticing this.
 
 Thu Dec 28 16:02:51 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -3413,19 +3425,19 @@ Tue Oct 17 00:21:41 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
         * examples/Service_Configurator/IPC-tests/server/Handle_Timeout.h,
           examples/Service_Configurator/IPC-tests/server/Handle_Timeout.i,
- 	  examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.h,
- 	  examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.i,
- 	  examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.h,
- 	  examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.i,
- 	  examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.h,
- 	  examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.i,
- 	  examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.h,
- 	  examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.i:
+          examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.h,
+          examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.i,
+          examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.h,
+          examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.i,
+          examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.h,
+          examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.i,
+          examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.h,
+          examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.i:
           Changed *::get_handle(), *::handle_input(), and
- 	  *::handle_close() to use ACE_HANDLE and ACE_INVALID_HANDLE
- 	  instead of int and -1.  Thanks to Mike Curtis
- 	  <mccurry@my-deja.com> for pointing this out.
-	
+          *::handle_close() to use ACE_HANDLE and ACE_INVALID_HANDLE
+          instead of int and -1.  Thanks to Mike Curtis
+          <mccurry@my-deja.com> for pointing this out.
+
 Mon Oct 16 14:05:13 2000  David L. Levine <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: removed spurious 3D characters from

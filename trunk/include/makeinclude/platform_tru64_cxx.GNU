@@ -40,8 +40,18 @@ ifeq (4.,$(findstring 4.,$(ACE_DU_VERSION)))
 else # ! 4.x
 ifeq (5.,$(findstring 5.,$(ACE_DU_VERSION)))
   include $(ACE_ROOT)/include/makeinclude/platform_osf1_4.0.GNU
-  CFLAGS += -DDIGITAL_UNIX=0x500
+
   SOFLAGS = -shared -use_ld_input $(ACELIB)
+
+  ifndef ACE_DU_SUBVERSION
+    ACE_DU_SUBVERSION := $(shell /usr/sbin/sizer -v)
+  endif # ! ACE_DU_SUBVERSION
+
+  ifeq (V5.1,$(findstring V5.1,$(ACE_DU_SUBVERSION)))
+    CFLAGS += -DDIGITAL_UNIX=0x510
+  else
+    CFLAGS += -DDIGITAL_UNIX=0x500
+  endif
 
 endif # 5.x
 endif # ! 4.x
