@@ -218,44 +218,44 @@ run_main (int, ACE_TCHAR *[])
 
   // test multiplication by double
   // test simple multiplication
-  tv1.set( 1, 1 );
-  tv2.set( 2, 2 );
+  tv1.set (1, 1);
+  tv2.set (2, 2);
   tv1 *= 2.0;
-  ACE_ASSERT( tv1.sec() == tv2.sec() && tv1.usec() == tv2.usec() );
-  tv1.set( 1, 1 );
-  tv2.set( -2, -2 );
+  ACE_ASSERT (tv1.sec () == tv2.sec () && tv1.usec () == tv2.usec ());
+  tv1.set (1, 1);
+  tv2.set (-2, -2);
   tv1 *= -2.0;
-  ACE_ASSERT( tv1.sec() == tv2.sec() && tv1.usec() == tv2.usec() );
+  ACE_ASSERT (tv1.sec () == tv2.sec () && tv1.usec () == tv2.usec ());
 
   // test usec shift
-  tv1.set( 1, 999999 );
-  tv2.set( 19, 999990 );
+  tv1.set (1, 999999);
+  tv2.set (19, 999990);
   tv1 *= 10.0;
-  ACE_ASSERT( tv1.sec() == tv2.sec() && tv1.usec() == tv2.usec() );
-  tv1.set( 1, 999999 );
-  tv2.set( -19, -999990 );
+  ACE_ASSERT ( tv1.sec () == tv2.sec () && tv1.usec () == tv2.usec ());
+  tv1.set (1, 999999);
+  tv2.set (-19, -999990);
   tv1 *= -10.0;
-  ACE_ASSERT( tv1.sec() == tv2.sec() && tv1.usec() == tv2.usec() );
+  ACE_ASSERT (tv1.sec () == tv2.sec () && tv1.usec () == tv2.usec ());
 
   // test results near limits
-  tv1.set( ( ACE_INT32_MAX >> 1 ) , 499999 );
-  tv2.set( -( ( ACE_INT32_MAX >> 1 ) << 1 ), -999998 );
+  tv1.set ((ACE_INT32_MAX >> 1), 499999);
+  tv2.set ((-(ACE_INT32_MAX >> 1) << 1), -999998);
   tv1 *= -2.0;
-  ACE_ASSERT( tv1.sec() == tv2.sec() && tv1.usec() == tv2.usec() );
-  tv1.set( ACE_INT32_MAX >> 1, 499999 );
-  tv2.set( ( ( ACE_INT32_MAX >> 1 ) << 1 ), 999998 );
+  ACE_ASSERT (tv1.sec () == tv2.sec () && tv1.usec () == tv2.usec ());
+  tv1.set (ACE_INT32_MAX >> 1, 499999);
+  tv2.set (((ACE_INT32_MAX >> 1) << 1), 999998);
   tv1 *= 2.0;
-  ACE_ASSERT( tv1.sec() == tv2.sec() && tv1.usec() == tv2.usec() );
+  ACE_ASSERT (tv1.sec () == tv2.sec () && tv1.usec () == tv2.usec ());
 
   // test saturated result
-  tv1.set( ACE_INT32_MAX - 1, 499999 );
-  tv2.set( ACE_INT32_MAX, 999999  );
+  tv1.set (ACE_INT32_MAX - 1, 499999);
+  tv2.set (ACE_INT32_MAX, 999999);
   tv1 *= ACE_INT32_MAX;
-  ACE_ASSERT( tv1.sec() == tv2.sec() && tv1.usec() == tv2.usec() );
-  tv1.set( ACE_INT32_MAX - 1, 499999 );
-  tv2.set( ACE_INT32_MIN, -999999  );
+  ACE_ASSERT (tv1.sec () == tv2.sec () && tv1.usec () == tv2.usec ());
+  tv1.set (ACE_INT32_MAX - 1, 499999);
+  tv2.set (ACE_INT32_MIN, -999999);
   tv1 *= ACE_INT32_MIN;
-  ACE_ASSERT( tv1.sec() == tv2.sec() && tv1.usec() == tv2.usec() );
+  ACE_ASSERT (tv1.sec () == tv2.sec () && tv1.usec () == tv2.usec ());
 
 #if defined (sun) && !defined (ACE_LACKS_LONGLONG_T)
   if (test_ace_u_longlong () != 0)
@@ -263,5 +263,6 @@ run_main (int, ACE_TCHAR *[])
 #endif /* sun && ! ACE_LACKS_LONGLONG_T */
 
   ACE_END_TEST;
+
   return ret;
 }

@@ -135,9 +135,9 @@ ACE_Time_Value::operator FILETIME () const
   file_time.dwHighDateTime = LL_100ns.hi();
 #else
   ULARGE_INTEGER _100ns;
- double  _100ns.QuadPart = (((DWORDLONG) this->tv_.tv_sec * (10000 * 1000) +
-                      this->tv_.tv_usec * 10) +
-                     ACE_Time_Value::FILETIME_to_timval_skew);
+ double _100ns.QuadPart = (((DWORDLONG) this->tv_.tv_sec * (10000 * 1000) +
+                            this->tv_.tv_usec * 10) +
+                           ACE_Time_Value::FILETIME_to_timval_skew);
 
   file_time.dwLowDateTime = _100ns.LowPart;
   file_time.dwHighDateTime = _100ns.HighPart;
@@ -171,36 +171,36 @@ ACE_Time_Value::normalize (void)
   if (this->tv_.tv_usec >= ACE_ONE_SECOND_IN_USECS)
     {
       /*! \todo This loop needs some optimization.
-      */
+       */
       do
-      {
-          this->tv_.tv_sec++;
+        {
+          ++this->tv_.tv_sec;
           this->tv_.tv_usec -= ACE_ONE_SECOND_IN_USECS;
-      }
+        }
       while (this->tv_.tv_usec >= ACE_ONE_SECOND_IN_USECS);
     }
   else if (this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS)
     {
       /*! \todo This loop needs some optimization.
-      */
+       */
       do
-      {
-          this->tv_.tv_sec--;
+        {
+          --this->tv_.tv_sec;
           this->tv_.tv_usec += ACE_ONE_SECOND_IN_USECS;
-      }
+        }
       while (this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS);
     }
 
   if (this->tv_.tv_sec >= 1 && this->tv_.tv_usec < 0)
     {
-      this->tv_.tv_sec--;
+      --this->tv_.tv_sec;
       this->tv_.tv_usec += ACE_ONE_SECOND_IN_USECS;
     }
 // tv_sec in qnxnto is unsigned
-#if !defined( __QNXNTO__)
+#if !defined ( __QNXNTO__)
   else if (this->tv_.tv_sec < 0 && this->tv_.tv_usec > 0)
     {
-      this->tv_.tv_sec++;
+      ++this->tv_.tv_sec;
       this->tv_.tv_usec -= ACE_ONE_SECOND_IN_USECS;
     }
 #endif /* __QNXNTO__  */
@@ -275,25 +275,35 @@ ACE_Countdown_Time::update (void)
 ACE_Time_Value &
 ACE_Time_Value::operator *= (double d)
 {
-    // double is long enough (16 digits) to not loose the accuracy
-    double time_total = ( this->sec()+
-        ( this->usec() * 1.0 ) / ACE_ONE_SECOND_IN_USECS ) * d;
-    // shall we saturate the result?
-    if ( time_total > ACE_INT32_MAX + 0.999999 )
-        time_total = ACE_INT32_MAX + 0.999999;
-    if ( time_total < ACE_INT32_MIN - 0.999999 )
-        time_total = ACE_INT32_MIN - 0.999999;
-    long  time_sec  = long( time_total );
-    time_total      -= time_sec;
-    time_total      *= ACE_ONE_SECOND_IN_USECS;
-    long  time_usec = long( time_total );
-    // round up the result to save the last usec
-    if ( ( time_usec > 0 )  && ( time_total - time_usec ) >= 0.5 )
-        ++time_usec;
-    else   if ( ( time_usec < 0 )  && ( time_total - time_usec ) <= -0.5 )
-        -- time_usec;
-    this->set( time_sec, time_usec );
-    this->normalize (); // protect against future changes in normalization
+  // double is long enough (16 digits) to not lose the accuracy.
+  double time_total =
+    (this->sec ()
+     + static_cast<double> (this->usec ()) / ACE_ONE_SECOND_IN_USECS) * d;
 
-    return *this;
+  // shall we saturate the result?
+  static const double max_int = ACE_INT32_MAX + 0.999999;
+  static const double min_int = ACE_INT32_MIN - 0.999999;
+
+  if (time_total > max_int)
+    time_total = max_int;
+  if (time_total < min_int)
+    time_total = min_int;
+
+  const long time_sec = static_cast<long> (time_total);
+
+  time_total -= time_sec;
+  time_total *= ACE_ONE_SECOND_IN_USECS;
+
+  long time_usec = static_cast<long> (time_total);
+
+  // round up the result to save the last usec
+  if (time_usec > 0 && (time_total - time_usec) >= 0.5)
+    ++time_usec;
+  else if (time_usec < 0 && (time_total - time_usec) <= -0.5)
+    --time_usec;
+
+  this->set (time_sec, time_usec);
+  this->normalize (); // protect against future changes in normalization
+
+  return *this;
 }

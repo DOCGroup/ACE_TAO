@@ -451,7 +451,7 @@ private:
    * for such a beast is that in some setting a few (fast) machines
    * can be serving hundreds of slow machines with the opposite byte
    * order, so it makes sense (as a load balancing device) to put the
-   * responsability in the writers.  THIS IS NOT A STANDARD IN CORBA,
+   * responsibility in the writers.  THIS IS NOT A STANDARD IN CORBA,
    * USE AT YOUR OWN RISK
    */
   bool do_byte_swap_;
