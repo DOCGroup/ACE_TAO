@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!DOCTYPE ECConfiguration SYSTEM "ecconfig.dtd">
+
+<ECConfiguration>
+    
+<!-- Define the events -->
+<Timeout name="Subtask1.1 Timeout" >
+  <Period>200</Period> <!-- in msec -->
+  <Phase>0</Phase> <!-- in msec -->
+</Timeout>
+  
+<Event name="Subtask1.1 Trigger" > <!-- name must be unique among Events -->
+  <Period>200</Period> <!-- in msec -->
+  <Criticality value="VERY_LOW" />
+  <Importance value="VERY_LOW" />
+  <WorstExecution>50</WorstExecution> <!-- in msec -->
+  <TypicalExecution>50</TypicalExecution> <!-- in msec -->
+</Event>
+
+<Event name="Subtask1.2 Trigger" >
+  <Period>200</Period> <!-- in msec -->
+  <Criticality value="VERY_LOW" />
+  <Importance value="VERY_LOW" />
+  <WorstExecution>50</WorstExecution> <!-- in msec -->
+  <TypicalExecution>50</TypicalExecution> <!-- in msec -->
+</Event>
+
+<!-- Configure the ECs -->
+<RemoteEventChannel name="Server" >
+  <IORFile>server.ior</IORFile>
+</RemoteEventChannel>
+
+<LocalEventChannel name="Client" >
+  <SchedulingStrategy type="EDF" enableRG="true" />
+  <Consumer name="Subtask1.1 Executor" >
+    <Subscriptions>
+      <EventName>Subtask1.1 Trigger</EventName>
+    </Subscriptions>
+    <Dependants>
+      <!-- no need for Supplier to be declared already -->
+      <SupplierName>Subtask1.2 Supplier</SupplierName>
+    </Dependants>
+  </Consumer>
+  <Supplier name="Subtask1.2 Supplier" >
+    <Publications>
+      <EventName>Subtask1.2 Trigger</EventName>
+    </Publications>
+    <Triggers>
+      <TimeoutName>Subtask1.1 Timeout</TimeoutName>
+    </Triggers>
+  </Supplier>
+</LocalEventChannel>
+
+<!-- Configure the driver -->
+<!-- there should only be one Driver -->
+<TestDriver>
+  <StartCondition type="DelayAfterConnect" master="yes" >
+    <Time>30000</Time> <!-- in msecs -->
+  </StartCondition>
+  <StopCondition type="Duration" >
+    <Value>300000</Value> <!-- duration in msecs -->
+  </StopCondition>
+</TestDriver>
+
+</ECConfiguration>
