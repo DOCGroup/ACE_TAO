@@ -40,6 +40,8 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release\DsLogAdmin"
 # PROP Target_Dir ""
+MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D ACE_OS_HAS_DLL=0 /D "_MBCS" /D "_LIB" /D "TAO_AS_STATIC_LIBS" /D "NDEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
 # SUBTRACT CPP /YX
@@ -64,6 +66,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug\DsLogAdmin"
 # PROP Target_Dir ""
+MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_MBCS" /D "_LIB" /D "TAO_AS_STATIC_LIBS" /D "_DEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
 # SUBTRACT CPP /YX
@@ -89,6 +93,10 @@ LIB32=link.exe -lib
 
 SOURCE=.\DsLogAdminS_T.cpp
 # PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogNotificationS_T.cpp
 # End Source File
 # End Group
 # Begin Group "IDL Files"
@@ -178,10 +186,91 @@ BuildCmds= \
 !ENDIF 
 
 # End Source File
+# Begin Source File
+
+SOURCE=.\DsLogNotification.idl
+
+!IF  "$(CFG)" == "DsLogAdmin_Static - Win32 Static Release"
+
+# Begin Custom Build - Invoking TAO_IDL on $(InputPath)
+InputPath=.\DsLogNotification.idl
+InputName=DsLogNotification
+
+BuildCmds= \
+	..\..\..\bin\Release\tao_idl_static -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Log_Export -Wb,export_include=Log\log_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "DsLogAdmin_Static - Win32 Static Debug"
+
+# Begin Custom Build - Invoking TAO_IDL on $(InputPath)
+InputPath=.\DsLogNotification.idl
+InputName=DsLogNotification
+
+BuildCmds= \
+	..\..\..\bin\tao_idl_static -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Log_Export -Wb,export_include=Log\log_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter "i"
+# PROP Default_Filter "i;inl"
 # Begin Source File
 
 SOURCE=.\DsLogAdminC.i
@@ -193,6 +282,18 @@ SOURCE=.\DsLogAdminS.i
 # Begin Source File
 
 SOURCE=.\DsLogAdminS_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogNotificationC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogNotificationS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogNotificationS_T.i
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -220,6 +321,18 @@ SOURCE=.\DsLogAdminS_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\DsLogNotificationC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogNotificationS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogNotificationS_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Log\Iterator_i.h
 # End Source File
 # Begin Source File
@@ -244,7 +357,15 @@ SOURCE=.\Log\LogMgr_i.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Log\LogNotification.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Log\LogRecordStore.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log\PersistStore.h
 # End Source File
 # End Group
 # Begin Group "Source Files"
@@ -268,6 +389,14 @@ SOURCE=.\DsLogAdminS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DsLogNotificationC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogNotificationS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Log\Iterator_i.cpp
 # End Source File
 # Begin Source File
@@ -288,7 +417,15 @@ SOURCE=.\Log\LogMgr_i.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Log\LogNotification.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Log\LogRecordStore.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log\PersistStore.cpp
 # End Source File
 # End Group
 # End Target
