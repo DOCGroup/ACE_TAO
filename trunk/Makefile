@@ -179,9 +179,9 @@ release: ACE-INSTALL
          chmod a+r ACE.tar.gz ACE-lib.tar.gz; \
          mv ACE.tar.gz ACE-lib.tar.gz ./ACE_wrappers/)
 
-releaseall: ACE-INSTALL
+releaseall: release
 	@cd TAO; make releaseall
-	@$(TIMESTAMP) (cd ..; \
+	@(cd ..; \
          find $(ALL_RELEASE_FILES) $(FILTER) | \
            cpio -o -H tar | gzip -9 > TAO.tar.gz; \
          chmod a+r TAO.tar.gz \
