@@ -256,7 +256,7 @@ be_generator::create_constant(AST_Expression::ExprType et,
 			      UTL_ScopedName *n,
 			      UTL_StrList *p)
 {
-  return (AST_Constant *) new be_constant(et, ev, n, p);
+  return (AST_Constant *) new be_constant (et, ev, n, p);
 }
 
 /*
@@ -265,7 +265,7 @@ be_generator::create_constant(AST_Expression::ExprType et,
 AST_Expression *
 be_generator::create_expr(UTL_ScopedName *n)
 {
-  return (AST_Expression *) new be_expr_val(n);
+  return (AST_Expression *) new be_expression (n);
 }
 
 /*
@@ -274,7 +274,7 @@ be_generator::create_expr(UTL_ScopedName *n)
 AST_Expression *
 be_generator::create_expr(AST_Expression *b, AST_Expression::ExprType t)
 {
-  return (AST_Expression *) new be_expr_val(b, t);
+  return (AST_Expression *) new be_expression (b, t);
 }
 
 /*
@@ -285,7 +285,7 @@ be_generator::create_expr(AST_Expression::ExprComb c,
 			  AST_Expression *v1,
 			  AST_Expression *v2)
 {
-  return (AST_Expression *) new be_expr_val(c, v1, v2);
+  return (AST_Expression *) new be_expression (c, v1, v2);
 }
 
 /*
@@ -294,7 +294,7 @@ be_generator::create_expr(AST_Expression::ExprComb c,
 AST_Expression *
 be_generator::create_expr(long l)
 {
-  return (AST_Expression *) new be_expr_val(l);
+  return (AST_Expression *) new be_expression (l);
 }
 
 /*
@@ -303,7 +303,7 @@ be_generator::create_expr(long l)
 AST_Expression *
 be_generator::create_expr(long l, AST_Expression::ExprType t)
 {
-  return (AST_Expression *) new be_expr_val(l, t);
+  return (AST_Expression *) new be_expression (l, t);
 }
 
 /*
@@ -312,16 +312,16 @@ be_generator::create_expr(long l, AST_Expression::ExprType t)
 AST_Expression *
 be_generator::create_expr(unsigned long l)
 {
-  return (AST_Expression *) new be_expr_val(l);
+  return (AST_Expression *) new be_expression(l);
 }
 
 /*
  * Create a BE_Expression node denoting a char * (encapsulated as a String)
  */
 AST_Expression *
-be_generator::create_expr(String *s)
+be_generator::create_expr (String *s)
 {
-  return (AST_Expression *) new be_expr_val(s);
+  return (AST_Expression *) new be_expression (s);
 }
 
 /*
@@ -330,16 +330,16 @@ be_generator::create_expr(String *s)
 AST_Expression *
 be_generator::create_expr(char c)
 {
-  return (AST_Expression *) new be_expr_val(c);
+  return (AST_Expression *) new be_expression (c);
 }
 
 /*
  * Create a BE_Expression node denoting a 64-bit floating point number
  */
 AST_Expression *
-be_generator::create_expr(double d)
+be_generator::create_expr (double d)
 {
-  return (AST_Expression *) new be_expr_val(d);
+  return (AST_Expression *) new be_expression (d);
 }
 
 /*
