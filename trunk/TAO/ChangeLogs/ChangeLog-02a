@@ -1,3 +1,12 @@
+Sun Feb 10 09:08:36 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/IORManipulation/IORTest.cpp:
+	* orbsvcs/performance-tests/EC_Latency/Client_Task.cpp:
+	* orbsvcs/performance-tests/EC_Scalability/Client_Task.cpp:
+	* orbsvcs/IFR_Service/IFR_Server.cpp: All of the above files
+	  needed an include of tao/Environment.h to get rid of compile
+	  errors in the TRU 64 build.
+
 Sat Feb  9 23:40:31 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/PICurrent/client.bor (OBJFILES):

@@ -7,6 +7,7 @@
  */
 
 #include "Client_Task.h"
+#include "tao/Environment.h"
 
 ACE_RCSID(EC_Scalability, Client_Task, "$Id$")
 
