@@ -6,13 +6,13 @@ ACE_RCSID (Basic,
 
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TLS_Client client; // Telecom Log Service Client
 
   ACE_TRY_NEW_ENV
     {
-      client.init (argc, argv//,
+      client.init (argc, argv
                    ACE_ENV_ARG_PARAMETER); //Init the Client
       ACE_TRY_CHECK;
 

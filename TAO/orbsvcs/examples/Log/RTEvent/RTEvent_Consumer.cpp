@@ -11,7 +11,7 @@ ACE_RCSID (RTEvent,
 #define EVENT_TLS_LOG_FACTORY_NAME "RTEventLogFactory"
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Consumer consumer;
 
@@ -91,7 +91,7 @@ Consumer::run (int argc, char* argv[])
       name[0].id = CORBA::string_dup (EVENT_TLS_LOG_FACTORY_NAME);
 
       CORBA::Object_var obj =
-        this->naming_context_->resolve (name//,
+        this->naming_context_->resolve (name
                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

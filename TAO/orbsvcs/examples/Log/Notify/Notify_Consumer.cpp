@@ -18,7 +18,7 @@ ACE_RCSID (Notify,
 #define EVENTS_TO_SEND 30
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Consumer consumer;
 

@@ -41,7 +41,7 @@ TLS_Client::init_ORB (int argc,
 {
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
-                                ""//,
+                                ""
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
@@ -50,7 +50,7 @@ void
 TLS_Client::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Object_var naming_obj =
-    this->orb_->resolve_initial_references (NAMING_SERVICE_NAME//,
+    this->orb_->resolve_initial_references (NAMING_SERVICE_NAME
                                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -71,12 +71,12 @@ TLS_Client::resolve_TLS_Basic_factory (ACE_ENV_SINGLE_ARG_DECL)
   name[0].id = CORBA::string_dup (BASIC_TLS_LOG_FACTORY_NAME);
 
   CORBA::Object_var obj =
-    this->naming_context_->resolve (name//,
+    this->naming_context_->resolve (name
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->basic_log_factory_ =
-    DsLogAdmin::BasicLogFactory::_narrow (obj.in ()//,
+    DsLogAdmin::BasicLogFactory::_narrow (obj.in ()
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
@@ -99,7 +99,7 @@ TLS_Client::run_tests (ACE_ENV_SINGLE_ARG_DECL)
   DsLogAdmin::BasicLog_var basic_log =
     this->basic_log_factory_->create (logfullaction,
                                       max_size,
-                                      logid//,
+                                      logid
                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -109,9 +109,6 @@ TLS_Client::run_tests (ACE_ENV_SINGLE_ARG_DECL)
   // Create some fake log events.
   DsLogAdmin::Anys any_seq (LOG_EVENT_COUNT);
   any_seq.length (LOG_EVENT_COUNT);
-
-  //DsLogAdmin::RecordIdList id_seq (LOG_EVENT_COUNT);
-  //id_seq.length (LOG_EVENT_COUNT);
 
   for (int i = 0; i < LOG_EVENT_COUNT; i++)
     {
