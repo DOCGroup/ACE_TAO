@@ -1,3 +1,8 @@
+Sat Jun 21 13:47:28 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+          Fixed typo.
+
 Sat Jun 21 12:05:42 UTC 2003  Johnny WIllemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-mingw.h:
