@@ -36,14 +36,14 @@ be_visitor_interface_ih::~be_visitor_interface_ih (void)
 int
 be_visitor_interface_ih::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  static char namebuf [NAMEBUFSIZE];
-
-
-  if (node->impl_hdr_gen () || node->imported ())
+  if (node->impl_hdr_gen () || node->imported () || node->is_abstract ())
     {
       return 0;
     }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+  static char namebuf [NAMEBUFSIZE];
+
 
   ACE_OS::memset (namebuf, 
                   '\0', 

@@ -36,15 +36,13 @@ be_visitor_interface_is::~be_visitor_interface_is (void)
 int
 be_visitor_interface_is::visit_interface (be_interface *node)
 {
-
-  this->ctx_->interface (node);
-
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  if (node->impl_skel_gen () || node->imported ())
+  if (node->impl_skel_gen () || node->imported () || node->is_abstract ())
     {
       return 0;
     }
+
+  this->ctx_->interface (node);
+  TAO_OutStream *os = this->ctx_->stream ();
 
   // Generate the skeleton class name.
 
