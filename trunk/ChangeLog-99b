@@ -28,6 +28,8 @@ Thu Feb 25 22:17:58 1999  David L. Levine  <levine@cs.wustl.edu>
           to ::taskSpawn ().  Thanks to Tad Jarosinski <tadj@qualcomm.com>
           for asking about spa ().
 
+        * ace/Managed_Object.h: fixed comments in description.
+
 Thu Feb 25 20:10:06 1999  Ossama Othman  <othman@cs.wustl.edu>
 
         * ace/Synch.h:
