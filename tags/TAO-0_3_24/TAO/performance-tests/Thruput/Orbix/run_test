@@ -1,0 +1,31 @@
+#!/bin/csh -f
+if ($#argv < 3) then
+	echo "Usage: sclt <Total Data Size> <Max msg size> <destination> <TitleOfThisTest> <seq type>"
+	exit 1
+endif
+#
+@ msize=1024
+@ limit= ($argv[2] * 1024)
+#echo $limit
+#echo $msize 
+echo "Iteration#" 1 ": client -S" $1 "-D -f m -s -t -l" $msize "-h" $3 "-x -L" $4 "-q" $5 -b 65536
+client -S $1 -D -f m -l $msize -h $3 -x -L $4 -q $5 -b 65536
+set flag=0
+while ($msize <= $limit)
+  if ($flag == 0) goto label
+	echo "Iteration#" 1 ": client -S" $1 "-D -f m -l" $msize "-h" $3 "-x -L" $4 "-q" $5 -b 65536
+	client -S $1 -D -f m -l $msize -h $3 -x -L $4 -q $5 -b 65536
+ label:
+  set flag=1
+  sleep 2
+  foreach i (2 3)
+	echo "Iteration#" $i ": client -S" $1 "-D -f m -s -t -l" $msize "-h" $3 "-x -L " $4 "-q" $5 -b 65536
+	client -S $1 -D -f m -l $msize -h $3 -x -L $4 -q $5 -b 65536
+  end
+	echo "---------------------------"
+	@ msize = ($msize * 2)
+end 
+
+echo " "
+echo "Done at:" 
+date
