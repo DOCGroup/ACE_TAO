@@ -1,3 +1,17 @@
+Tue Dec  4 06:59:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.cpp: 
+	* performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.h:
+	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.h:
+	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.cpp: 
+	   
+	  New tests for measuring the throughput of two different server
+	  concurrency architectures.  The idea is to make it simpler than
+	  what is already there and hence the tests. The old tests were a
+	  bit confusing and very complicated. The old tests have been
+	  retained. The tests are for getting some ball-park figures for
+	  RT_CORBA and for TAO in general.
+	
 Tue Dec  4 10:00:04 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * examples/Reactor/Multicast/client.cpp:

@@ -6,9 +6,9 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
-BIN     = leader_follower
+BIN     = leader_follower RT_CORBA_Leader_Follower
 
-FILES   = $(BIN)
+FILES   = $(BIN) 
 LSRC    = $(addsuffix .cpp,$(FILES))
 LOBJ    = $(addsuffix .o,$(FILES))
 CPPFLAGS += -I..
