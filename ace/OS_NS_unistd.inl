@@ -77,6 +77,24 @@ ACE_OS::alarm (u_int secs)
 }
 
 ACE_INLINE int
+ACE_OS::getpagesize (void)
+{
+  ACE_OS_TRACE ("ACE_OS::getpagesize");
+#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
+  SYSTEM_INFO sys_info;
+  ::GetSystemInfo (&sys_info);
+  return (int) sys_info.dwPageSize;
+#elif defined (_SC_PAGESIZE)
+  return (int) ::sysconf (_SC_PAGESIZE);
+#elif defined (ACE_HAS_GETPAGESIZE)
+  return ::getpagesize ();
+#else
+  // Use the default set in config.h
+  return ACE_PAGE_SIZE;
+#endif /* ACE_WIN32 */
+}
+
+ACE_INLINE int
 ACE_OS::allocation_granularity (void)
 {
 #if defined (ACE_WIN32)
@@ -544,24 +562,6 @@ ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
 }
 
 #endif /* !ACE_WIN32 */
-
-ACE_INLINE int
-ACE_OS::getpagesize (void)
-{
-  ACE_OS_TRACE ("ACE_OS::getpagesize");
-#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
-  SYSTEM_INFO sys_info;
-  ::GetSystemInfo (&sys_info);
-  return (int) sys_info.dwPageSize;
-#elif defined (_SC_PAGESIZE)
-  return (int) ::sysconf (_SC_PAGESIZE);
-#elif defined (ACE_HAS_GETPAGESIZE)
-  return ::getpagesize ();
-#else
-  // Use the default set in config.h
-  return ACE_PAGE_SIZE;
-#endif /* ACE_WIN32 */
-}
 
 ACE_INLINE pid_t
 ACE_OS::getpgid (pid_t pid)
