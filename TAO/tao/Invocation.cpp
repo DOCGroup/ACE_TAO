@@ -71,7 +71,8 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (STUB_Object *data,
                  TAO_ENCAP_BYTE_ORDER,
                  orb_core->output_cdr_buffer_allocator (),
                  orb_core->output_cdr_dblock_allocator ()),
-    orb_core_ (orb_core)
+    orb_core_ (orb_core),
+    transport_ (0)
 {
   // @@ TODO The comments here are scary, can someone please give me a
   // warm fuzzy feeling about this (coryan).
@@ -93,8 +94,8 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (STUB_Object *data,
 
 TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 {
-  if (this->data_->profile_in_use ()->transport () != 0)
-    this->data_->profile_in_use ()->transport ()->idle ();
+  if (this->transport_ != 0)
+    this->transport_->idle ();
 }
 
 // The public API involves creating an invocation, starting it, filling
@@ -140,10 +141,12 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
   // profile to use based on some policy or the current forwarding state.
   // We will use the returned profile
   // Note: data_->profile_in_use () == profile
-  TAO_Profile *profile = conn_reg->connect (this->data_, ACE_TRY_ENV);
+  this->profile_ = this->data_->profile_in_use ();
+
+  this->transport_ = conn_reg->connect (this->data_, ACE_TRY_ENV);
   ACE_CHECK;
 
-  const TAO_ObjectKey *key = &profile->object_key();
+  const TAO_ObjectKey *key = &this->profile_->object_key();
 
   ACE_TIMEPROBE (TAO_GIOP_INVOCATION_START_CONNECT);
 
@@ -292,27 +295,14 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
 
-  // Send Request, return on error or if we're done
-
-  TAO_Profile   *profile   = this->data_->profile_in_use ();
-  TAO_Transport *transport = profile->transport ();
-  return this->invoke_i (profile, transport, is_roundtrip, ACE_TRY_ENV);
-}
-
-TAO_GIOP_ReplyStatusType
-TAO_GIOP_Invocation::invoke_i (TAO_Profile *profile,
-                               TAO_Transport *transport,
-                               CORBA::Boolean is_roundtrip,
-                               CORBA::Environment &ACE_TRY_ENV)
-{
-  if (transport == 0 ||
-      transport->send_request (this->orb_core_,
-                               this->out_stream_,
-                               is_roundtrip) == -1)
+  if (this->transport_ == 0 ||
+      this->transport_->send_request (this->orb_core_,
+                                      this->out_stream_,
+                                      is_roundtrip) == -1)
     {
       // send_request () closed the connection; we just set the
       // handler to 0 here.
-      profile->reset_hint ();
+      this->profile_->reset_hint ();
 
       //
       // @@ highly desirable to know whether we wrote _any_ data; if
@@ -347,8 +337,8 @@ TAO_GIOP_Invocation::close_connection (void)
   // not just the connection.  Without reinitializing, we'd give
   // false error reports to applications.
 
-  this->data_->profile_in_use ()->transport ()->close_connection ();
-  this->data_->profile_in_use ()->reset_hint ();
+  this->transport_->close_connection ();
+  this->profile_->reset_hint ();
 
   // @@ Get rid of any forwarding profiles and reset
   // the profile list to point to the first profile! FRED
@@ -377,11 +367,10 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   // This object pointer will be now extracted.
 
   CORBA::Object_ptr object_ptr = 0;
-  TAO_Transport *transport = this->data_->profile_in_use ()->transport ();
 
   if ( (inp_stream >> object_ptr) == 0)
     {
-      transport->close_connection ();
+      this->transport_->close_connection ();
       ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO),
                         TAO_GIOP_SYSTEM_EXCEPTION);
     }
@@ -393,7 +382,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
 
   if (stubobj == 0)
     {
-      transport->close_connection ();
+      this->transport_->close_connection ();
       ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_NO),
                         TAO_GIOP_SYSTEM_EXCEPTION);
     }
@@ -437,12 +426,8 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
 
-  TAO_Profile   *profile   = this->data_->profile_in_use ();
-  TAO_Transport *transport = profile->transport ();
-
   TAO_GIOP_ReplyStatusType retval =
-    TAO_GIOP_Invocation::invoke_i (profile, transport,
-                                   1, ACE_TRY_ENV);
+    TAO_GIOP_Invocation::invoke (1, ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
   ACE_UNUSED_ARG (retval);
 
@@ -482,11 +467,11 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
   // (explicitly coded) handlers called.  We assume a POSIX.1c/C/C++
   // environment.
 
-  TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (transport,
+  TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (this->transport_,
                                                      this->inp_stream_,
                                                      this->orb_core_);
 
-  transport->resume_connection (this->orb_core_->reactor ());
+  this->transport_->resume_connection (this->orb_core_->reactor ());
   // suspend was called in TAO_Client_Connection_Handler::handle_input
 
   switch (m)
@@ -522,7 +507,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
     case TAO_GIOP::EndOfFile:
       // @@ This should only refer to "getting GIOP MessageError" message only.
-      transport->close_connection ();
+      this->transport_->close_connection ();
       ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE), TAO_GIOP_SYSTEM_EXCEPTION);
     }
 
@@ -557,7 +542,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
   this->inp_stream_ >> reply_ctx;
   if (!this->inp_stream_.good_bit ())
     {
-      transport->close_connection ();
+      this->transport_->close_connection ();
       ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), TAO_GIOP_SYSTEM_EXCEPTION);
     }
 
@@ -566,7 +551,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
       || !this->inp_stream_.read_ulong (reply_status)
       || reply_status > TAO_GIOP_LOCATION_FORWARD)
     {
-      transport->close_connection ();
+      this->transport_->close_connection ();
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) bad Response header\n"));
       ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE), TAO_GIOP_SYSTEM_EXCEPTION);
     }
@@ -609,7 +594,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
         {
           if (this->inp_stream_.read_string (buf) == 0)
             {
-              transport->close_connection ();
+              this->transport_->close_connection ();
               ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), TAO_GIOP_SYSTEM_EXCEPTION);
             }
         }
@@ -672,7 +657,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
                   }
                 ACE_CATCH (CORBA_SystemException, ex)
                   {
-                    transport->close_connection ();
+                    this->transport_->close_connection ();
                     ACE_RETHROW;
                   }
                 ACE_ENDTRY;
@@ -722,12 +707,8 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
 
-  TAO_Profile *profile = this->data_->profile_in_use ();
-  TAO_Transport *transport = profile->transport ();
-
   TAO_GIOP_ReplyStatusType retval =
-    TAO_GIOP_Invocation::invoke_i (profile, transport,
-                                   1, ACE_TRY_ENV);
+    TAO_GIOP_Invocation::invoke (1, ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
   ACE_UNUSED_ARG (retval);
 
@@ -767,12 +748,12 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
   // (explicitly coded) handlers called.  We assume a POSIX.1c/C/C++
   // environment.
 
-  TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (transport,
+  TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (this->transport_,
                                                      this->inp_stream_,
                                                      this->orb_core_);
 
   // suspend was called in TAO_Client_Connection_Handler::handle_input
-  transport->resume_connection (this->orb_core_->reactor ());
+  this->transport_->resume_connection (this->orb_core_->reactor ());
 
   switch (m)
     {
@@ -807,7 +788,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
 
     case TAO_GIOP::EndOfFile:
       // @@ This should only refer to "getting GIOP MessageError" message only.
-      transport->close_connection ();
+      this->transport_->close_connection ();
       ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE), TAO_GIOP_SYSTEM_EXCEPTION);
     }
 
@@ -842,7 +823,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
   this->inp_stream_ >> reply_ctx;
   if (!this->inp_stream_.good_bit ())
     {
-      transport->close_connection ();
+      this->transport_->close_connection ();
       ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), TAO_GIOP_SYSTEM_EXCEPTION);
     }
 
@@ -851,7 +832,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
       || !this->inp_stream_.read_ulong (reply_status)
       || reply_status > TAO_GIOP_LOCATION_FORWARD)
     {
-      transport->close_connection ();
+      this->transport_->close_connection ();
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) bad Response header\n"));
       ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE), TAO_GIOP_SYSTEM_EXCEPTION);
     }
@@ -894,7 +875,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
         {
           if (this->inp_stream_.read_string (buf) == 0)
             {
-              this->data_->profile_in_use ()->transport ()->close_connection ();
+              this->transport_->close_connection ();
               ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), TAO_GIOP_SYSTEM_EXCEPTION);
             }
         }
@@ -958,7 +939,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
                   }
                 ACE_CATCH (CORBA_SystemException, ex)
                   {
-                    this->data_->profile_in_use ()->transport ()->close_connection ();
+                    this->transport_->close_connection ();
                     ACE_RETHROW;
                   }
                 ACE_ENDTRY;
@@ -1003,26 +984,23 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 {
   // Send Request, return on error or if we're done
 
-  TAO_Profile *profile = this->data_->profile_in_use ();
-  TAO_Transport *transport = profile->transport ();
-
   // @@ This appears broken, the send_request returns -1
-  if (transport->send_request (this->orb_core_,
-                               this->out_stream_,
-                               1) == -1)
+  if (this->transport_->send_request (this->orb_core_,
+                                      this->out_stream_,
+                                      1) == -1)
     {
       // send_request () closed the connection; we just set the
       // handler to 0 here.
-      profile->reset_hint ();
+      this->profile_->reset_hint ();
       ACE_TRY_ENV.exception (new CORBA::TRANSIENT (CORBA::COMPLETED_MAYBE));
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }
 
-  TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (transport,
+  TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (this->transport_,
                                                      this->inp_stream_,
                                                      this->orb_core_);
 
-  transport->resume_connection (this->orb_core_->reactor ());
+  this->transport_->resume_connection (this->orb_core_->reactor ());
   // suspend was called in TAO_Client_Connection_Handler::handle_input
 
   switch (m)
@@ -1041,7 +1019,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
           || request_id != this->my_request_id_
           || !this->inp_stream_.read_ulong (locate_status))
         {
-          transport->close_connection ();
+          this->transport_->close_connection ();
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) bad Response header\n"));
           ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE), TAO_GIOP_SYSTEM_EXCEPTION);
@@ -1082,7 +1060,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 
     case TAO_GIOP::EndOfFile:
       // @@ This should only refer to "getting GIOP MessageError" message only.
-      transport->close_connection ();
+      this->transport_->close_connection ();
       ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE), TAO_GIOP_SYSTEM_EXCEPTION);
     }
 

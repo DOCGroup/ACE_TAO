@@ -302,9 +302,8 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
       TAO_POA *poa = 0;
       if (pfile->tag () == TAO_IOP_TAG_INTERNET_IOP)
         {
-          ACE_INET_Addr &addr =
-            ACE_dynamic_cast (ACE_INET_Addr &,
-                              pfile->object_addr());
+          const ACE_INET_Addr &addr =
+            ACE_dynamic_cast (TAO_IIOP_Profile*,pfile)->object_addr();
 
           poa = TAO_ORB_Core_instance ()->get_collocated_poa (addr);
         }

@@ -86,7 +86,7 @@ TAO_Connector_Registry::preconnect (const char *the_preconnections)
   return result;
 }
 
-TAO_Profile *
+TAO_Transport *
 TAO_Connector_Registry::connect (STUB_Object *&obj,
                                  CORBA::Environment &env)
 {
@@ -110,10 +110,7 @@ TAO_Connector_Registry::connect (STUB_Object *&obj,
     connector->connect (profile, env);
   TAO_CHECK_ENV_RETURN (env, 0);
 
-  if (transport == 0)
-    return 0;
-
-  return profile;
+  return transport;
 }
 
 TAO_IOP_Version::~TAO_IOP_Version (void)
