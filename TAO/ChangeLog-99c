@@ -1,3 +1,17 @@
+Thu Jul 29 22:48:54 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/MProfile/README:
+	* tests/MProfile/test_i.cpp:
+	* tests/MProfile/test_i.h:
+	* tests/MProfile/client.cpp:
+	* tests/MProfile/server.cpp:
+	* tests/MProfile/test.idl
+	* tests/MProfile/Makefile:
+	* tests/MProfile/client.dsp:
+	* tests/MProfile/server.dsp:
+	* tests/MProfile/MProfile.dsw: An example application that use IOR
+	  merging to demonstrate  FT aspects.
+
 Mon Jul 26 18:27:56 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/RTCP.{h,cpp}: 
