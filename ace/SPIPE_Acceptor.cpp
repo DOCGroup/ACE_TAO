@@ -115,13 +115,13 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
     return -1;
   else
     {
-      // Start the Connect (analogous to listen () for a socket).  Completion
-      // is noted by the event being signalled.  If a client connects
-      // before this call, the error status will be ERROR_PIPE_CONNECTED, in
-      // which case that fact is remembered via already_connected_ and noted
-      // when the user calls accept ().
-      // Else the error status should be ERROR_IO_PENDING and the OS will
-      // signal the event when it's done.
+      // Start the Connect (analogous to listen () for a socket).
+      // Completion is noted by the event being signalled.  If a
+      // client connects before this call, the error status will be
+      // ERROR_PIPE_CONNECTED, in which case that fact is remembered
+      // via already_connected_ and noted when the user calls accept
+      // ().  Else the error status should be ERROR_IO_PENDING and the
+      // OS will signal the event when it's done.
       this->already_connected_ = 0;
       this->set_handle (this->event_.handle ());
       this->overlapped_.hEvent = this->event_.handle ();
@@ -129,7 +129,6 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
 
       BOOL result = ::ConnectNamedPipe (this->pipe_handle_,
                                         &this->overlapped_);
-      ACE_ASSERT (result == FALSE);
       ACE_UNUSED_ARG (result);
 
       status = ::GetLastError ();

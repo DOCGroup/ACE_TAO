@@ -1,3 +1,9 @@
+Fri Mar 15 05:59:45 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/SPIPE_Acceptor.cpp: Removed the ACE_ASSERT (result == FALSE)
+	  macro call.  Thanks to Oleg <ua_fireball@yahoo.com> for
+ 	  reporting this.
+
 Fri Mar 15 00:16:06 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* include/makeinclude/platform_freebsd.GNU:
