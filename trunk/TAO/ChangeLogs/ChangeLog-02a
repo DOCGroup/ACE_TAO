@@ -1,3 +1,10 @@
+Tue Apr 10 09:06:15 2001  Ossama Othman  <ossama@uci.edu>
+
+	* examples/PluggableUDP/tests/Makefile:
+
+	  Somehow this Makefile was removed.  Installed a new one to
+	  correction Makefile recursion errors.
+
 Tue Apr 10 08:42:11 2001  Ossama Othman  <ossama@uci.edu>
 
 	* examples/PluggableUDP/DIOP/DIOP_Connector.h:
