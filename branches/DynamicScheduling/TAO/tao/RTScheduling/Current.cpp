@@ -2,8 +2,9 @@
 #include "Current.h"
 #include "tao/ORB_Core.h"
 #include "Distributable_Thread.h"
+#include "ace/Atomic_Op.h"
 
-
+ACE_Atomic_Op<ACE_Thread_Mutex, long> guid_counter;
 
 TAO_RTScheduler_Current::TAO_RTScheduler_Current (TAO_ORB_Core* orb)
 {
@@ -279,21 +280,23 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(const char * name,
   if (CORBA::is_nil (this->dt_.in ())) // Check if it is a new Scheduling Segmnet
     {
       //Generate GUID
-      //char buf [BUFSIZ];
-      //ACE_OS::itoa (ACE_OS::rand (), buf, 10);
+      this->guid_.length (sizeof(long));
 
-      int guid = ACE_OS::rand (); //Will be replaced by the ACE guid generator
-      
-      this->guid_.length (sizeof guid);
-	
+	long temp = ++guid_counter;
       ACE_OS::memcpy (this->guid_.get_buffer (),
-		      &guid,
-		      sizeof guid);
+		      &temp,
+		      sizeof(long));
 
+      int guid;
+      ACE_OS::memcpy (&guid,
+		      this->guid_.get_buffer (),
+		      this->guid_.length ());
+      
       ACE_DEBUG ((LM_DEBUG,
-		  "The Guid is %d\n",
-		  (const int*) this->guid_.get_buffer ()));
-
+		  "The Guid is %d %d\n",
+		  guid,
+		  guid_counter));
+      
       this->scheduler_->begin_new_scheduling_segment (this->guid_,
 						      name,
 						      sched_param,
@@ -410,7 +413,7 @@ TAO_RTScheduler_Current_i::end_scheduling_segment (const char * name
 	  ACE_CHECK;
 	}
 
-      if (this->previous_current_ == 0)
+    if (this->previous_current_ == 0)
 	{
 	  // Let the scheduler know that the DT is
 	  // terminating.
@@ -480,7 +483,7 @@ RTScheduling::Current::IdType *
 TAO_RTScheduler_Current_i::id (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-		return 0;
+  return &this->guid_;
 }
 
 
@@ -488,21 +491,44 @@ CORBA::Policy_ptr
 TAO_RTScheduler_Current_i::scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-		return 0;
+  return this->sched_param_;
 }
 
 CORBA::Policy_ptr 
 TAO_RTScheduler_Current_i::implicit_scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-		return 0;
+  return this->implicit_sched_param_;
 }
 
 RTScheduling::Current::NameList * 
 TAO_RTScheduler_Current_i::current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-		return 0;
+  RTScheduling::Current::NameList* name_list;
+  ACE_NEW_RETURN (name_list,
+		  RTScheduling::Current::NameList,
+		  0);
+
+  TAO_RTScheduler_Current_i* current = this;
+
+  int index = 0;
+  while (current != 0)
+    {
+      TAO_RTScheduler_Current_i* prev_current = current->previous_current_;
+      
+      name_list->length (index+1);
+      (*name_list) [index++] = current->name ();
+      current = prev_current;
+    }
+
+  return name_list;
+}
+
+const char*
+TAO_RTScheduler_Current_i::name (void)
+{
+  return this->name_;
 }
 
 void
@@ -554,7 +580,7 @@ TAO_RTScheduler_Current_i::delete_all_currents (void)
   
   while (current != 0)
     {
-      TAO_RTScheduler_Current_i* prev_current = this->previous_current_;
+      TAO_RTScheduler_Current_i* prev_current = current->previous_current_;
       current->cleanup_current ();
       current = prev_current;
     }

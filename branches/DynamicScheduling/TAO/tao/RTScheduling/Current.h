@@ -172,6 +172,8 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
 
   void delete_all_currents (void);
 
+  const char* name (void);
+
  private:
   RTScheduling::Scheduler_var scheduler_;
   TAO_ORB_Core* orb_;

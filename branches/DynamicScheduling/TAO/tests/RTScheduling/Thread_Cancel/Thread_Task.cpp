@@ -15,7 +15,7 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
   
   long flags = THR_NEW_LWP | THR_JOINABLE;
   if (this->ACE_Task <ACE_SYNCH>::activate (flags,
-					    2) == -1)
+					    4) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
 	ACE_ERROR_RETURN ((LM_ERROR,
@@ -35,7 +35,7 @@ Thread_Task::svc (void)
       CORBA::Policy_ptr implicit_sched_param = 0;
       
       
-      this->current_->begin_scheduling_segment (name,
+      this->current_->begin_scheduling_segment ("Chamber of Secrets",
 						sched_param,
 						implicit_sched_param
 						ACE_ENV_ARG_PARAMETER);
@@ -43,18 +43,29 @@ Thread_Task::svc (void)
   
 
       //Start - Nested Scheduling Segment
-      this->current_->begin_scheduling_segment (name,
+      this->current_->begin_scheduling_segment ("Potter",
 						sched_param,
 						implicit_sched_param
 						ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       
       //Start - Nested Scheduling Segment
-      this->current_->begin_scheduling_segment (name,
+      this->current_->begin_scheduling_segment ("Harry",
 						sched_param,
 						implicit_sched_param
 						ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+	  
+      RTScheduling::Current::NameList* name_list = this->current_->current_scheduling_segment_names (ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      for (int i = 0; i < name_list->length ();++i)
+	{
+	  ACE_DEBUG ((LM_DEBUG,
+		      "Scheduling Segment Name - %s\n",
+		      (*name_list) [i].in ()));
+	}
   
       ACE_OS::sleep (50);
 
@@ -62,7 +73,9 @@ Thread_Task::svc (void)
 					      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       //  End - Nested Scheduling Segment
-  
+
+      
+      
       this->current_->end_scheduling_segment (name
 					      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
