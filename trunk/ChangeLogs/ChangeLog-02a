@@ -1,3 +1,8 @@
+Wed Jul  5 14:04:50 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/SUN_Proactor: Added yet another handle_events() method to keep
+	  SunC++ from complaining!  Thanks to David for reporting this.
+
 Wed Jul 05 13:19:52 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.h: Don't typedef pid_t for ACE_PSOS_DIAB_PPC - it's defined
