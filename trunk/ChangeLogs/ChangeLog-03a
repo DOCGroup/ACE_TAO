@@ -1,3 +1,10 @@
+Sun May  7 19:50:21 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+
+          Undid Doug's change on "Wed May  3 18:07:16 2000".
+          The fix wasn't working in our SUNCC 5 builds.
+
 Sat May  6 17:49:01 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Log_Msg.h:
