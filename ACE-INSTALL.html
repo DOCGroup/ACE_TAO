@@ -926,17 +926,21 @@ card.  This is one method:<P>
       MS Loopback Adapter<P>
 </OL>
 
-<B>ALPHA CONFIGURATIONS</B>
+<B>NT ALPHA CONFIGURATIONS</B>
 
-<P>Many project files already contain Alpha NT configurations.  For those that
-do not, follow these steps to add them.</P>
+<P>Many project files already contain Alpha NT configurations, but others do
+not (requiring them to be added).  Also, since most of the development happens
+on x86, problems building ACE on Alpha NT can often be fixed by recreating the
+configurations from the x86 versions.</P>
+
+<P>Here are the steps to add an Alpha Configuration.</P>
 
 <OL>
   <LI>Load the project on the Alpha machine.
   <LI>Go to the Build menu and then Configurations.
   <LI>Select the project that you want to convert.
   <LI>Click on Add.
-  <LI>Select the x86 configuration to &quot;Copy settings from&qout;
+  <LI>Select the x86 configuration to &quot;Copy settings from&quot;
       (either Debug or Release versions).
   <LI>Prepend &quot;Alpha &quot; to the beginning of the name under
       &quot;Configuration&quot;.
@@ -952,6 +956,10 @@ do not, follow these steps to add them.</P>
       library is set to &quot;Multithreaded DLL&quot; or &quot;Debug Multithreaded
           DLL&quot;.
 </OL>
+
+<P><B>Note:</B> MSVC 6 has a bug where if a .dsp is converted from version 5 to 6 on
+x86, the Alpha configuration will be partially corrupted.  If this occurs, the 
+easiest way to fix it is as above, recreate it.</P>
 
 <HR>
 <H4><A NAME="vxworks">Building and Installing ACE on VxWorks</A></H4>
