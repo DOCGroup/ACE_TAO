@@ -51,6 +51,14 @@ Mon Sep 07 09:52:12 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_HAS_PTHREADS_STD instead of _POSIX_PTHREAD_SEMANTICS to
           select the three-arg ::readdir_r ().
 
+        * ace/OS.i,config-vxworks5.x.h (readdir_r,rewinddir,seekdir,telldir):
+          added support for ACE_LACKS_READDIR_R, ACE_LACKS_SEEKDIR, and
+          ACE_LACKS_TELLDIR.
+
+        * ace/OS.i (opendir): added const_cast to remove constness
+          from the argument, because VxWorks' header doesn't declare
+          it const.  This shouldn't cause a problem on other platforms.
+
 Mon Sep  7 01:02:58 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/ACE.i: Changed ACE_INLINE to ASYS_INLINE.
