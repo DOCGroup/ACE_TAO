@@ -422,7 +422,8 @@ void FT_TestReplica_i::store(long counter)
   FILE * f = ACE_OS::fopen("Persistent.dat", "w");
   if(f != 0)
   {
-    unsigned char buffer[sizeof(long)];
+    unsigned char* buffer = 0;
+    ACE_NEW (buffer, unsigned char [sizeof(long)]);
     storeLong(buffer, 0, counter);
     ACE_OS::fwrite(buffer, 1, sizeof(long), f);
     ACE_OS::fclose(f);
@@ -430,6 +431,8 @@ void FT_TestReplica_i::store(long counter)
     {
       std::cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << ": " << counter << std::endl;
     }
+    delete[] buffer;
+    buffer = 0;
   }
 }
 
