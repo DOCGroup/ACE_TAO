@@ -4,10 +4,10 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/tests/Simple/time
+//    TAO/tests/Simple/grid
 //
 // = FILENAME
-//    Time_Client_i.h
+//    Grid_Client_i.h
 //
 // = DESCRIPTION
 //    This class implements the  interface calls for RMI.
@@ -19,7 +19,7 @@
 // ============================================================================
 
 #ifndef GRID_CLIENT_I_H
-#define GRDI_CLIENT_I_H
+#define GRID_CLIENT_I_H
 
 #include "../Simple_util.h"
 #include "GridC.h"
@@ -44,7 +44,7 @@ public:
   // Execute the methods.
 
   virtual int parse_args (int argc, char**argv);
-
+  // Parses the command line arguments
 private:
   Client<Grid_Factory, Grid_Factory_var> client;
   // Instantiate the client object.
