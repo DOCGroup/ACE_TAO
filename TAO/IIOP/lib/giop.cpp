@@ -71,7 +71,8 @@
 #define	GIOP_HDR_LEN	12		// defined by GIOP 1.0 protocol
 
 
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
+// #ifdef	ACE_HAS_THREADS
 //
 // This lock covers the mutable info in all IIOP objref data,
 // namely the forwarded-to objref.  It must be held when a client
@@ -144,7 +145,7 @@ dump_msg (const char *label, const unsigned char *ptr, size_t len)
 CORBA_Boolean
 GIOP::send_message(CDR& stream, ACE_SOCK_Stream& peer)
 {
-  int h = peer.get_handle();
+  ACE_HANDLE h = peer.get_handle();
   CORBA_Boolean r = send_message(stream, h);
   peer.set_handle(h);
   return r;
@@ -261,7 +262,7 @@ close_message [GIOP_HDR_LEN] = {
 void
 GIOP::close_connection (ACE_SOCK_Stream& peer, void* unused)
 {
-  int h = peer.get_handle();
+  ACE_HANDLE h = peer.get_handle();
   close_connection(h, unused);
   peer.set_handle(h);
 }
@@ -312,7 +313,7 @@ send_error (ACE_HANDLE &fd)
 static inline void
 send_error(ACE_SOCK_Stream& peer)
 {
-  int h = peer.get_handle();
+  ACE_HANDLE h = peer.get_handle();
   send_error(h);
   peer.set_handle(h);
 }
@@ -339,7 +340,7 @@ read_buffer (
       retval = peer.recv(buf, len);
 
 #ifdef	DEBUG
-      dmsg_filter (6, "read %d bytes from connection: %d", retval, fd);
+      dmsg_filter (6, "read %d bytes from connection: %d", retval, peer.get_handle());
 #endif
       if (retval <= 0)			// EOF or error
 	return retval;
@@ -534,7 +535,9 @@ GIOP::Invocation::Invocation (
     do_rsvp			(is_roundtrip),
     stream			(&buffer [0], sizeof buffer)
 {
-#ifdef	ACE_HAS_THREADS
+
+#ifdef	_POSIX_THREADS  // Leave for NT until POSIX calls removed
+// #ifdef	ACE_HAS_THREADS 
     //
     // POSIX does not require this to be true, it's an implementation
     // assumption that will at some point be removed but is true on
@@ -667,7 +670,8 @@ GIOP::Invocation::start (
     assert (endpoint == 0);
     assert (_data != 0);
 
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
+// #ifdef	ACE_HAS_THREADS
     Critical	section (&fwd_info_lock);
 #endif	// ACE_HAS_THREADS
 
@@ -840,7 +844,8 @@ GIOP::Invocation::invoke (
 	// error reports to applications.
 	//
 	{
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
+// #ifdef	ACE_HAS_THREADS
 	    Critical	section (&fwd_info_lock);
 #endif	// ACE_HAS_THREADS
 
@@ -1083,7 +1088,8 @@ GIOP::Invocation::invoke (
 	    // be recorded here.  (This is just an optimization, and is
 	    // not related to correctness.)
 	    //
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
+// #ifdef	ACE_HAS_THREADS
 	    Critical	section (&fwd_info_lock);
 #endif	// ACE_HAS_THREADS
 
@@ -1118,7 +1124,12 @@ GIOP::Invocation::invoke (
 // In the typical case, the request and response buffers live on the
 // stack so that the heap never gets used.  These grow if needed.
 //
-int
+int GIOP::incoming_message(ACE_SOCK_Stream& peer,
+		                   ForwardFunc check_forward,
+			               RequestHandler handle_request,
+			               void* context,
+			               CORBA_Environment& env)
+/*int
 GIOP::incoming_message (
     ACE_SOCK_Stream&	peer,
     LocateStatusType	check_forward (
@@ -1136,6 +1147,7 @@ GIOP::incoming_message (
     void		*context,
     CORBA_Environment	&env
 )
+*/
 {
   int retval = 1;		// 1==success, 0==eof, -1==error
 
@@ -1212,7 +1224,7 @@ GIOP::incoming_message (
 	if (debug_level >= 3) {
 		dmsg_v ("%sRequest ID %#lx from FD %d",
 		    req.response_expected ? "" : "Oneway ",
-		    req.request_id, fd);
+		    req.request_id, peer.get_handle());
 		if (debug_level >= 4) {
 		    dmsg_opaque ("object key", req.object_key.buffer,
 				req.object_key.length);

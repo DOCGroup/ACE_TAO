@@ -12,6 +12,7 @@ copy connmgr.hh  ..\proto\include
 copy giop.hh     ..\proto\include
 copy iiopobj.hh  ..\proto\include
 copy iioporb.hh  ..\proto\include
+copy roa.hh      ..\proto\include
 copy tcpoa.hh    ..\proto\include
 copy xdr.hh      ..\proto\include
 

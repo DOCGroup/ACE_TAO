@@ -46,6 +46,7 @@ ROA_Handler::open(void*)
 	ACE_DEBUG ((LM_DEBUG,
 		    "(%P|%t) threaded connection from client %s\n",
 		    addr.get_host_name()));
+      return 0;
     }
   else
     {
