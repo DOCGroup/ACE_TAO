@@ -40,13 +40,30 @@ sub convert_slashes {
 }
 
 
+sub list_mpc_files {
+  my($self)  = shift;
+  my($hash)  = shift;
+  my(@files) = ();
+
+  foreach my $key (keys %$hash) {
+    push(@files, $self->reverse_relative($key), $self->list_mpc_files($$hash{$key}));
+  }
+
+  return @files;
+}
+
+
 sub fill_value {
   my($self)  = shift;
   my($name)  = shift;
   my($value) = undef;
   my($names) = $self->{'source_files'};
 
-  if ($name eq 'vpath') {
+  if ($name eq 'mpc_files') {
+    my(@mpc_files) = $self->list_mpc_files($self->get_inheritance_tree());
+    $value = \@mpc_files;
+  }
+  elsif ($name eq 'vpath') {
     my(%vpath) = ();
     foreach my $name (keys %$names) {
       my($comps) = $$names{$name};

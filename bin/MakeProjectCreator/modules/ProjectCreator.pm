@@ -45,6 +45,7 @@ my(%validNames) = ('exename'         => 1,
                    'after'           => 1,
                    'libs'            => 0,
                    'lit_libs'        => 0,
+                   'pure_libs'       => 0,
                    'pch_header'      => 1,
                    'pch_source'      => 1,
                    'dllout'          => 1,
@@ -1076,7 +1077,7 @@ sub process_duplicate_modification {
   ## either addition or subtraction, we are going to
   ## perform a little fix on the value to avoid multiple
   ## libraries and to try to insure the correct linking order
-  if ($name eq 'libs' || $name eq 'libpaths' || $name eq 'includes') {
+  if ($name eq 'libpaths' || $name eq 'includes' || $name =~ /libs$/) {
     my($nval) = $self->get_assignment($name, $assign);
     if (defined $nval) {
       my($parts) = $self->create_array($nval);

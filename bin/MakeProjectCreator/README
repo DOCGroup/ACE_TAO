@@ -113,6 +113,11 @@ macros          These values will be passed as macros to the compiler.
 libpaths	Specifies 1 or more locations to find libraries
 includes	Specifies 1 or more locations to find include files
 libs		Specifies 1 or more libraries to link into the exe or library
+lit_libs	Specifies 1 or more libraries to link into the exe or library.
+                If libraries receive a library decorator, then these will not.
+pure_libs	Specifies 1 or more libraries to link into the exe or library.
+                If libraries receive a library decorator, then these will not.
+                If libraries receive a file extension, then these will not.
 after           Specifies that this project must be built after 1 or more
                 project names listed.
 dynamicflags	Specifies preprocessor flags needed for dynamic libraries

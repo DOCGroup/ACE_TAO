@@ -1,3 +1,4 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
   <style>
@@ -48,6 +49,7 @@
   </script>
 </head>
 <body>
+<title><%project_name%></title>
 <h1><%project_name%></h1>
 
 <%foreach(inheritance_nodes)%>
@@ -78,6 +80,7 @@
 <tr><td>macros</td><td><%macros%></td></tr>
 <tr><td>pch_header</td><td><%pch_header%></td></tr>
 <tr><td>pch_source</td><td><%pch_source%></td></tr>
+<tr><td>pure_libs</td><td><%pure_libs%></td></tr>
 <tr><td>requires</td><td><%requires%></td></tr>
 <tr><td>sharedname</td><td><%sharedname%></td></tr>
 <tr><td>staticflags</td><td><%staticflags%></td></tr>
@@ -103,6 +106,10 @@
 <tr><td colspan="2">MPC Template Settings</td></tr>
 <tr><th>Name</th><th>Value</th></tr>
 </thead>
+<%comment("common to all mpt files")%>
+<%if(pch_defines)%>
+<tr><td>pch_defines</td><td><%pch_defines%></td></tr>
+<%endif%>
 <%foreach(configurations)%>
 <tr><td class="sub" colspan="2">Configuration: <%configuration%></td></tr>
 <%comment("borland, nmake, va4, em3, vc6, vc7 and vc71 mpt files")%>
@@ -148,10 +155,6 @@
 <%endif%>
 <%endfor%>
 <%endfor%>
-<%comment("common to all mpt files")%>
-<%if(pch_defines)%>
-<tr><td>pch_defines</td><td><%pch_defines%></td></tr>
-<%endif%>
 <%endif%>
 </tbody>
 </table>
