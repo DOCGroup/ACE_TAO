@@ -83,7 +83,12 @@ ACE_SSL_Accept_Handler::ssl_accept (void)
     case SSL_ERROR_SYSCALL:
       // On some platforms (e.g. MS Windows) OpenSSL does not
       // store the last error in errno so explicitly do so.
-      ACE_OS::set_errno_to_last_error ();
+      //
+      // Explicitly check for EWOULDBLOCK since it doesn't get
+      // converted to an SSL_ERROR_WANT_{READ,WRITE} on some
+      // platforms, such as AIX.
+      if (ACE_OS::set_errno_to_last_error () == EWOULDBLOCK)
+        return 0;
 
     default:
       ACE_SSL_Context::report_error ();
