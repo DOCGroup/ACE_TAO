@@ -31,7 +31,7 @@ CORBA_NamedValue::CORBA_NamedValue (void)
 }
 
 // return the name
-ACE_INLINE TAO_CONST char*
+ACE_INLINE const char*
 CORBA_NamedValue::name (void) const
 {
   return this->name_;
@@ -41,7 +41,7 @@ CORBA_NamedValue::name (void) const
 ACE_INLINE CORBA::Any_ptr
 CORBA_NamedValue::value (void) const
 {
-  return (const CORBA::Any_ptr)&this->any_;
+  return ACE_const_cast(CORBA::Any_ptr,&this->any_);
 }
 
 // return the flags
