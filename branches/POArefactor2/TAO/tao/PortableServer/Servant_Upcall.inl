@@ -83,12 +83,6 @@ namespace TAO
       return this->active_object_map_entry_;
     }
 
-    ACE_INLINE void
-    Servant_Upcall::using_servant_locator (void)
-    {
-      this->using_servant_locator_ = 1;
-    }
-
     ACE_INLINE CORBA::Short
     Servant_Upcall::priority (void) const
     {

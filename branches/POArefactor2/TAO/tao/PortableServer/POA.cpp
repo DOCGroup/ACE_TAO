@@ -218,7 +218,6 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
 
     adapter_activator_ (),
     servant_activator_ (),
-    servant_locator_ (),
     default_servant_ (),
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
@@ -386,8 +385,6 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
     this->adapter_activator_ = PortableServer::AdapterActivator::_nil ();
 
     this->servant_activator_ = PortableServer::ServantActivator::_nil ();
-
-    this->servant_locator_ = PortableServer::ServantLocator::_nil ();
 
     this->default_servant_ = 0;
 

@@ -799,8 +799,8 @@ namespace TAO
                             0);
         }
 
-      // Remember to invoke <postinvoke>
-      servant_upcall.using_servant_locator ();
+      // Remember to invoke <postinvoke> on the given locator
+      servant_upcall.servant_locator (servant_locator_.in());
 
       // Remember the cookie
       servant_upcall.locator_cookie (cookie);

@@ -38,9 +38,9 @@ namespace TAO
     #if (TAO_HAS_MINIMUM_POA == 0)
         cookie_ (0),
         operation_ (0),
+        servant_locator_ (),
     #endif /* TAO_HAS_MINIMUM_POA == 0 */
-        active_object_map_entry_ (0),
-        using_servant_locator_ (0)
+        active_object_map_entry_ (0)
     {
       TAO_Adapter *adapter = oc->poa_adapter ();
       TAO_Object_Adapter *object_adapter =
@@ -338,17 +338,17 @@ namespace TAO
     {
     #if (TAO_HAS_MINIMUM_POA == 0)
 
-      if (this->using_servant_locator_)
+      if (!CORBA::is_nil (this->servant_locator_.in ()))
         {
           ACE_DECLARE_NEW_CORBA_ENV;
           ACE_TRY
             {
-              this->poa_->servant_locator_->postinvoke (this->current_context_.object_id (),
-                                                        this->poa_,
-                                                        this->operation_,
-                                                        this->cookie_,
-                                                        this->servant_
-                                                        ACE_ENV_ARG_PARAMETER);
+              servant_locator_->postinvoke (this->current_context_.object_id (),
+                                            this->poa_,
+                                            this->operation_,
+                                            this->cookie_,
+                                            this->servant_
+                                            ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
           ACE_CATCHANY
@@ -359,6 +359,12 @@ namespace TAO
         }
 
     #endif /* TAO_HAS_MINIMUM_POA == 0 */
+    }
+
+    void
+    Servant_Upcall::servant_locator (PortableServer::ServantLocator_ptr servant_locator)
+    {
+      servant_locator_ = PortableServer::ServantLocator::_duplicate (servant_locator);
     }
 
     void

@@ -1,3 +1,16 @@
+Tue Oct 26 10:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp}:
+          Removed all ServantLocator stuff from the POA
+
+        * tao/PortableServer/Servant_Upcall.{h,inl,cpp}:
+        * tao/PortableServer/Request_Processing_Strategy.cpp:
+          Instead of storing a bool whether to call the servant locator, just
+          store the servant locator itself in the Servant_Upcall. That way we
+          also always use the same servant locator for the preinvoke and the
+          postinvoke. This is easier to handle then the int, but probably we
+          will move this later to the request processing strategy.
+
 Tue Oct 26 09:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{h,cpp}:

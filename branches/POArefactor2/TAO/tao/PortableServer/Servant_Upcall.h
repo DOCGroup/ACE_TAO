@@ -153,7 +153,7 @@ namespace TAO
       TAO_Active_Object_Map::Map_Entry *active_object_map_entry (void) const;
 
       /// We are using the servant locator for this upcall.
-      void using_servant_locator (void);
+      void servant_locator (PortableServer::ServantLocator_ptr servant_locator);
 
       /// Get the priority for the current upcall.
       CORBA::Short priority (void) const;
@@ -208,14 +208,13 @@ namespace TAO
       /// Operation name for this current.
       const char *operation_;
 
+      PortableServer::ServantLocator_var servant_locator_;
+
   #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
       /// Pointer to the entry in the TAO_Active_Object_Map corresponding
       /// to the servant for this request.
       TAO_Active_Object_Map::Map_Entry *active_object_map_entry_;
-
-      /// Are we using the servant locator?
-      int using_servant_locator_;
 
       /// Preinvoke data for the upcall.
       Pre_Invoke_State pre_invoke_state_;
