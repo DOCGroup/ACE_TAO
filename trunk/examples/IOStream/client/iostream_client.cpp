@@ -29,11 +29,9 @@ int main (int argc, char *argv[])
   cerr << f << " ";
   cerr << s2 << endl;
 #else
-  String s1;
-  server s1 >> i >> f;
+  server >> i >> f;
 
   cerr << "Server said:\n\t";
-  cerr << s1 << " ";
   cerr << i << " ";
   cerr << f << endl;
 #endif /* __GNUC__ */
