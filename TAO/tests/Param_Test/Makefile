@@ -58,7 +58,7 @@ client:	$(addprefix $(VDIR),$(PARAM_TEST_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 clean:
-	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
+	-/bin/rm -rf *.o $(BIN) obj.* core Templates.DB .make.state
 
 realclean: clean
 	-/bin/rm -rf param_testC.* param_testS.*
