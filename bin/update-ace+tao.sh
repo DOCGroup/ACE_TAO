@@ -30,10 +30,10 @@ echo Old software version tags: $old_ace_version $old_tao_version
 echo New software version tags: $ace_version $tao_version 
 
 # Conserve net bandwidth if no change was observed
-if [ $old_ace_version != $ace_version ]; then
+if [ $old_ace_version != $ace_version ] || [ x"$1"x = x"force"x ]; then
   cvs -q update -Pd -r $ace_version `make -s show_controlled_files`
 fi
-if [ $old_tao_version != $tao_version ]; then
+if [ $old_tao_version != $tao_version ] || [ x"$1"x = x"force"x ]; then
   cvs -q update -Pd -r $tao_version TAO
 fi
 
