@@ -1,7 +1,7 @@
 // $Id$
 
 // Test program for different methods of copying files.
-#if !defined(_WIN32) 
+#if !defined(_WIN32)
 
 #include "ace/OS.h"
 #include "ace/ACE.h"
@@ -33,7 +33,7 @@ static ACE_Profile_Timer profile_timer;
 
 // Explain usage and exit.
 
-static void 
+static void
 print_usage_and_die (void)
 {
   ACE_OS::fprintf (stderr, "usage: %s"
@@ -196,7 +196,7 @@ main (int argc, char *argv[])
                        "run_tests"),
                       -1);
 
-  if (ACE_OS::fclose (input_fp) == -1 
+  if (ACE_OS::fclose (input_fp) == -1
       || ACE_OS::fclose (output_fp) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%s\n",
@@ -205,8 +205,8 @@ main (int argc, char *argv[])
   cleanup ();
   return 0;
 }
-#else 
-int main(int ac, char* av[]) {
+#else
+int main(int, char*[]) {
   // not supported on win32
   return 0;
 }
