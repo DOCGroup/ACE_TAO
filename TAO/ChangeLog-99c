@@ -15,6 +15,7 @@ Fri Jun  4 00:32:04 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	* tao/Transport_Mux_Strategy.h:
 	* tao/Transport_Mux_Strategy.cpp:
 	* tao/TAO.dsp
+	* tao/TAO_Static.dsp
 
 	The Mux strategies are over the Transport objects. So naming them
 	as Transport_Mux is more appropriate than Request_Mux. 
