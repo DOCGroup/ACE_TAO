@@ -1,8 +1,8 @@
 #include "LB_CPU_Monitor.h"
 
-#ifdef sun
-#  include <sys/loadavg.h>
-#endif  /* sun */
+#if defined (ACE_HAS_SYS_LOADAVG_H)
+# include <sys/loadavg.h>
+#endif /* ACE_HAS_SYS_LOADAVG_H */
 
 
 ACE_RCSID (LoadBalancing,
@@ -130,7 +130,11 @@ TAO_LB_CPU_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
 
 # else
 
+#   if defined (ACE_HAS_SYS_LOADAVG_H)
   const int samples = ::getloadavg (loadavg, 1);
+#   else
+  const int samples = 0;
+#   endif /* ACE_HAS_SYS_LOADAVG_H */
 
 # endif  /* linux
             && ((__GLIBC__ == 2 && __GLIBC_MINOR__ < 2)
