@@ -1,3 +1,13 @@
+Mon Feb 17 09:25:08 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* ace/config-linux-lxpthreads.h: Bumped the Linux kernel version
+ 	number assigned to the symbol LINUX.  Also added conditional
+ 	defines for PTHREAD_{MAX,MIN}_PRIORITY when using Xavier Leroy's
+ 	LinuxThreads.
+
+	* ace/Thread_Priority.cpp: Added convert_to_os_priority() for Linux.
+	
+
 Mon Feb 17 00:07:47 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests: Added a new test, Reactor_Notify_Test.cpp, which tests
