@@ -28,8 +28,8 @@ class TimeoutClient
 {
 public:
   TimeoutClient (CORBA::ORB_ptr orb,
-                 Timeout_ptr timeoutObject,
-                 AMI_TimeoutHandler_ptr replyHandlerObject,
+                 TimeoutObj_ptr timeoutObject,
+                 AMI_TimeoutObjHandler_ptr replyHandlerObject,
                  TimeoutHandler_i *timeoutHandler_i,
                  unsigned long timeToWait);
 
@@ -61,10 +61,10 @@ private:
   CORBA::ORB_var orb_;
 
   // A CORBA object reference to the target object.
-  Timeout_var timeoutObject_;
+  TimeoutObj_var timeoutObject_;
 
   // A CORBA object reference to the reply handler
-  AMI_TimeoutHandler_var replyHandlerObject_;
+  AMI_TimeoutObjHandler_var replyHandlerObject_;
 
   // A pointer to the actual C++ reply handler implementation
   TimeoutHandler_i *timeoutHandler_i_;

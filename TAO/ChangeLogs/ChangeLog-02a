@@ -1,3 +1,19 @@
+Wed Mar 14 14:50:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* tests/AMI_Timeouts/AMI_Timeouts.dsw
+	* tests/AMI_Timeouts/client.cpp
+	* tests/AMI_Timeouts/server.cpp
+	* tests/AMI_Timeouts/timeout.idl
+	* tests/AMI_Timeouts/timeout_client.cpp
+	* tests/AMI_Timeouts/timeout_client.h
+	* tests/AMI_Timeouts/timeout_i.cpp
+	* tests/AMI_Timeouts/timeout_i.h:
+
+	  Renamed the "Timeout" IDL interface to "TimeoutObj" as it
+	  had a name clash with Messaging::Timeout due to a SunCC 4.2
+	  compiler bug.
+	  Thanks to Bala our Build Czar for reporting this.
+
 Wed Mar 14 13:01:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile:

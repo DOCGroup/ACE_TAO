@@ -14,13 +14,13 @@
 #include "timeout_client.h"
 
 TimeoutClient::TimeoutClient (CORBA::ORB_ptr orb,
-                              Timeout_ptr timeoutObject,
-                              AMI_TimeoutHandler_ptr replyHandlerObject,
+                              TimeoutObj_ptr timeoutObject,
+                              AMI_TimeoutObjHandler_ptr replyHandlerObject,
                               TimeoutHandler_i *timeoutHandler_i,
                               unsigned long timeToWait)
 : orb_(CORBA::ORB::_duplicate (orb))
-  , timeoutObject_(Timeout::_duplicate (timeoutObject))
-  , replyHandlerObject_(AMI_TimeoutHandler::_duplicate (replyHandlerObject))
+  , timeoutObject_(TimeoutObj::_duplicate (timeoutObject))
+  , replyHandlerObject_(AMI_TimeoutObjHandler::_duplicate (replyHandlerObject))
   , timeoutHandler_i_(timeoutHandler_i)
   , local_reply_excep_counter_ (0)
   , INVOKE_SYNCH(false)

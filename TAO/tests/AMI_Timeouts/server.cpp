@@ -85,7 +85,7 @@ main (int argc, char *argv[])
 
       Timeout_i timeout_i (orb.in ());
 
-      Timeout_var timeout_var =
+      TimeoutObj_var timeout_var =
         timeout_i._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -114,7 +114,7 @@ main (int argc, char *argv[])
       // Instantiate reply handler
       TimeoutHandler_i timeoutHandler_i;
 
-      AMI_TimeoutHandler_var timeoutHandler_var =
+      AMI_TimeoutObjHandler_var timeoutHandler_var =
         timeoutHandler_i._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
