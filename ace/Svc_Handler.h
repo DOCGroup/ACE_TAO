@@ -23,9 +23,6 @@ class ACE_Connection_Recycling_Strategy;
 #include "ace/Synch_Options.h"
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
-#include "ace/Synch_T.h"
-#include "ace/Dynamic.h"
-#include "ace/Singleton.h"
 
 template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
 class ACE_Svc_Handler : public ACE_Task<ACE_SYNCH_USE>
@@ -153,9 +150,6 @@ public:
 private:  
   ACE_PEER_STREAM peer_; 
   // Maintain connection with client.
-
-  typedef ACE_TSS_Singleton<ACE_Dynamic, ACE_SYNCH_NULL_MUTEX> DYNAMIC;
-  // Point of access to the ACE_Dynamic singleton.
 
   int dynamic_;
   // Have we been dynamically created?
