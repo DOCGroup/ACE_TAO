@@ -7,7 +7,8 @@ Sun Jul 19 22:21:17 1998  David L. Levine  <levine@cs.wustl.edu>
           List_Node.cpp (List_Node), Hash_Table.cpp (Hash_Table):
           reordered initializers to match declaration order.
 
-        * apps/gperf/src/Hash_Table.cpp (~Hash_Table): cast sizeof
+        * apps/gperf/src/Hash_Table.cpp (~Hash_Table),
+        * apps/gperf/src/Bool_Array.cpp (init): cast sizeof
           to int to avoid compiler (g++/Linux alpha) warning about
           mismatch with %d format specifier.
 
