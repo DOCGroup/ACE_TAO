@@ -1,3 +1,11 @@
+Fri Jul 27 11:07:26 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/OS.h:
+
+          After conversation with Steve Huston, I am reverting his change
+          pertaining to HPUX from "Tue Jul 10 18:15:39 2001  Steve Huston
+          <shuston@riverace.com>".
+
 Fri Jul 27 10:57:24 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/SOCK_Dgram_Bcast.cpp:
