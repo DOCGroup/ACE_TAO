@@ -1,3 +1,14 @@
+Thu Nov 13 04:26:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * include/makeinclude/rules.lib.GNU;
+          Added # -*- Makefile -*- at the top of the file so emacs will
+          highlight the syntax.
+
+        * include/makeinclude/rules.local.GNU:
+          Added explicit shared library with version extention to the
+          deinstall.local target so that it will get cleaned up even if it
+          is only defined as SHLIB_UNCHECKED.
+
 Thu Nov 13 03:32:14 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
