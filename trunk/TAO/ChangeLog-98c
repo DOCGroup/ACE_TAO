@@ -1,3 +1,8 @@
+Fri Jan 09 12:29:55 1998    <coryan@CHA-CHA>
+
+	* tao/default_server.cpp: 
+	  Fixed missing initialization for object_lookup_strategy_
+
 Fri Jan  9 12:17:02 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
 	* orbsvcs/Event_Service/Dispatching_Modules.cpp: 

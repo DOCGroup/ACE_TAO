@@ -64,6 +64,7 @@ TAO_Reactive_Strategy<SH>::activate_svc_handler (SH *svc_handler, void *arg)
 TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
   : thread_flags_ (0),
     object_table_size_ (TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE),
+    object_lookup_strategy_ (TAO_DYNAMIC_HASH),
     concurrency_strategy_ (0)
 {
 }
