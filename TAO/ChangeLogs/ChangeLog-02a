@@ -1,3 +1,12 @@
+Wed Jan 10 16:52:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * tao/Policy_Manager.cpp:
+
+          Fix, Version 3.  The intermediate variable was pointing
+          to a temporary, which disappeared by the next statement.
+          Found out the cast works on its own, so going with that
+          now instead.
+
 Wed Jan 10 15:57:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/Policy_Manager.cpp:
