@@ -81,6 +81,17 @@ be_union_branch::gen_label_value (TAO_OutStream *os, unsigned long index)
   if (dt == 0)
     return -1;
 
+  // Check if discriminator is a typedef of an integer. If so, and the
+  // first IF block in this function didn't catch it, then we
+  // are a constant of this type. We can't generate the constant's name,
+  // we must generate the underlying integer value for the
+  // label value.
+  if (dt->node_type () == AST_Decl::NT_pre_defined)
+    {
+      *os << e;
+      return 0;
+    }
+
   // Find where was the enum defined, if it was defined in the globa
   // scope, then it is easy to generate the enum values....
   be_scope* scope =
