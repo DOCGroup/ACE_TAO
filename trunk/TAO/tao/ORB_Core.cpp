@@ -1251,12 +1251,34 @@ TAO_ORB_Core::get_protocols_hooks (void)
   if (TAO_ORB_Core::protocols_hooks_ == 0)
     {
       // Look in the service repository for an instance.
-      this->protocols_hooks_ =
+      TAO_ORB_Core::protocols_hooks_ =
         ACE_Dynamic_Service<TAO_Protocols_Hooks>::instance
         (TAO_ORB_Core::protocols_hooks_name_);
+
+      if (TAO_ORB_Core::protocols_hooks_ == 0)
+        {
+          if (ACE_OS::strcmp (TAO_ORB_Core::protocols_hooks_name_,
+                              "RT_Protocols_Hooks") == 0)
+            {
+              // @@ Kind of hard-coding .. on the fact that this is
+              // needed only when RT_CORBA==1 and if it is not
+              // RT_CORBA==1, the second if loop will serve the
+              // purpose.
+              int r = ACE_Service_Config::process_directive
+                (
+                 "dynamic RT_Protocols_Hooks Service_Object * TAO:_make_TAO_RT_Protocols_Hooks ()"
+                 );
+
+              if (r != 0)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "Error Configuring RT_Protocols_Hooks\n"), 0);
+                }
+            }
+        }
     }
 
-  if (TAO_ORB_Core::protocols_hooks_name_ == 0)
+  if (TAO_ORB_Core::protocols_hooks_ == 0)
     {
       // Still don't have one, so let's allocate the default.  This
       // will throw an exception if it fails on exception-throwing
@@ -1266,10 +1288,10 @@ TAO_ORB_Core::get_protocols_hooks (void)
                       TAO_Protocols_Hooks,
                       0);
 
-      this->protocols_hooks_ = protocols_hooks;
+      TAO_ORB_Core::protocols_hooks_ = protocols_hooks;
     }
 
-  return this->protocols_hooks_;
+  return TAO_ORB_Core::protocols_hooks_;
 }
 
 void
