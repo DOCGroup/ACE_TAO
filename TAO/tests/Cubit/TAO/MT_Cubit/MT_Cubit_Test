@@ -3,19 +3,29 @@
 #
 # Spawns MT_Cubit server and client executables on a single host.
 
-usage="usage: $0 [-n <iterations>] <number of low priority threads>"
+usage="usage: $0 [-n <iterations>] [-t] <number of low priority threads>"
 
 user=`whoami`
-ior_file=/var/tmp/MT_Cubit-ior.${user}
-iterations=100
+ior_file=/tmp/MT_Cubit-ior.${user}
+iterations=1000
+tmp=
+
+if [ "$HOSTTYPE" = "lynxos" ]; then
+  server_exec_prefix='prio 30'
+  tmp='/tmp/'
+else
+  server_exec_prefix=
+fi
+client_exec_prefix=time
 
 
 ########
 ######## Interpret command arguments.
 ########
-while getopts ?n: arg; do
+while getopts ?n:t arg; do
   case $arg in
       n   ) iterations=$OPTARG ;;
+      t   ) tmp='/tmp/' ;;
       '?' ) echo $usage; exit 0 ;;
   esac
 done
@@ -37,7 +47,8 @@ trap 'kill -1 $server_pid; /bin/rm -f $ior_file' 0 1 2 15
 ########
 ######## Start server and save its pid.
 ########
-./server -s -f $ior_file -t $threads > server.log 2>&1 &
+$server_exec_prefix ./server -s -f $ior_file -t $threads > \
+   ${tmp}server.log 2>&1 &
 server_pid=$!
 
 sleep 4
@@ -47,4 +58,4 @@ sleep 4
 ######## Start client.
 ########
 ./client -s -f $ior_file -t $threads -n $iterations > \
-  client-${threads}.log 2>&1
+  ${tmp}client-${threads}.log 2>&1
