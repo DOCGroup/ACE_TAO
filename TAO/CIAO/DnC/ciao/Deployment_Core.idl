@@ -111,8 +111,6 @@ module Deployment
      *
      *   But any way seems I can forget about the configuration now. --Tao
      */
-    //long init (in ::Deployment::Properties properties)
-    //  raises (::Components::InvalidConfiguration);
 
     // @@ Initialize the nodeapplication, so it will know what components it will create
     // and home many of them are there. However the real create action will take place
@@ -143,7 +141,6 @@ module Deployment
     //Note:: We have to decide later how container/home/component could be configured.
     //       These properties could be passed in here or at higher level
     //       according to the plan(@ NodeApplicationManager/NodeApplication?)
-    //
     //
     //The reason that I want to expose these operation in IDL (can be called remotely)
     //is   1. for easy testing.

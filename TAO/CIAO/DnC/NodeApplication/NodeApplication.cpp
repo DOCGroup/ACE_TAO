@@ -166,7 +166,7 @@ main (int argc, char *argv[])
 
           CIAO::NodeApplication_Callback_var nam_callback
             = CIAO::NodeApplication_Callback::_narrow (obj.in ()
-							 ACE_ENV_ARG_PARAMETER);
+						       ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           Deployment::Properties_out properties_out (prop.out ());
@@ -186,7 +186,12 @@ main (int argc, char *argv[])
        * 2. call init locally on the servant of NodeApplication.
        */
 
-      nodeapp_servant->init ();
+      if (nodeapp_servant->init (ACE_ENV_SINGLE_ARG_PARAMETER))
+      {
+	ACE_DEBUG ((LM_DEBUG, "NodeApplication Failed on creating and\
+                               initializing the session container!"));
+	return 1;
+      }
       ACE_TRY_CHECK;
 
       CORBA::String_var str = orb->object_to_string (nodeapp_obj.in ()
@@ -215,5 +220,6 @@ main (int argc, char *argv[])
     }
   ACE_ENDTRY;
 
+  ACE_DEBUG ((LM_DEBUG, "This NodeApplication is quitting now!\n"));
   return 0;
 }

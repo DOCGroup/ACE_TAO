@@ -12,7 +12,9 @@ CIAO::NodeDaemon_Impl::NodeDaemon_Impl (const char *name,
     poa_ (PortableServer::POA::_duplicate (poa)),
     name_ (CORBA::string_dup (name)),
     nodeapp_location_ (CORBA::string_dup (nodapp_loc)),
+    manager_ (Deployment::NodeApplicationManager::_nil ()),
     spawn_delay_ (spawn_delay)
+
 {
 }
 
@@ -42,7 +44,6 @@ CIAO::NodeDaemon_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 }
 
-///////////////////////////////////////////////////////////////////////
 void
 CIAO::NodeDaemon_Impl::joinDomain (const Deployment::Domain & ,
                                    Deployment::TargetManager_ptr ,
@@ -69,8 +70,9 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
                    Deployment::PlanError))
 {
   // Return cached manager
-  if (CORBA::is_nil (this->manager_.in ()))
-
+  ACE_TRY
+  {
+    if (CORBA::is_nil (this->manager_.in ()))
     {
       //Implementation undefined.
       CIAO::NodeApplicationManager_Impl *app_mgr;
@@ -78,31 +80,51 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
                         CIAO::NodeApplicationManager_Impl (this->orb_.in (),
                                                            this->poa_.in ()),
                         CORBA::NO_MEMORY ());
+      ACE_TRY_CHECK;
 
-      CIAO::NodeApplicationManager_Impl * mgr =
-        app_mgr->init (this->nodeapp_location_,
-                       this->spawn_delay_,
-                       plan);
+      ACE_DEBUG ((LM_DEBUG, "NM:prepare before init on NAM\n"));
+      PortableServer::ServantBase_var safe (app_mgr);
+
+      //@@ Note: after the init call the servant ref count would become 2. so
+      //   we can leave the safeservant along and be dead. Also note that I added
+      //   the callback poa as the last augment. Letting the NDeamon to create the
+      //   poa and pass it to the NAM is a better idea, so I will come back here. --Tao
+      this->callback_poa_ =
+	app_mgr->init (this->nodeapp_location_,
+		       this->spawn_delay_,
+		       plan,
+		       this->callback_poa_.in ()
+		       ACE_ENV_ARG_PARAMETER);
+      ACE_DEBUG ((LM_DEBUG, "NM:prepare 3\n"));
+
+      ACE_TRY_CHECK;
 
       // Obtain the Object Reference
-      CORBA::Object_ptr obj =
-        this->poa_->servant_to_reference (mgr);
+      CORBA::Object_var obj =
+        this->poa_->servant_to_reference (app_mgr ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-      Deployment::NodeApplicationManager_ptr obj_ref =
-        Deployment::NodeApplicationManager::_narrow (obj);
+      this->manager_ =
+        Deployment::NodeApplicationManager::_narrow (obj. in ());
 
-      if (CORBA::is_nil (obj_ref))
+      if (CORBA::is_nil (this->manager_.in ()))
         {
           ACE_DEBUG ((LM_DEBUG, "preparePlan: NodeApplicationManager ref is nil\n"));
           ACE_THROW (Deployment::StartError ());
         }
-
-      // This manager takes ownership of the Object Reference
-      this->manager_ = obj_ref;
     }
-      // Duplicate this reference to the caller
-      return
+    // Duplicate this reference to the caller
+    return
       Deployment::NodeApplicationManager::_duplicate (this->manager_.in ());
+  }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+			 "NodeDaemon_Impl::preparePlan\t\n");
+    ACE_RE_THROW;
+  }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
 }
 
 

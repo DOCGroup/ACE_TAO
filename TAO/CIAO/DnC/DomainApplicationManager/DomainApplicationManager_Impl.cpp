@@ -15,7 +15,7 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
                                Deployment::TargetManager_ptr manager,
                                const Deployment::DeploymentPlan & plan,
-                               char * deployment_file)
+                               const char * deployment_file)
   ACE_THROW_SPEC ((CORBA::SystemException))
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
@@ -38,7 +38,8 @@ CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
 void
 CIAO::DomainApplicationManager_Impl::
 init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-  ACE_THROW_SPEC ((Deployment::ResourceNotAvailable,
+  ACE_THROW_SPEC ((CORBA::SystemException,
+		   Deployment::ResourceNotAvailable,
                    Deployment::StartError,
                    Deployment::PlanError))
 {
@@ -80,12 +81,14 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
           // corresponding child plan as input, which returns a
           // NodeApplicationManager object reference.
 
+	  ACE_DEBUG ((LM_DEBUG, "DAM:INIT calling prepareplan On NM?\n"));
+
           Deployment::NodeApplicationManager_var app_manager
 	      = Deployment::NodeApplicationManager::_narrow
-	      (
-	       my_node_manager->preparePlan (artifacts.child_plan_
-					     ACE_ENV_ARG_PARAMETER)
-	       );
+	      (my_node_manager->preparePlan (artifacts.child_plan_
+					     ACE_ENV_ARG_PARAMETER));
+	  ACE_DEBUG ((LM_DEBUG, "DAM:INIT 3\n"));
+
           ACE_TRY_CHECK;
 
           if (CORBA::is_nil (app_manager.in ()))
@@ -107,7 +110,7 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK;
 }
 
 int
@@ -244,7 +247,7 @@ split_plan (void)
       const ::Deployment::MonolithicDeploymentDescription & my_implementation =
         (this->plan_.implementation)[my_instance.implementationRef];
 
-      Deployment::DnC_Dump::dump (this->plan_);
+      //Deployment::DnC_Dump::dump (this->plan_);
       //Deployment::DnC_Dump::dump ( (this->plan_.implementation)[my_instance.implementationRef]);
 
       //ACE_DEBUG ((LM_DEBUG, "My implementation"));
@@ -429,11 +432,12 @@ finishLaunch (::CORBA::Boolean start
                                         entry) != 0)
             ACE_THROW (Deployment::StartError ()); // Should never happen!
 
+	  //@@ Note: Don't delete the below debugging helpers.
           // Dump the connections for debug purpose.
-	  ACE_DEBUG ((LM_DEBUG, "==============================================\n"));
-	  ACE_DEBUG ((LM_DEBUG, "dump incomming connection for child plan:%d\n", i));
-          dump_connections (this->all_connections_.in ());
-	  ACE_DEBUG ((LM_DEBUG, "==============================================\n"));
+	  //ACE_DEBUG ((LM_DEBUG, "==============================================\n"));
+	  //ACE_DEBUG ((LM_DEBUG, "dump incomming connection for child plan:%d\n", i));
+          //dump_connections (this->all_connections_.in ());
+	  //ACE_DEBUG ((LM_DEBUG, "==============================================\n"));
 
 
           // Get the Connections variable.
@@ -446,10 +450,10 @@ finishLaunch (::CORBA::Boolean start
 	  Deployment::Connections_var safe (my_connections);
 
           // Dump the connections for debug purpose.
-	  ACE_DEBUG ((LM_DEBUG, "==============================================\n"));
-	  ACE_DEBUG ((LM_DEBUG, "dump outgoingcomming connection for child plan:%d\n", i));
-          dump_connections (safe.in ());
-	  ACE_DEBUG ((LM_DEBUG, "==============================================\n"));
+	  //ACE_DEBUG ((LM_DEBUG, "==============================================\n"));
+	  //ACE_DEBUG ((LM_DEBUG, "dump outgoingcomming connection for child plan:%d\n", i));
+          //dump_connections (safe.in ());
+	  //ACE_DEBUG ((LM_DEBUG, "==============================================\n"));
 
           // Invoke finishLaunch() operation on NodeApplication.
           entry->int_id_.node_application_->finishLaunch (safe.in (),
@@ -620,12 +624,12 @@ get_outgoing_connections (const Deployment::DeploymentPlan &plan)
 
   // For each component instance in the child plan ...
   for (CORBA::ULong i = 0; i < plan.instance.length (); i++)
-    {
+  {
 
     // Get the component instance name
     if (!get_outgoing_connections_i (plan.instance[i].name.in (),
 				     connections.inout ()))
-      return 0;
+    return 0;
   }
   return connections._retn ();
 }
@@ -716,7 +720,6 @@ get_outgoing_connections_i (const char * instname,
       }
     }  /* close for loop on internal endpoints */
   }  /* close for loop on all connections in the plan */
-
   return 1;
 }
 

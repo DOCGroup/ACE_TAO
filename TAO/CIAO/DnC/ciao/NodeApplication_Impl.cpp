@@ -8,8 +8,6 @@
 
 CIAO::NodeApplication_Impl::~NodeApplication_Impl ()
 {
-  //@@ This should clean up all components and homes.
-
 }
 
 void
@@ -101,17 +99,16 @@ start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 		   Deployment::StartError))
 {
   //@@ Note: set_session_context will be called when the servant is created.
-
   Funct_Ptr functor = & Components::CCMObject::ciao_preactivate;
-  start_i (functor);
+  start_i (functor ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   functor = & Components::CCMObject::ciao_activate;
-  start_i (functor);
+  start_i (functor ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   functor = & Components::CCMObject::ciao_postactivate;
-  start_i (functor);
+  start_i (functor ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -129,7 +126,7 @@ start_i (Funct_Ptr functor
   {
     //@@ I don't know what if Components::InvalidConfiguration
     //   is thrown from here, so it's ignored for now.  --Tao
-    (((*iter).int_id_)->*functor) ();
+    (((*iter).int_id_)->*functor) (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
   }
 }
@@ -139,16 +136,18 @@ CIAO::NodeApplication_Impl::
 properties (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ::Deployment::Properties *retval;
+  Deployment::Properties * tmp;
 
-  ACE_NEW_THROW_EX (retval,
+  ACE_NEW_THROW_EX (tmp,
                     Deployment::Properties (),
                     CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
 
-  *retval = this->properties_;
+  Deployment::Properties_var retval (tmp);
 
-  return retval;
+  retval.inout() = this->properties_;
+
+  return retval._retn ();
 }
 
 ::Deployment::ComponentInfos *
@@ -161,11 +160,12 @@ install (const ::Deployment::ImplementationInfos & impl_infos
 		   ::Deployment::InstallationFailure,
 		   ::Components::InvalidConfiguration))
 {
-  Deployment::ComponentInfos_var retv;
-  ACE_NEW_THROW_EX (retv,
+  Deployment::ComponentInfos * tmp;
+  ACE_NEW_THROW_EX (tmp,
 		    Deployment::ComponentInfos,
 		    CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
+  Deployment::ComponentInfos_var retv (tmp);
 
   CORBA::ULong len = impl_infos.length ();
   retv->length (len);
@@ -175,7 +175,8 @@ install (const ::Deployment::ImplementationInfos & impl_infos
 
   for (CORBA::ULong i = 0; i < len; ++i)
   {
-    home = this->install_home (impl_infos[i]);
+    home = this->install_home (impl_infos[i]
+			       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     Components::KeylessCCMHome_var kh =
@@ -188,7 +189,7 @@ install (const ::Deployment::ImplementationInfos & impl_infos
 
     // @@ Note, here we are missing the CreateFailure.
     // Sometime I will come back to add exception rethrow.
-    comp = kh->create_component ();
+    comp = kh->create_component (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
     if (this->component_map_.bind (impl_infos[i].component_instance_name.in (),
@@ -214,13 +215,13 @@ install_home (const ::Deployment::ImplementationInfo & impl_info
 		   Deployment::InstallationFailure,
 		   Components::InvalidConfiguration))
 {
- Components::CCMHome_var newhome =
-   this->container_->ciao_install_home
-   (impl_info.executor_dll.in (),
-    impl_info.executor_entrypt.in (),
-    impl_info.servant_dll.in (),
-    impl_info.servant_entrypt.in ()
-    ACE_ENV_ARG_PARAMETER);
+  Components::CCMHome_var newhome =
+    this->container_->ciao_install_home
+    (impl_info.executor_dll.in (),
+     impl_info.executor_entrypt.in (),
+     impl_info.servant_dll.in (),
+     impl_info.servant_entrypt.in ()
+     ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (Components::CCMHome::_nil ());
   // We don't have to do _narrow since the generated code makes sure of
@@ -252,13 +253,13 @@ remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
   ACE_CHECK;
 
-
   // Even if above op failed we should still remove homes.
   for (;
        iter != this->home_map_.end ();
        ++iter)
   {
-    this->container_->ciao_uninstall_home ( (*iter).int_id_);
+    this->container_->ciao_uninstall_home ( (*iter).int_id_
+					    ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     CORBA::release ( (*iter).int_id_);
@@ -286,7 +287,8 @@ remove_home (const char * comp_ins_name
   // We should remove all components created by this home as well.
   // This is not implemented yet.
 
-  this->container_->ciao_uninstall_home (home);
+  this->container_->ciao_uninstall_home (home
+					 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // If the previous calls failed, what should we do here??
@@ -302,12 +304,13 @@ CIAO::NodeApplication_Impl::
 get_homes (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  Components::CCMHomes_var retval;
-
-  ACE_NEW_THROW_EX (retval.out (),
+  Components::CCMHomes * tmp;
+  ACE_NEW_THROW_EX (tmp,
                     Components::CCMHomes (),
                     CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
+
+  Components::CCMHomes_var retval (tmp);
 
   CORBA::ULong len = this->home_map_.current_size ();
   retval->length (len);
@@ -323,7 +326,6 @@ get_homes (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   }
 
   return retval._retn ();
-
 }
 
 CORBA::Long
@@ -341,6 +343,8 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   return this->container_->init (0,
 				 0
 				 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+  return 0;
 }
 
 ::CORBA::Object_ptr
@@ -427,6 +431,8 @@ remove_component (const char * comp_ins_name
   ACE_THROW (::Components::RemoveFailure ());
 }
 
+// The code below is obsolete now. However I want to keep it arround as a
+// start point for configurations.
 /*
 void
 CIAO::NodeApplication_Impl::
