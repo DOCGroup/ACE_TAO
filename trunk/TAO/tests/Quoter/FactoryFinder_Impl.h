@@ -3,7 +3,7 @@
 // ============================================================================
 //
 // = FILENAME
-//    FactoryFinderImpl.h
+//    FactoryFinder_Impl.h
 //
 // = DESCRIPTION
 //    Factory Finder Implementation for the Quoter example
