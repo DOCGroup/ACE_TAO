@@ -1,3 +1,12 @@
+Mon Dec 20 09:40:22 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+          Re-removed TAO/orbsvcs/tests/Notify/Lanes/run_test.pl and
+          TAO/orbsvcs/tests/Notify/ThreadPool/run_test.pl.  These tests
+          require more scheduling priorities than most of the nightly build
+          systems have access to as a regular user.
+
 Mon Dec 20 16:47:08 2004  Olli Savia  <ops@iki.fi>
 
         * ace/Mem_Map.h:
@@ -6,20 +15,20 @@ Mon Dec 20 16:47:08 2004  Olli Savia  <ops@iki.fi>
         * ace/OS_NS_sys_mman.inl:
           Replaced ACE_HAS_LYNX_BROKEN_MMAP with ACE_HAS_LYNXOS_BROKEN_MMAP
           to be more consistent in macro naming.
-        
+
         * ace/Time_Value.h:
-          Removed unnecessary LynxOS specific includes. 
+          Removed unnecessary LynxOS specific includes.
 
         * ace/config-lynxos.h:
           Added #define ACE_HAS_LYNXOS_BROKEN_MMAP.
-        
+
         * tests/Cached_Conn_Test.cpp:
         * tests/Priority_Reactor_Test.cpp:
         * tests/Reader_Writer_Test.cpp:
         * tests/TSS_Test.cpp:
         * tests/Thread_Mutex_Test.cpp:
           Removed unnecessary LynxOS specific code.
-          
+
         * tests/run_test.lst:
           Enabled/disabled some test for LynxOS.
 
