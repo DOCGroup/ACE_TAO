@@ -26,6 +26,29 @@
 
 ACE_RCSID(tests, OS_Test, "$Id$")
 
+// Test ACE_OS::access() to be sure a file's existence is correctly noted.
+int
+access_test (void)
+{
+  int test_status = 0;
+
+  int status = ACE_OS::access (ACE_TEXT ("missing_file.txt"), F_OK);
+  if (status == -1)
+    {
+      if (errno == ENOTSUP)
+        ACE_ERROR_RETURN ((LM_INFO,
+                           ACE_TEXT ("ACE_OS::access() not supported\n")),
+                          0);
+    }
+  else
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Missing file noted as present.\n")));
+      test_status = -1;
+    }
+
+  return test_status;
+}
+
 // Test ACE_OS::rename to be sure the files come and go as expected.
 int
 rename_test (void)
@@ -766,6 +789,9 @@ run_main (int, ACE_TCHAR *[])
 
   int status = 0;
   int result;
+
+  if ((result = access_test ()) != 0)
+    status = result;
 
   if ((result = rename_test ()) != 0)
     status = result;

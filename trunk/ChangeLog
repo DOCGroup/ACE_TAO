@@ -37,6 +37,16 @@ Wed Jun 16 15:02:39 2004  Steve Huston  <shuston@riverace.com>
 	* Kokyu/DSRT_Dispatcher_Impl_T.h: Added #includes to pick up needed
 	  declarations for ACE_SYNCH_RECURSIVE_MUTEX.
 
+Wed Jun 16 12:48:21 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_unistd.inl (access): Fixed the ACE_HAS_WINCE part of this
+	  to check the opened handle for 0,  not ACE_INVALID_HANDLE, since it's
+	  a FILE *, not a handle. With this fix, the WinCE part and the VxWorks
+	  part are the same, so they were combined.
+
+	* tests/OS_Test.cpp: Added access_test() to test ACE_OS::access()
+	  features.
+
 Wed Jun 16 07:18:44 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
