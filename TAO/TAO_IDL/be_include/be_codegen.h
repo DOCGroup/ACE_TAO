@@ -61,10 +61,10 @@ public:
     TAO_ARGUMENT_ARGLIST_OTHERS,             // ... in other cases
     TAO_ARGUMENT_PRE_DOCALL_CS,              // preprocessing of argument
                                              // variable before passing to
-                                             // do_call  (in stub)
-    TAO_ARGUMENT_DOCALL_CS,                  // passing argument variable to do_call
+                                             // do_static_call  (in stub)
+    TAO_ARGUMENT_DOCALL_CS,                  // passing argument variable to do_static_call
     TAO_ARGUMENT_POST_DOCALL_CS,             // postprocessing of argument
-                                             // variable after do_call
+                                             // variable after do_static_call
     TAO_ARGUMENT_VARDECL_SS,                 // declaration of argument
                                              // variable in skeleton (server)
     TAO_ARGUMENT_MARSHAL_SS,                 // passing argument node to the
@@ -200,13 +200,13 @@ public:
     TAO_OPERATION_RETVAL_PRE_DOCALL_CS,      // preprocessing for return value
                                              // before sending over the wire
     TAO_OPERATION_ARG_PRE_DOCALL_CS,         // preprocessing of arguments
-                                             //   before do_call
+                                             //   before do_static_call
     TAO_OPERATION_RETVAL_DOCALL_CS,          // passing the return type
-                                             //   variable to do_call
-    TAO_OPERATION_ARG_DOCALL_CS,             // passing argument variable to do_call
+                                             //   variable to do_static_call
+    TAO_OPERATION_ARG_DOCALL_CS,             // passing argument variable to do_static_call
     TAO_OPERATION_RETVAL_POST_DOCALL_CS,     // processing  of return type
-                                             //   after do_call
-    TAO_OPERATION_ARG_POST_DOCALL_CS,        // processing of arg after do_call
+                                             //   after do_static_call
+    TAO_OPERATION_ARG_POST_DOCALL_CS,        // processing of arg after do_static_call
     TAO_OPERATION_RETVAL_RETURN_CS,          // returning the return type variable
     TAO_OPERATION_RETVAL_DECL_SS,            // return type decl in skeleton
     TAO_OPERATION_ARG_DECL_SS,               // argument decl in skeleton
