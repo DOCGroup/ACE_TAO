@@ -20,12 +20,8 @@
 // by the server.
 class Basic;
 
-// @@ Jai, the class is called LB_Basic_Test yet the filename is
-//    LB_server.*.  Can you please correct the names so that they
-//    match.
-
 /**
- * @class LB_Basic_Test
+ * @class LB_server
  *
  * @brief Encapsulate the test in class.
  *
@@ -35,12 +31,12 @@ class Basic;
  * Clients then invoke the "servant operations" on the LoadManager
  * itself.  At this point the Load Balancing cycle starts.
  */
-class LB_Basic_Test
+class LB_server
 {
 public:
 
   /// Constructor
-  LB_Basic_Test (int argc, char **argv);
+  LB_server (int argc, char **argv);
 
   /// destroys LoadManager, ORB and POA.
   int destroy (void);
