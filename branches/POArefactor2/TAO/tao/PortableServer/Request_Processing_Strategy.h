@@ -104,14 +104,6 @@ namespace TAO
                       ACE_ENV_ARG_DECL) = 0;
 
       virtual
-      PortableServer::ObjectId *
-      servant_to_id (PortableServer::Servant servant
-                     ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::ServantNotActive,
-                         PortableServer::POA::WrongPolicy));
-
-      virtual
       PortableServer::Servant
       locate_servant (const char *operation,
                         const PortableServer::ObjectId &system_id,
@@ -235,14 +227,6 @@ namespace TAO
                    TAO::Portable_Server::Servant_Upcall &servant_upcall,
                    TAO::Portable_Server::POA_Current_Impl &poa_current_impl
                    ACE_ENV_ARG_DECL);
-
-      virtual
-      PortableServer::ObjectId *
-      servant_to_id (PortableServer::Servant servant
-                              ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::ServantNotActive,
-                         PortableServer::POA::WrongPolicy));
 
       virtual
       PortableServer::Servant

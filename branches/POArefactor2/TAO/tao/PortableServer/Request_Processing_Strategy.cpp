@@ -44,17 +44,6 @@ namespace TAO
       // dependent on type create the correct strategy.
     }
 
-    PortableServer::ObjectId *
-    Request_Processing_Strategy::servant_to_id (
-      PortableServer::Servant servant
-      ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::ServantNotActive,
-                         PortableServer::POA::WrongPolicy))
-    {
-      return 0;
-    }
-
     AOM_Only_Request_Processing_Strategy::AOM_Only_Request_Processing_Strategy()
     {
     }
@@ -299,43 +288,6 @@ namespace TAO
           // Success
           return result;
         }
-    }
-
-    PortableServer::ObjectId *
-    Default_Servant_Request_Processing_Strategy::servant_to_id (
-      PortableServer::Servant servant
-      ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::ServantNotActive,
-                         PortableServer::POA::WrongPolicy))
-    {
-      // If the POA has the USE_DEFAULT_SERVANT policy, the servant
-      // specified is the default servant, and the operation is being
-      // invoked in the context of executing a request on the default
-      // servant, then the ObjectId associated with the current invocation
-      // is returned.
-
-      // Compare the servant specified in the parameter list to the
-      // default servant registered with this POA.
-      PortableServer::Servant default_servant = this->default_servant_.in ();
-      if (default_servant != 0 &&
-          default_servant == servant)
-        {
-          // If they are the same servant, then check if we are in an
-          // upcall.
-          TAO::Portable_Server::POA_Current_Impl *poa_current_impl =
-            static_cast <TAO::Portable_Server::POA_Current_Impl *>
-                        (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
-          // If we are in an upcall on the default servant, return the
-          // ObjectId associated with the current invocation.
-          if (poa_current_impl != 0 &&
-              servant == poa_current_impl->servant ())
-            {
-              return poa_current_impl->get_object_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-            }
-        }
-
-      return 0;
     }
 
     Servant_Manager_Request_Processing_Strategy::~Servant_Manager_Request_Processing_Strategy (void)

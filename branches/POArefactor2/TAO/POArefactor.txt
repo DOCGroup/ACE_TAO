@@ -1,3 +1,21 @@
+Fri Oct 29 10:15:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/Request_Processing_Strategy.cpp:
+          Changed the get_servant, don't throw an exception when no default
+          servant is set with default servant request processing strategy in
+          the strategy itself, let the POA do that, this makes the
+          get_servant() method much more usable from the rest of the policies.
+          The reason of this change is that when get_servant() is used on the
+          POA and default servant policy is set, but no servant, then we
+          should give the exception NoServant, but when other strategies use
+          the default_servant, and it is not there they should give obj
+          adapter exception
+
+        * tao/PortableServer/Servant_Retention_Strategy.{h,cpp}:
+          Implemented servant_to_id for the non retain case and changed the
+          usage of thet get_servant call in the request processing strategy
+
 Fri Oct 29 09:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         All PolicyFactory are now loaded on demand with the correct
