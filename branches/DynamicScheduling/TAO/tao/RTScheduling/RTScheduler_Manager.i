@@ -4,6 +4,8 @@
 // Inline operations for class TAO_RTScheduler_Manager_var
 // *************************************************************
 
+#include "tao/ORB_Core.h"
+
 ACE_INLINE
 TAO_RTScheduler_Manager_var::TAO_RTScheduler_Manager_var (void) // default constructor
   : ptr_ (TAO_RTScheduler_Manager::_nil ())
@@ -199,8 +201,8 @@ TAO_RTScheduler_Manager_out::operator-> (void)
 
 ///////////////////////////////////////////////////////////////////////////
 ACE_INLINE
-TAO_RTScheduler_Manager::TAO_RTScheduler_Manager (PortableInterceptor::ORBInitInfo_ptr info)
-  : info_ (PortableInterceptor::ORBInitInfo::_duplicate (info))
+TAO_RTScheduler_Manager::TAO_RTScheduler_Manager (TAO_ORB_Core* orb)
+  : orb_ (orb)
 {
 }
 
@@ -215,9 +217,9 @@ TAO_RTScheduler_Manager::rtscheduler (RTScheduling::Scheduler_ptr rtscheduler
 				      ACE_ENV_ARG_PARAMETER)
 {
  rtscheduler_ = RTScheduling::Scheduler::_duplicate (rtscheduler);
- this->info_->register_initial_reference ("RTScheduler",
-                                          rtscheduler
-			   		  ACE_ENV_ARG_PARAMETER);	
+ this->orb_->object_ref_table ().register_initial_reference ("RTScheduler",
+													         this->rtscheduler_
+			   												ACE_ENV_ARG_PARAMETER);	
  ACE_CHECK;						
 
 }

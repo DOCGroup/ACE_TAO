@@ -28,10 +28,17 @@ module RTScheduling
 
     local interface DistributableThread
     {
+	enum DT_State
+	{
+	  ACTIVE,
+	  CANCELLED
+	};
+
         void cancel();
             // raises CORBA::OBJECT_NOT_FOUND if
             // the distributable thread is
             // not known to the scheduler
+	readonly attribute DT_State state;
     };
 
     local interface Current 

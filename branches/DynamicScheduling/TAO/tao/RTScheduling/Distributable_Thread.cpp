@@ -2,12 +2,28 @@
 
 #include "Distributable_Thread.h"
 
+TAO_DistributableThread::TAO_DistributableThread (void)
+  :state_ (RTScheduling::DistributableThread::ACTIVE)
+{
+}
+
+TAO_DistributableThread::~TAO_DistributableThread (void)
+{
+}
+
 void 
 TAO_DistributableThread::cancel (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  this->state_ = RTScheduling::DistributableThread::CANCELLED;
 }
 
+RTScheduling::DistributableThread::DT_State 
+TAO_DistributableThread::state (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return this->state_;
+}
 
 RTScheduling::DistributableThread_ptr 
 TAO_DistributableThread_Factory::create_DT (void)
@@ -22,6 +38,10 @@ TAO_DistributableThread_Factory::create_DT (void)
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
+
+  //RTScheduling::DistributableThread_var dt = RTScheduling::DistributableThread::_narrow (DT
+	//										 ACE_ENV_ARG_PARAMETER);
+  //ACE_CHECK;	
 
   return DT;
 }

@@ -71,6 +71,7 @@ TAO_NAMESPACE  CORBA
 
 // TAO_IDL - Generated from
 // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
+
 	typedef void* VoidData;
 
 }
@@ -355,9 +356,35 @@ TAO_NAMESPACE  RTScheduling
     static void _tao_any_destructor (void *);
     
     // TAO_IDL - Generated from
+    // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_enum/enum_ch.cpp:57
+    
+    enum DT_State
+    {
+      ACTIVE,
+      CANCELLED
+    };
+    
+    typedef DT_State &DT_State_out;
+    
+    // TAO_IDL - Generated from
+    // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+    
+    static ::CORBA::TypeCode_ptr _tc_DT_State;
+    
+    // TAO_IDL - Generated from
     // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void cancel (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+    // TAO_IDL - Generated from
+    // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual ::RTScheduling::DistributableThread::DT_State state (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -1540,6 +1567,12 @@ TAO_RTScheduler_Export CORBA::Boolean operator>>= (const CORBA::Any &, RTSchedul
 TAO_RTScheduler_Export void operator<<= (CORBA::Any &, RTScheduling::DistributableThread_ptr); // copying
 TAO_RTScheduler_Export void operator<<= (CORBA::Any &, RTScheduling::DistributableThread_ptr *); // non-copying
 TAO_RTScheduler_Export CORBA::Boolean operator>>= (const CORBA::Any &, RTScheduling::DistributableThread_ptr &);
+
+// TAO_IDL - Generated from
+// C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_enum/any_op_ch.cpp:51
+
+TAO_RTScheduler_Export void operator<<= (CORBA::Any &, RTScheduling::DistributableThread::DT_State);
+TAO_RTScheduler_Export CORBA::Boolean operator>>= (const CORBA::Any &, RTScheduling::DistributableThread::DT_State &);
 
 // TAO_IDL - Generated from
 // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52

@@ -79,7 +79,7 @@ void
   TAO_RTScheduler_Manager *manager = 0;
 
   ACE_NEW_THROW_EX (manager,
-                    TAO_RTScheduler_Manager,
+                    TAO_RTScheduler_Manager (tao_info->orb_core ()),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
