@@ -243,6 +243,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IOP_IORC.h \
  $(TAO_ROOT)/tao/OctetSeqC.h \
  $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/VarOut_T.h \
+ $(TAO_ROOT)/tao/VarOut_T.inl \
+ $(TAO_ROOT)/tao/VarOut_T.cpp \
  $(TAO_ROOT)/tao/IOP_IORC.i \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/Any_T.h \
@@ -264,9 +267,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging/Messaging_SyncScope_PolicyC.i \
  $(TAO_ROOT)/tao/Messaging/Messaging_RT_PolicyC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/VarOut_T.h \
- $(TAO_ROOT)/tao/VarOut_T.inl \
- $(TAO_ROOT)/tao/VarOut_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/Messaging/Messaging_RT_PolicyC.i \
  $(TAO_ROOT)/tao/Messaging/Messaging_No_ImplC.h \
@@ -578,6 +578,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IOP_IORC.h \
  $(TAO_ROOT)/tao/OctetSeqC.h \
  $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/VarOut_T.h \
+ $(TAO_ROOT)/tao/VarOut_T.inl \
+ $(TAO_ROOT)/tao/VarOut_T.cpp \
  $(TAO_ROOT)/tao/IOP_IORC.i \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/Any_T.h \
@@ -599,9 +602,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging/Messaging_SyncScope_PolicyC.i \
  $(TAO_ROOT)/tao/Messaging/Messaging_RT_PolicyC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/VarOut_T.h \
- $(TAO_ROOT)/tao/VarOut_T.inl \
- $(TAO_ROOT)/tao/VarOut_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/Messaging/Messaging_RT_PolicyC.i \
  $(TAO_ROOT)/tao/Messaging/Messaging_No_ImplC.h \
@@ -912,6 +912,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IOP_IORC.h \
  $(TAO_ROOT)/tao/OctetSeqC.h \
  $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/VarOut_T.h \
+ $(TAO_ROOT)/tao/VarOut_T.inl \
+ $(TAO_ROOT)/tao/VarOut_T.cpp \
  $(TAO_ROOT)/tao/IOP_IORC.i \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/Any_T.h \
@@ -933,9 +936,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging/Messaging_SyncScope_PolicyC.i \
  $(TAO_ROOT)/tao/Messaging/Messaging_RT_PolicyC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/VarOut_T.h \
- $(TAO_ROOT)/tao/VarOut_T.inl \
- $(TAO_ROOT)/tao/VarOut_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/Messaging/Messaging_RT_PolicyC.i \
  $(TAO_ROOT)/tao/Messaging/Messaging_No_ImplC.h \
@@ -1247,6 +1247,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IOP_IORC.h \
  $(TAO_ROOT)/tao/OctetSeqC.h \
  $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/VarOut_T.h \
+ $(TAO_ROOT)/tao/VarOut_T.inl \
+ $(TAO_ROOT)/tao/VarOut_T.cpp \
  $(TAO_ROOT)/tao/IOP_IORC.i \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/Any_T.h \
@@ -1268,9 +1271,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging/Messaging_SyncScope_PolicyC.i \
  $(TAO_ROOT)/tao/Messaging/Messaging_RT_PolicyC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/VarOut_T.h \
- $(TAO_ROOT)/tao/VarOut_T.inl \
- $(TAO_ROOT)/tao/VarOut_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/Messaging/Messaging_RT_PolicyC.i \
  $(TAO_ROOT)/tao/Messaging/Messaging_No_ImplC.h \
@@ -1582,6 +1582,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IOP_IORC.h \
  $(TAO_ROOT)/tao/OctetSeqC.h \
  $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/VarOut_T.h \
+ $(TAO_ROOT)/tao/VarOut_T.inl \
+ $(TAO_ROOT)/tao/VarOut_T.cpp \
  $(TAO_ROOT)/tao/IOP_IORC.i \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/Any_T.h \
@@ -1603,9 +1606,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging/Messaging_SyncScope_PolicyC.i \
  $(TAO_ROOT)/tao/Messaging/Messaging_RT_PolicyC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/VarOut_T.h \
- $(TAO_ROOT)/tao/VarOut_T.inl \
- $(TAO_ROOT)/tao/VarOut_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/Messaging/Messaging_RT_PolicyC.i \
  $(TAO_ROOT)/tao/Messaging/Messaging_No_ImplC.h \
@@ -1861,6 +1861,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IOP_IORC.h \
  $(TAO_ROOT)/tao/OctetSeqC.h \
  $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/VarOut_T.h \
+ $(TAO_ROOT)/tao/VarOut_T.inl \
+ $(TAO_ROOT)/tao/VarOut_T.cpp \
  $(TAO_ROOT)/tao/IOP_IORC.i \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/Any.i \
@@ -1879,9 +1882,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/ServicesC.h \
- $(TAO_ROOT)/tao/VarOut_T.h \
- $(TAO_ROOT)/tao/VarOut_T.inl \
- $(TAO_ROOT)/tao/VarOut_T.cpp \
  $(TAO_ROOT)/tao/ServicesC.i \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
@@ -2233,6 +2233,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IOP_IORC.h \
  $(TAO_ROOT)/tao/OctetSeqC.h \
  $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/VarOut_T.h \
+ $(TAO_ROOT)/tao/VarOut_T.inl \
+ $(TAO_ROOT)/tao/VarOut_T.cpp \
  $(TAO_ROOT)/tao/IOP_IORC.i \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/Any.i \
@@ -2251,9 +2254,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/ServicesC.h \
- $(TAO_ROOT)/tao/VarOut_T.h \
- $(TAO_ROOT)/tao/VarOut_T.inl \
- $(TAO_ROOT)/tao/VarOut_T.cpp \
  $(TAO_ROOT)/tao/ServicesC.i \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
@@ -2525,6 +2525,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IOP_IORC.h \
  $(TAO_ROOT)/tao/OctetSeqC.h \
  $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/VarOut_T.h \
+ $(TAO_ROOT)/tao/VarOut_T.inl \
+ $(TAO_ROOT)/tao/VarOut_T.cpp \
  $(TAO_ROOT)/tao/IOP_IORC.i \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/Any.i \
@@ -2543,9 +2546,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/ServicesC.h \
- $(TAO_ROOT)/tao/VarOut_T.h \
- $(TAO_ROOT)/tao/VarOut_T.inl \
- $(TAO_ROOT)/tao/VarOut_T.cpp \
  $(TAO_ROOT)/tao/ServicesC.i \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
@@ -2684,9 +2684,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/Condition.h \
- $(TAO_ROOT)/tao/Condition.inl \
- $(TAO_ROOT)/tao/Condition.cpp \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/LF_Invocation_Event.h \
  $(TAO_ROOT)/tao/LF_Event.h \
@@ -2916,6 +2913,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IOP_IORC.h \
  $(TAO_ROOT)/tao/OctetSeqC.h \
  $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/VarOut_T.h \
+ $(TAO_ROOT)/tao/VarOut_T.inl \
+ $(TAO_ROOT)/tao/VarOut_T.cpp \
  $(TAO_ROOT)/tao/IOP_IORC.i \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/Any_T.h \
@@ -2937,9 +2937,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging/Messaging_SyncScope_PolicyC.i \
  $(TAO_ROOT)/tao/Messaging/Messaging_RT_PolicyC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/VarOut_T.h \
- $(TAO_ROOT)/tao/VarOut_T.inl \
- $(TAO_ROOT)/tao/VarOut_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/Messaging/Messaging_RT_PolicyC.i \
  $(TAO_ROOT)/tao/Messaging/Messaging_No_ImplC.h \
