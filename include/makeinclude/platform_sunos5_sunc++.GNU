@@ -101,4 +101,5 @@ ifdef fast
   CFLAGS += -fast
   CCFLAGS += -features=no%castop,no%rtti
   DCFLAGS =
+  LDFLAGS += -fast
 endif # fast
