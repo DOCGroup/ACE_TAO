@@ -92,8 +92,13 @@ check_default_server_protocol (CORBA::ORB_ptr orb,
   // It is for testing purposes only! (Unfortunately, there
   // is no standard way to access ORB default policies).
   CORBA_ORB *tao_orb = ACE_dynamic_cast (CORBA_ORB *, orb);
-  RTCORBA::ServerProtocolPolicy_var policy =
+  CORBA::Policy_var server_protocol = 
     tao_orb->orb_core ()->default_server_protocol ();
+
+  RTCORBA::ServerProtocolPolicy_var policy =
+    RTCORBA::ServerProtocolPolicy::_narrow (server_protocol.in (),
+                                            ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (policy.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
