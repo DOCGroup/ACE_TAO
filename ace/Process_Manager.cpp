@@ -265,12 +265,9 @@ ACE_Process_Manager::terminate (pid_t pid)
 
       if (result == -1)
 	{ 
-	  // We need to save this across calls to remove_thr() since that
-	  // call may reset errno.
-	  int error = errno;
-
+          // Save/restore errno.
+          ACE_Errno_Guard error (errno);
 	  this->remove (this->proc_table_[i].proc_id_); 
-	  errno = error; 
 	  return -1; 
 	} 
       else 

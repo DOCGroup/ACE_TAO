@@ -1222,16 +1222,14 @@ ACE::leave_recv_timedwait (ACE_HANDLE handle,
                            int val)
 {
   if (timeout != 0
-      && ACE_BIT_DISABLED (val, ACE_NONBLOCK))
+      && ACE_BIT_DISABLED (val,
+                           ACE_NONBLOCK))
     {
-      // We need to stash errno here because ACE::clr_flags() may
-      // reset it.
-      int error = errno;
-
+      // Save/restore errno.
+      ACE_Errno_Guard error (errno);
       // Only disable ACE_NONBLOCK if we weren't in non-blocking mode
       // originally.
       ACE::clr_flags (handle, ACE_NONBLOCK);
-      errno = error;
     }
 }
 
@@ -1304,14 +1302,11 @@ ACE::leave_send_timedwait (ACE_HANDLE handle,
   if (timeout != 0
       && ACE_BIT_DISABLED (val, ACE_NONBLOCK))
     {
-      // We need to stash errno here because ACE::clr_flags() may
-      // reset it.
-      int error = errno;
-
+      // Save/restore errno.
+      ACE_Errno_Guard error (errno);
       // Only disable ACE_NONBLOCK if we weren't in non-blocking mode
       // originally.
       ACE::clr_flags (handle, ACE_NONBLOCK);
-      errno = error;
     }
 }
 

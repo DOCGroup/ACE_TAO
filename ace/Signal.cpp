@@ -320,8 +320,8 @@ ACE_Sig_Handler::dispatch (int signum,
           ACE_TSS_Guard<ACE_Recursive_Thread_Mutex> m (*lock));
 #endif /* 0 */
 
-  // Preserve errno across callbacks!
-  int old_errno = errno;
+  // Save/restore errno.
+  ACE_Errno_Guard error (errno);
 
   // We can't use the <sig_pending> call here because that acquires
   // the lock, which is non-portable...
@@ -351,9 +351,6 @@ ACE_Sig_Handler::dispatch (int signum,
       eh->handle_close (ACE_INVALID_HANDLE,
                         ACE_Event_Handler::SIGNAL_MASK);
     }
-
-  // Restore error when callback completes.
-  errno = old_errno;
 }
 
 ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Sig_Action &sa, int sigkey)
@@ -686,8 +683,8 @@ ACE_Sig_Handlers::dispatch (int signum,
     ACE_TSS_Guard<ACE_Recursive_Thread_Mutex> m (*lock));
 #endif /* 0 */
 
-  // Preserve errno across callbacks!
-  int old_errno = errno;
+  // Save/restore errno.
+  ACE_Errno_Guard error (errno);
 
   ACE_Sig_Handler::sig_pending_ = 1;
 
@@ -709,9 +706,6 @@ ACE_Sig_Handlers::dispatch (int signum,
           delete *eh;
         }
     }
-
-  // Restore error when callback completes.
-  errno = old_errno;
 }
 
 // Return the first item in the list of handlers.  Note that this will

@@ -4685,6 +4685,52 @@ extern "C" {
   typedef int (*ACE_COMPARE_FUNC)(const void *, const void *);
 }
 
+class ACE_Errno_Guard
+{
+  // = TITLE
+  //   Provides a wrapper to improve performance when thread-specific
+  //   errno must be saved and restored in a block of code.
+  //
+  // = DESCRIPTION
+  //   The typical use-case for this is the following:
+  //  
+  //   int error = errno;
+  //   call_some_function_that_might_change_errno ();
+  //   errno = error;
+  //
+  //   This can be replaced with
+  //
+  //   {
+  //     ACE_Errno_Guard guard (errno);
+  //     call_some_function_that_might_change_errno ();
+  //   }
+  //
+  //   This implementation is more elegant and more efficient since it
+  //   avoids an unnecessary second access to thread-specific storage
+  //   by caching a pointer to the value of errno in TSS.  
+public:
+  ACE_Errno_Guard (int &e):
+#if defined (ACE_MT_SAFE)
+    ep_ (&e),
+#endif /* ACE_MT_SAFE */
+    error_ (e) { }
+
+  ~ACE_Errno_Guard (void)
+  {
+#if defined (ACE_MT_SAFE)
+    *ep_ = error_;
+#else
+    errno = error_;
+#endif /* ACE_MT_SAFE */
+  }
+
+private:
+#if defined (ACE_MT_SAFE)
+  int *ep_;
+#endif /* ACE_MT_SAFE */
+  int error_;
+};
+
 class ACE_Export ACE_OS
 {
   // = TITLE

@@ -1,27 +1,33 @@
+Tue Jun  8 15:47:06 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
+
+        * ace: Updated most of the places in ACE that can benefit from the
+ 	  new ACE_Errno_Guard class.
+
+	* ace/OS.h: Added a new ACE_Errno_Guard class that improves
+ 	  performance when thread-specific errno must be saved/restored in
+ 	  a block of code.  Thanks to Serge Kolgan <skolgan@cisco.com> for
+ 	  motivating this.
+
+	* ace/Env_Value_T.h: Added a new ACE_Convert() function that works
+ 	  for const char *'s.  Thanks to David for reporting this.
+
 Tue Jun 08 18:08:41 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.h: Added new overridable macro, ACE_LOCALHOST. This allows
           overriding of the string used to do a loopback IP socket to the
           local host. Some systems (e.g. PharLap ETS) don't have a host table
           out of the box, and require an IP address string.
-        * ace/Pipe.cpp: Use the new ACE_LOCALHOST macro instead of a hard
-          "localhost" when using a socket to emulate a pipe.
 
-          Thanks to Bruce Trask <BTRASK@contactsystems.com> for working to
-          get this ironed out for PharLap ETS.
+        * ace/Pipe.cpp: Use the new ACE_LOCALHOST macro instead of a hard
+ 	  "localhost" when using a socket to emulate a pipe.  Thanks to
+ 	  Bruce Trask <BTRASK@contactsystems.com> for working to get this
+ 	  ironed out for PharLap ETS.
 
         * README: Added Bruce Trask to the Hall of Fame ;-)
 
-Tue Jun 08 16:57:03 1999  Steve Huston  <shuston@riverace.com>
-
-        * tests/SOCK_Connector_Test.cpp: Check for failed host lookup before
-          trying to connect.  Changed the way sethostent is done on AIX 4.3 to
-          work around an apparant bug in AIX 4.3.
-
-Tue Jun  8 15:47:06 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
-
-	* ace/Env_Value_T.h: Added a new ACE_Convert() function that works
- 	  for const char *'s.  Thanks to David for reporting this.
+        * tests/SOCK_Connector_Test.cpp: Check for failed host lookup
+ 	  before trying to connect.  Changed the way sethostent is done on
+ 	  AIX 4.3 to work around an apparent bug in AIX 4.3.
 
 Tue Jun 08 13:46:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -64,7 +70,7 @@ Mon Jun  7 14:21:48 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
         * tests/DLL_Test.cpp (main): ANSI C++ spec doesnt allow void * to
           be typecasted to a function_pointer. Hence made changes to
-          remove the warning due to this. Thanks to Nanbor
+          remove the warning due to this.  Thanks to Nanbor
           <nanbor@cs.wustl.edu> for pointing it out.
 
 Mon Jun  7 14:12:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
