@@ -18,9 +18,9 @@ IDL_SRC	= TimeC.cpp TimeS.cpp
 
 PROG_SRCS = \
 	client.cpp \
-	client_i.cpp \
+	Client_i.cpp \
 	server.cpp \
-	server_i.cpp \
+	Server_i.cpp \
 	Time_i.cpp \
 
 SRC = $(IDL_SRC) $(PROG_SRCS)
@@ -28,13 +28,13 @@ SRC = $(IDL_SRC) $(PROG_SRCS)
 SIMPLE_CLT_OBJS = \
 		TimeC.o \
 		TimeS.o \
-		client_i.o \
+		Client_i.o \
 		client.o
 SIMPLE_SVR_OBJS = \
 		TimeC.o \
 		TimeS.o \
 		Time_i.o \
-		server_i.o \
+		Server_i.o \
 		server.o
 
 BIN = server \
@@ -536,7 +536,7 @@ realclean: clean
  $(TAO_ROOT)/tao/singletons.h \
  TimeC.i TimeS_T.h TimeS_T.i \
  TimeS_T.cpp TimeS.i
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp client_impl.h TimeC.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Client_impl.h TimeC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -764,7 +764,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  TimeC.i
-.obj/client_impl.o .obj/client_impl.so .shobj/client_impl.o .shobj/client_impl.so: client_impl.cpp client_impl.h TimeC.h \
+.obj/Client_impl.o .obj/Client_impl.so .shobj/Client_impl.o .shobj/Client_impl.so: Client_impl.cpp Client_impl.h TimeC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -994,7 +994,7 @@ realclean: clean
  TimeC.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp server_impl.h time_impl.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Server_impl.h time_impl.h \
  TimeS.h TimeC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -1225,7 +1225,7 @@ realclean: clean
  TimeC.i TimeS_T.h TimeS_T.i \
  TimeS_T.cpp TimeS.i \
  $(TAO_ROOT)/tao/TAO.h
-.obj/server_impl.o .obj/server_impl.so .shobj/server_impl.o .shobj/server_impl.so: server_impl.cpp server_impl.h time_impl.h \
+.obj/Server_impl.o .obj/Server_impl.so .shobj/Server_impl.o .shobj/Server_impl.so: Server_impl.cpp Server_impl.h time_impl.h \
  TimeS.h TimeC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \

@@ -31,7 +31,7 @@ options are ignored.
 client:
 -------
 
-client [-d] [-x] [-f <server_ior_file>] [-n iterations] [-k ior]
+client [-d] [-x] [-f <Server_ior_file>] [-n iterations] [-k ior]
 
 Options:
 -------

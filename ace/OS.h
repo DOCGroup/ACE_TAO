@@ -4082,6 +4082,8 @@ private:
     typedef prusage_t ACE_Rusage;
 #elif defined (ACE_HAS_GETRUSAGE)
     typedef rusage ACE_Rusage;
+#else
+    typedef int ACE_Rusage;
 #endif /* ACE_HAS_PRUSAGE_T */
 
 class ACE_Export ACE_OS

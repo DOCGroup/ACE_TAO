@@ -1,18 +1,29 @@
 // $Id$
 
-#include "server_i.h"
+#include "Server_i.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Time, server_i, "$Id$")
+ACE_RCSID(Time, Server_i, "$Id$")
 
-server_i::server_i (void)
-  : ior_output_file_ (0),
-    servant_ (0)
+// Constructor.
+
+Server_i::Server_i (void)
+  : ior_output_file_ (0)
 {
+  // no-op.
 }
 
+// Destructor.
+
+Server_i::~Server_i (void)
+{
+  // no-op.
+}
+
+// Parse the command-line arguments and set options.
+
 int
-server_i::parse_args (void)
+Server_i::parse_args (void)
 {
   ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:");
   int c;
@@ -40,12 +51,15 @@ server_i::parse_args (void)
                            argv_ [0]),
                           1);
       }
+
   // Indicates successful parsing of command line.
   return 0;
 }
 
+// Initialize the server.
+
 int
-server_i::init (int argc, char *argv[], CORBA::Environment &env)
+Server_i::init (int argc, char *argv[], CORBA::Environment &env)
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.
@@ -68,8 +82,11 @@ server_i::init (int argc, char *argv[], CORBA::Environment &env)
     return retval;
    
   CORBA::ORB_var orb = this->orb_manager_.orb ();
-  this->servant_ = new Time_i (orb.in ());
 
+  // Stash our ORB pointer for later reference.
+  this->servant_.orb (orb.in ());
+
+  // Activate the servant in its own child POA.
   CORBA::String_var str  =
     this->orb_manager_.activate_under_child_poa ("time",
                                                  this->servant_,
@@ -90,17 +107,14 @@ server_i::init (int argc, char *argv[], CORBA::Environment &env)
 }
 
 int
-server_i::run (CORBA::Environment &env)
+Server_i::run (CORBA::Environment &env)
 {
+  // Run the main event loop for the ORB.
   if (this->orb_manager_.run (env) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "server_i::run"),
+                       "Server_i::run"),
                       -1);
 
   return 0;
 }
 
-server_i::~server_i (void)
-{
-  delete this->servant_;
-}
