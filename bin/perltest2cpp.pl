@@ -284,7 +284,7 @@ sub getTop {
 
   $declared{$os} = "%s";
   $decscope{$os} = -1;
-  
+
   foreach my $main (getMainList()) {
     $top .= "TEST_MAIN_FUNC_DECLARE($main);\n";
   }
@@ -1578,7 +1578,7 @@ sub handlePrint {
   }
 
   $value = handleEmbeddedVar($value);
-  
+
   if (defined $stream) {
     $line = "ACE_OS::fprintf($stream, $value);";
   }
@@ -1637,7 +1637,7 @@ sub handleWaitKill {
       $var = $1;
     }
   }
-  if ($line =~ /->.*Kill\s*\(([\w\$]*)\)/) {  
+  if ($line =~ /->.*Kill\s*\(([\w\$]*)\)/) {
     my($time) = $var . "Timeout";
     my($val)  = ($1 eq "" ? $defaultTimeout : $1);
     if (!defined $declared{$time}) {
