@@ -2110,7 +2110,7 @@ ACE_Ordered_MultiSet_Iterator<T>::ACE_Ordered_MultiSet_Iterator (ACE_Ordered_Mul
 }
 
  template <class T> int
-ACE_Ordered_MultiSet_Iterator<T>::next (T *&item)
+ACE_Ordered_MultiSet_Iterator<T>::next (T *&item) const
 {
 // ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::next");
   if (this->current_)
