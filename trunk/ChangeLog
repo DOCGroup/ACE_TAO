@@ -1,5 +1,9 @@
 Thu Mar 14 09:17:55 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* ace/Configuration.cpp (remove_section): Made the code consistent
+	  for all versions of Windows.  Thanks to Jon Lambert
+ 	  <jlsysinc@ix.netcom.com> for the fix.
+
 	* examples/Service_Configurator/IPC-tests/client/remote_service_directory_test.cpp (ACE_TMAIN): Added
 	  '\n' to the end of command strings so that the client won't hang.  Thanks to 
 	  Marc M Adkins <Marc.M.Adkins@doorways.org> for this fix.
