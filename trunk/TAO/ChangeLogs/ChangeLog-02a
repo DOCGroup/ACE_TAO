@@ -1,3 +1,20 @@
+Sat Mar  2 13:30:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Buffered_Oneways/Buffered_Oneways_client.bor:
+        * examples/Buffered_Oneways/Buffered_Oneways_server.bor:
+        * performance-tests/Callback/client.bor:
+        * performance-tests/Callback/server.bor:
+        * performance-tests/Latency/AMI/client.bor:
+        * performance-tests/Latency/AMI/server.bor:
+        * performance-tests/RTCorba/Oneways/Reliable/client.bor:
+        * performance-tests/RTCorba/Oneways/Reliable/server.bor:
+        * orbsvcs/tests/Event/Performance/Connect.bor:
+        * orbsvcs/tests/Event/Performance/Inversion.bor:
+        * orbsvcs/tests/Event/Performance/Latency.bor:
+        * orbsvcs/tests/Event/Performance/Latency_Server.bor:
+        * orbsvcs/tests/Event/Performance/Throughput.bor:
+          Added TAO_Messaging library
+
 Fri Mar  1 17:42:54 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* tao/Makefile:

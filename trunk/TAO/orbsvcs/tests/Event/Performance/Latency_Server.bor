@@ -15,7 +15,8 @@ CFLAGS = \
 	$(TAO_PORTABLESERVER_CFLAGS) \
 	$(TAO_STRATEGIES_CFLAGS) \
 	$(TAO_CFLAGS) \
-	$(ACE_CFLAGS)
+        $(ACE_CFLAGS) \
+        $(TAO_MESSAGING_CFLAGS)
 
 LIBFILES = \
 	$(TAO_RTEVENT_TEST_LIB) \
@@ -26,7 +27,8 @@ LIBFILES = \
         $(TAO_PORTABLESERVER_LIB) \
         $(TAO_STRATEGIES_LIB) \
         $(TAO_LIB) \
-        $(ACE_LIB)
+        $(ACE_LIB) \
+        $(TAO_MESSAGING_LIB)
 
 CPPDIR = .
 
