@@ -42,12 +42,27 @@ TAO_MProfile::operator= (const TAO_MProfile& rhs)
 ACE_INLINE
 TAO_MProfile::~TAO_MProfile (void)
 {
-  if (policy_list_ != 0)
+  if (this->policy_list_ != 0)
     {
-      for (CORBA::ULong i = 0; i < policy_list_->length (); ++i)
-        (*policy_list_)[i]->destroy ();
+      ACE_DECLARE_NEW_CORBA_ENV;
+      const CORBA::ULong len = this->policy_list_->length ();
+      for (CORBA::ULong i = 0; i < len; ++i)
+        {
+          ACE_TRY
+            {
+              (*this->policy_list_)[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
+          ACE_CATCHANY
+            {
+              // Ignore all exceptions to allow other policies to be
+              // destroyed.
+            }
+          ACE_ENDTRY;
+        }
+
+      delete this->policy_list_;
     }
-  delete policy_list_;
 
   this->cleanup ();
 }

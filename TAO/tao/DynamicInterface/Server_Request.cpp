@@ -83,7 +83,7 @@ CORBA_ServerRequest::arguments (CORBA::NVList_ptr &list
   // arguments() must be called before either of these.
   if (this->params_ != 0 || this->exception_ != 0)
     {
-      ACE_THROW (CORBA::BAD_INV_ORDER (7, CORBA::COMPLETED_NO));
+      ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 7, CORBA::COMPLETED_NO));
     }
 
   // Save params for later use when marshaling the reply.
@@ -111,7 +111,7 @@ CORBA_ServerRequest::set_result (const CORBA::Any &value
   // exists or before the args have been processeed is an error.
   if (this->retval_ != 0 || this->exception_ != 0 || this->params_ == 0)
     {
-      ACE_THROW (CORBA::BAD_INV_ORDER (8, CORBA::COMPLETED_NO));
+      ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 8, CORBA::COMPLETED_NO));
     }
 
   ACE_NEW_THROW_EX (this->retval_,

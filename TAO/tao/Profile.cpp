@@ -90,7 +90,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list
     }
 
   TAO_OutputCDR out_cdr;
-  // Now we have to embedd the Messaging::PolicyValueSeq into
+  // Now we have to embed the Messaging::PolicyValueSeq into
   // a TaggedComponent.
 
   IOP::TaggedComponent tagged_component;
@@ -128,12 +128,12 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list
 }
 
 
-CORBA::PolicyList&
-TAO_Profile::policies (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CORBA::PolicyList &
+TAO_Profile::policies (ACE_ENV_SINGLE_ARG_DECL)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-  CORBA::PolicyList *policies = this->stub_->base_profiles ().policy_list_;
+  CORBA::PolicyList * pl = this->stub_->base_profiles ().policy_list_;
 
   if (!this->are_policies_parsed_)
     // None has already parsed the policies.
@@ -148,7 +148,7 @@ TAO_Profile::policies (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
           const CORBA::Octet *buf =
             tagged_component.component_data.get_buffer ();
 
-          TAO_InputCDR in_cdr (ACE_reinterpret_cast (const char*, buf),
+          TAO_InputCDR in_cdr (ACE_reinterpret_cast (const char *, buf),
                                tagged_component.component_data.length ());
 
           // Extract the Byte Order
@@ -160,7 +160,11 @@ TAO_Profile::policies (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
           // Now we take out the Messaging::PolicyValueSeq out from the
           // CDR.
           Messaging::PolicyValueSeq policy_value_seq;
-          in_cdr >> policy_value_seq;
+          if (!(in_cdr >> policy_value_seq))
+            {
+              ACE_THROW_RETURN (CORBA::INV_OBJREF (),
+                                *(stub_->base_profiles ().policy_list_));
+            }
 
           // Here we extract the Messaging::PolicyValue out of the sequence
           // and we convert those into the proper CORBA::Policy
@@ -169,7 +173,7 @@ TAO_Profile::policies (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
           CORBA::ULong length = policy_value_seq.length ();
 
           // Set the policy list length.
-          policies->length (length);
+          pl->length (length);
 
           for (CORBA::ULong i = 0; i < length; ++i)
             {
@@ -189,7 +193,7 @@ TAO_Profile::policies (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                     this->orb_core_->orb ()->create_policy (
                       policy_value_seq[i].ptype,
                       dummy_any
-                       ACE_ENV_ARG_PARAMETER);
+                      ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
 
                   if (!CORBA::is_nil (policy.in ()))
@@ -200,12 +204,15 @@ TAO_Profile::policies (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                         ACE_reinterpret_cast (const char*, buf),
                         policy_value_seq[i].pvalue.length ());
 
-                      in_cdr >> ACE_InputCDR::to_boolean (byte_order);
-                      in_cdr.reset_byte_order (ACE_static_cast(int,
-                                                               byte_order));
+
+                      if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
+                        ACE_TRY_THROW (CORBA::INV_OBJREF ());
+
+                      in_cdr.reset_byte_order (ACE_static_cast (int,
+                                                                byte_order));
 
                       policy->_tao_decode (in_cdr);
-                      (*policies)[i] = policy._retn ();
+                      (*pl)[i] = policy._retn ();
                     }
                   else
                     {
@@ -217,12 +224,13 @@ TAO_Profile::policies (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
                       if (TAO_debug_level >= 5)
                         ACE_DEBUG ((LM_DEBUG,
-                                ACE_TEXT ("The IOR contains Unsupported Policies.\n")));
+                                    ACE_TEXT ("The IOR contains unsupported "
+                                              "policies.\n")));
                     }
                 }
               ACE_CATCHANY
                 {
-                  // This case should occure when in the IOR are
+                  // This case should occur when in the IOR are
                   // embedded policies that TAO doesn't support, so as
                   // specified by the RT-CORBA spec. ptc/99-05-03 we
                   // just ignore these un-understood policies.
@@ -237,6 +245,8 @@ TAO_Profile::policies (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
         }
     }
 
+#else
+  ACE_ENV_ARG_NOT_USED;    // FUZZ: ignore check_for_ace_check
 #endif /* (TAO_HAS_CORBA_MESSAGING == 1) */
 
   return *(stub_->base_profiles ().policy_list_);

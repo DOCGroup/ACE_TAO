@@ -1384,7 +1384,7 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
   // same then the ORB shall return SUCCESS.
   if (!priorities_match)
     {
-      ACE_THROW (CORBA::BAD_INV_ORDER (1,
+      ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 1,
                                        CORBA::COMPLETED_NO));
     }
 
