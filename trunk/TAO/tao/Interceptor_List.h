@@ -34,10 +34,10 @@ class TAO_Export TAO_Interceptor_List
 {
 public:
 
-  /// Constructor
+  /// Constructor.
   TAO_Interceptor_List (void);
 
-  /// Destructor
+  /// Destructor.
   virtual ~TAO_Interceptor_List (void);
 
 protected:
@@ -76,15 +76,15 @@ public:
 
   /// Define a trait for the underlying portable interceptor array.
   typedef
-  ACE_Array_Base<PortableInterceptor::ClientRequestInterceptor_ptr> TYPE;
+  ACE_Array_Base<PortableInterceptor::ClientRequestInterceptor_var> TYPE;
 
 public:
 
   /// Constructor
   TAO_ClientRequestInterceptor_List (void);
 
-  /// Destructor
-  ~TAO_ClientRequestInterceptor_List (void);
+  /// Destructor.
+  virtual ~TAO_ClientRequestInterceptor_List (void);
 
   /// Register a client request interceptor.
   void add_interceptor (PortableInterceptor::ClientRequestInterceptor_ptr i
@@ -124,15 +124,15 @@ public:
 
   /// Define a trait for the underlying portable interceptor array.
   typedef
-  ACE_Array_Base<PortableInterceptor::ServerRequestInterceptor_ptr> TYPE;
+  ACE_Array_Base<PortableInterceptor::ServerRequestInterceptor_var> TYPE;
 
 public:
 
   /// Constructor
   TAO_ServerRequestInterceptor_List (void);
 
-  /// Destructor
-  ~TAO_ServerRequestInterceptor_List (void);
+  /// Destructor.
+  virtual ~TAO_ServerRequestInterceptor_List (void);
 
   /// Register a server request interceptor.
   void add_interceptor (PortableInterceptor::ServerRequestInterceptor_ptr i

@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "IORInterceptorC.h"
+
 #include "tao/Interceptor_List.h"
 
 /**
@@ -34,16 +36,15 @@ class TAO_IORInterceptor_Export TAO_IORInterceptor_List
 public:
 
   /// Define a trait for the underlying portable interceptor array.
-  typedef
-  ACE_Array_Base<PortableInterceptor::IORInterceptor_ptr> TYPE;
+  typedef ACE_Array_Base<PortableInterceptor::IORInterceptor_var> TYPE;
 
 public:
 
   /// Constructor
   TAO_IORInterceptor_List (void);
 
-  /// Destructor
-  ~TAO_IORInterceptor_List (void);
+  /// Destructor.
+  virtual ~TAO_IORInterceptor_List (void);
 
   /// Register an IOR interceptor.
   void add_interceptor (PortableInterceptor::IORInterceptor_ptr

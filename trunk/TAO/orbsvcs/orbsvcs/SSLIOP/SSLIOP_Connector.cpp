@@ -65,7 +65,7 @@ TAO_SSLIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
   // Since the ACE_Strategy_Connector (and ACE_Connector) cannot
   // handle non-blocking connections with protocols that have more
-  // than once handshake, such as SSL, force blocking connections for
+  // than one handshake, such as SSL, force blocking connections for
   // SSLIOP.  This deficiency will be addressed soon.
   ACE_NEW_RETURN (this->active_connect_strategy_,
                   TAO_Blocked_Connect_Strategy (orb_core),
