@@ -1,3 +1,8 @@
+Sun May  9 13:06:48 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/Deployment.mpc:
+	* DnC/Config_Handlers/Config_Handlers.mpc:
+
 Sun May  9 09:08:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.cpp:
@@ -35,34 +40,34 @@ Sun May  9 07:46:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  are working on to initialize a few things upfront and tear them
 	  later. The downside of this is that the executors need to
 	  implement ciao_preactivate () and ciao_postactivate (). I think
-	  there is a good idea to avoid that. We will visit that soon. 
-	
+	  there is a good idea to avoid that. We will visit that soon.
+
  	* CIDLC/ServantHeaderGenerator.cpp:
 	* CIDLC/ServantSourceGenerator.cpp:
 
 	  Added code generation for ciao_preactivate () and
-	  ciao_postactivate (). 
+	  ciao_postactivate ().
 
 	* tools/Assembly_Deployer/Assembly_Impl.cpp:
 
-	  Cosmetic fix. 
+	  Cosmetic fix.
 
-	* tools/Assembly_Deployer/Assembly_Visitors.h:	
+	* tools/Assembly_Deployer/Assembly_Visitors.h:
 
 	  Added a typedef for the iterator in the CIAO::Assembly_Context
 	  struct.
-	
+
 	* tools/Assembly_Deployer/Assembly_Visitors.cpp:
 
 	  Iterate over the CCMObject references and call preactivate,
 	  activate and postactivate on all of them one after another.
-	  
+
 	* examples/Hello/Receiver/Receiver_exec.cpp:
 	* examples/Hello/Receiver/Receiver_exec.h:
 	* examples/Hello/Sender/Sender_exec.cpp:
 	* examples/Hello/Sender/Sender_exec.h:
 
-          Added the preactivate and postactivate calls. 
+          Added the preactivate and postactivate calls.
 
 Sat May  8 15:19:18 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
