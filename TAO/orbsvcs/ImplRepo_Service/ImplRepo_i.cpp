@@ -737,8 +737,6 @@ ImplRepo_i::init (CORBA::Environment &ACE_TRY_ENV)
 
   ACE_TRY
     {
-      int retval = 0;
-
       CORBA::Object_var table_object =
         orb->resolve_initial_references ("IORTable", ACE_TRY_ENV);
       ACE_TRY_CHECK;
