@@ -1,3 +1,18 @@
+Wed Sep 10 11:48:31 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+
+          Allow files with spaces to be processed correctly.
+
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+
+          Added support for files with spaces (vc7 already supported them).
+
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+
+          Fixed a warning about the /Ob option.
+
 Wed Sep 10 10:21:16 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
