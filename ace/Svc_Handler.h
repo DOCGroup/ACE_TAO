@@ -71,10 +71,12 @@ public:
   // instead of closing it.  If the object does not have a recycler,
   // it will be closed.
 
-  virtual int state (ACE_Recyclable_State new_state);
-  // Call this method if you want to change the state of the
+  virtual ACE_Recyclable_State recycle_state (void) const;
+  virtual int recycle_state (ACE_Recyclable_State new_state);
+  // Call this method if you want to get/set the state of the
   // <Svc_Handler>.  If the object does not have a recycler, this call
-  // will have no effect.
+  // will have no effect (and the accessor will return
+  // ACE_RECYCLABLE_UNKNOWN).
 
   virtual void cleanup_hint (void);
   // When the svc_handle is no longer needed around as a hint, call

@@ -321,9 +321,8 @@ cached_connect (STRATEGY_CONNECTOR &con,
                        ASYS_TEXT ("connection failed")),
                       -1);
 
-  // Svc_Handler is now idle, so mark it as such and let the cache
-  // recycle it.
-  svc_handler->idle (1);
+  // Reset Svc_Handler state.
+  svc_handler->recycle_state (ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE);
 
   return 0;
 }
