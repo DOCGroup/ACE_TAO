@@ -1,3 +1,12 @@
+Wed Jan  5 10:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTPortableServer/RT_Acceptor_Filters.{h,cpp,i}:
+        * tao/RTPortableServer/RT_Collocation_Resolver.{h,cpp,i}:
+          Removed i file and updated h/cpp file.
+
+        * tao/Makefile.am
+          Updated for changes above
+
 Wed Jan  5 10:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/Asynch_Reply_Dispatcher.{h,cpp,i}:

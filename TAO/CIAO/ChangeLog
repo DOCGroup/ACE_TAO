@@ -1,6 +1,12 @@
+Wed Jan  5 10:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/RTNodeApplication/RTServer_Impl.h:
+          Fixed compile problem in emulated exception builds due to
+          incorrect environment macro
+
 Mon Jan  3 10:01:09 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* DAnCE/RTNodeApplication/README: 
+	* DAnCE/RTNodeApplication/README:
 	* DAnCE/RTNodeApplication/NodeApplication_Task.cpp:
 	* DAnCE/RTNodeApplication/NodeApplication_Task.h:
 	* DAnCE/RTNodeApplication/NodeApplication_Task.inl:
@@ -10,7 +16,7 @@ Mon Jan  3 10:01:09 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* DAnCE/RTNodeApplication/RTServer_Impl.h:
 	* DAnCE/RTNodeApplication/RTServer_Impl.inl:
 	* DAnCE/RTNodeApplication/senv.sh: Added a minimal
-	  real-time-enabled NodeApplication server.  
+	  real-time-enabled NodeApplication server.
 
 Mon Jan  3 12:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
