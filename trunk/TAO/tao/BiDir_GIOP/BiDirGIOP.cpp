@@ -72,10 +72,7 @@ TAO_BiDirGIOP_Loader::parse_policy (TAO_ORB_Core *orb_core,
 int
 TAO_BiDirGIOP_Loader::Initializer (void)
 {
-  ACE_Service_Config::static_svcs ()->
-    insert (&ace_svc_desc_TAO_BiDirGIOP_Loader);
-
-  return 0;
+  return ACE_Service_Config::process_directive (ace_svc_desc_TAO_BiDirGIOP_Loader);
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_BiDirGIOP_Loader,

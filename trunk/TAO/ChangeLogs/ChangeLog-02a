@@ -1,3 +1,83 @@
+Mon Sep 24 19:23:29 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/TAO_Internal.cpp (open_services_i):
+	* tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.cpp (Initializer): 
+	* tao/TypeCodeFactory/TypeCodeFactory_Loader.cpp (Initializer): 
+	* tao/Strategies/advanced_resource.cpp (TAO_Resource_Factory_Changer): 
+	* tao/RTPortableServer/RTPortableServer.cpp (TAO_RTPortableServer_Initializer): 
+	* tao/RTCORBA/RTCORBA.cpp (TAO_RTCORBA_Initializer): 
+	* tao/PortableServer/PortableServer.cpp (init): 
+	* tao/IORTable/IORTable.cpp (init): 
+	* tao/IORManipulation/IORManip_Loader.cpp (Initializer): 
+	* tao/IFR_Client/IFR_Client_Adapter_Impl.cpp (Initializer): 
+	* tao/DynamicInterface/Dynamic_Adapter_Impl.cpp (Initializer): 
+	* tao/DynamicAny/DynamicAny.cpp (Initializer): 
+	* tao/BiDir_GIOP/BiDirGIOP.cpp (Initializer): 
+
+          - Changed 
+
+            ACE_Service_Config::static_svcs ()->insert (&blah) 
+
+            to
+
+            ACE_Service_Config::process_directive (blah) 
+
+            The reason for this change is that when the ORB is loaded
+            into a program as a DLL through the Service Configurator,
+            Service_Config::open has already been run.  This prevents
+            the static services in TAO to be loaded into the Service
+            Repository since Service_Config::open only executes once.
+            However, Service_Config::process_directive works
+            irrespective of whether Service_Config::open has already
+            being run.
+
+	* tao/Strategies/TAO_Strategies_Internal.cpp: 
+	* tao/Strategies/TAO_Strategies_Internal.h: 
+
+	  Removed unused files.
+	
+	* tao/Strategies/Makefile.bor: 
+	* tao/Strategies/Makefile: 
+	* tao/Strategies/TAO_Strategies.dsp: 
+	* tao/Strategies/TAO_Strategies_Static.dsp: 
+
+	  Removed TAO_Strategies_Internal.
+
+	* tao/Strategies/advanced_resource.h:
+	  "ACE_STATIC_SVC_REQUIRE(TAO_Advanced_Resource_Factory)" removed
+	  as it was not needed.
+
+	* tao/default_resource.cpp (get_parser_names): Removed unnecessary
+	  lookup of parsers. 
+
+	* tao/orbconf.h: Removed default defines for
+	  TAO_DEFAULT_RESOURCE_FACTORY_ARGS,
+	  TAO_ADVANCED_RESOURCE_FACTORY_ARGS,
+	  TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS, and
+	  TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS since they are we
+	  horribly out of date and the defaults work fine.  User can still
+	  define them as needed.
+
+	* tao/TAO_Internal.cpp: 
+
+	  - Since TAO_DEFAULT_RESOURCE_FACTORY_ARGS,
+	    TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS, and
+	    TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS are no longer
+	    defined by default, the initialization of the
+	    corresponding statics in TAO_Internal had to be modified.
+
+          - For consistency, <server_strategy_args_> and
+            <client_strategy_args_> got renamed to
+            <server_strategy_factory_args_> and
+            <client_strategy_factory_args_> respectively.
+
+	* tao/ORB_Core.cpp: Fixed some incorrect comments.
+
+	* tao/MCAST_Parser.h: Removed extra OS.h include.
+
+	* examples/Simple/time-date/Time_Date.cpp: Removed extra
+	  TAO_Singleton.h include.
+
 Mon Sep 24 14:12:11 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/MCAST_Parser.cpp (assign_to_variables):

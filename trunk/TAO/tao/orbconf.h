@@ -65,30 +65,6 @@
 # define TAO_USE_DOTTED_DECIMAL_ADDRESSES 0
 #endif /* TAO_USE_DOTTED_DECIMAL_ADDRESSES */
 
-// The default arguments of the resource factory for the fake service
-// configurator
-#if !defined (TAO_DEFAULT_RESOURCE_FACTORY_ARGS)
-#define TAO_DEFAULT_RESOURCE_FACTORY_ARGS "static Resource_Factory \"-ORBresources tss\""
-#endif /* TAO_DEFAULT_RESOURCE_FACTORY_ARGS */
-
-// The default arguments of the advanced resource factory for the fake service
-// configurator
-#if !defined (TAO_ADVANCED_RESOURCE_FACTORY_ARGS)
-#define TAO_ADVANCED_RESOURCE_FACTORY_ARGS "static Advanced_Resource_Factory \"-ORBresources tss -ORBReactorType select_st\""
-#endif /* TAO_ADVANCED_RESOURCE_FACTORY_ARGS */
-
-// The default arguments of the client strategy factory for the fake service
-// configurator
-#if !defined (TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS)
-#define TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS "static Client_Strategy_Factory \"\""
-#endif /* TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS */
-
-// The default arguments of the server strategy factory for the fake service
-// configurator
-#if !defined (TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS)
-#define TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS  "static Server_Strategy_Factory \"-ORBconcurrency reactive -ORBsystemidpolicydemuxstrategy dynamic -ORBtablesize 128\""
-#endif /* TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS */
-
 // The default size of TAO's server active object map.
 #if !defined (TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE)
 # if defined (TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE)

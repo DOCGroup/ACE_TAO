@@ -53,8 +53,8 @@ public:
   /// Set default `svc.conf' content.  This call has no effect if This
   /// function must be called before first ORB initialization.
   static void default_svc_conf_entries (const char *resource_factory_args,
-                                        const char *server_strategy_args,
-                                        const char *client_strategy_args);
+                                        const char *server_strategy_factory_args,
+                                        const char *client_strategy_factory_args);
 
 private:
 
@@ -90,8 +90,8 @@ private:
 
 
   static const char *resource_factory_args_;
-  static const char *server_strategy_args_;
-  static const char *client_strategy_args_;
+  static const char *server_strategy_factory_args_;
+  static const char *client_strategy_factory_args_;
 };
 
 #include "ace/post.h"

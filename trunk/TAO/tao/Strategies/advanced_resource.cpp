@@ -39,18 +39,15 @@ TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
   TAO_ORB_Core::set_resource_factory ("Advanced_Resource_Factory");
 
 #if TAO_HAS_UIOP == 1
-  ACE_Service_Config::static_svcs ()->
-    insert (&ace_svc_desc_TAO_UIOP_Protocol_Factory);
+  ACE_Service_Config::process_directive (ace_svc_desc_TAO_UIOP_Protocol_Factory);
 #endif /* TAO_HAS_UIOP == 1 */
 
 #if TAO_HAS_SHMIOP == 1
-  ACE_Service_Config::static_svcs ()->
-    insert (&ace_svc_desc_TAO_SHMIOP_Protocol_Factory);
+  ACE_Service_Config::process_directive (ace_svc_desc_TAO_SHMIOP_Protocol_Factory);
 #endif /* TAO_HAS_SHMIOP == 1 */
 
 #if TAO_HAS_DIOP == 1
-  ACE_Service_Config::static_svcs ()->
-    insert (&ace_svc_desc_TAO_DIOP_Protocol_Factory);
+  ACE_Service_Config::process_directive (ace_svc_desc_TAO_DIOP_Protocol_Factory);
 #endif /* TAO_HAS_DIOP == 1 */
 
 }

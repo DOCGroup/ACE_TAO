@@ -1485,7 +1485,6 @@ TAO_ORB_Core::root_poa (CORBA::Environment &ACE_TRY_ENV)
     ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (TAO_ORB_Core::poa_factory_name_);
   if (factory == 0)
     {
-      // Try again, using the default directive...
       ACE_Service_Config::process_directive (TAO_ORB_Core::poa_factory_directive_);
       factory =
         ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (TAO_ORB_Core::poa_factory_name_);
@@ -1969,10 +1968,8 @@ TAO_ORB_Core::resolve_typecodefactory_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_Dynamic_Service<TAO_Object_Loader>::instance ("TypeCodeFactory_Loader");
   if (loader == 0)
     {
-      ACE_Service_Config::process_directive (
-          "dynamic TypeCodeFactory Service_Object *"
-          "TAO_TypeCodeFactory:_make_TAO_TypeCodeFactory_Loader()"
-        );
+      ACE_Service_Config::process_directive ("dynamic TypeCodeFactory Service_Object *"
+                                             "TAO_TypeCodeFactory:_make_TAO_TypeCodeFactory_Loader()");
       loader =
         ACE_Dynamic_Service<TAO_Object_Loader>::instance ("TypeCodeFactory_Loader");
       if (loader == 0)
@@ -1989,13 +1986,8 @@ TAO_ORB_Core::resolve_dynanyfactory_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_Dynamic_Service<TAO_Object_Loader>::instance ("DynamicAny_Loader");
   if (loader == 0)
     {
-      // The Loader has not been statically configured, try to
-      // dynamically load it...
-      ACE_Service_Config::process_directive (
-                                             "dynamic DynamicAny_Loader Service_Object *"
-                                             "TAO_DynamicAny:_make_TAO_DynamicAny_Loader()"
-                                             );
-
+      ACE_Service_Config::process_directive ("dynamic DynamicAny_Loader Service_Object *"
+                                             "TAO_DynamicAny:_make_TAO_DynamicAny_Loader()");
       loader =
         ACE_Dynamic_Service<TAO_Object_Loader>::instance ("DynamicAny_Loader");
       if (loader == 0)
@@ -2013,13 +2005,8 @@ TAO_ORB_Core::resolve_iormanipulation_i (CORBA::Environment &ACE_TRY_ENV)
 
   if (loader == 0)
     {
-      // The Loader has not been statically configured, try to
-      // dynamically load it...
-      ACE_Service_Config::process_directive (
-                                             "dynamic IORManip_Loader Service_Object *"
-                                             "TAO_IORManip:_make_TAO_IORManip_Loader()"
-                                             );
-
+      ACE_Service_Config::process_directive ("dynamic IORManip_Loader Service_Object *"
+                                             "TAO_IORManip:_make_TAO_IORManip_Loader()");
       loader =
         ACE_Dynamic_Service<TAO_Object_Loader>::instance ("IORManip_Loader");
       if (loader == 0)
@@ -2036,13 +2023,8 @@ TAO_ORB_Core::resolve_ior_table_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_Dynamic_Service<TAO_Adapter_Factory>::instance ("TAO_IORTable");
   if (factory == 0)
     {
-      // The Loader has not been statically configured, try to
-      // dynamically load it...
-      ACE_Service_Config::process_directive (
-                                             "dynamic TAO_IORTable Service_Object *"
-                                             "TAO_IORTable:_make_TAO_Table_Adapter_Factory()"
-                                             );
-
+      ACE_Service_Config::process_directive ("dynamic TAO_IORTable Service_Object *"
+                                             "TAO_IORTable:_make_TAO_Table_Adapter_Factory()");
       factory =
         ACE_Dynamic_Service<TAO_Adapter_Factory>::instance ("TAO_IORTable");
     }

@@ -170,10 +170,6 @@ SOURCE=.\SHMIOP_Transport.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\TAO_Strategies_Internal.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\UIOP_Acceptor.cpp
 # End Source File
 # Begin Source File
@@ -287,10 +283,6 @@ SOURCE=.\SHMIOP_Transport.h
 # Begin Source File
 
 SOURCE=.\strategies_export.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\TAO_Strategies_Internal.h
 # End Source File
 # Begin Source File
 

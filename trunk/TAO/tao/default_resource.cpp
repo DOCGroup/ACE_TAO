@@ -386,125 +386,28 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
 
   // OK fallback on the hardcoded ones....
   this->parser_names_count_ = 5; // HOW MANY DO WE HAVE?
-
-  this->parser_names_ = new char *[this->parser_names_count_];
-
-  for (int i = 0;
-       i < this->parser_names_count_;
-       ++i)
-    this->parser_names_[i] = 0;
-
-  // Ensure that there is enough space in the parser_names_ array
+  this->parser_names_ =
+    new char *[this->parser_names_count_];
 
   size_t index = 0;
-
-  // DLL_Parser
-  TAO_IOR_Parser *tmp =
-    ACE_Dynamic_Service<TAO_IOR_Parser>::instance ("DLL_Parser");
-
-  if (tmp == 0)
-    {
-      int r = ACE_Service_Config::process_directive
-        (
-         "dynamic DLL_Parser Service_Object * TAO:_make_TAO_DLL_Parser()"
-         );
-      if (r != 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Error configuring DLL parser\n"), -1);
-        }
-    }
 
   this->parser_names_[index] = CORBA::string_dup ("DLL_Parser");
   index++;
 
-  // FILE_Parser
-  tmp =
-    ACE_Dynamic_Service<TAO_IOR_Parser>::instance ("FILE_Parser");
-
-  if (tmp == 0)
-    {
-      int r = ACE_Service_Config::process_directive
-        (
-         "dynamic FILE_Parser Service_Object * TAO:_make_TAO_FILE_Parser()"
-         );
-
-      if (r != 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Error Configuring FILE Parser\n"), -1);
-        }
-    }
-
   this->parser_names_[index] = CORBA::string_dup ("FILE_Parser");
   index++;
-
-  // CORBALOC_Parser
-  tmp =
-    ACE_Dynamic_Service<TAO_IOR_Parser>::instance ("CORBALOC_Parser");
-
-  if (tmp == 0)
-    {
-      int r = ACE_Service_Config::process_directive
-        (
-         "dynamic CORBALOC_Parser Service_Object * TAO:_make_TAO_CORBALOC_Parser()"
-         );
-
-      if (r != 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Error Configuring CORBALOC Parser\n"), -1);
-        }
-    }
 
   this->parser_names_[index] = CORBA::string_dup ("CORBALOC_Parser");
   index++;
 
-  // CORBANAME_Parser
-  tmp =
-    ACE_Dynamic_Service<TAO_IOR_Parser>::instance ("CORBANAME_Parser");
-
-  if (tmp == 0)
-    {
-      int r = ACE_Service_Config::process_directive
-        (
-         "dynamic CORBANAME_Parser Service_Object * TAO:_make_TAO_CORBANAME_Parser()"
-         );
-
-      if (r != 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Error Configuring CORBANAME Parser\n"), -1);
-        }
-    }
-
   this->parser_names_[index] = CORBA::string_dup ("CORBANAME_Parser");
   index++;
-
-  // MCAST_Parser
-  tmp =
-    ACE_Dynamic_Service<TAO_IOR_Parser>::instance ("MCAST_Parser");
-
-  if (tmp == 0)
-    {
-      int r = ACE_Service_Config::process_directive
-        (
-         "dynamic MCAST_Parser Service_Object * TAO:_make_TAO_MCAST_Parser()"
-         );
-
-      if (r != 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Error Configuring MCAST Parser\n"), -1);
-        }
-    }
 
   this->parser_names_[index] = CORBA::string_dup ("MCAST_Parser");
   index++;
 
   names = this->parser_names_;
 
-  //  number_of_names = this->parser_names_count_;
   number_of_names = index;
 
   return 0;

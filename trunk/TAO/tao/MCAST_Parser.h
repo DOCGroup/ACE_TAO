@@ -23,7 +23,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Config.h"
-#include "ace/OS.h"
 
 /**
  * @class TAO_MCAST_Parser
