@@ -1,3 +1,9 @@
+Sun Nov  9 22:12:29 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tao/Makefile.dirs:
+          Moved IORInterceptor below ObjRefTemplate since
+          libTAO_IORInterceptor now depends on libTAO_ObjRefTemplate.
+
 Sun Nov  9 16:32:28 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/Kokyu_dsrt_schedulers/Makefile:
