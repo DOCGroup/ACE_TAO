@@ -46,6 +46,7 @@ struct Schedule_Viewer_Data
   u_long computation_time;
 };
 
+
 class DualEC_Supplier
 {
   // = TITLE
@@ -130,7 +131,7 @@ private:
   RtecScheduler::Scheduler_var sched_hi_;
   RtecScheduler::Scheduler_var sched_lo_;
 
-  // Handles for the dummy rt_infos registered with the 
+  // Handles for the dummy rt_infos registered with the
   // schedulers in order to force priority differentiation.
   RtecScheduler::handle_t sched_hi_rt_info_hi_;
   RtecScheduler::handle_t sched_hi_rt_info_lo_;
@@ -141,7 +142,7 @@ private:
   Terminator terminator_impl_;
   NavWeapTerminator_var terminator_;
 
-  // Default EC module factory for Event 
+  // Default EC module factory for Event
   // Service servant implementations.
   TAO_Default_Module_Factory default_module_factory_;
 
@@ -192,4 +193,3 @@ private:
 };
 
 #endif /* DUALEC_SUP_H */
-

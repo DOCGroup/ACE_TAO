@@ -9,7 +9,7 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 #### VisiBroker 3.3
-JAVA_DIR = /project/doc/pkg/VisiJava3.3/bin/
+JAVA_DIR = /project/doc/pkg/VisiJava3.4/bin/
 IDL2JAVA = $(JAVA_DIR)idl2java
 JAVAC = $(JAVA_DIR)vbjc
 
