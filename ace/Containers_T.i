@@ -308,9 +308,10 @@ ACE_Ordered_MultiSet<T>::size (void) const
 template <class T> ACE_INLINE
 ACE_Array_Base<T>::~ACE_Array_Base (void)
 {
-  ACE_DES_FREE (this->array_,
-                this->allocator_->free,
-                T);
+  ACE_DES_ARRAY_FREE (this->array_,
+                      this->max_size_,
+                      this->allocator_->free,
+                      T);
 }
 
 template <class T> ACE_INLINE size_t
@@ -346,7 +347,7 @@ ACE_Array_Base<T>::operator[] (size_t index) const
 // ****************************************************************
 
 template <class T> ACE_INLINE
-ACE_Array<T>::ACE_Array (size_t size, 
+ACE_Array<T>::ACE_Array (size_t size,
                          ACE_Allocator *alloc)
   : ACE_Array_Base<T> (size, alloc)
 {

@@ -2350,9 +2350,10 @@ ACE_Array_Base<T>::operator= (const ACE_Array_Base<T> &s)
     {
       if (this->max_size_ < s.size ())
         {
-          ACE_DES_FREE (this->array_,
-                        this->allocator_->free,
-                        T);
+          ACE_DES_ARRAY_FREE (this->array_,
+                              this->max_size_,
+                              this->allocator_->free,
+                              T);
 
           ACE_NEW_MALLOC (this->array_,
                           (T *) this->allocator_->malloc (s.size () * sizeof (T)),
@@ -2416,10 +2417,11 @@ ACE_Array_Base<T>::max_size (size_t new_size)
       // previously allocated section.
       for (size_t j = this->cur_size_; j < new_size; j++)
         new (&tmp[j]) T;
-      
-      ACE_DES_FREE (this->array_,
-                    this->allocator_->free,
-                    T);
+
+      ACE_DES_ARRAY_FREE (this->array_,
+                          this->max_size_,
+                          this->allocator_->free,
+                          T);
 
       this->array_ = tmp;
       this->max_size_ = new_size;
