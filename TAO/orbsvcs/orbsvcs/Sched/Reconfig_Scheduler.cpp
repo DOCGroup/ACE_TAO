@@ -26,10 +26,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !defined (__ACE_INLINE__)
-#include "Reconfig_Scheduler.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Sched, Reconfig_Scheduler, "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

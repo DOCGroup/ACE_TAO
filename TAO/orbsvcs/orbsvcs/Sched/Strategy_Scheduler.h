@@ -491,12 +491,6 @@ private:
 
 };
 
-
-
-#if defined (__ACE_INLINE__)
-#include "Strategy_Scheduler.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* STRATEGY_SCHEDULER_H */
 

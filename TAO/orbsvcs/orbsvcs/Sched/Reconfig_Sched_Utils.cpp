@@ -28,10 +28,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (__ACE_INLINE__)
-#include "Reconfig_Sched_Utils.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (Sched, Reconfig_Sched_Utils, "$Id$")
 
 ///////////////////////////

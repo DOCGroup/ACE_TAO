@@ -246,7 +246,7 @@ public:
     (ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
      ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
   // Constructor.
-  
+
 protected:
 
   virtual int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
@@ -447,7 +447,7 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 class TAO_RSE_Criticality_Propagation_Visitor :
   public TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
   // = TITLE
-  //   A scheduler entry visitor that propagates criticality 
+  //   A scheduler entry visitor that propagates criticality
   //   from called to calling nodes in a topologically ordered
   //   graph.
   //
@@ -472,12 +472,6 @@ protected:
   // successor), and -1 on error.
 
 };
-
-
-#if defined (__ACE_INLINE__)
-#include "Reconfig_Sched_Utils_T.i"
-#endif /* __ACE_INLINE__ */
-
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Reconfig_Sched_Utils_T.cpp"

@@ -1,3 +1,18 @@
+Wed Jan  5 11:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/SchedConfig_Scheduler.{h,cpp,i}:
+        * orbsvcs/orbsvcs/SchedReconfig_Sched_Utils.{h,cpp,i}:
+        * orbsvcs/orbsvcs/SchedReconfig_Sched_Utils_T.{h,cpp,i}:
+        * orbsvcs/orbsvcs/SchedReconfig_Scheduler.{h,cpp,i}:
+        * orbsvcs/orbsvcs/SchedReconfig_Scheduler_T.{h,cpp,i}:
+        * orbsvcs/orbsvcs/SchedScheduler.{h,cpp,i}:
+        * orbsvcs/orbsvcs/SchedScheduler_Generic.{h,cpp,i}:
+        * orbsvcs/orbsvcs/SchedStrategy_Scheduler.{h,cpp,i}:
+          Removed i file and updated h/cpp file.
+
+        * orbsvcs/orbsvcs/Makefile.am
+          Updated for changes above
+
 Wed Jan  5 11:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.{h,cpp,i}:

@@ -26,10 +26,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !defined (__ACE_INLINE__)
-#include "Reconfig_Sched_Utils_T.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Sched, Reconfig_Sched_Utils_T, "$Id$")
 
 ////////////////////////////////
@@ -58,7 +54,7 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
 {
   int result = 0;
 
-  /* WSOA merge - commented out 
+  /* WSOA merge - commented out
   // Call unconditional action method, which performs any necessary
   // modifications that are applied to each node unconditionally.
   if (this->unconditional_action (rse) < 0)
@@ -112,7 +108,7 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
               if (rt_info_map_.find ((*dependency_set) [i].rt_info,
                                      next_rt_info) != 0)
                 {
-                  ACE_ERROR_RETURN ((LM_ERROR, "RT_Info (%i) not found.\n", 
+                  ACE_ERROR_RETURN ((LM_ERROR, "RT_Info (%i) not found.\n",
                                      (*dependency_set) [i].rt_info), -1);
                 }
 
@@ -271,7 +267,7 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_DFS_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 precondition (TAO_Reconfig_Scheduler_Entry &rse)
 {
-  int result = 
+  int result =
     TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
       precondition (rse);
 
@@ -411,7 +407,7 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 precondition (TAO_Reconfig_Scheduler_Entry &rse)
 {
-  int result = 
+  int result =
     TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
       precondition (rse);
 
@@ -722,17 +718,17 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                       "Failed to access tuple under iterator"));
           return -1;
         }
-      
+
       // @TODO - check for conjunction nodes here and perform conjunctive
       // function on existing rate tuples.
 
 #ifdef SCHEDULER_LOGGING
-      ACE_DEBUG((LM_DEBUG, "Inserting new propagated tuple for RT_Info: %d, entry_ptr: 0x%x, tuple_ptr: 0x%x\n", 
-                 successor.actual_rt_info ()->handle, 
+      ACE_DEBUG((LM_DEBUG, "Inserting new propagated tuple for RT_Info: %d, entry_ptr: 0x%x, tuple_ptr: 0x%x\n",
+                 successor.actual_rt_info ()->handle,
                  &successor,
                  (*tuple_ptr_ptr)));
 #endif
-      // Propagate tuples disjunctively. 
+      // Propagate tuples disjunctively.
       successor.insert_tuple (**tuple_ptr_ptr,
                               TAO_Reconfig_Scheduler_Entry::PROPAGATED);
 
@@ -755,18 +751,18 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                       "Failed to access tuple under iterator"));
           return -1;
         }
-      
+
       // @TODO - check for conjunction nodes here and perform conjunctive
       // function on existing rate tuples.
 
 #ifdef SCHEDULER_LOGGING
-      ACE_DEBUG((LM_DEBUG, "Inserting new propagated tuple for RT_Info: %d, entry_ptr: 0x%x, tuple_ptr: 0x%x\n", 
-                 successor.actual_rt_info ()->handle, 
+      ACE_DEBUG((LM_DEBUG, "Inserting new propagated tuple for RT_Info: %d, entry_ptr: 0x%x, tuple_ptr: 0x%x\n",
+                 successor.actual_rt_info ()->handle,
                  &successor,
                  (*tuple_ptr_ptr)));
 #endif
 
-      // Propagate tuples disjunctively. 
+      // Propagate tuples disjunctively.
       successor.insert_tuple (**tuple_ptr_ptr,
                               TAO_Reconfig_Scheduler_Entry::PROPAGATED);
 
@@ -815,7 +811,7 @@ TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::visit (TAO_Reconfig
 {
   int result = 0;
 #ifdef SCHEDULER_LOGGING
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "Priority_Visitor visiting %s[%d],crit=%d,period=%d\n",
               rse.actual_rt_info ()->entry_point.in(),
               rse.actual_rt_info ()->handle,
@@ -836,7 +832,7 @@ TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::visit (TAO_Reconfig
   else
     {
 #ifdef SCHEDULER_LOGGING
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "Previous entry %s[%d],crit=%d,period=%d\n",
                   previous_entry_->actual_rt_info ()->entry_point.in(),
                   previous_entry_->actual_rt_info ()->handle,
@@ -922,7 +918,7 @@ TAO_Tuple_Admission_Visitor (const CORBA::Double & critical_utilization_threshol
   : critical_utilization_ (0.0),
     noncritical_utilization_ (0.0),
     total_critical_utilization_ (0.0),
-    total_noncritical_utilization_ (0.0),    
+    total_noncritical_utilization_ (0.0),
     critical_utilization_threshold_ (critical_utilization_threshold),
     noncritical_utilization_threshold_ (noncritical_utilization_threshold)
 {
@@ -945,13 +941,13 @@ TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::visit (TAO_RT_Info_Tuple &
   if (t.enabled_state () == RtecScheduler::RT_INFO_DISABLED
       || entry->enabled_state () == RtecScheduler::RT_INFO_DISABLED)
     {
-      return 0; 
+      return 0;
     }
 
   // Compute the current tuple's utilization.
   CORBA::Double delta_utilization =
     (ACE_static_cast (CORBA::Double,
-                      t.threads) 
+                      t.threads)
      * ACE_static_cast (CORBA::Double,
                         ACE_UINT64_DBLCAST_ADAPTER (entry->
                                                       aggregate_exec_time ())))
@@ -1075,7 +1071,7 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
   ACE_UNUSED_ARG (di);
 
 #ifdef SCHEDULER_LOGGING
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "Crit Prop_Visitor visiting %s[%d], successor is %s[%d]\n",
               entry.actual_rt_info ()->entry_point.in(),
               entry.actual_rt_info ()->handle,
@@ -1085,19 +1081,19 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
 
   if (successor.enabled_state () != RtecScheduler::RT_INFO_DISABLED)
     {
-      RtecScheduler::Criticality_t entry_crit = 
+      RtecScheduler::Criticality_t entry_crit =
         entry.actual_rt_info ()->criticality;
-      RtecScheduler::Criticality_t succ_crit = 
+      RtecScheduler::Criticality_t succ_crit =
         successor.actual_rt_info ()->criticality;
       RtecScheduler::Criticality_t max_crit = entry_crit;
-      
+
       if (max_crit < succ_crit)
         max_crit = succ_crit;
 
       successor.actual_rt_info ()->criticality = max_crit;
 
 #ifdef SCHEDULER_LOGGING
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "Successor's new criticality is %d\n",
                   successor.actual_rt_info ()->criticality));
 #endif
