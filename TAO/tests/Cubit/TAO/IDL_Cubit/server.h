@@ -66,7 +66,8 @@ private:
   // Number of cubit objects we export.
 
   int use_naming_service_;
-  //Flag to tell whether to use the TAO Naming Service.
+  //Flag to tell server not to use the TAO Naming Service to register
+  //the cubit factory.
 
   FILE* ior_output_file_;
   // File to output the cubit factory IOR.

@@ -106,7 +106,7 @@ Sample Run-Using Naming Service:
 	%server -ORBport 19999
 
 2. Start the client
-	%client -ORBport 19999
+	%client -ORBport 19998
 		if you don't want the server to shutdown.
 	%client -ORBport 19998  -x
 		if you want to shutdown the server after this request.
