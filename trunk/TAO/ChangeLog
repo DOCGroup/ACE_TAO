@@ -1,3 +1,22 @@
+Wed Aug 11 15:34:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ClientCredentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_OwnCredentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.cpp:
+
+	  Remove explicit namespace qualifier from base class constructor
+	  call in the base member initializer list due to MSVC++ 6 brain
+	  damage.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp (operator==):
+
+	  Added missing SSLIOP Credentials attribute checks.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirer.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
+
+	  Coding style updates.
+
 Wed Aug 11 14:54:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* docs/ORBEndpoint.html:
