@@ -761,12 +761,6 @@ public:
   typedef ACE_Null_Mutex NULL_SEMAPHORE;
 };
 
-#define ACE_SYNCH ACE_MT_SYNCH
-
-#else /* ACE_HAS_THREADS */
-
-#define ACE_SYNCH ACE_NULL_SYNCH
-
 #endif /* ACE_HAS_THREADS */
 
 #define ACE_SYNCH_MUTEX ACE_SYNCH::MUTEX
@@ -813,6 +807,12 @@ public:
 // These are available on *all* platforms
 #define ACE_SYNCH_PROCESS_SEMAPHORE ACE_Process_Semaphore
 #define ACE_SYNCH_PROCESS_MUTEX  ACE_Process_Mutex
+
+#if defined (ACE_HAS_THREADS)
+#define ACE_SYNCH ACE_MT_SYNCH
+#else /* ACE_HAS_THREADS */
+#define ACE_SYNCH ACE_NULL_SYNCH
+#endif /* ACE_HAS_THREADS */
 
 #if defined (__ACE_INLINE__)
 #include "ace/Synch_T.i"

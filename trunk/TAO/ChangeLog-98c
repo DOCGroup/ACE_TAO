@@ -1,3 +1,10 @@
+Thu Nov 06 20:58:52 1997    <irfan@TWOSTEP>
+
+	* tao/connect.cpp: Made sure that TAO_Server_Connection_Handler
+ 	  and TAO_Client_Connection_Handler have a zero Reactor pointer.
+  	  If this is not the case, they will try to deregister from a
+ 	  sometimes non-existent Reactor.
+
 Thu Nov  6 19:06:59 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
 	* docs/releasenotes/index.html: Updated status of Naming Service

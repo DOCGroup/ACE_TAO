@@ -11,8 +11,10 @@ TAO_Server_Connection_Handler::params (TAO_OA_Parameters *p)
 }
 
 ACE_INLINE
-TAO_Client_Connection_Handler::TAO_Client_Connection_Handler (ACE_Thread_Manager *)
-{}
+TAO_Client_Connection_Handler::TAO_Client_Connection_Handler (ACE_Thread_Manager *t)
+  : TAO_SVC_HANDLER (t, 0, 0)
+{
+}
 
 /*
 // @@ Chris, shouldn't we protect this stuff with some type of #ifdef
