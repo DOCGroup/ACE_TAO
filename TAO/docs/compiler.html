@@ -12,13 +12,19 @@
 <h3>
 TAO IDL compiler User's Guide</h3>
 
-<h2> Scope</h2> This document describes the options and features of
+<h3> Scope</h3> This document describes the options and features of
 TAO IDL compiler.  It is not a reference manual or tutorial on OMG
 IDL.  For more information on OMG IDL see the <A
 HREF="http://cgi.omg.org/library/c2indx.html">online CORBA
 specification</A> and the <A
 HREF="http://www.triodia.com/staff/michi-henning.html">Advanced CORBA
-Programming with C++</A> book. <P>
+Programming with C++</A> book.  More information on the design of
+TAO's IDL compiler is also available <A
+HREF="http://www.cs.wustl.edu/~schmidt/PDF/ami1.pdf">online</A>.
+Finally, comprehensive documentation on TAO's IDL compiler is
+available in the OCI <A
+HREF="http://www.theaceorb.com/product/description.php">TAO
+Developer's Guide</A>.<P>
 
 <HR><P>
 <h3>Generated Files</h3>
@@ -30,10 +36,10 @@ appending the following suffixes (see the list of TAO's IDL compiler
 these files:) <P>
 
 <UL>
-  <LI> <EM>Client stubs</EM> -- <tt>*C.h</tt>, <tt>*C.i</tt>, and <tt>*C.cpp</tt>
-  <LI> <EM>Server skeletons</EM> -- <tt>*S.h</tt>, <tt>*S.i</tt>, and
+  <LI> <EM>Client stubs</EM>, <EM>i.e.</EM>, <tt>*C.h</tt>, <tt>*C.i</tt>, and <tt>*C.cpp</tt>
+  <LI> <EM>Server skeletons</EM>, <EM>i.e.</EM>,  <tt>*S.h</tt>, <tt>*S.i</tt>, and
       <tt>*S.cpp</tt>
-  <LI> <EM>Server skeleton templates </EM> -- <tt>*S_T.h</tt>, <tt>S_T.i</tt>,
+  <LI> <EM>Server skeleton templates</EM>, <EM>i.e.</EM>, <tt>*S_T.h</tt>, <tt>S_T.i</tt>,
       and <tt>*S_T.cpp</tt>
 </UL>
 
