@@ -36,6 +36,10 @@
 
 #include "tao/corba.h"
 
+#if !defined (__ACE_INLINE__)
+# include "tao/CDR.i"
+#endif /* ! __ACE_INLINE__ */
+
 // This functions are private, so it is safe to declare them inline in
 // the .cpp file, we still use the ACE_INLINE macro to support
 // compilations without any inline code.
@@ -119,7 +123,7 @@ CDR::adjust_to_put (size_t size, char*& buf)
       // grow(0) may change the value of wr_ptr() so we have to
       // recompute the position....
       buf = ACE_reinterpret_cast (char *,
-                                  ptr_align_binary (this->mb_->wr_ptr (), 
+                                  ptr_align_binary (this->mb_->wr_ptr (),
                                                     size));
       this->mb_->wr_ptr (buf + size);
       return CORBA::B_TRUE;
@@ -167,7 +171,7 @@ CDR::CDR (char *buf,
                ACE_Message_Block
                  (new ACE_Data_Block (len,
                                       ACE_Message_Block::MB_DATA,
-                                      (char *) buf, 
+                                      (char *) buf,
                                       0,
                                       0,
                                       flags)));

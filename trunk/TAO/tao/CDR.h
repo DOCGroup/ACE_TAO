@@ -349,6 +349,10 @@ private:
   // Set to 0 when an error ocurrs.
 };
 
+#if defined (__ACE_INLINE__)
+# include "tao/CDR.i"
+#endif /* __ACE_INLINE__ */
+
 #if !defined(__ACE_INLINE__)
 extern CDR &operator<< (CDR &cdr, CORBA::Boolean x);
 extern CDR &operator<< (CDR &cdr, CORBA::Octet x);

@@ -45,6 +45,10 @@
 #include "tao/corba.h"
 #include "tao/Timeprobe.h"
 
+#if !defined (__ACE_INLINE__)
+# include "tao/GIOP.i"
+#endif /* ! __ACE_INLINE__ */
+
 static const char digits [] = "0123456789ABCD";
 static const char *names [] =
 {
@@ -117,7 +121,7 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
       if (buflen > stream.length ())
         {
           ACE_DEBUG ((LM_DEBUG,
-		      "(%P|%t) ?? writebuf, buflen %u > length %u\n",
+                      "(%P|%t) ?? writebuf, buflen %u > length %u\n",
                       buflen, stream.length ()));
           ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
           return CORBA::B_FALSE;
@@ -994,11 +998,11 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
     case TAO_GIOP_USER_EXCEPTION:
     case TAO_GIOP_SYSTEM_EXCEPTION:
       {
-	char* buf;
+        char* buf;
 
         // Pull the exception ID out of the marshaling buffer.
         {
-	  if (this->stream_.get_string (buf) == CORBA::B_FALSE)
+          if (this->stream_.get_string (buf) == CORBA::B_FALSE)
             {
               TAO_GIOP::send_error (this->handler_);
               env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_YES));
@@ -1062,7 +1066,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
                     delete exception;
                     ACE_DEBUG ((LM_ERROR, "(%P|%t) invoke, unmarshal %s exception %s\n",
                                 (reply_status == TAO_GIOP_USER_EXCEPTION) ? "user" : "system",
-				buf));
+                                buf));
                     TAO_GIOP::send_error (this->handler_);
                     return TAO_GIOP_SYSTEM_EXCEPTION;
                   }
@@ -1133,7 +1137,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
         // Make sure a new connection is used next time.
         this->handler_->close ();
-        this->handler_ = 0; 
+        this->handler_ = 0;
         // We may not need to do this since TAO_GIOP_Invocations
         // get created on a per-call basis. For now we'll play it safe.
       }

@@ -220,10 +220,9 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 #include "tao/Object.i"
 #include "tao/ORB.i"
 #include "tao/Marshal.i"
-#endif /* 0 */
-
 #include "tao/CDR.i"
 #include "tao/GIOP.i"
+#endif /* 0 */
 
 #include "tao/IIOP_ORB.i"
 #include "tao/IIOP_Object.i"
