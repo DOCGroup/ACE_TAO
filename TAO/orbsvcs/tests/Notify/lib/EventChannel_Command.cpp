@@ -106,14 +106,11 @@ TAO_NS_EventChannel_Command::create_colocated_ecf (ACE_ENV_SINGLE_ARG_DECL)
   PortableServer::POA_var poa;
   CosNaming::NamingContextExt_var naming;
 
-  LOOKUP_MANAGER->resolve (orb ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->resolve (orb);
 
-  LOOKUP_MANAGER->resolve (poa ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->resolve (poa);
 
-  LOOKUP_MANAGER->resolve (naming ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->resolve (naming);
 
   notify_service->init (orb.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
