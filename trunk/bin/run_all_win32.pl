@@ -132,9 +132,9 @@ foreach $i (@RUN_LIST) {
     print LOG "$CMD: =============================================\n";
     print LOG "$CMD: running $program in $directory at ", $date, "\n";
     local $subdir =
-	$ENV{ACE_ROOT} . '/'. $directory;
+        $ENV{ACE_ROOT} . '/'. $directory;
     chdir ($subdir)
-	|| mydie "cannot chdir to $subdir";
+        || mydie "cannot chdir to $subdir";
 
     $run_error = 0;
 
@@ -143,21 +143,21 @@ foreach $i (@RUN_LIST) {
     open (RUN, "$exe_log_name") || push @failures, "Can't open execution log file $exe_log_name\n";
 
     while (<RUN>) {
-	print LOG $_;
-	if (m/^Error/ || m/FAILED/ || m/EXCEPTION/) {
-	    $run_error = 1;
-	}
+        print LOG $_;
+        if (m/^Error/ || m/FAILED/ || m/EXCEPTION/) {
+            $run_error = 1;
+        }
     }
     if (close(RUN) == 0) {
-	push @failures, "Error when closing log file $program in $directory";
-	next;
+        push @failures, "Error when closing log file $program in $directory";
+        next;
     }
     $date = localtime;
     print LOG "$CMD: $program finished ", $date, "\n";
 
     if ($run_error != 0) {
-	push @failures,
-	    "errors detected while running $program in $directory";
+        push @failures,
+            "errors detected while running $program in $directory";
     }
 
     unlink ("$exe_log_name");
