@@ -3,6 +3,13 @@ Mon Apr 20 09:48:01 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/CDR/growth.cpp (main): cast ACE_ONE_SECOND_IN_USECS
           to ACE_UINT32 to avoid ambiguity when using ACE_U_LongLong.
 
+        * tao/append.cpp (append): commented out unused local
+          "continue_append".
+
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (run_tests): removed
+          unused local "context_switch".  Protected declarations of
+          "ptartTime" and "pstopTime" for CHORUS only.
+
 Mon Apr 20 06:36:44 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
         * TAO_IDL/be/be_interface.cpp: The generated typecode was incorect
