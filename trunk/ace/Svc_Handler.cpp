@@ -465,7 +465,8 @@ ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::flush_i (void)
     result = this->peer ().send_n (mblk);
 
   // This method assumes the caller holds the queue's lock!
-  this->msg_queue ()->flush_i ();
+  if (result != -1)
+    this->msg_queue ()->flush_i ();
 
   if (this->timeoutp_ != 0)
     // Update the next timeout period by adding the interval.
