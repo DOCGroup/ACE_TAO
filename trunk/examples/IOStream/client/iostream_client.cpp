@@ -20,8 +20,8 @@ int main (int argc, char *argv[])
   float f;
 
 #if defined (ACE_HAS_STRING_CLASS)
-  String s1;
-  String s2;
+  ACE_IOStream_String s1;
+  ACE_IOStream_String s2;
   server >> s1 >> i >> f >> s2;
 
   cerr << "Server said:\n\t";

@@ -46,7 +46,9 @@ ACE_Streambuf_T<STREAM>::ACE_Streambuf_T (STREAM *peer,
   // functions anyway and I haven't implemented anything there to
   // support unbuffered IO.
 
+#if !defined (ACE_LACKS_UNBUFFERED_STREAMBUF)
   this->unbuffered (0);
+#endif /* ! ACE_LACKS_UNBUFFERED_STREAMBUF */
 
   // Linebuffered is similar to unbuffered.  Again, I don't have any
   // need for this and I don't see the advantage.  I believe this

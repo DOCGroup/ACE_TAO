@@ -1,3 +1,19 @@
+Sun Nov 16 11:13:43 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* include/makeinclude/platform_linux_kcc.GNU (SOFLAGS): Improved
+ 	  this file a bit to work better with NULL pointers.  Thanks to
+ 	  Ben Eng <ben@jetpen.com> for reporting this.
+
+	* examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp (main):
+ 	  Changed allocator to alloc to avoid conflicts with STL.  Thanks
+ 	  to Ben Eng <ben@jetpen.com> for reporting this.
+
+	* ace/config-linux-kcc.h: Added some fixes for the KCC compiler.
+  	  Thanks to Ben Eng <ben@jetpen.com> for reporting this.
+
+	* ace/IOStream: Added fixes for the standard C++ library.  Thanks
+ 	  to Ben Eng <ben@jetpen.com> for reporting this.
+
 Sat Nov 15 17:31:58 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * Ran "make depend" on all of ACE.

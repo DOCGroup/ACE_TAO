@@ -68,7 +68,7 @@
 
 // Compiler/platform has correctly prototyped header files.
 #define ACE_HAS_CPLUSPLUS_HEADERS
-#define ACE_LACKS_POSIX_PROTOTYPES_FOR_SOME_FUNCS
+#define ACE_LACKS_SOME_POSIX_PROTOTYPES
 
 // Platforms lacks UNIX domain sockets.
 //#define ACE_LACKS_UNIX_DOMAIN_SOCKETS
@@ -130,10 +130,12 @@
 //#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
 // Define this if you want to use the standard C++ library
-#if defined(__KCC)
+#if defined (__KCC)
 #define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-#define ACE_LACKS_ACE_IOSTREAM 1
-#endif
+#define ACE_LACKS_IOSTREAM_FX 1
+#define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
+#define ACE_LACKS_UNBUFFERED_STREAMBUF 1
+#endif /* __KCC */
 
 #endif /* ACE_CONFIG_H */

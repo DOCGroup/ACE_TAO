@@ -9,7 +9,7 @@ optimize = 0
 CC              = KCC
 CXX		= KCC
 CFLAGS		+=
-CCFLAGS		+= $(CFLAGS)
+CCFLAGS		+= $(CFLAGS) -DNULL=0
 DCFLAGS		+= +K0 -g
 DLD             = $(CXX)
 LD		= $(CXX)
@@ -20,7 +20,7 @@ AR              = KCC
 ARFLAGS         = -o
 RANLIB          = true
 
-SOFLAGS = $(CPPFLAGS) -tall
+SOFLAGS = $(CPPFLAGS) 
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<
 PRELIB  = @true
 PRELIB_USES_OBJ_ONLY = 1

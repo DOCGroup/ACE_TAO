@@ -8,7 +8,7 @@
 
 // Shared memory allocator (note that this chews up the
 // ACE_DEFAULT_SEM_KEY).
-static ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple> allocator;
+static ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple> alloc;
 
 const int SEM_KEY = ACE_DEFAULT_SEM_KEY + 1;
 
@@ -29,8 +29,8 @@ parent (char *shm)
   else if (sem.acquire (1) == -1)
     ACE_ERROR ((LM_ERROR, "%p", "parent sem.acquire(1)"));
 
-  if (allocator.remove () == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "allocator.remove"));
+  if (alloc.remove () == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", "alloc.remove"));
   if (sem.remove () == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "sem.remove"));
   return 0;
@@ -60,7 +60,7 @@ child (char *shm)
 int
 main (int, char *[])
 {
-  char *shm = (char *) allocator.malloc (27);
+  char *shm = (char *) alloc.malloc (27);
 
   switch (ACE_OS::fork ())
     {

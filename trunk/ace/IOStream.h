@@ -33,6 +33,9 @@
 #if defined (ACE_HAS_STRING_CLASS)
 #if defined (ACE_WIN32)
 typedef CString ACE_IOStream_String;
+#elif defined (ACE_HAS_STANDARD_CPP_LIBRARY) && defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
+#include /**/ <string>
+typedef std::string ACE_IOStream_String;
 #else
 #include /**/ <String.h>
 typedef String ACE_IOStream_String;
@@ -279,6 +282,17 @@ protected:
   // that time.
 
   virtual ACE_HANDLE get_handle (void);
+
+#if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+  char *base (void) const { return eback_saved_; }
+  char *ebuf (void) const { return eback_saved_ + streambuf_size_; }
+  int blen (void) const { return streambuf_size_; }
+  void setb (char* b, char* eb, int a=0)
+    {
+      setbuf (b, (eb - b));
+    }
+  int out_waiting (void) { return pptr () - pbase (); }
+#endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 };
 
 ///////////////////////////////////////////////////////////////////////////

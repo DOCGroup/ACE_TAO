@@ -39,72 +39,72 @@ public:
   Handler (void) {}
 
   virtual int open (void *)
-  {
-    if (this->reactor () ->register_handler
-	(this, ACE_Event_Handler::READ_MASK) == - 1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-			 "registering connection handler with ACE_Reactor\n"),
-			-1);
+    {
+      if (this->reactor ()->register_handler
+          (this, ACE_Event_Handler::READ_MASK) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "registering connection handler with ACE_Reactor\n"),
+                          -1);
 
-    return 0;
-  }
+      return 0;
+    }
 
   virtual void destroy (void)
-  {
-    this->peer ().close ();
-    delete this ;
-  }
+    {
+      this->peer ().close ();
+      delete this ;
+    }
 
   virtual int close (u_long)
-  {
-    this->destroy ();
-    return 0 ;
-  }
+    {
+      this->destroy ();
+      return 0 ;
+    }
 
   virtual int handle_input (ACE_HANDLE)
-  {
-    int i;
-    float f;
+    {
+      int i;
+      float f;
 
 #if defined (ACE_HAS_STRING_CLASS)
-    String s;
+      ACE_IOStream_String s;
 
-    if (!(this -> peer () >> i >> f >> s))
-      {
-	cerr << "Error getting data" << endl ;
-	return - 1 ;
-      }
+      if (!(this->peer () >> i >> f >> s))
+        {
+          cerr << "Error getting data" << endl ;
+          return - 1 ;
+        }
 
-    cerr << "Received (" << i << ") (" << f << ") (" << s << ")" << endl ;
+      cerr << "Received (" << i << ") (" << f << ") (" << s << ")" << endl ;
 
-    if (!(this -> peer () << "Received: " << i << " " << f << " " << s << endl))
-      {
-	cerr << __LINE__ << "Error sending data" << endl ;
-	return - 1 ;
-      }
+      if (!(this->peer () << "Received: " << i << " " << f << " " << s << endl))
+        {
+          cerr << __LINE__ << "Error sending data" << endl ;
+          return - 1 ;
+        }
 #else
-    if (!(this -> peer () >> i >> f))
-      {
-	cerr << "Error getting data" << endl ;
-	return - 1 ;
-      }
+      if (!(this->peer () >> i >> f))
+        {
+          cerr << "Error getting data" << endl ;
+          return - 1 ;
+        }
 
-    cerr << "Received (" << i << ") (" << f << ")" << endl;
+      cerr << "Received (" << i << ") (" << f << ")" << endl;
 
-    if (!(this -> peer () << i << " " << f << endl))
-      {
-	cerr << __LINE__ << "Error sending data" << endl ;
-	return - 1 ;
-      }
+      if (!(this->peer () << i << " " << f << endl))
+        {
+          cerr << __LINE__ << "Error sending data" << endl ;
+          return - 1 ;
+        }
 #endif /* ACE_HAS_STRING_CLASS */
 
-    // In order to flush the output to the peer, we have to use the
-    // sync () function.  Some iostreams implementations let us use a
-    // 'flush' function much like the 'endl' function.
+      // In order to flush the output to the peer, we have to use the
+      // sync () function.  Some iostreams implementations let us use a
+      // 'flush' function much like the 'endl' function.
 
-    // this->peer ().sync ();
-    return 0;
-  }
+      // this->peer ().sync ();
+      return 0;
+    }
 };
 
 // Create an object which will accept new connection requests and
@@ -133,7 +133,7 @@ main (int argc, char *argv [])
 
   Logging_Acceptor peer_acceptor ;
 
-  if (peer_acceptor.open (ACE_INET_Addr (argc > 1 ? atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT)) == - 1)
+  if (peer_acceptor.open (ACE_INET_Addr (argc > 1 ? atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), - 1);
 
   else if (ACE_Reactor::instance ()->register_handler
