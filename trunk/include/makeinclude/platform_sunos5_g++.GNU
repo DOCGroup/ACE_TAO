@@ -45,11 +45,15 @@ CC              = gcc
 CXX             = g++
 CFLAGS          += -W -Wall -Wpointer-arith -pipe #### -Winline
 
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
 ifeq ($(threads),1)
   CPPFLAGS      += -D_REENTRANT
 endif
 
-CCFLAGS         += $(CFLAGS) -fno-implicit-templates
+CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
 DLD             = $(CXX)
 LD              = $(CXX)
 LDFLAGS         +=

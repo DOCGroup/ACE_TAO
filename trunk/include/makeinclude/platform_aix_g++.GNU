@@ -12,11 +12,17 @@
 
 debug = 1
 static_libs_only = 1
- 
+
 CC              = gcc
 CXX             = gcc
+
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
 CFLAGS          += -W -Wall -nostdlib -mcpu=common
-CCFLAGS         += $(CFLAGS) -fno-implicit-templates
+CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
+
 #only needed for one of the tests and causes compiler errors in building libACE
 #CCFLAGS         += -fhandle-exceptions
 DCFLAGS         += -g

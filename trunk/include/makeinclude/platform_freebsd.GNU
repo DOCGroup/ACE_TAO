@@ -10,11 +10,11 @@ endif
 ifndef exceptions
   exceptions = 1
 endif
- 
+
 ifeq (,$(debug))
   debug = 1
 endif
- 
+
 ifeq (,$(optimize))
   optimize = 1
 endif
@@ -22,40 +22,13 @@ endif
 CC              = gcc
 CXX             = g++
 
-CXX_VERSION := $(shell $(CXX) -dumpversion)
- 
-# If no option has been specified, try to enable implicit_templates based
-# on the version of the compiler.
+# Test for template instantiation.
 #
-ifeq ($(implicit_templates),)
-  ifeq (2.95,$(findstring 2.95,$(CXX_VERSION)))
-    implicit_templates = 1
-  else
-    ifeq (3.,$(findstring 3.,$(CXX_VERSION)))
-      implicit_templates = 1
-    endif
-    ifeq (2.96,$(findstring 2.96,$(CXX_VERSION)))
-      implicit_templates = 1
-    endif
-  endif
-endif
- 
-# User didn't specify and we couldn't guess if this version of the compiler
-# works fine with implicit template instantiation. Turn if off. This could
-# as well go into the previous check but GNU Make conditionals are lame.
-#
-ifeq ($(implicit_templates),)
-  implicit_templates = 0
-endif
- 
-ifeq ($(implicit_templates),0)
-  ifeq ($(IMPLICIT_TEMPLATES_FLAG),) # Turn on flags if none is speficied.
-    IMPLICIT_TEMPLATES_FLAG=-fno-implicit-templates
-  endif
-endif
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
 
 CFLAGS          += -W -Wall -Wpointer-arith -pipe
-CCFLAGS         += $(CFLAGS) $(IMPLICIT_TEMPLATES_FLAG)
+CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
 DCFLAGS         += -g
 ifneq ($(VERSION),3)
   LDFLAGS       += -Wl,-rpath $(ACE_ROOT)/ace

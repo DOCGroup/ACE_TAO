@@ -5,10 +5,15 @@
 debug = 1
 optimize = 1
 
-CC	= gcc 
+CC	= gcc
 CXX	= g++
 CFLAGS  += -fno-strict-prototypes
-CCFLAGS += $(CFLAGS) -fno-implicit-templates
+
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
 DCFLAGS	+= -g
 DLD	= /bin/ld
 LD	= $(CXX)
@@ -19,7 +24,7 @@ PIC	= -fpic
 AR	= ar
 ARFLAGS	= ruv
 RANLIB	= ranlib
-SOFLAGS	= -assert pure-text 
+SOFLAGS	= -assert pure-text
 # SOBUILD - compile into .so directly
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 # SOLINK	= $(SOLINK.cc) -o $@ $(LDFLAGS) $<

@@ -60,35 +60,9 @@ CC  = gcc
 CXX = g++
 endif
 
-CXX_VERSION := $(shell $(CXX) -dumpversion)
-
-# If no option has been specified, try to enable implicit_templates based
-# on the version of the compiler.
+# Test for template instantiation.
 #
-ifeq ($(implicit_templates),)
-  ifeq (2.95,$(findstring 2.95,$(CXX_VERSION)))
-    implicit_templates = 1
-  else
-    ifeq (3.,$(findstring 3.,$(CXX_VERSION)))
-      implicit_templates = 1
-    else
-      ifeq (2.96,$(findstring 2.96,$(CXX_VERSION)))
-        implicit_templates = 1
-      else
-        implicit_templates = 0
-      endif
-    endif
-  endif
-endif
-
-# User didn't specify and we couldn't guess if this version of the compiler
-# works fine with implicit template instantiation. Turn if off.
-#
-ifeq ($(implicit_templates),0)
-  ifeq ($(IMPLICIT_TEMPLATES_FLAG),) # Turn on flags if none is speficied.
-    IMPLICIT_TEMPLATES_FLAG=-fno-implicit-templates
-  endif
-endif
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 CFLAGS  += -W -Wall -Wpointer-arith -pipe
 ifeq ($(threads),1)
@@ -96,7 +70,7 @@ ifeq ($(threads),1)
                $(PLATFORM_AIO_SUPPORT)
 endif # threads
 
-CCFLAGS += $(CFLAGS) $(IMPLICIT_TEMPLATES_FLAG)
+CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
 DCFLAGS += -g
 DLD     = $(CXX)
 LD      = $(CXX)
