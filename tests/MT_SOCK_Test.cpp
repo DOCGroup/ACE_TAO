@@ -87,7 +87,7 @@ client (void *arg)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "recv_n"));
 
   ACE_DEBUG ((LM_DEBUG,
-	      "(%P|%t) received handshake from server"));
+	      "(%P|%t) received handshake from server\n"));
 
   // Close the connection completely.
   if (cli_stream.close () == -1) 
