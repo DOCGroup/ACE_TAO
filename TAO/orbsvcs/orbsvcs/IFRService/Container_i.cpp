@@ -1857,7 +1857,7 @@ TAO_Container_i::create_ext_value_i (
   TAO_IFR_Generic_Utils<CORBA::ExtInitializerSeq>::set_initializers (
       initializers,
       this->repo_->config (),
-      this->section_key_
+      new_key
     );
 
   CORBA::ULong length = initializers.length ();
@@ -2420,8 +2420,8 @@ TAO_Container_i::update_refs (const char *path,
 ACE_TString
 TAO_Container_i::create_value_common (
     CORBA::DefinitionKind container_kind,
-    ACE_Configuration_Section_Key container_key,
-    ACE_Configuration_Section_Key new_key,
+    ACE_Configuration_Section_Key &container_key,
+    ACE_Configuration_Section_Key &new_key,
     const char *id,
     const char *name,
     const char *version,
