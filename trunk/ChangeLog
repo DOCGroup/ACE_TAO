@@ -1,3 +1,9 @@
+Sat Dec 29 06:31:50 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tests/MEM_Stream_Test.cpp (test_concurrent): Added an
+	  ACE_UNUSED_ARG(connect_client) to silence complaints on certain
+ 	  compilers about unused arguments.
+
 Sat Dec 29 12:54:45 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * examples/IPC_SAP/SOCK_SAP/C-inclient.cpp:
