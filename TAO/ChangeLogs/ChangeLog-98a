@@ -4700,8 +4700,8 @@ Thu Apr 16 10:31:53 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 Thu Apr 16 10:10:16 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-        * tests\Quoter\Quoter_Impl.cpp: Improved the copy operation
-        * tests\Quoter\client.{h,cpp}: Using the copy operation
+        * tests/Quoter/Quoter_Impl.cpp: Improved the copy operation
+        * tests/Quoter/client.{h,cpp}: Using the copy operation
                   Status: Bootstraping and copying of Lifecycle Objects works.
 
 Thu Apr 16 08:36:16 1998  David L. Levine  <levine@cs.wustl.edu>

@@ -2568,7 +2568,7 @@ Fri May 14 17:14:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Fri May 14 16:15:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
-        * orbsvcs\orbsvcs\Sched\Reconfig_Scheduler.{cpp, h}: more on a
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.{cpp, h}: more on a
           very rough draft of the initial implementation.
 
 Fri May 14 15:25:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
