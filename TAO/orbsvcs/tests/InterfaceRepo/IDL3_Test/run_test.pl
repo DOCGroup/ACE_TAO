@@ -12,6 +12,7 @@ $status = 0;
 
 $ifr_iorfile= "if_repo.ior";
 $test_idl = PerlACE::LocalFile ("test.idl");
+$includes = "-I ../../../.. -I../../../../CIAO/ciao -I../../../../orbsvcs";
 
 # find the tao_ifr executable.
 # Its placement is dependent upon the OS and if MPC generated makefiles are used.
@@ -53,7 +54,7 @@ if (PerlACE::waitforfile_timed ($ifr_iorfile, 15) == -1) {
     exit 1;
 }
 
-$TAO_IFR->Arguments ("-ORBInitRef InterfaceRepository=file://$ifr_iorfile $test_idl");
+$TAO_IFR->Arguments ("-ORBInitRef InterfaceRepository=file://$ifr_iorfile $includes $test_idl");
 
 $tresult = $TAO_IFR->SpawnWaitKill (30);
 

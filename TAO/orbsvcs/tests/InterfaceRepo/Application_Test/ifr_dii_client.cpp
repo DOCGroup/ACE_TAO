@@ -12,7 +12,8 @@ IFR_DII_Client::IFR_DII_Client (void)
   : namespace_name (CORBA::string_dup ("warehouse")),
     interface_name (CORBA::string_dup ("inventory")),
     op_name (CORBA::string_dup ("getCDinfo")),
-    lookup_by_name_ (0)
+    lookup_by_name_ (false),
+    debug_ (false)
 {
 }
 
@@ -44,9 +45,10 @@ IFR_DII_Client::init (int argc,
 
   if (CORBA::is_nil (this->target_.in ()))
   {
-     ACE_ERROR_RETURN ((LM_ERROR,
-                        "Unable to find interface repository in: file://iorfile\n"),
-                       -1);
+     ACE_ERROR_RETURN ((
+        LM_ERROR,
+        "Unable to find interface repository in: file://iorfile\n"),
+        -1);
   }
 
   if (this->parse_args (argc, argv) == -1)
@@ -60,20 +62,27 @@ IFR_DII_Client::init (int argc,
 int
 IFR_DII_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 {
+  int result = 0;
+  
   if (this->lookup_by_name_)
     {
-       if (this->lookup_interface_def (ACE_ENV_SINGLE_ARG_PARAMETER) == -1)
-         {
-            return -1;
-         }
+      result = this->lookup_interface_def (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
+    
+      if (result == -1)
+        {
+          return -1;
+        }
     }
   else
     {
-       if (this->find_interface_def (ACE_ENV_SINGLE_ARG_PARAMETER))
-          return (-1);      
-
+      result = this->find_interface_def (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
+      
+      if (result == -1)
+        {
+          return (-1);
+        }  
     }
 
   this->get_operation_def (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -92,23 +101,26 @@ int
 IFR_DII_Client::parse_args (int argc,
                             char *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "n");
+  ACE_Get_Opt opts (argc, argv, "dn");
   int c;
 
   while ((c = opts ()) != -1)
     switch (c)
       {
-      case 'n':   // Select lookup by name.
-        this->lookup_by_name_ = 1;
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage: %s"
-                           " [-n]"
-                           "\n",
-                           argv [0]),
-                          -1);
+        case 'd':
+          this->debug_ = true;
+          break;
+        case 'n':   // Select lookup by name.
+          this->lookup_by_name_ = true;
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "usage: %s"
+                            " [-n]"
+                            "\n",
+                            argv [0]),
+                            -1);
       }
 
   return 0;
@@ -122,11 +134,11 @@ IFR_DII_Client::find_interface_def (ACE_ENV_SINGLE_ARG_DECL)
 
 
   if (CORBA::is_nil (this->target_def_.in ()))
-  {
-     ACE_ERROR_RETURN ((LM_ERROR,
-                        "Unable to find interface def\n"),
-                       -1);
-  }
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                          "Unable to find interface def\n"),
+                        -1);
+    }
 
   return 0;
 }
@@ -147,9 +159,9 @@ IFR_DII_Client::lookup_interface_def (ACE_ENV_SINGLE_ARG_DECL)
   // repository called "warehouse"?
   CORBA::ContainedSeq_var candidates =
     this->repo_->lookup_name (this->namespace_name.in (),
-                              -1,               // Unlimited level recursion.
-                              CORBA::dk_all,    // Any type of contained object.
-                              1                 // Exclude parents of interfaces.
+                              -1,            // Unlimited level recursion.
+                              CORBA::dk_all, // Any type of contained object.
+                              1              // Exclude parents of interfaces.
                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN(-1);
 
@@ -259,7 +271,8 @@ IFR_DII_Client::create_dii_request (ACE_ENV_SINGLE_ARG_DECL)
 
   this->req_->set_return_type (this->result_.in ());
 
-  CORBA::ParDescriptionSeq_var params = this->op_->params (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ParDescriptionSeq_var params =
+    this->op_->params (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::ULong length = params->length ();
@@ -327,38 +340,55 @@ IFR_DII_Client::invoke_and_display (ACE_ENV_SINGLE_ARG_DECL)
       CORBA::NVList_ptr args = this->req_->arguments ();
 
       const char *artist = 0;
-      *args->item (0)->value () >>= artist;
+      ACE_ASSERT ((*args->item (0)->value () >>= artist) == TRUE);
+      
+      ACE_ASSERT (ACE_OS::strcmp (artist, "the Beatles") == 0);
 
       const char *title = 0;
-      *args->item (1)->value () >>= title;
+      ACE_ASSERT ((*args->item (1)->value () >>= title) == TRUE);
+      
+      const char *correct = "Sgt. Pepper's Lonely Hearts Club Band";
+      ACE_ASSERT (ACE_OS::strcmp (title, correct) == 0);
 
       CORBA::Float price = 0.0f;
-      *args->item (2)->value () >>= price;
+      ACE_ASSERT ((*args->item (2)->value () >>= price) == TRUE);
+      
+      ACE_ASSERT (price == 13.49f);
 
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%s:\t%s\n")
-                  ACE_TEXT ("%s:\t%s\n")
-                  ACE_TEXT ("%s:\t$%2.2f\n"),
-                  args->item (0)->name (),
-                  artist,
-                  args->item (1)->name (),
-                  title,
-                  args->item (2)->name (),
-                  price));
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("%s:\t%s\n")
+                      ACE_TEXT ("%s:\t%s\n")
+                      ACE_TEXT ("%s:\t$%2.2f\n"),
+                      args->item (0)->name (),
+                      artist,
+                      args->item (1)->name (),
+                      title,
+                      args->item (2)->name (),
+                      price));
+        }
 
       CORBA::Boolean in_stock = 0;
 
-      this->req_->return_value () >>= CORBA::Any::to_boolean (in_stock);
+      CORBA::Boolean ret_status =
+        this->req_->return_value () >>= CORBA::Any::to_boolean (in_stock);
+        
+      ACE_ASSERT (ret_status == TRUE);
+      ACE_ASSERT (in_stock == TRUE);
 
-      if (in_stock)
+      if (this->debug_)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("status: in stock\n")));
-        }
-      else
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("status: out of stock\n")));
+          if (in_stock)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("status: in stock\n")));
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("status: out of stock\n")));
+            }
         }
     }
 }
