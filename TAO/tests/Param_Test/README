@@ -52,10 +52,14 @@ To run the client, type
        short                for shorts
        ulonglong            for unsigned long long
        ubstring             for unbounded string
+       ubwstring            for unbounded wide string
        bdstring             for bounded string
+       bswstring            for bounded wide string
        fixed_struct         for fixed sized structs
        ub_strseq            for sequences of strings
+       ub_wstrseq           for sequences of wide strings
        bd_strseq            for bounded sequences of strings
+       bd_wstrseq           for bounded sequences of wide strings
        var_struct           for variable structs
        nested_struct        for nested structs
        objref_struct        for object references inside structures

@@ -6,31 +6,31 @@
 //    TAO/tests/Param_Test
 //
 // = FILENAME
-//    bd_string.h
+//    ub_wstring.h
 //
 // = DESCRIPTION
-//     Tests bounded string
+//     Tests unbounded wide string
 //
 // = AUTHORS
-//      Carlos O'Ryan
+//      Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ============================================================================
 
-#ifndef PARAM_TEST_BOUNDED_STRING_H
-#define PARAM_TEST_BOUNDED_STRING_H
+#ifndef PARAM_TEST_UNBOUNDED_WSTRING_H
+#define PARAM_TEST_UNBOUNDED_WSTRING_H
 
 #include "param_testCli.h"
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        tests bounded strings
+//                        test unbounded wide strings
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-class Test_Bounded_String
+class Test_Unbounded_WString
 {
 public:
-  Test_Bounded_String (void);
+  Test_Unbounded_WString (void);
   // ctor
 
-  ~Test_Bounded_String (void);
+  ~Test_Unbounded_WString (void);
   // dtor
 
   int run_sii_test (Param_Test_ptr objref,
@@ -41,16 +41,16 @@ public:
                 CORBA::NVList_ptr retval,
                 CORBA::Environment &env);
   // add args to NVList for DII
-
+/*
   int add_args (CORBA::Request_ptr &req,
                 CORBA::Environment &env);
-  // add args to NVList using << operator
-
+  // add args to DII request using << operator
+*/
   const char *opname (void) const;
   // return operation name
 
   int init_parameters (Param_Test_ptr objref,
-                        CORBA::Environment &env);
+                       CORBA::Environment &env);
   // set values for parameters
 
   int reset_parameters (void);
@@ -65,24 +65,25 @@ public:
   void print_values (void);
   // print all the values
 
-  void dii_req_invoke (CORBA::Request *, CORBA::Environment &);
+  void dii_req_invoke (CORBA::Request *, 
+                       CORBA::Environment &);
   // invoke DII request with appropriate exception handling.
 
 private:
   char *opname_;
   // operation name
 
-  char *in_;
+  CORBA::WChar *in_;
   // in parameter
 
-  char *inout_;
+  CORBA::WChar *inout_;
   // inout parameter
 
-  char *out_;
+  CORBA::WChar *out_;
   // out parameter
 
-  char *ret_;
+  CORBA::WChar *ret_;
   // return value
 };
 
-#endif /* PARAM_TEST_BOUNDED_STRING_H */
+#endif /* PARAM_TEST_UNBOUNDED_WSTRING_H */

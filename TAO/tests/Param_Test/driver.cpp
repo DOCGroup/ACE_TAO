@@ -181,6 +181,32 @@ Driver::run (void)
         delete client;
       }
       break;
+    case Options::TEST_UB_WSTRING:
+      {
+        Param_Test_Client<Test_Unbounded_WString> *client = new
+          Param_Test_Client<Test_Unbounded_WString> (this->orb_.in (),
+                                                     this->objref_.in(),
+                                                     new Test_Unbounded_WString);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
+    case Options::TEST_BD_WSTRING:
+      {
+        Param_Test_Client<Test_Bounded_WString> *client = new
+          Param_Test_Client<Test_Bounded_WString> (this->orb_.in (),
+                                                   this->objref_.in(),
+                                                   new Test_Bounded_WString);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
     case Options::TEST_FIXED_STRUCT:
       {
         Param_Test_Client<Test_Fixed_Struct> *client = new
@@ -213,6 +239,32 @@ Driver::run (void)
           Param_Test_Client<Test_Bounded_String_Sequence> (this->orb_.in (),
                                                            this->objref_.in(),
                                                            new Test_Bounded_String_Sequence);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
+    case Options::TEST_UB_WSTRING_SEQUENCE:
+      {
+        Param_Test_Client<Test_WString_Sequence> *client = new
+          Param_Test_Client<Test_WString_Sequence> (this->orb_.in (),
+                                                    this->objref_.in(),
+                                                    new Test_WString_Sequence);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
+    case Options::TEST_BD_WSTRING_SEQUENCE:
+      {
+        Param_Test_Client<Test_Bounded_WString_Sequence> *client = new
+          Param_Test_Client<Test_Bounded_WString_Sequence> (this->orb_.in (),
+                                                            this->objref_.in(),
+                                                            new Test_Bounded_WString_Sequence);
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else

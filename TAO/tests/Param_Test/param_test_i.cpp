@@ -133,6 +133,52 @@ Param_Test_i::test_bounded_string (const char *s1,
   return retstr;
 }
 
+// test unbounded strings. For return and out types, we return duplicates of
+// the in string. For the inout, we append the same string to itself and send
+// it back
+CORBA::WChar *
+Param_Test_i::test_unbounded_wstring (const CORBA::WChar *ws1,
+                                      CORBA::WChar *&ws2,
+                                      CORBA::WString_out ws3,
+                                      CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  CORBA::WChar *retwstr = CORBA::wstring_dup (ws1);
+  ws3 = CORBA::wstring_dup (ws1);
+  CORBA::ULong len = ACE_OS::wslen (ws2);
+  CORBA::WChar *tmp = CORBA::wstring_alloc (2*len);
+  for (CORBA::ULong i = 0; i < 2; i++)
+    for (CORBA::ULong j = 0; j < len; j++)
+      tmp[j + i*len] = ws2[j];
+  tmp[2*len] = 0;
+  CORBA::wstring_free (ws2);
+  ws2 = tmp;
+  return retwstr;
+}
+
+// test bounded strings. For return and out types, we return duplicates of
+// the in string. For the inout, we append the same string to itself and send
+// it back
+CORBA::WChar *
+Param_Test_i::test_bounded_wstring (const CORBA::WChar *ws1,
+                                    CORBA::WChar *&ws2,
+                                    CORBA::WString_out ws3,
+                                    CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  CORBA::WChar *retwstr = CORBA::wstring_dup (ws1);
+  ws3 = CORBA::wstring_dup (ws1);
+  CORBA::ULong len = ACE_OS::wslen (ws2);
+  CORBA::WChar *tmp = CORBA::wstring_alloc (2*len);
+  for (CORBA::ULong i = 0; i < 2; i++)
+    for (CORBA::ULong j = 0; j < len; j++)
+      tmp[j + i*len] = ws2[j];
+  tmp[2*len] = 0;
+  CORBA::wstring_free (ws2);
+  ws2 = tmp;
+  return retwstr;
+}
+
 // test for fixed structures. Just copy the in parameter into all the others
 Param_Test::Fixed_Struct
 Param_Test_i::test_fixed_struct (const Param_Test::Fixed_Struct &s1,
@@ -274,6 +320,48 @@ Param_Test_i::test_bounded_strseq (const Param_Test::Bounded_StrSeq & s1,
   *out = s1;
   *ret = s1;
   s3 = out;
+  return ret;
+}
+
+Param_Test::WStrSeq *
+Param_Test_i::test_wstrseq (const Param_Test::WStrSeq &ws1,
+                            Param_Test::WStrSeq &ws2,
+                            Param_Test::WStrSeq_out ws3,
+                            CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // we copy the "in" sequences into all the inout, out and return sequences.
+
+  Param_Test::WStrSeq
+    *ret = new Param_Test::WStrSeq,
+    *out = new Param_Test::WStrSeq;
+
+  // now copy all elements of s1 into the others using the assignment operator
+  ws2 = ws1;
+  *out = ws1;
+  *ret = ws1;
+  ws3 = out;
+  return ret;
+}
+
+Param_Test::Bounded_WStrSeq *
+Param_Test_i::test_bounded_wstrseq (const Param_Test::Bounded_WStrSeq & ws1,
+                                    Param_Test::Bounded_WStrSeq & ws2,
+                                    Param_Test::Bounded_WStrSeq_out ws3,
+                                    CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // we copy the "in" sequences into all the inout, out and return sequences.
+
+  Param_Test::Bounded_WStrSeq
+    *ret = new Param_Test::Bounded_WStrSeq,
+    *out = new Param_Test::Bounded_WStrSeq;
+
+  // now copy all elements of s1 into the others using the assignment operator
+  ws2 = ws1;
+  *out = ws1;
+  *ret = ws1;
+  ws3 = out;
   return ret;
 }
 
