@@ -8,7 +8,8 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  =	Factory
+DIRS  =	Factory \
+	Simple
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
