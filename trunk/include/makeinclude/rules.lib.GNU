@@ -22,7 +22,11 @@ VSHOBJS1 =
 else
 LSRC    += $(LSRC2)
 ifdef PRELIB
+ifdef PRELIB_USES_OBJ_ONLY
+VSHOBJS = $(LSRC:%.cpp=$(VSHDIR)%.o)
+else
 VSHOBJS	= $(LSRC:%.cpp=$(VSHDIR)%.so)
+endif
 VSHOBJS1 = $(VSHOBJS)
 else
 VSHOBJS = $(LSRC:%.cpp=$(VSHDIR)%.so)
