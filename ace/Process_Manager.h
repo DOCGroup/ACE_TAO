@@ -321,7 +321,7 @@ private:
   // Returns -1 if <process_id> is not in the <process_table_>
 
 #if defined (ACE_WIN32)
-  size_t find_proc (ACE_HANDLE process_handle);
+  ssize_t find_proc (ACE_HANDLE process_handle);
   // Locate the index of the table slot occupied by <process_handle>.
   // Returns ~0 if <process_handle> is not in the <process_table_>
 #endif /* ACE_WIN32 */
