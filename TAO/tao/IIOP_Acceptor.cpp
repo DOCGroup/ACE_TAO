@@ -39,3 +39,9 @@ TAO_IIOP_Acceptor::acceptor (void)
 {
   return &base_acceptor_;
 }
+
+int
+TAO_IIOP_Acceptor::close (void)
+{
+  return this->base_acceptor_.close ();
+}
