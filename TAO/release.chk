@@ -26,14 +26,13 @@ Legend:
 [11110 ] IDL_Cubit compiles
 [11110 ] 	svr runs
 [11111 ]	clnt runs
-      
+
 [1111x ] POA/RootPOA compiles
 [1111x ] 	POA/RootPOA runs
 [1111x ] POA/FindPOA compiles
 [1111x ] 	POA/FindPOA runs
 [1111x ] POA/NewPOA compiles
 [1111x ] 	POA/NewPOA runs
-<<<<<<< release.chk
 [1101  ] POA/Generic_Servant compiles
 [1101  ] 	POA/Generic_Servant runs
 [1101  ] POA/On_Demand_Activation compiles
@@ -42,9 +41,9 @@ Legend:
 [0100  ] 	POA/Explicit_Activation runs
 [x1xxx ] POA/Default_Servant compiles
 [xxxxx ] 	POA/Default_Servant runs
-      
+
 [1111x ] Param_Test compiles
-[x01xx ] 	SII short
+[101xx ] 	SII short
 [x01xx ] 	SII ubstring
 [x01xx ] 	SII fixed_struct
 [x0xxx ] 	SII strseq
@@ -52,7 +51,7 @@ Legend:
 [x00xx ] 	SII nested_struct
 [x00xx ] 	SII struct_seq
 [x00xx ] 	SII objref
-      
+
 [x0xxx ] 	DII short
 [x0xxx ] 	DII ubstring
 [x0xxx ] 	DII fixed_struct
@@ -61,7 +60,7 @@ Legend:
 [x0xxx ] 	DII nested_struct
 [x0xxx ] 	DII struct_seq
 [x0xxx ] 	DII objref
-      
+
 [0x0x0 ] Thruput/TAO compiles
 
 [1111x ] liborbsvcs compiles
