@@ -1,3 +1,13 @@
+Sat Dec 20 22:59:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+	  For some reason we were generating
+	  ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION  for CORBA::is_nil ()
+	  and CORBA::release () for abstract interfaces. Thanks to  David
+	  Smith <dts@prismtechnologies.com> for reporting that the above
+	  problem occurs on HPUX. 
+
 Sat Dec 20 15:04:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Array_VarOut_T.h:
