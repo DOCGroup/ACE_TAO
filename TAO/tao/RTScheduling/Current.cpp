@@ -8,7 +8,8 @@
 //#include "ThreadAction.h"
 
 
-ACE_Atomic_Op<ACE_Thread_Mutex, long> guid_counter;
+//ACE_Atomic_Op<ACE_Thread_Mutex, long> guid_counter;
+long guid_counter = 0;
 
 u_long
 TAO_DTId_Hash::operator () (const IdType &id) const
@@ -20,7 +21,17 @@ TAO_DTId_Hash::operator () (const IdType &id) const
 TAO_RTScheduler_Current::TAO_RTScheduler_Current (TAO_ORB_Core* orb)
   : orb_ (orb)
 {
+
+  //ACE_OS::srand ((int)ACE_OS::getpid ());
+  //guid_counter = (long) ACE_OS::rand (); 
+  
+
   // Create the RT_Current.
+  FILE* guid_file = ACE_OS::fopen ("Guid_File", "r");
+  char buf [BUFSIZ];
+  ACE_OS::fread (buf,BUFSIZ,1,guid_file);
+  guid_counter = (long) ACE_OS::atoi (buf);
+  ACE_OS::fclose (guid_file);
   RTCORBA::Current_ptr current;
   ACE_NEW_THROW_EX (current,
                     TAO_RT_Current (orb),
@@ -343,7 +354,10 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(const char * name,
   if (this->guid_.length () == 0) 
     {
       //Generate GUID
+	  
+      
       long temp = ++guid_counter;
+
       this->guid_.length (sizeof(long));
       ACE_OS::memcpy (this->guid_.get_buffer (),
 		      &temp,
@@ -493,7 +507,7 @@ TAO_RTScheduler_Current_i::end_scheduling_segment (const char * name
       // scheduling segment.
       this->scheduler_->end_nested_scheduling_segment (this->guid_,
 						       name,
-						       this->previous_current_->sched_param_
+						       this->previous_current_->sched_param_.in ()
 						       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 	  
@@ -527,7 +541,7 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
   // If no scheduling parameter is specified then use the current
   // implicit scheduling parameter as the scheduling parameter
   if (sched_param == 0)
-    sched_param = this->implicit_sched_param_;
+    sched_param = this->implicit_sched_param_.in ();
 
   RTScheduling::DistributableThread_var dt = TAO_DistributableThread_Factory::create_DT ();
   TAO_RTScheduler_Current_i *new_current;
@@ -697,14 +711,14 @@ CORBA::Policy_ptr
 TAO_RTScheduler_Current_i::scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return CORBA::Policy::_duplicate (this->sched_param_);
+  return this->sched_param_.in ();//CORBA::Policy::_duplicate (this->sched_param_);
 }
 
 CORBA::Policy_ptr 
 TAO_RTScheduler_Current_i::implicit_scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return CORBA::Policy::_duplicate (this->implicit_sched_param_);
+  return this->implicit_sched_param_.in ();//CORBA::Policy::_duplicate (this->implicit_sched_param_);
 }
 
 RTScheduling::Current::NameList * 
@@ -731,7 +745,7 @@ TAO_RTScheduler_Current_i::current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_
 const char*
 TAO_RTScheduler_Current_i::name (void)
 {
-  return CORBA::string_dup (this->name_.in ());
+  return CORBA::string_dup (this->name_);
 }
 
 void
