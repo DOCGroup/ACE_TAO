@@ -109,7 +109,7 @@ public:
   CORBA::ULong consumer_ipaddr (CORBA::ULong i) const;
   // The ipaddr (in host byte order) of the event type <i>
 
-  void open (ACE_SOCK_Dgram *dgram,
+  void open (TAO_ECG_UDP_Out_Endpoint *endoint,
              RtecEventChannelAdmin::EventChannel_ptr ec,
              RtecScheduler::Scheduler_ptr scheduler,
              CORBA::Environment &_env);
@@ -521,7 +521,7 @@ private:
   CORBA::ORB_var orb_;
   // The ORB, so we can shut it down.
 
-  ACE_SOCK_Dgram send_dgram_;
+  TAO_ECG_UDP_Out_Endpoint endpoint_;
   // This socket is shared by all the federations to send the
   // multicast events.
 };

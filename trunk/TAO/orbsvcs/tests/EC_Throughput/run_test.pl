@@ -18,24 +18,13 @@ $NS = Process::Create ("..".$DIR_SEPARATOR.
 
 sleep $sleeptime;
 
-$ES = Process::Create ("..".$DIR_SEPARATOR.
-		       "..".$DIR_SEPARATOR.
-		       "Event_Service".$DIR_SEPARATOR.
-		       "Event_Service".$Process::EXE_EXT);
+$T = Process::Create ($EXEPREFIX."ECT_Throughput".$Process::EXE_EXT);
 
 sleep $sleeptime;
 
-$C = Process::Create ($EXEPREFIX."ECT_Consumer".$Process::EXE_EXT);
-
-sleep $sleeptime;
-
-$S = Process::Create ($EXEPREFIX."ECT_Supplier".$Process::EXE_EXT);
-
-$C->Wait ();
-$S->Wait ();
+$T->Wait ();
 
 $NS->Kill (); $NS->Wait ();
-$ES->Kill (); $ES->Wait ();
 
 unlink $NS_ior;
 

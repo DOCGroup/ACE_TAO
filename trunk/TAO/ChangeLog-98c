@@ -1,8 +1,32 @@
+Thu Dec 17 16:11:58 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
+	  Added support for fragmentation and reassembly to the UDP
+	  gateway. This is still experimental, but seems to work OK.
+	  Though I have payed attention to the first order optimizations:
+	  no data copying, little or no memory allocation, reduced
+	  locking; we have to systematically explore if there are any
+	  performance bottlenecks or problems.
+	  I still have to Purify/Quantify this code.
+
+	* tao/ORB_Core.cpp: 
+	  By default the CDR allocators where TSS, but this was not safe
+	  for certain applications. Thanks to Ron Barack
+	  <r.barack@inobis.de> for pointing this out.
+
+	* orbsvcs/tests/EC_Throughput/run_test.pl: 
+	  Updated the script.
+
 Thu Dec 17 14:09:33 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-        * tao/DynAnyC.cpp : Added some AHETI lines at the end to reflect what the
-          updated IDL compiler does. Should fix a build error reported on Dec Alpha.
-          Builds ok on NT, doing further checking on Unix.
+        * tao/DynAnyC.cpp:
+	  Added some AHETI lines at the end to reflect what the updated
+	  IDL compiler does. Should fix a build error reported on Dec
+	  Alpha.
+	  Builds ok on NT, doing further checking on Unix.
 
 Thu Dec 17 04:45:39 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 

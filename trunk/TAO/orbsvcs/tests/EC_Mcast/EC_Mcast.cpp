@@ -306,7 +306,7 @@ ECM_Driver::open_senders (RtecEventChannelAdmin::EventChannel_ptr ec,
                           RtecScheduler::Scheduler_ptr scheduler,
                           CORBA::Environment &_env)
 {
-  if (this->send_dgram_.open (ACE_Addr::sap_any) == -1)
+  if (this->endpoint_.dgram ().open (ACE_Addr::sap_any) == -1)
     {
       // @@ TODO throw an application specific exception.
       _env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
@@ -314,7 +314,7 @@ ECM_Driver::open_senders (RtecEventChannelAdmin::EventChannel_ptr ec,
     }
   for (int i = 0; i < this->all_federations_count_; ++i)
     {
-      this->all_federations_[i]->open (&this->send_dgram_,
+      this->all_federations_[i]->open (&this->endpoint_,
                                        ec,
                                        scheduler,
                                        _env);
@@ -330,7 +330,7 @@ ECM_Driver::close_senders (CORBA::Environment &_env)
       this->all_federations_[i]->close (_env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
     }
-  this->send_dgram_.close ();
+  this->endpoint_.dgram ().close ();
 }
 
 void
@@ -626,7 +626,7 @@ ECM_Federation::ECM_Federation (char* name,
 }
 
 void
-ECM_Federation::open (ACE_SOCK_Dgram *dgram,
+ECM_Federation::open (TAO_ECG_UDP_Out_Endpoint *endpoint,
                       RtecEventChannelAdmin::EventChannel_ptr ec,
                       RtecScheduler::Scheduler_ptr scheduler,
                       CORBA::Environment &_env)
@@ -643,9 +643,12 @@ ECM_Federation::open (ACE_SOCK_Dgram *dgram,
   this->sender_.init (ec, scheduler,
                       buf,
                       addr_server.in (),
-                      dgram,
+                      endpoint,
                       _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
+
+  // @@ TODO Make this a parameter....
+  this->sender_.mtu (64);
 
   RtecScheduler::handle_t rt_info =
     scheduler->create (buf, _env);
@@ -1175,12 +1178,18 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
     this->federation_->addr_server (_env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
+  ACE_Reactor* reactor = TAO_ORB_Core_instance ()->reactor ();
+
   ACE_INET_Addr local_addr;
   this->federation_->sender_local_addr (local_addr);
+  // @@ This should be parameters...
+  ACE_Time_Value expire_interval (0, 1000); // 1 milli second
+  const int max_timeouts = 3; // expire the message after 3 msecs
   this->receiver_.init (ec, scheduler,
                         buf,
                         local_addr,
                         addr_server.in (),
+                        reactor, expire_interval, max_timeouts,
                         _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
@@ -1206,7 +1215,7 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
 
   RtecEventComm::EventSourceID source = ACE::crc32 (buf);
 
-  this->mcast_eh_.reactor (TAO_ORB_Core_instance ()->reactor ());
+  this->mcast_eh_.reactor (reactor);
 
   this->mcast_eh_.open (ec, _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
