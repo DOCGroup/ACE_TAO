@@ -1,3 +1,24 @@
+Thu Nov 27 16:12:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/ImplRepo_Service/implrepo.dsp: 
+	* orbsvcs/ImplRepo_Service/tao_imr.dsp: 
+	* orbsvcs/tests/Notify/Basic/AdminProperties.dsp: 
+	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.dsp: 
+	* orbsvcs/tests/Notify/Basic/Events.dsp: 
+	* orbsvcs/tests/Notify/Basic/Filter.dsp: 
+	* orbsvcs/tests/Notify/Basic/IdAssignment.dsp: 
+	* orbsvcs/tests/Notify/Basic/LifeCycle.dsp: 
+	* orbsvcs/tests/Notify/Basic/MultiTypes.dsp: 
+	* orbsvcs/tests/Notify/Basic/Sequence.dsp: 
+	* orbsvcs/tests/Notify/Basic/Simple.dsp: 
+	* orbsvcs/tests/Notify/Basic/Updates.dsp: 
+	* orbsvcs/tests/Notify/Blocking/Structured_Consumer.dsp: 
+	* orbsvcs/tests/Notify/Blocking/Structured_Supplier.dsp: 
+	* orbsvcs/tests/Notify/Destroy/Notify_Test_Destroy.dsp: 
+	* orbsvcs/tests/Notify/Discarding/Sequence_Consumer.dsp: 
+
+	  Some more fixes.
+
 Thu Nov 27 13:10:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/ImplRepo_Service/implrepo.dsp: 
