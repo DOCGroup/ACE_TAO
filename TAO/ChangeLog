@@ -1,3 +1,8 @@
+Sat Aug  3 09:08:56 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/AMH/Sink_Server/client.cpp: Fixed warnings from
+	  explicit template builds.
+
 Sat Aug  3 08:08:48 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/AMH/Sink_Server/Base_Server.cpp: Fixed a "reaches end
