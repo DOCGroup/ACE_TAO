@@ -1,3 +1,26 @@
+Mon Dec 30 21:30:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_hpux_gcc.GNU: Removed the SOVERSION=
+          line to allow versions libraries to be set up properly.
+
+        * ace/Based_Pointer_Repository.cpp:
+        * ace/Dynamic.cpp:
+        * ace/SString.cpp:
+        * tests/Framework_Component_DLL.cpp:
+        * tests/MEM_Stream_Test.cpp:
+        * tests/Process_Strategy_Test.cpp:
+        * tests/Timeprobe_Test.cpp:
+        * apps/drwho/File_Manager.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp:
+        * examples/Logger/Acceptor-server/server_loggerd.cpp:
+        * examples/Logger/simple-server/server_loggerd.cpp:
+        * examples/Threads/auto_event.cpp:
+        * examples/Threads/tss2.cpp:
+          Add __hpux to the conditions needed to instantiate
+          static template members. Also see
+          Sat Nov 23 18:12:37 2002  Steve Huston  <shuston@riverace.com>
+
 Mon Dec 30 19:32:18 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Codecs_Test.cpp: Add explicit template instantiation for
@@ -1268,7 +1291,7 @@ Tue Dec  3 20:47:39 2002  Steve Huston  <shuston@riverace.com>
         * tests/MEM_Stream_Test.cpp: Add explicit instantiation of
           ACE_Singleton<ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_short>,
                         ACE_SYNCH_RECURSIVE_MUTEX>::singleton_.
-        * tests/Process_Strategy_TEst.cpp: Add explicit instantiation of
+        * tests/Process_Strategy_Test.cpp: Add explicit instantiation of
           ACE_Singleton<Options, ACE_Null_Mutex>::singleton_.
         * tests/Timeprobe_Test.cpp: Add explicit instantiation of
           ACE_Singleton<int, ACE_SYNCH_RECURSIVE_MUTEX>::singleton_.
