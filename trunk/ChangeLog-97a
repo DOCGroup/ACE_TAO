@@ -1,3 +1,37 @@
+Sun Jan 19 11:10:49 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* include/makeinclude/platform_sunos5_sunc++.GNU,
+	  platform_sunos5_sunc++_4.1.GNU:
+	  added comment about compiler warnings with +w option.
+	  Also, added +w to platform_sunos5_sunc++_4.1.GNU.  With the
+	  other changes in this ChangeLog entry, there no longer should
+	  be significant warnings from Sun C++ when building ACE.
+
+	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp
+	  (Peer_Handler::put): added ACE_UNUSED_ARG (tv);.
+
+	* examples/IPC_SAP/SPIPE_SAP/NPServer.cpp (main),
+	  netsvcs/clients/Tokens/invariant/invariant.cpp (main):
+	  commented out argc and argv.
+
+	* examples/Mem_Map/file-reverse/file-reverse.cpp (main):
+	  removed unused variable "cp".
+
+	* netsvcs/clients/Tokens/manual/manual.cpp (handle_input,
+	  handle_exception): added ACE_UNUSED_ARG (fd); and
+	  (create_proxy): added return statement at end:  even
+	  though it should never be reached, it eliminates a
+	  compiler warning.
+
+	* examples/OS/Process/process.cpp,
+	  examples/Reactor/Misc/test_reactors.cpp,
+	  netsvcs/clients/Tokens/deadlock/deadlock_detection_test.cpp,
+	  netsvcs/clients/Tokens/mutex/test_mutex.cpp,
+	  netsvcs/clients/Tokens/rw_lock/rw_locks.cpp,
+	  performance-tests/TTCP/ORBeline/ttcp_i.cpp,
+	  performance-tests/TTCP/Orbix/ttcp_i.cpp (main):
+	  return 0 instead of 42.
+
 Fri Jan 17 16:33:25 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/High_Res_Timer.*: added elapsed_time () and get_time ().
