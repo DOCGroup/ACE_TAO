@@ -1,3 +1,21 @@
+Mon Jul  5 20:44:44 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/Acceptor_Registry.cpp (open, open_default):
+
+	  Moved loop that iterates over the protocol factories to an outer 
+	  level since it only needs to be run once for each protocol.
+	  Previously it was being run for each addr within a given
+	  endpoint.  The code flow now makes more sense. This fix also
+	  removes and simplifies some code in the open_default() method.
+	  Bonus!
+
+	  Add a test that checks if a usable protocol was found.  If one
+	  wasn't found then return an error.
+
+	* tao/Makefile:
+
+	  Updated dependencies.
+
 Mon Jul  5 19:47:04 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.cpp
