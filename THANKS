@@ -1028,6 +1028,7 @@ Victor Krebss <lopik@delfi.lv>
 Chander P. Thareja <cthareja@ssind.stpn.soft.net>
 John Mills <jmills@tga.com>
 Haifeng Lee <haifeng@dset.com.cn>
+Hans Utz <hans.utz@student.uni-ulm.de>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
