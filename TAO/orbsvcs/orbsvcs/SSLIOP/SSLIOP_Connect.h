@@ -55,6 +55,17 @@ class TAO_SSLIOP_Handler_Base : public TAO_SSL_SVC_HANDLER
 public:
   TAO_SSLIOP_Handler_Base (ACE_Thread_Manager *t);
   TAO_SSLIOP_Handler_Base (TAO_ORB_Core *orb_core);
+
+  struct TCP_Properties
+  {
+    // = TITLE
+    //   TCP protocol properties specification for a set of
+    //   connections.
+    //
+    int send_buffer_size;
+    int recv_buffer_size;
+    int no_delay;
+  };
 };
 
 class TAO_SSLIOP_Export TAO_SSLIOP_Client_Connection_Handler : public TAO_SSLIOP_Handler_Base
@@ -118,9 +129,17 @@ class TAO_SSLIOP_Export TAO_SSLIOP_Server_Connection_Handler : public TAO_SSLIOP
 public:
   TAO_SSLIOP_Server_Connection_Handler (ACE_Thread_Manager* t = 0);
   TAO_SSLIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core,
-                                        CORBA::Boolean flag = 0);
-  ~TAO_SSLIOP_Server_Connection_Handler (void);
+                                        CORBA::Boolean flag,
+                                        void *arg);
   // Constructor.
+  // <flag> parameter is normally used to enable the GIOPlite
+  // messaging protocol.  However, it is disabled in SSLIOP since it
+  // introduces security holes.
+  // <arg> parameter is used by the Acceptor to pass the protocol
+  // configuration properties for this connection.
+
+  ~TAO_SSLIOP_Server_Connection_Handler (void);
+  // Destructor.
 
   virtual int open (void *);
   // Called by the <Strategy_Acceptor> when the handler is completely
@@ -178,6 +197,9 @@ protected:
 
   u_long refcount_;
   // Reference count, to avoid early deletes...
+
+  TCP_Properties *tcp_properties_;
+  // TCP configuration for this connection.
 };
 
 #if defined (__ACE_INLINE__)
