@@ -1,3 +1,14 @@
+Sun Nov  2 16:23:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.cpp:
+	* orbsvcs/orbsvcs/Event/RT_Task.cpp:
+	* orbsvcs/orbsvcs/Log/LogNotification.cpp:
+	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
+	* orbsvcs/orbsvcs/Log/PersistStore.cpp:
+	* orbsvcs/orbsvcs/Notify/Method_Request.h:
+
+	  Added missing includes. 
+
 Sun Nov  2 15:45:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Collocated_Invocation.h:

@@ -1,5 +1,7 @@
 #include "PersistStore.h"
 #include "tao/Any_Unknown_IDL_Type.h"
+#include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_sys_time.h"
 
 #include "orbsvcs/Time_Utilities.h"
 
