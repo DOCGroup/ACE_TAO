@@ -1,3 +1,7 @@
+Mon Jun 15 23:17:27 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * Makefile: added os-patches/ to distribution.
+
 Mon Jun 15 23:07:45 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.5.12 released.
@@ -13,8 +17,6 @@ Mon Jun 15 13:58:17 1998  David L. Levine  <levine@cs.wustl.edu>
         * os-patches/linux-patches.html: updated glibc info.  Thanks
           to Bob Scott <bob_scott@broder.com> for pointing out the
           glibc-2.0.7-7 is not available from sunsite.
-
-        * Makefile: added os-patches/ to distribution.
 
 Sat Jun 13 13:10:05 1998  David L. Levine  <levine@cs.wustl.edu>
 
