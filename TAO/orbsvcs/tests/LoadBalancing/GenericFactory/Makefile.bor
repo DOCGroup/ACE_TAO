@@ -6,7 +6,8 @@
 
 
 DIRS = \
-	Application_Controlled
+	Application_Controlled \
+        Infrastructure_Controlled
 
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
