@@ -785,6 +785,28 @@ class POA_Foo {
           instead of blocking directly on the <CODE>writev</CODE> call.
         </P>
       </LI>
+
+      <LI><P><B>ORB:</B>
+	  When handling a forward request we may get forwarded to a
+	  collocated object.
+	  The typical scenario is a server that register with the
+	  Implementation Repository:
+	  if it creates an object reference to a local object the
+	  object reference will be pointing to the ImplRepo and
+	  potentially none of its profiles will match the local ones.
+	  Trying to contact the ImplRepo will result in a
+	  LOCATION_FORWARD exceptions (and/or a LocateReply) pointing
+	  to the local endpoints, but now we should use collocation.
+        </P>
+      </LI>
+
+      <LI><P><B>ImplRepo:</B>
+	  How do the ImplRepo and pluggable protocols interact? What
+	  if the ImplRepo is using a protocol that is not implemented
+	  in the server? Or vice-versa?
+        </P>
+      </LI>
+
     <HR>
 
   <!-- Things below this point are "big" tasks" that -->
