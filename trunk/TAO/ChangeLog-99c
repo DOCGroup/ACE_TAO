@@ -1,3 +1,13 @@
+Wed Aug 25 12:15:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB.pidl:
+	  Helper file used to generate the proper signature for several
+	  methods in the CORBA::ORB class
+
+	* tao/Object.pidl:
+	  Helper file used to generate the proper signature for several
+	  methods in the CORBA::Object class
+
 Wed Aug 25 12:09:42 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao_targets.GNU:
