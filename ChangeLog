@@ -1,3 +1,15 @@
+Fri Feb  6 11:50:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/INET_Addr.cpp:
+	  
+	  Fixes a problem that this change "Thu Jan 15 08:02:23 2004
+	  Douglas C. Schmidt  <schmidt@cse.wustl.edu>" opened up and which
+	  Craig Rodrigues reported. This problem has been lying around for
+	  almost an year now. In the static method
+	  get_port_number_from_name (), if we get a portnumber 0
+	  (perfectly valid to send a 0) we missed to check for port
+	  0. This has now been fixed. Thanks to Craig for reporting this.
+
 Fri Feb  6 09:48:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* include/makeinclude/platform_sunos5_sunc++.GNU (CPPFLAGS):
