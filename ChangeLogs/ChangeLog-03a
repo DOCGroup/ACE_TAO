@@ -1,3 +1,10 @@
+Mon Feb 10 09:22:04 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/SPIPE_Stream.i: Added a special case for win32 platforms to
+          ACE_SPIPE_Stream::send_handle() and recv_handle() to allow handle
+          passing. The extension is necessary since the receiving side must
+          open the duplicate handle before the sending side closes it.
+
 Fri Feb  7 17:22:39 2003  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.cpp (ACE_OS::thr_create): Moved the pthread_setstack() call
