@@ -293,7 +293,7 @@ typedef int key_t;
 #define ACE_Export 
 #endif /* ACE_HAS_DLL */
 
-#if defined (ACE_HAS_DLL)
+#if defined (ACE_HAS_SVC_DLL)
 #if defined (ACE_BUILD_SVC_DLL)
 #if !defined (_MSC_VER) /* Mark classes as exported, Borland. */
 #define ACE_Svc_Export _export
@@ -310,7 +310,7 @@ typedef int key_t;
  
 #else /* We're not building a DLL! */
 #define ACE_Svc_Export 
-#endif /* ACE_HAS_DLL */
+#endif /* ACE_HAS_SVC_DLL */
 
 // This needs to go here *first* to avoid problems with AIX.
 // Just to be safe we'll do it with pthreads, too -- jwr
