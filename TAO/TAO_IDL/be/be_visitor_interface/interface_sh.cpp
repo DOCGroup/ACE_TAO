@@ -162,7 +162,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
     }
 
   // Print out the _this() method.
-  *os << node->full_name () << " *_this (" << be_idt << be_idt_nl
+  *os << "::" << node->full_name () << " *_this (" << be_idt << be_idt_nl
       << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
       << "TAO_default_environment ()"
       << be_uidt << be_uidt_nl

@@ -53,7 +53,7 @@ int be_visitor_interface_thru_poa_collocated_sh::visit_interface (be_interface *
   *os << "class " << idl_global->skel_export_macro ()
       << " " << node->local_coll_name (be_interface::THRU_POA);
   os->incr_indent ();
-  *os << " : public virtual " << node->full_name ();
+  *os << " : public virtual ::" << node->full_name ();
 
   // generate base classes if any
   if (node->n_inherits () > 0)
