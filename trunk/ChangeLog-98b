@@ -1,3 +1,10 @@
+Wed Sep 16 13:41:50 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h: Added more protection for the semun definition, i.e.,
+	  (defined (__GLIBC__) && defined (_SEM_SEMUN_UNDEFINED)).  This
+	  fixes problems with Linux, GLIBC 2.1, and PGCC.  Thanks to
+	  Marc Lehmann <pcg@goof.com> for reporting this.
+
 Wed Sep 16 11:41:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/High_Res_Timer.cpp: added ACE_HAS_POWERPC_TIMER support.
