@@ -103,7 +103,7 @@
           <componentinstantiation id="a_UCAV">
         </componentinstantiation>
       </homeplacement>
-      <destination>UCAVHost</destination>
+      <destination>UCAVGSHost</destination>
     </processcollocation>               
   <!-- A plain vanilla partition.  We don't even need the processcollocation tag here. -->
 
