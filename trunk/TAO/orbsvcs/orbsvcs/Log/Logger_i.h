@@ -1,19 +1,18 @@
 /* -*- C++ -*- */
-
 // ============================================================================
 //
 // $Id$
 //
 // = LIBRARY
 //    TAO services
-// 
+//
 // = FILENAME
 //   Logger_i.h
 //
 // = AUTHOR
 //    Marina Spivak <marina@cs.wustl.edu>,
 //    Sergio Flores-Gaitan <sergio@cs.wustl.edu>, and
-//    Matthew Braun <mjb2@cec.wustl.edu> 
+//    Matthew Braun <mjb2@cec.wustl.edu>
 //
 // ============================================================================
 
@@ -34,18 +33,18 @@ public:
   // destructor
 
   virtual void log (const Logger::Log_Record &log_rec,
-		    CORBA::Environment &_env);
+                    CORBA::Environment &_env);
   // Writes the <log_rec> to the standard output.
 
   virtual void logv (const Logger::Log_Record &log_rec,
-		     Logger::Verbosity_Level verbosity,
-		     CORBA::Environment &_env);
+                     Logger::Verbosity_Level verbosity,
+                     CORBA::Environment &_env);
   // Writes the <log_rec> to the standard output with the given
   // verbosity level
-  
+
   Logger::Verbosity_Level verbosity (void) const;
   // Gets the verbosity level
-  
+
   void verbosity (Logger::Verbosity_Level level, CORBA::Environment &env);
   // Sets the verbosity level. Valid values are {VERBOSE, VERBOSE_LITE
   //  and SILENT}. Defaults to VERBOSE
@@ -54,12 +53,12 @@ private:
   ACE_Log_Priority priority_conversion (Logger::Log_Priority priority);
   // Converts the IDL defined <Log_Priority> enum type to the
   // <ACE_Log_Priority> enum type.
-  
+
   u_long verbosity_conversion (Logger::Verbosity_Level verbosity_level);
   // Converts the IDL defined <Verbosity_Level> enum type to a u_long,
   // which is used by the <ACE_Log_Record> to distinguish the
   // level of verbosity.
-  
+
   char *name_;
   // Logger identification.
 
@@ -79,7 +78,7 @@ public:
 
   ~Logger_Factory_i (void);
   // Destructor.
-  
+
   virtual Logger_ptr make_logger (const char *name,
                                   CORBA::Environment &_env);
   // This function creates and returns a logger with the given <name>.
@@ -88,8 +87,8 @@ public:
 private:
   // Calls to make_logger will create a new instance of Logger and
   // bind into the hash map manager if <name> is unique, else it will
-  // return a previously bound entry. 
-  ACE_Hash_Map_Manager<const char *, Logger_i *, ACE_Null_Mutex> hash_map_;
+  // return a previously bound entry.
+  ACE_Hash_Map_Manager<ACE_CString, Logger_i *, ACE_Null_Mutex> hash_map_;
 };
 
 

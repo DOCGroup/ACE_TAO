@@ -10,50 +10,13 @@ ACE_RCSID(Log, Logger_i, "$Id$")
 
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 #define TAO_Logger_Hash \
-  ACE_Hash_Map_Manager<const char *, Logger_i *, ACE_Null_Mutex>
-#define TAO_Logger_Hash_Entry \
-        ACE_Hash_Map_Entry<const char *, Logger_i *>
+  ACE_Hash_Map_Manager<ACE_CString, Logger_i *, ACE_Null_Mutex>
 
-long unsigned int
-TAO_Logger_Hash::hash (const char *const &ext_id)
+u_long
+TAO_Logger_Hash::hash (const ACE_CString &ext_id)
 {
-  return ACE::hash_pjw (ext_id);
+  return ACE::hash_pjw (ext_id.fast_rep ());
 }
-
-int
-TAO_Logger_Hash::equal (const char *const &id1, const char *const &id2)
-{
-  return ACE_OS::strcmp (id1, id2) == 0;
-}
-
-
-TAO_Logger_Hash_Entry::ACE_Hash_Map_Entry (const char *const &ext_id,
-                                           Logger_i *const &int_id,
-                                           TAO_Logger_Hash_Entry *next,
-                                           TAO_Logger_Hash_Entry *prev)
-  : ext_id_ (ext_id ? ACE_OS::strdup (ext_id) : ACE_OS::strdup ("")),
-    int_id_ (int_id),
-    next_ (next),
-    prev_ (prev)
-{
-}
-
-TAO_Logger_Hash_Entry::ACE_Hash_Map_Entry (TAO_Logger_Hash_Entry *next,
-                                           TAO_Logger_Hash_Entry *prev)
-  : ext_id_ (0),
-    next_ (next),
-    prev_ (prev)
-{
-}
-
-TAO_Logger_Hash_Entry::~ACE_Hash_Map_Entry (void)
-{
-  ACE_OS::free ((void *) ext_id_);
-}
-
-
-#undef TAO_Logger_Hash
-#undef TAO_Logger_Hash_Entry
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 
 Logger_Factory_i::Logger_Factory_i (void)
@@ -144,7 +107,7 @@ Logger_i::verbosity_conversion (Logger::Verbosity_Level verbosity_level)
 
 void
 Logger_i::log (const Logger::Log_Record &log_rec,
-	       CORBA::Environment &_env)
+               CORBA::Environment &_env)
 {
   this->logv (log_rec, verbosity_level_, _env);
 }
@@ -152,8 +115,8 @@ Logger_i::log (const Logger::Log_Record &log_rec,
 
 void
 Logger_i::logv (const Logger::Log_Record &log_rec,
-	       Logger::Verbosity_Level verbosity,
-	       CORBA::Environment &_env)
+               Logger::Verbosity_Level verbosity,
+               CORBA::Environment &_env)
 {
   ACE_Time_Value temp (log_rec.time);
 
@@ -218,18 +181,18 @@ Logger_i::verbosity (Logger::Verbosity_Level level, CORBA::Environment &env)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Hash_Map_Entry <const char *, Logger_i *>;
-template class ACE_Hash_Map_Manager <const char *, Logger_i *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base <const char *, Logger_i *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator <const char *, Logger_i *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator <const char *, Logger_i *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry <ACE_CString, Logger_i *>;
+template class ACE_Hash_Map_Manager <ACE_CString, Logger_i *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base <ACE_CString, Logger_i *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator <ACE_CString, Logger_i *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator <ACE_CString, Logger_i *, ACE_Null_Mutex>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Hash_Map_Entry <const char *, Logger_i *>
-#pragma instantiate ACE_Hash_Map_Manager <const char *, Logger_i *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base <const char *, Logger_i *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator <const char *, Logger_i *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator <const char *, Logger_i *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry <ACE_CString, Logger_i *>
+#pragma instantiate ACE_Hash_Map_Manager <ACE_CString, Logger_i *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base <ACE_CString, Logger_i *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator <ACE_CString, Logger_i *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator <ACE_CString, Logger_i *, ACE_Null_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
