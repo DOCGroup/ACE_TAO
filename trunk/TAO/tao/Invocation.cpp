@@ -963,6 +963,7 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
                                           ACE_TRY_ENV);
     }
 
+  // Create this only if a reply is required.
   TAO_Synch_Reply_Dispatcher rd (this->orb_core_, 
                                  this->service_info_);
 
