@@ -1,28 +1,37 @@
+Sat Mar 13 08:07:25 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/ platform_osf1_4.0.GNU: added suppression
+          of msg 1180, statement causes unreachble return, with cxx 6.2
+          and later.  It doesn't like ACE_OSCALL_RETURN and
+          ACE_NOTSUP_RETURN, though it seems to be going overboard.
+          The warnings appeared with cxx 6.2-009.  If someone uses
+          6.2-007, they might have to manually remove the 1180 suppression.
+
 Sat Mar 13 00:37:17 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.28 released.
 
 Fri Mar 12 20:17:47 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Select_Reactor_Base.cpp (handle_input):
-	* ace/WFMO_Reactor.cpp (handle_signal): Added support for
-	  dispatching QOS_MASK and GROUP_QOS_MASK.
+        * ace/Select_Reactor_Base.cpp (handle_input):
+        * ace/WFMO_Reactor.cpp (handle_signal): Added support for
+          dispatching QOS_MASK and GROUP_QOS_MASK.
 
 Fri Mar 12 19:13:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.i:
-	  Implemented ACE_OS::timezone() for LynxOS.
+        * ace/OS.i:
+          Implemented ACE_OS::timezone() for LynxOS.
 
 Fri Mar 12 16:31:19 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ACE-INSTALL.html (Linux): added note about non-thread safe
-	glibc 2.0 dynamic loader.  The dynamic loader in glibc 2.1 is
-	thread safe.
+        * ACE-INSTALL.html (Linux): added note about non-thread safe
+        glibc 2.0 dynamic loader.  The dynamic loader in glibc 2.1 is
+        thread safe.
 
 Fri Mar 12 13:44:54 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/DLL_Test.cpp (main): Fixed the errors on VxWorks and
-	  LynxOS by shifting the START_TEST before the #ifdefs began.
+        * tests/DLL_Test.cpp (main): Fixed the errors on VxWorks and
+          LynxOS by shifting the START_TEST before the #ifdefs began.
 
 Fri Mar 12 12:53:17 1999  David L. Levine  <levine@cs.wustl.edu>
 
