@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-09-21 22:49 EDT by <jcej@chiroptera.tragus.org>.
+# Made on 2000-03-19 15:00 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/010'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -13,15 +13,15 @@
 # ------ ---------- ------------------------------------------
 #    440 -rw-rw-r-- hdr
 #     49 -rw-rw-r-- bodies
-#   2246 -rw-rw-r-- page01.pre
+#   2242 -rw-rw-r-- page01.pre
 #     84 -rw-rw-r-- page02.pre
 #    231 -rw-rw-r-- page03.pre
 #    138 -rw-rw-r-- page04.pre
-#    607 -rw-rw-r-- page05.pre
+#    606 -rw-rw-r-- page05.pre
 #   1493 -rw-rw-r-- page06.pre
 #    444 -rw-rw-r-- page07.pre
 #    689 -rw-rw-r-- page02.pst
-#    237 -rw-rw-r-- page03.pst
+#    236 -rw-rw-r-- page03.pst
 #    387 -rw-rw-r-- page04.pst
 #    647 -rw-rw-r-- page05.pst
 #
@@ -70,7 +70,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh04931; then
+if mkdir _sh32552; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -98,7 +98,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0124153399 'hdr' &&
+  $shar_touch -am 03191459100 'hdr' &&
   chmod 0664 'hdr' ||
   $echo 'restore of' 'hdr' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -167,8 +167,8 @@ The Message Queue is a FIFO accessible from multiple threads.
 That is, a thread puts the produced blocks of data on the message queue
 to be consumed by some other thread/threads and processed. In this
 tutorial, we see how effectively the Message Queue in a ACE_Task can be
-used to pass data among threads in the thread pool. 
-(this is very similar to 
+used to pass data among threads in the thread pool.
+(this is very similar to
 <A HREF="../007/page01.html">Tutorial 7</A>
 X wherein we implemented a
 thread-pool server).Here, actual data is passed between the threads and
@@ -178,10 +178,10 @@ multiple threads.
 The Message Queue consists of Message Blocks, each of which has a read
 and write pointer. Using these pointers the message blocks can be
 accessed for reading and writing operations. The ACE_Task::svc() method
-will put the block onto the queue without bothering about the existence 
+will put the block onto the queue without bothering about the existence
 of a consumer for that block. A thread from the thread pool obtains the
 block from the queue, and checks to see whether the block_type is
-MB_HANGUP. If so, it puts the block back on the queue for its 
+MB_HANGUP. If so, it puts the block back on the queue for its
 peers and exits. Otherwise, it reads the block and processes it before
 releasing it.
 <P>
@@ -190,19 +190,19 @@ Message Queue which could be used to our advantage especially for
 multithreaded applications.
 </UL>
 SHAR_EOF
-  $shar_touch -am 0124153899 'page01.pre' &&
+  $shar_touch -am 03191459100 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-84d1b63ff2eb7eecec515b248f73d791  page01.pre
+a59ecff5ebb6cd48d96531f70c504ffc  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 2246 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '2246,' 'current size' "$shar_count!"
+    test 2242 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '2242,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -217,7 +217,7 @@ We'll look first at <A HREF="message_queue.cpp">main()</A>.
 X
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0124153399 'page02.pre' &&
+  $shar_touch -am 03191459100 'page02.pre' &&
   chmod 0664 'page02.pre' ||
   $echo 'restore of' 'page02.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -245,7 +245,7 @@ that the message blocks to, indeed, get freed when we're done with 'em.
 X
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0124153399 'page03.pre' &&
+  $shar_touch -am 03191459100 'page03.pre' &&
   chmod 0664 'page03.pre' ||
   $echo 'restore of' 'page03.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -272,7 +272,7 @@ and reads from the message queue it contains.
 X
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0124153399 'page04.pre' &&
+  $shar_touch -am 03191459100 'page04.pre' &&
   chmod 0664 'page04.pre' ||
   $echo 'restore of' 'page04.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -305,24 +305,24 @@ is invoked, the semaphore is decremented and the thread is blocked.
 X  When the count equals zero, all threads are unblocked and allowed to
 continue.
 <P>
-<font size=-1>Note:  This isn't the way ACE_Barrier really works, it's 
+<font size=-1>Note:  This isn't the way ACE_Barrier really works, it's
 just an analogy</font>
 X
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0209155699 'page05.pre' &&
+  $shar_touch -am 03191459100 'page05.pre' &&
   chmod 0664 'page05.pre' ||
   $echo 'restore of' 'page05.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page05.pre:' 'MD5 check failed'
-ff8f02648de795cd92f08141962d746d  page05.pre
+ff8fe38f39f3860bcd45aa450cb754da  page05.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page05.pre'`"
-    test 607 -eq "$shar_count" ||
-    $echo 'page05.pre:' 'original size' '607,' 'current size' "$shar_count!"
+    test 606 -eq "$shar_count" ||
+    $echo 'page05.pre:' 'original size' '606,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page06.pre ==============
@@ -371,7 +371,7 @@ It's also worth mentioning that it's just an accident that all of the blocks
 are created and enqueued before any are processed.  Run the test on a multi-processor
 or with more iterations and you'll see some get processed before all are created.
 SHAR_EOF
-  $shar_touch -am 0124153299 'page06.pre' &&
+  $shar_touch -am 03191459100 'page06.pre' &&
   chmod 0664 'page06.pre' ||
   $echo 'restore of' 'page06.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -406,7 +406,7 @@ X
 <LI><A HREF="task.h">task.h</A>
 </UL>
 SHAR_EOF
-  $shar_touch -am 0124153299 'page07.pre' &&
+  $shar_touch -am 03191459100 'page07.pre' &&
   chmod 0664 'page07.pre' ||
   $echo 'restore of' 'page07.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -441,7 +441,7 @@ that in the next tutorial, let's stick with the basics first.
 On the next page we'll take a look at our Block object...
 <P>
 SHAR_EOF
-  $shar_touch -am 0124153399 'page02.pst' &&
+  $shar_touch -am 03191459100 'page02.pst' &&
   chmod 0664 'page02.pst' ||
   $echo 'restore of' 'page02.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -467,21 +467,21 @@ else
 Ok, nothing really magic there.  Some folks just feel a little uncomfortable
 not doing an explicit <i>delete</i> on objects they've <i>new</i>'d so I
 wanted to show you that the memory really does get cleaned up.
-X 
+X
 SHAR_EOF
-  $shar_touch -am 0124153399 'page03.pst' &&
+  $shar_touch -am 03191459100 'page03.pst' &&
   chmod 0664 'page03.pst' ||
   $echo 'restore of' 'page03.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page03.pst:' 'MD5 check failed'
-f0ce99c3625ad734730e7ac93efd2c8d  page03.pst
+fe792e145798cee96c099bf4026cf8ef  page03.pst
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page03.pst'`"
-    test 237 -eq "$shar_count" ||
-    $echo 'page03.pst:' 'original size' '237,' 'current size' "$shar_count!"
+    test 236 -eq "$shar_count" ||
+    $echo 'page03.pst:' 'original size' '236,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page04.pst ==============
@@ -498,7 +498,7 @@ handy way to synchronize the threads at the beginning of svc().  In testing
 I found that if I didn't sync svc(), the first thread to get activated would
 tend to get all of the messages before the other threads came alive.
 SHAR_EOF
-  $shar_touch -am 0124153399 'page04.pst' &&
+  $shar_touch -am 03191459100 'page04.pst' &&
   chmod 0664 'page04.pst' ||
   $echo 'restore of' 'page04.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -531,7 +531,7 @@ X      tutorial.  Why?  Because in <i>message_queue.cpp</i> we call
 X      <i>wait()</i> to wait for all of the task's threads to exit.
 X      That prevents the leak that we normally avoid by using <i>THR_DETACHED</i>.
 SHAR_EOF
-  $shar_touch -am 0921223299 'page05.pst' &&
+  $shar_touch -am 03191459100 'page05.pst' &&
   chmod 0664 'page05.pst' ||
   $echo 'restore of' 'page05.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -546,5 +546,5 @@ SHAR_EOF
     $echo 'page05.pst:' 'original size' '647,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh04931
+rm -fr _sh32552
 exit 0

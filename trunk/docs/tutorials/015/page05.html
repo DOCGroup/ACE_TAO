@@ -47,7 +47,7 @@ int main (int, char **)
         <font color=red>// To keep things simple, I'll create it on the stack.</font>
     ACE_Select_Reactor mySelectReactor;
 
-        <font color=red>// Next, we need an ACE_Reactor that is the bridge between the </font>
+        <font color=red>// Next, we need an ACE_Reactor that is the bridge between the</font>
         <font color=red>// code and the real reactor.  It is given a pointer to the</font>
         <font color=red>// real reactor.</font>
     ACE_Reactor myReactor (&mySelectReactor);
@@ -92,3 +92,4 @@ template class ACE_Svc_Handler&lt;ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 </PRE>
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page06.html">Continue This Tutorial</A>]</CENTER>
+

@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -18,7 +19,7 @@ that you would like to link together.
 
 <p>An intermediate class you we will deal with is the <b>ACE_Module</b>.
 
-<p>The basic plan is to wrap your <b>Task</b> into a <b>Module</b>, push 
+<p>The basic plan is to wrap your <b>Task</b> into a <b>Module</b>, push
 the <b>Module</b> onto the <b>Stream</b>.  Do this for each <b>Task</b>,
  and then inject <b>Message_Block</b>s into the <b>Stream</b>.
 
@@ -28,7 +29,7 @@ it on to the next <b>Task</b> in the <b>Stream</b>.
 <p>If you are not already familiar with <b>Message_Block</b>s and <b>Message_Queue</b>s,
 I highly suggest that you check out <A HREF="../#MQ">Tutorials 10-13</A>.
 
-<p>Streams can be used for both downstream and upstream movement of messages.  Used 
+<p>Streams can be used for both downstream and upstream movement of messages.  Used
 this way mirrors closely the way System V STREAMS work.  But you don't have to use them
 bidirectionally.  In this tutorial, we only use one direction of the Stream.  Down.
 
@@ -60,13 +61,14 @@ Then the other modules are pushed from the Tail-end into the Stream.
 This is because we are interested in writing and not reading.
 (Picture this to be a FIFO (queue) with head and tail nodes such
 that the nodes are removed from the front and put into the queue from
-the back) 
+the back)
 <P>
 Each module then opens up the task which spawns threads and begins to
 shove messgaes down the stream. Once we have got all the messages into
-the stream, our job is completed and we shut down the Stream. 
+the stream, our job is completed and we shut down the Stream.
 <P>
 A simple way to wade down the stream...;)
 </ul>
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page02.html">Continue This Tutorial</A>]</CENTER>
+

@@ -77,7 +77,7 @@ int <font color=#008888>Test::open</font>(void * _unused)
 
         <font color=red>// One thing about the barrier:  You have to tell it how many</font>
         <font color=red>// threads it will be synching.  The threads() mutator on my</font>
-        <font color=red>// Barrier class lets you do that and hides the implementation </font>
+        <font color=red>// Barrier class lets you do that and hides the implementation</font>
         <font color=red>// details at the same time.</font>
     barrier_.threads(threads_);
 
@@ -105,14 +105,14 @@ int <font color=#008888>Test::svc</font>(void)
     ACE_DEBUG ((LM_INFO, "<font color=green>(%P|%t|%T)\<font color=#008888>tTest::svc</font>() Entry\n</font>"));
 
         <font color=red>// Initialize the random number generator.  We'll use this to</font>
-        <font color=red>// create sleep() times in each thread.  This will help us see </font>
+        <font color=red>// create sleep() times in each thread.  This will help us see</font>
         <font color=red>// if the barrier synch is working.</font>
     ACE_Time_Value now(<font color=#008888>ACE_OS::gettimeofday</font>());
     ACE_RANDR_TYPE seed = now.usec();
     <font color=#008888>ACE_OS::srand</font>(seed);
     int delay;
 
-        <font color=red>// After saying hello above, sleep for a random amount of time </font>
+        <font color=red>// After saying hello above, sleep for a random amount of time</font>
         <font color=red>// from 1 to 6 seconds.  That will cause the next message</font>
         <font color=red>// "<font color=green>Entering wait()</font>" to be staggered on the output as each</font>
         <font color=red>// thread's sleep() returns.</font>
@@ -132,7 +132,7 @@ int <font color=#008888>Test::svc</font>(void)
         return 0;
     }
 
-        <font color=red>// When all threads have reached wait() they will give us this </font>
+        <font color=red>// When all threads have reached wait() they will give us this</font>
         <font color=red>// message.  If you execute this, you should see all of the</font>
         <font color=red>// "<font color=green>Everybody together</font>" messages at about the same time.</font>
     ACE_DEBUG ((LM_INFO, "<font color=green>(%P|%t|%T)\<font color=#008888>tTest::svc</font>() Everybody together?\n</font>"));
@@ -145,7 +145,7 @@ int <font color=#008888>Test::svc</font>(void)
     ACE_DEBUG ((LM_INFO, "<font color=green>(%P|%t|%T)\<font color=#008888>tTest::svc</font>() Entering done()\n</font>"));
 
         <font color=red>// This time we call done() instead of wait().  done()</font>
-        <font color=red>// actually invokes wait() but before returning here, it will </font>
+        <font color=red>// actually invokes wait() but before returning here, it will</font>
         <font color=red>// clean up a few resources.  The goal is to prevent carrying</font>
         <font color=red>// around objects you don't need.</font>
     if( barrier_.done() == -1 )
@@ -192,3 +192,4 @@ int main(int, char**)
 </PRE>
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page03.html">Continue This Tutorial</A>]</CENTER>
+

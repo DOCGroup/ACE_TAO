@@ -19,6 +19,8 @@ Crypt::~Crypt(void)
  */
 int Crypt::send(ACE_Message_Block *message, ACE_Time_Value *timeout)
 {
+    ACE_UNUSED_ARG(timeout);
+
     ACE_DEBUG ((LM_INFO, "(%P|%t) Crypt::send() encrypting (%s)\n", message->rd_ptr() ));
 
         // I suspect that some encryptors might change the data size.
@@ -45,6 +47,8 @@ int Crypt::send(ACE_Message_Block *message, ACE_Time_Value *timeout)
 */
 int Crypt::recv(ACE_Message_Block *message, ACE_Time_Value *timeout)
 {
+    ACE_UNUSED_ARG(timeout);
+
     ACE_DEBUG ((LM_INFO, "(%P|%t) Crypt::recv() decrypting (%s)\n", message->rd_ptr() ));
 
         // Create a destination for the decrypted data.  The same

@@ -76,10 +76,14 @@ Test_T<MUTEX>::send (ACE_Message_Block *message)
 {
   // If no message was provided, create a hangup message.
   if (message == 0)
+  {
+    ACE_Message_Block::ACE_Message_Type mb_hangup =
+        ACE_Message_Block::MB_HANGUP ;
+
     ACE_NEW_RETURN (message,
-                    ACE_Message_Block (0,
-                                       ACE_Message_Block::MB_HANGUP),
+                    ACE_Message_Block (0, mb_hangup),
                     -1);
+  }
 
   // Use the duplicate() method when sending the message.  For this
   // simple application, that may be overkill but it's a good habit.

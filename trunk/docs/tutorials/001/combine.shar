@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-09-21 22:48 EDT by <jcej@chiroptera.tragus.org>.
+# Made on 2000-03-19 15:00 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/001'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -14,7 +14,7 @@
 #    524 -rw-rw-r-- hdr
 #     38 -rw-rw-r-- bodies
 #   4034 -rw-rw-r-- page01.pre
-#   2188 -rw-rw-r-- page02.pre
+#   2186 -rw-rw-r-- page02.pre
 #    553 -rw-rw-r-- page03.pre
 #     79 -rw-rw-r-- page04.pre
 #   1149 -rw-rw-r-- page05.pre
@@ -67,7 +67,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh04675; then
+if mkdir _sh32295; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -95,7 +95,7 @@ A Beginners Guide to Using the ACE&nbsp;Toolkit</FONT></B></P></CENTER>
 X
 <hr>
 SHAR_EOF
-  $shar_touch -am 0117141099 'hdr' &&
+  $shar_touch -am 03191459100 'hdr' &&
   chmod 0664 'hdr' ||
   $echo 'restore of' 'hdr' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -228,7 +228,7 @@ I only went into all of this so that it can kick around in the back of your
 mind until you need it later.
 <P>
 SHAR_EOF
-  $shar_touch -am 0117140899 'page01.pre' &&
+  $shar_touch -am 03191459100 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -284,8 +284,8 @@ client requests in its handle_input() method. It is also registered
 with the Reactor with the ACE_Event_Handler::READ_MASK.
 <P>
 The Event_Handlers can be unregistered from the Reactor using
-handle_close() methods 
-or explicitly calling the remove_handler() methods. 
+handle_close() methods
+or explicitly calling the remove_handler() methods.
 <P>
 This server application builds and executes succesfully waiting for
 client requests to arrive.
@@ -304,19 +304,19 @@ to "read" data from an established connection.
 </UL>
 <hr>
 SHAR_EOF
-  $shar_touch -am 0117140999 'page02.pre' &&
+  $shar_touch -am 03191459100 'page02.pre' &&
   chmod 0664 'page02.pre' ||
   $echo 'restore of' 'page02.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page02.pre:' 'MD5 check failed'
-5e23294cf842366a9ca1b14867856359  page02.pre
+38b2ebf93344832204a8327d37bab41c  page02.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page02.pre'`"
-    test 2188 -eq "$shar_count" ||
-    $echo 'page02.pre:' 'original size' '2188,' 'current size' "$shar_count!"
+    test 2186 -eq "$shar_count" ||
+    $echo 'page02.pre:' 'original size' '2186,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page03.pre ==============
@@ -349,7 +349,7 @@ appropriate section (event_handler) which would cater to his needs.
 <P>
 <HR>
 SHAR_EOF
-  $shar_touch -am 0117140999 'page03.pre' &&
+  $shar_touch -am 03191459100 'page03.pre' &&
   chmod 0664 'page03.pre' ||
   $echo 'restore of' 'page03.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -376,7 +376,7 @@ X
 <P>
 <HR>
 SHAR_EOF
-  $shar_touch -am 0117140999 'page04.pre' &&
+  $shar_touch -am 03191459100 'page04.pre' &&
   chmod 0664 'page04.pre' ||
   $echo 'restore of' 'page04.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -435,7 +435,7 @@ In fact, it's probably safe to say that the concepts found there will keep
 coming back to haunt you as these tutorials continue.
 <P>
 SHAR_EOF
-  $shar_touch -am 0117141399 'page05.pre' &&
+  $shar_touch -am 03191459100 'page05.pre' &&
   chmod 0664 'page05.pre' ||
   $echo 'restore of' 'page05.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -477,7 +477,7 @@ to new connection requests.
 X
 <P>
 SHAR_EOF
-  $shar_touch -am 0117141299 'page02.pst' &&
+  $shar_touch -am 03191459100 'page02.pst' &&
   chmod 0664 'page02.pst' ||
   $echo 'restore of' 'page02.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -524,7 +524,7 @@ anyway.
 X
 <P>
 SHAR_EOF
-  $shar_touch -am 0117141299 'page03.pst' &&
+  $shar_touch -am 03191459100 'page03.pst' &&
   chmod 0664 'page03.pst' ||
   $echo 'restore of' 'page03.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -555,7 +555,7 @@ In the future, we'll learn about ACE_Svc_Handler&lt;>
 which will take care of most of the housekeeping for us.
 <P>
 SHAR_EOF
-  $shar_touch -am 0117141299 'page04.pst' &&
+  $shar_touch -am 03191459100 'page04.pst' &&
   chmod 0664 'page04.pst' ||
   $echo 'restore of' 'page04.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -570,5 +570,5 @@ SHAR_EOF
     $echo 'page04.pst:' 'original size' '279,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh04675
+rm -fr _sh32295
 exit 0

@@ -47,10 +47,11 @@ main (int argc, char *argv[])
                           argc > 1 ? argv[1] : default_signature))
         {
           /* If the client didn't say something we like then log it
-            *and move on.  /
+           * and move on.
+           */
           ACE_DEBUG ((LM_DEBUG,
-		      "(%P|%t) Client query does not match our signature (%s).  Response not sent.\n",
-		      argc > 1 ? argv[1] : default_signature));
+              "(%P|%t) Client query does not match our signature (%s).  Response not sent.\n",
+              argc > 1 ? argv[1] : default_signature));
         }
       else
         {

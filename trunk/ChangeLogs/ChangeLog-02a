@@ -1,3 +1,43 @@
+Sun Mar 19 14:30:56 2000  James CE Johnson  <jcej@mobsec.com>
+
+        * docs/tutorials/002/handler.h:
+        * docs/tutorials/008/broadcast_client.cpp:
+        * docs/tutorials/015/Compressor.cpp:
+        * docs/tutorials/006/server.cpp:
+        * docs/tutorials/005/server.cpp:
+        * docs/tutorials/007/server.cpp:
+        * docs/tutorials/009/server.cpp:
+        * docs/tutorials/015/Protocol_Task.h:
+        * docs/tutorials/015/Protocol_Task.cpp:
+        * docs/tutorials/015/Crypt.cpp:
+        * docs/tutorials/015/Handler.cpp:
+        A whole batch of ACE_UNUSED_ARGs were applied keep the compiler
+        quiet.
+
+        * docs/tutorials/018/Test_T.cpp (send):
+        Explicit creating of MB_HANGUP instance to avoid casting
+        confustion on the ACE_Message_Block constructor.
+
+        * docs/tutorials/005/client_handler.cpp:
+        * docs/tutorials/006/client_handler.cpp:
+        * docs/tutorials/007/client_handler.cpp:
+        Added a null-terminator to the strings received from the client
+        so that they look reasonable when printed.  Thanks to Steven
+        Boelens <steven@casema.net> for catching this.
+
+        * docs/tutorials/*/hdr:
+        * docs/tutorials/*/*.pre:
+        * docs/tutorials/*/*.pst:
+        * docs/tutorials/*/*.cpp:
+        Eliminating trailing whitespace and \r to make CVS happy.  The
+        relevant combine.shar files were also rebuilt.
+
+        * docs/tutorials/combine: Mutated to include CVS Id tag in every
+        page.
+
+        * docs/tutorials/*/*.html:  Everything rebuilt due to changes
+        above.
+
 Sat Mar 18 20:51:06 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/check_build_logs: added -u option, to provide a

@@ -39,6 +39,8 @@ favorite library.
  */</font>
 int <font color=#008888>Crypt::send</font>(ACE_Message_Block *message, ACE_Time_Value *timeout)
 {
+    ACE_UNUSED_ARG(timeout);
+
     ACE_DEBUG ((LM_INFO, "<font color=green>(%P|%t) <font color=#008888>Crypt::send</font>() encrypting (%s)\n</font>", message->rd_ptr() ));
 
         <font color=red>// I suspect that some encryptors might change the data size.</font>
@@ -65,6 +67,8 @@ int <font color=#008888>Crypt::send</font>(ACE_Message_Block *message, ACE_Time_
 */</font>
 int <font color=#008888>Crypt::recv</font>(ACE_Message_Block *message, ACE_Time_Value *timeout)
 {
+    ACE_UNUSED_ARG(timeout);
+
     ACE_DEBUG ((LM_INFO, "<font color=green>(%P|%t) <font color=#008888>Crypt::recv</font>() decrypting (%s)\n</font>", message->rd_ptr() ));
 
         <font color=red>// Create a destination for the decrypted data.  The same</font>
@@ -98,3 +102,4 @@ int <font color=#008888>Crypt::recv</font>(ACE_Message_Block *message, ACE_Time_
 </PRE>
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page22.html">Continue This Tutorial</A>]</CENTER>
+

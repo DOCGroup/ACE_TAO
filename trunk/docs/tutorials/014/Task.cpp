@@ -14,7 +14,7 @@
 #include "Task.h"
 
 Task::Task(const char * nameOfTask,
-	   int numberOfThreads)
+       int numberOfThreads)
   : d_numberOfThreads(numberOfThreads),
     d_barrier(numberOfThreads)
 {
@@ -44,7 +44,7 @@ int Task::open(void *arg)
 }
 
 int Task::put(ACE_Message_Block *message,
-	      ACE_Time_Value *timeout)
+          ACE_Time_Value *timeout)
 {
   // ACE_Stream uses the put() method of Tasks to send messages.
   // This defaultly does nothing.  Here we link our put() method
@@ -154,7 +154,7 @@ int Task::svc(void)
       // in case there are some more peer service threads still running.
 
       if (this->putq(messageBlock->duplicate()) == -1) {
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Task::svc() putq"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Task::svc() putq"), -1);
       }
 
       // We release our copy of the Block.

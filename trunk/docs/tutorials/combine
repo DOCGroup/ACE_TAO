@@ -2,6 +2,8 @@ eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
+# $Id$
+
 #
 # This perl script will combine a set of files into one or more HTML pages.
 #
@@ -81,6 +83,8 @@ foreach $file (@ARGV) {
   select(FILE);
   $| = 1;
 
+  print FILE '<!-- $Id$ -->' . "\n";
+
   # .hdr has the HTML header, title, etc...
   if( -f "$base.hdr" ) {
 	copy("$base.hdr",\*FILE);
@@ -122,6 +126,7 @@ foreach $file (@ARGV) {
 	}
 	print FILE "</CENTER>\n";
   }
+  print FILE "\n";
   close(FILE);
 }
 
@@ -157,6 +162,8 @@ sub addFile {
                     s,\*/,$&</font>,;
                     s,\w+::\~?\w+,<font color=\#008888>$&</font>,;
                   }
+                  s/[ \t]+$//;
+                  s/\t/  /g;
                   print FILE $_;
                }
                print FILE "</PRE>\n";
