@@ -154,7 +154,7 @@ private:
 				// on which we're listening for
 				// connections and requests.
   CORBA_Boolean do_exit;	// Flag set by <clean_shutdown()>
-  ROA_Acceptor clientAcceptor_;	// The acceptor listening for requests.
+  ROA_Acceptor client_acceptor_;// The acceptor listening for requests.
   CORBA_ORB_ptr _orb;		// Pointer to our ORB.
 
   u_int call_count;		// Used by COM stuff

@@ -33,55 +33,55 @@ ROA::init (CORBA_ORB_ptr parent,
 	   ACE_INET_Addr& rendezvous,
 	   CORBA_Environment& env)
 {
-    env.clear ();
+  env.clear ();
 
-    //    ACE_MT(ACE_GUARD(ACE_Thread_Mutex, roa_mon, lock_));
+  //    ACE_MT(ACE_GUARD(ACE_Thread_Mutex, roa_mon, lock_));
 
-    if (ROA_Parameters::instance()->oa())
-      {
-	env.exception (new CORBA_INITIALIZE (COMPLETED_NO));
-	return 0;
-      }
+  if (ROA_Parameters::instance()->oa())
+    {
+      env.exception (new CORBA_INITIALIZE (COMPLETED_NO));
+      return 0;
+    }
 
 #if defined(ROA_NEED_REQ_KEY)
-    (void) ACE_Thread::keycreate(&req_key_);
+  (void) ACE_Thread::keycreate(&req_key_);
 #endif
     
-    // Don't know if this is right for what was originally being done.  Looks like
-    // what was set in thread_attr were flags given to pthread_create().  However,
-    // thread creation (when necessary) is now performed by the Svc_Handler::create().
-    //(void) ROA_Parameters::instance()->thread_flags(ROA_DEFAULT_THREADFLAGS);
+  // Don't know if this is right for what was originally being done.  Looks like
+  // what was set in thread_attr were flags given to pthread_create().  However,
+  // thread creation (when necessary) is now performed by the Svc_Handler::create().
+  //(void) ROA_Parameters::instance()->thread_flags(ROA_DEFAULT_THREADFLAGS);
 #if 0
 
-    //
-    // Initialize POSIX thread stuff:  TSD key for request data, and
-    // attributes for threads that can be dynamically created.
-    //
-    // XXX this stuff should be guarded by "pthread_once", it's not
-    // at all OA-specific.
-    //
-    (void) pthread_key_create (&request_key, 0);
+  //
+  // Initialize POSIX thread stuff:  TSD key for request data, and
+  // attributes for threads that can be dynamically created.
+  //
+  // XXX this stuff should be guarded by "pthread_once", it's not
+  // at all OA-specific.
+  //
+  (void) pthread_key_create (&request_key, 0);
 
-    (void) pthread_attr_init (&thread_attr);
-    (void) pthread_attr_setdetachstate (&thread_attr, PTHREAD_CREATE_DETACHED);
+  (void) pthread_attr_init (&thread_attr);
+  (void) pthread_attr_setdetachstate (&thread_attr, PTHREAD_CREATE_DETACHED);
 
 #ifdef	_POSIX_THREAD_PRIORITY_SCHEDULING
-    (void) pthread_attr_setscope (&thread_attr, PTHREAD_SCOPE_PROCESS);
+  (void) pthread_attr_setscope (&thread_attr, PTHREAD_SCOPE_PROCESS);
 #endif	// _POSIX_THREAD_PRIORITY_SCHEDULING
 
 #endif	// _POSIX_THREADS
 
-    ROA_ptr rp;
-    ACE_NEW_RETURN (rp, ROA(parent, rendezvous, env), 0);
-    ROA_Parameters::instance()->oa(rp);
+  ROA_ptr rp;
+  ACE_NEW_RETURN (rp, ROA(parent, rendezvous, env), 0);
+  ROA_Parameters::instance()->oa(rp);
 
-    return rp;
+  return rp;
 }
 
 
 ROA::ROA (CORBA_ORB_ptr owning_orb,
-		ACE_INET_Addr& rendezvous,
-		CORBA_Environment &env)
+	  ACE_INET_Addr& rendezvous,
+	  CORBA_Environment &env)
   : do_exit(CORBA_B_FALSE), 
     _orb(owning_orb),
     call_count(0),
@@ -95,22 +95,19 @@ ROA::ROA (CORBA_ORB_ptr owning_orb,
   //
   // Initialize the endpoint ... or try!
   //
-  if (clientAcceptor_.open(rendezvous,
-			   ACE_Service_Config::reactor(),
-			   f->creation_strategy(),
-			   f->accept_strategy(),
-			   f->concurrency_strategy(),
-			   f->scheduling_strategy()) == -1)
-    {
-      // XXXCJC Need to return an error somehow!!  Maybe set do_exit?
-    }
+  if (client_acceptor_.open(rendezvous,
+			    ACE_Service_Config::reactor(),
+			    f->creation_strategy(),
+			    f->accept_strategy(),
+			    f->concurrency_strategy(),
+			    f->scheduling_strategy()) == -1)
+    // XXXCJC Need to return an error somehow!!  Maybe set do_exit?
+    ;
 
-  clientAcceptor_.acceptor().get_local_addr(addr);
+  client_acceptor_.acceptor().get_local_addr(addr);
 
   if (env.exception () != 0)
-    {
-      p->oa(this);
-    }
+    p->oa(this);
 }
 
 ROA::~ROA ()
@@ -187,13 +184,12 @@ ROA::create (CORBA_OctetSeq& key,
   //
   // Return the CORBA_Object_ptr interface to this objref.
   //
-  CORBA_Object_ptr		new_obj;
+  CORBA_Object_ptr new_obj;
 
   if (data->QueryInterface (IID_CORBA_Object, (void**)&new_obj)
       != NOERROR)
-    {
-      env.exception (new CORBA_INTERNAL (COMPLETED_NO));
-    }
+    env.exception (new CORBA_INTERNAL (COMPLETED_NO));
+
   data->Release ();
   return new_obj;
 }
@@ -205,9 +201,9 @@ ROA::create (CORBA_OctetSeq& key,
 CORBA_OctetSeq *
 ROA::get_key(CORBA_Object_ptr, CORBA_Environment& env)
 {
-    // XXX implement me ! ... must have been created by this OA.
-    env.exception (new CORBA_IMP_LIMIT (COMPLETED_NO));
-    return 0;
+  // XXX implement me ! ... must have been created by this OA.
+  env.exception (new CORBA_IMP_LIMIT (COMPLETED_NO));
+  return 0;
 }
 
 #if defined(ROA_NEED_REQ_KEY)
@@ -359,11 +355,12 @@ ROA::get_request (
     //
     // Here, some unthreaded app asked for thread support.  Ooops!
     //
-    if (do_thr_create) {
-      env.exception (new CORBA_IMP_LIMIT (COMPLETED_NO));
-      dexc (env, "TCP_OA, unthreaded: can't create worker threads");
-      return;
-    }
+    if (do_thr_create) 
+      {
+	env.exception (new CORBA_IMP_LIMIT (COMPLETED_NO));
+	dexc (env, "TCP_OA, unthreaded: can't create worker threads");
+	return;
+      }
 
     //
     // Get a request/message ... if no file descriptor is returned,
