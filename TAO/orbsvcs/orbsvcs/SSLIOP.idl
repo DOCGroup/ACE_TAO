@@ -37,9 +37,12 @@ module SSLIOP {
   /// Authority certificates proceeding sequentially upward.
   typedef sequence<ASN_1_Cert> SSL_Cert;
 
+  /// The following are TAO extensions.
+# pragma prefix "ssliop.tao"
   /// The SSLIOP::Current interface provides methods to gain access to
   /// the SSL session state for the current execution context.
   local interface Current : CORBA::Current {
+
 
     /// Exception that indicates a SSLIOP::Current operation was
     /// invoked outside of an SSL session.
@@ -51,6 +54,7 @@ module SSLIOP {
     SSL_Cert get_peer_certificate_chain () raises (NoContext);
 
   };
+# pragma prefix "omg.org"
 
 };
 
