@@ -1,3 +1,9 @@
+Wed Feb 9 14:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release:
+          Added the removal of the temporary file we create in the
+          old_versions_dir to check if we can write to that directory
+
 Tue Feb 8 20:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
