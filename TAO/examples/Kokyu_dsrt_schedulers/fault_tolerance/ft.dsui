@@ -1,7 +1,7 @@
 # $Id$
 DSTRM_FAMILY    TEST_ONE	1       "Description"
-DSTRM_FAMILY    WORKER_GROUP    2       "Description"
-DSTRM_FAMILY    MAIN_GROUP      3       "Description"
+DSTRM_FAMILY    MAIN_GROUP      2       "Description"
+DSTRM_FAMILY    WORKER_GROUP    3       "Description"
 
 # TEST_ONE
 DSTRM_EVENT	TEST_ONE	1	START_SERVICE		0       "Start service time"    print_string

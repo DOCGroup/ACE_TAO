@@ -57,7 +57,7 @@ int ft_table_offset= 1;
 family_t *ft_family_table[ft_NUM_FAMILIES] = {
 	
 	&TEST_ONE,
-	&WORKER_GROUP,
 	&MAIN_GROUP,
+	&WORKER_GROUP,
 };
 

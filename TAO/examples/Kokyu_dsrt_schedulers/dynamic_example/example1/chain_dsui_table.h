@@ -1,4 +1,4 @@
-//$Id$
+// $Id$
 // Automatically generated header file "chain_dsui_table.h" by dsui-parse.py 
 #ifndef _chain_DSUI_TABLE_H
 #define _chain_DSUI_TABLE_H

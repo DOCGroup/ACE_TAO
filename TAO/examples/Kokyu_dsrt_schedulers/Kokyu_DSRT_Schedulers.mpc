@@ -6,6 +6,10 @@ project(Kokyu_DSRT_EDF_Scheduler) : orbsvcslib, kokyu, rtscheduling, rtcorba {
   dynamicflags = KOKYU_DSRT_SCHEDULERS_BUILD_DLL KOKYU_HAS_RELEASE_GUARD
   idlflags += -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h
 
+  IDL_Files {
+	EDF_Scheduling.idl
+  }
+
   Source_Files {
         ip.cpp
         EDF_Scheduler.cpp
@@ -17,13 +21,8 @@ project(Kokyu_DSRT_EDF_Scheduler) : orbsvcslib, kokyu, rtscheduling, rtcorba {
   }
   
   Header_Files {
-<<<<<<< Kokyu_DSRT_Schedulers.mpc
       Kokyu_dsrt_schedulers_export.h
-      MIF_SchedulingC.h
-      MUF_SchedulingC.h
-      FP_SchedulingC.h	
-=======
-      Kokyu_dsrt_schedulers_export.h
+      EDF_SchedulingC.h
   }
 }
 
@@ -81,6 +80,5 @@ project(Kokyu_DSRT_MIF_Scheduler) : orbsvcslib, kokyu, rtscheduling, rtcorba {
   
   Header_Files {
       Kokyu_dsrt_schedulers_export.h
->>>>>>> 1.6.2.6
   }
 }
