@@ -24,7 +24,7 @@ typedef ACE_Strategy_Connector<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR
 
 typedef ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler,
                                     TAO_SOCK_CONNECTOR,
-                                    ACE_SYNCH_RW_MUTEX>
+                                    ACE_SYNCH_MUTEX>
         TAO_CACHED_CONNECT_STRATEGY;
 
 typedef ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler>
@@ -70,7 +70,7 @@ private:
   static ACE_Lock *coltbl_lock_;
 };
 
-typedef ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA*, TAO_COLTBL_Lock>
+typedef ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_COLTBL_Lock>
         TAO_GLOBAL_COLTBL;
 
 // Forward decl.
