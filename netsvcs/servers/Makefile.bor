@@ -1,7 +1,0 @@
-
-NAME = main
-OBJFILES = $(OBJDIR)\$(NAME).obj
-CFLAGS = -I$(ACE_ROOT)\netsvcs\lib $(ACE_CFLAGS)
-LIBFILES = $(ACE_LIB) $(NETSVCS_LIB)
-!include <$(ACE_ROOT)\netsvcs\build.bor>
-

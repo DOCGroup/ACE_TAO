@@ -1,9 +1,0 @@
-#
-# Makefile for building orbsvcs examples
-#
-
-DIRS = \
-        RtEC \
-        Security
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -1,3 +1,0 @@
-project(Nested Non Servant Upcalls): server {
-  exename = Nested_Non_Servant_Upcalls
-}
