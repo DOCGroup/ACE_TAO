@@ -33,6 +33,14 @@
 
 #include /**/ "ace/pre.h"
 
+// ====== Handcrafted
+namespace TAO
+{
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_IIOP_Endpoint_Info;
+
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_IIOPEndpointSequence;
+}
+
 // TAO_IDL - Generated from
 // be/be_visitor_structure/any_op_ch.cpp:52
 
@@ -52,4 +60,3 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const TAO::IIOPEndpoi
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
-
