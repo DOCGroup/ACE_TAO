@@ -36,11 +36,11 @@ void
 ACE_High_Res_Timer::elapsed_time (ACE_Time_Value &tv)
 {
   if (scale_factor_ > 0) {
-    tv.sec ((ACE_hrtime_t) ((this->end_ - this->start_) / scale_factor_ / 1000000L));
-    tv.usec ((ACE_hrtime_t) ((this->end_ - this->start_) / scale_factor_) % 1000000L);
+    tv.sec ((long) ((this->end_ - this->start_) / scale_factor_ / 1000) / 1000000);
+    tv.usec ((long) ((this->end_ - this->start_) / scale_factor_ / 1000) % 1000000);
   } else {
-    tv.sec ((this->end_ - this->start_) / 1000000L);
-    tv.usec ((this->end_ - this->start_) % 1000000L);
+    tv.sec ((long) ((this->end_ - this->start_) / 1000) / 1000000);
+    tv.usec ((long) ((this->end_ - this->start_) / 1000) % 1000000);
   }
 }
 
@@ -49,11 +49,11 @@ void
 ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time)
 {
   if (scale_factor_ > 0) {
-    elapsed_time.tv_sec = (ACE_hrtime_t) ((this->end_ - this->start_)  / scale_factor_) / (1000 * 1000 * 1000);
-    elapsed_time.tv_nsec = (ACE_hrtime_t) ((this->end_ - this->start_) / scale_factor_) % (1000 * 1000 * 1000);
+    elapsed_time.tv_sec = (time_t) ((this->end_ - this->start_)  / scale_factor_ / 1000) / 1000000;
+    elapsed_time.tv_nsec = (long) ((this->end_ - this->start_) / scale_factor_ / 1000) % 1000000;
   } else {
-    elapsed_time.tv_sec = (this->end_ - this->start_) / (1000 * 1000 * 1000);
-    elapsed_time.tv_nsec = (this->end_ - this->start_) % (1000 * 1000 * 1000);
+    elapsed_time.tv_sec = (time_t) ((this->end_ - this->start_) / 1000) / 1000000;
+    elapsed_time.tv_nsec = (long) ((this->end_ - this->start_) / 1000) % 1000000;
   }
 }
 #endif /* ACE_HAS_POSIX_TIME */
@@ -62,11 +62,11 @@ void
 ACE_High_Res_Timer::elapsed_time_incr (ACE_Time_Value &tv)
 {
   if (scale_factor_ > 0) {
-    tv.sec ((ACE_hrtime_t) (this->total_ / scale_factor_) / 1000000L);
-    tv.usec ((ACE_hrtime_t) (this->total_ / scale_factor_) % 1000000L);
+    tv.sec ((long) (this->total_ / scale_factor_ / 1000) / 1000000);
+    tv.usec ((long) (this->total_ / scale_factor_ / 1000) % 1000000);
   } else {
-    tv.sec (this->total_ / 1000000L);
-    tv.usec (this->total_ % 1000000L);
+    tv.sec ((long) (this->total_ / 1000) / 1000000);
+    tv.usec ((long) (this->total_ / 1000) % 1000000);
   }
 }
 
@@ -79,8 +79,8 @@ ACE_High_Res_Timer::print_ave (const char *str, const int count, ACE_HANDLE hand
     total = (ACE_hrtime_t) ((this->end_ - this->start_) / scale_factor_);
   else
     total = this->end_ - this->start_;
-  ACE_hrtime_t total_secs  = total / (1000 * 1000 * 1000);
-  u_long extra_nsecs = total % (1000 * 1000 * 1000);
+  ACE_hrtime_t total_secs  = total / 1000000000;
+  u_long extra_nsecs = (u_long) (total % 1000000000);
 
   char buf[100];
   if (count > 1)
@@ -104,10 +104,10 @@ ACE_High_Res_Timer::print_total (const char *str, const int count, ACE_HANDLE ha
   ACE_TRACE ("ACE_High_Res_Timer::print_total");
   ACE_hrtime_t total_secs;
   if (scale_factor_ > 0)
-    total_secs = (ACE_hrtime_t) (this->total_ / scale_factor_) / (1000 * 1000 * 1000);
+    total_secs = (ACE_hrtime_t) (this->total_ / scale_factor_ / 1000000000);
   else
-    total_secs = this->total_ / (1000 * 1000 * 1000);
-  u_long extra_nsecs = this->total_ % (1000 * 1000 * 1000);
+    total_secs = this->total_ / 1000000000;
+  u_long extra_nsecs = (u_long) (this->total_ % 1000000000);
 
   char buf[100];
   if (count > 1)
