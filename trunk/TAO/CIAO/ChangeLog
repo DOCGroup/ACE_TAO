@@ -3,8 +3,10 @@ Fri Jul 30 18:29:54 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* ciao/Servant_Impl_T.cpp (get_all_facets, get_all_consumers):
 
 	  Fixed another instance of incorrect emulated exception
-	  parameter.  The method definition incorrectly used a default
-	  parameter.
+	  parameters.  The method definitions incorrectly used a default
+	  valued parameters.
+
+	  Fixed unused parameter warnings.
 
 Fri Jul 30 17:29:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
@@ -15,10 +17,10 @@ Thu Jul 29 16:54:01 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* DAnCE/ciao/Servant_Impl_T.cpp (get_all_facets):
 	  (get_all_consumers):
 
-	  Fixed incorrect emulated exception parameter.  The method
-	  definition incorrectly used a default parameter.
+	  Fixed incorrect emulated exception parameters.  The method
+	  definitions incorrectly used a default valued parameters.
 
-	  Fixed unused parameter warning.
+	  Fixed unused parameter warnings.
 
 Thu Jul 29 16:47:56 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
