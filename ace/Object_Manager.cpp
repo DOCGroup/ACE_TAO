@@ -56,9 +56,11 @@ ACE_Object_Manager::delete_at_exit_i (void *object)
     {
       i.advance ();
 
-      if (obj == object)
-	// The object has already been registered.
-	return 1;
+      if (*obj == object)
+        {
+          // The object has already been registered.
+          return 1;
+        }
     }
 
   // Returns -1 if unable to allocate storage.
@@ -76,9 +78,11 @@ ACE_Object_Manager::delete_array_at_exit_i (void *array)
     {
       i.advance ();
 
-      if (obj == array)
-	// The array has already been registered.
-	return 1;
+      if (*obj == array)
+        {
+          // The array has already been registered.
+          return 1;
+        }
     }
 
   // Returns -1 if unable to allocate storage.
