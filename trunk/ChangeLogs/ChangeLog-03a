@@ -1,27 +1,44 @@
+Mon Feb 26 15:54:33 2001  Phil Mesnier  <mesnier_p@ociweb.com>
+        Port to Unixware 7 (7.1.1) Using UDK CC (7.1.1.b)
+
+        * docs/tutorials/013/message_queue.cpp:
+        * tests/Malloc_Test.cpp:
+
+        Fixed errors in #pragma instiate lines including removal of ';', mispellings
+
+        * ace/config-all.h:
+
+        Added definition of Unixware UDK for definition of ACE_NOTREACHED()
+
+        * ace/config-unixware-7.1.0.udk.h:
+        * include/makeinclude/platform_unixware_udk.GNU:
+
+        New configuration files for building on Unixware 7 with UDK CC.
+
 Mon Feb 26 12:29:45 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/ARGV.h: Clarify that the int add (const ACE_TCHAR *next_arg)
-	  method assumes ownership of <next_arg>, rather than copying it.
-  	  Thanks to Steve Hespelt <shespelt@bear.com> for reporting this.
-	  Fixes [Bug 807].
-  
+        * ace/ARGV.h: Clarify that the int add (const ACE_TCHAR *next_arg)
+          method assumes ownership of <next_arg>, rather than copying it.
+          Thanks to Steve Hespelt <shespelt@bear.com> for reporting this.
+          Fixes [Bug 807].
+
 Mon Feb 26 12:27:46 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/CDR_Stream.h:
         * ace/CDR_Stream.i:
 
           Added method to reset the byte order in class OuputCDR.  This
- 	  will be used by a gateway to set the byte order of a reply to a
- 	  reqest it has handled to one different than the gateway's own
- 	  byte order, if necessary. It should be called while the stream
- 	  is still empty, that is, before any part of the reply, including
- 	  the header, has been marshaled.
+          will be used by a gateway to set the byte order of a reply to a
+          reqest it has handled to one different than the gateway's own
+          byte order, if necessary. It should be called while the stream
+          is still empty, that is, before any part of the reply, including
+          the header, has been marshaled.
 
 Mon Feb 26 12:07:00 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Memory_Pool.cpp: Moved the copying of MMAP flags up before
           setting the MAP_FIXED flag.  Thanks to <rhuber@amadeus.net> for
- 	  reporting this. [Bug 752]
+          reporting this. [Bug 752]
 
 Mon Feb 26 09:29:36 2001  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
