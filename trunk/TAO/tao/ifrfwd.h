@@ -7,17 +7,17 @@
 //    TAO
 //
 // = FILENAME
-//   ifrfwd.h
+//    ifrfwd.h
 //
 // = DESCRIPTION
-//   Forward declare the basic types used in the IR
-//   implementation. This file should be included in
-//   ORB file headers that use one or more IR namespace
-//   types. The corresponding source files will include
-//   InterfaceC.h.
+//    Forward declare the basic types used in the IR
+//    implementation. This file should be included in
+//    ORB file headers that use one or more IR namespace
+//    types. The corresponding source files will include
+//    InterfaceC.h.
 //
 // = AUTHOR
-//   Jeff Parsons
+//    Jeff Parsons
 //
 // ============================================================================
 
@@ -31,6 +31,8 @@
 
 #if (TAO_HAS_INTERFACE_REPOSITORY == 1)
 
+#include "tao/corbafwd.h"
+
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
@@ -43,8 +45,6 @@
 #endif /* _MSC_VER */
 
 // Forward declarations of some data types are needed.
-enum IR_DefinitionKind;
-
 class IR_Contained;
 class IR_Contained_var;
 class IR_Contained_out;
@@ -320,15 +320,9 @@ class IR_AttributeDef_var;
 class IR_AttributeDef_out;
 typedef IR_AttributeDef *IR_AttributeDef_ptr;
 
-enum IR_AttributeMode;
-
 struct IR_AttributeDescription;
 class IR_AttributeDescription_var;
 class IR_AttributeDescription_out;
-
-enum IR_PrimitiveKind;
-
-enum IR_ParameterMode;
 
 struct IR_ParameterDescription;
 class IR_ParameterDescription_var;
@@ -346,8 +340,6 @@ class IR_OperationDef;
 class IR_OperationDef_var;
 class IR_OperationDef_out;
 typedef IR_OperationDef *IR_OperationDef_ptr;
-
-enum IR_OperationMode;
 
 struct IR_OperationDescription;
 class IR_OperationDescription_var;
