@@ -411,6 +411,31 @@ namespace CIAO
     oid = id._retn ();
   }
 
+  void
+  Session_Container::add_servant_map
+    (PortableServer::ObjectId &,
+     Dynamic_Component_Servant_Base*
+     ACE_ENV_ARG_DECL)
+  {
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  }
+
+  void
+  Session_Container::delete_servant_map
+    (PortableServer::ObjectId &
+     ACE_ENV_ARG_DECL)
+  {
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  }
+
+  CORBA::Object_ptr
+  Session_Container::get_home_objref (PortableServer::Servant
+                                      ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  }
+
   CORBA::Object_ptr
   Session_Container::generate_reference (const char *obj_id,
                                          const char *repo_id,
