@@ -228,7 +228,8 @@ CORBA_ORB::open (void)
   // @@ For now we simple assume an IIOP handler, in the future
   // @@ this has to be more general
   TAO_IIOP_BASE_ACCEPTOR *iiop_acceptor =
-    ACE_dynamic_cast(TAO_IIOP_BASE_ACCEPTOR *, ocp->acceptor ()->acceptor ());
+    ACE_dynamic_cast(TAO_IIOP_BASE_ACCEPTOR *,
+                     ocp->acceptor ()->acceptor ());
 
   // Initialize the endpoint ... or try!
 
@@ -659,23 +660,23 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
   // method that returns the port number of the client, so we can use
   // that to reply.
 
-  struct
-  {
-    u_short reply_port;
-    CORBA::Short service_id;
-  } mcast_info;
+  ACE_UINT16 mcast_info[2];
 
   // Figure out what port to listen on for server replies, and convert
   // to network byte order.
-  mcast_info.reply_port =
-    ACE_HTONS (response_addr.get_port_number ());
-  mcast_info.service_id =
+  mcast_info[0] =
+    // Make sure not to convert this into network byte order since
+    // it's already in network byte order when it comes back from
+    // <get_local_addr>.
+    response_addr.get_port_number ();
+  mcast_info[1] =
     ACE_HTONS (service_id);
 
-  // Send multicast of one byte, enough to wake up server.
-  ssize_t n_bytes = multicast.send (&mcast_info,
+  // Send multicast info to the server.
+  ssize_t n_bytes = multicast.send (mcast_info,
                                     sizeof (mcast_info));
-  // Close multicast socket now.
+  // Close multicast socket now to recycle handle.
+  // @@ Fred,
   multicast.close ();
 
   if (TAO_debug_level > 0)
@@ -704,10 +705,10 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
                      ? ACE_Time_Value (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
                      : *timeout);
 
-  // Receive response message
+  // Receive response message.
 
   // @@ Why on earth are we allocating this memory dynamically?  It's
-  // a fixed size, so it should be passed in
+  // a fixed size, so it should be passed in by the caller...
   char *buf = new char[ACE_MAX_DGRAM_SIZE + 1]; // add char for '\0'
 
   n_bytes = response.recv (buf,
@@ -715,7 +716,6 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
                            remote_addr,
                            0,
                            &tv);
-
   // Close endpoint for response.
   int retval = response.close ();
 
@@ -737,7 +737,6 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
                 "%s; Service resolved to ior: '%s'\n",
                 __FILE__,
                 buf));
-
   return buf;
 }
 
@@ -761,6 +760,9 @@ CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
   char *buf = this->multicast_query (service_id,
                                      port,
                                      timeout);
+  // @@ There's a memory leak here since buf was allocated dynamically
+  // and doesn't appear to be freed up.  It's a better idea to return
+  // an object reference here...
   if (buf)
     {
       // Convert ior to an object reference.
