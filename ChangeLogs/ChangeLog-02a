@@ -1,3 +1,11 @@
+Wed Jan 30 09:28:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * XML/parser/debug_validator/Debug_Attributes_Builder.cpp:
+        * XML/parser/debug_validator/Debug_DTD_Manager.cpp:
+        * XML/parser/debug_validator/Debug_Element_Builder.cpp:
+        * XML/parser/debug_validator/Element_Tree.cpp:
+          Added missing ACE_LIB_TEXT. This fixes the BCB unicode build errors
+
 Tue Jan 29 20:11:21 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* etc/*.doxygen (EXPAND_AS_DEFINED): Added ACE_CACHE_MAP_MANAGER
@@ -9,22 +17,22 @@ Tue Jan 29 19:36:24 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* bin/make_release: The whole release process has been moved to
 	  Linux box. This is because the sun machines at WashU were having
 	  problems and they are not dependable. The following are the list
-	  of changes made 
+	  of changes made
 
 	  - All the path related stuff have been changed ie. instead of
 	    using /pkg/gnu tools, we use native tools on Linux now.
-	
-	  - The gnu suffixes to many of the tools have been removed. 
+
+	  - The gnu suffixes to many of the tools have been removed.
 
 	  - Most of the path to the tools have been hardcoded in the PATH
-	    environment variabe. 
-	  
+	    environment variabe.
+
 	  - Tools that were missing have been loaded on 3 main Linux boxes
 	    at WashU including Graphviz and doxygen.
-	  
-	  - A beta cannot be cut from a sun box. 
-	  
-	  - The script will recommend cutting a beta from deuce.doc. 
+
+	  - A beta cannot be cut from a sun box.
+
+	  - The script will recommend cutting a beta from deuce.doc.
 
 	  The script has been tested with a dummy release.
 

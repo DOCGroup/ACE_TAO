@@ -45,7 +45,7 @@ ACEXML_Debug_Attribute_Builder::setAttType (const ATT_TYPE type,
       this->type_ = type;
       return 0;
     }
-  xmlenv.exception (new ACEXML_SAXParseException ("Attribute type redefinition in Debug Validator"));
+  xmlenv.exception (new ACEXML_SAXParseException (ACE_LIB_TEXT("Attribute type redefinition in Debug Validator")));
   return -1;
 }
 
@@ -195,7 +195,7 @@ ACEXML_Debug_Attributes_Builder::insertAttribute (ACEXML_Attribute_Def_Builder *
       this->attributes_.bind (attname, *ptr);
       return 0;
     }
-  xmlenv.exception (new ACEXML_SAXParseException ("ACEXML_Debug_Attributes_Builder internal error"));
+  xmlenv.exception (new ACEXML_SAXParseException (ACE_LIB_TEXT("ACEXML_Debug_Attributes_Builder internal error")));
   return -1;
 }
 
