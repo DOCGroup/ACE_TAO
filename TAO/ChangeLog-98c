@@ -1,3 +1,10 @@
+Wed Jan  7 20:20:56 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/NS_CosNaming.cpp:
+	* orbsvcs/Naming_Service/CosNaming_i.cpp: Use the correct
+ 	_duplicate function.  Also changed the code to use exceptions
+ 	already supported by TAO.
+
 Wed Jan  7 18:00:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/Makefile: 
