@@ -596,15 +596,24 @@ main (int argc, char *argv[])
       int minor_code =
         exception.minor ();
 
-      if (ACE_BIT_ENABLED (minor_code, TAO_RTCORBA_THREAD_CREATION_LOCATION_CODE) &&
-          errno == EPERM)
+      if (errno == EPERM)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot create thread with scheduling policy %s\n"
-                             "because the user does not have the appropriate privileges, terminating program....\n"
-                             "Check svc.conf options and/or run as root\n",
-                             sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
-                            2);
+          if (ACE_BIT_ENABLED (minor_code, TAO_RTCORBA_THREAD_CREATION_LOCATION_CODE))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot create thread with scheduling policy %s\n"
+                                 "because the user does not have the appropriate privileges, terminating program....\n"
+                                 "Check svc.conf options and/or run as root\n",
+                                 sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
+                                2);
+            }
+          else
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "ERROR: would expect that TAO_RTCORBA_THREAD_CREATION_LOCATION_CODE "
+                                 "minor code is set, minor code is %d",
+                                 TAO_RTCORBA_THREAD_CREATION_LOCATION_CODE), -1);
+            }
         }
       else
         // Unexpected error.
