@@ -1,3 +1,9 @@
+Tue May  6 09:03:32 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          Reverted my change from Tue May  6 06:54:43 2003.  
+
 Tue May  6 06:54:43 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
