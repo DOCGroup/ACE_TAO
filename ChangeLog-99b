@@ -1,9 +1,14 @@
+Thu May 20 14:21:44 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i: (t_getname): fixed comment after #endif, to
+          agree with the #ifdef.
+
 Thu May 20 13:51:20 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-win32-common.h: I forgot to put '/**/' between
-	  #include and <blah.h> which caused MSVC to generate warnings
-	  when checking file dependencies.  Thanks to Christian Schuderer
-	  <Christian.Schuderer@erl9.siemens.de> for reporting this.
+        * ace/config-win32-common.h: I forgot to put '/**/' between
+          #include and <blah.h> which caused MSVC to generate warnings
+          when checking file dependencies.  Thanks to Christian Schuderer
+          <Christian.Schuderer@erl9.siemens.de> for reporting this.
 
 Thu May 20 13:52:04 1999  David L. Levine  <levine@cs.wustl.edu>
 
