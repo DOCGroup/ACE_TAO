@@ -1,5 +1,9 @@
 Thu Aug 27 13:45:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* ace/OS.h:  Added /**/ between "#include" and
+	  "<ace/sys_conf.h>".  Otherwise, MSVC spits out warnings, tons of
+	  them.
+
 	* ace/Profile_Timer.h (ACE_Profile_Timer): Remove the Win32
 	  section.  Win32 (except CE) actually uses the code in
 	  ACE_HAS_GETRUSAGE. 
