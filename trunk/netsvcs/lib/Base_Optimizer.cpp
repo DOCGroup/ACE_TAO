@@ -4,7 +4,7 @@
 
 #include "Base_Optimizer.h"
 
-#if !define (BASE_OPTIMIZER_CPP)
+#if !defined (BASE_OPTIMIZER_CPP)
 #define BASE_OPTIMIZER_CPP
 
 template<class Base, class Member>
