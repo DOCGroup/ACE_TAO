@@ -1,3 +1,21 @@
+Wed Mar 16 07:20:36 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* Makefile.am:
+
+	  Regenerate.
+
+	* orbsvcs/orbsvcs/CosNotification.mpc:
+
+	  Add empty Header_Files and Inline_Files sections to
+	  CosNotification_Persist project so MPC doesn't add unrelated
+	  files to project.
+
+	* orbsvcs/orbsvcs/RTCORBAEvent.mpc:
+
+	  Add empty Header_Files and Inline_Files sections to
+	  RTCORBAEvent project so MPC doesn't add unreleated files to
+	  project.
+
 Wed Mar 16 11:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/POA/Forwarding/POA_Forwarding.mpc:
