@@ -120,9 +120,9 @@ ACE::crc32 (const char *string)
 }
 
 ACE_UINT32
-ACE::crc32 (const void *buffer, size_t len)
+ACE::crc32 (const void *buffer, size_t len, ACE_UINT32 crc)
 {
-  ACE_UINT32 crc = 0xFFFFFFFF;
+  crc = ~crc;
 
   for (const char *p = (const char *) buffer,
                   *e = (const char *) buffer + len;
@@ -136,9 +136,9 @@ ACE::crc32 (const void *buffer, size_t len)
 }
 
 ACE_UINT32
-ACE::crc32 (const iovec *iov, int len)
+ACE::crc32 (const iovec *iov, int len, ACE_UINT32 crc)
 {
-  ACE_UINT32 crc = 0xFFFFFFFF;
+  crc = ~crc;
 
   for (int i = 0; i < len; ++i)
     {
