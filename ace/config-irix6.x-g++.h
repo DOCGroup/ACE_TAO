@@ -37,9 +37,6 @@
 // Platform has pthread_equal().
 #define ACE_HAS_PTHREAD_EQUAL
 
-// Platform has pthread_t defined.
-#define ACE_HAS_PTHREAD_T
-
 // Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 

@@ -37,8 +37,6 @@
 // Platform supports <sys/procfs.h>
 #define ACE_HAS_PROC_FS
 
-// Platform supports tid_t
-#define ACE_HAS_TID_T
 #define ACE_HAS_UALARM
 
 // If ACE doesn't compile due to the lack of these methods, please
@@ -55,7 +53,6 @@
 // Platform has non-POSIX setkind and other functions.
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 #define ACE_HAS_SETKIND_NP
-#define ACE_HAS_PTHREAD_T
 
 // Platform supports POSIX 1.b clock_gettime ()
 #define ACE_HAS_CLOCK_GETTIME
