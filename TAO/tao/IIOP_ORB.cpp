@@ -195,10 +195,10 @@ iiop_string_to_object (const char *string,
                   CORBA::Object::_nil ());
   // pfile refcount == 1
   
-  // Now make the STUB_Object ...
-  STUB_Object *data;
+  // Now make the TAO_Stub ...
+  TAO_Stub *data;
   ACE_NEW_RETURN (data, 
-                  STUB_Object ((char *) 0,
+                  TAO_Stub ((char *) 0,
                                pfile), 
                   CORBA::Object::_nil ());
   // pfile refcount == 2
@@ -280,10 +280,10 @@ iioploc_string_to_object (const char *string,
       mp->give_profile (pfile);
     }
   
-  // Now make the STUB_Object ...
-  STUB_Object *data;
+  // Now make the TAO_Stub ...
+  TAO_Stub *data;
   ACE_NEW_RETURN (data,
-                  STUB_Object ((char *) 0,
+                  TAO_Stub ((char *) 0,
                                mp),
                   CORBA::Object::_nil ());
   
@@ -343,7 +343,7 @@ IIOP_ORB::string_to_object (const char *str,
 }
 
 TAO_ServantBase *
-IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
+IIOP_ORB::_get_collocated_servant (TAO_Stub *sobj)
 {
   // ACE_DEBUG ((LM_DEBUG, "IIOP_ORB: get_collocated_servant\n"));
   
@@ -352,7 +352,7 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
       
       TAO_Profile *pfile = sobj->profile_in_use ();
       
-      // Make sure users passed in a valid STUB_Object otherwise, we
+      // Make sure users passed in a valid TAO_Stub otherwise, we
       // don't know what to do next.
       if (pfile == 0)
         {

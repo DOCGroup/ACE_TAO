@@ -385,7 +385,7 @@ TAO_IIOP_Profile::parse (TAO_InputCDR& cdr,
 
 int
 TAO_IIOP_Profile::parse_string (const char *string,
-                                CORBA::Environment &env)
+                                CORBA::Environment &ACE_TRY_ENV)
 {
   if (!string || !*string)
     return 0;
@@ -406,18 +406,12 @@ TAO_IIOP_Profile::parse_string (const char *string,
       string += 5;
     }
   else
-    // @@ AFAIK the right kind of exception to raise here is
-    // CORBA_MARSHAL: CORBA_DATA_CONVERSION is reserved for failure
-    // to translate *values* (such as character set mismatches,
-    // fixed<> types, floats, etc.)
-    env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), 0);
 
   if (this->version_.major != TAO_IIOP_Profile::DEF_IIOP_MAJOR
       || this->version_.minor  > TAO_IIOP_Profile::DEF_IIOP_MINOR)
     {
-      // @@ Same thing here....
-      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return -1;
+      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), -1);
     }
 
   // Pull off the "hostname:port/" part of the objref
@@ -428,9 +422,8 @@ TAO_IIOP_Profile::parse_string (const char *string,
   char *cp = ACE_OS::strchr (start, ':');
 
   if (cp == 0)
-    {
-      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return -1;
+    { 
+      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), -1);
     }
 
   if (this->host_)
@@ -458,9 +451,8 @@ TAO_IIOP_Profile::parse_string (const char *string,
 
   if (cp == 0)
     {
-      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
       CORBA::string_free (this->host_);
-      return -1;
+      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), -1);
     }
 
   this->port_ = (CORBA::UShort) ACE_OS::atoi (start);

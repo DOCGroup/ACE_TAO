@@ -28,7 +28,7 @@ class ACE_Addr;
 class ACE_Reactor;
 class TAO_ORB_Core;
 
-class STUB_Object;
+class TAO_Stub;
 class TAO_Profile;
 class TAO_MProfile;
 class TAO_Resource_Factory;
@@ -433,7 +433,7 @@ public:
   // For this list of preconnections call the connector specific
   // preconnect method for each preconnection.
 
-  int connect (STUB_Object *&obj, TAO_Transport *&);
+  int connect (TAO_Stub *&obj, TAO_Transport *&);
   // This is where the transport protocol is selected based on some
   // policy.  This member will call the connect member of the
   // TAO_Connector class which in turn will call the concrete

@@ -254,7 +254,7 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
 {
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
 
-  // Current version:  objref is really an STUB_Object.
+  // Current version:  objref is really an TAO_Stub.
   // @@ But, it need not be.  All IIOP specific processing has
   //    been move to the specific transport profile class!
   //

@@ -474,7 +474,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 protected:
   CORBA_DynAny (void); // default constructor
-  CORBA_DynAny (STUB_Object *objref,
+  CORBA_DynAny (TAO_Stub *objref,
       TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
@@ -601,7 +601,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 protected:
   CORBA_DynEnum (void); // default constructor
-  CORBA_DynEnum (STUB_Object *objref,
+  CORBA_DynEnum (TAO_Stub *objref,
       TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
@@ -1076,7 +1076,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 protected:
   CORBA_DynStruct (void); // default constructor
-  CORBA_DynStruct (STUB_Object *objref,
+  CORBA_DynStruct (TAO_Stub *objref,
       TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
@@ -1219,7 +1219,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 protected:
   CORBA_DynUnion (void); // default constructor
-  CORBA_DynUnion (STUB_Object *objref,
+  CORBA_DynUnion (TAO_Stub *objref,
       TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
@@ -1637,7 +1637,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 protected:
   CORBA_DynSequence (void); // default constructor
-  CORBA_DynSequence (STUB_Object *objref,
+  CORBA_DynSequence (TAO_Stub *objref,
       TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
@@ -1755,7 +1755,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 protected:
   CORBA_DynArray (void); // default constructor
-  CORBA_DynArray (STUB_Object *objref,
+  CORBA_DynArray (TAO_Stub *objref,
       TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );

@@ -27,7 +27,7 @@ CORBA_DynAny::CORBA_DynAny (void) // default constructor
 {}
 
 ACE_INLINE
-CORBA_DynAny::CORBA_DynAny (STUB_Object *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+CORBA_DynAny::CORBA_DynAny (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
   : CORBA_Object (objref, _tao_servant, _tao_collocated)
 {}
 
@@ -230,7 +230,7 @@ CORBA_DynEnum::CORBA_DynEnum (void) // default constructor
 {}
 
 ACE_INLINE
-CORBA_DynEnum::CORBA_DynEnum (STUB_Object *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+CORBA_DynEnum::CORBA_DynEnum (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
   : CORBA_Object (objref, _tao_servant, _tao_collocated)
 {}
 
@@ -767,7 +767,7 @@ CORBA_DynStruct::CORBA_DynStruct (void) // default constructor
 {}
 
 ACE_INLINE
-CORBA_DynStruct::CORBA_DynStruct (STUB_Object *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+CORBA_DynStruct::CORBA_DynStruct (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
   : CORBA_Object (objref, _tao_servant, _tao_collocated)
 {}
 
@@ -954,7 +954,7 @@ CORBA_DynUnion::CORBA_DynUnion (void) // default constructor
 {}
 
 ACE_INLINE
-CORBA_DynUnion::CORBA_DynUnion (STUB_Object *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+CORBA_DynUnion::CORBA_DynUnion (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
   : CORBA_Object (objref, _tao_servant, _tao_collocated)
 {}
 
@@ -1322,7 +1322,7 @@ CORBA_DynSequence::CORBA_DynSequence (void) // default constructor
 {}
 
 ACE_INLINE
-CORBA_DynSequence::CORBA_DynSequence (STUB_Object *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+CORBA_DynSequence::CORBA_DynSequence (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
   : CORBA_Object (objref, _tao_servant, _tao_collocated)
 {}
 
@@ -1509,7 +1509,7 @@ CORBA_DynArray::CORBA_DynArray (void) // default constructor
 {}
 
 ACE_INLINE
-CORBA_DynArray::CORBA_DynArray (STUB_Object *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+CORBA_DynArray::CORBA_DynArray (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
   : CORBA_Object (objref, _tao_servant, _tao_collocated)
 {}
 

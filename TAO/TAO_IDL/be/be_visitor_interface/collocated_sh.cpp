@@ -89,7 +89,7 @@ int be_visitor_interface_collocated_sh::visit_interface (be_interface *node)
   *os << node->local_name () << "_ptr "
       << " servant," << be_nl;
 
-  *os << "STUB_Object *stub\n";
+  *os << "TAO_Stub *stub\n";
   os->decr_indent ();
   *os << ");\n";
   os->decr_indent (0);

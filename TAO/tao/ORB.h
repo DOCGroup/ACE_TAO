@@ -89,7 +89,7 @@ typedef struct TAO_Leader_Follower_Info_Struct
   // thread ID of the leader thread (protected)
 } TAO_Leader_Follower_Info;
 
-class STUB_Object;
+class TAO_Stub;
 // Forward declarations.
 
 class TAO_Export CORBA_String_var
@@ -244,11 +244,11 @@ public:
   // this is typically eventually given to <string_to_object()> as an
   // argument.
 
-  virtual TAO_ServantBase *_get_collocated_servant (STUB_Object *p) = 0;
+  virtual TAO_ServantBase *_get_collocated_servant (TAO_Stub *p) = 0;
   // Return the object pointer of an collocated object it there is
   // one, otherwise, return 0.  Each type of ORB, e. g., IIOP ORB,
   // must implement this and determine what is a collocated object
-  // based on information provided in the STUB_Object.
+  // based on information provided in the TAO_Stub.
 
   virtual int _tao_add_to_IOR_table (ACE_CString object_id, CORBA::Object_ptr obj) = 0;
   // Add a mapping ObjectID->IOR to the table.
@@ -329,7 +329,7 @@ public:
                                      const TAO_POA_Policies *policies = 0);
   // Resolve the POA.
 
-  STUB_Object *create_stub_object (const TAO_ObjectKey &key,
+  TAO_Stub *create_stub_object (const TAO_ObjectKey &key,
                                    const char *type_id,
                                    CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Makes sure that the ORB is open and then creates an IIOP object

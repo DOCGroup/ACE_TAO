@@ -37,8 +37,8 @@ class TAO_Export TAO_MProfile
   //   a linear array of profiles.
   //
   //   It is assumed that locking will only be required when a profile
-  //   list is associated with a STUB_Object.  Thus when the
-  //   STUB_Object accepts ownership of an MProfile it also assumes
+  //   list is associated with a TAO_Stub.  Thus when the
+  //   TAO_Stub accepts ownership of an MProfile it also assumes
   //   responsibility for controling access (i.e. locking).
 public:
   // = Initalization and termination methods.

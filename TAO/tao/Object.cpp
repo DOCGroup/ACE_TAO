@@ -34,7 +34,7 @@ CORBA_Object::~CORBA_Object (void)
   this->protocol_proxy_->_decr_refcnt ();
 }
 
-CORBA_Object::CORBA_Object (STUB_Object *protocol_proxy,
+CORBA_Object::CORBA_Object (TAO_Stub *protocol_proxy,
                             TAO_ServantBase *servant,
                             CORBA::Boolean collocated)
   : servant_ (servant),
@@ -80,7 +80,7 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
 
   CORBA::Boolean _tao_retval = 0;
 
-  STUB_Object *istub = this->_stubobj ();
+  TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 
@@ -155,7 +155,7 @@ CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
 {
     CORBA::Boolean _tao_retval = 0;
 
-  STUB_Object *istub = this->_stubobj ();
+  TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 
@@ -287,7 +287,7 @@ CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
   // @@ this should use the _nil() method...
   CORBA::InterfaceDef_ptr _tao_retval = 0;
 
-  STUB_Object *istub = this->_stubobj ();
+  TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 
@@ -356,7 +356,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA_Object* x)
       return cdr.good_bit ();
     }
 
-  STUB_Object *stubobj = x->_stubobj ();
+  TAO_Stub *stubobj = x->_stubobj ();
 
   if (stubobj == 0)
     return 0;
@@ -502,16 +502,16 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
       return 0;
     }
 
-  // Ownership of type_hint is given to STUB_Object
-  // STUB_Object will make a copy of mp!
-  STUB_Object *objdata;
-  ACE_NEW_RETURN (objdata, STUB_Object (type_hint._retn (),
+  // Ownership of type_hint is given to TAO_Stub
+  // TAO_Stub will make a copy of mp!
+  TAO_Stub *objdata;
+  ACE_NEW_RETURN (objdata, TAO_Stub (type_hint._retn (),
                                         mp.get ()), 0);
 
   if (objdata == 0)
     return 0;
 
-  // Create a new CORBA_Object and give it the STUB_Object just
+  // Create a new CORBA_Object and give it the TAO_Stub just
   // created.
   TAO_ServantBase *servant =
     TAO_ORB_Core_instance ()->orb ()->_get_collocated_servant (objdata);

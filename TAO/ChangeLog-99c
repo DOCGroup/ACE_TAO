@@ -1,3 +1,40 @@
+Tue Mar 23 22:33:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Stub.h:
+	* tao/Stub.i:
+	* tao/Stub.cpp:
+	  Changed the name from STUB_Object to TAO_Stub, otherwise it
+	  pollutes the namespace.
+	  This affected many files.
+	
+	* tao/corbafwd.h:
+	* tao/Exception.h:
+	* tao/Exception.cpp:
+	  Added new system exceptions: INV_POLICY (invalid policy), REBIND 
+	  (request will require object rebind) and TIMEOUT (the request
+	  timed out).
+	  This new exceptions are not raised yet, but they will be as part
+	  of the CORBA Messaging effort.
+
+	* tao/IIOP_Profile.cpp: 
+	  Changed all CORBA_DATA_CONVERSION exceptions for
+	  CORBA::MARSHAL. DATA_CONVERSION is reserved to errors while
+	  handling basic types, such as fixed<> or marshaling character
+	  sets.
+
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/collocated_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/collocated_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	  The IDL compiler generates TAO_Stub now.
+	  Moved the generation of the _duplicate() and _nil() methods to
+	  the .i files.
+	  We now generate the _unchecked_narrow() method.
+
 Tue Mar 23 21:55:21 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * rules.tao.GNU,orbsvcs/orbsvcs/Makefile,docs/configurations.html:
