@@ -72,6 +72,11 @@
 // Platform has ACE_TLI.
 // #define ACE_HAS_TLI
 
+// 10 millisecond fudge factor to account for Solaris timers...
+#if !defined (ACE_TIMER_SKEW)
+#define ACE_TIMER_SKEW 1000 * 10
+#endif /* ACE_TIMER_SKEW */
+
 #define ACE_HAS_SUNOS4_SIGNAL_T
 #define ACE_HAS_CPLUSPLUS_HEADERS
 #define ACE_HAS_RTLD_LAZY_V

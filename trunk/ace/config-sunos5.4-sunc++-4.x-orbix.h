@@ -160,6 +160,11 @@
 // Use the poll() event demultiplexor rather than select().
 //#define ACE_USE_POLL
 
+// 10 millisecond fudge factor to account for Solaris timers...
+#if !defined (ACE_TIMER_SKEW)
+#define ACE_TIMER_SKEW 1000 * 10
+#endif /* ACE_TIMER_SKEW */
+
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
 #define ACE_NTRACE 1

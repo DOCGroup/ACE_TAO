@@ -7,9 +7,6 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
-// No timer skew for Reactors and Timer Queues.
-#define ACE_TIMER_SKEW 0
-
 #define ACE_LACKS_STRCASECMP
 #define ACE_LACKS_SYS_NERR
 #define ACE_LACKS_COND_T
