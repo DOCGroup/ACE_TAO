@@ -27,17 +27,13 @@
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
+#if defined (ACE_HAS_IPV6)
 static void *
 client (void *arg)
 {
   ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
-#if defined (ACE_HAS_IPV6)
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
                              ACE_IPV6_LOCALHOST);
-#else
-  ACE_INET_Addr server_addr (remote_addr->get_port_number (),
-                             ACE_LOCALHOST);
-#endif /*ACE_HAS_IPV6*/
 
   ACE_SOCK_Stream cli_stream;
   ACE_SOCK_Connector con;
@@ -206,7 +202,6 @@ server (void *arg)
   return 0;
 }
 
-#if defined (ACE_HAS_IPV6)
 static void
 spawn (void)
 {

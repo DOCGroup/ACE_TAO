@@ -1,3 +1,10 @@
+Sun Jan 18 09:40:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tests/SOCK_Send_Recv_Test_IPV6.cpp:
+	* tests/SOCK_Test_IPv6.cpp:
+
+	  More warnings from unused functions.
+
 Sun Jan 18 09:55:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/msvc_auto_compile.pl:
