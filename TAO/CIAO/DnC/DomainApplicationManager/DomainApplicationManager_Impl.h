@@ -49,7 +49,7 @@ namespace CIAO
 				                           PortableServer::POA_ptr poa,
                                    Deployment::TargetManager_ptr manager,
                                    Deployment::DeploymentPlan & plan,
-                                   ACE_CString & deployment_file);
+                                   const char * deployment_file);
 
     /// Destructor
     virtual ~DomainApplicationManager_Impl (void);
@@ -65,12 +65,78 @@ namespace CIAO
      *     The <node_manager_names> is a pointer to an array of ACE_CString 
      *     objets, which is allocated by the caller and deallocated by the
      *     DomainApplicationManager destructor.
+     * (3) Check the validity of the deployment plan and the deployment
+     *     information data file.
+     * (4) Call split_plan () member function.
+     * (5) Invoke all the preparePlan () operations on all the corresponding
+     *     NodeManagers with child plans.
      *     
      *
      * @@ What else do we need to initialize here?
      */
-    int init (int num_child_plans, const ACE_CString * node_manager_names);
+    void init ()
+      ACE_THROW_SPEC ((Deployment::ResourceNotAvailable,
+                       Deployment::StartError,
+                       Deployment::PlanError));
 
+    /*===========================================================
+     * Below are operations from the DomainApplicationManager
+     *
+     *============================================================*/
+
+    /** 
+     * Executes the application, but does not start it yet. Users can optionally provide
+     * launch-time configuration properties to override properties that are part of the
+     * plan. Raises the InvalidProperty exception if a configuration property 
+     * is invalid. Raises the StartError exception if an error occurs
+     * during launching. Raises the ResourceNotAvailable exception if the
+     * commitResources parameter to the prepare operation of the
+     * ExecutionManager was true, if late resource allocation is used, and 
+     * one of the requested resources is not available.
+     */
+    virtual void startLaunch (const ::Deployment::Properties & configProperty,
+                              ::CORBA::Boolean start
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Deployment::ResourceNotAvailable,
+                       ::Deployment::StartError,
+                       ::Deployment::InvalidProperty));
+
+    /** 
+     * The second step in launching an application in the domain-level.
+     * If the start parameter is true, the application is started as well. 
+     * Raises the StartError exception if launching or starting the application 
+     * fails.
+     */
+    virtual void finishLaunch (::CORBA::Boolean start
+                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Deployment::StartError));
+
+    /**
+     * Starts the application. Raises the StartError exception if starting the 
+     * application fails.
+     */
+    virtual void start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Deployment::StartError));
+
+    /**
+     * Terminates a running application. Raises the StopError exception if an error
+     * occurs during termination. Raises the InvalidReference exception if the appliction
+     * referen is unknown.
+     */
+    virtual void destroyApplication (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Deployment::StopError));
+
+    /**
+     * Returns the DeploymentPlan associated with this ApplicationManager.
+     */
+    virtual ::Deployment::DeploymentPlan * getPlan (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  protected:
     /**
      * Check whether all the NodeManager names are present in the
      * deployment information data file.
@@ -83,54 +149,6 @@ namespace CIAO
      * are cached in the ACE hash map member variable.
      */
     int split_plan ();
-
-
-    /*===========================================================
-     * Below are operations from the DomainApplicationManager
-     *
-     *============================================================*/
-
-    /** 
-     * Executes the application, but does not start it yet. Users can optionally provide
-     * launch-time configuration properties to override properties that are part of the
-     * plan. A handle to the application is returned, as well as connections for the component¡¯s
-     * external provider ports. 
-     * Raises the InvalidProperty exception if a configuration property 
-     * is invalid. Raises the StartError exception if an error occurs
-     * during launching. Raises the ResourceNotAvailable exception if the
-     * commitResources parameter to the prepare operation of the
-     * ExecutionManager was true, if late resource allocation is used, and 
-     * one of the requested resources is not available.
-     */
-    virtual ::Deployment::Application_ptr 
-      startLaunch (const Deployment::Properties & configProperty,
-                   Deployment::Connections_out providedReference,
-                   CORBA::Boolean start
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::ResourceNotAvailable,
-                       Deployment::StartError,
-                       Deployment::InvalidProperty));
-
-    /**
-     * Terminates a running application. Raises the StopError exception if an error
-     * occurs during termination. Raises the InvalidReference exception if the appliction
-     * referen is unknown.
-     */
-    virtual void destroyApplication (Deployment::Application_ptr app
-				                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException, 
-                       Deployment::StopError));
-
-    /// Returns a list of all applications that have been launched from this
-    /// ApplicationManager and that are still executing.
-    virtual ::Deployment::Applications * getApplications (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-    /// Returns the DeploymentPlan associated with this ApplicationManager.
-    virtual ::Deployment::DeploymentPlan * getPlan (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
 
   protected:
     /// location of the Domainapplication
@@ -175,7 +193,10 @@ namespace CIAO
                             ACE_Null_Mutex> child_plans_info_;
 
     /// The deployment information data file.
-    ACE_CString & deployment_file_;
+    const char * deployment_file_;
+
+    /// Deployment Configuration info, which contains the deployment topology.
+    Deployment_Configuration &deployment_config_;
   };
 }
 
