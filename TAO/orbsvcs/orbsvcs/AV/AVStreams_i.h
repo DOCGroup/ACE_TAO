@@ -37,11 +37,6 @@
 #include "orbsvcs/AV/AV_Core.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/Null_MediaCtrlS.h"
-
-#if defined (TAO_ORBSVCS_HAS_Trader)
-#include "orbsvcs/Trader/Trader.h"
-#endif /* TAO_ORBSVCS_HAS_Trader */
-
 #include "orbsvcs/AV/FlowSpec_Entry.h"
 
 #define FLOWSPEC_MAX 5
