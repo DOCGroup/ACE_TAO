@@ -467,7 +467,7 @@ be_operation::gen_client_stubs (void)
       *cs << "this->Release (); "
 	  << "// QueryInterface has bumped up our refcount" << nl;
 
-      // do any pre do_call stuff with arguments
+      // do any pre do_static_call stuff with arguments
       cg->push (TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS);
       if (be_scope::gen_client_stubs () == -1)
 	{
@@ -478,8 +478,8 @@ be_operation::gen_client_stubs (void)
 	}
       cg->pop ();
 
-      // call do_call with appropriate number of arguments
-      *cs << "istub->do_call (env, &" << this->flatname ()
+      // call do_static_call with appropriate number of arguments
+      *cs << "istub->do_static_call (env, &" << this->flatname ()
 	  << "_calldata";
 
       // if our return type is not void, then pass the address of retval
@@ -531,7 +531,7 @@ be_operation::gen_client_stubs (void)
       cg->pop ();
       *cs << ");" << nl;
 
-      // do any post do_call stuff with arguments
+      // do any post do_static_call stuff with arguments
       cg->push (TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS);
       if (be_scope::gen_client_stubs () == -1)
 	{
