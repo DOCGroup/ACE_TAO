@@ -153,6 +153,8 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 #define ACE_HAS_TLI
 // Platform supports ACE_TLI tiuser header.
 #define ACE_HAS_TIUSER_H
+// But it has _terrno() outside the extern "C" stuff.
+#define ACE_HAS_TIUSER_H_BROKEN_EXTERN_C
 // Platform provides ACE_TLI function prototypes.
 #define ACE_HAS_TLI_PROTOTYPES
 
