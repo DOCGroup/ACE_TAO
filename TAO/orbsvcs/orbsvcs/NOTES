@@ -1,0 +1,112 @@
+// -*- C++ -*-
+//
+// $Id$
+
+// -----------------------------------------------------------
+
+ReplicaLocator::pre_invoke ()
+{
+  replica =
+    LoadAnalyzer.get_replica ( ObjectId )
+       {
+         ObjectId_Replica_Map.find (ObjectId, Location_Replica_Map);
+        
+         Location_Replica_Map (select replica from it);
+       }
+
+  ACE_THROW_RETURN (PortableServer::ForwardRequest (replica.in ()));
+}
+
+// -----------------------------------------------------------
+
+GenericFactory::create_object ()
+{
+  ObjectGroup_Map.bind (FactoryCreationId, ObjectGroup);
+  ObjectId_Replica_Map.bind (ObjectId, ReplicaMap);
+
+  if (infrastructure-controlled)
+    this->populate_object_group()
+
+  return ObjectGroup._retn ();
+}
+
+GenericFactory::populate_object_group ()
+{
+  Factory_Map.bind (FactoryCreationId, Factory);
+  Location_Replica_Map.bind (Location, Replica);
+}
+
+GenericFactory::delete_object ()
+{
+  ObjectGroup_Map.unbind (FactoryCreationId, ObjectGroup);
+
+  ObjectId = this->poa_->reference_to_id (ObjectGroup);
+
+  ObjectId_Replica_Map.find (ObjectId, Location_Replica_Map);
+
+  Release Replica references (if necessary);
+
+  Close the ObjectId_Replica_Map;
+  Close the Location_Replication_Map;
+}
+
+// -----------------------------------------------------------
+
+ObjectGroupManager::create_member ()
+{
+  Replica = factory->create_object();
+
+  // @@ Be careful with exception specifications.
+  return this->add/create_member_i (object_group,
+                                    the_location,
+                                    replica,
+                                    ACE_TRY_ENV);
+}
+
+ObjectGroupManager::add_member ()
+{
+  ObjectId = this->poa_->reference_to_id (ObjectGroup);
+
+  ObjectId_Map.find (ObjectId, Location_Replica_Map);
+
+  Location_Replica_Map.bind (location, Replica);
+
+  return ObjectGroup._retn ();
+}
+
+ObjectGroupManager::remove_member ()
+{
+  ObjectId = this->poa_->reference_to_id (ObjectGroup);
+
+  ObjectId_Replica_Map.find (ObjectId, Location_Replica_Map);
+
+  Location_Replica_Map.unbind (location, replica);
+}
+
+// -----------------------------------------------------------
+
+Location_Replica_Map
+
+struct Replica_Map_Entry
+{
+  TAO_LoadBalancer::FactoryInfo_var factory_info;
+  TAO_LoadBalancer::GenericFactory::FactoryCreationId fcid;
+  CORBA::Object_var replica;
+};
+
+// -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+// Code to be called by LB's destructor or similar shutdown call.
+
+Location_Replica_Map.unbind (location, replica_map_entry);
+
+if (!CORBA::is_nil (replica_map_entry->factory_info.the_factory.in ())
+{
+  replica_map_entry->factory_info->the_factory->delete_object (
+    replica_map_entry->fcid,
+    ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+delete replica_map_entry;
+// -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+

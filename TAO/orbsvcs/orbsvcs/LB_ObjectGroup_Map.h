@@ -63,7 +63,7 @@ public:
 
     /// The FactoryCreationId corresponding to the ObjectGroup created
     /// by the Load Balancer GenericFactory.
-    TAO_LoadBalancing::FactoryCreationId factory_creation_id;
+    CORBA::ULong factory_creation_id;
 
     /// Hash map containing replica references and all related
     /// information for each replica.
@@ -86,17 +86,18 @@ public:
     TAO_LB_ObjectGroup_Equal_To,
     ACE_SYNCH_MUTEX> ObjectGroup_map;
 
-  /// FactoryCreationId hash map.
+  /// FactoryCreationId hash map.  A FactoryCreationId is represented
+  /// internally as a CORBA::ULong.
   typedef ACE_Hash_Map_Manager_Ex<
-    TAO_LoadBalancing::FactoryCreationId,
+    ACE_UINT32,
     Map_Entry *,
-    TAO_LB_FactoryCreationId_Hash,
-    TAO_LB_FactoryCreationId_Equal_To,
+    ACE_Hash<ACE_UINT32>,
+    ACE_Equal_To<ACE_UINT32>,
     ACE_SYNCH_MUTEX> FactoryCreationId_map;
 
   int bind (const char *type_id,
             TAO_LoadBalancing::ObjectGroup_ptr object_group,
-            TAO_LoadBalancing::FactoryCreationId &factory_creation_id);
+            CORBA::ULong &factory_creation_id);
 };
 
 #include "ace/post.h"
