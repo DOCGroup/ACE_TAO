@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "pace_dll"=..\pace\win32\pace_dll.dsp - Package Owner=<4>
+Project: "PACE DLL"=..\pace\win32\pace_dll.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -15,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "pace_lib"=..\pace\win32\pace_lib.dsp - Package Owner=<4>
+Project: "PACE LIB"=..\pace\win32\pace_lib.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -35,6 +35,12 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name PACE DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PACE LIB
+    End Project Dependency
 }}}
 
 ###############################################################################

@@ -1,3 +1,27 @@
+Mon Jan 15 10:44:39 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/tests.dsw:
+
+          Added dependencies between the projects.
+
+        * pace/win32/pace_dll.dsp:
+        * pace/win32/pace_lib.dsp:
+        * tests/test_stdio.dsp:
+
+          - Fixed the intermediate and output directories to
+            fit the model used in ACE.
+
+          - Changed the names of the two pace* projects so 
+            msvc_auto_compile.pl will be able to recognize
+            them as libraries.
+
+          - Added two new configurations to test_stdio so it
+            now can link to both the dynamic and static 
+            version of PACE.
+
+          - Changed the configuration name of the static
+            projects to Win32 Static Release and Debug
+
 Mon Jan 15 10:32:19 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * pace/setjmp.h:
