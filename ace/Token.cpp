@@ -362,21 +362,17 @@ ACE_Token::renew (int requeue_position,
 #endif /* DEBUGGING */
   // ACE_ASSERT (ACE_OS::thr_equal (ACE_Thread::self (), this->owner_));
 
-  //
   // Check to see if there are any waiters worth giving up the lock
   // for.
-  //
 
   // If no writers and either we are a writer or there are no readers.
   if (this->writers_.head_ == 0 &&
-      (this->in_use_ == ACE_Token::WRITE_TOKEN &&
+      (this->in_use_ == ACE_Token::WRITE_TOKEN ||
        this->readers_.head_ == 0))
     // Immediate return.
     return 0;
 
-  //
   // We've got to sleep until we get the token again.
-  //
 
   // Determine which queue should this thread go to.
   ACE_Token::ACE_Token_Queue *this_threads_queue =
