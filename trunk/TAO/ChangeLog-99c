@@ -1,3 +1,11 @@
+Mon Mar 15 10:48:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Param_Test/except.cpp: 
+	  Fixed throw expression. In platforms that support native C++
+	  exceptions the right way to throw is TAO_THROW(Foo()); not
+	  TAO_THROW(Foo).  Of course the form proposed works in platforms
+	  without native C++ exceptions too.
+
 Mon Mar 15 10:42:27 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* tao/POAManager.{h,i,cpp}:
