@@ -9,40 +9,40 @@ Fri Sep 21 12:36:36 2001  Ossama Othman  <ossama@uci.edu>
 
         * tao/Profile.cpp (policies):
 
-          Added missing CORBA::Environment parameter to the call to
-          CORBA::Policy::policy_type().  Removes a TSS access during each
-          policy insertion into the TAG_POLICIES IOR tagged component.
-          Also fixes a potential problem where an emulated exception would
-          not be caught if thrown during a remote
-          CORBA::Policy::policy_type() invocation.
+	  Added missing CORBA::Environment parameter to the call to
+	  CORBA::Policy::policy_type().  Removes a TSS access during each
+	  policy insertion into the TAG_POLICIES IOR tagged component.
+	  Also fixes a potential problem where an emulated exception would
+	  not be caught if thrown during a remote
+	  CORBA::Policy::policy_type() invocation.
 
-        * tao/ClientInterceptorAdapter.cpp (receive_exception):
-        * tao/PortableServer/ServerInterceptorAdapter.cpp (send_exception):
+	* tao/ClientInterceptorAdapter.cpp (receive_exception):
+	* tao/PortableServer/ServerInterceptorAdapter.cpp (send_exception):
 
-          Only re-throw the exception if it hasn't been transformed
-          (e.g. to a LOCATION_FORWARD)by the receive_exception() and
-          send_exception() interception points, respectively.
+	  Only re-throw the exception if it hasn't been transformed
+	  (e.g. to a LOCATION_FORWARD) by the receive_exception() and
+	  send_exception() interception points, respectively.
 
-        * tao/PortableServer/POA.cpp (client_exposed_policies):
+	* tao/PortableServer/POA.cpp (client_exposed_policies): 
 
-          Improved exception-safety of this method by storing the
-          allocated CORBA::PolicyList in a CORBA::PolicyList_var.  Fixes a
-          memory leak that occurred if an exception was thrown within this
-          method.
+	  Improved exception-safety of this method by storing the
+	  allocated CORBA::PolicyList in a CORBA::PolicyList_var.  Fixes a
+	  memory leak that occurred if an exception was thrown within this
+	  method.
 
-        * TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp
-          (gen_marshal_and_invoke):
-        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp
-          (visit_operation):
+	* TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp
+	  (gen_marshal_and_invoke):
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+	  (visit_operation):
 
-          Do not call the generated instantiation of the RequestInfo
-          object "ri."  Doing so will cause conflicts with IDL that
-          uses an operation parameter of the same name.  The generated
-          code now uses "_tao_ri" to avoid namespace pollution.
+	  Do not call the generated instantiation of the RequestInfo
+	  object "ri."  Doing so will cause conflicts with IDL that
+	  uses an operation parameter of the same name.  The generated
+	  code now uses "_tao_ri" to avoid namespace pollution.
 
-        * tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor_Flow.dsw:
-        * tests/Portable_Interceptors/Request_Interceptor_Flow/client.dsp:
-        * tests/Portable_Interceptors/Request_Interceptor_Flow/server.dsp:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor_Flow.dsw:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/client.dsp:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/server.dsp:
 
           Corrected spelling.  "Inteceptor" --> "Interceptor"
 
