@@ -1508,8 +1508,9 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   ACE_UNUSED_ARG (arg);
   ACE_UNUSED_ARG (sa);
 
-  // Type includes these options: SEM_Q_PRIORITY, SEM_Q_FIFO, SEM_DELETE_SAFE,
-  // and SEM_INVERSION_SAFE that are currently outside of the ACE mutex model.
+  // Type includes these options: SEM_Q_PRIORITY, SEM_Q_FIFO,
+  // SEM_DELETE_SAFE, and SEM_INVERSION_SAFE that are currently
+  // outside of the ACE mutex model.
   return (*m = ::semMCreate (type)) == 0 ? -1 : 0;
 #endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #else
