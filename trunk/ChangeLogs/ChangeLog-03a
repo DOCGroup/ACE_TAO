@@ -1,3 +1,8 @@
+Fri Oct 13 19:12:31 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Malloc_T.h: Added #include "ace/Malloc.h" because the definition
+          of ACE_Control_Block is needed, and it's in Malloc.h.
+
 Fri Oct 13 18:47:51 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Caching_Strategies_T.cpp:
