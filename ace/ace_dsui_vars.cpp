@@ -13,24 +13,24 @@ family_t MSG_QUEUE = {
 	NUM_HISTOGRAMS_MSG_QUEUE,
 	MSG_QUEUE_COUNTERS,
 	MSG_QUEUE_HISTOGRAMS,
-	0,
-	0,
-	0,
+	0, 
+	0, 
+	0, 
 	0
 };
 
 int ace_table_offset= 1;
-family_t *ace_family_table[ace_NUM_FAMILIES] = {
-
-
-
-
-
-
-
-
-
-
+family_t *ace_family_table[NUM_FAMILIES] = {
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	&MSG_QUEUE,
 };
 

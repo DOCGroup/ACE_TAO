@@ -14,7 +14,7 @@ class ACE_Object_Counter
 
     struct object_id {
       uint32_t id;
-      uint64_t tid;
+      uint32_t tid;
       uint32_t queue_id;
     };
 

@@ -1,6 +1,10 @@
 DSTRM_FAMILY    MSG_QUEUE       10      "Message Queue events"
 
 # Messsage_Queue (Message_Queue_T.cpp)
+DSTRM_EVENT     MSG_QUEUE       10       AFTER_ENQUEUE_I_CALL     16      "Mark time after enqueue_i lock call"     print_string
+DSTRM_EVENT     MSG_QUEUE       10       BEFORE_ENQUEUE_I_CALL    15      "Mark time before enqueue_i call"    print_string
+DSTRM_EVENT     MSG_QUEUE       10       AFTER_ENQUEUE_PRIO_LOCK_ACQUIRE     14      "Mark time after enqueue prio lock call"     print_string
+DSTRM_EVENT     MSG_QUEUE       10       BEFORE_ENQUEUE_PRIO_LOCK_ACQUIRE    13      "Mark time before enqueue prio lock call"    print_string
 DSTRM_EVENT     MSG_QUEUE       10       AFTER_DEQUEUE_HEAD_LOCK_ACQUIRE     12      "Mark time after dequeue head lock call"     print_string
 DSTRM_EVENT     MSG_QUEUE       10       BEFORE_DEQUEUE_HEAD_LOCK_ACQUIRE    11      "Mark time before dequeue head lock call"    print_string
 DSTRM_EVENT     MSG_QUEUE       10       AFTER_ENQUEUE_TAIL_LOCK_ACQUIRE     10      "Mark time after enqueue tail lock call"     print_string
