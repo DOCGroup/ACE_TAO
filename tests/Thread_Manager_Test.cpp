@@ -275,6 +275,12 @@ main (int, ASYS_TCHAR *[])
       status = -1;
     }
 
+#if defined (sun)
+  // To help avoid thread panics on SunOS 2.5.1 and 2.7.  It doesn't
+  // solve the problem, but it does seem to help.
+  ACE_OS::sleep (5);
+#endif /* sun */
+
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) main thread finished\n")));
 
 #if defined (VXWORKS)
