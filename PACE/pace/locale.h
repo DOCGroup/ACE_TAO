@@ -34,14 +34,18 @@ extern "C" {
      Fills in pace_lconv with values consistent with the
      current locality.
    */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
   PACE_INLINE pace_lconv* pace_localeconv (void);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
      PACE's implementation of the POSIX function setlocale.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.2.
    */
+#if (PACE_HAS_POSIX_MP_UOF)
   PACE_INLINE char * pace_setlocale (int category, const char * locale);
+#endif /* PACE_HAS_POSIX_MP_UOF */
 
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)

@@ -30,7 +30,7 @@ int
 main (int argc, char **argv)
 {
   /* Test creating/opening a file. */
-  FILE *file;
+  PACE_FILE *file;
   int retval;
   char* retval2;
   char buffer[256];

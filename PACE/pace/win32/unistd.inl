@@ -16,6 +16,7 @@
 #include <unistd.h>
 #include <stdarg.h>
 
+#if (PACE_HAS_POSIX_MP_UOF)
 PACE_INLINE
 void
 pace__exit (int status)
@@ -23,96 +24,72 @@ pace__exit (int status)
  _exit (status);
  return;
 }
+#endif /* PACE_HAS_POSIX_MP_UOF */
 
+#if (PACE_HAS_POSIX_FS_UOF)
 PACE_INLINE
 int
 pace_access (const char * path, int amode)
 {
   return access (path, amode);
 }
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
+#if (PACE_HAS_POSIX_SIG_UOF)
 PACE_INLINE
 unsigned int
 pace_alarm (unsigned int seconds)
 {
   return alarm (seconds);
 }
+#endif /* PACE_HAS_POSIX_SIG_UOF */
 
+#if (PACE_HAS_POSIX_FS_UOF)
 PACE_INLINE
 int
 pace_chdir (const char * path)
 {
   return chdir (path);
 }
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
+#if (PACE_HAS_POSIX_FA_UOF)
 PACE_INLINE
 int
 pace_chown (const char * path, uid_t owner, pace_gid_t group)
 {
   return chown (path, owner, group);
 }
+#endif /* PACE_HAS_POSIX_FA_UOF */
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 int
 pace_close (int fildes)
 {
   return close (fildes);
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
-PACE_INLINE
-char *
-pace_ctermid (char * s)
-{
-  return ctermid (s);
-}
-
+#if (PACE_HAS_POSIX_FM_UOF)
 PACE_INLINE
 int
 pace_dup (int fildes)
 {
   return dup (fildes);
 }
+#endif /* PACE_HAS_POSIX_FM_UOF */
 
+#if (PACE_HAS_POSIX_FM_UOF)
 PACE_INLINE
 int
 pace_dup2 (int fildes, int fildes2)
 {
   return dup2 (fildes, fildes2);
 }
+#endif /* PACE_HAS_POSIX_FM_UOF */
 
-int
-pace_execl (const char* path, const char* arg, ...)
-{
-  int result = 0;
-  va_list ap;
-  va_start (ap, arg);
-  result = pace_execv (path, (char*const*)ap);
-  va_end (ap);
-  return result;
-}
-
-int
-pace_execle (const char* path, const char* arg, ...)
-{
-  int result = 0;
-  va_list ap;
-  va_start (ap, arg);
-  result = pace_execve (path, (char*const*)ap, 0);
-  va_end (ap);
-  return result;
-}
-
-int
-pace_execlp (const char* file, const char* arg,  ...)
-{
-  int result = 0;
-  va_list ap;
-  va_start (ap, arg);
-  result = pace_execvp (file, (char*const*)ap);
-  va_end (ap);
-  return result;
-}
-
+#if (PACE_HAS_POSIX_MP_UOF)
 PACE_INLINE
 int
 pace_execv (const char * path,
@@ -121,7 +98,9 @@ pace_execv (const char * path,
   return execv (path, argv);
   /* if successful, this operation does NOT return */
 }
+#endif /* PACE_HAS_POSIX_MP_UOF */
 
+#if (PACE_HAS_POSIX_MP_UOF)
 PACE_INLINE
 int
 pace_execve (const char * path,
@@ -131,7 +110,9 @@ pace_execve (const char * path,
   return execve (path, argv, envp);
   /* if successful, this operation does NOT return */
 }
+#endif /* PACE_HAS_POSIX_MP_UOF */
 
+#if (PACE_HAS_POSIX_MP_UOF)
 PACE_INLINE
 int
 pace_execvp (const char * file,
@@ -140,84 +121,108 @@ pace_execvp (const char * file,
   return execvp (file, argv);
   /* if successful, this operation does NOT return */
 }
+#endif /* PACE_HAS_POSIX_MP_UOF */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_fdatasync (int fildes)
 {
   return fdatasync (fildes);
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_MP_UOF)
 PACE_INLINE
 pid_t
 pace_fork ()
 {
   return fork ();
 }
+#endif /* PACE_HAS_POSIX_MP_UOF */
 
+#if (PACE_HAS_POSIX_FS_UOF)
 PACE_INLINE
 long
 pace_fpathconf (int fildes, int name)
 {
   return fpathconf (fildes, name);
 }
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_fsync (int fildes)
 {
   return fildes;
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_ftruncate (int fildes, pace_off_t length)
 {
   return ftruncate (fildes, length);
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_FS_UOF)
 PACE_INLINE
 char *
 pace_getcwd (char * buf, size_t size)
 {
   return getcwd (buf, size);
 }
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
+#if (PACE_HAS_POSIX_UG_UOF)
 PACE_INLINE
 uid_t
 pace_getegid ()
 {
   return getegid ();
 }
+#endif /* PACE_HAS_POSIX_UG_UOF */
 
+#if (PACE_HAS_POSIX_UG_UOF)
 PACE_INLINE
 uid_t
 pace_geteuid ()
 {
   return geteuid ();
 }
+#endif /* PACE_HAS_POSIX_UG_UOF */
 
+#if (PACE_HAS_POSIX_UG_UOF)
 PACE_INLINE
 int
 pace_getgroups (int gidsetsize, pace_gid_t grouplist[])
 {
   return getgroups (gidsetsize, grouplist);
 }
+#endif /* PACE_HAS_POSIX_UG_UOF */
 
+#if (PACE_HAS_POSIX_UG_UOF)
 PACE_INLINE
 uid_t
 pace_getgid ()
 {
   return getgid ();
 }
+#endif /* PACE_HAS_POSIX_UG_UOF */
 
+#if (PACE_HAS_POSIX_UG_UOF)
 PACE_INLINE
 char*
 pace_getlogin ()
 {
   return getlogin ();
 }
+#endif /* PACE_HAS_POSIX_UG_UOF */
 
+#if (PACE_HAS_POSIX_UGR_UOF)
 PACE_INLINE
 int
 pace_getlogin_r (char * name, size_t namesize)
@@ -230,154 +235,198 @@ pace_getlogin_r (char * name, size_t namesize)
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 # endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
+#endif /* PACE_HAS_POSIX_UGR_UOF */
 
+#if (PACE_HAS_POSIX_UG_UOF)
 PACE_INLINE
 pid_t
 pace_getpgrp ()
 {
   return getpgrp ();
 }
+#endif /* PACE_HAS_POSIX_UG_UOF */
 
+#if (PACE_HAS_POSIX_MP_UOF)
 PACE_INLINE
 pid_t
 pace_getpid ()
 {
   return getpid ();
 }
+#endif /* PACE_HAS_POSIX_MP_UOF */
 
+#if (PACE_HAS_POSIX_MP_UOF)
 PACE_INLINE
 pid_t
 pace_getppid ()
 {
   return getppid ();
 }
+#endif /* PACE_HAS_POSIX_MP_UOF */
 
+#if (PACE_HAS_POSIX_UG_UOF)
 PACE_INLINE
 uid_t
 pace_getuid ()
 {
   return getuid ();
 }
+#endif /* PACE_HAS_POSIX_UG_UOF */
 
+#if (PACE_HAS_POSIX_DS_UOF)
 PACE_INLINE
 int
 pace_isatty (int fildes)
 {
   return isatty (fildes);
 }
+#endif /* PACE_HAS_POSIX_DS_UOF */
 
+#if (PACE_HAS_POSIX_FS_UOF)
 PACE_INLINE
 int
 pace_link (const char * existing, const char * new_link)
 {
   return link (existing, new_link);
 }
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
+#if (PACE_HAS_POSIX_FM_UOF)
 PACE_INLINE
 pace_off_t
 pace_lseek (int fildes, pace_off_t offset, int whence)
 {
   return lseek (fildes, offset, whence);
 }
+#endif /* PACE_HAS_POSIX_FM_UOF */
 
-PACE_INLINE
-int
-pace_pause ()
-{
-  return pause ();
-}
-
+#if (PACE_HAS_POSIX_FS_UOF)
 PACE_INLINE
 long
 pace_pathconf (const char * path, int name)
 {
   return pathconf (path, name);
 }
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
+#if (PACE_HAS_POSIX_SIG_UOF)
+PACE_INLINE
+int
+pace_pause ()
+{
+  return pause ();
+}
+#endif /* PACE_HAS_POSIX_SIG_UOF */
+
+#if (PACE_HAS_POSIX_P_UOF)
 PACE_INLINE
 int
 pace_pipe (int fildes[2])
 {
   return pipe (fildes);
 }
+#endif /* PACE_HAS_POSIX_P_UOF */
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 ssize_t
 pace_read (int fildes, void * buf, size_t nbyte)
 {
   return read (fildes, buf, nbyte);
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */
 
+#if (PACE_HAS_POSIX_FS_UOF)
 PACE_INLINE
 int
 pace_rmdir (const char * path)
 {
   return rmdir (path);
 }
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
+#if (PACE_HAS_POSIX_UG_UOF)
 PACE_INLINE
 int
 pace_setgid (pace_gid_t gid)
 {
   return setgid (gid);
 }
+#endif /* PACE_HAS_POSIX_UG_UOF */
 
+#if (PACE_HAS_POSIX_JC_UOF)
 PACE_INLINE
 int
 pace_setpgid (pid_t pid, pid_t pgid)
 {
   return setpgid (pid, pgid);
 }
+#endif /* PACE_HAS_POSIX_JC_UOF */
 
+#if (PACE_HAS_POSIX_UG_UOF)
 PACE_INLINE
 pid_t
 pace_setsid ()
 {
   return setsid ();
 }
+#endif /* PACE_HAS_POSIX_UG_UOF */
 
+#if (PACE_HAS_POSIX_UG_UOF)
 PACE_INLINE
 int
 pace_setuid (uid_t uid)
 {
   return setuid (uid);
 }
+#endif /* PACE_HAS_POSIX_UG_UOF */
 
+#if (PACE_HAS_POSIX_MP_UOF)
 PACE_INLINE
 unsigned int
 pace_sleep (unsigned int seconds)
 {
   return sleep (seconds);
 }
+#endif /* PACE_HAS_POSIX_MP_UOF */
 
+#if (PACE_HAS_POSIX_SP_UOF)
 PACE_INLINE
 long
 pace_sysconf (int name)
 {
   return sysconf (name);
 }
+#endif /* PACE_HAS_POSIX_SP_UOF */
 
+#if (PACE_HAS_POSIX_JC_UOF)
 PACE_INLINE
 pid_t
 pace_tcgetpgrp (int fildes)
 {
   return tcgetpgrp (fldes);
 }
+#endif /* PACE_HAS_POSIX_JC_UOF */
 
+#if (PACE_HAS_POSIX_JC_UOF)
 PACE_INLINE
 int
 pace_tcsetpgrp (int fildes, pid_t pgrp_id)
 {
   return tcsetpgrp (fildes, pgrp_id);
 }
+#endif /* PACE_HAS_POSIX_JC_UOF */
 
+#if (PACE_HAS_POSIX_DS_UOF)
 PACE_INLINE
 char *
 pace_ttyname (int fildes)
 {
   return ttyname (fildes);
 }
+#endif /* PACE_HAS_POSIX_DS_UOF */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
 pace_ttyname_r (int fildes,
@@ -393,17 +442,22 @@ pace_ttyname_r (int fildes,
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 #endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
+#if (PACE_HAS_POSIX_FS_UOF)
 PACE_INLINE
 int
 pace_unlink (const char * path)
 {
   return unlink (path);
 }
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
+#if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 ssize_t
 pace_write (int fildes, const void * buf, size_t nbyte)
 {
   return write (fildes, buf, nbyte);
 }
+#endif /* PACE_HAS_POSIX_DI_UOF */

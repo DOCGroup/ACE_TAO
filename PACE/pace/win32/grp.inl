@@ -13,13 +13,16 @@
  *
  * ============================================================================= */
 
+#if (PACE_HAS_POSIX_SD_UOF)
 PACE_INLINE
 pace_group *
 pace_getgrgid (pace_gid_t gid)
 {
   return getgrgid (gid);
 }
+#endif /* PACE_HAS_POSIX_SD_UOF */
 
+#if (PACE_HAS_POSIX_SDR_UOF)
 PACE_INLINE
 int
 pace_getgrgid_r (pace_gid_t gid,
@@ -39,14 +42,18 @@ pace_getgrgid_r (pace_gid_t gid,
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 # endif /* !PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
+#endif /* PACE_HAS_POSIX_SDR_UOF */
 
+#if (PACE_HAS_POSIX_SD_UOF)
 PACE_INLINE
 pace_group *
 pace_getgrnam (const char * name)
 {
   return getgrnam (name);
 }
+#endif /* PACE_HAS_POSIX_SD_UOF */
 
+#if (PACE_HAS_POSIX_SDR_UOF)
 PACE_INLINE
 int
 pace_getgrnam_r (const char * name,
@@ -66,3 +73,4 @@ pace_getgrnam_r (const char * name,
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 # endif /* !PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
+#endif /* PACE_HAS_POSIX_SDR_UOF */

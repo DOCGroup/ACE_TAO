@@ -35,22 +35,28 @@ extern "C" {
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 5.1.2.
    */
+#if (PACE_HAS_POSIX_FS_UOF)
   PACE_INLINE PACE_DIR * pace_opendir (const char * dirname);
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
   /**
      PACE's implementation of the POSIX function readdir.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 5.1.2.
    */
+#if (PACE_HAS_POSIX_FS_UOF)
   PACE_INLINE pace_dirent * pace_readdir (PACE_DIR * dirp);
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
   /**
      PACE's implementation of the POSIX function readdir_r.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 5.1.2.
    */
+#if (PACE_HAS_POSIX_CLSR_UOF)
   PACE_INLINE int pace_readdir_r (PACE_DIR * dirp, pace_dirent * entry,
                                   pace_dirent ** result);
+#endif /* PACE_HAS_POSIX_CLSR_UOF */
   /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
   /**
@@ -58,14 +64,18 @@ extern "C" {
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 5.1.2.
    */
+#if (PACE_HAS_POSIX_FS_UOF)
   PACE_INLINE void pace_rewinddir (PACE_DIR * dirp);
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
   /**
      PACE's implementation of the POSIX function closedir.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 5.1.2.
    */
+#if (PACE_HAS_POSIX_FS_UOF)
   PACE_INLINE int pace_closedir (PACE_DIR * dirp);
+#endif /* PACE_HAS_POSIX_FS_UOF */
 
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)

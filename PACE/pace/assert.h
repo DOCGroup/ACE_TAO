@@ -39,11 +39,13 @@ extern "C" {
      would not be useful with an inline function.
    */
 
+#if (PACE_HAS_POSIX_MP_UOF)
 #if defined (PACE_NDEBUG)
 # define pace_assert(X)
 #else  /* ! PACE_NDEBUG */
 # define pace_assert(X) assert (X)
 #endif /* ! PACE_NDEBUG */
+#endif /* PACE_HAS_POSIX_MP_UOF */
 
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)

@@ -35,35 +35,45 @@ extern "C" {
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 11.2.4.
    */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
   PACE_INLINE int pace_sem_close (pace_sem_t * sem);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
      PACE's implementation of the POSIX function sem_destroy.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 11.2.2.
    */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
   PACE_INLINE int pace_sem_destroy (pace_sem_t * sem);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
      PACE's implementation of the POSIX function sem_getvalue.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 11.2.8.
    */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
   PACE_INLINE int pace_sem_getvalue (pace_sem_t * sem, int * sval);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
      PACE's implementation of the POSIX function sem_init.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 11.2.1.
    */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
   PACE_INLINE int pace_sem_init (pace_sem_t * sem, int pshared, unsigned int value);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
      PACE's implementation of the POSIX function sem_open.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 11.2.3.
    */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
   # define pace_sem_open sem_open
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
   /* int fprintf (FILE *stream, const char *format, (*//* args *//*) ... ); */
 
   /**
@@ -71,28 +81,36 @@ extern "C" {
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 11.2.7.
    */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
   PACE_INLINE int pace_sem_post (pace_sem_t * sem);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
      PACE's implementation of the POSIX function sem_trywait.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 11.2.6.
    */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
   PACE_INLINE int pace_sem_trywait (pace_sem_t * sem);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
      PACE's implementation of the POSIX function sem_unlink.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 11.2.5.
    */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
   PACE_INLINE int pace_sem_unlink (const char * name);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
      PACE's implementation of the POSIX function sem_wait.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 11.2.6.
    */
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
   PACE_INLINE int pace_sem_wait (pace_sem_t * sem);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)
