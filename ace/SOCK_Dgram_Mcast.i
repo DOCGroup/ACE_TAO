@@ -13,8 +13,14 @@ ACE_SOCK_Dgram_Mcast::set_option (int option,
 				  char optval) 
 { 
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::set_option");
+#if !defined (ACE_WIN32)
   return this->ACE_SOCK::set_option (IPPROTO_IP, option, 
 				     &optval, sizeof (char));
+#else
+  int sock_opt = optval;
+  return this->ACE_SOCK::set_option (IPPROTO_IP, option, 
+				     &sock_opt, sizeof (sock_opt));
+#endif /* !ACE_WIN32 */  
 }
 
 ASYS_INLINE ssize_t
