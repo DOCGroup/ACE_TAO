@@ -1,3 +1,10 @@
+Fri Aug 27 06:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.cpp (ORT_adapter_i):
+          Readded the check whether ort_adapter_ is not null, we call this
+          method from _i methods and we need this check for that invocation
+          path
+
 Thu Aug 26 17:07:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.cpp:
@@ -7,7 +14,7 @@ Thu Aug 26 17:07:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/PortableServer/POA.i:
 	* tao/PortableServer/PortableServer.pidl:
 
-	  Cosmtic changes after a review. 
+	  Cosmtic changes after a review.
 
 Thu Aug 26 13:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
