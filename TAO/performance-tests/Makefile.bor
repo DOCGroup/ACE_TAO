@@ -4,6 +4,7 @@
 
 DIRS = \
 	AMI_Latency \
+	AMH_Single_Threaded_Latency \
         Callback \
         Cubit \
 	DII_Latency \
