@@ -1,3 +1,8 @@
+Wed Jun 12 21:28:29 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Framework_Component_DLL.cpp (Server_T): Add template
+          parameter name to class template arg to get aC++ to eat it.
+
 Wed Jun 12 18:29:11 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * include/makeinclude/rules.lib.GNU:
@@ -64,7 +69,6 @@ Wed Jun 12 18:29:11 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
           Changed SOFLAGS = to SOFLAGS += to avoid dealing with order of
           includes of various Makefile rules.
-
 
 Wed Jun 12 11:25:22 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
