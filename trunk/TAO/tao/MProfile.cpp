@@ -27,11 +27,39 @@ TAO_MProfile::TAO_MProfile (TAO_MProfile *mprofiles)
 int
 TAO_MProfile::set (CORBA::ULong sz)
 {
-  // first release all of our profiles.
-  if (this->pfiles_)
+  if (sz == 0)
+    {
+      // We do, so release all of our profiles.
+      for (PHandle h = 0; h < this->size_; h++ )
+        {
+          if (this->pfiles_[h]) 
+            {
+              this->pfiles_[h]->_decr_refcnt ();
+              this->pfiles_[h] = 0;
+            }
+        }
+
+      if (size_)
+        delete [] this->pfiles_;
+  
+    if (fwded_mprofile_)
+      delete fwded_mprofile_;
+  
+    pfiles_ = 0;
+    current_ = 0;
+    size_ = 0;
+    last_= 0;
+
+    return  0;
+  }
+
+  // see if we already have an existing profile list
+  // or if we need to get ridof what we have
+  if (size_)
     {
       
-      for (PHandle h = 0; h < this->size_; h++ )
+      // We do, so release all of our profiles.
+      for (PHandle h = 0; h < size_; h++)
         {
           if (this->pfiles_[h]) 
             {
@@ -41,46 +69,37 @@ TAO_MProfile::set (CORBA::ULong sz)
         }
   
       // Next see if we can reuse our profile list memory Since
-      // this->pfiles_ != 0, size_ > 0!  So if sz == 0 then memory is
-      // deallocated.
       if (this->size_ != sz)
         {
-          // we cant!
+          // we cant reuse memory since the array sized are different!
           delete [] this->pfiles_;
   
-          if (this->size_ == sz)
-            {
-              ACE_NEW_RETURN (this->pfiles_,
-                              TAO_Profile_ptr [this->size_],
-                              -1);
-              ACE_OS::memset (this->pfiles_,
-                              0,
-                              sizeof (TAO_Profile_ptr) *this->size_);
-            }
-          else // do not allocate any memory!
-            this->pfiles_ = 0;
-        }
+          ACE_NEW_RETURN (this->pfiles_,
+                          TAO_Profile_ptr [sz],
+                          -1);
+        } 
     }
   else
     {
-      if (this->size_ == sz)
-        {
-          ACE_NEW_RETURN (this->pfiles_,
-                          TAO_Profile_ptr [this->size_],
-                          -1);
-          ACE_OS::memset (this->pfiles_,
-                          0,
-                          sizeof (TAO_Profile_ptr) *this->size_);
-        }
-      else
-        pfiles_ = 0;
+      // first time, initialize!
+      ACE_NEW_RETURN (this->pfiles_,
+                      TAO_Profile_ptr [sz],
+                      -1);
     } // this->pfiles_
 
+  ACE_OS::memset (this->pfiles_,
+                  0,
+                  sizeof (TAO_Profile_ptr) * sz);
+
+  size_ = sz;
   this->last_ = 0;
   this->current_ = 0;
-  this->fwded_mprofile_ = 0;
 
-  return 1;
+  // @@ since we are being reset, get rid of fwd references!
+  if (fwded_mprofile_)
+    delete fwded_mprofile_;
+
+  return size_;
 }
   
 int
