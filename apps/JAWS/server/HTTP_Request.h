@@ -37,8 +37,15 @@ public:
   const char * uri (void) const;
   const char * version (void) const;
 
-  u_long type (void);
-  // GET or PUT.
+  int type (void) const;
+
+private:
+  // Private Accessors which can set values
+  const char * method (const char *method_string);
+  const char * uri (const char *uri_string);
+  const char * version (const char *version_string);
+
+  int type (const char *type_string);
 
   char *data (void);
 
@@ -61,13 +68,17 @@ public:
     NO_REQUEST,
     NO_FILENAME, 
     NO_CONTENT_LENGTH, 
-    NO_HEADER,
-    // **************
-    NO_TYPE,
-    GET,
+    NO_HEADER
+  };
+
+  enum
+  {
+    NO_TYPE = -1,
+    GET = 0,
     HEAD,
     POST,
-    PUT
+    PUT,
+    NUM_METHOD_STRINGS
   };
 
   enum
@@ -107,6 +118,9 @@ private:
 
   const char * const * const header_strings_;
   static const char * const static_header_strings_[NUM_HEADER_STRINGS];
+
+  const char * const * const method_strings_;
+  static const char * const static_method_strings_[NUM_METHOD_STRINGS];
 
   char *data_;
   int datalen_;

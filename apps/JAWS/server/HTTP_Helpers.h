@@ -29,6 +29,13 @@ private:
 
 private:
   static const char * const months_[12];
+
+#if !defined (ACE_HAS_REENTRANT_LIBC)
+#if defined (ACE_HAS_THREADS)  
+  static ACE_Thread_Mutex mutex_;
+#endif /* ACE_HAS_THREADS */
+#endif /* NOT ACE_HAS_REENTRANT_LIBC */
+
 };
 
 // Design around the Singleton pattern

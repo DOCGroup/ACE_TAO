@@ -5,13 +5,19 @@
 #include "JAWS/server/HTTP_Helpers.h"
 
 // = Static initialization.
-ACE_SYNCH_MUTEX HTTP_Status_Code::lock_;
-int HTTP_Status_Code::instance_ = 0;
-const char *HTTP_Status_Code::Reason[HTTP_Status_Code::MAX_STATUS_CODE + 1];
-
 const char * const
 HTTP_Helper::months_[12]= { "Jan", "Feb", "Mar", "Apr", "May", "Jun",
                             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+
+#if !defined (ACE_HAS_REENTRANT_LIBC)
+#if defined (ACE_HAS_THREADS)  
+ACE_Thread_Mutex HTTP_Helper::mutex_;
+#endif /* ACE_HAS_THREADS */
+#endif /* NOT ACE_HAS_REENTRANT_LIBC */
+
+ACE_SYNCH_MUTEX HTTP_Status_Code::lock_;
+int HTTP_Status_Code::instance_ = 0;
+const char *HTTP_Status_Code::Reason[HTTP_Status_Code::MAX_STATUS_CODE + 1];
 
 time_t
 HTTP_Helper::HTTP_mktime (const char *httpdate)
@@ -76,13 +82,14 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
 
   /* mktime is a Standard C function */
   {
+
 #if !defined (ACE_HAS_REENTRANT_LIBC)
 #if defined (ACE_HAS_THREADS)
-    static ACE_Thread_Mutex mutex;
-    ACE_Guard<ACE_Thread_Mutex> g(mutex);
+    ACE_Guard<ACE_Thread_Mutex> g(HTTP_Helper::mutex_);
 #endif /* ACE_HAS_THREADS */
 #endif /* NOT ACE_HAS_REENTRANT_LIBC */
-    return ::mktime(&tms);
+
+    return ACE_OS::mktime(&tms);
   }
 }
 
