@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS_NS_time.h"
 #include "ace/Log_Msg.h"
 
 #include "Thermometer.h"

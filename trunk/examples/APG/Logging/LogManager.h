@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/streams.h"
 #include "ace/Synch.h"
 #include "ace/Singleton.h"
 #include "ace/Log_Msg.h"

@@ -23,9 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SString.h"
-
-template <class T> class ACE_Unbounded_Set;
-template <class T> class ACE_Unbounded_Set_Iterator;
+#include "ace/Unbounded_Set.h"
 
 typedef ACE_Unbounded_Set<ACE_NS_WString> ACE_WSTRING_SET;
 
