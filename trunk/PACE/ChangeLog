@@ -1,3 +1,14 @@
+Tue Aug 29 14:14:45 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/stat.h (pace_fstat):
+	* pace/stat.h (pace_fchmod):	
+	* pace/posix/stat.inl (pace_fchmod):
+	* pace/posix/stat.inl (pace_fstat):
+	* pace/win32/stat.inl (pace_fchmod):
+	* pace/win32/stat.inl (pace_fstat):
+
+	  Changed argument 1 from an int to a PACE_HANDLE.
+
 Tue Aug 29 13:07:55 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/fcntl.inl (pace_creat):
