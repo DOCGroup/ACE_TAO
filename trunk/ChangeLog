@@ -1,3 +1,11 @@
+Mon Aug 30 23:28:03 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/config-macos.h:
+	* ace/config-macos-panther.h:
+
+	  Removed vestigial ACE_HAS_PTHREAD_CANCEL and ACE_HAS_PTHREAD_KILL
+	  definitions.
+
 Mon Aug 30 23:18:51 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/config-linux-common.h:
