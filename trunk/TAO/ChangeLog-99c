@@ -1,3 +1,19 @@
+Mon Apr  5 21:34:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/include/ast_expression.h:
+	* TAO_IDL/ast/ast_expression.cpp:
+	* TAO_IDL/ast/ast_constant.cpp:
+	* TAO_IDL/be/be_expression.cpp:
+	* TAO_IDL/be/be_sunsoft.cpp:
+	* TAO_IDL/util/utl_global.cpp:
+	  We can now define constants (in .idl files) of type
+	  long long, unsigned long long and wchar. This has been 
+	  made easier by the fact that the CORBA basic types are
+	  now defined in ACE. Still need more ACE/TAO support in
+	  order to do long double and wide strings, though. All
+	  the above builds cleanly on NT, sunc++, g++ and egcs.
+	  A few simple examples work on NT - more testing to come.
+
 Mon Apr  5 16:26:32 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input): 
