@@ -6032,17 +6032,17 @@ void *ACE_OS_Object_Manager::preallocated_object[
 
 ACE_OS_Object_Manager::ACE_OS_Object_Manager ()
 {
-  if (instance_ == 0)
-    {
-      // Store the address of the instance so that instance () doesn't
-      // allocate a new one when called.
-      instance_ = this;
+  // If Instance_ was not 0, then another ACE_OS_Object_Manager has
+  // already been instantiated.  Because this might be the non-static
+  // instance (with ACE_HAS_NONSTATIC_OBJECT_MANAGER), use it and leak
+  // the old one.  We can't destroy it, because the application might
+  // be using some of its resources, via static constructors.
 
-      init ();
-    }
-  // else if ACE_Object_Manager_instance_ was not 0, then then another
-  // ACE_Object_Manager has already been instantiated.  Don't do
-  // anything, so that it will own all ACE_Object_Manager resources.
+  // Store the address of the instance so that instance () doesn't
+  // allocate a new one when called.
+  instance_ = this;
+
+  init ();
 }
 
 ACE_OS_Object_Manager::~ACE_OS_Object_Manager ()
@@ -6197,6 +6197,12 @@ ACE_OS_Object_Manager::fini (void)
       instance_ = 0;
     }
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
+
+#if defined (ACE_FINI_HOOK)
+  // ACE_FINI_HOOK can be defined in ace/config.h to do whatever
+  // you want.
+  ACE_FINI_HOOK;
+#endif /* ACE_FINI_HOOK */
 
   return 0;
 }
