@@ -18,27 +18,6 @@
 // Static constant representing `zero-time'.
 const ACE_Time_Value ACE_Time_Value::zero;
 
-#if defined (ACE_MT_SAFE)
-
-// This is lock defines a monitor that is shared by all threads
-// calling certain ACE_OS methods.
-static ACE_Thread_Mutex ace_os_monitor_lock;
-
-#if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
-int 
-ACE_OS::netdb_acquire (void)
-{
-  return ace_os_monitor_lock.acquire ();
-}
-
-int 
-ACE_OS::netdb_release (void)
-{
-  return ace_os_monitor_lock.release ();
-}
-#endif /* defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS) */
-#endif /* defined (ACE_MT_SAFE) */
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Time_Value)
 
 // Initializes the ACE_Time_Value object from a timeval.
@@ -688,6 +667,27 @@ DllMain (HINSTANCE, // DLL module handle
 
 #include "ace/Synch.h"
 #include "ace/Set.h"
+
+#if defined (ACE_MT_SAFE)
+
+// This is lock defines a monitor that is shared by all threads
+// calling certain ACE_OS methods.
+static ACE_Thread_Mutex ace_os_monitor_lock;
+
+#if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+int 
+ACE_OS::netdb_acquire (void)
+{
+  return ace_os_monitor_lock.acquire ();
+}
+
+int 
+ACE_OS::netdb_release (void)
+{
+  return ace_os_monitor_lock.release ();
+}
+#endif /* defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS) */
+#endif /* defined (ACE_MT_SAFE) */
 
 class ACE_TSS_Ref
   // = TITLE
