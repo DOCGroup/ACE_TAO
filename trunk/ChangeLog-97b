@@ -5,7 +5,7 @@ Mon Nov 10 14:09:24 1997  Steve Huston  <shuston@riverace.com>
 	  Added the use if it in OS.h, and use the functions in OS.i,
 	  strlen and strcpy with wchar_t arguments.
 
-	* ace/config-hpux-10.x.h, config-aix-4.2.x.h,
+	* ace/config-hpux-10.x.h, config-aix-4.2.x.h, config-mvs.h,
 	  config-sunos5.5-sunc++-4.x.h: Added ACE_HAS_XPG4_MULTIBYTE_CHAR.
 
 Mon Nov 10 13:33:02 1997    <irfan@TWOSTEP>
