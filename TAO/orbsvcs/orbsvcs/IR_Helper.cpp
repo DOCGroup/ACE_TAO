@@ -16,7 +16,7 @@ class ServerObject_i: public POA_ImplementationRepository::ServerObject
   //    Implementation Repository uses this to communicate with the IR
   //    registered server.
 public:
-  ServerObject_i (CORBA::ORB_ptr orb, int debug = 0) 
+  ServerObject_i (CORBA::ORB_ptr orb, int debug = 0)
     : orb_ (orb),
       debug_ (debug) {}
 
@@ -32,7 +32,7 @@ public:
     {
       if (this->debug_)
         ACE_DEBUG ((LM_DEBUG, "ServerObject_i::Shutdown\n"));
- 
+
       this->orb_->shutdown ();
     }
 private:
@@ -70,7 +70,7 @@ IR_Helper::IR_Helper (const char *server_name,
 
       exception_message = "While narrowing ImplRepo";
       this->implrepo_ =
-        ImplementationRepository::Administration::_narrow (implrepo_object.in(), 
+        ImplementationRepository::Administration::_narrow (implrepo_object.in(),
                                                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -85,12 +85,12 @@ IR_Helper::IR_Helper (const char *server_name,
       ACE_TRY_CHECK;
 
       exception_message = "While creating reference to ping object";
-      CORBA::Object_ptr svr_obj = 
+      CORBA::Object_ptr svr_obj =
         this->poa_->id_to_reference (server_object_id.in (),
                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
-    
-      this->server_object_ptr_ = 
+
+      this->server_object_ptr_ =
         ImplementationRepository::ServerObject::_narrow (svr_obj,
                                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -128,7 +128,7 @@ IR_Helper::register_server (const char *comm_line,
                           -1);
 
       ImplementationRepository::Administration *ImplRepo =
-        ImplementationRepository::Administration::_narrow (implrepo_object.in(), 
+        ImplementationRepository::Administration::_narrow (implrepo_object.in(),
                                                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -168,7 +168,7 @@ IR_Helper::notify_startup (CORBA_Environment &ACE_TRY_ENV)
   TAO_AcceptorSetItor end = registry->end ();
 
   for (TAO_AcceptorSetItor i = registry->begin (); i != end; ++i)
-    if ((*i)->tag () == TAO_IOP_TAG_INTERNET_IOP)
+    if ((*i)->tag () == TAO_TAG_IIOP_PROFILE)
       {
         acceptor = (*i);
         break;
