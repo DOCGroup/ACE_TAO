@@ -45,28 +45,17 @@ TAO_Default_Server_Strategy_Factory::concurrency_strategy (void)
     return this->concurrency_strategy_;
 }
 
-ACE_Lock *
-TAO_Default_Server_Strategy_Factory::create_poa_lock (void)
+int
+TAO_Default_Server_Strategy_Factory::enable_poa_locking (void)
 {
-  ACE_Lock *the_lock = 0;
-
   switch (this->poa_lock_type_)
     {
+    case TAO_NULL_LOCK:
+      return 0;
     case TAO_THREAD_LOCK:
-#if defined (ACE_HAS_THREADS)
-      ACE_NEW_RETURN (the_lock,
-                      ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex> (),
-                      0);
-      break;
-#endif /* ACE_HAS_THREADS */
     default:
-      ACE_NEW_RETURN (the_lock,
-                      ACE_Lock_Adapter<ACE_Null_Mutex> (),
-                      0);
-      break;
+      return 1;
     }
-
-  return the_lock;
 }
 
 ACE_Lock *

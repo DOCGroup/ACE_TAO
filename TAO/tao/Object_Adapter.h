@@ -83,6 +83,10 @@ public:
 
   ACE_Lock &lock (void);
 
+  ACE_SYNCH_MUTEX &thread_lock (void);
+
+  ACE_Reverse_Lock<ACE_Lock> &reverse_lock (void);
+
   static CORBA::ULong transient_poa_name_size (void);
 
 protected:
@@ -123,6 +127,9 @@ protected:
 
   int unbind_persistent_poa (const poa_name &folded_name,
                              const poa_name &system_name);
+
+  static ACE_Lock *create_lock (int enable_locking,
+                                ACE_SYNCH_MUTEX &thread_lock);
 
   class Hint_Strategy
   {
@@ -275,7 +282,22 @@ protected:
 
   TAO_ORB_Core &orb_core_;
 
+  int enable_locking_;
+
+  ACE_SYNCH_MUTEX thread_lock_;
+
   ACE_Lock *lock_;
+
+  ACE_Reverse_Lock<ACE_Lock> reverse_lock_;
+
+  ACE_SYNCH_CONDITION non_servant_upcall_condition_;
+  // Condition variable for waiting on non-servant upcalls to end.
+
+  CORBA::Boolean non_servant_upcall_in_progress_;
+  // Flag for knowing when an non-servant upcall is in progress.
+
+  ACE_thread_t non_servant_upcall_thread_;
+  // Id of thread making the non-servant upcall.
 
 public:
 
@@ -325,6 +347,64 @@ public:
 
     const poa_name &folded_name_;
   };
+
+  class Non_Servant_Upcall
+  {
+    // = TITLE
+    //     This class helps us with a recursive thread lock without
+    //     using a recursive thread lock.  Non_Servant_Upcall has a
+    //     magic constructor and destructor.  We unlock the
+    //     Object_Adapter lock for the duration of the non-servant
+    //     (i.e., adapter activator and servant activator) upcalls;
+    //     reacquiring once the upcalls complete.  Even though we are
+    //     releasing the lock, other threads will not be able to make
+    //     progress since
+    //     <Object_Adapter::non_servant_upcall_in_progress_> has been
+    //     set.
+  public:
+
+    Non_Servant_Upcall (TAO_Object_Adapter &object_adapter);
+    // Constructor.
+
+    ~Non_Servant_Upcall (void);
+    // Destructor.
+
+  protected:
+
+    TAO_Object_Adapter &object_adapter_;
+  };
+
+  friend Non_Servant_Upcall;
+
+  class Outstanding_Requests
+  {
+    // = TITLE
+    //     This class helps us by increasing
+    //     <POA::outstanding_requests_> for the duration of the
+    //     servant upcall. Outstanding_Requests has a magic
+    //     constructor and destructor.  We increment
+    //     <POA::outstanding_requests_> in the constructor.  We
+    //     decrement <POA::outstanding_requests_> in the destructor.
+    //     Note that the lock is released after
+    //     <POA::outstanding_requests_> is increased and
+    //     <POA::outstanding_requests_> is decreased after the lock
+    //     has been reacquired.
+  public:
+
+    Outstanding_Requests (TAO_POA &poa,
+                          TAO_Object_Adapter &object_adapter);
+    // Constructor.
+
+    ~Outstanding_Requests (void);
+    // Destructor.
+
+  protected:
+
+    TAO_POA &poa_;
+    TAO_Object_Adapter &object_adapter_;
+  };
+
+  friend Outstanding_Requests;
 
 };
 

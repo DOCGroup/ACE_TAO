@@ -110,8 +110,8 @@ public:
   virtual SCHEDULING_STRATEGY *scheduling_strategy (void);
   // Return the scheduling strategy used.
 
-  virtual ACE_Lock *create_poa_lock (void);
-  // Return a new lock for use in locking the POA.
+  virtual int enable_poa_locking (void);
+  // Enable POA locking?
 
   virtual ACE_Lock *create_servant_lock (void);
   // Return a new lock for use in locking the servant.

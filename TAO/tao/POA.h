@@ -353,6 +353,7 @@ class TAO_Export TAO_POA : public POA_PortableServer::POA
 public:
 
   friend class TAO_Object_Adapter;
+  friend class TAO_Object_Adapter::Outstanding_Requests;
   friend class TAO_POA_Current;
   friend class TAO_POA_Manager;
 
@@ -489,6 +490,7 @@ public:
            const TAO_POA_Policies &policies,
            TAO_POA *parent,
            ACE_Lock &lock,
+           ACE_SYNCH_MUTEX &thread_lock,
            TAO_ORB_Core &orb_core,
            CORBA_Environment &ACE_TRY_ENV);
 
@@ -664,6 +666,14 @@ protected:
 
   static CORBA::ULong root_key_type_length (void);
 
+  CORBA::ULong outstanding_requests (void) const;
+
+  void outstanding_requests (CORBA::ULong new_outstanding_requests);
+
+  CORBA::ULong increment_outstanding_requests (void);
+
+  CORBA::ULong decrement_outstanding_requests (void);
+
   String name_;
 
   TAO_Object_Adapter::poa_name folded_name_;
@@ -710,6 +720,12 @@ protected:
   CORBA::Boolean cleanup_in_progress_;
 
   CORBA::Boolean etherealize_objects_;
+
+  CORBA::ULong outstanding_requests_;
+
+  ACE_SYNCH_CONDITION outstanding_requests_condition_;
+
+  CORBA::Boolean destroy_pending_;
 };
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
