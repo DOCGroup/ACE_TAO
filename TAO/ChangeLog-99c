@@ -1,3 +1,13 @@
+Sun Apr 11 23:55:50 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Param_Test/driver.cpp 
+	* tests/Param_Test/multdim_array.cpp
+	* tests/Param_Test/param_test.idl
+	* tests/Param_Test/param_test_i.cpp
+	* tests/Param_Test/param_test_i.h
+	Blanked of code for Multi dimensional arrays. We had a nasty stuff
+	compile problem on NT.
+
 Sun Apr 11 19:38:39 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
