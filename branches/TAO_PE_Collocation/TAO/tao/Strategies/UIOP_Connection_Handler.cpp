@@ -57,7 +57,7 @@ TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
 #else
-  ACE_UNUSED_ARG (orb_Core);
+  ACE_UNUSED_ARG (orb_core);
   ACE_UNUSED_ARG (flag);
 #endif
 
