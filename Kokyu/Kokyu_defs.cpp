@@ -18,6 +18,12 @@ namespace Kokyu
     :immediate_activation_ (0)
   {
   }
+
+  DSRT_ConfigInfo::DSRT_ConfigInfo ()
+    :sched_policy_ (ACE_SCHED_RR),
+     sched_scope_ (ACE_SCOPE_THREAD)
+  {
+  }
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

@@ -12,15 +12,15 @@
 #define KOKYU_DEFS_H
 #include /**/ "ace/pre.h"
 #include "ace/Array.h"
-
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 #include "ace/Time_Value.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Message_Block.h"
 #include "ace/Sched_Params.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "kokyu_export.h"
 
 namespace Kokyu
@@ -85,7 +85,7 @@ namespace Kokyu
   };
 
 
-  struct QoSDescriptor
+  struct Kokyu_Export QoSDescriptor
   {
     Priority_t preemption_priority_;
     Deadline_t deadline_;
@@ -109,7 +109,11 @@ namespace Kokyu
   class Kokyu_Export Dispatch_Command
     {
     public:
-      Dispatch_Command(int dont_delete = 0);
+      Dispatch_Command(int dont_delete = 0, 
+                       ACE_Allocator *allocator = 0); 
+      //dont_delete indicates whether this object needs to be deleted once processed.
+      //allocator indicates the ACE_Allocator, if any, from which this object was created. 
+      //This same allocator has to be used for the deletion also
 
       /// Command callback
       virtual int execute () = 0;
@@ -125,7 +129,38 @@ namespace Kokyu
 
     private:
       int dont_delete_;
+      ACE_Allocator *allocator_;
+      //if this object has to be deleted, then delete it using the allocator
+      //if one is present.
     };
+
+  enum DSRT_Sched_Type_t
+    {
+      DSRT_FP,
+      DSRT_MUF,
+      DSRT_MIF
+    };
+
+  enum DSRT_Dispatcher_Impl_t
+    {
+      DSRT_CV_BASED,
+      DSRT_OS_BASED
+    };
+
+  struct Kokyu_Export DSRT_ConfigInfo
+  {
+    //not used currently
+    DSRT_Sched_Type_t sched_strategy_;
+
+    ACE_Sched_Params::Policy sched_policy_;
+    int sched_scope_;
+
+    //type of implementation
+    DSRT_Dispatcher_Impl_t impl_type_;
+
+    DSRT_ConfigInfo ();
+  };
+
 } //end of namespace
 
 //to satisfy ACE_Array<ConfigInfo>
