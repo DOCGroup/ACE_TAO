@@ -44,7 +44,7 @@ CORBA::Double read_timer (CORBA::Char *str, CORBA::Long len);
 void prusage (CORBA::Char *outp);
 void tvadd (struct timeval *tsum, struct timeval *t0, struct timeval *t1);
 void tvsub (struct timeval *tdiff, struct timeval *t1, struct timeval *t0);
-void psecs (CORBA::Long l, register CORBA::Char *cp);
+void psecs (CORBA::Double d, register CORBA::Char *cp);
 void delay (CORBA::Long us);
 void FillPattern (register CORBA::Char *cp, register CORBA::Long bufLen, CORBA::ULong dt);
 void PrintStats (void);

@@ -363,7 +363,6 @@ prusage (char *outp)
   register ACE_timer_t t, ms;
   register char *cp;
   register int i;
-  struct rusage *r1, *r0;
 
   ACE_Profile_Timer::ACE_Elapsed_Time et;
   ACE_Profile_Timer::Rusage rusage;
@@ -548,22 +547,22 @@ tvsub (struct timeval *tdiff, struct timeval *t1, struct timeval *t0)
 
 // print in seconds
 void
-psecs (CORBA::Long l, register CORBA::Char *cp)
+psecs (CORBA::Double d, register CORBA::Char *cp)
 {
   register int i;
 
-  i = l / 3600;
+  i = d / 3600;
   if (i)
     {
       ACE_OS::sprintf (cp, "%d:", i);
       END (cp);
-      i = l % 3600;
+      i = (int) d % 3600;
       ACE_OS::sprintf (cp, "%d%d ", (i / 60) / 10, (i / 60) % 10);
       END (cp);
     }
   else
     {
-      i = l;
+      i = (int) d;
       ACE_OS::sprintf (cp, "%d", i / 60);
       END (cp);
     }
