@@ -1,3 +1,13 @@
+Mon May 31 00:40:25 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/Core/NodeApplication_Impl.cpp:
+	* DnC/Core/NodeApplication_Impl.h:
+
+	  Added component/home removal functionality.
+	  Also added a install method which will be called by
+	  NodeApplicationManager to install everything which belong
+	  to the NodeApplication.
+
 Sun May 30 17:47:10 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/tests/NodeApplicationTest:
