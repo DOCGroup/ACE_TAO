@@ -2222,11 +2222,6 @@ TAO_Transport::assign_translators (TAO_InputCDR *inp, TAO_OutputCDR *outp)
       this->wchar_translator_->assign (inp);
       this->wchar_translator_->assign (outp);
     }
-  else
-    {
-      if (inp) inp->wchar_allowed(this->wchar_allowed_);
-      if (outp) outp->wchar_allowed(this->wchar_allowed_);
-    }
 }
 
 

@@ -103,12 +103,50 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 
       break;
     case be_sequence::MNG_ABSTRACT:
-      if (node->unbounded ())
-        {
-        }
-      else
-        {
-        }
+      {
+        be_interface *elem = be_interface::narrow_from_decl (bt);
+
+        if (node->unbounded ())
+          {
+            *os << "template class" << be_idt_nl 
+                << "TAO_Unbounded_Abstract_Sequence<" << be_idt << be_idt_nl
+                << elem->name () << "," << be_nl
+                << elem->name () << "_var," << be_nl
+                << elem->fwd_helper_name () << "_life" << be_uidt_nl
+                << ">;" << be_uidt << be_uidt_nl;
+          }
+        else
+          {
+            *os << "template class" << be_idt_nl 
+                << "TAO_Bounded_Object_Sequence<" << be_idt << be_idt_nl
+                << elem->name () << "," << be_nl
+                << elem->name () << "_var," << be_nl
+                << elem->fwd_helper_name () << "_life," << be_nl
+                << node->max_size ()->ev ()->u.ulval << be_uidt_nl
+                << ">;" << be_uidt << be_uidt_nl;
+          }
+
+        *os << "template class" << be_idt_nl
+            << "TAO_VarSeq_Var_T<" << be_idt << be_idt_nl
+            << node->name () << "," << be_nl
+            << "TAO_Abstract_Manager<" << be_idt << be_idt_nl
+            << elem->name () << "," << be_nl
+            << elem->name () << "_var," << be_nl
+            << elem->fwd_helper_name () << "_life" << be_uidt_nl
+            << ">" << be_uidt << be_uidt_nl
+            << ">;" << be_uidt << be_uidt_nl;
+
+        *os << "template class" << be_idt_nl
+            << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
+            << node->name () << "," << be_nl
+            << node->name () << "_var," << be_nl
+            << "TAO_Abstract_Manager<" << be_idt << be_idt_nl
+            << elem->name () << "," << be_nl
+            << elem->name () << "_var," << be_nl
+            << elem->fwd_helper_name () << "_life" << be_uidt_nl
+            << ">" << be_uidt << be_uidt_nl
+            << ">;";
+      }
 
       break;
     case be_sequence::MNG_PSEUDO:
@@ -187,7 +225,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
                 << elem->name () << "_var, \\" << be_nl
                 << elem->fwd_helper_name () << "_life, \\" << be_nl
                 << elem->fwd_helper_name () << "_cast, \\" << be_uidt_nl
-                << ">" << be_uidt << be_uidt << be_uidt_nl;
+                << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl;
           }
         else
           {
@@ -198,7 +236,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
                 << elem->fwd_helper_name () << "_life, \\" << be_nl
                 << elem->fwd_helper_name () << "_cast \\" << be_nl
                 << node->max_size ()->ev ()->u.ulval << " \\" << be_uidt_nl
-                << ">" << be_uidt << be_uidt << be_uidt_nl;
+                << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl;
           }
 
         *os << "# pragma instantiate \\" << be_idt << be_idt_nl
@@ -225,12 +263,50 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 
       break;
     case be_sequence::MNG_ABSTRACT:
-      if (node->unbounded ())
-        {
-        }
-      else
-        {
-        }
+      {
+        be_interface *elem = be_interface::narrow_from_decl (bt);
+
+        if (node->unbounded ())
+          {
+            *os << "# pragma instantiate \\" << be_idt_nl 
+                << "TAO_Unbounded_Abstract_Sequence< \\" << be_idt << be_idt_nl
+                << elem->name () << ", \\" << be_nl
+                << elem->name () << "_var, \\" << be_nl
+                << elem->fwd_helper_name () << "_life \\" << be_uidt_nl
+                << ">" << be_uidt << be_uidt_nl;
+          }
+        else
+          {
+            *os << "# pragma instantiate \\" << be_idt_nl 
+                << "TAO_Bounded_Object_Sequence< \\" << be_idt << be_idt_nl
+                << elem->name () << ", \\" << be_nl
+                << elem->name () << "_var, \\" << be_nl
+                << elem->fwd_helper_name () << "_life, \\" << be_nl
+                << node->max_size ()->ev ()->u.ulval << " \\" << be_uidt_nl
+                << ">" << be_uidt << be_uidt_nl;
+          }
+
+        *os << "# pragma instantiate \\" << be_idt_nl
+            << "TAO_VarSeq_Var_T< \\" << be_idt << be_idt_nl
+            << node->name () << ", \\" << be_nl
+            << "TAO_Abstract_Manager< \\" << be_idt << be_idt_nl
+            << elem->name () << ", \\" << be_nl
+            << elem->name () << "_var, \\" << be_nl
+            << elem->fwd_helper_name () << "_life \\" << be_uidt_nl
+            << "> \\" << be_uidt << be_uidt_nl
+            << ">" << be_uidt << be_uidt_nl;
+
+        *os << "# pragma instantiate \\" << be_idt_nl
+            << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
+            << node->name () << ", \\" << be_nl
+            << node->name () << "_var, \\" << be_nl
+            << "TAO_Abstract_Manager< \\" << be_idt << be_idt_nl
+            << elem->name () << ", \\" << be_nl
+            << elem->name () << "_var, \\" << be_nl
+            << elem->fwd_helper_name () << "_life \\" << be_uidt_nl
+            << "> \\" << be_uidt << be_uidt_nl
+            << ">";
+      }
 
       break;
     case be_sequence::MNG_PSEUDO:

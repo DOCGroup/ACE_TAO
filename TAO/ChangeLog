@@ -1,3 +1,26 @@
+Wed Mar 26 01:06:24 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+
+  	  Added code generation for sequences of abstract
+	  interfaces.
+
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.i:
+
+	  Uninlined a few methods that were too long.
+
+        * tao/Transport.cpp:
+
+	  Cut out an ELSE block to get this to work with
+	  changes Phil Mesnier <mesnier_p@ociweb.com> has
+	  made to ACE - his corresponding TAO changes are
+	  blocked by the branch. This file will get in 
+	  sync again when the branch is merged.
+
 Tue Mar 25 21:44:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Sequence_T.cpp:

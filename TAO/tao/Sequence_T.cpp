@@ -136,8 +136,7 @@ TAO_Unbounded_Sequence<T>::_deallocate_buffer (void)
   this->buffer_ = 0;
 }
 
-template <typename T> 
-ACE_INLINE 
+template <typename T>  
 T *
 TAO_Unbounded_Sequence<T>::get_buffer (CORBA::Boolean orphan)
 {
@@ -204,7 +203,6 @@ TAO_Unbounded_Sequence<T>::operator[] (CORBA::ULong i) const
 }
 
 template <typename T> 
-ACE_INLINE 
 void
 TAO_Unbounded_Sequence<T>::replace (CORBA::ULong max,
                                     CORBA::ULong length,
@@ -328,7 +326,6 @@ TAO_Bounded_Sequence<T, MAX>::_deallocate_buffer (void)
 }
 
 template <typename T, size_t MAX> 
-ACE_INLINE 
 T *
 TAO_Bounded_Sequence<T, MAX>::get_buffer (CORBA::Boolean orphan)
 {
@@ -367,8 +364,7 @@ TAO_Bounded_Sequence<T, MAX>::get_buffer (CORBA::Boolean orphan)
   return result;
 }
 
-template <typename T, size_t MAX> 
-ACE_INLINE 
+template <typename T, size_t MAX>  
 void
 TAO_Bounded_Sequence<T,MAX>::replace (CORBA::ULong max,
                                       CORBA::ULong length,
@@ -716,7 +712,17 @@ TAO_Abstract_Manager<T,T_var,T_life>::operator= (const T_var & p)
 }
 
 template<typename T, typename T_var, typename T_life>
-ACE_INLINE 
+TAO_Abstract_Manager<T,T_var,T_life>::operator const T_var () const
+{
+  if (*this->ptr_ != 0)
+    {
+      (*this->ptr_)->_add_ref ();
+    }
+
+  return *this->ptr_;
+}
+
+template<typename T, typename T_var, typename T_life>
 T *&
 TAO_Abstract_Manager<T,T_var,T_life>::out (void)
 {
@@ -2257,7 +2263,7 @@ TAO_Unbounded_Abstract_Sequence<T,T_var,T_life>::_allocate_buffer (
     CORBA::ULong length
   )
 {
-  T ** tmp = TAO_Unbounded_Abstract_Sequence<T,T_var>::allocbuf (length);
+  T ** tmp = TAO_Unbounded_Abstract_Sequence<T,T_var,T_life>::allocbuf (length);
 
   if (this->buffer_ != 0)
     {
@@ -2303,7 +2309,7 @@ TAO_Unbounded_Abstract_Sequence<T,T_var,T_life>::_deallocate_buffer (void)
   for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
       T_life::tao_release (tmp[i]);
-      tmp[i] = T_var::tao_nil ();
+      tmp[i] = T_life::tao_nil ();
     }
 
   TAO_Unbounded_Abstract_Sequence<T,T_var,T_life>::freebuf (tmp);
@@ -2868,7 +2874,6 @@ TAO_Bounded_Array_Sequence<T,T_life,MAX>::operator= (
 }
 
 template <typename T, typename T_life, size_t MAX> 
-ACE_INLINE 
 T *
 TAO_Bounded_Array_Sequence<T,T_life,MAX>::get_buffer (CORBA::Boolean orphan)
 {
@@ -2927,6 +2932,18 @@ TAO_Bounded_Array_Sequence<T,T_life,MAX>::_deallocate_buffer (void)
     {
       return;
     }
+
+template <typename T, typename T_life, size_t MAX> 
+void
+TAO_Bounded_Array_Sequence<T,T_life,MAX>::freebuf (T * buffer)
+{
+  if (buffer == 0)
+    {
+      return;
+    }
+
+  delete [] buffer;
+}
 
 #if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)
   T * tmp = (T *) this->buffer_;

@@ -60,13 +60,18 @@ be_interface::be_interface (UTL_ScopedName *n,
                             long nih_flat,
                             idl_bool local,
                             idl_bool abstract)
-  : AST_Interface (n,
+  : be_scope (AST_Decl::NT_interface),
+    be_type (AST_Decl::NT_interface,
+             n),
+    AST_Interface (n,
                    ih,
                    nih,
                    ih_flat,
                    nih_flat,
                    local,
                    abstract),
+    AST_Type (AST_Decl::NT_interface,
+              n),
     AST_Decl (AST_Decl::NT_interface,
               n),
     UTL_Scope (AST_Decl::NT_interface),
@@ -568,35 +573,18 @@ be_interface:: gen_var_out_seq_decls (void)
       << ");" << be_uidt << be_uidt_nl
       << "};";
 
-  *os << be_nl << be_nl
-      << "struct tao_" << lname << "_cast" << be_nl
-      << "{" << be_idt_nl
-      << "static " << lname << "_ptr tao_narrow (" << be_idt << be_idt_nl;
-
-  if (this->is_abstract ())
+  if (! this->is_abstract ())
     {
-      *os << "CORBA::AbstractBase_ptr";
+      *os << be_nl << be_nl
+          << "struct tao_" << lname << "_cast" << be_nl
+          << "{" << be_idt_nl
+          << "static " << lname << "_ptr tao_narrow (" << be_idt << be_idt_nl
+          << "CORBA::Object_ptr"
+          << be_nl << "ACE_ENV_ARG_DECL" << be_uidt_nl
+          << ");" << be_uidt_nl
+          << "static CORBA::Object_ptr tao_upcast (void *);" << be_uidt_nl
+          << "};";
     }
-  else
-    {
-      *os << "CORBA::Object_ptr";
-    }
-
-  *os << be_nl << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ");" << be_uidt_nl
-      << "static ";
-
-  if (this->is_abstract ())
-    {
-      *os << "CORBA::AbstractBase_ptr ";
-    }
-  else
-    {
-      *os << "CORBA::Object_ptr ";
-    }
-
-  *os << "tao_upcast (void *);" << be_uidt_nl
-      << "};";
 }
 
 // ****************************************************************
