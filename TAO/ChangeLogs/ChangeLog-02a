@@ -1,7 +1,15 @@
+Wed Oct 24 14:12:29 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableInterceptor.cpp:
+	* tao/PortableInterceptor.i:
+
+	  Removed these vestigial files.  They were split up into client
+	  and server side files months ago, and are no longer used.
+
 Tue Oct 23 18:55:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/examples/Security/Send_File/Makefile:Updated
-	  dependancies.  
+	* orbsvcs/examples/Security/Send_File/Makefile: Updated
+	  dependencies.  
 
 Tue Oct 23 09:49:01 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
