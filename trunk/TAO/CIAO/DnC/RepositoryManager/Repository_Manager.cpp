@@ -16,7 +16,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TCHAR* package_url = 0;
   ACE_TCHAR* plan_url = 0;
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:d"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:d:"));
   int c;
 
   while ((c = get_opt ()) != EOF)
@@ -40,15 +40,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     return -1;
   }
 
+  if (plan_url == 0) {
+    usage(argv[0]);
+    return -1;
+  }
+
   // Initialize the ORB so that CORBA::Any will work
   //
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "");
 
   try
     {
-      CIAO::RepositoryManager_Impl rep_impl;
-      rep_impl.installPackage ("PC", package_url);
-
       DOMDocument* doc = CIAO::Config_Handler::Utils::
                          create_document (plan_url);
       CIAO::Config_Handler::Plan_Handler plan_handler (doc,
@@ -57,6 +59,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Deployment::DeploymentPlan plan;
       plan_handler.process_plan (plan);
       Deployment::DnC_Dump::dump (plan);
+      Deployment::PackageConfiguration* pc;
+      CIAO::RepositoryManager_Impl rep_impl;
+      rep_impl.installPackage ("PC", package_url);
+      pc = rep_impl.findPackageByName ("PC");
+      Deployment::DnC_Dump::dump (*pc);
+
     }
   catch (CORBA::Exception& ex)
     {

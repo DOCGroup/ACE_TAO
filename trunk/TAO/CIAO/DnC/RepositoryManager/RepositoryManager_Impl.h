@@ -17,6 +17,8 @@
 #include "RepositoryManagerS.h"
 #include "ace/Get_Opt.h"
 #include "RepositoryManager_Impl.h"
+#include "ace/Synch.h"
+#include "ace/Hash_Map_Manager.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
@@ -55,9 +57,6 @@ using xercesc::DOMNodeFilter;
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Synch.h"
-#include "ace/Hash_Map_Manager.h"
 
 /**
  *
@@ -137,6 +136,13 @@ namespace CIAO
           ACE_THROW_SPEC ((CORBA::SystemException));
 
     protected:
+
+      typedef ACE_Hash_Map_Manager_Ex<const char *,
+        Deployment::PackageConfiguration*,
+        ACE_Hash<const char *>, ACE_Equal_To<const char *>,
+        TAO_SYNCH_MUTEX> pc_table;
+  
+      typedef pc_table::iterator pc_iterator;
       // Cached ORB pointer
       CORBA::ORB_var orb_;
 
@@ -145,6 +151,8 @@ namespace CIAO
 
       // Package Configuration element
       Deployment::PackageConfiguration pc_;
+
+      pc_table pc_table_;
     };
 };
 
