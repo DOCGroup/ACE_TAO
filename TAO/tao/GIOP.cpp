@@ -56,6 +56,7 @@
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/POA.h"
+#include "tao/TAOC.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP.i"
