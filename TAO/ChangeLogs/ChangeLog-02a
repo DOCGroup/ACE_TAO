@@ -1,3 +1,11 @@
+Wed Jul 11 14:41:20 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp (compute_prefix):
+
+          Fixed function to work if the #pragma prefix string looks like
+          '#pragma prefix      "foo.bar"'. The preprocessor takes care
+          of the whitespace, if any, between '#pragma' and 'prefix'.
+
 Wed Jul 11 14:38:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
        * tao/Strategies/DIOP_Connection_Handler.cpp:
