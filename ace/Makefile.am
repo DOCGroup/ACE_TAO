@@ -9,6 +9,7 @@
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 includedir = @includedir@/ace
+pkgconfigdatadir = ${prefix}/lib/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -1228,6 +1229,11 @@ nobase_include_HEADERS = \
   Unbounded_Set.cpp \
   Unbounded_Set_Ex.cpp \
   Vector_T.cpp
+
+pkgconfigdata_DATA = ACE.pc
+
+ACE.pc: ${top_builddir}/config.status ACE.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/ACE.pc.in
 
 EXTRA_DIST = \
   ace.rc

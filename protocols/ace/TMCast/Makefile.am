@@ -9,6 +9,7 @@
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 includedir = @includedir@/ace/TMCast
+pkgconfigdatadir = ${prefix}/lib/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -47,6 +48,11 @@ nobase_include_HEADERS += \
   Messaging.hpp \
   Protocol.hpp \
   TransactionController.hpp
+
+pkgconfigdata_DATA = ACE_TMCast.pc
+
+ACE_TMCast.pc: ${top_builddir}/config.status ACE_TMCast.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/ACE_TMCast.pc.in
 
 endif BUILD_THREADS
 endif BUILD_EXCEPTIONS
