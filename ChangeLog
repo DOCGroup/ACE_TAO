@@ -1,3 +1,8 @@
+Sat Oct 26 11:42:04 UTC 2002  John Aughey  <jha@aughey.com>
+
+        * ace/INET_Addr.cpp: Changed default behavior to set 0
+	port and INADDR_ANY address.
+
 Sat Oct 26 09:45:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Timer_Heap_T.h:
