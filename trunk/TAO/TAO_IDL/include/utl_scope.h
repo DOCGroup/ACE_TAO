@@ -51,8 +51,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -135,6 +135,7 @@ public:
   virtual AST_Sequence		*add_sequence(AST_Sequence		*s);
   virtual AST_String		*add_string(AST_String			*s);
   virtual AST_Array		*add_array(AST_Array			*a);
+  virtual AST_Native            *add_native (AST_Native                 *n);
 
   // Call back end add_XXX functions for this scope
   virtual AST_Decl 		*call_add();
@@ -252,6 +253,7 @@ private:
   virtual AST_Sequence		*fe_add_sequence(AST_Sequence		*s);
   virtual AST_String		*fe_add_string(AST_String		*s);
   virtual AST_Array		*fe_add_array(AST_Array			*a);
+  virtual AST_Native            *fe_add_native (AST_Native              *n);
 };
 
 // Active iterator for a UTL_Scope node

@@ -76,7 +76,7 @@ main (int argc, char *argv[])
   Param_Test_i *param_test;
 
   // implicitly initializes with the OA
-  ACE_NEW_RETURN (param_test, Param_Test_i ("param_test"), 1);
+  ACE_NEW_RETURN (param_test, Param_Test_i ("unknown", "param_test"), 1);
 
   if (TAO_debug_level > 0)
     {

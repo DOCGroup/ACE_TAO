@@ -51,8 +51,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -191,7 +191,7 @@ AST_Interface *AST_Module::fe_add_interface(AST_Interface *t)
 
       if (fwd == NULL)
           return NULL;
-      
+
       if (!fwd->is_defined()) {	/* Forward declared and not defined yet */
 	if (fwd->defined_in() != this) {
 	  idl_global->err()
@@ -248,7 +248,7 @@ AST_InterfaceFwd *AST_Module::fe_add_interface_fwd(AST_InterfaceFwd *i)
       itf = AST_Interface::narrow_from_decl(d);
       if (itf == NULL)
           return NULL;
-      
+
       i->set_full_definition(itf);
       return i;
     }
@@ -500,6 +500,42 @@ AST_EnumVal *AST_Module::fe_add_enum_val(AST_EnumVal *t)
  * Add this AST_Typedef node (a typedef) to this scope
  */
 AST_Typedef *AST_Module::fe_add_typedef(AST_Typedef *t)
+{
+  AST_Decl *d;
+
+  /*
+   * Already defined and cannot be redefined? Or already used?
+   */
+  if ((d = lookup_for_add(t, I_FALSE)) != NULL) {
+    if (!can_be_redefined(d)) {
+      idl_global->err()->error3(UTL_Error::EIDL_REDEF, t, this, d);
+      return NULL;
+    }
+    if (referenced(d)) {
+      idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
+      return NULL;
+    }
+    if (t->has_ancestor(d)) {
+      idl_global->err()->redefinition_in_scope(t, d);
+      return NULL;
+    }
+  }
+  /*
+   * Add it to scope
+   */
+  add_to_scope(t);
+  /*
+   * Add it to set of locally referenced symbols
+   */
+  add_to_referenced(t, I_FALSE);
+
+  return t;
+}
+
+/*
+ * Add an AST_Native (a native declaration) to this scope
+ */
+AST_Native *AST_Module::fe_add_native (AST_Native *t)
 {
   AST_Decl *d;
 

@@ -18,6 +18,33 @@
 
 #include "param_testS.h"
 
+// Implementation of the Coffee interface
+class Coffee_i : public POA_Coffee
+
+{
+public:
+  Coffee_i (const char *name,
+            const char *obj_name = 0);
+  // constructor
+
+  ~Coffee_i (void);
+  // destructor
+
+  // =methods for the attribute
+
+  virtual Coffee::Desc * description (CORBA::Environment &env);
+  // get attribute
+
+  virtual void description (const Coffee::Desc &description,
+                            CORBA::Environment &env);
+  // set attribute
+
+private:
+  CORBA::String_var name_;
+  // my description
+};
+
+// the implementation of the Param_test interface
 class Param_Test_i : public POA_Param_Test
 {
   // = TITLE
@@ -25,7 +52,8 @@ class Param_Test_i : public POA_Param_Test
   // = DESCRIPTION
   //    Implementation of the Param_Test test suite.
 public:
-  Param_Test_i (const char *obj_name = 0);
+  Param_Test_i (const char *coffee_name,
+                const char *obj_name = 0);
   // Constructor
 
   ~Param_Test_i (void);
@@ -70,6 +98,21 @@ public:
                       Param_Test::Nested_Struct_out s3,
                       CORBA::Environment &env);
   // test for nested structs
+
+  virtual Coffee_ptr
+  make_coffee (CORBA::Environment &env);
+  // make a coffee object
+
+  virtual Coffee_ptr
+  test_objref (Coffee_ptr o1,
+               Coffee_ptr &o2,
+               Coffee_out o3,
+               CORBA::Environment &env);
+  // test for object references
+
+private:
+  Coffee_var obj_;
+  // the coffee object reference we maintain
 };
 
 #endif /* PARAM_TEST_I_H */

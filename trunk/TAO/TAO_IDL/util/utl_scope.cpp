@@ -51,8 +51,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -197,7 +197,7 @@ UTL_Scope::UTL_Scope(AST_Decl::NodeType nt)
  * Private operations
  */
 
-static 
+static
 AST_Decl * add_type(AST_Type *type)
 {
   AST_Decl * result = 0;
@@ -209,18 +209,18 @@ AST_Decl * add_type(AST_Type *type)
       break;
     case AST_Decl::NT_enum:
       result = type->defined_in()->add_enum(AST_Enum::narrow_from_decl(type));
-      scope = AST_Enum::narrow_from_decl(type); 
+      scope = AST_Enum::narrow_from_decl(type);
       break;
     case AST_Decl::NT_sequence:
       result =
 	idl_global->root()->add_sequence(AST_Sequence::narrow_from_decl(type));
       break;
     case AST_Decl::NT_string:
-      result = 
+      result =
 	idl_global->root()->add_string(AST_String::narrow_from_decl(type));
       break;
     case AST_Decl::NT_struct:
-      result = 
+      result =
         type->defined_in()->
           add_structure(AST_Structure::narrow_from_decl(type));
       scope = AST_Structure::narrow_from_decl(type);
@@ -238,7 +238,7 @@ AST_Decl * add_type(AST_Type *type)
   }
   if (scope)
     result = scope->call_add();
-  return result; 
+  return result;
 }
 
 /*
@@ -367,7 +367,7 @@ AST_UnionBranch *UTL_Scope::add_union_branch(AST_UnionBranch *u)
   u->set_added(I_TRUE);
   if (!u->field_type()->added()) {
     return add_type(u->field_type()) ? u : 0 ;
-  } else 
+  } else
     return u;
 }
 
@@ -408,7 +408,7 @@ AST_Typedef *UTL_Scope::add_typedef(AST_Typedef *t)
   t->set_added(I_TRUE);
   if (!t->base_type()->added()) {
     return add_type(t->base_type()) ? t : 0 ;
-  } else 
+  } else
     return t;
 }
 
@@ -435,8 +435,15 @@ AST_Array *UTL_Scope::add_array(AST_Array *a)
   a->set_added(I_TRUE);
   if (!a->base_type()->added()) {
     return add_type(a->base_type()) ? a : 0 ;
-  } else 
+  } else
     return a;
+}
+
+AST_Native *UTL_Scope::add_native (AST_Native *n)
+{
+  if (n == NULL) return NULL;
+  n->set_added (I_TRUE);
+  return n;
 }
 
 // Protected Front End Scope Management Protocol
@@ -551,6 +558,11 @@ AST_Array *UTL_Scope::fe_add_array(AST_Array *)
   return NULL;
 }
 
+AST_Native *UTL_Scope::fe_add_native (AST_Native *)
+{
+  return NULL;
+}
+
 // This is the second pass of the front end
 // It calls the public add protocol on everything in scope.
 // It calls the add_xx functions of the most derived AST_Node.
@@ -568,13 +580,13 @@ AST_Decl *UTL_Scope::call_add()
     decl = i->item();
     scope = 0;
     switch (decl->node_type()) {
-      case AST_Decl::NT_argument: 
+      case AST_Decl::NT_argument:
         result = add_argument(AST_Argument::narrow_from_decl(decl));
   	break;
       case AST_Decl::NT_array:
     	result = add_array(AST_Array::narrow_from_decl(decl));
 	break;
-      case AST_Decl::NT_attr: 
+      case AST_Decl::NT_attr:
         result = add_attribute(AST_Attribute::narrow_from_decl(decl));
 	break;
       case AST_Decl::NT_const:
@@ -585,7 +597,7 @@ AST_Decl *UTL_Scope::call_add()
         result = add_enum(AST_Enum::narrow_from_decl(decl));
 	break;
       case AST_Decl::NT_enum_val:
-        result = add_enum_val(AST_EnumVal::narrow_from_decl(decl)); 
+        result = add_enum_val(AST_EnumVal::narrow_from_decl(decl));
 	break;
       case AST_Decl::NT_except:
         scope = AST_Exception::narrow_from_decl(decl);
@@ -603,8 +615,11 @@ AST_Decl *UTL_Scope::call_add()
 	break;
       case AST_Decl::NT_module:
       	scope = AST_Module::narrow_from_decl(decl);
-  	result = add_module(AST_Module::narrow_from_decl(decl)); 
+  	result = add_module(AST_Module::narrow_from_decl(decl));
   	break;
+      case AST_Decl::NT_native:
+        result = add_native (AST_Native::narrow_from_decl(decl));
+	break;
       case AST_Decl::NT_op:
 	result = add_operation(AST_Operation::narrow_from_decl(decl));
         scope = AST_Operation::narrow_from_decl(decl);
@@ -771,7 +786,7 @@ UTL_Scope::look_in_inherited(UTL_ScopedName *e, idl_bool treat_as_ref)
    * Not found
    */
   return NULL;
-}    
+}
 
 /*
  * Look up a String * in local scope only
@@ -931,7 +946,7 @@ UTL_Scope::add_to_referenced(AST_Decl *e, idl_bool recursive)
   long		i;
 
   if (e == NULL) return;
-  
+
   // Special case for forward declared interfaces in the
   // scope in which they're defined. Cannot add before full
   // definition is seen
@@ -971,7 +986,7 @@ UTL_Scope::add_to_referenced(AST_Decl *e, idl_bool recursive)
       s->add_to_referenced(e, recursive);
   }
 }
-  
+
 // Add a node to set of nodes declared in this scope
 void
 UTL_Scope::add_to_scope(AST_Decl *e)
@@ -981,7 +996,7 @@ UTL_Scope::add_to_scope(AST_Decl *e)
   long		i;
 
   if (e == NULL) return;
-  
+
   // Make sure there's space for one more
   if (pd_decls_allocated == pd_decls_used) {
 
@@ -1155,8 +1170,8 @@ UTL_ScopeActiveIterator::is_done()
 {
   long	limit;
 
-  limit = (stage == UTL_Scope::IK_decls) 
-    ? iter_source->pd_decls_used 
+  limit = (stage == UTL_Scope::IK_decls)
+    ? iter_source->pd_decls_used
     : iter_source->pd_locals_used;
 
   for (;;) {

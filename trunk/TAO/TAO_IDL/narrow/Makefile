@@ -56,8 +56,11 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
 .obj/narrow.o .shobj/narrow.so: narrow.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -66,7 +69,6 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -84,14 +86,15 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/utl_strlist.h ../include/utl_exprlist.h \
- ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
- ../include/utl_idlist.h ../include/utl_exceptlist.h \
- ../include/utl_namelist.h ../include/utl_labellist.h \
- ../include/utl_decllist.h ../include/idl_global.h \
- ../include/utl_error.h ../include/utl_indenter.h \
- ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
- ../include/drv_extern.h ../include/ast_extern.h \
- ../include/nr_extern.h ../include/global_extern.h
+ ../include/ast_native.h ../include/utl_strlist.h \
+ ../include/utl_exprlist.h ../include/ast_generator.h \
+ ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
+ ../include/utl_exceptlist.h ../include/utl_namelist.h \
+ ../include/utl_labellist.h ../include/utl_decllist.h \
+ ../include/idl_global.h ../include/utl_error.h \
+ ../include/utl_indenter.h ../include/idl_extern.h \
+ ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
+ ../include/ast_extern.h ../include/nr_extern.h \
+ ../include/global_extern.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

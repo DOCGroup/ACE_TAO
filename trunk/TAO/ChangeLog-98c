@@ -1,3 +1,64 @@
+Wed Jan  7 12:00:14 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO/tao/corbacom.h: Added forward declarations for
+	CORBA_Object_var and CORBA_Object_out
+
+	* TAO/tao/varout.h: some improvements. However, this file is not
+	used currently.
+
+	* TAO_IDL/include/ast_native.h: New file that defines the "native"
+	type defined by the POA spec.
+
+	* TAO_IDL/include/{ast, ast_interface, ast_module, ast_decl,
+	idl_fwd, idl_global, utl_scope}:
+	Added the create_native and fe_add_native methods for the newly
+	added "native" type. Added a enum value for native in
+	AST_Decl.h. Added an enum value for the current parse state in
+	idl_global.h. Added forward declarations in idl_fwd.h. Added the
+	"add_native" method in utl_scope.h
+
+	* TAO_IDL/ast/{ast_generator, ast_interface, ast_module}.cpp:
+	Added the create_native and fe_add_native methods for the newly
+	added "native" type.
+
+	* TAO_IDL/ast/ast_native.cpp: New file for native type
+
+	* TAO_IDL/fe/idl.ll: Added a rule to recognize the "native"
+	keyword.
+
+	* TAO_IDL/fe/idl.yy: Added a grammar rule for the "native" type.
+
+	* TAO_IDL/util/utl_scope.cpp: Added add_native and fe_add_native
+	methods.
+
+	* TAO_IDL/be_include/be_native.h: New file for the backend for
+	"native" type.
+
+	* TAO_IDL/be/be_native.cpp: New file for backend implementation of
+	"native".
+
+	* TAO_IDL/be/be_attribute.cpp: For the "set" method, we were
+	setting the paramdata structure of the get method. This has been
+	fixed.
+
+	* TAO_IDL/be/be_generator.cpp: Added create_native method.
+
+	* TAO_IDL/be/be_interface.cpp:
+	For a special case of a deeply nested inheritance graph and one
+	specific way of inheritance in which a node that was already
+	visited, but is not present in the queue, gets inserted at the
+	tail. This sitation arises when a node multiply inherits from two
+	or more interfaces in which the first parent is higher up in the
+	tree than the second parent. In addition, if the second parent
+	turns out to be a child of the first. Thanks to Carlos O'Ryan for
+	reporting the error.
+
+	* TAO_IDL/be/be_type.cpp: We generate relative paths instead of
+	the ACE_NESTED_CLASS macro. However, I am going to make this an
+	IDL option at a later point.
+
+	* TAO_IDL: Did "make depend" on all the Makefiles.
+
 Tue Jan  6 19:48:45 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
 	* TAO/tests/Cubit/TAO/MT_Cubit/README: Updated README to explain
