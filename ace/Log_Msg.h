@@ -370,6 +370,11 @@ private:
 
   static int msg_off_;
   // Offset of msg_[].
+
+  static void close ();
+  // For cleanup, at program termination, by ACE_Object_Manager;
+
+  friend class ACE_Object_Manager;
 };
 
 // #if defined (__ACE_INLINE__)

@@ -4,6 +4,7 @@
 
 #include "ace/Object_Manager.h"
 #include "ace/Service_Repository.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Object_Manager.i"
@@ -31,6 +32,9 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   // This call closes and deletes all ACE library services and
   // singletons.
   ACE_Service_Config::close ();
+
+  // Finally, close the Log_Msg instance.
+  ACE_Log_Msg::close ();
 }
 
 ACE_Object_Manager *
