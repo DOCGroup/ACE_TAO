@@ -1,3 +1,10 @@
+Fri Apr  9 13:28:06 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	  Updated the following .dsp files to incorporate the recent file
+	  name changes for Time service server and clerk.
+	
+        * Time_Service_{Server,Clerk}.dsp
+
 Fri Apr  9 11:30:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/default_server.cpp:
