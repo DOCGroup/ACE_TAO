@@ -8,7 +8,7 @@
 //     CosProperty_Hash.h
 //
 // = DESCRITION
-//     Defines INT_ID and EXT_ID classes for the Hash_Map_Manager to
+//     Defines CosProperty_Hash_Value and CosProperty_Hash_Key classes for the Hash_Map_Manager to
 //     be used in the CosPropertyService. 
 //
 // = AUTHOR
@@ -21,50 +21,50 @@
 
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Synch.h"
-#include "CosPropertyServiceS.h"
+#include "orbsvcs/CosPropertyServiceS.h"
 
-class TAO_ORBSVCS_Export EXT_ID 
+class Tao_ORBSVCS_Export CosProperty_Hash_Key 
 {
   // = TITLE
   //     Key for the Hash Table.
 public: 
-  EXT_ID (void);
+  CosProperty_Hash_Key (void);
   // Default constructor
   
-  EXT_ID (const CosPropertyService::PropertyName &name);
+  CosProperty_Hash_Key (const CosPropertyService::PropertyName &name);
   // Costructor that takes PropertyName
 
-  //EXT_ID (const EXT_ID &ext_id);
+  //CosProperty_Hash_Key (const CosProperty_Hash_Key &CosProperty_Hash_Key);
   // Copy constructor
   
-  virtual int operator == (const EXT_ID &ext_id) const;
+  virtual int operator == (const CosProperty_Hash_Key &CosProperty_Hash_Key) const;
   // The vital operator for hash binding and "find"ing.
 
   virtual u_long hash (void) const;
   // The vital function
 
-  virtual ~EXT_ID (void);
+  virtual ~CosProperty_Hash_Key (void);
   // Destructor
 
   CosPropertyService::PropertyName_var pname_; 
   // This is still the public variable... 
 };
 
-class TAO_ORBSVCS_Export INT_ID
+class TAO_ORBSVCS_Export CosProperty_Hash_Value
 {
   // = TITLE 
   //     This is the Hash Entry.
 public: 
-  INT_ID (void);
+  CosProperty_Hash_Value (void);
   // Default constructor 
   
-  INT_ID (const CORBA::Any &value);
+  CosProperty_Hash_Value (const CORBA::Any &value);
   // Constructor with Any value
 
-  //INT_ID (const INT_ID &int_id);
+  //CosProperty_Hash_Value (const CosProperty_Hash_Value &CosProperty_Hash_Value);
   // Copy constructor
   
-  virtual ~INT_ID (void);
+  virtual ~CosProperty_Hash_Value (void);
   // Destructor
 
   CORBA::Any pvalue_;

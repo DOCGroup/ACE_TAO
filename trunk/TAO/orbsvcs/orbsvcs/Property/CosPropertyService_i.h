@@ -11,7 +11,7 @@
 //   CosPropertyService_i.h
 //
 // = AUTHOR
-//    Sumedh Mungee <sumedh@cs.wustl.edu>
+//     Alexander Babu Arulanthu <alex@cs.wustl.edu>
 //     
 // ============================================================================
 
@@ -72,10 +72,10 @@ class TAO_ORBSVCS_Export TAO_PropertySet :  public virtual POA_CosPropertyServic
   //    Gives operations for defining, deleting, enumerating and
   //    checking of properties.
   //
-  // = DESCRIPTION
+  // = DESCRIPTIONq
   //     Uses a HashTable to manage the properties. 
 public:
-  typedef ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_Null_Mutex> CosProperty_Hash_Map;
+  typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex> CosProperty_Hash_Map;
   
   TAO_PropertySet (void);
   // Default constructor 
