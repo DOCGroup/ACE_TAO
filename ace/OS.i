@@ -537,7 +537,7 @@ ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_LACKS_GETOPT_PROTO)
   ACE_OSCALL_RETURN (::getopt (argc, (char**) argv, optstring), int, -1);
-#elif defined (ACE_LACKS_SOME_POSIX_PROTOTYPES)
+#elif defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::getopt (argc, (const char* const *) argv, optstring), int, -1);
 #else
   ACE_OSCALL_RETURN (::getopt (argc, argv, optstring), int, -1);
