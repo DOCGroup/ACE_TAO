@@ -12,7 +12,7 @@ ACE_RCSID(Synch_Benchmarks, pipe_thr_test, "$Id$")
 class ACE_Svc_Export Pipe_Thr_Test : public Benchmark_Performance
 {
 public:
-  virtual int init (int, char **);
+  virtual int init (int, ACE_TCHAR **);
   virtual int svc (void);
 
 private:
@@ -37,17 +37,17 @@ Pipe_Thr_Test::reader (Pipe_Thr_Test *t)
 }
 
 int
-Pipe_Thr_Test::init (int, char **)
+Pipe_Thr_Test::init (int, ACE_TCHAR **)
 {
   synch_count = 1;
 
   if (ACE_OS::pipe (this->pipe_handles) == -1)
-    ACE_OS::perror ("pipe"), ACE_OS::exit (1);
+    ACE_OS::perror (ACE_TEXT("pipe")), ACE_OS::exit (1);
 
   if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (Pipe_Thr_Test::reader),
        (void *) this, performance_test_options.t_flags ()) == -1)
-    ACE_OS::perror ("thr_create"), ACE_OS::exit (1);
+    ACE_OS::perror (ACE_TEXT("thr_create")), ACE_OS::exit (1);
 
   return 1;
 }
@@ -62,7 +62,7 @@ Pipe_Thr_Test::svc (void)
 
   while (!this->done ())
     if (ACE_OS::write (handle, from, length) != length)
-      ACE_OS::perror ("write");
+      ACE_OS::perror (ACE_TEXT("write"));
 
   ACE_OS::close (this->pipe_handles[0]);
   ACE_OS::close (this->pipe_handles[1]);

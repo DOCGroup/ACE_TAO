@@ -18,7 +18,7 @@ Performance_Test::Performance_Test (void)
 // Initialize and run the benchmarks tests.
 
 int
-Performance_Test::init (int argc, char **argv)
+Performance_Test::init (int argc, ACE_TCHAR **argv)
 {
   ACE_DEBUG ((LM_DEBUG, "Performance_Test::init\n"));
   performance_test_options.parse_args (argc, argv);

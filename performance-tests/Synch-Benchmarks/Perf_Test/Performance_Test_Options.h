@@ -24,7 +24,7 @@ class ACE_Svc_Export Performance_Test_Options
 {
 public:
   Performance_Test_Options (void);
-  void   parse_args (int argc, char *argv[]);
+  void   parse_args (int argc, ACE_TCHAR *argv[]);
 
   void   init (void);
 
@@ -34,14 +34,14 @@ public:
   void   thr_count (size_t count);
   size_t thr_count (void);
 
-  void   pipe_addr (char pipe[]);
-  char   *pipe_addr (void);
+  void   pipe_addr (ACE_TCHAR pipe[]);
+  ACE_TCHAR *pipe_addr (void);
 
-  void   mapped_file (char filename[]);
-  char   *mapped_file (void);
+  void   mapped_file (ACE_TCHAR filename[]);
+  ACE_TCHAR *mapped_file (void);
 
-  void   service_entry (char *service_entry);
-  char   *service_entry (void);
+  void   service_entry (ACE_TCHAR *service_entry);
+  ACE_TCHAR *service_entry (void);
 
   void   sleep_time (size_t count);
   size_t sleep_time (void);
@@ -97,9 +97,9 @@ public:
 
 private:
   ACE_Profile_Timer _itimer;            // Keep track of time.
-  char          *_service_entry;        // Name of the shared object file and shared object.
-  char          *_mapped_file;          // Name of the mapped file.
-  char          *_pipe_addr;            // Name of the STREAM pipe.
+  ACE_TCHAR     *_service_entry;        // Name of the shared object file and shared object.
+  ACE_TCHAR     *_mapped_file;          // Name of the mapped file.
+  ACE_TCHAR     *_pipe_addr;            // Name of the STREAM pipe.
   size_t        _sleep_time;            // Time to sleep.
   size_t        _n_lwps;                // Number of LWPs.
   size_t        _thr_count;             // Number of threads to spawn.
