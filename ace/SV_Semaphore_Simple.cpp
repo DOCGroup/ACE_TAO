@@ -86,12 +86,10 @@ ACE_SV_Semaphore_Simple::open (key_t k,
   if (this->internal_id_ == -1)
     return -1;
 
-  if (flags == IPC_CREAT)
-    {
-      for (int i = 0; i < n; i++)
-	if (ACE_OS::semctl (this->internal_id_, i, SETVAL, ivalue) == -1)
-	  return -1;
-    }
+  if (ACE_BIT_ENABLED (flags, IPC_CREAT))
+    for (int i = 0; i < n; i++)
+      if (ACE_OS::semctl (this->internal_id_, i, SETVAL, ivalue) == -1)
+	return -1;
 
   return 0;
 }
