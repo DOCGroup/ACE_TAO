@@ -413,9 +413,27 @@ public:
   /// for allocating the buffers used in *outgoing* CDR streams.
   ACE_Allocator *input_cdr_buffer_allocator (void);
 
+  /// This allocator is global, may or may not have locks. It is
+  /// intended for ACE_Data_Blocks used in message blocks or CDR
+  /// streams that have no relation with the life of threads,
+  /// something like used in a class on a per connection basis
+  ACE_Allocator *message_block_dblock_allocator (void);
+
+  /// This allocator is global, may or may not have locks. It is
+  /// intended for ACE_Data_Blocks used in message blocks or CDR
+  /// streams that have no relation with the life of threads,
+  /// something like used in a class on a per connection basis
+  ACE_Allocator *message_block_buffer_allocator (void);
+
   /// The Message Blocks used for input CDRs must have appropiate
   /// locking strategies.
   ACE_Data_Block *create_input_cdr_data_block (size_t size);
+
+
+  /// The data blocks returned have memeory from the global pool. Will
+  /// not get anything from the TSS even if it is available.
+  ACE_Data_Block *data_block_for_message_block (size_t size);
+
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -869,6 +887,11 @@ protected:
   ACE_Allocator *input_cdr_buffer_allocator_i (TAO_ORB_Core_TSS_Resources *);
   //@}
 
+  /// Routine that creates a ACE_Data_Block given the lock and allocators.
+  ACE_Data_Block *create_data_block_i (size_t size,
+                                       ACE_Allocator *buffer_allocator,
+                                       ACE_Allocator *dblock_allocator,
+                                       ACE_Lock *lock);
 #if (TAO_HAS_RT_CORBA == 1)
 
   /// Obtain and cache the RT_ORB factory object reference
@@ -998,6 +1021,12 @@ protected:
 
   /// Handle to the factory for resource information..
   TAO_Resource_Factory *resource_factory_;
+
+  /// The allocators for the message blocks
+  //@{
+  ACE_Allocator *message_block_dblock_allocator_;
+  ACE_Allocator *message_block_buffer_allocator_;
+  //@}
 
   // Name of the resource factory that needs to be instantiated.
   // The default value is "Resource_Factory". If TAO_Strategies is
