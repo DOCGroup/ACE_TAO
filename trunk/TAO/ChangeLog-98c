@@ -7,6 +7,9 @@ Tue Mar 24 07:29:20 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/ORB.cpp (wscpy): removed, because we now use ACE_OS::wscpy ()
           instead.
 
+        * tao/Stub.cpp: added ACE_BUILD_DLL.  Thanks to Michael for
+          reporting this.
+
 Mon Mar 23 19:44:11 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tao/ORB: CORBA_ORB no longer inherits from IUnknown.
