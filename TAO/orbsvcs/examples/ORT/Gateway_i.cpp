@@ -76,7 +76,7 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Flags flags;
+  CORBA::Flags flags = 0;
 
   CORBA::ULong length = parameters->length ();
 
