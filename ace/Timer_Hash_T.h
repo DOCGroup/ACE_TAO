@@ -222,7 +222,7 @@ private:
   size_t earliest_position_;
   // Index to the position with the earliest entry
 
-  HASH_ITERATOR iterator_;
+  HASH_ITERATOR *iterator_;
   // Iterator used to expire timers.
 
   // = Don't allow these operations for now.
