@@ -258,8 +258,8 @@ ace_yyerror (char *s)
 static ACE_Module_Type *
 get_module (ACE_Static_Node *str_rec, const char *svc_name)
 {
-  const ACE_Service_Record *sr = str_rec->record ();
-  const ACE_Service_Type *type = sr->type ();
+  const ACE_Service_Type *sr = str_rec->record ();
+  const ACE_Service_Type_Impl *type = sr->type ();
   ACE_Stream_Type *st = sr == 0 ? 0 : (ACE_Stream_Type *) type;
   ACE_Module_Type *mt = st == 0 ? 0 : st->find (svc_name);
 
@@ -275,10 +275,10 @@ get_module (ACE_Static_Node *str_rec, const char *svc_name)
 static ACE_Module_Type *
 get_module (ACE_Static_Node *str_rec, ACE_Static_Node *svc_type)
 {
-  const ACE_Service_Record *sr = str_rec->record ();
-  const ACE_Service_Type *type = sr->type ();
+  const ACE_Service_Type *sr = str_rec->record ();
+  const ACE_Service_Type_Impl *type = sr->type ();
   ACE_Stream_Type *st = sr == 0 ? 0 : (ACE_Stream_Type *) type;
-  const ACE_Service_Record *sv = svc_type->record ();
+  const ACE_Service_Type *sv = svc_type->record ();
   type = sv->type ();
   ACE_Module_Type *mt = (ACE_Module_Type *) type;
 
@@ -291,13 +291,13 @@ get_module (ACE_Static_Node *str_rec, ACE_Static_Node *svc_type)
   return mt;
 }
 
-ACE_Service_Type *
+ACE_Service_Type_Impl *
 ace_create_service_type (const char *name, 
 			 int type, 
 			 const void *symbol, 
 			 u_int flags)
 {
-  ACE_Service_Type *stp = 0;
+  ACE_Service_Type_Impl *stp = 0;
 
   // Note, the only place we need to put a case statement.  This is
   // also the place where we'd put the RTTI tests, if the compiler
@@ -815,13 +815,13 @@ case 30:
 #line 193 "Svc_Conf.y"
 {
       u_int flags 
-	= ACE_Service_Type::DELETE_THIS | (ace_yyvsp[-1].location_node_->dispose () == 0 ? 0 : ACE_Service_Type::DELETE_OBJ);
+	= ACE_Service_Type_::DELETE_THIS | (ace_yyvsp[-1].location_node_->dispose () == 0 ? 0 : ACE_Service_Type_::DELETE_OBJ);
       const void *sym = ace_yyvsp[-1].location_node_->symbol ();
 
       if (sym != 0)
 	{
-	  ACE_Service_Type *stp = ace_create_service_type (ace_yyvsp[-3].ident_, ace_yyvsp[-2].type_, ace_yyvsp[-1].location_node_->symbol (), flags);
-	  ace_yyval.svc_record_ = new ACE_Service_Record (ace_yyvsp[-3].ident_, stp, ace_yyvsp[-1].location_node_->handle (), ace_yyvsp[0].type_);
+	  ACE_Service_Type_Impl *stp = ace_create_service_type (ace_yyvsp[-3].ident_, ace_yyvsp[-2].type_, ace_yyvsp[-1].location_node_->symbol (), flags);
+	  ace_yyval.svc_record_ = new ACE_Service_Type (ace_yyvsp[-3].ident_, stp, ace_yyvsp[-1].location_node_->handle (), ace_yyvsp[0].type_);
 	}
       else
 	{

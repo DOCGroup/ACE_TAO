@@ -2,17 +2,64 @@
 // $Id$
 
 #define ACE_BUILD_DLL
-#include "ace/Service_Record.h"
+#include "ace/Service_Types.h"
 #include "ace/Stream_Modules.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Service_Record.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type_Impl)
+
+void
+ACE_Service_Type_Impl::dump (void) const
+{
+  ACE_TRACE ("ACE_Service_Type_Impl::dump");
+}
+
+ACE_Service_Type_Impl::ACE_Service_Type_Impl (const void *so, 
+				    const char *s_name, 
+				    unsigned int f)
+  : name_ (0),
+    obj_ (so), 
+    flags_ (f)
+{
+  ACE_TRACE ("ACE_Service_Type_Impl::ACE_Service_Type_Impl");
+  this->name (s_name);
+}
+
+ACE_Service_Type_Impl::~ACE_Service_Type_Impl (void)
+{
+  ACE_TRACE ("ACE_Service_Type_Impl::~ACE_Service_Type_Impl");
+
+  // It's ok to call this, even though we may have already deleted it
+  // in the fini() method since it would then be NULL.
+  delete [] (char *) this->name_;
+}
+
+int
+ACE_Service_Type_Impl::fini (void) const
+{
+  ACE_TRACE ("ACE_Service_Type_Impl::fini");
+  ACE_DEBUG ((LM_DEBUG, "destroying %s, flags = %d\n", 
+	     this->name_, this->flags_));
+
+  delete [] (char *) this->name_;
+  ((ACE_Service_Type_Impl *) this)->name_ = 0;
+
+  if (ACE_BIT_ENABLED (this->flags_, ACE_Service_Type_::DELETE_OBJ))
+    operator delete ((void *) this->object ());	// cast to remove const-ness
+
+  if (ACE_BIT_ENABLED (this->flags_, ACE_Service_Type_::DELETE_THIS))
+    delete (ACE_Service_Type_Impl *) this; 
+
+  return 0;
+}
+
 ACE_Service_Object_Type::ACE_Service_Object_Type (ACE_Service_Object *so,
 						  const char *s_name,
 						  unsigned int f)
-  : ACE_Service_Type ((const void *) so, s_name, f)
+  : ACE_Service_Type_Impl ((const void *) so, s_name, f)
 {
   ACE_TRACE ("ACE_Service_Object_Type::ACE_Service_Object_Type");
 }
@@ -41,7 +88,7 @@ ACE_Module_Type::dump (void) const
 ACE_Module_Type::ACE_Module_Type (MT_Module *m,
 				  const char *m_name,
 				  u_int f)
-  : ACE_Service_Type ((const void *) m, m_name, f)
+  : ACE_Service_Type_Impl ((const void *) m, m_name, f)
 {
   ACE_TRACE ("ACE_Module_Type::ACE_Module_Type");
 }
@@ -115,7 +162,7 @@ ACE_Module_Type::fini (void) const
 
   // Close the module and delete the memory.
   mod->close (MT_Module::M_DELETE);
-  return ACE_Service_Type::fini ();
+  return ACE_Service_Type_Impl::fini ();
 }
 
 int
@@ -137,14 +184,14 @@ void
 ACE_Module_Type::link (ACE_Module_Type *n)
 {
   ACE_TRACE ("ACE_Module_Type::link");
-  this->next_ = n;
+  this->link_ = n;
 }
 
 ACE_Module_Type *
 ACE_Module_Type::link (void) const
 {
   ACE_TRACE ("ACE_Module_Type::link");
-  return this->next_;
+  return this->link_;
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Stream_Type)
@@ -185,7 +232,7 @@ ACE_Stream_Type::resume (void) const
 ACE_Stream_Type::ACE_Stream_Type (MT_Stream *s,
 				  const char *s_name,
 				  unsigned int f)
-  : ACE_Service_Type ((const void *) s, s_name, f),
+  : ACE_Service_Type_Impl ((const void *) s, s_name, f),
     head_ (0)
 {
   ACE_TRACE ("ACE_Stream_Type::ACE_Stream_Type");
@@ -227,7 +274,7 @@ ACE_Stream_Type::fini (void) const
     }
 
   str->close ();
-  return ACE_Service_Type::fini ();
+  return ACE_Service_Type_Impl::fini ();
 }
 
 // Locate and remove <mod_name> from the ACE_Stream.
@@ -244,14 +291,14 @@ ACE_Stream_Type::remove (ACE_Module_Type *mod)
   for (ACE_Module_Type *m = this->head_; m != 0; )
     {
       // We need to do this first so we don't bomb out if we delete m!
-      ACE_Module_Type *next = m->link ();
+      ACE_Module_Type *link = m->link ();
 
       if (m == mod)
 	{
 	  if (prev == 0)
-	    this->head_ = next;
+	    this->head_ = link;
 	  else
-	    prev->link (next);
+	    prev->link (link);
 
 	  // Final arg is an indication to *not* delete the Module.
 	  if (str->remove (m->name (), MT_Module::M_DELETE_NONE) == -1)
@@ -264,7 +311,7 @@ ACE_Stream_Type::remove (ACE_Module_Type *mod)
       else
 	prev = m;
 
-      m = next;
+      m = link;
     }
 
   return result;
@@ -297,52 +344,6 @@ ACE_Stream_Type::find (const char *mod_name) const
   return 0;
 }
 
-ACE_ALLOC_HOOK_DEFINE(ACE_Service_Record)
-
-void
-ACE_Service_Record::dump (void) const
-{
-  ACE_TRACE ("ACE_Service_Record::dump");
-}
-
-ACE_Service_Record::ACE_Service_Record (const char *n,
-					ACE_Service_Type *t,
-					const ACE_SHLIB_HANDLE h,
-					int active)
-  : name_ (0),
-    type_ (t),
-    handle_ (h),
-    active_ (active)
-{
-  ACE_TRACE ("ACE_Service_Record::ACE_Service_Record");
-  this->name (n);
-}
-
-ACE_Service_Record::~ACE_Service_Record (void)
-{
-  ACE_TRACE ("ACE_Service_Record::~ACE_Service_Record");
-  this->type_->fini ();
-  if (this->handle_ != 0)
-    ACE_OS::dlclose ((ACE_SHLIB_HANDLE) this->handle_);
-  delete [] (char *) this->name_;
-}
-
-void
-ACE_Service_Record::suspend (void) const
-{
-  ACE_TRACE ("ACE_Service_Record::suspend");
-  ((ACE_Service_Record *) this)->active_ = 0;
-  this->type_->suspend ();
-}
-
-void
-ACE_Service_Record::resume (void) const
-{
-  ACE_TRACE ("ACE_Service_Record::resume");
-  ((ACE_Service_Record *) this)->active_ = 1;
-  this->type_->resume ();
-}
-
 int
 ACE_Service_Object_Type::fini (void) const
 {
@@ -351,7 +352,7 @@ ACE_Service_Object_Type::fini (void) const
   ACE_Service_Object *so = (ACE_Service_Object *) obj;
   if (so)
     so->fini ();
-  return ACE_Service_Type::fini ();
+  return ACE_Service_Type_Impl::fini ();
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
