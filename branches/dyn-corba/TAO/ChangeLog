@@ -1,3 +1,23 @@
+Sun Jan 12 02:08:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/CosEvent.dsp:
+        * orbsvcs/orbsvcs/CosNaming.dsp:
+        * orbsvcs/orbsvcs/CosNotification.dsp:
+        * orbsvcs/orbsvcs/CosTrading.dsp:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.dsp:
+        * orbsvcs/orbsvcs/DsLogAdmin.dsp:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.dsp:
+
+	  Turned on RTTI in these projects, since they use the new
+	  Any operators.
+
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+
+	  Fixed old-style Any internal calls in these files.
+
 Sun Jan 12 02:01:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/NVList.cpp:
