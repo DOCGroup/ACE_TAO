@@ -222,13 +222,13 @@ $ $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -ORBEndPoint iiop://ace.cs.wus
       try to run the server with an invalid IOR for the naming
       service.  What happens if the server and client pick different
       naming services through their multicast protocol?  What happens
-      if they are not configured consistently with repect to their
+      if they are not configured consistently with respect to their
       Naming Service?
     </P>
 
-    <H3>Persistance</H3>
+    <H3>Persistence</H3>
 
-    <P>What happens if the naming service is killed betwen the object
+    <P>What happens if the naming service is killed between the object
       registration and the lookup?  By default TAO's Naming Service is
       <STRONG>not</STRONG> persistent, but it is a matter of using a
       flag to save its state on a file:

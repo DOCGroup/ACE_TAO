@@ -80,7 +80,7 @@
 
     <P>Let's take a minute to look at the generated code,
       you don't need to do this often, in fact you rarely have to do
-      it at all.  But doing it once is educative and can demistify the
+      it at all.  But doing it once is educative and can demystify the
       role of the IDL compiler.
     </P>
     <P>To generate the code you must
@@ -147,7 +147,7 @@ int main (int argc, char* argv[])
                        "" /* the ORB name, it can be anything! */);
 </PRE>
     <P>Since the ORB initialization can fail, and in fact, any CORBA
-      operation can raise a <CODE>CORBA::SystemExpception</CODE> we use
+      operation can raise a <CODE>CORBA::SystemException</CODE> we use
       a <CODE>try/catch</CODE> block to check for any failures.
       Needless to say this is very naive, some failures can be
       temporary and we should have a better way to recover from
@@ -207,7 +207,7 @@ int main (int argc, char* argv[])
       string passed in the first argument.
     </P>
     <P>The easiest way is to use the first argument to get the string,
-      and then use <CODE>string_to_object()</CODE> to conver it into an
+      and then use <CODE>string_to_object()</CODE> to convert it into an
       object reference:
     </P>
 <PRE>
@@ -273,7 +273,7 @@ int main (int argc, char* argv[])
       a <A HREF="Makefile">Makefile</A> are provided, just
       implement the <CODE>client.cpp</CODE> file.
       Cut & paste the ORB initialization code, and anything you find
-      useful from above, you can even cheat and look at the soluition,
+      useful from above, you can even cheat and look at the solution,
       but it is going to be some really boring 30 minutes if you do!
     </P>
 
