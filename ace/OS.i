@@ -2004,59 +2004,44 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m, int &abandoned)
 }
 
 ACE_INLINE int
-ACE_OS::mutex_timedlock (ACE_mutex_t *m,
-                         ACE_Time_Value *timeout)
+ACE_OS::mutex_lock (ACE_mutex_t *m,
+                    const ACE_Time_Value &timeout)
 {
 #if defined (ACE_HAS_THREADS)
 
 # if defined (ACE_HAS_MUTEX_TIMEOUTS)
 
   int result;
-  timespec_t ts;
 
   // "timeout" should be an absolute time.
 
-  if (timeout != 0)
-    ts = *timeout;  // Calls ACE_Time_Value::operator timespec_t().
+  timespec_t ts = timeout;  // Calls ACE_Time_Value::operator
+                            // timespec_t().
 
   // Note that the mutex should not be a recursive one, i.e., it
   // should only be a standard mutex or an error checking mutex.
 
 #   if defined (ACE_HAS_PTHREADS)
 
-  if (timeout == 0)
-    return ACE_OS::mutex_lock (m);  // Block indefinitely
-  else
-    {
-      ACE_OSCALL (ACE_ADAPT_RETVAL (
-         ::pthread_mutex_timedlock (m, &ts),
-         result), int, -1, result);
-    }
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_mutex_timedlock (m, &ts),
+                                       result), int, -1);
+
 #   else  /* ACE_HAS_PTHREADS */
 
   // @@ Apparently only POSIX threads have the timed lock
   //    functionality.
 
-  if (timeout == 0)
-    return ACE_OS::mutex_lock (m);     // Block indefinitely.
-  else
-    return ACE_OS::mutex_trylock (m);  // The best that we can do is
+  ACE_UNUSED_ARG (timeout);
+  return ACE_OS::mutex_trylock (m);  // The best that we can do is
                                        // try to grab the lock.
 
 #   endif  /* ACE_HAS_PTHREADS */
 
-  if (timeout != 0)
-    timeout->set (ts); // Update the time value before returning.
-
-  return result;
-
 # else  /* ACE_HAS_MUTEX_TIMEOUTS */
 
-  if (timeout == 0)
-    return ACE_OS::mutex_lock (m);     // Block indefinitely.
-  else
-    return ACE_OS::mutex_trylock (m);  // The best that we can do is
-                                       // try to grab the lock.
+  ACE_UNUSED_ARG (timeout);
+  return ACE_OS::mutex_trylock (m);  // The best that we can do is try
+                                     // to grab the lock.
 
 # endif /* ACE_HAS_MUTEX_TIMEOUTS */
 
