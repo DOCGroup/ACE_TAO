@@ -307,8 +307,8 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
                                 ACE_Message_Block::Message_Flags flags,
                                 ACE_Allocator *data_block_allocator)
   : type_ (msg_type),
-    cur_size_ (size),
-    max_size_ (size),
+    cur_size_ (0),          // Reset later if memory alloc'd ok
+    max_size_ (0),
     flags_ (flags),
     base_ ((char *) msg_data),
     allocator_strategy_ (allocator_strategy),
@@ -332,8 +332,10 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
   if (msg_data == 0)
     ACE_ALLOCATOR (this->base_,
                    (char *) this->allocator_strategy_->malloc (size));
-  else
-    this->base_ = (char *) msg_data;
+    // ACE_ALLOCATOR returns on alloc failure...
+
+  // The memory is legit, whether passed in or allocated, so set the size.
+  this->cur_size_ = this->max_size_ = size;
 }
 
 ACE_Message_Block::ACE_Message_Block (const char *data,
@@ -679,6 +681,10 @@ ACE_Message_Block::init_i (size_t size,
 
   // Reset the data_block_ pointer.
   this->data_block (db);
+  // If the data alloc failed, the ACE_Data_Block ctor can't relay
+  // that directly. Therefore, need to check it explicitly.
+  if (db->size () < size)
+    return -1;
   return 0;
 }
 

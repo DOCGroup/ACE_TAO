@@ -1,3 +1,41 @@
+Thu Aug 15 10:43:51 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Message_Queue_T.cpp (enqueue_tail): Moved notify() call outside
+          lock scope, as Sun May  5 19:14:34 2002  Douglas C. Schmidt
+          suggested.
+
+Wed Aug 14 18:14:57 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.cpp (ACE_TSS_Cleanup::remove()): Always mark the key no
+          longer in use, instead of simply decrementing the reference count.
+          Shouldn't call remove() until there are no more references to
+          the key.
+          (ACE_TSS_Cleanup::detach()): Decrement the reference count when
+          detaching. Previously, the count could never get to 0 and the
+          remove() method would never be called until object manager shutdown.
+          This resolves a problem where a service using
+          ACE_Unmanaged_TSS_Singleton would do its cleanup(), but there would
+          still be a reference to the key... if the destructor (in an unloaded
+          service DLL) was called at process shutdown, it would crash.
+          Thanks to Craig L. Ching <cching@mqsoftware.com> for pointing this
+          problem area out.
+
+Fri Aug  9 16:11:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Message_Block.cpp:
+          (ACE_Data_Block::ACE_Data_Block): If the data allocation fails,
+          reset the cur_size_ and max_size_ to 0 to reflect the fact that
+          there is no legitimate memory allocated.
+          (ACE_Message_Block::init_i): If the data block size() that results
+          from allocating a new ACE_Data_Block is not what was requested,
+          return -1 to indicate the failure.
+
+        * ace/Malloc_T.i (ACE_Cached_Allocator::free): Don't attempt to
+          return a 0 pointer to the free_list_. Thanks to Laxmikant
+          Bopalkar <LBopalkar@protrader.com> for this fix.
+
+        * THANKS: Added Laxmikant Bopalkar to the Hall of Fame.
+
 Thu Aug 22 17:34:18 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/FIFO_Recv_Msg.{h i}: Fixed recv() in the non-
@@ -202,7 +240,7 @@ Mon Aug 12 10:17:55 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Thread_Manager.h (ACE_Thread_Manager): Fixed a type where
 	  "manipulated" was spelled "maniputated".  Thanks to
-	 Eric Newton <ecn@metaslash.com> for reporting this.
+          Eric Newton <ecn@metaslash.com> for reporting this.
 
 	* PROBLEM-REPORT-FORM: Fixed a typo where "ASCII text" was spelled
 	  "ASCII test".  Thanks to Eric Newton <ecn@metaslash.com> for
