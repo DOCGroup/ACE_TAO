@@ -1,3 +1,11 @@
+Sun Jul 20 14:02:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
+	* TAO_IDL/be/be_visitor_tmplinst/tmplinst_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_tmplinst/tmplinst_cs.h:
+	* TAO_IDL/be_include/be_visitor_tmplinst/tmplinst_ss.h: Added
+	  these files into the branch.
+
 Sun Jul 20 13:00:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Abstract_Servant_Base.h: #include'd corbafwd.h to get the
