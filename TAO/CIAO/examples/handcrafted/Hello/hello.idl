@@ -9,7 +9,7 @@ interface Hello
   string sayhello (in string username);
 };
 
-#if 0
+#if 1
 component HelloWorld supports Hello
 {
   // The name of this greeting machine.
