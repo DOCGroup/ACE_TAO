@@ -48,7 +48,7 @@ $UCOM_NAME = uc $com_name;
 # Prologue
 
 if (defined $opt_p) {
-    $stub_depend = "depends += $opt_p".'_stub';
+    $stub_depend = "after += $opt_p".'_stub';
     $svnt_depend = "$opt_p".'_svnt';
     $lib_depend = "$opt_p".'_stub '."$opt_p".'_svnt';
     $client_depend = "$com_name".'_stub '."$opt_p"."_stub";
@@ -76,7 +76,7 @@ if (defined $opt_c) {
 '
 project ('."$unique_prefix"."$com_name".'_client) : ciao_client {
   exename = client
-  depends += '."$client_depend
+  after += '."$client_depend
   $lib_paths".'
 
   IDL_Files {
@@ -99,12 +99,12 @@ if (! defined $opt_n) {
     $component_def =
 '
 project('."$unique_prefix"."$com_name".'_exec) : ciao_component {
-  depends   += '."$com_name".'_svnt
+  after   += '."$unique_prefix"."$com_name".'_svnt
   sharedname = '."$com_name".'_exec
   libs      += '."$com_name".'_stub '."$com_name".'_svnt'." $lib_depend
   $lib_paths".'
   idlflags  +=  -Wb,export_macro='."$UCOM_NAME".'_EXEC_Export -Wb,export_include='."$com_name".'_exec_export.h
-  dllflags   = '."$UCOM_NAME".'_EXEC_BUILD_DLL
+  dynamicflags   = '."$UCOM_NAME".'_EXEC_BUILD_DLL
 
   IDL_Files {'."
     $exec_impl_idl".'
@@ -125,7 +125,7 @@ project('."$unique_prefix"."$com_name".'_stub): ciao_client {'."
   $stub_depend".'
   sharedname = '."$com_name".'_stub
   idlflags += -Wb,stub_export_macro='."$UCOM_NAME".'_STUB_Export -Wb,stub_export_include='."$com_name".'_stub_export.h -Wb,skel_export_macro='."$UCOM_NAME".'_SVNT_Export -Wb,skel_export_include='."$com_name".'_svnt_export.h
-  dllflags   = '."$UCOM_NAME".'_STUB_BUILD_DLL
+  dynamicflags   = '."$UCOM_NAME".'_STUB_BUILD_DLL
 
   IDL_Files {
     '."$com_name".'.idl
@@ -137,12 +137,12 @@ project('."$unique_prefix"."$com_name".'_stub): ciao_client {'."
 }
 
 project('."$unique_prefix"."$com_name".'_svnt) : ciao_servant {
-  depends += '."$svnt_depend $com_name".'_stub
+  after += '."$svnt_depend "."$unique_prefix"."$com_name".'_stub
   sharedname  = '."$com_name".'_svnt
   libs    += '."$com_name".'_stub'." $lib_depend
   $lib_paths".'
   idlflags  +=  -Wb,export_macro='."$UCOM_NAME".'_SVNT_Export -Wb,export_include='."$com_name".'_svnt_export.h
-  dllflags = '."$UCOM_NAME".'_SVNT_BUILD_DLL
+  dynamicflags = '."$UCOM_NAME".'_SVNT_BUILD_DLL
 
   CIDL_Files {
     '."$com_name".'.cidl
