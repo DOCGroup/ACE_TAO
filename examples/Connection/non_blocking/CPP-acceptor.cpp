@@ -22,7 +22,7 @@ Svc_Handler<PR_ST_2>::Svc_Handler (ACE_Reactor *r)
 {
 }
 
-template <PR_ST_1> int 
+template <PR_ST_1> int
 Svc_Handler<PR_ST_2>::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -33,9 +33,9 @@ Svc_Handler<PR_ST_2>::close (u_long)
   return 0;
 }
 
-template <PR_ST_1> int 
+template <PR_ST_1> int
 Svc_Handler<PR_ST_2>::open (void *)
-{ 
+{
   PR_AD client_addr;
   char buf[BUFSIZ];
 
@@ -53,7 +53,7 @@ Svc_Handler<PR_ST_2>::open (void *)
   else
     ACE_DEBUG ((LM_DEBUG,
                 "client addr %s on handle %d\n",
-		buf,
+                buf,
                 this->peer ().get_handle ()));
 
   // Process the connection immediately since we are an interative
@@ -63,7 +63,7 @@ Svc_Handler<PR_ST_2>::open (void *)
 
 // Receive and process the data from the client.
 
-template <PR_ST_1> int 
+template <PR_ST_1> int
 Svc_Handler<PR_ST_2>::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
@@ -94,9 +94,9 @@ Svc_Handler<PR_ST_2>::handle_input (ACE_HANDLE)
   return 0;
 }
 
-template <PR_ST_1> int 
-Svc_Handler<PR_ST_2>::handle_timeout (const ACE_Time_Value &, 
-				       const void *)
+template <PR_ST_1> int
+Svc_Handler<PR_ST_2>::handle_timeout (const ACE_Time_Value &,
+                                       const void *)
 {
   ACE_DEBUG ((LM_DEBUG,
               "%p\n",
@@ -107,14 +107,14 @@ Svc_Handler<PR_ST_2>::handle_timeout (const ACE_Time_Value &,
 template <class SH, PR_AC_1> int
 IPC_Server<SH, PR_AC_2>::init (int argc, char *argv[])
 {
-  const char *local_addr = argc > 1 
-    ? argv[1] 
+  const char *local_addr = argc > 1
+    ? argv[1]
     : ACE_DEFAULT_SERVER_PORT_STR;
-  ACE_Time_Value timeout (argc > 2 
-                          ? ACE_OS::atoi (argv[2]) 
+  ACE_Time_Value timeout (argc > 2
+                          ? ACE_OS::atoi (argv[2])
                           : ACE_DEFAULT_TIMEOUT);
-  int use_reactor = argc > 3 
-    ? ACE_Synch_Options::USE_REACTOR 
+  int use_reactor = argc > 3
+    ? ACE_Synch_Options::USE_REACTOR
     : 0;
 
   this->options_.set (ACE_Synch_Options::USE_TIMEOUT | use_reactor,
@@ -127,9 +127,9 @@ IPC_Server<SH, PR_AC_2>::init (int argc, char *argv[])
                       -1);
   // Call down to the ACCEPTOR's <open> method to do the
   // initialization.
-  if (this->inherited::open (this->server_addr_, 
-			     use_reactor 
-                             ? ACE_Reactor::instance () 
+  if (this->inherited::open (this->server_addr_,
+                             use_reactor
+                             ? ACE_Reactor::instance ()
                              : 0) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
@@ -137,7 +137,7 @@ IPC_Server<SH, PR_AC_2>::init (int argc, char *argv[])
                       -1);
   // Handle the SIGINT signal through the <ACE_Reactor>.
   else if (ACE_Reactor::instance ()->register_handler
-	   (SIGINT,
+           (SIGINT,
             &this->done_handler_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
@@ -145,8 +145,8 @@ IPC_Server<SH, PR_AC_2>::init (int argc, char *argv[])
                       -1);
 #if !defined (ACE_WIN32)
   // Handle the SIGPIPE signal through the <ACE_Reactor>.
-  else if (ACE_Reactor::instance ()->register_handler 
-	   (SIGPIPE,
+  else if (ACE_Reactor::instance ()->register_handler
+           (SIGPIPE,
             &this->done_handler_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
@@ -169,7 +169,7 @@ IPC_Server<SH, PR_AC_2>::fini (void)
   return 0;
 }
 
-template <class SH, PR_AC_1> 
+template <class SH, PR_AC_1>
 IPC_Server<SH, PR_AC_2>::~IPC_Server (void)
 {
 }
@@ -178,6 +178,9 @@ template <class SH, PR_AC_1> int
 IPC_Server<SH, PR_AC_2>::handle_close (ACE_HANDLE handle,
                                        ACE_Reactor_Mask mask)
 {
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (mask);
+
   ACE_DEBUG ((LM_DEBUG,
               "calling IPC_Server handle_close, but accept handle stays open!\n"));
   return 0;
@@ -188,7 +191,7 @@ IPC_Server<SH, PR_AC_2>::handle_close (ACE_HANDLE handle,
 template <class SH, PR_AC_1> int
 IPC_Server<SH, PR_AC_2>::svc (void)
 {
-  char buf[BUFSIZ];                                          
+  char buf[BUFSIZ];
 
   if (this->server_addr_.addr_to_string (buf,
                                          sizeof buf) == -1)
@@ -199,7 +202,7 @@ IPC_Server<SH, PR_AC_2>::svc (void)
   else
     ACE_DEBUG ((LM_DEBUG,
                 "starting server addr %s on handle %d\n",
-		buf,
+                buf,
                 this->get_handle ()));
 
   // Performs the iterative server activities.
@@ -207,7 +210,7 @@ IPC_Server<SH, PR_AC_2>::svc (void)
   while (ACE_Reactor::event_loop_done () == 0)
     {
       SH sh (this->reactor ());
-                                                                     
+
       // Create a new <SH> endpoint, which performs all processing in
       // its <open> method (note no automatic restart if errno ==
       // EINTR).
@@ -216,18 +219,18 @@ IPC_Server<SH, PR_AC_2>::svc (void)
                         0,
                         this->options_,
                         0) == -1)
-	{ 
-	  if (errno == EWOULDBLOCK 
+        {
+          if (errno == EWOULDBLOCK
               && this->reactor ())
             // Handle the accept asynchronously if necessary.
-	    this->reactor ()->handle_events ();
-	  else
+            this->reactor ()->handle_events ();
+          else
             // We've probably timed out...
-	    ACE_ERROR ((LM_ERROR,
-                        "%p on handle %d\n", 
-			"accept",
+            ACE_ERROR ((LM_ERROR,
+                        "%p on handle %d\n",
+                        "accept",
                         this->acceptor ().get_handle ()));
-	}
+        }
 
       // <SH>'s destructor closes the stream implicitly but the
       // listening endpoint stays open.
