@@ -1,3 +1,12 @@
+Wed Feb 28 20:44:37 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Latency/pong.h: 
+	* orbsvcs/tests/AVStreams/Latency/ping.h: 
+	* orbsvcs/tests/AVStreams/Latency/ping.cpp: 
+
+	  Fixed compile errors and warnings.
+	
 Wed Feb 28 15:43:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/orbconf.h: Fixed a small mistake for the default case.
