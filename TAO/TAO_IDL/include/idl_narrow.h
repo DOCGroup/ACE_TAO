@@ -111,7 +111,8 @@ TYPE::type_id()\
 void    * \
 TYPE::narrow(long type_const) {\
   void  *rval = NULL; \
-  if (type_const == (long)&TYPE::type_id) \
+  long temp = (long) &TYPE::type_id; \
+  if (type_const == temp) \
     rval = this; \
   return rval; \
 }
@@ -130,7 +131,8 @@ TYPE::type_id() \
 void    * \
 TYPE::narrow(long type_const) {\
   void  *rval = NULL; \
-  if (type_const == (long)&TYPE::type_id) \
+  long temp = (long) &TYPE::type_id; \
+  if (type_const == temp) \
     rval = this; \
   if (rval == NULL) \
     rval = PARENT::narrow(type_const);\
@@ -151,7 +153,8 @@ TYPE::type_id() \
 void    * \
 TYPE::narrow(long type_const) { \
   void *rval = NULL; \
-  if (type_const == (long)&TYPE::type_id) \
+  long temp = (long) &TYPE::type_id; \
+  if (type_const == temp) \
     rval = this; \
   if (rval == NULL) \
     rval = PARENT1::narrow(type_const);\
@@ -174,7 +177,8 @@ TYPE::type_id() \
 void    * \
 TYPE::narrow(long type_const) {\
   void *rval = NULL; \
-  if (type_const == (long)&TYPE::type_id) \
+  long temp = (long) &TYPE::type_id; \
+  if (type_const == temp) \
     rval = this; \
   if (rval == NULL) \
     rval = PARENT1::narrow(type_const);\
@@ -199,7 +203,8 @@ TYPE::type_id() \
 void    * \
 TYPE::narrow(long type_const) {\
   void *rval = NULL; \
-  if (type_const == (long)&TYPE::type_id) \
+  long temp = (long) &TYPE::type_id; \
+  if (type_const == temp) \
     rval = this; \
   if (rval == NULL) \
     rval = PARENT1::narrow(type_const);\
@@ -226,7 +231,8 @@ TYPE::type_id() \
 void    * \
 TYPE::narrow(long type_const) {\
   void *rval = NULL; \
-  if (type_const == (long)&TYPE::type_id) \
+  long temp = (long) &TYPE::type_id; \
+  if (type_const == temp) \
     rval = this; \
   if (rval == NULL) \
     rval = PARENT1::narrow(type_const);\
