@@ -26,7 +26,8 @@ DIRS  = Simple_Naming \
 	Concurrency \
 	ImplRepo \
 	Trading \
-	AVStreams
+	AVStreams \
+	Notify
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
