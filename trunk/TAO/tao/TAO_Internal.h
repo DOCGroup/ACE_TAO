@@ -61,9 +61,9 @@ private:
   // <open_services>, and decremented by <close_services>.  Access to
   // this is protected via the <ACE_Static_Object_Lock>.
 
-  static char *resource_factory_args_;
-  static char *server_strategy_args_;
-  static char *client_strategy_args_;
+  static const char *resource_factory_args_;
+  static const char *server_strategy_args_;
+  static const char *client_strategy_args_;
 };
 
 #endif /* TAO_INTERNAL_H */
