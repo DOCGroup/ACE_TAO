@@ -8,9 +8,6 @@ Fri May 30 15:25:29 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * examples/OEP/Display/HUDisplay_stub_export.h:
         * examples/OEP/Display/HUDisplay_svnt.dsp:
         * examples/OEP/Display/HUDisplay_svnt_export.h:
-        * examples/OEP/Display/Makefile:
-        * examples/OEP/Display/Makefile.HUDisplay_stub
-        * examples/OEP/Display/Makefile.HUDisplay_svnt
         * examples/OEP/Display/NOTE:
         * examples/OEP/Display/README:
         * examples/OEP/Display/cleanup_mpcfiles.cmd:
