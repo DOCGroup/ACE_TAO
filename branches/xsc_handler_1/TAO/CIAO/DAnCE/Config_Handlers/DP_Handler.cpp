@@ -59,6 +59,76 @@ namespace CIAO
 
       this->idl_dp_.reset (tmp);
 
+      // *************************
+      // Steve's stuff starts here
+      // *************************
+
+      // Read in the label, if present, since minoccurs = 0
+      if (this->dp_.label_p ())
+	{
+	  this->idl_dp_->label =
+	    CORBA::string_dup (this->dp_.label ().c_str ());
+	}
+      
+      // Read in the UUID, if present
+      if (this->dp_.UUID_p ())
+	{
+	  this->idl_dp_->UUID =
+	    CORBA::string_dup (this->dp_.UUID ().c_str ());
+	}
+
+      // Get the connection info from the PCD_Handler.
+      // This looks different from the others because PCD_Handler only offers
+      // a void function.
+      for (DeploymentPlan::connection_const_iterator cstart = this->dp_.begin_connection ();
+	   cstart != this->dp_.end_connection ();
+	   ++cstart)
+	{
+	  // where does this length () method come from??
+	  CORBA::ULong len = 
+	    this->idl_dp_->connection.length ();
+
+	  this->idl_dp_->connection.length (len + 1);
+
+	  PCD_Handler::get_PlanConnection_Description ( 
+            *cstart, 
+            this->idl_dp_->connection [len]);
+	}
+
+      // Similar thing for dependsOn
+      for (DeploymentPlan::dependsOn_const_iterator dstart = this->dp_.begin_dependsOn ();
+	   dstart != this->dp_.end_dependsOn ();
+	   ++dstart)
+	{
+	  CORBA::ULong len =
+	    this->idl_dp_->dependsOn.length ();
+	  
+	  this->idl_dp_->dependsOn.length (len + 1);
+
+	  ID_Handler::getImplementationDependency (
+	    *cstart,
+	    this->idl_dp_->dependsOn [len]);
+	}
+
+      // ... and the property stuff
+      for (DeploymentPlan::infoProperty_const_iterator pstart = this->dp_.begin_infoProperty ();
+	   pstart != this->dp_.end_infoProperty ();
+	   ++pstart)
+	{
+	  CORBA::ULong len =
+	    this-idl_dp_->infoProperty.length ();
+
+	  this->idl_dp_->infoProperty.length (len + 1);
+
+	  Property_Handler::get_property (
+	    *pstart,
+	    this->idl_dp_->infoProperty [len]);
+	}
+      
+      // *************************
+      // Steve's stuff ends here
+      // *************************
+
       this->retval_ =
         CCD_Handler::component_interface_descr (
           this->dp_.realizes (),

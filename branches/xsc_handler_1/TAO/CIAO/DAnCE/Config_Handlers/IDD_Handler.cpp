@@ -24,6 +24,7 @@ namespace CIAO
            idd_b != idd_e;
            ++idd_b)
         {
+          /* @@ Can you say n^2? */
           CORBA::ULong len =
             dest.length ();
           dest.length (len + 1);
