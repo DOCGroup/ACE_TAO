@@ -1,3 +1,11 @@
+Tue Aug 17 21:03:08 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/interceptors.mpb:
+
+	  New file, with base project requiring interceptors.  Project
+	  files should inherit from this instead of providing explicit
+	  requires statements to eliminate duplicate entries in list.
+
 Tue Aug 17 17:42:16 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/config/rtcosscheduler.mpb:
@@ -9,7 +17,7 @@ Tue Aug 17 09:50:46 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
  	* bin/MakeProjectCreator/config/ciao_servant.mpb:
 	* bin/MakeProjectCreator/config/ciao_servant_dnc.mpb:
 
-	  Added the path to $TAO_ROOT/orbsvcs to the CIDL compiler. 
+	  Added the path to $TAO_ROOT/orbsvcs to the CIDL compiler.
 
 Tue Aug 17 14:30:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
         * tests/Proactor_Test.cpp
