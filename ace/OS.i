@@ -10355,6 +10355,19 @@ ACE_OS::sigprocmask (int how, const sigset_t *nsp, sigset_t *osp)
 #endif /* ACE_LACKS_SIGSET || ACE_LACKS_SIGSET_DEFINITIONS */
 }
 
+ACE_INLINE int
+ACE_OS::pthread_sigmask (int how, const sigset_t *nsp, sigset_t *osp)
+{
+#if defined (ACE_HAS_PTHREADS_STD)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, nsp, osp),
+                                       ace_result_),
+                     int,
+                     -1);
+#else /* !ACE_HAS_PTHREADS_STD */
+  ACE_NOTSUP_RETURN (-1);                
+#endif /* ACE_HAS_PTHREADS_STD */
+}
+
 ACE_INLINE void *
 ACE_OS::sbrk (int brk)
 {
