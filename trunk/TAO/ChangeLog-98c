@@ -1,19 +1,27 @@
+Tue Oct 06 11:23:32 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit_Test: support
+          server and client on different machines, using -r option.
+
+        * performance-tests/Cubit/TAO/MT_Cubit/plot: plot high
+          priority in blue, low in light green.
+
 Tue Oct  6 10:26:06 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp: 
-	  Assigning an _var to a _ptr is ambiguous, we have to use .in().
+        * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+          Assigning an _var to a _ptr is ambiguous, we have to use .in().
 
 Tue Oct  6 08:06:33 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/driver/drv_args.cpp:
 
-	  Added a -Gi option to enable interpretive marshaling. More work
-	  needs to be done here such that we can selectively generate
-	  compiled or interpretive marshaling based on some pragmas.
+          Added a -Gi option to enable interpretive marshaling. More work
+          needs to be done here such that we can selectively generate
+          compiled or interpretive marshaling based on some pragmas.
 
-	* docs/compiler.html:
+        * docs/compiler.html:
 
-	  Added documentation for the new options for the IDl compiler.
+          Added documentation for the new options for the IDl compiler.
 
 Tue Oct 06 03:56:05 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -25,8 +33,8 @@ Tue Oct 06 03:12:38 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Oct  6 02:58:35 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* docs/compiler.html: Updated documentation for the new Binary
-	Search operation lookup stratetgy.
+        * docs/compiler.html: Updated documentation for the new Binary
+        Search operation lookup stratetgy.
 
 Tue Oct 06 00:11:11 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -34,12 +42,12 @@ Tue Oct 06 00:11:11 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Mon Oct  5 22:12:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp: 
-	  Added some template instantiations.
+        * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+          Added some template instantiations.
 
-	* docs/Options.html: 
-	* docs/configurations.html: 
-	  Added a few comments for the latest options.
+        * docs/Options.html:
+        * docs/configurations.html:
+          Added a few comments for the latest options.
 
 Mon Oct 05 21:43:26 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -47,79 +55,79 @@ Mon Oct 05 21:43:26 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Mon Oct  5 20:35:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway.h: 
-	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp: 
-	  The IIOP Gateways were not preserving the remote supplier IDs
-	  properly. The current implementation uses a map of
-	  ProxyPushConsumer on the "local" EC, using a different entry for
-	  each supplier ID the local consumers show interest in.
-	  At run-time the events are dispatched to the corresponding entry
-	  in the map.
-	  A special consumer is used for all the other events.
+        * orbsvcs/orbsvcs/Event/EC_Gateway.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+          The IIOP Gateways were not preserving the remote supplier IDs
+          properly. The current implementation uses a map of
+          ProxyPushConsumer on the "local" EC, using a different entry for
+          each supplier ID the local consumers show interest in.
+          At run-time the events are dispatched to the corresponding entry
+          in the map.
+          A special consumer is used for all the other events.
 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	  Fixed a dead-lock during shutdown.
-	  Also fixed some problems while updating the Observers; we held
-	  the EC lock during the complete process, but it is fairly common
-	  to make changes to the EC while the observers are beign updated.
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+          Fixed a dead-lock during shutdown.
+          Also fixed some problems while updating the Observers; we held
+          the EC lock during the complete process, but it is fairly common
+          to make changes to the EC while the observers are beign updated.
 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
-	  Some improvements on shutdown.
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+          Some improvements on shutdown.
 
-	* docs/releasenotes/TODO.html: 
-	  Updated the tasks corresponding to the changes in this ChangeLog
-	  entry.
+        * docs/releasenotes/TODO.html:
+          Updated the tasks corresponding to the changes in this ChangeLog
+          entry.
 
 Mon Oct 05 18:54:31 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/CosNaming_i: Fixed the POA id generation
-	  to take into account the name of the parent.  Otherwise everyone
-	  was using the same "namespace".
+        * orbsvcs/orbsvcs/Naming/CosNaming_i: Fixed the POA id generation
+          to take into account the name of the parent.  Otherwise everyone
+          was using the same "namespace".
 
-	* performance-tests/Cubit/TAO/IDL_Cubit: Added the testing of
-	  sequences of structs.
+        * performance-tests/Cubit/TAO/IDL_Cubit: Added the testing of
+          sequences of structs.
 
 Mon Oct  5 18:07:38 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Makefile: Changed the Makefile so that it'll now also
- 	  build the new Callback_Quoter test.
+        * examples/Makefile: Changed the Makefile so that it'll now also
+          build the new Callback_Quoter test.
 
 Mon Oct  5 18:15:31 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Param_Test/Makefile: 
-	* orbsvcs/tests/Logger/Makefile: 
-	* orbsvcs/tests/Simple_Naming/Makefile: 
-	* examples/Quoter/Makefile: 
-	* examples/POA/Forwarding/Makefile: 
-	* examples/POA/Generic_Servant/Makefile: 
-	* orbsvcs/orbsvcs/Makefile: 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile: 
-	  Removed the -Gc options for the IDL compiler, if wanted the
-	  option can be added on the command line when invoking make, as:
-	  $ make TAO_IDLFLAGS=-Gc
+        * tests/Param_Test/Makefile:
+        * orbsvcs/tests/Logger/Makefile:
+        * orbsvcs/tests/Simple_Naming/Makefile:
+        * examples/Quoter/Makefile:
+        * examples/POA/Forwarding/Makefile:
+        * examples/POA/Generic_Servant/Makefile:
+        * orbsvcs/orbsvcs/Makefile:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Makefile:
+          Removed the -Gc options for the IDL compiler, if wanted the
+          option can be added on the command line when invoking make, as:
+          $ make TAO_IDLFLAGS=-Gc
 
 Mon Oct  5 17:29:14 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* tao/DynUnion_i.cpp:
-	* tao/DynUnion_i_T.cpp:
-	  Put a preprocessor conditional around the case that
-	  instantiates the longlong type of template class
-	  in get_extractor(). Because of this, the memcmp in
-	  DynUnion_i_T.cpp has been removed - no need for it
-	  now and VxWorks and Chorus should still be happy.
+        * tao/DynUnion_i.cpp:
+        * tao/DynUnion_i_T.cpp:
+          Put a preprocessor conditional around the case that
+          instantiates the longlong type of template class
+          in get_extractor(). Because of this, the memcmp in
+          DynUnion_i_T.cpp has been removed - no need for it
+          now and VxWorks and Chorus should still be happy.
 
 Mon Oct 05 16:39:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/corba.h: Removed duplicated macro definitions that are
-	  defined in try_macros.h.
+        * tao/corba.h: Removed duplicated macro definitions that are
+          defined in try_macros.h.
 
-	* tao/try_macros.h (TAO_CATCH): Added ACE_UNUSED_ARG (VAR) for
-	  this when TAO_USE_EXCEPTIONS and removed ACE_UNUSED_ARG (VAR)
-	  when !TAO_USE_EXCEPTIONS.
+        * tao/try_macros.h (TAO_CATCH): Added ACE_UNUSED_ARG (VAR) for
+          this when TAO_USE_EXCEPTIONS and removed ACE_UNUSED_ARG (VAR)
+          when !TAO_USE_EXCEPTIONS.
 
-	* tao/Dyn{Any,Array,Enum,Sequence,Struct,Union}_i.cpp: Changed
-	  exceptions CORBA::NO_MEMORY to CORBA::NO_MEMORY () to avoid
-	  compilation errors when TAO_USE_EXCEPTIONS is enabled.
+        * tao/Dyn{Any,Array,Enum,Sequence,Struct,Union}_i.cpp: Changed
+          exceptions CORBA::NO_MEMORY to CORBA::NO_MEMORY () to avoid
+          compilation errors when TAO_USE_EXCEPTIONS is enabled.
 
 Mon Oct 05 16:13:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
