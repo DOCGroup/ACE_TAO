@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Real-Time Event Channel Configuration</title>
-    <!-- $Id$ -->
+    <!-- $Id$-->
   </head>
 
   <body>
@@ -110,6 +110,7 @@ static EC_Factory "-ECFiltering basic ....."
           <TH>Option</TH>
           <TH>Description</TH>
         </TR>
+
         <!-- <TR NAME="ECDispatching"> -->
         <TR>
           <TD><CODE>-ECDispatching</CODE>
@@ -455,6 +456,30 @@ static EC_Factory "-ECFiltering basic ....."
           <TD><CODE>-ECSupplierAdminLock</CODE>
           </TD>
           <TD>Obsolete option, ignored in the current version.
+          </TD>
+        </TR>
+
+        <!-- <TR NAME="ECConsumerValidateConnection"> -->
+        <TR>
+          <TD><CODE>-ECConsumerValidateConnection</CODE>
+            <EM>validate_connection: 0 | 1</EM>
+          </TD>
+          <TD>When this option is set the connection from the Event Channel 
+            to the consumer will be created during the connect of the 
+            consumer, just before the consumer is added to the consumer
+            list. By default 
+            the Event Channel will create the connection to the consumer at
+            the moment the first event is pushed to the consumer. 
+            When the network is heavily loaded during this connect and a new event 
+            is pushed before the connection is establed, a new create connection 
+            request is done. When having very high connection establishment  
+            time (for example running on a WAN) and an interval that is much
+            smaller than the connection establishment time it is wise to 
+            set this option. Else you get dozens of new connection request
+            that can result in a stack overflow. Another option is to use BiDIR
+            GIOP so that there is only one connection between Rtec and consumer
+            but for this the Rtec and the consumer must be changed to set the
+            BiDIR Policy, this is not implemented at this moment.
           </TD>
         </TR>
 

@@ -56,7 +56,7 @@ public:
   typedef RtecEventChannelAdmin::ProxyPushSupplier_var _var_type;
 
   /// constructor...
-  TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel* event_channel);
+  TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel* event_channel, int validate_connection);
 
   /// destructor...
   virtual ~TAO_EC_ProxyPushSupplier (void);
@@ -200,6 +200,9 @@ private:
 
   /// The filter object
   TAO_EC_Filter* child_;
+
+  /// Validate the connection to consumer on connect
+  int consumer_validate_connection_;
 };
 
 #if defined (__ACE_INLINE__)
