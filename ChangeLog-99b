@@ -1,7 +1,8 @@
 Tue Mar 09 11:21:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Message_Block.h: For some reason, default ctor and operator=
-	  must be declared private.  Otherwise, VC complains.
+	  must be declared private instead of protected if they are not to
+	  be accessable.  Otherwise, VC complains.
 
 Tue Mar  9 10:21:51 1999  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
 
