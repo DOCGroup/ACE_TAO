@@ -373,7 +373,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
       << "(char *)value," << be_nl
-      << "\"IDL:org.omg/CORBA/Object:1.0\"" << be_uidt_nl
+      << "\"IDL:omg.org/CORBA/Object:1.0\"" << be_uidt_nl
       << ")";
 
   if (node->has_mixed_parentage ())
@@ -381,7 +381,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       *os << " ||" << be_uidt_nl
           << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
           << "(char *)value," << be_nl
-          << "\"IDL:org.omg/CORBA/AbstractBase:1.0\"" << be_uidt_nl
+          << "\"IDL:omg.org/CORBA/AbstractBase:1.0\"" << be_uidt_nl
           << ")";
     }
 
