@@ -1,3 +1,31 @@
+Wed Mar  7 08:57:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Asynch_IO.h:
+
+          Changed use of ACE_UNIMPLEMENTED_FUNC to just defining the
+          assignment operators outright.  The point here is to just
+          provide any implementation, since the default one is flagged
+          as causing infinite recursion.
+
+          Thanks to David Levine for pointing out this incorrect usage
+          of the macro.
+
+        * ace/config-win32-msvc-5.h:
+        * ace/config-win32-msvc-6.h:
+
+          @file comments were mismatched.
+
+        * ace/config-win32.h:
+
+          Changed config-win32-wince.h to config-WinCE.h.
+
+        * ace/ace_wchar.h:
+        * ace/Log_Msg_NT_Event_Log.cpp:
+
+          Changed several system calls to ACE_TEXT_* (and needed to
+          add some to ace_wchar.h) since they need the ACE_TEXT
+          treatment.
+
 Wed Mar  7 08:20:01 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/ARGV.cpp:
@@ -18,7 +46,7 @@ Wed Mar  7 08:20:01 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Wed Mar  7 06:11:52 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Asynch_IO.h: Removed the unnecessary/improver ';' at the
+	* ace/Asynch_IO.h: Removed the unnecessary/improper ';' at the
 	  end of the line.  Thanks to Johnny Willemsen and Chris Kohlhoff
  	  for reporting/fixing this.
 
@@ -40,7 +68,7 @@ Tue Mar  6 14:14:06 2001  Darrell Brunsch <brunsch@uci.edu>
         * ace/config-win32-msvc.h:
 
           Moved the inclusion of the crtdbg.h file to where it is being
-          used.  This is mainly 
+          used.  This is mainly to alleviate some excessive inclusions.
 
         * ace/config-WinCE.h:
         * ace/config-win32.h:

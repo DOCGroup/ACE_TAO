@@ -26,9 +26,9 @@ ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
   // for event logging.
   ACE_TCHAR msg_file [MAXPATHLEN];
 
-  if (!GetModuleFileName (ACE_OS::get_win32_resource_module (),
-                          msg_file,
-                          MAXPATHLEN))
+  if (!ACE_TEXT_GetModuleFileName (ACE_OS::get_win32_resource_module (),
+                                   msg_file,
+                                   MAXPATHLEN))
     return -1;
   int msg_file_length = ACE_OS::strlen (msg_file);
 
@@ -36,7 +36,7 @@ ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
   // logger_key.
   ACE_TCHAR reg_key [MAXPATHLEN];
   ACE_OS::strcpy (reg_key,
-                  "SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\");
+                  ACE_LIB_TEXT ("SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\"));
   int reg_key_length = ACE_OS::strlen(reg_key);
   ACE_OS::strncat (reg_key,
                    logger_key,
@@ -46,9 +46,9 @@ ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
   // is not fatal. The application will still be able to write entries
   // to the event log, they just won't be formatted correctly.
   HKEY hkey;
-  RegCreateKey (HKEY_LOCAL_MACHINE,
-                reg_key,
-                &hkey);
+  ACE_TEXT_RegCreateKey (HKEY_LOCAL_MACHINE,
+                         reg_key,
+                         &hkey);
   DWORD flags = EVENTLOG_ERROR_TYPE | EVENTLOG_WARNING_TYPE | EVENTLOG_INFORMATION_TYPE;
   RegSetValueEx (hkey,
                  "TypesSupported",
@@ -65,7 +65,7 @@ ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
   RegCloseKey (hkey);
 
   // Obtain a handle to the event source.
-  this->evlog_handle_ = RegisterEventSource (0, logger_key);
+  this->evlog_handle_ = ACE_TEXT_RegisterEventSource (0, logger_key);
   return this->evlog_handle_ ? 0 : -1;
 }
 
@@ -132,8 +132,8 @@ ACE_Log_Msg_NT_Event_Log::log (ACE_Log_Record &log_record)
   const ACE_TCHAR* msgs [1];
   msgs[0] = msg_data;
 
-  if (ReportEvent (this->evlog_handle_,
-                   event_type, 0, 0, 0, 1, 0, msgs, 0) == 0)
+  if (ACE_TEXT_ReportEvent (this->evlog_handle_,
+                            event_type, 0, 0, 0, 1, 0, msgs, 0) == 0)
     return -1;
   else 
     return 0;
