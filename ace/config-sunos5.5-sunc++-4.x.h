@@ -180,7 +180,10 @@
 // . . . but only supports SCHED_OTHER scheduling policy
 #define ACE_HAS_ONLY_SCHED_OTHER
 #define ACE_HAS_SIGWAIT
-#define ACE_LACKS_CONDATTR_PSHARED
+// If ACE doesn't compile due to the lack of these methods, please
+// send email to schmidt@cs.wustl.edu reporting this. 
+// #define ACE_LACKS_CONDATTR_PSHARED
+// #define ACE_LACKS_MUTEXATTR_PSHARED
 
 // Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
