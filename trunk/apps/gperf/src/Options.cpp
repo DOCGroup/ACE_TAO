@@ -43,6 +43,9 @@ static const int DEFAULT_JUMP_VALUE = 5;
 // Default name for generated lookup function.
 static const char *const DEFAULT_NAME = "in_word_set";
 
+// Default filler for keyword table.
+static const char *const DEFAULT_FILL = "";
+
 // Default name for the key component.
 static const char *const DEFAULT_KEY = "name";
 
@@ -66,6 +69,7 @@ int Options::argc_;
 char **Options::argv_;
 int Options::iterations_;
 const char *Options::function_name_;
+const char *Options::fill_default_;
 const char *Options::key_name_;
 const char *Options::class_name_;
 const char *Options::hash_name_;
@@ -139,6 +143,7 @@ Options::Options (void)
   jump_ = DEFAULT_JUMP_VALUE;
   option_word_ = DEFAULTCHARS | C;
   function_name_ = DEFAULT_NAME;
+  fill_default_ = DEFAULT_FILL;
   key_name_ = DEFAULT_KEY;
   hash_name_ = DEFAULT_HASH_NAME;
   class_name_ = DEFAULT_CLASS_NAME;
@@ -154,18 +159,43 @@ Options::~Options (void)
     {
       char *ptr;
 
-      ACE_OS::fprintf (stderr, "\ndumping Options:\nDEBUG is.......: %s\nORDER is.......: %s"
-                       "\nANSI is........: %s\nTYPE is........: %s\nINLINE is......: %s"
-                       "\nRANDOM is......: %s\nDEFAULTCHARS is: %s\nSWITCH is......: %s"
-                       "\nPOINTER is.....: %s\nNOLENGTH is....: %s\nLENTABLE is....: %s"
-                       "\nDUP is.........: %s\nFAST is........: %s\nCOMP is........: %s"
-                       "\nNOTYPE is......: %s\nGLOBAL is......: %s\nCONSTANT is....: %s"
-                       "\nCPLUSPLUS is...: %s\nC is...........: %s\nENUM is........: %s"
-                       "\nSTRCASECMP is..: %s\nOPTIMIZE is....: %s\nLINEARSEARCH is: %s"
+      ACE_OS::fprintf (stderr,
+                       "\ndumping Options:"
+                       "\nDEBUG is.......: %s"
+                       "\nORDER is.......: %s"
+                       "\nANSI is........: %s"
+                       "\nTYPE is........: %s"
+                       "\nINLINE is......: %s"
+                       "\nRANDOM is......: %s"
+                       "\nDEFAULTCHARS is: %s"
+                       "\nSWITCH is......: %s"
+                       "\nPOINTER is.....: %s"
+                       "\nNOLENGTH is....: %s"
+                       "\nLENTABLE is....: %s"
+                       "\nDUP is.........: %s"
+                       "\nFAST is........: %s"
+                       "\nCOMP is........: %s"
+                       "\nNOTYPE is......: %s"
+                       "\nGLOBAL is......: %s"
+                       "\nCONSTANT is....: %s"
+                       "\nCPLUSPLUS is...: %s"
+                       "\nC is...........: %s"
+                       "\nENUM is........: %s"
+                       "\nSTRCASECMP is..: %s"
+                       "\nOPTIMIZE is....: %s"
+                       "\nLINEARSEARCH is: %s"
 		       "\nBINARYSEARCH is: %s"
-                       "\niterations = %d\nlookup function name = %s\nhash function name = %s"
-                       "\nkey name = %s\njump value = %d\nmax associcated value = %d"
-                       "\ninitial associated value = %d\ndelimiters = %s\nnumber of switch statements = %d\n",
+                       "\niterations = %d"
+                       "\nlookup function name = %s"
+                       "\nfill default = %s"
+                       "\nhash function name = %s"
+                       "\nkey name = %s"
+                       "\njump value = %d"
+                       "\nmax associcated value = %d"
+                       "\ninitial associated value = %d"
+                       "\ndelimiters = %s"
+                       "\nnumber of switch statements = %d"
+                       "\n",
                        ACE_BIT_ENABLED (option_word_, DEBUG) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word_, ORDER) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word_, ANSI) ? "enabled" : "disabled",
@@ -192,6 +222,7 @@ Options::~Options (void)
                        ACE_BIT_ENABLED (option_word_, BINARYSEARCH) ? "enabled" : "disabled",
                        iterations_,
                        function_name_,
+                       fill_default_,
                        hash_name_,
                        key_name_,
                        jump_,
@@ -226,7 +257,7 @@ Options::parse_args (int argc, char *argv[])
   if (ACE_LOG_MSG->open (argv[0]) == -1)
     return -1;
 
-  ACE_Get_Opt getopt (argc, argv, "abBcCdDe:Ef:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:");
+  ACE_Get_Opt getopt (argc, argv, "abBcCdDe:Ef:F:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:");
   int option_char;
 
   argc_ = argc;
@@ -325,7 +356,8 @@ Options::parse_args (int argc, char *argv[])
                              "-B\tGenerate code for Binary Search.\n"
                              "-c\tGenerate comparison code using strncmp rather than strcmp.\n"
                              "-C\tMake the contents of generated lookup tables constant, i.e., readonly.\n"
-                             "-d\tEnables the debugging option (produces verbose output to the standard error).\n"
+                             "-d\tEnables the debugging option (produces verbose output to the standard\n"
+                             "\terror).\n"
                              "-D\tHandle keywords that hash to duplicate values.  This is useful\n"
                              "\tfor certain highly redundant keyword sets.\n"
                              "-e\tAllow user to provide a string containing delimiters used to separate\n"
@@ -336,11 +368,13 @@ Options::parse_args (int argc, char *argv[])
                              "\trunning time at the cost of minimizing generated table-size.\n"
                              "\tThe numeric argument represents the number of times to iterate when\n"
                              "\tresolving a collision.  `0' means ``iterate by the number of keywords.''\n"
+                             "-F\tProvided expression will be used to assign default values in keyword\n"
+                             "\ttable, i.e., the fill value.  Default is \"\".\n"
                              "-g\tMake generated routines use ``inline'' to remove function overhead.\n"
                              "-G\tGenerate the static table of keywords as a static global variable,\n"
                              "\trather than hiding it inside of the lookup function (which is the\n"
                              "\tdefault behavior).\n"
-                             "-h\tPrints this mesage.\n"
+                             "-h\tPrints this message.\n"
                              "-H\tAllow user to specify name of generated hash function. Default\n"
                              "\tis `hash'.\n"
                              "-i\tProvide an initial value for the associate values array.  Default is 0.\n"
@@ -356,42 +390,45 @@ Options::parse_args (int argc, char *argv[])
                              "\toccur in any order.  Also, the meta-character '*' causes the generated\n"
                              "\thash function to consider ALL key positions, and $ indicates the\n"
                              "\t``final character'' of a key, e.g., $,1,2,4,6-10.\n"
-                             "-K\tAllow use to select name of the keyword component in the keyword structure.\n"
+                             "-K\tAllow use to select name of the keyword component in the keyword\n"
+                             "\tstructure.\n"
                              "-l\tCompare key lengths before trying a string comparison.  This helps\n"
                              "\tcut down on the number of string comparisons made during the lookup.\n"
-                             "-L\tGenerates code in the language specified by the option's argument.  Languages\n"
-                             "\thandled are currently C++ and C.  The default is C.\n"
+                             "-L\tGenerates code in the language specified by the option's argument.\n"
+                             "\tLanguages handled are currently C++ and C.  The default is C.\n"
                              "-m\tAvoids the warning about identical hash values. This is valid\n"
                              "\tonly if the -D option is enabled.\n"
                              "-M\tSkips class definition in the output. This is valid only in C++ mode.\n"
-                             "-n\tDo not include the length of the keyword when computing the hash function\n"
+                             "-n\tDo not include the length of the keyword when computing the hash\n"
+                             "\tfunction.\n"
                              "-N\tAllow user to specify name of generated lookup function.  Default\n"
                              "\tname is `in_word_set.'\n"
                              "-o\tReorders input keys by frequency of occurrence of the key sets.\n"
                              "\tThis should decrease the search time dramatically.\n"
-                             "-O\tOptimize the generated lookup function by assuming that all input keywords \n"
-                             "\tare members of the keyset from the keyfile.\n"
+                             "-O\tOptimize the generated lookup function by assuming that all input\n"
+                             "\tkeywords are members of the keyset from the keyfile.\n"
                              "-p\tChanges the return value of the generated function ``in_word_set''\n"
                              "\tfrom its default boolean value (i.e., 0 or 1), to type ``pointer\n"
                              "\tto wordlist array''  This is most useful when the -t option, allowing\n"
                              "\tuser-defined structs, is used.\n"
                              "-r\tUtilizes randomness to initialize the associated values table.\n"
                              "-s\tAffects the size of the generated hash table.  The numeric argument\n"
-                             "\tfor this option indicates ``how many times larger or smaller'' the associated\n"
-                             "\tvalue range should be, in relationship to the number of keys, e.g. a value of 3\n"
-                             "\tmeans ``allow the maximum associated value to be about 3 times larger than the\n"
-                             "\tnumber of input keys.''  Conversely, a value of -3 means ``make the maximum\n"
-                             "\tassociated value about 3 times smaller than the number of input keys.\n"
-                             "\tA larger table should decrease the time required for an unsuccessful search,\n"
-                             "\tat the expense of extra table space.  Default value is 1.\n"
+                             "\tfor this option indicates ``how many times larger or smaller'' the\n"
+                             "\tassociated value range should be, in relationship to the number of\n"
+                             "\tkeys, e.g. a value of 3 means ``allow the maximum associated value\n"
+                             "\tto be about 3 times larger than the number of input keys.''\n"
+                             "\tConversely, a value of -3 means ``make the maximum associated\n"
+                             "\tvalue about 3 times smaller than the number of input keys. A\n"
+                             "\tlarger table should decrease the time required for an unsuccessful\n"
+                             "\tsearch, at the expense of extra table space.  Default value is 1.\n"
                              "-S\tCauses the generated C code to use a switch statement scheme, rather\n"
                              "\tthan an array lookup table.  This can lead to a reduction in both\n"
                              "\ttime and space requirements for some keyfiles.  The argument to\n"
                              "\tthis option determines how many switch statements are generated.\n"
-                             "\tA value of 1 generates 1 switch containing all the elements, a value of 2\n"
-                             "\tgenerates 2 tables with 1/2 the elements in each table, etc.  This\n"
-                             "\tis useful since many C compilers cannot correctly generate code for\n"
-                             "\tlarge switch statements.\n"
+                             "\tA value of 1 generates 1 switch containing all the elements, a value\n"
+                             "\tof 2 generates 2 tables with 1/2 the elements in each table, etc.\n"
+                             "\tThis is useful since many C compilers cannot correctly generate code\n"
+                             "\tfor large switch statements.\n"
                              "-t\tAllows the user to include a structured type declaration for \n"
                              "\tgenerated code. Any text before %%%% is consider part of the type\n"
                              "\tdeclaration.  Key words and additional fields may follow this, one\n"
@@ -555,6 +592,12 @@ Options::parse_args (int argc, char *argv[])
         case 'N':
           {
             function_name_ = getopt.optarg;
+            break;
+          }
+        // Make fill_default be optarg
+        case 'F':
+          {
+            fill_default_ = getopt.optarg;
             break;
           }
         // Order input by frequency of key set occurrence.
@@ -751,6 +794,14 @@ const char *
 Options::function_name (void)
 {
   return function_name_;
+}
+
+// Returns the fill default
+
+const char *
+Options::fill_default (void)
+{
+  return fill_default_;
 }
 
 // Returns the keyword key name.

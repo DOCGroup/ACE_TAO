@@ -112,6 +112,7 @@ public:
   static int initial_value (void);
   static int total_switches (void);
   static const char *function_name (void);
+  static const char *fill_default (void);
   static const char *key_name (void);
   static const char *class_name (void);
   static const char *hash_name (void);
@@ -150,6 +151,9 @@ private:
 
   static const char *function_name_;
   // Names used for generated lookup function.
+  
+  static const char  *fill_default_;
+  // Expression used to assign default values in keyword table.
 
   static const char *key_name_;
   // Name used for keyword key.
