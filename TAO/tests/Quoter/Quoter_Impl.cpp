@@ -9,47 +9,71 @@
 //    Quoter_Impl.cpp
 //
 // = AUTHOR
-//    Darrell Brunsch
+//    Darrell Brunsch <brunsch@cs.wustl.edu>
 //
 // ============================================================================
 
 #include "tao/corba.h"
 #include "Quoter_Impl.h"
-//#include "QuoterC.h"
 
-// Constructor
 
-Quoter_Factory_Impl::Quoter_Factory_Impl (void)
+// Constructor.  Create all the quoter factories.
+
+Quoter_Factory_Impl::Quoter_Factory_Impl (size_t num)
+  : quoter_num_ (num),
+    next_quoter_ (0),
+    my_quoters_ (0)
 {
+  ACE_NEW(this->my_quoters_, Quoter_Impl *[num]);
+  
+  for (size_t i = 0; i < num; i++)
+    ACE_NEW(this->my_quoters_[i], Quoter_Impl("x"));
 }
+
 
 // Destructor
 
 Quoter_Factory_Impl::~Quoter_Factory_Impl (void)
 {
+  for (size_t i = 0; i < this->quoter_num_; i++)
+    delete this->my_quoters_[i];
 }
+
+
+// Return the quoter by the id <name>.
 
 Stock::Quoter_ptr
 Quoter_Factory_Impl::create_quoter (const char *name,
                                     CORBA::Environment &env)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "Quoter Created\n"));
   ACE_UNUSED_ARG (name);
-  return my_quoter_._this (env);
+
+  this->next_quoter_ = (this->next_quoter_ + 1) % this->quoter_num_;
+
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Quoter %d Created\n", this->next_quoter_));
+
+  return my_quoters_[this->next_quoter_]->_this (env);
 }
+
 
 // Constructor
 
-Quoter_Impl::Quoter_Impl (const char *)
+Quoter_Impl::Quoter_Impl (const char *name)
 {
+  ACE_UNUSED_ARG (name);
 }
+
 
 // Destructor
 
 Quoter_Impl::~Quoter_Impl (void)
 {
 }
+
+
+// Returns the current quote for the stock <stock_name>.
+// For now, just return 42.  It was a good day on Wall Street.
 
 CORBA::Long
 Quoter_Impl::get_quote (char const *stock_name,
@@ -61,18 +85,8 @@ Quoter_Impl::get_quote (char const *stock_name,
   return 42;
 }
 
-// Shutdown.
 
-void Quoter_Impl::destroy (CORBA::Environment &env)
-{
-  ACE_UNUSED_ARG (env);
-
-  ACE_DEBUG ((LM_DEBUG,
-              "%s",
-              "I have been asked to shut down "));
-
-  TAO_ORB_Core_instance ()->orb ()->shutdown ();
-}
+// Make a copy of this object
 
 CosLifeCycle::LifeCycleObject_ptr
 Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
@@ -170,6 +184,9 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
   return CosLifeCycle::LifeCycleObject::_nil();
 }
 
+
+// Move this object using <there> and <the_criteria>
+
 void
 Quoter_Impl::move (CosLifeCycle::FactoryFinder_ptr there,
                    const CosLifeCycle::Criteria &the_criteria,
@@ -180,13 +197,22 @@ Quoter_Impl::move (CosLifeCycle::FactoryFinder_ptr there,
 
   // the move operation is not implemented yet, because of the issue,
   // that the object reference has to stay the same. But if it has
-  // to stay the same this object. the old object, has to forward
+  // to stay the same this object, the old object, has to forward
   // further calls.
 
   _env_there.exception (new CosLifeCycle::NotMovable());
 }
 
+
+// Removes the object.  Once we shut down the ORB we can call it a day.
+
 void
 Quoter_Impl::remove (CORBA::Environment &_tao_environment)
 {
+  ACE_UNUSED_ARG (_tao_environment);
+
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "I have been asked to shut down.\n"));
+	      
+  TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }

@@ -17,7 +17,6 @@ Quoter_Task::svc (void)
     return 1;
   else
     return this->quoter_client.run ();
-
 }
 
 // Constructor.
@@ -26,34 +25,9 @@ Quoter_Client::Quoter_Client (void)
     quoter_key_ (ACE_OS::strdup ("key0")),
     shutdown_ (0),
     quoter_var_ (Stock::Quoter::_nil ()),
-    quoter_factory_ior_file_ (0),
-    f_handle_ (ACE_INVALID_HANDLE),
-    use_naming_service_ (1),
     useLifeCycleService_(0)  // use the Generic Factory
 {
-}
-
-// Reads the Quoter factory ior from a file
-
-int
-Quoter_Client::read_ior (char *filename)
-{
-  // Open the file for reading.
-  this->f_handle_ = ACE_OS::open (filename,0);
-  
-  if (this->f_handle_ == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-    "Unable to open %s for writing: %p\n",
-    filename),
-    -1);
-  ACE_Read_Buffer ior_buffer (this->f_handle_);
-  this->quoter_factory_key_ = ior_buffer.read ();
-  
-  if (this->quoter_factory_key_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to allocate memory to read ior: %p\n"),
-                      -1);
-   return 0;
+  // Nothing
 }
 
 // Parses the command line arguments and returns an error status.
@@ -61,27 +35,17 @@ Quoter_Client::read_ior (char *filename)
 int
 Quoter_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:f:k:lxs");
+  ACE_Get_Opt get_opts (argc_, argv_, "n:dlx");
   int c;
-  int result;
   
   while ((c = get_opts ()) != -1)
     switch (c)
     {   
+      case 'n':  // multiple threads
+        // ignore it, it was handled already
+        break;
       case 'd':  // debug flag
         TAO_debug_level++;
-        break;
-      case 'f': // read the IOR from the file.
-        result = this->read_ior (get_opts.optarg);
-        if (result < 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-          "Unable to read ior from %s : %p\n",
-          get_opts.optarg),
-          -1);
-        break;
-      case 'k': // read the quoter IOR from the command-line.
-        this->quoter_factory_key_ =
-          ACE_OS::strdup (get_opts.optarg);
         break;
       case 'l':
         this->useLifeCycleService_ = 1;
@@ -89,17 +53,13 @@ Quoter_Client::parse_args (void)
       case 'x': 
         this->shutdown_ = 1;
         break;
-      case 's': // Don't use the TAO Naming Service.
-        this->use_naming_service_ = 0;
-        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                           "usage:  %s"
+                          " [-m]"
                           " [-d]"
-                          " [-f quoter_factory-obj-ref-key-file]"
                           " [-l] # use the lifecycle service instead of the generic factory"
-                          " [-k quoter-obj-ref-key]"
                           " [-x]"
                           " [-s]"
                           "\n",
@@ -135,7 +95,6 @@ Quoter_Client::run (void)
     return -1;
   }
 
-
   Stock::Quoter_var quoter_var =
     Stock::Quoter::_narrow (quoterObj_var.in (),
 			    this->env_);
@@ -145,7 +104,9 @@ Quoter_Client::run (void)
     this->env_.clear();
     return -1;
   }
-  ACE_DEBUG ((LM_DEBUG, "Copied object\n"));
+  
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Copied object\n"));
 
   q = this->quoter_var_->get_quote ("ACE Hardware", this->env_);
   if (this->env_.exception () != 0)
@@ -154,6 +115,7 @@ Quoter_Client::run (void)
     this->env_.clear();
     return -1;
   }
+  
   ACE_DEBUG ((LM_DEBUG, "Copied object: ACE Hardware = %i\n", q));
 
   return 0;  
@@ -163,10 +125,6 @@ Quoter_Client::~Quoter_Client (void)
 {
   // Free resources
   // Close the ior files
-  if (this->quoter_factory_ior_file_)
-    ACE_OS::fclose (this->quoter_factory_ior_file_);
-  if (this->f_handle_ != ACE_INVALID_HANDLE)
-    ACE_OS::close (this->f_handle_);
   if (this->quoter_factory_key_ != 0)
     ACE_OS::free (this->quoter_factory_key_);
   if (this->quoter_key_ != 0)
@@ -184,14 +142,15 @@ Quoter_Client::init_naming_service (void)
 
     if (CORBA::is_nil (naming_obj.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to resolve the Name Service.\n"),
+                        "Unable to resolve the Name Service.\n"),
          -1);
 
     CosNaming::NamingContext_var naming_context = 
       CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
     TAO_CHECK_ENV;
 
-    ACE_DEBUG ((LM_DEBUG, "Have a proper reference to the Naming Service.\n"));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "Have a proper reference to the Naming Service.\n"));
 
     // deprecated
     // ------------------------------------------- direct use of the Quoter Factory
@@ -227,14 +186,16 @@ Quoter_Client::init_naming_service (void)
     quoterFactoryFinderName[0].id = CORBA::string_dup ("IDL_Quoter");
     quoterFactoryFinderName[1].id = CORBA::string_dup ("Quoter_Factory_Finder");
 
-    ACE_DEBUG ((LM_DEBUG, "Trying to resolve the Quoter Factory Finder!\n"));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "Trying to resolve the Quoter Factory Finder!\n"));
 
     CORBA::Object_var factory_obj =
       naming_context->resolve (quoterFactoryFinderName,
                                TAO_TRY_ENV);
     TAO_CHECK_ENV;
 
-    ACE_DEBUG ((LM_DEBUG, "Resolved the Quoter Factory Finder!\n"));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "Resolved the Quoter Factory Finder!\n"));
     
     factory_Finder_var_ =
       Stock::Quoter_Factory_Finder::_narrow (factory_obj.in (), 
@@ -246,7 +207,8 @@ Quoter_Client::init_naming_service (void)
       " could not resolve quoter factory in Naming service <%s>\n"),
       -1);
 
-    ACE_DEBUG ((LM_DEBUG, "Have a proper reference to the Quoter Factory Finder.\n"));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "Have a proper reference to the Quoter Factory Finder.\n"));
 
     // The name of the Quoter Generic Factory
     CosLifeCycle::Key factoryName (2);  // max = 2
@@ -265,7 +227,8 @@ Quoter_Client::init_naming_service (void)
       factoryName[1].id = CORBA::string_dup ("Quoter_Generic_Factory");
     }
     
-    ACE_DEBUG ((LM_DEBUG, "Trying to get a reference of a factory.\n"));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "Trying to get a reference of a factory.\n"));
 
     // Find an appropriate factory over there.
     CosLifeCycle::Factories_ptr factories_ptr = 
@@ -276,7 +239,8 @@ Quoter_Client::init_naming_service (void)
                          "Did not get a Generic Quoter Factory.\n"),
                          -1);
 
-    ACE_DEBUG ((LM_DEBUG, "Got a proper reference of a factory.\n"));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "Got a proper reference of a factory.\n"));
 
 
     // Get the first object reference to a factory.
@@ -307,7 +271,8 @@ Quoter_Client::init_naming_service (void)
                          "Factory received is not valid.\n"),
                          -1);
 
-    ACE_DEBUG ((LM_DEBUG, "Have a proper reference to the Quoter Factory.\n"));
+    if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG, "Have a proper reference to the Quoter Factory.\n"));
   }
   TAO_CATCH (CosLifeCycle::NoFactory, excpt)
   {
@@ -327,7 +292,13 @@ int
 Quoter_Client::init (int argc, char **argv)
 {
   this->argc_ = argc;
-  this->argv_ = argv;
+  int i;
+
+  // Make a copy of argv since ORB_init will change it.
+  this->argv_ = new char *[argc];
+  
+  for (i = 0; i < argc; i++)
+    this->argv_[i] = argv[i];
   
   TAO_TRY
   {
@@ -337,7 +308,7 @@ Quoter_Client::init (int argc, char **argv)
                                     "internet",
                                     TAO_TRY_ENV);
       TAO_CHECK_ENV;
-    
+      
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
         return -1;
@@ -374,7 +345,8 @@ Quoter_Client::init (int argc, char **argv)
             }
         }*/
     
-      ACE_DEBUG ((LM_DEBUG, "Factory received OK\n"));
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Factory received OK\n"));
     
       // Now retrieve the Quoter obj ref corresponding to the key.
       // direct Quoter Factory
@@ -400,7 +372,8 @@ Quoter_Client::init (int argc, char **argv)
       this->quoter_var_ = Stock::Quoter::_narrow (quoterObject_var.in(), TAO_TRY_ENV);     
       TAO_CHECK_ENV;
 
-      ACE_DEBUG ((LM_DEBUG, "Quoter Created\n"));
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Quoter Created\n"));
     
       if (CORBA::is_nil (this->quoter_var_.in()))
       {
@@ -425,25 +398,33 @@ Quoter_Client::init (int argc, char **argv)
 int
 main (int argc, char **argv)
 {
-//  Quoter_Client quoter_client;
-//
-//  ACE_DEBUG ((LM_DEBUG,"\n \t IDL_Quoter: client \n\n"));
-//
-//  if (quoter_client.init (argc, argv) == -1)
-//    return 1;
-//  else
-//    return quoter_client.run ();
-
   ACE_Thread_Manager thr_mgr;
 
-  Quoter_Task client1 (argc, argv);
-//  Quoter_Task client2 (argc, argv);
-//  Quoter_Task client3 (argc, argv);
+  ACE_DEBUG ((LM_DEBUG,"\n\tQuoter: client\n\n"));
 
-  client1.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, ACE_DEFAULT_THREAD_PRIORITY);
-//  client2.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, ACE_DEFAULT_THREAD_PRIORITY);
-//  client3.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, ACE_DEFAULT_THREAD_PRIORITY);
+  int i;
+  int threads = 1;
 
-  return ACE_Thread_Manager::instance ()->wait ();
+  for (i = 0; i < argc; i++)
+    if (ACE_OS::strcmp (argv[i], "-n") == 0)
+      threads = ACE_OS::atoi(argv[i + 1]);
+    
+  Quoter_Task **clients = new Quoter_Task*[threads];
+    
+  for (i = 0; i < threads; i++)
+    clients[i] = new Quoter_Task (argc, argv);
+
+
+  for (i = 0; i < threads; i++)
+    clients[i]->activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, ACE_DEFAULT_THREAD_PRIORITY);
+
+  int result = ACE_Thread_Manager::instance ()->wait ();
+
+  for (i = 0; i < threads; i++)
+    delete clients[i];
+
+  delete [] clients;
+
+  return result;
 }
 
