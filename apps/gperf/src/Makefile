@@ -1,43 +1,43 @@
 #----------------------------------------------------------------------------
-#	$Id: Makefile	1.1	10/18/96
+#       $Id$
 #
-#	Makefile for GPERF release
+#       Makefile for GPERF release
 #----------------------------------------------------------------------------
 
-BIN	= gperf
-LIB   	= libGperf.a
-SHLIB	= libGperf.$(SOEXT)
+BIN     = gperf
+LIB     = libGperf.a
+SHLIB   = libGperf.$(SOEXT)
 
-FILES	= new \
-	  Options \
-	  Iterator \
-	  Gen_Perf \
-	  Key_List \
-	  List_Node \
-	  Hash_Table \
-	  Bool_Array \
-	  Vectors \
-	  Version
+FILES   = new \
+          Options \
+          Iterator \
+          Gen_Perf \
+          Key_List \
+          List_Node \
+          Hash_Table \
+          Bool_Array \
+          Vectors \
+          Version
 
-LSRC	= $(addsuffix .cpp,$(FILES)) 
+LSRC    = $(addsuffix .cpp,$(FILES))
 
-LDLIBS	= -lGperf
+LDLIBS  = -lGperf
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-BUILD 	= $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
+BUILD   = $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
-include		$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include		$(ACE_ROOT)/include/makeinclude/macros.GNU
-include		$(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include		$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include		$(ACE_ROOT)/include/makeinclude/rules.lib.GNU
-include		$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
