@@ -1565,7 +1565,7 @@ TAO_NAMESPACE  Messaging
 #if !defined (_MESSAGING_EXCEPTIONHOLDER___VAR_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER___VAR_CH_
 
-  class  ExceptionHolder_var
+  class TAO_Export ExceptionHolder_var
   {
   public:
     ExceptionHolder_var (void); // default constructor
@@ -1598,7 +1598,7 @@ TAO_NAMESPACE  Messaging
 #if !defined (_MESSAGING_EXCEPTIONHOLDER___OUT_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER___OUT_CH_
 
-  class  ExceptionHolder_out
+  class TAO_Export ExceptionHolder_out
   {
   public:
     ExceptionHolder_out (ExceptionHolder* &);
@@ -1622,7 +1622,7 @@ TAO_NAMESPACE  Messaging
 #if !defined (_MESSAGING_EXCEPTIONHOLDER___INIT_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER___INIT_CH_
 
-  class  ExceptionHolder_init : public ACE_CORBA_1 (ValueFactoryBase)
+  class TAO_Export ExceptionHolder_init : public ACE_CORBA_1 (ValueFactoryBase)
   {
   public:
     virtual ~ExceptionHolder_init ();
@@ -1638,7 +1638,7 @@ TAO_NAMESPACE  Messaging
 #if !defined (_MESSAGING_EXCEPTIONHOLDER_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER_CH_
 
-  class  ExceptionHolder : public virtual ACE_CORBA_1 (ValueBase)
+  class TAO_Export ExceptionHolder : public virtual ACE_CORBA_1 (ValueBase)
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1668,7 +1668,7 @@ TAO_NAMESPACE  Messaging
     // _tao_seq_Octet
     // *************************************************************
     
-    class  _tao_seq_Octet : public 
+    class TAO_Export _tao_seq_Octet : public 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
       TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -1708,7 +1708,7 @@ TAO_NAMESPACE  Messaging
     // class Messaging::ExceptionHolder::_tao_seq_Octet_var
     // *************************************************************
 
-    class  _tao_seq_Octet_var
+    class TAO_Export _tao_seq_Octet_var
     {
     public:
       _tao_seq_Octet_var (void); // default constructor
@@ -1743,7 +1743,7 @@ TAO_NAMESPACE  Messaging
 #if !defined (_MESSAGING_EXCEPTIONHOLDER__TAO_SEQ_OCTET___OUT_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER__TAO_SEQ_OCTET___OUT_CH_
 
-    class  _tao_seq_Octet_out
+    class TAO_Export _tao_seq_Octet_out
     {
     public:
       _tao_seq_Octet_out (_tao_seq_Octet *&);
