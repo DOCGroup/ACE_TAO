@@ -108,7 +108,7 @@ ACE_Proactor_Timer_Handler::~ACE_Proactor_Timer_Handler (void)
   this->timer_event_.signal ();
 
   // Wait for the Timer Handler thread to exit.
-  this->thr_mgr ()->wait ();
+  this->thr_mgr ()->wait_grp (this->grp_id ());
 }
 
 int
@@ -285,7 +285,7 @@ ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
            ACE_Proactor_Timer_Handler (*this));
 
   // Activate <timer_handler>.
-  if (this->timer_handler_->activate (THR_NEW_LWP | THR_DETACHED) == -1)
+  if (this->timer_handler_->activate (THR_NEW_LWP) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%N:%l:(%P | %t):%p\n"),
                 ACE_LIB_TEXT ("Task::activate:could not create thread\n")));
@@ -351,7 +351,7 @@ ACE_Proactor::instance (ACE_Proactor *r)
   // Register with the Object_Manager so that the wrapper to
   // delete the proactor will be called when Object_Manager is
   // being terminated.
-  
+
 #if defined ACE_HAS_SIG_C_FUNC
   ACE_Object_Manager::at_exit (ACE_Proactor::proactor_,
                                ACE_Proactor_cleanup,
@@ -361,7 +361,7 @@ ACE_Proactor::instance (ACE_Proactor *r)
                                ACE_Proactor::cleanup,
                                0);
 #endif /* ACE_HAS_SIG_C_FUNC */
-  
+
   ACE_Proactor::proactor_ = r;
   return t;
 }
@@ -370,7 +370,7 @@ void
 ACE_Proactor::close_singleton (void)
 {
   ACE_TRACE ("ACE_Proactor::close_singleton");
-  
+
   ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
                      *ACE_Static_Object_Lock::instance ()));
 
