@@ -793,6 +793,13 @@ ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
 
 #endif /* WIN32 */
 
+ACE_INLINE int 
+ACE_OS::stat (const char *file, struct stat *stp)
+{
+  // ACE_TRACE ("ACE_OS::stat");
+  ACE_OSCALL_RETURN (::stat (file, stp), int, -1);
+}
+
 ACE_INLINE time_t 
 ACE_OS::time (time_t *tloc)
 {
@@ -6190,6 +6197,13 @@ ACE_INLINE FILE *
 ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
 {
   ACE_OSCALL_RETURN (::_wfopen (filename, mode), FILE *, 0);    
+}
+
+ACE_INLINE int 
+ACE_OS::stat (const wchar_t *file, struct stat *stp)
+{
+  // ACE_TRACE ("ACE_OS::stat");
+  ACE_OSCALL_RETURN (::_wstat (file, (struct _stat *) stp), int, -1);
 }
 
 ACE_INLINE int 
