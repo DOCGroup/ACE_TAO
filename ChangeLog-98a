@@ -1,5 +1,11 @@
 Tue Mar 10 15:07:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Svc_Handler.cpp,
+	  ace/Module.cpp: 
+	  Fixed some problems where Svc_Handlers in Modules were being
+ 	  deleted prematurely.  Thanks to Steve Coy <stevec@magna.com.au>
+ 	  for reporting this.
+
 	* ace/Reactor.h (ACE_Reactor): Added a "reset_event_loop" method
  	  so that it's possible to reset the loop again once the
  	  end_event_loop() method is called.  Thanks to Eric Hopper

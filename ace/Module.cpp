@@ -30,9 +30,14 @@ ACE_Module<ACE_SYNCH_USE>::writer (ACE_Task<ACE_SYNCH_USE> *q,
   this->close_i (1, flags);
 
   this->q_pair_[1] = q;
+
   if (q != 0)
-    ACE_CLR_BITS (q->flags_, ACE_Task_Flags::ACE_READER);
-	
+    {
+      ACE_CLR_BITS (q->flags_, ACE_Task_Flags::ACE_READER);
+      // Set the q's module pointer to point to us.
+      q->mod_ = this;
+    }
+
   // Don't allow the caller to change the reader status.
   ACE_SET_BITS (flags_, (flags & M_DELETE_WRITER));
 }
@@ -47,8 +52,13 @@ ACE_Module<ACE_SYNCH_USE>::reader (ACE_Task<ACE_SYNCH_USE> *q,
   this->close_i (0, flags);
 
   this->q_pair_[0] = q;
+
   if (q != 0)
-    ACE_SET_BITS (q->flags_, ACE_Task_Flags::ACE_READER);
+    {
+      ACE_SET_BITS (q->flags_, ACE_Task_Flags::ACE_READER);
+      // Set the q's module pointer to point to us.
+      q->mod_ = this;
+    }
 	
   // don't allow the caller to change the reader status
   ACE_SET_BITS (flags_, (flags & M_DELETE_READER));
