@@ -70,7 +70,7 @@ TAO_DynUnion_i::init (const CORBA_Any& any,
 
 void
 TAO_DynUnion_i::init (CORBA_TypeCode_ptr tc,
-  CORBA::Environment &ACE_TRY_ENV)
+                      CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc,
                                                    ACE_TRY_ENV);
@@ -81,22 +81,28 @@ TAO_DynUnion_i::init (CORBA_TypeCode_ptr tc,
       ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
     }
 
-  // Initialize the typecode holder.
-  this->type_ =
-    CORBA::TypeCode::_duplicate (tc);
+  // Initialize the typecode holder and current index.
+  this->type_ = CORBA::TypeCode::_duplicate (tc);
+  this->current_index_ = 0U;
 
-  CORBA::TypeCode_var disc_tc =
-    tc->discriminator_type (ACE_TRY_ENV);
+  CORBA::Any_ptr first_label = tc->member_label (this->current_index_,
+                                                 ACE_TRY_ENV);
   ACE_CHECK;
 
-  // Get a typecode into the discriminator holder.
+  // Initialize the discriminator to the label value of the first member.
   this->discriminator_ =
-    TAO_DynAnyFactory::make_dyn_any (disc_tc.in (),
-                                  ACE_TRY_ENV);
+    TAO_DynAnyFactory::make_dyn_any (*first_label,
+                                     ACE_TRY_ENV);
   ACE_CHECK;
 
-  // To be filled in by from_any() or assign().
-  this->member_ = 0;
+  CORBA::TypeCode_var first_type = tc->member_type (this->current_index_,
+                                                    ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Recursively initialize the member to its default value.
+  this->member_ = TAO_DynAnyFactory::make_dyn_any (first_type.in (),
+                                                   ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 // ****************************************************************

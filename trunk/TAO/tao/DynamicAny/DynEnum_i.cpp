@@ -70,6 +70,8 @@ TAO_DynEnum_i::init (CORBA_TypeCode_ptr tc,
     }
 
   this->type_ = CORBA::TypeCode::_duplicate (tc);
+
+  this->value_ = 0U;
 }
 
 // ****************************************************************

@@ -108,6 +108,7 @@ TAO_DynAnyFactory::make_dyn_any (const CORBA_Any &any,
       case CORBA::tk_TypeCode:
       case CORBA::tk_objref:
       case CORBA::tk_string:
+      case CORBA::tk_wstring:
         {
           TAO_DynAny_i *p;
 
@@ -245,6 +246,7 @@ TAO_DynAnyFactory::make_dyn_any (CORBA::TypeCode_ptr tc,
       case CORBA::tk_TypeCode:
       case CORBA::tk_objref:
       case CORBA::tk_string:
+      case CORBA::tk_wstring:
         {
           TAO_DynAny_i *p;
 
