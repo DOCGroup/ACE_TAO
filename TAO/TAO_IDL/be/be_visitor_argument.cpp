@@ -41,5 +41,9 @@
 #include "be_visitor_argument/ami_arglist.cpp"
 #include "be_visitor_argument/ami_handler_arglist.cpp"
 #include "be_visitor_argument/ami_handler_result_arg.cpp"
+#include "be_visitor_argument/ami_handler_compiled_marshal_cs.cpp"
+#include "be_visitor_argument/ami_handler_upcall_cs.cpp"
+#include "be_visitor_argument/ami_handler_vardecl_cs.cpp"
+
 ACE_RCSID(be, be_visitor_argument, "$Id$")
 

@@ -75,12 +75,6 @@ int be_visitor_args_upcall_ss::visit_array (be_array *node)
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
 
-  // If we use it in conjunction with AMI Reply Handlers we do
-  // not want to generate declarations for IN arguments
-  if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_UPCALL_CS) 
-    return 0;
-
   os->indent ();
   switch (this->direction ())
     {
@@ -125,12 +119,6 @@ int be_visitor_args_upcall_ss::visit_interface (be_interface *)
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-  // If we use it in conjunction with AMI Reply Handlers we do
-  // not want to generate declarations for IN arguments
-  if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_UPCALL_CS) 
-    return 0;
-
   os->indent ();
   switch (this->direction ())
     {
@@ -165,12 +153,6 @@ int be_visitor_args_upcall_ss::visit_interface_fwd (be_interface_fwd *)
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-  // If we use it in conjunction with AMI Reply Handlers we do
-  // not want to generate declarations for IN arguments
-  if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_UPCALL_CS) 
-    return 0;
-
   os->indent ();
   switch (this->direction ())
     {
@@ -207,12 +189,6 @@ int be_visitor_args_upcall_ss::visit_valuetype (be_valuetype *)
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-  // If we use it in conjunction with AMI Reply Handlers we do
-  // not want to generate declarations for IN arguments
-  if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_UPCALL_CS) 
-    return 0;
-
   os->indent ();
   switch (this->direction ())
     {
@@ -247,12 +223,6 @@ int be_visitor_args_upcall_ss::visit_valuetype_fwd (be_valuetype_fwd *)
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-  // If we use it in conjunction with AMI Reply Handlers we do
-  // not want to generate declarations for IN arguments
-  if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_UPCALL_CS) 
-    return 0;
-
   os->indent ();
   switch (this->direction ())
     {
@@ -290,12 +260,6 @@ int be_visitor_args_upcall_ss::visit_predefined_type (be_predefined_type *node)
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-  // If we use it in conjunction with AMI Reply Handlers we do
-  // not want to generate declarations for IN arguments
-  if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_UPCALL_CS) 
-    return 0;
-
   os->indent ();
   // check if the type is an any
   if (node->pt () == AST_PredefinedType::PT_any)
@@ -363,12 +327,6 @@ int be_visitor_args_upcall_ss::visit_sequence (be_sequence *)
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-  // If we use it in conjunction with AMI Reply Handlers we do
-  // not want to generate declarations for IN arguments
-  if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_UPCALL_CS) 
-    return 0;
-
   os->indent ();
   switch (this->direction ())
     {
@@ -392,12 +350,6 @@ int be_visitor_args_upcall_ss::visit_string (be_string *)
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-  // If we use it in conjunction with AMI Reply Handlers we do
-  // not want to generate declarations for IN arguments
-  if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_UPCALL_CS) 
-    return 0;
-
   os->indent ();
   switch (this->direction ())
     {
@@ -463,12 +415,6 @@ int be_visitor_args_upcall_ss::visit_union (be_union *node)
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-  // If we use it in conjunction with AMI Reply Handlers we do
-  // not want to generate declarations for IN arguments
-  if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_UPCALL_CS) 
-    return 0;
-
   os->indent ();
   switch (this->direction ())
     {

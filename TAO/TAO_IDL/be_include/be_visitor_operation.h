@@ -59,4 +59,6 @@
 #include "be_visitor_operation/ami_handler_operation_ch.h"
 #include "be_visitor_operation/ami_handler_arglist.h"
 #include "be_visitor_operation/ami_handler_operation_cs.h"
+#include "be_visitor_operation/ami_handler_skeleton_cs.h"
+#include "be_visitor_operation/ami_handler_argument_marshal.h"
 #endif // TAO_BE_VISITOR_OPERATION_H

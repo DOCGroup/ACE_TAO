@@ -81,12 +81,6 @@ int be_visitor_args_vardecl_ss::visit_array (be_array *node)
   else
     bt = node;
 
-  // If we use it in conjunction with AMI Reply Handlers we do
-  // not want to generate declarations for IN arguments
-  if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS) 
-    return 0;
-  
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -128,12 +122,6 @@ int be_visitor_args_vardecl_ss::visit_enum (be_enum *node)
   else
     bt = node;
 
-  // If we use it in conjunction with AMI Reply Handlers we do
-  // not want to generate declarations for IN arguments
-  if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS) 
-    return 0;
-  
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -186,12 +174,6 @@ int be_visitor_args_vardecl_ss::visit_interface (be_interface *node)
   else
     bt = node;
 
-  // If we use it in conjunction with AMI Reply Handlers we do
-  // not want to generate declarations for IN arguments
-  if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS) 
-    return 0;
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -238,16 +220,6 @@ int be_visitor_args_vardecl_ss::visit_interface_fwd (be_interface_fwd *node)
     bt = this->ctx_->alias ();
   else
     bt = node;
-
-  // If we use it in conjunction with AMI Reply Handlers we do
-  // not want to generate declarations for IN arguments
-  if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS) 
-    return 0;
-
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
 
   switch (this->direction ())
     {
@@ -310,13 +282,6 @@ int be_visitor_args_vardecl_ss::visit_predefined_type (be_predefined_type *node)
     bt = this->ctx_->alias ();
   else
     bt = node;
-
-  // If we use it in conjunction with AMI Reply Handlers we do
-  // not want to generate declarations for IN arguments
-  if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS) 
-    return 0;
-
 
   // check if the type is an any
   if (node->pt () == AST_PredefinedType::PT_any)
@@ -402,12 +367,6 @@ int be_visitor_args_vardecl_ss::visit_sequence (be_sequence *node)
   else
     bt = node;
 
-  // If we use it in conjunction with AMI Reply Handlers we do
-  // not want to generate declarations for IN arguments
-  if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS) 
-    return 0;
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -437,12 +396,6 @@ int be_visitor_args_vardecl_ss::visit_string (be_string *)
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
                                                          // node
-  // If we use it in conjunction with AMI Reply Handlers we do
-  // not want to generate declarations for IN arguments
-  if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS) 
-    return 0;
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -486,12 +439,6 @@ int be_visitor_args_vardecl_ss::visit_structure (be_structure *node)
   else
     bt = node;
 
-  // If we use it in conjunction with AMI Reply Handlers we do
-  // not want to generate declarations for IN arguments
-  if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS) 
-    return 0;
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -533,12 +480,6 @@ int be_visitor_args_vardecl_ss::visit_union (be_union *node)
     bt = this->ctx_->alias ();
   else
     bt = node;
-
-  // If we use it in conjunction with AMI Reply Handlers we do
-  // not want to generate declarations for IN arguments
-  if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS) 
-    return 0;
 
   switch (this->direction ())
     {
@@ -615,12 +556,6 @@ int be_compiled_visitor_args_vardecl_ss::visit_interface (be_interface *node)
   else
     bt = node;
 
-  // If we use it in conjunction with AMI Reply Handlers we do
-  // not want to generate declarations for IN arguments
-  if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS) 
-    return 0;
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -648,13 +583,6 @@ int be_compiled_visitor_args_vardecl_ss::visit_interface_fwd (be_interface_fwd *
     bt = this->ctx_->alias ();
   else
     bt = node;
-
-  // If we use it in conjunction with AMI Reply Handlers we do
-  // not want to generate declarations for IN arguments
-  if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS) 
-    return 0;
-
 
   switch (this->direction ())
     {
@@ -687,12 +615,6 @@ int be_compiled_visitor_args_vardecl_ss::visit_valuetype (be_valuetype *node)
   else
     bt = node;
 
-  // If we use it in conjunction with AMI Reply Handlers we do
-  // not want to generate declarations for IN arguments
-  if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS) 
-    return 0;
-
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -721,12 +643,6 @@ be_compiled_visitor_args_vardecl_ss::visit_valuetype_fwd (be_valuetype_fwd *node
     bt = this->ctx_->alias ();
   else
     bt = node;
-
-  // If we use it in conjunction with AMI Reply Handlers we do
-  // not want to generate declarations for IN arguments
-  if (this->direction () == AST_Argument::dir_IN
-      && this->ctx_->state() == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS) 
-    return 0;
 
   switch (this->direction ())
     {

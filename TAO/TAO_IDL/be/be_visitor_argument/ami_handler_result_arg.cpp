@@ -45,7 +45,7 @@ int
 be_visitor_args_ami_handler_result_arg::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  *os << "const " << this->type_name (node) << " _tao_ami_result, ";
+  *os << "const " << this->type_name (node) << " _tao_retval, ";
   return 1;
 }
 
@@ -53,7 +53,7 @@ int
 be_visitor_args_ami_handler_result_arg::visit_enum (be_enum *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  *os << this->type_name (node) << " _tao_ami_result";
+  *os << this->type_name (node) << " _tao_retval";
   return 1;
 }
 
@@ -61,7 +61,7 @@ int
 be_visitor_args_ami_handler_result_arg::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  *os << this->type_name (node, "_ptr") << " _tao_ami_result";
+  *os << this->type_name (node, "_ptr") << " _tao_retval";
   return 1;
 }
 
@@ -69,7 +69,7 @@ int
 be_visitor_args_ami_handler_result_arg::visit_interface_fwd (be_interface_fwd *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  *os << this->type_name (node, "_ptr") << " _tao_ami_result";
+  *os << this->type_name (node, "_ptr") << " _tao_retval";
   return 1;
 }
 
@@ -77,7 +77,7 @@ int
 be_visitor_args_ami_handler_result_arg::visit_native (be_native *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  *os << this->type_name (node) << " _tao_ami_result";
+  *os << this->type_name (node) << " _tao_retval";
   return 1;
 }
 
@@ -95,15 +95,15 @@ be_visitor_args_ami_handler_result_arg::visit_predefined_type (be_predefined_typ
   // Check if the type is an any.
   if (node->pt () == AST_PredefinedType::PT_any)
     {
-      *os << "const " << this->type_name (node) << " &" << " _tao_ami_result";  
+      *os << "const " << this->type_name (node) << " &" << " _tao_retval";  
     }
   else if (node->pt () == AST_PredefinedType::PT_pseudo) // e.g., CORBA::Object
     {
-      *os << this->type_name (node, "_ptr") << " _tao_ami_result";
+      *os << this->type_name (node, "_ptr") << " _tao_retval";
     }
   else 
     {
-      *os << this->type_name (node) << " _tao_ami_result";
+      *os << this->type_name (node) << " _tao_retval";
     }
 
   return 1;
@@ -113,7 +113,7 @@ int
 be_visitor_args_ami_handler_result_arg::visit_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
-  *os << "const " << this->type_name (node) << " &" << " _tao_ami_result";
+  *os << "const " << this->type_name (node) << " &" << " _tao_retval";
   return 1;
 }
 
@@ -121,7 +121,7 @@ int
 be_visitor_args_ami_handler_result_arg::visit_string (be_string *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
-  *os << "const char *" << " _tao_ami_result";
+  *os << "const char *" << " _tao_retval";
   return 1;
 }
 
@@ -129,7 +129,7 @@ int
 be_visitor_args_ami_handler_result_arg::visit_structure (be_structure *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
-  *os << "const " << this->type_name (node) << " &" << " _tao_ami_result";
+  *os << "const " << this->type_name (node) << " &" << " _tao_retval";
   return 1;
 }
 
@@ -137,7 +137,7 @@ int
 be_visitor_args_ami_handler_result_arg::visit_union (be_union *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
-  *os << "const " << this->type_name (node) << " &" << " _tao_ami_result";
+  *os << "const " << this->type_name (node) << " &" << " _tao_retval";
   return 1;
 }
 
@@ -164,7 +164,7 @@ int
 be_visitor_args_ami_handler_result_arg::visit_valuetype (be_valuetype *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
-  *os << this->type_name (node) << " *" << " _tao_ami_result";
+  *os << this->type_name (node) << " *" << " _tao_retval";
   return 1;
 } 
 
@@ -172,7 +172,7 @@ int
 be_visitor_args_ami_handler_result_arg::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
-  *os << "const " << this->type_name (node) << " *" << " _tao_ami_result";
+  *os << "const " << this->type_name (node) << " *" << " _tao_retval";
   return 1;
 }
 
