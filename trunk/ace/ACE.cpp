@@ -3238,7 +3238,7 @@ ACE::get_ip_interfaces (size_t &count,
   // what it returned, so increase the num_ifs by one.
   ++num_ifs;
 
-  struct ifreq *ifs;
+  struct ifreq *ifs = 0;
   ACE_NEW_RETURN (ifs,
                   struct ifreq[num_ifs],
                   -1);
