@@ -1,8 +1,8 @@
-#include "tao/ValueFactory_Map.h"
-#include "tao/ValueFactory.h"
+#include "ValueFactory_Map.h"
+#include "ValueFactory.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/ValueFactory_Map.i"
+# include "ValueFactory_Map.inl"
 #endif /* ! __ACE_INLINE__ */
 
 

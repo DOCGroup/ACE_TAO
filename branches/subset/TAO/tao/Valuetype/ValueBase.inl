@@ -8,14 +8,18 @@ ACE_INLINE void
 CORBA::add_ref (CORBA::ValueBase *val)
 {
   if (val)
-    val->_add_ref ();
+    {
+      val->_add_ref ();
+    }
 }
 
 ACE_INLINE void
 CORBA::remove_ref (CORBA::ValueBase *val)
 {
   if (val)
-    val->_remove_ref ();
+    {
+      val->_remove_ref ();
+    }
 }
 
 // ===========================================================
@@ -290,7 +294,7 @@ TAO_OBV_GIOP_Flags::is_value_tag (CORBA::ULong tag)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags:: has_codebase_url(CORBA::ULong tag)
+TAO_OBV_GIOP_Flags:: has_codebase_url (CORBA::ULong tag)
 {
   return (CORBA::Boolean) (tag & Codebase_url);
 }

@@ -98,6 +98,18 @@ SOURCE=.\AbstractBase.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ValueBase.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ValueFactory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ValueFactory_Map.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Valuetype_Adapter_Impl.cpp
 # End Source File
 # End Group
@@ -107,6 +119,18 @@ SOURCE=.\Valuetype_Adapter_Impl.cpp
 # Begin Source File
 
 SOURCE=.\AbstractBase.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ValueBase.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ValueFactory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ValueFactory_Map.h
 # End Source File
 # Begin Source File
 
@@ -123,6 +147,18 @@ SOURCE=.\valuetype_export.h
 # Begin Source File
 
 SOURCE=.\AbstractBase.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\ValueBase.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\ValueFactory.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\ValueFactory_Map.inl
 # End Source File
 # End Group
 # Begin Group "Reosurce Files"

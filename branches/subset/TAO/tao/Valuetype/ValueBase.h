@@ -16,6 +16,7 @@
 
 #include "ace/pre.h"
 
+#include "valuetype_export.h"
 #include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -27,6 +28,10 @@
 #include "ace/Basic_Types.h"           /* for ptr_arith_t */
 #include "ace/Synch_T.h"
 
+#if defined (TAO_EXPORT_MACRO)
+#undef TAO_EXPORT_MACRO
+#endif
+#define TAO_EXPORT_MACRO TAO_Valuetype_Export
 
 namespace CORBA
 {
@@ -44,7 +49,7 @@ namespace CORBA
    *
    * @see CORBA 2.3 - Section 20.17.5
    */
-  class TAO_Export ValueBase
+  class TAO_Valuetype_Export ValueBase
   {
   public:
     typedef ValueBase* _ptr_type;
@@ -122,7 +127,7 @@ namespace CORBA
    *
    * @brief _var class for ValueBase
    */
-  class TAO_Export ValueBase_var
+  class TAO_Valuetype_Export ValueBase_var
   {
   public:
     ValueBase_var (void);
@@ -162,7 +167,7 @@ namespace CORBA
    *
    * _out class for CORBA::ValueBase
    */
-  class TAO_Export ValueBase_out
+  class TAO_Valuetype_Export ValueBase_out
   {
   public:
     ValueBase_out (CORBA::ValueBase *&);
@@ -186,7 +191,7 @@ namespace CORBA
    *
    * Default mix-in for reference count of a valuetype.
    */
-  class TAO_Export DefaultValueRefCountBase
+  class TAO_Valuetype_Export DefaultValueRefCountBase
     : public virtual ValueBase
   {
   public:
@@ -226,7 +231,7 @@ namespace CORBA
  *
  * @see CORBA 2.3 -- Section 15.3.4
  */
-class TAO_Export TAO_OBV_GIOP_Flags
+class TAO_Valuetype_Export TAO_OBV_GIOP_Flags
 {
 public:
   static const CORBA::ULong Value_tag_base;
@@ -250,14 +255,14 @@ public:
   static CORBA::Boolean is_end_tag            (CORBA::ULong);
 };
 
-TAO_Export CORBA::Boolean
+TAO_Valuetype_Export CORBA::Boolean
 operator<< (TAO_OutputCDR&, const CORBA::ValueBase *);
 
-TAO_Export CORBA::Boolean
+TAO_Valuetype_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, CORBA::ValueBase *&);
 
 #if defined (__ACE_INLINE__)
-# include "tao/ValueBase.i"
+# include "ValueBase.inl"
 #endif /* __ACE_INLINE__*/
 
 #include "ace/post.h"

@@ -39,8 +39,20 @@ public:
   virtual ~TAO_Valuetype_Adapter_Impl (void);
 
   virtual CORBA::Object_ptr abstractbase_to_object (
-      CORBA::AbstractBase_ptr p
+      CORBA::AbstractBase_ptr
     );
+
+  virtual CORBA::ULong type_info_single (void) const;
+
+  virtual TAO_ValueFactory_Map *valuefactory_map_instance (void);
+
+  virtual int vf_map_rebind (TAO_ValueFactory_Map *,
+                             const char *,
+                             CORBA::ValueFactory &);
+
+  virtual int vf_map_find (TAO_ValueFactory_Map *,
+                           const char *,
+                           CORBA::ValueFactory &);
     
   // Used to force the initialization of the ORB code.
   static int Initializer (void);

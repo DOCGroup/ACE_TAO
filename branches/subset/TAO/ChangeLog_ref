@@ -1,3 +1,44 @@
+Wed Apr 30 21:33:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ORB.cpp:
+        * tao/TAO.dsp:
+        * tao/Valuetype_Adapter.h:
+        * tao/append.cpp:
+        * tao/corba.h:
+        * tao/skip.cpp:
+        * tao/Valuetype/AbstractBase.cpp:
+        * tao/Valuetype/TAO_Valuetype.dsp
+        * tao/Valuetype/Valuetype_Adapter_Impl.cpp:
+        * tao/Valuetype/Valuetype_Adapter_Impl.h:
+
+	  Exisiting files modified toward separating
+	  valuetype-related files into a library.
+
+        * tao/Valuetype/ValueBase.cpp:
+        * tao/Valuetype/ValueBase.h:
+        * tao/Valuetype/ValueBase.inl:
+        * tao/Valuetype/ValueFactory.cpp:
+        * tao/Valuetype/ValueFactory.h:
+        * tao/Valuetype/ValueFactory.inl:
+        * tao/Valuetype/ValueFactory_Map.cpp:
+        * tao/Valuetype/ValueFactory_Map.h:
+        * tao/Valuetype/ValueFactory_Map.inl:
+
+	  Files moved from TAO/tao and/or renamed.
+
+        * tao/ValueBase.cpp:
+        * tao/ValueBase.h:
+        * tao/ValueBase.i:
+        * tao/ValueFactory.cpp:
+        * tao/ValueFactory.h:
+        * tao/ValueFactory.i:
+        * tao/ValueFactory_Map.cpp:
+        * tao/ValueFactory_Map.h:
+        * tao/ValueFactory_Map.i:
+
+	  Files removed from TAO and transferred to
+	  the TAO_Valuetype library.
+
 Wed Apr 30 18:11:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_interface.cpp:

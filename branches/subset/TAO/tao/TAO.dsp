@@ -967,18 +967,6 @@ SOURCE=.\TypeCodeFactory_Adapter.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ValueBase.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ValueFactory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ValueFactory_Map.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Valuetype_Adapter.cpp
 # End Source File
 # Begin Source File
@@ -1848,18 +1836,6 @@ SOURCE=.\TypeCodeFactory_Adapter.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ValueBase.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ValueFactory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ValueFactory_Map.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Valuetype_Adapter.h
 # End Source File
 # Begin Source File
@@ -2445,18 +2421,6 @@ SOURCE=.\Transport_Descriptor_Interface.inl
 # Begin Source File
 
 SOURCE=.\typecode.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ValueBase.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ValueFactory.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ValueFactory_Map.i
 # End Source File
 # End Group
 # Begin Group "Resource files"

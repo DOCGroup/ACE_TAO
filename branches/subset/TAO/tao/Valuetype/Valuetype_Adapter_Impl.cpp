@@ -2,6 +2,8 @@
 
 #include "Valuetype_Adapter_Impl.h"
 #include "AbstractBase.h"
+#include "ValueBase.h"
+#include "ValueFactory_Map.h"
 #include "tao/ORB_Core.h"
 
 ACE_RCSID (Valuetype,
@@ -18,6 +20,36 @@ TAO_Valuetype_Adapter_Impl::abstractbase_to_object (
   )
 {
   return p->_to_object ();
+}
+
+CORBA::ULong
+TAO_Valuetype_Adapter_Impl::type_info_single (void) const
+{
+  return TAO_OBV_GIOP_Flags::Type_info_single;
+}
+
+TAO_ValueFactory_Map *
+TAO_Valuetype_Adapter_Impl::valuefactory_map_instance (void)
+{
+  return TAO_VALUEFACTORY_MAP::instance ();
+}
+    
+int 
+TAO_Valuetype_Adapter_Impl::vf_map_rebind (TAO_ValueFactory_Map *map,
+                                           const char *repo_id,
+                                           CORBA::ValueFactory &factory)
+{
+  return map->rebind (repo_id,
+                      factory);
+}
+
+int 
+TAO_Valuetype_Adapter_Impl::vf_map_find (TAO_ValueFactory_Map *map,
+                                         const char *repo_id,
+                                         CORBA::ValueFactory &factory)
+{
+  return map->find (repo_id,
+                    factory);
 }
     
 // *********************************************************************

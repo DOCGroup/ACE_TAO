@@ -1,10 +1,10 @@
 // "$Id$"
 
 #include "AbstractBase.h"
-#include "tao/ValueBase.h"
+#include "ValueBase.h"
+#include "ValueFactory.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"
-#include "tao/ValueFactory.h"
 #include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)

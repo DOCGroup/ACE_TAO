@@ -16,11 +16,14 @@
 #include "ace/pre.h"
 
 #include "ace/Service_Object.h"
-#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/corbafwd.h"
+
+class TAO_ValueFactory_Map;
 
 /**
  * @class TAO_Valuetype_Adapter
@@ -39,6 +42,18 @@ public:
   virtual CORBA::Object_ptr abstractbase_to_object (
       CORBA::AbstractBase_ptr p
     ) = 0;
+
+  virtual CORBA::ULong type_info_single (void) const = 0;
+
+  virtual TAO_ValueFactory_Map * valuefactory_map_instance (void) = 0;
+
+  virtual int vf_map_rebind (TAO_ValueFactory_Map *,
+                             const char *,
+                             CORBA::ValueFactory &) = 0;
+
+  virtual int vf_map_find (TAO_ValueFactory_Map *,
+                           const char *,
+                           CORBA::ValueFactory &) = 0;
 };
 
 #include "ace/post.h"
