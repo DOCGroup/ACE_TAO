@@ -1,7 +1,10 @@
 # $Id$
 #
-# NOTE: the above file from ACE 4.6 has been modified by Mike P. to get rid of 
-# thread related stuff until we can obtain fsu-threads library.
+# Note 1: the above file from ACE 4.6 has been modified by Mike P. to get 
+# rid of thread related stuff until we can obtain fsu-threads library.
+#
+# Note 2: You must setup FSU_PTHREADS_DIR environment var to your FSU
+# pthreads directory.  
 
 # Requires gcc 2.7.2 Skunkware 97
 # to produce libACE.so correctly changed the specs file for gcc 2.7.2
