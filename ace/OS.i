@@ -7114,10 +7114,13 @@ ACE_INLINE int
 ACE_OS::thr_getspecific (ACE_OS_thread_key_t key, void **data)
 {
   ACE_OS_TRACE ("ACE_OS::thr_getspecific");
-#  if defined (ACE_HAS_PACE)
-  *data = ::pace_pthread_getspecific (key);
-  return 0;
-#  elif defined (ACE_HAS_THREADS)
+// If we are using TSS emulation then we shuld use ACE's implementation
+//  of it and not make any PACE calls.
+//#  if defined (ACE_HAS_PACE)
+//  *data = ::pace_pthread_getspecific (key);
+//  return 0;
+//#  elif defined (ACE_HAS_THREADS)
+#  if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getspecific (key, data), ace_result_), int, -1);
 #   elif defined (ACE_HAS_PTHREADS)
@@ -7166,7 +7169,8 @@ ACE_OS::thr_getspecific (ACE_OS_thread_key_t key, void **data)
   ACE_UNUSED_ARG (key);
   ACE_UNUSED_ARG (data);
   ACE_NOTSUP_RETURN (-1);
-#  endif /* ACE_HAS_PACE */
+//#  endif /* ACE_HAS_PACE */
+#  endif /* ACE_HAS_THREADS */
 }
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
@@ -7247,7 +7251,9 @@ ACE_INLINE int
 ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 {
   // ACE_OS_TRACE ("ACE_OS::thr_getspecific");
-#if defined (ACE_HAS_PACE)
+  // If we are using TSS emulation then we shuld use ACE's implementation
+  //  of it and not make any PACE calls.
+#if defined (ACE_HAS_PACE) && !defined (ACE_HAS_TSS_EMULATION)
   *data = ::pace_pthread_getspecific (key);
   return 0;
 #elif defined (ACE_HAS_THREADS)
@@ -7314,7 +7320,7 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
   ACE_UNUSED_ARG (key);
   ACE_UNUSED_ARG (data);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_PACE */
+#endif /* ACE_HAS_PACE && !ACE_HAS_TSS_EMULATION */
 }
 
 ACE_INLINE int
