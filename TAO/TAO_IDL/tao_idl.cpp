@@ -139,7 +139,7 @@ DRV_fork (void)
           ACE_OS::exit (0);
         }
 
-      if (child_pid == -1)
+      if (child_pid == ACE_INVALID_PID)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("IDL: spawn failed\n")));

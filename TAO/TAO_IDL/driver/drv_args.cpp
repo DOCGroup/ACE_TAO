@@ -413,7 +413,7 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-     ACE_TEXT (" -v\t\t\ttraces compilation stages\n")
+      ACE_TEXT (" -v\t\t\ttraces compilation stages\n")
    ));
   ACE_DEBUG ((
       LM_DEBUG,
