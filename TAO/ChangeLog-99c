@@ -1,3 +1,9 @@
+Sun Jun 27 17:15:45 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp: 
+	  Replaced ACE_TRY_ENV.print_exceptions with
+	  ACE_PRINT_EXCEPTION. Thanks to Carlos for reporting these.
+	
 Sun Jun 27 16:57:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/IIOP_Connect.cpp:
