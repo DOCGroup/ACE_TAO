@@ -1,3 +1,82 @@
+Wed May 23 21:27:28 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_root.cpp:
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/ast/ast_string.cpp:
+        * TAO_IDL/be/be_array.cpp:
+        * TAO_IDL/be/be_predefined_type.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_string.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/fe/fe_init.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/include/utl_identifier.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_identifier.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Moved the stripping of the leading underscore (if any)
+          of an identifier from the lexer to the Identifier
+          constructor, and added a flag to the Identifier class
+          to indicate that the name had been 'escaped' in the IDL
+          file. Escaping is the workaround described in the spec
+          for legacy IDL files containing names that have since
+          become IDL keywords. Escaping turns off keyword checking,
+          but the generated name must be stripped of the underscore.
+          Previously, checking for a clash with an IDL keyword in
+          the IDL compiler was case-sensitive. That part is still
+          there, since an exact match causes the lexer to return
+          a token of the wrong type, leading to a 'syntax error'
+          message. Case-insensitive checking has now been added,
+          just before the node is added to the AST, and it is 
+          turned off by a check of the new 'escaped' flag in class
+          Identifier. Note that a case-sensitive match with a C++
+          keyword will, as defined by the spec, cause '_cxx_' to
+          be prepended to the generated name - this is unchanged
+          in the IDL compiler. Thanks to Paul Calabrese
+          <calabrese_p@ociweb.com> for discovering and reporting
+          this bug.
+
+          Also removed three default arguments from the Identifier
+          class constructor that have never been used.
+
+        * tao/orb.idl:
+
+          Removed forward declarations of interface Object and
+          interface Exception from the file. They are unused
+          and undefined, and they also cause problems with the
+          new case-insensitive checking for IDL keyword class
+          described above, if orb.idl is included in another
+          IDL file. The spec does not require anything in
+          particular to be in orb.idl - it only requires that
+          it be there.
+
+        * orbsvcs/orbsvcs/CosLifeCycle.idl:
+
+          Placed a leading underscore in front of the name "Factory",
+          now an IDL keyword.
+
+        * orbsvcs/orbsvcs/FT_CORBA.idl
+
+          Placed a leading underscore in front of the name "factory",
+          now an IDL keyword.
+
 Wed May 23 18:53:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tao/RTPOA.pidl:
