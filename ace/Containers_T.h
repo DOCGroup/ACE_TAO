@@ -33,7 +33,7 @@
 // Backwards compatibility, please include "ace/Unbounded_Set.h" directly.
 #include "ace/Unbounded_Set.h"
 
-// Backwards compatibility, please include "ace/Unbounded_Set.h" directly.
+// Backwards compatibility, please include "ace/Unbounded_Queue.h" directly.
 #include "ace/Unbounded_Queue.h"
 
 class ACE_Allocator;
