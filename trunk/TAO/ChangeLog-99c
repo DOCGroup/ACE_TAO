@@ -1,3 +1,15 @@
+Wed Jun 16 14:57:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynUnion_i.h:
+	* tao/DynUnion_i.cpp:
+	* tao/DynUnion_i_T.h:
+	* tao/DynUnion_i_T.cpp:
+	  Removed the 'const' from the Any args of the
+	  DynUnion extractor functions, both template
+	  and specialized versions. Thanks to Steve Huston
+	  <shuston@riverace.com> for reporting the errors 
+	  with AIX 4.3 w/ IBM C/C++ 3.6.4.
+
 Wed Jun 16 14:00:53 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
