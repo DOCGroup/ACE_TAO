@@ -120,7 +120,7 @@ HTTP_Server::init (int argc, char *argv[])
   // Document this function
 {
   // Ignore signals generated when a connection is broken unexpectedly.
-  ACE_Sig_Action sig (ACE_SignalHandler (SIG_IGN), SIGPIPE);
+  ACE_Sig_Action sig ((ACE_SignalHandler) SIG_IGN, SIGPIPE);
   ACE_UNUSED_ARG (sig);
 
   // Parse arguments which sets the initial state.
