@@ -222,6 +222,10 @@ subproject Message_Queue_Test_Ex icc "Message_Queue_Test_Ex.icc", ics "Message_Q
 {
 }
 
+subproject Multihomed_INET_Addr_Test icc "Multihomed_INET_Addr_Test.icc", ics "Multihomed_INET_Addr_Test.ics"
+{
+}
+
 subproject Naming_Test icc "Naming_Test.icc", ics "Naming_Test.ics"
 {
 }

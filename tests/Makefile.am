@@ -135,6 +135,7 @@ noinst_PROGRAMS = \
   Message_Queue_Test \
   Message_Queue_Test_Ex \
   Multicast_Test \
+  Multihomed_INET_Addr_Test \
   Notify_Performance_Test \
   OS_Test \
   Object_Manager_Test \
@@ -327,6 +328,9 @@ Message_Queue_Test_Ex_SOURCES = Message_Queue_Test_Ex.cpp \
                                 Message_Queue_Test_Ex.h
 
 Multicast_Test_SOURCES = Multicast_Test.cpp
+
+Multihomed_INET_Addr_Test_SOURCES = Multihomed_INET_Addr_Test.cpp \
+                                    Multihomed_INET_Addr_Test.h
 
 Naming_Test_SOURCES = Naming_Test.cpp
 
