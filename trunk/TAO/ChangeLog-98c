@@ -1,3 +1,26 @@
+Wed Aug 12 14:40:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp
+	  orbsvcs/tests/EC_Mcast/EC_Mcast.cpp
+	  orbsvcs/tests/Sched_Conf/Sched_Conf.cpp:
+
+	  Added config info to calls to compute_scheduling and dump_schedule
+
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp
+
+	  Added config info to calls to compute_scheduling, dump_schedule,
+	  use_runtime, and ACE_Runtime_Scheduler::ACE_Runtime_Scheduler
+
+	* orbsvcs/tests/EC_Multiple/Scheduler_Runtime1.h
+	  orbsvcs/tests/EC_Multiple/Scheduler_Runtime2.h
+	  orbsvcs/tests/EC_Multiple/Scheduler_Runtime_Dynamic.h:
+
+	  Added config info array and size value
+	
+	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: 
+
+	  Added missing ;'s to output
+
 Wed Aug 12 14:39:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Stub.h: 
