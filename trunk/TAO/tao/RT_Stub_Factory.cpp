@@ -2,6 +2,8 @@
 #include "RT_Stub_Factory.h"
 #include "RT_Stub.h"
 
+#if (TAO_HAS_RT_CORBA == 1)
+
 ACE_RCSID(tao, RT_TAO_Stub_Factory, "$Id$")
 
 TAO_RT_Stub_Factory::~TAO_RT_Stub_Factory (void)
@@ -28,3 +30,5 @@ TAO_RT_Stub_Factory::create_stub (const char *repository_id,
 
   return retval;
 }
+
+#endif /* TAO_HAS_RT_CORBA == 1 */

@@ -18,6 +18,8 @@
 #include "tao/corbafwd.h"
 #include "tao/Stub.h"
 
+#if (TAO_HAS_RT_CORBA == 1)
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -153,7 +155,8 @@ private:
 #endif /* __GNUG__ */
 };
 
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
 
 #include "ace/post.h"
 #endif /* TAO_RT_STUB_FACTORY_H_ */
-
