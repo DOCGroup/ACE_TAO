@@ -24,7 +24,7 @@ Sun May 26 22:18:03 UTC 2002  Don Hinton  <dhinton@ieee.org>
 	  the test into handle_test() and basic_test() methods, as well as
 	  adding some ACE_TRACE statements.
 	
-	* ace/Singleton.{h,cpp}:
+	* ace/Singleton.{h,i,cpp}:
 
 	  Made ACE_DLL_Singleton_T not inherit from ACE_Singleton and
 	  added all missing methods.  Added ACE_TRACE statements.  
