@@ -536,8 +536,12 @@ namespace TAO
        * to do things. But a need to be compliant is forcing us into
        * this.
        */
-      if ((ACE_OS_String::strcmp (type_id.in (),
-                                  "TRANSIENT") == 0) &&
+      if (((ACE_OS_String::strcmp (type_id.in (),
+                                  "TRANSIENT") == 0) ||
+           (ACE_OS_String::strcmp (type_id.in (),
+                                  "OBJ_ADAPTER") == 0) ||
+           (ACE_OS_String::strcmp (type_id.in (),
+                                  "NO_RESPONSE") == 0)) &&
           (CORBA::CompletionStatus) completion != CORBA::COMPLETED_YES)
         {
          Invocation_Status s =
