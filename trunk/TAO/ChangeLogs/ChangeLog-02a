@@ -1,3 +1,44 @@
+Wed Mar  1 17:27:45 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IIOP_Acceptor.h (hostname):
+
+	  Added new helper method to the TAO_IIOP_Acceptor class.
+
+	* tao/IIOP_Acceptor.cpp (open_default):
+
+	  Make sure number of probed network interfaces returned from
+	  ACE::get_ip_interfaces() is greater than zero.  If no network
+	  interfaces were found then assume one exists and use the default
+	  interface.  The use of the default interface in this situation
+	  basically reverts back to the pre-multi-homed support behavior,
+	  so it should always work on properly configured systems.
+
+	  (open, open_default):
+
+	  Use ACE_INET_Addr::set() to initialize the TAO_IIOP_Acceptor
+	  member addr(s), instead of performing memberwise assignment.
+
+	  Note that the open() method was missing a copy/assignment
+	  altogether.  This buglet was introduced when I added support for
+	  multi-homed hosts.  The only affect this bug should have had is
+	  to break the check for collocation in
+	  TAO_IIOP_Acceptor::is_collocated().
+
+	  (open_i):
+
+	  Cosmetic update.
+
+	  (hostname):
+
+	  Added this helper method.  It factors out the code common to
+	  both the open() and the open_default() methods that cache the
+	  hostname(s) extracted from the ACE_INET_Addr(s).
+
+	* tao/ORB_Core.cpp (TAO_ORB_Core):
+	* tao/Stub.h:
+
+	  Cosmetic updates.
+
 Wed Mar  1 17:30:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
