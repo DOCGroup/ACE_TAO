@@ -3,7 +3,7 @@ distributed logging server described in several papers in the C++
 Report (which can be obtained via the following WWW URLs:
 http://www.cs.wustl.edu/~schmidt/{Reactor1-93.ps.gz,Reactor2-93.ps.gz}).
 
-The example consists of the following two directories:
+The example consists of the following directories:
 
 	. client
 

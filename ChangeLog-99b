@@ -1,3 +1,10 @@
+Tue Jul 27 23:25:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* netsvcs/lib/Server_Logging_Handler_T.cpp (open): Updated a
+	  comment to point out that we use a thread-per-connection
+ 	  concurrency model.  Thanks to Raghu Nambiath
+ 	  <raghun@wipinfo.soft.net> for reporting this.	  
+
 Tue Jul 27 21:05:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_tru64_cxx.GNU (ACE_DU_SUBVERSION):
