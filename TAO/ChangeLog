@@ -32,10 +32,10 @@ Thu May  1 09:51:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
 
           My recent additions to typedef code generation were generating
-          a scoped name for both the type and the alias. This was 
+          a scoped name for both the type and the alias. This was
           incorrect, changed the alias generation to use the local name.
           Thanks to Simon McQueen <sm@prismtechnologies.com> for
-          pointing out the problems the error was causing in 
+          pointing out the problems the error was causing in
           CosLoadBalancing and the logging service libraries.
 
 Thu May  1 08:37:49 2003  Chad Elliott  <elliott_c@ociweb.com>
