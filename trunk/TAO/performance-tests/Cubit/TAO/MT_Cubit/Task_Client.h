@@ -150,9 +150,6 @@ public:
   char *one_ior_;
   // Ior array used if utilization test is run.
 
-  u_int use_name_service_;
-  // Flag that say if we are using the or not the name service.
-
   u_int one_to_n_test_;
   // indicates whether we are running the "1 to n" test, which has 1
   // low priority servant and n low priority clients.

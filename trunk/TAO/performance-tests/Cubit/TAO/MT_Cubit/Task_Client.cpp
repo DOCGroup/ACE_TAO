@@ -35,7 +35,6 @@ Task_State::Task_State (void)
     shutdown_ (0),
     oneway_ (0),
     one_ior_ (0),
-    use_name_service_ (1),
     one_to_n_test_ (0),
     context_switch_test_ (0),
     iors_ (0),
@@ -58,7 +57,7 @@ Task_State::Task_State (void)
 int
 Task_State::parse_args (int argc,char *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "U:mu:sn:t:d:rxof:g:1cl");
+  ACE_Get_Opt opts (argc, argv, "U:mu:n:t:d:rxof:g:1cl");
   int c;
 
   while ((c = opts ()) != -1)
@@ -80,9 +79,6 @@ Task_State::parse_args (int argc,char *argv[])
     case 'u':
       use_utilization_test_ = 1;
       loop_count_ = util_time_ = ACE_OS::atoi (opts.optarg);
-      break;
-    case 's':
-      use_name_service_ = 0;
       break;
     case 'f':
       ior_file_ = ACE_OS::strdup (opts.optarg);

@@ -11,6 +11,9 @@ Thu Oct 15 20:08:36 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/Makefile:
 		Removed liborbsvcs from the LD_LIBS.
+
+	* performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit_Test:
+		Removed -s option for server and client.
 	
 Thu Oct 15 17:29:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
