@@ -1,3 +1,8 @@
+Mon Jun 29 11:05:03 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/encode.cpp: 
+	  Removed unused variable.
+
 Mon Jun 29 11:00:26 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:

@@ -1273,8 +1273,6 @@ TAO_Marshal_WString::encode (CORBA::TypeCode_ptr tc,
                              void *context,
                              CORBA::Environment &env)
 {
-  CORBA::Boolean continue_encoding = CORBA::B_TRUE;
-
   CORBA::WChar *str = *(CORBA::WChar **) data;
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
 
