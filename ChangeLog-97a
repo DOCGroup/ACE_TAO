@@ -1,3 +1,8 @@
+Sun Jun  8 11:39:06 1997  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* ace/Token.h: Added some no-op method for ACE_Token so that it
+ 	  will still compile even if ACE_HAS_THREADS isn't defined.
+
 Sun Jun  8 01:37:52 1997  Nanbor Wang  <nw1@siesta.cs.wustl.edu>
 
 	* examples/Log_Msg/Log_Msg.{dsp,dsw}: Added project file and
