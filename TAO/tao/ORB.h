@@ -781,13 +781,6 @@ public:
   // this is typically eventually given to <string_to_object()> as an
   // argument.
 
-  virtual int _register_collocation (ACE_Addr &) = 0;
-  // @@ Should I use ACE_Addr instead of void *?
-  // Register an "end-point" where the collocated objects can be
-  // found.  Each type of ORB, e. g., IIOP ORB must implement this.
-  // Returns 0 if the endpoint gets register properly, non-zero
-  // otherwise.
-
   virtual TAO_ServantBase *_get_collocated_servant (STUB_Object *p) = 0;
   // Return the object pointer of an collocated object it there is
   // one, otherwise, return 0.  Each type of ORB, e. g., IIOP ORB,

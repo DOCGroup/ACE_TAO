@@ -138,6 +138,7 @@ CORBA_ORB::open (void)
     return -1;
 
   ocp->orb_params ()->addr (ocp->addr ());
+  ocp->add_to_collocation_table ();
 
   return 0;
 }

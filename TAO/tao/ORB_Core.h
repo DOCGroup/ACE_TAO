@@ -33,6 +33,46 @@ typedef ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler>
 typedef ACE_NOOP_Concurrency_Strategy<TAO_Client_Connection_Handler>
         TAO_NULL_ACTIVATION_STRATEGY;
 
+
+class TAO_COLTBL_Lock : public ACE_Lock
+{
+  // = TITLE
+  //    A specialized lock class to facilitate using different lock in
+  //    the global collocation table at run time.
+  //
+  // = DESCRIPTION
+  //    Because the lock used in ACE_Hash_Map_Manager is template
+  //    parameterized, we can only choose the lock to use in it at
+  //    compile time which does not give us enough flexibility.  This
+  //    class uses the Bridge pattern to relay the operations to the
+  //    lock of our choice.
+
+public:
+  TAO_COLTBL_Lock (void);
+  // Ctor gets the lock from server resource factory.
+
+  virtual ~TAO_COLTBL_Lock (void);
+  // Dtor deallocate the lock.
+
+  // = Lock/unlock operations.
+
+  virtual int remove (void);
+  virtual int acquire (void);
+  virtual int tryacquire (void);
+  virtual int release (void);
+  virtual int acquire_read (void);
+  virtual int acquire_write (void);
+  virtual int tryacquire_read (void);
+  virtual int tryacquire_write (void);
+  void dump () const;
+
+private:
+  static ACE_Lock *coltbl_lock_;
+};
+
+typedef ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA*, TAO_COLTBL_Lock>
+        TAO_GLOBAL_COLTBL;
+
 // Forward decl.
 class TAO_Resource_Factory;
 
@@ -119,6 +159,16 @@ public:
 
   TAO_Server_Strategy_Factory *server_factory (void);
   // Returns pointer to the server factory.
+
+  CORBA::Boolean using_collocation (void);
+  // Check if we are optimizing collocation objects.
+
+  int add_to_collocation_table (void);
+  // Added this ORB into collocation table.
+
+  TAO_POA *get_collocated_poa (ACE_INET_Addr &addr);
+  // See if we have a collocated address, if yes, return the POA
+  // associated with the address.
 
 private:
   int init (int& argc, char ** argv);
@@ -213,6 +263,10 @@ private:
   CORBA::Boolean server_factory_from_service_config_;
   // TRUE if <server_factory_> was obtained from the Service
   // Configurator.
+
+  CORBA::Boolean opt_for_collocation_;
+  // TRUE if we want to take advantage of collocation optimization in
+  // this ORB.
 
   char *preconnections_;
   // A string of comma-separated <{host}>:<{port}> pairs used to
@@ -317,6 +371,11 @@ public:
   // Return a pointer to an ACE_Allocator used for allocating memory
   // within the ORB.
 
+  TAO_GLOBAL_COLTBL *get_global_collocation_table (void);
+  // Get the global collocation table.  Return the pointer to the
+  // global collocation table if we are using one, otherwise, return
+  // 0.
+
   void set_allocator (ACE_Allocator *alloc);
   // Set the allocator pointer which will be returned by
   // <get_allocator()>.
@@ -403,6 +462,12 @@ private:
   // thread-specific.  If not set specifically, this takes on the
   // value of <resource_source_>.
 
+  int coltbl_source_;
+  // Flag indicating whether the collocation table should be global
+  // thread-specific.  It defaults to TAO_GLOBAL if not set
+  // specifically.
+
+
   // = Typedefs for the singleton types used to store our orb core
   // information.
   typedef ACE_Singleton<Pre_Allocated, ACE_SYNCH_MUTEX>
@@ -414,6 +479,8 @@ private:
           GLOBAL_APP_ALLOCATED;
   typedef ACE_TSS_Singleton<App_Allocated, ACE_SYNCH_MUTEX>
           TSS_APP_ALLOCATED;
+  typedef ACE_Singleton<TAO_GLOBAL_COLTBL, ACE_SYNCH_MUTEX>
+          GLOBAL_COLTBL;
 };
 
 #if defined (__ACE_INLINE__)
