@@ -74,7 +74,6 @@ Wed Nov 13 14:30:44 2002  Pradeep Gore  <pradeep@oomworks.com>
  	* orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
 	  Rearranged code to avoid deadlock in <connect> methods.
 
->>>>>>> 1.793
 Wed Nov 13 10:41:50 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Log/NotifyLogNotification.h:
