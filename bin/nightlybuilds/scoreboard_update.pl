@@ -688,6 +688,11 @@ sub update_html ($$)
 
     print $indexhtml "<BODY bgcolor=white>\n<H1>Build Scoreboard</H1>\n<HR>\n";
 
+    ### Print link to new scoreboard
+
+    print $indexhtml "<A HREF=\"http://doc.ece.uci.edu/scoreboard\">New";
+    print $indexhtml "Scoreboard</A><BR><HR>\n";
+
     ### Print tables (first the empty one)
     
     update_html_table ($dir, $script, $indexhtml, undef);
