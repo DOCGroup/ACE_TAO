@@ -1060,12 +1060,8 @@ TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec,
 int
 TAO_ECG_Mcast_EH::close (CORBA::Environment& TAO_IN_ENV)
 {
-  if (this->reactor ()->remove_handler (this,
-                                        ACE_Event_Handler::READ_MASK) == -1)
-    return -1;
-
-  if (this->dgram_.unsubscribe () == -1)
-    return -1;
+  if (this->handle_ == 0)
+    return;
 
   this->ec_->remove_observer (this->handle_, TAO_IN_ENV);
   this->handle_ = 0;
@@ -1081,6 +1077,13 @@ TAO_ECG_Mcast_EH::close (CORBA::Environment& TAO_IN_ENV)
     poa->deactivate_object (id.in (), ACE_TRY_ENV);
     ACE_CHECK_RETURN (-1);
   }
+
+  if (this->reactor ()->remove_handler (this,
+                                        ACE_Event_Handler::READ_MASK) == -1)
+    return -1;
+
+  if (this->dgram_.unsubscribe () == -1)
+    return -1;
 
   return 0;
 }

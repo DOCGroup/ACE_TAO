@@ -1,3 +1,25 @@
+Mon Jun 21 14:15:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* performance-tests/Makefile:
+	* performance-tests/Latency/Makefile:
+	* performance-tests/Latency/README:
+	* performance-tests/Latency/client.conf:
+	* performance-tests/Latency/client.cpp:
+	* performance-tests/Latency/run_test.pl:
+	* performance-tests/Latency/server.conf:
+	* performance-tests/Latency/server.cpp:
+	* performance-tests/Latency/test.idl:
+	* performance-tests/Latency/test_i.cpp:
+	* performance-tests/Latency/test_i.h:
+	* performance-tests/Latency/test_i.i:
+	  Added new test to measure latency (and throughput) in the ORB,
+	  using different configurations (thread-pool,
+	  thread-per-connection, etc.)
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+	  Fixed close() method, thanks to J. Russell Noseworthy
+	  <rnosewor@objectsciences.com> for pointing this 
+
 Mon Jun 21 12:27:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp (forward_query):
