@@ -6,6 +6,7 @@
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_unistd.h"
 

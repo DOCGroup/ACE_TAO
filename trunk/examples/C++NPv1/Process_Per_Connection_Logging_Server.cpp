@@ -7,6 +7,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Process_Manager.h"
 #include "ace/Signal.h"
+#include "ace/OS_NS_string.h"
 #include "ace/os_include/os_fcntl.h"
 
 #include "Process_Per_Connection_Logging_Server.h"

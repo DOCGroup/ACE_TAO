@@ -9,8 +9,10 @@
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
 #include "ace/SString.h"
+#include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
+#include "ace/OS_NS_stdlib.h"
 
 ACE_RCSID (ace,
            Get_Opt,

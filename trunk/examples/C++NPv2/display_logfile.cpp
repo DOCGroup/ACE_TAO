@@ -4,6 +4,7 @@
 ** Copyright 2002 Addison Wesley. All Rights Reserved.
 */
 
+#include "ace/ACE.h"
 #include "ace/CDR_Stream.h"
 #include "ace/FILE_Addr.h"
 #include "ace/FILE_Connector.h"

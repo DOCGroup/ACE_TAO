@@ -2,6 +2,7 @@
 
 #include "ace/TLI_Connector.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"

@@ -9,6 +9,14 @@
 #ifndef DSRT_DISPATCHER_IMPL_H
 #define DSRT_DISPATCHER_IMPL_H
 #include /**/ "ace/pre.h"
+
+#include "ace/Synch_Traits.h"
+#if defined (ACE_HAS_THREADS)
+#  include "ace/Recursive_Thread_Mutex.h"
+#else
+#  include "ace/Null_Mutex.h"
+#endif /* ACE_HAS_THREADS */
+
 #include "Kokyu_dsrt.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -25,6 +25,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_arpa_inet.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
@@ -720,7 +721,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           1);
       ACE_INET_Addr remote_addr;
 
-      if (isdigit(argv[getopt.opt_ind ()][0]))
+      if (ACE_OS::ace_isdigit(argv[getopt.opt_ind ()][0]))
         {
           if (remote_addr.set (dstport,
                                (ACE_UINT32) ACE_OS::inet_addr

@@ -6,6 +6,7 @@
 // ACE_Reactor, ACE_Acceptor, ACE_Singleton, and the ACE_Test_and_Set
 // components.
 
+#include "ace/OS_NS_string.h"
 #include "ace/Get_Opt.h"
 #include "ace/Acceptor.h"
 #include "ace/Null_Mutex.h"

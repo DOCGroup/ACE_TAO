@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Handle_L_Pipe.h"
+#include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(server, Handle_L_Pipe, "$Id$")
@@ -13,8 +14,8 @@ char *
 Handle_L_Pipe::upper_case (char s[], int n)
 {
   while (--n >= 0)
-    if (islower (s[n]))
-      s[n] = toupper (s[n]);
+    if (ACE_OS::ace_islower (s[n]))
+      s[n] = ACE_OS::to_upper (s[n]);
 
   return s;
 } 
