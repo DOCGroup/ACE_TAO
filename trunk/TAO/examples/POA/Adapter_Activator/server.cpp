@@ -84,7 +84,7 @@ CORBA::Boolean
 Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
                                     const char *name,
                                     CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (ACE_OS::strcmp (name, "firstPOA") == 0)
     {
