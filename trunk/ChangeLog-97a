@@ -1,3 +1,21 @@
+Tue Apr 29 00:16:27 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+	* JAWS: Changes to support CGI scripts
+
+	  Changed the following files --
+	  HTTP_Handler.cpp HTTP_Handler.h HTTP_Helpers.cpp
+	  HTTP_Helpers.h HTTP_Request.cpp HTTP_Request.h IO.cpp IO.h
+
+	  Added the following files --
+	  HTTP_Response.cpp HTTP_Response.h Parse_Headers.cpp
+	  Parse_Headers.h
+
+	  Removed the file --
+	  JXH_String.h
+
+	* JAWS/stress_testing: Changed the Makefile to link in the math
+	  library (-lm).
+
 Mon Apr 28 22:11:05 1997  Irfan Pyarali <irfan@cs.wustl.edu>
 
 	* ace: Removed config-win32-msvc2.0.h,  config-win32-msvc4.0.h
