@@ -1,3 +1,102 @@
+Thu Jul 24 03:03:20 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>		
+
+	Two example schedulers were plugged into the Dynamic Scheduling
+	framework to illustrate the pluggable scheduler concept of the
+	framework. The two schedulers are Fixed_Priority_Scheduler and
+	Most Important First (MIF) Scheduler.
+
+	Fixed Priority Scheduler
+	------------------------
+ 	
+	* examples/RTScheduling/FP_Scheduling.pidl:	
+	* examples/RTScheduling/FP_SchedulingC.h:		
+	* examples/RTScheduling/FP_SchedulingC.cpp:
+	* examples/RTScheduling/FP_SchedulingC.i:			
+	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.h:	
+	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.cpp: 	
+	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_DT_Creator.h:
+	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_DT_Creator.cpp:
+	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_Task.h:
+	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_Task.cpp:
+	* examples/RTScheduling/Fixed_Priority_Scheduler/test.cpp:
+	* examples/RTScheduling/Fixed_Priority_Scheduler/test.h:
+	* examples/RTScheduling/Fixed_Priority_Scheduler/Makefile:
+	* examples/RTScheduling/Fixed_Priority_Scheduler/README:
+	* examples/RTScheduling/Fixed_Priority_Scheduler/fp_dt_creator_export.h:
+	* examples/RTScheduling/Fixed_Priority_Scheduler/svc.conf.client:
+	* examples/RTScheduling/Fixed_Priority_Scheduler/svc.conf.server:
+
+	In this experiment we show how dynamic scheduling is done using
+	the Dynamic Scheduling framework with the Fixed Priority Scheduler
+	as the pluggable scheduler.
+
+	This scheduler uses the OS scheduler to schedule the Distributable
+	Threads (DTs) in the system. The DTs are scheduled according to
+	their importance. The scheduler maps the importance of the DT to
+	native thread priorities so the OS scheduler can schedule the
+	DTs. At any given instance the DT of highest priority is running
+	on a given host.
+
+
+	MIF Scheduler
+	--------------
+	
+	* examples/RTScheduling/MIF_Scheduling.pidl:	
+	* examples/RTScheduling/MIF_SchedulingC.h:		
+	* examples/RTScheduling/MIF_SchedulingC.cpp:
+	* examples/RTScheduling/MIF_SchedulingC.i:			
+	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.h:	
+	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.cpp: 	
+	* examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.h:
+	* examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.cpp:
+	* examples/RTScheduling/MIF_Scheduler/MIF_Task.h:
+	* examples/RTScheduling/MIF_Scheduler/MIF_Task.cpp:
+	* examples/RTScheduling/MIF_Scheduler/test.cpp:
+	* examples/RTScheduling/MIF_Scheduler/test.h:
+	* examples/RTScheduling/MIF_Scheduler/Makefile:
+	* examples/RTScheduling/MIF_Scheduler/README:
+	* examples/RTScheduling/MIF_Scheduler/mif_dt_creator_export.h:
+	* examples/RTScheduling/MIF_Scheduler/svc.conf.client:
+	* examples/RTScheduling/MIF_Scheduler/svc.conf.server:
+
+	In this experiment we show how dynamic scheduling is done using
+	the Dynamic Scheduling framework with the MIF Scheduler as the
+	pluggable scheduler. 
+
+	This scheduler manages a ready queue of Distributable Threads
+	(DTs) ordered by their importance and suspended on a condition
+	variable. AT any given time the scheduler dequeues the DT at the
+	head of the queue, that corresponds to the most important thread,
+	and signals the thread to activate it. The service context is used
+	to send the importance and GUID of the DT across hosts it spans so
+	the DT can be scheduled accordingly on the remote host. At any
+	given instance the DT of highest priority is running on a given
+	host.
+
+	Common Files
+	------------
+
+	* examples/RTScheduling/Job.idl:                
+	* examples/RTScheduling/Job_i.cpp:              
+	* examples/RTScheduling/Job_i.h:           
+	* examples/RTScheduling/DT_Creator.cpp:       
+	* examples/RTScheduling/DT_Creator.h:              
+        * examples/RTScheduling/Synch.idl:
+        * examples/RTScheduling/Synch_i.cpp:
+        * examples/RTScheduling/Synch_i.h:
+        * examples/RTScheduling/Task_Stats.cpp:
+        * examples/RTScheduling/Task_Stats.h:
+        * examples/RTScheduling/Task_Stats.inl:
+	* examples/RTScheduling/Thread_Task.cpp:
+	* examples/RTScheduling/Thread_Task.h:
+        * examples/RTScheduling/POA_Holder.h:	
+	* examples/RTScheduling/POA_Holder.cpp:
+	* examples/RTScheduling/Starter.h:
+        * examples/RTScheduling/Starter.cpp:	
+	* examples/RTScheduling/Makefile: 	
+	* examples/RTScheduling/README:
+	
+
 Wed Jul 23 14:45:32 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/PortableServer/Object_Adapter.cpp (open):
@@ -946,6 +1045,7 @@ Wed Jul 16 16:28:47 2003  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/tests/Notify/Basic/Sequence.cpp:
 
           Added useful debug messages.
+	
 Wed Jul 16 14:13:24 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
         * tests/RTScheduling/Scheduler.cpp:
