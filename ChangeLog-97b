@@ -1,3 +1,15 @@
+Thu Sep 25 03:50:27 1997    <irfan@TWOSTEP>
+
+	* ace/OS.i (thr_getspecific): Must restore errno if no errors have
+ 	  occured.
+
+	* ace/Log_Msg.cpp (close): Must close the message queue *before*
+ 	  destruction since there is no destructor for the queue.
+
+	* netsvcs/lib/Client_Logging_Handler.cpp (fini): fini must close
+ 	  and unregister the acceptor. Closing the socket is simply not
+ 	  enough.
+
 Thu Sep 25 01:39:47 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/Containers.{i,cpp}:  Commented out all ACE_TRACE macros in
