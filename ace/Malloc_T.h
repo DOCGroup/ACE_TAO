@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and 
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and
  *          Irfan Pyarali <irfan@cs.wustl.edu>
  */
 //==========================================================================
@@ -215,7 +215,7 @@ public:
   /**
    * Note that @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
-   * that all processes that need to access it can do so. 
+   * that all processes that need to access it can do so.
    * This constructor must be inline to avoid bugs with some C++
    * compilers. */
   ACE_Allocator_Adapter (const char *pool_name,
@@ -238,7 +238,7 @@ public:
   /**
    * Note that @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
-   * that all processes that need to access it can do so. 
+   * that all processes that need to access it can do so.
    * This constructor must be inline to avoid bugs with some C++
    * compilers. */
   ACE_Allocator_Adapter (const wchar_t *pool_name,
@@ -423,7 +423,7 @@ public:
    *
    * Note that @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
-   * that all processes that need to access it can do so. 
+   * that all processes that need to access it can do so.
    */
   ACE_Malloc_T (const ACE_TCHAR *pool_name = 0);
 
@@ -436,7 +436,7 @@ public:
    *
    * Note that @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
-   * that all processes that need to access it can do so. 
+   * that all processes that need to access it can do so.
    */
   ACE_Malloc_T (const ACE_TCHAR *pool_name,
                 const ACE_TCHAR *lock_name,
@@ -594,6 +594,16 @@ public:
   /// Return cb_ptr value.
   void *base_addr (void);
 
+  /**
+   * Bad flag.  This operation should be called immediately after the
+   * construction of the Malloc object to query whether the object was
+   * constructed successfully.  If not, the user should invoke @c
+   * remove and release the object (it is not usable.)
+   * @retval 0 if all is fine.  non-zero if this malloc object is
+   *         unuable.
+   */
+  int bad (void);
+
 private:
   /// Initialize the Malloc pool.
   int open (void);
@@ -627,6 +637,9 @@ private:
   /// Lock that ensures mutual exclusion for the memory pool.
   ACE_LOCK *lock_;
   int delete_lock_;       // True if destructor should delete the lock
+
+  /// Keep track of failure in constructor.
+  int bad_flag_;
 };
 
 /**
@@ -784,7 +797,7 @@ public:
    * initialize the underlying memory pool.  Note that @a pool_name
    * should be located in a directory with the appropriate visibility
    * and protection so that all processes that need to access it can
-   * do so. 
+   * do so.
    */
   ACE_Malloc (const ACE_TCHAR *pool_name,
               const ACE_TCHAR *lock_name,
