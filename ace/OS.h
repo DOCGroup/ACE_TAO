@@ -3281,9 +3281,9 @@ struct sigaction
 #define SIGCHLD 0
 #endif /* SIGCHLD */
 
-#if !defined (SIGCHLD)
-#define SIGCHLD 0
-#endif /* SIGCHLD */
+#if !defined (SIGCLD)
+#define SIGCLD SIGCHLD
+#endif /* SIGCLD */
 
 #if !defined (SIGQUIT)
 #define SIGQUIT 0
