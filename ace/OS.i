@@ -7080,7 +7080,7 @@ ACE_OS::getpid (void)
 ACE_INLINE pid_t
 ACE_OS::getpgid (pid_t pid)
 {
-  // ACE_TRACE ("ACE_OS::getpid");
+  // ACE_TRACE ("ACE_OS::getpgid");
 #if defined (ACE_LACKS_GETPGID)
   ACE_UNUSED_ARG (pid);
   ACE_NOTSUP_RETURN (-1);
