@@ -196,7 +196,7 @@ main (int argc, char* argv[])
 
       for (CORBA::Long i = 1; i < 8; i += 2)
         {
-          status = run_test (objref, i ACE_ENV_ARG_PARAMETER);
+          status = run_test (objref.in (), i ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (status == 0)

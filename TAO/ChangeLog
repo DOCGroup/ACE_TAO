@@ -1,3 +1,8 @@
+Wed Nov 27 18:32:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/OBV/TC_Alignment/Makefile:
+	* tests/OBV/TC_Alignment/client.cpp: Fixed problems in g++ builds.
+
 Wed Nov 27 15:22:13 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Bug_1361_Regression/Server_Thread_Pool.cpp: Fixed a
