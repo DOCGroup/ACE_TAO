@@ -94,7 +94,7 @@ private:
   // *************************************************************
 
 template <class IF>
-class TAO_Trader_Components : 
+class TAO_Trader_Components :
   public virtual IF,
   public virtual PortableServer::RefCountServantBase
 {
@@ -251,12 +251,8 @@ public:
   // uses the appropriate form of equals comparison.
 };
 
-template <class OPERAND_TYPE>
-CORBA::Boolean TAO_find (const CORBA::Any& sequence, const OPERAND_TYPE& operand);
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Trader_T.cpp"
 #endif  /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* ACE_TRADER_H */
-

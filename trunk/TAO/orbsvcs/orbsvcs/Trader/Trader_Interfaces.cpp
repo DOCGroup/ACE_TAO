@@ -6,6 +6,7 @@
 #include "Trader_Interfaces.h"
 #include "Trader_T.h"
 #include "ace/INET_Addr.h"
+#include "Trader_Constraint_Visitors.h"
 
 ACE_RCSID(Trader, Trader_Interfaces, "$Id$")
 
@@ -135,7 +136,7 @@ query (const char *type,
   TAO_Offer_Filter offer_filter (policies,
                                  ACE_TRY_ENV);
   ACE_CHECK;
-  TAO_Constraint_Validator validator (type_struct.in ());
+  TAO_Trader_Constraint_Validator validator (type_struct.in ());
   TAO_Constraint_Interpreter constr_inter (validator,
                                            constraint,
                                            ACE_TRY_ENV);
@@ -261,7 +262,7 @@ lookup_one_type (const char* type,
       // constraints.
       CosTrading::Offer* offer = offer_iter.get_offer ();
 
-      TAO_Constraint_Evaluator evaluator (offer);
+      TAO_Trader_Constraint_Evaluator evaluator (offer);
       if (offer_filter.ok_to_consider (offer) &&
           constr_inter.evaluate (evaluator))
         {
@@ -1117,7 +1118,7 @@ withdraw_using_constraint (const char *type,
       offer_iter (type, offer_database);
 #endif /* _MSC_VER */
 
-    TAO_Constraint_Validator validator (type_struct.in ());
+    TAO_Trader_Constraint_Validator validator (type_struct.in ());
     TAO_Constraint_Interpreter constr_inter (validator, constr, ACE_TRY_ENV);
     ACE_CHECK;
 
@@ -1126,7 +1127,7 @@ withdraw_using_constraint (const char *type,
         CosTrading::Offer* offer = offer_iter.get_offer ();
         // Add offer if it matches the constraints
 
-        TAO_Constraint_Evaluator evaluator (offer, dp_support);
+        TAO_Trader_Constraint_Evaluator evaluator (offer, dp_support);
         if (constr_inter.evaluate (evaluator))
           ids.enqueue_tail (offer_iter.get_id ());
 
