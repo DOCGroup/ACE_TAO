@@ -13,7 +13,7 @@ sub run_test
 {
   my $type = shift(@_);
 
-  system (".".$DIR_SEPARATOR."basic_test -t $type");
+  system ($EXEPREFIX."basic_test -t $type");
 
 }
 
