@@ -7,7 +7,7 @@ Tue Oct 19 12:55:16 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/Codeset_IBM1047.cpp:
 
-	  Moved inclusion of `ace/Codeset_IBM1047.cpp' ahead of ACE_MVS
+	  Moved inclusion of `ace/Codeset_IBM1047.h' ahead of ACE_MVS
 	  macro definition check, and removed inclusing of
 	  `ace/inc_user_config.h'
 
