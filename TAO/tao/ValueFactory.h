@@ -102,8 +102,8 @@ private:
 // orb->lookup_value_factory (char * repo_id) .)
 
 #define TAO_OBV_REGISTER_FACTORY(FACTORY,VALUETYPE) \
-  { CORBA_ValueFactory *factory = new FACTORY; \
-    CORBA_ValueFactory *prev_factory = \
+  { CORBA_ValueFactory factory = new FACTORY; \
+    CORBA_ValueFactory prev_factory = \
     TAO_ORB_Core_instance ()->orb ()->register_value_factory (\
                                    VALUETYPE::_tao_obv_static_repository_id (),\
                                    factory); \

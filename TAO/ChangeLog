@@ -1,3 +1,10 @@
+Thu Jul  4 16:50:53 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/ValueFactory.h:
+
+	  Fixed TAO_OBV_REGISTER_FACTORY macro to use the (spec-defined) 
+	  typedef of CORBA_ValueFactoryBase* in corbafwd.h.
+
 Thu Jul  4 15:25:33 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
@@ -17,7 +24,7 @@ Thu Jul  4 12:58:57 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* tests/AMH_Exceptions/Makefile:
 	  Added missing TAO_ROOT variable definition.  Thanks to Craig Rodrigues 
-    <crodrigu@bbn.com> for reporting this.
+	  <crodrigu@bbn.com> for reporting this.
 
 Thu Jul  4 11:50:51 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
