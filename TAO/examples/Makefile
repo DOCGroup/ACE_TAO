@@ -15,7 +15,8 @@ DIRS  = Callback_Quoter \
 	Logging \
 	Simple \
 	Event_Comm \
-	OBV
+	OBV \
+	Load_Balancing
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
