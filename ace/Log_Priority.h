@@ -6,10 +6,9 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_LOG_PRIORITY_H
 #define ACE_LOG_PRIORITY_H
