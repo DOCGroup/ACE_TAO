@@ -27,7 +27,7 @@ print STDERR "\n********** RTCORBA Priority Banded Connections Unit Test\n";
 
 $server_args =
     "-n $iorfile1 -o $iorfile2 -b bands.unix -ORBSvcConf $server_conf "
-    ."-p 67 -w 78 "
+    ."-p 67 -w 81 "
     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=69 "
     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=76 "
     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=80 ";
@@ -47,6 +47,19 @@ if ($^O eq "MSWin32") {
     $client_args =
         "-n file://$iorfile1 -o file://$iorfile2 "
             ."-a 2 -b 4 -c 6 ";
+}
+
+if ($^O eq "dec_osf") {
+    $server_args =
+        "-n $iorfile1 -o $iorfile2 -b bands.tru64 -ORBSvcConf $server_conf "
+            ."-p 20 -w 34 "
+            ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=23 "
+            ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=28 "
+            ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=33 ";
+
+    $client_args =
+        "-n file://$iorfile1 -o file://$iorfile2 "
+            ."-a 23 -b 28 -c 33 ";
 }
 
 $SV = new PerlACE::Process ("server", $server_args);

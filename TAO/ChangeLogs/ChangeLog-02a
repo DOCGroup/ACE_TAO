@@ -1,3 +1,29 @@
+Wed May 30 17:13:04 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * tests/RTCORBA/Banded_Connections/run_test.pl:
+
+        Changed the priority bands to the correct values so that it does
+        what the correct behaviour. Previously a exception within a band was
+        given, when the test was for an illegal priority. Changed the
+        priority levels on Tru64 as the minimum and maximum priorities are
+        different.
+
+        * tests/RTCORBA/Banded_Connections/bands.tru64:
+
+        Added a new file containing the bands for Tru64.
+
+        * tests/RTCORBA/MT_Client_Protocol_Priority/process-output.pl:
+
+        Added missing semicolons. I have a feeling that the script is
+        busted as it depends on the debug levels. Angelo says that it's
+        not possible to fix this without having some hooks inside the ORB.
+
+        * tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl:
+        * tests/RTCORBA/Server_Declared/run_test.pl:
+
+        Changed the priority bands to fall within the acceptable range on
+        Tru64.
+
 Wed May 30 16:50:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * tests/InterOp-Naming/run_test.pl:
@@ -7,17 +33,17 @@ Wed May 30 16:50:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 Wed May 30 13:19:27 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/QoS_UDP.i: 
+        * orbsvcs/orbsvcs/AV/QoS_UDP.i:
 
-	  Added the definition for setting the flow handler negotiator.
+          Added the definition for setting the flow handler negotiator.
 
 Wed May 30 12:06:21 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/TAO_Singleton.cpp:
+        * tao/TAO_Singleton.cpp:
 
-	  Integrated David's suggested changes that deal with potential
-	  problems related to registering Singletons in the presence of
-	  multiple TAO_Singleton_Manager instances.
+          Integrated David's suggested changes that deal with potential
+          problems related to registering Singletons in the presence of
+          multiple TAO_Singleton_Manager instances.
 
 Wed May 30 13:44:46 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -41,19 +67,19 @@ Wed May 30 13:44:46 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed May 30 00:35:15 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/TAO_Singleton.cpp (instance):
+        * tao/TAO_Singleton.cpp (instance):
 
-	  Fixed memory leak that occured due to the singleton instance not
-	  being registered with the TAO_Singleton_Manager when built
-	  without thread support.  Thanks to Kitty and David for helping
-	  with this problem.
+          Fixed memory leak that occured due to the singleton instance not
+          being registered with the TAO_Singleton_Manager when built
+          without thread support.  Thanks to Kitty and David for helping
+          with this problem.
 
 Tue May 29 23:26:12 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
         * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
         * orbsvcs/ImplRepo_Service/Options.cpp:
-        * docs/releasenotes/index.html: 
+        * docs/releasenotes/index.html:
 
         Changed the default for multicast discovery for the Naming
         Service, AV Stream, and Implementation Repository.  Now, the
@@ -63,7 +89,7 @@ Tue May 29 23:26:12 2001  Chris Cleeland  <cleeland_c@ociweb.com>
         multicast discovery; see documentation on the individual services
         on how to do that for a particular service.  No client-side code
         got changed, and no changes are necessary in application code.
-        NOTE: the Trading Service was not changed because it contains code 
+        NOTE: the Trading Service was not changed because it contains code
         to partially eliminate the type of problems this change was
         motivated to prevent.
 
@@ -87,7 +113,7 @@ Tue May 29 18:44:46 2001  Jeff Parsons <parsons@cs.wustl.edu>
           Fixed fe_add_interface_fwd to find the full definition (and set
           the full_definition_ member) of a forward declared interface
           even if the full definition comes in a previous opening of the
-          enclosing module. Then add_to_previous can skip over such a 
+          enclosing module. Then add_to_previous can skip over such a
           forward declared interface, since its presence confuses the logic
           of look_in_previous(). Thanks to Russell Mora <rd.mora@econz.co.nz>
           for sending in the example IDL file that uncovered this bug.
@@ -121,39 +147,39 @@ Tue May 29 16:08:39 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Tue May 29 14:48:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Makefile: Added the new file GIOP_Message_Version in the
-	  builds.  It was really bad on my part that I missed this one :(  
+        * tao/Makefile: Added the new file GIOP_Message_Version in the
+          builds.  It was really bad on my part that I missed this one :(
 
 Tue May 29 12:29:25 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/ior_corbaloc/run_test.pl: 
-	  Matched the @corabloc_tests and @comments.
-	
-	* tao/CORBALOC_Parser.cpp (assign_key_string): 
-	  Set things so that when the port is unspecified, it defaults to
-	  2809. Thanks to Craig Rodrigues  <crodrigu@bbn.com> for pointing
-	  out and hence made me commit the stuff that I had lying in my
-	  workspace for a while now.
+        * tests/ior_corbaloc/run_test.pl:
+          Matched the @corabloc_tests and @comments.
+
+        * tao/CORBALOC_Parser.cpp (assign_key_string):
+          Set things so that when the port is unspecified, it defaults to
+          2809. Thanks to Craig Rodrigues  <crodrigu@bbn.com> for pointing
+          out and hence made me commit the stuff that I had lying in my
+          workspace for a while now.
 
 Tue May 29 13:01:54 2001  Phil Mesnier  <mesnier_p@ociweb.com>
 
-	* tao/Strategies/SHMIOP_Acceptor.cpp (open_i):
-	* tao/Strategies/UIOP_Acceptor.cpp (open_i):
-	* tao/IIOP_Acceptor.cpp (open_i):
+        * tao/Strategies/SHMIOP_Acceptor.cpp (open_i):
+        * tao/Strategies/UIOP_Acceptor.cpp (open_i):
+        * tao/IIOP_Acceptor.cpp (open_i):
 
-	In order to fix bug 902, I added the enabling of CLOSE_ON_EXEC
-	for the acceptor sockets used by the above protocols. This is
-	part 1 (of 3) of the solution.
+        In order to fix bug 902, I added the enabling of CLOSE_ON_EXEC
+        for the acceptor sockets used by the above protocols. This is
+        part 1 (of 3) of the solution.
 
-	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (start_server_i):
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (start_server_i):
 
-	Since win32 does not support CLOSE_ON_EXEC for individual files, a 
-	slightly more heavy handed solution is needed when spawning child
-	processes and guarantee the ImplRepo server can be restarted if 
-	necessary.  This does not address the problem of identifying which 
-	processes are "owned" by a newly restarted impl repo though. This
-	is part 2 (of 3) of the solution. Part 3 is discussed in $ACE_ROOT/
-	ChangeLog.
+        Since win32 does not support CLOSE_ON_EXEC for individual files, a
+        slightly more heavy handed solution is needed when spawning child
+        processes and guarantee the ImplRepo server can be restarted if
+        necessary.  This does not address the problem of identifying which
+        processes are "owned" by a newly restarted impl repo though. This
+        is part 2 (of 3) of the solution. Part 3 is discussed in $ACE_ROOT/
+        ChangeLog.
 
 Tue May 29 11:19:29 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -171,99 +197,99 @@ Tue May 29 11:19:29 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon May 28 16:44:59 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* examples/PluggableUDP/tests/Basic/client.dsp:
+        * examples/PluggableUDP/tests/Basic/client.dsp:
           Added POA library to the static release linker options.
 
 Mon May 28 13:31:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp: Updated with the new files.
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp: Updated with the new files.
 
 Mon May 28 13:09:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
-	* examples/PluggableUDP/DIOP/DIOP_Acceptor.h:
-	* examples/PluggableUDP/DIOP/DIOP_Profile.cpp:
-	* examples/PluggableUDP/DIOP/DIOP_Profile.h:
-	* examples/PluggableUDP/DIOP/Makefile: Changed references of
-	  TAO_GIOP_Version to TAO_GIOP_Message_Version. Changed the
-	  inclusion to GIOP_Message_Version.h.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+        * examples/PluggableUDP/DIOP/DIOP_Acceptor.h:
+        * examples/PluggableUDP/DIOP/DIOP_Profile.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Profile.h:
+        * examples/PluggableUDP/DIOP/Makefile: Changed references of
+          TAO_GIOP_Version to TAO_GIOP_Message_Version. Changed the
+          inclusion to GIOP_Message_Version.h.
 
 Mon May 28 13:01:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	Modules that used TAO_GIOP_Version were forced to include the file 
-	GIOP_Message_State.h. This header file also had another class that
-	had lot of information that was not needed for files that needed
-	only the TAO_GIOP_Version class. This checkins are to break that
-	dependency. 
+        Modules that used TAO_GIOP_Version were forced to include the file
+        GIOP_Message_State.h. This header file also had another class that
+        had lot of information that was not needed for files that needed
+        only the TAO_GIOP_Version class. This checkins are to break that
+        dependency.
 
-	* tao/GIOP_Message_Version.h:
-	* tao/GIOP_Message_Version.cpp:
-	* tao/GIOP_Message_Version.inl: Moved the TAO_GIOP_Version class to a
-	  new file. Also renamed the class as TAO_GIOP_Message_Version to
-	  keep in sync with other GIOP classes naming conventions. 
-	
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_Base.h:
-	* tao/GIOP_Message_Lite.h: Changed the class names from
-	  TAO_GIOP_Version to TAO_GIOP_Message_Version. 
+        * tao/GIOP_Message_Version.h:
+        * tao/GIOP_Message_Version.cpp:
+        * tao/GIOP_Message_Version.inl: Moved the TAO_GIOP_Version class to a
+          new file. Also renamed the class as TAO_GIOP_Message_Version to
+          keep in sync with other GIOP classes naming conventions.
 
-	* tao/GIOP_Message_State.h:
-	* tao/GIOP_Message_State.i: Removed the class TAO_GIOP_Version
-	  from the files.
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Lite.h: Changed the class names from
+          TAO_GIOP_Version to TAO_GIOP_Message_Version.
 
-	* tao/Muxed_TMS.cpp:
-	* tao/Profile.cpp:
-	* tao/Profile.h:
-	* tao/Profile.i:
-	* tao/Reply_Dispatcher.h:
-	* tao/Synch_Reply_Dispatcher.h:
-	* tao/Invocation.cpp:
-	* tao/IIOP_Acceptor.h:
-	* tao/IIOP_Profile.cpp:
-	* tao/IIOP_Profile.h: Changed the references of TAO_GIOP_Version
-	  to TAO_GIOP_Message_Version. Changed the inclusions from
-	  GIOP_Message_State.h to GIOP_Message_Version.h.
-	
-	* tao/Makefile:
-	* tao/BiDir_GIOP/Makefile:
-	* tao/Domain/Makefile:
-	* tao/DynamicAny/Makefile:
-	* tao/DynamicInterface/Makefile:
-	* tao/IFR_Client/Makefile:
-	* tao/IORManipulation/Makefile:
-	* tao/PortableServer/Makefile:
-	* tao/TypeCodeFactory/Makefile:
-	* tao/Strategies/Makefile:  Updated dependencies.
-	
-	* tao/Strategies/SHMIOP_Acceptor.h:
-	* tao/Strategies/SHMIOP_Profile.cpp:
-	* tao/Strategies/SHMIOP_Profile.h:
-	* tao/Strategies/UIOP_Acceptor.h:
-	* tao/Strategies/UIOP_Profile.cpp:
-	* tao/Strategies/UIOP_Profile.h: Made the changes from
-	  TAO_GIOP_Version to TAO_GIOP_Message_Version. 
-	
+        * tao/GIOP_Message_State.h:
+        * tao/GIOP_Message_State.i: Removed the class TAO_GIOP_Version
+          from the files.
+
+        * tao/Muxed_TMS.cpp:
+        * tao/Profile.cpp:
+        * tao/Profile.h:
+        * tao/Profile.i:
+        * tao/Reply_Dispatcher.h:
+        * tao/Synch_Reply_Dispatcher.h:
+        * tao/Invocation.cpp:
+        * tao/IIOP_Acceptor.h:
+        * tao/IIOP_Profile.cpp:
+        * tao/IIOP_Profile.h: Changed the references of TAO_GIOP_Version
+          to TAO_GIOP_Message_Version. Changed the inclusions from
+          GIOP_Message_State.h to GIOP_Message_Version.h.
+
+        * tao/Makefile:
+        * tao/BiDir_GIOP/Makefile:
+        * tao/Domain/Makefile:
+        * tao/DynamicAny/Makefile:
+        * tao/DynamicInterface/Makefile:
+        * tao/IFR_Client/Makefile:
+        * tao/IORManipulation/Makefile:
+        * tao/PortableServer/Makefile:
+        * tao/TypeCodeFactory/Makefile:
+        * tao/Strategies/Makefile:  Updated dependencies.
+
+        * tao/Strategies/SHMIOP_Acceptor.h:
+        * tao/Strategies/SHMIOP_Profile.cpp:
+        * tao/Strategies/SHMIOP_Profile.h:
+        * tao/Strategies/UIOP_Acceptor.h:
+        * tao/Strategies/UIOP_Profile.cpp:
+        * tao/Strategies/UIOP_Profile.h: Made the changes from
+          TAO_GIOP_Version to TAO_GIOP_Message_Version.
+
 
 Mon May 28 06:23:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* performance-tests/POA/Create_Reference/create_reference.cpp:
-	  Fixed a compile error in g++. 
+        * performance-tests/POA/Create_Reference/create_reference.cpp:
+          Fixed a compile error in g++.
 
 Sat May 27 10:40:27 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/QoS_UDP.cpp: 
+        * orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
 
-	  Fixed addressing problems. Modified the transport to initiate
-	  the PATH messaged only when explicitly initiated with a
-	  modify_qos or specifying the QoS during stream set-up.  
-	
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
+          Fixed addressing problems. Modified the transport to initiate
+          the PATH messaged only when explicitly initiated with a
+          modify_qos or specifying the QoS during stream set-up.
 
-	  Modified the test to demonstrate the initiation of QoS messages
-	  when explicitly stated with modify_qos. 
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
+
+          Modified the test to demonstrate the initiation of QoS messages
+          when explicitly stated with modify_qos.
 
 Sun May 27 22:43:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -286,46 +312,46 @@ Sun May 27 22:43:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 Sun May 27 21:11:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp: Uncommented the
-	  method create_new_mprofile (). Looks like the method should be
-	  create_new_profiles (). Hence changed the name of the method.   
-	  
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp: Uncommented the
+          method create_new_mprofile (). Looks like the method should be
+          create_new_profiles (). Hence changed the name of the method.
+
 Sun May 27 21:01:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
- 	* performance-tests/POA/Create_Reference/create_reference.cpp:
+        * performance-tests/POA/Create_Reference/create_reference.cpp:
 
-	  Fixed a warning with KCC.
+          Fixed a warning with KCC.
 
 Sun May 27 12:04:18 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* performance-tests/POA/Create_Reference/run_test.pl: This
-	  performance test now runs with and without active hints.
+        * performance-tests/POA/Create_Reference/run_test.pl: This
+          performance test now runs with and without active hints.
 
-	* performance-tests/POA/Create_Reference/create_reference.cpp:
-	  Added performance testing for POA::create_reference() in
-	  addition to the already existing performance testing of
-	  POA::create_reference_with_id().
+        * performance-tests/POA/Create_Reference/create_reference.cpp:
+          Added performance testing for POA::create_reference() in
+          addition to the already existing performance testing of
+          POA::create_reference_with_id().
 
 Sun May 27 10:01:47 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/PortableServer/ImplRepo_i.h: Added missing #include
-	  "ace/post.h".  Thanks to the Fuzz script.
+        * tao/PortableServer/ImplRepo_i.h: Added missing #include
+          "ace/post.h".  Thanks to the Fuzz script.
 
 Sat May 26 20:37:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/PortableServer/POA.cpp: Fixed a unused variable warning.
+        * tao/PortableServer/POA.cpp: Fixed a unused variable warning.
 
 Sat May 26 18:50:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/tutorials/Quoter/RT_Event_Service/Stock_i.cpp: Fixed a few
-	  compile errors with g++.  
+        * docs/tutorials/Quoter/RT_Event_Service/Stock_i.cpp: Fixed a few
+          compile errors with g++.
 
 Sat May 26 18:23:04 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp: Commented out the
-	  implementation of create_new_mprofile (). Looks like it is not
-	  getting called anywhere. This was giving compile errors with
-	  g++ on Linux.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp: Commented out the
+          implementation of create_new_mprofile (). Looks like it is not
+          getting called anywhere. This was giving compile errors with
+          g++ on Linux.
 
 Sat May 26 17:41:37 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -336,7 +362,7 @@ Sat May 26 17:41:37 2001  Krishnakumar B  <kitty@cs.wustl.edu>
         * performance-tests/Thread_Pool_Latency/run_test. pl:
 
           Bumped up the timeouts on these tests as they seem to be timing
-	  out on Tru64 before the test could be completed. 
+          out on Tru64 before the test could be completed.
 
 Sat May 26 17:12:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
@@ -358,16 +384,16 @@ Sat May 26 16:45:04 2001  Krishnakumar B  <kitty@cs.wustl.edu>
         * examples/PluggableUDP/tests/SimplePerformance/run_test.pl:
 
           The previous changelog should have been mentioned
-	  examples/PluggableUDP/tests/SimplePerformance/run_test.pl and
-	  not  examples/PluggableUDP/run_test.pl. Added the new file with
-	  correct permissions.
+          examples/PluggableUDP/tests/SimplePerformance/run_test.pl and
+          not  examples/PluggableUDP/run_test.pl. Added the new file with
+          correct permissions.
 
 Sat May 26 16:42:05 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * examples/PluggableUDP/run_test.pl:
 
           Removed the file from the repository as it was checked in
-	  without execute permissions. 
+          without execute permissions.
 
 Fri May 25 20:51:33 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
