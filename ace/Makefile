@@ -21,7 +21,8 @@ OS_FILES = \
   OS_Thread_Adapter \
   OS_Log_Msg_Attributes \
   Thread_Hook \
-  Sched_Params
+  Sched_Params \
+  Handle_Set
 UTILS_FILES = \
   ACE \
   Active_Map_Manager \
@@ -39,7 +40,6 @@ UTILS_FILES = \
   Get_Opt \
   Hash_Map_Manager \
   Handle_Ops \
-  Handle_Set \
   Init_ACE \
   Lib_Find \
   Message_Block \

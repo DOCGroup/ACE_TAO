@@ -120,6 +120,17 @@ ACE_Process_Options::handle_inheritence (int hi)
 #endif /* !ACE_HAS_WINCE */
 }
 
+ACE_INLINE int
+ACE_Process_Options::avoid_zombies (void)
+{
+  return avoid_zombies_;
+}
+ACE_INLINE void
+ACE_Process_Options::avoid_zombies (int avoid_zombies)
+{
+  avoid_zombies_ = avoid_zombies;
+}
+
 #if defined (ACE_WIN32)
 
 ACE_INLINE ACE_TEXT_STARTUPINFO *
@@ -195,17 +206,6 @@ ACE_Process_Options::get_stderr (void)
 }
 
 ACE_INLINE int
-ACE_Process_Options::avoid_zombies (void)
-{
-  return avoid_zombies_;
-}
-ACE_INLINE void
-ACE_Process_Options::avoid_zombies (int avoid_zombies)
-{
-  avoid_zombies_ = avoid_zombies;
-}
-
-ACE_INLINE int
 ACE_Process_Options::setreugid (const char* user)
 {
 #if !defined (ACE_LACKS_PWD_FUNCTIONS)  
@@ -277,9 +277,11 @@ ACE_Process_Options::getegid (void)
 #endif /* ACE_WIN32 */
 
 ACE_INLINE ACE_TCHAR *
-ACE_Process_Options::command_line_buf (void)
+ACE_Process_Options::command_line_buf (int *max_lenp)
 {
-  return command_line_buf_;
+  if (max_lenp != 0)
+    *max_lenp = this->command_line_buf_len_;
+  return this->command_line_buf_;
 }
 
 ACE_INLINE ACE_TCHAR *

@@ -15,6 +15,7 @@
 #include "ace/pre.h"
 
 #include "ace/OS.h"
+#include "ace/Handle_Set.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -165,8 +166,9 @@ public:
   ACE_TCHAR *working_directory (void);
 
   /// Buffer of command-line options.  Returns exactly what was passed
-  /// to this->command_line.
-  ACE_TCHAR *command_line_buf (void);
+  /// to this->command_line. If @arg max_len is not 0, receives the
+  /// maximum length of the command line buffer.
+  ACE_TCHAR *command_line_buf (int *max_len = 0);
 
   /**
    * argv-style command-line options.  Parses and modifies the string
@@ -194,6 +196,39 @@ public:
   /// Allows disabling of handle inheritence.
   int handle_inheritence (void);
   void handle_inheritence (int);
+
+  /// Cause the specified handle to be passed to a child process
+  /// when it's spawned.
+  /**
+   * Has meaning mainly for Win32. The handle value will be included
+   * in the spawned process's command line as @arg +H @arg handle.
+   * The passed handle value will be duplicated if on Win32 less than NT4.
+   * @return 0 if success, -1 if failure.
+   */
+  int pass_handle (ACE_HANDLE);
+
+  /// Get a copy of the handles the ACE_Process_Options duplicated
+  /// for the spawned process.
+  /**
+   * Any handles created through duplication of those passed into
+   * @arg pass_handle are returned in @arg set.
+   * @return 0 if there were no handles to return; 1 if there were.
+   */
+  int dup_handles (ACE_Handle_Set &set) const;
+
+  /// Get a copy of the handles passed to the spawned process. This
+  /// will be the set of handles previously passed to @arg pass_handle().
+  /**
+   * Any handles previously passed to @arg pass_handle are returned
+   * in @arg set.
+   * @return 0 if there were no handles to return; 1 if there were.
+   */
+  int passed_handles (ACE_Handle_Set &set) const;
+
+  /// Set value for avoid_zombies (has no real effect except on *nix).
+  /// Get current value for avoid_zombies.
+  void avoid_zombies (int);
+  int avoid_zombies (void);
 
 #if defined (ACE_WIN32)
   // = Non-portable accessors for when you "just have to use them."
@@ -227,11 +262,6 @@ public:
   ACE_HANDLE get_stdout (void);
   ACE_HANDLE get_stderr (void);
 
-  /// Set value for avoid_zombies.
-  /// Get current value for avoid_zombies.
-  void avoid_zombies (int);
-  int avoid_zombies (void);
-
   // = Set/get real & effective user & group id associated with user.
   int setreugid (const ACE_TCHAR* user);
   void setruid (uid_t id);
@@ -257,6 +287,9 @@ protected:
 
   /// Default 0.
   u_long creation_flags_;
+
+  /// Avoid zombies for spawned processes.
+  int avoid_zombies_;
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   /// Helper function to grab win32 environment and stick it in
@@ -284,11 +317,9 @@ protected:
   SECURITY_ATTRIBUTES security_buf2_;
 
 #else /* !ACE_WIN32 */
-  /// Avoid zombies for spawned processes.
   ACE_HANDLE stdin_;
   ACE_HANDLE stdout_;
   ACE_HANDLE stderr_;
-  int avoid_zombies_;
 
   // = Real & effective user & group id's.
   //   These should be set to -1 to leave unchanged (default).
@@ -342,6 +373,11 @@ protected:
 
   /// Process-group on Unix; unused on Win32.
   pid_t process_group_;
+
+  /// Set of handles that were passed in pass_handle ().
+  ACE_Handle_Set handles_passed_;
+  /// Results of duplicating handles passed in pass_handle ().
+  ACE_Handle_Set dup_handles_;
 
   /// Pathname for the process. Relative path or absolute path or just
   /// the program name.
@@ -454,6 +490,16 @@ public:
   /// Process has actually exited)!
   void exit_code (int code);
 
+  /// Close all the handles in the set obtained from the
+  /// @arg ACE_Process_Options::dup_handles object used to spawn
+  /// the process.
+  void close_dup_handles (void);
+
+  /// Close all the handles in the set obtained from the
+  /// @arg ACE_Process_Options::passed_handles object used to spawn
+  /// the process.
+  void close_passed_handles (void);
+
 #if defined (ACE_WIN32)
   PROCESS_INFORMATION process_info (void);
 #endif /* ACE_WIN32 */
@@ -466,6 +512,11 @@ protected:
   pid_t child_id_;
 #endif /* ACE_WIN32 */
   int exit_code_;
+
+  /// Set of handles that were passed to the child process.
+  ACE_Handle_Set handles_passed_;
+  /// Handle duplicates made for the child process.
+  ACE_Handle_Set dup_handles_;
 };
 
 #include "ace/SString.h"
