@@ -1,3 +1,12 @@
+Thu Jan 27 09:11:52 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Message_Block.h: Tried to clarify the comments regarding the
+          handling of the data block pointer in the <ACE_Data_Block>
+          manipulating functions. Thanks to Defang Zhou <dzhou@zoo.uvm.edu>
+          for pointing out the lack of documentation regarding this.
+
+        * THANKS: Added Defang Zhou to the Hall of Fame.
+
 Thu Jan 27 00:15:08 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/ACE.cpp (recv_n and send_n): There was a bug in these
