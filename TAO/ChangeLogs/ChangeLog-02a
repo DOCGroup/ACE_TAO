@@ -13,7 +13,7 @@ Thu May 17 16:23:40 2001  Ossama Othman  <ossama@uci.edu>
 	  Service Configurator instead of an ACE_ARGV to get around some
 	  unwanted side effects caused by the latter.  With this change,
 	  redundant/nested quotes around "-ORBSvcConf..." ORB options is
-	  no longer needed.
+	  no longer needed.  [Bug 780]
 
 	* tao/LRU_Connection_Purging_Strategy.cpp (update_item_i):
 
