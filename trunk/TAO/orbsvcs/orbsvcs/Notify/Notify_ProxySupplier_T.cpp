@@ -66,6 +66,7 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::~TAO_Notify_ProxySupplier (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   this->event_manager_->unregister_from_publication_updates (this,
                                                              ACE_TRY_ENV);
+  ACE_CHECK;
 
   // unsubscribe it to our current subscriptions.
   CosNotification::EventTypeSeq added (0);
@@ -76,11 +77,13 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::~TAO_Notify_ProxySupplier (void)
 
   this->event_manager_->subscribe_for_events (this,
                                               added, removed, ACE_TRY_ENV);
+  ACE_CHECK;
 
   delete this->lock_;
 
   this->consumer_admin_->proxy_pushsupplier_destroyed (this->proxy_id_);
   consumer_admin_->_remove_ref (ACE_TRY_ENV);
+  ACE_CHECK;
 
   TAO_Notify_EMO_Factory* event_manager_objects_factory =
     event_manager_->resource_factory ();
@@ -96,6 +99,7 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::evaluate_filter (TAO_Notify_Event &event
     {
       CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator =
         consumer_admin_->MyOperator (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
       // Inter-filter group operator.
 
       CORBA::Boolean bval =
@@ -105,7 +109,9 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::evaluate_filter (TAO_Notify_Event &event
       if ((bval == 1 && filter_operator == CosNotifyChannelAdmin::AND_OP) ||
           (bval == 0 && filter_operator == CosNotifyChannelAdmin::OR_OP))
         {
-          return this->filter_admin_.match (event, ACE_TRY_ENV);
+          bval = this->filter_admin_.match (event, ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+          return bval;
         }
       else if (bval == 1 && filter_operator == CosNotifyChannelAdmin::OR_OP)
         return 1;
@@ -161,6 +167,7 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::subscription_change (const CosNotificati
     {
       this->event_manager_->subscribe_for_events (this,
                                                   added, removed, ACE_TRY_ENV);
+      ACE_CHECK;
     }
 
   {
@@ -289,6 +296,8 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::resume_connection (CORBA::Environment &A
     while (this->event_list_.dequeue_head (event) == 0)
       {
         this->dispatch_event_i (*event, ACE_TRY_ENV);
+        ACE_CHECK;
+
         delete event;
       }
   }
