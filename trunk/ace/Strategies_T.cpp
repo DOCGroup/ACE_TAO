@@ -57,9 +57,9 @@ ACE_DLL_Strategy<SVC_HANDLER>::open (const char dll_name[],
 {
   ACE_TRACE ("ACE_DLL_Strategy<SVC_HANDLER>::open");
   this->inherited::open (thr_mgr);
-  ACE_OS::strncpy (this->dll_name_, dll_name);
-  ACE_OS::strncpy (this->factory_function_, factory_function);
-  ACE_OS::strncpy (this->svc_name_, svc_name);
+  ACE_OS::strcpy (this->dll_name_, dll_name);
+  ACE_OS::strcpy (this->factory_function_, factory_function);
+  ACE_OS::strcpy (this->svc_name_, svc_name);
   this->svc_rep_ = svc_rep;
   return 0;
 }
