@@ -1,3 +1,9 @@
+Sun Nov  9 03:14:03 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (wait): Merged the two blocks within this
+	  function so that we can avoid relase/acquire lock
+	  unnecessarily.  Thanks to Doug for his careful scrutiny.
+
 Sat Nov 08 23:20:50 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.41, released Sat Nov 08 23:20:50 1997.
