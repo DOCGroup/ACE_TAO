@@ -300,7 +300,7 @@ int ACE_DynScheduler::priority (
   RT_Info *rt_info = 0;
   if (lookup_rt_info (handle, rt_info) == SUCCEEDED)
   {
-    // copy the priority values from the RT_Info 
+    // copy the priority values from the RT_Info
     priority = rt_info->priority;
     subpriority = rt_info->preemption_subpriority;
     preemption_prio = rt_info->preemption_priority;
@@ -377,7 +377,7 @@ int ACE_DynScheduler::add_dependency(RT_Info* rt_info,
   }
 
   ACE_DEBUG ((LM_DEBUG, "adding %s dependency to caller: %s\n",
-              (const char *) ((d.dependency_type == RtecScheduler::TWO_WAY_CALL) 
+              (const char *) ((d.dependency_type == RtecScheduler::TWO_WAY_CALL)
                               ? "TWO_WAY" : "ONE_WAY"),
               (const char*)temp_info->entry_point.in ()));
 
@@ -427,7 +427,7 @@ void ACE_DynScheduler::export(RT_Info& info, FILE* file)
 }
 
 
-int 
+int
 ACE_DynScheduler::dispatch_configuration (const Preemption_Priority & p_priority,
                                           OS_Priority & priority,
                                           Dispatching_Type & d_type)
@@ -437,7 +437,7 @@ ACE_DynScheduler::dispatch_configuration (const Preemption_Priority & p_priority
   if (lookup_config_info (p_priority, config_info) != SUCCEEDED)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Config info for priority %lu could not be found\n", 
+                       "Config info for priority %lu could not be found\n",
                        p_priority),
                       -1);
   }
@@ -476,7 +476,7 @@ ACE_DynScheduler::lookup_rt_info (handle_t handle,
 }
   // obtains an RT_Info based on its "handle".
 
-ACE_DynScheduler::status_t 
+ACE_DynScheduler::status_t
 ACE_DynScheduler::lookup_config_info (Preemption_Priority priority,
                                       Config_Info* &config_info)
 {
@@ -1047,12 +1047,12 @@ ACE_DynScheduler::identify_threads (void)
         {
           Dispatch_Entry *dispatch_ptr;
           const TimeBase::TimeT effective_period =
-	    task_entries_ [i].effective_period ();
+            task_entries_ [i].effective_period ();
           ACE_NEW_RETURN(dispatch_ptr,
                          Dispatch_Entry (zero,
                                          effective_period,
-                                         task_entries_ [i].rt_info ()->preemption_priority, 
-                                         task_entries_ [i].rt_info ()->priority, 
+                                         task_entries_ [i].rt_info ()->preemption_priority,
+                                         task_entries_ [i].rt_info ()->priority,
                                          task_entries_ [i]),
                          ST_VIRTUAL_MEMORY_EXHAUSTED);
 
@@ -1263,15 +1263,15 @@ ACE_DynScheduler::store_assigned_info (void)
                      ST_UNKNOWN_TASK);
   }
 
-  // set OS priority and Scheduler preemption priority and static 
+  // set OS priority and Scheduler preemption priority and static
   // preemption subpriority in underlying RT_Info
   // TBD - assign values into a map of priorities and RT_Infos:
   // an RT_Info can be dispatched at multiple priorities
-  ordered_dispatch_entries_ [i]->task_entry ().rt_info ()->priority = 
+  ordered_dispatch_entries_ [i]->task_entry ().rt_info ()->priority =
     ordered_dispatch_entries_ [i]->OS_priority ();
-  ordered_dispatch_entries_ [i]->task_entry ().rt_info ()->preemption_priority = 
+  ordered_dispatch_entries_ [i]->task_entry ().rt_info ()->preemption_priority =
     ordered_dispatch_entries_ [i]->priority ();
-  ordered_dispatch_entries_ [i]->task_entry ().rt_info ()->preemption_subpriority = 
+  ordered_dispatch_entries_ [i]->task_entry ().rt_info ()->preemption_subpriority =
     ordered_dispatch_entries_ [i]->static_subpriority ();
   }
 
@@ -1363,9 +1363,9 @@ ACE_DynScheduler::create_timeline ()
       // Just use low 32 bits of arrival and deadline.  This will
       // have to change when CosTimeBase.idl is finalized.
       const TimeBase::TimeT arrival =
-	ordered_dispatch_entries_[i]->arrival () + current_frame_offset;
+        ordered_dispatch_entries_[i]->arrival () + current_frame_offset;
       const TimeBase::TimeT deadline=
-	ordered_dispatch_entries_[i]->deadline () + current_frame_offset;
+        ordered_dispatch_entries_[i]->deadline () + current_frame_offset;
 
       ACE_NEW_RETURN (
         new_dispatch_entry,
@@ -1866,6 +1866,9 @@ template class ACE_Unbounded_Set<RtecScheduler::RT_Info *>;
 template class ACE_Unbounded_Set<Task_Entry_Link *>;
 template class ACE_Unbounded_Set_Iterator<RtecScheduler::RT_Info *>;
 template class ACE_Unbounded_Set_Iterator<Task_Entry_Link *>;
+template class ACE_Node<RtecScheduler::Config_Info *>;
+template class ACE_Unbounded_Set<RtecScheduler::Config_Info *>;
+template class ACE_Unbounded_Set_Iterator<RtecScheduler::Config_Info *>;
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Map_Entry<ACE_CString, RtecScheduler::RT_Info *>
 #pragma instantiate ACE_Map_Manager<ACE_CString, RtecScheduler::RT_Info *, ACE_SYNCH_MUTEX>
@@ -1889,6 +1892,9 @@ template class ACE_Unbounded_Set_Iterator<Task_Entry_Link *>;
 #pragma instantiate ACE_Unbounded_Set<Task_Entry_Link *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<RtecScheduler::RT_Info *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<Task_Entry_Link *>
+#pragma instantiate ACE_Node<RtecScheduler::Config_Info *>
+#pragma instantiate ACE_Unbounded_Set<RtecScheduler::Config_Info *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<RtecScheduler::Config_Info *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // EOF
