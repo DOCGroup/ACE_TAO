@@ -41,21 +41,30 @@ namespace TAO
     public virtual CORBA::LocalObject
     {
     public:
-     POA_ThreadPolicy (PortableServer::ThreadPolicyValue v)
-     {
-       if (v == ORB_CTRL_MODEL)
-         {
-           this->value_ =
-           ACE_Dynamic_Service<ORB_CTRL_MODEL_Policy>::instance ();
-         }
-         else if (// for other stuff)
-         {
-         }
-     }
-     // Methods on the policy interface.
+      POA_ThreadPolicy (PortableServer::ThreadPolicyValue v)
+      {
+        if (v == ORB_CTRL_MODEL)
+          {
+            this->value_ =
+              ACE_Dynamic_Service<ORB_CTRL_MODEL_Policy>::instance ();
+          }
+          else if (// for other stuff)
+          {
+          }
+      }
+
+      CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+      CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
      // todo
      private:
-       PortableServer::ThreadPolicyValue *value_;
+       Loadable_Thread_Policy *value_;
     };
 
 }
