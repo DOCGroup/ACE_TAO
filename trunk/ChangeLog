@@ -1,3 +1,138 @@
+Tue Nov  4 14:36:59 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Array_Base.cpp:
+
+	  Check if _MSC_VER macro is defined prior to checking if
+	  it is defined to a specific value.  Addresses warnings in some
+	  g++ configurations.
+
+	* ace/Asynch_Pseudo_Task.h:
+
+	  Nuked trailing whitespace.
+
+	* ace/CDR_Base.cpp (swap_4_array):
+
+	  Fixed problem where byte swapping code for arrays containing 4
+	  byte elements on platforms with 8 byte alignment was not
+	  enabled.
+
+	* ace/Connector.cpp:
+
+	  Include "ace/Handle_Set.h".  Necessitated by inter-header
+	  dependency reductions.
+
+	* ace/Dev_Poll_Reactor.cpp:
+
+	  Include "ace/Signal.h".  Necessitated by inter-header dependency
+	  reductions.
+
+	* ace/Name_Space.h:
+
+	  Forward declare the ACE_Unbounded_Set and
+	  ACE_Unbounded_Set_Iterator template classes instead of include
+	  "ace/Unbounded_Set.h".
+
+	  No need to include "ace/Name_Proxy.h".
+
+	* ace/Naming_Context.h:
+
+	  No need to include "ace/SString.h", "ace/Containers.h" and
+	  "ace/Name_Proxy.h".
+
+	* ace/OS_NS_string.h:
+
+	  No need to forward declare ACE_Time_Value.
+
+	* ace/Process_Manager.h:
+
+	  No need to include "ace/Reactor.h".  A forward declaration for
+	  ACE_Reactor is enough.
+
+	* ace/Process_Manager.cpp:
+
+	  Include "ace/Reactor.h" to pull in ACE_Reactor class
+	  declaration.
+
+	* ace/Reactor.h:
+
+	  Include new "ace/Timer_Queuefwd.h" header instead of
+	  "ace/Timer_Queue.h".  Forward declarations are enough.
+
+	  No need to include "ace/Signal.h".  Forward declarations for
+	  ACE_Sig_{Action,Handler,Set} are enough.
+
+	  No need to include "ace/Handle_Set.h".  Forward declaring
+	  ACE_Handle_Set is enough.
+
+	* ace/Reactor.i:
+
+	  No need to include "ace/Handle_Set.h".  The forward declaration
+	  in "ace/Reactor.h" is enough.
+
+	* ace/Reactor_Impl.h:
+
+	  Include new "ace/Timer_Queuefwd.h" header instead of
+	  "ace/Timer_Queue.h".  Forward declarations are enough.
+
+	  No need to include "ace/Signal.h".  Forward declarations for
+	  ACE_Sig_{Action,Handler,Set} are enough.
+
+	* ace/Reactor_Timer_Interface.h:
+
+	  Include "ace/Time_Value.h" to pull in ACE_Time_Value class
+	  declaration.
+
+	* ace/SString.h (ACE_NS_WString):
+
+	  Corrected documentation.
+
+	* ace/SString.i:
+
+	  No need to include "ace/Malloc_Base.h".
+
+	* ace/SString.cpp:
+
+	  Cosmetic reorganization of code.
+
+	* ace/Select_Reactor_Base.h:
+
+	  No need to include "ace/Signal.h".
+
+	  Include new "ace/Timer_Queuefwd.h" header instead of
+	  "ace/Timer_Queue.h".  Forward declarations are enough.
+
+	* ace/Select_Reactor_Base.cpp:
+	* ace/Select_Reactor_T.cpp:
+
+	  Include "ace/Signal.h" to pull in ACE signal classes.
+
+	* ace/TP_Reactor.h:
+
+	  No need to include "ace/Log_Msg.h".
+
+	* ace/TP_Reactor.cpp:
+
+	  No need to include "ace/Reactor.h".
+
+	  Include "ace/Timer_Queue.h" and "ace/Signal.h" to pull in
+	  ACE_Timer_Queue and ACE signal classes.
+
+	* ace/Timer_Queue.h:
+
+	  Moved ACE_Timer_Queue typedef to new Timer_Queuefwd.h file.
+
+	  Include "ace/Timer_Queuefwd.h" to pull in ACE_Timer_Queue
+	  typedef.
+
+	* ace/Timer_Queue_T.cpp:
+
+	  No need to include "ace/Signal.h".
+
+	* ace/Timer_Queuefwd.h:
+
+	  New file containing forward declarations and typedefs for the
+	  ACE_Timer_Queue class and friends.
+
 Tue Nov  4 17:58:29 2003  Steve Huston  <shuston@riverace.com>
 
 	* ace/UUID.cpp: Added explicit instantiation of
