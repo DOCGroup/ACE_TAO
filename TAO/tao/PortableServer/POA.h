@@ -65,6 +65,7 @@
 class TAO_Acceptor_Filter;
 class TAO_Acceptor_Registry;
 class TAO_Temporary_Creation_Time;
+class TAO_ObjectReferenceTemplate;
 
 class TAO_Creation_Time
 {
@@ -842,6 +843,10 @@ protected:
   TAO_Object_Adapter::poa_name_var system_name_;
 
   CORBA::OctetSeq id_;
+
+  /// Keep a copy of the pointer to the actual implementation around
+  /// so that we can call some TAO-specific methods on it.
+  TAO_ObjectReferenceTemplate * def_ort_template_;
 
   PortableInterceptor::ObjectReferenceTemplate_var ort_template_;
 

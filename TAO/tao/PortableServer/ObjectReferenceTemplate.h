@@ -42,8 +42,8 @@ class TAO_POA;
  *        interface.
  */
 class TAO_PortableServer_Export TAO_ObjectReferenceTemplate
-  : public virtual CORBA::DefaultValueRefCountBase
-  , public virtual OBV_TAO_Default_ORT::ObjectReferenceTemplate
+  : public virtual OBV_TAO_Default_ORT::ObjectReferenceTemplate,
+    public virtual CORBA::DefaultValueRefCountBase
 {
 public:
 
@@ -86,6 +86,16 @@ public:
     ));
   //@}
 
+  /// Set the underlying POA pointer.
+  /**
+   * Upon destruction of the POA that this ObjectReferenceTemplate is
+   * associated with, the underlying POA pointer will be set to zero
+   * to forcibly break all ties with the POA.  This is necessary to
+   * prevent this ObjectReferenceTemplate from invoking the POA after
+   * it has been destroyed.
+   */
+  void poa (TAO_POA * poa);
+
 protected:
 
   /// Destructor
@@ -107,6 +117,10 @@ private:
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
+
+#if defined (__ACE_INLINE__)
+# include "ObjectReferenceTemplate.inl"
+#endif /* ! __ACE_INLINE__ */
 
 #include "ace/post.h"
 

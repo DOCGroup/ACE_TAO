@@ -6,6 +6,11 @@ ACE_RCSID (PortableServer,
            "$Id$")
 
 
+#if !defined (__ACE_INLINE__)
+# include "ObjectReferenceTemplate.inl"
+#endif /* ! __ACE_INLINE__ */
+
+
 TAO_ObjectReferenceTemplate::TAO_ObjectReferenceTemplate (
   const char *server_id,
   const char *orb_id,
@@ -56,6 +61,9 @@ TAO_ObjectReferenceTemplate::adapter_name (ACE_ENV_SINGLE_ARG_DECL)
     }
   else
     {
+      if (this->poa_ == 0)
+        ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 0);
+
       this->adapter_name_ =
         this->poa_->adapter_name (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
@@ -83,6 +91,9 @@ TAO_ObjectReferenceTemplate::make_object (
       CORBA::SystemException
     ))
 {
+  if (this->poa_ == 0)
+    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), CORBA::Object::_nil ());
+
   PortableServer::ObjectId oid;
   oid.replace (id.maximum (),
                id.length (),
