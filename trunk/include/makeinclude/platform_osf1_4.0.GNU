@@ -24,16 +24,18 @@ CFLAGS          += -pthread
 # 401: base_class_with_nonvirtual_dtor
 # 610: nonoverriding_function_decl
 # 835: unreferenced_function_param
+# 839: no_corresponding_delete (until this is fixed in libTAO)
 ifeq ($(CXX_VER),POST_5X)
   WARNING_FLAGS += -w0 -msg_display_number -msg_display_tag \
-                   -msg_disable 9,174,193,236,340,401,610,835
+                   -msg_disable 9,174,193,236,340,401,610,835,839
 endif
 
 CCFLAGS         += $(CFLAGS) -ptr ptrepository $(WARNING_FLAGS) #### -nortti
 DCFLAGS         += -g -O0
 DLD             = $(CXX)
 LD              = $(CXX)
-LIBS            += $(CFLAGS) -ptr ptrepository -ltli -lrt
+#### -lm is needed for TAO MT_Cubit client
+LIBS            += $(CFLAGS) -ptr ptrepository -ltli -lrt -lm
 OCFLAGS         += -O4
 PIC             =
 ARFLAGS         = cruvZ
