@@ -53,9 +53,8 @@ namespace TAO
                                 ACE_ENV_ARG_DECL)
   {
     // Cache the target to a local variable.
-    CORBA::Object *effective_target = this->target_;
-
-    CORBA::Object_var tmp_mem;
+    CORBA::Object_var effective_target =
+      CORBA::Object::_duplicate (this->target_);
 
     // Initial state
     TAO::Invocation_Status status = TAO_INVOKE_START;
@@ -105,8 +104,6 @@ namespace TAO
             details.reset_request_service_info ();
             details.reset_reply_service_info ();
 
-            tmp_mem = effective_target;
-
             if (TAO_debug_level > 2)
               {
                 ACE_DEBUG ((LM_DEBUG,
@@ -149,7 +146,7 @@ namespace TAO
   Invocation_Status
   Invocation_Adapter::invoke_collocated_i (TAO_Stub *stub,
                                            TAO_Operation_Details &details,
-                                           CORBA::Object *&effective_target,
+                                           CORBA::Object_var &effective_target,
                                            Collocation_Strategy strat
                                            ACE_ENV_ARG_DECL)
   {
@@ -190,7 +187,7 @@ namespace TAO
   Invocation_Status
   Invocation_Adapter::invoke_remote_i (TAO_Stub *stub,
                                        TAO_Operation_Details &details,
-                                       CORBA::Object *&effective_target,
+                                       CORBA::Object_var &effective_target,
                                        ACE_Time_Value *&max_wait_time
                                        ACE_ENV_ARG_DECL)
   {
@@ -204,7 +201,7 @@ namespace TAO
 
     // Create the resolver which will pick (or create) for us a
     // transport and a profile from the effective_target.
-    Profile_Transport_Resolver resolver (effective_target,
+    Profile_Transport_Resolver resolver (effective_target.in (),
                                          stub);
 
     resolver.resolve (max_wait_time
@@ -241,7 +238,7 @@ namespace TAO
 
   Invocation_Status
   Invocation_Adapter::invoke_twoway (TAO_Operation_Details &op,
-                                     CORBA::Object *&effective_target,
+                                     CORBA::Object_var &effective_target,
                                      Profile_Transport_Resolver &r,
                                      ACE_Time_Value *&max_wait_time
                                      ACE_ENV_ARG_DECL)
@@ -283,7 +280,7 @@ namespace TAO
 
   Invocation_Status
   Invocation_Adapter::invoke_oneway (TAO_Operation_Details &op,
-                                     CORBA::Object *&effective_target,
+                                     CORBA::Object_var &effective_target,
                                      Profile_Transport_Resolver &r,
                                      ACE_Time_Value *&max_wait_time
                                      ACE_ENV_ARG_DECL)
@@ -325,7 +322,7 @@ namespace TAO
   }
 
   void
-  Invocation_Adapter::object_forwarded (CORBA::Object *&effective_target,
+  Invocation_Adapter::object_forwarded (CORBA::Object_var &effective_target,
                                         TAO_Stub *stub
                                         ACE_ENV_ARG_DECL)
   {
