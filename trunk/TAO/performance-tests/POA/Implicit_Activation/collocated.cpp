@@ -7,6 +7,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"
 #include "ace/Sample_History.h"
+#include "ace/OS_NS_errno.h"
 
 ACE_RCSID(Activation, server, "$Id$")
 

@@ -4,6 +4,7 @@
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "testS.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 
 const char* filename = "test.ior";
 

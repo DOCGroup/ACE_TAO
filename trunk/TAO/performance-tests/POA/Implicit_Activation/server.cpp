@@ -4,6 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_errno.h"
 
 ACE_RCSID(Activation, server, "$Id$")
 

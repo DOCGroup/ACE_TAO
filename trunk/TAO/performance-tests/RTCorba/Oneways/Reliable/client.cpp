@@ -8,6 +8,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/OS_NS_errno.h"
 
 ACE_RCSID (Reliable,
            client,

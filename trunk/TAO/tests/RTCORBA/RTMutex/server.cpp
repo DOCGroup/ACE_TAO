@@ -5,6 +5,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
 
 static int test_try_lock_flag =
 #if defined (ACE_HAS_MUTEX_TIMEOUTS) && !defined (ACE_HAS_WTHREADS)

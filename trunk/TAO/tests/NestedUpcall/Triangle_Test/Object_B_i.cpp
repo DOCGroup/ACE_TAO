@@ -19,6 +19,7 @@
 
 #include "tao/Exception.h"
 #include "Object_B_i.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Triangle_Test, Object_B_i, "$Id$")
 
