@@ -1,3 +1,8 @@
+Fri Jun 28 07:37:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACEXML/common/URL_Addr.cpp:
+          Fixed BCB Unicode build error.
+
 Thu Jun 27 16:50:19 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/TP_Reactor.cpp:
