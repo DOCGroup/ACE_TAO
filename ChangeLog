@@ -158,7 +158,7 @@ Tue Nov 18 16:22:45 2003  Tao Lu  <lu@dre.vanderbilt.edu>
         * etc/ciao_xml_helpers.doxygen :
         * bin/generate_doxygen.pl :
         * html/index.html :
-        Added some more doxygen files.
+          Added some more doxygen files.
 
 Tue Nov 18 16:14:29 2003  Steve Huston  <shuston@riverace.com>
 
