@@ -128,257 +128,194 @@ write_iors_to_file (const char *first_ior,
 int
 main (int argc, char **argv)
 {
-  CORBA::Environment env;
+  //  CORBA::Environment env;
 
-  // Initialize the ORB first.
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, env);
+  ACE_DECLARE_NEW_CORBA_ENV;
 
-  if (env.exception () != 0)
+  ACE_TRY
     {
-      env.print_exception ("CORBA::ORB_init");
-      return -1;
-    }
+      
+      // Initialize the ORB first.
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  int result = parse_args (argc, argv);
-  if (result != 0)
-    return result;
+  
+      int result = parse_args (argc, argv);
+      if (result != 0)
+        return result;
+      
+      // Obtain the RootPOA.
+      CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
 
-  // Obtain the RootPOA.
-  CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
+      // Get the POA_var object from Object_var.
+      PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (obj.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+      // Get the POAManager of the RootPOA.
+      PortableServer::POAManager_var poa_manager =
+        root_poa->the_POAManager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  // Get the POA_var object from Object_var.
-  PortableServer::POA_var root_poa =
-    PortableServer::POA::_narrow (obj.in (), env);
+      // Policies for the firstPOA to be created.
+      CORBA::PolicyList policies (2);
+      policies.length (2);
 
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::_narrow");
-      return -1;
-    }
+      // Id Assignment Policy
+      policies[0] =
+        root_poa->create_id_assignment_policy (PortableServer::USER_ID, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  // Get the POAManager of the RootPOA.
-  PortableServer::POAManager_var poa_manager =
-    root_poa->the_POAManager (env);
+      // Lifespan policy
+      policies[1] =
+        root_poa->create_lifespan_policy (PortableServer::PERSISTENT, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::the_POAManager");
-      return -1;
-    }
+      // Create the firstPOA under the RootPOA.
+      ACE_CString name = "firstPOA";
+      PortableServer::POA_var first_poa =
+        root_poa->create_POA (name.c_str (),
+                              poa_manager.in (),
+                              policies,
+                              ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+  
+      // Create the secondPOA under the firstPOA.
+      name = "secondPOA";
+      PortableServer::POA_var second_poa =
+        first_poa->create_POA (name.c_str (),
+                               poa_manager.in (),
+                               policies,
+                               ACE_TRY_ENV);
+  
+      // Creation of POAs is over. Destroy the Policy objects.
+      for (CORBA::ULong i = 0;
+           i < policies.length () && ACE_TRY_ENV.exception () == 0;
+           ++i)
+        {
+          CORBA::Policy_ptr policy = policies[i];
+          policy->destroy (ACE_TRY_ENV);
+        }
 
-  // Policies for the firstPOA to be created.
-  CORBA::PolicyList policies (2);
-  policies.length (2);
 
-  // Id Assignment Policy
-  policies[0] =
-    root_poa->create_id_assignment_policy (PortableServer::USER_ID, env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::create_id_assignment_policy");
-      return -1;
-    }
+      // Create two Objects of Class MyFooServant (defined in
+      // ./../GenericServant/MyFooServant.h) Create one object at RootPOA
+      // and the other at firstPOA.
+      MyFooServant first_foo_impl (orb.in (), root_poa.in (), 27);
+      MyFooServant second_foo_impl (orb.in (), first_poa.in (), 28);
+      
+      // Do "activate_object" to activate the first_foo_impl object.  It
+      // returns ObjectId for that object.  Operation Used :
+      //  ObjectId activate_object( in Servant p_servant)
+      //    raises (ServantAlreadyActive, WrongPolicy);
+      PortableServer::ObjectId_var first_oid =
+        root_poa->activate_object (&first_foo_impl, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+  
+      // Get Object Reference for the first_foo_impl object.
+      Foo_var first_foo = first_foo_impl._this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+  
+  
+      // Get ObjectId for object secondFoo and use that ObjectId to
+      // activate the second_foo_impl object.
+      // Operation Used :
+      //  void activate_object_with_id( in ObjectId oid, in Servant p_servant)
+      //       raises (ObjectAlreadyActive, ServantAlreadyActive, WrongPolicy);
+      PortableServer::ObjectId_var second_oid =
+        PortableServer::string_to_ObjectId ("secondFoo");
+      
+      first_poa->activate_object_with_id (second_oid.in (),
+                                          &second_foo_impl,
+                                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  // Lifespan policy
-  policies[1] =
-    root_poa->create_lifespan_policy (PortableServer::PERSISTENT, env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::create_lifespan_policy");
-      return -1;
-    }
+      // Get Object reference for second_foo_impl object.
+      Foo_var second_foo = second_foo_impl._this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  // Create the firstPOA under the RootPOA.
-  ACE_CString name = "firstPOA";
-  PortableServer::POA_var first_poa =
-    root_poa->create_POA (name.c_str (),
-                          poa_manager.in (),
-                          policies,
-                          env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::create_POA");
-      return -1;
-    }
+      
+      // Get ObjectId for the string thirdPOA Create the object reference
+      // for thirdPOA using that ObjectId.  Operation Used :
+      //   Object create_reference_with_id (in ObjectId oid, in CORBA::RepositoryId intf );
+      // This operation creates an object reference that encapsulates the
+      // specified Object Id and interface repository Id values.
+      /*
+        PortableServer::ObjectId_var third_oid =
+        PortableServer::string_to_ObjectId ("thirdFoo");
+      */
+      
+      // This will test how the POA handles a user given ID
+      PortableServer::ObjectId_var third_oid =
+        PortableServer::string_to_ObjectId ("third Foo");
 
-  // Create the secondPOA under the firstPOA.
-  name = "secondPOA";
-  PortableServer::POA_var second_poa =
-    first_poa->create_POA (name.c_str (),
-                           poa_manager.in (),
-                           policies,
-                           env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::create_POA");
-      return -1;
-    }
+      third_oid[5] = (CORBA::Octet) '\0';
+      
+      CORBA::Object_var third_foo =
+        second_poa->create_reference_with_id (third_oid.in (),
+                                          "IDL:Foo:1.0", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  // Creation of POAs is over. Destroy the Policy objects.
-  for (CORBA::ULong i = 0;
-       i < policies.length () && env.exception () == 0;
-       ++i)
-    {
-      CORBA::Policy_ptr policy = policies[i];
-      policy->destroy (env);
-    }
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::create_POA");
-      return -1;
-    }
+  
+      // Stringyfy all the object references and print them out.
+      CORBA::String_var first_ior =
+        orb->object_to_string (first_foo.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  // Create two Objects of Class MyFooServant (defined in
-  // ./../GenericServant/MyFooServant.h) Create one object at RootPOA
-  // and the other at firstPOA.
-  MyFooServant first_foo_impl (orb.in (), root_poa.in (), 27);
-  MyFooServant second_foo_impl (orb.in (), first_poa.in (), 28);
+  
+      CORBA::String_var second_ior =
+        orb->object_to_string (second_foo.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+  
+      CORBA::String_var third_ior =
+        orb->object_to_string (third_foo.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  // Do "activate_object" to activate the first_foo_impl object.  It
-  // returns ObjectId for that object.  Operation Used :
-  //  ObjectId activate_object( in Servant p_servant)
-  //    raises (ServantAlreadyActive, WrongPolicy);
-  PortableServer::ObjectId_var first_oid =
-    root_poa->activate_object (&first_foo_impl, env);
-
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::activate_object");
-      return -1;
-    }
-
-  // Get Object Reference for the first_foo_impl object.
-  Foo_var first_foo = first_foo_impl._this (env);
-
-  if (env.exception () != 0)
-    {
-      env.print_exception ("POA_Foo::_this");
-      return -1;
-    }
-
-  // Get ObjectId for object secondFoo and use that ObjectId to
-  // activate the second_foo_impl object.
-  // Operation Used :
-  //  void activate_object_with_id( in ObjectId oid, in Servant p_servant)
-  //       raises (ObjectAlreadyActive, ServantAlreadyActive, WrongPolicy);
-  PortableServer::ObjectId_var second_oid =
-    PortableServer::string_to_ObjectId ("secondFoo");
-
-  first_poa->activate_object_with_id (second_oid.in (),
-                                      &second_foo_impl,
-                                      env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::activate_object_with_id");
-      return -1;
-    }
-
-  // Get Object reference for second_foo_impl object.
-  Foo_var second_foo = second_foo_impl._this (env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("POA_Foo::_this");
-      return -1;
-    }
-
-  // Get ObjectId for the string thirdPOA Create the object reference
-  // for thirdPOA using that ObjectId.  Operation Used :
-  //   Object create_reference_with_id (in ObjectId oid, in CORBA::RepositoryId intf );
-  // This operation creates an object reference that encapsulates the
-  // specified Object Id and interface repository Id values.
-  /*
-  PortableServer::ObjectId_var third_oid =
-    PortableServer::string_to_ObjectId ("thirdFoo");
-  */
-
-  // This will test how the POA handles a user given ID
-  PortableServer::ObjectId_var third_oid =
-    PortableServer::string_to_ObjectId ("third Foo");
-
-  third_oid[5] = (CORBA::Octet) '\0';
-
-  CORBA::Object_var third_foo =
-    second_poa->create_reference_with_id (third_oid.in (),
-                                          "IDL:Foo:1.0", env);
-
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::create_reference_with_id");
-      return -1;
-    }
-
-  // Stringyfy all the object references and print them out.
-  CORBA::String_var first_ior =
-    orb->object_to_string (first_foo.in (), env);
-
-  if (env.exception () != 0)
-    {
-      env.print_exception ("CORBA::ORB::object_to_string");
-      return -1;
-    }
-
-  CORBA::String_var second_ior =
-    orb->object_to_string (second_foo.in (), env);
-
-  if (env.exception () != 0)
-    {
-      env.print_exception ("CORBA::ORB::object_to_string");
-      return -1;
-    }
-
-  CORBA::String_var third_ior =
-    orb->object_to_string (third_foo.in (), env);
-
-  if (env.exception () != 0)
-    {
-      env.print_exception ("CORBA::ORB::object_to_string");
-      return -1;
-    }
-
-  ACE_DEBUG ((LM_DEBUG,
-              "%s\n%s\n%s\n",
-              first_ior.in (),
-              second_ior.in (),
-              third_ior.in ()));
-
-  int write_result = write_iors_to_file (first_ior.in (),
+  
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s\n%s\n%s\n",
+                  first_ior.in (),
+                  second_ior.in (),
+                  third_ior.in ()));
+      
+      int write_result = write_iors_to_file (first_ior.in (),
                                          second_ior.in (),
                                          third_ior.in ());
-  if (write_result != 0)
-    return write_result;
+      if (write_result != 0)
+        return write_result;
 
-  // Activate thirdPOA using its ObjectID.
-  MyFooServant third_foo_impl (orb.in (), second_poa.in (), 29);
-  second_poa->activate_object_with_id (third_oid.in (),
-                                       &third_foo_impl,
-                                       env);
-  if (env.exception () != 0)
+      // Activate thirdPOA using its ObjectID.
+      MyFooServant third_foo_impl (orb.in (), second_poa.in (), 29);
+      second_poa->activate_object_with_id (third_oid.in (),
+                                           &third_foo_impl,
+                                           ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+  
+      poa_manager->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+
+      if (orb->run () == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CORBA::ORB::run"), -1);
+
+      // Destroy RootPOA. ( Also destroys firstPOA)
+      root_poa->destroy (1,
+                         1,
+                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+
+      ACE_TIMEPROBE_PRINT;
+    }
+  ACE_CATCHANY
     {
-      env.print_exception ("PortableServer::POA::activate_object_with_id");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
       return -1;
     }
-
-  poa_manager->activate (env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POAManager::activate");
-      return -1;
-    }
-
-  if (orb->run () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CORBA::ORB::run"), -1);
-
-  // Destroy RootPOA. ( Also destroys firstPOA)
-  root_poa->destroy (1,
-                     1,
-                     env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("PortableServer::POA::destroy");
-      return -1;
-    }
-
-  ACE_TIMEPROBE_PRINT;
-
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+      
   return 0;
 }
