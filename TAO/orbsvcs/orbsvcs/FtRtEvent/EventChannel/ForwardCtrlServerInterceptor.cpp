@@ -5,6 +5,10 @@
 #include "GroupInfoPublisher.h"
 #include "IOGR_Maker.h"
 #include "../Utils/resolve_init.h"
+
+#include "tao/Object_KeyC.h"
+#include "tao/ORB_Constants.h"
+
 #include "orbsvcs/FTRTC.h"
 
 ACE_RCSID (EventChannel,

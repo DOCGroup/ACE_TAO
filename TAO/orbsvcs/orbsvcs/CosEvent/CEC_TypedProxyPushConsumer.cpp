@@ -11,6 +11,8 @@
 #include "CEC_TypedProxyPushConsumer.i"
 #endif /* __ACE_INLINE__ */
 
+#include "tao/debug.h"
+
 #include "ace/Reverse_Lock_T.h"
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;

@@ -1,3 +1,32 @@
+Fri Nov 21 21:05:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/FTRT_Event_Service/Gateway_Service/FTRTEC_Gateway_Service.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_T.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/SCTP_Fault_Detector.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/SCTP_Fault_Detector.h:
+        * orbsvcs/orbsvcs/Log/PersistStore.cpp:
+        
+          Added missing file includes, and made the RTFT Event Channel build
+          work when TAO_HAS_SCIOP is not defined.
+          
+        * orbsvcs/orbsvcs/FtRtEvent.mpc:
+        
+          Added missing export header file.
+          
+        * tao/tao.mpc:
+        
+          Added missing file OctetSeqA.cpp.
+          
+        * tao/Utils/tao_Utils.mpc:
+        
+          Added missing TAO_UTILS_BUILD_DLL preprocessor directive.
+
 Fri Nov 21 20:48:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_typedef.cpp:
