@@ -247,8 +247,8 @@ main (int, ASYS_TCHAR *[])
   ACE_ASSERT (thr_mgr->cancel_grp (grp_id) != -1);
 
   // Perform a barrier wait until all the threads have shut down.
-  // But, wait a maximum of 60 seconds because the test sometimes
-  // hangs on SunOS 5.5.1 and 5.7.
+  // But, wait for a limited time because sometimes the test hangs
+  // on SunOS 5.5.1 and 5.7.
   const ACE_Time_Value max_wait (60);
   const ACE_Time_Value wait_time (ACE_OS::gettimeofday () + max_wait);
   if (thr_mgr->wait (&wait_time) == -1)
