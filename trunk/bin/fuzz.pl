@@ -303,9 +303,9 @@ sub check_for_streams_include ()
                 if ($disable == 0
                     and /^\s*#\s*include\s*\"ace\/streams\.h\"/) {
                     print_error ("ace/streams.h included in $file on line $line");
-                    print STDERR " ace/streams.h is very expensive in both ";
-                    print STDERR "compile-time and footprint. \n";
-                    print STDERR " Please consider including ace/iosfwd.h instead.\n\n";
+                    print " ace/streams.h is very expensive in both ";
+                    print "compile-time and footprint. \n";
+                    print " Please consider including ace/iosfwd.h instead.\n\n";
                 }
             }
             close (FILE);
@@ -336,10 +336,10 @@ sub check_for_OS_h_include ()
                 if ($disable == 0
                     and /^\s*#\s*include\s*\"ace\/OS\.h\"/) {
                     print_error ("ace/OS.h included in $file on line $line");
-                    print STDERR " OS.h is very expensive in both ";
-                    print STDERR "compile-time and footprint. \n";
-                    print STDERR " Please consider including one of the ";
-                    print STDERR "OS_NS_*.h files instead.\n\n";
+                    print " OS.h is very expensive in both ";
+                    print "compile-time and footprint. \n";
+                    print " Please consider including one of the ";
+                    print "OS_NS_*.h files instead.\n\n";
                 }
             }
             close (FILE);
@@ -372,10 +372,10 @@ sub check_for_synch_include ()
                          or /^\s*#\s*include\s*\"(ace\/Synch_T\.h)\"/)) {
                     my $synch = $1;
                     print_error ("$synch included in $file on line $line");
-                    print STDERR " $synch is very expensive in both ";
-                    print STDERR "compile-time and footprint. \n";
-                    print STDERR " Please consider including one of the ";
-                    print STDERR "individual synch files instead.\n\n";
+                    print " $synch is very expensive in both ";
+                    print "compile-time and footprint. \n";
+                    print " Please consider including one of the ";
+                    print "individual synch files instead.\n\n";
                 }
             }
             close (FILE);
@@ -513,9 +513,9 @@ sub check_for_dependency_file ()
                     $depend = $path . $depend;
                     unless (open (DFILE, $depend)) {
                         print_error ("DEPENDENCY_FILE \"$depend\" not found");
-                        print STDERR " Either add \"$depend\" to cvs ";
-                        print STDERR "or remove DEPENDENCY_FILE variable\n";
-                        print STDERR " from $file\n";
+                        print " Either add \"$depend\" to cvs ";
+                        print "or remove DEPENDENCY_FILE variable\n";
+                        print " from $file\n";
                     }
                     close (DFILE);
                 }
