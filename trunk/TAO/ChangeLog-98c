@@ -1,3 +1,8 @@
+Wed Jul 22 00:29:32 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Invocation.cpp: 
+	  Fixed problem in TIMEPROBE initialization.
+
 Tue Jul 21 22:05:15 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Cubit/TAO/MT_Cubit/ Task_Client.cpp: added
