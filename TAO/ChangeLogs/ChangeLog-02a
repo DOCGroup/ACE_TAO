@@ -1,3 +1,12 @@
+Thu Aug 10 23:03:17 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/Latency/server.cpp:
+          Print debug message after the ORB is destroyed.
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp:
+          Minor patch so it would compile when TAO_NO_COPY_OCTET_SEQUENCES
+          is disabled.
+
 Thu Aug 10 20:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	
 	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
@@ -9,6 +18,7 @@ Thu Aug 10 20:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	per interface (this is the one-shot policy) or have the smart
 	factory per object instance by disabling the one-shot policy at
 	creation time.  
+
 	* tests/Smart_Proxies/Policy/Makefile:
 	* tests/Smart_Proxies/Policy/README:
 	* tests/Smart_Proxies/Policy/run_test.pl:
@@ -17,6 +27,7 @@ Thu Aug 10 20:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* tests/Smart_Proxies/Policy/Smart_Proxy_Impl.{h,cpp}:
 	* tests/Smart_Proxies/Policy/test.idl:
 	This test tries out both these policies.
+
 	* tests/Smart_Proxies/Benchmark/Makefile:
 	* tests/Smart_Proxies/Benchmark/README:
 	* tests/Smart_Proxies/Benchmark/run_test.pl:
@@ -26,6 +37,7 @@ Thu Aug 10 20:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* tests/Smart_Proxies/Benchmark/test.idl:
 	This is a test which performs benchmarking of the smart proxy
 	feature in TAO.  
+
 	* docs/Smart_Proxies.html: Describes these new options of the
 	smart proxy feature.
 	Thanks to Doug and Nanbor for motivating me to get these policies

@@ -161,11 +161,13 @@ main (int argc, char *argv[])
 
       orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG, "orb destroyed\n"));
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Exception caught:");
       return 1;
     }
   ACE_ENDTRY;
