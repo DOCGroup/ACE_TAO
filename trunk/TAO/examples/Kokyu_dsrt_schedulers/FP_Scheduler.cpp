@@ -296,8 +296,7 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
       sc_qos_as_any <<= sc_qos;
 
       sc.context_data =
-        ACE_reinterpret_cast(IOP::ServiceContext::
-                             _tao_seq_CORBA_Octet_ &,
+        ACE_reinterpret_cast (CORBA::OctetSeq &,
                              *codec_->encode (sc_qos_as_any));
 
 #ifdef KOKYU_DSRT_LOGGING
@@ -477,9 +476,7 @@ Fixed_Priority_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr
       CORBA::Any sc_qos_as_any;
       sc_qos_as_any <<= sc_qos;
 
-      sc.context_data = ACE_reinterpret_cast(
-                                             IOP::ServiceContext::
-                                             _tao_seq_CORBA_Octet_ &,
+      sc.context_data = ACE_reinterpret_cast(CORBA::OctetSeq &,
                                              *codec_->encode (sc_qos_as_any));
 
       // Add this context to the service context list.
