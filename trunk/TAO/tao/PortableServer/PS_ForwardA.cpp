@@ -33,36 +33,7 @@
 #include "tao/Any.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
-
-
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
-
-
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:744
-
-static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
-  _tao_tc_CORBA_sequence_0 (
-    CORBA::tk_sequence,
-    &::_tao_tc_CORBA::_tc_octet,
-    0U);
-  
-static TAO::TypeCode::Alias<char const *,
-                            TAO::Null_RefCount_Policy>
-  _tao_tc_CORBA_OctetSeq (
-    "IDL:omg.org/CORBA/OctetSeq:1.0",
-    "OctetSeq",
-    &::_tao_tc_CORBA_sequence_0);
-  
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr const _tc_OctetSeq =
-    &_tao_tc_CORBA_OctetSeq;
-}
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>

@@ -29,7 +29,7 @@
 #include "tao/Null_RefCount_Policy.h"
 #include "tao/TypeCode_Constants.h"
 #include "tao/Alias_TypeCode.h"
-#include "tao/TypeCode_Non_Default_Case.h"
+#include "tao/TypeCode_Enumerator.h"
 #include "tao/Enum_TypeCode.h"
 #include "tao/Objref_TypeCode.h"
 #include "tao/CDR.h"
@@ -37,16 +37,14 @@
 #include "tao/Any_Impl_T.h"
 #include "tao/Any_Basic_Impl_T.h"
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/enum_typecode.cpp:34
+// be/be_visitor_typecode/enum_typecode.cpp:34
 
 static TAO::TypeCode::Enumerator<char const *> const _tao_enumerators_PortableServer_ServantRetentionPolicyValue[] =
   {
-    "RETAIN",
-    "NON_RETAIN"
-
+    { "RETAIN" },
+    { "NON_RETAIN" }
+    
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -57,7 +55,7 @@ static TAO::TypeCode::Enum<char const *,
     "ServantRetentionPolicyValue",
     _tao_enumerators_PortableServer_ServantRetentionPolicyValue,
     2);
-
+  
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ServantRetentionPolicyValue =
@@ -67,7 +65,7 @@ namespace PortableServer
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:73
+// be/be_visitor_typecode/objref_typecode.cpp:73
 
 static TAO::TypeCode::Objref<char const *,
                              CORBA::tk_local_interface,
@@ -75,7 +73,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_PortableServer_ServantRetentionPolicy (
     "IDL:omg.org/PortableServer/ServantRetentionPolicy:2.3",
     "ServantRetentionPolicy");
-
+  
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ServantRetentionPolicy =
@@ -85,7 +83,7 @@ namespace PortableServer
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_enum/any_op_cs.cpp:52
+// be/be_visitor_enum/any_op_cs.cpp:52
 
 void operator<<= (
     CORBA::Any &_tao_any,
@@ -108,12 +106,12 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<PortableServer::ServantRetentionPolicyValue>::extract (
         _tao_any,
         PortableServer::_tc_ServantRetentionPolicyValue,
-        _tao_elem
+        _tao_elem 
       );
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -206,5 +204,3 @@ operator>>= (
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
