@@ -2,9 +2,11 @@
 
 #include "RS_Handler.h"
 #include "SP_Handler.h"
+#include "Utils.h"
 #include "tao/Exception.h"
 #include "ace/Auto_Ptr.h"
-#include "Utils.h"
+#include "ace/SString.h"
+
 
 void
 CIAO::Config_Handler::RS_Handler::
@@ -36,7 +38,7 @@ process_RequirementSatisfier (DOMNodeIterator * iter,
             {
               ::CORBA::ULong index = res_seq->length ();
               res_seq->length (res_seq->length () + 1);
-              res_seq [index] = 
+              res_seq [index] =
                 CIAO::Config_Handler::Utils::parse_string (iter);
               name = node->getNodeName ();
             }
@@ -59,10 +61,10 @@ process_RequirementSatisfier (DOMNodeIterator * iter,
           property_seq->length (0);
           while (name == XStr (ACE_TEXT ("property")))
             {
-              // Check for <href> tags 
+              // Check for <href> tags
               if (node->hasAttributes ())
                 {
-                  xercesc::DOMNamedNodeMap * named_node_map = 
+                  xercesc::DOMNamedNodeMap * named_node_map =
                     node->getAttributes ();
                   int length = named_node_map->getLength ();
                   if (length > 1)
@@ -79,7 +81,7 @@ process_RequirementSatisfier (DOMNodeIterator * iter,
                             {
                               XMLURL url (attr_node_value.c_str ());
                               DOMNodeIterator * value_iter =
-                                Utils::parse_href_tag (url, 
+                                Utils::parse_href_tag (url,
                                                        node->getOwnerDocument ());
                               // Get to the root-node
                               value_iter->nextNode ();
@@ -88,8 +90,8 @@ process_RequirementSatisfier (DOMNodeIterator * iter,
                               property_iter = value_iter;
                             }
                         }
-                    } 
-                } 
+                    }
+                }
               else
                 property_iter = iter;
 
@@ -117,7 +119,7 @@ process_RequirementSatisfier (DOMNodeIterator * iter,
             ACE_DEBUG ((LM_DEBUG, "Config_Handlers::RS_Handler::process_ \
                         RequirementSatisfier element mismatch expected <name>,\
                         <resourceType> <property>\n"));
-          // On exit go one step back as one might have processed the next 
+          // On exit go one step back as one might have processed the next
           // valid tag
           iter->previousNode ();
 

@@ -4,6 +4,8 @@
 #include "ReceiverC.h"
 #include "tao/ORB_Constants.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_string.h"
+
 
 static const char *sender_ior = "file://sender.ior";
 static const char *distributor_ior = "file://distributor.ior";
