@@ -19,12 +19,20 @@
 #include "CDR.h"
 #include "MProfile.h"
 
+#include "RT_ORB.h"
+#include "Priority_Mapping_Manager.h"
+#include "RT_Current.h"
+
 #include "ORBInitInfo.h"
 #include "ORBInitializer_Registry.h"
 
 #include "CodecFactory_ORBInitializer.h"
 
 #include "TypeCodeFactory_Adapter.h"
+
+#if TAO_HAS_RT_CORBA == 1
+# include "RT_ORBInitializer.h"         /* @@ This should go away! */
+#endif  /* TAO_HAS_RT_CORBA == 1 */
 
 #if TAO_HAS_CORBA_MESSAGING == 1
 # include "Messaging_ORBInitializer.h"  /* @@ This should go away! */
@@ -926,6 +934,34 @@ CORBA_ORB::resolve_policy_manager (CORBA::Environment &)
 }
 
 CORBA_Object_ptr
+CORBA_ORB::resolve_rt_current (CORBA::Environment &/*ACE_TRY_ENV*/)
+{
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  return this->orb_core_->rt_current ();
+
+#else
+
+  return CORBA_Object::_nil ();
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
+}
+
+CORBA_Object_ptr
+CORBA_ORB::resolve_rt_orb (CORBA::Environment &ACE_TRY_ENV)
+{
+#if (TAO_HAS_RT_CORBA == 1)
+  return this->orb_core_->rt_orb (ACE_TRY_ENV);
+#else
+  ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
+  return CORBA_Object::_nil ();
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
+}
+
+CORBA_Object_ptr
 CORBA_ORB::resolve_policy_current (CORBA::Environment &)
 {
 
@@ -1297,10 +1333,10 @@ CORBA_ORB::resolve_initial_references (const char *name,
     return this->orb_core ()->resolve_typecodefactory (ACE_TRY_ENV);
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_RTORB) == 0)
-    return this->orb_core ()->resolve_rt_orb (ACE_TRY_ENV);
+    return this->resolve_rt_orb (ACE_TRY_ENV);
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_RTCURRENT) == 0)
-    return this->orb_core ()->resolve_rt_current (ACE_TRY_ENV);
+    return this->resolve_rt_current (ACE_TRY_ENV);
 
   // -----------------------------------------------------------------
 
@@ -1473,11 +1509,30 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
   //    should be registered via the service configurator, for
   //    example.
 
-#if TAO_HAS_CORBA_MESSAGING == 1
+#if TAO_HAS_RT_CORBA == 1 || TAO_HAS_CORBA_MESSAGING == 1
   PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
     PortableInterceptor::ORBInitializer::_nil ();
   PortableInterceptor::ORBInitializer_var orb_initializer;
+#endif  /* TAO_HAS_RT_CORBA == 1 || TAO_HAS_CORBA_MESSAGING == 1 */
 
+#if TAO_HAS_RT_CORBA == 1
+  /// Register the RTCORBA ORBInitializer.
+  ACE_NEW_THROW_EX (temp_orb_initializer,
+                    TAO_RT_ORBInitializer,
+                    CORBA::NO_MEMORY (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK;
+  orb_initializer = temp_orb_initializer;
+
+  PortableInterceptor::register_orb_initializer (orb_initializer.in (),
+                                                 ACE_TRY_ENV);
+  ACE_CHECK;
+#endif  /* TAO_HAS_RT_CORBA == 1 */
+
+#if TAO_HAS_CORBA_MESSAGING == 1
   /// Register the Messaging ORBInitializer.
   ACE_NEW_THROW_EX (temp_orb_initializer,
                     TAO_Messaging_ORBInitializer,
@@ -1748,7 +1803,7 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
   this->check_shutdown (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  if (!CORBA::is_nil (obj) && obj->_is_local ())
+  if (obj->_is_local ())
     // @@ The CCM spec says one minor code, and the CORBA spec says
     //    another.  Which is the correct one?
     ACE_THROW_RETURN (CORBA::MARSHAL (TAO_OMG_VMCID | 4,
@@ -1781,8 +1836,6 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
                          this->orb_core_->output_cdr_dblock_allocator (),
                          this->orb_core_->output_cdr_msgblock_allocator (),
                          this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
-                         TAO_DEF_GIOP_MAJOR,
-                         TAO_DEF_GIOP_MINOR,
                          this->orb_core_->to_iso8859 (),
                          this->orb_core_->to_unicode ());
 
@@ -1831,16 +1884,12 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
     }
   else
     {
-      // It is perfectly valid to marshal a nil object reference.
-      // However, it is not possible to convert a nil object reference
-      // to a URL IOR, so throw an exception.
-      if (CORBA::is_nil (obj) || obj->_stubobj () == 0)
+      if (obj->_stubobj () == 0)
         {
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("Nil object reference or TAO_Stub ")
-                        ACE_TEXT ("pointer is zero when converting\n")
-                        ACE_TEXT ("object reference to URL IOR.\n")));
+                        ACE_TEXT ("TAO_Stub pointer in CORBA::ORB::object_to_string() ")
+                        ACE_TEXT ("is zero.\n")));
 
           ACE_THROW_RETURN (CORBA::MARSHAL (
                               CORBA_SystemException::_tao_minor_code (
@@ -1981,8 +2030,7 @@ CORBA_ORB::ior_string_to_object (const char *str,
   int byte_order = *(mb.rd_ptr ());
   mb.rd_ptr (1);
   mb.wr_ptr (len);
-  TAO_InputCDR stream (&mb, byte_order, TAO_DEF_GIOP_MAJOR,
-                       TAO_DEF_GIOP_MINOR, this->orb_core_);
+  TAO_InputCDR stream (&mb, byte_order, this->orb_core_);
 
   CORBA::Object_ptr objref = CORBA::Object::_nil ();
   stream >> objref;
