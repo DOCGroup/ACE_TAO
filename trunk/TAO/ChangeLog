@@ -1,3 +1,20 @@
+Thu Jan 16 10:52:07 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
+ 	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
+ 
+ 	  In the generated TAO_*_Proxy_Factory_Adapter class,
+ 	  changed signatures of register_proxy_factory() and
+ 	  unregister_proxy_factory() to return void. Error
+ 	  reporting through return type is not necessary, since
+ 	  native exceptions or an environment variable are
+ 	  already used, and there is no code in either of these
+ 	  methods that sets the return value to anything other
+ 	  than 0. Although the methods are public, the class
+	  itself has a protected constructor, and the methods
+	  are intended for TAO internal use only. 
+	  This closes [BUGID:844].
+
 Wed Jan 15 18:02:49 2003  Bala  <bala@cs.wustl.edu>
 
         * TAO version 1.3 released.
