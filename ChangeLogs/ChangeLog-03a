@@ -1,8 +1,15 @@
+Wed May  9 16:06:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/TTY_IO.cpp (control): 
+	* ace/OS.h: Corrected this change "Wed May  9 14:03:01 2001
+	  Douglas C. Schmidt". The problem was with the definition of the
+	  macro ACE_VTIME. Looks more like a cut and paste error.
+
 Wed May  9 16:00:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/OS.h: 
 	* ace/TTY_IO.cpp: Reverted this change "Wed May  9 14:03:01 2001
-	  Douglas C. Schmidt" 
+	  Douglas C. Schmidt". 
 
 Wed May  9 14:03:01 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 

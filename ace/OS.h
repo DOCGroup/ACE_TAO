@@ -114,6 +114,18 @@ typedef long      id_t;
 #   define ACE_NESTED_CLASS(TYPE, NAME) TYPE::NAME
 # endif /* ! ACE_HAS_BROKEN_NAMESPACES */
 
+#if !defined (VMIN)
+#define ACE_VMIN 4
+#else
+#define ACE_VMIN VMIN
+#endif /* VMIN */
+
+#if !defined (VTIME)
+#define ACE_VTIME 5
+#else
+#define ACE_VTIME VTIME
+#endif /* VTIME */
+
 
 # if !defined (ACE_DEFAULT_CLOSE_ALL_HANDLES)
 #   define ACE_DEFAULT_CLOSE_ALL_HANDLES 1
