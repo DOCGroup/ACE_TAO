@@ -94,8 +94,7 @@ BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
                                 this->log_mgr_.in (),
                                 id,
                                 full_action,
-                                max_size
-                                ),
+                                max_size),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 
@@ -103,11 +102,11 @@ BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
   // Transfer ownership to the POA.
 
   basic_log_i->init (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (basic_log._retn ());
+  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 
   // Register with the poa
   basic_log = basic_log_i->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (basic_log._retn ());
+  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 
   // widening a BasicLog_var to a Log_var
   DsLogAdmin::Log_var log = DsLogAdmin::BasicLog::_duplicate (basic_log.in ());
