@@ -41,7 +41,7 @@ public:
   ~Ptest (void);
   // Destructor
 
-  int init (int argc, 
+  int init (int argc,
             char *argv[]);
   // Initialize the ORB and get the IFR object reference.
 
@@ -66,12 +66,8 @@ private:
   CORBA::ORB_var orb_;
   // Storage of the ORB reference.
 
-  PortableServer::POA_var root_poa_;
-  // Storage of the root POA reference.
-
   IR::Repository_var repo_;
   // Storage of the IFR reference.
 };
 
 #endif /* PTEST_H */
-

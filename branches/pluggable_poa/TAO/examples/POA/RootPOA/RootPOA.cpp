@@ -19,6 +19,7 @@
 //=========================================================================
 
 #include "tao/corba.h"
+#include "tao/PortableServer/PortableServer.h"
 
 ACE_RCSID(RootPOA, RootPOA, "$Id$")
 

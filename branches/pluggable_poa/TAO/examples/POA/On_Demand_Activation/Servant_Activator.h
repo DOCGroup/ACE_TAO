@@ -17,6 +17,7 @@
 // ================================================================
 
 #include "tao/corba.h"
+#include "tao/PortableServer/PortableServer.h"
 
 class MyFooServantActivator : public PortableServer::ServantActivator
 {

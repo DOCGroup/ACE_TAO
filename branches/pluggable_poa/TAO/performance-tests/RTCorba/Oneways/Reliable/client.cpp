@@ -438,20 +438,11 @@ main (int argc, char *argv[])
         }
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA",
+        orb->resolve_initial_references ("ORBPolicyManager",
                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in (),
-                                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      obj = orb->resolve_initial_references ("ORBPolicyManager",
-                                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      CORBA::PolicyManager_var policy_manager = 
+      CORBA::PolicyManager_var policy_manager =
         CORBA::PolicyManager::_narrow (obj.in (),
                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -460,7 +451,7 @@ main (int argc, char *argv[])
                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      CORBA::PolicyCurrent_var policy_current = 
+      CORBA::PolicyCurrent_var policy_current =
         CORBA::PolicyCurrent::_narrow (obj.in (),
                                        ACE_TRY_ENV);
 
@@ -589,11 +580,6 @@ main (int argc, char *argv[])
                               ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
-
-      root_poa->destroy (1,
-                         1,
-                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
 
       if (shutdown_server)
         {

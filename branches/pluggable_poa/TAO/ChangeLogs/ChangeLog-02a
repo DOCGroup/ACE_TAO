@@ -1,42 +1,94 @@
+Wed Aug 30 17:06:31 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Add Collocated_Object.h to the skeleton file, it is needed when
+          direct collocation is enabled.
+
+        * examples/Buffered_Oneways/client.cpp:
+        * examples/Load_Balancing_persistent/Identity_Server.cpp:
+        * examples/Logging/Logging_Service_i.h:
+        * examples/POA/FindPOA/FindPOA.cpp:
+        * examples/POA/Forwarding/MyFooServant.cpp:
+        * examples/POA/Forwarding/Servant_Locator.h:
+        * examples/POA/Loader/Servant_Activator.h:
+        * examples/POA/Loader/Servant_Locator.h:
+        * examples/POA/Loader/server.cpp:
+        * examples/POA/NewPOA/NewPOA.cpp:
+        * examples/POA/On_Demand_Activation/Servant_Activator.h:
+        * examples/POA/On_Demand_Activation/Servant_Locator.h:
+        * examples/POA/On_Demand_Loading/Servant_Manager.h:
+        * examples/POA/On_Demand_Loading/Server_Manager.h:
+        * examples/POA/On_Demand_Loading/server.cpp:
+        * examples/POA/RootPOA/RootPOA.cpp:
+        * orbsvcs/Dump_Schedule/Dump_Schedule.cpp:
+        * orbsvcs/IFR_Service/IFR_Service.h:
+        * orbsvcs/IFR_Service/InterfaceS.cpp:
+        * orbsvcs/IFR_Service/InterfaceS.h:
+        * orbsvcs/IFR_Service/Servant_Factory.h:
+        * orbsvcs/IFR_Service/TypeCodeFactory_i.h:
+        * orbsvcs/IFR_Service/TypeCodeFactory_skel.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/ImplRepo_Service/Repository.h:
+        * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
+        * orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
+        * orbsvcs/examples/Log/Client/TLS_Client.cpp:
+        * orbsvcs/examples/Log/Client/TLS_Client.h:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.h:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.h:
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+          Found many clients that were activating the POA for no good
+          reason.
+          Also add a bunch of missing #include files after my reshuffling
+          in the tao directory.
+
+        * */Makefile:
+          Add the -lTAO_PortableServer library to the programs that needed
+          it.  I tried not to add it to programs that didn't need it, but
+          I'm sure that in more than one case the library is an overkill.
+          Everything compiles with shared libraries.
+          Have to try static libraries next.
+
 Wed Aug 30 16:16:02 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/TAO.dsp:
-	* tao/TAO.dsw:
-	* tao/TAO_Static.dsp:
-	* tao/PortableServer/TAO_PortableServer.dsp:
-	* tao/PortableServer/TAO_PortableServer_Static.dsp:
-	  Add new project files for the PortableServer library.
-	  Update the list of files in the TAO library
+        * tao/TAO.dsp:
+        * tao/TAO.dsw:
+        * tao/TAO_Static.dsp:
+        * tao/PortableServer/TAO_PortableServer.dsp:
+        * tao/PortableServer/TAO_PortableServer_Static.dsp:
+          Add new project files for the PortableServer library.
+          Update the list of files in the TAO library
 
-	* tao/PortableServer/portableserver_export.h:
-	  Add file to define the export macros for the PortableServer
-	  library.
+        * tao/PortableServer/portableserver_export.h:
+          Add file to define the export macros for the PortableServer
+          library.
 
-	* tao/PortableServer/Active_Object_Map.h:
-	* tao/PortableServer/Collocated_Object.h:
-	* tao/PortableServer/DomainS.h:
-	* tao/PortableServer/FT_CORBAS.h:
-	* tao/PortableServer/Forwarding_Servant.h:
-	* tao/PortableServer/ImplRepoC.h:
-	* tao/PortableServer/ImplRepoC.i:
-	* tao/PortableServer/ImplRepoS.h:
-	* tao/PortableServer/Key_Adapters.h:
-	* tao/PortableServer/MessagingS.h:
-	* tao/PortableServer/ORB_Manager.h:
-	* tao/PortableServer/Object_Adapter.h:
-	* tao/PortableServer/Operation_Table.h:
-	* tao/PortableServer/POA.h:
-	* tao/PortableServer/POAManager.h:
-	* tao/PortableServer/POA_CORBA.h:
-	* tao/PortableServer/PortableServer.h:
-	* tao/PortableServer/PortableServerC.h:
-	* tao/PortableServer/PortableServerC.i:
-	* tao/PortableServer/Servant_Base.h:
-	* tao/PortableServer/Object_Adapter.cpp:
-	  Add the infamous export macros.
+        * tao/PortableServer/Active_Object_Map.h:
+        * tao/PortableServer/Collocated_Object.h:
+        * tao/PortableServer/DomainS.h:
+        * tao/PortableServer/FT_CORBAS.h:
+        * tao/PortableServer/Forwarding_Servant.h:
+        * tao/PortableServer/ImplRepoC.h:
+        * tao/PortableServer/ImplRepoC.i:
+        * tao/PortableServer/ImplRepoS.h:
+        * tao/PortableServer/Key_Adapters.h:
+        * tao/PortableServer/MessagingS.h:
+        * tao/PortableServer/ORB_Manager.h:
+        * tao/PortableServer/Object_Adapter.h:
+        * tao/PortableServer/Operation_Table.h:
+        * tao/PortableServer/POA.h:
+        * tao/PortableServer/POAManager.h:
+        * tao/PortableServer/POA_CORBA.h:
+        * tao/PortableServer/PortableServer.h:
+        * tao/PortableServer/PortableServerC.h:
+        * tao/PortableServer/PortableServerC.i:
+        * tao/PortableServer/Servant_Base.h:
+        * tao/PortableServer/Object_Adapter.cpp:
+          Add the infamous export macros.
 
-	* tao/PortableServer/DomainS.cpp:
-	  Fix use of ACE_NESTED_CLASS macro
+        * tao/PortableServer/DomainS.cpp:
+          Fix use of ACE_NESTED_CLASS macro
 
 Wed Aug 30 13:56:53 2000  Carlos O'Ryan  <coryan@uci.edu>
 

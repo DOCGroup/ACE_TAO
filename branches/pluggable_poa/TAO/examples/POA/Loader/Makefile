@@ -15,7 +15,7 @@ OBJ = $(addsuffix .o,$(MYFILES))
 
 CPPFLAGS += -I$(TAO_ROOT)
 
-LDLIBS = -lTAO
+LDLIBS = -lTAO_PortableServer -lTAO
 LDFLAGS += -L$(TAO_ROOT)/tao
 
 INSTALL =

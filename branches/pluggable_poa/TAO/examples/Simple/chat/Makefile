@@ -70,10 +70,10 @@ $(foreach ext, $(IDL_EXT), Broadcaster$(ext)): Receiver.idl
 .PRECIOUS: $(foreach file, Broadcaster Receiver, $(foreach ext, $(IDL_EXT), $(file)$(ext))))
 
 server:	$(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
 
 client:	$(addprefix $(VDIR),$(SIMPLE_CLT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
 
 realclean: clean
 	-$(RM) ReceiverC.* ReceiverS.* ReceiverS_T.* BroadcasterC.* BroadcasterS.* BroadcasterS_T.*

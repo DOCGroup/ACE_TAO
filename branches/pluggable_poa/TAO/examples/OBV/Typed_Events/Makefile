@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO
+LDLIBS = -lTAO_PortableServer -lTAO
 
 IDL_FILES = Event_Types
 IDL_SRC = Event_TypesC.cpp Event_TypesS.cpp
