@@ -191,9 +191,20 @@ TAO_PSDL_Datastore::create_index (void)
 int
 TAO_PSDL_Datastore::create_index_helper (void *buffer)
 {
+#ifndef HPUX_11
   ACE_NEW_RETURN (this->obj_ref_map_,
                   (buffer) NAME_OBJ_REF_MAP (this->allocator_),
                   -1);
+#else
+   // The ACC339 compiler is confused by the ACE_NEW_RETURN macro call
+   // above, so replace the macro call with its expansion.
+   this->obj_ref_map_ = new(buffer) NAME_OBJ_REF_MAP(this->allocator_) ;
+   if( this->obj_ref_map_ == 0 )
+   {
+      errno = ENOMEM ;
+      return -1 ;
+   }
+#endif
   return 0;
 }
 
