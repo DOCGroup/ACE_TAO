@@ -48,7 +48,7 @@ private:
   TAO_OutStream_Type  strm_type_;
 };
 
-typedef ACE_Singleton<TAO_OutStream_Factory,ACE_SYNCH_MUTEX> TAO_OUTSTREAM_FACTORY;
+typedef ACE_Singleton<TAO_OutStream_Factory, ACE_SYNCH_RECURSIVE_MUTEX> TAO_OUTSTREAM_FACTORY;
 // Singleton instance of the OutStream factory
 
 #endif // if !defined

@@ -1,3 +1,20 @@
+Mon Oct 27 15:22:24 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
+
+	* TAO_IDL/be/be_state.cpp:
+	* TAO_IDL/be_include/be_codegen.h:
+	* TAO_IDL/be_include/be_factory.h:
+	* TAO_IDL/be_include/be_state.h:
+	* tao/iioporb.cpp:
+	* tao/marshal.cpp:
+	* tao/optable.cpp:
+	* tao/optable.h:
+	* tao/singletons.h:
+	The ACE_Singleton lock type needs to be changed from 
+	ACE_SYNCH_MUTEX (or ACE_SYNCH_RW_MUTEX) ACE_SYNCH_RECURSIVE_MUTEX.  
+	ACE handles those more efficiently for its singletons.
+	Change suggested by David Levine.
+
+
 Mon Oct 27 11:59:51 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/orbconf.h: Made it so _FAR is defined all the time.  Thanks
