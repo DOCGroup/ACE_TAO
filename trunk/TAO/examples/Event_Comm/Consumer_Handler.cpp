@@ -26,9 +26,9 @@ Consumer_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
       ACE_DEBUG ((LM_DEBUG,
                   "closing down Consumer_Handler\n"));
 
-      CORBA::release (this->receiver_.in());
+      CORBA::release (this->receiver_.in ());
       this->receiver_ = 0;
-      CORBA::release (this->notifier_.in());
+      CORBA::release (this->notifier_.in ());
       this->notifier_ = 0;
     }
   return 0;
@@ -52,16 +52,15 @@ Consumer_Handler::init (int argc, char *argv[])
 				    argv,
 				    0,
 				    TAO_TRY_ENV);
-
       TAO_CHECK_ENV;
 
+      // start the servant.
       this->receiver_ =
-      this->receiver_i_._this (TAO_TRY_ENV);
+	this->receiver_i_._this (TAO_TRY_ENV);
 
       TAO_CHECK_ENV;
 
-
-      if (get_notifier() == -1)
+      if (this->get_notifier() == -1)
 	ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to get the notifier "
                            "the TAO_Naming_Client. \n"),
@@ -101,8 +100,8 @@ Consumer_Handler::get_notifier(void)
                                                 TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // The CORBA::Object_var object is downcast to Notifier_var using
-      // the <_narrow> method.
+      // The CORBA::Object_var object is downcast to Notifier_var
+      // using the <_narrow> method.
       this->notifier_ =
          Event_Comm::Notifier::_narrow (notifier_obj.in (),
 					TAO_TRY_ENV);
@@ -127,9 +126,9 @@ Consumer_Handler:: close (void)
 int
 Consumer_Handler::run (void)
 {
- // Run the ORB.
- this->orb_->run ();
- return 0;
+  // Run the ORB.
+  this->orb_->run ();
+  return 0;
 }
 
 ACE_Reactor*
