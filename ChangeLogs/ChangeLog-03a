@@ -7,6 +7,11 @@ Sat Feb  1 09:34:45 2003  Ossama Othman  <ossama@uci.edu>
 	  not supported in GIOP 1.0.  Fixes a false positive in our
 	  scoreboard.
 
+Sat Feb  1 09:00:00 2003  Steve Huston  <shuston@riverace.com>
+
+        * Space Shuttle Columbia breaks up at 200,000ft altitude at
+          12,500mph. 7 astronauts killed; the US and Israel mourn their loss.
+
 Fri Jan 31 12:55:26 2003  Frank Hunleth  <frank@hunleth.com>
 
 	* tests/Reactor_Exceptions_Test.cpp (worker):  Added #if defined
