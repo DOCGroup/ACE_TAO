@@ -16886,12 +16886,12 @@ DEP_CPP_PERSI=\
 	"..\..\tao\WrongTransactionC.h"\
 	".\Naming\Persistent_Context_Index.h"\
 	".\Naming\Persistent_Entries.h"\
-	".\Naming\Shared_Hash_Map_T.cpp"\
-	".\Naming\Shared_Hash_Map_T.h"\
 	
 NODEP_CPP_PERSI=\
 	"..\..\tao\connect.h"\
 	"..\..\tao\connect.i"\
+	".\Naming\Shared_Hash_Map_T.cpp"\
+	".\Naming\Shared_Hash_Map_T.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -17196,12 +17196,12 @@ DEP_CPP_PERSIS=\
 	"..\..\tao\varout.i"\
 	"..\..\tao\WrongTransactionC.h"\
 	".\Naming\Persistent_Entries.h"\
-	".\Naming\Shared_Hash_Map_T.cpp"\
-	".\Naming\Shared_Hash_Map_T.h"\
 	
 NODEP_CPP_PERSIS=\
 	"..\..\tao\connect.h"\
 	"..\..\tao\connect.i"\
+	".\Naming\Shared_Hash_Map_T.cpp"\
+	".\Naming\Shared_Hash_Map_T.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -17511,14 +17511,14 @@ DEP_CPP_PERSIST=\
 	".\Naming\Persistent_Context_Index.h"\
 	".\Naming\Persistent_Entries.h"\
 	".\Naming\Persistent_Naming_Context.h"\
-	".\Naming\Shared_Hash_Map_T.cpp"\
-	".\Naming\Shared_Hash_Map_T.h"\
 	
 NODEP_CPP_PERSIST=\
 	"..\..\..\..\Naming\Naming_Context.h"\
 	"..\..\tao\connect.h"\
 	"..\..\tao\connect.i"\
 	".\Naming\Persistent_Bindings_Map.h"\
+	".\Naming\Shared_Hash_Map_T.cpp"\
+	".\Naming\Shared_Hash_Map_T.h"\
 	
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Alpha Debug"
@@ -25589,10 +25589,6 @@ SOURCE=.\sfpS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Naming\Shared_Hash_Map_T.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Sched\Strategy_Scheduler.h
 # End Source File
 # Begin Source File
@@ -29325,11 +29321,6 @@ SOURCE=.\Trader\Offer_Iterators_T.cpp
 
 !ENDIF 
 
-# End Source File
-# Begin Source File
-
-SOURCE=.\Naming\Shared_Hash_Map_T.cpp
-# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
