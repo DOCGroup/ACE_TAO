@@ -37,6 +37,7 @@ HTTP_Handler::HTTP_Handler (const char * path)
 
   // Find the filename.
   const char *last = ACE_OS::strrchr (path, '/');
+
   if (last == 0)
     last = path;
   else if (last[1] == '\0')
@@ -79,18 +80,23 @@ HTTP_Handler::svc (void)
 
   do
     {
-      while (((count += this->peer ().recv_n (buf+count, 1)) > 0)
+      while (((count += this->peer ().recv_n (buf + count, 1)) > 0)
              && ((u_int) count < sizeof (buf)))
         {
           buf[count] = '\0';
+
           if (count < 2)
 	    continue;
-          done = ACE_OS::strcmp (buf+count-4, "\n\n") == 0;
+          done = ACE_OS::strcmp (buf + count - 4, "\n\n") == 0;
+
           if (done)
 	    break;
+
           if (count < 4)
 	    continue;
-          done = ACE_OS::strcmp (buf+count-4, "\r\n\r\n") == 0;
+
+          done = ACE_OS::strcmp (buf + count - 4, "\r\n\r\n") == 0;
+
           if (done)
 	    break;
         }
@@ -99,6 +105,7 @@ HTTP_Handler::svc (void)
         {
           char *last = ACE_OS::strrchr (buf, '\n');
           last[0] = '\0';
+
           if ((contentlength = ACE_OS::strstr (buf, "\nContent-length:"))
               || (contentlength = ACE_OS::strstr (buf, "\nContent-Length:")))
             done = 1;
@@ -131,8 +138,9 @@ HTTP_Handler::svc (void)
 
       this->peer ().recv_n (afh.address (), this->response_size_);
 
-      ACE_OS::fprintf (stdout, "  ``%s'' is now cached.\n",
-                       this->filename_);
+      ACE_DEBUG ((LM_DEBUG,
+		  "  ``%s'' is now cached.\n",
+		  this->filename_));
     }
   else
     {
@@ -167,7 +175,9 @@ HTTP_Connector::connect (const char * url)
 
   if (this->parseurl (url, host, &port, path) == -1)
     {
-      ACE_DEBUG ((LM_DEBUG, "HTTP_Connector, error parsing url: %s\n", url));
+      ACE_DEBUG ((LM_DEBUG,
+		  "HTTP_Connector, error parsing url: %s\n",
+		  url));
       return -1;
     }
 
@@ -177,8 +187,8 @@ HTTP_Connector::connect (const char * url)
   // First check the cache.
   if (ACE_Filecache::instance ()->find (hh.filename ()))
     {
-      ACE_OS::fprintf (stdout, "  ``%s'' is already cached.\n",
-                       hh.filename ());
+      ACE_DEBUG ((LM_DEBUG, "  ``%s'' is already cached.\n",
+		  hh.filename ()));
       return 0;
     }
 

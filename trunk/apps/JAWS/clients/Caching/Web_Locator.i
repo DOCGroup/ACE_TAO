@@ -4,7 +4,8 @@
 
 ACE_INLINE
 ACE_URL_Property::ACE_URL_Property (LPCTSTR name, LPCTSTR value)
-  : name_ (0), value_ (0)
+  : name_ (0),
+    value_ (0)
 {
   this->name (name);
   this->value (value);
@@ -12,14 +13,15 @@ ACE_URL_Property::ACE_URL_Property (LPCTSTR name, LPCTSTR value)
 
 ACE_INLINE
 ACE_URL_Property::ACE_URL_Property (ACE_URL_Property &p)
-  : name_ (0), value_ (0)
+  : name_ (0),
+    value_ (0)
 {
   this->name (p.name ());
   this->value (p.value ());
 }
   
 ACE_INLINE
-ACE_URL_Property::~ACE_URL_Property ()
+ACE_URL_Property::~ACE_URL_Property (void)
 {
   delete[] this->name_;
   delete[] this->value_;
@@ -51,7 +53,7 @@ ACE_URL_Property::operator== (ACE_URL_Property &rhs) const
 ACE_INLINE int
 ACE_URL_Property::operator!= (ACE_URL_Property &rhs) const
 {
-  return ! (*this == rhs);
+  return !(*this == rhs);
 }
 
 ACE_INLINE LPCTSTR
@@ -63,7 +65,8 @@ ACE_URL_Property::name (void) const
 ACE_INLINE void
 ACE_URL_Property::name (LPCTSTR name)
 {
-  delete[] this->name_;
+  delete [] this->name_;
+
   if (name)
     {
       ACE_NEW (this->name_, TCHAR[ACE_OS::strlen (name) + 1]);
@@ -82,7 +85,8 @@ ACE_URL_Property::value (void) const
 ACE_INLINE void
 ACE_URL_Property::value (LPCTSTR value)
 {
-  delete[] this->value_;
+  delete [] this->value_;
+
   if (value)
     {
       ACE_NEW (this->value_, TCHAR[ACE_OS::strlen (value) + 1]);
@@ -94,7 +98,8 @@ ACE_URL_Property::value (LPCTSTR value)
 
 ACE_INLINE
 ACE_URL_Offer::ACE_URL_Offer (LPCTSTR url, ACE_URL_Property_Seq &prop_seq)
-  : url_ (0), prop_ (prop_seq)
+  : url_ (0),
+    prop_ (prop_seq)
 {
   this->url (url);
 }
@@ -102,7 +107,7 @@ ACE_URL_Offer::ACE_URL_Offer (LPCTSTR url, ACE_URL_Property_Seq &prop_seq)
 ACE_INLINE
 ACE_URL_Offer::~ACE_URL_Offer (void)
 {
-  delete[] this->url_;
+  delete [] this->url_;
 }
 
 ACE_INLINE ACE_URL_Offer &
@@ -119,17 +124,21 @@ ACE_URL_Offer::operator= (ACE_URL_Offer &rhs)
 ACE_INLINE int
 ACE_URL_Offer::operator== (ACE_URL_Offer &rhs) const
 {
-  if (this != &rhs)
-    if (ACE_OS::strcmp (this->url (), rhs.url ()) ||
-	(this->prop_ != rhs.url_properties ()))
+  // @@ Nanbor, I reformatted this expression.  Please make sure it is
+  // still correct!
+
+  if (this != &rhs
+      && (ACE_OS::strcmp (this->url (), rhs.url ()) 
+      || this->prop_ != rhs.url_properties ()))
       return 0;
-  return 1;
+  else
+    return 1;
 }
 
 ACE_INLINE int
 ACE_URL_Offer::operator!= (ACE_URL_Offer &rhs) const
 {
-  return ! (*this == rhs);
+  return !(*this == rhs);
 }
 
 ACE_INLINE LPCTSTR
@@ -141,7 +150,8 @@ ACE_URL_Offer::url (void) const
 ACE_INLINE void
 ACE_URL_Offer::url (LPCTSTR url)
 {
-  delete[] this->url_;
+  delete [] this->url_;
+
   if (url != 0)
     {
       ACE_NEW (this->url_, TCHAR[ACE_OS::strlen (url) + 1]);

@@ -64,8 +64,8 @@ class ACE_Location_Service
 {
 public:
   ACE_URL_OfferID export (ACE_URL_Offer &offer);
-  // Register an offer to the location server.  Operation will fail
-  // if there is an offer with identical URL string exist in the 
+  // Register an offer to the location server.  Operation will fail if
+  // there is an offer with identical URL string exist in the
   // repository and the function returns NULL.  On success, it returns
   // an OfferID.
 
@@ -73,20 +73,21 @@ public:
 	     const ACE_URL_Property_Seq *pseq,
 	     const int how_many,
 	     ACE_URL_Offer_Seq *offer);
-  // Query the offer repository whether there're offers that match our
-  // requirement specified in <how> and <pseq>.  Create an offer sequence
-  // that contains at most <how_many> offers in it.  Offers are picked out 
-  // from the beginning.  So if there are too many offers that meet our
-  // requirement, some may never get picked.  On success, the function
-  // return 0, non-zero indicates error condition.  
+  // Query the offer repository whether there are offers that match
+  // our requirement specified in <how> and <pseq>.  Create an offer
+  // sequence that contains at most <how_many> offers in it.  Offers
+  // are picked out from the beginning.  So if there are too many
+  // offers that meet our requirement, some may never get picked.  On
+  // success, the function return 0, non-zero indicates error
+  // condition.
 
   int withdraw (const ACE_URL_OfferID offer);
   // Withdraw an image offer.  return 0 if succeed, -1 otherwise (most
   // likely, there isn't an offer with id:<offer>.
 
   ACE_URL_Offer *describe (const ACE_URL_OfferID offer);
-  // Query a specific offer.  This function returns a pointer
-  // points to the ACE_URL_Offer field with corresponding <offer> id.
+  // Query a specific offer.  This function returns a pointer points
+  // to the ACE_URL_Offer field with corresponding <offer> id.
 
   int modify (const ACE_URL_OfferID offer,
 	      const char *url = 0,
@@ -96,21 +97,22 @@ public:
   // the offer will be replaced by string pointed by <url>.  <del>
   // points to a sequence of properties to be delete from the offer.
   // <modify> points to a sequence of properties to be modified.  It
-  // this offer contains a property with the same name, the value of this
-  // property will be replaced by the new value.  If the offer doesn't
-  // contain the same property, this property will be added to the offer.
+  // this offer contains a property with the same name, the value of
+  // this property will be replaced by the new value.  If the offer
+  // doesn't contain the same property, this property will be added to
+  // the offer.
 
 protected:
   ACE_URL_Repository repository_;
   // URL back store.
 
-  unsigned long id_counter_;
-  // This number is used to maintain the uniqueness of OfferID.
-  // An offer ID is derived from concatenating two strings.  First number is
-  // the ASCII representation of number from ACE_OS::time() and the second
-  // number is the ASCII representation of <id_counter_>.  The <id_counter_>
-  // get incremented everytime a new offer ID is generated.  The length of
-  // Offer ID is yet to be determined.
+  u_long id_counter_;
+  // This number is used to maintain the uniqueness of OfferID.  An
+  // offer ID is derived from concatenating two strings.  First number
+  // is the ASCII representation of number from ACE_OS::time() and the
+  // second number is the ASCII representation of <id_counter_>.  The
+  // <id_counter_> get incremented everytime a new offer ID is
+  // generated.  The length of Offer ID is yet to be determined.
 };
 
 #if define (__ACE_INLINE__)
