@@ -23,7 +23,6 @@ SHLIB_UNCHECKED  = libKokyu.$(SOEXT)
 SHLIB            = $(SHLIB_UNCHECKED)
 
 FILES = \
-  Counter \
   Dispatch_Deferrer \
   Dispatcher_Impl \
   Kokyu \
