@@ -1,3 +1,10 @@
+Sun Oct 25 15:24:14 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * TAO/tests/DynAny_Test/run_test.pl
+          Perl script to run one or all of the tests. Thanks to
+          Darrell for example file to cut and paste from, as 
+          well as help getting Corrido set up correctly.
+
 Sun Oct 25 13:30:49 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
         * TAO/tests/DynAny_Test/Makefile:

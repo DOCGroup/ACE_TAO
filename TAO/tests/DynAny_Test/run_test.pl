@@ -8,14 +8,12 @@ use lib "../../../bin";
 require ACEutils;
 
 $type = "";
-$other = "";
 
 sub run_test
 {
   my $type = shift(@_);
 
-  print (".".$DIR_SEPARATOR."basic_test -t "."$type");
-  system (".".$DIR_SEPARATOR."basic_test -t "."$type");
+  system (".".$DIR_SEPARATOR."basic_test -t $type");
 
 }
 
@@ -39,7 +37,6 @@ for ($i = 0; $i <= $#ARGV; $i++)
       $i++;
       last SWITCH;
     }
-    $other .= $ARGV[$i];
   }
 }
 
