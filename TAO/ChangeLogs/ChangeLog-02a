@@ -1,4 +1,4 @@
-Fri Aug 10 10:59:42 2001  Chad Elliott  elliott_c@ociweb.com
+Fri Aug 10 10:59:42 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Native_Exceptions/test_i.cpp:
         * tests/RTCORBA/Thread_Pool/server.cpp:
