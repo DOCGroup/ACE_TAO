@@ -338,9 +338,11 @@ run_event_loop (u_short port)
                     "(%P|%t) select timed out\n"));
       else
         {
+          ACE_INET_Addr x_factor;
           if (temp.is_set (twoway_acceptor.get_handle ()))
             {
-              if (twoway_acceptor.accept (new_stream) == -1)
+              if (twoway_acceptor.accept (new_stream,
+                                          &x_factor) == -1)
                 {
                   ACE_ERROR ((LM_ERROR,
                               "%p\n",
@@ -351,13 +353,17 @@ run_event_loop (u_short port)
                 ACE_DEBUG ((LM_DEBUG,
                             "(%P|%t) spawning twoway server\n"));
 
+              ACE_DEBUG ((LM_DEBUG, "(%P|%t) *** Got x_factor: %s:%d\n",
+                          x_factor.get_host_name (),
+                          x_factor.get_port_number ()));
+
               // Run the twoway server.
               run_server (twoway_server,
                           new_stream.get_handle ());
             }
           if (temp.is_set (oneway_acceptor.get_handle ()))
             {
-              if (oneway_acceptor.accept (new_stream) == -1)
+              if (oneway_acceptor.accept (new_stream, &x_factor) == -1)
                 {
                   ACE_ERROR ((LM_ERROR, "%p\n", "accept"));
                   continue;
@@ -366,6 +372,9 @@ run_event_loop (u_short port)
                 ACE_DEBUG ((LM_DEBUG,
                             "(%P|%t) spawning oneway server\n"));
 
+              ACE_DEBUG ((LM_DEBUG, "(%P|%t) *** Got x_factor: %s:%d\n",
+                          x_factor.get_host_name (),
+                          x_factor.get_port_number ()));
               // Run the oneway server.
               run_server (oneway_server,
                           new_stream.get_handle ());

@@ -18,11 +18,10 @@ run_event_loop (u_short port)
   // Create the acceptors.
   ACE_MEM_Acceptor acceptor;
 
-  // Create the  server addresses.
-  ACE_INET_Addr server_addr (port, "localhost");
+  ACE_INET_Addr server_addr;
 
   // Create acceptors, reuse the address.
-  if (acceptor.open (server_addr, 1) == -1)
+  if (acceptor.open (port, 1) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "open"),
@@ -49,8 +48,12 @@ run_event_loop (u_short port)
                       -1);
 
   char buf[MAXPATHLEN];
-  while (new_stream.recv (buf, MAXPATHLEN) != -1)
-    ACE_DEBUG ((LM_DEBUG, "%s\n", buf));
+  int len = 0;
+  while ((len = new_stream.recv (buf, MAXPATHLEN)) != -1)
+    {
+      ACE_DEBUG ((LM_DEBUG, "%s\n", buf));
+      new_stream.send (buf, len);
+    }
 
   return new_stream.remove ();
 }

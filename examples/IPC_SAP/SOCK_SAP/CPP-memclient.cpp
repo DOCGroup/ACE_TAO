@@ -19,16 +19,19 @@ ACE_RCSID(SOCK_SAP, CPP_inclient, "$Id$")
 static int
 run_client (void)
 {
-  ACE_INET_Addr server_addr(ACE_DEFAULT_SERVER_PORT, "localhost");
   ACE_MEM_Connector connector;
   ACE_MEM_Stream stream;
 
-  if (connector.connect (stream, server_addr) == -1)
+  if (connector.connect (stream, ACE_DEFAULT_SERVER_PORT) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "connect"), -1);
 
   char buf [MAXPATHLEN];
   while (gets (buf) >0)
-    stream.send (buf, ACE_OS::strlen (buf)+1);
+    {
+      stream.send (buf, ACE_OS::strlen (buf)+1);
+      stream.recv (buf, MAXPATHLEN);
+      ACE_DEBUG ((LM_DEBUG, "Echo: %s\n", buf));
+    }
 
   return 0;
 }

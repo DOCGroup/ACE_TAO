@@ -44,15 +44,24 @@ public:
   ACE_MEM_Acceptor (void);
   // Default constructor.
 
-  ACE_MEM_Acceptor (const ACE_Addr &local_sap,
+  ACE_MEM_Acceptor (const u_short local_port,
                     int reuse_addr = 0,
-                    int protocol_family = PF_INET,
                     int backlog = ACE_DEFAULT_BACKLOG,
                     int protocol = 0);
   // Initiate a passive mode socket.
 
+  int open (const u_short local_port,
+            int reuse_addr = 0,
+            int backlog = ACE_DEFAULT_BACKLOG,
+            int protocol = 0);
+  // Initialize a passive-mode BSD-style acceptor socket (no QoS).
+  // <local_sap> is the address that we're going to listen for
+  // connections on.  If <reuse_addr> is 1 then we'll use the
+  // <SO_REUSEADDR> to reuse this address.  Returns 0 on success and
+  // -1 on failure.
+
   int accept (ACE_MEM_Stream &new_ipc_sap,
-              ACE_Addr * = 0,
+              u_short * = 0,
               ACE_Time_Value *timeout = 0,
               int restart = 1,
               int reset_new_handle = 0) const;
@@ -65,7 +74,7 @@ public:
   // called.
 
   // = Meta-type info
-  typedef ACE_Addr PEER_ADDR;
+  typedef u_short PEER_ADDR;
   typedef ACE_MEM_Stream PEER_STREAM;
 
   void dump (void) const;
@@ -73,6 +82,36 @@ public:
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
+
+protected:
+  // = The following methods should not be accessable externally.
+  int open (const ACE_Addr &local_sap,
+            int reuse_addr = 0,
+            int protocol_family = PF_INET,
+            int backlog = ACE_DEFAULT_BACKLOG,
+            int protocol = 0);
+
+  int open (const ACE_Addr &local_sap,
+            ACE_Protocol_Info *protocolinfo,
+            ACE_SOCK_GROUP g,
+            u_long flags,
+            int reuse_addr,
+            int protocol_family,
+            int backlog = ACE_DEFAULT_BACKLOG,
+            int protocol = 0);
+
+  int accept (ACE_SOCK_Stream &new_stream,
+              ACE_Addr *remote_addr = 0,
+              ACE_Time_Value *timeout = 0,
+              int restart = 1,
+              int reset_new_handle = 0) const;
+
+  int accept (ACE_SOCK_Stream &new_stream,
+              ACE_Accept_QoS_Params qos_params,
+              ACE_Addr *remote_addr = 0,
+              ACE_Time_Value *timeout = 0,
+              int restart = 1,
+              int reset_new_handle = 0) const;
 };
 
 #if defined (__ACE_INLINE__)

@@ -27,32 +27,49 @@ ACE_MEM_Acceptor::ACE_MEM_Acceptor (void)
 
 // General purpose routine for performing server ACE_SOCK creation.
 
-ACE_MEM_Acceptor::ACE_MEM_Acceptor (const ACE_Addr &remote_sap,
+ACE_MEM_Acceptor::ACE_MEM_Acceptor (const u_short local_port,
                                     int reuse_addr,
-                                    int protocol_family,
                                     int backlog,
                                     int protocol)
 {
   ACE_TRACE ("ACE_MEM_Acceptor::ACE_MEM_Acceptor");
-  if (this->open (remote_sap,
+  if (this->open (local_port,
                   reuse_addr,
-                  protocol_family,
                   backlog,
                   protocol) == -1)
     ACE_ERROR ((LM_ERROR,
                 "ACE_MEM_Acceptor::ACE_MEM_Acceptor"));
 }
 
+ACE_MEM_Acceptor::open (const u_short local_port,
+                        int reuse_addr,
+                        int back_log,
+                        int protocol)
+{
+  ACE_TRACE ("ACE_MEM_Acceptor::open");
+  ACE_INET_Addr local_addr (local_port,
+                            ASYS_TEXT ("localhost"));
+
+  return this->ACE_SOCK_Acceptor::open (local_addr,
+                                        reuse_addr,
+                                        PF_INET,
+                                        back_log,
+                                        protocol);
+}
+
 // General purpose routine for accepting new connections.
 
 int
 ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
-                          ACE_Addr *remote_addr,
+                          u_short *remote_port,
                           ACE_Time_Value *timeout,
                           int restart,
                           int reset_new_handle) const
 {
   ACE_TRACE ("ACE_MEM_Acceptor::accept");
+
+  int *len_ptr = 0;
+  sockaddr *addr = 0;
 
   int in_blocking_mode = 0;
   if (this->shared_accept_start (timeout,
@@ -61,17 +78,6 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
     return -1;
   else
     {
-      int *len_ptr = 0;
-      sockaddr *addr = 0;
-      int len = 0;
-
-      if (remote_addr != 0)
-        {
-          len = remote_addr->get_size ();
-          len_ptr = &len;
-          addr = (sockaddr *) remote_addr->get_addr ();
-        }
-
       do
         new_stream.set_handle (ACE_OS::accept (this->get_handle (),
                                                addr,
@@ -81,11 +87,8 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
              && errno == EINTR
              && timeout == 0);
 
-      // Reset the size of the addr, which is only necessary for UNIX
-      // domain sockets.
-      if (new_stream.get_handle () != ACE_INVALID_HANDLE
-          && remote_addr != 0)
-        remote_addr->set_size (len);
+      if (remote_port != 0)
+        *remote_port = (* (sockaddr_in*) addr).sin_port;
     }
 
   if (this->shared_accept_finish (new_stream,

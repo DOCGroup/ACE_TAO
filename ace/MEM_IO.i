@@ -211,3 +211,22 @@ ACE_MEM_IO::recv (void *buf,
 
   return count;
 }
+/*
+ASYS_INLINE int
+ACE_MEM_IO::get_local_port (u_short &x) const
+{
+  ACE_Addr addr;
+  int retv =  ACE_SOCK::get_local_addr (addr);
+  x = addr.get_port_number ();
+  return retv;
+}
+
+ASYS_INLINE int
+ACE_MEM_IO::get_remote_port (u_short &x) const
+{
+  ACE_Addr addr;
+  int retv =  ACE_SOCK::get_remote_addr (addr);
+  x = addr.get_port_number ();
+  return retv;
+}
+*/
