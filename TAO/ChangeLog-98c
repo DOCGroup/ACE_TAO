@@ -1,3 +1,10 @@
+Mon Dec 14 16:16:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Environment.cpp: 
+	  Added the CORBA_Environment::exception_id() method, thanks to
+	  diesel@dekwl.abb.com (sorry, your name was not in the message!)
+	  for reporting this problem.
+
 1998-12-14  Seth Widoff  <swidoff@cs.cmu.edu>
 
 	* docs/releasenotes/trader.html:
