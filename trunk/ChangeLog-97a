@@ -5,6 +5,9 @@ Sun Apr 27 07:41:44 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Timer_Wheel_T.cpp: added newline at end of file.
 
+	* ace/Timer_Wheel_T.cpp (ACE_Timer_Wheel_T ctor): reordered
+	  initializers to match declaration order.
+
 	* examples/Reactor/Misc/test_timer_queue.cpp: fixed typos in
 	  #includes, and added #include of ace/Timer_Heap.h.
 
