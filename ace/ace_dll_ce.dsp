@@ -440,6 +440,18 @@ SOURCE=.\OS_Dirent.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\OS_Memory.cpp
+
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_String.cpp
+
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Parse_Node.cpp
 
 
