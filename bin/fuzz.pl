@@ -20,6 +20,8 @@ use Getopt::Std;
 # - Guards in .h files
 # - no global functions
 # - other commit_check checks, tabs, trailing spaces.
+# - _narrow() should always have ACE_TRY_ENV
+# - Using ACE_TRY_NEW_ENV (Nanbor suggests using ACE_DECLARE_NEW_CORBA_ENV)
 #
 # And others in ACE_Guidelines and Design Rules
 #
@@ -42,7 +44,7 @@ $warnings = 0;
 
 ##############################################################################
 
-# Find_Modified_Files will use 'cvs -nq' to get a list of locally modified 
+# Find_Modified_Files will use 'cvs -nq' to get a list of locally modified
 # files to look through
 sub find_mod_files ()
 {
@@ -61,7 +63,7 @@ sub find_mod_files ()
 
 
 
-# Find_Files will search for files with certain extensions in the 
+# Find_Files will search for files with certain extensions in the
 # directory tree
 sub find_files ()
 {
@@ -74,7 +76,7 @@ sub find_files ()
     find (\&wanted, '.');
 }
 
-# 
+#
 sub store_file ($)
 {
     my $name = shift;
@@ -124,7 +126,7 @@ sub print_warning ($)
 ## Tests
 
 # The point of this test is to check for the existence of ACE_INLINE
-# or ASYS_INLINE in a .cpp file.  This is most commonly caused by 
+# or ASYS_INLINE in a .cpp file.  This is most commonly caused by
 # copy/pasted code from a .inl/.i file
 sub check_for_inline_in_cpp ()
 {
@@ -152,11 +154,11 @@ sub check_for_inline_in_cpp ()
 
 # This test checks to make sure files have the $Id string in them.
 # Commit_check should find these when checking in files, but this can
-# be used locally or to check for files 
+# be used locally or to check for files
 sub check_for_id_string ()
 {
     print "Running \$ID\$ string check\n";
-    foreach $file (@files_cpp, @files_inl, @files_h, 
+    foreach $file (@files_cpp, @files_inl, @files_h,
                    @files_html, @files_idl, @files_pl) {
         my $found = 0;
         if (open (FILE, $file)) {
@@ -182,7 +184,7 @@ sub check_for_id_string ()
 sub check_for_newline ()
 {
     print "Running newline check\n";
-    foreach $file (@files_cpp, @files_inl, @files_h, 
+    foreach $file (@files_cpp, @files_inl, @files_h,
                    @files_html, @files_idl, @files_pl) {
         if (open (FILE, $file)) {
             my $line;
@@ -252,7 +254,7 @@ sub check_for_math_include ()
                 if (/FUZZ\: enable check_for_math_include/) {
                     $disable = 0;
                 }
-                if ($disable == 0 
+                if ($disable == 0
                     and /^\s*#\s*include\s*(\/\*\*\/){0,1}\s*\<math\.h\>/) {
                     print_error ("math.h included in $file on line $line");
                 }
@@ -291,8 +293,8 @@ sub check_for_line_length ()
 }
 
 
-# For preprocessor directives, only the old C style comments (/* */) 
-# should be used, not the newer // style.  
+# For preprocessor directives, only the old C style comments (/* */)
+# should be used, not the newer // style.
 sub check_for_preprocessor_comments ()
 {
     print "Running preprocessor comment test\n";
@@ -339,11 +341,11 @@ sub check_for_tchar
                     if (/LPTSTR/) {
                         print_error ("LPTSTR found on line $line in $file");
                     }
-    
+
                     if (/LPCTSTR/) {
                         print_error ("LPCTSTR found on line $line in $file");
                     }
-    
+
                     if (/ASYS_TCHAR/) {
                         print_error ("ASYS_TCHAR found on "
                                      ."line $line in $file");
@@ -355,7 +357,7 @@ sub check_for_tchar
                             print_error ("TCHAR on line $line in $file");
                         }
                     }
-    
+
                     if (/ASYS_TEXT/) {
                         print_error ("ASYS_TEXT on line $line in $file");
                     }
@@ -363,7 +365,7 @@ sub check_for_tchar
                         ### Do a double check, since there are several macros
                         ### that end with TEXT
                         if (/^TEXT\s*\(/ or /[^\w_]TEXT\s*\(/) {
-	                    print_error ("TEXT found on line $line in $file");
+                            print_error ("TEXT found on line $line in $file");
                         }
                     }
                 }
@@ -419,7 +421,7 @@ sub check_for_pre_and_post ()
 
 
 # Check doxygen @file comments
-sub check_for_mismatched_filename () 
+sub check_for_mismatched_filename ()
 {
     print "Running doxygen \@file test\n";
     foreach $file (@files_h, @files_cpp, @files_inl) {
@@ -450,24 +452,24 @@ sub check_for_bad_run_test ()
             my $sub = 0;
 
             print "Looking at file $file\n" if $opt_d;
-            
+
             while (<FILE>) {
                 ++$line;
 
                 if (m/PerlACE/ || m/ACEutils/) {
                     $is_run_test = 1;
                 }
-                
+
                 if ($is_run_test == 1) {
                     if (m/ACEutils/) {
                         print_error ("ACEutils.pm still being used in $file ($line)");
                     }
-                    
+
                     if (m/unshift \@INC/) {
                         print_error ("Still unshifting \@INC, should \"use lib\""
                                      ." instead in $file ($line)");
                     }
-                    
+
                     if (m/\$EXEPREFIX/) {
                         print_error ("Still using \$EXEPREFIX in $file ($line)");
                     }
@@ -490,7 +492,7 @@ sub check_for_bad_run_test ()
                     if (m/Process\:\:Create/) {
                         print_error ("Still using Process::Create in $file ($line)");
                     }
-                    
+
                     if ((m/\.ior/ || m/\.conf/) && !m/LocalFile/) {
                         print_error ("Not using PerlACE::LocalFile at $file ($line)");
                     }
@@ -523,7 +525,7 @@ sub check_for_bad_run_test ()
             close (FILE);
 
             if ($is_run_test) {
-                my @output = `perl -wc $file 2>&1`;    
+                my @output = `perl -wc $file 2>&1`;
 
                 foreach $output (@output) {
                     chomp $output;
@@ -582,7 +584,7 @@ sub check_for_bad_ace_trace()
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
                 ++$line;
-                
+
                 # look for methods or functions
                 if (m/(^[^\s][^\(]*)\:\:([^\:^\(]*[^\s^\(])\s*/) {
                     $class = $1;
@@ -596,25 +598,25 @@ sub check_for_bad_ace_trace()
                     $class = "";
                     $function = $1;
                 }
-                
+
                 # Look for TRACE statements
                 if (m/ACE_OS_TRACE\s*\(\s*\"(.*)\"/
                     || m/ACE_TRACE\s*\(\s*\"(.*)\"/) {
                     my $trace = $1;
-                    
-                    # reduce the classname 
+
+                    # reduce the classname
                     if ($class =~ m/([^\s][^\<^\s]*)\s*\</) {
                         $class = $1;
                     }
-                    
+
                     if ($class =~ m/([^\s^\&^\*]*)\s*$/) {
                         $class = $1;
                     }
-                    
+
                     if ($trace !~ m/\Q$function\E/
                         || ($trace =~ m/\:\:/ && !($trace =~ m/\Q$class\E/ && $trace =~ m/\Q$function\E/))) {
                         print_error ("Mismatched TRACE in $file on line $line");
-                        print_error ("   I see \"$trace\" but I think I'm in \"" 
+                        print_error ("   I see \"$trace\" but I think I'm in \""
                                      . $class . "::" . $function . "\"") if (defined $opt_v);
                     }
                 }
@@ -629,7 +631,7 @@ sub check_for_bad_ace_trace()
 
 
 
-# This test checks missing ACE_TRY_ENV when using 
+# This test checks missing ACE_TRY_ENV when using
 # resolve_initial_references
 sub check_for_missing_rir_env ()
 {
@@ -652,8 +654,8 @@ sub check_for_missing_rir_env ()
                     $disable = 0;
                 }
                 if ($disable == 0) {
-        	    next if m/^\s*\/\//;
-	
+                    next if m/^\s*\/\//;
+
                     if (m/^\s*try/) {
                         $disable = 1;
                         next;
@@ -672,12 +674,12 @@ sub check_for_missing_rir_env ()
                         $in_rir = 0;
                         if ($found_env != 1) {
                             print_error ("Missing ACE_TRY_ENV in"
-					 . " resolve_initial_references"
+                                         . " resolve_initial_references"
                                          . " in $file ($line)");
                         }
                         $found_env = 0;
                     }
-                    
+
                 }
             }
             close (FILE);
@@ -742,13 +744,13 @@ sub check_for_ace_check ()
                         }
                         $found_env = 0;
                     }
-                    
+
                     if (m/^\s*return/) {
                         $in_return = 1;
                     }
                     else {
                         $in_return = 0;
-                    }              
+                    }
                 }
             }
             close (FILE);
@@ -782,7 +784,7 @@ if (!$opt_l) {
 if ($opt_c) {
     foreach $file (@ARGV) {
         store_file ($file);
-    }   
+    }
 }
 elsif ($opt_m) {
     find_mod_files ();
