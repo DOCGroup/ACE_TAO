@@ -12,6 +12,7 @@
 #ifndef ACE_FRAMEWORK_COMPONENT_T_H
 #define ACE_FRAMEWORK_COMPONENT_T_H
 #include "ace/pre.h"
+#include "ace/Framework_Component.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
