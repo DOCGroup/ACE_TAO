@@ -1,3 +1,9 @@
+Tue Jul 30 14:09:35 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/tests.mpc:
+
+          Update the mpc file to include the libraries.
+
 Tue Jul 30 09:07:29 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Parse_Node.h:
