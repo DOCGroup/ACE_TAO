@@ -189,8 +189,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Invoking <%custom_type->command%> on <%custom_type->input_file%>"
-						CommandLine="<%custom_type->command%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%custom_type->input_file%> <%if(custom_type->output_option)%><%custom_type->output_option%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%endif%><%custom_type->input_file->output_files%><%endif%>"
-						Outputs="<%foreach(custom_type->input_file->output_files)%><%if(custom_type->output_option)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%endif%><%endif%><%custom_type->input_file->output_file%><%fornotlast(";")%><%endfor%>"/>
+						CommandLine="<%custom_type->command%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%custom_type->input_file%> <%if(custom_type->output_option)%><%custom_type->output_option%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_files)%><%else%><%custom_type->input_file->output_files%><%endif%><%endif%>"
+						Outputs="<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(";")%><%endfor%>"/>
 				</FileConfiguration>
 <%endfor%>
 			</File>

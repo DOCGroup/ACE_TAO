@@ -225,8 +225,8 @@ documenation_outputext  This is a comma separated list of possible
 For custom file types, there are two keywords that can be used within the
 custom file type input lists: commandflags and gendir.  The commandflags can
 be used to augment or override the commandflags defined in the Define_Custom
-section.  gendir can be used (only if output_option is set in Define_Custom)
-to specify the directory in which the generated output will go.  Below is an
+section.  gendir can be used to specify the directory in which the generated
+output will go.  Below is an
 example:
 
   MOC_Files {

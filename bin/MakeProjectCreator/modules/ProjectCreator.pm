@@ -1639,8 +1639,13 @@ sub check_custom_output {
           last;
         }
         else {
+          my($base) = $built;
+          if ($self->convert_slashes()) {
+            $base =~ s/\\/\//g;
+          }
+          my($re) = $self->escape_regex_special(basename($base));
           foreach my $c (@$comps) {
-            if ($c =~ /$built$/) {
+            if ($c =~ /$re$/) {
               push(@outputs, $built);
               last;
             }
