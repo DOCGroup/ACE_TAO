@@ -1,0 +1,15 @@
+//$Id$
+
+project(*CIDL) {
+  staticname = CIDL
+  includes += ../..
+  Source_Files {
+	.
+	./SemanticGraph
+	./Traversal
+        ./SemanticAction
+        ./SemanticAction/Impl
+
+  }
+
+}

@@ -1,0 +1,14 @@
+//$Id$
+
+project(*IDL3) {
+  staticname = IDL3
+  includes += ../..
+  Source_Files {
+        .
+	./SemanticGraph
+	./Traversal
+        ./SemanticAction/Impl
+
+  }
+
+}
