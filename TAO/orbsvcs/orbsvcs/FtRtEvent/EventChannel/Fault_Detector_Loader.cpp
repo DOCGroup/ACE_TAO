@@ -29,8 +29,6 @@ namespace FTRTEC {
   Fault_Detector_Loader::init (int argc,
     ACE_TCHAR* argv[])
   {
-    ACE_TRACE ("Fault_Detector_Loader::init");
-
     static int initialized = 0;
 
     // Only allow initialization once.

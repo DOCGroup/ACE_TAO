@@ -30,7 +30,7 @@ event channels is the events which are yet to be delivered to the consumers.
 Those events are hard to replicate because the time scale is too small.
 They might be delivered late or out of scope if we tried to replicate the
 events. However, the subscription information occurs at a suitable
-<br>time scale for replication, and is in fact more essential for the delivery
+time scale for replication, and is in fact more essential for the delivery
 of events since it establishes a kind of connectivity from suppliers to
 consumers. Therefore, we only replicate the subscriptions
 <p>Once the primary receives the subscription requests from the clients,
@@ -74,18 +74,20 @@ Quick start:</h3>
 &nbsp; Run the applications as follows:
 <br>&nbsp;
 <p>&nbsp; 1. Start Naming_Service
+<p>
 <br>&nbsp;&nbsp; $ $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -m 1
 <br>&nbsp;&nbsp;&nbsp;&nbsp; or you can use the shell script NameService
 in this directory to start it.
 <p>&nbsp; 2. Start the ftrt_eventservice. Use the "-p" option to start
 it as a primary and
 <br>&nbsp;&nbsp;&nbsp;&nbsp; use the "-j" option to start it as a backup.
-<p>&nbsp; $ ./ftec -p
+<p>&nbsp; $ cd $TAO_ROOT/orbsvcs/FTRT_Event_Service
+<br>&nbsp; $ ./ftec -p
 <br>&nbsp; $ ./ftec -j
 <br>&nbsp; $ ./ftec -j
 <br>&nbsp;
 <p>&nbsp; 3. Start the consumer and supplier.
-<br>&nbsp; $ ./consumer
+<p>&nbsp; $ ./consumer
 <br>&nbsp; $ ./supplier
 <br>&nbsp;
 <h3>

@@ -1,19 +1,29 @@
+Sun Oct 19 21:48:09 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.cpp:
+        * orbsvcs/FTRT_Event_Service/Factory_Service/EventChannelFactory_i.cpp
+          Fixed fuzz errors.
+
+        * docs/releasenotes/ftrt_ec.html: minor updates.
+
 Sun Oct 19 18:25:20 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp: 
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp:
 	* tests/OBV/Supports/Supports_Test_impl.cpp: Fixed unused
 	  ACE_ENV_ARG warnings.
 
 Sun Oct 19 17:11:21 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/FTRT_Event_Service/Readme: 
+	* orbsvcs/FTRT_Event_Service/Readme:
         * orbsvcs/orbsvcs/RTCosScheduling/README: Deleted these files and
 	  moved them as part of release notes. See below.
 
-	* docs/releasenotes/index.html: 
-	* docs/releasenotes/rtc10_sched.html: 
+	* docs/releasenotes/index.html:
+	* docs/releasenotes/rtc10_sched.html:
 	* docs/releasenotes/ftrt_ec.html: Added these to release notes.
-	
+
 Sun Oct 19 15:46:42 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/orbsvcs/RTCosScheduling_Static.dsp:

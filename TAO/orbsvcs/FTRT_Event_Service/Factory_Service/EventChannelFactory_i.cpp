@@ -91,7 +91,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   const FT::Criteria & the_criteria,
   FT::GenericFactory::FactoryCreationId_out factory_creation_id)
 {
-  ACE_TRACE("EventChannelFactory_i::create_prcess");
+  ACE_TRACE("EventChannelFactory_i::create_process");
 
   CORBA::Object_ptr result = CORBA::Object::_nil();
 
