@@ -1,3 +1,15 @@
+Thu Jul  1 15:45:48 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/RepositoryManager.idl:
+        * DAnCE/RepositoryManager/RepositoryManager.mpc:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h:
+        * DAnCE/RepositoryManager/Repository_Manager.cpp:
+        * DAnCE/RepositoryManager/Update_Plan.cpp:
+        * DAnCE/RepositoryManager/Update_Plan.h:
+
+          Moved the RepositoryManager directory here.
+
 Thu Jul  1 15:40:06 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/ciao/CCM_Base.idl:
