@@ -447,7 +447,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__ANONY="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\anonymous.idl
 InputName=anonymous
 
@@ -532,7 +532,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__ARRAY="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\array.idl
 InputName=array
 
@@ -617,7 +617,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__CONST="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\constants.idl
 InputName=constants
 
@@ -702,7 +702,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__ENUM_="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\enum_in_struct.idl
 InputName=enum_in_struct
 
@@ -787,7 +787,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__GENER="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\generic_object.idl
 InputName=generic_object
 
@@ -872,7 +872,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__INCLU="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\included.idl
 InputName=included
 
@@ -957,7 +957,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__INCLUD="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\including.idl
 InputName=including
 
@@ -1042,7 +1042,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__INTER="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\interface.idl
 InputName=interface
 
@@ -1127,7 +1127,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__KEYWO="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\keywords.idl
 InputName=keywords
 
@@ -1174,7 +1174,7 @@ SOURCE=.\params.idl
 !ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
 
 USERDEP__PARAM="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\params.idl
 InputName=params
 
@@ -1195,7 +1195,7 @@ SOURCE=.\pragma.idl
 !ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
 
 USERDEP__PRAGM="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\pragma.idl
 InputName=pragma
 
@@ -1280,7 +1280,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__REOPE="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\reopened_modules.idl
 InputName=reopened_modules
 
@@ -1365,7 +1365,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__SEQUE="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\sequence.idl
 InputName=sequence
 
@@ -1450,7 +1450,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__TYPED="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\typedef.idl
 InputName=typedef
 
@@ -1535,7 +1535,7 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__UNION="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\union.idl
 InputName=union
 
