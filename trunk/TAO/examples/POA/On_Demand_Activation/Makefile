@@ -11,7 +11,7 @@ OBJ = $(addsuffix .o,$(MYFILES))
 
 CPPFLAGS += -I$(TAO_ROOT) -I../Generic_Servant
 
-LDLIBS     =   -lMyFoo -lTAO
+LDLIBS     =   -lGeneric_Servant -lTAO
 LDFLAGS += -L$(TAO_ROOT)/tao -L../Generic_Servant
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
