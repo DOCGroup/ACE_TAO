@@ -37,11 +37,11 @@ Task::~Task (void)
    enabled, they inherit the thread-pool size.  Make sure that the subtasks can 
    be opened before we open our own threadpool. 
  */
-int Task::open (int threads)
+int Task::start (int threads)
 {
     if (next_)
     {
-        if (next_->open (threads) == -1)
+        if (next_->start (threads) == -1)
         {
             return -1;
         }

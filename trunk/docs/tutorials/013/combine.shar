@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1998-11-15 12:09 EST by <jcej@chiroptera.tragus.org>.
+# Made on 1999-01-31 11:54 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/013'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -13,7 +13,7 @@
 # ------ ---------- ------------------------------------------
 #    386 -rw-rw-r-- hdr
 #     89 -rw-rw-r-- bodies
-#    976 -rw-rw-r-- page01.pre
+#   2415 -rw-rw-r-- page01.pre
 #    432 -rw-rw-r-- page02.pre
 #   1426 -rw-rw-r-- page03.pre
 #   1049 -rw-rw-r-- page04.pre
@@ -71,7 +71,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh10945; then
+if mkdir _sh30349; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -145,8 +145,6 @@ if test -f 'page01.pre' && test "$first_param" != -c; then
 else
   $echo 'x -' extracting 'page01.pre' '(text)'
   sed 's/^X//' << 'SHAR_EOF' > 'page01.pre' &&
-X
-X
 <P>
 <HR WIDTH="100%">
 <P>
@@ -168,20 +166,49 @@ method is called for finishing up any outstanding work.
 The chain of thread pools is uni-directional using a singly-linked
 list of Task derivatives.  Each pool has the same number of tasks in 
 order to keep things simple.
+<P>
+Kirthika's abstract:
+<UL>
+In this tutorial, a singly linked list of thread-pools, each of which is
+a subtask and which acts as the finite state machine node, is used to
+simulate a finite state machine.
+<P>
+A task is created with a number of subtasks. Once the message block is
+obtained from the queue, it is verified to see whether a task has a
+subtask. If so, it is forwarded to the subtask. Thus the mesage
+traverses over the whole list. As a safety measure for destroying the
+block after it goes through the whole list, an effective and simple
+Memory Leak Detector has been implemented. It is a counter which
+increments when the object where it resides is created and decrements on
+its deletion. 
+<P>
+Another optimisation from the previous tutorials on Message Queues, is
+the bundling of the Data block within the Message Block. The Data block
+provides reference counting, so duplication of data is avoided. It is
+deleted only when its reference count drops to zero. Now updating 
+this count between threads call for synchronisation and in comes the
+ACE_Mutex, a lock which takes care that the counting is thread-safe.
+<P>
+Although the example isn't a full-fledged Finite State Machine,
+i.e. it has to be tweaked to be able to jump states on different inputs,
+it definitely proves to be a great lesson and introduces us to quite a
+few new ACE classes and the ways they can be mixed and matched to
+produce the end-system desired.
+</ul>
 SHAR_EOF
-  $shar_touch -am 1114225598 'page01.pre' &&
+  $shar_touch -am 0131114799 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-391c8a4163bf85a87526b476ac9f0f99  page01.pre
+52884c61973afc64e96c907493ebc216  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 976 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '976,' 'current size' "$shar_count!"
+    test 2415 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '2415,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -630,5 +657,5 @@ SHAR_EOF
     $echo 'page07.pst:' 'original size' '371,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh10945
+rm -fr _sh30349
 exit 0

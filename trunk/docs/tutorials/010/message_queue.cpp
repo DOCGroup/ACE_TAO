@@ -11,14 +11,13 @@
 int run_test( int iterations, int threads )
 {
   /*
-     Create and open an instance of our Task object.  I've overridden the
-     open() method to make it look more like other ACE objects. 
+     Create and star an instance of our Task object.
    */
   Task task;
 
-  if (task.open (threads) == -1)
+  if (task.start (threads) == -1)
   {
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "start"), -1);
   }
 
   /*

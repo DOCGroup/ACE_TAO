@@ -42,7 +42,7 @@ Task::~Task (void)
   get here.  We then pass the thread count through to our base class'
   activate().
 */
-int Task::open (int threads)
+int Task::start (int threads)
 {
   barrier_ = new ACE_Barrier (threads);
   return this->activate (THR_NEW_LWP, threads);

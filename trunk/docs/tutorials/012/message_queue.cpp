@@ -17,9 +17,9 @@ int run_test (int iterations, int threads)
      */
   Task task;
 
-  if (task.open (threads) == -1)
+  if (task.start (threads) == -1)
   {
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "start"), -1);
   }
 
    /*

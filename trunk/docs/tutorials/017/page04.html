@@ -67,7 +67,7 @@ u_int <font color=#008888>Barrier::threads</font>(void)
  */</font>
 int <font color=#008888>Barrier::threads</font>( u_int _threads, int _wait )
 {
-    if( <font color=#008888>ACE_OS::thr_self</font>() != owner_ )
+    if( ! <font color=#008888>ACE_OS::thr_equal</font>(ACE_OS::thr_self(), owner_) )
     {
         return -1;
     }

@@ -22,7 +22,7 @@ Task::~Task (void)
   delete barrier_;
 }
 
-int Task::open (int threads)
+int Task::start (int threads)
 {
   barrier_ = new ACE_Barrier (threads);
   return this->activate (THR_NEW_LWP, threads);

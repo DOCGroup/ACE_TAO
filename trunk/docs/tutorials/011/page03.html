@@ -43,7 +43,7 @@ public:
     Task (void);
    ~Task (void);
 
-  int open (int threads = 1);
+  int start (int threads = 1);
 
   int svc (void);
 
@@ -81,7 +81,7 @@ protected:
   delete barrier_;
 }
 
-int <font color=#008888>Task::open</font> (int threads)
+int <font color=#008888>Task::start</font> (int threads)
 {
   barrier_ = new ACE_Barrier (threads);
   return this->activate (THR_NEW_LWP, threads);

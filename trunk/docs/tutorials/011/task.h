@@ -19,7 +19,7 @@ public:
     Task (void);
    ~Task (void);
 
-  int open (int threads = 1);
+  int start (int threads = 1);
 
   int svc (void);
 

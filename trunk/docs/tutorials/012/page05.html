@@ -52,15 +52,12 @@ public:
     Task (void);
     ~Task (void);
 
-        <font color=red>// Some compilers complain when we don't overload all</font>
-        <font color=red>// baseclass signatures of a method.  &lt;sigh></font>
-    virtual int open ( void * args )
-        {
-            return -1;
-        }
-
-        <font color=red>// This is the open() we really want our clients to use.</font>
-    int open (int threads = 1);
+    <font color=red>/*
+      I really wanted this to be called open() but that was already
+      claimed by the Task framework.  start() will kick off our thread 
+      pool for us.
+    */</font>
+    int start (int threads = 1);
 
     virtual int svc (void);
 
@@ -118,7 +115,7 @@ protected:
   get here.  We then pass the thread count through to our base class'
   activate().
 */</font>
-int <font color=#008888>Task::open</font> (int threads)
+int <font color=#008888>Task::start</font> (int threads)
 {
   barrier_ = new ACE_Barrier (threads);
   return this->activate (THR_NEW_LWP, threads);

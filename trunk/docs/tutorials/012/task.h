@@ -29,15 +29,12 @@ public:
     Task (void);
     ~Task (void);
 
-        // Some compilers complain when we don't overload all
-        // baseclass signatures of a method.  <sigh>
-    virtual int open ( void * args )
-        {
-            return -1;
-        }
-
-        // This is the open() we really want our clients to use.
-    int open (int threads = 1);
+    /*
+      I really wanted this to be called open() but that was already
+      claimed by the Task framework.  start() will kick off our thread 
+      pool for us.
+    */
+    int start (int threads = 1);
 
     virtual int svc (void);
 

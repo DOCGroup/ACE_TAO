@@ -1,3 +1,22 @@
+
+Sun Jan 31 11:58:32 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/{010|011|012|013|017}:
+	  In all of these, I'd overridden open() as open(int) to specify
+	  the number of threads in a thread-pool.  Steve Huston pointed
+	  out that this causes grief with some compilers.  I've changed
+	  all of these open(int) overrides to start(int) instead.
+
+	* docs/tutorials/017/Barrier_i.cpp (threads):
+	  The thr_equal() call was changed to !thr_equal().
+
+	* docs/tutorials/010/taks.cpp:
+	  Vishal recommended some extra commentation to make things a bit
+	  more clear WRT barrier synch.
+
+	* docs/tutorials/013/page01.html:
+	  Added Kirthika's abstract.
+
 Sat Jan 30 16:03:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* websvcs/lib/URL_Addr.h: 

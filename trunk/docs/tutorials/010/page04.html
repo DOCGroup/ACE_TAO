@@ -50,12 +50,12 @@ public:
     Task (void);
    ~Task (void);
 
-  <font color=red>/*
-    To make our Task&lt;> derivative look more like other ACE objects
-    I've added an open() method.  It will take care of activate()ing
-    the object.
-  */</font>
-  int open (int threads = 1);
+    <font color=red>/*
+      I really wanted this to be called open() but that was already
+      claimed by the Task framework.  start() will kick off our thread 
+      pool for us.
+    */</font>
+  int start (int threads = 1);
 
   <font color=red>/*
     Our worker method

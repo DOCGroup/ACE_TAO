@@ -24,6 +24,12 @@ Task::~Task (void)
     Get our shutdown notification out of the queue and release it.
   */
   ACE_Message_Block * message;
+
+  /*
+    Like the getq() in svc() below, this will block until a message
+    arrives.  By blocking, we know that the destruction will be paused 
+    until the last thread is done with the message block.
+  */
   this->getq(message);
   message->release();
 
@@ -35,7 +41,7 @@ Task::~Task (void)
   it how many threads we'll be using.  Next, we activate the Task
   into the number of requested threads.
 */
-int Task::open (int threads)
+int Task::start (int threads)
 {
   barrier_ = new ACE_Barrier (threads);
   return this->activate (THR_NEW_LWP, threads);
@@ -76,7 +82,8 @@ int Task::svc (void)
   while (1)
   {
     /*
-      Get a message from the queue.
+      Get a message from the queue.  Note that getq() will block until 
+      a message shows up.  That makes us very processor-friendly.
     */
     if (this->getq (message) == -1)
     {

@@ -29,12 +29,12 @@ public:
     Task (void);
    ~Task (void);
 
-  /*
-    To make our Task<> derivative look more like other ACE objects
-    I've added an open() method.  It will take care of activate()ing
-    the object.
-  */
-  int open (int threads = 1);
+    /*
+      I really wanted this to be called open() but that was already
+      claimed by the Task framework.  start() will kick off our thread 
+      pool for us.
+    */
+  int start (int threads = 1);
 
   /*
     Our worker method
