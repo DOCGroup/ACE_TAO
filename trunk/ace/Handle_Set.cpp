@@ -12,12 +12,17 @@ ACE_RCSID(ace, Handle_Set, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Handle_Set)
 
+#if defined (__BORLANDC__) && !defined (ACE_WIN32)
+// The Borland C++ compiler on Linux also doesn't have fds_bits, but has __fds_bits.
+#define fds_bits __fds_bits
+#endif
+
 #if defined (linux) && __GLIBC__ > 1 && __GLIBC_MINOR__ >= 1 && !defined (_XOPEN_SOURCE)
   // XPG4.2 requires the fds_bits member name, so it is not enabled by
   // default on Linux/glibc-2.1.x systems.  Instead use "__fds_bits."
   // Ugly, but "what are you going to do?" 8-)
 #define fds_bits __fds_bits
-#endif  /* linux && __GLIBC__ > 1 && __GLIBC_MINOR__ >= 1 && !_GNU_SOURCE */
+#endif  /* linux && __GLIBC__ > 1 && __GLIBC_MINOR__ >= 1 && !_XOPEN_SOURCE */
 
 void
 ACE_Handle_Set::dump (void) const
