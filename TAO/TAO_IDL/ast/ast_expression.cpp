@@ -394,13 +394,13 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
     case AST_Expression::EV_ushort:
       return ev;
     case AST_Expression::EV_long:
-      if (ev->u.lval > (long) (SHRT_MAX << 1) || ev->u.lval < 0)
+      if (ev->u.lval > (long) ((SHRT_MAX << 1) + 1) || ev->u.lval < 0)
 	return NULL;
       ev->u.usval = (unsigned short) ev->u.lval;
       ev->et = AST_Expression::EV_ushort;
       return ev;
     case AST_Expression::EV_ulong:
-      if (ev->u.ulval > (unsigned long) (SHRT_MAX << 1))
+      if (ev->u.ulval > (unsigned long) ((SHRT_MAX << 1) + 1))
 	return NULL;
       ev->u.usval = (unsigned short) ev->u.ulval;
       ev->et = AST_Expression::EV_ushort;
@@ -410,13 +410,13 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->et = AST_Expression::EV_short;
       return ev;
     case AST_Expression::EV_float:
-      if (ev->u.fval < 0.0 || ev->u.fval > (float) (SHRT_MAX << 1))
+      if (ev->u.fval < 0.0 || ev->u.fval > (float) ((SHRT_MAX << 1) + 1))
 	return NULL;
       ev->u.usval = (unsigned short) ev->u.fval;
       ev->et = AST_Expression::EV_short;
       return ev;
     case AST_Expression::EV_double:
-      if (ev->u.dval < 0.0 || ev->u.dval > (double) (SHRT_MAX << 1))
+      if (ev->u.dval < 0.0 || ev->u.dval > (double) ((SHRT_MAX << 1) + 1))
 	return NULL;
       ev->u.usval = (unsigned short) ev->u.dval;
       ev->et = AST_Expression::EV_short;
