@@ -101,7 +101,7 @@ LINK32=link.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "TAO___Wi"
+# PROP Output_Dir ""
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
@@ -133,8 +133,8 @@ LINK32=link.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "TAO___W0"
-# PROP Intermediate_Dir "TAO___W0"
+# PROP Output_Dir ""
+# PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 MTL=midl.exe
@@ -346,6 +346,8 @@ DEP_CPP_ANY_C=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -596,6 +598,8 @@ DEP_CPP_APPEN=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -852,6 +856,8 @@ DEP_CPP_CDR_C=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -1102,6 +1108,8 @@ DEP_CPP_CLIEN=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -1358,6 +1366,8 @@ DEP_CPP_CONNE=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -1609,6 +1619,8 @@ DEP_CPP_CURRE=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -1859,6 +1871,8 @@ DEP_CPP_CURREN=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -2109,6 +2123,8 @@ DEP_CPP_DEBUG=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -2359,6 +2375,8 @@ DEP_CPP_DECOD=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -2609,6 +2627,8 @@ DEP_CPP_DEEP_=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -2859,6 +2879,8 @@ DEP_CPP_DEFAU=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -3109,6 +3131,8 @@ DEP_CPP_DEFAUL=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -3359,6 +3383,260 @@ DEP_CPP_ENCOD=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
+	".\Exception.h"\
+	".\Exception.i"\
+	".\giop.h"\
+	".\giop.i"\
+	".\IIOP_Interpreter.h"\
+	".\IIOP_Object.h"\
+	".\IIOP_Object.i"\
+	".\IIOP_ORB.h"\
+	".\IIOP_ORB.i"\
+	".\Invocation.h"\
+	".\Invocation.i"\
+	".\marshal.h"\
+	".\marshal.i"\
+	".\nvlist.h"\
+	".\NVList.i"\
+	".\object.h"\
+	".\object.i"\
+	".\Object_KeyC.h"\
+	".\Object_KeyC.i"\
+	".\Object_Table.h"\
+	".\Operation_Table.h"\
+	".\orb.h"\
+	".\ORB.i"\
+	".\orb_core.h"\
+	".\orb_core.i"\
+	".\ORB_Strategies_T.cpp"\
+	".\ORB_Strategies_T.h"\
+	".\ORB_Strategies_T.i"\
+	".\orbconf.h"\
+	".\params.h"\
+	".\params.i"\
+	".\poa.h"\
+	".\POA.i"\
+	".\POA_CORBA.h"\
+	".\poa_macros.h"\
+	".\poaC.h"\
+	".\poaC.i"\
+	".\poaS.h"\
+	".\poaS.i"\
+	".\PolicyC.h"\
+	".\PolicyC.i"\
+	".\Principal.h"\
+	".\Principal.i"\
+	".\request.h"\
+	".\Request.i"\
+	".\sequence.h"\
+	".\sequence.i"\
+	".\Sequence_T.cpp"\
+	".\Sequence_T.h"\
+	".\Sequence_T.i"\
+	".\servant_base.h"\
+	".\Server_Request.h"\
+	".\Server_Request.i"\
+	".\Server_Strategy_Factory.h"\
+	".\singletons.h"\
+	".\stub.h"\
+	".\stub.i"\
+	".\typecode.h"\
+	".\typecode.i"\
+	".\Union.h"\
+	".\varout.cpp"\
+	".\varout.h"\
+	".\varout.i"\
+	
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Environment.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+DEP_CPP_ENVIR=\
+	"..\..\ace\Acceptor.cpp"\
+	"..\..\ace\Acceptor.h"\
+	"..\..\ace\Acceptor.i"\
+	"..\..\ace\ACE.h"\
+	"..\..\ace\ACE.i"\
+	"..\..\ace\Addr.h"\
+	"..\..\ace\Addr.i"\
+	"..\..\ace\Atomic_Op.i"\
+	"..\..\ace\Auto_Ptr.cpp"\
+	"..\..\ace\Auto_Ptr.h"\
+	"..\..\ace\Auto_Ptr.i"\
+	"..\..\ace\Basic_Types.h"\
+	"..\..\ace\Basic_Types.i"\
+	"..\..\ace\config-win32-borland.h"\
+	"..\..\ace\config-win32-common.h"\
+	"..\..\ace\config-win32.h"\
+	"..\..\ace\config-WinCE.h"\
+	"..\..\ace\config.h"\
+	"..\..\ace\Connector.cpp"\
+	"..\..\ace\Connector.h"\
+	"..\..\ace\Connector.i"\
+	"..\..\ace\Containers.cpp"\
+	"..\..\ace\Containers.h"\
+	"..\..\ace\Containers.i"\
+	"..\..\ace\Dynamic.h"\
+	"..\..\ace\Dynamic.i"\
+	"..\..\ace\Dynamic_Service.cpp"\
+	"..\..\ace\Dynamic_Service.h"\
+	"..\..\ace\Event_Handler.h"\
+	"..\..\ace\Event_Handler.i"\
+	"..\..\ace\Free_List.cpp"\
+	"..\..\ace\Free_List.h"\
+	"..\..\ace\Free_List.i"\
+	"..\..\ace\Get_Opt.h"\
+	"..\..\ace\Get_Opt.i"\
+	"..\..\ace\Handle_Set.h"\
+	"..\..\ace\Handle_Set.i"\
+	"..\..\ace\Hash_Map_Manager.cpp"\
+	"..\..\ace\Hash_Map_Manager.h"\
+	"..\..\ace\inc_user_config.h"\
+	"..\..\ace\INET_Addr.h"\
+	"..\..\ace\INET_Addr.i"\
+	"..\..\ace\IO_Cntl_Msg.h"\
+	"..\..\ace\iosfwd.h"\
+	"..\..\ace\IPC_SAP.h"\
+	"..\..\ace\IPC_SAP.i"\
+	"..\..\ace\Log_Msg.h"\
+	"..\..\ace\Log_Priority.h"\
+	"..\..\ace\Log_Record.h"\
+	"..\..\ace\Log_Record.i"\
+	"..\..\ace\Malloc.h"\
+	"..\..\ace\Malloc.i"\
+	"..\..\ace\Malloc_Base.h"\
+	"..\..\ace\Malloc_T.cpp"\
+	"..\..\ace\Malloc_T.h"\
+	"..\..\ace\Malloc_T.i"\
+	"..\..\ace\Managed_Object.cpp"\
+	"..\..\ace\Managed_Object.h"\
+	"..\..\ace\Managed_Object.i"\
+	"..\..\ace\Map_Manager.cpp"\
+	"..\..\ace\Map_Manager.h"\
+	"..\..\ace\Map_Manager.i"\
+	"..\..\ace\Mem_Map.h"\
+	"..\..\ace\Mem_Map.i"\
+	"..\..\ace\Memory_Pool.h"\
+	"..\..\ace\Memory_Pool.i"\
+	"..\..\ace\Message_Block.h"\
+	"..\..\ace\Message_Block.i"\
+	"..\..\ace\Message_Queue.h"\
+	"..\..\ace\Message_Queue.i"\
+	"..\..\ace\Message_Queue_T.cpp"\
+	"..\..\ace\Message_Queue_T.h"\
+	"..\..\ace\Message_Queue_T.i"\
+	"..\..\ace\Module.cpp"\
+	"..\..\ace\Module.h"\
+	"..\..\ace\Module.i"\
+	"..\..\ace\Object_Manager.h"\
+	"..\..\ace\Object_Manager.i"\
+	"..\..\ace\OS.h"\
+	"..\..\ace\OS.i"\
+	"..\..\ace\Reactor.h"\
+	"..\..\ace\Reactor.i"\
+	"..\..\ace\Reactor_Impl.h"\
+	"..\..\ace\Service_Config.h"\
+	"..\..\ace\Service_Config.i"\
+	"..\..\ace\Service_Object.h"\
+	"..\..\ace\Service_Object.i"\
+	"..\..\ace\Service_Repository.h"\
+	"..\..\ace\Service_Repository.i"\
+	"..\..\ace\Service_Types.h"\
+	"..\..\ace\Service_Types.i"\
+	"..\..\ace\Shared_Object.h"\
+	"..\..\ace\Shared_Object.i"\
+	"..\..\ace\Signal.h"\
+	"..\..\ace\Signal.i"\
+	"..\..\ace\Singleton.cpp"\
+	"..\..\ace\Singleton.h"\
+	"..\..\ace\Singleton.i"\
+	"..\..\ace\SOCK.h"\
+	"..\..\ace\SOCK.i"\
+	"..\..\ace\SOCK_Acceptor.h"\
+	"..\..\ace\SOCK_Acceptor.i"\
+	"..\..\ace\SOCK_Connector.h"\
+	"..\..\ace\SOCK_Connector.i"\
+	"..\..\ace\SOCK_IO.h"\
+	"..\..\ace\SOCK_IO.i"\
+	"..\..\ace\SOCK_Stream.h"\
+	"..\..\ace\SOCK_Stream.i"\
+	"..\..\ace\SString.h"\
+	"..\..\ace\SString.i"\
+	"..\..\ace\Strategies.h"\
+	"..\..\ace\Strategies.i"\
+	"..\..\ace\Strategies_T.cpp"\
+	"..\..\ace\Strategies_T.h"\
+	"..\..\ace\Strategies_T.i"\
+	"..\..\ace\Stream_Modules.cpp"\
+	"..\..\ace\Stream_Modules.h"\
+	"..\..\ace\Stream_Modules.i"\
+	"..\..\ace\streams.h"\
+	"..\..\ace\SV_Semaphore_Complex.h"\
+	"..\..\ace\SV_Semaphore_Complex.i"\
+	"..\..\ace\SV_Semaphore_Simple.h"\
+	"..\..\ace\SV_Semaphore_Simple.i"\
+	"..\..\ace\Svc_Conf_Tokens.h"\
+	"..\..\ace\Svc_Handler.cpp"\
+	"..\..\ace\Svc_Handler.h"\
+	"..\..\ace\Svc_Handler.i"\
+	"..\..\ace\Synch.h"\
+	"..\..\ace\Synch.i"\
+	"..\..\ace\Synch_Options.h"\
+	"..\..\ace\Synch_Options.i"\
+	"..\..\ace\Synch_T.cpp"\
+	"..\..\ace\Synch_T.h"\
+	"..\..\ace\Synch_T.i"\
+	"..\..\ace\sys_conf.h"\
+	"..\..\ace\Task.h"\
+	"..\..\ace\Task.i"\
+	"..\..\ace\Task_T.cpp"\
+	"..\..\ace\Task_T.h"\
+	"..\..\ace\Task_T.i"\
+	"..\..\ace\Thread.h"\
+	"..\..\ace\Thread.i"\
+	"..\..\ace\Thread_Manager.h"\
+	"..\..\ace\Thread_Manager.i"\
+	"..\..\ace\Time_Value.h"\
+	"..\..\ace\Timer_Queue.h"\
+	"..\..\ace\Timer_Queue_T.cpp"\
+	"..\..\ace\Timer_Queue_T.h"\
+	"..\..\ace\Timer_Queue_T.i"\
+	"..\..\ace\Trace.h"\
+	"..\..\ace\WFMO_Reactor.h"\
+	"..\..\ace\WFMO_Reactor.i"\
+	"..\..\ace\ws2tcpip.h"\
+	".\align.h"\
+	".\any.h"\
+	".\any.i"\
+	".\cdr.h"\
+	".\cdr.i"\
+	".\Client_Strategy_Factory.h"\
+	".\connect.h"\
+	".\connect.i"\
+	".\corba.h"\
+	".\CurrentC.h"\
+	".\CurrentC.i"\
+	".\debug.h"\
+	".\default_client.h"\
+	".\default_client.i"\
+	".\default_server.h"\
+	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -3609,6 +3887,8 @@ DEP_CPP_EXCEP=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -3859,6 +4139,8 @@ DEP_CPP_FORWA=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\Forwarding_Servant.h"\
@@ -4116,6 +4398,8 @@ DEP_CPP_GIOP_=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -4367,6 +4651,8 @@ DEP_CPP_IIOP_=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -4623,6 +4909,8 @@ DEP_CPP_IIOP_O=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -4874,6 +5162,8 @@ DEP_CPP_IIOP_OR=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -5130,6 +5420,8 @@ DEP_CPP_INVOC=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -5381,6 +5673,8 @@ DEP_CPP_MARSH=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -5631,6 +5925,8 @@ DEP_CPP_NVLIS=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -5881,6 +6177,8 @@ DEP_CPP_OBJEC=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -6131,6 +6429,8 @@ DEP_CPP_OBJECT=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -6381,6 +6681,8 @@ DEP_CPP_OBJECT_=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -6631,6 +6933,8 @@ DEP_CPP_OPERA=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -6891,6 +7195,8 @@ DEP_CPP_ORB_C=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -7155,6 +7461,8 @@ DEP_CPP_ORB_CO=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -7406,6 +7714,8 @@ DEP_CPP_PARAM=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -7662,6 +7972,8 @@ DEP_CPP_POA_C=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\Forwarding_Servant.h"\
@@ -7914,6 +8226,8 @@ DEP_CPP_POAC_=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -8164,6 +8478,8 @@ DEP_CPP_POAS_=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -8414,6 +8730,8 @@ DEP_CPP_POLIC=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -8664,6 +8982,8 @@ DEP_CPP_POLICY=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -8914,6 +9234,8 @@ DEP_CPP_PRINC=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -9164,6 +9486,8 @@ DEP_CPP_REQUE=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -9414,6 +9738,8 @@ DEP_CPP_SEQUE=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -9670,6 +9996,8 @@ DEP_CPP_SERVA=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -9927,6 +10255,8 @@ DEP_CPP_SERVE=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -10178,6 +10508,8 @@ DEP_CPP_SERVER=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -10428,6 +10760,8 @@ DEP_CPP_SKIP_=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -10678,6 +11012,8 @@ DEP_CPP_STUB_=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -10928,6 +11264,8 @@ DEP_CPP_TAO_C=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -11179,6 +11517,8 @@ DEP_CPP_TAO_I=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -11430,6 +11770,8 @@ DEP_CPP_TYPEC=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -11680,6 +12022,8 @@ DEP_CPP_TYPECO=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -11930,6 +12274,8 @@ DEP_CPP_UNION=\
 	".\default_client.i"\
 	".\default_server.h"\
 	".\default_server.i"\
+	".\Environment.h"\
+	".\Environment.i"\
 	".\Exception.h"\
 	".\Exception.i"\
 	".\giop.h"\
@@ -12043,6 +12389,10 @@ SOURCE=.\default_client.h
 # Begin Source File
 
 SOURCE=.\default_server.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Environment.h
 # End Source File
 # Begin Source File
 
@@ -12219,6 +12569,10 @@ SOURCE=.\default_client.i
 # Begin Source File
 
 SOURCE=.\default_server.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Environment.i
 # End Source File
 # Begin Source File
 
