@@ -1,3 +1,7 @@
+Tue Sep 30 08:35:15 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Atomic_Op.i: added CVS header.
+
 Tue Sep 30 01:35:28 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/Naming_Context.cpp (close, close_down): Separated these two
