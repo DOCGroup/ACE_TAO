@@ -459,6 +459,9 @@ test_caching_strategy_type (void)
       ACE_NEW (hash_map_caching_strategy,
                HASH_MAP_FIFO_ADAPTER);
       break;
+      
+    case ACE_ALL: // Just to remove warnings!
+      break;
     }
 
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("map cache\n")));
