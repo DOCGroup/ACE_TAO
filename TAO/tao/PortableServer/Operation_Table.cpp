@@ -568,6 +568,9 @@ template class TAO_Singleton<TAO_Operation_Table_Parameters,
 #pragma instantiate ACE_Hash_Map_Manager_Ex<const char *, TAO::OPeration_Skeletons, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Entry<const char *, TAO::OPeration_Skeletons>
 #pragma instantiate TAO_Singleton<TAO_Operation_Table_Parameters, TAO_SYNCH_RECURSIVE_MUTEX>
-#elif defined (__GNUC__) && defined (__hpux)
-template class TAO_Singleton<TAO_Operation_Table_Parameters,TAO_SYNCH_RECURSIVE_MUTEX>;
+
+#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+
+template TAO_Singleton<TAO_Operation_Table_Parameters, TAO_SYNCH_RECURSIVE_MUTEX>* TAO_Singleton<TAO_Operation_Table_Parameters, TAO_SYNCH_RECURSIVE_MUTEX >::singleton_;
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
