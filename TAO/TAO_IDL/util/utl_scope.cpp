@@ -110,13 +110,15 @@ is_global_name(Identifier *i)
  * subsequent components of a scoped name
  */
 static AST_Decl *
-iter_lookup_by_name_local(AST_Decl *d, UTL_ScopedName *e,
+iter_lookup_by_name_local(AST_Decl *d, 
+                          UTL_ScopedName *e,
                           idl_bool treat_as_ref)
 {
   Identifier                    *s;
   AST_Typedef                   *td;
   UTL_IdListActiveIterator      *i;
   UTL_Scope                     *sc;
+  UTL_Scope                     *t = NULL;
 
   i = new UTL_IdListActiveIterator(e);
   for (i->next(); !(i->is_done()); ) {
@@ -163,7 +165,22 @@ iter_lookup_by_name_local(AST_Decl *d, UTL_ScopedName *e,
     /*
      * Look up the next element
      */
+    t = d->defined_in ();
     d = sc->lookup_by_name_local(s, treat_as_ref);
+
+    // If there is a reopened module in a scope somewhat
+    // removed from where we are, we may need to backtrack
+    // to find the subsequent declaration(s) of that 
+    // module's scope.
+    while (d == NULL && t != NULL)
+      {
+        d = t->lookup_by_name ((UTL_ScopedName *) e->tail (), 
+                               treat_as_ref, 
+                               0, 
+                               1);
+        AST_Decl *tmp = ScopeAsDecl (t);
+        t = tmp->defined_in ();
+      }
   }
   /*
    * OK, done with the loop
@@ -856,6 +873,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
                   else
                     d = fwd->full_definition ();
                 }
+
               return d;
             }
           else 
@@ -876,8 +894,10 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
  * Implements lookup by name for scoped names
  */
 AST_Decl *
-UTL_Scope::lookup_by_name(UTL_ScopedName *e, idl_bool treat_as_ref,
-                          idl_bool in_parent)
+UTL_Scope::lookup_by_name(UTL_ScopedName *e, 
+                          idl_bool treat_as_ref,
+                          idl_bool in_parent,
+                          long start_index)
 {
   AST_Decl                   *d;
   UTL_Scope                  *t = NULL;
@@ -932,41 +952,41 @@ UTL_Scope::lookup_by_name(UTL_ScopedName *e, idl_bool treat_as_ref,
    *
    * Is name defined here?
    */
-   long index = 0 ;
-   while (1) {
-     d = lookup_by_name_local(e->head(), treat_as_ref, index);
-     if (d == NULL) {
-        /*
-        * Special case for scope which is an interface. We have to look
-        * in the inherited interfaces as well..
-	* Look before parent scopes !
-        */
-        if (pd_scope_node_type == AST_Decl::NT_interface)
-           d = look_in_inherited(e, treat_as_ref);
-
-        if ((d == NULL) && in_parent) {
-          /*
-           * OK, not found. Go down parent scope chain.
-           */
-          d = ScopeAsDecl(this);
-          if (d != NULL) {
-            t = d->defined_in();
-            if (t == NULL)
-            d = NULL;
-           else
-             d = t->lookup_by_name(e, treat_as_ref);
-          }
-         }
+  long index = start_index;
+  while (1) {
+    d = lookup_by_name_local(e->head(), treat_as_ref, index);
+    if (d == NULL) {
       /*
-        * If treat_as_ref is true and d is not NULL, add d to
-        * set of nodes referenced here
-        */
-       if (treat_as_ref && d != NULL)
-         add_to_referenced(d, I_FALSE);
+       * Special case for scope which is an interface. We have to look
+       * in the inherited interfaces as well..
+	     * Look before parent scopes !
+       */
+      if (pd_scope_node_type == AST_Decl::NT_interface)
+         d = look_in_inherited(e, treat_as_ref);
+
+      if ((d == NULL) && in_parent) {
        /*
-        * OK, now return whatever we found
+        * OK, not found. Go down parent scope chain.
         */
-       return d;
+        d = ScopeAsDecl(this);
+        if (d != NULL) {
+          t = d->defined_in();
+          if (t == NULL)
+            d = NULL;
+          else
+            d = t->lookup_by_name(e, treat_as_ref);
+        }
+      }
+      /*
+       * If treat_as_ref is true and d is not NULL, add d to
+       * set of nodes referenced here
+       */
+      if (treat_as_ref && d != NULL)
+        add_to_referenced(d, I_FALSE);
+      /*
+       *  OK, now return whatever we found
+       */
+      return d;
     }
     /*
      * OK, start of name is defined. Now loop doing local lookups
