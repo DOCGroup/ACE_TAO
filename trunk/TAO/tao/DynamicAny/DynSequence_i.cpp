@@ -35,102 +35,86 @@ void
 TAO_DynSequence_i::init (const CORBA::Any& any,
                          CORBA::Environment &ACE_TRY_ENV)
 {
-  this->type_ = any.type ();
+  CORBA::TypeCode_var tc = any.type ();
   this->current_index_ = 0;
 
-  ACE_TRY
+  CORBA::TCKind kind =
+    TAO_DynAnyFactory::unalias (tc.in (),
+                                ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (kind != CORBA::tk_sequence)
     {
-      int tk =
-        TAO_DynAnyFactory::unalias (this->type_.in (),
-                               ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // The type will be correct if this constructor called from a
-      // factory function, but it could also be called by the user,
-      // so.....
-      if (tk == CORBA::tk_sequence)
-        {
-          // Get the CDR stream of the argument.
-          ACE_Message_Block *mb = any._tao_get_cdr ();
-
-          TAO_InputCDR cdr (mb,
-                            any._tao_byte_order ());
-
-          CORBA::ULong length;
-
-          // If the any is a sequence, first 4 bytes of cdr hold the
-          // length.
-          cdr.read_ulong (length);
-
-          // Resize the array.
-          this->da_members_.size (length);
-
-          // Get the type of the sequence elments.
-          CORBA::TypeCode_var field_tc =
-            this->get_element_type (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          for (CORBA::ULong i = 0; i < length; i++)
-            {
-              // This Any constructor is a TAO extension.
-              CORBA::Any field_any (field_tc.in (),
-                                   0,
-                                   cdr.byte_order (),
-                                   cdr.start ());
-
-              // This recursive step will call the correct constructor
-              // based on the type of field_any.
-              this->da_members_[i] =
-                TAO_DynAnyFactory::make_dyn_any (field_any,
-                                              ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-
-              // Move to the next field in the CDR stream.
-              (void) TAO_Marshal_Object::perform_skip (field_tc.in (),
-                                                       &cdr,
-                                                       ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-            }
-        }
-      else
-        ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
+      ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
     }
-  ACE_CATCHANY
+
+  this->type_ = tc;
+
+  // Get the CDR stream of the argument.
+  ACE_Message_Block *mb = any._tao_get_cdr ();
+
+  TAO_InputCDR cdr (mb,
+                    any._tao_byte_order ());
+
+  CORBA::ULong length;
+
+  // If the any is a sequence, first 4 bytes of cdr hold the
+  // length.
+  cdr.read_ulong (length);
+
+  // Resize the array.
+  this->da_members_.size (length);
+
+  // Get the type of the sequence elments.
+  CORBA::TypeCode_var field_tc =
+    this->get_element_type (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  for (CORBA::ULong i = 0; i < length; i++)
     {
+      // This Any constructor is a TAO extension.
+      CORBA::Any field_any (field_tc.in (),
+                            0,
+                            cdr.byte_order (),
+                            cdr.start ());
+
+      // This recursive step will call the correct constructor
+      // based on the type of field_any.
+      this->da_members_[i] =
+        TAO_DynAnyFactory::make_dyn_any (field_any,
+                                         ACE_TRY_ENV);
+      ACE_CHECK;
+
+      // Move to the next field in the CDR stream.
+      (void) TAO_Marshal_Object::perform_skip (field_tc.in (),
+                                               &cdr,
+                                               ACE_TRY_ENV);
+      ACE_CHECK;
     }
-  ACE_ENDTRY;
 }
-
-// Can't set the length from just the typecode, so we'll
-// do it upon initialization.
 
 void
 TAO_DynSequence_i::init (CORBA_TypeCode_ptr tc,
                          CORBA::Environment &ACE_TRY_ENV)
 {
+  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc,
+                                                   ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (kind != CORBA::tk_sequence)
+    {
+      ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
+    }
+
   this->type_ = CORBA::TypeCode::_duplicate (tc);
   this->current_index_ = 0;
-  ACE_TRY
-    {
-      // Need to check if called by user.
-      int tk = TAO_DynAnyFactory::unalias (tc,
-                                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      if (tk != CORBA::tk_sequence)
-        ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
-    }
-  ACE_CATCHANY
-    {
-      // Do nothing
-    }
-  ACE_ENDTRY;
 }
 
 // ****************************************************************
 
 TAO_DynSequence_i *
 TAO_DynSequence_i::_narrow (CORBA::Object_ptr obj,
-                       CORBA::Environment &)
+                            CORBA::Environment &)
 {
   if (CORBA::is_nil (obj))
     return 0;
