@@ -1,3 +1,9 @@
+Sun Nov 28 18:08:45 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* docs/tutorials/Quoter/AMI/index.html: Changed the backgrounds
+	  for the tutorial pages so they are white.  Also, changed the use
+ 	  of <h1> to <h3>, which is easier to read.
+
 Sun Nov 28 17:26:54 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* configure.in:
