@@ -1,3 +1,19 @@
+Sat Apr 12 12:36:08 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* CIDLC/parser_examples/cidl/cidl.vcproj:
+	* CIDLC/parser_examples/idl2/idl2.vcproj:
+	* CIDLC/parser_examples/idl3/idl3.vcproj: Changed the extra
+	  include paths from:
+
+	    ..,../spirit-1.3.0,../spirit-1.3.0/miniboost
+
+	  to:
+
+	    ..,$(SPIRIT_DIR),$(SPIRIT_DIR)/miniboost
+
+	  to be consistent with the MPC files and to decouple Spirit from
+	  CIAO's directory strucutre.
+
 Sat Apr 12 10:48:13 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/templates/CIAO_Glue_Session_Template.cpp:
