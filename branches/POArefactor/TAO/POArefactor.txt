@@ -1,3 +1,14 @@
+Fri Oct  8 08:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA_Current.{h,cpp,inl}:
+        * tao/PortableServer/Object_Adapter.{h,cpp,inl}:
+          Renamed TAO_POA_Current to TAO::Portable_Server::POA_Current and
+          moved it to its own file
+
+        * tao/PortableServer/PortableServer_ORBInitializer.cpp:
+        * tao/RTPortableServer/RT_Object_Adapter_Factory.cpp:
+          Updated because of change above
+
 Fri Oct  8 08:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA_Current_Impl.{h,cpp,inl}:
