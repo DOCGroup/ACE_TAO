@@ -49,4 +49,24 @@ interface foostep
   foo::date getDate ();
 };
 
+// Only operations or attributes should cause a clash
+// in this type of situation.
+interface mother
+{
+  struct member
+    {
+      long val;
+    };
+};
 
+interface father
+{
+  struct member
+    {
+      short ident;
+    };
+};
+
+interface child : mother, father
+{
+};
