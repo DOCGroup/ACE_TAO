@@ -1,3 +1,26 @@
+Thu Jun 24 17:13:20 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* CIDLC/ServantHeaderGenerator.cpp:
+	* CIDLC/ServantSourceGenerator.cpp:
+
+	  Reverted changes to 
+
+	  "Fri Jun  4 18:16:47 2004  Jeff Parsons
+	  <j.parsons@vanderbilt.edu>"  to get things going on VC6 builds. 
+
+	  Added changes to ensure that there is a gap between "<" brackets
+	  for templates and the scoping operator "::" Thanks to Ed
+	  Mulholland for reporting the problem. 
+	  
+	* DnC/ciao/Servant_Impl_T.cpp:
+	* DnC/ciao/Servant_Impl_T.h:
+	* ciao/Servant_Impl_T.cpp:
+	* ciao/Servant_Impl_T.h:
+
+	  Do not use traits as template parameters. VC6 cannot just handle
+	  all this. Thanks to Theckla Louchios <theckla.louchios@lmco.com>
+	  for reporting the problem.
+
 Thu Jun 24 16:40:53 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/RepositoryManager/RepositoryManager.mpc:

@@ -7,9 +7,12 @@
 
 namespace CIAO
 {
-  template <typename SKEL, typename EXEC, typename CONTEXT>
-  Servant_Impl<SKEL, EXEC, CONTEXT>::Servant_Impl (
-      typename EXEC::_ptr_type exe, 
+  template <typename BASE_SKEL, 
+            typename EXEC, 
+            typename EXEC_VAR, 
+            typename CONTEXT>
+  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::Servant_Impl (
+      EXEC * exe, 
       Session_Container * c
     )
     : Servant_Impl_Base (c),
@@ -17,24 +20,31 @@ namespace CIAO
   {
   }
   
-  template <typename SKEL, typename EXEC, typename CONTEXT>
-  Servant_Impl<SKEL, EXEC, CONTEXT>::~Servant_Impl (void)
+  template <typename BASE_SKEL, 
+            typename EXEC, 
+            typename EXEC_VAR, 
+            typename CONTEXT>
+  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::~Servant_Impl (void)
   {
   }
   
-  template <typename SKEL, typename EXEC, typename CONTEXT>
+  template <typename BASE_SKEL, 
+            typename EXEC, 
+            typename EXEC_VAR, 
+            typename CONTEXT>
   ::Components::FacetDescriptions *
-  Servant_Impl<SKEL, EXEC, CONTEXT>::get_all_facets (
+  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::get_all_facets (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ::Components::FacetDescriptions *fd_ptr = 0;
-    ACE_NEW_RETURN (fd_ptr,
+    ::Components::FacetDescriptions *tmp = 0;
+    ACE_NEW_RETURN (tmp,
                     ::Components::FacetDescriptions,
                     0);
-    ::Components::FacetDescriptions_var retval = fd_ptr;
                     
+    ::Components::FacetDescriptions_var retval = tmp;
+
     retval->length (this->facet_table_.current_size ());
     CORBA::ULong i = 0;
     
@@ -49,19 +59,23 @@ namespace CIAO
     return retval._retn ();
   }
   
-  template <typename SKEL, typename EXEC, typename CONTEXT>
+  template <typename BASE_SKEL, 
+            typename EXEC, 
+            typename EXEC_VAR, 
+            typename CONTEXT>
   ::Components::ConsumerDescriptions *
-  Servant_Impl<SKEL, EXEC, CONTEXT>::get_all_consumers (
+  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::get_all_consumers (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ::Components::ConsumerDescriptions *cd_ptr = 0;
-    ACE_NEW_RETURN (cd_ptr,
+    ::Components::ConsumerDescriptions *tmp = 0;
+    ACE_NEW_RETURN (tmp,
                     ::Components::ConsumerDescriptions,
                     0);
-    ::Components::ConsumerDescriptions_var retval = cd_ptr;
                     
+    ::Components::ConsumerDescriptions_var retval = tmp;
+
     retval->length (this->consumer_table_.current_size ());
     CORBA::ULong i = 0;
     

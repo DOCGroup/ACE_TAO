@@ -338,9 +338,9 @@ namespace
   {
     AttributeEmitter (Context& c, T& scope)
       : EmitterBase (c),
-        scope_ (scope),
         write_type_name_emitter_ (c.os ()),
-        read_type_name_emitter_ (c.os ())
+        read_type_name_emitter_ (c.os ()),
+        scope_ (scope)
     {
       write_belongs_.node_traverser (write_type_name_emitter_);
       read_belongs_.node_traverser (read_type_name_emitter_);
@@ -411,8 +411,8 @@ namespace
   {
     ReadOnlyAttributeEmitter (Context& c, T& scope)
       : EmitterBase (c),
-        scope_ (scope),
-        read_type_name_emitter_ (c.os ())
+        read_type_name_emitter_ (c.os ()),
+        scope_ (scope)
     {
       read_belongs_.node_traverser (read_type_name_emitter_);
     }
@@ -459,7 +459,6 @@ namespace
     {
     }
     
-  private:
     struct FacetOperationEmitter 
       : OperationEmitter<SemanticGraph::UnconstrainedInterface>
     {
@@ -522,7 +521,6 @@ namespace
       }
     };
     
-  public:
     virtual void
     traverse (UnconstrainedInterface& i)
     {
@@ -756,7 +754,7 @@ namespace
            
         os << "CORBA::ULong i = 0;" << endl;
         
-        os << "for (ACE_Active_Map_Manager< ";
+        os << "for (ACE_Active_Map_Manager< " << endl;
            
         Traversal::MultiUserData::belongs (u, belongs_);
         
@@ -765,7 +763,7 @@ namespace
            << "     iter != this->ciao_uses_" << u.name () << "_.end ();"
            << "     ++iter)" << endl
            << "{"
-           << "ACE_Active_Map_Manager< ";
+           << "ACE_Active_Map_Manager< " << endl;
 
         Traversal::MultiUserData::belongs (u, belongs_);
         
@@ -2243,6 +2241,8 @@ namespace
          << "      POA_" << stripped << "," << endl
          << "      " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "," << endl
+         << "      " << t.scoped_name ().scope_name () << "::CCM_"
+         << t.name () << "_var," << endl
          << "      " << t.name () << "_Context" << endl
          << "    " << "> (exe, c)" << endl
          << "{"
