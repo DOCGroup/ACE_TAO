@@ -1,16 +1,30 @@
+Thu Jul  8 00:23:02 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Malloc_T.cpp: Updated all the methods that check 
+	  cp_ptr_ to return immediately if it's 0.  Thanks to Dieter for
+ 	  suggesting this.
+
+	* ace/Malloc.cpp (dump): Added a cast to trigger operator void
+ 	  * for freep_ (which may be a smart pointer in some
+ 	  configurations).
+
+	* ace/Based_Pointer_Repository: Revised the implementation of
+	  this class to use the "Cheshire-Cat" technique to hide the
+ 	  implementation to avoid circular #include dependencies.
+
+	* ace/Token.h (ACE_Token): Clarified that the timeouts are in
+	  "absolute" time, not relative time.  Thanks to Everett Anderson
+ 	  <eea1@cs.wustl.edu> for reporting this.
+
+	* ace/config-win32-borland.h: Only enable 
+	  ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION if we're running on
+ 	  older versions of Borland.  Thanks to Christopher Kohlhoff
+ 	  <chris@kohlhoff.com> for reporting this.
+
 Wed Jul 07 22:44:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Recursive_Mutex_Test.cpp (main): added comment
           explaining why the stack size is now set.
-
-Wed Jul  7 22:01:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ace/config-win32-borland.h: Only enable
-          ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION if we're running on
-          older versions of Borland.  Thanks to Christopher Kohlhoff
-          <chris@kohlhoff.com> for reporting this.
-
-Wed Jul 07 21:37:33 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/test_config.h: removed special ACE_MAX_PROCESSES
           and ACE_MAX_THREADS values for LynxOS, because most
