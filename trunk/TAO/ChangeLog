@@ -1,3 +1,13 @@
+Wed May 07 11:36:43 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * orbsvcs/LoadBalancer/LoadManager.bor:
+        * orbsvcs/LoadBalancer/LoadMonitor.bor:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.bor:
+        * tests/Bug_1020_Regression/client.bor:
+        * tests/Bug_1020_Regression/server.bor:
+
+          Borland TAO_Valuetype build errors.
+
 Wed May 07 10:34:43 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * docs/tutorials/Quoter/AMI/client.dsp:
