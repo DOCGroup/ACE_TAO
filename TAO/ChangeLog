@@ -1,3 +1,26 @@
+Sun Feb 29 10:34:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/Advanced/ch_18/Makefile:
+	* examples/Callback_Quoter/Makefile:
+	* examples/Event_Comm/Makefile:
+	* examples/Logging/Makefile:
+	* examples/Persistent_Grid/Makefile:
+	* examples/Simple/bank/Makefile:
+	* examples/Simple/echo/Makefile:
+	* examples/Simple/grid/Makefile:
+	* examples/Simple/time/Makefile:
+	* examples/Simple/time-date/Makefile:
+	* examples/Simulator/Event_Supplier/Makefile:
+	* examples/ior_corbaloc/Makefile:
+	* orbsvcs/Dump_Schedule/Makefile:
+	* orbsvcs/Time_Service/Makefile:
+
+	  All these Makefiles were busted. They don't build in our daily
+	  builds. The check for ORBSVCS_COMPONENTS was done in the wrong
+	  place. I remember Thomas Lockhart mentioning about some of these
+	  things. I think he had caught all of this already. 
+	
+
 Sun Feb 29 08:40:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/Makefile*:

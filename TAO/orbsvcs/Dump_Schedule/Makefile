@@ -12,13 +12,6 @@ DUMP_OBJS = $(DUMP_SRCS:.cpp=.o)
 
 BIN2 = Dump_Schedule
 
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (RTSched,$(findstring RTSched,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
-endif # Sched
-
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
@@ -26,6 +19,12 @@ endif # Sched
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (RTSched,$(findstring RTSched,$(TAO_ORBSVCS)))
+  BIN = $(BIN2)
+endif # Sched
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 #include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU

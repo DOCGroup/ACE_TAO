@@ -20,12 +20,6 @@ LDLIBS = -lTAO_Messaging -lTAO_RTOLDEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_CosN
 
 BIN2 = Event_Sup Logging_Sup DualEC_Sup Event_Con
 
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (RTOLDEvent,$(findstring RTOLDEvent,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
-endif # RTOLDEvent
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -34,6 +28,12 @@ endif # RTOLDEvent
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (RTOLDEvent,$(findstring RTOLDEvent,$(TAO_ORBSVCS)))
+  BIN = $(BIN2)
+endif # RTOLDEvent
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
