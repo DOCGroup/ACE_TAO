@@ -27,7 +27,7 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/RequestInfo_Util.h"
-#include "tao/ClientRequestInfo.h"
+#include "tao/ClientRequestInfo_i.h"
 #include "tao/ClientInterceptorAdapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
@@ -224,27 +224,27 @@ ImplementationRepository::ServerObject_out::operator-> (void)
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-class TAO_ClientRequestInfo_ImplementationRepository_ServerObject_ping : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_ImplementationRepository_ServerObject_ping : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_ImplementationRepository_ServerObject_ping (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      TAO_ENV_ARG_DECL);
 
 
   virtual Dynamic::ParameterList * arguments (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Dynamic::ExceptionList * exceptions (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Any * result (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -260,7 +260,7 @@ TAO_ClientRequestInfo_ImplementationRepository_ServerObject_ping::TAO_ClientRequ
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -301,27 +301,27 @@ TAO_ClientRequestInfo_ImplementationRepository_ServerObject_ping::result (TAO_EN
   return result_any;
 }
 
-class TAO_ClientRequestInfo_ImplementationRepository_ServerObject_shutdown : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_ImplementationRepository_ServerObject_shutdown : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_ImplementationRepository_ServerObject_shutdown (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      TAO_ENV_ARG_DECL);
 
 
   virtual Dynamic::ParameterList * arguments (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Dynamic::ExceptionList * exceptions (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Any * result (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -337,7 +337,7 @@ TAO_ClientRequestInfo_ImplementationRepository_ServerObject_shutdown::TAO_Client
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -2218,28 +2218,28 @@ ImplementationRepository::Administration_out::operator-> (void)
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-class TAO_ClientRequestInfo_ImplementationRepository_Administration_activate_server : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_ImplementationRepository_Administration_activate_server : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_ImplementationRepository_Administration_activate_server (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
       const char * server
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      TAO_ENV_ARG_DECL);
 
 
   virtual Dynamic::ParameterList * arguments (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Dynamic::ExceptionList * exceptions (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Any * result (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -2257,7 +2257,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_activate_server::T
     const char * server
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     server_ (server)
 {}
 
@@ -2324,7 +2324,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_activate_server::r
   return result_any;
 }
 
-class TAO_ClientRequestInfo_ImplementationRepository_Administration_register_server : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_ImplementationRepository_Administration_register_server : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_ImplementationRepository_Administration_register_server (
@@ -2332,21 +2332,21 @@ public:
       CORBA::Object_ptr _tao_target,
       const char * server,
       const ImplementationRepository::StartupOptions & options
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      TAO_ENV_ARG_DECL);
 
 
   virtual Dynamic::ParameterList * arguments (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Dynamic::ExceptionList * exceptions (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Any * result (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -2366,7 +2366,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_register_server::T
     const ImplementationRepository::StartupOptions & options
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     server_ (server),
     options_ (options)
 {}
@@ -2436,7 +2436,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_register_server::r
   return result_any;
 }
 
-class TAO_ClientRequestInfo_ImplementationRepository_Administration_reregister_server : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_ImplementationRepository_Administration_reregister_server : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_ImplementationRepository_Administration_reregister_server (
@@ -2444,21 +2444,21 @@ public:
       CORBA::Object_ptr _tao_target,
       const char * server,
       const ImplementationRepository::StartupOptions & options
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      TAO_ENV_ARG_DECL);
 
 
   virtual Dynamic::ParameterList * arguments (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Dynamic::ExceptionList * exceptions (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Any * result (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -2478,7 +2478,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_reregister_server:
     const ImplementationRepository::StartupOptions & options
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     server_ (server),
     options_ (options)
 {}
@@ -2533,28 +2533,28 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_reregister_server:
   return result_any;
 }
 
-class TAO_ClientRequestInfo_ImplementationRepository_Administration_remove_server : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_ImplementationRepository_Administration_remove_server : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_ImplementationRepository_Administration_remove_server (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
       const char * server
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      TAO_ENV_ARG_DECL);
 
 
   virtual Dynamic::ParameterList * arguments (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Dynamic::ExceptionList * exceptions (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Any * result (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -2572,7 +2572,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_remove_server::TAO
     const char * server
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     server_ (server)
 {}
 
@@ -2638,28 +2638,28 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_remove_server::res
   return result_any;
 }
 
-class TAO_ClientRequestInfo_ImplementationRepository_Administration_shutdown_server : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_ImplementationRepository_Administration_shutdown_server : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_ImplementationRepository_Administration_shutdown_server (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
       const char * server
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      TAO_ENV_ARG_DECL);
 
 
   virtual Dynamic::ParameterList * arguments (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Dynamic::ExceptionList * exceptions (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Any * result (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -2677,7 +2677,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_shutdown_server::T
     const char * server
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     server_ (server)
 {}
 
@@ -2743,7 +2743,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_shutdown_server::r
   return result_any;
 }
 
-class TAO_ClientRequestInfo_ImplementationRepository_Administration_server_is_running : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_ImplementationRepository_Administration_server_is_running : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_ImplementationRepository_Administration_server_is_running (
@@ -2752,21 +2752,21 @@ public:
       const char * server,
       const char * addr,
       ImplementationRepository::ServerObject_ptr server_object
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      TAO_ENV_ARG_DECL);
 
 
   virtual Dynamic::ParameterList * arguments (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Dynamic::ExceptionList * exceptions (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Any * result (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -2790,7 +2790,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_server_is_running:
     ImplementationRepository::ServerObject_ptr server_object
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     server_ (server),
     addr_ (addr),
     server_object_ (server_object)
@@ -2874,28 +2874,28 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_server_is_running:
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_ImplementationRepository_Administration_server_is_shutting_down : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_ImplementationRepository_Administration_server_is_shutting_down : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_ImplementationRepository_Administration_server_is_shutting_down (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
       const char * server
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      TAO_ENV_ARG_DECL);
 
 
   virtual Dynamic::ParameterList * arguments (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Dynamic::ExceptionList * exceptions (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Any * result (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -2913,7 +2913,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_server_is_shutting
     const char * server
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     server_ (server)
 {}
 
@@ -2979,28 +2979,28 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_server_is_shutting
   return result_any;
 }
 
-class TAO_ClientRequestInfo_ImplementationRepository_Administration_find : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_ImplementationRepository_Administration_find : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_ImplementationRepository_Administration_find (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
       const char * server
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      TAO_ENV_ARG_DECL);
 
 
   virtual Dynamic::ParameterList * arguments (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Dynamic::ExceptionList * exceptions (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Any * result (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -3018,7 +3018,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_find::TAO_ClientRe
     const char * server
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     server_ (server)
 {}
 
@@ -3084,7 +3084,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_find::result (TAO_
   return result_any;
 }
 
-class TAO_ClientRequestInfo_ImplementationRepository_Administration_list : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_ImplementationRepository_Administration_list : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_ImplementationRepository_Administration_list (
@@ -3092,21 +3092,21 @@ public:
       CORBA::Object_ptr _tao_target,
       const CORBA::ULong & how_many
 
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      TAO_ENV_ARG_DECL);
 
 
   virtual Dynamic::ParameterList * arguments (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Dynamic::ExceptionList * exceptions (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Any * result (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -3126,7 +3126,7 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_list::TAO_ClientRe
 
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     how_many_ (how_many)
 
 {}
@@ -5800,28 +5800,28 @@ ImplementationRepository::ServerInformationIterator_out::operator-> (void)
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-class TAO_ClientRequestInfo_ImplementationRepository_ServerInformationIterator_next_n : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_ImplementationRepository_ServerInformationIterator_next_n : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_ImplementationRepository_ServerInformationIterator_next_n (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
       const CORBA::ULong & how_many
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      TAO_ENV_ARG_DECL);
 
 
   virtual Dynamic::ParameterList * arguments (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Dynamic::ExceptionList * exceptions (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Any * result (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -5841,7 +5841,7 @@ TAO_ClientRequestInfo_ImplementationRepository_ServerInformationIterator_next_n:
     const CORBA::ULong & how_many
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     how_many_ (how_many)
 {}
 
@@ -5902,27 +5902,27 @@ TAO_ClientRequestInfo_ImplementationRepository_ServerInformationIterator_next_n:
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_ImplementationRepository_ServerInformationIterator_destroy : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_ImplementationRepository_ServerInformationIterator_destroy : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_ImplementationRepository_ServerInformationIterator_destroy (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      TAO_ENV_ARG_DECL);
 
 
   virtual Dynamic::ParameterList * arguments (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Dynamic::ExceptionList * exceptions (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Any * result (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -5938,7 +5938,7 @@ TAO_ClientRequestInfo_ImplementationRepository_ServerInformationIterator_destroy
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *

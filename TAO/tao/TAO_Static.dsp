@@ -183,6 +183,10 @@ SOURCE=.\ClientRequestInfo.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ClientRequestInfo_i.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\CodecFactory.cpp
 # End Source File
 # Begin Source File
@@ -956,6 +960,10 @@ SOURCE=.\ClientInterceptorAdapter.h
 # Begin Source File
 
 SOURCE=.\ClientRequestInfo.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ClientRequestInfo_i.h
 # End Source File
 # Begin Source File
 
@@ -1780,6 +1788,10 @@ SOURCE=.\cdr.i
 # Begin Source File
 
 SOURCE=.\ClientInterceptorAdapter.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\ClientRequestInfo_i.inl
 # End Source File
 # Begin Source File
 

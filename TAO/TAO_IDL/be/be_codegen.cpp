@@ -324,7 +324,7 @@ TAO_CodeGen::start_client_stubs (const char *fname)
   this->gen_standard_include (this->client_stubs_,
                               "tao/RequestInfo_Util.h");
   this->gen_standard_include (this->client_stubs_,
-                              "tao/ClientRequestInfo.h");
+                              "tao/ClientRequestInfo_i.h");
   this->gen_standard_include (this->client_stubs_,
                               "tao/ClientInterceptorAdapter.h");
   *this->client_stubs_ << "#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n\n";

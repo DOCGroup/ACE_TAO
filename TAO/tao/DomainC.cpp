@@ -27,7 +27,7 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/RequestInfo_Util.h"
-#include "tao/ClientRequestInfo.h"
+#include "tao/ClientRequestInfo_i.h"
 #include "tao/ClientInterceptorAdapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
@@ -271,28 +271,28 @@ CORBA_DomainManager_out::operator-> (void)
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-class TAO_ClientRequestInfo_CORBA_DomainManager_get_domain_policy : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_DomainManager_get_domain_policy : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_DomainManager_get_domain_policy (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
       const CORBA::PolicyType & policy_type
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      TAO_ENV_ARG_DECL);
 
 
   virtual Dynamic::ParameterList * arguments (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Dynamic::ExceptionList * exceptions (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Any * result (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -312,7 +312,7 @@ TAO_ClientRequestInfo_CORBA_DomainManager_get_domain_policy::TAO_ClientRequestIn
     const CORBA::PolicyType & policy_type
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     policy_type_ (policy_type)
 {}
 
@@ -1049,7 +1049,7 @@ CORBA_ConstructionPolicy_out::operator-> (void)
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-class TAO_ClientRequestInfo_CORBA_ConstructionPolicy_make_domain_manager : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_CORBA_ConstructionPolicy_make_domain_manager : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_CORBA_ConstructionPolicy_make_domain_manager (
@@ -1057,21 +1057,21 @@ public:
       CORBA::Object_ptr _tao_target,
       CORBA_InterfaceDef_ptr object_type,
       const CORBA::Boolean & constr_policy
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      TAO_ENV_ARG_DECL);
 
 
   virtual Dynamic::ParameterList * arguments (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Dynamic::ExceptionList * exceptions (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Any * result (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      TAO_ENV_SINGLE_ARG_DECL)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -1091,7 +1091,7 @@ TAO_ClientRequestInfo_CORBA_ConstructionPolicy_make_domain_manager::TAO_ClientRe
     const CORBA::Boolean & constr_policy
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     object_type_ (object_type),
     constr_policy_ (constr_policy)
 {}

@@ -41,6 +41,10 @@
 
 #include "tao/LF_Event_Loop_Thread_Helper.h"
 
+#if (TAO_HAS_INTERCEPTORS == 1)
+#include "tao/ClientRequestInfo.h"
+#endif  /* TAO_HAS_INTERCEPTORS == 1  */
+
 #include "ace/Object_Manager.h"
 #include "ace/Env_Value_T.h"
 #include "ace/Dynamic_Service.h"
@@ -2673,7 +2677,15 @@ TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
     lane_ (0),
     ts_objects_ (),
     orb_core_ (0)
+#if TAO_HAS_INTERCEPTORS == 1
+    , pi_current_ ()
+    , client_request_info_ (0)
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 {
+#if TAO_HAS_INTERCEPTORS == 1
+  ACE_NEW (this->client_request_info_,
+           TAO_ClientRequestInfo);
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 }
 
 TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
@@ -2697,6 +2709,10 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
   if (this->input_cdr_buffer_allocator_ != 0)
     this->input_cdr_buffer_allocator_->remove ();
   delete this->input_cdr_buffer_allocator_;
+
+#if TAO_HAS_INTERCEPTORS == 1
+  CORBA::release (this->client_request_info_);
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
   //@@ This is broken on platforms that use TSS emulation since this
   //   destructor is invoked after the ORB.  Since we're under

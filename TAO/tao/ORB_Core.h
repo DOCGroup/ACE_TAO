@@ -90,6 +90,11 @@ class TAO_Delayed_Buffering_Sync_Strategy;
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
+#if TAO_HAS_INTERCEPTORS == 1
+class TAO_ClientRequestInfo;
+#endif  /* TAO_HAS_INTERCEPTORS == 1  */
+
+
 class TAO_Transport_Sync_Strategy;
 class TAO_Sync_Strategy;
 class TAO_Policy_Validator;
@@ -164,8 +169,11 @@ public:
 #if TAO_HAS_INTERCEPTORS == 1
   /// The thread-specific portion of the PICurrent object.
   TAO_PICurrent_Impl pi_current_;
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
+  /// The PortableInterceptor::ClientRequestInfo object for the
+  /// current thread.
+  TAO_ClientRequestInfo *client_request_info_;
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 };
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ClientInterceptorAdapter.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -9,6 +7,7 @@
 #endif /* defined INLINE */
 
 #include "ClientRequestInfo.h"
+#include "ClientRequestInfo_i.h"
 #include "Invocation.h"
 
 ACE_RCSID (tao,
@@ -22,18 +21,26 @@ TAO_ClientRequestInterceptor_Adapter::
 
 void
 TAO_ClientRequestInterceptor_Adapter::
-send_request (TAO_ClientRequestInfo *ri
+send_request (TAO_ClientRequestInfo_i *ri
               TAO_ENV_ARG_DECL)
 {
   // This method implements one of the "starting" client side
   // interception point.
 
-
   ACE_TRY
     {
+      // Only perform the TSS access if interceptors were registered
+      // with the ORB.
+      if (this->len_ > 0)
+        this->info_ =
+          this->invocation_->orb_core ()->
+          get_tss_resources ()->client_request_info_;
+
+      TAO_ClientRequestInfo_Guard info_guard (this->info_, ri);
+
       for (size_t i = 0 ; i < this->len_; ++i)
         {
-          this->interceptors_[i]->send_request (ri
+          this->interceptors_[i]->send_request (this->info_
                                                 TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
@@ -53,7 +60,7 @@ send_request (TAO_ClientRequestInfo *ri
 
 void
 TAO_ClientRequestInterceptor_Adapter::
-receive_reply (TAO_ClientRequestInfo *ri
+receive_reply (TAO_ClientRequestInfo_i *ri
                TAO_ENV_ARG_DECL)
 {
   // This is an "ending" interception point so we only process the
@@ -62,6 +69,8 @@ receive_reply (TAO_ClientRequestInfo *ri
   // Notice that the interceptors are processed in the opposite order
   // they were pushed onto the stack since this is an "ending"
   // interception point.
+
+  TAO_ClientRequestInfo_Guard info_guard (this->info_, ri);
 
   // Unwind the stack.
   size_t len = this->stack_size_;
@@ -74,7 +83,7 @@ receive_reply (TAO_ClientRequestInfo *ri
       --this->stack_size_;
 
       this->interceptors_[this->stack_size_]->receive_reply (
-        ri
+        this->info_
         TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
@@ -86,7 +95,7 @@ receive_reply (TAO_ClientRequestInfo *ri
 
 void
 TAO_ClientRequestInterceptor_Adapter::
-receive_exception (TAO_ClientRequestInfo *ri
+receive_exception (TAO_ClientRequestInfo_i *ri
                    TAO_ENV_ARG_DECL)
 {
   // This is an "ending" interception point so we only process the
@@ -98,6 +107,8 @@ receive_exception (TAO_ClientRequestInfo *ri
 
   ACE_TRY
     {
+      TAO_ClientRequestInfo_Guard info_guard (this->info_, ri);
+
       // Unwind the flow stack.
       size_t len = this->stack_size_;
       for (size_t i = 0; i < len; ++i)
@@ -109,7 +120,7 @@ receive_exception (TAO_ClientRequestInfo *ri
           --this->stack_size_;
 
           this->interceptors_[this->stack_size_]->receive_exception (
-            ri
+            this->info_
             TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
@@ -153,7 +164,7 @@ receive_exception (TAO_ClientRequestInfo *ri
 
 void
 TAO_ClientRequestInterceptor_Adapter::
-receive_other (TAO_ClientRequestInfo *ri
+receive_other (TAO_ClientRequestInfo_i *ri
                TAO_ENV_ARG_DECL)
 {
   // This is an "ending" interception point so we only process the
@@ -165,6 +176,8 @@ receive_other (TAO_ClientRequestInfo *ri
 
   ACE_TRY
     {
+      TAO_ClientRequestInfo_Guard info_guard (this->info_, ri);
+
       // Unwind the stack.
       size_t len = this->stack_size_;
       for (size_t i = 0; i < len; ++i)
@@ -176,7 +189,7 @@ receive_other (TAO_ClientRequestInfo *ri
           --this->stack_size_;
 
           this->interceptors_[this->stack_size_]->receive_other (
-            ri
+            this->info_
             TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
@@ -192,19 +205,20 @@ receive_other (TAO_ClientRequestInfo *ri
 
 void
 TAO_ClientRequestInterceptor_Adapter::process_forward_request (
-  TAO_ClientRequestInfo *ri,
+  TAO_ClientRequestInfo_i *ri,
   PortableInterceptor::ForwardRequest &exc
   TAO_ENV_ARG_DECL)
 {
   ri->forward_reference (exc);
 
   this->invoke_status_ =
-    this->invocation_->location_forward (exc.forward.in () TAO_ENV_ARG_PARAMETER);
+    this->invocation_->location_forward (exc.forward.in ()
+                                         TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // receive_other() is potentially invoked recursively.
   this->receive_other (ri
-                        TAO_ENV_ARG_PARAMETER);
+                       TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
