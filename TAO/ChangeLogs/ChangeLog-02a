@@ -1,3 +1,26 @@
+Sun Oct 15 00:11:07 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/Profile.h
+	* tao/Profile.cpp:
+
+	  Removed <reset_hint> and <addr_to_string> methods from
+	  TAO_Unknown_Profile since they were removed from TAO_Profile.
+
+	* tao/Connector_Registry.cpp
+	* tao/Invocation_Endpoint_Selectors.cpp:
+
+	  Added logic for handling TAO_Unknown_Profile(s), i.e., protocols
+	  the ORB does not understand, during profile selection and
+	  connection establishment.  When the ORB encounters an unknown
+	  profile, it transparently retries with the next appropriate one.
+	  (Handling unknown protocols worked in the past, but was broken
+	  with the introduction of Endpoint component to the PP framework.
+	  This change restores the functionality.)
+
+	* tao/Invocation.cpp:
+
+	  Added comment.
+
 Sat Oct 14 19:49:39 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/tests/RTCORBA/Client_Protocol/server.cpp:

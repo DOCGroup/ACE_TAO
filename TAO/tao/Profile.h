@@ -233,8 +233,6 @@ public:
   virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile);
   virtual CORBA::ULong hash (CORBA::ULong max,
                              CORBA::Environment &ACE_TRY_ENV);
-  virtual int addr_to_string(char *buffer, size_t length);
-  virtual void reset_hint (void);
   virtual IOP::TaggedProfile &create_tagged_profile (void);
 
 private:

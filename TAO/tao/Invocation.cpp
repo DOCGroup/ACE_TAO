@@ -207,6 +207,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
       if (this->transport_ != 0)
         this->transport_->idle ();
 
+      // Obtain a connection.
       int result = conn_reg->connect (this->endpoint_,
                                       this->transport_,
                                       this->max_wait_time_,
@@ -488,14 +489,14 @@ TAO_GIOP_Invocation::create_ior_info (void)
   return mprofile.get_current_handle ();
 }
 
-void 
+void
 TAO_GIOP_Invocation::add_rt_service_context (CORBA_Environment
                                              &ACE_TRY_ENV)
 {
   // RTCORBA-specific processing.
   // If invocation target supports RTCORBA::CLIENT_PROPAGATED priority
   // model, we must add IOP::RTCorbaPriority service context to the
-  // list. 
+  // list.
 
 #if (TAO_HAS_RT_CORBA == 1)
 
@@ -514,7 +515,7 @@ TAO_GIOP_Invocation::add_rt_service_context (CORBA_Environment
           TAO_OutputCDR cdr;
           if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
                == 0)
-              || (cdr << this->endpoint_selection_state_.client_priority_) 
+              || (cdr << this->endpoint_selection_state_.client_priority_)
               == 0)
             ACE_THROW (CORBA::MARSHAL ());
 
