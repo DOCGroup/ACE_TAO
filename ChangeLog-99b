@@ -1,3 +1,10 @@
+Fri Jul  9 14:02:52 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h: Re-enabled ACE_LACKS_SETSCHED for AIX 4.3.
+          The OS defs are not aligned/matched correctly with what they mean
+          in this area, but will need to wait til after ACE 5.0 is done
+          before straightening it out.
+
 Fri Jul  9 12:43:33 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Based_Pointer_Repository.cpp (unbind): Fixed a
