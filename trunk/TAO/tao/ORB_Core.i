@@ -1,7 +1,6 @@
 // -*- C++ -*-
-//
-// $Id$
 
+// $Id$
 
 ACE_INLINE CORBA::ULong
 TAO_ORB_Core::_incr_refcnt (void)
@@ -131,6 +130,12 @@ ACE_INLINE TAO_Acceptor_Registry *
 TAO_ORB_Core::acceptor_registry (void)
 {
   return TAO_OC_RETRIEVE (acceptor_registry);
+}
+
+ACE_INLINE TAO_Parser_Registry *
+TAO_ORB_Core::parser_registry (void)
+{
+  return &this->parser_registry_;
 }
 
 #undef TAO_OC_RETRIEVE
@@ -514,4 +519,3 @@ TAO_ORB_Core_Auto_Ptr::operator *() const
   // @@ Potential problem if this->p_ is zero!
   return *this->get ();
 }
-
