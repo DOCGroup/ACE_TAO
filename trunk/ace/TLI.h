@@ -35,6 +35,14 @@
 #define ACE_TLI_TCP_DEVICE "/dev/tcp"
 #endif
 
+// There's not a universal device name for XTI/ATM devices.  If the platform
+// needs something other than /dev/xtisvc0, it needs to be set up in the
+// config.h file as ACE_XTI_ATM_DEVICE. This may be FORE vendor specific and
+// there may be no good default.
+#ifndef ACE_XTI_ATM_DEVICE
+#define ACE_XTI_ATM_DEVICE "/dev/xtisvc0"
+#endif
+
 class ACE_Export ACE_TLI : public ACE_IPC_SAP
 {
   // = TITLE
