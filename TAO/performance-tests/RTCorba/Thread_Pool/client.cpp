@@ -13,6 +13,7 @@
 #include "testC.h"
 #include "tests/RTCORBA/common_args.cpp"
 #include "tests/RTCORBA/check_supported_priorities.cpp"
+#include "ace/Event.h"
 
 ACE_RCSID(Thread_Pool, client, "$Id$")
 

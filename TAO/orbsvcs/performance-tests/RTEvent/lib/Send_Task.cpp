@@ -8,6 +8,7 @@
 
 #include "Send_Task.h"
 #include "orbsvcs/Time_Utilities.h"
+#include "ace/Barrier.h"
 
 ACE_RCSID(TAO_PERF_RTEC, Send_Task, "$Id$")
 

@@ -33,6 +33,7 @@
 #include "ace/OS.h"
 #include "ace/ACE.h"
 #include "ace/SString.h"
+#include "ace/Null_Mutex.h"
 
 class AccountManager_i : public POA_Bank::AccountManager
 {

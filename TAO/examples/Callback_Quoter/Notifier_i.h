@@ -31,6 +31,7 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Containers.h"
 #include "ace/SString.h"
+#include "ace/Null_Mutex.h"
 
 class Notifier_i : public POA_Notifier
 {

@@ -4,6 +4,7 @@ project(*Server): taoserver, orbsvcsexe, iormanip, ftorb {
 
   Source_Files {
     test_i.cpp
+    testC.cpp
     testS.cpp
     Server_ORBInitializer.cpp
     Server_Request_Interceptor.cpp
