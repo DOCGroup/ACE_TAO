@@ -13,7 +13,7 @@ TAO_Offer_Importer::TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if,
 
 void
 TAO_Offer_Importer::perform_queries (CORBA::Environment& TAO_IN_ENV)
-  TAO_THROW_SPEC ((CORBA::SystemException,
+  ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
                    CosTrading::IllegalConstraint,
@@ -40,7 +40,7 @@ TAO_Offer_Importer::perform_queries (CORBA::Environment& TAO_IN_ENV)
 
 void
 TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& TAO_IN_ENV)
-  TAO_THROW_SPEC ((CORBA::SystemException,
+  ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
                    CosTrading::IllegalConstraint,
@@ -139,7 +139,7 @@ void
 TAO_Offer_Importer::
 perform_queries_with_policies (const TAO_Policy_Creator& policies,
                                CORBA::Environment& TAO_IN_ENV)
-  TAO_THROW_SPEC ((CORBA::SystemException,
+  ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
                    CosTrading::IllegalConstraint,
@@ -229,7 +229,7 @@ void
 TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
                                      CosTrading::OfferIterator_ptr offer_iterator,
                                      CORBA::Environment& TAO_IN_ENV) const
-  TAO_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TRY
     {
