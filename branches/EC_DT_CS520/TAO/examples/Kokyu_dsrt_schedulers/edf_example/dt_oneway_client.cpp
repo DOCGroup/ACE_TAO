@@ -20,8 +20,8 @@ int do_shutdown = 1;
 int enable_dynamic_scheduling = 1;
 int enable_yield = 1;
 int niteration = 1000;
-int workload = 30;
-int period = 50;
+int workload = 1;
+int period = 2;
  
 class Worker : public ACE_Task_Base
 {
@@ -62,7 +62,7 @@ private:
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "ks:n:w:p");
+  ACE_Get_Opt get_opts (argc, argv, "k:sn:w:p:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -248,7 +248,7 @@ main (int argc, char *argv[])
                       scheduler,
                       deadline,
                       importance,
-                      30,
+                      workload,
 		      1);
 
       if (worker1.activate (flags, 1, 0, max_prio) != 0)
@@ -391,8 +391,6 @@ Worker::svc (void)
 
   ACE_DEBUG ((LM_DEBUG, "(%t|%T) worker activated with prio %d\n", prio));
 
-  for (int i=0; i<niteration; i++) 
-  {
   if (enable_dynamic_scheduling)
     {
       EDF_Scheduling::SchedulingParameter sched_param;
@@ -419,6 +417,8 @@ Worker::svc (void)
       ACE_DEBUG ((LM_DEBUG, "(%t|%T):after begin_sched_segment\n"));
     }
 
+  for(int i=0; i<niteration; i++) 
+  {
   /* MEASURE: One way call start */
   DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 1, 0, NULL);
   ACE_DEBUG ((LM_DEBUG, "(%t|%T):about to make one way call\n"));
@@ -430,15 +430,14 @@ Worker::svc (void)
   /* MEASURE: One way call done */
   DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, m_id, 0, NULL);
   ACE_DEBUG ((LM_DEBUG, "(%t|%T):one way call done\n"));
-
+  
+  ACE_OS::sleep(period);
+  }
   if (enable_dynamic_scheduling)
     {
       scheduler_current_->end_scheduling_segment (name);
       ACE_CHECK_RETURN (-1);
     }
-
-  ACE_OS::sleep(period);
-  }
 
   ACE_DEBUG ((LM_DEBUG, "client worker thread (%t) done\n"));
 
