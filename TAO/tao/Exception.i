@@ -62,6 +62,7 @@ CORBA_Environment::clear (void)
     {
       this->exception_->Release ();
     }
+  this->exception_ = 0;
 }
 
 ACE_INLINE
