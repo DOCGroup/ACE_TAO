@@ -19,7 +19,7 @@ LIBFILES = \
         $(ACE_LIB) \
         $(ACE_SSL_LIB) \
         $(SSL_LIB) \
-        $(BINDIR)\Test_Output$(LIB_DECORATOR).lib
+        $(CORE_BINDIR)\Test_Output$(LIB_DECORATOR).lib
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
