@@ -1,3 +1,12 @@
+Thu Jun  3 10:52:18 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/ciao_deployment_stub.mpb:
+        * bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb:
+
+          Added idlfalgs+= to enable idl compiler to generate stubs and
+          skels for projects that inherit from the aforementioned mpc
+          files.
+
 Wed Jun  2 21:07:31 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/ciao_servant_dnc.mpb:
@@ -22,8 +31,8 @@ Wed Jun  2 20:42:49 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 Thu Jun 03 00:30:00 Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* ace/RW_Process_Mutex.h (ACE_RW_Process_Mutex): 
-	* ace/RW_Process_Mutex.cpp (ACE_RW_Process_Mutex): 
+	* ace/RW_Process_Mutex.h (ACE_RW_Process_Mutex):
+	* ace/RW_Process_Mutex.cpp (ACE_RW_Process_Mutex):
   	  Appended file mode to mutex constructor to solve the
  	  difficulties reported by Bae-Sik Chon <baesikchon@yahoo.com>.
 
