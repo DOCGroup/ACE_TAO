@@ -379,7 +379,7 @@ protected:
 
 };
 
-class ACE_Export ACE_WFMO_Reactor_Notify : public ACE_Event_Handler
+class ACE_Export ACE_WFMO_Reactor_Notify : public ACE_Reactor_Notify
 {
   // = TITLE
   //     Unblock the <ACE_WFMO_Reactor> from its event loop, passing
@@ -441,6 +441,9 @@ public:
   // dispatch the <ACE_Event_Handlers> that are passed in via the
   // notify queue before breaking out of its
   // <ACE_Message_Queue::dequeue> loop.
+
+  virtual void dump (void) const;
+  // Dump the state of an object.
 
 private:
   ACE_Timer_Queue *timer_queue_;
