@@ -1,3 +1,10 @@
+Sat Mar  2 09:30:35 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Stub.cpp (sync_scope): Do not check for policies at other
+	  levels if the policy has been cached in the stubs. This helps
+	  to fix a problem, which prevented applications to set policies
+	  at the object level.
+
 Sat Mar  2 13:30:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Buffered_Oneways/Buffered_Oneways_client.bor:
