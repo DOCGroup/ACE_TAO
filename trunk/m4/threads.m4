@@ -75,65 +75,67 @@ dnl Check if compiler accepts specific flag to enable threads
  ACE_SEARCH_LIBS(rwlock_destroy, thread,,)
 
  dnl Check for POSIX threads
- ACE_SEARCH_LIBS(pthread_create, pthread pthreads c_r gthreads,
-   [
-    ace_has_pthreads=yes
-    AC_DEFINE(ACE_HAS_PTHREADS)
-   ],
-   [
-    dnl Check if platform provides pthreads backward compatibility macros
-    dnl (Some platforms may define some pthread functions such as
-    dnl  pthread_create() as macros when using a later implementation of
-    dnl  pthreads.  For example, Digital Unix 4.0 #defines a pthread_create
-    dnl  macro as "__pthread_create" to allow the new implemenation of
-    dnl  pthread_create() to co-exist with the old implementation of
-    dnl  of pthread_create().)
+ dnl
+ dnl Check if platform provides pthreads backward compatibility macros
+ dnl (Some platforms may define some pthread functions such as
+ dnl  pthread_create() as macros when using a later implementation of
+ dnl  pthreads.  For example, Digital Unix 4.0 #defines a pthread_create
+ dnl  macro as "__pthread_create" to allow the new implemenation of
+ dnl  pthread_create() to co-exist with the old implementation of
+ dnl  of pthread_create().)
 
-    ACE_CACHE_CHECK(for pthreads backward compatibility macros,
-      ace_cv_lib_pthread_compat_macros,
+ ACE_CACHE_CHECK(for pthreads backward compatibility macros,
+   ace_cv_lib_pthread_compat_macros,
+   [
+    AC_EGREP_CPP(ACE_PTHREAD_MACROS,
       [
-       AC_EGREP_CPP(ACE_PTHREAD_MACROS,
-         [
 #include <pthread.h>
 
 #if defined (pthread_create)
   ACE_PTHREAD_MACROS
 #endif
-         ],
-         [
-          ace_cv_lib_pthread_compat_macros=yes
-         ],
-         [
-          ace_cv_lib_pthread_compat_macros=no
-         ])
       ],
       [
-       dnl Check if pthread function names are mangled (e.g. DU 4.0)
-       dnl to maintain older Pthread Draft compatibility.
-       ACE_CHECK_FUNC(pthread_create, pthread.h,
+       ace_cv_lib_pthread_compat_macros=yes
+      ],
+      [
+       ace_cv_lib_pthread_compat_macros=no
+      ])
+   ],
+   [
+    dnl Check if pthread function names are mangled (e.g. DU 4.0)
+    dnl to maintain older Pthread Draft compatibility.
+    ACE_CHECK_FUNC(pthread_create, pthread.h,
+      [
+       ace_has_pthreads=yes
+       AC_DEFINE(ACE_HAS_PTHREADS)
+      ],
+      [
+       ACE_CHECK_LIB(pthread, pthread_create, pthread.h, dnl
          [
           ace_has_pthreads=yes
+          dnl Since we AC_DEFINE(ACE_HAS_PTHREADS), the default behavior
+          dnl of adding "-lpthread" to the "LIBS" variable no longer
+          dnl works, so we have to add it manually.
+          LIBS="$LIBS -lpthread"
           AC_DEFINE(ACE_HAS_PTHREADS)
          ],
          [
-          ACE_CHECK_LIB(pthread, pthread_create, pthread.h, dnl
-            [
-             ace_has_pthreads=yes
-             dnl Since we AC_DEFINE(ACE_HAS_PTHREADS), the default behavior
-             dnl of adding "-lpthread" to the "LIBS" variable no longer
-             dnl works, so we have to add it manually.
-             LIBS="$LIBS -lpthread"
-             AC_DEFINE(ACE_HAS_PTHREADS)
-            ],
-            [
-             ace_has_pthreads=yes
-            ])
+          ace_has_pthreads=yes
          ])
+      ])
+   ],
+   [
+    ACE_SEARCH_LIBS(pthread_create, pthread pthreads c_r gthreads,
+      [
+       ace_has_pthreads=yes
+       AC_DEFINE(ACE_HAS_PTHREADS)
       ],
       [
        ace_has_pthreads=no
       ])
    ])
+
 
  dnl If we don't have any thread library, then disable threading altogether!
  if test "$ace_has_pthreads" != yes && 
@@ -170,26 +172,27 @@ thr_create();
   AC_TRY_CPP(
     [
 #include <pthread.h>
-    ], ace_header_exists=yes, ace_header_exists=no)
-
-  cat > conftest.$ac_ext <<EOF
+    ],
+    [
+     cat > conftest.$ac_ext <<EOF
 
 #include <pthread.h>
   ACE_REAL_FUNCTION pthread_create
 
 EOF
 
-  if test "$ace_header_exists" = yes; then
-    if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
-       egrep "ACE_REAL_FUNCTION" | 
-       (eval "$AWK '{print \[$]2}' > conftest.awk 2>&1"); then
-         rm -f conftest.$ac_ext
-         ace_real_function=`cat conftest.awk`
-         rm -f conftest.awk
-    fi
-  else
-    ace_real_function="pthread_create"
-  fi dnl test "$ace_header_not_exist" != yes
+     if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
+        egrep "ACE_REAL_FUNCTION" | 
+        (eval "$AWK '{print \[$]2}' > conftest.awk 2>&1"); then
+          rm -f conftest.$ac_ext
+          ace_real_function=`cat conftest.awk`
+          echo "$ace_real_function"
+          rm -f conftest.awk
+     fi
+    ],
+    [
+     ace_real_function="pthread_create"
+    ])
 
 AC_TRY_LINK(
 [
