@@ -1,3 +1,11 @@
+Thu Jun 24 07:44:07 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/IR_Helper.cpp:
+	  Fixed unused arg warnings.
+
+	* orbsvcs/tests/EC_Custom_Marshal/ECM_{Consumer,Supplier}.cpp:
+	  Fixed unused arg warnings.
+
 Thu Jun 24 06:43:00 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Reply_Dispatcher.cpp (dispatch_reply): added

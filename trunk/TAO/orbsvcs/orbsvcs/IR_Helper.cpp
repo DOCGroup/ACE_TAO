@@ -8,15 +8,17 @@
 #include "ace/Read_Buffer.h"
 
 class ServerObject_i: public POA_ImplementationRepository::ServerObject
+{
   // = TITLE
   //    IR Server Object Implementation
   //
   // = DESCRIPTION
   //    Implementation Repository uses this to communicate with the IR
   //    registered server.
-{
 public:
-  ServerObject_i (CORBA::ORB_ptr orb, int debug = 0) : orb_ (orb), debug_ (debug) {}
+  ServerObject_i (CORBA::ORB_ptr orb, int debug = 0) 
+    : orb_ (orb),
+      debug_ (debug) {}
 
   virtual void ping (CORBA::Environment &/*ACE_TRY_ENV = TAO_default_environment ()*/)
     ACE_THROW_SPEC (())
@@ -68,7 +70,8 @@ IR_Helper::IR_Helper (char *server_name,
 
       exception_message = "While narrowing ImplRepo";
       this->implrepo_ =
-        ImplementationRepository::Administration::_narrow (implrepo_object.in(), ACE_TRY_ENV);
+        ImplementationRepository::Administration::_narrow (implrepo_object.in(), 
+                                                           ACE_TRY_ENV);,
       ACE_TRY_CHECK;
 
       // Now register the Ping Object
@@ -101,7 +104,7 @@ IR_Helper::IR_Helper (char *server_name,
   ACE_ENDTRY;
 }
 
-IR_Helper::~IR_Helper ()
+IR_Helper::~IR_Helper (void)
 {
   delete this->name_;
 
@@ -125,7 +128,8 @@ IR_Helper::register_server (const char *comm_line,
                           -1);
 
       ImplementationRepository::Administration *ImplRepo =
-        ImplementationRepository::Administration::_narrow (implrepo_object.in(), ACE_TRY_ENV);
+        ImplementationRepository::Administration::_narrow (implrepo_object.in(), 
+                                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (implrepo_object.in ()))
@@ -162,14 +166,14 @@ IR_Helper::notify_startup (CORBA_Environment &ACE_TRY_ENV)
 
   TAO_Acceptor *acceptor = 0;
   TAO_AcceptorSetItor end = registry->end ();
+
   for (TAO_AcceptorSetItor i = registry->begin (); i != end; ++i)
-    {
-      if ((*i)->tag () == TAO_IOP_TAG_INTERNET_IOP)
-        {
-          acceptor = (*i);
-          break;
-        }
-    }
+    if ((*i)->tag () == TAO_IOP_TAG_INTERNET_IOP)
+      {
+        acceptor = (*i);
+        break;
+      }
+
   if (acceptor == 0)
     ACE_THROW (CORBA::NO_IMPLEMENT());
 
@@ -200,7 +204,6 @@ IR_Helper::notify_startup (CORBA_Environment &ACE_TRY_ENV)
   ACE_ENDTRY;
 }
 
-
 // Notify the IR that the server has been shut down.
 void
 IR_Helper::notify_shutdown (CORBA_Environment &ACE_TRY_ENV)
@@ -218,21 +221,22 @@ IR_Helper::notify_shutdown (CORBA_Environment &ACE_TRY_ENV)
 }
 
 void
-IR_Helper::change_object (CORBA::Object_ptr obj, CORBA_Environment &ACE_TRY_ENV)
+IR_Helper::change_object (CORBA::Object_ptr obj,
+                          CORBA_Environment &)
 {
-  if ( obj
-    && obj->_stubobj ()
-    && obj->_stubobj ()->profile_in_use ()
-    && this->implrepo_
-    && this->implrepo_->_stubobj ()
-    && this->implrepo_->_stubobj ()->profile_in_use ()  )
+  if (obj
+      && obj->_stubobj ()
+      && obj->_stubobj ()->profile_in_use ()
+      && this->implrepo_
+      && this->implrepo_->_stubobj ()
+      && this->implrepo_->_stubobj ()->profile_in_use ()  )
     {
       TAO_IIOP_Profile *implrepo_pfile =
-          ACE_dynamic_cast (TAO_IIOP_Profile *,
-                            this->implrepo_->_stubobj ()->profile_in_use ());
+        ACE_dynamic_cast (TAO_IIOP_Profile *,
+                          this->implrepo_->_stubobj ()->profile_in_use ());
       TAO_IIOP_Profile *iiop_pfile =
-          ACE_dynamic_cast (TAO_IIOP_Profile *,
-                            obj->_stubobj ()->profile_in_use ());
+        ACE_dynamic_cast (TAO_IIOP_Profile *,
+                          obj->_stubobj ()->profile_in_use ());
 
       // @@ Only same host for now
       iiop_pfile->port (implrepo_pfile->port ());
