@@ -1,7 +1,3 @@
-Mon Jul 26 12:06:20 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-
-        * ACE version 4.6.46 released.
-
 Fri Jul 23 18:20:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/config-irix6.x-sgic++-nothreads.h:
