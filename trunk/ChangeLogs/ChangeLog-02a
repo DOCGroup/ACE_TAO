@@ -1,130 +1,138 @@
+Mon Apr 10 07:30:22 2000  John Rodgers <jrrodgers@acm.org>
+
+        * ace/OS.{h,cpp},Thread_Manager.cpp (instance,~ACE_Thread_Exit):
+          added a state variable, is_constructed_, to ACE_Thread_Exit.
+          instance () sets it, ~ACE_Thread_Exit () clears it.  This
+          allows ACE::init () to be called after ACE::fini (), because
+          a new ACE_Thread_Exit instance will be created. [Bug 526]
+
 Sun Apr  9 14:16:23 2000  James CE Johnson  <jcej@mobsec.com>
 
-	* docs/tutorials/015/page01.html : Thanks to Conrad Hughes for
-	pointing out that a real implementation would compress before
-	encrypting since encrypted data shouldn't really be compressible
-	anyway.
-	
-	* docs/tutorials/015/Protocol_Stream.cpp (open): Reorder the
-	module pushing so that encryption happens before compression.
-	
-	* docs/tutorials/015/Crypt.cpp :
-	* docs/tutorials/015/Compressor.cpp :
- 	Add a few extra bytes when creating the new message blocks.  A
-	real implementation would probably need that.	
+        * docs/tutorials/015/page01.html : Thanks to Conrad Hughes for
+        pointing out that a real implementation would compress before
+        encrypting since encrypted data shouldn't really be compressible
+        anyway.
+
+        * docs/tutorials/015/Protocol_Stream.cpp (open): Reorder the
+        module pushing so that encryption happens before compression.
+
+        * docs/tutorials/015/Crypt.cpp :
+        * docs/tutorials/015/Compressor.cpp :
+        Add a few extra bytes when creating the new message blocks.  A
+        real implementation would probably need that.
 
 Sun Apr 09 00:04:25 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Malloc_T.cpp (remove): Removed invocation of destructor to
-	  <malloc_stats_>.  It is a member of Control_Block and does not
-	  require explicit initialization/destruction.  This was causing
-	  ACE not to compile when ACE_HAS_MALLOC_STATS was defined.
-	  Thanks to John Smyder <jsmyder@salient.com> for reporting the
-	  problem.
+        * ace/Malloc_T.cpp (remove): Removed invocation of destructor to
+          <malloc_stats_>.  It is a member of Control_Block and does not
+          require explicit initialization/destruction.  This was causing
+          ACE not to compile when ACE_HAS_MALLOC_STATS was defined.
+          Thanks to John Smyder <jsmyder@salient.com> for reporting the
+          problem.
 
-	* ace/Malloc_T.cpp (open): Removed invocation of contructor to
-	  <malloc_stats_> for the same reason.
+        * ace/Malloc_T.cpp (open): Removed invocation of contructor to
+          <malloc_stats_> for the same reason.
 
 Fri Apr 07 23:32:16 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp: Added QoS_Manager.* into project files.
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp: Added QoS_Manager.* into project files.
 
 Thu Apr  6 07:29:48 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Token.h (ACE_Token): Clarified the recursive semantics of
- 	  ACE_Token.  Thanks to Antti Valtokari
- 	  <Antti.Valtokari@iocore.fi> for reporting this.
+        * ace/Token.h (ACE_Token): Clarified the recursive semantics of
+          ACE_Token.  Thanks to Antti Valtokari
+          <Antti.Valtokari@iocore.fi> for reporting this.
 
 Wed Apr  5 22:59:58 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-sunos5.5.h: Moved the ACE_HAS_USING_KEYWORD into
-	  the part of this header file that's enabled when
- 	  __SUNPRO_CC_COMPAT >= 5 is defined.  Thanks to Susan Liebeskind
- 	  <susan.liebeskind@gtri.gatech.edu> for reporting this.
+        * ace/config-sunos5.5.h: Moved the ACE_HAS_USING_KEYWORD into
+          the part of this header file that's enabled when
+          __SUNPRO_CC_COMPAT >= 5 is defined.  Thanks to Susan Liebeskind
+          <susan.liebeskind@gtri.gatech.edu> for reporting this.
 
 Tue Apr  4 23:50:02 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/ACE.cpp (sock_error): Changed "int error" to "ssize_t error"
-	  to be consistent...
+        * ace/ACE.cpp (sock_error): Changed "int error" to "ssize_t error"
+          to be consistent...
 
 Tue Apr  4 20:19:36 2000  <schmidt@rumba.ece.uci.edu>
 
-	* ace/Acceptor.cpp: Modified the implementation of
-	  ACE_Acceptor::open() and ACE_Acceptor::accept_svc_handler() so
-	  that the peer acceptor's handle is set into non-blocking mode.
-	  This is a safe-guard against the race condition that can
-	  otherwise occur between the time when <select> indicates that a
-	  passive-mode socket handle is "ready" and when we call <accept>.
-	  During this interval, the client can shutdown the connection, in
-	  which case, the <accept> call can hang!
+        * ace/Acceptor.cpp: Modified the implementation of
+          ACE_Acceptor::open() and ACE_Acceptor::accept_svc_handler() so
+          that the peer acceptor's handle is set into non-blocking mode.
+          This is a safe-guard against the race condition that can
+          otherwise occur between the time when <select> indicates that a
+          passive-mode socket handle is "ready" and when we call <accept>.
+          During this interval, the client can shutdown the connection, in
+          which case, the <accept> call can hang!
 
 Mon Apr  3 11:09:26 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ace/QoS_Manager.cpp: Added the #if defined
-	  (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION).
+        * ace/QoS_Manager.cpp: Added the #if defined
+          (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION).
 
 Mon Apr  3 08:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* bin/auto_compile: Added <smart_proxies> flag.
+        * bin/auto_compile: Added <smart_proxies> flag.
 
 Mon Apr  3 04:07:47 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-freebsd-pthread.h: Added a #define for
-	  ACE_HAS_ALT_CUSERID so that ACE will build on recent FreeBSD
- 	  releases.  Thanks to Raymond Wiker <raymond@orion.no> for
- 	  reporting this.
+        * ace/config-freebsd-pthread.h: Added a #define for
+          ACE_HAS_ALT_CUSERID so that ACE will build on recent FreeBSD
+          releases.  Thanks to Raymond Wiker <raymond@orion.no> for
+          reporting this.
 
 Sun Apr  2 21:32:20 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ace/SOCK.cpp: removed the extra #ifdef
-	  ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
-	* ace/QoS_Manager.{h,cpp}: removed the obsolete #pragma once.
-	* ace/QoS_Session_Impl.i: fully qualified the ACE_End_Point_Type.
-	* ace/Makefile: Added the QoS_Manager.
+        * ace/SOCK.cpp: removed the extra #ifdef
+          ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
+        * ace/QoS_Manager.{h,cpp}: removed the obsolete #pragma once.
+        * ace/QoS_Session_Impl.i: fully qualified the ACE_End_Point_Type.
+        * ace/Makefile: Added the QoS_Manager.
 
 Sun Apr  2 20:19:36 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ace/QoS_Manager.{h,cpp}: Added these two files. They define
-	  a QoS Manager that manages the QoS for a socket. This was being
-	  done earlier by the ACE_SOCK classes.
+        * ace/QoS_Manager.{h,cpp}: Added these two files. They define
+          a QoS Manager that manages the QoS for a socket. This was being
+          done earlier by the ACE_SOCK classes.
 
-	  Changed the following files to accomodate the new classes added
-	  above.
-	* ace/SOCK.{h,cpp}:  Removed the heavy container from ACE_SOCK.
-	* ace/SOCK_Dgram_Mcast.{h,cpp}: Changed the QoS management from
-	  ACE_SOCK to ACE_QoS_Manager.
+          Changed the following files to accomodate the new classes added
+          above.
+        * ace/SOCK.{h,cpp}:  Removed the heavy container from ACE_SOCK.
+        * ace/SOCK_Dgram_Mcast.{h,cpp}: Changed the QoS management from
+          ACE_SOCK to ACE_QoS_Manager.
 
-	* ace/QoS_Session_Impl.{h,cpp}:
-	* ace/QoS_Session.h: Changed the interface to use the
-	  ACE_QoS_Manager class
+        * ace/QoS_Session_Impl.{h,cpp}:
+        * ace/QoS_Session.h: Changed the interface to use the
+          ACE_QoS_Manager class
 
 Sun Apr  2 05:36:04 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Containers_T.cpp: There were a number of incorrect uses
-	  of ACE_NEW_MALLOC that I replaced with ACE_ALLOCATOR.  Thanks to
- 	  Francisco Bravo <emefjbm@madrid.es.eu.ericsson.se> and Chris
- 	  Uzdavinis <chris@atdesk.com> for clarifying the error of my
- 	  ways!
+        * ace/Containers_T.cpp: There were a number of incorrect uses
+          of ACE_NEW_MALLOC that I replaced with ACE_ALLOCATOR.  Thanks to
+          Francisco Bravo <emefjbm@madrid.es.eu.ericsson.se> and Chris
+          Uzdavinis <chris@atdesk.com> for clarifying the error of my
+          ways!
 
 Thu Mar 30 19:25:14 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/WFMO_Reactor.cpp (suspend_handler_i and resume_handler_i):
+        * ace/WFMO_Reactor.cpp (suspend_handler_i and resume_handler_i):
 
-	  If a handle is resumed, then:
+          If a handle is resumed, then:
 
-	  - check current handles to undo suspension (*)
-	  - check suspended handles to resume
-	  - check to_be_added handles to undo suspension
+          - check current handles to undo suspension (*)
+          - check suspended handles to resume
+          - check to_be_added handles to undo suspension
 
-	  If a handle is suspended, then:
+          If a handle is suspended, then:
 
-	  - check current handles to suspend
-	  - check suspended handles to undo resumption (*)
-	  - check to_be_added handles to suspend
+          - check current handles to suspend
+          - check suspended handles to undo resumption (*)
+          - check to_be_added handles to suspend
 
-	  (*) were missing.  Thanks to Ji Wuliu <jiwuliu0952_cn@sina.com>
-	  for pointing this out!
+          (*) were missing.  Thanks to Ji Wuliu <jiwuliu0952_cn@sina.com>
+          for pointing this out!
 
 Thu Mar 30 15:54:23 2000  Steve Huston  <shuston@riverace.com>
 
@@ -136,68 +144,68 @@ Thu Mar 30 15:54:23 2000  Steve Huston  <shuston@riverace.com>
 
 Wed Mar 29 00:01:39 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* netsvcs/lib/Client_Logging_Handler.cpp (handle_input):
-	  ACE_OS::closesocket() was being used to do some very "low-level"
- 	  closing of handles without assigning a handle to
- 	  ACE_INVALID_HANDLE.  This was causing problems.  Therefore, we
- 	  now try to use this->peer ().close () if it's different from
- 	  handle.  Thanks to Alexander Dergatch <dergy@websci.ru> for
- 	  reporting this.  This fixes [BUGID 520].
+        * netsvcs/lib/Client_Logging_Handler.cpp (handle_input):
+          ACE_OS::closesocket() was being used to do some very "low-level"
+          closing of handles without assigning a handle to
+          ACE_INVALID_HANDLE.  This was causing problems.  Therefore, we
+          now try to use this->peer ().close () if it's different from
+          handle.  Thanks to Alexander Dergatch <dergy@websci.ru> for
+          reporting this.  This fixes [BUGID 520].
 
 Tue Mar 28 12:13:12 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Containers_T.h: Fixed the mismatching filename in preamble.
+        * ace/Containers_T.h: Fixed the mismatching filename in preamble.
 
 Tue Mar 28 12:06:31 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Array.h: Simply include "ace/Containers_T.h" would work.
-	  Removed all other template kludge since they should be handled
-	  in Containers_T.h.  Thanks to Airat A. Sadreev
-	  <airat@hq.tatenergo.ru> for report this problem.
+        * ace/Array.h: Simply include "ace/Containers_T.h" would work.
+          Removed all other template kludge since they should be handled
+          in Containers_T.h.  Thanks to Airat A. Sadreev
+          <airat@hq.tatenergo.ru> for report this problem.
 
 Tue Mar 28 11:56:56 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Dirent.h"
-	* ace/Dirent.cpp: The meaning of __ACE_INLINE__ is just the
-	  opposite of ACE_LACKS_INLINE_FUNCTIONS (my fault.)  Rearrange
-	  the logic for checking __ACE_INLINE__ and include "ace/Dirent.h"
-	  in Dirent.cpp.
+        * ace/Dirent.h"
+        * ace/Dirent.cpp: The meaning of __ACE_INLINE__ is just the
+          opposite of ACE_LACKS_INLINE_FUNCTIONS (my fault.)  Rearrange
+          the logic for checking __ACE_INLINE__ and include "ace/Dirent.h"
+          in Dirent.cpp.
 
 Tue Mar 28 06:00:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* Dirent.cpp,
-	* Dirent.h: Renamed ACE_LACKS_INLINE_FUNCTIONS into __ACE_INLINE__ which
-	  is the correct way of handling inlining differences.
+        * Dirent.cpp,
+        * Dirent.h: Renamed ACE_LACKS_INLINE_FUNCTIONS into __ACE_INLINE__ which
+          is the correct way of handling inlining differences.
 
-	* ace/OS.h,
-	  ace/OS.i: Win32 does not support <dirent> a set of functions to
-	  retrieve the content of a directory. However, the Win32 functions
-	  FindFirstFile and FindNextFile provide similar behavior. This change
-	  added an emulation of dirent based on these functions. Changes were
-	  made to ACE_OS::opendir, ACE_OS::readdir, and ACE_OS::closedir.
+        * ace/OS.h,
+          ace/OS.i: Win32 does not support <dirent> a set of functions to
+          retrieve the content of a directory. However, the Win32 functions
+          FindFirstFile and FindNextFile provide similar behavior. This change
+          added an emulation of dirent based on these functions. Changes were
+          made to ACE_OS::opendir, ACE_OS::readdir, and ACE_OS::closedir.
 
-	* ace/config-win32-common.h: Added the defines ACE_HAS_DIRENT,
-	  ACE_LACKS_TELLDIR, ACE_LACKS_SEEKDIR, ACE_LACKS_REWINDDIR and
-	  ACE_LACKS_READDIR_R.
-	  This was necessary to enable the above mentioned <dirent> emulation.
+        * ace/config-win32-common.h: Added the defines ACE_HAS_DIRENT,
+          ACE_LACKS_TELLDIR, ACE_LACKS_SEEKDIR, ACE_LACKS_REWINDDIR and
+          ACE_LACKS_READDIR_R.
+          This was necessary to enable the above mentioned <dirent> emulation.
 
 Mon Mar 27 16:58:03 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* ace/TkReactor.cpp:
-	  Fixed the unused variable warning and ACE_Select_Reactor_Token
-	  undeclared error.
+        * ace/TkReactor.cpp:
+          Fixed the unused variable warning and ACE_Select_Reactor_Token
+          undeclared error.
 
 Fri Mar 24 10:30:44 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/LSOCK.cpp (recv_handle): For some reason, Linux allocates an extra
-	  handle when doing a recvmsg() with the MSG_PEEK flag set.
-  	  Therefore, we need to close this.  Thanks to Rick Ohnemus
- 	  <rjohnemus@systemware-inc.com> for reporting this.  Fixed [BUGID
- 	  511].
+        * ace/LSOCK.cpp (recv_handle): For some reason, Linux allocates an extra
+          handle when doing a recvmsg() with the MSG_PEEK flag set.
+          Therefore, we need to close this.  Thanks to Rick Ohnemus
+          <rjohnemus@systemware-inc.com> for reporting this.  Fixed [BUGID
+          511].
 
-	* examples/IPC_SAP/FILE_SAP/client.cpp. Fixed the formatting
-	  to conform to ACE guidelines.  Thanks to Steve Luoma
- 	  <stevel@dvc400.com> for motivating this.
+        * examples/IPC_SAP/FILE_SAP/client.cpp. Fixed the formatting
+          to conform to ACE guidelines.  Thanks to Steve Luoma
+          <stevel@dvc400.com> for motivating this.
 
 Thu Mar 23 20:37:19 2000  David L. Levine  <levine@cs.wustl.edu>
 
