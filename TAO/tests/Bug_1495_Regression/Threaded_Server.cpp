@@ -182,6 +182,8 @@ main (int argc, char *argv[])
     }
   ACE_ENDTRY;
 
+  ACE_DEBUG ((LM_DEBUG, "Threaded Server ready\n"));
+
   return 0;
 }
 

@@ -124,5 +124,7 @@ main (int argc, char *argv[])
     }
   ACE_ENDTRY;
 
+  ACE_DEBUG ((LM_DEBUG, "Threaded client ready.\n"));
+
   return 0;
 }
