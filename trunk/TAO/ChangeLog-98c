@@ -1,3 +1,7 @@
+Tue Nov 11 23:50:06 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO version 0.0.29, released Tue Nov 11 23:50:06 1997.
+
 Tue Nov 11 20:45:26 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tao/default_server.cpp (parse_args): Replaced NULL with 0.
