@@ -32,7 +32,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG) -I$(TAO_ROOT)/or
 MPEG_ROOT = $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source
 CPPFLAGS += -I$(MPEG_ROOT)
 
-LDLIBS 	= -lTAO 
+LDLIBS 	= -lAVsvc -lorbsvcs -lTAO 
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.

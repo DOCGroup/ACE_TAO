@@ -49,7 +49,7 @@ FILES= 24bit            \
 
 MPEG_ROOT = $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source
 CPPFLAGS += -I$(MPEG_ROOT) -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
-LDLIBS = -lTAO
+LDLIBS = -lAVsvc -lorbsvcs -lTAO
 
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
