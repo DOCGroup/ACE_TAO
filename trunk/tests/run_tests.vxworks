@@ -43,9 +43,15 @@ ld < CDR_Test
 write 2, "CDR_Test ", 9
 ace_main; unld "CDR_Test"
 
-ld < CDR_Array_Test
-write 2, "CDR_Array_Test ", 9
-ace_main; unld "CDR_Array_Test"
+##
+## @@ According to the ace config files the compiler we are
+## @@ using is pre 2.8 (i.e., ACE_HAS_GNUG_PRE_2_8 is defined).
+## @@ Therefore don't run CDR_Array_Test since the Makefile
+## @@ doesn't build it (due to the ACE_HAS_GNUG_PRE_2_8 macro).
+##
+## ld < CDR_Array_Test
+## write 2, "CDR_Array_Test ", 9
+## ace_main; unld "CDR_Array_Test"
 
 ##
 ## @@ I'm not sure if File_Test can run on vxworks.
