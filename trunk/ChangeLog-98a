@@ -1,3 +1,15 @@
+Fri Feb 27 15:47:15 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-chorus.h: use ACE_NEEDS_READV/WRITEV with GHS as well
+          as with g++.
+
+        * ace/Basic_Types.{h,i} (ACE_U_LongLong): added a bunch of arithmetic
+          operators for Carlos :-)  The operator *= is _very_ slow, until we
+          come up with the right way to do it.
+
+        * tests/Time_Value_Test.cpp (test_ace_u_longlong): added some tests
+          of the new operators.
+
 Fri Feb 27 13:42:09 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/ACE.cpp (recv_n): Removed the MSG_PEEK flag since it didn't
