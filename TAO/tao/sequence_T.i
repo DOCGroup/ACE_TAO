@@ -95,24 +95,24 @@ TAO_Unbounded_Sequence<T>::freebuf (T *buffer)
 // operations on the generic Bounded sequence class
 // ***************************************************
 
-template <class T> ACE_INLINE T *
-TAO_Bounded_Sequence<T>::get_buffer (CORBA::Boolean orphan)
+template <class T, CORBA::ULong MAX> ACE_INLINE T *
+TAO_Bounded_Sequence<T, MAX>::get_buffer (CORBA::Boolean orphan)
 {
   // @@ This is broken...
   return (T *) this->buffer_;
 }
 
-template <class T> ACE_INLINE const T *
-TAO_Bounded_Sequence<T>::get_buffer (void) const
+template <class T, CORBA::ULong MAX> ACE_INLINE const T *
+TAO_Bounded_Sequence<T, MAX>::get_buffer (void) const
 {
   return (const T *) this->buffer_;
 }
 
-template <class T> ACE_INLINE void
-TAO_Bounded_Sequence<T>::replace (CORBA::ULong max,
-                                  CORBA::ULong length,
-                                  T *data,
-                                  CORBA::Boolean release)
+template <class T, CORBA::ULong MAX> ACE_INLINE void
+TAO_Bounded_Sequence<T, MAX>::replace (CORBA::ULong max,
+                                       CORBA::ULong length,
+                                       T *data,
+                                       CORBA::Boolean release)
 {
 }
 
