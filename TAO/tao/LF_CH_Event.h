@@ -28,7 +28,7 @@
  * in the invocation path.
  *
  * Concrete event types and manipulation class which is used for
- * connection handleing purposes.
+ * connection handling purposes.
  */
 class TAO_Export TAO_LF_CH_Event: public TAO_LF_Event
 {

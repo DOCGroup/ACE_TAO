@@ -56,7 +56,7 @@ protected:
   /// Set the length of the underlying interceptor sequence.
   virtual void length (size_t) = 0;
 
-  /// Return the interceptor in sequence element <index>.
+  /// Return the interceptor in sequence element @a index.
   virtual PortableInterceptor::Interceptor_ptr interceptor (
       size_t index
     ) = 0;
