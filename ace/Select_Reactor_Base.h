@@ -373,7 +373,8 @@ protected:
   // we didn't create it, then we don't delete it).
 
   int restart_;
-  // Restart automatically when interrupted
+  // Restart the <handle_events> event-loop method automatically when
+  // <select> is interrupted via <EINTR>.
 
   int requeue_position_;
   // Position that the main ACE_Select_Reactor thread is requeued in

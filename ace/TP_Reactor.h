@@ -111,11 +111,16 @@ public:
                   ACE_Timer_Queue * = 0);
   // Initialize <ACE_TP_Reactor> with the default size.
 
-  ACE_TP_Reactor (size_t size,
+  ACE_TP_Reactor (size_t max_number_of_handles,
                   int restart = 0,
                   ACE_Sig_Handler * = 0,
                   ACE_Timer_Queue * = 0);
-  // Initialize <ACE_TP_Reactor> with size <size>.
+  // Initialize the <ACE_TP_Reactor> to manage
+  // <max_number_of_handles>.  If <restart> is non-0 then the
+  // <ACE_Reactor>'s <handle_events> method will be restarted
+  // automatically when <EINTR> occurs.  If <signal_handler> or
+  // <timer_queue> are non-0 they are used as the signal handler and
+  // timer queue, respectively.
 
   // = Event loop drivers.
 
