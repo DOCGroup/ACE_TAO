@@ -128,8 +128,8 @@ private:
   IORS server_;
   // The unbounded set of server IORS.
 
-  FILE *ior_fp_;
-  // Handle to the file of server IORs.
+  int ior_fp_;
+  // Read IORs from a file.
 
   CORBA::ORB_var orb_;
   // My orb.
