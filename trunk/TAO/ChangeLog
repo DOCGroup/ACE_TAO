@@ -1,3 +1,13 @@
+Mon Mar 07 08:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1495_Regression/Client_Task.cpp:
+        * tests/Bug_1495_Regression/Server_Task.cpp:
+        * tests/Bug_1495_Regression/Threaded_Server.cpp:
+          Print out where the exception is caught
+
+        * tests/Bug_1495_Regression/test.idl:
+          Converted documentation to doxygen style
+
 Mon Mar 07 07:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Leader_Follower.cpp:
