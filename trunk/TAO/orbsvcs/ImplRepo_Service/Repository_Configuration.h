@@ -30,7 +30,7 @@ class Repository_Configuration
  public:
   
   /// Default Constructor
-  Repository_Configuration (ACE_TCHAR *repository_mode);
+  Repository_Configuration (const char *repository_mode);
   
   /// Destructor
   ~Repository_Configuration ();
@@ -41,14 +41,14 @@ class Repository_Configuration
   int open ();
   
   /// opens a configuration based on a file name
-  int open (const ACE_TCHAR* file_name);
+  int open (const char* file_name);
     
   int open_section (const ACE_Configuration_Section_Key& base,
-                    const ACE_TCHAR* sub_section,
+                    const char* sub_section,
                     int create, ACE_Configuration_Section_Key& result);
   
   int remove_section (const ACE_Configuration_Section_Key& key,
-                      const ACE_TCHAR* sub_section,
+                      const char* sub_section,
                       int recursive);
   
   int enumerate_sections (const ACE_Configuration_Section_Key& key,
@@ -56,19 +56,19 @@ class Repository_Configuration
                           ACE_CString& name);
   
   int set_string_value (const ACE_Configuration_Section_Key& key,
-                        const ACE_TCHAR* name,
+                        const char* name,
                         const ACE_CString& value);
   
   int set_integer_value (const ACE_Configuration_Section_Key& key,
-                         const ACE_TCHAR* name,
+                         const char* name,
                          u_int value);
   
   int get_string_value (const ACE_Configuration_Section_Key& key,
-                        const ACE_TCHAR* name,
+                        const char* name,
                         ACE_CString& value);
   
   int get_integer_value (const ACE_Configuration_Section_Key& key,
-                         const ACE_TCHAR* name,
+                         const char* name,
                          u_int& value);
   
  private:

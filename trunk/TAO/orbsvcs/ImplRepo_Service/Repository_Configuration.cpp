@@ -7,12 +7,12 @@
 
 #if defined (ACE_WIN32)
 const HKEY SERVICE_REG_ROOT = HKEY_LOCAL_MACHINE;
-const ACE_TCHAR *SERVICE_REG_PATH =
+const char *SERVICE_REG_PATH =
   ACE_TEXT ("SYSTEM\\CurrentControlSet\\Services\\TAOImplRepo\\Parameters");
-const ACE_TCHAR *SERVICE_REG_VALUE_NAME = ACE_TEXT ("ORBOptions");
+const char *SERVICE_REG_VALUE_NAME = ACE_TEXT ("ORBOptions");
 #endif /* ACE_WIN32 */
 
-Repository_Configuration::Repository_Configuration (ACE_TCHAR *repository_mode)
+Repository_Configuration::Repository_Configuration (const char *repository_mode)
   : config_ (0)
 {
   /// Default Constructor
@@ -84,7 +84,7 @@ Repository_Configuration::open (void)
 
 
 int
-Repository_Configuration::open (const ACE_TCHAR *file_name)
+Repository_Configuration::open (const char *file_name)
 {
   if (this->config_ == 0)
     {
@@ -117,7 +117,7 @@ Repository_Configuration::open (const ACE_TCHAR *file_name)
 
 int
 Repository_Configuration::open_section (const ACE_Configuration_Section_Key& base,
-                                        const ACE_TCHAR* sub_section,
+                                        const char* sub_section,
                                         int create,
                                         ACE_Configuration_Section_Key& result)
 {
@@ -138,7 +138,7 @@ Repository_Configuration::open_section (const ACE_Configuration_Section_Key& bas
 
 int
 Repository_Configuration::remove_section (const ACE_Configuration_Section_Key& key,
-                                          const ACE_TCHAR* sub_section,
+                                          const char* sub_section,
                                           int recursive)
 {
   if (this->config_ == 0)
@@ -178,7 +178,7 @@ Repository_Configuration::enumerate_sections (const ACE_Configuration_Section_Ke
 
 int
 Repository_Configuration::set_string_value (const ACE_Configuration_Section_Key& key,
-                        const ACE_TCHAR* name,
+                        const char* name,
                         const ACE_CString& value)
 {
   if (this->config_ == 0)
@@ -198,7 +198,7 @@ Repository_Configuration::set_string_value (const ACE_Configuration_Section_Key&
 
 int
 Repository_Configuration::set_integer_value (const ACE_Configuration_Section_Key& key,
-                                             const ACE_TCHAR* name,
+                                             const char* name,
                                              u_int value)
 {
   if (this->config_ == 0)
@@ -217,7 +217,7 @@ Repository_Configuration::set_integer_value (const ACE_Configuration_Section_Key
 
 int
 Repository_Configuration::get_string_value (const ACE_Configuration_Section_Key& key,
-                                            const ACE_TCHAR* name,
+                                            const char* name,
                                             ACE_CString& value)
 {
   if (this->config_ == 0)
@@ -236,7 +236,7 @@ Repository_Configuration::get_string_value (const ACE_Configuration_Section_Key&
 
 int
 Repository_Configuration::get_integer_value (const ACE_Configuration_Section_Key& key,
-                                             const ACE_TCHAR* name,
+                                             const char* name,
                                              u_int& value)
 {
   if (this->config_ == 0)

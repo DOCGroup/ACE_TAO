@@ -1,3 +1,15 @@
+Fri Sep  6 09:03:50 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/ImplRepo_Service/Options.h:
+	* orbsvcs/ImplRepo_Service/Server_Repository.cpp: 
+	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp: 
+	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp: 
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+	* orbsvcs/ImplRepo_Service/Repository_Configuration.cpp: 
+	* orbsvcs/ImplRepo_Service/Repository_Configuration.h: 
+	  For some reason, the above files didnt get committed yesterday. 
+	  Recommitting them.
+
 Fri Sep  6 03:54:01 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* rules.tao.GNU: Remove deprecated use_flick macro for Flick IDL
