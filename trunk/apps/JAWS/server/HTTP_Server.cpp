@@ -7,6 +7,7 @@
 #include "IO.h"
 #include "HTTP_Server.h"
 
+// class is overkill
 class HTTP_Server_Anchor
 {
 public:
@@ -30,7 +31,7 @@ HTTP_Server::parse_args (int argc,
   int c;
   int thr_strategy = 0;
   int io_strategy = 0;
-  char *prog = argc > 0 ? argv[0] : "Sock_Server";
+  char *prog = argc > 0 ? argv[0] : "HTTP_Server";
 
   // Set some defaults
   this->port_ = 0;
@@ -69,6 +70,7 @@ HTTP_Server::parse_args (int argc,
       case 'f':
         if (ACE_OS::strcmp (get_opt.optarg, "THR_BOUND") == 0)
           {
+            // What happened here?
           }
         else if (ACE_OS::strcmp (get_opt.optarg, "THR_DAEMON") == 0)
           {
@@ -91,16 +93,18 @@ HTTP_Server::parse_args (int argc,
 	break;
       }
 
-  if (this->port_ == 0)
+  // No magic numbers.
+  if (this->port_ <= 0)
     this->port_ = 5432;
-  if (this->threads_ == 0)
+  if (this->threads_ <= 0)
     this->threads_ = 5;
-  if (this->backlog_ == 0)
+  // Don't use number of threads as default
+  if (this->backlog_ <= 0)
     this->backlog_ = this->threads_;
 
-  this->strategy_ = thr_strategy + io_strategy;
+  this->strategy_ = thr_strategy | io_strategy;
 
-  prog = prog;
+  ACE_UNUSED_ARG (prog);
   ACE_DEBUG ((LM_DEBUG,
               "in HTTP_Server::init, %s port = %d, number of threads = %d\n",
               prog, this->port_, this->threads_));
@@ -108,25 +112,30 @@ HTTP_Server::parse_args (int argc,
 
 int
 HTTP_Server::init (int argc, char *argv[])
+  // Document this function
 {
+  // Ignore signals generated when a connection is broken unexpectedly.
   ACE_Sig_Action sig (ACE_SignalHandler (SIG_IGN), SIGPIPE);
   ACE_UNUSED_ARG (sig);
 
+  // Parse arguments which sets the initial state.
   this->parse_args (argc, argv);
 
+  // Choose what concurrency strategy to run.
   switch (this->strategy_)
     {
-    case 2:
+    case (JAWS::POOL | JAWS::ASYNCH) :
       return this->asynch_thread_pool ();
 
-    case 1:
+    case (JAWS::PER_REQUEST | JAWS::SYNCH) :
       return this->thread_per_request ();
 
-    case 0:
+    case (JAWS::POOL | JAWS::SYNCH) :
     default:
       return this->synch_thread_pool ();
     }
-  ACE_NOTREACHED(return 0);
+
+  ACE_NOTREACHED (return 0);
 }
 
 int
@@ -136,57 +145,43 @@ HTTP_Server::fini (void)
   return 0;
 }
 
+
 int
 HTTP_Server::synch_thread_pool (void)
 {
+  // Main thread opens the acceptor
   if (this->acceptor_.open (ACE_INET_Addr (this->port_), 1,
                             PF_INET, this->backlog_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::open"), -1);
 
-  for (int i = 0; i < this->threads_; i++)
-    {
-      Synch_Thread_Pool_Task *t;
-
-      ACE_NEW_RETURN (t,
-		      Synch_Thread_Pool_Task (this->acceptor_, this->tm_),
-                      -1);
-
-      if (t->open () != 0)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Thread_Pool_Task::open"), -1);
-    }
+  // Create a pool of threads to handle incoming connections.
+  Synch_Thread_Pool_Task t (this->acceptor_, this->tm_, this->threads_);
 
   this->tm_.wait ();
   return 0;
 }
 
 Synch_Thread_Pool_Task::Synch_Thread_Pool_Task (HTTP_Acceptor &acceptor,
-                                                ACE_Thread_Manager &tm)
+                                                ACE_Thread_Manager &tm,
+                                                int threads)
   : ACE_Task<ACE_NULL_SYNCH> (&tm),
     acceptor_ (acceptor)
 {
-}
-
-int
-Synch_Thread_Pool_Task::open (void *args)
-{
-  ACE_UNUSED_ARG (args);
-
-  if (this->activate (THR_DETACHED | THR_NEW_LWP) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Synch_Thread_Pool_Task::open"),
-                      -1);
-
-  return 0;
+  if (this->activate (THR_DETACHED | THR_NEW_LWP, threads) == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", "Synch_Thread_Pool_Task::open"));
 }
 
 int
 Synch_Thread_Pool_Task::svc (void)
 {
+  // Creates a factory of HTTP_Handlers binding to synchronous I/O strategy
   Synch_HTTP_Handler_Factory factory;
 
   for (;;)
     {
       ACE_SOCK_Stream stream;
 
+      // Lock in this accept.  When it returns, we have a connection.
       if (this->acceptor_.accept (stream) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::accept"), -1);
 
@@ -195,8 +190,12 @@ Synch_Thread_Pool_Task::svc (void)
                       ACE_Message_Block (HTTP_Handler::MAX_REQUEST_SIZE + 1),
                       -1);
 
+      // Create an HTTP Handler to handle this request
       HTTP_Handler *handler = factory.create_http_handler ();
       handler->open (stream.get_handle (), *mb);
+      // Handler is destroyed when the I/O puts the Handler into the
+      // done state.
+
       mb->release ();
       ACE_DEBUG ((LM_DEBUG,
                   " (%t) in Synch_Thread_Pool_Task::svc, recycling\n"));
@@ -211,12 +210,16 @@ HTTP_Server::thread_per_request (void)
   int grp_id = -1;
 
   // thread per request
+  // Main thread opens the acceptor
   if (this->acceptor_.open (ACE_INET_Addr (this->port_), 1,
                             PF_INET, this->backlog_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::open"), -1);
 
   ACE_SOCK_Stream stream;
-  const ACE_Time_Value wait_time (0,10);
+
+  // When we are throttling, this is the amount of time to wait before
+  // checking for runnability again.
+  const ACE_Time_Value wait_time (0, 10);
 
   for (;;)
     {
@@ -224,12 +227,14 @@ HTTP_Server::thread_per_request (void)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::accept"), -1);
 
       Thread_Per_Request_Task *t;
+      // Pass grp_id as a constructor param instead of into open.
       ACE_NEW_RETURN (t, Thread_Per_Request_Task (stream.get_handle (),
-                                                  this->tm_),
+                                                  this->tm_,
+                                                  grp_id),
                       -1);
 
 
-      if (t->open (&grp_id) != 0)
+      if (t->open () != 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n", "Thread_Per_Request_Task::open"),
                           -1);
@@ -248,25 +253,28 @@ HTTP_Server::thread_per_request (void)
 }
 
 Thread_Per_Request_Task::Thread_Per_Request_Task (ACE_HANDLE handle,
-						  ACE_Thread_Manager &tm)
+						  ACE_Thread_Manager &tm,
+                                                  int &grp_id)
   : ACE_Task<ACE_NULL_SYNCH> (&tm),
-    handle_ (handle)
+    handle_ (handle),
+    grp_id_ (grp_id)
 {
 }
 
+
+// HEY!  Add a method to the thread_manager to return total number of
+// threads managed in all the tasks.
+
 int
-Thread_Per_Request_Task::open (void *args)
+Thread_Per_Request_Task::open (void *)
 {
   int status = -1;
-  int *grp_id = &status;
 
-  if (args != 0)
-    grp_id = (int *) args;
-
-  if (*grp_id == -1)
-    status = *grp_id = this->activate (THR_DETACHED | THR_NEW_LWP);
+  if (this->grp_id_ == -1)
+    status = this->grp_id_ = this->activate (THR_DETACHED | THR_NEW_LWP);
   else
-    status = this->activate (THR_DETACHED | THR_NEW_LWP, 1, 0, -1, *grp_id, 0);
+    status = this->activate (THR_DETACHED | THR_NEW_LWP,
+                             1, 0, -1, this->grp_id_, 0);
 
   if (status == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Thread_Per_Request_Task::open"),
@@ -297,7 +305,8 @@ Thread_Per_Request_Task::close (u_long)
 }
 
 // Understanding the code below requires understanding of the
-// WindowsNT asynchronous completion notification mechanism.
+// WindowsNT asynchronous completion notification mechanism and the
+// Proactor Pattern.
 
 // (1) The application submits an asynchronous I/O request to the
 //     operating system and a special handle with it (Asynchronous
@@ -328,19 +337,12 @@ HTTP_Server::asynch_thread_pool (void)
                        "ACE_Asynch_Acceptor::open"), -1);
 
   // Create the thread pool.
-  for (int i = 0; i < this->threads_; i++)
-    {
-      // Register threads with the proactor and thread manager.
-      Asynch_Thread_Pool_Task *t;
-      ACE_NEW_RETURN (t,
-		      Asynch_Thread_Pool_Task (*ACE_Proactor::instance (),
-					       this->tm_),
-		      -1);
-      if (t->open () != 0)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
-                           "Thread_Pool_Task::open"), -1);
-      // The proactor threads are waiting on the I/O Completion Port.
-    }
+  // Register threads with the proactor and thread manager.
+  Asynch_Thread_Pool_Task t (*ACE_Proactor::instance (),
+                             this->tm_,
+                             this->threads_); 
+
+  // The proactor threads are waiting on the I/O Completion Port.
 
   // Wait for the threads to finish.
   return this->tm_.wait ();
@@ -356,16 +358,9 @@ Asynch_Thread_Pool_Task::Asynch_Thread_Pool_Task (ACE_Proactor &proactor,
   : ACE_Task<ACE_NULL_SYNCH> (&tm),
     proactor_ (proactor)
 {
-}
-
-int
-Asynch_Thread_Pool_Task::open (void *args)
-{
   if (this->activate () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Asynch_Thread_Pool_Task::open"),
-                      -1);
-
-  return 0;
+                      );
 }
 
 int
