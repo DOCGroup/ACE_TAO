@@ -1,3 +1,22 @@
+Thu Apr  3 13:13:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Muxed_TMS.cpp (connection_closed): Fix for bug 1482. Please
+	  refer to 
+
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1482
+
+	  for details. The patch does the following 
+	  
+	  - Picks up the first element from the hash map and calls
+	    close_connection () on it.
+	  - Fetches the first node again to compare whether the one that
+	    was used to call closed_connection () is the same as the
+	    present begin node. If so, it is unbounded from the map and
+	    the process continues. If not, there is no need for unbinding
+	    and the iteration continues. 
+
+	  Thanks to Carlos O'Ryan for this patch.
+
 Thu Apr 03 12:41:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1482_Regression/Bug_1482_regression.dsw:
