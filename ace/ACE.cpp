@@ -3368,6 +3368,50 @@ ACE::sock_error (int error)
 #endif /* ACE_WIN32 */
 }
 
+bool
+ACE::is_sock_error (int error)
+{
+#if defined (ACE_WIN32)
+  switch (error)
+    {
+    case WSAVERNOTSUPPORTED:
+    case WSASYSNOTREADY:
+    case WSAEINVAL:
+    case WSAHOST_NOT_FOUND:
+    case WSATRY_AGAIN:
+    case WSANO_RECOVERY:
+    case WSANO_DATA:
+      /*
+        case WSANO_ADDRESS:
+      */
+    case WSANOTINITIALISED:
+    case WSAENETDOWN:
+    case WSAEINPROGRESS:
+    case WSAEINTR:
+    case WSAEAFNOSUPPORT:
+    case WSAEMFILE:
+    case WSAENOBUFS:
+    case WSAEPROTONOSUPPORT:
+    case WSAEPROTOTYPE:
+    case WSAESOCKTNOSUPPORT:
+    case WSAENOTSOCK:
+    case WSAEWOULDBLOCK:
+    case WSAEADDRINUSE:
+    case WSAECONNABORTED:
+    case WSAECONNRESET:
+    case WSAENOTCONN:
+    case WSAETIMEDOUT:
+    case WSAECONNREFUSED:
+    case WSAEHOSTDOWN:
+    case WSAEHOSTUNREACH:
+    case WSAEADDRNOTAVAIL:
+    case WSAEISCONN:
+      return true;
+    }
+#endif /* ACE_WIN32 */
+  return false;
+}
+
 char *
 ACE::strndup (const char *str, size_t n)
 {
