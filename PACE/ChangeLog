@@ -1,3 +1,13 @@
+Fri Jul 21 18:43:07 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/unistd.inl:
+
+	  Emulated or removed implementation.
+
+	* pace/docs/PACE_POSIX_support.txt
+
+	  Updated.
+
 Fri Jul 21 18:33:04 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/config/constants.h (PACE_ONE_SECOND_IN_MSECS):
