@@ -10,8 +10,7 @@
 //
 // = DESCRIPTION
 //    This program helps you to test the <aio_*> calls on a
-//    platform. 
-//    Before running this test, make sure the platform can
+//    platform. Before running this test, make sure the platform can 
 //    support POSIX <aio_> calls. use $ACE_ROOT/tests for this.
 //    This is for testing the AIOCB (AIO Control Blocks) based
 //    completion approach which uses <aio_suspend> for completion
@@ -20,7 +19,7 @@
 //    can be used on this platform.
 // 
 // = COMPILE and RUN
-//    % CC -g -o test_aiocb -lposix4 test_aiocb.cpp
+//    % CC -g -o test_aiocb -lrt test_aiocb.cpp
 //    % ./test_aiocb
 // 
 // = AUTHOR
