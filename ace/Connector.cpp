@@ -94,10 +94,9 @@ ACE_Connector<SH, PR_CO_2>::open (ACE_Reactor *r)
 
 template <class SH, PR_CO_1> 
 ACE_Connector<SH, PR_CO_2>::ACE_Connector (ACE_Reactor *r)
-  :
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::ACE_Connector");
-  this->open (r);
+  (void) this->open (r);
 }
 
 // Register the SVC_HANDLER with the map of pending connections so

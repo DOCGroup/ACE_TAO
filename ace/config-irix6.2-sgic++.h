@@ -148,6 +148,8 @@
 // Platform supports STREAMS.
 #define ACE_HAS_STREAMS 
 
+#define ACE_LACKS_LINEBUFFERED_STREAMBUF
+
 // Platform supports STREAM pipes (note that this is disabled by
 // default, see the manual page on pipe(2) to find out how to enable
 // it). 

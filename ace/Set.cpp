@@ -13,6 +13,26 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Fixed_Set)
 
+template <class T, size_t SIZE> size_t
+ACE_Fixed_Set<T, SIZE>::size (void) const
+{
+  return this->cur_size_;
+}
+
+template <class T> size_t
+ACE_Bounded_Set<T>::size (void) const
+{
+  ACE_TRACE ("ACE_Bounded_Set<T>::size");
+  return this->cur_size_;
+}
+
+template <class T> size_t
+ACE_Unbounded_Set<T>::size (void) const
+{
+// ACE_TRACE ("ACE_Unbounded_Set<T>::size");
+  return this->cur_size_;
+}
+
 template <class T, size_t SIZE> void
 ACE_Fixed_Set<T, SIZE>::dump (void) const
 {

@@ -1,11 +1,12 @@
-/* -*- C++ -*- */
-// $Id$
-
 // The following configuration file is designed to work for SCO UNIX
 // version 5.0 with MIT pthreads.
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
+
+#if !defined (__ACE_INLINE__)
+#define __ACE_INLINE__
+#endif /* ! __ACE_INLINE__ */
 
 // Compiling for SCO.
 #if !defined (SCO)
@@ -34,6 +35,8 @@
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC			
+#define	ACE_HAS_NONCONST_MSGSND
+// #define	ACE_LACKS_POSIX_PROTO
 #define	ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 
@@ -77,7 +80,9 @@
 // Compiler/platform supports strerror ().
 #define ACE_HAS_STRERROR
 
-#define ACE_HAS_SVR4_GETTIMEOFDAY
+// ???
+// #define ACE_HAS_SUNOS4_GETTIMEOFDAY
+#define	ACE_HAS_TIMEZONE_GETTIMEOFDAY
 
 // HP/UX has an undefined syscall for GETRUSAGE...
 //#define ACE_HAS_SYSCALL_GETRUSAGE
@@ -90,7 +95,8 @@
 
 // Platform has prototypes for ACE_TLI.
 #define ACE_HAS_TLI
-#define	ACE_HAS_SVR4_TLI
+//#define	ACE_HAS_SVR4_TLI
+#define ACE_HAS_T_OPMGMT
 #define ACE_HAS_TLI_PROTOTYPES
 #define	ACE_HAS_TIMOD_H
 #define	ACE_HAS_TIUSER_H
@@ -110,17 +116,20 @@
 #define	ACE_HAS_UCONTEXT_T
 
 #define	ACE_NEEDS_SYSTIME_H
+#define ACE_HAS_INLINED_OSCALLS
 
 #define	ACE_HAS_STRBUF_T
 #define	ACE_HAS_STREAMS
 //#define	ACE_HAS_STREAM_PIPES
+#define	ACE_HAS_IP_MULTICAST
 
 // Threads
 #define	ACE_HAS_THREADS
+#define	ACE_MT_SAFE
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 #define	ACE_HAS_PTHREADS
-#define	ACE_MT_SAFE
 #define	ACE_HAS_PTHREAD_T
+#define ACE_HAS_PTHREADS_XAVIER
 #define	ACE_HAS_SIGWAIT
 //#define	ACE_HAS_ONEARG_SIGWAIT
 //#define	ACE_HAS_PTHREAD_YIELD_VOID_PTR
@@ -134,10 +143,12 @@
 //#define ACE_LACKS_THREAD_STACK_ADDR
 //#define ACE_LACKS_KEYDELETE
 #define ACE_LACKS_CONDATTR_PSHARED
-
+#define ACE_LACKS_RWLOCK_T
+#define	ACE_LACKS_SETSCHED
+#define ACE_LACKS_RPC_H
 #define	ACE_HAS_POSIX_TIME
-#define ACE_HAS_IP_MULTICAST
 
 #include <pthread.h>
+#include <sys/regset.h>
 
 #endif /* ACE_CONFIG_H */
