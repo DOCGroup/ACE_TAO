@@ -3,6 +3,8 @@
 
 // INET_Addr.i
 
+#include "ace/OS.h"
+
 // Default dtor.
 ACE_INLINE
 ACE_INET_Addr::~ACE_INET_Addr (void)
