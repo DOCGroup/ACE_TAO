@@ -1,3 +1,13 @@
+Thu Mar 20 18:58:50 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Connector.cpp (connector): Fixed some minor bugs that
+ 	  prevented the ACE_Connector from compiling.  Thanks to David
+ 	  Levine for noticing this.
+
+	* ace/OS.h: Moved the ACE_LACKS_SIGACTION block so that it will
+ 	  work on Win32.  Thanks to Matthias Kerkhoff
+ 	  <make@cs.tu-berlin.de> for pointing this out.
+
 Thu Mar 20 15:52:34 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-aix-4.[12].x.h: added back ACE_HAS_THREAD_SELF and
@@ -16,12 +26,6 @@ Thu Mar 20 12:25:30 1997    <harrison@samba.cs.wustl.edu>
 	  _M_IX86 == 500.  Projects must specify Pentium in
 	  Build->Settings->Code Generation->Processor to use the RDTSC
 	  instruction in ACE_OS::gethrtime.
-
-Thu Mar 20 05:23:26 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ace/OS.h: Moved the ACE_LACKS_SIGACTION block so that it will
- 	  work on Win32.  Thanks to Matthias Kerkhoff
- 	  <make@cs.tu-berlin.de> for pointing this out.
 
 Thu Mar 20 01:13:19 1997    <harrison@samba.cs.wustl.edu>
 
