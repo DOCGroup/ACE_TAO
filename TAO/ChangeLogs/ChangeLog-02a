@@ -1,3 +1,15 @@
+Sat Feb  2 12:36:31 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.cpp (init):
+	* tao/TAO_Internal.cpp (open_services):
+
+	  Moved vestigial code that retrieved the debug level from the
+	  TAO_ORB_DEBUG environment variable to the appropriate location
+	  in TAO_Internal.cpp.  Fixes a problem where the debug level was
+	  sometimes reset to zero despite the fact it was explicitly set
+	  by the -ORBDebugLevel ORB option.
+	  Reported by Scott Harris <harris_s@ociweb.com>
+
 Fri Feb  1 23:25:39 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Supplier.dsp: 
