@@ -671,6 +671,7 @@ ACE_Double_Linked_List<T>::ACE_Double_Linked_List (const ACE_Double_Linked_List<
                   T);
   this->init_head ();
   this->copy_nodes (cx);
+  this->size_ = cx.size_;
 }
 
 template <class T> void
