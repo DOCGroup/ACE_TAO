@@ -33,47 +33,47 @@ Washington University at St.Louis
 <BR><HR>
 <!-- Table of Contents -->
 <UL>
-<LI><A HREF="#SECTION100">Overview of Implementation of Pluggable Protocols for TAO</A>
+<LI><A NAME="TOC_SECTION100" HREF="#SECTION100">Overview of Implementation of Pluggable Protocols for TAO</A>
 <UL>
-<LI><A HREF="#SECTION110">The Hard Way</A>
-<LI><A HREF="#SECTION120">The Path of Least Resistance</A>
+<LI><A NAME="TOC_SECTION110" HREF="#SECTION110">The Hard Way</A>
+<LI><A NAME="TOC_SECTION120" HREF="#SECTION120">The Path of Least Resistance</A>
 <UL>
-<LI><A HREF="#SECTION121">Basic Requirements</A>
-<LI><A HREF="#SECTION122">Basics of Implementing a Pluggable Protocol for TAO</A>
+<LI><A NAME="TOC_SECTION121" HREF="#SECTION121">Basic Requirements</A>
+<LI><A NAME="TOC_SECTION122" HREF="#SECTION122">Basics of Implementing a Pluggable Protocol for TAO</A>
 </UL>
 </UL>
-<LI><A HREF="#SECTION200">Pluggable Protocol Framework Components</A>
+<LI><A NAME="TOC_SECTION200" HREF="#SECTION200">Pluggable Protocol Framework Components</A>
 <UL>
-<LI><A HREF="#SECTION210">The <TT> Acceptor</TT></A>
+<LI><A NAME="TOC_SECTION210" HREF="#SECTION210">The <TT> Acceptor</TT></A>
 <UL>
-<LI><A HREF="#SECTION211">Context</A>
-<LI><A HREF="#SECTION212">Problem</A>
-<LI><A HREF="#SECTION213">Solution</A>
-<LI><A HREF="#SECTION214">Applying the solution to TAO</A>
-<LI><A HREF="#SECTION215"><TT> Acceptor</TT> Implementation</A>
+<LI><A NAME="TOC_SECTION211" HREF="#SECTION211">Context</A>
+<LI><A NAME="TOC_SECTION212" HREF="#SECTION212">Problem</A>
+<LI><A NAME="TOC_SECTION213" HREF="#SECTION213">Solution</A>
+<LI><A NAME="TOC_SECTION214" HREF="#SECTION214">Applying the solution to TAO</A>
+<LI><A NAME="TOC_SECTION215" HREF="#SECTION215"><TT> Acceptor</TT> Implementation</A>
 </UL>
-<LI><A HREF="#SECTION220">The <TT> Connector</TT></A>
+<LI><A NAME="TOC_SECTION220" HREF="#SECTION220">The <TT> Connector</TT></A>
 <UL>
-<LI><A HREF="#SECTION221">Context</A>
-<LI><A HREF="#SECTION222">Problem</A>
-<LI><A HREF="#SECTION223">Solution</A>
-<LI><A HREF="#SECTION224">Applying the solution in TAO</A>
-<LI><A HREF="#SECTION225"><TT> Connector</TT> Implementation</A>
+<LI><A NAME="TOC_SECTION221" HREF="#SECTION221">Context</A>
+<LI><A NAME="TOC_SECTION222" HREF="#SECTION222">Problem</A>
+<LI><A NAME="TOC_SECTION223" HREF="#SECTION223">Solution</A>
+<LI><A NAME="TOC_SECTION224" HREF="#SECTION224">Applying the solution in TAO</A>
+<LI><A NAME="TOC_SECTION225" HREF="#SECTION225"><TT> Connector</TT> Implementation</A>
 </UL>
-<LI><A HREF="#SECTION230">The <TT> Profile</TT> Object</A>
-<LI><A HREF="#SECTION240">The <TT> Protocol_Factory</TT> Object</A>
-<LI><A HREF="#SECTION250">The <TT> Transport</TT> Object</A>
+<LI><A NAME="TOC_SECTION230" HREF="#SECTION230">The <TT> Profile</TT> Object</A>
+<LI><A NAME="TOC_SECTION240" HREF="#SECTION240">The <TT> Protocol_Factory</TT> Object</A>
+<LI><A NAME="TOC_SECTION250" HREF="#SECTION250">The <TT> Transport</TT> Object</A>
 <UL>
-<LI><A HREF="#SECTION251">Context</A>
-<LI><A HREF="#SECTION252">Problem</A>
-<LI><A HREF="#SECTION253">Solution</A>
-<LI><A HREF="#SECTION254">Applying the solution in TAO</A>
-<LI><A HREF="#SECTION255"><TT> Transport</TT> Implementation</A>
+<LI><A NAME="TOC_SECTION251" HREF="#SECTION251">Context</A>
+<LI><A NAME="TOC_SECTION252" HREF="#SECTION252">Problem</A>
+<LI><A NAME="TOC_SECTION253" HREF="#SECTION253">Solution</A>
+<LI><A NAME="TOC_SECTION254" HREF="#SECTION254">Applying the solution in TAO</A>
+<LI><A NAME="TOC_SECTION255" HREF="#SECTION255"><TT> Transport</TT> Implementation</A>
 </UL>
 </UL>
-<LI><A HREF="#SECTION300">Notes From a ``Real World'' Pluggable Protocol Implementation</A>
-<LI><A HREF="#SECTION400">Using a Pluggable Protocol</A>
-<LI><A HREF="#SECTION500">Bibliography</A>
+<LI><A NAME="TOC_SECTION300" HREF="#SECTION300">Notes From a ``Real World'' Pluggable Protocol Implementation</A>
+<LI><A NAME="TOC_SECTION400" HREF="#SECTION400">Using a Pluggable Protocol</A>
+<LI><A NAME="TOC_SECTION500" HREF="#SECTION500">Bibliography</A>
 </UL>
 <!-- End of Table of Contents -->
 <BR><HR>
@@ -81,7 +81,7 @@ Washington University at St.Louis
 
 <P>
 
-<H1><A NAME="SECTION100">
+<H1><A NAME="SECTION100" HREF="#TOC_SECTION100">
 Overview of Implementation of Pluggable Protocols for TAO</A>
 </H1>
 
@@ -91,7 +91,7 @@ implementing pluggable protocols for TAO. This section describes them.
 
 <P>
 
-<H2><A NAME="SECTION110">
+<H2><A NAME="SECTION110" HREF="#TOC_SECTION110">
 The Hard Way</A>
 </H2>
 
@@ -103,7 +103,7 @@ using existing ACE and TAO models and implementations.
 
 <P>
 
-<H2><A NAME="SECTION120">
+<H2><A NAME="SECTION120" HREF="#TOC_SECTION120">
 The Path of Least Resistance</A>
 </H2>
 
@@ -115,7 +115,7 @@ use these encapsulations some requirements must be satisfied.
 
 <P>
 
-<H3><A NAME="SECTION121">
+<H3><A NAME="SECTION121" HREF="#TOC_SECTION121">
 Basic Requirements</A>
 </H3>
 
@@ -160,7 +160,7 @@ protocol may be difficult or pointless to implement as a pluggable protocol.</LI
 
 <P>
 
-<H3><A NAME="SECTION122">
+<H3><A NAME="SECTION122" HREF="#TOC_SECTION122">
 Basics of Implementing a Pluggable Protocol for TAO</A>
 </H3>
 
@@ -194,7 +194,7 @@ and their public interfaces.
 <P>
 <HR>
 <P>
-<H1><A NAME="SECTION200">
+<H1><A NAME="SECTION200" HREF="#TOC_SECTION200">
 Pluggable Protocol Framework Components</A>
 </H1>
 
@@ -208,7 +208,7 @@ within several components, namely the <TT>Acceptor</TT>, <TT>Connector</TT>,
 
 <P>
 
-<H2><A NAME="SECTION210">
+<H2><A NAME="SECTION210" HREF="#TOC_SECTION210">
 The <TT>Acceptor</TT></A>
 </H2>
 
@@ -217,7 +217,7 @@ The <TT>Acceptor</TT></A>
 <A NAME="design:accept"></A>
 <P>
 
-<H3><A NAME="SECTION211">
+<H3><A NAME="SECTION211" HREF="#TOC_SECTION211">
 Context</A>
 </H3>
 
@@ -231,7 +231,7 @@ requests, but receive no requests from other clients.
 
 <P>
 
-<H3><A NAME="SECTION212">
+<H3><A NAME="SECTION212" HREF="#TOC_SECTION212">
 Problem</A>
 </H3>
 
@@ -242,7 +242,7 @@ be possible to add new protocols without changing the ORB.
 
 <P>
 
-<H3><A NAME="SECTION213">
+<H3><A NAME="SECTION213" HREF="#TOC_SECTION213">
 Solution</A>
 </H3>
 
@@ -255,7 +255,7 @@ the connection is accepted <I>passively</I>, rather than being initiated <I>acti
 
 <P>
 
-<H3><A NAME="SECTION214">
+<H3><A NAME="SECTION214" HREF="#TOC_SECTION214">
 Applying the solution to TAO</A>
 </H3>
 
@@ -312,7 +312,7 @@ object, hiding the transport- and strategy-specific details of the acceptor.
 
 <P>
 
-<H3><A NAME="SECTION215">
+<H3><A NAME="SECTION215" HREF="#TOC_SECTION215">
 <TT>Acceptor</TT> Implementation</A>
 </H3>
 
@@ -771,7 +771,7 @@ of TAO's pluggable protocols simply return <TT>1</TT>.</DD>
 
 <P>
 
-<H2><A NAME="SECTION220">
+<H2><A NAME="SECTION220" HREF="#TOC_SECTION220">
 The <TT>Connector</TT></A>
 </H2>
 
@@ -780,7 +780,7 @@ The <TT>Connector</TT></A>
 <A NAME="design:connect"></A>
 <P>
 
-<H3><A NAME="SECTION221">
+<H3><A NAME="SECTION221" HREF="#TOC_SECTION221">
 Context</A>
 </H3>
 
@@ -791,7 +791,7 @@ establish a connection to the server.
 
 <P>
 
-<H3><A NAME="SECTION222">
+<H3><A NAME="SECTION222" HREF="#TOC_SECTION222">
 Problem</A>
 </H3>
 
@@ -803,7 +803,7 @@ IOP and transport protocol, if available. It must then locate the applicable
 
 <P>
 
-<H3><A NAME="SECTION223">
+<H3><A NAME="SECTION223" HREF="#TOC_SECTION223">
 Solution</A>
 </H3>
 
@@ -845,7 +845,7 @@ instance of a concrete <TT>Connector</TT>.
 
 <P>
 
-<H3><A NAME="SECTION224">
+<H3><A NAME="SECTION224" HREF="#TOC_SECTION224">
 Applying the solution in TAO</A>
 </H3>
 
@@ -896,7 +896,7 @@ object and to the <TT>Transport</TT> objects that were created.
 
 <P>
 
-<H3><A NAME="SECTION225">
+<H3><A NAME="SECTION225" HREF="#TOC_SECTION225">
 <TT>Connector</TT> Implementation</A>
 </H3>
 
@@ -1276,7 +1276,7 @@ and the `<TT>/</TT>' is the protocol-specific object key delimiter.
 
 <P>
 
-<H2><A NAME="SECTION230">
+<H2><A NAME="SECTION230" HREF="#TOC_SECTION230">
 The <TT>Profile</TT> Object</A>
 </H2>
 
@@ -1601,7 +1601,7 @@ of improved <TT>Connector</TT> table look up times.</DD>
 
 <P>
 
-<H2><A NAME="SECTION240">
+<H2><A NAME="SECTION240" HREF="#TOC_SECTION240">
 The <TT>Protocol_Factory</TT> Object</A>
 </H2>
 
@@ -1922,13 +1922,13 @@ static&nbsp;Resource_Factory&nbsp;&#34;-ORBProtocolFactory&nbsp;UIOP_Factory&#34
 </DL>
 <P>
 
-<H2><A NAME="SECTION250">
+<H2><A NAME="SECTION250" HREF="#TOC_SECTION250">
 The <TT>Transport</TT> Object</A>
 </H2>
 
 <P>
 
-<H3><A NAME="SECTION251">
+<H3><A NAME="SECTION251" HREF="#TOC_SECTION251">
 Context</A>
 </H3>
 
@@ -1954,7 +1954,7 @@ the missing semantics, such as reliability, in order to use GIOP.
 
 <P>
 
-<H3><A NAME="SECTION252">
+<H3><A NAME="SECTION252" HREF="#TOC_SECTION252">
 Problem</A>
 </H3>
 
@@ -1994,7 +1994,7 @@ Client Inter-ORB and Transport Class Diagram</CAPTION>
 
 <P>
 
-<H3><A NAME="SECTION253">
+<H3><A NAME="SECTION253" HREF="#TOC_SECTION253">
 Solution</A>
 </H3>
 
@@ -2042,7 +2042,7 @@ Server Inter-ORB and Transport Class Diagram</CAPTION>
 
 <P>
 
-<H3><A NAME="SECTION254">
+<H3><A NAME="SECTION254" HREF="#TOC_SECTION254">
 Applying the solution in TAO</A>
 </H3>
 
@@ -2063,7 +2063,7 @@ creates and initializes these objects.
 
 <P>
 
-<H3><A NAME="SECTION255">
+<H3><A NAME="SECTION255" HREF="#TOC_SECTION255">
 <TT>Transport</TT> Implementation</A>
 </H3>
 
@@ -2362,7 +2362,7 @@ pluggable protocols.
 <HR>
 <P>
 
-<H1><A NAME="SECTION300">
+<H1><A NAME="SECTION300" HREF="#TOC_SECTION300">
 Notes From a ``Real World'' Pluggable Protocol Implementation</A>
 </H1>
 
@@ -2906,7 +2906,7 @@ HREF="mailto:btrask@contactsystems.com">btrask@contactsystems.com</A>
 <HR>
 <P>
 
-<H1><A NAME="SECTION400">
+<H1><A NAME="SECTION400" HREF="#TOC_SECTION400">
 Using a Pluggable Protocol</A>
 </H1>
 
@@ -2967,7 +2967,7 @@ that points to the object on that endpoint to make requests on that object.
 <HR>
 <P>
 
-<H2><A NAME="SECTION500">
+<H2><A NAME="SECTION500" HREF="#TOC_SECTION500">
 Bibliography</A>
 </H2><DL COMPACT><DD><P></P><DT><A NAME="Schmidt:97c">1</A>
 <DD>
@@ -3005,7 +3005,7 @@ F. Buschmann, R. Meunier, H. Rohnert, P. Sommerlad, and M. Stal, <EM>  Pattern-O
 <HR><H4>Footnotes</H4>
 <DL>
 <DT><A NAME="foot549">... abstraction.</A><A NAME="foot549"
- HREF="pluggable_protocols.html#tex2html5"><SUP>1</SUP></A>
+ HREF="#tex2html5"><SUP>1</SUP></A>
 <DD>Protocol stacks based on the Internet or ISO OSI reference models are common
 examples of the Layers architecture.
 
@@ -3014,7 +3014,7 @@ examples of the Layers architecture.
     <ADDRESS><a href="mailto:othman@cs.wustl.edu">Ossama Othman</a></ADDRESS>
 <!-- Created: Tue Dec 14 16:53:58 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Thu Dec 16 18:55:31 CST 1999
+Last modified: Thu Dec 16 19:05:58 CST 1999
 <!-- hhmts end -->
 </BODY>
 </HTML>
