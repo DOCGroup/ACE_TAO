@@ -4,7 +4,9 @@
 #include "ace/Thread_Hook.h"
 #include "ace/OS.h"
 
-ACE_RCSID(ace, OS_Thread_Adapter, "$Id$")
+ACE_RCSID (ace,
+           OS_Thread_Adapter,
+           "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_Thread_Adapter.inl"
@@ -170,9 +172,7 @@ ACE_OS_Thread_Adapter::invoke (void)
 #  endif /* SC_PREPC */
       status = ::t_delete (0); // Suicide - only returns on error
 #endif /* ACE_PSOS */
-
-      return status;
     }
 
-  ACE_NOTREACHED (return status);
+  return status;
 }
