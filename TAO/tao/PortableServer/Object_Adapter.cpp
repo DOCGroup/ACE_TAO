@@ -316,13 +316,18 @@ TAO_Object_Adapter::dispatch_servant (const TAO_ObjectKey &key,
   if (result != TAO_Adapter::DS_OK)
     return result;
 
+  // Preprocess remote request.
+  servant_upcall.pre_invoke_remote_request (req
+                                            ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (result);
+
   // Servant dispatch.
   {
     ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_DISPATCH_START);
 
-    this->servant_dispatcher_->dispatch (servant_upcall,
-                                         req
-                                         ACE_ENV_ARG_PARAMETER);
+    servant_upcall.servant ()->_dispatch (req,
+                                          &servant_upcall
+                                          ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (result);
   }
 
@@ -1269,6 +1274,43 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key
   return TAO_Adapter::DS_OK;
 }
 
+void
+TAO_Object_Adapter::Servant_Upcall::pre_invoke_remote_request (TAO_ServerRequest &req
+                                                               ACE_ENV_ARG_DECL)
+{
+  this->object_adapter_->servant_dispatcher_->pre_invoke_remote_request (this->poa (),
+                                                                         this->priority (),
+                                                                         req.request_service_context (),
+                                                                         req.reply_service_context (),
+                                                                         this->pre_invoke_state_
+                                                                         ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+}
+
+void
+TAO_Object_Adapter::Servant_Upcall::pre_invoke_collocated_request (ACE_ENV_SINGLE_ARG_DECL)
+{
+  this->object_adapter_->servant_dispatcher_->pre_invoke_collocated_request (this->poa (),
+                                                                             this->priority (),
+                                                                             this->pre_invoke_state_
+                                                                             ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+}
+
+void
+TAO_Object_Adapter::Servant_Upcall::post_invoke (void)
+{
+  this->object_adapter_->servant_dispatcher_->post_invoke (this->poa (),
+                                                           this->pre_invoke_state_);
+}
+
+TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State::Pre_Invoke_State (void)
+  : state_ (NO_ACTION_REQUIRED),
+    original_native_priority_ (0),
+    original_CORBA_priority_ (0)
+{
+}
+
 TAO_POA *
 TAO_Object_Adapter::Servant_Upcall::lookup_POA (const TAO_ObjectKey &key
                                                 ACE_ENV_ARG_DECL)
@@ -1302,6 +1344,8 @@ TAO_Object_Adapter::Servant_Upcall::lookup_POA (const TAO_ObjectKey &key
 
 TAO_Object_Adapter::Servant_Upcall::~Servant_Upcall ()
 {
+  this->post_invoke ();
+
   switch (this->state_)
     {
     case SERVANT_LOCK_ACQUIRED:
