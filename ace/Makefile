@@ -7979,7 +7979,9 @@ endif # GHS
   Log_Msg.h \
   Log_Record.h \
   Log_Priority.h \
-  Log_Record.i
+  Log_Record.i \
+  INET_Addr.h \
+  INET_Addr.i
 
 .obj/SOCK_Dgram_Bcast.o .obj/SOCK_Dgram_Bcast.so .shobj/SOCK_Dgram_Bcast.o .shobj/SOCK_Dgram_Bcast.so: SOCK_Dgram_Bcast.cpp \
   SOCK_Dgram_Bcast.h \
