@@ -23,31 +23,31 @@ ttcp_sequence_i::start_timer (CORBA::Environment &IT_env)
   ::prep_timer ();
 }
 
-void 
+void
 ttcp_sequence_i::stop_timer (CORBA::Environment &IT_env)
 {
   ACE_UNUSED_ARG (IT_env);
 
   (void) ::read_timer (stats, sizeof (stats));
-	::nbytes = this->nbytes_;
-	::PrintStats();
-	// reset
-	this->nbytes_ = 0;
-	numCalls = 0;
-#if defined (USE_QUANTIFY)
+        ::nbytes = this->nbytes_;
+        ::PrintStats();
+        // reset
+        this->nbytes_ = 0;
+        numCalls = 0;
+#if defined (ACE_HAS_QUANTIFY)
     quantify_stop_recording_data();
     ACE_Service_Config::end_reactor_event_loop();
-    cerr << "*********** just before exiting " << endl;
+    ACE_OS::fprintf (stderr, "*********** just before exiting\n");
 #endif
-#if defined (USE_PURIFY)
+#if defined (ACE_HAS_PURIFY)
     ACE_Service_Config::end_reactor_event_loop();
-    cerr << "*********** just before exiting " << endl;
+    ACE_OS::fprintf (stderr, "*********** just before exiting\n");
 #endif
 }
 
 void
-ttcp_sequence_i::sendShortSeq (const ttcp_sequence::ShortSeq& ttcp_seq, 
-			       CORBA::Environment &IT_env)
+ttcp_sequence_i::sendShortSeq (const ttcp_sequence::ShortSeq& ttcp_seq,
+                               CORBA::Environment &IT_env)
 {
   ACE_UNUSED_ARG (IT_env);
   numCalls++;
@@ -55,8 +55,8 @@ ttcp_sequence_i::sendShortSeq (const ttcp_sequence::ShortSeq& ttcp_seq,
 }
 
 void
-ttcp_sequence_i::sendLongSeq (const ttcp_sequence::LongSeq& ttcp_seq, 
-			      CORBA::Environment &IT_env)
+ttcp_sequence_i::sendLongSeq (const ttcp_sequence::LongSeq& ttcp_seq,
+                              CORBA::Environment &IT_env)
 {
   ACE_UNUSED_ARG (IT_env);
   numCalls++;
@@ -64,8 +64,8 @@ ttcp_sequence_i::sendLongSeq (const ttcp_sequence::LongSeq& ttcp_seq,
 }
 
 void
-ttcp_sequence_i::sendOctetSeq (const ttcp_sequence::OctetSeq& ttcp_seq, 
-			       CORBA::Environment &IT_env)
+ttcp_sequence_i::sendOctetSeq (const ttcp_sequence::OctetSeq& ttcp_seq,
+                               CORBA::Environment &IT_env)
 {
   ACE_UNUSED_ARG (IT_env);
   numCalls++;
@@ -73,8 +73,8 @@ ttcp_sequence_i::sendOctetSeq (const ttcp_sequence::OctetSeq& ttcp_seq,
 }
 
 void
-ttcp_sequence_i::sendDoubleSeq (const ttcp_sequence::DoubleSeq& ttcp_seq, 
-				CORBA::Environment &IT_env)
+ttcp_sequence_i::sendDoubleSeq (const ttcp_sequence::DoubleSeq& ttcp_seq,
+                                CORBA::Environment &IT_env)
 {
   ACE_UNUSED_ARG (IT_env);
   numCalls++;
@@ -82,8 +82,8 @@ ttcp_sequence_i::sendDoubleSeq (const ttcp_sequence::DoubleSeq& ttcp_seq,
 }
 
 void
-ttcp_sequence_i::sendCharSeq (const ttcp_sequence::CharSeq& ttcp_seq, 
-			      CORBA::Environment &IT_env)
+ttcp_sequence_i::sendCharSeq (const ttcp_sequence::CharSeq& ttcp_seq,
+                              CORBA::Environment &IT_env)
 {
   ACE_UNUSED_ARG (IT_env);
   numCalls++;
@@ -91,8 +91,8 @@ ttcp_sequence_i::sendCharSeq (const ttcp_sequence::CharSeq& ttcp_seq,
 }
 
 void
-ttcp_sequence_i::sendStructSeq (const ttcp_sequence::StructSeq& ttcp_seq, 
-				CORBA::Environment &IT_env)
+ttcp_sequence_i::sendStructSeq (const ttcp_sequence::StructSeq& ttcp_seq,
+                                CORBA::Environment &IT_env)
 {
   ACE_UNUSED_ARG (IT_env);
   numCalls++;
@@ -101,12 +101,3 @@ ttcp_sequence_i::sendStructSeq (const ttcp_sequence::StructSeq& ttcp_seq,
   //    cout << "Bytes received so far = " << this->nbytes_ << endl;
 #endif
 }
-
-
-
-
-
-
-
-
-
