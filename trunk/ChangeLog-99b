@@ -1,5 +1,8 @@
 Fri Jul 02 22:22:12 1999  Steve Huston  <shuston@riverace.com>
 
+        * ace/config-hpux-11.x-hpc++.h: Added
+          ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION for aC++.
+
         * websvcs/tests/Makefile: Replace VLDLIBS with correct LDLIBS. Now
           works on AIX.
 
