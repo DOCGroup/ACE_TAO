@@ -1,14 +1,19 @@
+Mon Jun 29 21:16:39 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp (invoke): wrapped final return with ACE_NOTREACHED.
+          "It's the right thing to do."
+
 Mon Jun 29 19:42:12 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Timeprobe_T.cpp (ACE_Timeprobe): Changed __TEXT to ASYS_TEXT.
+        * ace/Timeprobe_T.cpp (ACE_Timeprobe): Changed __TEXT to ASYS_TEXT.
 
 Mon Jun 29 14:48:58 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h: Added UNICODE macros for non-Win32 platforms.  Thanks
- 	  to Jeff Greif <jmg@trivida.com> for pointing this out.
+        * ace/OS.h: Added UNICODE macros for non-Win32 platforms.  Thanks
+          to Jeff Greif <jmg@trivida.com> for pointing this out.
 
-	* ace/OS.cpp (invoke): Added a return at the end to keep AIX
- 	  happy.  Thanks to CLahey@cccis.com for reporting this.
+        * ace/OS.cpp (invoke): Added a return at the end to keep AIX
+          happy.  Thanks to CLahey@cccis.com for reporting this.
 
 Mon Jun 29 11:37:28 1998  Steve Huston  <shuston@riverace.com>
 
