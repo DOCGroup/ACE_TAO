@@ -154,7 +154,7 @@ TAO_Object_Manager<T>::operator= (const TAO_Object_Manager<T> &rhs)
     }
   else
     {
-      *this->ptr_ = rhs.ptr_;
+      *this->ptr_ = *rhs.ptr_;
     }
   return *this;
 }
