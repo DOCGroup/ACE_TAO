@@ -23,14 +23,17 @@
 char *
 strtok_r (char * s, const char * sep, char ** lasts)
 {
+  int l_org;
+  int l_sub;
+
   if (s == 0)
     s = *lasts;
   else
     *lasts = s;
   if (*s == 0)                  // We have reached the end
     return 0;
-  int l_org = ACE_OS_String::strlen (s);
-  int l_sub = ACE_OS_String::strlen (s = ::strtok (s, sep));
+  l_org = pace_strlen (s);
+  l_sub = pace_strlen (s = pace_strtok (s, sep));
   *lasts = s + l_sub;
   if (l_sub != l_org)
     *lasts += 1;

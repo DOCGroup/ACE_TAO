@@ -1,3 +1,9 @@
+Fri Jul 20 15:53:56 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * pace/win32/string.c (strtok_r):
+          Fixed problems with reference to ACE_OS and some C++
+          incongruities.
+
 Fri Jul 20 15:44:02 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * pace/win32/string.h: 
