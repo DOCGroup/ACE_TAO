@@ -252,11 +252,34 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   ACE_UNUSED_ARG (_env);
 
   impl->init (minimum_priority, maximum_priority);
-  if (impl->schedule () != BaseSchedImplType::SUCCEEDED)
+
+  BaseSchedImplType::status_t schedule_status;
+  schedule_status = impl->schedule ();
+  switch (schedule_status)
     {
-      // TODO: throw something.
-      ACE_ERROR ((LM_ERROR, "schedule failed\n"));
-      return;
+      // If we succeeded with no warnings, do nothing.
+      case BaseSchedImplType::SUCCEEDED:
+        break;
+
+      // Issue a warning if there were unresolved remote dependencies.
+      case BaseSchedImplType::ST_UNRESOLVED_REMOTE_DEPENDENCIES:
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Warning: schedule has unresolved "
+                    "remote dependencies\n."));
+        break;
+
+      // Issue a warning if the schedule is not feasible.
+      case BaseSchedImplType::ST_UTILIZATION_BOUND_EXCEEDED:
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Warning: schedule exceeds utilization bound\n."));
+        break;
+
+      // On any other kind of scheduling error, 
+      // abort without generating a schedule. 
+      default:
+        // TODO: throw something.
+        ACE_ERROR ((LM_ERROR, "Schedule failed\n"));
+        return;
     }
 
   // return the set of scheduled RT_Infos

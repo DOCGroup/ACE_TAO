@@ -6,37 +6,37 @@
 #include "orbsvcs/Scheduler_Factory.h"
 
 static ACE_Scheduler_Factory::POD_RT_Info infos[] = {
-{"high_20_S" , 1, 0, 0, 0,   500000, (RtecScheduler::Criticality) 3, (RtecScheduler::Importance) 1, 0, 1,  15, 9, 0, (RtecScheduler::Info_Type) 0}
+{"high_20_S" , 1, 5000, 5000, 5000,   500000, (RtecScheduler::Criticality) 3, (RtecScheduler::Importance) 1, 0, 1,  15, 11, 0, (RtecScheduler::Info_Type) 0}
 ,
-{"low_20_S"  , 2, 0, 0, 0,   500000, (RtecScheduler::Criticality) 1, (RtecScheduler::Importance) 3, 0, 1,   2, 9, 1, (RtecScheduler::Info_Type) 0}
+{"low_20_S"  , 2, 5000, 5000, 5000,   500000, (RtecScheduler::Criticality) 1, (RtecScheduler::Importance) 3, 0, 1,   2, 8, 1, (RtecScheduler::Info_Type) 0}
 ,
-{"high_10_S" , 3, 0, 0, 0,  1000000, (RtecScheduler::Criticality) 3, (RtecScheduler::Importance) 1, 0, 1,  15, 6, 0, (RtecScheduler::Info_Type) 0}
+{"high_10_S" , 3, 10000, 10000, 10000,  1000000, (RtecScheduler::Criticality) 3, (RtecScheduler::Importance) 1, 0, 1,  15, 8, 0, (RtecScheduler::Info_Type) 0}
 ,
-{"low_10_S"  , 4, 0, 0, 0,  1000000, (RtecScheduler::Criticality) 1, (RtecScheduler::Importance) 3, 0, 1,   2, 6, 1, (RtecScheduler::Info_Type) 0}
+{"low_10_S"  , 4, 10000, 10000, 10000,  1000000, (RtecScheduler::Criticality) 1, (RtecScheduler::Importance) 3, 0, 1,   2, 5, 1, (RtecScheduler::Info_Type) 0}
 ,
-{"high_05_S" , 5, 0, 0, 0,  2000000, (RtecScheduler::Criticality) 3, (RtecScheduler::Importance) 1, 0, 1,  15, 3, 0, (RtecScheduler::Info_Type) 0}
+{"high_05_S" , 5, 20000, 20000, 20000,  2000000, (RtecScheduler::Criticality) 3, (RtecScheduler::Importance) 1, 0, 1,  15, 5, 0, (RtecScheduler::Info_Type) 0}
 ,
-{"low_05_S"  , 6, 0, 0, 0,  2000000, (RtecScheduler::Criticality) 1, (RtecScheduler::Importance) 3, 0, 1,   2, 3, 1, (RtecScheduler::Info_Type) 0}
+{"low_05_S"  , 6, 20000, 20000, 20000,  2000000, (RtecScheduler::Criticality) 1, (RtecScheduler::Importance) 3, 0, 1,   2, 2, 1, (RtecScheduler::Info_Type) 0}
 ,
-{"high_01_S" , 7, 0, 0, 0, 10000000, (RtecScheduler::Criticality) 3, (RtecScheduler::Importance) 1, 0, 1,  15, 0, 0, (RtecScheduler::Info_Type) 0}
+{"high_01_S" , 7, 100000, 100000, 100000, 10000000, (RtecScheduler::Criticality) 3, (RtecScheduler::Importance) 1, 0, 0,  15, 2, 0, (RtecScheduler::Info_Type) 0}
 ,
-{"low_01_S"  , 8, 0, 0, 0, 10000000, (RtecScheduler::Criticality) 1, (RtecScheduler::Importance) 3, 0, 1,   2, 0, 1, (RtecScheduler::Info_Type) 0}
+{"low_01_S"  , 8, 100000, 100000, 100000,        0, (RtecScheduler::Criticality) 1, (RtecScheduler::Importance) 3, 0, 0,   0, 0, 0, (RtecScheduler::Info_Type) 3}
 ,
-{"high_20_C" , 9, 0, 0, 0,        0, (RtecScheduler::Criticality) 3, (RtecScheduler::Importance) 1, 0, 0,  15, 10, 0, (RtecScheduler::Info_Type) 0}
+{"high_20_C" , 9, 0, 0, 0,        0, (RtecScheduler::Criticality) 3, (RtecScheduler::Importance) 1, 0, 0,  15, 9, 0, (RtecScheduler::Info_Type) 0}
 ,
-{"low_20_C"  , 10, 0, 0, 0,        0, (RtecScheduler::Criticality) 1, (RtecScheduler::Importance) 3, 0, 0,   2, 10, 1, (RtecScheduler::Info_Type) 0}
+{"low_20_C"  , 10, 0, 0, 0,        0, (RtecScheduler::Criticality) 1, (RtecScheduler::Importance) 3, 0, 0,   2, 6, 1, (RtecScheduler::Info_Type) 0}
 ,
-{"high_10_C" , 11, 0, 0, 0,        0, (RtecScheduler::Criticality) 3, (RtecScheduler::Importance) 1, 0, 0,  15, 7, 0, (RtecScheduler::Info_Type) 0}
+{"high_10_C" , 11, 0, 0, 0,        0, (RtecScheduler::Criticality) 3, (RtecScheduler::Importance) 1, 0, 0,  15, 6, 0, (RtecScheduler::Info_Type) 0}
 ,
-{"low_10_C"  , 12, 0, 0, 0,        0, (RtecScheduler::Criticality) 1, (RtecScheduler::Importance) 3, 0, 0,   2, 7, 1, (RtecScheduler::Info_Type) 0}
+{"low_10_C"  , 12, 0, 0, 0,        0, (RtecScheduler::Criticality) 1, (RtecScheduler::Importance) 3, 0, 0,   2, 3, 1, (RtecScheduler::Info_Type) 0}
 ,
-{"high_05_C" , 13, 0, 0, 0,        0, (RtecScheduler::Criticality) 3, (RtecScheduler::Importance) 1, 0, 0,  15, 4, 0, (RtecScheduler::Info_Type) 0}
+{"high_05_C" , 13, 0, 0, 0,        0, (RtecScheduler::Criticality) 3, (RtecScheduler::Importance) 1, 0, 0,  15, 3, 0, (RtecScheduler::Info_Type) 0}
 ,
-{"low_05_C"  , 14, 0, 0, 0,        0, (RtecScheduler::Criticality) 1, (RtecScheduler::Importance) 3, 0, 0,   2, 4, 1, (RtecScheduler::Info_Type) 0}
+{"low_05_C"  , 14, 0, 0, 0,        0, (RtecScheduler::Criticality) 1, (RtecScheduler::Importance) 3, 0, 0,   2, 0, 1, (RtecScheduler::Info_Type) 0}
 ,
-{"high_01_C" , 15, 0, 0, 0,        0, (RtecScheduler::Criticality) 3, (RtecScheduler::Importance) 1, 0, 0,  15, 1, 0, (RtecScheduler::Info_Type) 0}
+{"high_01_C" , 15, 0, 0, 0,        0, (RtecScheduler::Criticality) 3, (RtecScheduler::Importance) 1, 0, 0,  15, 0, 0, (RtecScheduler::Info_Type) 0}
 ,
-{"low_01_C"  , 16, 0, 0, 0,        0, (RtecScheduler::Criticality) 1, (RtecScheduler::Importance) 3, 0, 0,   2, 1, 1, (RtecScheduler::Info_Type) 0}
+{"low_01_C"  , 16, 0, 0, 0,        0, (RtecScheduler::Criticality) 1, (RtecScheduler::Importance) 3, 0, 0,   0, 0, 0, (RtecScheduler::Info_Type) 0}
 
 };
 
