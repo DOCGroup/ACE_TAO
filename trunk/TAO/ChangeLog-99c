@@ -1,3 +1,14 @@
+Tue Nov 30 19:35:13 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+	* performance-tests/RTCorba/Oneways/Reliable/server.cpp:
+	  Client and server now output the priority of the
+	  thread each is running in.
+
+	* performance-tests/RTCorba/Oneways/Reliable/run_test.pl:
+	  Running test with no command line args now adds
+	  tests of several queue sizes for buffered oneways.
+
 Tue Nov 30 19:12:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* docs/tutorials/Quoter/index.html:
