@@ -45,6 +45,12 @@ CORBA_Object::_narrow (CORBA_Object_ptr obj, CORBA::Environment&)
   return CORBA_Object::_duplicate (obj);
 }
 
+ACE_INLINE CORBA_Object_ptr
+CORBA_Object::_unchecked_narrow (CORBA_Object_ptr obj, CORBA::Environment&)
+{
+  return CORBA_Object::_duplicate (obj);
+}
+
 ACE_INLINE TAO_Stub *
 CORBA_Object::_stubobj (void) const
 {
