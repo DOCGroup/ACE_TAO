@@ -1004,7 +1004,7 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
       break;
     case AST_Decl::NT_pre_defined: // type is predefined type
       {
-        be_predefined_type *bpd = be_predefined_type::narrow_from_decl (bt);
+        be_predefined_type *bpd = be_predefined_type::narrow_from_decl (type);
 
         switch (cg->state ())
           {
@@ -1613,7 +1613,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
       break;
     case AST_Decl::NT_pre_defined: // type is predefined type
       {
-        be_predefined_type *bpd = be_predefined_type::narrow_from_decl (bt);
+        be_predefined_type *bpd = be_predefined_type::narrow_from_decl (type);
 
         // check if the type is an any
         if (bpd->pt () == AST_PredefinedType::PT_any)
@@ -2256,7 +2256,7 @@ be_state_typedef::gen_code (be_type *bt, be_decl *d, be_type *type)
           {
           case TAO_CodeGen::TAO_TYPEDEF_CH:
             {
-              be_predefined_type *pd = be_predefined_type::narrow_from_decl (bt);
+              be_predefined_type *pd = be_predefined_type::narrow_from_decl (type);
 
               if (!pd)
                 return -1;
@@ -2667,6 +2667,10 @@ be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
        // base class of the typedef
     ACE_ASSERT (bt->node_type () == AST_Decl::NT_typedef);
 
+  // enclosing scope in which the typedef occurs
+  be_decl *scope = 
+    be_decl::narrow_from_decl (ScopeAsDecl (bt->defined_in ()));
+
   // for sequences, all we do is generate the type
   switch (type->node_type ())
     {
@@ -2679,8 +2683,13 @@ be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
           case TAO_CodeGen::TAO_SEQUENCE_BASE_CS:
           case TAO_CodeGen::TAO_SEQUENCE_BASE_CI:
             break;
+          case TAO_CodeGen::TAO_SEQUENCE_BODY_CH:
+            *os << bt->nested_type_name (scope, "_var");
+	    break;
+          case TAO_CodeGen::TAO_SEQUENCE_BODY_CS:
+          case TAO_CodeGen::TAO_SEQUENCE_BODY_CI:
           default:
-            *os << bt->name () << "_var";
+	    *os << bt->name () << "_var";
           }
       }
       break;
@@ -2696,8 +2705,13 @@ be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
           case TAO_CodeGen::TAO_SEQUENCE_BASE_CS:
           case TAO_CodeGen::TAO_SEQUENCE_BASE_CI:
             break;
+          case TAO_CodeGen::TAO_SEQUENCE_BODY_CH:
+            *os << bt->nested_type_name (scope, "");
+	    break;
+          case TAO_CodeGen::TAO_SEQUENCE_BODY_CS:
+          case TAO_CodeGen::TAO_SEQUENCE_BODY_CI:
           default:
-            *os << bt->name ();
+	    *os << bt->name ();
           }
       }
       break;
@@ -2732,10 +2746,13 @@ be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
                 }
             }
             break;
+          case TAO_CodeGen::TAO_SEQUENCE_BODY_CH:
+	    *os << bt->nested_type_name (scope, "");
+	    break;
+          case TAO_CodeGen::TAO_SEQUENCE_BODY_CS:
+          case TAO_CodeGen::TAO_SEQUENCE_BODY_CI:
           default:
-            {
-              *os << bt->name ();
-            }
+	    *os << bt->name ();
           }
       }
       break;
