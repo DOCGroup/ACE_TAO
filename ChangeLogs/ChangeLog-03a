@@ -1,3 +1,8 @@
+Mon Dec 30 19:32:18 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Codecs_Test.cpp: Add explicit template instantiation for
+          ACE_Auto_Basic_Array_Ptr<ACE_Byte>.
+
 Mon Dec 30 18:44:20  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/TP_Logging_Server.cpp:
