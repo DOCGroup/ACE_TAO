@@ -12,7 +12,7 @@
 #include "orbsvcs/Sched/Config_Scheduler.h"
 #include "orbsvcs/Event/Event_Channel.h"
 #include "ECT_Supplier.h"
-#include "dataC.h"
+#include "ECT_Data.h"
 
 int
 main (int argc, char *argv [])
@@ -191,15 +191,19 @@ ECTS_Driver::supplier_task (Test_Supplier *supplier,
 
       CORBA::ULong n = this->event_count_;
 
-      ECT_Data::Info info;
+      ECT_IDLData::Info info;
       info.mobile_name = CORBA::string_copy ("test");
       info.mobile_speed = 1;
       info.trajectory.length (n);
+
+      ECT_Data other;
+      other.description = CORBA::string_copy ("some data");
 
       for (int j = 0; j < n; ++j)
 	{
 	  info.trajectory[j].x = j;
 	  info.trajectory[j].y = j*j;
+	  other.inventory.bind (j, j + 1);
 	}
 
       // We have to make it big enough so we get a contiguous block,
@@ -213,8 +217,11 @@ ECTS_Driver::supplier_task (Test_Supplier *supplier,
       // general the CDR interface is not specified).
       // @@ TODO once the compiled marshalling approach is in place
       // this will read: cdr << info;
-      cdr.encode (ECT_Data::_tc_Info, &info, 0, TAO_TRY_ENV);
+      cdr.encode (ECT_IDLData::_tc_Info, &info, 0, TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      // Here we marshall a non-IDL type.
+      cdr << other;
 
       const ACE_Message_Block* mb = cdr.begin ();
       CORBA::ULong mblen = cdr.length ();

@@ -12,7 +12,7 @@
 #include "orbsvcs/Sched/Config_Scheduler.h"
 #include "orbsvcs/Event/Event_Channel.h"
 #include "ECT_Consumer.h"
-#include "dataC.h"
+#include "ECT_Data.h"
 
 int
 main (int argc, char *argv [])
@@ -225,15 +225,21 @@ Driver::push_consumer (void* consumer_cookie,
 
       TAO_InputCDR cdr (mb, byte_order);
 
-      ECT_Data::Info info;
-      cdr.decode (ECT_Data::_tc_Info, &info, 0, _env);
+      ECT_IDLData::Info info;
+      cdr.decode (ECT_IDLData::_tc_Info, &info, 0, _env);
       if (_env.exception () != 0) return;
+
+      ECT_Data other;
+      cdr >> other;
 
       CORBA::ULong n = info.trajectory.length ();
       ACE_DEBUG ((LM_DEBUG, "Payload contains <%d> elements\n", n));
+      ACE_DEBUG ((LM_DEBUG, "Inventory contains <%d> elements\n",
+		  other.inventory.current_size ()));
+      
       for (CORBA::ULong i = 0; i < n; ++i)
 	{
-	  ECT_Data::Point& p = info.trajectory[i];
+	  ECT_IDLData::Point& p = info.trajectory[i];
 	  if (p.x != i || p.y != i*i)
 	    {
 	      ACE_DEBUG ((LM_DEBUG,
