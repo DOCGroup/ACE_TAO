@@ -1,3 +1,9 @@
+Wed Apr 23 16:57:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Multihomed_INET_Addr.cpp: Added explicit template
+	  instantiations. This should fix big chunk of the problems in our
+	  daily builds.
+
 Wed Apr 23 21:22:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
         Please direct all immediate build issues to jcohen@atl.lmco.com
