@@ -14,6 +14,8 @@ ACE_RCSID (be_visitor_operation,
            amh_ss,
            "$Id$")
 
+#include "ace/SString.h"
+
 be_visitor_amh_operation_ss::be_visitor_amh_operation_ss (
     be_visitor_context *ctx
   )
@@ -360,7 +362,7 @@ be_visitor_amh_operation_ss::generate_shared_section (be_decl *node,
       << response_handler_implementation_name.c_str ()
       << " (_tao_server_request)" << be_uidt_nl
       << ");" << be_uidt_nl
-      << response_handler_name.c_str () << "_var _tao_rh = _tao_rh_ptr;" 
+      << response_handler_name.c_str () << "_var _tao_rh = _tao_rh_ptr;"
       << be_nl;
 
   // Make the upcall.
