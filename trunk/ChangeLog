@@ -1,3 +1,17 @@
+Sun Jul 29 22:10:40 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Service_Config_DLL.cpp:
+	* tests/Service_Config_DLL.h:
+	* tests/Service_Config_DLL.dsp:
+	* tests/Service_Config_Test.conf:
+	* tests/Service_Config_Test_Export.h:
+
+	  New files associated with the existing Service_Config_Test.
+	  They are used when testing the reentrance/thread-safety of the
+	  Service Configurator, in addition to testing the Service
+	  Configurator's ability to handle nested process of Service
+	  Configurator directives.
+
 Sun Jul 29 19:19:20 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Service_Config.cpp (process_directive, process_directives):
