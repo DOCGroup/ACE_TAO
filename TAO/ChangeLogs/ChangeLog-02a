@@ -1,3 +1,10 @@
+Mon Sep 11 11:09:04 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/Makefile.dependencies:
+
+	  Added no-op clean and realclean targets. Thanks to 
+	  Bala for reporting this oversight.
+
 Mon Sep 11 09:18:18 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* Updated dependencies to Makefiles in orbsvcs/orbsvcs to take
