@@ -1,3 +1,6 @@
+/* -*- C++ -*- */
+// $Id$
+
 #if !defined (ACE_CONFIG_SCO_5_0_0_H)
 #define ACE_CONFIG_SCO_5_0_0_H
 
@@ -16,7 +19,7 @@
 #define ACE_LACKS_STRRECVFD
 #define ACE_NEEDS_FTRUNCATE
 #define ACE_LACKS_MADVISE
-#define	ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
+#define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 
 #define ACE_DEFAULT_CLOSE_ALL_HANDLES 0
 
@@ -24,11 +27,11 @@
 //#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
-#define ACE_HAS_SYSV_IPC			
-#define	ACE_HAS_NONCONST_MSGSND
+#define ACE_HAS_SYSV_IPC
+#define ACE_HAS_NONCONST_MSGSND
 #define ACE_HAS_LONG_FDMASK
-// #define	ACE_LACKS_POSIX_PROTOTYPES
-#define	ACE_HAS_SVR4_DYNAMIC_LINKING
+// #define      ACE_LACKS_POSIX_PROTOTYPES
+#define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 
 // Platform supports Term Ioctls
@@ -94,12 +97,12 @@
 #endif /* ACE_NTRACE */
 
 #define ACE_HAS_SIGINFO_T
-#define	ACE_HAS_UCONTEXT_T
+#define ACE_HAS_UCONTEXT_T
 
-#define	ACE_NEEDS_SYSTIME_H
-#define	ACE_LACKS_STRCASECMP
+#define ACE_NEEDS_SYSTIME_H
+#define ACE_LACKS_STRCASECMP
 
-// #define	ACE_HAS_POSIX_TIME
-#define	ACE_HAS_IP_MULTICAST
+// #define      ACE_HAS_POSIX_TIME
+#define ACE_HAS_IP_MULTICAST
 
 #endif /* ACE_CONFIG_SCO_5_0_0_H */
