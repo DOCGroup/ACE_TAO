@@ -23,9 +23,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // =========================================================================
-// Perfect Multicast filting refers to RFC 3376, where a socket is only 
+// Perfect Multicast filting refers to RFC 3376, where a socket is only
 // delivered dgrams for groups joined even if it didn't bind the group
-// address.  We turn this option off by default, although most OS's 
+// address.  We turn this option off by default, although most OS's
 // except for Windows and Solaris probably lack perfect filtering.
 // =========================================================================
 
@@ -550,7 +550,7 @@ typedef ACE_THR_FUNC_RETURN (*ACE_THR_C_FUNC)(void *);
 // Macros for controlling the lifetimes of dlls loaded by ACE_DLL--including
 // all dlls loaded via the ACE Service Config framework.
 //
-// Please don't change these values or add new ones wantonly, since we use 
+// Please don't change these values or add new ones wantonly, since we use
 // the ACE_BIT_ENABLED, etc..., macros to test them.
 // ============================================================================
 
@@ -559,7 +559,7 @@ typedef ACE_THR_FUNC_RETURN (*ACE_THR_C_FUNC)(void *);
 // Apply policy on a per-dll basis.  If the dll doesn't use one of the macros
 // below, the current per-process policy will be used.
 #define ACE_DLL_UNLOAD_POLICY_PER_DLL 1
-// Don't unload dll when refcount reaches zero, i.e., wait for either an 
+// Don't unload dll when refcount reaches zero, i.e., wait for either an
 // explicit unload request or program exit.
 #define ACE_DLL_UNLOAD_POLICY_LAZY 2
 // Default policy allows dlls to control their own destinies, but will
