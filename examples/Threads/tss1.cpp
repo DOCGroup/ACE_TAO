@@ -85,8 +85,8 @@ ACE_TSS<Errno> TSS_Error;
 // (Sun C++ 4.2 with -O3 won't link if the following is static.)
 int close_started = 0;
 
-template <ACE_SYNCH_1>
-class Tester: public ACE_Task<ACE_SYNCH_2>
+template <ACE_SYNCH_DECL>
+class Tester: public ACE_Task<ACE_SYNCH_USE>
 {
 public:
   Tester (void) {}
@@ -100,8 +100,8 @@ public:
   virtual int close (u_long args = 0);
 };
 
-template <ACE_SYNCH_1> int
-Tester<ACE_SYNCH_2>::svc (void)
+template <ACE_SYNCH_DECL> int
+Tester<ACE_SYNCH_USE>::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) svc: setting error code to 1\n"));
   TSS_Error->error (1);
@@ -116,15 +116,15 @@ Tester<ACE_SYNCH_2>::svc (void)
   return 0;
 }
 
-template <ACE_SYNCH_1> int
-Tester<ACE_SYNCH_2>::open (void *)
+template <ACE_SYNCH_DECL> int
+Tester<ACE_SYNCH_USE>::open (void *)
 {
   // Make this an Active Object.
   return this->activate ();
 }
 
-template <ACE_SYNCH_1>
-int Tester<ACE_SYNCH_2>::close (u_long)
+template <ACE_SYNCH_DECL>
+int Tester<ACE_SYNCH_USE>::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) close running\n"));
   close_started = 1;
