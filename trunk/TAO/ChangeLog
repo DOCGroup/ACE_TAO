@@ -1,3 +1,21 @@
+Fri Aug  1 17:04:49 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.cpp: 
+
+	  Removed the unused ACE_TRY_LABEL warning from RH 7.1 Explicit
+	  Template build.
+	
+Fri Aug 1 16:35:43 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tests/RTScheduling/VoidData/run_test.pl:
+	* tests/RTScheduling/Thread_Cancel/run_test.pl:
+	* tests/RTScheduling/DT_Spawn/run_test.pl:
+	* tests/RTScheduling/Current/run_test.pl:
+	* tests/RTScheduling/Scheduling_Interceptor/run_test.pl:
+	* tao_orb_tests.lst: 
+	
+	  Added run_test.pl to execute the tests.
+
 Fri Aug 01 14:37:23 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * tao/Object_KeyC.h:
