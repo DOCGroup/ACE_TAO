@@ -50,7 +50,7 @@ main (int argc, char *argv[])
     ACE_OS::printf ("fileinfo : mode = %o\nno of links = %lu\nsize = %lu\n",
                     fileinfo.mode_ & 0777,
                     ACE_static_cast(unsigned long,fileinfo.nlink_),
-                    fileinfo.size_);
+                    (u_long) fileinfo.size_);
 
   off_t fpos = cli_file.position ();
 
@@ -61,7 +61,7 @@ main (int argc, char *argv[])
                       1);
   else
     ACE_OS::printf ("current filepointer is at %ld\n",
-                    fpos);
+                    (long int) fpos);
 
   if (cli_file.position (0,
                          SEEK_SET) == -1)
