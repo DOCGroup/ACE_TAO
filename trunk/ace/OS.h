@@ -2648,6 +2648,10 @@ public:
 #   endif /* ! USYNC_PROCESS */
 // These are dummies needed for class OS.h
 typedef int ACE_cond_t;
+struct ACE_Export ACE_condattr_t
+{
+  int type;
+};
 typedef int ACE_mutex_t;
 typedef int ACE_thread_mutex_t;
 typedef int ACE_recursive_thread_mutex_t;
@@ -6240,9 +6244,9 @@ public:
   // manipulate\ions of CORBA::WString.
   typedef ACE_UINT16 WChar;
   static u_int wslen (const WChar *);
-  static WChar *wscpy (WChar *, 
+  static WChar *wscpy (WChar *,
                        const WChar *);
-  static int wscmp (const WChar *, 
+  static int wscmp (const WChar *,
                     const WChar *);
   static int wsncmp (const WChar *,
                      const WChar *,
