@@ -1,7 +1,7 @@
 #include "CORBA_String.h"
 #include "Managed_Types.h"
 #include "ace/OS.h"
-#include "ace/iosfwd.h"
+#include "ace/streams.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/CORBA_String.inl"

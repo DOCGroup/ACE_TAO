@@ -1,3 +1,8 @@
+Mon Jul 21 07:19:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/CORBA_String.cpp: Include ace/string.h for getting it to
+	  compile properly.  Thanks to Jeff for reporting this.
+
 Sun Jul 20 14:02:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
