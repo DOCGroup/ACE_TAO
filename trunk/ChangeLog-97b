@@ -72,10 +72,8 @@ Sun Oct 26 11:04:21 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Hash_Map_Manager.cpp (unbind): added ACE_UNUSED_ARG (int_id).
 
-        * tests/Conn_Test.cpp (server): added ACE_UNUSED_ARG (options).  I'm
-          not sure if we can just remove "options", because I don't know if
-          its construction has any side effects.  And, added template
-          instantations.
+        * tests/Conn_Test.cpp (server): added ACE_UNUSED_ARG (options).
+          And, added template instantations.
 
         * tests/Conn_Test.cpp (cached_connect): changed type of loop index i
           to int to avoid signed/unsigned comparison.
