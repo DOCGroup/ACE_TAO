@@ -110,7 +110,7 @@ main (int, char *[])
 			     n_iterations,
 			     thread_handles);
 
-#if !defined (VXWORKS)
+#if defined (VXWORKS)
       // VxWorks doesn't support thr_join() semantics...  Someday
       // we'll fix this.
       ACE_Thread_Manager::instance ()->wait ();
