@@ -525,7 +525,8 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
       this->entry_->protocol_object (object);
       this->entry_->set_local_addr (local_addr);
       this->entry_->handler (flow_handler);
-      this->entry_->address (inet_addr);
+      //this->entry_->address (inet_addr);
+	  this->entry_->address (local_addr);
     }
   else
     {
@@ -589,7 +590,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                                TAO_AV_Transport *&transport,
                                TAO_AV_Core::Flow_Component flow_component)
 {
-  ACE_INET_Addr *local_addr;
+  ACE_INET_Addr *local_addr = 0;
   ACE_INET_Addr *control_inet_addr;
 
   this->entry_ = entry;
@@ -820,7 +821,7 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
 
           local_addr->set (local_addr->get_port_number (),
                            local_addr->get_host_name ());
-            handler->set_peer_addr (local_addr);
+	  handler->set_peer_addr (local_addr);
         }
     }
   else
@@ -871,9 +872,13 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
 	handler->set_remote_address  (inet_addr);
       
       result = handler->get_socket ()->get_local_addr (*local_addr);
-	  	 
-	  local_addr->addr_to_string (buf, BUFSIZ);
-
+      
+      
+      local_addr->set (local_addr->get_port_number (),
+		       local_addr->get_host_name ());
+      
+      local_addr->addr_to_string (buf, BUFSIZ);
+      
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_Dgram_Connector::open: get_local_addr failed\n"),result);
     }
