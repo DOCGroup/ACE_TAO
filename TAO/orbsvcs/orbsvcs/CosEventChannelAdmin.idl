@@ -1,5 +1,28 @@
 // $Id$
 
+// ============================================================================
+//
+// = LIBRARY
+//    orbsvcs
+//
+// = FILENAME
+//    CosEventChannelAdmin.idl
+//
+// = DESCRIPTION
+//    EVENT SERVICE - described in CORBAservices: Common Object Services
+//    Specification, chapter 4.
+//    CosEventChannelAdmin Module, page 4-15 includes the following interfaces:
+//    ProxyPushConsumer, ProxyPullSupplier, ProxyPullConsumer,
+//    ProxyPushSupplier, ConsumerAdmin, SupplierAdmin, EventChannel
+//    The Event service description can be downloaded from
+//    ftp://www.omg.org/pub/docs/formal/97-11-02.idl
+//
+// = AUTHOR
+//    Pradeep Gore <pradeep@cs.wustl.edu>
+//
+// ============================================================================
+
+
 #ifndef TAO_EVENTCHANNELADMIN_IDL
 #define  TAO_EVENTCHANNELADMIN_IDL
 
