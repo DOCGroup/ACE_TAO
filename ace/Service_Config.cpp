@@ -459,11 +459,12 @@ int
 ACE_Service_Config::open (const ASYS_TCHAR program_name[],
                           LPCTSTR logger_key)
 {
+  int retval = 0;
   ACE_TRACE ("ACE_Service_Config::open");
 
   // Clear the LM_DEBUG bit from log messages if appropriate
   if (!ACE_Service_Config::debug_)
-    ACE_Log_Msg::disable_debug_messages();
+    ACE_Log_Msg::disable_debug_messages();  
   // Become a daemon before doing anything else.
   if (ACE_Service_Config::be_a_daemon_)
     ACE_Service_Config::start_daemon ();
@@ -484,7 +485,7 @@ ACE_Service_Config::open (const ASYS_TCHAR program_name[],
   if (ACE_LOG_MSG->open (program_name,
                          flags,
                          key) == -1)
-    return -1;
+    retval = -1;
   else
     {
       if (ACE_Service_Config::debug_)
@@ -501,13 +502,18 @@ ACE_Service_Config::open (const ASYS_TCHAR program_name[],
       // See if we need to load the static services.
       if (ACE_Service_Config::no_static_svcs_ == 0
           && ACE_Service_Config::load_static_svcs () == -1)
-        return -1;
+        retval = -1;
       else
         {
           int result = ACE_Service_Config::process_commandline_directives ();
-          return ACE_Service_Config::process_directives () + result;
+          retval = ACE_Service_Config::process_directives () + result;
         }
     }
+  
+  if (!ACE_Service_Config::debug_)
+    ACE_Log_Msg::enable_debug_messages();  
+
+  return retval;
 }
 
 ACE_Service_Config::ACE_Service_Config (const ASYS_TCHAR program_name[],
@@ -608,6 +614,9 @@ ACE_Service_Config::close (void)
 {
   ACE_TRACE ("ACE_Service_Config::close");
 
+  if (!ACE_Service_Config::debug_)
+    ACE_Log_Msg::disable_debug_messages ();
+
   // ACE_Service_Config must be deleted before the Singletons are
   // closed so that an object's fini() method may reference a
   // valid ACE_Reactor.
@@ -620,6 +629,9 @@ ACE_Service_Config::close (void)
   // Delete the dynamically allocated static_svcs instance.
   delete ACE_Service_Config::static_svcs_;
   ACE_Service_Config::static_svcs_ = 0;
+
+  if (!ACE_Service_Config::debug_)
+    ACE_Log_Msg::enable_debug_messages ();
 
   return 0;
 }
