@@ -48,12 +48,11 @@ DatabaseImpl::Entry::invoke (CORBA::ServerRequest_ptr request,
       const char *operation = request->operation ();
 
       if (ACE_OS::strcmp (operation, "_is_a") == 0)
-        this->_is_a (request, ACE_TRY_ENV);
+        this->is_a (request, ACE_TRY_ENV);
 
       else
         {
           ACE_THROW (CORBA::NO_IMPLEMENT (CORBA::COMPLETED_NO));
-          return;
         }
       ACE_TRY_CHECK;
     }
@@ -66,7 +65,7 @@ DatabaseImpl::Entry::invoke (CORBA::ServerRequest_ptr request,
 }
 
 void
-DatabaseImpl::Entry::_is_a (CORBA::ServerRequest_ptr request,
+DatabaseImpl::Entry::is_a (CORBA::ServerRequest_ptr request,
                             CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::NVList_ptr list;
