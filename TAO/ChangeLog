@@ -1,3 +1,12 @@
+Mon Mar 31 14:05:12 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp (set_is_multiple):
+
+          Added ACE_UNUSED_ARG macros for the arguments in a second template
+          method, overlooked in
+
+          Mon Mar 31 10:01:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Mon Mar 31 13:20:41 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
  	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp: Fixed a
