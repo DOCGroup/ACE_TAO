@@ -33,6 +33,7 @@ Tue Aug 26 16:42:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  been released to the transport cache or not. 
 	
 	* tao/IIOP_Transport.cpp: 
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
 	* tao/Strategies/SCIOP_Transport.cpp:
 	* tao/Strategies/SHMIOP_Transport.cpp:
 	* tao/Strategies/UIOP_Transport.cpp: The method send_message ()
