@@ -60,7 +60,7 @@ private:
   char *name_;
   char *ir_key_;
 
-  Implementation_Repository::INET_Addr ir_addr_;
+  Implementation_Repository::INET_Addr *ir_addr_;
   
   POA_Ping_Object *ping_;  
   CORBA::Object_ptr ping_ptr_;
