@@ -1,3 +1,15 @@
+Tue Dec 23 11:52:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_visitor_arg_traits.cpp:
+
+	  Changes to get the generated code to compile if gperf is not
+	  available. There have been questiosn from users in the past
+	  whether they can avoid using gperf genereated code. To prevent
+	  suprises for those users we have to get the generated code
+	  compiling for every strategy that we support or remove those
+	  strategies which we can't maintain ;).
+
 Tue Dec 23 11:04:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/PortableInterceptorC.h:
