@@ -1,3 +1,8 @@
+Wed Aug  4 00:23:34 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/InterfaceC.cpp:
+	* tao/InterfaceC.h : Made some changes according to TAO conventions
+
 Tue Aug  3 22:25:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Makefile: 

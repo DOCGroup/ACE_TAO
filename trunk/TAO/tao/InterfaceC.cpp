@@ -8,7 +8,9 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "InterfaceC.h"
+#include "tao/InterfaceC.h"
+#include "tao/Stub.h"
+#include "tao/Invocation.h"
 
 #ifdef TAO_HAS_INTERFACE_REPOSITORY
 
