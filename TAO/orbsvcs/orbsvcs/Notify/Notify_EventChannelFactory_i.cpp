@@ -37,19 +37,8 @@ TAO_Notify_EventChannelFactory_i::create (PortableServer::POA_ptr default_POA, C
     ::_narrow (obj._retn (), ACE_TRY_ENV);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannelFactory::_nil ());
 
-  // -- debug
-  CosNotifyChannelAdmin::ChannelID id;
-  CosNotification::QoSProperties initial_qos_;
-  CosNotification::AdminProperties initial_admin_;
-
-  channelfactory->my_ref_->create_channel (initial_qos_,
-                                           initial_admin_,
-                                           id, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-  // -- debug
-
   return CosNotifyChannelAdmin::EventChannelFactory::
-    _duplicate (channelfactory->my_ref_);
+    _duplicate (channelfactory->my_ref_.in ());
 }
 
 void
@@ -133,13 +122,23 @@ TAO_Notify_EventChannelFactory_i::get_event_channel (CosNotifyChannelAdmin::Chan
                    CosNotifyChannelAdmin::ChannelNotFound
                    ))
 {
-  CORBA::Object_var obj =
-    this->resource_manager_->id_to_reference (id, this->ec_POA_.in (),
-                                              ACE_TRY_ENV);
-  ACE_THROW_RETURN (CosNotifyChannelAdmin::ChannelNotFound (),
-                    CosNotifyChannelAdmin::EventChannel::_nil ());
+  ACE_TRY
+    {
+      CORBA::Object_var obj =
+        this->resource_manager_->id_to_reference (id, this->ec_POA_.in (),
+                                                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  return CosNotifyChannelAdmin::EventChannel::_narrow (obj.in ());
+      return CosNotifyChannelAdmin::EventChannel::_narrow (obj._retn ());
+    }
+  ACE_CATCHANY // Translate any exception to "not found"
+    {
+      ACE_THROW_RETURN (CosNotifyChannelAdmin::ChannelNotFound (),
+                        CosNotifyChannelAdmin::EventChannel::_nil ());
+    }
+  ACE_ENDTRY;
+
+  return CosNotifyChannelAdmin::EventChannel::_nil ();
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
