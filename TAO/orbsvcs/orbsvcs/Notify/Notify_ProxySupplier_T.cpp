@@ -28,6 +28,7 @@ template <class SERVANT_TYPE> void
 TAO_Notify_ProxySupplier<SERVANT_TYPE>::init (CosNotifyChannelAdmin::ProxyID proxy_id, CORBA::Environment& ACE_TRY_ENV)
 {
   consumer_admin_->_add_ref (ACE_TRY_ENV);
+  ACE_CHECK;
 
   this->proxy_id_ = proxy_id;
 
@@ -35,6 +36,7 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::init (CosNotifyChannelAdmin::ProxyID pro
     TAO_Notify_Factory::get_channel_objects_factory ();
 
   this->lock_ = cof->create_proxy_supplier_lock (ACE_TRY_ENV);
+  ACE_CHECK;
 
   TAO_Notify_EMO_Factory* event_manager_objects_factory =
     event_manager_->resource_factory ();

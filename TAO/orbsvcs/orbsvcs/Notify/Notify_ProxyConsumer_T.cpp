@@ -31,6 +31,7 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::init (CosNotifyChannelAdmin::ProxyID pro
     TAO_Notify_Factory::get_channel_objects_factory ();
 
   this->lock_ = cof->create_proxy_consumer_lock (ACE_TRY_ENV);
+  ACE_CHECK;
 
   // Create the task to forward filtering commands to:
 
@@ -83,18 +84,20 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::evaluate_filter (TAO_Notify_Event &event
                                                       ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
+  CORBA::Boolean ret_val;
+
   if (supplier_admin_->MyOperator (ACE_TRY_ENV) == CosNotifyChannelAdmin::AND_OP)
-    return (bval
-            &&
-            this->filter_admin_.match (event,
-                                       ACE_TRY_ENV)
-            );
-      else
-        return (bval
-                ||
-                this->filter_admin_.match (event,
-                                           ACE_TRY_ENV)
-                );
+    {
+      ret_val = bval && this->filter_admin_.match (event, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+    }
+  else
+    {
+      ret_val = bval || this->filter_admin_.match (event, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+    }
+
+  return ret_val;
 }
 
 template <class SERVANT_TYPE> TAO_Notify_Worker_Task*

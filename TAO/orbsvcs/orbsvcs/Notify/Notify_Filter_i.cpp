@@ -19,6 +19,7 @@ TAO_Notify_Filter_i::~TAO_Notify_Filter_i (void)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   this->remove_all_constraints (ACE_TRY_ENV);
+  ACE_CHECK;
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Filter Destroyed\n"));

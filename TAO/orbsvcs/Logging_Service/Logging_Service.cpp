@@ -69,6 +69,7 @@ Logging_Service::startup (int argc, char *argv[],
 
   CORBA::String_var str =
     this->orb_->object_to_string (obj.in (), ACE_TRY_ENV);
+  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
               "The Basic Log Factory IOR is <%s>\n", str.in ()));

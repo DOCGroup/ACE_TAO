@@ -90,6 +90,7 @@ TAO_Notify_EventChannel_i::init (CosNotifyChannelAdmin::ChannelID channel_id, co
 
   this->event_listener_list_ =
     TAO_Notify_Factory::get_collection_factory ()->create_event_listener_list (ACE_TRY_ENV);
+  ACE_CHECK;
 
   // Create the default Consumer Admin. Because the ID_Pool is being used
   // the first time here, it will generate the id 0.
@@ -154,11 +155,14 @@ TAO_Notify_EventChannel_i::destroy (CORBA::Environment &ACE_TRY_ENV)
                    ))
 {
   this->event_manager_->shutdown (ACE_TRY_ENV);
+  ACE_CHECK;
 
   // Deactivate ourselves.
   this->poa_factory_->deactivate_object (this,
                                          this->my_POA_.in (),
                                          ACE_TRY_ENV);
+  ACE_CHECK;
+
   // shutdown consumer admins's.
   TAO_Notify_Shutdown_Worker shutdown_worker;
 
@@ -167,12 +171,15 @@ TAO_Notify_EventChannel_i::destroy (CORBA::Environment &ACE_TRY_ENV)
 
   // release all references.
   this->event_listener_list_->shutdown (ACE_TRY_ENV);
+  ACE_CHECK;
 
   // @@ TODO: We need a way to send shutdown messages to the proxy consumers too.
   // (event listeners are proxy suppliers or CA's in disguise)
 
   this->poa_factory_->destroy_POA (this->CA_POA_.in (),
                                    ACE_TRY_ENV);
+  ACE_CHECK;
+
   this->poa_factory_->destroy_POA (this->SA_POA_.in (),
                                    ACE_TRY_ENV);
 }
@@ -395,6 +402,7 @@ TAO_Notify_EventChannel_i::for_consumers (CORBA::Environment& ACE_TRY_ENV)
 
   CORBA::Object_var obj =
     this->get_consumeradmin (this->default_id_, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CosEventChannelAdmin::ConsumerAdmin::_nil ());
 
   return CosEventChannelAdmin::ConsumerAdmin::_narrow (obj.in (),
                                                        ACE_TRY_ENV);

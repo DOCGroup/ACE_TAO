@@ -128,6 +128,7 @@ TAO_Notify_ConsumerAdmin_i::evaluate_filter (TAO_Notify_Event &event, CORBA::Boo
     // because we've done it here.
 
     this->event_listener_list_->for_each (&worker, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
     // Propogate the filter command.
 
     return 0;
@@ -246,6 +247,7 @@ TAO_Notify_ConsumerAdmin_i::destroy_i (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   this->event_listener_list_->shutdown (ACE_TRY_ENV);
+  ACE_CHECK;
 
   this->poa_factory_->destroy_POA (this->proxy_pushsupplier_POA_.in (),
                                    ACE_TRY_ENV);
@@ -298,7 +300,7 @@ TAO_Notify_ConsumerAdmin_i::subscription_change (const CosNotification::EventTyp
 {
   this->event_manager_->subscribe_for_events (this, //*this->event_listener_list_,
                                               added, removed, ACE_TRY_ENV);
-
+  ACE_CHECK;
   {
     ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
                         CORBA::INTERNAL ());
