@@ -1,3 +1,35 @@
+Wed Mar 15 21:50:42 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/TAO.dsp: Added new files to the project. Many thanks to
+	  Angelo Corsaro <corsaro@cs.wustl.edu> who helped me with this.
+
+Wed Mar 15 20:26:13 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/AMI/FL_Callback/Makefile
+	* examples/Buffered_AMI/Makefile
+	* examples/Callback_Quoter/Makefile
+	* examples/Event_Comm/Makefile
+	* examples/Load_Balancing/Makefile
+	* examples/Load_Balancing_persistent/Makefile
+	* examples/Logging/Makefile
+	* examples/OBV/Typed_Events/Makefile
+	* examples/POA/Generic_Servant/Makefile
+	* examples/POA/Adapter_Activator/Makefile
+	* examples/POA/DSI/Makefile
+	* examples/POA/Default_Servant/Makefile
+	* examples/POA/Explicit_Activation/Makefile
+	* examples/POA/FindPOA/Makefile
+	* examples/POA/Forwarding/Makefile
+	* examples/POA/Generic_Servant/Makefile
+	* examples/POA/Loader/Makefile
+	* examples/POA/NewPOA/Makefile
+	* examples/POA/On_Demand_Activation/Makefile
+	* examples/POA/On_Demand_Loading/Makefile
+	* examples/POA/Reference_Counted_Servant/Makefile
+	* examples/POA/RootPOA/Makefile
+	* examples/POA/TIE/Makefile: 
+
+
 Wed Mar 15 19:49:35 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/OctetSeq/Makefile
