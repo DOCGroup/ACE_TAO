@@ -21,7 +21,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Basic_Argument_T.h"
-#include "Arg_Traits_T.h"
 
 namespace TAO
 {
@@ -31,89 +30,39 @@ namespace TAO
    *
    */
 
-  template<>
-  class TAO_Export Ret_Basic_Argument_T<void> : public Argument
+  struct Void_Arg_Traits
   {
-  public:
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (CORBA::Any *);
+    typedef void        ret_type;
 
-    operator void () const;
-  };
+    typedef Argument    stub_ret_val;
+    typedef Argument    skel_ret_val;
 
-  template<>
-  class TAO_Export Ret_Basic_SArgument_T<void> : public Argument
-  {
-  public:
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (CORBA::Any *);
-
-    operator void () const;
-  };
-
-  template<>
-  class Arg_Traits<void>
-  {
-    typedef void                          ret_type;
-
-    typedef Ret_Basic_Argument_T<void>    stub_ret_val;
-    typedef Ret_Basic_SArgument_T<void>   skel_ret_val;
-
-    typedef Basic_Tag                     idl_tag;
+    typedef Basic_Tag   idl_tag;
   };
 
   /**
    *
-   * @brief Specializations for most of the basic IDL types.
+   * @brief Typedefs for basic IDL arg types, except (w)char/boolean/octet.
    *
    */
 
-  template<>
-  class Arg_Traits<CORBA::Short> : public Basic_Arg_Traits_T<CORBA::Short>
-  {
-  };
+  typedef Basic_Arg_Traits_T<CORBA::Short>        Short_Arg_Traits;
 
-  template<>
-  class Arg_Traits<CORBA::Long> : public Basic_Arg_Traits_T<CORBA::Long>
-  {
-  };
+  typedef Basic_Arg_Traits_T<CORBA::Long>         Long_Arg_Traits;
 
-  template<>
-  class Arg_Traits<CORBA::UShort> : public Basic_Arg_Traits_T<CORBA::UShort>
-  {
-  };
+  typedef Basic_Arg_Traits_T<CORBA::UShort>       UShort_Arg_Traits;
 
-  template<>
-  class Arg_Traits<CORBA::ULong> : public Basic_Arg_Traits_T<CORBA::ULong>
-  {
-  };
+  typedef Basic_Arg_Traits_T<CORBA::ULong>        ULong_Arg_Traits;
 
-  template<>
-  class Arg_Traits<CORBA::Float> : public Basic_Arg_Traits_T<CORBA::Float>
-  {
-  };
+  typedef Basic_Arg_Traits_T<CORBA::Float>        Float_Arg_Traits;
 
-  template<>
-  class Arg_Traits<CORBA::Double> : public Basic_Arg_Traits_T<CORBA::Double>
-  {
-  };
+  typedef Basic_Arg_Traits_T<CORBA::Double>       Double_Arg_Traits;
 
-  template<>
-  class Arg_Traits<CORBA::LongLong> : public Basic_Arg_Traits_T<CORBA::LongLong>
-  {
-  };
+  typedef Basic_Arg_Traits_T<CORBA::LongLong>     LongLong_Arg_Traits;
 
-  template<>
-  class Arg_Traits<CORBA::ULongLong> : public Basic_Arg_Traits_T<CORBA::ULongLong>
-  {
-  };
+  typedef Basic_Arg_Traits_T<CORBA::ULongLong>    ULongLong_Arg_Traits;
 
-  template<>
-  class Arg_Traits<CORBA::LongDouble> : public Basic_Arg_Traits_T<CORBA::LongDouble>
-  {
-  };
+  typedef Basic_Arg_Traits_T<CORBA::LongDouble>   LongDouble_Arg_Traits;
 };
 
 #include "ace/post.h"

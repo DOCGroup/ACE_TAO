@@ -274,10 +274,10 @@ char * _TAO_foo_Remote_Proxy_Impl::all_str (
     CORBA::SystemException
   ))
 {
-  TAO::Arg_Traits<ACE_InputCDR::to_string>::stub_ret_val _tao_retval;
-  TAO::Arg_Traits<ACE_InputCDR::to_string>::in_arg_val _tao_inarg (inarg);
-  TAO::Arg_Traits<ACE_InputCDR::to_string>::inout_arg_val _tao_inoutarg (inoutarg);
-  TAO::Arg_Traits<ACE_InputCDR::to_string>::out_arg_val _tao_outarg (outarg);
+  TAO::UB_String_Arg_Traits::stub_ret_val _tao_retval;
+  TAO::UB_String_Arg_Traits::in_arg_val _tao_inarg (inarg);
+  TAO::UB_String_Arg_Traits::inout_arg_val _tao_inoutarg (inoutarg);
+  TAO::UB_String_Arg_Traits::out_arg_val _tao_outarg (outarg);
 
   TAO::Argument *_tao_signature [] =
   {

@@ -246,53 +246,53 @@ namespace TAO
            size_t BOUND>
   struct BD_String_Arg_Traits_T
   {
-    typedef T *                                               ret_type;
-    typedef const T *                                         in_type;
-    typedef T *&                                              inout_type;
-    typedef T_out                                             out_type;
+    typedef T *                                   ret_type;
+    typedef const T *                             in_type;
+    typedef T *&                                  inout_type;
+    typedef T_out                                 out_type;
 
     typedef In_BD_String_Argument_T<T,
                                     to_T,
                                     from_T,
-                                    BOUND>                    in_arg_val;
+                                    BOUND>        in_arg_val;
     typedef Inout_BD_String_Argument_T<T,
                                        to_T,
                                        from_T,
-                                       BOUND>                 inout_arg_val;
+                                       BOUND>     inout_arg_val;
     typedef Out_BD_String_Argument_T<T,
                                      T_out,
                                      to_T,
                                      from_T,
-                                     BOUND>                   out_arg_val;
+                                     BOUND>       out_arg_val;
     typedef Ret_BD_String_Argument_T<T,
                                      T_var,
                                      to_T,
                                      from_T,
-                                     BOUND>                   stub_ret_val;
+                                     BOUND>       stub_ret_val;
 
     typedef In_BD_String_SArgument_T<T,
                                      T_var,
                                      to_T,
                                      from_T,
-                                     BOUND>                   in_sarg_val;
+                                     BOUND>       in_sarg_val;
     typedef Inout_BD_String_SArgument_T<T,
                                         T_var,
                                         to_T,
                                         from_T,
-                                        BOUND>                inout_sarg_val;
+                                        BOUND>    inout_sarg_val;
     typedef Out_BD_String_SArgument_T<T,
                                       T_var,
                                       T_out,
                                       to_T,
                                       from_T,
-                                      BOUND>                  out_sarg_val;
+                                      BOUND>      out_sarg_val;
     typedef Ret_BD_String_SArgument_T<T,
                                       T_var,
                                       to_T,
                                       from_T,
-                                      BOUND>                  skel_ret_val;
+                                      BOUND>      skel_ret_val;
 
-    typedef BD_String_Tag                                     idl_tag;
+    typedef BD_String_Tag                         idl_tag;
   };
 
   /**
@@ -302,7 +302,7 @@ namespace TAO
    */
 
   template<size_t BOUND>
-  class BD_String_Traits
+  class BD_String_Arg_Traits
     : public BD_String_Arg_Traits_T<CORBA::Char, 
                                     CORBA::String_var,
                                     CORBA::String_out,
@@ -313,7 +313,7 @@ namespace TAO
   };
 
   template<size_t BOUND>
-  class BD_WString_Traits
+  class BD_WString_Arg_Traits
     : public BD_String_Arg_Traits_T<CORBA::WChar, 
                                     CORBA::WString_var,
                                     CORBA::WString_out,

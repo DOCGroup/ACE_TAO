@@ -21,31 +21,24 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "UB_String_Argument_T.h"
-#include "Arg_Traits_T.h"
 
 namespace TAO
 {
   /**
    *
-   * @brief Specializations for unbounded (w)strings
+   * @brief Typedefs for unbounded (w)strings.
    *
    */
 
-  template<>
-  class Arg_Traits<ACE_InputCDR::to_string> 
-    : public UB_String_Arg_Traits_T<CORBA::Char, 
-                                    CORBA::String_var,
-                                    CORBA::String_out>
-  {
-  };
+  typedef UB_String_Arg_Traits_T<CORBA::Char, 
+                                 CORBA::String_var,
+                                 CORBA::String_out>
+    UB_String_Arg_Traits;
 
-  template<>
-  class Arg_Traits<ACE_InputCDR::to_wstring> 
-    : public UB_String_Arg_Traits_T<CORBA::WChar, 
-                                    CORBA::WString_var,
-                                    CORBA::WString_out>
-  {
-  };
+  typedef UB_String_Arg_Traits_T<CORBA::WChar, 
+                                 CORBA::WString_var,
+                                 CORBA::WString_out>
+    UB_WString_Arg_Traits;
 };
 
 #include "ace/post.h"
