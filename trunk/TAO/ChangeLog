@@ -1,3 +1,24 @@
+Sun Oct  6 09:28:18 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile (MKLIST):
+
+	  The new Telecom Logging Service implementation depends on other
+	  services in some cases.  Build those other services if
+	  necessary.  Addresses minimum CORBA build issues.
+
+	  Added {Event,Notify,RTEvent} Logging service specific
+	  "TAO_ORBSVCS" components.  Previously "Log" was used for all
+	  four logging service types.  That was too coarse-grained to
+	  allow disabling builds of some logging services when other
+	  services they depend on are not built.
+
+	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile:
+
+	  Only build the service if its corresponding TAO_ORBSVCS
+	  component was built.  Addresses minimum CORBA build issues.
+
 Sun Oct  6 08:44:27 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/Object_Adapter.cpp (init):

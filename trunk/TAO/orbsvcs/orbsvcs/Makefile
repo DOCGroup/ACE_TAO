@@ -32,17 +32,20 @@ ifndef TAO_ORBSVCS
                 Sched
 
   ifeq ($(corba_messaging),1)
-  TAO_ORBSVCS += RTEvent \
-		NativeCosEvent \
-                CosEvent \
-		RTOLDEvent \
-		RTSchedEvent
+    TAO_ORBSVCS += RTEvent \
+		   NativeCosEvent \
+                   CosEvent \
+		   RTOLDEvent \
+		   RTSchedEvent \
+                   EventLog \
+                   RTEventLog \
+		   NotifyLog
   endif #corba_messaging
 
   TAO_ORBSVCS += Concurrency \
-		Trader \
-		Log \
-		AV
+		 Trader \
+		 Log \
+		 AV
 
   ifeq ($(minimum_corba),0)
       ifneq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
@@ -70,7 +73,7 @@ ifndef TAO_ORBSVCS
     # Minimum CORBA disables.
     TAO_ORBSVCS += CosLoadBalancing
 
-    # The PortableGroup library requires several methods on the POA,
+    # The PortableGroup library requires several methods in the POA,
     # which are disabled by Minimum CORBA.
     TAO_ORBSVCS += PortableGroup
 
@@ -168,13 +171,25 @@ endif
 ifneq (,$(findstring  Log, $(TAO_ORBSVCS)))
   MKLIST += Makefile.DsLogAdmin
 endif
-ifneq (,$(findstring  Log, $(TAO_ORBSVCS)))
+ifneq (,$(findstring  EventLog, $(TAO_ORBSVCS)))
+  # The EventLog service depends on the CosEvent service.
+  ifeq (,$(findstring  CosEvent, $(TAO_ORBSVCS)))
+    MKLIST += Makefile.CosEvent
+  endif
   MKLIST += Makefile.DsEventLogAdmin
 endif
-ifneq (,$(findstring  Log, $(TAO_ORBSVCS)))
+ifneq (,$(findstring  NotifyLog, $(TAO_ORBSVCS)))
+  # The NotifyLog service depends on the Notification service.
+  ifeq (,$(findstring  Notify, $(TAO_ORBSVCS)))
+    MKLIST += Makefile.ETCL Makefile.CosNotification
+  endif
   MKLIST += Makefile.DsNotifyLogAdmin
 endif
-ifneq (,$(findstring  Log, $(TAO_ORBSVCS)))
+ifneq (,$(findstring  RTEventLog, $(TAO_ORBSVCS)))
+  # The RTEventLog service depends on the RTEvent service.
+  ifeq (,$(findstring  RTEvent, $(TAO_ORBSVCS)))
+    MKLIST += Makefile.RTEvent
+  endif
   MKLIST += Makefile.RTEventLogAdmin
 endif
 ifneq (,$(findstring  Security, $(TAO_ORBSVCS)))
