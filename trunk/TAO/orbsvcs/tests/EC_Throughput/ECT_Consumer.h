@@ -26,11 +26,15 @@
 
 class Test_Consumer : public POA_RtecEventComm::PushConsumer
 {
-  //
   // = TITLE
   //   Receive the events.
   //
   // = DESCRIPTION
+  //   This class is a consumer of events. It subscribes for a
+  //   continous ranges of event types, this permits studying the
+  //   effect of the number of subscriptions for each particular kind
+  //   of event on the EC.
+  //
 public:
   Test_Consumer (ECT_Driver* driver,
                  void* cookie,
@@ -38,8 +42,8 @@ public:
 
   void connect (RtecScheduler::Scheduler_ptr scheduler,
                 const char* name,
-                int event_a,
-                int event_b,
+                int type_start,
+                int type_count,
                 RtecEventChannelAdmin::EventChannel_ptr ec,
                 CORBA::Environment& _env);
   // This method connects the consumer to the EC.

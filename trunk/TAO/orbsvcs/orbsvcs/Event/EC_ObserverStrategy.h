@@ -52,7 +52,7 @@ class TAO_EC_ObserverStrategy
   //   The Event Channel supports Observers for the set of
   //   subscriptions and publications.
   //   This is used to implement federations of event channels,
-  //   either through UDP (multicast and unicast) and/or regular CORBA 
+  //   either through UDP (multicast and unicast) and/or regular CORBA
   //   calls.
   //
   //   This behavior of the EC is strategized to avoid overhead when
@@ -101,7 +101,7 @@ class TAO_EC_Null_ObserverStrategy : public TAO_EC_ObserverStrategy
   //   A null observer strategy.
   //
   // = DESCRIPTION
-  //   This class keeps no information and simply ignores the messages 
+  //   This class keeps no information and simply ignores the messages
   //   from the EC.
   //
 public:
@@ -142,7 +142,7 @@ class TAO_EC_Basic_ObserverStrategy : public TAO_EC_ObserverStrategy
   //   This class simply keeps the information about the current list
   //   of observers, whenever the list of consumers and/or suppliers
   //   changes in queries the EC, computes the global subscription
-  //   and/or publication list and sends the update message to all the 
+  //   and/or publication list and sends the update message to all the
   //   observers.
   //
 public:

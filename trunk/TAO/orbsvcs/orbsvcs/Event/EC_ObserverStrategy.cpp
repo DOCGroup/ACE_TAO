@@ -72,6 +72,10 @@ TAO_EC_Null_ObserverStrategy::disconnected (TAO_EC_ProxyPushSupplier*,
 
 // ****************************************************************
 
+TAO_EC_Basic_ObserverStrategy::~TAO_EC_Basic_ObserverStrategy (void)
+{
+}
+
 RtecEventChannelAdmin::Observer_Handle
 TAO_EC_Basic_ObserverStrategy::append_observer (
        RtecEventChannelAdmin::Observer_ptr obs,
@@ -156,9 +160,9 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
 
   {
     // @@ TODO locking in the consumer admin?
-    TAO_EC_ConsumerAdmin::SupplierSetIterator end = 
+    TAO_EC_ConsumerAdmin::SupplierSetIterator end =
       this->event_channel_->consumer_admin ()->end ();
-    for (TAO_EC_ConsumerAdmin::SupplierSetIterator i = 
+    for (TAO_EC_ConsumerAdmin::SupplierSetIterator i =
            this->event_channel_->consumer_admin ()->begin ();
          i != end;
          ++i)
@@ -200,15 +204,15 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
 
   {
     // @@ TODO locking in the consumer admin?
-    TAO_EC_SupplierAdmin::ConsumerSetIterator end = 
+    TAO_EC_SupplierAdmin::ConsumerSetIterator end =
       this->event_channel_->supplier_admin ()->end ();
-    for (TAO_EC_SupplierAdmin::ConsumerSetIterator i = 
+    for (TAO_EC_SupplierAdmin::ConsumerSetIterator i =
            this->event_channel_->supplier_admin ()->begin ();
          i != end;
          ++i)
       {
         TAO_EC_ProxyPushConsumer* consumer = *i;
-        const RtecEventChannelAdmin::SupplierQOS& pub = 
+        const RtecEventChannelAdmin::SupplierQOS& pub =
           consumer->publications ();
         if (pub.is_gateway)
           continue;
@@ -217,7 +221,7 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
             const RtecEventComm::Event& event =
               pub.publications[j].event;
             RtecEventComm::EventType type = event.header.type;
-            
+
             if (0 <= type && type <= ACE_ES_EVENT_UNDEFINED)
               continue;
             headers.insert (event.header, 1);

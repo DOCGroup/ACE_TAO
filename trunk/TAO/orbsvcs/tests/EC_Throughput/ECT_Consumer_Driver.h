@@ -74,9 +74,10 @@ private:
   // supplier sends a shutdown message after it finishes, the consumer
   // finishes when all the suppliers do.
 
-  int event_a_;
-  int event_b_;
-  // We send two types of events, with different contents.
+  int type_start_;
+  int type_count_;
+  // We receive the events whose type is in the range
+  // [type_start,type_start+type_count)
 
   const char* pid_file_name_;
   // The name of a file where the process stores its pid

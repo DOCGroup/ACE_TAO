@@ -165,6 +165,7 @@ ifneq (,$(findstring Event2,$(TAO_ORBSVCS)))
 	Event/EC_Type_Filter \
 	Event/EC_Basic_Filter_Builder \
 	Event/EC_Basic_Factory \
+	Event/EC_ObserverStrategy \
 
 endif # Event2
 

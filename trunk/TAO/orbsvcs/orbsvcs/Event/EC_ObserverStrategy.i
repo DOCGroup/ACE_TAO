@@ -33,5 +33,3 @@ TAO_EC_Basic_ObserverStrategy::Observer_Entry::
      observer (o)
 {
 }
-
-

@@ -28,8 +28,8 @@ ECT_Supplier_Driver::ECT_Supplier_Driver (void)
     burst_size_ (100),
     event_size_ (128),
     burst_pause_ (100),
-    event_a_ (ACE_ES_EVENT_UNDEFINED),
-    event_b_ (ACE_ES_EVENT_UNDEFINED + 1),
+    type_start_ (ACE_ES_EVENT_UNDEFINED),
+    type_count_ (1),
     pid_file_name_ (0)
 {
 }
@@ -78,8 +78,8 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
                   "  burst size = <%d>\n"
                   "  event size = <%d>\n"
                   "  burst size = <%d>\n"
-                  "  supplier Event A = <%d>\n"
-                  "  supplier Event B = <%d>\n"
+                  "  type start = <%d>\n"
+                  "  type count = <%d>\n"
                   "  pid file name = <%s>\n",
 
                   this->n_suppliers_,
@@ -87,8 +87,8 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
                   this->burst_size_,
                   this->event_size_,
                   this->burst_pause_,
-                  this->event_a_,
-                  this->event_b_,
+                  this->type_start_,
+                  this->type_count_,
 
                   this->pid_file_name_?this->pid_file_name_:"nil") );
 
@@ -145,7 +145,7 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
       TAO_CHECK_ENV;
       if (CORBA::is_nil (sched_obj.in ()))
         return 1;
-      RtecScheduler::Scheduler_var scheduler = 
+      RtecScheduler::Scheduler_var scheduler =
         RtecScheduler::Scheduler::_narrow (sched_obj.in (),
                                            TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -168,7 +168,7 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
       poa_manager->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      this->connect_suppliers (scheduler.in (), 
+      this->connect_suppliers (scheduler.in (),
                                channel.in (),
                                TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -227,8 +227,8 @@ ECT_Supplier_Driver::connect_suppliers
                                     this->burst_size_,
                                     this->event_size_,
                                     this->burst_pause_,
-                                    this->event_a_,
-                                    this->event_b_,
+                                    this->type_start_,
+                                    this->type_count_,
                                     channel,
                                     TAO_IN_ENV);
       TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
@@ -301,9 +301,9 @@ ECT_Supplier_Driver::parse_args (int argc, char *argv [])
             char* aux;
                 char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
 
-            this->event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
+            this->type_start_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
                 arg = ACE_OS::strtok_r (0, ",", &aux);
-            this->event_b_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
+            this->type_count_ = ACE_OS::atoi (arg);
           }
           break;
 

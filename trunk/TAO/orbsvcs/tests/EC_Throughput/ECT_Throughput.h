@@ -4,6 +4,9 @@
 // ============================================================================
 //
 // = DESCRIPTION
+//   This is a helper class for the throughput tests of the Event
+//   Channel.
+//   Used for the collocated test.
 //
 // ============================================================================
 
@@ -93,9 +96,23 @@ private:
   int burst_pause_;
   // The time between each event burst, in microseconds.
 
-  int event_a_;
-  int event_b_;
-  // We send two types of events, with different contents.
+  int consumer_type_start_;
+  int consumer_type_count_;
+  int consumer_type_shift_;
+  // The consumers subscribe to different sets of events, as follows:
+  // Consumer0: [start          , start           + count)
+  // Consumer1: [start + 1*shift, start + 1*shift + count)
+  // Consumer2: [start + 2*shift, start + 2*shift + count)
+  // And so on.
+
+  int supplier_type_start_;
+  int supplier_type_count_;
+  int supplier_type_shift_;
+  // The suppliers generate different sets of events, as follows:
+  // Supplier0: [start          , start           + count)
+  // Supplier1: [start + 1*shift, start + 1*shift + count)
+  // Supplier2: [start + 2*shift, start + 2*shift + count)
+  // And so on.
 
   const char* pid_file_name_;
   // The name of a file where the process stores its pid
@@ -112,6 +129,9 @@ private:
 
   int new_ec_;
   // If not zero then we use the new EC implementation
+
+  int ec_concurrency_hwm_;
+  // Set the HWM for the concurrency in the EC.
 };
 
 #endif /* ECT_TRHOUGHPUT_H */

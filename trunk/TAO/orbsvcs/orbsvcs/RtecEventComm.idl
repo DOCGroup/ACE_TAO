@@ -84,8 +84,8 @@ module RtecEventComm {
     //
     // = DESCRIPTION
     //   Events are represented by this structure, it is simply a
-    //   header,data pair. 
-    // 
+    //   header,data pair.
+    //
     EventHeader header;
 
     EventData data;
@@ -95,7 +95,7 @@ module RtecEventComm {
 
   interface PushConsumer {
     oneway void push (in EventSet data);
-    void disconnect_push_consumer(); 
+    void disconnect_push_consumer();
   };
 
   interface PushSupplier {
@@ -103,5 +103,3 @@ module RtecEventComm {
   };
 
 };
-
-

@@ -29,7 +29,7 @@ TAO_EC_Event_Channel::TAO_EC_Event_Channel (TAO_EC_Factory* factory)
     this->factory_->create_supplier_admin (this);
   this->timer_module_ =
     this->factory_->create_timer_module (this);
-  this->observer_strategy_ = 
+  this->observer_strategy_ =
     this->factory_->create_observer_strategy (this);
 }
 

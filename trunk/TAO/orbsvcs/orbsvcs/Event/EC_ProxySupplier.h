@@ -51,7 +51,6 @@ class TAO_EC_ProxyPushSupplier : public POA_RtecEventChannelAdmin::ProxyPushSupp
   //   used to communicate with a particular consumer.
   //
   // = MEMORY MANAGMENT
-  //   This object will be reference counted.
   //   It does not assume ownership of the TAO_EC_Dispatching object.
   //   It makes a copy of the ConsumerQOS and the consumer object
   //   reference.
@@ -116,6 +115,14 @@ public:
   virtual void suspend_connection (CORBA::Environment &);
   virtual void resume_connection (CORBA::Environment &);
 
+  virtual CORBA::ULong _incr_refcnt (void);
+  virtual CORBA::ULong _decr_refcnt (void);
+  // Increment and decrement the reference count.
+  // @@ TODO We use the canonical tao form, but in the future we may
+  // want to add methods that follow the upcoming CORBA2.3
+  // specification, which will include reference counting for
+  // servants.
+
   // = The TAO_EC_Filter methods, only push() is implemented...
   virtual int filter (const RtecEventComm::EventSet& event,
                       TAO_EC_QOS_Info& qos_info,
@@ -147,6 +154,9 @@ private:
   ACE_Lock* lock_;
   // The locking strategy.
 
+  CORBA::ULong refcount_;
+  // The reference count.
+
   RtecEventComm::PushConsumer_var consumer_;
   // The consumer....
 
@@ -159,8 +169,8 @@ private:
   PortableServer::POA_var default_POA_;
   // Store the default POA.
 
-private:
   TAO_EC_Filter* child_;
+  // The filter object
 };
 
 #if defined (__ACE_INLINE__)
