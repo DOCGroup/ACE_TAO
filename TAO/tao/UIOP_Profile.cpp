@@ -369,7 +369,7 @@ TAO_UIOP_Profile::encode (TAO_OutputCDR &stream) const
 
   // Create the profile body
   this->create_profile_body (encap);
-  
+
   // write the encapsulation as an octet sequence...
   stream << CORBA::ULong (encap.total_length ());
   stream.write_octet_array_mb (encap.begin ());
@@ -383,9 +383,9 @@ TAO_UIOP_Profile::create_tagged_profile (void)
   // Check whether we have already created the TaggedProfile
   if (this->tagged_profile_.profile_data.get_buffer () == 0)
     {
-      // As we have not created we will now create the TaggedProfile 
+      // As we have not created we will now create the TaggedProfile
       this->tagged_profile_.tag = TAO_TAG_UIOP_PROFILE;
-      
+
       // Create the encapsulation....
       TAO_OutputCDR encap (ACE_CDR::DEFAULT_BUFSIZE,
                            TAO_ENCAP_BYTE_ORDER,
@@ -394,17 +394,29 @@ TAO_UIOP_Profile::create_tagged_profile (void)
                            this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
                            this->orb_core_->to_iso8859 (),
                            this->orb_core_->to_unicode ());
-      
+
       // Create the profile body
       this->create_profile_body (encap);
-      
+
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       // Place the message block in to the Sequence of Octets that we
-      // have 
-      this->tagged_profile_.profile_data.replace (
-            (CORBA::ULong) encap.total_length (),
-            encap.begin ());
+      // have
+      this->tagged_profile_.profile_data.replace (length,
+                                                  encap.begin ());
+#else
+      this->tagged_profile_.profile_data.length (length);
+      CORBA::Octet *buffer =
+        this->tagged_profile_.profile_data.get_buffer ();
+      for (const ACE_Message_Block *i = encap.begin ();
+           i != encap.end ();
+           i = i->next ())
+        {
+          ACE_OS::memcpy (buffer, i->rd_ptr (), i->length ());
+          buffer += i->length ();
+        }
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1*/
     }
-  
+
   return this->tagged_profile_;
 }
 

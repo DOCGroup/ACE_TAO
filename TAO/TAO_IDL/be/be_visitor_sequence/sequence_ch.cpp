@@ -406,14 +406,14 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       && node->unbounded ())
     {
       *os << "\n"
-	  << "#if defined(TAO_NO_COPY_OCTET_SEQUENCES)" << be_nl
+	  << "#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)" << be_nl
 	  << node->local_name () << " (" << be_idt << be_idt_nl
 	  << "CORBA::ULong length," << be_nl
 	  << "const ACE_Message_Block* mb" << be_uidt_nl
 	  << ")" << be_uidt_nl
 	  << "  : " << node->instance_name ()
 	  << " (length, mb) {}" << "\n"
-	  << "#endif /* TAO_NO_COPY_OCTET_SEQUENCE */\n\n";
+	  << "#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */\n\n";
     }
 
   os->decr_indent ();

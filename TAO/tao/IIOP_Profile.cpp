@@ -480,11 +480,26 @@ TAO_IIOP_Profile::create_tagged_profile (void)
       // Create the profile body
       this->create_profile_body (encap);
 
+      CORBA::ULong length =
+        ACE_static_cast(CORBA::ULong,encap.total_length ());
+
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       // Place the message block in to the Sequence of Octets that we
       // have
-      this->tagged_profile_.profile_data.replace (
-            (CORBA::ULong) encap.total_length (),
-            encap.begin ());
+      this->tagged_profile_.profile_data.replace (length,
+                                                  encap.begin ());
+#else
+      this->tagged_profile_.profile_data.length (length);
+      CORBA::Octet *buffer =
+        this->tagged_profile_.profile_data.get_buffer ();
+      for (const ACE_Message_Block *i = encap.begin ();
+           i != encap.end ();
+           i = i->next ())
+        {
+          ACE_OS::memcpy (buffer, i->rd_ptr (), i->length ());
+          buffer += i->length ();
+        }
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
     }
 
   return this->tagged_profile_;

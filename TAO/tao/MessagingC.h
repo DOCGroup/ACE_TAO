@@ -1903,13 +1903,13 @@ class TAO_Export QueueOrderPolicy: public virtual CORBA::Policy
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
 
-#if defined(TAO_NO_COPY_OCTET_SEQUENCES)
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       _tao_seq_Octet (
           CORBA::ULong length,
           const ACE_Message_Block* mb
         )
         : TAO_Unbounded_Sequence<CORBA::Octet> (length, mb) {}
-#endif /* TAO_NO_COPY_OCTET_SEQUENCE */
+#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */
 
     };
 
@@ -2333,13 +2333,13 @@ class TAO_Export QueueOrderPolicy: public virtual CORBA::Policy
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
 
-#if defined(TAO_NO_COPY_OCTET_SEQUENCES)
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       _tao_seq_Octet (
           CORBA::ULong length,
           const ACE_Message_Block* mb
         )
         : TAO_Unbounded_Sequence<CORBA::Octet> (length, mb) {}
-#endif /* TAO_NO_COPY_OCTET_SEQUENCE */
+#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */
 
     };
 

@@ -32,9 +32,15 @@ test_write_octet (TAO_OutputCDR &cdr,
                   char* /* buf */,
                   size_t bufsize)
 {
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
   ACE_Message_Block mb (/* buf, */ bufsize);
   mb.wr_ptr (bufsize);
   Test::OctetSeq os (bufsize, &mb);
+#else
+  Test::OctetSeq os (bufsize);
+  os.length (bufsize);
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
+
 
   if ((cdr << os) == 0)
     return -1;
