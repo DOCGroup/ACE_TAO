@@ -131,7 +131,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                 }
 
               *os << "public virtual ";
-              *os << inherited->nested_type_name (scope);  // dump the scoped name
+              *os << inherited->nested_type_name (scope);
               if (i < node->n_inherits () - 1) // node is the case of multiple
                                                // inheritance, so put a comma
                 {
@@ -158,8 +158,10 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           // but we must protect against certain versions of g++
           << "#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
           << be_idt_nl
-          << "typedef " << node->local_name () << "_ptr _ptr_type;" << be_nl
-          << "typedef " << node->local_name () << "_var _var_type;" << be_uidt_nl
+          << "typedef " << node->local_name () << "_ptr _ptr_type;" 
+          << be_nl
+          << "typedef " << node->local_name () << "_var _var_type;" 
+          << be_uidt_nl
           << "#endif /* ! __GNUC__ || g++ >= 2.8 */\n" << be_idt_nl
 
           // generate the static _duplicate, _narrow, and _nil operations
@@ -174,7 +176,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << be_uidt << be_uidt_nl
           << ");" << be_uidt_nl;
 
-      // There's no need for an _unchecked_narrow for locality constraint object.
+      // There's no need for an _unchecked_narrow for locality 
+      // constrained object.
       *os << "static " << node->local_name () << "_ptr "
           << "_unchecked_narrow (" << be_idt << be_idt_nl
           << "CORBA::Object_ptr obj," << be_nl
@@ -232,21 +235,26 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
         {
           // Add the Proxy Broker member variable.
           *os << "private:" << be_idt_nl
-              << node->base_proxy_broker_name () << " *" << "the" << node->base_proxy_broker_name ()
+              << node->base_proxy_broker_name () << " *" 
+              << "the" << node->base_proxy_broker_name ()
               << "_;" << be_nl <<  be_uidt_nl;
         }
       *os << "protected:" << be_idt_nl;
       if (!node->is_local ())
         {
-          // generate the "protected" constructor so that users cannot instantiate
-          // us
+          // Generate the "protected" constructor so that users cannot
+          // instantiate us.
 
-          *os << node->local_name () << " (int collocated = 0);" << be_nl << be_nl;
+          *os << node->local_name () << " (int collocated = 0);" 
+              << be_nl << be_nl;
 
           *os << "protected:" << be_idt_nl
-              << "// This methods travese the inheritance tree and set the" << be_nl
-              << "// parents piece of the given class in the right mode" << be_nl
-              << "virtual void _tao_setup_collocation (int collocated);" << be_nl << be_nl;
+              << "// This methods travese the inheritance tree and set the" 
+              << be_nl
+              << "// parents piece of the given class in the right mode" 
+              << be_nl
+              << "virtual void _tao_setup_collocation (int collocated);" 
+              << be_nl << be_nl;
         }
       else
         *os << node->local_name () << " ();" << be_nl << be_nl;
@@ -261,19 +269,21 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
               << ");" << be_uidt_nl << be_nl;
 
           // Friends declarations
-          *os << "friend class " << node->remote_proxy_impl_name () << ";" << be_nl
-              << "friend class " << node->thru_poa_proxy_impl_name () << ";" << be_nl
-              << "friend class " << node->direct_proxy_impl_name () << ";" << be_uidt_nl << be_nl;
+          *os << "friend class " << node->remote_proxy_impl_name () << ";" 
+              << be_nl
+              << "friend class " << node->thru_poa_proxy_impl_name () << ";" 
+              << be_nl
+              << "friend class " << node->direct_proxy_impl_name () << ";" 
+              << be_uidt_nl << be_nl;
         }
       // Protected destructor.
-      *os << "virtual ~" << node->local_name () << " (void);" << be_nl;
-
-
+      *os << "virtual ~" << node->local_name () << " (void);" << be_uidt_nl;
 
       // private copy constructor and assignment operator. These are not
       // allowed, hence they are private.
       *os << "private:" << be_idt_nl;
-      *os << node->local_name () << " (const " << node->local_name () << " &);"
+      *os << node->local_name () << " (const " 
+          << node->local_name () << " &);"
           << be_nl
           << "void operator= (const " << node->local_name () << " &);";
 
