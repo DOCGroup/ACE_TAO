@@ -14,6 +14,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Atomic_Op.h"
 
 ACE_RCSID(Threads, manual_event, "$Id$")
 
@@ -101,9 +102,11 @@ main (int argc, ACE_TCHAR **argv)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>;
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
 #pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1,3 +1,18 @@
+Tue Dec 25 09:07:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Threads/tss2.cpp: 
+	* examples/Threads/TSS_Task.h:
+	* examples/Threads/task_two.cpp:
+	* examples/Threads/reader_writer.cpp:
+	* examples/Threads/manual_event.cpp:
+	* examples/Threads/future2.cpp:
+	* examples/Threads/future1.cpp: 
+	* examples/Reactors/Misc/teste_reactors.cpp:
+	* netsvcs/lib/Server_Logging_T.cpp:
+	* netsvcs/lib/Server_Logging.cpp: Added #include of
+	  Atomic_Op.h. Added template instantiations for ACE_Atomic_Op_Ex
+	  in places that was required.
+
 Mon Dec 25 01:05:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Atomic_Op.h: Added a #include to get it compiling on win32

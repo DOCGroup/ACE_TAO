@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Token.h"
+#include "ace/Atomic_Op.h"
 
 class Test_Task
 {

@@ -19,6 +19,7 @@
 
 #include "ace/Thread.h"
 #include "ace/Log_Msg.h"
+#include "ace/Atomic_Op.h"
 #include "TSS_Data.h"
 #include "TSS_Obj.h"
 #include "TSS_Task.h"
@@ -173,16 +174,18 @@ main (int argc, ACE_TCHAR *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>;
-template class ACE_Atomic_Op<ACE_Token, int>;
+template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 template class ACE_Atomic_Op_Ex<ACE_Token, int>;
+template class ACE_Atomic_Op<ACE_Token, int>;
 template class ACE_Guard<ACE_Token>;
 template class ACE_TSS<TSS_Data>;
 template class ACE_TSS<TSS_Obj>;
 template class ACE_TSS_Singleton<TSS_Data, ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
+#pragma instantiate ACE_Atomic_Op_Ex<ACE_Token, int>
 #pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>
 #pragma instantiate ACE_Atomic_Op<ACE_Token, int>
 #pragma instantiate ACE_Atomic_Op_Ex<ACE_Token, int>
