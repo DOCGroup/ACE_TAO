@@ -40,7 +40,7 @@ CIAO::Config_Handler::Property_Handler::process_Property (DOMNodeIterator * iter
                       char*  attr_node_value_ch = 
                         XMLString::transcode (attr_node->getNodeValue ());
                       ACE_TString attr_node_value = attr_node_value_ch;
-                      XMLString::release (attr_node_value_ch);
+                      XMLString::release (&attr_node_value_ch);
                       if (attr_node_name = XStr (ACE_TEXT ("href")))
                         {
                           XMLURL url (attr_node_value.c_str ());
@@ -56,9 +56,7 @@ CIAO::Config_Handler::Property_Handler::process_Property (DOMNodeIterator * iter
                     }
                 }
               else if (length == 1)
-                {
-                  Any_Handler::process_Any (iter, property.value);
-                }
+                Any_Handler::process_Any (iter, property.value);
             }
           else
             // Process the value associated
