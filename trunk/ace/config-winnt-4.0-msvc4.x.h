@@ -235,4 +235,7 @@
 // #define ACE_HAS_SIGNAL_OBJECT_AND_WAIT
 // #define ACE_HAS_CANCEL_IO
 
+// Platform support for non-blocking connects is broken
+#define ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS
+
 #endif /* ACE_CONFIG_H */

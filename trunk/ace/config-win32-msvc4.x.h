@@ -231,4 +231,8 @@
 
 #define ACE_LACKS_COND_T
 #define ACE_LACKS_RWLOCK_T
+
+// Platform support for non-blocking connects is broken
+#define ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS
+
 #endif /* ACE_CONFIG_H */
