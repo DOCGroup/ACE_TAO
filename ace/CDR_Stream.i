@@ -448,7 +448,7 @@ ACE_INLINE int
 ACE_OutputCDR::align_write_ptr (size_t alignment)
 {
   char *dummy;
-  return this->grow_and_adjust (0, alignment, dummy);
+  return this->adjust (0, alignment, dummy);
 }
 
 ACE_INLINE ACE_Char_Codeset_Translator *
