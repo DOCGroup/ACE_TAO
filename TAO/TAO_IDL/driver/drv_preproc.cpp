@@ -80,11 +80,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifdef		SOLARIS2
 
 #include	<unistd.h>		// POSIX standard types
-#if defined (ACE_NETBSD)
+#if defined (ACE_NETBSD) || defined (__FreeBSD__)
 #include        <sys/wait.h>
 #else
 #include	<wait.h>		// POSIX definition of wait()
-#endif /* ACE_NETBSD */
+#endif /* ACE_NETBSD  || __FreeBSD__ */
 
 #endif		// SOLARIS2
 
