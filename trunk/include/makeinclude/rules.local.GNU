@@ -69,28 +69,29 @@ $(VDIR)%.o: %.cc $(VDIR).creation_stamp
 	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 
-# If SOLINK is defined, then the .$(SOEXT) file is built from the .$(OBJEXT) file via
-# separate rules in the same directory.  Otherwise, the .$(SOEXT) and .$(OBJEXT) are
-# built via the same rule.  SOLINK is required for the repository under
-# gcc.
+# If SOLINK is defined, then the .$(SOEXT) file is built from the
+# .$(OBJEXT) file via separate rules in the same directory.
+# Otherwise, the .$(SOEXT) and .$(OBJEXT) are built via the same rule.
+# SOLINK is required for the repository under gcc.
 ifndef SOLINK
 # I added the "Executable Shared Object (ESO)" define to separate between
 # normal shared object files and executable shared object files (the kind
 # that the service configurator needs to be able to function).
 # 970104 Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
 ifdef (ESOBUILD)
-$(VSHDIR)%.$(SOEXT): %.cpp
+$(VSHDIR)%.$(SOEXT): %.cpp $(VSHDIR).creation_stamp
 	$(ESOBUILD)
 else
-$(VSHDIR)%.$(SOEXT): %.cpp
+$(VSHDIR)%.$(SOEXT): %.cpp $(VSHDIR).creation_stamp
 	$(SOBUILD)
 endif
 
 ifeq ($(split), 1)
 $(VSHDIR)%.$(OBJEXT): %.cpp $(VSHDIR).creation_stamp
 	$(COMPILE.cc) $(PIC) SPLIT/`echo $< | sed "s/.cpp/_S\*/"`
-	mv *.$(OBJEXT) $(OBJDIRS)
+	mv *.$(OBJEXT) $(VSHDIR)
 else
+
 $(VSHDIR)%.$(OBJEXT): %.cpp $(VSHDIR).creation_stamp
 	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
 endif
@@ -103,17 +104,28 @@ $(VSHDIR)%.$(OBJEXT): %.c $(VSHDIR).creation_stamp
 
 $(VSHDIR)%.$(SOEXT): $(VSHDIR)%.$(OBJEXT)
 	$(SOLINK)
-
 endif
 
+ifeq ($(OS),"Windows_NT")
 $(VDIR).creation_stamp:
-	-@test -d $(VDIR) || mkdir $(VDIR)
+	@if not exist $@ mkdir $@
+	@echo > $@
+else
+$(VDIR).creation_stamp:
+	@-mkdir $(VDIR)
 	@touch $@
+endif
 
-ifneq ($(VSHDIR),$(VDIR))
+ifneq ($(VDIR),$(VSHDIR))
+  ifeq ($(OS),"Windows_NT")
 $(VSHDIR).creation_stamp:
-	-@test -d $(VSHDIR) || mkdir $(VSHDIR)
+	@if not exist $@ mkdir $@
+	@echo > $@
+  else
+$(VSHDIR).creation_stamp:
+	@-mkdir $(VSHDIR)
 	@touch $@
+  endif
 endif
 
 #----------------------------------------------------------------------------
@@ -279,13 +291,7 @@ rcs_info.local:
 
 build.objdirs: $(OBJDIRS)
 
-ifeq ($(OS),"Windows_NT")
-$(OBJDIRS):
-	if not exist $@ mkdir $@
-else
-$(OBJDIRS):
-	test -d $@ || mkdir $@
-endif
+$(OBJDIRS): $(VDIR).creation_stamp $(VSHDIR).creation_stamp
 
 #---------------------------------------------------------------------------
 #       Source file splitting
