@@ -1,3 +1,7 @@
+Fri Jul 21 14:46:37 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* ace/QoS_Decorator.cpp: Removed an extra semi-colon.
+
 Fri Jul 21 09:11:36 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Process_Manager: Updated the documentation to reflect the recent
