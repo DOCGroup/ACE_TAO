@@ -2065,7 +2065,7 @@ TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
 TAO_Thread_Lane_Resources &
 TAO_ORB_Core::lane_resources (void)
 {
-  return this->thread_lane_resources_manager ().lane_resources ();
+	  return this->thread_lane_resources_manager ().lane_resources ();
 }
 
 void

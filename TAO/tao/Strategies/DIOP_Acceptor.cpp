@@ -220,23 +220,6 @@ TAO_DIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 int
 TAO_DIOP_Acceptor::close (void)
 {
-  if (this->connection_handler_)
-    {
-      // Remove the connection handler from the reactor in the case
-      // of a valid handle, or close it yourself, if the handle is invalid.
-      // Either way it will cause the connection handler to be destructed.
-      if (this->connection_handler_->get_handle () != ACE_INVALID_HANDLE)
-        {
-          this->connection_handler_->reactor ()->remove_handler (this->connection_handler_,
-                                                                 ACE_Event_Handler::READ_MASK |
-                                                                 ACE_Event_Handler::DONT_CALL);
-        }
-
-      this->connection_handler_->remove_reference ();
-
-      this->connection_handler_ = 0;
-    }
-  return 0;
 }
 
 int
@@ -419,11 +402,14 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
   this->connection_handler_->open_server ();
 
   // Register only with a valid handle
-  if (this->connection_handler_->get_handle () != ACE_INVALID_HANDLE)
-    {
-      reactor->register_handler (this->connection_handler_,
-                                 ACE_Event_Handler::READ_MASK);
-    }
+  int result =
+    reactor->register_handler (this->connection_handler_,
+                               ACE_Event_Handler::READ_MASK);
+  if (result == -1)
+    return result;
+
+  // Connection handler ownership now belongs to the Reactor.
+  this->connection_handler_->remove_reference ();
 
   // Set the port for each addr.  If there is more than one network
   // interface then the endpoint created on each interface will be on

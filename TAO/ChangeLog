@@ -1,3 +1,28 @@
+Thu Jul 10 18:58:43 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* orbsvcs\orbsvcs\PortableGroup\UIPMC_Acceptor.cpp: 
+	* tao\Strategies\DIOP_Acceptor.cpp: 
+	
+	  - open_i() now transfers connection handler ownership to the
+	  Reactor after the handler successfully registers with the
+	  Reactor.
+
+	  - close() does nothing since the memory for the connection
+	  handler is automatically managed.
+
+	* orbsvcs\orbsvcs\PortableGroup\UIPMC_Transport.cpp:
+
+	  - Forgot to remove the assert from ~TAO_UIPMC_Transport().
+
+	* orbsvcs\orbsvcs\PortableGroup\UIPMC_Connection_Handler.cpp (handle_close): 
+	* tao\Strategies\DIOP_Connection_Handler.cpp (handle_close): 
+
+	  No asserts in handle_close() since the handler is registered
+	  with the Reactor and the handler ownership is given to the
+	  Reactor.  When the Reactor closes, it will call handle_close()
+	  on the handler.  It is however important to overwrite
+	  handle_close() to do nothing since the base class does too much.
+
 Wed Jul  9 22:31:54 2003  Oliver Kellogg <oliver.kellogg@sysde.eads.net>
 
 	* tao/IIOP_Connection_Handler.cpp (set_dscp_codepoint): Valgrind
