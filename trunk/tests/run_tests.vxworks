@@ -32,6 +32,10 @@
 
 memShow
 
+ld < Basic_Types_Test
+write 2, "Basic_Types_Test ", 17
+ace_main; unld "Basic_Types_Test"
+
 ld < Atomic_Op_Test
 write 2, "Atomic_Op_Test ", 15
 ace_main; unld "Atomic_Op_Test"
