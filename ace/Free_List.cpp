@@ -64,7 +64,7 @@ ACE_Locked_Free_List<T, ACE_LOCK>::alloc (size_t n)
 {
   for (; n > 0; n--)
     {
-      T *temp;
+      T *temp = 0;
       ACE_NEW (temp, T);
       temp->set_next (this->free_list_);
       this->free_list_ = temp;

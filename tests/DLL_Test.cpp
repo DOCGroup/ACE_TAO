@@ -53,7 +53,7 @@ USELIB("..\ace\aced.lib");
 #endif /*ACE_WIN32*/
 
 
-char const * 
+char const *
 cdecl_decoration(char const * func_name)
 {
 #if defined(__BORLANDC__)
@@ -71,7 +71,7 @@ extern "C" ACE_Svc_Export Hello *get_hello (void);
 
 Hello *get_hello (void)
 {
-  Hello *hello;
+  Hello *hello = 0;
 
   ACE_NEW_RETURN (hello,
                   Hello,
@@ -103,14 +103,14 @@ main (int argc, char *argv[])
                       -1);
 
   // Just becos the ANSI C++ spec says you can no longer cast a void* to a
-  // function pointer. Doesnt allow:TC f = (TC) dll.symbol ("get_hello"); 
+  // function pointer. Doesnt allow:TC f = (TC) dll.symbol ("get_hello");
   void * foo;
 
   char const *cdecl_str = cdecl_decoration("get_hello");
   foo = dll.symbol (cdecl_str);
-  
+
   // Cast the void* to long first.
-  long tmp = ACE_reinterpret_cast (long, foo);  
+  long tmp = ACE_reinterpret_cast (long, foo);
   TC f = ACE_reinterpret_cast (Hello * (*)(void), tmp);
   if (f == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
