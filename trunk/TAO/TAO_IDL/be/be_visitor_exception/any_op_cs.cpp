@@ -91,7 +91,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << "ACE_TRY_NEW_ENV" << be_nl
       << "{" << be_idt_nl
       << "CORBA::TypeCode_var type = _tao_any.type ();" << be_nl
-      << "if (!type->equal (" << node->tc_name ()
+      << "if (!type->equivalent (" << node->tc_name ()
       << ", ACE_TRY_ENV)) return 0; // not equal" << be_nl
       << "ACE_TRY_CHECK;" << be_nl
       << "if (_tao_any.any_owns_data ())" << be_nl
