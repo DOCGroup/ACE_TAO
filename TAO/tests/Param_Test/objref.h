@@ -74,18 +74,6 @@ private:
 
   Coffee_var ret_;
   // return value
-
-  // Need these for DII.
-  // SII requests that involve aliased objref types can rely on
-  // their stubs and skeletons to convert to CORBA::Object so the
-  // ORB can deal with it. DII requests cannot convert for every
-  // possible aliased objref type, so we must convert ourselves
-  // before invoking the DII request, and use the interface's
-  // _narrow() function when it returns.
-  CORBA::Object_ptr *in_courier,
-                    *inout_courier,
-                    *out_courier,
-                    *ret_courier;
 };
 
 #endif /* PARAM_TEST_OBJREF_H */

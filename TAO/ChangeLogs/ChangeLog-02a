@@ -1,3 +1,24 @@
+Fri Mar 10 12:24:01 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* examples/POA/DSI/Database_i.cpp:
+	* orbsvcs/LifeCycle_Service/Criteria_Evaluator.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+	* orbsvcs/tests/Property/client.cpp:
+	* orbsvcs/tests/Trading/Offer_Exporter.cpp:
+	* orbsvcs/tests/Trading/TT_Info.cpp:
+	* tests/CDR/basic_types.cpp:
+	* tests/Param_Test/objref.cpp:
+	* tests/Param_Test/objref.h:
+	* utils/catior/catior.cpp:
+	  Fixed uses of encode(), decode(), replace(), the void*
+	  constructor for Any and obsolete >>= or <<= operators.
+
+	* */Makefile:
+	  Updated dependencies
+
 Fri Mar 10 11:28:17 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/Any.cpp:

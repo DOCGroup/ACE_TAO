@@ -47,7 +47,7 @@ Criteria_Evaluator::getInitialization (CORBA::Environment &ACE_TRY_ENV)
 char *
 Criteria_Evaluator::getFilter (CORBA::Environment &ACE_TRY_ENV)
 {
-  char* string;
+  const char* string;
   CORBA::Any value;
   CORBA::Any_ptr any_ptr = this->getCriteriaMember ("filter");
 
@@ -56,7 +56,7 @@ Criteria_Evaluator::getFilter (CORBA::Environment &ACE_TRY_ENV)
                         ("No filter member found.\n"),
                       0);
   *any_ptr >>= string;
-  return string;
+  return CORBA::string_dup (string);
 }
 
 CORBA::Any *

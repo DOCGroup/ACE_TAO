@@ -26,11 +26,7 @@ ACE_RCSID(Param_Test, objref, "$Id$")
 // ************************************************************************
 
 Test_ObjRef::Test_ObjRef (void)
-  : opname_ (CORBA::string_dup ("test_objref")),
-    in_courier (new CORBA::Object_ptr),
-    inout_courier (new CORBA::Object_ptr),
-    out_courier (new CORBA::Object_ptr),
-    ret_courier (new CORBA::Object_ptr)
+  : opname_ (CORBA::string_dup ("test_objref"))
 {
 }
 
@@ -38,11 +34,6 @@ Test_ObjRef::~Test_ObjRef (void)
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
-
-  delete this->in_courier;
-  delete this->inout_courier;
-  delete this->out_courier;
-  delete this->ret_courier;
 }
 
 const char *
@@ -160,12 +151,6 @@ Test_ObjRef::reset_parameters (void)
   this->inout_ = Coffee::_nil ();
   this->out_ = Coffee::_nil ();
   this->ret_ = Coffee::_nil ();
-
-  // DII
-  *this->in_courier = ACE_dynamic_cast (CORBA::Object_ptr,
-                                        this->in_.in ());
-  *this->inout_courier = ACE_dynamic_cast (CORBA::Object_ptr,
-                                           this->inout_.in ());
 
   return 0;
 }
