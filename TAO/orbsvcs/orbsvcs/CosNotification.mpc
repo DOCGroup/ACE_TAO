@@ -34,6 +34,7 @@ project(CosNotification) : orbsvcslib, core, event {
     NotifyExtC.h
     Event_ForwarderC.h
     Notify/Notify_Extensions.h
+    Notify/notify_export.h
   }
 
   Inline_Files {
@@ -85,6 +86,8 @@ project(CosNotification_Skel) : orbsvcslib, core, notification, event_skel, port
     CosNotifyChannelAdminS_T.h
     NotifyExtS_T.h
     Event_ForwarderS_T.h
+
+    Notify/notify_skel_export.h
   }
 
   Inline_Files {
