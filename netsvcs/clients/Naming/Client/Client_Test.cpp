@@ -381,7 +381,7 @@ Client_Test::set_proc_local (void)
 {
   // Close down original name space
   NAMING_CONTEXT ()->close ();
-  this->name_options_->nameserver_host ("localhost");
+  this->name_options_->nameserver_host (ACE_TEXT ("localhost"));
   this->name_options_->context (ACE_Naming_Context::PROC_LOCAL);
   return NAMING_CONTEXT ()->open (ACE_Naming_Context::PROC_LOCAL);
 }
@@ -391,7 +391,7 @@ Client_Test::set_node_local (void)
 {
   // Close down original name space
   NAMING_CONTEXT ()->close ();
-  this->name_options_->nameserver_host ("localhost");
+  this->name_options_->nameserver_host (ACE_TEXT ("localhost"));
   this->name_options_->context (ACE_Naming_Context::NODE_LOCAL);
   return NAMING_CONTEXT ()->open (ACE_Naming_Context::NODE_LOCAL);
 }
@@ -404,7 +404,7 @@ Client_Test::set_host (const char *hostname, int port)
 
   this->name_options_->context (ACE_Naming_Context::NET_LOCAL);
   // Set Name Options
-  this->name_options_->nameserver_host (hostname);
+  this->name_options_->nameserver_host (ACE_TEXT_CHAR_TO_TCHAR (hostname));
   this->name_options_->nameserver_port (port);
 
   return NAMING_CONTEXT ()->open (ACE_Naming_Context::NET_LOCAL);
