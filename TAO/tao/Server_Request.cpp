@@ -12,18 +12,35 @@ DEFINE_GUID (IID_IIOP_ServerRequest,
 DEFINE_GUID (IID_CORBA_ServerRequest,
 0x4b48d881, 0xf7f0, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
-IIOP_ServerRequest::IIOP_ServerRequest (CDR *req,
+CORBA_ServerRequest *
+CORBA_ServerRequest::_duplicate (CORBA_ServerRequest *req)
+{
+  if (req)
+    {
+      req->AddRef ();
+      return req;
+    }
+  return (CORBA_ServerRequest *) 0;
+}
+
+CORBA_ServerRequest *
+CORBA_ServerRequest::_nil (void)
+{
+  return (CORBA_ServerRequest *) 0;
+}
+
+IIOP_ServerRequest::IIOP_ServerRequest (const TAO_GIOP_RequestHeader &hdr,
+                                        CDR *req,
                                         CDR *resp,
-                                        CORBA::ULong reqid,
                                         CORBA::ORB_ptr the_orb,
                                         TAO_POA *the_poa)
-  : incoming_ (req),
+  : opname_ (CORBA::string_dup (hdr.operation)),
+    incoming_ (req),
     outgoing_ (resp),
-    reqid_ (reqid),
+    reqid_ (hdr.request_id),
     params_ (0),
     retval_ (0),
     exception_ (0),
-    ex_type_ (CORBA::NO_EXCEPTION),
     refcount_ (1),
     orb_ (the_orb),
     poa_ (the_poa)
@@ -32,21 +49,19 @@ IIOP_ServerRequest::IIOP_ServerRequest (CDR *req,
 
 IIOP_ServerRequest::~IIOP_ServerRequest (void)
 {
-  ACE_ASSERT (refcount_ == 0);
-
-  if (params_)
-    CORBA::release (params_);
-  if (retval_)
-    delete retval_;
-  if (exception_)
-    delete exception_;
+  if (this->params_)
+    CORBA::release (this->params_);
+  if (this->retval_)
+    delete this->retval_;
+  if (this->exception_)
+    delete this->exception_;
 }
 
 ULONG
 IIOP_ServerRequest::AddRef (void)
 {
-  ACE_ASSERT (refcount_ > 0);
-  return refcount_++;
+  ACE_ASSERT (this->refcount_ > 0);
+  return this->refcount_++;
 }
 
 ULONG
@@ -54,8 +69,8 @@ IIOP_ServerRequest::Release (void)
 {
   ACE_ASSERT (this != 0);
 
-  if (--refcount_ != 0)
-    return refcount_;
+  if (--this->refcount_ != 0)
+    return this->refcount_;
 
   delete this;
   return 0;
@@ -65,7 +80,7 @@ TAO_HRESULT
 IIOP_ServerRequest::QueryInterface (REFIID riid,
                                     void **ppv)
 {
-  ACE_ASSERT (refcount_ > 0);
+  ACE_ASSERT (this->refcount_ > 0);
   *ppv = 0;
 
   if (IID_IIOP_ServerRequest == riid
@@ -76,7 +91,7 @@ IIOP_ServerRequest::QueryInterface (REFIID riid,
   if (*ppv == 0)
     return ResultFromScode (TAO_E_NOINTERFACE);
 
- (void) AddRef ();
+ (void) this->AddRef ();
   return TAO_NOERROR;
 }
 
@@ -84,8 +99,8 @@ IIOP_ServerRequest::QueryInterface (REFIID riid,
 // inout/out/return values later on.
 
 void
-IIOP_ServerRequest::params (CORBA::NVList_ptr list,
-                            CORBA::Environment &env)
+IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
+                               CORBA::Environment &env)
 {
   env.clear ();
 
@@ -97,6 +112,7 @@ IIOP_ServerRequest::params (CORBA::NVList_ptr list,
     {
       CORBA::NamedValue_ptr nv = list->item (i, env);
 
+      // check if it is an in or inout parameter
       if (ACE_BIT_DISABLED (nv->flags (), CORBA::ARG_IN | CORBA::ARG_INOUT))
         continue;
 
@@ -108,6 +124,8 @@ IIOP_ServerRequest::params (CORBA::NVList_ptr list,
       // environments where DSI is just being used in lieu of a
       // language mapped server-side API and the size is really
       // knowable in advance.
+      //
+      // This is exactly what the TAO IDL compiler generated skeletons do.
 
       CORBA::Any_ptr any = nv->value ();
       CORBA::TypeCode_ptr tc = any->type ();
@@ -133,7 +151,7 @@ IIOP_ServerRequest::params (CORBA::NVList_ptr list,
           tc->Release ();
         }
       else
-        value = (void *)any->value ();
+        value = (void *)any->value (); // memory was already preallocated
 
       // Then just unmarshal the value.
       (void) incoming_->decode (tc, value, 0, env);
@@ -141,7 +159,7 @@ IIOP_ServerRequest::params (CORBA::NVList_ptr list,
 
   // If any data is left over, it'd be context values ... else error.
   // We don't support context values, so it's always an error.
-
+  // @@ (TAO) support for Contexts??
   if (incoming_->bytes_remaining () != 0)
     {
       dmsg1 ("params (), %d bytes remaining (error)",
@@ -155,70 +173,32 @@ IIOP_ServerRequest::params (CORBA::NVList_ptr list,
 // only after the parameter list has been provided (maybe empty).
 
 void
-IIOP_ServerRequest::result (CORBA::Any_ptr value,
-                            CORBA::Environment &env)
+IIOP_ServerRequest::set_result (const CORBA::Any &value,
+                                CORBA::Environment &env)
 {
   env.clear ();
 
-  if (!params_ || retval_ || exception_)
+  // setting a result when another result already exists or if an exception
+  // exists is an error
+  if (!this->params_ || this->retval_ || this->exception_)
     env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
   else
-    retval_ = value;
-
-  // XXX send the message now!
+    this->retval_ = new CORBA::Any (value);
 }
 
 // Store the exception value.
 
 void
-IIOP_ServerRequest::exception (CORBA::ExceptionType type,
-                               CORBA::Any_ptr value,
-                               CORBA::Environment &env)
+IIOP_ServerRequest::set_exception (const CORBA::Any &value,
+                                   CORBA::Environment &env)
 {
-  if (!params_ || retval_ || exception_)
+  if (!this->params_ || this->retval_ || this->exception_)
     env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
   else
     {
       env.clear ();
-      exception_ = value;
-      ex_type_ = type;
+      this->exception_ = new CORBA::Any (value);
     }
-
-  // XXX send the message now!
-}
-
-// Invocation attributes.
-
-CORBA::String
-IIOP_ServerRequest::op_name (void)
-{
-  return opname_;
-}
-
-CORBA::Object_ptr
-IIOP_ServerRequest::target (void)
-{
-  // XXX implement me!!  Code from TCP_OA exists ...
-  return 0;
-}
-
-CORBA::Principal_ptr
-IIOP_ServerRequest::caller (void)
-{
-  // XXX ... return client's principal
-  return 0;
-}
-
-CORBA::ORB_ptr
-IIOP_ServerRequest::orb (void)
-{
-  return orb_;
-}
-
-TAO_POA *
-IIOP_ServerRequest::oa (void)
-{
-  return poa_;
 }
 
 // Extension
@@ -265,7 +245,7 @@ IIOP_ServerRequest::demarshal (CORBA::Environment &env,  // exception reporting
   va_end (param_vector);
 
   // Now demarshal the parameters using a call to params.
-  this->params (nvlist, env); // nvlist is now owned by us
+  this->arguments (nvlist, env); // nvlist is now owned by us
 }
 
 // Extension
@@ -377,11 +357,12 @@ IIOP_ServerRequest::init_reply (CORBA::Environment &env)
 
       // Finish the GIOP Reply header, then marshal the exception.
       // XXX x->type () someday ...
-      if (this->ex_type_ == CORBA::SYSTEM_EXCEPTION)
+
+      //      if (this->ex_type_ == CORBA::SYSTEM_EXCEPTION)
+      if (1)
         this->outgoing_->put_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
       else
         this->outgoing_->put_ulong (TAO_GIOP_USER_EXCEPTION);
-
       (void) this->outgoing_->encode (except_tc, x, 0, env);
     }
   else // Normal reply

@@ -2476,7 +2476,7 @@ TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
   PortableServer::ObjectId_out id_out (id);
   TAO_POA *poa = 0;
   // const char *operation = req.operation ();
-  const char *operation = req.op_name ();
+  const char *operation = req.operation ();
 
   // Setup for POA Current
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
@@ -2498,7 +2498,7 @@ TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
 		   servant,
                    &current_context,
                    env);
-  
+
   // Upcall
   servant->_dispatch (req,
                       context,
@@ -2509,7 +2509,7 @@ TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
                     operation,
                     &current_context,
                     env);
-  
+
   // Reset old context
   orb_core->poa_current (previous_context);
 

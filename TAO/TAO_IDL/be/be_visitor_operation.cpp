@@ -168,6 +168,8 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   // only if none of our arguments is of "native" type. Native types cannot be
   // marshaled. Hence, stubs for such operations will generate MARSHAL
   // exceptions. As a result it is pointless generating these tables
+  be_visitor_context ctx;
+  be_visitor *visitor;
   if (!node->has_native ())
     {
       // native type does not exist. Generate the static tables
@@ -205,6 +207,24 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
       *os << "\n";
       os->decr_indent ();
       *os << "}; // " << node->flatname () << "_paramdata\n\n";
+
+      // Check if this operation raises any exceptions. In that case, we must
+      // generate a list of exception typecodes. This is not valid for
+      // attributes
+      if (!this->ctx_->attribute ())
+        {
+          ctx = *this->ctx_;
+          ctx.state (TAO_CodeGen::TAO_OPERATION_EXCEPTLIST_CS);
+          visitor = tao_cg->make_visitor (&ctx);
+          if (!visitor || (node->accept (visitor) == -1))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) "
+                                 "be_visitor_operation_cs::visit_operation - "
+                                 "Exceptionlist generation error\n"),
+                                -1);
+            }
+        }
 
       // STEP 1B: now generate the calldata table
       os->indent ();
@@ -258,14 +278,25 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
         }
       *os << node->flatname () << "_paramdata, ";
 
-      // XXXASG - Exception list goes here (if it exists) - TODO
-      *os << "0, 0};\n\n";
+      // insert exception list (if any) - node for attributes
+      if (this->ctx_->attribute ())
+        *os << "0, 0};\n\n";
+      else
+        {
+          if (node->exceptions ())
+            {
+              *os << node->exceptions ()->length ()
+                  << ", _tao_" << node->flatname () << "_exceptlist};\n\n";
+            }
+          else
+            *os << "0, 0};\n\n";
+        }
     } // end of if !(native)
 
   // STEP 2: generate the return type mapping (same as in the header file)
-  be_visitor_context ctx (*this->ctx_);
+  ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  visitor = tao_cg->make_visitor (&ctx);
 
   if (!visitor)
     {
@@ -982,7 +1013,14 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
 
-  // STEP 3C: setup parameters for marshaling and marshal them into the
+  // STEP 3G: check if we are oneway in which case, we are done
+  if (node->flags () == AST_Operation::OP_oneway)
+    {
+      // we are done. Nothing else to do
+      return 0;
+    }
+
+  // STEP 3H: setup parameters for marshaling and marshal them into the
   // outgoing stream
   *os << "_tao_server_request.marshal (" << be_idt_nl
       << "_tao_environment, " << be_nl
@@ -3065,4 +3103,62 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
     }
   delete visitor;
   return 0;
+}
+
+
+// ****************************************************************************
+// visitor to generate the exception list for operations
+// ****************************************************************************
+
+be_visitor_operation_exceptlist_cs::be_visitor_operation_exceptlist_cs (be_visitor_context
+                                                            *ctx)
+  : be_visitor_decl (ctx)
+{
+}
+
+be_visitor_operation_exceptlist_cs::~be_visitor_operation_exceptlist_cs (void)
+{
+}
+
+int
+be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
+  // don't do anything if the exception list is empty
+  if (node->exceptions ())
+    {
+      os->indent ();
+      *os << "CORBA::TypeCode_ptr " << "_tao_" << node->flatname ()
+          << "_exceptlist [] = {" << be_idt_nl;
+      // initialize an iterator to iterate thru the exception list
+      UTL_ExceptlistActiveIterator *ei;
+      ACE_NEW_RETURN (ei,
+                      UTL_ExceptlistActiveIterator (node->exceptions ()),
+                      -1);
+      // continue until each element is visited
+      while (!ei->is_done ())
+        {
+          be_exception *excp = be_exception::narrow_from_decl (ei->item ());
+
+          if (excp == 0)
+            {
+              delete ei;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_operation_exceptlist_cs"
+                                 "visit_operation - "
+                                 "codegen for scope failed\n"), -1);
+
+            }
+          os->indent ();
+          *os << excp->tc_name ();
+
+          ei->next ();
+          if (!ei->is_done ())
+            *os << ",\n";
+          // except the last one is processed?
+
+        } // end of while loop
+      delete ei;
+      *os << be_uidt_nl << "};\n\n";
+    } // end of if
 }

@@ -205,6 +205,8 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_operation_rettype_post_docall_cs (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS:
       return new be_visitor_operation_rettype_return_cs (new_ctx);
+    case TAO_CodeGen::TAO_OPERATION_EXCEPTLIST_CS:
+      return new be_visitor_operation_exceptlist_cs (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
       return new be_visitor_operation_rettype_vardecl_ss (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_RETVAL_DEMARSHAL_SS:
