@@ -93,7 +93,7 @@ TAO_ORBInitInfo::codec_factory (CORBA::Environment &ACE_TRY_ENV)
                               TAO_DEFAULT_MINOR_CODE,
                               ENOMEM),
                             CORBA::COMPLETED_NO));
-      ACE_CHECK;
+      ACE_CHECK_RETURN (IOP::CodecFactory::_nil ())
 
       this->codec_factory_ = codec_factory;
     }

@@ -1,3 +1,8 @@
+Sat Aug 18 08:59:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/ORBInitInfo.cpp: Fixed a compiler error in the static
+	  builds. 
+
 Sat Aug 18 07:09:09 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* Removed the "announcement" file since it was hopelessly
