@@ -18,7 +18,7 @@
 
 // Const strings for timeprobe event type descriptions.
 
-static const char * event_description_strings [] = 
+static const char * event_description_strings [] =
 {
   "start",
   "stop",
@@ -63,7 +63,7 @@ ACE_Metrics_Timeprobe (ALLOCATOR *alloc,
                        u_int id,
                        const char *name,
                        u_long size)
-  : 
+  :
 	ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR> (size),
 		id_ (id),
     name_ (0)
@@ -75,7 +75,8 @@ ACE_Metrics_Timeprobe (ALLOCATOR *alloc,
 
   char * name_tmp;
   ACE_NEW_MALLOC_ARRAY (name_tmp,
-                        (char *) this->allocator ()->malloc (strlen(name)+1),
+//                        (char *) this->allocator ()->malloc (strlen(name)+1),
+                        (char *) alloc->malloc(strlen(name)+1),
                         char,
                         strlen(name)+1);
   ACE_OS::memcpy (name_tmp, name, strlen (name)+1);
@@ -111,7 +112,7 @@ ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::is_event (const ACE_Metrics_Timeprob
 
 template <class ACE_LOCK, class ALLOCATOR>
 const char *
-ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::probe_name (void) 
+ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::probe_name (void)
 {
    return name_;
 }

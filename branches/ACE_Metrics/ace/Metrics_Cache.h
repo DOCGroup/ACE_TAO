@@ -32,7 +32,7 @@
 #  define REGISTER_METRICS_PROBE_RETURN(METRICS_PTR,METRICS_REGION,PROBE_NAME,PROBE_TYPE,METRICS_HANDLE) \
 do { if((METRICS_PTR->metrics_enabled())) { \
 METRICS_HANDLE = METRICS_PTR-> \
-register_##METRICS_REGION## ( \
+register_##METRICS_REGION ( \
 PROBE_NAME, \
 PROBE_TYPE); \
 } } while (0)
@@ -112,5 +112,3 @@ METRICS_PTR->report_##NAME##_stop(); \
 #endif /* ACE_COMPILE_TIMEPROBES */
 
 #endif /* ACE_METRICS_CACHE_H */
-
-
