@@ -61,6 +61,10 @@ all:
 	$(CXX) $(CCFLAGS) -o iout iinset.cpp test.o $(LDFLAGS) $(VLDLIBS)
 	./iout -v < $(srcdir)/idl.gperf > idl.out
 	-diff -b $(srcdir)/idl.exp idl.out
+	$(GPERF) -a -o < $(srcdir)/corba.gperf > tinset.cpp
+	$(CXX) $(CCFLAGS) -o tout tinset.cpp test.o $(LDFLAGS) $(VLDLIBS)
+	./tout -v < $(srcdir)/corba.gperf > corba.out
+	-diff -b $(srcdir)/corba.exp corba.out
 # these next 5 are demos that show off the generated code
 	$(GPERF) -p -j1 -o -t -N is_reserved_word -k1,3,'$$' < $(srcdir)/c-parse.gperf | egrep -v 'ing time is ' > test-1.out
 	-diff -b $(srcdir)/test-1.exp test-1.out
