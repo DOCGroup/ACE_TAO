@@ -1,3 +1,11 @@
+Wed Oct  3 16:37:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/CDR_Stream.cpp (read_1): Reverted this change "Wed Oct  3
+	  15:05:43 2001  Jeff Parsons <parsons@cs.wustl.edu>".  This
+	  change is alone not enough to fix the problem that Brad
+	  reported. The sample program for the text needs to be fixed to
+	  get it working right.
+
 Wed Oct  3 15:05:43 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/CDR_Stream.cpp (read_1);
