@@ -1,3 +1,8 @@
+Fri Mar 30 16:01:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp: Fixed fuzz warnings that were
+	  missed in the last run.
+
 Fri Mar 30 15:45:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/TAO.dsp: Removed the BiDirection GIOP files that have been

@@ -182,7 +182,7 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto,
       TimeBase::TimeT uto_time = uto->time (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (this->time (ACE_TRY_ENV) > uto_time)
+      if (this->time () > uto_time)
         {
           ACE_NEW_THROW_EX (tio,
                             TAO_TIO (uto_time,
@@ -223,13 +223,15 @@ TAO_UTO::interval (CORBA::Environment &ACE_TRY_ENV)
 
   ACE_TRY
     {
-      TimeBase::TimeT lower =
-        this->time (ACE_TRY_ENV) - this->inaccuracy (ACE_TRY_ENV);
+      TimeBase::TimeT this_inaccuracy =
+          this->inaccuracy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      TimeBase::TimeT lower =
+        this->time () - this_inaccuracy;
+
       TimeBase::TimeT upper =
-        this->time (ACE_TRY_ENV) + this->inaccuracy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        this->time () + this_inaccuracy;
 
       ACE_NEW_THROW_EX (tio,
                         TAO_TIO (lower,
