@@ -1,3 +1,12 @@
+Fri May 23 10:11:26 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.cpp: (thr_create, with STHREADS only): *thr_handle was
+	  used but *thr_id had been set by ::thr_create, so threads never
+	  got activated.  Fixed by using *thr_id instead of *thr_handle
+	  in the calls to ACE_OS::thr_setprio and ACE_OS::continue.
+	  Thanks to Jan Perman <uabjjpp@osd.ericsson.se> for reporting
+	  this problem.
+
 Fri May 23 02:58:28 1997  Nanbor Wang  <nw1@siesta.cs.wustl.edu>
 
 	* ace/OS.i (dlsym): Added ACE_USES_ASM_SYMBOL_IN_DLSYM, support
