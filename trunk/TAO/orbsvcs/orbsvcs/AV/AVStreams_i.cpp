@@ -1791,6 +1791,7 @@ template class TAO_PropertySet<POA_AVStreams::MMDevice>;
 template class TAO_PropertySet<POA_AVStreams::FlowConnection>;
 template class TAO_PropertySet<POA_AVStreams::FlowEndPoint>;
 template class TAO_PropertySet<POA_AVStreams::FDev>;
+template class TAO_PropertySet<POA_AVStreams::MCastConfigIf>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,CORBA::Object_ptr>
 #pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,CORBA::Object_ptr,ACE_Null_Mutex>
@@ -1812,4 +1813,5 @@ template class TAO_PropertySet<POA_AVStreams::FDev>;
 #pragma instantiate TAO_PropertySet<POA_AVStreams::FlowConnection>
 #pragma instantiate TAO_PropertySet<POA_AVStreams::FlowEndPoint>
 #pragma instantiate TAO_PropertySet<POA_AVStreams::FDev>
+#pragma instantiate TAO_PropertySet<POA_AVStreams::MCastConfigIf>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
