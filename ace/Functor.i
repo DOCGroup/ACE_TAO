@@ -106,6 +106,12 @@ ACE_Hash<unsigned long>::operator () (unsigned long t) const
 }
 
 ACE_INLINE u_long 
+ACE_Hash<unsigned long long>::operator () (unsigned long long t) const
+{
+  return ACE_static_cast (u_long, t);
+}
+
+ACE_INLINE u_long 
 ACE_Hash<const char *>::operator () (const char *t) const
 {
   return ACE::hash_pjw (t);
