@@ -298,7 +298,7 @@ AMI_Simple_Server_Handler::get_number_skel (TAO_InputCDR &_tao_reply_cdr,
   AMI_Simple_Server_Handler_var _tao_reply_handler_object = 
     AMI_Simple_Server_Handler::_narrow (_tao_reply_handler,
                                         ACE_TRY_ENV);
-  ACE_CHECK_ENV;
+  ACE_CHECK;
 
   // @@ Error handling.
   
