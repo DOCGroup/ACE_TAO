@@ -400,7 +400,7 @@ AC_DEFUN([ACE_COMPILATION_OPTIONS],
       ;;
     no)
       ace_user_enable_exceptions=no
-      if test -n "$GXX"; then
+      if test "$GXX" = yes; then
 dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
 changequote(, )dnl
         if $CXX --version | egrep -v '^2\.[0-7]' > /dev/null; then
@@ -420,7 +420,7 @@ changequote([, ])dnl
 dnl THE FOLLOWING WAS ONLY USED WHEN DISABLING EXCEPTION SUPPORT BY
 dnl DEFAULT.
 dnl
-dnl    if test -n "$GXX"; then
+dnl    if test "$GXX" = yes; then
 dnl dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
 dnl changequote(, )dnl
 dnl      if $CXX --version | egrep -v '^2\.[0-7]' > /dev/null; then
@@ -587,7 +587,7 @@ dnl    fi
   [
    case "${enableval}" in
     yes)
-      if test -n "$GXX"; then
+      if test "$GXX" = yes; then
         ace_user_enable_repo=yes
         ACE_CXXFLAGS="$ACE_CXXFLAGS -frepo"
         AC_DEFINE(ACE_HAS_GNU_REPO)
@@ -613,7 +613,7 @@ dnl    fi
   [
    case "${enableval}" in
     yes)
-      if test -z "$GXX"; then
+      if test "$GXX" = no; then
         case "$host" in
           *solaris*)
                ace_user_enable_rtti=yes

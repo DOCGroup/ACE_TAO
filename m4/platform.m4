@@ -119,7 +119,7 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
     ;;
   *irix5.3*)
     AC_DEFINE([IRIX5])
-    if test -z "$GXX"; then
+    if test "$GXX" = no; then
       ACE_CPPFLAGS="$ACE_CPPFLAGS -D_BSD_TYPES"
     fi
     ;;
@@ -307,7 +307,7 @@ dnl    AC_DEFINE(ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL)
 changequote(, )dnl
       i[3456]86*)
 changequote([, ])dnl
-        if test -n "$GXX"; then
+        if test "$GXX" = yes; then
           # Neutrino defines memcpy as a macro on x86, which then
           # hoses the ACE_OS::memcpy() method.  Undefining
           # __OPTIMIZE__ prevents this from happening.
