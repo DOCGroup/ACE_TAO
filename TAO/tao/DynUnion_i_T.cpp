@@ -17,6 +17,7 @@
 #define TAO_DYNUNION_I_T_C
 
 #include "tao/DynUnion_i_T.h"
+#include "tao/Any.h"
 
 // Method of template class that serves as a functor for all that
 // compares Anys constructed from all legal discriminator types - some
