@@ -1,3 +1,9 @@
+Thu Jan  1 20:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* include/makeinclude/outputdir.bor:
+	  Object files are always placed in subdirectories dependent on the
+	  configuration
+
 Thu Jan  1 17:59:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/OS_NS_Thread.h:
