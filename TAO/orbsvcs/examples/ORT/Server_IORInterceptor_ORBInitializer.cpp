@@ -28,12 +28,12 @@ Server_IORInterceptor_ORBInitializer::post_init (
 {
   CORBA::Object_var obj =
     info->resolve_initial_references ("Gateway_Object_Factory"
-                                      TAO_ENV_ARG_DECL);
+                                      TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   /// Narrow it down correctly.
   Gateway::Object_Factory_var gateway_object_factory =
-    Gateway::Object_Factory::_narrow (obj.in () TAO_ENV_ARG_DECL);
+    Gateway::Object_Factory::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
   /// Check for nil reference
@@ -56,6 +56,6 @@ Server_IORInterceptor_ORBInitializer::post_init (
     gateway;
 
   info->add_ior_interceptor (ior_interceptor.in ()
-                             TAO_ENV_ARG_DECL);
+                             TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

@@ -53,7 +53,7 @@ main (int argc, char *argv[])
         orb_initializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer_var.in ()
-                                                     TAO_ENV_ARG_DECL);
+                                                     TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
@@ -65,7 +65,7 @@ main (int argc, char *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             "server_sum_orb"
-                                            TAO_ENV_ARG_DECL);
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -74,12 +74,12 @@ main (int argc, char *argv[])
       /// Resolve reference to RootPOA
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA"
-                                         TAO_ENV_ARG_DECL);
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       /// Narrow it down correctly.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in () TAO_ENV_ARG_DECL);
+        PortableServer::POA::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       /// Check for nil references
@@ -90,11 +90,11 @@ main (int argc, char *argv[])
 
       /// Get poa_manager reference
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_DECL);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       /// Activate it.
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_DECL);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ///@}
@@ -103,13 +103,13 @@ main (int argc, char *argv[])
       sum_server_i sum_server_impl;
 
       /// Activate
-      obj = sum_server_impl._this (TAO_ENV_SINGLE_ARG_DECL);
+      obj = sum_server_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       /// Narrow it down.
       ORT::sum_server_var sum_server =
         ORT::sum_server::_narrow (obj.in ()
-                                  TAO_ENV_ARG_DECL);
+                                  TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       /// Check for nil reference
@@ -121,7 +121,7 @@ main (int argc, char *argv[])
 
       /// Convert the object reference to a string format.
       CORBA::String_var ior =
-        orb->object_to_string (sum_server.in () TAO_ENV_ARG_DECL);
+        orb->object_to_string (sum_server.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       /// If the ior_output_file exists, output the IOR to it.
@@ -138,7 +138,7 @@ main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      orb->run (TAO_ENV_SINGLE_ARG_DECL);
+      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_INFO, "Successful.\n"));
