@@ -98,9 +98,9 @@ Peer_Handler::display_menu (void)
 
 IPC_Client::IPC_Client (void)
   : iterations_ (0),
-    rendezvous_ ("acepipe"),
     done_handler_ (ACE_Sig_Handler_Ex (ACE_Service_Config::end_proactor_event_loop))
 {
+  ACE_OS::strcpy (rendezvous_, __TEXT ("acepipe"));
 }
 
 IPC_Client::~IPC_Client (void)
@@ -119,7 +119,7 @@ IPC_Client::init (int argc, char *argv[])
 	   (SIGINT, &this->done_handler_) == -1)
     return -1;
 
-  ACE_DEBUG ((LM_DEBUG, "Opening %s\n", rendezvous_));
+  ACE_DEBUG ((LM_DEBUG, "Opening %s\n", ACE_MULTIBYTE_STRING (rendezvous_)));
 
   Peer_Handler *ph;
   
@@ -169,7 +169,9 @@ IPC_Client::parse_args (int argc, char *argv[])
       switch (c)
 	{
 	case 'r':
-	  rendezvous_ = get_opt.optarg;
+	  ACE_OS::strncpy (rendezvous_, 
+			   ACE_WIDE_STRING (get_opt.optarg),
+			   sizeof rendezvous_ / sizeof TCHAR);
 	  break;
 	case 'i':
 	  iterations_ = ACE_OS::atoi (get_opt.optarg);

@@ -34,7 +34,7 @@ main (int argc, char *argv[])
 						    // HKEY_CLASSES_ROOT,
 						    // HKEY_USERS,
 						    // HKEY_CURRENT_USER, 
-						    argc == 2 ? ACE_WIDE_STRING (argv[1]), 0);
+						    argc == 2 ? ACE_WIDE_STRING (argv[1]) : 0);
 							
   if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Predefined_Naming_Contexts::connect failed"), -1);

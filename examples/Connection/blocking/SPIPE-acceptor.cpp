@@ -15,6 +15,7 @@ Svc_Handler::Svc_Handler (void)
   this->mb_.size (BUFSIZ);
 }
 
+
 Svc_Handler::~Svc_Handler (void)
 {
 }
@@ -47,9 +48,9 @@ Svc_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 
 IPC_Server::IPC_Server (void)
   : n_threads_ (1),
-    rendezvous_ ("acepipe"),
     done_handler_ (ACE_Sig_Handler_Ex (ACE_Service_Config::end_proactor_event_loop))
 {
+  ACE_OS::strcpy (rendezvous_, __TEXT ("acepipe"));
 }
 
 IPC_Server::~IPC_Server (void)
@@ -62,7 +63,7 @@ IPC_Server::init (int argc, char *argv[])
   if (this->parse_args (argc, argv) == -1)
     return -1;
 
-  ACE_DEBUG ((LM_DEBUG, "Opening %s\n", rendezvous_));
+  ACE_DEBUG ((LM_DEBUG, "Opening %s\n", ACE_MULTIBYTE_STRING (rendezvous_)));
 
   // Initialize named pipe listener.
   if (this->open (ACE_SPIPE_Addr (rendezvous_)) == -1)
@@ -94,7 +95,9 @@ IPC_Server::parse_args (int argc, char *argv[])
       switch (c)
 	{
 	case 'r':
-	  rendezvous_ = get_opt.optarg;
+	  ACE_OS::strncpy (rendezvous_, 
+			   ACE_WIDE_STRING (get_opt.optarg),
+			   sizeof rendezvous_ / sizeof TCHAR);
 	  break;
 	case 't':
 	  n_threads_ = ACE_OS::atoi (get_opt.optarg);
@@ -166,6 +169,7 @@ IPC_Server::svc (void)
 }
 
 #endif /* SPIPE_ACCEPTOR_C */
+
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Concurrency_Strategy<Svc_Handler>;
