@@ -309,7 +309,6 @@ ImR_Activator_i::start_server_i (const char *server
       if (spawned_pid == ACE_INVALID_PID)
         {
           // If invalid PID..
-          cout << __FILE__ << __LINE__ << endl;
           ACE_ERROR ((LM_ERROR,
                      "Error: Cannot activate server <%s> using <%s>\n",
                       server,
@@ -352,7 +351,6 @@ ImR_Activator_i::start_server_i (const char *server
           // starting_up_ value to '0' and
           this->repository_.starting_up (server, 0);
 
-          cout << __FILE__ << __LINE__ << endl;
           // print the same.
           ACE_ERROR ((LM_ERROR,
                       "Error: Cannot activate server <%s> using <%s>, "
@@ -474,7 +472,6 @@ ImR_Activator_i::ready_check (const char *server)
   }
   ACE_CATCHANY
     {
- cout << __FILE__ << __LINE__ << endl;
       ACE_ERROR ((LM_ERROR,
                  "Error: Cannot activate server <%s>, "
                  "terminating it (Server Ping Object failed).\n",
@@ -525,8 +522,8 @@ ImR_Activator_i::ready_check (const char *server)
 
 void
 ImR_Activator_i::register_server (const char *server,
-                             const ImplementationRepository::StartupOptions &options
-                             ACE_ENV_ARG_DECL)
+                                  const ImplementationRepository::StartupOptions &options
+                                  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::AlreadyRegistered))
 {
