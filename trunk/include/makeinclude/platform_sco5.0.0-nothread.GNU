@@ -7,7 +7,7 @@ CCFLAGS		+= -b elf -w -O2 -Xpg4plus -fno-implicit-templates \
 		   -I/usr/progressive/lib/g++-include
 DLD             = $(CXX)
 LD		= $(CXX)
-LIBS            = -lsocket -lnsl -ldl
+LIBS            += -lsocket -lnsl -ldl
 PIC             = -fpic 
 AR              = ar
 ARFLAGS         = ruv

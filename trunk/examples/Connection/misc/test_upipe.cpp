@@ -180,6 +180,11 @@ main (void)
 }
 #endif /* ACE_HAS_THREADS */
 
+#if defined (ACE_MT_SAFE)
+typedef ACE_RW_Mutex RW_MUTEX;
+#else
+typedef ACE_Null_Mutex RW_MUTEX;
+#endif /* ACE_MT_SAFE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Accept_Strategy<Server_Service, ACE_UPIPE_ACCEPTOR>;
@@ -187,12 +192,12 @@ template class ACE_Acceptor<Server_Service, ACE_UPIPE_ACCEPTOR>;
 template class ACE_Concurrency_Strategy<Server_Service>;
 template class ACE_Connector<Client_Service, ACE_UPIPE_CONNECTOR>;
 template class ACE_Creation_Strategy<Server_Service>;
-template class ACE_Guard<ACE_RW_Mutex>;
-template class ACE_Map_Iterator<int, ACE_Svc_Tuple<Client_Service> *, ACE_RW_Mutex>;
-template class ACE_Map_Manager<int, ACE_Svc_Tuple<Client_Service> *, ACE_RW_Mutex>;
+template class ACE_Guard<RW_MUTEX>;
+template class ACE_Map_Iterator<int, ACE_Svc_Tuple<Client_Service> *, RW_MUTEX>;
+template class ACE_Map_Manager<int, ACE_Svc_Tuple<Client_Service> *, RW_MUTEX>;
 template class ACE_Message_Queue<ACE_NULL_SYNCH>;
 template class ACE_Module<ACE_NULL_SYNCH>;
-template class ACE_Read_Guard<ACE_RW_Mutex>;
+template class ACE_Read_Guard<RW_MUTEX>;
 template class ACE_Scheduling_Strategy<Server_Service>;
 template class ACE_Strategy_Acceptor<Server_Service, ACE_UPIPE_ACCEPTOR>;
 template class ACE_Svc_Handler<ACE_UPIPE_STREAM, ACE_NULL_SYNCH>;
@@ -201,5 +206,5 @@ template class ACE_TSS<ACE_Dynamic>;
 template class ACE_Task<ACE_NULL_SYNCH>;
 template class ACE_Thread_Strategy<Server_Service>;
 template class ACE_Thru_Task<ACE_NULL_SYNCH>;
-template class ACE_Write_Guard<ACE_RW_Mutex>;
+template class ACE_Write_Guard<RW_MUTEX>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

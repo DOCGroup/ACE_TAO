@@ -349,6 +349,6 @@ Peer_Router::control (ACE_Message_Block *mb)
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Map_Iterator<ROUTING_KEY, Peer_Handler *, ACE_RW_Mutex>;
-template class ACE_Map_Manager<ROUTING_KEY, Peer_Handler *, ACE_RW_Mutex>;
+template class ACE_Map_Iterator<ROUTING_KEY, Peer_Handler *, ROUTER_MUTEX>;
+template class ACE_Map_Manager<ROUTING_KEY, Peer_Handler *, ROUTER_MUTEX>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

@@ -1,13 +1,88 @@
+Tue Apr 15 17:09:33 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* examples/Connection/non_blocking/test_sock_connector.cpp: Added
+ 	  a typedef for ACE_RW_Mutex so that the code compiles on non-MT
+ 	  platforms.  Thanks to Ganesh Pai <gpai@voicetek.com> for
+ 	  reporting this.
+
+	* examples/Connection/non_blocking/test_tli_connector.cpp: Added a
+ 	  typedef for ACE_RW_Mutex so that the code compiles on non-MT
+ 	  platforms.  Thanks to Ganesh Pai <gpai@voicetek.com> for
+ 	  reporting this.
+
+	* examples/Connection/misc/test_upipe.cpp: Added a typedef for
+ 	  ACE_RW_Mutex so that the code compiles on non-MT platforms.
+  	  Thanks to Ganesh Pai <gpai@voicetek.com> for reporting this.
+
+	* performance-tests/Synch-Benchmarks/Options.cpp: Added a #ifdef
+ 	  for ACE_Thread_Mutex so that the code compiles on non-MT
+ 	  platforms.  Thanks to Ganesh Pai <gpai@voicetek.com> for
+ 	  reporting this.
+
+	* examples/ASX/Event_Server/Transceiver/transceiver.cpp: Added a
+ 	  typedef for ACE_RW_Mutex so that the code compiles on non-MT
+ 	  platforms.  Thanks to Ganesh Pai <gpai@voicetek.com> for
+ 	  reporting this.
+
+	* examples/ASX/UPIPE_Event_Server/Consumer_Router.cpp: Added a
+ 	  typedef for ACE_RW_Mutex so that the code compiles on non-MT
+ 	  platforms.  Thanks to Ganesh Pai <gpai@voicetek.com> for
+ 	  reporting this.
+
+	* examples/ASX/Event_Server/Event_Server/Options.cpp
+ 	  (print_results): Although rusage struct is defined on SCO, there
+ 	  is no getrusage(), rusage is used only by wait()
+ 	  etc. internally.  Therefore, we had to move some #ifdefs around.
+  	  Thanks to Ganesh Pai <gpai@voicetek.com> for reporting this.
+
+	* apps/Gateway/Gateway/Proxy_Handler_Connector.cpp: Added a
+ 	  typedef for ACE_RW_Mutex so that the code compiles on non-MT
+ 	  platforms.  Thanks to Ganesh Pai <gpai@voicetek.com> for
+ 	  reporting this.
+
+	* tests/Conn_Test.cpp: Added a typedef for ACE_RW_Mutex so that
+ 	  the code compiles on non-MT platforms.  Thanks to Ganesh Pai
+ 	  <gpai@voicetek.com> for reporting this.
+
+	* tests/SPIPE_Test.cpp (main): Removed the VXWORKS arm of the
+ 	  #ifdef, which is not correct since this stuff only works if
+ 	  we're working with a version of VxWorks that has STREAM pipes.
+
+	* include/makeinclude/platform_sco5.0.0-nothread.GNU: Changed
+	
+	  LIBS            = -lsocket -lnsl -ldl
+
+	  to
+
+	  LIBS            += -lsocket -lnsl -ldl
+
+  	  Thanks to Ganesh Pai <gpai@voicetek.com> for reporting this.
+
+	* netsvcs/lib/Client_Logging_Handler.cpp: Added a typedef for
+ 	  ACE_RW_Mutex so that the code compiles on non-MT platforms.
+  	  Thanks to Ganesh Pai <gpai@voicetek.com> for reporting this.
+
+	* netsvcs/lib/TS_Clerk_Handler.cpp: Added a typedef for
+ 	  ACE_RW_Mutex so that the code compiles on non-MT platforms.
+  	  Thanks to Ganesh Pai <gpai@voicetek.com> for reporting this.
+
+	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp: Added a
+ 	  typedef for ACE_RW_Mutex so that the code compiles on non-MT
+ 	  platforms.  Thanks to Ganesh Pai <gpai@voicetek.com> for
+ 	  reporting this.
+
 Tue Apr 15 13:01:13 1997  David L. Levine  <levine@cs.wustl.edu>
 
-	* ace/Token_Request_Reply.cpp (ctor): added initialization of transfer_.data_ to
-	  avoid unitialized memory read.
+	* ace/Token_Request_Reply.cpp (ctor): added initialization of
+	  transfer_.data_ to avoid unitialized memory read.
 
-	* tests/test_config.h: removed "static" qualifier from randomize () to avoid warning from
-	  g++ when it's not called in a test.
+	* tests/test_config.h: removed "static" qualifier from
+	  randomize () to avoid warning from g++ when it's not called
+	  in a test.  
 
-	* examples/IPC_SAP/SPIPE_SAP/server.cpp (main): moved declaration of local variable "handle"
-	  up before its first use.
+	* examples/IPC_SAP/SPIPE_SAP/server.cpp (main): moved
+	  declaration of local variable "handle" up before its first
+	  use. 
 
 Mon Apr 14 23:08:27 1997    <irfan@TWOSTEP>
 

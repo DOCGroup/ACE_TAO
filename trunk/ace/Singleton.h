@@ -61,5 +61,3 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_SINGLETON_H */
-
-
