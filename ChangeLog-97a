@@ -1,5 +1,11 @@
 Thu May 15 13:10:12 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* include/makeinclude/platform_osf1_3.2.GNU: Got rid of all
+ 	  unresolved symbol warnings using cxx 5.5 on DEC/OSF v3.2 by
+ 	  using the linker flag "-expect_unresolved '*'."  In addition, I
+ 	  added -threads to the DCFLAGS macro.  Thanks to Tom Dobridge
+ 	  <dobridge@persimmon.com> for this.
+
 	* ace/Strategies_T: Added a minor ACE_Reactive_Strategy extension
  	  to enable non-blocking I/O in active_svc_handler().  Thanks to
  	  Arturo Montes <mitosys@colomsat.net.co> for contributing this.
