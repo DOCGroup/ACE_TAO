@@ -1,3 +1,23 @@
+Wed Jul 21 02:36:51 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/Naming_Service.dsp:
+	* orbsvcs/Naming_Service/Makefile: Changed the executable name
+	  back to Naming_Service.
+
+	* examples/Callback_Quoter/run_test.pl:
+	* examples/Quoter/run_test.pl:
+	* orbsvcs/Naming_Service/Makefile:
+	* orbsvcs/tests/AVStreams/benchmark/run_test.pl:
+	* orbsvcs/tests/CosEC_Multiple/run_test.pl:
+	* orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
+	* orbsvcs/tests/EC_Multiple/run_test.pl:
+	* orbsvcs/tests/EC_Throughput/run_test.pl:
+	* orbsvcs/tests/Event_Latency/run_test.pl:
+	* orbsvcs/tests/Property/run_test.pl:
+	* orbsvcs/tests/Simple_Naming/run_test.pl: Changed the name of
+	  Naming Service program from Naming_Server back to
+	  Naming_Service.
+
 Tue Jul 20 22:37:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
@@ -51,13 +71,13 @@ Tue Jul 20 19:32:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp:
 	  The low priority thread was trying to use priorities in the RT
-	  class, event though we were not allowed to do that.	  
+	  class, event though we were not allowed to do that.
 
 Tue Jul 20 19:16:00 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/ObjectIDList.{h,i}:
 
-	  Added missing TAO_Export macros in class declarations and global 
+	  Added missing TAO_Export macros in class declarations and global
 	  function definitions.
 
 Tue Jul 20 19:05:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
@@ -68,7 +88,7 @@ Tue Jul 20 19:05:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  anyway.
 
 	* TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
-	  Changed reference to be_type::SIZE_TYPE to 
+	  Changed reference to be_type::SIZE_TYPE to
 	  be_decl::SIZE_TYPE (where it actually resides).
 
 	* TAO_IDL/be/be_field.cpp:
@@ -106,8 +126,8 @@ Tue Jul 20 14:08:57 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Tue Jul 20 13:30:41 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp: Removed some 
-          unnecessary ACE_CHECKs in the list method.  
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp: Removed some
+          unnecessary ACE_CHECKs in the list method.
 
 Tue Jul 20 10:41:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
