@@ -1,0 +1,10 @@
+# DSRT DIRECT Dispatcher (DSRT_DIRECT_Dispatcher_Impl_T.cpp)
+DSTRM_EVENT     DSRT_DIRECT_DISPATCH        7       SCHEDULE_EXIT   1       "Exit Schedule_i"      print_string
+DSTRM_EVENT     DSRT_DIRECT_DISPATCH        7       SCHEDULE_ENTER  0       "Enter Schedule_i"      print_string
+
+# DSRT CV Dispatcher (DSRT_CV_Dispatcher_Impl_T.cpp)
+DSTRM_EVENT     DSRT_CV_DISPATCH        6       SCHEDULE_EXIT   1       "Exit Schedule_i"      print_string
+DSTRM_EVENT     DSRT_CV_DISPATCH        6       SCHEDULE_ENTER  0       "Enter Schedule_i"      print_string
+
+# DSRT_Dispatcher (Kokyu_dsrt.cpp)
+DSTRM_EVENT	DSRT_DISPATCH	5	SCHEDULE	0	"Schedule task"	print_string
