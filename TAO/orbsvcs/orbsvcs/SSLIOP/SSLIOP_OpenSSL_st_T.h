@@ -71,7 +71,7 @@ namespace TAO
 
     /// Deep copy the given OpenSSL structure.
     template <typename T>
-    T * copy (T * st);
+    T * copy (T const & st);
 
     /// Decrease the reference count on the given OpenSSL structure.
     template <typename T>

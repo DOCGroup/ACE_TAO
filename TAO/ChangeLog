@@ -1,10 +1,20 @@
+Fri Aug 13 09:38:24 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.h (copy):
+
+	  Corrected function parameter.  It should have been "T const &",
+	  not "T *".  This should fix a Borland C++ Builder X compile-time
+	  problem.  Interestingly, g++ 3.4.1 did not complain about this
+	  problem.
+
 Fri Aug 13 11:10:00 2004  Liang-Jui Shen <ls1@cec.wustl.edu>
-        *orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp
-        *orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp
-        *orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp
-        *orbsvcs/orbsvcs/Event/EC_Reactive_Timeout_Generator.cpp
-        *orbsvcs/orbsvcs/Event/EC_Reactive_Timeout_Generator.h
-        
+
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_Timeout_Generator.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_Timeout_Generator.h:
+
         My previous check-ins failed the tests. Therefore, I reverted to
         the original version.
 
