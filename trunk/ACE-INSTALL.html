@@ -27,7 +27,7 @@ HREF="ACE.FAQ.html">FAQ</A> before building and installing ACE.
 
 <UL>
 <LI><A HREF="#platforms">Supported Platforms and Compilers</A>
-<LI><A HREF="#g++">Compiling ACE with GNU C++</A>
+<LI><A HREF="#g++">Compiling ACE with GNU g++</A>
 <LI><A HREF="#aceinstall">Building and Installing ACE</A>
 <LI><A HREF="#svcsinstall">Building and Installing ACE Network Services</A>
 <LI><A HREF="#advanced">Advanced Topics</A>
@@ -141,11 +141,11 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ace/Makefile">Makefile</a>
 
 <DD> ACE has been ported to <A
 HREF="http://www.cs.wustl.edu/~cleeland/ace/">Linux</A> using the GNU
-G++ 2.7.2 compiler. <P>
+g++ 2.7.2 compiler. <P>
 
 <DT> <B> SCO UNIX </B> <BR><BR>
 
-<DD> ACE has been ported to SCO UNIX using the GNU G++ 2.7.2 compiler.
+<DD> ACE has been ported to SCO UNIX using the GNU g++ 2.7.2 compiler.
 Arturo Montes &lt<A
 HREF="mailto:mitosys@colomsat.net.co">mitosys@colomsat.net.co</A>&gt
 maintains this code.  In addition, he also maintains a version of <A
@@ -218,13 +218,13 @@ for help with this port. <P>
 <DD>
 
      Wei Chiang &lt<A HREF="mailto:chiang@tele.nokia.fi">chiang@tele.nokia.fi</A>&gt
-	has ported ACE to Chorus 3.1 using GNU G++ 2.7.2.<P>
+	has ported ACE to Chorus 3.1 using GNU g++ 2.7.2.<P>
 
 <DT><B>LynxOS</B> <BR><BR>
 <DD>
 
      Dave Mayerhoefer &lt<A HREF="mailto:davem@lynx.com">davem@lynx.com</A>&gt
-	has ported ACE to LynxOS 2.5 using GNU G++ 2.7.2.<P>
+	has ported ACE to LynxOS 2.5 using GNU g++ 2.7.2.<P>
 
 <DT><STRONG>VxWorks</STRONG> <BR><BR>
 <DD>
@@ -312,14 +312,26 @@ clean.  There are still some problems that need to be ironed out: <P>
 </DL>
 
 <HR>
-<H4><A NAME="g++">Compiling ACE with GNU C++</A></H4>
+<H4><A NAME="g++">Compiling ACE with GNU g++</A></H4>
 
-If you use the GNU GCC C++ compiler please note the following: <P>
+If you use the GNU GCC g++ compiler please note the following: <P>
 
 <UL>
- 	<LI>Earlier versions of G++ may not compile certain
-	  parts of ACE correctly due to compiler bugs.  Please
-	  upgrade to G++ 2.7.2 or greater. <P>
+        <LI>ACE transparently supports egcs.  Please use the appropriate
+        g++ config and platform files for the OS on which you will use egcs.
+
+        <LI>With g++ 2.8.0, an internal compiler error is raised when
+        trying to compile ACE_Map_Manager instantiations.  One workaround
+        is to disable optimization.  The easiest way to do that is:
+
+        <pre><code>% make optimize=0</code></pre>
+
+        Or, you can edit your include/makeinclude/platform_sunos5_g++.GNU,
+        and comment out the <code>OCFLAGS</code> line.
+
+ 	<LI>Earlier (prior to 2.7.2) versions of g++ may not compile
+        certain parts of ACE correctly due to compiler bugs.  Please
+        upgrade to g++ 2.7.2 or greater. <P>
 
 	<LI>Make sure to update your gcc <code>config.status</code>
         file.  This file is produced when installing gcc; it specifies
