@@ -20,7 +20,10 @@ module Priority_Test
    */
   interface Op_Mode
   {
-    void perform_test ();
+    /// Start with arg.
+    void start (in long arg);
+
+    void stop ();
   };
 
   /**
