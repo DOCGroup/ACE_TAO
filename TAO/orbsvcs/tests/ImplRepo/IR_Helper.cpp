@@ -1,7 +1,6 @@
 // $Id$
 
 #include "IR_Helper.h"
-#include "orbsvcs/PingS.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/IIOP_Acceptor.h"
 #include "tao/Acceptor_Registry.h"
