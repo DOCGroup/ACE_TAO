@@ -1,3 +1,12 @@
+Sat Jan 10 22:17:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Connection_Handler.cpp:
+
+	  Reverted this change "Sat Jan 10 21:17:10 2004  Balachandran
+	  Natarajan  <bala@dre.vanderbilt.edu>" since it doesn't look
+	  like a right fix. This can cause other problems like silent
+	  crashes when threads exits.
+
 Sat Jan 10 21:42:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FtRtEvent.mpc:
