@@ -32,6 +32,12 @@ namespace ACE_RMCast
     virtual size_t
     recv (void* buf, size_t s);
 
+    // Retrun the size of the next message. Block if message is
+    // not available.
+    //
+    virtual size_t
+    size ();
+
   private:
     ACE_Auto_Ptr<Socket_Impl> impl_;
   };

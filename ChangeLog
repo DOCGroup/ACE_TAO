@@ -1,8 +1,17 @@
+Mon Mar 14 16:32:08 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/ace/RMCast/Socket.h:
+	* protocols/ace/RMCast/Socket.cpp: Added support for querying
+	incoming message size.
+
+	* examples/RMCast/Send_Msg/Receiver.cpp: Added a check that
+	discards messages of a wrong size before reading them.
+
 Mon Mar 14 16:13:13 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/tao_orb_tests.lst: 
+	* bin/tao_orb_tests.lst:
 
-	  Added the Hang_Shutdown test to the daily builds. 
+	  Added the Hang_Shutdown test to the daily builds.
 
 Mon Mar  14 10:07:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
