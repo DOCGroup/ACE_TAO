@@ -13,6 +13,8 @@ BIN =   Test_URL_Addr
 
 LSRC   = $(addsuffix .cpp,$(BIN))
 
+LDLIBS := -lwebsvcs
+
 BUILD = $(VBIN)
 
 #----------------------------------------------------------------------------
@@ -25,8 +27,6 @@ include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
-
-VLDLIBS := -lwebsvcs $(VLDLIBS)
 
 # To build multiple executables in the same directory on AIX, it works
 # best to wipe out any previously-created tempinc directory.
