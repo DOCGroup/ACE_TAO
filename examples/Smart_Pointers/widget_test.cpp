@@ -14,6 +14,7 @@
 #include "ace/Unbounded_Queue.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
+#include "ace/Null_Mutex.h"
 #include "Widget.h"
 #include "Widget_Factory.h"
 #include "Widget_Part.h"
