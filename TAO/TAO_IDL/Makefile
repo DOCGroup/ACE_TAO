@@ -33,19 +33,22 @@ endif # ! CROSS-COMPILE
 #	Local targets
 #----------------------------------------------------------------------------
 
-ifndef CROSS-COMPILE
-IDL_CFE_VERSION	= \"1.3.0\"
-CPPFLAGS += -Iinclude -Ibe_include -DCPP_LOCATION=\"$(CXX)\" \
-            -DIDL_CFE_VERSION=$(IDL_CFE_VERSION)
-
-clean:
-	rm -f tao_idl
-
-realclean:
-	rm -f tao_idl TAGS
-else
+ifdef CROSS-COMPILE
   default_embedded:
 	@echo The IDL compiler won\'t run or build on CROSS-COMPILE platforms.
+
+  clean realclean:
+	@echo Nothing to clean in TAO_IDL on CROSS-COMPILE platforms.
+else  # ! CROSS-COMPILE
+  IDL_CFE_VERSION	= \"1.3.0\"
+  CPPFLAGS += -Iinclude -Ibe_include -DCPP_LOCATION=\"$(CXX)\" \
+              -DIDL_CFE_VERSION=$(IDL_CFE_VERSION)
+
+  clean:
+	rm -f tao_idl
+
+  realclean:
+	rm -f tao_idl TAGS
 endif # ! CROSS-COMPILE
 
 tags:
