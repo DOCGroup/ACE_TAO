@@ -442,7 +442,7 @@ ACE_Name_Options::ACE_Name_Options (void)
       ACE_ERROR ((LM_ERROR,
                   ACE_LIB_TEXT ("Temporary path too long, ")
                   ACE_LIB_TEXT ("defaulting to current directory\n")));
-      ACE_OS::strcat (this->namespace_dir_, ACE_LIB_TEXT ("."));
+      ACE_OS::strcpy (this->namespace_dir_, ACE_LIB_TEXT ("."));
       ACE_OS::strcat (this->namespace_dir_, ACE_DIRECTORY_SEPARATOR_STR);
     }
 #endif /* ACE_DEFAULT_NAMESPACE_DIR */
