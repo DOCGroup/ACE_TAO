@@ -1,3 +1,14 @@
+Wed Apr 26 08:43:21 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * apps/drwho/PMC_Flo.cpp:
+        * apps/drwho/PMC_Usr.cpp:
+        * apps/drwho/PMS_All.cpp:
+        * apps/drwho/PMS_Flo.cpp:
+        * apps/drwho/PMS_Ruser.cpp:
+        * apps/drwho/PMS_Usr.cpp:
+
+          Was still using ACE::strecpy, changed to ACE_OS::strecpy.
+
 Tue Apr 25 15:11:41 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * THANKS:
