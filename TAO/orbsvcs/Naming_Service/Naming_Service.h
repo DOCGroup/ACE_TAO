@@ -49,47 +49,29 @@ public:
   // Destructor.
 
 protected:
-  int parse_args (int argc, char *argv[]);
-  // parses the arguments.
+
+  int parse_args (int argc, char *argv []);
+  // Parse the command line arguments to find 
+  // the timeout period.
 
   CORBA::ORB_var orb_;
   // The ORB.
-
-  PortableServer::POA_var root_poa_;
+  
+  //  PortableServer::POA_var root_poa_;
   // The Root POA.
-
-  PortableServer::POA_var ns_poa_;
-  // The Naming Service POA.
 
   TAO_Naming_Server my_naming_server_;
   // Naming Server instance.
 
-  FILE *ior_output_file_;
-  // File to output the Naming Service IOR.
-
-  const char *pid_file_name_;
-  // File to output the process id.
-
-  size_t context_size_;
-  // Size of the hash_table allocated upon the creation of the Naming
-  // Service context (if one is created).  Note: all the contexts
-  // created under the given context will use the same size for their
-  // initial hash table allocations.
-
-  const ACE_TCHAR *persistence_file_name_;
-  // Path to the file to be used to store/read in Naming Service
-  // persistent state.
-
-  void *base_address_;
-  // Address to be used for memory mapping Naming Service state file,
-  // identified by the <persistence_file_name_>.
-
   size_t time_;
   // After how long the server should stop listening to requests (in
   // seconds).
+  
+  int argc_;
+  // argc
 
-  int multicast_;
-  // If not zero multicast is enabled.
+  char *argv_ [];
+  // argv []
 };
 
 #endif /* TAO_NAMING_SERVICE_H */
