@@ -1,7 +1,7 @@
 // $Id$
 
 #include "tao/Servant_Base.h"
-#include "tao/POAC.h"
+#include "tao/PortableServerC.h"
 #include "Notify_EventChannelFactory_i.h"
 #include "Notify_EventChannel_i.h"
 #include "Notify_Resource_Manager.h"
