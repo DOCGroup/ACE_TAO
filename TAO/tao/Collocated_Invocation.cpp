@@ -49,7 +49,7 @@ namespace TAO
         if (strat == TAO_CS_THRU_POA_STRATEGY)
           {
             // Perform invocations on the servant through the servant's ORB.
-            CORBA::ORB_var servant_orb = this->stub ()->servant_orb_ptr ();
+            CORBA::ORB_var servant_orb = this->effective_target ()->_stubobj ()->servant_orb_ptr ();
             TAO_ORB_Core * const orb_core = servant_orb->orb_core ();
 
             TAO_ServerRequest request (orb_core,
