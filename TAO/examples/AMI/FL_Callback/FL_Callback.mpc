@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*progress): taoexe, strategies, messaging, ami, portableserver, ace_fl {
+project(*progress): taoexe, messaging, ami, portableserver, tao_flreactor {
   Source_Files {
     Progress_i.cpp
     progress.cpp

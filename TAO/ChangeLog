@@ -1,3 +1,24 @@
+Sun Jan  9 01:20:25 2005  Marek Brudka  <mbrudka@aster.pl>
+
+	* docs/Options.html (Module):
+	Updated documentation.
+	* tao/Strategies/advanced_resource.h (Module):
+	* tao/Strategies/advanced_resource.cpp (Module):
+	Removed support for FlReactor and TkReactor from AdvancedFactory.
+	* examples/AMI/FL_Callback/svc.conf.xml (Module):
+	* examples/AMI/FL_Callback/svc.conf (Module):
+	* examples/AMI/FL_Callback/FL_Callback.mpc (Module):
+	* tests/FL_Cube/svc.conf.xml (Module):
+	* tests/FL_Cube/svc.conf (Module):
+	* tests/FL_Cube/server.cpp (Module):
+	* tests/FL_Cube/client.cpp (Module):
+	TAO_Advanced_Resource_Factory changed into TAO_FlResource_Factory.
+	* tao/tao_xtreactor.mpc (Module):
+	* tao/tao_tkreactor.mpc (Module):
+	* tao/tao_qtreactor.mpc (Module):
+	* tao/tao_flreactor.mpc (Module):
+	Removed dependencies on features tao_qtreactor,tao_xtreactor,tao_flreactor,tao_tkreactor
+
 Mon Dec 13 19:17:29 2004  Marek Brudka  <mbrudka@aster.pl>
 
 	* */.cvsignore (Module):

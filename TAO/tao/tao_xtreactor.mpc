@@ -1,5 +1,4 @@
 project(TAO_XtReactor) : acelib, taolib, taoversion, core, tao_output, taodefaults, ace_xtreactor {
-  requires     += tao_xtreactor
   sharedname   = TAO_XtReactor
   dynamicflags += TAO_XTREACTOR_BUILD_DLL
   Header_Files {

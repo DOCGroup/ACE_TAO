@@ -1,5 +1,4 @@
 project(TAO_FlReactor) : acelib, taolib, taoversion, core, tao_output, taodefaults, ace_flreactor {
-  requires     += tao_flreactor
   sharedname   = TAO_FlReactor
   dynamicflags += TAO_FLREACTOR_BUILD_DLL
   Header_Files {

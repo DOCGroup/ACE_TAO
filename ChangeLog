@@ -1,3 +1,14 @@
+Sun Jan  9 01:13:42 2005  Marek Brudka  <mbrudka@aster.pl>
+
+	* ace/TkReactor.h (Module):
+	* ace/TkReactor.cpp (Module):
+	* ace/FlReactor.h (Module):
+	* ace/FlReactor.cpp (Module):
+	Removed factory methods for loading reactor from shared library.
+
+	* bin/MakeProjectCreator/config/global.features (Module):
+	Disabled by defult tao_flreactor and tao_tkreactor features.
+
 Mon Jan  3 22:48:32 2005  Marek Brudka  <mbrudka@aster.pl>
 
 	* ace/ace_xtreactor.mpc (Module):

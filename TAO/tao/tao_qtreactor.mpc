@@ -1,5 +1,4 @@
 project(TAO_QtReactor) : acelib, taolib, taoversion, core, tao_output, taodefaults, ace_qtreactor {
-  requires     += tao_qtreactor
   sharedname   = TAO_QtReactor
   dynamicflags += TAO_QTREACTOR_BUILD_DLL
   Header_Files {

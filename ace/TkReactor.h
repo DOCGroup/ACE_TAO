@@ -126,8 +126,6 @@ private:
   ACE_TkReactor (const ACE_TkReactor &);
   ACE_TkReactor &operator = (const ACE_TkReactor &);
 };
-// Factory method to create an instance of ACE_TkReactor
-extern "C" ACE_TkReactor_Export ACE_Reactor_Impl *ACE_create_tkreactor(void);
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TK_REACTOR_H */
