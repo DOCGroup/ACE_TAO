@@ -107,7 +107,7 @@ namespace TAO
      * Duplicate values replace previous values.
      * @param property_set the properties to be decoded
      */
-    void decode (const PortableGroup::Properties & property_set)
+    void decode (const PortableGroup::Properties & property_set ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /**

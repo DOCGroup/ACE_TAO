@@ -81,7 +81,9 @@ namespace TAO
      *
      * @param props the set of properties to update the defaults.
      */
-    void set_default_properties (const PortableGroup::Properties & props);
+    void set_default_properties (const PortableGroup::Properties & props
+         ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
     /**
      * Export the default properties in PortableGroup::Properties format.
@@ -169,7 +171,7 @@ namespace TAO
      */
     TAO::PG_Property_Set *  TAO::PG_Properties_Support::find_typeid_properties (
         const char *type_id
-        ACE_ENV_ARG_PARAMETER)
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /**

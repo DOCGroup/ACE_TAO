@@ -109,8 +109,7 @@ const char * TAO::PG_FactoryRegistry::identity () const
   return this->identity_.c_str();
 }
 
-
-void TAO::PG_FactoryRegistry::_remove_ref (ACE_ENV_SINGLE_ARG_DECL)
+void TAO::PG_FactoryRegistry::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   this->quit_state_ = GONE;
 }
