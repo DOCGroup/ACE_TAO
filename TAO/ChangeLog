@@ -82,6 +82,11 @@ Mon Feb 14 23:05:55 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 	  - Fixed bug that aborted the IDL compiler when an eventtype
 	    contained a constant declaration. Thanks to Steven Baker
 	    <Steven_D_Baker@raytheon.com> for reporting the bug.
+	    
+	* tests/IDL_Test/interface.idl:
+	
+	  Expanded sample IDL file sent in by Steven Baker in the
+	  last list item above and added it to the test suite.
 
         * TAO_IDL/be/be_visitor_eventtype.cpp:
         * TAO_IDL/be/be_visitor_eventtype_fwd.cpp:
