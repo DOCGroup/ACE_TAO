@@ -1,3 +1,9 @@
+Wed Dec 10 16:58:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/GIOP_Message_State.cpp:
+
+          Added #include of ace/OS_NS_string.h, and made style changes.
+
 Wed Dec 10 16:39:25 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Synch_Invocation.cpp (handle_system_exception):
