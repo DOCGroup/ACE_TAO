@@ -1145,7 +1145,7 @@ ACE_POSIX_AIOCB_Proactor::handle_events_i (u_long milli_seconds)
       // Block on <aio_suspend> for <milli_seconds>
       timespec timeout;
       timeout.tv_sec = milli_seconds / 1000;
-      timeout.tv_nsec = (milli_seconds - (timeout.tv_sec * 1000)) * 1000;
+      timeout.tv_nsec = (milli_seconds - (timeout.tv_sec * 1000)) * 1000000;
       result_suspend = aio_suspend (aiocb_list_,
                                     aiocb_list_max_size_,
                                     &timeout);

@@ -1,3 +1,9 @@
+Mon Apr 28 21:20:48 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/POSIX_Proactor.cpp (handle_events_i): There was an incorrect 
+	  conversion from milliseconds to nanoseconds, which is now fixed.
+  	  Thanks to Ray Limpus <ray.limpus@boeing.com> for reporting this.
+
 Tue Apr 29 00:30:37 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * bin/generate_compile_stats.sh:
