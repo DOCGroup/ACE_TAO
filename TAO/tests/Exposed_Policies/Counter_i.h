@@ -16,10 +16,6 @@
 //
 // ============================================================================
 
-
-// @@ Angelo, please put header with author, file name, etc. here.
-// @@ Marina Done.
-
 #ifndef COUNTER_I_H_
 #define COUNTER_I_H_
 
@@ -36,16 +32,15 @@ public:
 
   // = Counter Interface Methods Overloading.
 
-  virtual void increment (CORBA::Environment &ACE_TRY_ENV = 
-                            TAO_default_environment ());
-  
-  virtual CORBA::Long get_count (CORBA::Environment &ACE_TRY_ENV = 
-                                   TAO_default_environment ());
-  
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV = 
-                           TAO_default_environment ()
-                         ) ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void increment (CORBA::Environment &ACE_TRY_ENV =
+                          TAO_default_environment ());
 
+  virtual CORBA::Long get_count (CORBA::Environment &ACE_TRY_ENV =
+                                 TAO_default_environment ());
+
+  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV =
+                         TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
   CORBA::Long count_;
