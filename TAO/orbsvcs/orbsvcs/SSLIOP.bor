@@ -2,7 +2,9 @@
 # Makefile for building	the TAO	SSLIOP library
 #
 
+!ifdef SSLIOP
 NAME = TAO_SSLIOP
+!endif
 
 TAO_IDL	= $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe \
 	-I..\..	-Ge 1 -Wb,export_macro=TAO_SSLIOP_Export \

@@ -12,11 +12,13 @@ OBJFILES = \
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
-	$(TAO_CFLAGS)
+	$(TAO_CFLAGS) \
+	$(TAO_STRATEGIES_CFLAGS)
 
 LIBFILES = \
 	$(ACE_LIB) \
-	$(TAO_LIB)
+	$(TAO_LIB) \
+	$(TAO_STRATEGIES_LIB)
 
 IDLFILES = \
         $(IDLDIR)\test.idl

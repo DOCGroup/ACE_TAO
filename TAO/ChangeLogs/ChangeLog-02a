@@ -1,3 +1,25 @@
+Tue Nov 21 07:32:28 2000  Chris Kohlhoff  <chris@kohlhoff.com>
+
+        * tao/IORManipulation/Makefile.bor:
+        * tao/IORTable/Makefile.bor:
+
+          Add missing CFLAGS required to build static libraries correctly.
+
+        * orbsvcs/orbsvcs/SSLIOP.bor:
+
+          Prevent SSL libraries from being built unless SSL_ROOT is defined.
+
+        * orbsvcs/Event_Service/Makefile.bor:
+        * orbsvcs/Naming_Service/Naming_Service.bor:
+        * orbsvcs/Naming_Service/NT_Naming_Service.bor:
+        * orbsvcs/Notify_Service/Makefile.bor:
+        * orbsvcs/Time_Service/Time_Service_Clerk.bor:
+        * orbsvcs/Time_Service/Time_Service_Server.bor:
+        * tests/*/client.bor:
+        * tests/*/server.bor:
+
+          Added missing libraries.
+
 Tue Nov 21 03:03:00 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/RTCORBA/Private_Connection/run_test.pl:
