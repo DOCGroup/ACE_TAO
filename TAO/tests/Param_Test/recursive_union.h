@@ -6,33 +6,33 @@
 //    TAO/tests/Param_Test
 //
 // = FILENAME
-//    recursive_struct.h
+//    recursive_union.h
 //
 // = DESCRIPTION
-//    Tests a structure that contains a sequence of itself
+//    Tests a union that contains a sequence of itself
 //
 // = AUTHORS
-//    Aniruddha Gokhale, Jeff Parsons
+//    Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ============================================================================
 
-#ifndef PARAM_TEST_RECURSIVE_STRUCT_H
-#define PARAM_TEST_RECURSIVE_STRUCT_H
+#ifndef PARAM_TEST_RECURSIVE_UNION_H
+#define PARAM_TEST_RECURSIVE_UNION_H
 
 #include "param_testCli.h"
 #include "helper.h"
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//           test recursive structs
+//           test recursive unions
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 
-class Test_Recursive_Struct
+class Test_Recursive_Union
 {
 public:
-  Test_Recursive_Struct (void);
+  Test_Recursive_Union (void);
   // ctor
 
-  ~Test_Recursive_Struct (void);
+  ~Test_Recursive_Union (void);
   // dtor
 
   int run_sii_test (Param_Test_ptr objref,
@@ -70,27 +70,34 @@ private:
   char *opname_;
   // operation name
 
-  Param_Test::Recursive_Struct in_;
+  Param_Test::Recursive_Union in_;
   // in parameter
 
   // these need memory management
-  Param_Test::Recursive_Struct_var inout_;
+  Param_Test::Recursive_Union_var inout_;
   // inout parameter
 
-  Param_Test::Recursive_Struct_var out_;
+  Param_Test::Recursive_Union_var out_;
   // out parameter
 
-  Param_Test::Recursive_Struct_var ret_;
+  Param_Test::Recursive_Union_var ret_;
   // return value
 
-  void deep_init (Param_Test::Recursive_Struct &rs,
+  void deep_init (Param_Test::Recursive_Union &u,
                   Generator *gen,
                   CORBA::ULong level);
-  // helper function for init_parameters
 
-  CORBA::Boolean deep_check (const Param_Test::Recursive_Struct &in_struct,
-                             const Param_Test::Recursive_Struct &test_struct);
-  // helper function for check_validity
+  void deep_init_nested (Param_Test::nested_rec_union &nu,
+                         Generator *gen,
+                         CORBA::ULong level);
+  // helper functions for init_parameters
+
+  CORBA::Boolean deep_check (const Param_Test::Recursive_Union &in_union,
+                             const Param_Test::Recursive_Union &test_union);
+
+  CORBA::Boolean deep_check_nested (const Param_Test::nested_rec_union &in,
+                                    const Param_Test::nested_rec_union &test);
+  // helper functions for check_validity
 };
 
-#endif /* PARAM_TEST_RECURSIVE_STRUCT_H */
+#endif /* PARAM_TEST_RECURSIVE_UNION_H */

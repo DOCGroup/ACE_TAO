@@ -56,15 +56,24 @@ Test_Bounded_Array_Sequence::dii_req_invoke (CORBA::Request *req,
 
 int
 Test_Bounded_Array_Sequence::init_parameters (Param_Test_ptr,
-                                               CORBA::Environment &)
+                                              CORBA::Environment &)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
   // set the length of the sequence
   this->in_.length (MAX_ARRAYSEQ_LEN);
+  // different from in_.
+  this->inout_->length (1);
 
   // now set each individual element
   Param_Test::Fixed_Array tmp;
+
+  for (CORBA::ULong j = 0; j < Param_Test::DIM1; j++)
+    {
+      tmp[j] = gen->gen_long ();
+    }
+
+  Param_Test::Fixed_Array_copy (this->inout_[0], tmp);
 
   for (CORBA::ULong i = 0; i < this->in_.length (); i++)
     {
@@ -120,8 +129,8 @@ Test_Bounded_Array_Sequence::run_sii_test (Param_Test_ptr objref,
 
 int
 Test_Bounded_Array_Sequence::add_args (CORBA::NVList_ptr param_list,
-                                        CORBA::NVList_ptr retval,
-                                        CORBA::Environment &ACE_TRY_ENV)
+                                       CORBA::NVList_ptr retval,
+                                       CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_TRY
     {
