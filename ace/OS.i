@@ -268,7 +268,7 @@ operator != (const ACE_Time_Value &tv1,
 // Define this file to keep /usr/include/memory.h from being included.
 #include /**/ <cstring>
 #else
-#if defined (VXWORKS)
+#if defined (ACE_LACKS_MEMORY_H)
 #include /**/ <string.h>
 #else
 #include /**/ <memory.h>
@@ -425,7 +425,7 @@ ACE_INLINE int
 ACE_OS::mkfifo (const char *file, mode_t mode)
 {
   // ACE_TRACE ("ACE_OS::mkfifo");
-#if defined (VXWORKS)
+#if defined (VXWORKS) || defined (CHORUS)
   ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::mkfifo (file, mode), int, -1);
@@ -489,52 +489,6 @@ ACE_OS::setsid (void)
 #else
   ACE_OSCALL_RETURN (::setsid (), int, -1);
 #endif /* VXWORKS */
-}
-
-ACE_INLINE int 
-ACE_OS::sigaddset (sigset_t *s, int signum)
-{
-  // ACE_TRACE ("ACE_OS::sigaddset");
-  ACE_OSCALL_RETURN (::sigaddset (s, signum), int, -1);
-}
-
-ACE_INLINE int 
-ACE_OS::sigdelset (sigset_t *s, int signum)
-{
-  // ACE_TRACE ("ACE_OS::sigdelset");
-  ACE_OSCALL_RETURN (::sigdelset (s, signum), int, -1);
-}
-
-ACE_INLINE int 
-ACE_OS::sigemptyset (sigset_t *s)
-{
-  // ACE_TRACE ("ACE_OS::sigemptyset");
-  ACE_OSCALL_RETURN (::sigemptyset (s), int, -1);
-}
-
-ACE_INLINE int 
-ACE_OS::sigfillset (sigset_t *s)
-{
-  // ACE_TRACE ("ACE_OS::sigfillset");
-  ACE_OSCALL_RETURN (::sigfillset (s), int, -1);
-}
-
-ACE_INLINE int 
-ACE_OS::sigismember (sigset_t *s, int signum)
-{
-  // ACE_TRACE ("ACE_OS::sigismember");
-  ACE_OSCALL_RETURN (::sigismember (s, signum), int, -1);
-}
-
-ACE_INLINE int 
-ACE_OS::sigprocmask (int how, const sigset_t *nsp, sigset_t *osp)
-{
-  // ACE_TRACE ("ACE_OS::sigprocmask");
-#if defined (ACE_LACKS_POSIX_PROTO)
-  ACE_OSCALL_RETURN (::sigprocmask (how, (int*) nsp, osp), int, -1);
-#else
-  ACE_OSCALL_RETURN (::sigprocmask (how, nsp, osp), int, -1);
-#endif /* ACE_LACKS_POSIX_PROTO */
 }
 
 ACE_INLINE int 
@@ -712,66 +666,6 @@ ACE_OS::setsid (void)
   ACE_NOTSUP_RETURN (0);
 }
 
-ACE_INLINE int 
-ACE_OS::sigaddset (sigset_t *s, int signum)
-{
-  ACE_UNUSED_ARG (s);
-  ACE_UNUSED_ARG (signum);
-
-  //	ACE_TRACE ("ACE_OS::sigaddset");
-	
-  ACE_NOTSUP_RETURN (0);
-}
-
-ACE_INLINE int 
-ACE_OS::sigdelset (sigset_t *s, int signum)
-{
-  ACE_UNUSED_ARG (s);
-  ACE_UNUSED_ARG (signum);
-
-  //	ACE_TRACE ("ACE_OS::sigdelset");
-  ACE_NOTSUP_RETURN (0);
-}
-
-ACE_INLINE int 
-ACE_OS::sigemptyset (sigset_t *s)
-{
-  ACE_UNUSED_ARG (s);
-
-  //	ACE_TRACE ("ACE_OS::sigemptyset");
-  ACE_NOTSUP_RETURN (0);
-}
-
-ACE_INLINE int 
-ACE_OS::sigfillset (sigset_t *s)
-{
-  ACE_UNUSED_ARG (s);
-
-  //	ACE_TRACE ("ACE_OS::sigfillset");
-  ACE_NOTSUP_RETURN (0);
-}
-
-ACE_INLINE int 
-ACE_OS::sigismember (sigset_t *s, int signum)
-{
-  ACE_UNUSED_ARG (s);
-  ACE_UNUSED_ARG (signum);
-
-  //	ACE_TRACE ("ACE_OS::sigismember");
-  ACE_NOTSUP_RETURN (0);
-}
-
-ACE_INLINE int 
-ACE_OS::sigprocmask (int how, const sigset_t *nsp, sigset_t *osp)
-{
-  ACE_UNUSED_ARG (how);
-  ACE_UNUSED_ARG (nsp);
-  ACE_UNUSED_ARG (osp);
-
-  //	ACE_TRACE ("ACE_OS::sigprocmask");
-  ACE_NOTSUP_RETURN (0);
-}
-
 ACE_INLINE mode_t 
 ACE_OS::umask (mode_t cmask)
 {
@@ -846,7 +740,7 @@ ACE_OS::gettimeofday (void)
 #if defined (ACE_HAS_TIMEZONE_GETTIMEOFDAY) || (defined (ACE_HAS_SVR4_GETTIMEOFDAY) && !defined (m88k))
   int result;
   ACE_OSCALL (::gettimeofday (&tv, 0), int, -1, result);
-#elif defined (VXWORKS)
+#elif defined (VXWORKS) || defined (CHORUS)
   // Assumes that struct timespec is same size as struct timeval,
   // which assumes that time_t is a long: it currently (VxWorks 5.2/5.3) is.
   struct timespec ts;
@@ -1091,7 +985,8 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
   // ACE_TRACE ("ACE_OS::mutex_lock");
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_mutex_lock (m), ace_result_), int, -1);
+  // Note, don't use "::" here since the following call is often a macro.
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_lock (m), ace_result_), int, -1);
 #elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_lock (m), ace_result_), int, -1);
 #elif defined (ACE_HAS_WTHREADS)
@@ -1134,7 +1029,8 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
   // ACE_TRACE ("ACE_OS::mutex_trylock");
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_mutex_trylock (m), ace_result_), int, -1);
+  // Note, don't use "::" here since the following call is often a macro.
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_trylock (m), ace_result_), int, -1);
 #elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_trylock (m), ace_result_), int, -1);
 #elif defined (ACE_HAS_WTHREADS)
@@ -1189,7 +1085,8 @@ ACE_OS::mutex_unlock (ACE_mutex_t *m)
   // ACE_TRACE ("ACE_OS::mutex_unlock");
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_mutex_unlock (m), ace_result_), int, -1);
+  // Note, don't use "::" here since the following call is often a macro.
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_unlock (m), ace_result_), int, -1);
 #elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_unlock (m), ace_result_), int, -1);
 #elif defined (ACE_HAS_WTHREADS)
@@ -3589,7 +3486,8 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getspecific (key, data), ace_result_), int, -1);
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
 #if !defined (ACE_HAS_FSU_PTHREADS) && !defined (ACE_HAS_SETKIND_NP) && !defined (ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR)
-  *data = ::pthread_getspecific (key);
+  // Note, don't use "::" here since the following call is often a macro.
+  *data = pthread_getspecific (key);
 #elif !defined (ACE_HAS_FSU_PTHREADS) && defined (ACE_HAS_SETKIND_NP) || defined (ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR)
   ::pthread_getspecific (key, data);
 #else /* ACE_HAS_FSU_PTHREADS */
@@ -4017,7 +3915,8 @@ ACE_OS::thr_self (ACE_hthread_t &self)
   // ACE_TRACE ("ACE_OS::thr_self");
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_DCETHREADS)
-  self = ::pthread_self ();
+  // Note, don't use "::" here since the following call is often a macro.
+  self = pthread_self ();
 #elif defined (ACE_HAS_THREAD_SELF)
   self = ::thread_self ();
 #elif defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_SETKIND_NP)
@@ -4040,7 +3939,8 @@ ACE_OS::thr_self (void)
   // ACE_TRACE ("ACE_OS::thr_self");
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-  ACE_OSCALL_RETURN (::pthread_self (), int, -1);
+  // Note, don't use "::" here since the following call is often a macro.
+  ACE_OSCALL_RETURN (pthread_self (), int, -1);
 #elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (::thr_self (), int, -1);
 #elif defined (ACE_HAS_WTHREADS)
@@ -5540,7 +5440,7 @@ ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_
     len = ::GetFileSize (lock->handle_, NULL);
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, LOCKFILE_EXCLUSIVE_LOCK, 0, len, 0, &lock->overlapped_), 
 				       ace_result_), int, -1);
-#elif defined (VXWORKS)
+#elif defined (ACE_LACKS_FILELOCKS)
   ACE_NOTSUP_RETURN (-1);
 #else
   lock->lock_.l_whence = whence;
@@ -5563,7 +5463,7 @@ ACE_OS::flock_rdlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_
     len = ::GetFileSize (lock->handle_, NULL);
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, 0, 0, len, 0, &lock->overlapped_), 
 				       ace_result_), int, -1);
-#elif defined (VXWORKS)
+#elif defined (ACE_LACKS_FILELOCKS)
   ACE_NOTSUP_RETURN (-1);
 #else
   lock->lock_.l_whence = whence;
@@ -5586,7 +5486,7 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, o
     len = ::GetFileSize (lock->handle_, NULL);
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, LOCKFILE_FAIL_IMMEDIATELY | LOCKFILE_EXCLUSIVE_LOCK, 0, len, 0, &lock->overlapped_), 
 				       ace_result_), int, -1);
-#elif defined (VXWORKS)
+#elif defined (ACE_LACKS_FILELOCKS)
   ACE_NOTSUP_RETURN (-1);
 #else
   lock->lock_.l_whence = whence;
@@ -5610,7 +5510,7 @@ ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, o
     len = ::GetFileSize (lock->handle_, NULL);
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, LOCKFILE_FAIL_IMMEDIATELY, 0, len, 0, &lock->overlapped_), 
 				       ace_result_), int, -1);
-#elif defined (VXWORKS)
+#elif defined (ACE_LACKS_FILELOCKS)
   ACE_NOTSUP_RETURN (-1);
 #else
   lock->lock_.l_whence = whence;
@@ -5634,7 +5534,7 @@ ACE_OS::flock_unlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_
     len = ::GetFileSize (lock->handle_, NULL);
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::UnlockFileEx (lock->handle_, 0, len, 0, &lock->overlapped_), 
 				       ace_result_), int, -1);
-#elif defined (VXWORKS)
+#elif defined (ACE_LACKS_FILELOCKS)
   ACE_NOTSUP_RETURN (-1);
 #else
   lock->lock_.l_whence = whence;
@@ -5664,7 +5564,7 @@ ACE_INLINE int
 ACE_OS::execv (const char *path, char *const argv[])
 {
   // ACE_TRACE ("ACE_OS::execv");
-#if defined (ACE_WIN32)  ||  defined (VXWORKS)
+#if defined (ACE_LACKS_EXEC)
   ACE_UNUSED_ARG (path);
   ACE_UNUSED_ARG (argv);
 	
@@ -5678,7 +5578,7 @@ ACE_INLINE int
 ACE_OS::execve (const char *path, char *const argv[], char *const envp[])
 {
   // ACE_TRACE ("ACE_OS::execve");
-#if defined (ACE_WIN32) || defined (VXWORKS)
+#if defined (ACE_LACKS_EXEC)
   ACE_UNUSED_ARG (path);
   ACE_UNUSED_ARG (argv);
   ACE_UNUSED_ARG (envp);
@@ -5693,7 +5593,7 @@ ACE_INLINE int
 ACE_OS::execvp (const char *file, char *const argv[])
 {
   // ACE_TRACE ("ACE_OS::execvp");
-#if defined (ACE_WIN32) || defined (VXWORKS)
+#if defined (ACE_LACKS_EXEC)
   ACE_UNUSED_ARG (file);
   ACE_UNUSED_ARG (argv);
 
@@ -5914,7 +5814,7 @@ ACE_INLINE pid_t
 ACE_OS::fork (void)
 {
   // ACE_TRACE ("ACE_OS::fork");
-#if defined (ACE_WIN32) || defined (VXWORKS)
+#if defined (ACE_LACKS_EXEC)
   ACE_NOTSUP_RETURN (pid_t (-1));
 #else
   ACE_OSCALL_RETURN (::fork (), pid_t, -1);
@@ -5927,7 +5827,7 @@ ACE_OS::getpid (void)
   // ACE_TRACE ("ACE_OS::getpid");
 #if defined (ACE_WIN32)
   return ::GetCurrentProcessId();
-#elif defined (VXWORKS)
+#elif defined (VXWORKS) || defined (CHORUS)
   // getpid() is not supported:  just one process anyways
   return 0;
 #else
@@ -6061,6 +5961,8 @@ ACE_OS::sigaction (int signum,
 
   osa->sa_handler = ::signal (signum, nsa->sa_handler);
   return osa->sa_handler == SIG_ERR ? -1 : 0;
+#elif defined (CHORUS)
+  ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_LACKS_POSIX_PROTO)
   ACE_OSCALL_RETURN (::sigaction (signum, (struct sigaction*) nsa, osa), int, -1);
 #else
@@ -6489,3 +6391,82 @@ ACE_OS::thr_suspend (const ACE_Thread_ID &thr_id)
 }
 
 #endif /* 0 */
+
+ACE_INLINE int 
+ACE_OS::sigaddset (sigset_t *s, int signum)
+{
+  // ACE_TRACE ("ACE_OS::sigaddset");
+#if !defined (ACE_LACKS_SIGSET)
+  ACE_OSCALL_RETURN (::sigaddset (s, signum), int, -1);
+#else
+  ACE_UNUSED_ARG (s);
+  ACE_UNUSED_ARG (signum);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* !ACE_LACKS_SIGSET */
+}
+
+ACE_INLINE int 
+ACE_OS::sigdelset (sigset_t *s, int signum)
+{
+#if !defined (ACE_LACKS_SIGSET)
+  ACE_OSCALL_RETURN (::sigdelset (s, signum), int, -1);
+#else
+  ACE_UNUSED_ARG (s);
+  ACE_UNUSED_ARG (signum);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* !ACE_LACKS_SIGSET */
+}
+
+ACE_INLINE int 
+ACE_OS::sigemptyset (sigset_t *s)
+{
+#if !defined (ACE_LACKS_SIGSET)
+  ACE_OSCALL_RETURN (::sigemptyset (s), int, -1);
+#else
+  ACE_UNUSED_ARG (s);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* !ACE_LACKS_SIGSET */
+}
+
+ACE_INLINE int 
+ACE_OS::sigfillset (sigset_t *s)
+{
+#if !defined (ACE_LACKS_SIGSET)
+  ACE_OSCALL_RETURN (::sigfillset (s), int, -1);
+#else
+  ACE_UNUSED_ARG (s);
+  ACE_NOTSUP_RETURN (0);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* !ACE_LACKS_SIGSET */
+}
+
+ACE_INLINE int 
+ACE_OS::sigismember (sigset_t *s, int signum)
+{
+#if !defined (ACE_LACKS_SIGSET)
+  ACE_OSCALL_RETURN (::sigismember (s, signum), int, -1);
+#else
+  ACE_UNUSED_ARG (s);
+  ACE_UNUSED_ARG (signum);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* !ACE_LACKS_SIGSET */
+}
+
+ACE_INLINE int 
+ACE_OS::sigprocmask (int how, const sigset_t *nsp, sigset_t *osp)
+{
+#if !defined (ACE_LACKS_SIGSET)
+#if defined (ACE_LACKS_POSIX_PROTO)
+  ACE_OSCALL_RETURN (::sigprocmask (how, (int*) nsp, osp), int, -1);
+#else
+  ACE_OSCALL_RETURN (::sigprocmask (how, nsp, osp), int, -1);
+#endif /* ACE_LACKS_POSIX_PROTO */
+#else
+  ACE_UNUSED_ARG (how);
+  ACE_UNUSED_ARG (nsp);
+  ACE_UNUSED_ARG (osp);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* !ACE_LACKS_SIGSET */
+}
+
+

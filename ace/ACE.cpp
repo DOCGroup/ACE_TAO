@@ -862,7 +862,7 @@ int
 ACE::daemonize (const char pathname[])
 {
   ACE_TRACE ("ACE::daemonize");
-#if !defined (ACE_WIN32)
+#if !defined (ACE_LACKS_EXEC)
   pid_t pid = ACE_OS::fork ();
 
   if (pid == -1)

@@ -1,14 +1,16 @@
-CC		= /bin/cc
-CXX		= /usr/bin/CC
+CC		= /bin/cc -Aa -z
+CXX		= /usr/bin/CC -Aa -pta -ptb -z
 DLD		= $(CXX)
 LD		= $(CXX) 
-PIC		= 
+PIC		= +Z
 ARFLAGS		= ruv
 RANLIB		= echo
-CFLAGS		= -Aa -z +z $(DCFLAGS) 
+CFLAGS		= $(DCFLAGS)
 LDFLAGS		= -L$(WRAPPER_ROOT)/ace -Wl,+s
-CCFLAGS		= -Aa -z +z -pta -ptb
+LIBS		+= -lxti
+CCFLAGS		=
 SOFLAGS		= -b
+SOEXT		= sl
 SOBUILD     = @echo ""; \
   echo "$(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<"; \
   $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \

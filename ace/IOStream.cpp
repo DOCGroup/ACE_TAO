@@ -517,7 +517,7 @@ ACE_IOStream<STREAM>::close (void)
   return STREAM::close ();
 }
 
-#if defined (__GNUC__)
+#if defined (__GNUC__) && !defined (CHORUS)
 // A simple string operator.  The base iostream has 'em for char* but
 // that isn't always the best thing for a String.  If we don't provide
 // our own here, we may not get what we want.

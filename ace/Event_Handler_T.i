@@ -74,7 +74,7 @@ ACE_Event_Handler_T<T>::handle_signal (ACE_HANDLE signum, siginfo_t *s, ucontext
   return this->sig_handler_ == 0 ? 0 : (this->op_handler_->*sig_handler_) (signum, s, u);
 }
 
-template<class T> ACE_INLINE ACE_Event_Handler_T<T>::GET_HANDLE
+template<class T> ACE_INLINE ACE_TYPENAME ACE_Event_Handler_T<T>::GET_HANDLE
 ACE_Event_Handler_T<T>::handle_get (void)
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::handle_get");
@@ -88,7 +88,7 @@ ACE_Event_Handler_T<T>::handle_get (ACE_Event_Handler_T<T>::GET_HANDLE h)
   this->get_handle_ = h;
 }
 
-template<class T> ACE_INLINE ACE_Event_Handler_T<T>::SET_HANDLE
+template<class T> ACE_INLINE ACE_TYPENAME ACE_Event_Handler_T<T>::SET_HANDLE
 ACE_Event_Handler_T<T>::handle_set (void)
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::handle_set");
@@ -102,7 +102,7 @@ ACE_Event_Handler_T<T>::handle_set (ACE_Event_Handler_T<T>::SET_HANDLE h)
   this->set_handle_ = h;
 }
 
-template<class T> ACE_INLINE ACE_Event_Handler_T<T>::IO_HANDLER
+template<class T> ACE_INLINE ACE_TYPENAME ACE_Event_Handler_T<T>::IO_HANDLER
 ACE_Event_Handler_T<T>::input_handler (void)
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::input_handler");
@@ -116,7 +116,7 @@ ACE_Event_Handler_T<T>::input_handler (ACE_Event_Handler_T<T>::IO_HANDLER h)
   this->input_handler_ = h;
 }
 
-template<class T> ACE_INLINE ACE_Event_Handler_T<T>::IO_HANDLER 
+template<class T> ACE_INLINE ACE_TYPENAME ACE_Event_Handler_T<T>::IO_HANDLER 
 ACE_Event_Handler_T<T>::output_handler (void)
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::output_handler");
@@ -130,7 +130,7 @@ ACE_Event_Handler_T<T>::output_handler (ACE_Event_Handler_T<T>::IO_HANDLER h)
   this->output_handler_ = h;
 }
 
-template<class T> ACE_INLINE ACE_Event_Handler_T<T>::IO_HANDLER 
+template<class T> ACE_INLINE ACE_TYPENAME ACE_Event_Handler_T<T>::IO_HANDLER 
 ACE_Event_Handler_T<T>::except_handler (void)
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::except_handler");
@@ -144,7 +144,7 @@ ACE_Event_Handler_T<T>::except_handler (ACE_Event_Handler_T<T>::IO_HANDLER h)
   this->except_handler_ = h;
 }
 
-template<class T> ACE_INLINE ACE_Event_Handler_T<T>::TO_HANDLER 
+template<class T> ACE_INLINE ACE_TYPENAME ACE_Event_Handler_T<T>::TO_HANDLER 
 ACE_Event_Handler_T<T>::to_handler (void)
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::to_handler");
@@ -158,7 +158,7 @@ ACE_Event_Handler_T<T>::to_handler (ACE_Event_Handler_T<T>::TO_HANDLER h)
   this->to_handler_ = h;
 }
 
-template<class T> ACE_INLINE ACE_Event_Handler_T<T>::CL_HANDLER 
+template<class T> ACE_INLINE ACE_TYPENAME ACE_Event_Handler_T<T>::CL_HANDLER 
 ACE_Event_Handler_T<T>::cl_handler (void)
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::cl_handler");
@@ -172,7 +172,7 @@ ACE_Event_Handler_T<T>::cl_handler (ACE_Event_Handler_T<T>::CL_HANDLER h)
   this->cl_handler_ = h;
 }
 
-template<class T> ACE_INLINE ACE_Event_Handler_T<T>::SIG_HANDLER 
+template<class T> ACE_INLINE ACE_TYPENAME ACE_Event_Handler_T<T>::SIG_HANDLER 
 ACE_Event_Handler_T<T>::sig_handler (void)
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::sig_handler");

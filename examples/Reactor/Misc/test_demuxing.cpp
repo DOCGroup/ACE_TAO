@@ -200,7 +200,7 @@ STDIN_Handler::handle_input (ACE_HANDLE handle)
   return 0;
 }
 
-class Message_Handler : public ACE_Task <ACE_MT_SYNCH>
+class Message_Handler : public ACE_Task <ACE_SYNCH>
 {
 public:
   Message_Handler (void);

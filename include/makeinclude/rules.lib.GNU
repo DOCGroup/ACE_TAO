@@ -10,7 +10,11 @@
 # The following targets arrange to build both unshared and shared libraries
 #----------------------------------------------------------------------------
 
-VSHLIB  = $(SHLIB:%.so=%$(VAR).so)
+ifndef SOEXT
+SOEXT=so
+endif
+
+VSHLIB  = $(SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
 VOBJS   = $(LSRC:%.cpp=$(VDIR)%.o)
 
 ifdef TEMPINCDIR
@@ -30,7 +34,7 @@ endif
 # $(DEFS:%=$(INSINC)/%) \
 
 INSTALL = $(VLIB:%.a=$(INSLIB)/%.a) \
-	  $(VSHLIB:%.so=$(INSLIB)/%.so)
+	  $(VSHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT))
 
 ifdef PRELIB
 # Unfortunately, gcc has to do a link of all of the objects (during which
@@ -107,8 +111,12 @@ $(VSHLIB): $(VSHOBJS) $(STATLIB)
 ifdef PRELIB
 	$(PRELIB)
 endif
-	$(SOLINK.cc) -o $@ $(VSHOBJS1) $(LDFLAGS) $(LIBS) $(STATLIB)
-	-chmod a+rx $@
+ifdef SHLIBBUILD
+	$(SHLIBBUILD)
+else
+ 	$(SOLINK.cc) -o $@ $(VSHOBJS1) $(LDFLAGS) $(LIBS) $(STATLIB)
+ 	-chmod a+rx $@
+endif
 
 ifdef SHLIBA
 $(SHLIBA): $(VSHLIB)

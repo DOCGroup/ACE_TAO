@@ -8,7 +8,10 @@
 #define ACE_CONFIG_H
 
 #define ACE_HAS_EXCEPTIONS
+#define ACE_LACKS_SIGACTION
 #define ACE_HAS_MFC
+#define ACE_LACKS_SIGSET
+#define ACE_LACKS_EXEC
 
 // We are using STL's min and max (in algobase.h).  Therefore the
 // macros in window.h are extra

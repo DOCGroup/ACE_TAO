@@ -48,7 +48,14 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
 				     &one,
 				     sizeof one) == -1)
     return -1;
-  
+#if defined (SO_REUSEPORT)
+  if (this->ACE_SOCK::set_option (SOL_SOCKET,
+				  SO_REUSEPORT,
+				  &one,
+				  sizeof one) == -1)
+    return -1;
+#endif /* SO_REUSEPORT */
+
   // Create an address to bind the socket to.
   
   ACE_INET_Addr local;
