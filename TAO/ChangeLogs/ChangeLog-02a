@@ -1,3 +1,9 @@
+Fri Dec 22 14:24:17 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/TAO.dsp
+	* tao/TAO_Static.dsp
+	  Added the new files: RT_ORB_Loader.{h,cpp} .
+	 
 Fri Dec 22 14:13:46 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ORB_Core.h :
