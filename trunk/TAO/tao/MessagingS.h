@@ -2638,7 +2638,7 @@ private:
 
 };
 
-#include "MessagingS_T.h"
+// #include "MessagingS_T.h"
 
 #if defined (__ACE_INLINE__)
 #include "MessagingS.i"
