@@ -1,3 +1,12 @@
+Mon Aug 16 15:58:12 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-sunos5.5.h:
+        * include/makeinclude/platform_sunos5_sunc++.GNU: Added support
+          for using "compat=4" mode for Sun CC 5. To use this, do 
+          "make compat4=1", or equivalent. Compat 4 uses -compat=4 with
+          its old iostreams, but the newer Sun CC 5 scheme of explicit
+          template instantiation.
+
 Mon Aug 16 11:59:18 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* ace/SOCK_Dgram_Mcast.cpp (subscribe): Constructed and passed a
