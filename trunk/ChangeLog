@@ -1,3 +1,9 @@
+Tue Aug 27 14:44:00 2002  Justin Michel  <michel_j@ociweb.com>
+
+        * ace/Timer_Wheel_T.cpp:
+
+        Fixed problem with incorrect name in ACE_TRACE macro.
+
 Tue Aug 27 13:28:17 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/config-win32-common.h: Added #define ACE_MALLOC_ALIGN 8 for
