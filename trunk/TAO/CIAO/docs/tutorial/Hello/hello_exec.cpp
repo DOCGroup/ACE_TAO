@@ -51,7 +51,7 @@ hello_example::HelloWorld_Impl::set_session_context (
 }
 
 void
-hello_example::HelloWorld_Impl::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL)
+hello_example::HelloWorld_Impl::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   Components::CCMException))
 {
