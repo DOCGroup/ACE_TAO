@@ -24,162 +24,162 @@
 #define _OCTETSEQ_CI_
 
 // *************************************************************
-// Inline operations for class OctetSeq_var
+// Inline operations for class CORBA_OctetSeq_var
 // *************************************************************
 
 ACE_INLINE
-OctetSeq_var::OctetSeq_var (void) // default constructor
+CORBA_OctetSeq_var::CORBA_OctetSeq_var (void) // default constructor
   : ptr_ (0)
 {}
 
 ACE_INLINE
-OctetSeq_var::OctetSeq_var (OctetSeq *p)
+CORBA_OctetSeq_var::CORBA_OctetSeq_var (CORBA_OctetSeq *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-OctetSeq_var::OctetSeq_var (const ::OctetSeq_var &p) // copy constructor
+CORBA_OctetSeq_var::CORBA_OctetSeq_var (const ::CORBA_OctetSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, ::OctetSeq (*p.ptr_));
+    ACE_NEW (this->ptr_, ::CORBA_OctetSeq (*p.ptr_));
   else
     this->ptr_ = 0;
 }
 
 // fixed-size base types only
 ACE_INLINE
-OctetSeq_var::OctetSeq_var (const ::OctetSeq &p)
+CORBA_OctetSeq_var::CORBA_OctetSeq_var (const ::CORBA_OctetSeq &p)
 {
-  ACE_NEW (this->ptr_, ::OctetSeq (p));
+  ACE_NEW (this->ptr_, ::CORBA_OctetSeq (p));
 }
 
 ACE_INLINE
-OctetSeq_var::~OctetSeq_var (void) // destructor
+CORBA_OctetSeq_var::~CORBA_OctetSeq_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE OctetSeq_var &
-OctetSeq_var::operator= (OctetSeq *p)
+ACE_INLINE CORBA_OctetSeq_var &
+CORBA_OctetSeq_var::operator= (CORBA_OctetSeq *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE OctetSeq_var &
-OctetSeq_var::operator= (const ::OctetSeq_var &p) // deep copy
+ACE_INLINE CORBA_OctetSeq_var &
+CORBA_OctetSeq_var::operator= (const ::CORBA_OctetSeq_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::OctetSeq (*p.ptr_), *this);
+    ACE_NEW_RETURN (this->ptr_, ::CORBA_OctetSeq (*p.ptr_), *this);
   }
   return *this;
 }
 
 // fixed-size types only
-ACE_INLINE ::OctetSeq_var &
-OctetSeq_var::operator= (const ::OctetSeq &p)
+ACE_INLINE ::CORBA_OctetSeq_var &
+CORBA_OctetSeq_var::operator= (const ::CORBA_OctetSeq &p)
 {
   if (this->ptr_ != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::OctetSeq (p), *this);
+    ACE_NEW_RETURN (this->ptr_, ::CORBA_OctetSeq (p), *this);
   }
   return *this;
 }
 
-ACE_INLINE const ::OctetSeq *
-OctetSeq_var::operator-> (void) const
+ACE_INLINE const ::CORBA_OctetSeq *
+CORBA_OctetSeq_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::OctetSeq *
-OctetSeq_var::operator-> (void)
+ACE_INLINE ::CORBA_OctetSeq *
+CORBA_OctetSeq_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-OctetSeq_var::operator const ::OctetSeq &() const // cast
+CORBA_OctetSeq_var::operator const ::CORBA_OctetSeq &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-OctetSeq_var::operator ::OctetSeq &() // cast 
+CORBA_OctetSeq_var::operator ::CORBA_OctetSeq &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-OctetSeq_var::operator ::OctetSeq &() const // cast 
+CORBA_OctetSeq_var::operator ::CORBA_OctetSeq &() const // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE CORBA::Octet &
-OctetSeq_var::operator[] (CORBA::ULong index)
+CORBA_OctetSeq_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
 ACE_INLINE const CORBA::Octet &
-OctetSeq_var::operator[] (CORBA::ULong index) const
+CORBA_OctetSeq_var::operator[] (CORBA::ULong index) const
 {
   return ACE_const_cast (const CORBA::Octet &, this->ptr_->operator[] (index));
 }
 
-ACE_INLINE const ::OctetSeq &
-OctetSeq_var::in (void) const
+ACE_INLINE const ::CORBA_OctetSeq &
+CORBA_OctetSeq_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE ::OctetSeq &
-OctetSeq_var::inout (void)
+ACE_INLINE ::CORBA_OctetSeq &
+CORBA_OctetSeq_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE ::OctetSeq *&
-OctetSeq_var::out (void)
+ACE_INLINE ::CORBA_OctetSeq *&
+CORBA_OctetSeq_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE ::OctetSeq *
-OctetSeq_var::_retn (void)
+ACE_INLINE ::CORBA_OctetSeq *
+CORBA_OctetSeq_var::_retn (void)
 {
-  ::OctetSeq *tmp = this->ptr_;
+  ::CORBA_OctetSeq *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE ::OctetSeq *
-OctetSeq_var::ptr (void) const
+ACE_INLINE ::CORBA_OctetSeq *
+CORBA_OctetSeq_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class OctetSeq_out
+// Inline operations for class CORBA_OctetSeq_out
 // *************************************************************
 
 ACE_INLINE
-OctetSeq_out::OctetSeq_out (OctetSeq *&p)
+CORBA_OctetSeq_out::CORBA_OctetSeq_out (CORBA_OctetSeq *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-OctetSeq_out::OctetSeq_out (OctetSeq_var &p) // constructor from _var
+CORBA_OctetSeq_out::CORBA_OctetSeq_out (CORBA_OctetSeq_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -187,44 +187,44 @@ OctetSeq_out::OctetSeq_out (OctetSeq_var &p) // constructor from _var
 }
 
 ACE_INLINE
-OctetSeq_out::OctetSeq_out (const ::OctetSeq_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (OctetSeq_out&, p).ptr_)
+CORBA_OctetSeq_out::CORBA_OctetSeq_out (const ::CORBA_OctetSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (CORBA_OctetSeq_out&, p).ptr_)
 {}
 
-ACE_INLINE ::OctetSeq_out &
-OctetSeq_out::operator= (const ::OctetSeq_out &p)
+ACE_INLINE ::CORBA_OctetSeq_out &
+CORBA_OctetSeq_out::operator= (const ::CORBA_OctetSeq_out &p)
 {
-  this->ptr_ = ACE_const_cast (OctetSeq_out&, p).ptr_;
+  this->ptr_ = ACE_const_cast (CORBA_OctetSeq_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE ::OctetSeq_out &
-OctetSeq_out::operator= (OctetSeq *p)
+ACE_INLINE ::CORBA_OctetSeq_out &
+CORBA_OctetSeq_out::operator= (CORBA_OctetSeq *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-OctetSeq_out::operator ::OctetSeq *&() // cast
+CORBA_OctetSeq_out::operator ::CORBA_OctetSeq *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::OctetSeq *&
-OctetSeq_out::ptr (void) // ptr
+ACE_INLINE ::CORBA_OctetSeq *&
+CORBA_OctetSeq_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::OctetSeq *
-OctetSeq_out::operator-> (void)
+ACE_INLINE ::CORBA_OctetSeq *
+CORBA_OctetSeq_out::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE CORBA::Octet &
-OctetSeq_out::operator[] (CORBA::ULong index)
+CORBA_OctetSeq_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
@@ -233,17 +233,17 @@ OctetSeq_out::operator[] (CORBA::ULong index)
 #endif /* end #if !defined */
 
 
-#if !defined _TAO_CDR_OP_OctetSeq_I_
-#define _TAO_CDR_OP_OctetSeq_I_
+#if !defined _TAO_CDR_OP_CORBA_OctetSeq_I_
+#define _TAO_CDR_OP_CORBA_OctetSeq_I_
 
-CORBA::Boolean  operator<< (
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
-    const OctetSeq &
+    const CORBA_OctetSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
-    OctetSeq &
+    CORBA_OctetSeq &
   );
 
-#endif /* _TAO_CDR_OP_OctetSeq_I_ */
+#endif /* _TAO_CDR_OP_CORBA_OctetSeq_I_ */
 

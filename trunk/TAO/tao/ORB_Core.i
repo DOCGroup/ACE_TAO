@@ -124,6 +124,11 @@ TAO_ORB_Core::service_create_policy (CORBA::PolicyType policy,
                                      const CORBA::Any& val,
                                      CORBA::Environment &ACE_TRY_ENV)
 {
+  // @@ This method should go away in favor of the policy factory
+  //    registration support provided by the Portable Interceptor
+  //    spec.
+  //        -Ossama
+
   CORBA::Policy_ptr ret_policy = CORBA::Policy::_nil ();
 
   // @@ We look at the services if they are loaded. But if more
@@ -252,6 +257,13 @@ TAO_ORB_Core::parser_registry (void)
 {
   return &this->parser_registry_;
 }
+
+ACE_INLINE TAO_PolicyFactory_Registry *
+TAO_ORB_Core::policy_factory_registry (void)
+{
+  return &this->policy_factory_registry_;
+}
+
 
 #undef TAO_OC_RETRIEVE
 
@@ -599,6 +611,40 @@ TAO_ORB_Core::rt_current (void)
 }
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+ACE_INLINE void
+TAO_ORB_Core::add_interceptor (
+   PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
+   CORBA_Environment &ACE_TRY_ENV)
+{
+  this->client_request_interceptors_.add_interceptor (interceptor,
+                                                      ACE_TRY_ENV);
+}
+
+ACE_INLINE void
+TAO_ORB_Core::add_interceptor (
+   PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
+   CORBA_Environment &ACE_TRY_ENV)
+{
+  this->server_request_interceptors_.add_interceptor (interceptor,
+                                                      ACE_TRY_ENV);
+}
+
+ACE_INLINE TAO_ClientRequestInterceptor_List::TYPE &
+TAO_ORB_Core::client_request_interceptors (void)
+{
+  return this->client_request_interceptors_.interceptors ();
+}
+
+ACE_INLINE TAO_ServerRequestInterceptor_List::TYPE &
+TAO_ORB_Core::server_request_interceptors (void)
+{
+  return this->server_request_interceptors_.interceptors ();
+}
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
 
 // ****************************************************************
 

@@ -17,7 +17,7 @@
 #include "Servant_Base.h"
 #include "Collocated_Object.h"
 #include "tao/DomainC.h"
-#include "tao/Request_Info.h"
+#include "ServerRequestInfo.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -105,7 +105,7 @@
     // This needed to be able to store the arguments, exceptiosn, constexts
     // and build the lists dynamically on demand so that unnecessary time overhead
     // of building these lists when they arent used is avoided.
-            class TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy : public TAO_ServerRequest_Info
+            class TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy : public TAO_ServerRequestInfo
     {
     public:
       friend class POA_CORBA_DomainManager;
@@ -386,7 +386,7 @@ public:
   // and build the lists dynamically on demand so that unnecessary time overhead
   // of building these lists when they arent used is avoided.
   class TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager 
-    : public TAO_ServerRequest_Info
+    : public TAO_ServerRequestInfo
   {
   public:
     friend class POA_CORBA_ConstructionPolicy;

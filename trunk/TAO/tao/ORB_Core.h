@@ -32,9 +32,16 @@
 #include "tao/TAO_Singleton_Manager.h"
 #include "tao/TAO_Singleton.h"
 #include "tao/Adapter.h"
-#include "tao/Service_Callbacks.h"
+#include "tao/PolicyFactory_Registry.h"
 #include "tao/Parser_Registry.h"
+#include "tao/Service_Callbacks.h"
 #include "tao/Fault_Tolerance_Service.h"
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+// Interceptor definitions.
+# include "tao/PortableInterceptorC.h"
+# include "tao/Interceptor_List.h"
+#endif  /* TAO_HAS_INTERCEPTORS */
 
 #include "ace/Hash_Map_Manager.h"
 
@@ -190,6 +197,10 @@ public:
 
   // = Get the IOR parser registry
   TAO_Parser_Registry *parser_registry (void);
+
+  TAO_PolicyFactory_Registry *policy_factory_registry (void);
+  ///< Return pointer to the policy factory registry associated with
+  ///< this ORB core.
 
   // = Get the protocol factories
   TAO_ProtocolFactorySet *protocol_factories (void);
@@ -600,6 +611,10 @@ public:
   // layer. This method would call the loaded services to check
   // whether they can create the policy object requested by the
   // application.
+  // @@ This method should go away in favor of the policy factory
+  //    registration support provided by the Portable Interceptor
+  //    spec.
+
 
   void service_context_list (TAO_Stub *&stub,
                              IOP::ServiceContextList &service_list,
@@ -624,6 +639,30 @@ public:
   // Raise a transient failure exception if a service is not loaded, else
   // delegate to the service to see what the service has to do for
   // this case.
+
+#if TAO_HAS_INTERCEPTORS == 1
+
+  void add_interceptor (
+    PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
+    CORBA_Environment &ACE_TRY_ENV);
+  ///< Register a client request interceptor.
+
+  void add_interceptor (
+    PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
+    CORBA_Environment &ACE_TRY_ENV);
+  ///< Register a server request interceptor.
+
+  TAO_ClientRequestInterceptor_List::TYPE &
+    client_request_interceptors (void);
+  ///< Return the array of client-side interceptors specific to
+  ///< this ORB.
+
+  TAO_ServerRequestInterceptor_List::TYPE &
+    server_request_interceptors (void);
+  ///< Return the array of server-side interceptors specific to
+  ///< this ORB.
+
+#endif /* TAO_HAS_INTERCEPTORS */
 
   int open (CORBA::Environment &ACE_TRY_ENV);
   // Set up the ORB Core's acceptor to listen on the
@@ -668,12 +707,12 @@ protected:
 
 private:
 
-  void resolve_ior_table_i (CORBA::Environment &ACE_TRY_ENV);
-  // Obtain and cache the dynamic any factory object reference
-
-  // The ORB Core should not be copied
+  // The ORB Core should not be copied.
   ACE_UNIMPLEMENTED_FUNC (TAO_ORB_Core(const TAO_ORB_Core&))
   ACE_UNIMPLEMENTED_FUNC (void operator=(const TAO_ORB_Core&))
+
+  void resolve_ior_table_i (CORBA::Environment &ACE_TRY_ENV);
+  // Obtain and cache the dynamic any factory object reference.
 
   CORBA::Object_ptr create_collocated_object (TAO_Stub *the_stub,
                                               TAO_ORB_Core *other_orb,
@@ -912,8 +951,18 @@ protected:
   // dynamically loaded ORBs where an application level reactor, such
   // as the Singleton reactor, is used instead of an ORB created one.
 
+  TAO_PolicyFactory_Registry policy_factory_registry_;
+  ///< Registry containing all registered policy factories.
+
+#if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_ClientRequestInterceptor_List client_request_interceptors_;
+  TAO_ServerRequestInterceptor_List server_request_interceptors_;
+  ///< Interceptor registries.
+#endif /* TAO_HAS_INTERCEPTORS */
+
   TAO_Parser_Registry parser_registry_;
   // The IOR parser registry
+
 };
 
 // ****************************************************************

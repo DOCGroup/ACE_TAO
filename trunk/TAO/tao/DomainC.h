@@ -18,7 +18,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "PolicyC.h"
-#include "Request_Info.h"
+#include "ClientRequestInfo.h"
 
 class IR_InterfaceDef;
 
@@ -174,7 +174,7 @@ class TAO_Export CORBA_DomainManager : public virtual CORBA_Object
     // and build the lists dynamically on demand so that unnecessary time overhead
     // of building these lists when they arent used is avoided.
     class TAO_ClientRequest_Info_CORBA_DomainManager_get_domain_policy 
-      : public TAO_ClientRequest_Info
+      : public TAO_ClientRequestInfo
     {
     public:
       friend class CORBA_DomainManager;
@@ -182,9 +182,7 @@ class TAO_Export CORBA_DomainManager : public virtual CORBA_Object
           const char *_tao_operation,
           IOP::ServiceContextList &_tao_service_context_list,
           CORBA::Object *_tao_target,
-          CORBA::PolicyType& policy_type,
-          CORBA::Environment &ACE_TRY_ENV =
-            TAO_default_environment ()
+          CORBA::PolicyType& policy_type
         );
 
       virtual Dynamic::ParameterList * arguments (

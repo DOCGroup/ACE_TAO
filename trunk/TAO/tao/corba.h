@@ -86,10 +86,13 @@
 #include "tao/BoundsC.h"
 #include "tao/TAOC.h"
 #include "tao/MessagingC.h"
-#include "tao/StringSeq.h"
+#include "tao/StringSeqC.h"
+#include "tao/OctetSeqC.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/PortableInterceptor.h"
+#include "tao/ClientRequestInfo.h"
+#include "tao/PortableServer/ServerRequestInfo.h"
 #endif  /* TAO_HAS_INTERCEPTORS */
 
 
