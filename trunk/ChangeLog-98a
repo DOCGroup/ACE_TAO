@@ -1,3 +1,14 @@
+Tue Jan 20 15:54:44 1998  Darrell Brunsch  <brunsch@cs.wustl.edu>
+
+	* ace/Timer_Heap_T.cpp: Fixed a bug that was introduced on 
+	  Sunday because of the non-use of position 0 (we have to 
+	  grow the heap one node early).  
+
+	* ace/Timer_Queue_T.{h,cpp}: Added a return_node () method 
+	  which is used to return a ACE_Timer_Node back into the
+	  control of the Timer Queue after it leaves via
+	  remove_first ().
+
 Tue Jan 20 15:52:31 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.19, released Tue Jan 20 15:52:31 1998.
