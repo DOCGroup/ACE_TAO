@@ -1,3 +1,11 @@
+Wed Nov 19 19:24:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ORB.cpp:
+
+	  Fixed a warning. Probably this would be millionth time in the
+	  history of ACE+TAO that we fix a warning, which is basically 
+	  a .in () for a _var.
+
 Wed Nov 19 17:39:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_global.cpp:
@@ -21,8 +29,8 @@ Wed Nov 19 13:51:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any_Special_Impl_T.cpp (insert):
 
-	  Eliminated a memory leak (TypeCode copy not released) when inserting a
-	  string into an Any.
+	  Eliminated a memory leak (TypeCode copy not released) when
+	  inserting a string into an Any.
 
         * tao/DynamicAny/DynAny_i.cpp:
         * tao/DynamicAny/DynArray_i.cpp:
