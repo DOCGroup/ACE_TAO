@@ -1,3 +1,26 @@
+Wed Oct  4 17:41:53 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ior_corbaname_export.h: 
+	* tao/ior_corbaname/CORBANAME_Parser.*:
+	
+	  Moved the files up one directory to tao.
+	  Removed all the files in tao/ior_corbaname/.
+	  
+	* tao/default_resource.cpp: 
+	  Added the code for dynamically loading CORBANAME_Parser.
+	
+	* tao/Makefile: 
+	  Added an entry for CORBANAME_Parser.
+	
+	* orbsvcs/tests/ior_corbaname/
+	* tao/tests/ior_corbaname/
+	
+	  Moved the $TAO_ROOT/tests/ior_corbaname directory contents here
+	  as the test depends on Naming Service. 
+	  Removed all the files in $TAO_ROOT/tests/ior_corbaname.
+
+	  With these set of changes, TAO supports corbaname scheme. 
+	
 Wed Oct  4 18:49:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_enum.cpp:
