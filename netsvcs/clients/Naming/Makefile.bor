@@ -1,3 +1,0 @@
-DIRS = Client Dump_Restore
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
