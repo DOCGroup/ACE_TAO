@@ -14,10 +14,12 @@
 //
 // ACE_Init_Test.cpp : Defines the class behaviors for the application.
 
-#include "ace/Thread_Manager.h"
 #include "ACE_Init_Test_StdAfx.h"
 #include "ACE_Init_Test.h"
 #include "ACE_Init_TestDlg.h"
+#include "test_config.h"
+#include "ace/Thread_Manager.h"
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -57,11 +59,12 @@ CACE_Init_TestApp theApp;
 
 BOOL CACE_Init_TestApp::InitInstance()
 {
-
   // This is needed because there's no overridden main(int, char *[])
   // which would normally handle the initialization.  Also see the
   // corresponding ACE::fini, below.
   ACE::init();
+
+  ACE_START_TEST (ACE_TEXT ("ACE_Init_Test"));
 
   CACE_Init_TestDlg dlg;
   m_pMainWnd = &dlg;
@@ -80,6 +83,8 @@ BOOL CACE_Init_TestApp::InitInstance()
     }
 
   ACE_Thread_Manager::instance()->wait();
+
+  ACE_END_TEST;
 
   // Since the dialog has been closed, return FALSE so that we exit the
   //  application, rather than start the application's message pump.

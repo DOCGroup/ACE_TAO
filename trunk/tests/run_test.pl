@@ -1,3 +1,4 @@
+
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
@@ -5,6 +6,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 # This file is for running the tests in the ACE tests directory.
+# It is usually used for auto_compiles.
 
 unshift @INC, '../bin';
 require ACEutils;
@@ -40,13 +42,14 @@ else {
     print "Defaulting to configuration: $config\n";
 }
 
-if (!($ACE_ROOT = $ENV{ACE_ROOT})) {
-    my $cd = getcwd ();
-    chdir ('..');
-    $ACE_ROOT = getcwd ().$DIR_SEPARATOR;
-    chdir ($cd);
-    warn "ACE_ROOT not defined, defaulting to ACE_ROOT=$ACE_ROOT";
-}
+### Doesn't look like we need $ACE_ROOT now
+#if (!($ACE_ROOT = $ENV{ACE_ROOT})) {
+#    my $cd = getcwd ();
+#    chdir ('..');
+#    $ACE_ROOT = getcwd ().$DIR_SEPARATOR;
+#    chdir ($cd);
+#    warn "ACE_ROOT not defined, defaulting to ACE_ROOT=$ACE_ROOT";
+#}
 
 if (!($tmp = $ENV{TMP})) {
   $tmp="/tmp";
@@ -120,12 +123,11 @@ sub check_log ($)
     if (! -e $log ) {
         print STDERR "Error: No log file ($log) is present\n";
     } else {
-        if (open (LOG, "<". $log) == 0) {
+        if (open (LOG, "<".$log) == 0) {
             print STDERR "Error: Cannot open log file $log\n";
         } else {
             my $starting_matched = 0;
             my $ending_matched = 0;
-            my $bad_matched = 0;
             
             while (<LOG>) {
                 chomp;
@@ -137,19 +139,10 @@ sub check_log ($)
                 if (m/Ending/) {
                     $ending_matched = 1;
                 }
-        
-                if (m/assertion failed|timeout|Bad file number/) {
-                    $bad_matched = 1;
-                }
-        
-                if ($log =~ /Cached_Accept_Conn_Test/
-                    && m/No such file or directory/) {
-                    $bad_matched = 1;
-                }
                 
-                if (m/not supported/) {
-                    print STDERR "Error: ($log): $_\n";
-                }
+                if (/LM\_ERROR\@(.*)$/) {
+                    print STDERR "Error: ($log): $1\n";
+                } 
             }
 
             close (LOG); # ignore errors
@@ -160,10 +153,6 @@ sub check_log ($)
             
             if ($ending_matched == 0) {
                 print STDERR "Error ($log): no line with 'Ending'\n";
-            }
-      
-            if ($bad_matched == 1) {
-                print STDERR "Error ($log): unexpected output\n";
             }
       
         }
