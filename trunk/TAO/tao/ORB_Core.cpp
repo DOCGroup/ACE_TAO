@@ -108,7 +108,10 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // Be certain to copy the program name so that service configurator
   // has something to skip!
   ACE_Arg_Shifter arg_shifter (argc, argv);
-  svc_config_argv[svc_config_argc++] = CORBA::string_dup (argv[0]);
+  const char* argv0 = "";
+  if (argc > 0 && argv != 0)
+    argv0 = argv[0];
+  svc_config_argv[svc_config_argc++] = CORBA::string_dup (argv0);
 
   ACE_Env_Value<int> defport ("TAO_DEFAULT_SERVER_PORT",
                               TAO_DEFAULT_SERVER_PORT);
