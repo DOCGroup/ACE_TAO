@@ -10223,7 +10223,7 @@ ACE_OS::opendir (const char *filename)
 #endif /* ACE_HAS_DIRENT */
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 ACE_OS::closedir (DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
@@ -10250,13 +10250,13 @@ ACE_OS::readdir_r (DIR *dirp,
                    struct dirent **result)
 {
 #if defined (ACE_HAS_DIRENT)
-#if defined (_POSIX_PTHREAD_SEMANTICS)
+#if defined (ACE_HAS_PTHREADS_STD)
   return ::readdir_r (dirp, entry, result);
-#else
+#else  /* ! ACE_HAS_PTHREADS_STD */
   // <result> had better not be 0!
   *result = ::readdir_r (dirp, entry);
   return 0;
-#endif /* _POSIX_PTHREAD_SEMANTICS */
+#endif /* ! ACE_HAS_PTHREADS_STD */
 #else
   ACE_UNUSED_ARG (dirp);
   ACE_UNUSED_ARG (entry);
@@ -10265,7 +10265,7 @@ ACE_OS::readdir_r (DIR *dirp,
 #endif /* ACE_HAS_DIRENT */
 }
 
-ACE_INLINE long 
+ACE_INLINE long
 ACE_OS::telldir (DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
@@ -10276,7 +10276,7 @@ ACE_OS::telldir (DIR *d)
 #endif /* ACE_HAS_DIRENT */
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 ACE_OS::seekdir (DIR *d, long loc)
 {
 #if defined (ACE_HAS_DIRENT)
