@@ -20,7 +20,7 @@ ACE_RMCast_IO_UDP::~ACE_RMCast_IO_UDP (void)
 }
 
 int
-ACE_RMCast_IO_UDP::open (const ACE_INET_Addr &mcast_group,
+ACE_RMCast_IO_UDP::init (const ACE_INET_Addr &mcast_group,
                          const ACE_Addr &local,
                          int protocol_family,
                          int protocol,

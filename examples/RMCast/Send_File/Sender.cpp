@@ -49,10 +49,10 @@ main (int argc, char *argv[])
   // this example we simply ignore them.
   ACE_RMCast_UDP_Reliable_Sender sender (0);
 
-  if (sender.open (mcast_group) == -1)
+  if (sender.init (mcast_group) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Cannot open UDP I/O at <%s:%d> %p\n",
+                         "Cannot init UDP I/O at <%s:%d> %p\n",
                          mcast_group.get_host_name (),
                          mcast_group.get_port_number (),
                          ""),

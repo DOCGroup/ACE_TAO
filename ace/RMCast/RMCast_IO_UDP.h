@@ -52,7 +52,7 @@ public:
    * alternative would be to implement almost identical class for
    * outgoing and incoming UDP I/O
    */
-  int open (const ACE_INET_Addr &mcast_group,
+  int init (const ACE_INET_Addr &mcast_group,
             const ACE_Addr &local,
             int protocol_family = PF_INET,
             int protocol = 0,
