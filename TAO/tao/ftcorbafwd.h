@@ -73,6 +73,8 @@ struct FT_HeartbeatPolicyValue;
 class  FT_HeartbeatPolicyValue_var;
 
 
+class FT_Name;
+
 class   FT_HeartbeatPolicy;
 class   FT_HeartbeatPolicy_var;
 class   FT_HeartbeatPolicy_out;
@@ -93,10 +95,6 @@ class FT_FaultNotifier_var;
 class FT_FaultNotifier_out;
 typedef FT_FaultNotifier *FT_FaultNotifier_ptr;
 
-class FT_Name;
-class FT_Name_var;
-class FT_Name_out;
-
 struct FT_Property;
 class  FT_Property_var;
 class  FT_Property_out;
@@ -104,10 +102,6 @@ class  FT_Property_out;
 class FT_Properties;
 class FT_Properties_var;
 class FT_Properties_out;
-
-class FT_Location;
-class FT_Location_var;
-class FT_Location_out;
 
 class FT_Locations;
 class FT_Locations_var;
@@ -266,6 +260,8 @@ TAO_NAMESPACE FT
   typedef FT_FaultNotifier_out FaultNotifier_out;
   typedef FaultNotifier *FaultNotifier_ptr;
 
+  typedef FT_Name Name;
+
   typedef char * TypeId;
   typedef CORBA::String_var TypeId_var;
   typedef CORBA::String_out TypeId_out;
@@ -276,10 +272,6 @@ TAO_NAMESPACE FT
   typedef CORBA::Object_var ObjectGroup_var;
   typedef CORBA::Object_out ObjectGroup_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ObjectGroup;
-
-  typedef FT_Name Name;
-  typedef FT_Name_var Name_var;
-  typedef FT_Name_out Name_out;
 
   typedef CORBA::Any Value;
   typedef CORBA::Any_ptr Value_ptr;
@@ -296,14 +288,6 @@ TAO_NAMESPACE FT
   typedef FT_Properties_var Properties_var;
   typedef FT_Properties_out Properties_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Properties;
-
-  //  typedef Name Location;
-  //typedef Name_var Location_var;
-  //typedef Name_out Location_out;
-  typedef FT_Location Location;
-  typedef FT_Location_var Location_var;
-  typedef FT_Location_out Location_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Location;
 
   typedef FT_Locations Locations;
   typedef FT_Locations_var Locations_var;

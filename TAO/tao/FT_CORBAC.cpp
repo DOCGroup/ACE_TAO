@@ -1183,4 +1183,676 @@ static const CORBA::Long _oc_FT_Property[] =
 
 };
 
+void operator<<= (CORBA::Any &_tao_any, const FT::TagFTGroupTaggedComponent &_tao_elem) // copying
+{
+  TAO_OutputCDR stream;
+  stream << _tao_elem;
+  _tao_any._tao_replace (
+      FT::_tc_TagFTGroupTaggedComponent,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin ()
+    );
+}
+
+void operator<<= (CORBA::Any &_tao_any, FT::TagFTGroupTaggedComponent *_tao_elem) // non copying
+{
+  TAO_OutputCDR stream;
+  stream << *_tao_elem;
+  _tao_any._tao_replace (
+      FT::_tc_TagFTGroupTaggedComponent,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin (),
+      1,
+      _tao_elem,
+      FT::TagFTGroupTaggedComponent::_tao_any_destructor
+    );
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, FT::TagFTGroupTaggedComponent *&_tao_elem)
+{
+  return _tao_any >>= ACE_const_cast(const FT::TagFTGroupTaggedComponent*&,_tao_elem);
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const FT::TagFTGroupTaggedComponent *&_tao_elem)
+{
+  _tao_elem = 0;
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    if (!type->equivalent (FT::_tc_TagFTGroupTaggedComponent, ACE_TRY_ENV)) // not equal
+      {
+        return 0;
+      }
+    ACE_TRY_CHECK;
+    if (_tao_any.any_owns_data ())
+    {
+      _tao_elem = ACE_static_cast(
+          const FT::TagFTGroupTaggedComponent*,
+          _tao_any.value ()
+        );
+      return 1;
+    }
+    else
+    {
+      FT::TagFTGroupTaggedComponent *tmp;
+      ACE_NEW_RETURN (tmp, FT::TagFTGroupTaggedComponent, 0);
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *tmp)
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            FT::_tc_TagFTGroupTaggedComponent,
+            1,
+            ACE_static_cast (void *, tmp),
+            FT::TagFTGroupTaggedComponent::_tao_any_destructor
+          );
+        _tao_elem = tmp;
+        return 1;
+      }
+      else
+      {
+        delete tmp;
+      }
+    }
+  }
+  ACE_CATCHANY
+  {
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+void operator<<= (CORBA::Any &_tao_any, const FT::TagFTPrimaryTaggedComponent &_tao_elem) // copying
+{
+  TAO_OutputCDR stream;
+  stream << _tao_elem;
+  _tao_any._tao_replace (
+      FT::_tc_TagFTPrimaryTaggedComponent,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin ()
+    );
+}
+
+void operator<<= (CORBA::Any &_tao_any, FT::TagFTPrimaryTaggedComponent *_tao_elem) // non copying
+{
+  TAO_OutputCDR stream;
+  stream << *_tao_elem;
+  _tao_any._tao_replace (
+      FT::_tc_TagFTPrimaryTaggedComponent,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin (),
+      1,
+      _tao_elem,
+      FT::TagFTPrimaryTaggedComponent::_tao_any_destructor
+    );
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, FT::TagFTPrimaryTaggedComponent *&_tao_elem)
+{
+  return _tao_any >>= ACE_const_cast(const FT::TagFTPrimaryTaggedComponent*&,_tao_elem);
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const FT::TagFTPrimaryTaggedComponent *&_tao_elem)
+{
+  _tao_elem = 0;
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    if (!type->equivalent (FT::_tc_TagFTPrimaryTaggedComponent, ACE_TRY_ENV)) // not equal
+      {
+        return 0;
+      }
+    ACE_TRY_CHECK;
+    if (_tao_any.any_owns_data ())
+    {
+      _tao_elem = ACE_static_cast(
+          const FT::TagFTPrimaryTaggedComponent*,
+          _tao_any.value ()
+        );
+      return 1;
+    }
+    else
+    {
+      FT::TagFTPrimaryTaggedComponent *tmp;
+      ACE_NEW_RETURN (tmp, FT::TagFTPrimaryTaggedComponent, 0);
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *tmp)
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            FT::_tc_TagFTPrimaryTaggedComponent,
+            1,
+            ACE_static_cast (void *, tmp),
+            FT::TagFTPrimaryTaggedComponent::_tao_any_destructor
+          );
+        _tao_elem = tmp;
+        return 1;
+      }
+      else
+      {
+        delete tmp;
+      }
+    }
+  }
+  ACE_CATCHANY
+  {
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+void operator<<= (CORBA::Any &_tao_any, const FT::FTGroupVersionServiceContext &_tao_elem) // copying
+{
+  TAO_OutputCDR stream;
+  stream << _tao_elem;
+  _tao_any._tao_replace (
+      FT::_tc_FTGroupVersionServiceContext,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin ()
+    );
+}
+
+void operator<<= (CORBA::Any &_tao_any, FT::FTGroupVersionServiceContext *_tao_elem) // non copying
+{
+  TAO_OutputCDR stream;
+  stream << *_tao_elem;
+  _tao_any._tao_replace (
+      FT::_tc_FTGroupVersionServiceContext,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin (),
+      1,
+      _tao_elem,
+      FT::FTGroupVersionServiceContext::_tao_any_destructor
+    );
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, FT::FTGroupVersionServiceContext *&_tao_elem)
+{
+  return _tao_any >>= ACE_const_cast(const FT::FTGroupVersionServiceContext*&,_tao_elem);
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const FT::FTGroupVersionServiceContext *&_tao_elem)
+{
+  _tao_elem = 0;
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    if (!type->equivalent (FT::_tc_FTGroupVersionServiceContext, ACE_TRY_ENV)) // not equal
+      {
+        return 0;
+      }
+    ACE_TRY_CHECK;
+    if (_tao_any.any_owns_data ())
+    {
+      _tao_elem = ACE_static_cast(
+          const FT::FTGroupVersionServiceContext*,
+          _tao_any.value ()
+        );
+      return 1;
+    }
+    else
+    {
+      FT::FTGroupVersionServiceContext *tmp;
+      ACE_NEW_RETURN (tmp, FT::FTGroupVersionServiceContext, 0);
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *tmp)
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            FT::_tc_FTGroupVersionServiceContext,
+            1,
+            ACE_static_cast (void *, tmp),
+            FT::FTGroupVersionServiceContext::_tao_any_destructor
+          );
+        _tao_elem = tmp;
+        return 1;
+      }
+      else
+      {
+        delete tmp;
+      }
+    }
+  }
+  ACE_CATCHANY
+  {
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+void operator<<= (CORBA::Any &_tao_any, const FT::FTRequestServiceContext &_tao_elem) // copying
+{
+  TAO_OutputCDR stream;
+  stream << _tao_elem;
+  _tao_any._tao_replace (
+      FT::_tc_FTRequestServiceContext,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin ()
+    );
+}
+
+void operator<<= (CORBA::Any &_tao_any, FT::FTRequestServiceContext *_tao_elem) // non copying
+{
+  TAO_OutputCDR stream;
+  stream << *_tao_elem;
+  _tao_any._tao_replace (
+      FT::_tc_FTRequestServiceContext,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin (),
+      1,
+      _tao_elem,
+      FT::FTRequestServiceContext::_tao_any_destructor
+    );
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, FT::FTRequestServiceContext *&_tao_elem)
+{
+  return _tao_any >>= ACE_const_cast(const FT::FTRequestServiceContext*&,_tao_elem);
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const FT::FTRequestServiceContext *&_tao_elem)
+{
+  _tao_elem = 0;
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    if (!type->equivalent (FT::_tc_FTRequestServiceContext, ACE_TRY_ENV)) // not equal
+      {
+        return 0;
+      }
+    ACE_TRY_CHECK;
+    if (_tao_any.any_owns_data ())
+    {
+      _tao_elem = ACE_static_cast(
+          const FT::FTRequestServiceContext*,
+          _tao_any.value ()
+        );
+      return 1;
+    }
+    else
+    {
+      FT::FTRequestServiceContext *tmp;
+      ACE_NEW_RETURN (tmp, FT::FTRequestServiceContext, 0);
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *tmp)
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            FT::_tc_FTRequestServiceContext,
+            1,
+            ACE_static_cast (void *, tmp),
+            FT::FTRequestServiceContext::_tao_any_destructor
+          );
+        _tao_elem = tmp;
+        return 1;
+      }
+      else
+      {
+        delete tmp;
+      }
+    }
+  }
+  ACE_CATCHANY
+  {
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+FT::RequestDurationPolicy_ptr (*_TAO_collocation_FT_RequestDurationPolicy_Stub_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  ) = 0;
+void operator<<= (CORBA::Any &_tao_any, FT::RequestDurationPolicy_ptr _tao_elem)
+{
+  TAO_OutputCDR stream;
+  if (stream << _tao_elem)
+  {
+    _tao_any._tao_replace (
+        FT::_tc_RequestDurationPolicy,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        FT::RequestDurationPolicy::_duplicate (_tao_elem),
+        FT::RequestDurationPolicy::_tao_any_destructor
+      );
+  }
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, FT::RequestDurationPolicy_ptr &_tao_elem)
+{
+  ACE_TRY_NEW_ENV
+  {
+    _tao_elem = FT::RequestDurationPolicy::_nil ();
+    CORBA::TypeCode_var type = _tao_any.type ();
+    if (!type->equivalent (FT::_tc_RequestDurationPolicy, ACE_TRY_ENV)) // not equal
+      {
+        return 0;
+      }
+    ACE_TRY_CHECK;
+    TAO_InputCDR stream (
+        _tao_any._tao_get_cdr (),
+        _tao_any._tao_byte_order ()
+      );
+    if (stream >> _tao_elem)
+    {
+      ((CORBA::Any *)&_tao_any)->_tao_replace (
+          FT::_tc_RequestDurationPolicy,
+          1,
+          _tao_elem,
+          FT::RequestDurationPolicy::_tao_any_destructor
+        );
+      return 1;
+    }
+  }
+  ACE_CATCHANY
+  {
+    _tao_elem = FT::RequestDurationPolicy::_nil ();
+    return 0;
+  }
+  ACE_ENDTRY;
+  _tao_elem = FT::RequestDurationPolicy::_nil ();
+  return 0;
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+defined (ACE_HAS_GNU_REPO)
+  template class TAO_Object_Manager<FT::RequestDurationPolicy,FT::RequestDurationPolicy_var>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#  pragma instantiate TAO_Object_Manager<FT::RequestDurationPolicy,FT::RequestDurationPolicy_var>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+void operator<<= (CORBA::Any &_tao_any, const FT::TagFTHeartbeatEnabledTaggedComponent &_tao_elem) // copying
+{
+  TAO_OutputCDR stream;
+  stream << _tao_elem;
+  _tao_any._tao_replace (
+      FT::_tc_TagFTHeartbeatEnabledTaggedComponent,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin ()
+    );
+}
+
+void operator<<= (CORBA::Any &_tao_any, FT::TagFTHeartbeatEnabledTaggedComponent *_tao_elem) // non copying
+{
+  TAO_OutputCDR stream;
+  stream << *_tao_elem;
+  _tao_any._tao_replace (
+      FT::_tc_TagFTHeartbeatEnabledTaggedComponent,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin (),
+      1,
+      _tao_elem,
+      FT::TagFTHeartbeatEnabledTaggedComponent::_tao_any_destructor
+    );
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, FT::TagFTHeartbeatEnabledTaggedComponent *&_tao_elem)
+{
+  return _tao_any >>= ACE_const_cast(const FT::TagFTHeartbeatEnabledTaggedComponent*&,_tao_elem);
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const FT::TagFTHeartbeatEnabledTaggedComponent *&_tao_elem)
+{
+  _tao_elem = 0;
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    if (!type->equivalent (FT::_tc_TagFTHeartbeatEnabledTaggedComponent, ACE_TRY_ENV)) // not equal
+      {
+        return 0;
+      }
+    ACE_TRY_CHECK;
+    if (_tao_any.any_owns_data ())
+    {
+      _tao_elem = ACE_static_cast(
+          const FT::TagFTHeartbeatEnabledTaggedComponent*,
+          _tao_any.value ()
+        );
+      return 1;
+    }
+    else
+    {
+      FT::TagFTHeartbeatEnabledTaggedComponent *tmp;
+      ACE_NEW_RETURN (tmp, FT::TagFTHeartbeatEnabledTaggedComponent, 0);
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *tmp)
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            FT::_tc_TagFTHeartbeatEnabledTaggedComponent,
+            1,
+            ACE_static_cast (void *, tmp),
+            FT::TagFTHeartbeatEnabledTaggedComponent::_tao_any_destructor
+          );
+        _tao_elem = tmp;
+        return 1;
+      }
+      else
+      {
+        delete tmp;
+      }
+    }
+  }
+  ACE_CATCHANY
+  {
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+void operator<<= (CORBA::Any &_tao_any, const FT::HeartbeatPolicyValue &_tao_elem) // copying
+{
+  TAO_OutputCDR stream;
+  stream << _tao_elem;
+  _tao_any._tao_replace (
+      FT::_tc_HeartbeatPolicyValue,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin ()
+    );
+}
+
+void operator<<= (CORBA::Any &_tao_any, FT::HeartbeatPolicyValue *_tao_elem) // non copying
+{
+  TAO_OutputCDR stream;
+  stream << *_tao_elem;
+  _tao_any._tao_replace (
+      FT::_tc_HeartbeatPolicyValue,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin (),
+      1,
+      _tao_elem,
+      FT::HeartbeatPolicyValue::_tao_any_destructor
+    );
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, FT::HeartbeatPolicyValue *&_tao_elem)
+{
+  return _tao_any >>= ACE_const_cast(const FT::HeartbeatPolicyValue*&,_tao_elem);
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const FT::HeartbeatPolicyValue *&_tao_elem)
+{
+  _tao_elem = 0;
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    if (!type->equivalent (FT::_tc_HeartbeatPolicyValue, ACE_TRY_ENV)) // not equal
+      {
+        return 0;
+      }
+    ACE_TRY_CHECK;
+    if (_tao_any.any_owns_data ())
+    {
+      _tao_elem = ACE_static_cast(
+          const FT::HeartbeatPolicyValue*,
+          _tao_any.value ()
+        );
+      return 1;
+    }
+    else
+    {
+      FT::HeartbeatPolicyValue *tmp;
+      ACE_NEW_RETURN (tmp, FT::HeartbeatPolicyValue, 0);
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *tmp)
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            FT::_tc_HeartbeatPolicyValue,
+            1,
+            ACE_static_cast (void *, tmp),
+            FT::HeartbeatPolicyValue::_tao_any_destructor
+          );
+        _tao_elem = tmp;
+        return 1;
+      }
+      else
+      {
+        delete tmp;
+      }
+    }
+  }
+  ACE_CATCHANY
+  {
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+FT::HeartbeatPolicy_ptr (*_TAO_collocation_FT_HeartbeatPolicy_Stub_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  ) = 0;
+void operator<<= (CORBA::Any &_tao_any, FT::HeartbeatPolicy_ptr _tao_elem)
+{
+  TAO_OutputCDR stream;
+  if (stream << _tao_elem)
+  {
+    _tao_any._tao_replace (
+        FT::_tc_HeartbeatPolicy,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        FT::HeartbeatPolicy::_duplicate (_tao_elem),
+        FT::HeartbeatPolicy::_tao_any_destructor
+      );
+  }
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, FT::HeartbeatPolicy_ptr &_tao_elem)
+{
+  ACE_TRY_NEW_ENV
+  {
+    _tao_elem = FT::HeartbeatPolicy::_nil ();
+    CORBA::TypeCode_var type = _tao_any.type ();
+    if (!type->equivalent (FT::_tc_HeartbeatPolicy, ACE_TRY_ENV)) // not equal
+      {
+        return 0;
+      }
+    ACE_TRY_CHECK;
+    TAO_InputCDR stream (
+        _tao_any._tao_get_cdr (),
+        _tao_any._tao_byte_order ()
+      );
+    if (stream >> _tao_elem)
+    {
+      ((CORBA::Any *)&_tao_any)->_tao_replace (
+          FT::_tc_HeartbeatPolicy,
+          1,
+          _tao_elem,
+          FT::HeartbeatPolicy::_tao_any_destructor
+        );
+      return 1;
+    }
+  }
+  ACE_CATCHANY
+  {
+    _tao_elem = FT::HeartbeatPolicy::_nil ();
+    return 0;
+  }
+  ACE_ENDTRY;
+  _tao_elem = FT::HeartbeatPolicy::_nil ();
+  return 0;
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+    template class TAO_Object_Manager<FT::HeartbeatPolicy,FT::HeartbeatPolicy_var>;
+  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+  #  pragma instantiate TAO_Object_Manager<FT::HeartbeatPolicy,FT::HeartbeatPolicy_var>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+FT::HeartbeatEnabledPolicy_ptr (*_TAO_collocation_FT_HeartbeatEnabledPolicy_Stub_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  ) = 0;
+void operator<<= (CORBA::Any &_tao_any, FT::HeartbeatEnabledPolicy_ptr _tao_elem)
+{
+  TAO_OutputCDR stream;
+  if (stream << _tao_elem)
+  {
+    _tao_any._tao_replace (
+        FT::_tc_HeartbeatEnabledPolicy,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        FT::HeartbeatEnabledPolicy::_duplicate (_tao_elem),
+        FT::HeartbeatEnabledPolicy::_tao_any_destructor
+      );
+  }
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, FT::HeartbeatEnabledPolicy_ptr &_tao_elem)
+{
+  ACE_TRY_NEW_ENV
+  {
+    _tao_elem = FT::HeartbeatEnabledPolicy::_nil ();
+    CORBA::TypeCode_var type = _tao_any.type ();
+    if (!type->equivalent (FT::_tc_HeartbeatEnabledPolicy, ACE_TRY_ENV)) // not equal
+      {
+        return 0;
+      }
+    ACE_TRY_CHECK;
+    TAO_InputCDR stream (
+        _tao_any._tao_get_cdr (),
+        _tao_any._tao_byte_order ()
+      );
+    if (stream >> _tao_elem)
+    {
+      ((CORBA::Any *)&_tao_any)->_tao_replace (
+          FT::_tc_HeartbeatEnabledPolicy,
+          1,
+          _tao_elem,
+          FT::HeartbeatEnabledPolicy::_tao_any_destructor
+        );
+      return 1;
+    }
+  }
+  ACE_CATCHANY
+  {
+    _tao_elem = FT::HeartbeatEnabledPolicy::_nil ();
+    return 0;
+  }
+  ACE_ENDTRY;
+  _tao_elem = FT::HeartbeatEnabledPolicy::_nil ();
+  return 0;
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+    template class TAO_Object_Manager<FT::HeartbeatEnabledPolicy,FT::HeartbeatEnabledPolicy_var>;
+  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+  #  pragma instantiate TAO_Object_Manager<FT::HeartbeatEnabledPolicy,FT::HeartbeatEnabledPolicy_var>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #endif /*TAO_HAS_FT_CORBA == 1 */
