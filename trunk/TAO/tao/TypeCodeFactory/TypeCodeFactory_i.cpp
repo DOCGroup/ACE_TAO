@@ -53,14 +53,14 @@ TAO_TypeCodeFactory_i::_tao_QueryInterface (ptr_arith_t type)
       return this;
     }
 
-  return this->CORBA_TypeCodeFactory::_tao_QueryInterface (type);
+  return this->ACE_NESTED_CLASS (CORBA, TypeCodeFactory)::_tao_QueryInterface (type);
 }
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_struct_tc (
     const char *id,
     const char *name,
-    const CORBA_StructMemberSeq &members
+    const CORBA::StructMemberSeq &members
     ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -77,7 +77,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
     const char *id,
     const char *name,
     CORBA::TypeCode_ptr discriminator_type,
-    const CORBA_UnionMemberSeq &members
+    const CORBA::UnionMemberSeq &members
     ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -308,7 +308,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
     CORBA::TypeCode::_nil ();
 
   ACE_NEW_THROW_EX (union_typecode,
-                    CORBA_TypeCode (CORBA::tk_union,
+                    CORBA::TypeCode (CORBA::tk_union,
                                     consolidated_block.length (),
                                     consolidated_block.rd_ptr (),
                                     0,
@@ -323,7 +323,7 @@ CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_enum_tc (
     const char *id,
     const char *name,
-    const CORBA_EnumMemberSeq &members
+    const CORBA::EnumMemberSeq &members
     ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -390,7 +390,7 @@ TAO_TypeCodeFactory_i::create_enum_tc (
     CORBA::TypeCode::_nil ();
 
   ACE_NEW_THROW_EX (enum_typecode,
-                    CORBA_TypeCode (CORBA::tk_enum,
+                    CORBA::TypeCode (CORBA::tk_enum,
                                     consolidated_block.length (),
                                     consolidated_block.rd_ptr (),
                                     0,
@@ -461,7 +461,7 @@ TAO_TypeCodeFactory_i::create_alias_tc (
     CORBA::TypeCode::_nil ();
 
   ACE_NEW_THROW_EX (alias_typecode,
-                    CORBA_TypeCode (CORBA::tk_alias,
+                    CORBA::TypeCode (CORBA::tk_alias,
                                     consolidated_block.length (),
                                     consolidated_block.rd_ptr (),
                                     0,
@@ -476,7 +476,7 @@ CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_exception_tc (
     const char *id,
     const char *name,
-    const CORBA_StructMemberSeq &members
+    const CORBA::StructMemberSeq &members
     ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -519,7 +519,7 @@ TAO_TypeCodeFactory_i::create_string_tc (
     CORBA::TypeCode::_nil ();
 
   ACE_NEW_THROW_EX (string_typecode,
-                    CORBA_TypeCode (CORBA::tk_string,
+                    CORBA::TypeCode (CORBA::tk_string,
                                     cdr.total_length (),
                                     cdr.buffer (),
                                     0,
@@ -547,7 +547,7 @@ TAO_TypeCodeFactory_i::create_wstring_tc (
     CORBA::TypeCode::_nil ();
 
   ACE_NEW_THROW_EX (wstring_typecode,
-                    CORBA_TypeCode (CORBA::tk_wstring,
+                    CORBA::TypeCode (CORBA::tk_wstring,
                                     cdr.total_length (),
                                     cdr.buffer (),
                                     0,
@@ -607,7 +607,7 @@ TAO_TypeCodeFactory_i::create_sequence_tc (
     CORBA::TypeCode::_nil ();
 
   ACE_NEW_THROW_EX (sequence_typecode,
-                    CORBA_TypeCode (CORBA::tk_sequence,
+                    CORBA::TypeCode (CORBA::tk_sequence,
                                     consolidated_block.length (),
                                     consolidated_block.rd_ptr (),
                                     0,
@@ -655,7 +655,7 @@ TAO_TypeCodeFactory_i::create_array_tc (
     CORBA::TypeCode::_nil ();
 
   ACE_NEW_THROW_EX (array_typecode,
-                    CORBA_TypeCode (CORBA::tk_array,
+                    CORBA::TypeCode (CORBA::tk_array,
                                     consolidated_block.length (),
                                     consolidated_block.rd_ptr (),
                                     0,
@@ -672,7 +672,7 @@ TAO_TypeCodeFactory_i::create_value_tc (
     const char * /* name */,
     CORBA::ValueModifier /* type_modifier */,
     CORBA::TypeCode_ptr /* concrete_base */,
-    const CORBA_ValueMemberSeq & /* members */
+    const CORBA::ValueMemberSeq & /* members */
     ACE_ENV_ARG_DECL_NOT_USED
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -736,7 +736,7 @@ TAO_TypeCodeFactory_i::create_value_box_tc (
     CORBA::TypeCode::_nil ();
 
   ACE_NEW_THROW_EX (value_box_typecode,
-                    CORBA_TypeCode (CORBA::tk_value_box,
+                    CORBA::TypeCode (CORBA::tk_value_box,
                                     consolidated_block.length (),
                                     consolidated_block.rd_ptr (),
                                     0,
@@ -832,7 +832,7 @@ void
 TAO_TypeCodeFactory_i::compute_default_label (
     CORBA::TCKind kind,
     CORBA::ULong skip_slot,
-    const CORBA_UnionMemberSeq &members,
+    const CORBA::UnionMemberSeq &members,
     TAO_OutputCDR &cdr
   )
 {
@@ -1050,7 +1050,7 @@ TAO_TypeCodeFactory_i::create_tc_common (
     CORBA::TypeCode::_nil ();
 
   ACE_NEW_THROW_EX (result,
-                    CORBA_TypeCode (kind,
+                    CORBA::TypeCode (kind,
                                     consolidated_block.length (),
                                     consolidated_block.rd_ptr (),
                                     0,
@@ -1065,7 +1065,7 @@ CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::struct_except_tc_common (
     const char *id,
     const char *name,
-    const CORBA_StructMemberSeq &members,
+    const CORBA::StructMemberSeq &members,
     CORBA::TCKind kind
     ACE_ENV_ARG_DECL
   )
@@ -1164,7 +1164,7 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
     CORBA::TypeCode::_nil ();
 
   ACE_NEW_THROW_EX (new_typecode,
-                    CORBA_TypeCode (kind,
+                    CORBA::TypeCode (kind,
                                     consolidated_block.length (),
                                     consolidated_block.rd_ptr (),
                                     0,
@@ -1243,7 +1243,7 @@ TAO_TypeCodeFactory_i::valid_content_type (CORBA::TypeCode_ptr tc
 }
 
 CORBA::Boolean
-TAO_TypeCodeFactory_i::unique_label_values (const CORBA_UnionMemberSeq &members,
+TAO_TypeCodeFactory_i::unique_label_values (const CORBA::UnionMemberSeq &members,
                                             CORBA::TypeCode_ptr disc_tc,
                                             CORBA::ULong default_index_slot
                                             ACE_ENV_ARG_DECL)
