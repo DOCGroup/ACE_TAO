@@ -1,6 +1,15 @@
+Sun Jan 13 21:24:59 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/Request_Dispatcher.cpp: Fixed ACE_CHECK typo.  Thanks to
+	  Venkita for catching it.
+
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Loader.h:
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.h:
+	  Cleaned up two comments.
+
 Sun Jan 13 18:23:11 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* tests/Two_Objects/Makefile: 
+	* tests/Two_Objects/Makefile:
 	  Regenerated dependencies.
 
 Sun Jan 13 16:19:24 2002  Ossama Othman  <ossama@uci.edu>

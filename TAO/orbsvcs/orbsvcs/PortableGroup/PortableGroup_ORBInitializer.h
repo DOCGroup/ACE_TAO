@@ -35,7 +35,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-/// RTCORBA ORB initializer.
+/// PortableGroup ORB initializer.
 class TAO_PortableGroup_Export TAO_PortableGroup_ORBInitializer :
   public virtual PortableInterceptor::ORBInitializer,
   public virtual TAO_Local_RefCounted_Object
