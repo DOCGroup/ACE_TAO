@@ -346,7 +346,7 @@ ACE_ReactorEx::open (size_t size,
     this->delete_handler_rep_ = 1;
 
   // Open the notification handler
-  if (this->notify_handler_.open (*this) == -1)
+  if (this->notify_handler_.open (*this, timer_queue_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", 
 		       "opening notify handler "), 
 		      -1);
@@ -464,7 +464,7 @@ ACE_ReactorEx::schedule_timer (ACE_Event_Handler *handler,
   ACE_TRACE ("ACE_ReactorEx::schedule_timer");
 
   int result = this->timer_queue_->schedule 
-    (handler, arg, ACE_OS::gettimeofday () + delta_time, interval);
+    (handler, arg, timer_queue_->gettimeofday () + delta_time, interval);
   
   // Wakeup the owner thread so that it gets the latest timer values
   this->notify ();
@@ -733,13 +733,16 @@ ACE_ReactorEx::update_state (void)
 // ************************************************************
 
 ACE_ReactorEx_Notify::ACE_ReactorEx_Notify (void)
-  : max_notify_iterations_ (-1)
+  : max_notify_iterations_ (-1),
+    timer_queue_ (0)
 {
 }
 
 int 
-ACE_ReactorEx_Notify::open (ACE_ReactorEx &reactorEx)
+ACE_ReactorEx_Notify::open (ACE_ReactorEx &reactorEx,
+			    ACE_Timer_Queue *timer_queue)
 {
+  timer_queue_ = timer_queue;
   return reactorEx.register_handler (this);
 }
 
@@ -849,7 +852,7 @@ ACE_ReactorEx_Notify::notify (ACE_Event_Handler *eh,
       // current time of day.  This is what <ACE_Message_Queue>
       // expects.
       if (timeout != 0)
-	*timeout += ACE_OS::gettimeofday ();
+	*timeout += timer_queue_->gettimeofday ();
 
       if (this->message_queue_.enqueue_tail 
 	  (mb, timeout) == -1)

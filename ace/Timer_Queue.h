@@ -172,6 +172,11 @@ public:
   // Returns the number of <Event_Handler>s for which <handle_timeout>
   // was called.
 
+  virtual ACE_Time_Value gettimeofday (void);
+  // Returns the current time of day.  This allows different
+  // implementations of the timer queue to use special high resolution
+  // timers.
+
   virtual ACE_Time_Value *calculate_timeout (ACE_Time_Value *max);
   // Determine the next event to timeout.  Returns <max> if there are
   // no pending timers or if all pending timers are longer than max.

@@ -19,7 +19,7 @@ ACE_INLINE int
 ACE_Timer_Queue::expire (void)
 {
   if (!this->is_empty ())
-    return this->expire (ACE_OS::gettimeofday () + timer_skew_);
+    return this->expire (this->gettimeofday () + timer_skew_);
   else
     return 0;
 }

@@ -245,7 +245,7 @@ ACE_Proactor::schedule_timer (ACE_Event_Handler *handler,
   ACE_TRACE ("ACE_Proactor::schedule_timer");
 
   return this->timer_queue_->schedule 
-    (handler, arg, ACE_OS::gettimeofday () + delta_time, interval);
+    (handler, arg, timer_queue_->gettimeofday () + delta_time, interval);
 }
 
 #define ACE_TIMEOUT_OCCURRED 258

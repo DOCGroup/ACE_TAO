@@ -72,7 +72,7 @@ ACE_Timer_Queue::calculate_timeout (ACE_Time_Value *max_wait_time)
     return max_wait_time; 
   else
     {
-      ACE_Time_Value cur_time = ACE_OS::gettimeofday ();
+      ACE_Time_Value cur_time = this->gettimeofday ();
 
       if (this->earliest_time () > cur_time)
         {
@@ -174,3 +174,8 @@ ACE_Timer_Queue::expire (const ACE_Time_Value &cur_time)
   return number_of_timers_expired;
 }
 
+ACE_Time_Value
+ACE_Timer_Queue::gettimeofday (void)
+{
+  return ACE_OS::gettimeofday ();
+}
