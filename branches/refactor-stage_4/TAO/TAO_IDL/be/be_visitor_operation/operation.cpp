@@ -425,9 +425,9 @@ be_visitor_operation::gen_stub_operation_body (
   // Declare return type helper class.
 
   *os << "TAO::Arg_Traits<";
-  
+
   this->gen_arg_template_param_name (return_type, os);
-      
+
   *os << ">::stub_ret_val _tao_retval;";
 
   // Declare the argument helper classes.
@@ -442,11 +442,11 @@ be_visitor_operation::gen_stub_operation_body (
 
       *os << be_nl
           << "TAO::Arg_Traits<";
-          
+
       this->gen_arg_template_param_name (arg->field_type (), os);
-       
+
       *os << ">::";
-      
+
       switch (arg->direction ())
         {
           case AST_Argument::dir_IN:
@@ -461,7 +461,7 @@ be_visitor_operation::gen_stub_operation_body (
             break;
         }
 
-      *os << "_arg_val _tao_" << arg->local_name () << " (" 
+      *os << "_arg_val _tao_" << arg->local_name () << " ("
           << arg->local_name () << ");";
     }
 
@@ -484,12 +484,13 @@ be_visitor_operation::gen_stub_operation_body (
       << "};" << be_uidt;
 
   *os << be_nl << be_nl
-      << "TAO::Invocation_Base _tao_call (" << be_idt << be_idt_nl
+      << "TAO::Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
       << "_collocated_tao_target_," << be_nl
       << "_tao_signature," << be_nl
       << node->argument_count () + 1 << "," << be_nl
       << "\"" << node->local_name () << "\"," << be_nl
-      << ACE_OS::strlen (node->local_name ()->get_string ());
+      << ACE_OS::strlen (node->local_name ()->get_string ()) << be_nl
+      << "0";
 
   if (node->flags () == AST_Operation::OP_oneway)
     {
@@ -502,7 +503,7 @@ be_visitor_operation::gen_stub_operation_body (
       *os << "," << be_nl
           << "TAO::TAO_ASYNCHRONOUS_CALLBACK_INVOCATION";
     }
-      
+
   *os << be_uidt_nl
       << ");" << be_uidt;
 

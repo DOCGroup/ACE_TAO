@@ -1353,7 +1353,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       this->gen_standard_include (this->client_header_,
                                   "tao/Valuetype/Valuetype_Adapter_Impl.h");
 
-      // @@@@ (JP) These can be logically separated later 
+      // @@@@ (JP) These can be logically separated later
       // with additional checks.
       this->gen_standard_include (this->client_header_,
                                   "tao/Valuetype/ValueFactory.h");
@@ -1399,7 +1399,8 @@ TAO_CodeGen::gen_stub_src_includes (void)
                        << "\"";
 
   this->gen_standard_include (this->client_stubs_, "tao/Stub.h");
-  this->gen_standard_include (this->client_stubs_, "tao/Invocation_Base.h");
+  this->gen_standard_include (this->client_stubs_, "tao/Invocation_Adapter.h");
+  // @@ This probably needs to go..
   this->gen_standard_include (this->client_stubs_, "tao/Invocation.h");
 
   // The following header must always be included.
@@ -1445,4 +1446,3 @@ TAO_CodeGen::gen_arg_file_include (ACE_UINT64 mask, const char *filepath)
                                   filepath);
     }
 }
-
