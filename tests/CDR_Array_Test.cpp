@@ -42,6 +42,8 @@
 #endif
 
 #include "test_config.h"
+#include "ace/OS_Memory.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/Get_Opt.h"
 #include "ace/CDR_Stream.h"
 #include "ace/High_Res_Timer.h"
