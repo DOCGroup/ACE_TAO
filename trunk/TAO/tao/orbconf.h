@@ -462,7 +462,15 @@ enum MCAST_SERVICEID
 #endif  /* !TAO_HAS_UIOP */
 
 #if !defined (TAO_HAS_SHMIOP)
-#  define TAO_HAS_SHMIOP 1
+#  define TAO_HAS_SHMIOP 0
+#endif /* TAO_HAS_SHMIOP */
+
+// If by any chance we have TAO_HAS_SHMIOP defined by the user, we
+// still want to disable SHMIOP for TAO 1.1.13 as we have a small
+// problem with SHMIOP for this beta. We need to remove this after the
+// beta -- Bala
+#if defined (TAO_HAS_SHMIOP)
+#  define TAO_HAS_SHMIOP 0
 #endif /* TAO_HAS_SHMIOP */
 
 // RT_CORBA support is enabled by default if TAO is not configured for
