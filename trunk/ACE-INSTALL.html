@@ -492,6 +492,12 @@ make: *** [libACE.so] Error 8
       <code>-Wno-uninitialized</code> to your <code>CCFLAGS</code> in
       <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code><p>
 
+      Tornado II/VxWorks 5.4 support IP multicast.  That is not enabled
+      by default in ACE for VxWorks, because it probably depends on
+      kernel configuration.  To enable it, add
+      <code>#define ACE_HAS_IP_MULTICAST</code> to your
+      <code>ace/config.h</code>.<p>
+
       In addition to all of the other benefits of ACE, it helps work
       around some deficiencies with VxWorks 5.3/5.3.1.  Some of these
       apply only with g++, at least thru version 2.7.2.  That is the

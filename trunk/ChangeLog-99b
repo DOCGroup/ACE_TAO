@@ -1,3 +1,9 @@
+Thu Jul 08 11:35:53 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: added note about IP multicast support
+          with Tornado II/VxWorks 5.4.  It's not enabled by default
+          in ACE.
+
 Thu Jul 08 11:30:43 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: added note about the uninitialized
