@@ -54,6 +54,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Latency Tests Client"=".\Latency\client.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Latency Tests Server"=".\Latency\server.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "MT_Cubit Client"=".\Cubit\TAO\MT_Cubit\client.dsp" - Package Owner=<4>
 
 Package=<5>
