@@ -55,10 +55,10 @@ Legend:
 [xx1x1x] liborbsvcs compiles
 [1 1 1 ] Naming_Service compiles
 [  0 0 ] Scheduling_Service compiles
-[  0 0 ] Event_Service compiles
+[1 0 0 ] Event_Service compiles
 [  0 0 ] Dump_Schedule compiles
-[  x x ] orbsvcs/tests compiles
-        [xx1x1x] Simple_Naming compiles
+[x x x ] orbsvcs/tests compiles
+        [1x1x1x] Simple_Naming compiles
         [xxxxxx] Simple_Naming runs
         [0x0x0x] Logger compiles
         [xxxxxx] Logger runs
