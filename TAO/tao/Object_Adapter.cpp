@@ -996,8 +996,8 @@ TAO_POA_Current_Impl::setup (TAO_POA *impl,
   this->operation_ = operation;
 
   // Set the current context and remember the old one.
-  TAO_ORB_Core_TSS_Resources *tss =
-    TAO_ORB_CORE_TSS_RESOURCES::instance ();
+  TAO_TSS_Resources *tss =
+    TAO_TSS_RESOURCES::instance ();
 
   this->previous_current_impl_ = tss->poa_current_impl_;
   tss->poa_current_impl_ = this;
@@ -1073,8 +1073,8 @@ TAO_POA_Current_Impl::teardown (void)
 
   if (this->setup_done_)
     {
-      TAO_ORB_Core_TSS_Resources *tss =
-        TAO_ORB_CORE_TSS_RESOURCES::instance ();
+      TAO_TSS_Resources *tss =
+        TAO_TSS_RESOURCES::instance ();
 
       // Reset the old context.
       tss->poa_current_impl_ = this->previous_current_impl_;
@@ -1136,14 +1136,14 @@ TAO_POA_Current::get_object_id (CORBA::Environment &ACE_TRY_ENV)
 TAO_POA_Current_Impl *
 TAO_POA_Current::implementation (void)
 {
-  return TAO_ORB_CORE_TSS_RESOURCES::instance ()->poa_current_impl_;
+  return TAO_TSS_RESOURCES::instance ()->poa_current_impl_;
 }
 
 TAO_POA_Current_Impl *
 TAO_POA_Current::implementation (TAO_POA_Current_Impl *new_current)
 {
-  TAO_ORB_Core_TSS_Resources *tss =
-    TAO_ORB_CORE_TSS_RESOURCES::instance ();
+  TAO_TSS_Resources *tss =
+    TAO_TSS_RESOURCES::instance ();
 
   TAO_POA_Current_Impl *old = tss->poa_current_impl_;
   tss->poa_current_impl_ = new_current;

@@ -47,7 +47,7 @@ TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (ACE_Thre
 TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core)
   : TAO_UIOP_Handler_Base (orb_core),
     orb_core_ (orb_core),
-    tss_resources_ (TAO_ORB_CORE_TSS_RESOURCES::instance ())
+    tss_resources_ (orb_core->get_tss_resources ())
 {
   transport_ = new TAO_UIOP_Server_Transport (this,
                                               this->orb_core_);

@@ -1,3 +1,42 @@
+Wed Jun 16 12:30:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Makefile:
+	* docs/Options.html:
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	* tao/ORB_Core.cpp:
+	* tao/Object_Adapter.cpp:
+	* tao/POA.cpp:
+	* tao/Policy_Manager.cpp:
+	* tao/Servant_Base.cpp:
+	* tao/IIOP_Connect.cpp:
+	* tao/UIOP_Connect.cpp:
+	* tao/Resource_Factory.h:
+	* tao/Resource_Factory.cpp:
+	* tao/default_resource.h:
+	* tao/default_resource.i:
+	* tao/default_resource.cpp:
+	  Added new per-ORB-per-thread resources, they only include the
+	  reactor and the output CDR allocators at this point. This
+	  eliminates some of the problems at shutdown because now the
+	  reactor goes down *after* the ORB shutdowns, not before.
+	  Also added a new option to the ORB (not the resource factory) to 
+	  control if the resources are TSS or global, the old option in
+	  the resource factory is maintained for backwards compatibility
+
+	* tests/OctetSeq/Makefile:
+	* tests/OctetSeq/README:
+	* tests/OctetSeq/client.cpp:
+	* tests/OctetSeq/run_test.pl:
+	* tests/OctetSeq/server.cpp:
+	* tests/OctetSeq/test.idl:
+	* tests/OctetSeq/test_i.cpp:
+	* tests/OctetSeq/test_i.h:
+	* tests/OctetSeq/test_i.i:
+	* tests/OctetSeq/OctetSeq.cpp:
+	  Added a new test to check the octet sequence optimizations have
+	  no side effects across multiple calls.
+
 Wed Jun 16 03:13:22 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_expression.cpp (eval_un_op): Fixed an obscure

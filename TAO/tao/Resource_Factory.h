@@ -99,6 +99,10 @@ public:
 
   // = Resource Retrieval
 
+  virtual int use_tss_resources (void) const;
+  // @@ Backwards compatibility, return 1 if the ORB core should use
+  //    TSS resources
+
   virtual ACE_Reactor *get_reactor (void);
   // Return an <ACE_Reactor> to be utilized.
 

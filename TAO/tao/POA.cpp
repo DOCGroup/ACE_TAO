@@ -741,7 +741,8 @@ TAO_POA::check_for_valid_wait_for_completions (CORBA::Boolean wait_for_completio
 {
   if (wait_for_completion)
     {
-      TAO_POA_Current_Impl *poa_current_impl = TAO_ORB_CORE_TSS_RESOURCES::instance ()->poa_current_impl_;
+      TAO_POA_Current_Impl *poa_current_impl =
+        TAO_TSS_RESOURCES::instance ()->poa_current_impl_;
 
       // This thread cannot currently be in an upcall.
       if (poa_current_impl != 0)

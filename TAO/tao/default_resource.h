@@ -51,16 +51,9 @@ public:
 
   // = Resources
 
-  ACE_Reactor *r_;
-  // The Reactor.
-
   ACE_Allocator *input_cdr_dblock_allocator_;
   ACE_Allocator *input_cdr_buffer_allocator_;
   // The allocators for the input CDR streams.
-
-  ACE_Allocator *output_cdr_dblock_allocator_;
-  ACE_Allocator *output_cdr_buffer_allocator_;
-  // The allocators for the output CDR streams.
 };
 
 // ****************************************************************
@@ -106,19 +99,15 @@ public:
     TAO_REACTOR_FL,
     TAO_REACTOR_XT,
     TAO_REACTOR_WFMO,
-    TAO_REACTOR_MSGWFMO
+    TAO_REACTOR_MSGWFMO,
+    TAO_REACTOR_TP
   };
-
-  // = Range of values for <{resource source specifier}>.
-  virtual void resource_source (int which_source);
-  // Set the resource source specifier.
-  virtual int resource_source (void);
-  // Get the resource source specifier.
 
   int cdr_allocator_source (void);
   // Modify and get the source for the CDR allocators
 
   // = Resource Retrieval
+  virtual int use_tss_resources (void) const;
   virtual ACE_Reactor *get_reactor (void);
   virtual TAO_Acceptor_Registry  *get_acceptor_registry (void);
   virtual TAO_Connector_Registry *get_connector_registry (void);
@@ -136,8 +125,7 @@ protected:
   // Obtain the reactor implementation
 
 protected:
-
-  int resource_source_;
+  int use_tss_resources_;
   // Flag indicating whether resources should be global or
   // thread-specific.
 
