@@ -8,6 +8,9 @@ project (CIAO_DnC_Client) : taolib_with_idl, valuetype, ifr_client {
   idlflags  += -Wb,skel_export_include=CIAO_Container_Export.h
   idlflags  += -Wb,skel_export_macro=CIAO_CONTAINER_Export
 
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)/DAnCE
+    
   dynamicflags    = CIAO_CLIENT_BUILD_DLL
 
   IDL_Files {
@@ -39,6 +42,9 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, 
   idlflags   += -Wb,export_macro=CIAO_CONTAINER_Export
   dynamicflags = CIAO_CONTAINER_BUILD_DLL
 
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)/DAnCE
+
   IDL_Files {
     CCM_Transaction.idl
     CosPersistentState.idl
@@ -66,6 +72,9 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client {
   after        += CIAO_DnC_Client
 
   libs += CIAO_DnC_Client
+
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)/DAnCE
 
   idlflags     += -Wb,stub_export_macro=Deployment_stub_Export
   idlflags     += -Wb,stub_export_include=Deployment_stub_export.h
@@ -102,6 +111,9 @@ project(Deployment_svnt) : taolib_with_idl, portableserver, valuetype, ifr_clien
   idlflags     += -Wb,stub_export_include=Deployment_stub_export.h
   idlflags     += -Wb,skel_export_macro=Deployment_svnt_Export
   idlflags     += -Wb,skel_export_include=Deployment_svnt_export.h
+
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)/DAnCE
 
   IDL_Files {
   }

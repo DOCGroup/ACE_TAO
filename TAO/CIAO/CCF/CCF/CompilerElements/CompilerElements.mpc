@@ -4,7 +4,7 @@ project(CompilerElements) {
   requires += cidl exceptions
   sharedname =
   staticname = CompilerElements
-  includes += ../..
+  includes += $(CIAO_ROOT)/CCF
   libout = ..
   
   specific(vc71) {
