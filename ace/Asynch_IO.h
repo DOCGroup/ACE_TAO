@@ -21,7 +21,11 @@
 #include "ace/OS.h"
 
 #if defined (ACE_WIN32)
-// This only works on Win32 platforms
+// This only works on Win32 platforms. 
+//
+// The implementation of ACE_Asynch_Transmit_File and
+// ACE_Asynch_Accept are only supported if ACE_HAS_WINSOCK2 is defined
+// or you are on WinNT 4.0 or higher
 
 // Forward declarations
 class ACE_Proactor;

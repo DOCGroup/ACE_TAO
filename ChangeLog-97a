@@ -1,8 +1,19 @@
+Wed Apr  9 03:12:24 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace/config-win32-common.h: Defining _WIN32_WINNT as 0x0400
+ 	  implies ACE_HAS_WINSOCK2.
+	
+	* ace/Asynch_IO: The implementation of ACE_Asynch_Transmit_File
+ 	  and ACE_Asynch_Accept are only supported if ACE_HAS_WINSOCK2 is
+ 	  defined or you are on WinNT 4.0 or higher. Therefore, added
+ 	  appropriate #defines.  Thanks to Matthias Kerkhoff
+ 	  <make@cs.tu-berlin.de> for suggesting this.
+
 Tue Apr  8 22:45:28 1997  Prashant Jain  <pjain@merengue.cs.wustl.edu>
 
 	* java/src/SOCKStream.java (SOCKStream): Made two small changes to
-	  the two send(). Instead of doing a println, I now do a
-	  print. This was really a bug!
+ 	  the two send(). Instead of doing a println, I now do a
+ 	  print. This was really a bug!
 
 Tue Apr 08 22:08:12 1997  David L. Levine  <levine@cs.wustl.edu>
 
