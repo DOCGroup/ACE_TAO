@@ -128,11 +128,19 @@ template class ACE_Node<TAO_Protocol_Item*>;
 template class ACE_Unbounded_Set<TAO_Protocol_Item*>;
 template class ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*>;
 
+template class ACE_Guard<TAO_Cached_Connector_Lock>;
+template class ACE_Reverse_Lock<TAO_Cached_Connector_Lock>;
+template class ACE_Guard<ACE_Reverse_Lock<TAO_Cached_Connector_Lock> >;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Dynamic_Service<TAO_Resource_Factory>
 #pragma instantiate ACE_Node<TAO_Protocol_Item*>
 #pragma instantiate ACE_Unbounded_Set<TAO_Protocol_Item*>
 #pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*>
+
+#pragma instantiate ACE_Guard<TAO_Cached_Connector_Lock>
+#pragma instantiate ACE_Reverse_Lock<TAO_Cached_Connector_Lock>
+#pragma instantiate ACE_Guard<ACE_Reverse_Lock<TAO_Cached_Connector_Lock> >
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
