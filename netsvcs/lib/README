@@ -16,8 +16,8 @@ ACE wrapper features.
 	  allows applications to bind, find, and unbind names in
 	  a distributed system.
 
-	. Token_Handler.* -- Implements a distributed token service
-	  that allows distributed applications to acquire and release 
+	. Token_Handler.* -- Implements a distributed token 
+	  service that allows applications to acquire and release 
 	  locks in a distributed system.
 
 	. Time_Handler.* -- Implements a distributed time service that
