@@ -135,7 +135,34 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
   
   *os << "TAO_ServerRequest_Info_"<<node->flat_name ()<< "::"
       << "arguments (CORBA::Environment &)"<< be_nl
-      << "{\n // Generate the arg list on demand \n return 0;\n}\n\n";
+      << "{" <<be_idt_nl 
+      <<" // Generate the arg list on demand" << be_nl;
+
+  if (node->argument_count () == 0)
+    {
+      *os << "return 0;\n}\n\n" << be_nl;
+    }
+  else
+    {
+      // The insertion operator is different for different nodes.
+      // We change our scope to go to the argument scope to
+      // be able to decide this.
+        ctx = *this->ctx_;
+        ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_PARAMLIST);
+        visitor = tao_cg->make_visitor (&ctx);
+        if (!visitor || (node->accept (visitor) == -1))
+          {
+            delete visitor;
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%N:%l) be_visitor_operation_cs::"
+                         "visit_operation - "
+                               "codegen for argument pre invoke failed\n"),
+                              -1);
+          }
+        delete visitor;
+
+        *os << be_nl << "return &this->parameter_list_;\n}\n\n";
+    }
 
   *os << "Dynamic::ExceptionList *" << be_nl;
   if (node->is_nested ())
