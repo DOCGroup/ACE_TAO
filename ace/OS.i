@@ -10694,6 +10694,7 @@ ACE_OS::readdir_r (DIR *dirp,
                    struct dirent **result)
 {
 # if !defined (ACE_HAS_REENTRANT_FUNCTIONS)
+  ACE_UNUSED_ARG (entry);
   // <result> has better not be 0!
   *result = ACE_OS::readdir (dirp);
   return 0;
