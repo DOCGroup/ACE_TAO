@@ -25,7 +25,7 @@
 
 ACE_RCSID(asnmp, wpdu, "$Id$")
 
-#define MAX_COMM_STR_LEN 255 
+#define MAX_COMM_STR_LEN 255
 #define V1_COLD_START 0
 #define V1_WARM_START 1
 #define V1_LINK_DOWN 2
@@ -41,7 +41,7 @@ void reset_iov(iovec& iov)
   iov.iov_len = 0;
 }
 
-wpdu::wpdu(const Pdu& pdu, const UdpTarget& target): 
+wpdu::wpdu(const Pdu& pdu, const UdpTarget& target):
    valid_flag_(SNMP_CLASS_INVALID ), comm_len(MAX_COMM_STR_LEN)
 {
    reset_iov(iovec_);
@@ -63,14 +63,14 @@ wpdu::wpdu(const Pdu& pdu, const UdpTarget& target):
    raw_pdu->errindex= (unsigned long) pdu.get_error_index();
 
    switch (raw_pdu->command) {
-     case sNMP_PDU_GET:  
+     case sNMP_PDU_GET:
      case sNMP_PDU_GETNEXT:
        target.get_read_community(comm_str);
        break;
 
      case sNMP_PDU_SET:
        target.get_write_community(comm_str);
-       break;      
+       break;
 
      case sNMP_PDU_V1TRAP:
        target.get_read_community(comm_str);
@@ -96,11 +96,11 @@ wpdu::wpdu(const Pdu& pdu, const UdpTarget& target):
    ACE_NEW(iovec_.iov_base, char [iovec_.iov_len]);
 
    // create raw byte stream
-   status = cmu_snmp::build( raw_pdu, 
-			    (unsigned char *)iovec_.iov_base, 
-			    (int *) &iovec_.iov_len,
-			    target.get_version(), 
-			    comm_str.data(), comm_str.length());
+   status = cmu_snmp::build( raw_pdu,
+                            (unsigned char *)iovec_.iov_base,
+                            (int *) &iovec_.iov_len,
+                            target.get_version(),
+                            comm_str.data(), comm_str.length());
    if ( status != 0) {
      valid_flag_ = SNMP_ERROR_WRONG_ENCODING;
      cmu_snmp::free_pdu( raw_pdu);
@@ -124,8 +124,8 @@ int wpdu::set_trap_info(snmp_pdu *raw_pdu, const Pdu& pdu) const
 
   raw_pdu->specific_type=0;
 
-  // TODO: object should emit numeric instead of this kind of mess... 
-  if ( trapid == coldStart) 
+  // TODO: object should emit numeric instead of this kind of mess...
+  if ( trapid == coldStart)
     raw_pdu->trap_type = V1_COLD_START;  // cold start
   else if ( trapid == warmStart)
     raw_pdu->trap_type = V1_WARM_START;  // warm start
@@ -163,13 +163,13 @@ int wpdu::set_trap_info(snmp_pdu *raw_pdu, const Pdu& pdu) const
     // HDN - enterprise is a local object, cannot simply assign pointer
     //raw_pdu->enterprise = rawOid->ptr;
     raw_pdu->enterprise_length = (int) rawOid->len;
-    ACE_NEW_RETURN(raw_pdu->enterprise, 
-		   oid[raw_pdu->enterprise_length],-1);
-    ACE_OS::memcpy((char *)raw_pdu->enterprise,(char *)rawOid->ptr,  
-		   raw_pdu->enterprise_length * sizeof(oid));
+    ACE_NEW_RETURN(raw_pdu->enterprise,
+                   oid[raw_pdu->enterprise_length],-1);
+    ACE_OS::memcpy((char *)raw_pdu->enterprise,(char *)rawOid->ptr,
+                   raw_pdu->enterprise_length * sizeof(oid));
   }
- 
-  TimeTicks timestamp; 
+
+  TimeTicks timestamp;
   pdu.get_notify_timestamp( timestamp);
   raw_pdu->time = ( unsigned long) timestamp;
 
@@ -177,7 +177,7 @@ int wpdu::set_trap_info(snmp_pdu *raw_pdu, const Pdu& pdu) const
   char localHostName[MAXHOSTNAMELEN];
   if (ACE_OS::hostname(localHostName, sizeof(localHostName)) != -1) {
     struct hostent* hostInfo;
-    if (hostInfo = ACE_OS::gethostbyname(localHostName)) {
+    if ((hostInfo = ACE_OS::gethostbyname(localHostName))) {
       ACE_OS::memcpy(&(raw_pdu->agent_addr.sin_addr), hostInfo->h_addr, hostInfo->h_length);
     }
   }
@@ -185,26 +185,26 @@ int wpdu::set_trap_info(snmp_pdu *raw_pdu, const Pdu& pdu) const
   return 0;
 }
 
-wpdu::wpdu(const iovec& iov): valid_flag_(FALSE),comm_len(MAX_COMM_STR_LEN)
+wpdu::wpdu(const iovec& iov): valid_flag_(0),comm_len(MAX_COMM_STR_LEN)
 {
   community_name[0] = 0;
    reset_iov(iovec_);
-   version_ = version1;		// TODO: figure where this should come from
+   version_ = version1;         // TODO: figure where this should come from
    ACE_NEW(iovec_.iov_base, char[iov.iov_len]);
    if (!iovec_.iov_base) {
      valid_flag_ = SNMP_CLASS_RESOURCE_UNAVAIL;
      return;
    }
 
-   copy_iovec(iovec_, iov);     
+   copy_iovec(iovec_, iov);
    valid_flag_ = SNMP_CLASS_SUCCESS;
 }
 
-wpdu::wpdu(): valid_flag_(FALSE), comm_len(MAX_COMM_STR_LEN)
+wpdu::wpdu(): valid_flag_(0), comm_len(MAX_COMM_STR_LEN)
 {
   community_name[0] = 0;
    reset_iov(iovec_);
-   version_ = version1;		// TODO: figure where this should come from
+   version_ = version1;         // TODO: figure where this should come from
 }
 
 int wpdu::valid() const
@@ -223,7 +223,7 @@ int wpdu::load_vbs(snmp_pdu *raw_pdu, const Pdu& pdu)
    Oid tempoid;
    SmiLPOID smioid;
    SmiVALUE smival;
- 
+
    vb_count = pdu.get_vb_count();
 
    for (int z = 0; z < vb_count; z++) {
@@ -234,7 +234,7 @@ int wpdu::load_vbs(snmp_pdu *raw_pdu, const Pdu& pdu)
       status = convert_vb_to_smival( tempvb, &smival );
       if ( status != SNMP_CLASS_SUCCESS)
          return status;
- 
+
       // add the var to the raw pdu
       cmu_snmp::add_var(raw_pdu, smioid->ptr, (int) smioid->len, &smival);
       free_smival_descriptor( &smival);
@@ -244,7 +244,7 @@ int wpdu::load_vbs(snmp_pdu *raw_pdu, const Pdu& pdu)
 }
 
 // supports overlapped copies
-// static 
+// static
 void wpdu::copy_iovec(iovec& dest, const iovec& src)
 {
   if (&dest == &src)
@@ -259,10 +259,10 @@ int wpdu::convert_vb_to_smival( Vb &tempvb, SmiVALUE *smival )
   smival->syntax = tempvb.get_syntax();
 
   switch ( smival->syntax ) {
-    
+
   case sNMP_SYNTAX_NULL:
     break;
-    
+
     // case sNMP_SYNTAX_INT32:
   case sNMP_SYNTAX_INT:
     {
@@ -271,7 +271,7 @@ int wpdu::convert_vb_to_smival( Vb &tempvb, SmiVALUE *smival )
       smival->value.sNumber = tmp;
     }
     break;
-    
+
     //    case sNMP_SYNTAX_UINT32:
   case sNMP_SYNTAX_GAUGE32:
   case sNMP_SYNTAX_CNTR32:
@@ -282,7 +282,7 @@ int wpdu::convert_vb_to_smival( Vb &tempvb, SmiVALUE *smival )
       smival->value.uNumber = tmp;
     }
     break;
-    
+
     // case Counter64
   case sNMP_SYNTAX_CNTR64:
     {
@@ -301,32 +301,32 @@ int wpdu::convert_vb_to_smival( Vb &tempvb, SmiVALUE *smival )
       tempvb.get_value(tmpoid);
       SmiLPOID smi = tmpoid.oidval();
       smival->value.oid.len = tmpoid.length();
-      ACE_NEW_RETURN(smival->value.oid.ptr, 
+      ACE_NEW_RETURN(smival->value.oid.ptr,
                 SmiUINT32 [smival->value.oid.len], 1);
-      ACE_OS::memcpy(smival->value.oid.ptr, smi->ptr, 
+      ACE_OS::memcpy(smival->value.oid.ptr, smi->ptr,
                      smival->value.oid.len *sizeof(SmiUINT32));
     }
     break;
-    
+
   case sNMP_SYNTAX_BITS:
   case sNMP_SYNTAX_OCTETS:
   case sNMP_SYNTAX_IPADDR:
     {
       OctetStr os;
       tempvb.get_value(os);
-      smival->value.string.ptr = NULL;
+      smival->value.string.ptr = 0;
       smival->value.string.len = os.length();
       if ( smival->value.string.len > 0 ) {
-	ACE_NEW_RETURN(smival->value.string.ptr,  
-		SmiBYTE [smival->value.string.len], 1);
-	if ( smival->value.string.ptr )  {
-	  for (int i=0; i<(int) smival->value.string.len ; i++)
-	    smival->value.string.ptr[i] = os[i];
-	}
-	else   {
-	  smival->syntax = sNMP_SYNTAX_NULL;  // invalidate the smival
-	  return SNMP_CLASS_RESOURCE_UNAVAIL;
-	}
+        ACE_NEW_RETURN(smival->value.string.ptr,
+                SmiBYTE [smival->value.string.len], 1);
+        if ( smival->value.string.ptr )  {
+          for (int i=0; i<(int) smival->value.string.len ; i++)
+            smival->value.string.ptr[i] = os[i];
+        }
+        else   {
+          smival->syntax = sNMP_SYNTAX_NULL;  // invalidate the smival
+          return SNMP_CLASS_RESOURCE_UNAVAIL;
+        }
       }
     }
     break;
@@ -337,7 +337,7 @@ int wpdu::convert_vb_to_smival( Vb &tempvb, SmiVALUE *smival )
   } // switch
 
   return 0;
-} 
+}
 
 // free a SMI value
 void wpdu::free_smival_descriptor( SmiVALUE *smival )
@@ -349,7 +349,7 @@ void wpdu::free_smival_descriptor( SmiVALUE *smival )
   case sNMP_SYNTAX_BITS:                 // obsoleted in SNMPv2 Draft Std
     delete [] smival->value.string.ptr;
     break;
-    
+
   case sNMP_SYNTAX_OID:
     delete [] smival->value.oid.ptr;
     break;
@@ -369,7 +369,7 @@ const iovec& wpdu::get_buffer() const
 }
 
 // return a pdu from a buffer
-int wpdu::get_pdu(Pdu& pdu, snmp_version& version) 
+int wpdu::get_pdu(Pdu& pdu, snmp_version& version)
 {
   if (iovec_.iov_len == 0)
     return -1; // NO DATA
@@ -378,10 +378,10 @@ int wpdu::get_pdu(Pdu& pdu, snmp_version& version)
   raw_pdu = cmu_snmp::pdu_create(0);
   if (!raw_pdu) {
     return SNMP_CLASS_RESOURCE_UNAVAIL;
-  } 
+  }
 
   // max value a client can send us - TODO: replace this with an
-  // api to get actual string length 
+  // api to get actual string length
   int status = cmu_snmp::parse( raw_pdu, (unsigned char *)iovec_.iov_base,
                      community_name, comm_len,
                      version, iovec_.iov_len);
@@ -400,7 +400,7 @@ int wpdu::get_pdu(Pdu& pdu, snmp_version& version)
   }
 
   cmu_snmp::free_pdu(raw_pdu);
-  return 0;  
+  return 0;
 }
 
 int wpdu::restore_vbs(Pdu& pdu, const snmp_pdu *raw_pdu) const
@@ -410,15 +410,15 @@ int wpdu::restore_vbs(Pdu& pdu, const snmp_pdu *raw_pdu) const
    struct variable_list *vp;
 
    for(vp = raw_pdu->variables; vp; vp = vp->next_variable) {
- 
+
     // extract the oid portion
     tempoid.set_data( (unsigned long *)vp->name,
                        ( unsigned int) vp->name_length);
     tempvb.set_oid( tempoid);
- 
+
     // extract the value portion
     switch(vp->type) {
- 
+
     // octet string
     case sNMP_SYNTAX_OCTETS:
      case sNMP_SYNTAX_OPAQUE:
@@ -428,7 +428,7 @@ int wpdu::restore_vbs(Pdu& pdu, const snmp_pdu *raw_pdu) const
        tempvb.set_value( octets);
     }
     break;
- 
+
     // object id
     case sNMP_SYNTAX_OID:
     {
@@ -437,7 +437,7 @@ int wpdu::restore_vbs(Pdu& pdu, const snmp_pdu *raw_pdu) const
       tempvb.set_value( oid);
     }
      break;
- 
+
     // timeticks
     case sNMP_SYNTAX_TIMETICKS:
     {
@@ -445,7 +445,7 @@ int wpdu::restore_vbs(Pdu& pdu, const snmp_pdu *raw_pdu) const
        tempvb.set_value( timeticks);
     }
     break;
- 
+
     // 32 bit counter
     case sNMP_SYNTAX_CNTR32:
     {
@@ -467,7 +467,7 @@ int wpdu::restore_vbs(Pdu& pdu, const snmp_pdu *raw_pdu) const
        tempvb.set_value( ipaddress);
     }
     break;
- 
+
     // 32 bit integer
     case sNMP_SYNTAX_INT:
     {
@@ -475,7 +475,7 @@ int wpdu::restore_vbs(Pdu& pdu, const snmp_pdu *raw_pdu) const
       tempvb.set_value( int32);
     }
     break;
- 
+
     // 32 bit unsigned integer
     case sNMP_SYNTAX_UINT32:
     {
@@ -483,27 +483,27 @@ int wpdu::restore_vbs(Pdu& pdu, const snmp_pdu *raw_pdu) const
       tempvb.set_value( uint32);
     }
      break;
- 
+
     // v2 counter 64's
     case sNMP_SYNTAX_CNTR64:
      break;
- 
+
     case sNMP_SYNTAX_NULL:
       tempvb.set_null();
     break;
- 
+
     // v2 vb exceptions
     case sNMP_SYNTAX_NOSUCHOBJECT:
     case sNMP_SYNTAX_NOSUCHINSTANCE:
     case sNMP_SYNTAX_ENDOFMIBVIEW:
        set_exception_status( &tempvb, vp->type);
      break;
- 
+
     default:
        tempvb.set_null();
- 
+
     } // end switch
- 
+
     // append the vb to the pdu
     pdu += tempvb;
   }
@@ -515,4 +515,3 @@ const unsigned char *wpdu::get_community() const
 {
   return community_name;
 }
-
