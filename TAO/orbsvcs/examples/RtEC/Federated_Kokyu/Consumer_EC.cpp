@@ -12,7 +12,7 @@
 
 #include "Kokyu_EC.h"
 #include "Consumer.h"
-#include <Kokyu/Counter.h>
+#include <ace/Counter.h>
 #include "orbsvcs/Event/EC_Event_Limit.h"
 
 #ifdef ACE_HAS_DSUI
@@ -49,7 +49,7 @@ main (int argc, char* argv[])
   ACE_Time_Value tv = ACE_OS::gettimeofday();
   ACE_DEBUG((LM_DEBUG,"Consumer_EC thread %t START at %u\n",tv.msec()));
 #ifdef ACE_HAS_DSUI
-  //  EC_Event_Counter::event_id eid = EC_EVENT_COUNTER->increment();
+  //  ACE_Object_Counter::object_id oid = ACE_OBJECT_COUNTER->increment();
   //  DSUI_EVENT_LOG(MAIN_GROUP_FAM, START, 1, sizeof(EC_Event_Counter::event_id), (char*)&eid);
   DSUI_EVENT_LOG(MAIN_GROUP_FAM, START, 0, 0, NULL);
 #endif //ACE_HAS_DSUI

@@ -212,6 +212,10 @@ Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
                                    &(this->data_block_),
                                    ACE_Message_Block::DONT_DELETE,
                                    this->allocator_);
+#if defined (ACE_HAS_DSUI)
+  ACE_Object_Counter::object_id oid = cmd->getID();
+  qitem->set_ID (oid);
+#endif // ACE_HAS_DSUI
 
 #ifdef KOKYU_HAS_RELEASE_GUARD
   //if current release time < last release time + period then defer dispatch
@@ -234,7 +238,6 @@ Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
 #if defined (ACE_HAS_DSUI)
       //@BT INSTRUMENT with event ID: EVENT_DEFERRED Measure delay
       //between original dispatch and dispatch because of RG
-      ACE_Object_Counter::object_id oid = cmd->getID();
       DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_DEFERRED, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
 
       ACE_Time_Value tv = ACE_OS::gettimeofday();
@@ -284,6 +287,11 @@ void Dispatch_Queue_Item::init_i (const QoSDescriptor& qos_info)
   this->msg_priority (qos_info.preemption_priority_);
   this->msg_execution_time (qos_info.execution_time_);
   this->msg_deadline_time (qos_info.deadline_);
+}
+
+void Dispatch_Queue_Item::set_ID (ACE_Object_Counter::object_id oid)
+{
+  this->oid_ = oid;
 }
 
 }
