@@ -74,6 +74,9 @@ namespace Deployment
 
     ///   ... Zillions of such things ....
 
+   private:
+    static void dump (const ::CORBA::Any &any);
+    // Helper function to print an Any   
    };
 }
 
