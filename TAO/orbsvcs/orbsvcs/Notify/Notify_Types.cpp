@@ -15,7 +15,8 @@ TAO_Notify_EventType::TAO_Notify_EventType (void)
   // No-Op.
 }
 
-TAO_Notify_EventType::TAO_Notify_EventType (const char* domain_name, const char* type_name)
+TAO_Notify_EventType::TAO_Notify_EventType (const char* domain_name,
+                                            const char* type_name)
 {
   this->event_type_.type_name = type_name;
   this->event_type_.domain_name = domain_name;
@@ -25,6 +26,9 @@ TAO_Notify_EventType::TAO_Notify_EventType (const char* domain_name, const char*
 TAO_Notify_EventType::TAO_Notify_EventType (const CosNotification::EventType& event_type)
 {
   // @@ Check it these dups are indeed required.
+  // @@ Pradeep: do not live with broken windows, if the code did not
+  // need the dups then just remove them!
+
   this->event_type_.type_name = event_type.type_name.in ();
   //CORBA::string_dup (event_type.type_name.in ());
   this->event_type_.domain_name = event_type.domain_name.in ();
@@ -34,18 +38,32 @@ TAO_Notify_EventType::TAO_Notify_EventType (const CosNotification::EventType& ev
 
 TAO_Notify_EventType::~TAO_Notify_EventType ()
 {
+  // @@ Pradeep:
   // No-Op.
 }
 
 u_long
 TAO_Notify_EventType::hash (void) const
 {
+  // @@ Pradeep: this is an excellent candidate for an inline
+  // function. Get in the habit of creating .h, .cpp and .i files,
+  // even if initially the .i file is empty, that way it is easier to
+  // do this stuff.
   return this->hash_value_;
 }
 
 void
 TAO_Notify_EventType::recompute_hash (void)
 {
+  // @@ Pradeep: this code is bound to crash someday if the strings
+  // are too long....  See if the hash_pjw() function can be modified
+  // to take accumulate multiple strings, as in:
+  //   hash = ACE::hash_pjw_accummulate (0, str1);
+  //   hash = ACE::hash_pjw_accummulate (hash, str2);
+  //
+  // @@ Or use grow the buffer when needed, or just add the two hash
+  // values or something, but fix this code!
+  // 
   char buffer[BUFSIZ];
   ACE_OS::strcpy (buffer, this->event_type_.domain_name.in ());
   ACE_OS::strcat (buffer, this->event_type_.type_name.in ());
@@ -64,6 +82,12 @@ TAO_Notify_EventType::operator=(const CosNotification::EventType& rhs)
 int
 TAO_Notify_EventType::operator==(const TAO_Notify_EventType& rhs) const
 {
+  // @@ Pradeep: what kind of hack is this?  What you should do is:
+  // if (this->hash () != rhs.hash ())
+  //    return 0;
+  // else
+  //   compare the strings!
+  //
   if (this->hash () == rhs.hash ())
     return 1;
   else
@@ -91,10 +115,18 @@ TAO_Notify_EventType::get_native (void) const
   return event_type_;
 }
 
+// ****************************************************************
+
 // = Any Event Type.
 
 TAO_Notify_Any::TAO_Notify_Any (void)
 {
+  // @@ Pradeep: get in the habit of initializing in the
+  // initialization section.  This is a field of the base class (beats
+  // me why it is there), but then you should provide a protected
+  // constructor to initialize it!
+
+  // @@ Pradeep: remember it is 'this->is_owner_'
   is_owner_ = 0;
 }
 
@@ -109,6 +141,8 @@ TAO_Notify_Any::TAO_Notify_Any (const CORBA::Any & data)
 
 TAO_Notify_Any::~TAO_Notify_Any ()
 {
+  // @@ Pradeep: please be consistent, use this-> for *all* fields.
+
   if (this->is_owner_)
     delete data_;
 }
@@ -121,6 +155,8 @@ TAO_Notify_Any::clone (void)
 
   if (this->is_owner_)
     {
+      // @@ Are you sure this is the right way to clone?  You are
+      // stealing the data from the original class...
       this->is_owner_ = 0;
       clone->data_ = this->data_;
       clone->is_owner_ = 1;
@@ -162,19 +198,22 @@ TAO_Notify_Any::event_type (void) const
 }
 
 CORBA::Boolean
-TAO_Notify_Any::do_match (CosNotifyFilter::Filter_ptr filter, CORBA::Environment &ACE_TRY_ENV) const
+TAO_Notify_Any::do_match (CosNotifyFilter::Filter_ptr filter,
+                          CORBA::Environment &ACE_TRY_ENV) const
 {
   return filter->match (*this->data_, ACE_TRY_ENV);
 }
 
 void
-TAO_Notify_Any::do_push (CosEventComm::PushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const
+TAO_Notify_Any::do_push (CosEventComm::PushConsumer_ptr consumer,
+                         CORBA::Environment &ACE_TRY_ENV) const
 {
   consumer->push (*this->data_, ACE_TRY_ENV);
 }
 
 void
-TAO_Notify_Any::do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const
+TAO_Notify_Any::do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer,
+                         CORBA::Environment &ACE_TRY_ENV) const
 {
   // translation pg. 28
   CosNotification::StructuredEvent event;
@@ -185,7 +224,12 @@ TAO_Notify_Any::do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer, COR
   consumer->push_structured_event (event, ACE_TRY_ENV);
 }
 
+// ****************************************************************
+
 // = TAO_Notify_StructuredEvent
+
+// @@ Pradeep: many of the same comments that i made for
+// TAO_Notify_Any apply here too.
 
 TAO_Notify_StructuredEvent::TAO_Notify_StructuredEvent (void)
 {
@@ -255,13 +299,15 @@ TAO_Notify_StructuredEvent::event_type (void) const
 }
 
 CORBA::Boolean
-TAO_Notify_StructuredEvent::do_match (CosNotifyFilter::Filter_ptr filter, CORBA::Environment &ACE_TRY_ENV) const
+TAO_Notify_StructuredEvent::do_match (CosNotifyFilter::Filter_ptr filter,
+                                      CORBA::Environment &ACE_TRY_ENV) const
 {
   return filter->match_structured (*this->data_, ACE_TRY_ENV);
 }
 
 void
-TAO_Notify_StructuredEvent::do_push (CosEventComm::PushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const
+TAO_Notify_StructuredEvent::do_push (CosEventComm::PushConsumer_ptr consumer,
+                                     CORBA::Environment &ACE_TRY_ENV) const
 {
   // translation pg. 28
   CORBA::Any any;
@@ -276,6 +322,8 @@ TAO_Notify_StructuredEvent::do_push (CosNotifyComm::StructuredPushConsumer_ptr c
 {
   consumer->push_structured_event (*this->data_, ACE_TRY_ENV);
 }
+
+// ****************************************************************
 
 // = EVENTTYPE_LIST
 void

@@ -31,6 +31,10 @@ TAO_Notify_SequenceProxyPushConsumer_i::connect_sequence_push_supplier (CosNotif
                    CosEventChannelAdmin::AlreadyConnected
                    ))
 {
+  // @@ Pradeep: here is another example on code that is not thread
+  // safe, i know you are post-poning the thread safety issues, but it
+  // is not that easy!
+
   if (this->is_connected_ == 1)
     ACE_THROW (CosEventChannelAdmin::AlreadyConnected ());
   else

@@ -36,6 +36,10 @@ class TAO_Notify_Event_Manager;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+// @@ Pradeep: this is cool, deriving from the template type is really
+// neat.  I bet it is going to break something like 90% of the
+// compilers, but they deserve it! ;-) ;-)
+
 template <class SERVANT_TYPE>
 class TAO_Notify_Export TAO_Notify_Proxy : public SERVANT_TYPE, public TAO_Notify_Update_Listener
 {

@@ -66,5 +66,6 @@ public:
     CosNotification::UnsupportedQoS
   ));
 };
+
 #include "ace/post.h"
 #endif /* TAO_NOTIFY_QOSADMIN_I_H */

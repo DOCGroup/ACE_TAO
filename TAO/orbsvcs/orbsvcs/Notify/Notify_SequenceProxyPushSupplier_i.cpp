@@ -18,6 +18,7 @@ TAO_Notify_SequenceProxyPushSupplier_i::~TAO_Notify_SequenceProxyPushSupplier_i 
 void
 TAO_Notify_SequenceProxyPushSupplier_i::cleanup_i (CORBA::Environment &ACE_TRY_ENV)
 {
+  // @@ Pradeep: maybe a typedef would simplify this...
   TAO_Notify_ProxySupplier<POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>::cleanup_i (ACE_TRY_ENV);
 
   this->push_consumer_ = CosNotifyComm::SequencePushConsumer::_nil ();
@@ -98,11 +99,13 @@ TAO_Notify_SequenceProxyPushSupplier_i::disconnect_sequence_push_supplier(
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
 template class TAO_Notify_ProxySupplier<POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>;
 template class TAO_Notify_Proxy<POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Notify_ProxySupplier<POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>
 
+#pragma instantiate TAO_Notify_ProxySupplier<POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>
 #pragma instantiate TAO_Notify_Proxy<POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>
+
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

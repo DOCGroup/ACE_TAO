@@ -58,12 +58,16 @@ class TAO_Notify_Export TAO_Notify_SequenceProxyPushSupplier_i : public TAO_Noti
     CosEventChannelAdmin::TypeError
   ));
 
+  // @@ Pradeep: more indentation problems....
 virtual void disconnect_sequence_push_supplier (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
+
+  // @@ Pradeep: please setup your editor to start 'protected',
+  // 'public' and 'private' on the first column
 
  protected:
   virtual void dispatch_event_i (TAO_Notify_Event &event, CORBA::Environment &ACE_TRY_ENV);
