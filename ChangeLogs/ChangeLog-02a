@@ -1,3 +1,10 @@
+Fri Feb 16 05:37:47 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* tests/Log_Msg_Test.cpp (test_log_msg_features): Added
+	  ACE_Log_Msg::PROCESS to a coupld or priority_mask() calls to
+ 	  make the test work correctly.  Thanks to Kitty for reporting
+ 	  this.
+
 Thu Feb 15 17:53:31 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* ace/Thread_Manager.i: Simplified casting in
