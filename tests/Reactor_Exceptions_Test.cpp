@@ -148,6 +148,8 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "(%t) exiting main\n"));
 #else
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
   ACE_ERROR ((LM_ERROR, "C++ exceptions not supported on this platform\n"));
 #endif /* ACE_HAS_EXCEPTIONS */
 
