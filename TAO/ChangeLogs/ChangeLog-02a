@@ -1,3 +1,22 @@
+Thu Dec 14 11:39:55 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
+
+        * tao/DynamicInterface/TAO_DynamicInterface_Static.dsp:
+
+          New project.
+
+        * TAOACE_Static.dsw:
+
+          Added new project to workspace.
+
+        * tao/DynamicIinterface/dynamicinterface_export.h:
+
+          Modified file to work with static build.
+
+        * tao/ORB.cpp:
+
+          Changed a hard-coded string parameter "Dynamic_Adapter"
+          to the variable TAO_ORB_Core::dynamic_adapter_name().
+
 Thu Dec 14 09:24:49 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Makefile.av:
