@@ -12,8 +12,8 @@ bgcolor="#ffffff">
 
 <p>We have revised TAO's interceptor implementation so that it
 conforms to the Portable Interceptor specification which is now a part
-of the <a href="http://www.omg.org/cgi-bin/doc?formal/02-05-15">CORBA
-2.6.1</A> specification.  The purpose of this document is to provide a
+of the <a href="http://www.omg.org/cgi-bin/doc?formal/04-03-01">CORBA
+3.0.3</A> specification.  The purpose of this document is to provide a
 transition guide for those who have used our old interceptors.  The
 old interceptors will no longer be supported now that we have the new
 mechanism in place.  A paper that describes TAO's portable
@@ -395,18 +395,13 @@ module PortableInterceptor
 <hr><p>
 <h3><a name="issues">Known Issues</a></h3>
 <ul>
-  <li>The current implementation does not go through the interceptor chain
-      when using collocation optimizations such as <CODE>direct</CODE> or
-      <CODE>ThruPOA</CODE>.
-  <li><CODE>ClientRequestInfo::{arguments,exceptions,result}() are not
-      available for AMI calls.</CODE>
-  <li>Add interception points for DII/DSI invocations.
+  <li>Currently none.</li>
 </ul>
 
 <hr><P>
 <H3><a name="ref">References</a></H3>
 <UL>
-  <LI><A HREF="http://www.omg.org/cgi-bin/doc?formal/02-12-02">formal/02-12-02</A> -- CORBA 3.0.2 Specification -- contains the Portable Interceptors chapter</LI>
+  <LI><A HREF="http://www.omg.org/cgi-bin/doc?formal/04-03-01">formal/2004-03-01</A> -- CORBA 3.0.3 Specification -- contains the Portable Interceptors chapter</LI>
 
 </UL>
 <hr>
