@@ -224,7 +224,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   os->indent ();
   *os << "void " << node->full_skel_name ()
       << "::_is_a_skel (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest &_tao_server_request, " << be_nl
+      << "CORBA::ServerRequest &_tao_server_request, " << be_nl
       << "void * _tao_object_reference," << be_nl
       << "void * /* context */," << be_nl
       << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
@@ -256,7 +256,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       // generate code for the _non_existent skeleton
   *os << "void " << node->full_skel_name ()
       << "::_non_existent_skel (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest &_tao_server_request, " << be_nl
+      << "CORBA::ServerRequest &_tao_server_request, " << be_nl
       << "void * _tao_object_reference," << be_nl
       << "void * /* context */," << be_nl
       << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
@@ -329,7 +329,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   // now the dispatch method
   *os << "void " << node->full_skel_name () <<
-    "::_dispatch (TAO_ServerRequest &req, " <<
+    "::_dispatch (CORBA::ServerRequest &req, " <<
     "void *context, CORBA::Environment &ACE_TRY_ENV)" << be_nl;
   *os << "{" << be_idt_nl;
   //BRT

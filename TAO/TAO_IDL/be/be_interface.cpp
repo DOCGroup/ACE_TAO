@@ -106,7 +106,7 @@ be_interface::local_name (void) const
 }
 
 const char *
-be_interface::full_name (void) const
+be_interface::full_name (void)
 {
   // Return the stringified full name.
   return this->strategy_->full_name ();
@@ -2055,7 +2055,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                   // Generate the static method corresponding to this method.
                   *os << "static void " << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
-                      << "TAO_ServerRequest &req, " << be_nl
+                      << "CORBA::ServerRequest &req, " << be_nl
                       << "void *obj," << be_nl
                       << "void *context," << be_nl
                       << "CORBA::Environment &ACE_TRY_ENV =" << be_idt_nl
@@ -2070,7 +2070,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << derived->full_skel_name () << "::"
                       << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
-                      << "TAO_ServerRequest &req," << be_nl
+                      << "CORBA::ServerRequest &req," << be_nl
                       << "void *obj," << be_nl
                       << "void *context," << be_nl
                       << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
@@ -2108,7 +2108,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                   // Generate the static method corresponding to this method.
                   *os << "static void _get_" << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
-                      << "TAO_ServerRequest &req," << be_nl
+                      << "CORBA::ServerRequest &req," << be_nl
                       << "void *obj," << be_nl
                       << "void *context," << be_nl
                       << "CORBA::Environment &ACE_TRY_ENV =" << be_idt_nl
@@ -2123,7 +2123,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << derived->full_skel_name () << "::_get_"
                       << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
-                      << "TAO_ServerRequest &req," << be_nl
+                      << "CORBA::ServerRequest &req," << be_nl
                       << "void *obj," << be_nl
                       << "void *context," << be_nl
                       << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
@@ -2157,7 +2157,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       // this method.
                       *os << "static void _set_" << d->local_name ()
                           << "_skel (" << be_idt << be_idt_nl
-                          << "TAO_ServerRequest &req," << be_nl
+                          << "CORBA::ServerRequest &req," << be_nl
                           << "void *obj," << be_nl
                           << "void *context," << be_nl
                           << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
@@ -2173,7 +2173,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << derived->full_skel_name ()
                           << "::_set_" << d->local_name ()
                           << "_skel (" << be_idt << be_idt_nl
-                          << "TAO_ServerRequest &req," << be_nl
+                          << "CORBA::ServerRequest &req," << be_nl
                           << "void *obj," << be_nl
                           << "void *context," << be_nl
                           << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
