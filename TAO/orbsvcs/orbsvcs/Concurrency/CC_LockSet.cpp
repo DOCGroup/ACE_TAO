@@ -22,14 +22,16 @@
 // full fledged version the lock set (implementation) will be instantiated
 // here
 CC_LockSet::CC_LockSet(void)
-  : related_lockset_ (0)
+  : related_lockset_ (0),
+    lock_ (0)
 {
   // Do nothing
 }
 
 // Constructor used to create related lock sets.
 CC_LockSet::CC_LockSet(CosConcurrencyControl::LockSet_ptr related)
-  : related_lockset_ (related)
+  : related_lockset_ (related),
+    lock_ (0)
 {
   // Do nothing
 }
@@ -41,6 +43,7 @@ CC_LockSet::~CC_LockSet(void)
 {
   if(lock_!=0)
     delete lock_;
+  lock_ = 0;
 }
 
 // Locks the lock in the desired mode. Blocks until success. In a later
