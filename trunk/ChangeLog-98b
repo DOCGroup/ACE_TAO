@@ -1,3 +1,8 @@
+Fri Dec 11 14:05:11 1998  Steve Huston  <shuston@riverace.com>
+
+        * tests/MT_Reactor_Timer_Test.(cpp h): Replaced the multithread
+          timer set/cancel test with sensible tests.
+
 Fri Dec 11 08:51:07 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: updated egcs version information.
