@@ -17,7 +17,7 @@
 
 #include "ace/Array_Base.h"
 #include "ciao/CIAO_Server_Export.h"
-//#include "ciao/Dynamic_Component_Servant_Base.h"
+#include "ciao/Dynamic_Component_Servant_Base.h"
 #include "tao/PortableServer/Key_Adapters.h"
 #include "ace/Hash_Map_Manager_T.h"
 
@@ -78,14 +78,14 @@ namespace CIAO
 
     /// Mutex that synchronizes access to the array.
     ACE_SYNCH_MUTEX  mutex_;
-/*
+
     ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
                             Dynamic_Component_Servant_Base *,
                             TAO_ObjectId_Hash,
                             ACE_Equal_To<PortableServer::ObjectId>,
                             ACE_SYNCH_MUTEX>
       servant_map_;
-*/
+
   };
 }
 
