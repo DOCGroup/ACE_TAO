@@ -202,8 +202,10 @@ main (int argc, char *argv[])
   non_dsui_timer.calibrate ();
   non_dsui_timer.start();
 
+  Object_ID oid = ACE_OBJECT_COUNTER->increment();
+
   /* MEASURE: Program start time */
-  DSTRM_EVENT(MAIN_GROUP_FAM, START,0,0,NULL);
+  DSTRM_EVENT(MAIN_GROUP_FAM, START,0, sizeof(Object_ID), (char*)&oid);
 
   EDF_Scheduler* scheduler=0;
   RTScheduling::Current_var current;
@@ -322,7 +324,7 @@ main (int argc, char *argv[])
                                          sched_scope), -1);
 
 	  /* MEASURE: Scheduler start time */
-	  DSTRM_EVENT (MAIN_GROUP_FAM, SCHEDULER_STARTED, 0, 0, NULL);
+	  DSTRM_EVENT (MAIN_GROUP_FAM, SCHEDULER_STARTED, 0, sizeof(Object_ID), (char*)&oid); 
 
           manager->rtscheduler (scheduler);
 
@@ -454,7 +456,7 @@ main (int argc, char *argv[])
           /* MEASURE: Call to shutdown server */
           // char* msg = "(%t): wait for worker threads done in main thread\n";
           // Get thread id
-          DSTRM_EVENT (MAIN_GROUP_FAM, CALL_SERVER_SHUTDOWN, 0, 0, NULL);
+          DSTRM_EVENT (MAIN_GROUP_FAM, CALL_SERVER_SHUTDOWN, 0, sizeof(Object_ID), (char*)&oid); 
 
           server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -463,7 +465,7 @@ main (int argc, char *argv[])
           ACE_TRY_CHECK;
 
           /* MEASURE: After call to server shutdown */
-          DSTRM_EVENT (MAIN_GROUP_FAM, AFTER_SERVER_SHUTDOWN, 0, 0, NULL);
+          DSTRM_EVENT (MAIN_GROUP_FAM, AFTER_SERVER_SHUTDOWN, 0, sizeof(Object_ID), (char*)&oid); 
           ACE_DEBUG ((LM_DEBUG, "after shutdown call in main thread\n"));
 
 
@@ -477,7 +479,7 @@ main (int argc, char *argv[])
       scheduler->shutdown ();
 
       /* MEASURE: Scheduler stop time */
-      DSTRM_EVENT (MAIN_GROUP_FAM, SCHEDULER_SHUTDOWN, 0, 0, NULL);
+      DSTRM_EVENT (MAIN_GROUP_FAM, SCHEDULER_SHUTDOWN, 0, sizeof(Object_ID), (char*)&oid); 
       ACE_DEBUG ((LM_DEBUG, "scheduler shutdown done\n"));
     }
   ACE_CATCHANY
@@ -489,7 +491,7 @@ main (int argc, char *argv[])
   ACE_ENDTRY;
 
   /* MEASURE: Program stop time */
-  DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 0, 0, NULL);
+  DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 0, sizeof(Object_ID), (char*)&oid); 
 
   non_dsui_timer.stop();
   ACE_hrtime_t dsui_ovhd_time;
