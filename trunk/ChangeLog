@@ -1,3 +1,18 @@
+Fri Oct  1 11:35:59 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* Makefile.am:
+	* configure.ac:
+
+	  Changed to configure/build Kokyu if directory is present.
+
+	* Kokyu/Makefile.am:
+	* Kokyu/tests/Makefile.am:
+	* Kokyu/tests/DSRT_MIF/Makefile.am:
+	* Kokyu/tests/EDF/Makefile.am:
+	* Kokyu/tests/FIFO/Makefile.am:
+
+	  New files.
+
 Thu Sep 30 22:20:10 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* m4/tls.m4 (ACE_CHECK_TLS):
