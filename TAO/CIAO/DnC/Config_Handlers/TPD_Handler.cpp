@@ -1,7 +1,6 @@
 // $Id$
 
 #include "tao/Exception.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
 
 #include "Property_Handler.h"
@@ -27,7 +26,7 @@ ACE_TString TPD_Handler::process_TopLevelPackageDescription()
        node = this->iter_->nextNode())
     {
       XStr node_name (node->getNodeName());
-      if (node_name == XStr 
+      if (node_name == XStr
           (ACE_TEXT ("Deployment:TopLevelPackageDescription")))
         {
         }
@@ -44,9 +43,12 @@ ACE_TString TPD_Handler::process_TopLevelPackageDescription()
                 {
                   DOMNode* attribute_node = named_node_map->item (j);
                   XStr strattrnodename (attribute_node->getNodeName ());
-                  ACE_TString aceattrnodevalue =
+
+                  char * temp =
                     XMLString::transcode (attribute_node->getNodeValue ());
-                  
+                  ACE_TString aceattrnodevalue = temp;
+                  XMLString::release (&temp);
+
                   // if href is given find out the referenced position
                   // and process the element
                   if (strattrnodename == XStr (ACE_TEXT ("href")))
@@ -54,13 +56,21 @@ ACE_TString TPD_Handler::process_TopLevelPackageDescription()
                       XMLURL xml_url (aceattrnodevalue.c_str ());
                       XMLURL result (aceattrnodevalue.c_str ());
                       ACE_TString url_string = aceattrnodevalue.c_str ();
-                      ACE_TString doc_path =
+
+                      char * temp =
                         XMLString::transcode ( doc_->getDocumentURI ());
-                      result.makeRelativeTo
-                        (XMLString::transcode (doc_path.c_str ()));
-                      ACE_TString final_url =
-                        XMLString::transcode (result.getURLText ());
-                      
+                      ACE_TString doc_path = temp;
+                      XMLString::release (&temp);
+
+                      XMLCh * relative_path =
+                        XMLString::transcode (doc_path.c_str ());
+                      result.makeRelativeTo (relative_path);
+                      XMLString::release (&relative_path);
+
+                      temp = XMLString::transcode (result.getURLText ());
+                      ACE_TString final_url = temp;
+                      XMLString::release (&temp);
+
                       if (xml_url.isRelative ())
                         {
                           return final_url;
