@@ -16,7 +16,7 @@
 # There should be no other warnings from Sun C++ when building ACE.
 #
 CC		= cc
-CXX		= CC +w -mt -pta # -noex This option should solve some evil problems with Solaris
+CXX		= CC +w -mt -pta -noex
 DLD		= $(CXX) 
 LD		= $(CXX)
 LDFLAGS		+= -R $(WRAPPER_ROOT)/ace 

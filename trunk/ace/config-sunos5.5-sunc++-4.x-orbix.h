@@ -9,7 +9,8 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
-#define ACE_HAS_EXCEPTIONS
+// until we can trust exception handling with Sun C++, it's not enabled . . .
+// #define ACE_HAS_EXCEPTIONS
 
 // Platform contains the Orbix CORBA implementation.
 #define ACE_HAS_ORBIX
