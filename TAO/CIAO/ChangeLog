@@ -1,3 +1,14 @@
+Fri Jun 18 13:34:16 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DomainApplicationManager/DomainApplicationManager.mpc
+	* ExecutionManager/ExecutionManager.mpc
+	* NodeManager/NodeDaemon.mpc
+	* RepositoryManager/Repository_Manager.cpp
+
+          Fixed linking problems in Windows. Added debug/test
+          capabilities by remotely shutdown ExecutionManager.
+
+
 Fri Jun 18 11:59:56 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* docs/tutorial/Hello/hello_exec.cpp:

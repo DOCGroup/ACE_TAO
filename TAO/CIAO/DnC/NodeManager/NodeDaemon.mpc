@@ -18,16 +18,14 @@ project (NodeDaemon_stub): ciao_deployment_stub {
 
 project(Node_Daemon): ciao_deployment_svnt, ciao_deployment_stub, iortable, naming {
   requires += dnc
-  after += NodeApplicationManager
-  libs += NodeApplicationManager CIAO_Server
+  after += NodeApplicationManager NodeDaemon_stub
+  libs += NodeApplicationManager NodeDaemon_stub CIAO_Server
   exename = Node_Daemon
 
   IDL_Files {
-    NodeDaemon.idl
   }
 
   Source_Files {
-    NodeDaemonC.cpp
     NodeDaemonS.cpp
     NodeDaemon_Impl.cpp
     Node_Daemon.cpp
