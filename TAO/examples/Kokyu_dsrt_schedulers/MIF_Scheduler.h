@@ -3,7 +3,7 @@
 #ifndef MIF_SCHEDULER_H
 #define MIF_SCHEDULER_H
 
-#include "tao/RTScheduling/RTSchedulerC.h"
+#include "tao/RTScheduling/RTScheduler.h"
 #include "MIF_SchedulingC.h"
 #include "Kokyu_dsrt.h"
 #include "Kokyu_dsrt_schedulers_export.h"

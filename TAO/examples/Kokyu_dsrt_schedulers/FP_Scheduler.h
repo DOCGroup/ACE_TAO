@@ -3,7 +3,7 @@
 #ifndef FIXED_PRIORITY_SCHEDULER_H
 #define FIXED_PRIORITY_SCHEDULER_H
 
-#include "tao/RTScheduling/RTSchedulerC.h"
+#include "tao/RTScheduling/RTScheduler.h"
 #include "FP_SchedulingC.h"
 #include "Kokyu_dsrt.h"
 #include "Kokyu_dsrt_schedulers_export.h"

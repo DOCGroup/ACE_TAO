@@ -22,8 +22,8 @@
 
 #include <IOP.pidl>
 #include <TimeBase.pidl>
-#include <RTScheduler.pidl>
-#include <RTCORBA.pidl>
+#include <tao/RTScheduling/RTScheduler.pidl>
+#include <tao/RTCORBA/RTCORBA.pidl>
 
 #pragma prefix "omg.org"
 
