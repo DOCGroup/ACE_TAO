@@ -140,6 +140,10 @@ main (int argc, char **argv)
       // Report success.
       ACE_DEBUG ((LM_DEBUG,
                   "Default_Servant test successful\n"));
+
+      // Destroy the ORB.
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
