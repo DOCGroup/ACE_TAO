@@ -176,9 +176,9 @@ ACE_Time_Request::dump (void) const
     ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("blocking forever\n")));
   else
     {
-#if !defined (ACE_NDEBUG)
+#if !defined (ACE_NLOGGING)
       ACE_Time_Value tv = this->timeout ();
-#endif /* ! ACE_NDEBUG */
+#endif /* ! ACE_NLOGGING */
       ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("waiting for %ld secs and %ld usecs\n"),
                   tv.sec (), tv.usec ()));
     }

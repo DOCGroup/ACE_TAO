@@ -84,10 +84,10 @@ ACE_Trace::ACE_Trace (const ASYS_TCHAR *n,
                       int line,
                       const ASYS_TCHAR *file)
 {
-#if defined (ACE_NDEBUG)
+#if defined (ACE_NLOGGING)
   ACE_UNUSED_ARG (line);
   ACE_UNUSED_ARG (file);
-#endif /* ACE_NDEBUG */
+#endif /* ACE_NLOGGING */
 
   this->name_ = n;
 
