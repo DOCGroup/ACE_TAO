@@ -58,7 +58,9 @@ Mon Feb 28 09:20:27 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/Process_Manager_Test.cpp:
         * tests/Process_Manager_Test.dsp:  (added)
+        * tests/version_tests/Process_Manager_Test.dsp:  (added)
         * tests/tests.dsw:
+        * tests/version_tests/version_tests.dsw:
           
           Enabled the Process_Manager_Test on NT and created a MSVC 
           workspace for it.  Also fixed some miscellaneous UNICODE issues.
