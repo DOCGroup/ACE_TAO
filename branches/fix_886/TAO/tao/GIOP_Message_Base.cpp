@@ -11,6 +11,7 @@
 #include "TAO_Server_Request.h"
 #include "GIOP_Message_Locate_Header.h"
 #include "Transport.h"
+#include "tao/LF_Strategy.h"
 
 #if !defined (__ACE_INLINE__)
 # include "GIOP_Message_Base.i"

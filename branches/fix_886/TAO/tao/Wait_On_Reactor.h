@@ -41,7 +41,7 @@ public:
   // = Documented in TAO_Wait_Strategy.
 
   virtual int wait (ACE_Time_Value *max_wait_time,
-                    int &reply_received);
+                    TAO_Synch_Reply_Dispatcher &rd);
   virtual int register_handler (void);
   virtual int non_blocking (void);
 };

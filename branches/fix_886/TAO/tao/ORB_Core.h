@@ -152,9 +152,6 @@ public:
   /// leader.
   int client_leader_thread_;
 
-  /// Condition variable for the leader follower model.
-  TAO_SYNCH_CONDITION* leader_follower_condition_variable_;
-
   /// The Reactor Holder that we should callback when destroying the
   /// cookie.
   TAO_Reactor_Registry *reactor_registry_;
@@ -668,10 +665,6 @@ public:
   /// the shutdown flag. If the return value is zero then the server
   /// threads block forever.
   int thread_per_connection_timeout (ACE_Time_Value &timeout) const;
-
-  /// Condition variable used in the Leader Follower Wait Strategy, on
-  /// which the follower thread blocks.
-  TAO_SYNCH_CONDITION* leader_follower_condition_variable (void);
 
   /// Makes sure that the ORB is open and then creates a TAO_Stub
   /// based on the endpoint.

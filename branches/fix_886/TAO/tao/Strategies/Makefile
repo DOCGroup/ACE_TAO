@@ -52,7 +52,8 @@ CPP_SRCS += \
   Reactor_Per_Priority \
   LFU_Connection_Purging_Strategy \
   FIFO_Connection_Purging_Strategy \
-  NULL_Connection_Purging_Strategy
+  NULL_Connection_Purging_Strategy \
+  LF_Strategy_Null
 
 IDL_SRC = \
         $(addsuffix S.cpp, $(IDL_FILES)) \

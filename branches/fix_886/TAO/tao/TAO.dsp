@@ -387,6 +387,14 @@ SOURCE=.\Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Follower.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Follower_Auto_Ptr.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP_Message_Base.cpp
 # End Source File
 # Begin Source File
@@ -512,6 +520,18 @@ SOURCE=.\IORInfo.cpp
 # Begin Source File
 
 SOURCE=.\Leader_Follower.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Leader_Follower_Flushing_Strategy.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Event_Loop_Thread_Helper.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Strategy.cpp
 # End Source File
 # Begin Source File
 
@@ -1119,6 +1139,22 @@ SOURCE=.\Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Follower.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Follower.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Follower_Auto_Ptr.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Follower_Auto_Ptr.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\giop.h
 # End Source File
 # Begin Source File
@@ -1264,6 +1300,26 @@ SOURCE=.\IORInfo.h
 # Begin Source File
 
 SOURCE=.\Leader_Follower.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Leader_Follower_Flushing_Strategy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Event_Loop_Thread_Helper.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Event_Loop_Thread_Helper.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Strategy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Strategy.inl
 # End Source File
 # Begin Source File
 
@@ -1960,6 +2016,30 @@ SOURCE=.\IOR_Parser.i
 # Begin Source File
 
 SOURCE=.\Leader_Follower.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Event.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Event.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Event.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Strategy_Complete.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Strategy_Complete.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LF_Strategy_Complete.inl
 # End Source File
 # Begin Source File
 

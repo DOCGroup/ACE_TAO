@@ -107,7 +107,7 @@ TAO_Transport::~TAO_Transport (void)
     {
       // @@ This is a good point to insert a flag to indicate that a
       // CloseConnection message was successfully received.
-      i->connection_closed ();
+      i->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
 
       TAO_Queued_Message *tmp = i;
       i = i->next ();
@@ -558,12 +558,6 @@ TAO_Transport::idle_after_reply (void)
   return this->tms ()->idle_after_reply ();
 }
 
-TAO_SYNCH_CONDITION *
-TAO_Transport::leader_follower_condition_variable (void)
-{
-  return this->wait_strategy ()->leader_follower_condition_variable ();
-}
-
 int
 TAO_Transport::tear_listen_point_list (TAO_InputCDR &)
 {
@@ -705,7 +699,7 @@ TAO_Transport::close_connection_i (void)
 
   for (TAO_Queued_Message *i = this->head_; i != 0; i = i->next ())
     {
-      i->connection_closed ();
+      i->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
     }
 }
 

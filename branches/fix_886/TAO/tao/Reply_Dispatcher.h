@@ -76,13 +76,6 @@ public:
   // Get the Message State into which the reply has been read.
 
   /**
-   * The dispatcher has been bound.
-   * Some dispatchers need to retain state to cooperate with other
-   * components, such as the waiting strategy.
-   */
-  virtual void dispatcher_bound (TAO_Transport*) = 0;
-
-  /**
    * The used for the pending reply has been closed.
    * No reply is expected.
    * @@ TODO: If the connection was closed due to a CloseConnection

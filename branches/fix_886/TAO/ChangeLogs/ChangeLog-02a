@@ -1,17 +1,184 @@
+Thu Jul 26 16:50:46 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * Part of the fixes for
+          http://ace.cs.wustl.edu/bugzilla/show_bug.cgi?id=886
+
+          the changes also close the following bug:
+
+          http://ace.cs.wustl.edu/bugzilla/show_bug.cgi?id=296
+
+        * tao/Leader_Follower_Flushing_Strategy.h:
+        * tao/Leader_Follower_Flushing_Strategy.cpp:
+          New flushing strategy that participates in the Leader/Followers
+          protocol.
+          To support this several changes to the Leader/Followers
+          implementation were required.  The most important involved using
+          some abstract representation for the events that the
+          Leader/Followers wait for, in the old days there were only reply
+          events, so there was no need to abstract anything, but now the
+          Leader/Followers set can wait for both 'message flushed' events,
+          as well as 'reply received'.
+          With this explicit representation for events at hand it was
+          easier to encapsulate the Leader/Followers wait loop in
+          TAO_Leader_Follower class, instead of hidden in
+          Wait_On_Leader_Follower.
+          To match the events that L/F waits for and the threads waiting
+          for them we addd a class that represents a Follower thread.
+          These TAO_Follower objects had to implement an intrusive list
+          for fast addition into the follower set, once that intrusive
+          list was implemented adding a free list was trivial, and thus we
+          could solve bug 296 easily too.
+
+        * tao/Asynch_Queued_Message.cpp:
+        * tao/Synch_Queued_Message.cpp:
+          Use the TAO_LF_Event methods to signal any waiters when the
+          state changes.
+
+        * tao/Follower.h:
+        * tao/Follower.inl:
+        * tao/Follower.cpp:
+          This class represents a thread playing the Follower role.  It
+          contains the condition variable used by the thread.
+          The class provides the necessary hooks to implement an intrusive
+          linked list.
+
+        * tao/Invocation.cpp:
+          The waiting strategy wants the complete Synch_Reply_Dispatcher,
+          not just the reply_received flag.
+
+        * tao/LF_Event.h:
+        * tao/LF_Event.inl:
+        * tao/LF_Event.cpp:
+          New class to represent events that the Leader/Followers loop
+          waits for.  Used as a base class for both TAO_Queued_Message and
+          for TAO_Synch_Reply.
+
+        * tao/LF_Event_Loop_Thread_Helper.h:
+        * tao/LF_Event_Loop_Thread_Helper.inl:
+        * tao/LF_Event_Loop_Thread_Helper.cpp:
+          Move helper class to its own file, no sense in exposing it to
+          everybody through the Leader_Follower.h file.
+
+        * tao/Leader_Follower.h:
+        * tao/Leader_Follower.i:
+        * tao/Leader_Follower.cpp:
+          Add free list for TAO_Follower, as well as allocation and
+          deallocation methods.
+          Move Leader/Followers main loop to this class.
+          Move LF_Strategy and friends to their own files.
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+          Removed the TSS Leader/Followers condition variable, the
+          Leader/Followers free list implements the same optimization with
+          less problems (i.e. without bug 296).
+
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.cpp:
+        * tao/Synch_Reply_Dispatcher.h:
+        * tao/Synch_Reply_Dispatcher.cpp:
+          This class derives from TAO_LF_Event now.  Any state or methods
+          required to detect timeouts, closed connections or transmition
+          errors are in the base class.
+
+        * tao/Reply_Dispatcher.h:
+        * tao/Asynch_Reply_Dispatcher.h:
+        * tao/Asynch_Reply_Dispatcher.cpp:
+          Remove the dispatcher_bound() calls, they are no longer required
+          to match follower threads and their reply dispatchers, this is
+          now done in the TAO_LF_Event::bind() method, called from
+          TAO_Leader_Follower::wait_for_event()
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+
+        * tao/Transport_Mux_Strategy.h:
+        * tao/Transport_Mux_Strategy.cpp:
+        * tao/Muxed_TMS.cpp:
+        * tao/Exclusive_TMS.cpp:
+          Since there is no need to call dispatcher_bound() anymore the
+          bind_dispatcher() methods were simplified.
+
+        * tao/Wait_On_Leader_Follower.h:
+        * tao/Wait_On_Leader_Follower.cpp:
+        * tao/Wait_On_Reactor.h:
+        * tao/Wait_On_Reactor.cpp:
+        * tao/Wait_On_Read.h:
+        * tao/Wait_On_Read.cpp:
+        * tao/Wait_Strategy.h:
+        * tao/Wait_Strategy.cpp:
+          Use a TAO_Synch_Reply_Dispatcher to wait for a reply.  The hack
+          using a reply_received flag + a cond.var. was too ugly, plus it
+          was tightly coupling the Leader/Followers loop to the reply
+          dispatching logic.
+
+        * tao/default_resource.h:
+        * tao/default_resource.cpp:
+          Made Leader_Follower_Flushing_Strategy the default.
+
+        * tao/orbconf.h:
+        * tao/default_client.cpp:
+          Made Muxed_TMS the default
+
+        * tao/LF_Strategy.h:
+        * tao/LF_Strategy.inl:
+        * tao/LF_Strategy.cpp:
+        * tao/LF_Strategy_Complete.h:
+        * tao/LF_Strategy_Complete.inl:
+        * tao/LF_Strategy_Complete.cpp:
+          Move the LF_Strategy classes to their own files, no sense in
+          exposing them to everybody through the Leader_Follower.h file.
+
+        * tao/Follower_Auto_Ptr.h:
+        * tao/Follower_Auto_Ptr.inl:
+        * tao/Follower_Auto_Ptr.cpp:
+          Helper class to automatically allocate and deallocate
+          TAO_Follower objects from the Leader/Followers set.
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/Reactor_Registry.cpp:
+          Must #include the "LF_Strategy.h" file explicitly.
+
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+	* tao/Makefile:
+	* tao/Makefile.bor:
+        * tao/Strategies/TAO_Strategies.dsp:
+        * tao/Strategies/TAO_Strategies_Static.dsp:
+	* tao/Strategies/Makefile:
+	* tao/Strategies/Makefile.bor:
+          Add new files to the projects and Makefile
+
+
+        * tao/Strategies/advanced_resource.cpp:
+        * tao/Strategies/LF_Strategy_Null.h:
+        * tao/Strategies/LF_Strategy_Null.inl:
+        * tao/Strategies/LF_Strategy_Null.cpp:
+          Move the Null Leader/Follower Strategy to the TAO_Strategies
+          library, it was in TAO, but was only used here.
+
+        * tao/RTPortableServer/TAO_RTPortableServer.dsp:
+          Fixed missing libraries in link line.
+
+        * tao/TAO.dsw:
+          Add missing dependencies for RTPortableServer and RTCORBA
+
 Thu Jul 26 09:44:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
 
-          Hide more debugging messages behind: if( TAO_debug_level > 0) 
+          Hide more debugging messages behind: if( TAO_debug_level > 0)
 
 Thu Jul 26 07:37:29 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/RTCORBA/Server_Protocol/server.cpp:
-	* tests/RTCORBA/Client_Propagated/server.cpp:
-	* tests/RTCORBA/Thread_Pool/server.cpp: Fixed warnings in g++. 
+        * tests/RTCORBA/Server_Protocol/server.cpp:
+        * tests/RTCORBA/Client_Propagated/server.cpp:
+        * tests/RTCORBA/Thread_Pool/server.cpp: Fixed warnings in g++.
 
 Wed Jul 25 23:37:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
- 
+
         * orbsvcs/tests/AVStreams/Full_Profile/Makefile:
         * orbsvcs/tests/AVStreams/Latency/Makefile:
         * orbsvcs/tests/AVStreams/Modify_QoS/Makefile:
@@ -21,77 +188,77 @@ Wed Jul 25 23:37:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
         * orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile:
         * orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
         * orbsvcs/orbsvcs/Makefile.av:
- 
+
           Correct link flags so that ACE_QoS is linked in when
           rapi=1 is specified in platform_macros.GNU.
 
 Wed Jul 25 22:45:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/SHMIOP_Transport.cpp:
-	* tao/Strategies/DIOP_Transport.cpp: Fixed a compile error that
-	  came up from my previous change.
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/DIOP_Transport.cpp: Fixed a compile error that
+          came up from my previous change.
 
 Wed Jul 25 22:39:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/RTCORBA/Server_Protocol/server.cpp:
-	* tests/RTCORBA/Client_Propagated/server.cpp:
-	* tests/RTCORBA/Thread_Pool/server.cpp: Added checks & debugging
-	  statments for a null RootPOA. thanks to Johnny Willemsen for
-	  pointing this out. Did some minor cosmetic fixes.
+        * tests/RTCORBA/Server_Protocol/server.cpp:
+        * tests/RTCORBA/Client_Propagated/server.cpp:
+        * tests/RTCORBA/Thread_Pool/server.cpp: Added checks & debugging
+          statments for a null RootPOA. thanks to Johnny Willemsen for
+          pointing this out. Did some minor cosmetic fixes.
 
 Wed Jul 25 22:10:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.cpp:
-	* tao/Transport.h: Fixed a subtle problem that seems to have lead
-	  to the  Muxing tests failing randomly. The problem is something
-	  like this
-	  - multiple client threads can try to share a connection
-	  - because of the above, more than one message are sent on the
-	    same connection
-	  - if the server is multi-threaded, the messages can be processed
-	    concurrently
-	  - there may be a possibility of more than two replies coming on
-	    the same connection.
-	  - one of the client threads can pick up both the replies
-	  - one of the replies would be queued up and the first one can be
-	    its own
-	  - after queueing up the second it would wake up another thread
-	  - if the woken up thread does not own the reply, it could just
-	    take the reply and try to transfer ownership to the right
-	    thread.
-	  - before the second thread transfers the reply, teh second
-	    thread would have resumed the handler and because of which one
-	    of the threads would have gone into the reactor from the LF.
-	  - at exactly the same instant the seccond thread will have
-	    difficulty in waking up the thread on select () is it is the
-	    owner.
-	  Fixed this problem by not resuming the handle till we dispatch
-	  the reply. We dont buy anything by resuming the handle before
-	  dispatching the reply because, the dispatching will not be
-	  unbounded. The forces that apply to the server thread, which
-	  resumes the handle before making an upcall does not apply to the
-	  client threads that reads and processes replies. This fix should
-	  ideally fix the Muxing test failure on different paltforms. If
-	  it doesnt, it will atleast prevent the race condition outlined
-	  above :-)
+        * tao/Transport.cpp:
+        * tao/Transport.h: Fixed a subtle problem that seems to have lead
+          to the  Muxing tests failing randomly. The problem is something
+          like this
+          - multiple client threads can try to share a connection
+          - because of the above, more than one message are sent on the
+            same connection
+          - if the server is multi-threaded, the messages can be processed
+            concurrently
+          - there may be a possibility of more than two replies coming on
+            the same connection.
+          - one of the client threads can pick up both the replies
+          - one of the replies would be queued up and the first one can be
+            its own
+          - after queueing up the second it would wake up another thread
+          - if the woken up thread does not own the reply, it could just
+            take the reply and try to transfer ownership to the right
+            thread.
+          - before the second thread transfers the reply, teh second
+            thread would have resumed the handler and because of which one
+            of the threads would have gone into the reactor from the LF.
+          - at exactly the same instant the seccond thread will have
+            difficulty in waking up the thread on select () is it is the
+            owner.
+          Fixed this problem by not resuming the handle till we dispatch
+          the reply. We dont buy anything by resuming the handle before
+          dispatching the reply because, the dispatching will not be
+          unbounded. The forces that apply to the server thread, which
+          resumes the handle before making an upcall does not apply to the
+          client threads that reads and processes replies. This fix should
+          ideally fix the Muxing test failure on different paltforms. If
+          it doesnt, it will atleast prevent the race condition outlined
+          above :-)
 
 Wed Jul 25 20:33:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/time-date/Makefile.bor:
-	* examples/Simple/time-date/server.bor:
-	* examples/Simple/time-date/time_date.bor: Fixed Borland builds
-	  for this example. This commit is for Johnny Willemsen who is
-	  away from his work.
+        * examples/Simple/time-date/Makefile.bor:
+        * examples/Simple/time-date/server.bor:
+        * examples/Simple/time-date/time_date.bor: Fixed Borland builds
+          for this example. This commit is for Johnny Willemsen who is
+          away from his work.
 
 Wed Jul 25 12:50:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
-	* tao/Strategies/DIOP_Factory.cpp:
+        * tao/Strategies/DIOP_Factory.cpp:
 
-	  Changed the return value of requires_explicit_endpoint () to 0
-	  and documented that this return code is not reflecting that
-	  the endpoints are not cleaned-up but that we disable it by default
-	  because DIOP is only suitable for certain use cases, e.g. it only
-	  supports one-ways.
+          Changed the return value of requires_explicit_endpoint () to 0
+          and documented that this return code is not reflecting that
+          the endpoints are not cleaned-up but that we disable it by default
+          because DIOP is only suitable for certain use cases, e.g. it only
+          supports one-ways.
 
 Wed Jul 25 08:41:39 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
