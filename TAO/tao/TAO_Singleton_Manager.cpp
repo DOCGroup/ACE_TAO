@@ -31,7 +31,7 @@ TAO_Singleton_Manager::TAO_Singleton_Manager (void)
   // default_mask_ isn't initialized, because it's defined by <init>.
   : thread_hook_ (0),
     exit_info_ (),
-    registered_with_object_manager_ (0)
+    registered_with_object_manager_ (-1)
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   , internal_lock_ (new ACE_Recursive_Thread_Mutex)
 # endif /* ACE_MT_SAFE */
@@ -40,7 +40,12 @@ TAO_Singleton_Manager::TAO_Singleton_Manager (void)
   if (instance_ == 0)
     instance_ = this;
 
-  (void) this->init ();
+  // @@ This is a hack.  Allow the TAO_Singleton_Manager to be registered
+  //    with the ACE_Object_Manager (or not) in an explicit call to
+  //    TAO_Singleton_Manager::init().  However, once the explicit call is
+  //    made, it will not be possible to alter the setting.
+  int register_with_object_manager = -1;
+  (void) this->init (register_with_object_manager);
 }
 
 TAO_Singleton_Manager::~TAO_Singleton_Manager (void)
@@ -96,10 +101,16 @@ TAO_Singleton_Manager::instance (void)
 int
 TAO_Singleton_Manager::init (void)
 {
-  // Register the TAO_Singleton_Manager with the ACE_Object_Manager.
-  int register_with_object_manager = 1;
+  if (this->registered_with_object_manager_ == -1)
+    {
+      // Register the TAO_Singleton_Manager with the
+      // ACE_Object_Manager.
+      int register_with_object_manager = 1;
 
-  return this->init (register_with_object_manager);
+      return this->init (register_with_object_manager);
+    }
+
+  return 1;  // Already initialized.
 }
 
 int
@@ -121,6 +132,34 @@ TAO_Singleton_Manager::init (int register_with_object_manager)
       ACE_NEW_RETURN (this->default_mask_, sigset_t, -1);
       ACE_OS::sigfillset (this->default_mask_);
 
+      // Finally, indicate that the TAO_Singleton_Manager instance has
+      // been initialized.
+      this->object_manager_state_ = OBJ_MAN_INITIALIZED;
+
+      return 0;
+    }
+
+  // @@ This strange looking code is what provides the "register on
+  //    explicit call to init()" semantics.  This was needed since the
+  //    TAO_Singleton_Manager constructor invokes init().
+  //    Unfortunately, I couldn't get rid of that init() call without
+  //    breaking things.  The fact things broke needs to be
+  //    investigated further.
+  if (this->registered_with_object_manager_ != -1
+      && register_with_object_manager
+      != this->registered_with_object_manager_)
+    {
+      // An attempt was made to register the TAO_Singleton_Manager
+      // with a manager of a different type from the one it is
+      // currently registered with.  This indicates a problem with the
+      // caller's logic.
+
+      errno = EINVAL;
+      return -1;
+    }
+
+  if (this->registered_with_object_manager_ == -1)
+    {
       if (register_with_object_manager == 1
           && ACE_Object_Manager::at_exit (
                this,
@@ -130,23 +169,6 @@ TAO_Singleton_Manager::init (int register_with_object_manager)
 
       this->registered_with_object_manager_ =
         register_with_object_manager;
-
-      // Finally, indicate that the TAO_Singleton_Manager instance has
-      // been initialized.
-      this->object_manager_state_ = OBJ_MAN_INITIALIZED;
-
-      return 0;
-    }
-  else if (this->registered_with_object_manager_
-           != register_with_object_manager)
-    {
-      // An attempt was made to register the TAO_Singleton_Manager
-      // with a manager of a different type from the one it is
-      // currently registered with.  This indicates a problem with the
-      // caller's logic.
-
-      errno = EINVAL;
-      return -1;
     }
 
   // Had already initialized.
