@@ -10,6 +10,26 @@
 
 ACE_RCSID(lib, Name_Handler, "$Id$")
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Singleton<Naming_Context, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Accept_Strategy<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Acceptor<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Concurrency_Strategy<ACE_Name_Handler>;
+template class ACE_Creation_Strategy<ACE_Name_Handler>;
+template class ACE_Schedule_All_Reactive_Strategy<ACE_Name_Handler>;
+template class ACE_Scheduling_Strategy<ACE_Name_Handler>;
+template class ACE_Strategy_Acceptor<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Singleton<Naming_Context, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Accept_Strategy<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Acceptor<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Concurrency_Strategy<ACE_Name_Handler>
+#pragma instantiate ACE_Creation_Strategy<ACE_Name_Handler>
+#pragma instantiate ACE_Schedule_All_Reactive_Strategy<ACE_Name_Handler>
+#pragma instantiate ACE_Scheduling_Strategy<ACE_Name_Handler>
+#pragma instantiate ACE_Strategy_Acceptor<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // Simple macro that does bitwise AND -- useful in table lookup
 #define ACE_TABLE_MAP(INDEX, MASK) (INDEX & MASK)
 
@@ -597,23 +617,3 @@ ACE_Name_Handler::~ACE_Name_Handler (void)
   ACE_DEBUG ((LM_DEBUG, "closing down Handle  %d\n",
               this->get_handle ()));
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton<Naming_Context, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Accept_Strategy<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Acceptor<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Concurrency_Strategy<ACE_Name_Handler>;
-template class ACE_Creation_Strategy<ACE_Name_Handler>;
-template class ACE_Schedule_All_Reactive_Strategy<ACE_Name_Handler>;
-template class ACE_Scheduling_Strategy<ACE_Name_Handler>;
-template class ACE_Strategy_Acceptor<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<Naming_Context, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Accept_Strategy<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Acceptor<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Concurrency_Strategy<ACE_Name_Handler>
-#pragma instantiate ACE_Creation_Strategy<ACE_Name_Handler>
-#pragma instantiate ACE_Schedule_All_Reactive_Strategy<ACE_Name_Handler>
-#pragma instantiate ACE_Scheduling_Strategy<ACE_Name_Handler>
-#pragma instantiate ACE_Strategy_Acceptor<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

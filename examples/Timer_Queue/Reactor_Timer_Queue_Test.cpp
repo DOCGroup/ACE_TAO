@@ -24,6 +24,14 @@
 #include "Driver.h"
 #include "Reactor_Timer_Queue_Test.h"
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class Timer_Queue_Test_Driver <ACE_Timer_Heap, Input_Handler, Input_Handler::ACTION>;
+template class Command<Input_Handler, Input_Handler::ACTION>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate Timer_Queue_Test_Driver <ACE_Timer_Heap, Input_Handler, Input_Handler::ACTION>
+#pragma instantiate Command<Input_Handler, Input_Handler::ACTION>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 ACE_RCSID(Timer_Queue, Reactor_Timer_Queue_Test, "$Id$")
 
 void
@@ -40,8 +48,11 @@ Reactor_Timer_Handler::handle_timeout (const ACE_Time_Value &tv,
   ACE_UNUSED_ARG (tv);
 
   ACE_Time_Value txv = ACE_OS::gettimeofday ();
-  ACE_DEBUG ((LM_DEBUG, "\nTimer #%d fired at %d.%06d (%T)!\n",
-              this->tid_, txv.sec (), txv.usec ()));
+  ACE_DEBUG ((LM_DEBUG,
+              "\nTimer #%d fired at %d.%06d (%T)!\n",
+              this->tid_,
+              txv.sec (),
+              txv.usec ()));
   delete this;
 
   return 0;
@@ -75,7 +86,8 @@ Input_Handler::schedule_timer (void *argument)
                                               0,
                                               ACE_Time_Value (0, delay));
       if (tid == -1)
-        ACE_DEBUG ((LM_DEBUG, "Unable to schedule timer\n"));
+        ACE_DEBUG ((LM_DEBUG,
+                    "Unable to schedule timer\n"));
       else
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -86,8 +98,9 @@ Input_Handler::schedule_timer (void *argument)
         }
     }
   else
-    ACE_ERROR_RETURN ((LM_ERROR, "not enough memory?\n"), -1);
-
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "not enough memory?\n"),
+                      -1);
   return tid;
 }
 
@@ -105,7 +118,8 @@ Input_Handler::shutdown_timer (void *argument)
   ACE_UNUSED_ARG (argument);
 
   this->done_ = 1;
-  ACE_DEBUG ((LM_DEBUG, "Shutting down event loop\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "Shutting down event loop\n"));
   return -1;
 }
 
@@ -116,9 +130,10 @@ Input_Handler::list_timer (void *argument)
   ACE_UNUSED_ARG (argument);
 
   ACE_Timer_Queue_Iterator &iter = this->tq_->iter ();
-  ACE_DEBUG ((LM_DEBUG, "\n\nTimers in queue:\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "\n\nTimers in queue:\n"));
 
-  for (; ! iter.isdone (); iter.next ())
+  for (; !iter.isdone (); iter.next ())
     {
       ACE_Timer_Node *tn = iter.item ();
       ACE_DEBUG ((LM_DEBUG, "Timer #%d: %d.%06d\n",
@@ -155,9 +170,10 @@ Reactor_Timer_Queue_Test_Driver::display_menu (void)
     "4) Shutdown program\n"
     "Enter selection:";
 
-  ACE_DEBUG ((LM_DEBUG, "%s", menu));
-
-  return  0;
+  ACE_DEBUG ((LM_DEBUG,
+              "%s",
+              menu));
+  return 0;
 }
 
 int
@@ -199,7 +215,8 @@ Reactor_Timer_Queue_Test_Driver::init (void)
 int
 Reactor_Timer_Queue_Test_Driver::run_test (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "TIMER TEST STARTED\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "TIMER TEST STARTED\n"));
 
   this->init ();
 
@@ -207,14 +224,7 @@ Reactor_Timer_Queue_Test_Driver::run_test (void)
   while (thandler_.done () == 0)
     ACE_Reactor::instance ()->handle_events ();
 
-  ACE_DEBUG ((LM_DEBUG, "TIMER TEST ENDED\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "TIMER TEST ENDED\n"));
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Timer_Queue_Test_Driver <ACE_Timer_Heap, Input_Handler, Input_Handler::ACTION>;
-template class Command<Input_Handler, Input_Handler::ACTION>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Timer_Queue_Test_Driver <ACE_Timer_Heap, Input_Handler, Input_Handler::ACTION>
-#pragma instantiate Command<Input_Handler, Input_Handler::ACTION>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
