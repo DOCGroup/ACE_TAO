@@ -450,7 +450,7 @@ string_emulation_test (void)
 }
 
 int 
-main (int, char *[])
+main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("OS_Test"));
 
