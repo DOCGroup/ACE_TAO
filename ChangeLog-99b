@@ -1,3 +1,8 @@
+Thu Jul 15 10:05:40 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: removed reference to
+          ACE_OS::scanf ().  No such thing.
+
 Thu Jul 15 09:28:32 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_tru64_cxx.GNU: changed
