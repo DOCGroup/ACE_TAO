@@ -8,6 +8,7 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/INET_Addr.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(SOCK_SAP, CPP_inserver_poll, "$Id$")
 

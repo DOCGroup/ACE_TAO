@@ -1,9 +1,8 @@
 // FIFO_Send_Msg.cpp
 // $Id$
 
-/* -*- C++ -*- */
-
 #include "ace/FIFO_Send_Msg.h"
+#include "ace/Log_Msg.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/FIFO_Send_Msg.i"

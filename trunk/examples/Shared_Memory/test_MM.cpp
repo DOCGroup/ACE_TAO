@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Shared_Memory_MM.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Shared_Memory, test_MM, "$Id$")
 

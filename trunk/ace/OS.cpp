@@ -3,6 +3,8 @@
 #include "ace/OS.h"
 #include "ace/Sched_Params.h"
 
+#include "ace/Log_Msg.h"  // @@ Should go away!
+
 #if defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)  || \
     defined (ACE_HAS_MINIMAL_ACE_OS)
 # if defined (ACE_PSOS)

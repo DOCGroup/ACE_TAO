@@ -3,6 +3,7 @@
 #include "Options.h"
 #include "Multicast_Manager.h"
 #include "ace/Get_Opt.h"
+#include "ace/Log_Msg.h"
 
 // Initialize all the static variables. 
 

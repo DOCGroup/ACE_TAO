@@ -5,6 +5,7 @@
 #include "HT_Client.h"
 #include "PMC_Ruser.h"
 #include "ace/ACE.h"
+#include "ace/Log_Msg.h"
 
 // This function is pretty much a no-op that just sets up the
 // appropriate lookup function to use.

@@ -3,6 +3,7 @@
 
 #include "ace/DLL.h"
 
+#include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 
 ACE_RCSID(ace, DLL, "$Id$")

@@ -6,6 +6,7 @@
 // Daemon, the logging records will be written to stderr.
 
 #include "ace/OS.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Logger, indirect_logging, "$Id$")
 

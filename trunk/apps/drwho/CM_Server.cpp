@@ -4,6 +4,7 @@
 #include "Options.h"
 #include "CM_Server.h"
 #include "ace/ACE.h"
+#include "ace/Log_Msg.h"
 
 // Creates and binds a UDP socket...
 

@@ -19,6 +19,7 @@
 #include "ace/pre.h"
 
 #include "ace/DEV_IO.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

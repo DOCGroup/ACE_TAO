@@ -3,6 +3,7 @@
 // Defines the Internet domain address family address format.
 
 #include "ace/ATM_Addr.h"
+#include "ace/Log_Msg.h"
 
 #if defined (ACE_HAS_FORE_ATM_WS2)
 #include "forews2.h"

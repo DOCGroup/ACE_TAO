@@ -6530,6 +6530,10 @@ extern "C"
 void
 ACE_OS_Object_Manager_Internal_Exit_Hook (void);
 
+
+// @@ This forward declaration should go away.
+class ACE_Log_Msg;
+
 class ACE_Export ACE_OS_Object_Manager : public ACE_Object_Manager_Base
 {
 public:
@@ -7510,7 +7514,6 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 #   include "ace/Trace.h"
 # endif /* ! ACE_HAS_MINIMAL_ACE_OS */
 
-
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)
 #     undef ACE_INLINE
@@ -7518,11 +7521,6 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 #   define ACE_INLINE inline
 #   include "ace/OS.i"
 # endif /* ACE_HAS_INLINED_OSCALLS */
-
-# if !defined (ACE_HAS_MINIMAL_ACE_OS)
-    // This needs to come here to avoid problems with circular dependencies.
-#   include "ace/Log_Msg.h"
-# endif /* ! ACE_HAS_MINIMAL_ACE_OS */
 
 // Byte swapping macros to deal with differences between little endian
 // and big endian machines.  Note that "long" here refers to 32 bit
@@ -7718,6 +7716,10 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 #define ACE_SIGRTMIN 0
 #define ACE_SIGRTMAX 0
 #endif /* ACE_HAS_AIO_CALLS */
+
+#if !defined (ACE_ONLY_LATEST_AND_GREATEST)
+# include "ace/Log_Msg.h"
+#endif  /* ACE_ONLY_LATEST_AND_GREATEST */
 
 #include "ace/post.h"
 #endif  /* ACE_OS_H */

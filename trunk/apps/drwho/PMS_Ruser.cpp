@@ -4,6 +4,7 @@
 #include "HT_Server.h"
 #include "PMS_Ruser.h"
 #include "ace/ACE.h"
+#include "ace/Log_Msg.h"
 
 // This function packs the located friends userids, plus the machines
 // they are logged into (along with the inactive and active counts on

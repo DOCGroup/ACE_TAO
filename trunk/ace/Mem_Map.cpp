@@ -3,6 +3,7 @@
 // Defines the member functions for the memory mapping facility.
 
 #include "ace/Mem_Map.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Mem_Map.i"

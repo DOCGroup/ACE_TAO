@@ -4,6 +4,7 @@
 #include "PM_Server.h"
 #include "PM_Client.h"
 #include "ace/ACE.h"
+#include "ace/Log_Msg.h"
 
 // This function is used to merge the LOGIN_NAME from server HOST_NAME
 // into the userids kept on the client's side.  Note that we must

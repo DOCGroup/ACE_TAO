@@ -2,6 +2,7 @@
 
 #include "Options.h"
 #include "Search_Struct.h"
+#include "ace/Log_Msg.h"
 
 Search_Struct::~Search_Struct (void)
 {

@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ace/LSOCK_Connector.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, LSOCK_Connector, "$Id$")
 
