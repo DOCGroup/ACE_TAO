@@ -86,6 +86,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/PortableServer.o .obj/PortableServer.so .shobj/PortableServer.o .shobj/PortableServer.so: PortableServer.cpp PortableServer.h \
  $(ACE_ROOT)/ace/pre.h \
  portableserver_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -110,13 +112,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -133,10 +143,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -264,6 +270,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/PortableServerC.o .obj/PortableServerC.so .shobj/PortableServerC.o .shobj/PortableServerC.so: PortableServerC.cpp PortableServerC.h \
  $(ACE_ROOT)/ace/pre.h \
  portableserver_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -288,13 +296,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -311,10 +327,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -439,8 +451,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  Object_Adapter.i POAManager.h POAManager.i \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
- POA.i \
- $(TAO_ROOT)/tao/ORB.h \
+ POA.i $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
@@ -455,13 +466,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
- $(TAO_ROOT)/tao/TAO_Singleton.h \
- $(TAO_ROOT)/tao/TAO_Singleton.inl \
- $(TAO_ROOT)/tao/TAO_Singleton.cpp \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
@@ -472,6 +476,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -491,6 +497,18 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -500,10 +518,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -520,10 +534,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -669,8 +679,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
@@ -705,8 +713,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/Profile.h \
@@ -714,6 +720,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -747,6 +759,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  Default_Acceptor_Filter.h \
  $(ACE_ROOT)/ace/pre.h \
  portableserver_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -772,13 +786,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -795,10 +817,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -908,6 +926,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/Object_Adapter.o .obj/Object_Adapter.so .shobj/Object_Adapter.o .shobj/Object_Adapter.so: Object_Adapter.cpp Object_Adapter.h \
  $(ACE_ROOT)/ace/pre.h \
  portableserver_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -933,13 +953,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -956,10 +984,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -1100,13 +1124,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
- $(TAO_ROOT)/tao/TAO_Singleton.h \
- $(TAO_ROOT)/tao/TAO_Singleton.inl \
- $(TAO_ROOT)/tao/TAO_Singleton.cpp \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
@@ -1141,9 +1158,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -1153,6 +1173,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -1165,6 +1191,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/Operation_Table.o .obj/Operation_Table.so .shobj/Operation_Table.o .shobj/Operation_Table.so: Operation_Table.cpp Operation_Table.h \
  $(ACE_ROOT)/ace/pre.h \
  portableserver_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1189,13 +1217,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -1212,10 +1248,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -1332,8 +1364,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
@@ -1342,6 +1372,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/Key_Adapters.o .obj/Key_Adapters.so .shobj/Key_Adapters.o .shobj/Key_Adapters.so: Key_Adapters.cpp Key_Adapters.h \
  $(ACE_ROOT)/ace/pre.h \
  PortableServerC.h portableserver_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1366,13 +1398,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -1389,10 +1429,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -1505,6 +1541,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/POAManager.o .obj/POAManager.so .shobj/POAManager.o .shobj/POAManager.so: POAManager.cpp POAManager.h \
  $(ACE_ROOT)/ace/pre.h \
  PortableServerC.h portableserver_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1529,13 +1567,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -1552,10 +1598,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -1685,6 +1727,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/Active_Object_Map.o .obj/Active_Object_Map.so .shobj/Active_Object_Map.o .shobj/Active_Object_Map.so: Active_Object_Map.cpp Active_Object_Map.h \
  $(ACE_ROOT)/ace/pre.h \
  Key_Adapters.h PortableServerC.h portableserver_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1709,13 +1753,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -1732,10 +1784,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -1853,6 +1901,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/Servant_Base.o .obj/Servant_Base.so .shobj/Servant_Base.o .shobj/Servant_Base.so: Servant_Base.cpp Servant_Base.h \
  $(ACE_ROOT)/ace/pre.h \
  PortableServerC.h portableserver_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1877,13 +1927,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -1900,10 +1958,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -2053,8 +2107,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
@@ -2089,8 +2141,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/Profile.h \
@@ -2098,6 +2148,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -2107,6 +2163,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/Collocated_Object.o .obj/Collocated_Object.so .shobj/Collocated_Object.o .shobj/Collocated_Object.so: Collocated_Object.cpp Collocated_Object.h \
  $(ACE_ROOT)/ace/pre.h \
  portableserver_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2132,13 +2190,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -2155,10 +2221,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -2297,13 +2359,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
- $(TAO_ROOT)/tao/TAO_Singleton.h \
- $(TAO_ROOT)/tao/TAO_Singleton.inl \
- $(TAO_ROOT)/tao/TAO_Singleton.cpp \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
@@ -2337,9 +2392,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/Profile.h \
@@ -2347,6 +2405,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/Stub.i
@@ -2354,6 +2418,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/DomainS.o .obj/DomainS.so .shobj/DomainS.o .shobj/DomainS.so: DomainS.cpp DomainS.h \
  $(ACE_ROOT)/ace/pre.h \
  PortableServerC.h portableserver_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2378,13 +2444,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -2401,10 +2475,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -2487,13 +2557,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
- $(TAO_ROOT)/tao/TAO_Singleton.h \
- $(TAO_ROOT)/tao/TAO_Singleton.inl \
- $(TAO_ROOT)/tao/TAO_Singleton.cpp \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/DomainC.i \
@@ -2550,6 +2613,11 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  Object_Adapter.i Operation_Table.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
@@ -2587,8 +2655,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
@@ -2600,6 +2666,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/Stub.i
@@ -2611,6 +2683,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2630,13 +2704,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -2653,10 +2735,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -2740,13 +2818,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
- $(TAO_ROOT)/tao/TAO_Singleton.h \
- $(TAO_ROOT)/tao/TAO_Singleton.inl \
- $(TAO_ROOT)/tao/TAO_Singleton.cpp \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/DomainC.i \
@@ -2802,6 +2873,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  Object_Adapter.i Operation_Table.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/PolicyS.h \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
@@ -2838,6 +2915,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB.h \
@@ -2854,9 +2937,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp
+ $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/FT_CORBAS.o .obj/FT_CORBAS.so .shobj/FT_CORBAS.o .shobj/FT_CORBAS.so: FT_CORBAS.cpp FT_CORBAS.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -2866,6 +2947,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2885,13 +2968,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -2908,10 +2999,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -2995,13 +3082,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
- $(TAO_ROOT)/tao/TAO_Singleton.h \
- $(TAO_ROOT)/tao/TAO_Singleton.inl \
- $(TAO_ROOT)/tao/TAO_Singleton.cpp \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/DomainC.i \
@@ -3016,6 +3096,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/ORB_Manager.o .obj/ORB_Manager.so .shobj/ORB_Manager.o .shobj/ORB_Manager.so: ORB_Manager.cpp ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  PortableServer.h portableserver_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3040,13 +3122,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -3063,10 +3153,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -3153,13 +3239,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
- $(TAO_ROOT)/tao/TAO_Singleton.h \
- $(TAO_ROOT)/tao/TAO_Singleton.inl \
- $(TAO_ROOT)/tao/TAO_Singleton.cpp \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
@@ -3169,6 +3248,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3188,6 +3269,18 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  Servant_Base.h PortableServerC.h portableserver_export.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -3196,10 +3289,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -3216,10 +3305,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -3304,13 +3389,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
- $(TAO_ROOT)/tao/TAO_Singleton.h \
- $(TAO_ROOT)/tao/TAO_Singleton.inl \
- $(TAO_ROOT)/tao/TAO_Singleton.cpp \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
- $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
@@ -3319,6 +3397,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/ImplRepoC.o .obj/ImplRepoC.so .shobj/ImplRepoC.o .shobj/ImplRepoC.so: ImplRepoC.cpp ImplRepoC.h \
  $(ACE_ROOT)/ace/pre.h \
  portableserver_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3344,13 +3424,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -3367,10 +3455,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -3498,6 +3582,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/Encodable.h \
  $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB.h \
@@ -3517,8 +3607,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
@@ -3537,22 +3625,11 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
  $(TAO_ROOT)/tao/ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.h \
@@ -3573,6 +3650,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/ImplRepoS.o .obj/ImplRepoS.so .shobj/ImplRepoS.o .shobj/ImplRepoS.so: ImplRepoS.cpp ImplRepoS.h \
  $(ACE_ROOT)/ace/pre.h \
  ImplRepoC.h portableserver_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3598,13 +3677,21 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -3621,10 +3708,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -3783,6 +3866,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB.h \
@@ -3800,8 +3889,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
@@ -3815,12 +3902,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Principal.h \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/GIOP_Message_Base.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/GIOP_Message_Base.i \
  $(TAO_ROOT)/tao/Tagged_Profile.h \
  $(TAO_ROOT)/tao/GIOPC.h \
@@ -3835,8 +3916,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i
 
@@ -3844,6 +3923,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -3863,6 +3944,18 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  MessagingS.h PortableServerC.h portableserver_export.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -3871,10 +3964,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -3891,10 +3980,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -3977,16 +4062,14 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
- $(TAO_ROOT)/tao/Smart_Proxies.h \
- $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/MessagingC.i \
+ MessagingS_T.h MessagingS_T.i MessagingS_T.cpp MessagingS.i \
+ Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
- $(TAO_ROOT)/tao/MessagingC.i \
- MessagingS_T.h MessagingS_T.i MessagingS_T.cpp MessagingS.i \
- Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -4073,6 +4156,12 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
  $(TAO_ROOT)/tao/Tagged_Components.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Pluggable_Messaging.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Profile.i \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB.h \
@@ -4094,8 +4183,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp
+ $(TAO_ROOT)/tao/ORB_Core.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -189,7 +189,7 @@ template class ACE_Hash_Cache_Map_Manager<TAO_ADDR, TAO_HANDLER *, TAO_HASH_KEY,
 
 template class ACE_LRU_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>;
 
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES) 
+#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
 #if (TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 0)
 
 template class ACE_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>;
@@ -285,7 +285,7 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 
 #pragma instantiate ACE_LRU_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
 
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES) 
+#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
 #if (TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 0)
 
 #pragma instantiate ACE_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
@@ -456,16 +456,16 @@ TAO_UIOP_Connector::close (void)
 }
 
 int
-TAO_UIOP_Connector::connect (TAO_Endpoint *endpoint
+TAO_UIOP_Connector::connect (TAO_Endpoint *endpoint,
                              TAO_Transport *& transport,
                              ACE_Time_Value *max_wait_time)
 {
   if (endpoint->tag () != TAO_TAG_UIOP_PROFILE)
     return -1;
 
-  TAO_UIOP_Profile *uiop_endpoint =
+  TAO_UIOP_Endpoint *uiop_endpoint =
     ACE_dynamic_cast (TAO_UIOP_Endpoint *,
-                      profile);
+                      endpoint);
   if (uiop_endpoint == 0)
     return -1;
 

@@ -24,7 +24,7 @@ TAO_UIOP_Endpoint::hash (void)
 ACE_INLINE CORBA::Boolean
 TAO_UIOP_Endpoint::is_equivalent (const TAO_UIOP_Endpoint *other_endpoint)
 {
-  return 
+  return
     ACE_OS::strcmp (this->rendezvous_point (),
                     other_endpoint->rendezvous_point ()) == 0;
 }
@@ -36,10 +36,9 @@ TAO_UIOP_Endpoint::rendezvous_point (void) const
 }
 
 ACE_INLINE TAO_Endpoint *
-TAO_SHMIOP_Endpoint::next (void)
+TAO_UIOP_Endpoint::next (void)
 {
   return this->next_;
 }
 
 #endif  /* TAO_HAS_UIOP == 1 */
-
