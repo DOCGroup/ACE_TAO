@@ -311,7 +311,8 @@ TAO_GIOP::send_request (TAO_Transport  *transport,
 // static CORBA::Octet
 static const char close_message [TAO_GIOP_HEADER_LEN] =
 {
-  'G', 'I', 'O', 'P',
+  // 'G', 'I', 'O', 'P',
+  0x47, 0x49, 0x4f, 0x50, // work on non-ASCII platforms...
   TAO_GIOP_MessageHeader::MY_MAJOR,
   TAO_GIOP_MessageHeader::MY_MINOR,
   TAO_ENCAP_BYTE_ORDER,
@@ -356,7 +357,8 @@ TAO_GIOP::close_connection (TAO_Transport *transport, void *)
 static const char
 error_message [TAO_GIOP_HEADER_LEN] =
 {
-  'G', 'I', 'O', 'P',
+  // 'G', 'I', 'O', 'P',
+  0x47, 0x49, 0x4f, 0x50, // work on non-ASCII platforms...
   TAO_GIOP_MessageHeader::MY_MAJOR,
   TAO_GIOP_MessageHeader::MY_MINOR,
   TAO_ENCAP_BYTE_ORDER,
@@ -604,10 +606,12 @@ TAO_GIOP::parse_header_std (TAO_InputCDR &cdr,
 {
   char *header = cdr.start_.rd_ptr ();
 
-  if (!(header [0] == 'G'
-        && header [1] == 'I'
-        && header [2] == 'O'
-        && header [3] == 'P'))
+  // The values are hard-coded to support non-ASCII platforms
+  if (!(header [0] == 0x47    // 'G'
+        && header [1] == 0x49 // 'I'
+        && header [2] == 0x4f // 'O'
+        && header [3] == 0x50 // 'P'
+        ))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "TAO: (%P|%t) bad header, magic word [%c%c%c%c]\n",
@@ -704,7 +708,8 @@ TAO_GIOP::start_message_std (TAO_GIOP::Message_Type type,
 
   static CORBA::Octet header[] =
   {
-    'G', 'I', 'O', 'P',
+    // 'G', 'I', 'O', 'P',
+    0x47, 0x49, 0x4f, 0x50, // work on non-ASCII platforms...
     TAO_GIOP_MessageHeader::MY_MAJOR,
     TAO_GIOP_MessageHeader::MY_MINOR,
     TAO_ENCAP_BYTE_ORDER
