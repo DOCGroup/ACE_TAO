@@ -91,6 +91,12 @@
 #   define ACE_TEMPLATE_METHOD_SPECIALIZATION
 # endif /* ACE_HAS_STD_TEMPLATE_SPECIALIZATION */
 
+# if defined (ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION)
+#   define ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
+# else
+#   define ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION template<>
+# endif /* ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION */
+
 // =========================================================================
 // Perfect Multicast filting refers to RFC 3376, where a socket is only
 // delivered dgrams for groups joined even if it didn't bind the group
