@@ -57,10 +57,20 @@ private:
   // Depth of the recursion.
 };
 
+extern "C"
+void 
+exithook (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "we're outta here!\n"));
+}
+
 int 
 main (int argc, char *argv[])
 {
   const size_t MAX_DEPTH = argc == 1 ? 10 : atoi (argv[1]);
+
+  ACE_OS::atexit (exithook);
 
   if (argc > 2)
     ACE_Trace::set_nesting_indent (ACE_OS::atoi (argv[2]));
