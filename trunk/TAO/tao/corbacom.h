@@ -174,7 +174,13 @@ struct CORBA_SEQUENCE
     : maximum (0),
       length (0),
       buffer (0),
-      release (CORBA::B_FALSE) { }
+#  if SIZEOF_BOOL != 0
+      release (false) { }
+#  else /* "bool" not builtin to this compiler */
+      // The following hard-codes the definition of CORBA::B_FALSE here, but
+      // this class will be disappearing soon . . .
+      release (0 /* CORBA::B_FALSE */) { }
+#  endif /* "bool" not builtin */
 
   // XXX destructor should free buffer, elements!!
   ~CORBA_SEQUENCE (void) { }
