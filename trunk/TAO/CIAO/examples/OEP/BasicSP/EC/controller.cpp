@@ -11,7 +11,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
 
-char *rategen_ior_ = 0;
+const char *rategen_ior_ = 0;
 int rate = 2;
 int turn_on = 1;
 
@@ -22,42 +22,49 @@ parse_args (int argc, char *argv[])
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        turn_on = 1;
+    {
+      switch (c)
+        {
+        case 'o':
+          turn_on = 1;
+          break;
+
+        case 'f':
+          turn_on = 0;
+          break;
+
+        case 'k':
+          rategen_ior_ = get_opts.opt_arg ();
+          break;
+
+        case 'r':
+        rate = atoi (get_opts.opt_arg ());
         break;
 
-      case 'f':
-        turn_on = 0;
-        break;
-
-      case 'k':
-        rategen_ior_ = get_opts.opt_arg ();
-        break;
-
-      case 'r':
-       rate = atoi (get_opts.opt_arg ());
-      break;
-
-      case '?':  // display help for use of the server.
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s\n"
-                           "-o (Turn on the rate generator)\n"
-                           "-f (Turn off the rate generator)\n"
-                           "-k <EC IOR> (default is file://rategen.ior)\n"
-                           "-r <rate in hertz> (default is 3)\n"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+        case '?':  // display help for use of the server.
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s\n"
+                             "-o (Turn on the rate generator)\n"
+                             "-f (Turn off the rate generator)\n"
+                             "-k <EC IOR> (default is file://rategen.ior)\n"
+                             "-r <rate in hertz> (default is 3)\n"
+                             "\n",
+                             argv [0]),
+                            -1);
+          break;
+        }
+    }
 
   if (rategen_ior_ == 0)
-    rategen_ior_ = "file://ec.ior";
+    {
+      rategen_ior_ = "file://ec.ior";
+    }
 
   if (rate == 0)
-    rate = 3;
+    {
+      rate = 3;
+    }
 
   return 0;
 }
@@ -69,17 +76,19 @@ main (int argc, char *argv[])
     {
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init (argc, 
-		                            argv,
-					    ""
-					    ACE_ENV_ARG_PARAMETER);
+		                                        argv,
+					                                  ""
+					                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
-        return -1;
+        {
+          return -1;
+        }
 
-      CORBA::Object_var obj
-        = orb->string_to_object (rategen_ior_
-                                 ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var obj =
+        orb->string_to_object (rategen_ior_
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       BasicSP::EC_var pulser
@@ -88,7 +97,11 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (pulser.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR, "Unable to acquire 'EC' objref\n"), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, 
+                             "Unable to acquire 'EC' objref\n"),
+                            -1);
+        }
 
       pulser->hertz (rate
                      ACE_ENV_ARG_PARAMETER);

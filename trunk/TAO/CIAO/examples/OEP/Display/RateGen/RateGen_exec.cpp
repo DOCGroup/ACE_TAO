@@ -36,7 +36,10 @@ MyImpl::Pulse_Handler::close ()
   this->reactor ()->notify ();
 
   if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "Waiting\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG, "Waiting\n"));
+    }
+    
   return this->wait ();
 }
 
@@ -44,7 +47,9 @@ int
 MyImpl::Pulse_Handler::start (CORBA::Long hertz)
 {
   if (hertz == 0 || this->active_ != 0)        // Not valid
-    return -1;
+    {
+      return -1;
+    }
 
   long usec = 1000000 / hertz;
 
@@ -61,7 +66,9 @@ int
 MyImpl::Pulse_Handler::stop (void)
 {
   if (this->active_ == 0)       // Not valid.
-    return -1;
+    {
+      return -1;
+    }
 
   this->reactor ()->cancel_timer (this);
 
@@ -80,11 +87,13 @@ MyImpl::Pulse_Handler::handle_close (ACE_HANDLE handle,
                                      ACE_Reactor_Mask close_mask)
 {
   if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("[%x] handle = %d, close_mask = %d\n"),
-                this,
-                handle,
-                close_mask));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("[%x] handle = %d, close_mask = %d\n"),
+                  this,
+                  handle,
+                  close_mask));
+    }
 
   return 0;
 }
@@ -110,7 +119,9 @@ MyImpl::Pulse_Handler::svc (void)
   this->reactor ()->owner (ACE_OS::thr_self ());
 
   while (!this->done_)
-    this->reactor ()->handle_events ();
+    {
+      this->reactor ()->handle_events ();
+    }
 
   return 0;
 }
@@ -143,7 +154,7 @@ MyImpl::RateGen_exec_i::hertz (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 MyImpl::RateGen_exec_i::hertz (CORBA::Long hertz
-                                  ACE_ENV_ARG_DECL_NOT_USED)
+                               ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->hertz_ = hertz;
@@ -156,7 +167,9 @@ MyImpl::RateGen_exec_i::start (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->hertz_ == 0 || this->pulser_.active())
-    ACE_THROW (CORBA::BAD_INV_ORDER ());
+    {
+      ACE_THROW (CORBA::BAD_INV_ORDER ());
+    }
 
   // @@ Start the rate generator
   this->pulser_.start (this->hertz_);
@@ -167,7 +180,9 @@ MyImpl::RateGen_exec_i::stop (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (! this->pulser_.active ())
-    ACE_THROW (CORBA::BAD_INV_ORDER ());
+    {
+      ACE_THROW (CORBA::BAD_INV_ORDER ());
+    }
 
   // @@ stop the rate generator
   this->pulser_.stop ();
@@ -183,13 +198,18 @@ MyImpl::RateGen_exec_i::active (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 // Operations from Components::SessionComponent
 
 void
-MyImpl::RateGen_exec_i::set_session_context (Components::SessionContext_ptr ctx
-                                             ACE_ENV_ARG_DECL)
+MyImpl::RateGen_exec_i::set_session_context (
+    Components::SessionContext_ptr ctx
+    ACE_ENV_ARG_DECL
+  )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::RateGen_exec_i::set_session_context\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "MyImpl::RateGen_exec_i::set_session_context\n"));
+    }
 
   this->context_ =
     HUDisplay::CCM_RateGen_Context::_narrow (ctx
@@ -197,7 +217,9 @@ MyImpl::RateGen_exec_i::set_session_context (Components::SessionContext_ptr ctx
   ACE_CHECK;
 
   if (CORBA::is_nil (this->context_.in ()))
-    ACE_THROW (CORBA::INTERNAL ());
+    {
+      ACE_THROW (CORBA::INTERNAL ());
+    }
   // Urm, we actually discard exceptions thown from this operation.
 
 }
@@ -215,7 +237,10 @@ MyImpl::RateGen_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::RateGen_exec_i::ccm_activate\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "MyImpl::RateGen_exec_i::ccm_activate\n"));
+    }
 
   this->pulser_.open ();
 }
@@ -233,7 +258,11 @@ MyImpl::RateGen_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::RateGen_exec_i::ccm_passivate\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "MyImpl::RateGen_exec_i::ccm_passivate\n"));
+    }
+    
   this->pulser_.close ();
 }
 
@@ -243,7 +272,10 @@ MyImpl::RateGen_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::RateGen_exec_i::ccm_remove\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "MyImpl::RateGen_exec_i::ccm_remove\n"));
+    }
 }
 
 void
@@ -252,8 +284,10 @@ MyImpl::RateGen_exec_i::pulse (void)
   ACE_TRY_NEW_ENV
     {
       if (CIAO::debug_level () > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Pushing HUDisplay::tick event!\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Pushing HUDisplay::tick event!\n")));
+        }
 
       HUDisplay::tick_var ev = new OBV_HUDisplay::tick ();
 
@@ -278,14 +312,14 @@ MyImpl::RateGenHome_exec_i::~RateGenHome_exec_i ()
 }
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::RateGenHome_exec_i::new_RateGen (CORBA::Long hertz
+MyImpl::RateGenHome_exec_i::new_RateGen (CORBA::Long /* hertz */
                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Components::EnterpriseComponent_ptr tmp = 0;
   ACE_NEW_THROW_EX (tmp,
-		    MyImpl::RateGen_exec_i,
-		    CORBA::NO_MEMORY ());
+		                MyImpl::RateGen_exec_i,
+		                CORBA::NO_MEMORY ());
   return tmp;
 }
 

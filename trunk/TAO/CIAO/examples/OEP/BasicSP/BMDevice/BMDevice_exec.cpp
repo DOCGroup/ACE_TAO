@@ -33,8 +33,10 @@ MyImpl::BMDevice_exec_i::push_timeout (BasicSP::TimeOut *
   BasicSP::DataAvailable_var event = new OBV_BasicSP::DataAvailable;
 
   if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "BMDevice, received a timeout from EC \n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "BMDevice, received a timeout from EC \n"));
+    }
 
   this->context_->push_data_available (event
                                        ACE_ENV_ARG_PARAMETER);
@@ -56,21 +58,28 @@ MyImpl::BMDevice_exec_i::get_data (ACE_ENV_SINGLE_ARG_DECL)
 
 // Operations from Components::SessionComponent
 void
-MyImpl::BMDevice_exec_i::set_session_context (Components::SessionContext_ptr ctx
-                                         ACE_ENV_ARG_DECL)
+MyImpl::BMDevice_exec_i::set_session_context (
+    Components::SessionContext_ptr ctx
+    ACE_ENV_ARG_DECL
+  )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::BMDevice_exec_i::set_session_context\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG, 
+                  "MyImpl::BMDevice_exec_i::set_session_context\n"));
+    }
 
   this->context_ =
     BasicSP::CCM_BMDevice_Context::_narrow (ctx
-                                         ACE_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (this->context_.in ()))
-    ACE_THROW (CORBA::INTERNAL ());
+    {
+      ACE_THROW (CORBA::INTERNAL ());
+    }
   // Urm, we actually discard exceptions thown from this operation.
 }
 
@@ -87,17 +96,22 @@ MyImpl::BMDevice_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::BMDevice_exec_i::ccm_activate\n"));
-  char *argv[1] = { "BMDevice_exec"};
-
-  int argc = sizeof(argv)/sizeof(argv[0]);
-  CORBA::ORB_var orb = CORBA::ORB_init(argc, 
-		                       argv,
-				       ""
-				       ACE_ENV_ARG_PARAMETER);
+    {
+      ACE_DEBUG ((LM_DEBUG, 
+                  "MyImpl::BMDevice_exec_i::ccm_activate\n"));
+    }
+    
+  char *argv[1];
+  argv[0] = "BMDevice_exec";
+  int argc = sizeof (argv)/sizeof (argv[0]);
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+		                                    argv,
+				                                ""
+				                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CIAO_REGISTER_VALUE_FACTORY (orb.in(), BasicSP::TimeOut_init,
+  CIAO_REGISTER_VALUE_FACTORY (orb.in(), 
+                               BasicSP::TimeOut_init,
                                BasicSP::TimeOut);
 }
 
@@ -114,7 +128,10 @@ MyImpl::BMDevice_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::BMDevice_exec_i::ccm_passivate\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG, 
+                  "MyImpl::BMDevice_exec_i::ccm_passivate\n"));
+    }
 }
 
 void
@@ -123,7 +140,10 @@ MyImpl::BMDevice_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::BMDevice_exec_i::ccm_remove\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG, 
+                  "MyImpl::BMDevice_exec_i::ccm_remove\n"));
+    }
 }
 
 /// Default ctor.
@@ -148,7 +168,7 @@ MyImpl::BMDeviceHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
   Components::EnterpriseComponent_ptr tmp= 0;
   ACE_NEW_THROW_EX (tmp,
                     MyImpl::BMDevice_exec_i,
-		    CORBA::NO_MEMORY ());
+		                CORBA::NO_MEMORY ());
 
   return tmp;
 }

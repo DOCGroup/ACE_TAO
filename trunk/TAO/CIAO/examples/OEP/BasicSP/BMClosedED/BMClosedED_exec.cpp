@@ -45,29 +45,30 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *
   ACE_CHECK;
 
   if (CORBA::is_nil (dat.in ()))
-  {
-    ACE_DEBUG ((LM_DEBUG,
-                "BMClosedED - got nil from get_connection \n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "BMClosedED - got nil from get_connection \n"));
 
-    ACE_THROW (CORBA::BAD_INV_ORDER ());
-  }
+      ACE_THROW (CORBA::BAD_INV_ORDER ());
+    }
 
   CORBA::String_var str =
     dat->get_data (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CIAO::debug_level () > 0)
-
-    ACE_DEBUG ((LM_DEBUG,
-                "BMClosedED - Display data is [%s] \n",
-                str.in ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "BMClosedED - Display data is [%s] \n",
+                  str.in ()));
+    }
 
   if (ACE_OS::strcmp (str, "BM DEVICE DATA") == 0)
     {
       this->str_ = CORBA::string_dup ("BM CLOSED ED DATA");
     }
 
-  // Notify others
+  // Notify others.
   BasicSP::DataAvailable_var event =
     new OBV_BasicSP::DataAvailable;
 
@@ -87,13 +88,18 @@ MyImpl::BMClosedED_exec_i::get_data (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 // Operations from Components::SessionComponent
 void
-MyImpl::BMClosedED_exec_i::set_session_context (Components::SessionContext_ptr ctx
-                                         ACE_ENV_ARG_DECL)
+MyImpl::BMClosedED_exec_i::set_session_context (
+    Components::SessionContext_ptr ctx
+    ACE_ENV_ARG_DECL
+  )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::BMClosedED_exec_i::set_session_context\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "MyImpl::BMClosedED_exec_i::set_session_context\n"));
+    }
 
   this->context_ =
     BasicSP::CCM_BMClosedED_Context::_narrow (ctx
@@ -101,7 +107,9 @@ MyImpl::BMClosedED_exec_i::set_session_context (Components::SessionContext_ptr c
   ACE_CHECK;
 
   if (CORBA::is_nil (this->context_.in ()))
-    ACE_THROW (CORBA::INTERNAL ());
+    {
+      ACE_THROW (CORBA::INTERNAL ());
+    }
   // Urm, we actually discard exceptions thown from this operation.
 }
 
@@ -119,18 +127,22 @@ MyImpl::BMClosedED_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::BMClosedED_exec_i::ccm_activate\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "MyImpl::BMClosedED_exec_i::ccm_activate\n"));
+    }
 
-  char *argv[1] = { "BMClosedED_exec"};
-
-  int argc = sizeof(argv)/sizeof(argv[0]);
+  char *argv[1];
+  argv[0] = "BMClosedED_exec";
+  int argc = sizeof (argv)/sizeof (argv[0]);
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
-		                        argv,
-					""
-					ACE_ENV_ARG_PARAMETER);
+		                                    argv,
+					                              ""
+					                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CIAO_REGISTER_VALUE_FACTORY (orb.in(), BasicSP::DataAvailable_init,
+  CIAO_REGISTER_VALUE_FACTORY (orb.in(), 
+                               BasicSP::DataAvailable_init,
                                BasicSP::DataAvailable);
 }
 
@@ -148,7 +160,8 @@ MyImpl::BMClosedED_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                    Components::CCMException))
 {
   //  if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::BMClosedED_exec_i::ccm_passivate\n"));
+    ACE_DEBUG ((LM_DEBUG,
+                "MyImpl::BMClosedED_exec_i::ccm_passivate\n"));
 }
 
 void
@@ -157,7 +170,8 @@ MyImpl::BMClosedED_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                    Components::CCMException))
 {
   //  if (CIAO::debug_level () > 0)
-    ACE_DEBUG ((LM_DEBUG, "MyImpl::BMClosedED_exec_i::ccm_remove\n"));
+    ACE_DEBUG ((LM_DEBUG,
+                "MyImpl::BMClosedED_exec_i::ccm_remove\n"));
 }
 
 /// Default ctor.
@@ -179,10 +193,11 @@ MyImpl::BMClosedEDHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  Components::EnterpriseComponent_ptr tmp;
+  Components::EnterpriseComponent_ptr tmp =
+    Components::EnterpriseComponent::_nil ();
   ACE_NEW_THROW_EX (tmp,
-		    MyImpl::BMClosedED_exec_i,
-		    CORBA::NO_MEMORY ());
+		                MyImpl::BMClosedED_exec_i,
+		                CORBA::NO_MEMORY ());
   return tmp;
 }
 
