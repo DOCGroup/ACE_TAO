@@ -1,3 +1,32 @@
+Thu Feb 20 12:29:17 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Profile.h:
+	* tao/Profile.cpp:
+	* tao/Profile.i: Moved the ObjectKey from the inherited classes
+	  to the base class. Added a new protected constructor which can
+	  be used by the inherited classes to initialize the ObjectKey
+	  properly. Also added a new method set_tagged_components () which
+	  is a helper method useful for creating Tagged_Components of an
+	  IOR from a CDR stream. Uninlined the constructor, destructor and
+	  the methods for refcounted memory management.
+
+	* tao/IIOP_Profile.h:
+	* tao/IIOP_Profile.cpp:
+	* tao/Strategies/DIOP_Profile.h:
+	* tao/Strategies/DIOP_Profile.cpp:
+	* tao/Strategies/UIOP_Profile.h:
+	* tao/Strategies/UIOP_Profile.cpp:
+	* tao/Strategies/SHMIOP_Profile.h:
+	* tao/Strategies/SHMIOP_Profile.cpp: Removed the ObjectKey from
+	  the following classes since it has now been moved to the base
+	  class. 
+	  
+	  Used the protected constructor in the base class while base
+	  member initializations.  
+
+	  Call the set_tagged_componets () to place a list of
+	  IIOPEndpoints in the Tagged_Components contained in the profile.
+	
 Thu Feb 20 12:10:13 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Tagged_Components.h:

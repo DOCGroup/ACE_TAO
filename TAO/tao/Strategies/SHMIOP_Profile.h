@@ -28,7 +28,6 @@
 
 #include "strategies_export.h"
 #include "tao/Profile.h"
-#include "tao/Object_KeyC.h"
 #include "SHMIOP_Endpoint.h"
 
 #include "ace/Synch.h"
@@ -174,9 +173,6 @@ private:
 
   /// Number of endpoints in the list headed by <endpoint_>.
   size_t count_;
-
-  /// Object_key associated with this profile.
-  TAO_ObjectKey object_key_;
 };
 
 #if defined (__ACE_INLINE__)

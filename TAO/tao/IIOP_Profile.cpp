@@ -34,11 +34,13 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                                     const TAO_ObjectKey &object_key,
                                     const TAO_GIOP_Message_Version &version,
                                     TAO_ORB_Core *orb_core)
-  : TAO_Profile (IOP::TAG_INTERNET_IOP, orb_core, version),
+  : TAO_Profile (IOP::TAG_INTERNET_IOP,
+                 orb_core,
+                 object_key,
+                 version),
     endpoint_ (addr,
                orb_core->orb_params ()->use_dotted_decimal_addresses ()),
-    count_ (1),
-    object_key_ (object_key)
+    count_ (1)
 {
 }
 
@@ -48,10 +50,12 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
                                     const ACE_INET_Addr &addr,
                                     const TAO_GIOP_Message_Version &version,
                                     TAO_ORB_Core *orb_core)
-  : TAO_Profile (IOP::TAG_INTERNET_IOP, orb_core, version),
+  : TAO_Profile (IOP::TAG_INTERNET_IOP,
+                 orb_core,
+                 object_key,
+                 version),
     endpoint_ (host, port, addr),
-    count_ (1),
-    object_key_ (object_key)
+    count_ (1)
 {
 }
 
@@ -60,8 +64,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (TAO_ORB_Core *orb_core)
                  orb_core,
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
     endpoint_ (),
-    count_ (1),
-    object_key_ ()
+    count_ (1)
 {
 }
 
@@ -500,27 +503,8 @@ TAO_IIOP_Profile::encode_endpoints (void)
        == 0)
       || (out_cdr << endpoints) == 0)
     return -1;
-  CORBA::ULong length = out_cdr.total_length ();
 
-  IOP::TaggedComponent tagged_component;
-  tagged_component.tag = TAO_TAG_ENDPOINTS;
-  tagged_component.component_data.length (length);
-  CORBA::Octet *buf =
-    tagged_component.component_data.get_buffer ();
-
-  for (const ACE_Message_Block *iterator = out_cdr.begin ();
-       iterator != 0;
-       iterator = iterator->cont ())
-    {
-      CORBA::ULong i_length = iterator->length ();
-      ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
-
-      buf += i_length;
-    }
-
-  // Add component with encoded endpoint data to this profile's
-  // TaggedComponents.
-  tagged_components_.set_component (tagged_component);
+  this->set_tagged_components (out_cdr);
 
   return  0;
 }
