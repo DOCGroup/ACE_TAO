@@ -208,11 +208,11 @@ enum TAO_GIOP_ReplyStatusType
   TAO_GIOP_NO_EXCEPTION,
   // Request completed successfully
 
-  TAO_GIOP_SYSTEM_EXCEPTION,
-  // Request terminated with system exception
-
   TAO_GIOP_USER_EXCEPTION,
   // Request terminated with user exception
+
+  TAO_GIOP_SYSTEM_EXCEPTION,
+  // Request terminated with system exception
 
   TAO_GIOP_LOCATION_FORWARD
   // Reply is a location forward type
