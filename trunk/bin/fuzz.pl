@@ -103,7 +103,7 @@ sub store_file ($)
     elsif ($name =~ /\.pl$/i) {
         push @files_pl, ($name);
     }
-    elsif ($name =~ /ChangeLog/i) {
+    elsif ($name =~ /ChangeLog/i && -f $name) {
         push @files_changelog, ($name);
     }
 }
