@@ -25,12 +25,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/FT_ReplicationManager/FT_FaultAnalyzer.h"
-
-// #include "orbsvcs/CosNotifyCommS.h"
-// #include "orbsvcs/FT_NotifierC.h"
-// #include "orbsvcs/FT_ReplicationManagerC.h"
-// #include "orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.h"
+#include "FT_ReplicationManagerLib_export.h"
+#include "FT_FaultAnalyzer.h"
 
 namespace TAO
 {
@@ -39,7 +35,7 @@ namespace TAO
   * Default fault analyzer.
   *
   */
-  class FT_DefaultFaultAnalyzer
+  class TAO_ReplicationManagerLib_Export FT_DefaultFaultAnalyzer
     : public TAO::FT_FaultAnalyzer
   {
 

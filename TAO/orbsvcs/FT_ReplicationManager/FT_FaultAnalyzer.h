@@ -22,6 +22,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "FT_ReplicationManagerLib_export.h"
 #include "orbsvcs/CosNotifyCommC.h"
 
 namespace TAO
@@ -30,7 +31,7 @@ namespace TAO
   * Abstract base class for application-defined fault analyzers.
   *
   */
-  class FT_FaultAnalyzer
+  class TAO_ReplicationManagerLib_Export FT_FaultAnalyzer
   {
 
   public:
