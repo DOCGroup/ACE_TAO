@@ -3,6 +3,9 @@ Fri Apr 02 23:25:11 1999  David L. Levine  <levine@cs.wustl.edu>
         * bin/make_release: added TAO/tao/Version.h.  Thanks to
           Nanbor for suggesting this.
 
+        * ace/OS.cpp: removed use of ACE_Array for with WIN32 and
+          TSS_EMULATION.
+
 Fri Apr  2 19:19:09 1999  Ossama Othman  <othman@cs.wustl.edu>
 
         * bin/autogen: Update NEWS file by copying VERSION.  Temporary
