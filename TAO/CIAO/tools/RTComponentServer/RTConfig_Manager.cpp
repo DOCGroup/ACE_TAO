@@ -252,7 +252,7 @@ CIAO::RTPolicy_Set_Manager::create_single_policy
 
     case RTCORBA::THREADPOOL_POLICY_TYPE:
       {
-        char *idref;
+        const char *idref;
         policy_config.configuration >>= idref;
         RTCORBA::ThreadpoolId tpid =
           this->resource_manager_.find_threadpool_by_name (idref
@@ -267,7 +267,7 @@ CIAO::RTPolicy_Set_Manager::create_single_policy
 
     case RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE:
       {
-        char *idref;
+        const char *idref;
         policy_config.configuration >>= idref;
         RTCORBA::PriorityBands_var bands =
           this->resource_manager_.find_priority_bands_by_name (idref
