@@ -40,7 +40,7 @@ TAO_Unbounded_Sequence<T>::operator=
 	  T* tmp = ACE_reinterpret_cast(T*,this->buffer_);
 	  TAO_Unbounded_Sequence<T>::freebuf (tmp);
 	  this->buffer_ =
-	    TAO_Unbounded_Sequence<T>::allocbuf (this->maximum_);
+	    TAO_Unbounded_Sequence<T>::allocbuf (rhs.maximum_);
 	}
     }
   else
@@ -127,7 +127,7 @@ operator= (const TAO_Bounded_Sequence<T,MAX> &rhs)
 	  T* tmp = ACE_reinterpret_cast(T*,this->buffer_);
 	  TAO_Bounded_Sequence<T>::freebuf (tmp);
 	  this->buffer_ =
-	    TAO_Bounded_Sequence<T>::allocbuf (this->maximum_);
+	    TAO_Bounded_Sequence<T>::allocbuf (rhs.maximum_);
 	}
 #endif /* 0 */
     }

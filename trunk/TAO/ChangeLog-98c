@@ -1,3 +1,9 @@
+Mon Feb  2 18:08:21 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/sequence_T.cpp: 
+	  Fixed problems in memory reallocation for
+	  TAO_Unbounded_Sequence<T>::operator=().
+
 Mon Feb  2 13:47:23 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
 	* tao/Makefile: Renamed tao_util to tao. Ditto for the .h and .cpp
