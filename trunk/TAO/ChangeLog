@@ -1,3 +1,20 @@
+Sat Dec 11 14:29:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ObjectIdList.pidl:
+          Updated regeneration instructions
+
+        * tao/ObjectIdListC.{h,cpp,inl,i}:
+          Regenerated and replace .i file with .inl variant
+
+        * tao/ObjectIdListA.cpp:
+          New generated file
+
+        * tao/tao.mpc:
+          Added ObjectIdListA.cpp
+
+        * tao/Makefile.am:
+          Updated because of changes above
+
 Sat Dec 11 14:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI_Forward.pidl:
