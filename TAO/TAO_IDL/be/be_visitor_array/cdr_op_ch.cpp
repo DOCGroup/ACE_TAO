@@ -50,22 +50,67 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  AST_Type *bt = node->base_type ();
+  be_type *bt = be_type::narrow_from_decl (node->base_type ());
   AST_Decl::NodeType nt = bt->node_type ();
 
   // If the node is an array of anonymous sequence, we need to
   // generate the sequence's cdr operator declaration here.
   if (nt == AST_Decl::NT_sequence && bt->anonymous ())
     {
-      be_sequence *bs = be_sequence::narrow_from_decl (bt);
       be_visitor_sequence_cdr_op_ch visitor (this->ctx_);
 
-      if (bs->accept (&visitor) == -1)
+      if (bt->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "be_visitor_array_cdr_op_ch::"
                              "visit_array - "
                              "accept on anonymous base type failed\n"),
+                            -1);
+        }
+    }
+
+  // If the array is an anonymous member and if its element type
+  // is a declaration (not a reference), we must generate code for
+  // the declaration.
+  if (this->ctx_->alias () == 0 // Not a typedef.
+      && bt->is_child (this->ctx_->scope ()))
+    {
+      int status = 0;
+      be_visitor_context ctx (*this->ctx_);
+
+      switch (nt)
+      {
+        case AST_Decl::NT_enum:
+          {
+            ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CH);
+            be_visitor_enum_cdr_op_ch ec_visitor (&ctx);
+            status = bt->accept (&ec_visitor);
+            break;
+          }
+        case AST_Decl::NT_struct:
+          {
+            ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CH);
+            be_visitor_structure_cdr_op_ch sc_visitor (&ctx);
+            status = bt->accept (&sc_visitor);
+            break;
+          }
+        case AST_Decl::NT_union:
+          {
+            ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CH);
+            be_visitor_union_cdr_op_ch uc_visitor (&ctx);
+            status = bt->accept (&uc_visitor);
+            break;
+          }
+        default:
+          break;
+      }
+
+      if (status == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_array_ch::"
+                             "visit_array - "
+                             "array base type codegen failed\n"),
                             -1);
         }
     }

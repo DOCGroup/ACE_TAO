@@ -56,7 +56,7 @@ be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
   // it in our parent.
 
   // Set the substate as generating code for the types defined in our scope.
-  this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_SCOPE);
+  this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_SCOPE);
 
   if (this->visit_scope (node) == -1)
     {
@@ -68,7 +68,7 @@ be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
     }
 
   //  Set the sub state as generating code for the output operator.
-  this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
+  this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
 
   *os << "ACE_INLINE" << be_nl
       << "CORBA::Boolean operator<< (" << be_idt << be_idt_nl
@@ -203,6 +203,14 @@ be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
 int
 be_visitor_exception_cdr_op_ci::post_process (be_decl *bd)
 {
+  // This checks for members of an enum 'non-scope' declared inside
+  // the exception. If an enum val is actually a member, it will 
+  // have node type NT_field.
+  if (bd->node_type () == AST_Decl::NT_enum_val)
+    {
+      return 0;
+    }
+
   TAO_OutStream *os = this->ctx_->stream ();
 
   if (!this->last_node (bd))
