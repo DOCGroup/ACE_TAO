@@ -16,7 +16,8 @@ ACE_RCSID (tao,
 
 // Constructor.
 TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (
-    TAO_ORB_Core *orb_core
+    TAO_ORB_Core *orb_core,
+    ACE_Allocator *allocator
   )
   : db_ (sizeof buf_,
          ACE_Message_Block::MB_DATA,
@@ -35,6 +36,7 @@ TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (
   , lock_ (0)
   , refcount_ (1)
   , is_reply_dispatched_ (false)
+  , allocator_ (allocator)
 {
   // @@ NOTE: Need a seperate option for this..
   this->lock_ =
@@ -106,7 +108,16 @@ TAO_Asynch_Reply_Dispatcher_Base::decr_refcount (void)
       return this->refcount_;
   }
 
-  delete this;
+  if (this->allocator_)
+    {
+      ACE_DES_FREE (this,
+                    this->allocator_->free,
+                    TAO_Asynch_Reply_Dispatcher_Base);
+    }
+  else
+    {
+      delete this;
+    }
 
   return 0;
 }

@@ -29,6 +29,7 @@ class TAO_ORB_Core ;
 class ACE_Time_Value;
 class TAO_Transport;
 class ACE_Lock;
+class ACE_Allocator;
 
 /**
  * @class TAO_Asynch_Reply_Dispatcher_Base
@@ -36,21 +37,23 @@ class ACE_Lock;
  * @brief Base class for TAO_Asynch_Reply_Dispatcher and
  *  TAO_DII_Deferred_Reply_Dispatcher
  */
-
 class TAO_Export TAO_Asynch_Reply_Dispatcher_Base
   : public TAO_Reply_Dispatcher
 {
 public:
   /// Default constructor.
-  TAO_Asynch_Reply_Dispatcher_Base (TAO_ORB_Core *orb_core);
+  TAO_Asynch_Reply_Dispatcher_Base (TAO_ORB_Core *orb_core,
+                                    ACE_Allocator *allocator = 0);
 
   /// Sets the transport for this invocation.
   void transport (TAO_Transport *t);
 
-  // = The Reply Dispatcher methods
+  /// @name The Reply Dispatcher methods
+  //@{
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &) = 0;
 
   virtual void connection_closed (void) = 0;
+  //@}
 
   /// Inform that the reply timed out
   virtual void reply_timed_out (void) = 0;
@@ -58,13 +61,15 @@ public:
   /// Install the timeout handler
   virtual long schedule_timer (CORBA::ULong ,
                                const ACE_Time_Value &
-                               ACE_ENV_ARG_DECL)= 0;
+                               ACE_ENV_ARG_DECL) = 0;
 
-  /// Mutators for refcount
+  /// @name Mutators for refcount
+  //@{
   long incr_refcount (void);
   long decr_refcount (void);
+  //@}
 
-  /// A helper method that can be used by the sublcasses
+  /// A helper method that can be used by the subclasses
   /**
    * The semantics of this helper method needs careful attention. A
    * call to this method will do the following
@@ -111,7 +116,7 @@ protected:
   TAO_Transport *transport_;
 
 private:
-  /// Lock to protect recount and <is_reply_dispatched_> flag.
+  /// Lock to protect refcount and @c is_reply_dispatched_ flag.
   ACE_Lock *lock_;
 
   /// Refcount paraphernalia for this class
@@ -119,6 +124,10 @@ private:
 
   /// Has the reply been dispatched?
   bool is_reply_dispatched_;
+
+  /// Allocator that was used to allocate this reply dispatcher. In case of
+  /// zero we come from the heap.
+  ACE_Allocator *allocator_;
 };
 
 namespace TAO
