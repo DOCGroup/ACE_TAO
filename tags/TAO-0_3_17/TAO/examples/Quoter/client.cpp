@@ -1,0 +1,404 @@
+// $Id$
+
+#include "ace/Read_Buffer.h"
+#include "orbsvcs/CosNamingC.h"
+#include "client.h"
+
+ACE_RCSID(Quoter, client, "$Id$")
+
+Quoter_Task::Quoter_Task (int argc, char **argv)
+  : argc_ (argc), argv_ (argv)
+{
+  // Nothing
+}
+
+int
+Quoter_Task::svc (void)
+{
+  if (this->quoter_client.init (this->argc_, this->argv_) == -1)
+    return 1;
+  else
+    return this->quoter_client.run ();
+}
+
+// Constructor.
+Quoter_Client::Quoter_Client (void)
+  : quoter_factory_key_ (0),
+    quoter_key_ (ACE_OS::strdup ("key0")),
+    shutdown_ (0),
+    quoter_var_ (Stock::Quoter::_nil ()),
+    useLifeCycleService_(0)  // use the Generic Factory
+{
+  // Nothing
+}
+
+// Parses the command line arguments and returns an error status.
+
+int
+Quoter_Client::parse_args (void)
+{
+  ACE_Get_Opt get_opts (argc_, argv_, "n:dlx");
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+    {
+      case 'n':  // multiple threads
+        // ignore it, it was handled already
+        break;
+      case 'd':  // debug flag
+        TAO_debug_level++;
+        break;
+      case 'l':
+        this->useLifeCycleService_ = 1;
+        break;
+      case 'x':
+        this->shutdown_ = 1;
+        break;
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                          "usage:  %s"
+                          " [-m]"
+                          " [-d]"
+                          " [-l] # use the lifecycle service instead of the generic factory"
+                          " [-x]"
+                          " [-s]"
+                          "\n",
+                          this->argv_ [0]),
+                          -1);
+    }
+
+  // Indicates successful parsing of command line.
+  return 0;
+}
+
+int
+Quoter_Client::run (void)
+{
+  const char *exception_message = "Null Message";
+  ACE_TRY_NEW_ENV
+    {
+      exception_message = "While using get_quote ()";
+      CORBA::Long q = this->quoter_var_->get_quote ("ACE Hardware", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG, "ACE Hardware = %i\n", q));
+
+      // Copy the Quoter
+
+      CosLifeCycle::Criteria criteria;
+      exception_message = "While copying the quoter";
+      CORBA::Object_var quoterObj_var =
+        this->quoter_var_->copy (factory_Finder_var_.in (),
+                                 criteria,
+                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (quoterObj_var.in()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Quoter_Client::run: Copied Object pointer is nil!"),
+                          -1);
+
+      // Narrow it to the actual Quoter interface
+      exception_message = "While narrowing the quoter";
+      Stock::Quoter_var copied_quoter_var =
+        Stock::Quoter::_narrow (quoterObj_var.in (),
+                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (copied_quoter_var.in()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Quoter_Client::run: Copied Quoter is nil!"),
+                          -1);
+
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Copied object.\n"));
+
+      exception_message = "While using get_quote () on copied object";
+      q = copied_quoter_var->get_quote ("ACE Hardware", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG, "Copied object: ACE Hardware = %i\n", q));
+
+      // Move the Quoter
+    
+      exception_message = "While moving the quoter";
+      this->quoter_var_->move (factory_Finder_var_.in (),
+                               criteria,
+                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Caution, the object reference stays the same
+
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Moved object\n"));
+
+      exception_message = "While using get_quote () on moved object";
+      q = this->quoter_var_->get_quote ("ACE Hardware", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG, "Moved object: ACE Hardware = %i\n", q));
+    }
+  ACE_CATCHANY
+    {
+      ACE_ERROR ((LM_ERROR, "Quoter_Client::run - %s\n", exception_message));
+      ACE_TRY_ENV.print_exception ("Quoter_Client::run");
+      return -1;
+    }
+  ACE_ENDTRY;
+  
+  return 0;
+}
+
+Quoter_Client::~Quoter_Client (void)
+{
+  // Free resources
+  // Close the ior files
+  if (this->quoter_factory_key_ != 0)
+    ACE_OS::free (this->quoter_factory_key_);
+  if (this->quoter_key_ != 0)
+    ACE_OS::free (this->quoter_key_);
+}
+
+int
+Quoter_Client::init_naming_service (void)
+{
+  const char *exception_message = "Null Message";
+
+  ACE_TRY_NEW_ENV
+    {
+      // Resolve the Naming Service
+      CORBA::Object_var naming_obj =
+        orb_->resolve_initial_references ("NameService");
+
+      if (CORBA::is_nil (naming_obj.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Unable to resolve the Name Service.\n"),
+                          -1);
+
+      exception_message = "While narrowing the naming context";
+      CosNaming::NamingContext_var naming_context =
+        CosNaming::NamingContext::_narrow (naming_obj.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Have a proper reference to the Naming Service.\n"));
+
+      CosNaming::Name quoterFactoryFinderName (2);
+      quoterFactoryFinderName.length (2);
+      quoterFactoryFinderName[0].id = CORBA::string_dup ("IDL_Quoter");
+      quoterFactoryFinderName[1].id = CORBA::string_dup ("Quoter_Factory_Finder");
+
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Trying to resolve the Quoter Factory Finder!\n"));
+
+      exception_message = "While resolving the factory finder";
+      CORBA::Object_var factory_obj =
+        naming_context->resolve (quoterFactoryFinderName,
+                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Resolved the Quoter Factory Finder!\n"));
+
+      exception_message = "While narrowing the factory finder";
+      factory_Finder_var_ =
+        Stock::Quoter_Factory_Finder::_narrow (factory_obj.in (),
+                                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (factory_Finder_var_.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " could not resolve quoter factory in Naming service <%s>\n"),
+                          -1);
+
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Have a proper reference to the Quoter Factory Finder.\n"));
+
+      // The name of the Quoter Generic Factory
+      CosLifeCycle::Key factoryName (2);  // max = 2
+
+      if (this->useLifeCycleService_ == 1)
+      {
+        // use the LifeCycle Service
+        factoryName.length(1);
+        factoryName[0].id = CORBA::string_dup ("Life_Cycle_Service");
+      }
+      else
+      {
+        // use a Generic Factory
+        factoryName.length(2);
+        factoryName[0].id = CORBA::string_dup ("IDL_Quoter");
+        factoryName[1].id = CORBA::string_dup ("Quoter_Generic_Factory");
+      }
+
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Trying to get a reference of a factory.\n"));
+
+      // Find an appropriate factory over there.
+      exception_message = "While finding factories";
+      CosLifeCycle::Factories_ptr factories_ptr =
+          factory_Finder_var_->find_factories (factoryName, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (factories_ptr == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Did not get a Generic Quoter Factory.\n"),
+                          -1);
+
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Got a proper reference of a factory.\n"));
+
+
+      // Get the first object reference to a factory.
+      CORBA::Object_var quoter_FactoryObj_var;
+
+      if (factories_ptr->length () >= 1)
+        quoter_FactoryObj_var = (*factories_ptr)[0]; // everything is ok, at least one factory is there
+      else
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "No Factory received.\n"),
+                          -1);
+
+      // Narrow it to a Quoter Generic Factory
+      exception_message = "While narrowing the factory";
+      generic_Factory_var_ = 
+        CosLifeCycle::GenericFactory::_narrow (quoter_FactoryObj_var.in (), 
+                                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (this->generic_Factory_var_.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Factory received is not valid.\n"),
+                          -1);
+
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Have a proper reference to the Quoter Factory.\n"));
+    }
+  ACE_CATCH (CosLifeCycle::NoFactory, excpt)
+    {
+      ACE_ERROR ((LM_ERROR, "Quoter_Client::run - %s\n", exception_message));
+      ACE_TRY_ENV.print_exception ("Quoter::init_naming_service: No Factory available!");
+    }
+  ACE_CATCHANY
+    {
+      ACE_ERROR ((LM_ERROR, "Quoter_Client::init_naming_service - %s\n", exception_message));
+      ACE_TRY_ENV.print_exception ("Quoter::init_naming_service");
+      return -1;
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
+int
+Quoter_Client::init (int argc, char **argv)
+{
+  this->argc_ = argc;
+  int i;
+
+  // Make a copy of argv since ORB_init will change it.
+  this->argv_ = new char *[argc];
+
+  for (i = 0; i < argc; i++)
+    this->argv_[i] = argv[i];
+
+  ACE_TRY_NEW_ENV
+    {
+      // Retrieve the ORB.
+      this->orb_ = CORBA::ORB_init (this->argc_,
+                                    this->argv_,
+                                    "internet",
+                                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Parse command line and verify parameters.
+      if (this->parse_args () == -1)
+        return -1;
+
+      int naming_result = this->init_naming_service ();
+      if (naming_result == -1)
+        return naming_result;
+
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Factory received OK\n"));
+
+      // using the Quoter Generic Factory
+      CosLifeCycle::Key genericFactoryName (1);  // max = 1
+      genericFactoryName.length(1);
+      genericFactoryName[0].id = CORBA::string_dup ("Quoter_Factory");
+
+      // The final factory
+
+      CosLifeCycle::Criteria criteria(1);
+      criteria.length (1);
+      criteria[0].name = CORBA::string_dup ("filter");
+      criteria[0].value <<= CORBA::string_dup ("name=='Quoter_Generic_Factory'");
+      // used to find the last generic factory in the chain
+
+      CORBA::Object_var quoterObject_var =
+        this->generic_Factory_var_->create_object (genericFactoryName,
+                                                   criteria,
+                                                   ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      this->quoter_var_ = Stock::Quoter::_narrow (quoterObject_var.in(), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Quoter Created\n"));
+
+      if (CORBA::is_nil (this->quoter_var_.in()))
+      {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "null quoter objref returned by factory\n"),
+                            -1);
+      }
+    }
+  ACE_CATCHANY
+    {
+      ACE_TRY_ENV.print_exception ("Quoter::init");
+      return -1;
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
+
+// This function runs the test.
+
+int
+main (int argc, char **argv)
+{
+  ACE_Thread_Manager thr_mgr;
+
+  ACE_DEBUG ((LM_DEBUG,"\n\tQuoter: client\n\n"));
+
+  int i;
+  int threads = 1;
+
+  for (i = 0; i < argc; i++)
+    if (ACE_OS::strcmp (argv[i], "-n") == 0)
+      threads = ACE_OS::atoi(argv[i + 1]);
+
+  Quoter_Task **clients = new Quoter_Task*[threads];
+
+  for (i = 0; i < threads; i++)
+    clients[i] = new Quoter_Task (argc, argv);
+
+
+  for (i = 0; i < threads; i++)
+    clients[i]->activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, ACE_DEFAULT_THREAD_PRIORITY);
+
+  int result = ACE_Thread_Manager::instance ()->wait ();
+
+  for (i = 0; i < threads; i++)
+    delete clients[i];
+
+  delete [] clients;
+
+  return result;
+}
+

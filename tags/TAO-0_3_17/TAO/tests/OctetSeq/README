@@ -1,0 +1,23 @@
+# $Id$
+
+	This test measures the time it takes to marshal sequences of
+octets of different sizes. Since TAO optimizes octet sequence
+marshaling it was interesting to compare that time with the time to
+marshal sequences of chars (which could be optimized also, but there
+is no need for it).
+
+	The test accepts a few options:
+
+	-l <low>
+		Sets the minimum size of the sequences tested.
+
+	-h <high>
+		The maximum size of the sequences tested.
+
+	-s <step>
+		Increase the size of the sequence from <low> to <high>
+		in increments of <step>
+
+	-n <iter>
+		The number of iterations (marshaling/demarshaling)
+		done for each loop.
