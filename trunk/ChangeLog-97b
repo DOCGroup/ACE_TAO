@@ -1,3 +1,9 @@
+Mon Sep  8 17:43:43 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* ace/Timer_{List,Wheel,Hash,Heap}_T.cpp: The iter() method now 
+	  returns a pointer to an iterator that is in a reset state 
+	  instead of an unknown one.
+
 Mon Sep  8 14:05:15 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/ACE.cpp (read_adapter): Removed ACE_Thread_Control object in
