@@ -1,3 +1,9 @@
+Sun Oct 20 11:36:34 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ACEXML/common/FileCharStream.cpp: Fixed a compile error in
+	  Borland builds. The compile error is due to strict enforcement
+	  of scoping rules in a for loop by Borland compiler.
+
 Sun Oct 20 11:31:45 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ACEXML/common/Makefile.bor: Added Encoding.obj to the list of
