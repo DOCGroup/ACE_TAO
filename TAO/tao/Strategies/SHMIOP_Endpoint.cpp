@@ -175,7 +175,7 @@ CORBA::Boolean
 TAO_SHMIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 {
   const TAO_SHMIOP_Endpoint *endpoint = dynamic_cast <const TAO_SHMIOP_Endpoint *>
-                                                     (endpt);
+                                                     (other_endpoint);
 
   if (endpoint == 0)
     return 0;
