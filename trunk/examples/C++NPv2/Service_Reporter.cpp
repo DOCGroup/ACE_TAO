@@ -7,6 +7,7 @@
 #include "ace/OS.h"
 #include "ace/Get_Opt.h"
 #include "ace/INET_Addr.h"
+#include "ace/Log_Msg.h"
 #include "ace/Service_Config.h"
 #include "ace/Service_Repository.h"
 #include "ace/SOCK_Stream.h"
