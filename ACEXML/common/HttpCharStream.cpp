@@ -37,36 +37,43 @@ ACEXML_HttpCharStream::~ACEXML_HttpCharStream (void)
 int
 ACEXML_HttpCharStream::open (const ACEXML_Char *url)
 {
-  delete[] this->url_;
-  this->url_ = 0;
-
-  this->url_ = ACE_OS::strdup (url);
+  this->url_ = ACE::strnew (url);
 
   ACE_NEW_RETURN (this->url_addr_, ACEXML_URL_Addr, -1);
   ACE_NEW_RETURN (this->stream_, ACEXML_Mem_Map_Stream, -1);
 
-  if (this->url_addr_->string_to_addr (this->url_) == -1)
+  if (this->url_addr_->string_to_addr (this->url_) == -1) {
+    this->close();
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "cannot convert URL"), -1);
+  }
 
   ACE_NEW_RETURN (this->connector_,
                   Connector (0, ACE_NONBLOCK),
                   -1);
 
-  if (this->stream_->open (this->connector_, *this->url_addr_) == -1)
+  if (this->stream_->open (this->connector_, *this->url_addr_) == -1) {
+    this->close();
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "cannot open backing store"), -1);
+  }
 
   int result = this->send_request();
-  if (result == -1)
+  if (result == -1) {
+    this->close();
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send_request"), -1);
+  }
 
   size_t len = 0;
   result = this->get_url(len);
-  if (result == -1)
+  if (result == -1) {
+    this->close();
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_url"), -1);
-  if (result != 200)
+  }
+  if (result != 200) {
+    this->close();
     ACE_ERROR_RETURN ((LM_ERROR, "Server returned status %d : %s\n",
                        result,
-                       "Refer HTTP/1.0 for details"), -1);
+                       "Refer HTTP/1.1 for details"), -1);
+  }
 
   this->size_ = len;
   return 0;
@@ -236,7 +243,7 @@ ACEXML_HttpCharStream::get_url (size_t& len)
 int
 ACEXML_HttpCharStream::send_request (void)
 {
-  char* path = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (this->url_addr_->get_path_name()));
+  char* path = ACE::strnew (ACE_TEXT_ALWAYS_CHAR (this->url_addr_->get_path_name()));
   ACE_Auto_Basic_Array_Ptr<char> path_ptr (path);
   int commandsize = ACE_OS::strlen (path)
                     + ACE_OS::strlen (this->url_addr_->get_host_name ())
@@ -250,7 +257,7 @@ ACEXML_HttpCharStream::send_request (void)
   // Ensure that the <command> memory is deallocated.
   ACE_Auto_Basic_Array_Ptr<char> cmd_ptr (command);
 
-  int bytes = ACE_OS::sprintf (command, "GET %s HTTP/1.0\r\n", path);
+  int bytes = ACE_OS::sprintf (command, "GET %s HTTP/1.1\r\n", path);
   bytes += ACE_OS::sprintf (&command[bytes], "Host: %s\r\n",
                             this->url_addr_->get_host_name ());
   bytes += ACE_OS::sprintf (&command[bytes], "\r\n");
