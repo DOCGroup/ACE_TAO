@@ -50,18 +50,18 @@
 
 // FUZZ: disable check_for_math_include
 #include "ace/OS.h"
-#include "source.h"
-#include "AVStreams_i.h"
-#include "UDP.h"
+#include "orbsvcs/AV/source.h"
+#include "orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/AV/UDP.h"
 #include <math.h>
 #include <stdlib.h>
-#include "RTP.h"
+#include "orbsvcs/AV/RTP.h"
 
 /**
  * @class TAO_AV_RTP_State
  * @brief Encapsulate the state of an RTP session
  */
-class TAO_AV_RTP_State
+class TAO_AV_Export TAO_AV_RTP_State
 {
 public:
   TAO_AV_RTP_State (void);
@@ -87,7 +87,7 @@ class TAO_AV_SourceManager;
  * @brief Encapsulate the header format for the Real Time Control 
  *        Protocol (RTCP)
  */
-class TAO_AV_RTCP
+class TAO_AV_Export TAO_AV_RTCP
 {
 public:
   struct rtcphdr

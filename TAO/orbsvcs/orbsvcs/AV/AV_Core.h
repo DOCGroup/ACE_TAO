@@ -16,7 +16,7 @@
 
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/AVStreamsC.h"
-#include "AV_export.h"
+#include "orbsvcs/AV/AV_export.h"
 
 #include "ace/Singleton.h"
 
