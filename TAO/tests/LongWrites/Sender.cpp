@@ -63,7 +63,7 @@ Sender::add_receiver (Test::Receiver_ptr receiver,
 void
 Sender::send_events (CORBA::Long event_count,
                      CORBA::ULong event_size,
-                     CORBA::Environment &ACE_TRY_ENV)
+                     CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   {

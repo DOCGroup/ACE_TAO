@@ -17,6 +17,17 @@ how to run the following tests:
 
 	  Stress test non-blocking I/O features in the ORB.
 
+	. Big_Twoways
+
+	  More stress testing for the non-blocking I/O features in the
+	  ORB, this time also test receiving big blocks of data.
+
+	. Big_Requests_Muxing
+
+	  More stress testing for the non-blocking I/O features in the
+	  ORB, this time we send reliable and unreliable oneways
+	  through the same connection.
+
         . Bidirectional
 
           This is a test that exercises the birectional GIOP connection
