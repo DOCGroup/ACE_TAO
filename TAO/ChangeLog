@@ -1,3 +1,10 @@
+Wed Oct 30 12:49:32 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao\PortableServer\PortableServer_ORBInitializer.cpp
+	  (register_poa_current): Moved registration of POA Current from
+	  post_init() to pre_init().  Thanks to Ossama for pointing this
+	  out.
+
 Wed Oct 30 09:01:12 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/PortableServer_ORBInitializer.cpp
