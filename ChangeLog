@@ -1,3 +1,10 @@
+Fri Feb 18 13:48:33 2005  Martin Corino  <mcorino@remedy.nl>
+
+	* tests/Max_Default_Port_Test.cpp:
+
+	  Tweaked the test for VxWorks so it can also succeed on
+	  that platform with non-optimized kernels.
+
 Fri Feb 18 07:21:33 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Socket.cpp: Qualified call to
