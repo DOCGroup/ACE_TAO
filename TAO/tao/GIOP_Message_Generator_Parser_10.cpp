@@ -117,7 +117,7 @@ int
 TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
     TAO_OutputCDR &output,
     TAO_Pluggable_Reply_Params &reply,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment &env
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -219,6 +219,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
         }
       else
         {
+          CORBA::Environment &ACE_TRY_ENV = env;
           // <target> can only have the values above
           ACE_THROW_RETURN (CORBA::MARSHAL (),
                             0);
@@ -241,7 +242,8 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
   this->marshal_reply_status (output,
                               reply);
 
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_UNUSED_ARG (env);
+
   return 1;
 }
 
