@@ -1,3 +1,42 @@
+Mon Jan 14 13:41:11 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/ETCL/ETCL.dsp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Static.dsp:
+        * orbsvcs/orbsvcs/ETCL/ETCL.rc:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.inl:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint_Visitor.h:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Interpreter.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Interpreter.h:
+        * orbsvcs/orbsvcs/ETCL/ETCL_y.cpp.diff:
+        * orbsvcs/orbsvcs/ETCL/ETCL_y.h.diff:
+
+          New files added to finish the implementation of the
+          Extended Trader Constraint Language library that was
+          begun by Carlos O'Ryan <coryan@uci.edu>.
+
+        * orbsvcs/orbsvcs/ETCL/ETCL.ll:
+        * orbsvcs/orbsvcs/ETCL/ETCL.yy:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.h:
+        * orbsvcs/orbsvcs/ETCL/ETCL_l.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_l.cpp.diff:
+        * orbsvcs/orbsvcs/ETCL/ETCL_y.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_y.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Filter_i.h:
+        * orbsvcs/orbsvcs/Makefile.CosNotification:
+        * orbsvcs/orbsvcs/Makefile.ETCL:
+
+          Changes to ETCL and Notification Service files to complete
+          the implementation of the ETCL library and to make the
+          Notification Service use this library to filter events, 
+          instead of using the Trading Service's Trader Constraint
+          Language, as it did previously.
+
 Mon Jan 14 13:09:31 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
