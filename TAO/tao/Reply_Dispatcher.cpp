@@ -11,7 +11,6 @@
 
 // Constructor.
 TAO_Reply_Dispatcher::TAO_Reply_Dispatcher (void)
-  //  : reply_received_ (0)
 {
 }
 
@@ -141,11 +140,9 @@ TAO_Synch_Reply_Dispatcher::leader_follower_condition_variable (TAO_Transport *t
 
 // Constructor.
 TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (const TAO_Reply_Handler_Skeleton &reply_handler_skel,
-                                                          Messaging::ReplyHandler_ptr reply_handler_ptr,
-                                                          IOP::ServiceContextList &sc)
-  : reply_service_info_ (sc),
-    reply_handler_skel_ (reply_handler_skel),
-    reply_handler_ (reply_handler_ptr)
+                                                          Messaging::ReplyHandler_ptr reply_handler_ptr)
+: reply_handler_skel_ (reply_handler_skel),
+  reply_handler_ (reply_handler_ptr)
 {
 }
 
@@ -161,7 +158,6 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
                                              IOP::ServiceContextList &reply_ctx,
                                              TAO_GIOP_Message_State *message_state)
 {
-  // @@ Michael: Carlos, can we remove these?
   // this->reply_received_ = 1;
 
   this->reply_status_ = reply_status;
@@ -173,11 +169,8 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
   CORBA::ULong max = reply_ctx.maximum ();
   CORBA::ULong len = reply_ctx.length ();
   IOP::ServiceContext* context_list = reply_ctx.get_buffer (1);
-  // @@ Michael: Carlos, why would we release the old buffer?
-  // By releasing it I got a "acces violation". Could
-  // you tell me the "right thing"TM ?
-  // this->reply_service_info_.replace (max, len, context_list, 1);
-  this->reply_service_info_.replace (max, len, context_list, 0);
+  this->reply_service_info_.replace (max, len, context_list, 1);
+
 
   if (TAO_debug_level >= 4)
     {
