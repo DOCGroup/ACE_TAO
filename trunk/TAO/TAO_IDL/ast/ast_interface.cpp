@@ -131,7 +131,7 @@ void AST_Interface::set_abstract_valuetype ()
 }
 
 
-void AST_Interface::add_operation_x (AST_Operation *op)
+void AST_Interface::be_add_operation (AST_Operation *op)
 {
   fe_add_operation (op);
 }

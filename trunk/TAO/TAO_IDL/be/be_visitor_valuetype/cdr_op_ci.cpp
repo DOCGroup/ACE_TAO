@@ -100,8 +100,7 @@ be_visitor_valuetype_cdr_op_ci::visit_valuetype (be_valuetype *node)
       << be_uidt_nl
       << "}\n\n";
 
-  if (!node->is_abstract_valuetype ()
-    && idl_global->ami_call_back () == I_FALSE)
+  if (!node->is_abstract_valuetype ())
     { // functions that marshal state
       be_visitor_context* new_ctx  =
         new be_visitor_context (*this->ctx_);

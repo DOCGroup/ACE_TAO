@@ -119,7 +119,7 @@ public:
   virtual void                  dump(ostream &o);
 
   // Method to add exceptions
-  UTL_ExceptList *add_exceptions_x(UTL_ExceptList *t);
+  UTL_ExceptList *be_add_exceptions (UTL_ExceptList *t);
 
 
 private:

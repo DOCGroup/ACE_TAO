@@ -278,6 +278,10 @@ SOURCE=.\be\be_interface_fwd.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_interface_strategy.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_module.cpp
 # End Source File
 # Begin Source File
@@ -767,6 +771,10 @@ SOURCE=.\be_include\be_interface.h
 # Begin Source File
 
 SOURCE=.\be_include\be_interface_fwd.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_interface_strategy.h
 # End Source File
 # Begin Source File
 

@@ -490,7 +490,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
 
   // AMI
-
+#if 0
   // Generate code for the AMI Reply Handler.
   if (idl_global->ami_call_back () == I_TRUE
       && this->ctx_->state () != TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_SS)
@@ -531,6 +531,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
       delete node->set_strategy (old_strategy);
     }
+
+#endif /* 0 */
+
 
   *os << "\n\n";
 

@@ -54,6 +54,7 @@ be_visitor_interface_cdr_op_ci::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+#if 0
   int i;
   int to_do;
 
@@ -123,7 +124,7 @@ be_visitor_interface_cdr_op_ci::visit_interface (be_interface *node)
                              "codegen failed - invalid state\n"), -1);
         }
 
-
+#endif /* 0 */ 
 
       // First generate code for our children. The reason we do this first is
       // because the inlined code for our children must be available before we use
@@ -216,6 +217,7 @@ be_visitor_interface_cdr_op_ci::visit_interface (be_interface *node)
 
       node->cli_inline_cdr_op_gen (1);
 
+#if 0
       switch (i)
         {
         case 0:
@@ -228,6 +230,7 @@ be_visitor_interface_cdr_op_ci::visit_interface (be_interface *node)
                              "codegen failed - invalid state\n"), -1);
         }
     } // for 
+#endif /* 0 */
 
   return 0;
 }

@@ -52,6 +52,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // Grab the stream.
       os = this->ctx_->stream ();
 
+#if 0
       // Generate the AMI Reply Handler's forward declaration code, if
       // the option is enabled, for this interface.
 
@@ -105,6 +106,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
           delete node->set_strategy (old_strategy);
         }
+#endif /* 0 */
 
       // == STEP 1:  generate the class name and class names we inherit ==
 
@@ -294,8 +296,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                              ), -1);
         }
 
+#if 0
       // AMI
-
       // Generate code for the AMI Reply Handler.
 
       if (idl_global->ami_call_back () == I_TRUE)
@@ -367,8 +369,10 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           visitor = 0;
           delete node->set_strategy (old_strategy);     
         }
+#endif /* 0 */
 
       node->cli_hdr_gen (I_TRUE);
     } // if !cli_hdr_gen
+
   return 0;
 }
