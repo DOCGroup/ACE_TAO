@@ -30,14 +30,8 @@ PACE_INLINE
 char *
 pace_asctime_r (const struct tm * time, char * buf)
 {
-# if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
-  return asctime_r (time, buf);
-# else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
-  PACE_UNUSED_ARG (time);
-  PACE_UNUSED_ARG (buf);
-  PACE_ERRNO_NO_SUPPORT ();
-  return 0;
-# endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  char * retval = (char*)0;
+  PACE_ERRNO_NO_SUPPORT_RETURN (retval);
 }
 #endif /* PACE_HAS_POSIX_CLSR_UOF */
 
@@ -65,7 +59,9 @@ int
 pace_clock_getres (clockid_t clock_id,
                    struct timespec * res)
 {
-  return clock_getres (clock_id, res);
+  PACE_UNUSED_ARG (clock_id);
+  PACE_UNUSED_ARG (res);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -75,7 +71,9 @@ int
 pace_clock_gettime (clockid_t clock_id,
                     struct timespec * tp)
 {
-  return clock_gettime (clock_id, tp);
+  PACE_UNUSED_ARG (clock_id);
+  PACE_UNUSED_ARG (tp);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -85,7 +83,9 @@ int
 pace_clock_settime (clockid_t clock_id,
                     const struct timespec * tp)
 {
-  return clock_settime (clock_id, tp);
+  PACE_UNUSED_ARG (clock_id);
+  PACE_UNUSED_ARG (tp);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -103,14 +103,10 @@ PACE_INLINE
 char *
 pace_ctime_r (const time_t * clock, char * buf)
 {
-# if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
-  return ctime_r (clock, buf);
-# else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  char * retval = (char*)0;
   PACE_UNUSED_ARG (clock);
   PACE_UNUSED_ARG (buf);
-  PACE_ERRNO_NO_SUPPORT ();
-  return 0;
-# endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_ERRNO_NO_SUPPORT_RETURN (retval);
 }
 #endif /* PACE_HAS_POSIX_CLSR_UOF */
 
@@ -128,14 +124,10 @@ PACE_INLINE
 struct tm *
 pace_gmtime_r (const time_t * clock, struct tm * result)
 {
-# if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
-  return gmtime_r (clock, result);
-# else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  struct tm * retval = (struct tm*)0;
   PACE_UNUSED_ARG (clock);
   PACE_UNUSED_ARG (result);
-  PACE_ERRNO_NO_SUPPORT ();
-  return 0;
-# endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_ERRNO_NO_SUPPORT_RETURN (retval);
 }
 #endif /* PACE_HAS_POSIX_CLSR_UOF */
 
@@ -153,14 +145,10 @@ PACE_INLINE
 struct tm *
 pace_localtime_r (const time_t * clock, struct tm * result)
 {
-# if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
-  return localtime_r (clock, result);
-# else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  struct tm * retval = (struct tm*)0;
   PACE_UNUSED_ARG (clock);
   PACE_UNUSED_ARG (result);
-  PACE_ERRNO_NO_SUPPORT ();
-  return 0;
-# endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_ERRNO_NO_SUPPORT_RETURN (retval);
 }
 #endif /* PACE_HAS_POSIX_CLSR_UOF */
 
@@ -179,7 +167,9 @@ int
 pace_nanosleep (const struct timespec * rqtp,
                 struct timespec * rmtp)
 {
-  return nanosleep (rqtp, rmtp);
+  PACE_UNUSED_ARG (rqtp);
+  PACE_UNUSED_ARG (rmtp);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -207,10 +197,13 @@ pace_time (time_t * tloc)
 PACE_INLINE
 int
 pace_timer_create (clockid_t clock_id,
-                   struct sigevent *evp,
-                   timer_t *timerid)
+                   struct sigevent * evp,
+                   timer_t * timerid)
 {
-  return timer_create (clock_id, evp, timerid);
+  PACE_UNUSED_ARG (clock_id);
+  PACE_UNUSED_ARG (evp);
+  PACE_UNUSED_ARG (timerid);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -219,7 +212,8 @@ PACE_INLINE
 int
 pace_timer_delete (timer_t timerid)
 {
-  return timer_delete (timerid);
+  PACE_UNUSED_ARG (timerid);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -228,7 +222,8 @@ PACE_INLINE
 int
 pace_timer_getoverrun (timer_t timerid)
 {
-  return timer_getoverrun (timerid);
+  PACE_UNUSED_ARG (timerid);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -238,7 +233,9 @@ int
 pace_timer_gettime (timer_t timerid,
                     struct itimerspec * value)
 {
-  return timer_gettime (timerid, value);
+  PACE_UNUSED_ARG (timerid);
+  PACE_UNUSED_ARG (value);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -250,7 +247,11 @@ pace_timer_settime (timer_t timerid,
                     const struct itimerspec * value,
                     struct itimerspec * ovalue)
 {
-  return timer_settime (timerid, flags, value, ovalue);
+  PACE_UNUSED_ARG (timerid);
+  PACE_UNUSED_ARG (flags);
+  PACE_UNUSED_ARG (value);
+  PACE_UNUSED_ARG (ovalue);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -259,11 +260,7 @@ PACE_INLINE
 void
 pace_tzset ()
 {
-# if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
-  tzset ();
-# else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
   PACE_ERRNO_NO_SUPPORT ();
-# endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
   return;
 }
 #endif /* PACE_HAS_POSIX_CLS_UOF */
