@@ -1,3 +1,9 @@
+Tue Dec 24 10:55:20 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.cpp (ace_thread_adapter): Changed the message that is
+ 	  printed if we exit the thread.  Thanks to Luca for this
+ 	  suggestion.
+
 Tue Dec 24 15:38:43 1996  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.i (cond_destroy): added call to event_destroy ()
