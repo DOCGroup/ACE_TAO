@@ -156,3 +156,71 @@ int main (int,char**)
 
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class Kokyu::DSRT_Dispatcher_Factory<mif_scheduler_traits>;
+template class Kokyu::DSRT_Dispatcher<mif_scheduler_traits>;
+template class Kokyu::DSRT_Dispatcher_Impl<mif_scheduler_traits>;
+template class Kokyu::DSRT_Direct_Dispatcher_Impl<mif_scheduler_traits>;
+template class ACE_Lock_Adapter<ACE_Thread_Mutex>;
+template class Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>;
+template class Kokyu::Comparator_Adapter_Generator<mif_scheduler_traits>;
+template class Kokyu::Sched_Ready_Queue<mif_scheduler_traits, Kokyu::Comparator_Adapter_Generator<mif_scheduler_traits>::MoreEligible, ACE_Null_Mutex>;
+
+template class ACE_Hash_Map_Manager_Ex<int, ACE_RB_Tree_Node<Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits> > *, Kokyu::Sched_Ready_Queue<mif_scheduler_traits, Kokyu::Comparator_Adapter_Generator<mif_scheduler_traits>::MoreEligible, ACE_Null_Mutex>::Guid_Hash, ACE_Equal_To<int>, ACE_Null_Mutex>;
+
+template class ACE_RB_Tree<Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::Comparator_Adapter_Generator<mif_scheduler_traits>::MoreEligible, ACE_Null_Mutex>;
+
+template class ACE_RB_Tree_Iterator<Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::Comparator_Adapter_Generator<mif_scheduler_traits>::MoreEligible, ACE_Null_Mutex>;
+
+template class ACE_Hash_Map_Entry<int, ACE_RB_Tree_Node<Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits> > *>;
+
+template class ACE_RB_Tree_Node<Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits> >;
+
+template class Kokyu::MIF_Comparator<mif_scheduler_traits::QoSDescriptor_t>;
+
+template class ACE_Hash_Map_Iterator_Base_Ex<int, ACE_RB_Tree_Node<Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits> > *, Kokyu::Sched_Ready_Queue<mif_scheduler_traits, Kokyu::Comparator_Adapter_Generator<mif_scheduler_traits>::MoreEligible, ACE_Null_Mutex>::Guid_Hash, ACE_Equal_To<int>, ACE_Null_Mutex>;
+
+template class ACE_RB_Tree_Reverse_Iterator<Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::Comparator_Adapter_Generator<mif_scheduler_traits>::MoreEligible, ACE_Null_Mutex>;
+
+template class ACE_RB_Tree_Iterator_Base<Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::Comparator_Adapter_Generator<mif_scheduler_traits>::MoreEligible, ACE_Null_Mutex>;
+
+template class ACE_Array_Iterator<Kokyu::ConfigInfo>;
+
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate Kokyu::DSRT_Dispatcher_Factory<mif_scheduler_traits>
+#pragma instantiate Kokyu::DSRT_Dispatcher<mif_scheduler_traits>
+#pragma instantiate Kokyu::DSRT_Dispatcher_Impl<mif_scheduler_traits>
+#pragma instantiate Kokyu::DSRT_Direct_Dispatcher_Impl<mif_scheduler_traits>
+#pragma instantiate Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>
+#pragma instantiate Kokyu::Comparator_Adapter_Generator<mif_scheduler_traits>
+
+#pragma instantiate Kokyu::Sched_Ready_Queue<mif_scheduler_traits, Kokyu::Comparator_Adapter_Generator<mif_scheduler_traits>::MoreEligible, ACE_Null_Mutex>
+
+#pragma instantiate ACE_Lock_Adapter<ACE_Thread_Mutex>
+
+#pragma instantiate ACE_Hash_Map_Manager_Ex<int, ACE_RB_Tree_Node<Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits> > *, Kokyu::Sched_Ready_Queue<mif_scheduler_traits, Kokyu::Comparator_Adapter_Generator<mif_scheduler_traits>::MoreEligible, ACE_Null_Mutex>::Guid_Hash, ACE_Equal_To<int>, ACE_Null_Mutex>
+
+#pragma instantiate ACE_RB_Tree<Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::Comparator_Adapter_Generator<mif_scheduler_traits>::MoreEligible, ACE_Null_Mutex>
+
+#pragma instantiate ACE_RB_Tree_Iterator<Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::Comparator_Adapter_Generator<mif_scheduler_traits>::MoreEligible, ACE_Null_Mutex>
+
+ACE_Hash_Map_Entry<int, ACE_RB_Tree_Node<Koky\
+u::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::DSRT_Dispatch_Item_var<\
+mif_scheduler_traits> >
+
+#pragma instantiate ACE_Hash_Map_Entry<int, ACE_RB_Tree_Node<Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits> > *>
+
+#pragma instantiate ACE_RB_Tree_Node<Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits> >
+
+#pragma instantiate Kokyu::MIF_Comparator<mif_scheduler_traits::QoSDescriptor_t>
+
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<int, ACE_RB_Tree_Node<Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits> > *, Kokyu::Sched_Ready_Queue<mif_scheduler_traits, Kokyu::Comparator_Adapter_Generator<mif_scheduler_traits>::MoreEligible, ACE_Null_Mutex>::Guid_Hash, ACE_Equal_To<int>, ACE_Null_Mutex>
+
+#pragma instantiate ACE_RB_Tree_Reverse_Iterator<Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::Comparator_Adapter_Generator<mif_scheduler_traits>::MoreEligible, ACE_Null_Mutex>
+
+#pragma instantiate ACE_RB_Tree_Iterator_Base<Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>, Kokyu::Comparator_Adapter_Generator<mif_scheduler_traits>::MoreEligible, ACE_Null_Mutex>
+
+#pragma instantiate ACE_Array_Iterator<Kokyu::ConfigInfo>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
