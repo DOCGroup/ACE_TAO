@@ -2,7 +2,7 @@ Fri Sep 18 17:39:03 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* TAO/tests/DynAny_Test/DynUnion_i.{h,cpp}:
 	* TAO/tests/DynAny_Test/README:
-	  Checked in the finished DynUnion code and updasted the
+	  Checked in the finished DynUnion code and updated the
 	  README file.
 
 	  Quickly tested what I could of DynUnion functions, but TAO
