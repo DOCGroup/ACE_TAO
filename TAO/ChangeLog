@@ -1,3 +1,10 @@
+Sun Feb  2 13:05:12 2003  Ossama Othman  <ossama@uci.edu>
+
+        * tests/Collocation/Makefile.impl:
+        * tests/Collocation/Makefile.stub:
+          Set the correct x_BUILD_DLL define. This is needed for the
+          Cygwin/MingW and Kylix compiler.
+
 Sat Feb  1 09:03:55 2003  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp (loads):
@@ -14,16 +21,16 @@ Fri Jan 31 17:07:20 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Worker_Task.h:
 	  The is a Refcountable object now.
-	
+
 	* orbsvcs/orbsvcs/Notify/Reactive_Task.cpp:
 	* orbsvcs/orbsvcs/Notify/Reactive_Task.h:
 	  Modifications for Refcounting support.
-	
+
 	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
 	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
 	  Instead of relying on the thread count, the <close> method
 	  decrements the count on the Task Object.
-	  
+
 	* orbsvcs/orbsvcs/Notify/Object.cpp:
 	  Apply refcounting to Task objects.
 
