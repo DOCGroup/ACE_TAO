@@ -58,7 +58,7 @@
 	decoded properly, the problem starts because the interpreter
 	expects a CORBA::Object_ptr, but the real type is a T_var;
 	virtual inheritance adds the last ingredient to the poison.
-	[STATUS] A possible solution is to use a T_manager_var that
+	<BR>[STATUS] A possible solution is to use a T_manager_var that
 	has two fields a Object_ptr and a T_ptr....
       </LI>
 
@@ -78,7 +78,8 @@
 	contains).
       </LI>
 
-      <LI>Add compiled marshalling [STATUS] Andy is working on this.
+      <LI>Add compiled marshalling
+	<BR>[STATUS] Andy is working on this.
       </LI>
       
       <LI>Use active demuxing in the POA
@@ -338,7 +339,7 @@
       <LI>The current scheme for the orbsvcs leaves the user without
 	control collocation of servants, we need to move to a scheme
 	similar to the one in $ACE_ROOT/netsvcs.
-	[STATUS] The user can control collocation, but we need a
+	<BR>[STATUS] The user can control collocation, but we need a
 	dynamic way to do it (or an example) that exploits the Service
 	Configurator. We also may need to split the library.
       </LI>
@@ -409,20 +410,21 @@
     <UL>
       <LI>Optimize connection lookup in the client side, using "hints"
 	from the previous lookup, or keeping smaller sets on each IIOP
-	profile or a combination of both. [STATUS] Irfan is working on
+	profile or a combination of both.
+	<BR>[STATUS] Irfan is working on
 	this.
-	[DONE]
+	<BR>[DONE]
       </LI>
 
       <LI>Optimize the outgoing CDR streams by using TSS memory pools
 	for both the data blocks and the buffers.
-	[DONE] But we may consider strategizing the kind of allocator
+	<BR>[DONE] But we may consider strategizing the kind of allocator
 	we use (like using a free list instead of a generic
 	ACE_Malloc).
       </LI>
 
       <LI>Optimize Octet Sequences.
-	[DONE]
+	<BR>[DONE]
       </LI>
 
       <LI>Obtain results for the EC_Multiple test.
@@ -439,13 +441,14 @@
 
       <LI>Your next assignment: Regenerate all methods in
 	_tao_collocated to avoid "inherit via dominance" warnings.
-	[STATUS] The IDL compiler was modified to generate a suitable
-	#pragma that removes the warning, it reenables the warning when
-	leaving the file
+	<BR>[STATUS] The IDL compiler was modified to generate a
+	suitable
+	<CODE>#pragma</CODE> that removes the warning, it reenables
+	the warning when leaving the file
       </LI>
 
       <LI>Remove the SOLARIS2 macro from the TAO_IDL compilation.
-	[DONE]
+	<BR>[DONE]
       </LI>
 
       <LI>Remove the preemption_prio message from Scheduling_Service.
@@ -453,34 +456,38 @@
 
       <LI>The ORB core should be able to choose the right port for us
 	(in other words -ORBport 0) should work.
-	[DONE]
+	<BR>[DONE]
       </LI>
 
       <LI>Client side optimization for Octet Sequences.
-	[DONE]
+	<BR>[DONE]
       </LI>
 
       <LI>Minimize memory allocation in TAO
-	[STATUS] Down to 3 on the client side and 4 on the server
+	<BR>[STATUS] Down to 3 on the client side and 4 on the server
 	side.
+	<BR>[STATUS] For oneways it is down to 0 (for the common case)
+	on the client side and 2 on the server side. For twoways it is
+	2 on both sides.
       </LI>
 
       <LI>Automate subscription and publication list generation in the
 	EC_Gateway.
 	[VERY important for Boeing]
-	[STATUS] Completed and debugged, but the EC is still buggy.
+	<BR>[STATUS] Completed and debugged, but the EC is still
+	buggy.
       </LI>
 
       <LI>Debug EC shutdown and startup....
 	[Specially startup for Boeign, but shutdown is important for
 	Purify and Quantify] 
-	[STATUS] Shutdown is clean and startup of threads can be
+	<BR>[STATUS] Shutdown is clean and startup of threads can be
 	controlled by the user.
       </LI>
 
       <LI>Support a chain of Message Blocks in Output CDRs and use
 	writev() to write them.
-	[DONE]
+	<BR>[DONE]
       </LI>
 
       <LI>Memory managment in the demarshalling engine, it is not
@@ -492,7 +499,7 @@
 	Closely related to this is the problem of memory alignment for
 	different architectures, we need to develop strategies for each
 	one (they should only be a few) and choose the right one.
-	[STATUS] This seems to be working for most of the cases, the
+	<BR>[STATUS] This seems to be working for most of the cases, the
 	main idea is to delay demarshalling until enough information
 	is available, for instance, when decoding an Any just a
 	reference to the CDR stream is stored, decoding actually
@@ -506,32 +513,32 @@
       </LI>
 
       <LI>Show an example of the sequence<octet> and CDR streams.
-	  [DONE] But the example could also include the marshalling of
+	  <BR>[DONE] But the example could also include the marshalling of
 	  plain C++ types.
-	  [DONE too]
+	  <BR>[DONE too]
       </LI>
 
       <LI>Test anys in the EC.
-	[DONE] Michael reported that they work OK on NT.
+	<BR>[DONE] Michael reported that they work OK on NT.
       </LI>
 
       <LI>UDP for event channel and Multicast support in the EC.
-	[STATUS] Manual configuration using Suppliers and Consumers is
+	<BR>[STATUS] Manual configuration using Suppliers and Consumers is
 	possible, automation is under research. 
       </LI>
 
       <LI>Unbind the EC and scheduling service from the Naming
 	Service.
-	[DONE] For the Event_Service and the examples.
+	<BR>[DONE] For the Event_Service and the examples.
       </LI>
 
       <LI>Optimize oneways by not allocating the memory for the return
 	buffers.
-	[DONE] Added different Invocation classes for each case.
+	<BR>[DONE] Added different Invocation classes for each case.
       </LI>
 
       <LI>Fix the _non_existent call.
-	[DONE] The client side semantics match the new clarifications
+	<BR>[DONE] The client side semantics match the new clarifications
 	of the C++ RTF, the server side is implemented by the IDL
 	compiler, though t could be a good idea to put that in the
 	POA.
@@ -543,12 +550,12 @@
 	This is the right spot to add trivial Dispatching or
 	Correlation Modules and to dynamically load and configure the
 	EC.
-	[DONE] A Factory class is used to create the modules, only the
+	<BR>[DONE] A Factory class is used to create the modules, only the
 	default factory is implemented so far.
       </LI>
 
       <LI>Fix the ACE_Thread_Condition madness.
-	[DONE] We changed ACE so ACE_SYNCH_CONDITION expands to
+	<BR>[DONE] We changed ACE so ACE_SYNCH_CONDITION expands to
 	ACE_Condition_Thread_Mutex
       </LI>
 
@@ -556,42 +563,42 @@
 	all the QueryInterface madness to make that work. The policy
 	for references in multiple threads is: the reference count
 	must be >2 if that happens.
-	[STATUS] The QueryInterface method (all the COM stuff for that
+	<BR>[STATUS] The QueryInterface method (all the COM stuff for that
 	matter) was removed...
-	[DONE]
+	<BR>[DONE]
       </LI>
 
       <LI>Reference counting for Typecodes is completely broken.
-	[DONE]
+	<BR>[DONE]
       </LI>
 
       <LI>Under g++(2.7.2) the use of multiple inheritance in IDL
 	triggers some compiler bug, if the IDL explictly generated the
 	copy constructor for the skeletons (the POA_ classes) the
 	problem would go away. 
-	[DONE] Fixed, Seth is testing the fixes and will commit them
+	<BR>[DONE] Fixed, Seth is testing the fixes and will commit them
 	soon (Tue Jul 21 14:24:56 CDT 1998) 
       </LI>
 
       <LI>The octet sequence optimization causes problems when Anys
 	get into the game.
-	[DONE] Seth reported that the problem was not real.
+	<BR>[DONE] Seth reported that the problem was not real.
       </LI>
 
       <LI>The DEEP_FREE method is also broken, sometimes we need to
 	release the top-level memory, sometimes not.
-	[DONE] We always release the memory in the Any, it was failing
+	<BR>[DONE] We always release the memory in the Any, it was failing
 	due to weird interactions between the Environment containing
 	an exception and the Any that also did.
       </LI>
 
       <LI>Improve error messages in the IDL compiler.
-	[DONE] At least the filename is correct now.
+	<BR>[DONE] At least the filename is correct now.
       </LI>
 
       <LI>Support for arrays in the IDL compiler is incomplete,
 	specially anonymous arrays.
-	[DONE] According to Andy this is properly supported by the IDL
+	<BR>[DONE] According to Andy this is properly supported by the IDL
 	compiler now.
       </LI>
 
@@ -606,7 +613,7 @@
 	  <LI>Run Param_Test across Endian Borders.
 	  </LI>
 	</UL>
-	[DONE] At last!
+	<BR>[DONE] At last!
       </LI>
 
       <LI>Move this list to the release notes.
