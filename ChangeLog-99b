@@ -1,6 +1,6 @@
 Thu Apr 08 13:47:03 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * README, VERSION, Makefile, Makefile.am, bin/make_release,
+        * README,VERSION,Makefile,Makefile.am,bin/make_release,
           docs/ACE-bug-process.html: moved BUG-REPORT-FORM
           to PROBLEM-REPORT-FORM.  Thanks to Thomas Lockhart
           <Thomas.G.Lockhart@jpl.nasa.gov> for suggesting this.
