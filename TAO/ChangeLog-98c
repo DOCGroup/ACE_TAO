@@ -1,3 +1,12 @@
+Wed Nov 19 13:11:53 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/lib/Scheduler_Factory.cpp (dump_schedule): changed loop
+          index from int to u_int to avoid signed/unsigned comparison.
+          (use_runtime): return 0.
+
+        * orbsvcs/lib/Event_Utilities.cpp (debug): changed loop
+          index from int to u_int to avoid signed/unsigned comparison.
+
 Wed Nov 19 12:22:50 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/orbobj.cpp (resolve_name_service): Reverted some of the
