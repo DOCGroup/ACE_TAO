@@ -10,8 +10,8 @@
 //    be_codegen.cpp
 //
 // = DESCRIPTION
-//
 //   Code generation
+//
 // = AUTHOR
 //    Aniruddha Gokhale
 //
@@ -34,6 +34,8 @@ TAO_CodeGen::TAO_CodeGen (void)
     server_template_skeletons_ (0),
     server_inline_ (0),
     server_template_inline_ (0),
+    gperf_input_stream_ (0),
+    gperf_input_filename_ (0),
     curr_os_ (0),
     visitor_factory_ (0),
     strategy_ (TAO_DYNAMIC_HASH)
@@ -254,7 +256,7 @@ TAO_CodeGen::client_inline (void)
   return this->client_inline_;
 }
 
-// set the server header stream
+// set the server header stream.
 int
 TAO_CodeGen::start_server_header (const char *fname)
 {
@@ -422,14 +424,14 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
   return 0;
 }
 
-// get the server skeletons stream
+// Get the server skeletons stream.
 TAO_OutStream *
 TAO_CodeGen::server_skeletons (void)
 {
   return this->server_skeletons_;
 }
 
-// set the server template skeleton stream
+// Start the server template skeleton stream.
 int
 TAO_CodeGen::start_server_template_skeletons (const char *fname)
 {
@@ -636,15 +638,27 @@ TAO_CodeGen::end_server_template_skeletons (void)
 // effectively a global.
 
 void
-TAO_CodeGen::gperf_input (TAO_OutStream *os)
+TAO_CodeGen::gperf_input_stream (TAO_OutStream *os)
 {
-  this->gperf_input_ = os;
+  this->gperf_input_stream_ = os;
 }
 
 TAO_OutStream *
-TAO_CodeGen::gperf_input (void)
+TAO_CodeGen::gperf_input_stream (void)
 {
-  return this->gperf_input_;
+  return this->gperf_input_stream_;
+}
+
+void
+TAO_CodeGen::gperf_input_filename (char *filename)
+{
+  this->gperf_input_filename_ = filename;
+}
+
+char *
+TAO_CodeGen::gperf_input_filename (void)
+{
+  return this->gperf_input_filename_;
 }
 
 void

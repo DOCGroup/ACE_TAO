@@ -782,54 +782,158 @@ be_interface::tc_encap_len (void)
   return this->encap_len_;
 }
 
-// helper
+// helper.
 int
 be_interface::gen_operation_table (void)
 {
-  TAO_OutStream *ss; // output stream
-  TAO_NL  nl;        // end line
+  TAO_OutStream *ss; // output stream.
+  TAO_NL  nl;        // end line.
 
-  // retrieve a singleton instance of the code generator
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  // Retrieve the singleton instance of the CodeGen.
+  TAO_CodeGen *cg = 0;
+  cg = TAO_CODEGEN::instance ();
 
-  ss = cg->server_skeletons ();
-
-  ss->indent (); // start from current indentation level
-  *ss << "static const TAO_operation_db_entry " << this->flatname () <<
-    "_operations [] = {\n";
-  ss->incr_indent (0);
-
-  if (this->traverse_inheritance_graph (be_interface::gen_optable_helper, ss) == -1)
+  // Check out the op_lookup_strategy.
+  switch (cg->lookup_strategy ())
     {
+    case TAO_CodeGen::TAO_DYNAMIC_HASH:
+      // Init the outstream appropriately.
+      ss = cg->server_skeletons ();
+
+      // start from current indentation level.
+      ss->indent ();
+
+      // Start the table generation.
+      *ss << "static const TAO_operation_db_entry " << this->flatname () <<
+        "_operations [] = {\n";
+      ss->incr_indent (0);
+
+      // Traverse the graph.
+      if (this->traverse_inheritance_graph (be_interface::gen_optable_helper, ss) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_interface::gen_operation_table - "
+                             "inheritance graph traversal failed\n"), -1);
+        }
+
+      // generate the skeleton for the is_a method.
+      ss->indent ();
+      *ss << "{\"_is_a\", &" << this->full_skel_name () << "::_is_a_skel}\n";
+      this->skel_count_++;
+
+      ss->decr_indent ();
+      *ss << "};" << nl << nl;
+
+      // XXXASG - this code should be based on using different strategies for
+      // demux - for next release
+      *ss << "static const CORBA::Long _tao_" << this->flatname ()
+          << "_optable_size = sizeof (ACE_Hash_Map_Entry<const char *,"
+          << " TAO_Skeleton>) * (" << (3*this->skel_count_)
+          << ");" << be_nl;
+      *ss << "static char _tao_" << this->flatname () << "_optable_pool "
+          << "[_tao_" << this->flatname () << "_optable_size];" << be_nl;
+      *ss << "static ACE_Static_Allocator_Base _tao_" << this->flatname ()
+          << "_allocator (_tao_" << this->flatname () << "_optable_pool, "
+          << "_tao_" << this->flatname () << "_optable_size);" << be_nl;
+      *ss << "TAO_Dynamic_Hash_OpTable tao_" << this->flatname () << "_optable "
+          << "(" << this->flatname () << "_operations, " << this->skel_count_
+          << ", " << 2*this->skel_count_ << ", &_tao_" << this->flatname ()
+          << "_allocator);" << be_nl;
+
+      break;
+
+    case TAO_CodeGen::TAO_PERFECT_HASH:
+      // For each interface in the IDL, have a new temp file to
+      // collect the input for the gperf program.
+      {
+        // Temp file name.
+        char *temp_file = 0;
+        ACE_NEW_RETURN (temp_file,
+                        char [ACE_OS::strlen (this->flatname ()) +
+                             ACE_OS::strlen (".gperf")],
+                        -1);
+        ACE_OS::sprintf (temp_file, "%s.gperf", this->flatname ());
+
+        // Save this file name with the codegen singleton.
+        cg->gperf_input_filename (temp_file);
+
+        // Make a new outstream to hold the gperf_temp_file for this
+        // interface.
+
+        // Retrieve the singleton instance to the outstream factory.
+        TAO_OutStream_Factory *factory =
+          TAO_OUTSTREAM_FACTORY::instance ();
+
+        // Get a new instance for the temp file.
+        ss = factory->make_outstream ();
+        if (ss == 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_ss",
+                             "::",
+                             "visit_interface-",
+                             "make_outstream failed"),
+                            -1);
+
+        // Store the outstream with the codegen singleton.
+        cg->gperf_input_stream (ss);
+
+        // Open the temp file.
+        if (ss->open (temp_file,
+                      TAO_OutStream::TAO_GPERF_INPUT) == -1)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_ss",
+                             "::",
+                             "visit_interface-",
+                             "gperf_input.tmp file open failed"),
+                            -1);
+        
+        // Add the gperf input header.
+        gen_gperf_input_header (ss);
+
+        // Traverse the graph.
+        if (this->traverse_inheritance_graph (be_interface::gen_optable_helper, ss) == -1)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_interface::gen_operation_table - "
+                             "inheritance graph traversal failed\n"),
+                            -1);
+        
+        // Generate the skeleton for the is_a method.
+        ss->indent ();
+        *ss << "_is_a" << ",\t&" << this->full_skel_name () << "::_is_a_skel\n";
+        this->skel_count_++;
+
+        // Input to the gperf is ready. Run gperf and get things done.
+        gen_perfect_hash_optable ();
+        
+        // Cleanup the temp file. Delete the stream, remove the file
+        // and delete the filename ptr.
+        cleanup_gperf_temp_file ();
+      }
+      break;
+
+    default:
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_interface::gen_operation_table - "
-                         "inheritance graph traversal failed\n"), -1);
+                         "be_interface",
+                         "::",
+                         "gen_operation_table",
+                         "unknown op_lookup_strategy"),
+                        -1);
     }
-
-  // generate the skeleton for the is_a method
-  ss->indent ();
-  *ss << "{\"_is_a\", &" << this->full_skel_name () << "::_is_a_skel}\n";
-  this->skel_count_++;
-
-  ss->decr_indent ();
-  *ss << "};" << nl << nl;
-
-  // XXXASG - this code should be based on using different strategies for
-  // demux - for next release
-  *ss << "static const CORBA::Long _tao_" << this->flatname ()
-      << "_optable_size = sizeof (ACE_Hash_Map_Entry<const char *,"
-      << " TAO_Skeleton>) * (" << (3*this->skel_count_)
-      << ");" << be_nl;
-  *ss << "static char _tao_" << this->flatname () << "_optable_pool "
-      << "[_tao_" << this->flatname () << "_optable_size];" << be_nl;
-  *ss << "static ACE_Static_Allocator_Base _tao_" << this->flatname ()
-      << "_allocator (_tao_" << this->flatname () << "_optable_pool, "
-      << "_tao_" << this->flatname () << "_optable_size);" << be_nl;
-  *ss << "TAO_Dynamic_Hash_OpTable tao_" << this->flatname () << "_optable "
-      << "(" << this->flatname () << "_operations, " << this->skel_count_
-      << ", " << 2*this->skel_count_ << ", &_tao_" << this->flatname ()
-      << "_allocator);" << be_nl;
   return 0;
+}
+
+// Output the header (type declaration and %%) to the gperf's input
+// file.
+void
+be_interface::gen_gperf_input_header (TAO_OutStream *ss)
+{
+  *ss << "class TAO_operation_db_entry {\n"
+      << "public:\n"
+      << "\tchar *opname_;" << "\n"
+      << "\tTAO_Skeleton skel_ptr_;" << "\n"
+      << "};" << "\n"
+      << "%%"
+      << "\n";
 }
 
 // we separate the generation of operation table entries from the
@@ -847,57 +951,130 @@ be_interface::gen_optable_entries (be_interface *derived)
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
-  ss = cg->server_skeletons ();
-
-  if (this->nmembers () > 0)
+  switch (cg->lookup_strategy ())
     {
-      // if there are elements in this scope i.e., any operations and
-      // attributes defined by "this" which happens to be the same as "derived"
-      // or one of its ancestors.
+    case TAO_CodeGen::TAO_DYNAMIC_HASH:
+      // Init the outstream.
+      ss = cg->server_skeletons ();
 
-      si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
-      // instantiate a scope iterator.
-
-      while (!(si->is_done ()))
+      // The major stuff.
+      if (this->nmembers () > 0)
         {
-          // get the next AST decl node
-          d = si->item ();
-          if (d->node_type () == AST_Decl::NT_op)
+          // if there are elements in this scope i.e., any operations and
+          // attributes defined by "this" which happens to be the same as "derived"
+          // or one of its ancestors.
+
+          si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
+          // instantiate a scope iterator.
+
+          while (!(si->is_done ()))
             {
-              ss->indent (); // start from current indentation level
-              // we are an operation node
-              *ss << "{\"" << d->local_name () << "\", &" << derived->full_skel_name
-                () << "::" << d->local_name () << "_skel},\n";
-              derived->skel_count_++;
-            }
-          else if (d->node_type () == AST_Decl::NT_attr)
-            {
-              AST_Attribute *attr;
-
-              ss->indent (); // start from current indentation level
-              // generate only the "get" entry if we are readonly
-              *ss << "{\"_get_" << d->local_name () << "\", &" <<
-                derived->full_skel_name () << "::_get_" << d->local_name () <<
-                "_skel},\n";
-              derived->skel_count_++;
-
-              attr = AST_Attribute::narrow_from_decl (d);
-              if (!attr)
-                return -1;
-
-              if (!attr->readonly ())
+              // get the next AST decl node
+              d = si->item ();
+              if (d->node_type () == AST_Decl::NT_op)
                 {
-                  // the set method
                   ss->indent (); // start from current indentation level
-                  *ss << "{\"_set_" << d->local_name () << "\", &" <<
-                    derived->full_skel_name () << "::_set_" << d->local_name
-                    () << "_skel},\n";
+                  // we are an operation node
+                  *ss << "{\"" << d->local_name () << "\", &"
+                      << derived->full_skel_name () << "::"
+                      << d->local_name () << "_skel},\n";
                   derived->skel_count_++;
                 }
-            }
-          si->next ();
-        } // end of while
-      delete si; // free the iterator object
+              else if (d->node_type () == AST_Decl::NT_attr)
+                {
+                  AST_Attribute *attr;
+
+                  ss->indent (); // start from current indentation level
+                  // generate only the "get" entry if we are readonly
+                  *ss << "{\"_get_" << d->local_name () << "\", &" <<
+                    derived->full_skel_name () << "::_get_" << d->local_name () <<
+                    "_skel},\n";
+                  derived->skel_count_++;
+
+                  attr = AST_Attribute::narrow_from_decl (d);
+                  if (!attr)
+                    return -1;
+
+                  if (!attr->readonly ())
+                    {
+                      // the set method
+                      ss->indent (); // start from current indentation level
+                      *ss << "{\"_set_" << d->local_name () << "\", &" <<
+                        derived->full_skel_name () << "::_set_" << d->local_name
+                        () << "_skel},\n";
+                      derived->skel_count_++;
+                    }
+                }
+              si->next ();
+            } // end of while
+          delete si; // free the iterator object
+        }
+      break;
+
+    case TAO_CodeGen::TAO_PERFECT_HASH:
+      // Init the outstream.
+      ss = cg->gperf_input_stream ();
+
+      if (this->nmembers () > 0)
+        {
+          // if there are elements in this scope i.e., any operations and
+          // attributes defined by "this" which happens to be the same as "derived"
+          // or one of its ancestors.
+
+          si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
+          // instantiate a scope iterator.
+
+          while (!(si->is_done ()))
+            {
+              // Get the next AST decl node.
+              d = si->item ();
+              if (d->node_type () == AST_Decl::NT_op)
+                {
+                  ss->indent (); // start from current indentation level
+                  // we are an operation node
+                  *ss << d->local_name () << ",\t&"
+                      << derived->full_skel_name () << "::"
+                      << d->local_name () << "_skel" << "\n";
+                  derived->skel_count_++;
+                }
+              else if (d->node_type () == AST_Decl::NT_attr)
+                {
+                  AST_Attribute *attr;
+
+                  ss->indent (); // start from current indentation level
+                  // generate only the "get" entry if we are readonly
+                  *ss << "_get_" << d->local_name () << ",\t&"
+                      << derived->full_skel_name () << "::_get_"
+                      << d->local_name () << "_skel\n";
+                  derived->skel_count_++;
+
+                  attr = AST_Attribute::narrow_from_decl (d);
+                  if (!attr)
+                    return -1;
+
+                  if (!attr->readonly ())
+                    {
+                      // the set method
+                      ss->indent (); // start from current indentation level
+                      *ss << "_set_" << d->local_name () << ",\t&"
+                          << derived->full_skel_name () << "::_set_"
+                          << d->local_name () << "_skel\n";
+                      derived->skel_count_++;
+                    }
+                }
+              si->next ();
+            } // end of while
+          delete si; // free the iterator object
+        }
+      break;
+
+    default:
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_interface",
+                         "::",
+                         "gen_optable_entries",
+                         "unknown op_lookup_strategy"),
+                        -1);
     }
   return 0;
 }
@@ -905,7 +1082,8 @@ be_interface::gen_optable_entries (be_interface *derived)
 // template method that traverses the inheritance graph in a breadth-first
 // style. The actual work on each element in the inheritance graph is carried
 // out by the function passed as argument
-int be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
+int 
+be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
                                               TAO_OutStream *os)
 {
   long i;            // loop index
@@ -1053,6 +1231,175 @@ be_interface::gen_optable_helper (be_interface *derived,
                          "interfaces\n"), -1);
     }
   return 0;
+}
+
+// The main optable generator for the perfect hashing strategy.
+int
+be_interface::gen_perfect_hash_optable (void)
+{
+  // Output a class definition deriving from
+  // TAO_Perfect_Hash_OpTable.
+  gen_perfect_hash_class_definition ();
+
+  // Call GPERF and get the methods defined.
+  if (gen_perfect_hash_methods () == -1)
+    return -1;
+
+  // Create an instance of this perfect hash table.
+  gen_perfect_hash_instance ();
+
+  return 0;
+}
+
+
+// Outputs the class definition for the perfect hashing. This class
+// will inherit from the TAO_Perfect_Hash_OpTable.
+void
+be_interface::gen_perfect_hash_class_definition (void)
+{
+  // Codegen singleton.
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  // Outstream.
+  TAO_OutStream *ss = cg->server_skeletons ();
+
+  *ss << "class " << "TAO_" << this->flatname () << "_Perfect_Hash_OpTable"
+      << " : public TAO_Perfect_Hash_OpTable"
+      << be_nl
+      << "{"
+      << be_nl
+      << "private:"
+      << be_nl
+      << "  unsigned int hash (const char *str, int len);"
+      << be_nl
+      << "public:"
+      << be_nl
+      << " const TAO_operation_db_entry * lookup (const char *str, int len);"
+      << be_nl
+      << "};"
+      << "\n";
+}
+
+// We have collected the input (Operations and the corresponding
+// skeleton pointers) for the gperf program. Now let us execute gperf
+// and get things done.
+// GPERF reads from our temp file and write to the Server Skeleton
+// file.
+int
+be_interface::gen_perfect_hash_methods (void)
+{
+  // Using ACE_Process.
+  ACE_Process process_manager;
+  ACE_Process_Options process_options;
+
+  // Codegen's singleton.
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  // Adjust the offset of the underlying file pointer.
+  ACE_OS::rewind (cg->gperf_input_stream ()->file ());
+
+  // Set the stdin and stdout appropriately for the gperf program.
+
+  // Stdin is our temp file. Close the temp file and open using
+  // ACE_OS::open so that we will get ACE_HANDLE.
+
+  if (ACE_OS::fclose (cg->gperf_input_stream ()->file ()) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p:File close failed on temp gperf's input file\n"),
+                      -1);
+
+  ACE_HANDLE input =  ACE_OS::open (cg->gperf_input_filename (),
+                                    O_RDONLY);
+  if (input == ACE_INVALID_HANDLE)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p:File open failed on gperf's temp input file\n"),
+                      -1);
+
+  // Stdout is server skeleton. Do *not* close the file, just open
+  // again with ACE_OS::open with WRITE + APPEND option.. After this,
+  // remember to update the file offset to the correct location.
+
+  ACE_HANDLE output =  ACE_OS::open (idl_global->be_get_server_skeleton_fname (),
+                                     O_WRONLY | O_APPEND);
+  if (output == ACE_INVALID_HANDLE)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p:File open failed on server skeleton file\n"),
+                      -1);
+
+  // Set the handles now in the process options.
+  process_options.set_handles (input, output);
+
+  // Set the command line for the gperf program.
+  process_options.command_line ("gperf"
+                                " "
+                                "-m -M -J -c -C"
+                                " "
+                                "-D -E -T -f 0"
+                                " "
+                                "-a -o -t -p -K"
+                                " "
+                                "opname_ -L C++"
+                                " "
+                                "-Z TAO_%s_Perfect_Hash_OpTable"
+                                " "
+                                "-N lookup",
+                                this->flatname ());
+
+  // Spawn a process for gperf.
+  if (process_manager.spawn (process_options) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p:Couldnt spawn a process for gperf program\n"),
+                      -1);
+
+  // Wait for gperf to complete.
+  if (process_manager.wait () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p:wait'ing for gperf program failed.\n"),
+                      -1);
+
+  // Adjust the file offset to the EOF for the server skeleton file.
+  ACE_OS::fseek (cg->server_skeletons ()->file (), 0, SEEK_END);
+  
+  return 0;
+}
+
+// Create an instance of this perfect hash table.
+void
+be_interface::gen_perfect_hash_instance ()
+{
+  // Codegen singleton.
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  // Outstream.
+  TAO_OutStream *ss = cg->server_skeletons ();
+
+  *ss << "TAO_" << this->flatname () << "_Perfect_Hash_OpTable"
+      << " "
+      << "tao_" << this->flatname () << "_optable"
+      << ";"
+      << be_nl;
+}
+
+// Delete the stream and filename for this temp file and also remove
+// the temperary gperf's input file.
+void
+be_interface::cleanup_gperf_temp_file (void)
+{
+  // Codegen singleton.
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  // Delete the stream ptr.
+  TAO_OutStream *ss = cg->gperf_input_stream ();
+  if (ss != 0)
+    delete ss;
+  
+  // Delete the temp file.
+  ACE_OS::unlink (cg->gperf_input_filename ());
+    
+  // Delete the filename ptr.
+  char *fname = cg->gperf_input_filename ();
+  if (fname != 0)
+    delete fname;
 }
 
 int
