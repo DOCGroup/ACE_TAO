@@ -6,6 +6,14 @@
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
+#define _POSIX_C_SOURCE 199506
+#define _QNX_SOURCE
+
+// These constants are in i386-nto/include/limits.h, but egcs
+// picks up its own limits.h instead:
+#define _POSIX_NAME_MAX     14      /*  Max bytes in a filename             */
+#define _POSIX_PATH_MAX     256     /*  Num. bytes in pathname (excl. NULL) */
+
 // gcc can do inline
 #if __GNUC__ > 2 || ( __GNUC__ == 2 && __GNUC_MINOR__ >= 8)
 # if !defined (__ACE_INLINE__)
@@ -29,8 +37,8 @@
 //  ace expects 128 & 1024 respectively
 //  to set the following macros in ace/Basic_Types.h
 //  These macros are:
-#define ACE_SIZEOF_DOUBLE   8
-#define ACE_SIZEOF_FLOAT    4
+// #define ACE_SIZEOF_DOUBLE   8
+// #define ACE_SIZEOF_FLOAT    4
 
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
@@ -43,10 +51,8 @@
 #define ACE_HAS_GETPAGESIZE
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 #define ACE_HAS_NONSTATIC_OBJECT_MANAGER
-#define ACE_HAS_IDTYPE_T
 #define ACE_HAS_INLINED_OSCALLS
 #define ACE_HAS_IP_MULTICAST
-#define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION
 #define ACE_HAS_MSG
 #define ACE_HAS_MT_SAFE_MKTIME
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
@@ -84,7 +90,6 @@
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 #define ACE_LACKS_MADVISE
 #define ACE_LACKS_MSGBUF_T
-#define ACE_LACKS_MUTEXATTR_PSHARED
 #define ACE_LACKS_NAMED_POSIX_SEM
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
@@ -117,7 +122,7 @@
 #define ACE_NEEDS_FUNC_DEFINITIONS
 #define ACE_NEEDS_HUGE_THREAD_STACKSIZE 64000
 #define ACE_TEMPLATES_REQUIRE_SOURCE
-#define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
+#define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 
 #if !defined (ACE_NTRACE)
 # define ACE_NTRACE 1
