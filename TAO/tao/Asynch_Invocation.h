@@ -29,9 +29,9 @@
 
 #include "tao/MessagingC.h"
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if defined (TAO_HAS_CORBA_MESSAGING)
 
-#  if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+#  if defined (TAO_HAS_AMI_CALLBACK) || (TAO_HAS_AMI_POLLER)
 
 class TAO_Export TAO_GIOP_Twoway_Asynch_Invocation : public TAO_GIOP_Invocation
 {
@@ -81,9 +81,9 @@ private:
   // Reply dispatcher for the current synchronous Asynch_Invocation.
 };
 
-#  endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
+#  endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 //***********************************************************************
 

@@ -8,7 +8,7 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#if (TAO_HAS_AMI_POLLER == 1)
+#if defined (TAO_HAS_AMI_POLLER)
 ACE_INLINE void POA_Messaging::Poller::is_ready_skel (
                                                       CORBA::ServerRequest &req,
                                                       void *obj,
@@ -39,4 +39,4 @@ ACE_INLINE void POA_Messaging::Poller::create_pollable_set_skel (
                                                  env
                                                  );
 }
-#endif /* TAO_HAS_AMI_POLLER == 1 */
+#endif /* TAO_HAS_AMI_POLLER */

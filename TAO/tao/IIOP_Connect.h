@@ -33,6 +33,11 @@
 
 #include "tao/IIOP_Transport.h"
 
+// BALA Temporray include
+#include "tao/GIOP_Acceptors.h"
+#include "tao/GIOP_Message_Invocation.h"
+
+
 // Forward Decls
 class TAO_ORB_Core;
 class TAO_ORB_Core_TSS_Resources;
@@ -100,6 +105,11 @@ protected:
 
   TAO_ORB_Core *orb_core_;
   // Cached ORB Core.
+
+  //@@Added by Bala for the time being. This would change to the
+  // actual factory at a later date
+  TAO_GIOP_Client_Message_1_1 message_factory_;
+  // /////////////////////
 };
 
 // ****************************************************************
@@ -159,6 +169,11 @@ protected:
 protected:
   TAO_IIOP_Server_Transport transport_;
   // @@ New transport object reference.
+
+  //@@Added by Bala for the time being. This would change to the
+  // actual factory at a later date
+  TAO_GIOP_Message_Acceptor acceptor_factory_;
+  // /////////////////////
 
   TAO_ORB_Core *orb_core_;
   // Cached ORB Core.

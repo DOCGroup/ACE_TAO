@@ -1943,8 +1943,8 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
       || !stream.read_ulong (member_count))  // member count
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("TypeCode::private_member_label -- ")
-                  ASYS_TEXT ("error reading from stream")));
+                  "TypeCode::private_member_label -- "
+                  "error reading from stream"));
     ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 0);
     }
 
@@ -2018,8 +2018,8 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
         {
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
-                        ASYS_TEXT ("TypeCode::private_member_label ")
-                        ASYS_TEXT ("error getting typecode for member %d\n"),
+                        "TypeCode::private_member_label "
+                        "error getting typecode for member %d\n",
                         i));
           ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                             0);

@@ -134,7 +134,7 @@ CORBA_ValueBase::_tao_unmarshal (TAO_InputCDR &,
   //  new_object->_tao_unmarshal_v ()
   //  new_object->_tao_unmarshal_post ()
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("unimpl. CORBA::ValueBase::_tao_unmarshal\n")));
+  ACE_DEBUG ((LM_DEBUG, "unimpl. CORBA::ValueBase::_tao_unmarshal\n"));
   return 0; // %!
 }
 
@@ -177,7 +177,7 @@ CORBA_ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
 
   if (!TAO_OBV_GIOP_Flags::is_value_tag (value_tag))
     {
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("!CORBA::ValueBase::_tao_unmarshal_pre not value_tag\n")));
+      ACE_DEBUG ((LM_DEBUG, "!CORBA::ValueBase::_tao_unmarshal_pre not value_tag\n"));
       return 0;
     }
 
@@ -200,7 +200,7 @@ CORBA_ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
     ->lookup_value_factory (repo_id_stream.in());
   if (factory == 0) // %! except.!
     {
-      ACE_DEBUG ((LM_ERROR, ASYS_TEXT ("(%N:%l) OBV factory is null !!!\n")));
+      ACE_DEBUG ((LM_ERROR, "(%N:%l) OBV factory is null !!!\n"));
       return 0;
     }
 

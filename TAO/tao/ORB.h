@@ -487,7 +487,7 @@ public:
                                                CORBA::Environment &ACE_TRY_ENV
                                                = TAO_default_environment ());
 
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
+#if defined (TAO_HAS_INTERFACE_REPOSITORY)
   //Methods added for Philipe Merle for CORBA Script..
   CORBA_TypeCode_ptr create_interface_tc (const char * id,
                                           const char * name,
@@ -607,12 +607,12 @@ public:
   // Returns a sequence of ObjectIds that lists which objects have
   // references available via the initial references mechanism.
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if defined(TAO_HAS_CORBA_MESSAGING)
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    const CORBA::Any& val,
                                    CORBA_Environment &ACE_TRY_ENV =
                                        TAO_default_environment ());
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
   // ----------------------------------------------------------------
   // = TAO-specific extensions to the CORBA specification.
@@ -632,10 +632,6 @@ public:
   int _tao_find_in_IOR_table (const ACE_CString &object_id,
                               CORBA::Object_ptr &obj);
   // Find the given ObjectID in the table.
-
-  void _tao_register_IOR_table_callback (TAO_IOR_LookupTable_Callback *callback,
-                                         int delete_callback);
-  // Registers a new callback class with the table
 
   CORBA_Object_ptr resolve_root_poa (CORBA_Environment &ACE_TRY_ENV,
                                      const char *adapter_name =
@@ -892,5 +888,11 @@ operator>> (istream &, CORBA::WString_out &);
 #if defined (__ACE_INLINE__)
 # include "tao/ORB.i"
 #endif /* __ACE_INLINE__ */
+
+#if  defined (_MSC_VER)
+// @@ NW: Disable messing with alignment for now.
+// VC++, goes back to other padding rules
+//# pragma pack (pop)
+#endif /* _MSV_VER */
 
 #endif /* TAO_ORB_H */

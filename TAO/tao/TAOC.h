@@ -17,12 +17,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if defined (TAO_HAS_CORBA_MESSAGING)
 
 #include "tao/PolicyC.h"
 #include "tao/TimeBaseC.h"
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -44,7 +44,7 @@
 TAO_NAMESPACE  TAO
 {
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if defined (TAO_HAS_CORBA_MESSAGING)
 
   typedef CORBA::Short PrioritySelectionMode;
   typedef CORBA::Short_out PrioritySelectionMode_out;
@@ -223,7 +223,7 @@ class TAO_Export ClientPriorityPolicy: public virtual CORBA::Policy
   typedef CORBA::UShort_out BufferingConstraintMode_out;
     TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_BufferingConstraintMode;
 
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::UShort BUFFER_FLUSH;
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::UShort BUFFER_NONE;
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::UShort BUFFER_TIMEOUT;
 
@@ -396,10 +396,10 @@ class TAO_Export BufferingConstraintPolicy: public virtual CORBA::Policy
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_BufferingConstraintPolicy;
 
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
   // It seems easier to have copies of these here than to use
-  // #if (TAO_HAS_CORBA_MESSAGING == 1) everywhere or to
+  // #if defined (TAO_HAS_CORBA_MESSAGING) everywhere or to
   // define a new class TAO_GIOP_Reliable_Oneway_Invocation
   typedef CORBA::Short SyncScope;
 
@@ -410,10 +410,12 @@ class TAO_Export BufferingConstraintPolicy: public virtual CORBA::Policy
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_WITH_SERVER;
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_WITH_TARGET;
+
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_FLUSH;
 }
 TAO_NAMESPACE_CLOSE // module TAO
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if defined (TAO_HAS_CORBA_MESSAGING)
 
 TAO_Export void operator<<= (CORBA::Any &, const TAO::PrioritySpecification &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, TAO::PrioritySpecification*); // noncopying version
@@ -428,18 +430,18 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, TAO::BufferingConstra
 void  operator<<= (CORBA::Any &, TAO::BufferingConstraintPolicy_ptr);
 CORBA::Boolean  operator>>= (const CORBA::Any &, TAO::BufferingConstraintPolicy *&);
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 #ifndef __ACE_INLINE__
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if defined (TAO_HAS_CORBA_MESSAGING)
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO::PrioritySpecification &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO::PrioritySpecification &);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO::BufferingConstraint &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO::BufferingConstraint &);
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 #endif /* __ACE_INLINE__ */
 

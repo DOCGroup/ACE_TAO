@@ -41,7 +41,7 @@
 TAO_NAMESPACE POA_PortableServer
 {
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
   class ThreadPolicy;
   typedef ThreadPolicy *ThreadPolicy_ptr;
@@ -119,7 +119,7 @@ TAO_NAMESPACE POA_PortableServer
 
 #endif // end #if !defined
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   class LifespanPolicy;
   typedef LifespanPolicy *LifespanPolicy_ptr;
@@ -358,7 +358,7 @@ TAO_NAMESPACE POA_PortableServer
 #endif // end #if !defined
 
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
   class ImplicitActivationPolicy;
   typedef ImplicitActivationPolicy *ImplicitActivationPolicy_ptr;
@@ -596,7 +596,7 @@ TAO_NAMESPACE POA_PortableServer
 
 #endif // end #if !defined
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 
   class POAManager;
@@ -615,7 +615,7 @@ TAO_NAMESPACE POA_PortableServer
                              );
     virtual void activate ( CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0; // pure virtual
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
     virtual void hold_requests (CORBA::Boolean wait_for_completion,  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0; // pure virtual
 
@@ -623,7 +623,7 @@ TAO_NAMESPACE POA_PortableServer
 
     virtual void deactivate (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion,  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0; // pure virtual
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
     virtual PortableServer::POAManager::State get_state (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0; // pure virtual
 
@@ -651,7 +651,7 @@ TAO_NAMESPACE POA_PortableServer
                            CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
                            );
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
     virtual void hold_requests (
                                 CORBA::Boolean wait_for_completion,
@@ -667,7 +667,7 @@ TAO_NAMESPACE POA_PortableServer
                              CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
                              );
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
     virtual PortableServer::POAManager::State get_state (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
@@ -679,7 +679,7 @@ TAO_NAMESPACE POA_PortableServer
 #endif // end #if !defined
 
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
   class AdapterActivator;
   typedef AdapterActivator *AdapterActivator_ptr;
@@ -902,7 +902,7 @@ TAO_NAMESPACE POA_PortableServer
 
 #endif // end #if !defined
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   class POA;
   typedef POA *POA_ptr;
@@ -924,11 +924,11 @@ TAO_NAMESPACE POA_PortableServer
 
     virtual void destroy (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion,  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0; // pure virtual
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
     virtual PortableServer::ThreadPolicy_ptr  create_thread_policy (PortableServer::ThreadPolicyValue value,  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0; // pure virtual
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
     virtual PortableServer::LifespanPolicy_ptr  create_lifespan_policy (PortableServer::LifespanPolicyValue value,  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0; // pure virtual
 
@@ -936,7 +936,7 @@ TAO_NAMESPACE POA_PortableServer
 
     virtual PortableServer::IdAssignmentPolicy_ptr  create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue value,  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0; // pure virtual
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
     virtual PortableServer::ImplicitActivationPolicy_ptr  create_implicit_activation_policy (PortableServer::ImplicitActivationPolicyValue value,  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0; // pure virtual
 
@@ -944,7 +944,7 @@ TAO_NAMESPACE POA_PortableServer
 
     virtual PortableServer::RequestProcessingPolicy_ptr  create_request_processing_policy (PortableServer::RequestProcessingPolicyValue value,  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0; // pure virtual
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
     virtual char * the_name (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
 
@@ -952,7 +952,7 @@ TAO_NAMESPACE POA_PortableServer
 
     virtual PortableServer::POAManager_ptr  the_POAManager (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
     virtual PortableServer::AdapterActivator_ptr  the_activator (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
 
@@ -966,7 +966,7 @@ TAO_NAMESPACE POA_PortableServer
 
     virtual void set_servant (PortableServer::Servant p_servant,  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0; // pure virtual
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
     virtual PortableServer::ObjectId * activate_object (PortableServer::Servant p_servant,  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0; // pure virtual
 
@@ -1027,14 +1027,14 @@ TAO_NAMESPACE POA_PortableServer
                           CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
                           );
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
     virtual PortableServer::ThreadPolicy_ptr create_thread_policy (
                                                                    PortableServer::ThreadPolicyValue value,
                                                                    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
                                                                    );
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
     virtual PortableServer::LifespanPolicy_ptr create_lifespan_policy (
                                                                        PortableServer::LifespanPolicyValue value,
@@ -1048,7 +1048,7 @@ TAO_NAMESPACE POA_PortableServer
                                                                                 PortableServer::IdAssignmentPolicyValue value,
                                                                                 CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
                                                                                 );
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
     virtual PortableServer::ImplicitActivationPolicy_ptr create_implicit_activation_policy (
                                                                                             PortableServer::ImplicitActivationPolicyValue value,
@@ -1062,7 +1062,7 @@ TAO_NAMESPACE POA_PortableServer
                                                                                           PortableServer::RequestProcessingPolicyValue value,
                                                                                           CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
                                                                                           );
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 
     virtual char*  the_name (
@@ -1074,7 +1074,7 @@ TAO_NAMESPACE POA_PortableServer
     virtual PortableServer::POAManager_ptr the_POAManager (
                                                            CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
                                                            );
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
     virtual PortableServer::AdapterActivator_ptr the_activator (
                                                                 CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
@@ -1097,7 +1097,7 @@ TAO_NAMESPACE POA_PortableServer
                               CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
                               );
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
     virtual PortableServer::ObjectId * activate_object (
                                                         PortableServer::Servant p_servant,

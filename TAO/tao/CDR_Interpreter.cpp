@@ -298,7 +298,7 @@ TAO_CDR_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
 
   if (TAO_CDR_Interpreter::table_[kind].calc_ != 0)
     {
-      ACE_ASSERT (TAO_CDR_Interpreter::table_[kind].size_ == 0);
+      assert (TAO_CDR_Interpreter::table_[kind].size_ == 0);
 
       // Pull encapsulation length out of the stream.
       if (stream->read_ulong (temp) == 0)
@@ -319,7 +319,7 @@ TAO_CDR_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
       // any to ensure correctness.  Then use the calculator routine
       // to calculate size and alignment.
 
-      ACE_ASSERT (temp <= UINT_MAX);
+      assert (temp <= UINT_MAX);
 
       TAO_InputCDR nested (*stream, temp);
 
@@ -344,7 +344,7 @@ TAO_CDR_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
         }
       return size;
     }
-  ACE_ASSERT (TAO_CDR_Interpreter::table_[kind].size_ != 0);
+  assert (TAO_CDR_Interpreter::table_[kind].size_ != 0);
 
   // Reinitialize the TypeCode if requested; this consumes any
   // TypeCode parameters in the stream.  They only exist for TCKind
@@ -360,7 +360,7 @@ TAO_CDR_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
       switch (kind)
         {
         default:
-          ACE_ASSERT (TAO_CDR_Interpreter::table_[kind].skipper_ == 0);
+          assert (TAO_CDR_Interpreter::table_[kind].skipper_ == 0);
           break;
 
         case CORBA::tk_string:
@@ -381,7 +381,7 @@ TAO_CDR_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
             }
           tc->length_ = len;
 
-          ACE_ASSERT (len < UINT_MAX);
+          assert (len < UINT_MAX);
           tc->buffer_ = stream->rd_ptr ();
           stream->skip_bytes (len);
           break;
@@ -1107,7 +1107,7 @@ TAO_CDR_Interpreter::calc_union_attr_is_var_sized_member
         if (stream->read_ulong (encap) == 0)
           return -1;
 
-        ACE_ASSERT (encap <= UINT_MAX);
+        assert (encap <= UINT_MAX);
 
         TAO_InputCDR nested (*stream, temp);
 
@@ -1133,7 +1133,7 @@ TAO_CDR_Interpreter::calc_union_attr_is_var_sized_member
         if (stream->read_ulong (encap) == 0)
           return -1;
 
-        ACE_ASSERT (encap <= UINT_MAX);
+        assert (encap <= UINT_MAX);
 
         TAO_InputCDR nested (*stream, temp);
 

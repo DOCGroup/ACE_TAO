@@ -41,8 +41,10 @@ class TAO_Stub;
 class TAO_Profile;
 class TAO_MProfile;
 
-
-typedef TAO_Acceptor** TAO_AcceptorSetIterator;
+typedef ACE_Unbounded_Set<TAO_Acceptor*>
+        TAO_AcceptorSet;
+typedef ACE_Unbounded_Set_Iterator<TAO_Acceptor*>
+        TAO_AcceptorSetItor;
 
 class TAO_Export TAO_Acceptor_Registry
 {
@@ -64,7 +66,7 @@ public:
   //  Default destructor.
 
   int open (TAO_ORB_Core *orb_core,
-            CORBA::Environment &ACE_TRY_ENV)
+            CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Initialize all registered acceptors.  Return -1 on error.
 
@@ -84,8 +86,8 @@ public:
   // corresponds to a collocated object.
 
   // = Iterator.
-  TAO_AcceptorSetIterator begin (void);
-  TAO_AcceptorSetIterator end (void);
+  TAO_AcceptorSetItor begin (void);
+  TAO_AcceptorSetItor end (void);
 
 private:
   int open_default (TAO_ORB_Core *orb_core,
@@ -98,11 +100,8 @@ private:
   // Create a default acceptor using the specified protocol factory.
 
 private:
-  TAO_Acceptor **acceptors_;
+  TAO_AcceptorSet acceptors_;
   // List of acceptors that are currently open.
-
-  size_t size_;
-  // Number of acceptors that are currently open.
 };
 
 #if defined(__ACE_INLINE__)

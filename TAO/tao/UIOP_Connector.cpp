@@ -1,12 +1,10 @@
-// This may look like C, but it's really -*- C++ -*-
 // $Id$
 
 #include "tao/UIOP_Connector.h"
 
-#if TAO_HAS_UIOP == 1
+#if defined (TAO_HAS_UIOP)
 
 #include "tao/UIOP_Profile.h"
-#include "tao/GIOP.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Environment.h"
@@ -225,8 +223,8 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 #pragma instantiate ACE_Unbounded_Stack_Iterator<ACE_UNIX_Addr>
 
 #if !defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-#pragma instantiate CACHED_CONNECT_STRATEGY
-#pragma instantiate TAO_ADDR
+#pragma instantiate CACHED_CONNECT_STRATEGY;
+#pragma instantiate TAO_ADDR;
 #endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
 #pragma instantiate ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>
@@ -687,7 +685,7 @@ TAO_UIOP_Connector::check_prefix (const char *endpoint)
 char
 TAO_UIOP_Connector::object_key_delimiter (void) const
 {
-  return TAO_UIOP_Profile::object_key_delimiter_;
+  return TAO_UIOP_Profile::object_key_delimiter;
 }
 
-#endif /* TAO_HAS_UIOP == 1 */
+#endif /* TAO_HAS_UIOP */

@@ -17,7 +17,7 @@ TAO_POA_Manager::activate (CORBA_Environment &ACE_TRY_ENV)
   this->activate_i (ACE_TRY_ENV);
 }
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 ACE_INLINE void
 TAO_POA_Manager::hold_requests (CORBA::Boolean wait_for_completion,
@@ -52,7 +52,7 @@ TAO_POA_Manager::deactivate (CORBA::Boolean etherealize_objects,
                       ACE_TRY_ENV);
 }
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 ACE_INLINE PortableServer::POAManager::State
 TAO_POA_Manager::get_state_i (void)

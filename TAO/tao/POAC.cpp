@@ -250,7 +250,7 @@ TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, REQUEST_PROCESSING_POLICY_ID, 22)
 TAO_NAMESPACE_END
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 static const CORBA::Long _oc_PortableServer_ThreadPolicyValue[] =
 {
@@ -413,7 +413,7 @@ TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ThreadPolicy, &_tc_TAO_tc_PortableServer_ThreadPolicy)
 TAO_NAMESPACE_END
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 static const CORBA::Long _oc_PortableServer_LifespanPolicyValue[] =
 {
@@ -903,7 +903,7 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_IdAssignmentPolicy, &_tc_TAO_tc_P
 TAO_NAMESPACE_END
 
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 static const CORBA::Long _oc_PortableServer_ImplicitActivationPolicyValue[] =
 {
@@ -1393,7 +1393,7 @@ TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_RequestProcessingPolicy, &_tc_TAO_tc_PortableServer_RequestProcessingPolicy)
 TAO_NAMESPACE_END
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 PortableServer::POAManager_ptr PortableServer::POAManager::_duplicate (PortableServer::POAManager_ptr obj)
 {
@@ -1601,7 +1601,7 @@ TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_POAManager, &_tc_TAO_tc_PortableServer_POAManager)
 TAO_NAMESPACE_END
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_duplicate (PortableServer::AdapterActivator_ptr obj)
 {
@@ -1897,7 +1897,7 @@ TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ServantLocator, &_tc_TAO_tc_PortableServer_ServantLocator)
 TAO_NAMESPACE_END
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 PortableServer::POA_ptr PortableServer::POA::_duplicate (PortableServer::POA_ptr obj)
 {
@@ -2073,7 +2073,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_AdapterAlreadyExists
  (PortableServer::POA::AdapterAlreadyExists));
 CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterAlreadyExists = &_tc_TAO_tc_PortableServer_POA_AdapterAlreadyExists;
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 // default constructor
 PortableServer::POA::AdapterInactive::AdapterInactive (void)
@@ -2207,7 +2207,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_AdapterInactive
  (PortableServer::POA::AdapterInactive));
 CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterInactive = &_tc_TAO_tc_PortableServer_POA_AdapterInactive;
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 // default constructor
 PortableServer::POA::AdapterNonExistent::AdapterNonExistent (void)
@@ -2485,7 +2485,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_InvalidPolicy
  (PortableServer::POA::InvalidPolicy));
 CORBA::TypeCode_ptr PortableServer::POA::_tc_InvalidPolicy = &_tc_TAO_tc_PortableServer_POA_InvalidPolicy;
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 // default constructor
 PortableServer::POA::NoServant::NoServant (void)
@@ -2621,7 +2621,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_NoServant (CORBA::tk_except
                                                              sizeof (PortableServer::POA::NoServant));
 CORBA::TypeCode_ptr PortableServer::POA::_tc_NoServant = &_tc_TAO_tc_PortableServer_POA_NoServant;
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 // default constructor
 PortableServer::POA::ObjectAlreadyActive::ObjectAlreadyActive (void)

@@ -84,14 +84,10 @@ TAO_Exclusive_TMS::dispatch_reply (CORBA::ULong request_id,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO_Exclusive_TMS::dispatch_reply - <%d != %d>\n"),
+                    "TAO_Exclusive_TMS::dispatch_reply - <%d != %d>\n",
                     this->request_id_, request_id));
       return 0;
     }
-
-  // The transport is available for reuse again since we have received
-  // our reply.
-  this->transport_->idle ();
 
   TAO_Reply_Dispatcher *rd = this->rd_;
   this->request_id_ = 0xdeadbeef; // @@ What is a good value???
@@ -207,8 +203,8 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%P | %t):TAO_Muxed_TMS::bind_dispatcher: ")
-                    ASYS_TEXT ("bind dispatcher failed: result = %d\n"),
+                    "(%P | %t):TAO_Muxed_TMS::bind_dispatcher: "
+                    "bind dispatcher failed: result = %d\n",
                     result));
 
       return -1;
@@ -240,8 +236,8 @@ TAO_Muxed_TMS::dispatch_reply (CORBA::ULong request_id,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%P | %t):TAO_Muxed_TMS::dispatch_reply: ")
-                    ASYS_TEXT ("unbind dispatcher failed: result = %d\n"),
+                    "(%P | %t):TAO_Muxed_TMS::dispatch_reply: "
+                    "unbind dispatcher failed: result = %d\n",
                     result));
 
       return -1;

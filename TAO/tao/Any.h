@@ -173,19 +173,16 @@ public:
   CORBA::Boolean operator>>= (CORBA::Double&) const;
   // extract a double
 
-  CORBA::Boolean operator>>= (CORBA_Any&) const; // non-spec
-  CORBA::Boolean operator>>= (const CORBA_Any*&) const;
+  CORBA::Boolean operator>>= (CORBA_Any&) const;
   // extract an Any
 
   CORBA::Boolean operator>>= (CORBA::TypeCode_ptr&) const;
   // extract a TypeCode
 
-  CORBA::Boolean operator>>= (char*&) const; // deperecated
-  CORBA::Boolean operator>>= (const char*&) const;
+  CORBA::Boolean operator>>= (char*&) const;
   // extract an unbounded string
 
-  CORBA::Boolean operator>>= (CORBA::WChar*&) const; // deprecated
-  CORBA::Boolean operator>>= (const CORBA::WChar*&) const;
+  CORBA::Boolean operator>>= (CORBA::WChar*&) const;
   // extract an unbounded wide string
 
   // = Special types.
@@ -238,7 +235,7 @@ public:
   // This one's not in ACE.
   struct TAO_Export to_object
   {
-    // This signature reflects the change set out in
+    // This signature reflects the change seet out in
     // issue 154 of the 1.3 RTF.
     to_object (CORBA_Object_out obj);
     CORBA::Object_ptr &ref_;

@@ -56,8 +56,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     connector_registry_ (0),
     acceptor_registry_ (0),
     protocol_factories_ (0),
-    implrepo_service_ (CORBA::Object::_nil ()),
-    use_implrepo_ (0),
     orb_ (),
     root_poa_ (0),
     root_poa_reference_ (),
@@ -78,11 +76,11 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     opt_for_collocation_ (1),
     use_global_collocation_ (1),
     collocation_strategy_ (THRU_POA),
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if defined (TAO_HAS_CORBA_MESSAGING)
     policy_manager_ (0),
     default_policies_ (0),
     policy_current_ (0),
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
     poa_current_ (0),
     object_adapter_ (0),
     tm_ (),
@@ -104,9 +102,10 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     open_lock_ (),
     open_called_ (0),
     priority_mapping_ (0),
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if defined (TAO_HAS_CORBA_MESSAGING)
     none_sync_strategy_ (0),
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+    flush_sync_strategy_ (0),
+#endif /* TAO_HAS_CORBA_MESSAGING */
     transport_sync_strategy_ (0),
     svc_config_argc_ (0),
     svc_config_argv_ (0)
@@ -119,10 +118,13 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   ACE_NEW (this->to_iso8859_,   ACE_IBM1047_ISO8859);
 #endif /* ACE_MVS */
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if defined (TAO_HAS_CORBA_MESSAGING)
 
   ACE_NEW (this->none_sync_strategy_,
            TAO_None_Sync_Strategy);
+
+  ACE_NEW (this->flush_sync_strategy_,
+           TAO_Flush_Sync_Strategy);
 
   ACE_NEW (this->policy_manager_,
            TAO_Policy_Manager);
@@ -133,7 +135,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   ACE_NEW (this->policy_current_,
            TAO_Policy_Current);
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
   ACE_NEW (this->transport_sync_strategy_,
            TAO_Transport_Sync_Strategy);
@@ -147,15 +149,16 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   delete this->from_iso8859_;
   delete this->to_iso8859_;
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if defined (TAO_HAS_CORBA_MESSAGING)
 
   delete this->none_sync_strategy_;
+  delete this->flush_sync_strategy_;
 
   delete this->policy_manager_;
   delete this->default_policies_;
   delete this->policy_current_;
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
   delete this->transport_sync_strategy_;
 
@@ -290,7 +293,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
         if (TAO_debug_level <= 0)
           TAO_debug_level = 1;
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO_debug_level == %d"), TAO_debug_level));
+                    "TAO_debug_level == %d", TAO_debug_level));
       }
   }
 #endif  /* TAO_DEBUG */
@@ -302,7 +305,8 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
       ////////////////////////////////////////////////////////////////
       // begin with the 'parameterless' flags                       //
       ////////////////////////////////////////////////////////////////
-      if (arg_shifter.cur_arg_strncasecmp ("-ORBDaemon") == 0)
+      if (arg_shifter.cur_arg_strncasecmp
+          ("-ORBDaemon") != -1)
         {
           // Be a daemon
           this->svc_config_argv_[this->svc_config_argc_++] =
@@ -311,27 +315,18 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp
-               ("-ORBSkipServiceConfigOpen") == 0)
+               ("-ORBSkipServiceConfigOpen") != -1)
         {
-          skip_service_config_open = 1;
-
           arg_shifter.consume_arg ();
+
+          skip_service_config_open = 1;
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-ORBGIOPlite") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp ("-ORBGIOPlite") != -1)
         {
           // @@ This will have to change since gioplite
           // will be considered as an alternate ORB
           // messaging protocols.
           giop_lite = 1;
-
-          arg_shifter.consume_arg ();
-        }
-      else if (arg_shifter.cur_arg_strncasecmp ("-ORBDebug") == 0)
-        {
-          // later, replace all of these
-          // warning this turns on a daemon
-          ACE::debug (1);
-          TAO_orbdebug = 1;
 
           arg_shifter.consume_arg ();
         }
@@ -370,6 +365,16 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
+                ("-ORBDebug")))
+        {
+          // later, replace all of these
+          // warning this turns on a daemon
+          ACE::debug (1);
+          TAO_orbdebug = 1;
+
+          arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
                 ("-ORBEndpoint")))
         {
           // Each "endpoint" is of the form:
@@ -396,8 +401,8 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           if (this->orb_params ()->endpoints (endpts) != 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          ASYS_TEXT ("(%P|%t)\n")
-                          ASYS_TEXT ("Invalid endpoint(s) specified:\n%s\n"),
+                          "(%P|%t)\n"
+                          "Invalid endpoint(s) specified:\n%s\n",
                           endpts.c_str ()));
               ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
             }
@@ -421,8 +426,8 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           // Issue a warning since this backward compatibilty support
           // may be dropped in future releases.
           ACE_DEBUG ((LM_WARNING,
-                      ASYS_TEXT ("(%P|%t) \nWARNING: The `-ORBHost' option is obsolete.\n")
-                      ASYS_TEXT ("In the future, use the `-ORBEndpoint' option.\n")));
+                      "(%P|%t) \nWARNING: The `-ORBHost' option is obsolete.\n"
+                      "In the future, use the `-ORBEndpoint' option.\n"));
 
           host = current_arg;
 
@@ -435,9 +440,9 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           // Issue a warning since this backward compatibilty support
           // may be dropped in future releases.
           ACE_DEBUG ((LM_WARNING,
-                      ASYS_TEXT ("(%P|%t) \nWARNING: The `-ORBNameServiceIOR' option ")
-                      ASYS_TEXT ("is obsolete.\n")
-                      ASYS_TEXT ("Please use the `-ORBInitRef ' option instead.\n")));
+                      "(%P|%t) \nWARNING: The `-ORBNameServiceIOR' option "
+                      "is obsolete.\n"
+                      "Please use the `-ORBInitRef ' option instead.\n"));
 
           // Construct an argument that would be equivalent to
           // "-ORBInitRef NameService=....."
@@ -448,8 +453,8 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           if (this->orb_params ()->add_to_ior_table (init_ref) != 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          ASYS_TEXT ("TAO (%P|%t) Unable to add the Name ")
-                          ASYS_TEXT ("Service IOR <%s> to the lookup table.\n"),
+                          "TAO (%P|%t) Unable to add the Name "
+                          "Service IOR <%s> to the lookup table.\n",
                           current_arg));
               ACE_THROW_RETURN (CORBA::INTERNAL (), -1);
             }
@@ -492,9 +497,9 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           // Issue a warning since this backward compatibilty support
           // may be dropped in future releases.
           ACE_DEBUG ((LM_WARNING,
-                      ASYS_TEXT ("(%P|%t) \nWARNING: The `-ORBTradingServiceIOR' ")
-                      ASYS_TEXT ("option is obsolete.\n")
-                      ASYS_TEXT ("Please use the `-ORBInitRef' option instead.\n")));
+                      "(%P|%t) \nWARNING: The `-ORBTradingServiceIOR' "
+                      "option is obsolete.\n"
+                      "Please use the `-ORBInitRef' option instead.\n"));
 
           // Construct an argument that would be equivalent to
           // "-ORBInitRef TradingService=....."
@@ -507,8 +512,8 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           if (this->orb_params ()->add_to_ior_table (init_ref) != 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          ASYS_TEXT ("TAO (%P|%t) Unable to add the Trading ")
-                          ASYS_TEXT ("Service IOR <%s> to the lookup table.\n"),
+                          "TAO (%P|%t) Unable to add the Trading "
+                          "Service IOR <%s> to the lookup table.\n",
                           current_arg));
               ACE_THROW_RETURN (CORBA::INTERNAL (), -1);
             }
@@ -532,9 +537,9 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           // Issue a warning since this backward compatibilty support
           // may be dropped in future releases.
           ACE_DEBUG ((LM_WARNING,
-                      ASYS_TEXT ("(%P|%t) \nWARNING: The `-ORBImplRepoServiceIOR' ")
-                      ASYS_TEXT ("option is obsolete.\n")
-                      ASYS_TEXT ("Please use the `-ORBInitRef' option instead.\n")));
+                      "(%P|%t) \nWARNING: The `-ORBImplRepoServiceIOR' "
+                      "option is obsolete.\n"
+                      "Please use the `-ORBInitRef' option instead.\n"));
 
           // Construct an argument that would be equivalent to
           // "-ORBInitRef ImplRepoService=....."
@@ -547,9 +552,9 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           if (this->orb_params ()->add_to_ior_table (init_ref) != 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          ASYS_TEXT ("TAO (%P|%t) Unable to add the ")
-                          ASYS_TEXT ("Implementation Repository IOR <%s> to ")
-                          ASYS_TEXT ("the lookup table.\n"),
+                          "TAO (%P|%t) Unable to add the "
+                          "Implementation Repository IOR <%s> to "
+                          "the lookup table.\n",
                           current_arg));
               ACE_THROW_RETURN (CORBA::INTERNAL (), -1);
             }
@@ -573,8 +578,8 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 
           old_style_endpoint = 1;
           ACE_DEBUG ((LM_WARNING,
-                      ASYS_TEXT ("(%P|%t) \nWARNING: The `-ORBPort' option is obsolete.\n")
-                      ASYS_TEXT ("In the future, use the `-ORBEndpoint' option.\n")));
+                      "(%P|%t) \nWARNING: The `-ORBPort' option is obsolete.\n"
+                      "In the future, use the `-ORBEndpoint' option.\n"));
 
           // Specify the port number/name on which we should listen
           // We really shouldn't limit this to being specified as
@@ -663,9 +668,9 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
             {
               yes_implies_global = 1;
               ACE_DEBUG ((LM_WARNING,
-                          ASYS_TEXT ("WARNING: using '-ORBCollocation YES' is obsolete ")
-                          ASYS_TEXT ("and implies '-ORBCollocation global'")
-                          ASYS_TEXT ("  Please use '-ORBCollocation global' instead.\n")));
+                          "WARNING: using '-ORBCollocation YES' is obsolete "
+                          "and implies '-ORBCollocation global'"
+                          "  Please use '-ORBCollocation global' instead.\n"));
             }
 
           if (yes_implies_global ||
@@ -691,9 +696,9 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
         // calls.
         {
           ACE_DEBUG ((LM_WARNING,
-                      ASYS_TEXT ("WARNING: -ORBGlobalCollocation option is obsolete.")
-                      ASYS_TEXT ("  Please use '-ORBCollocation global/per-orb/no'")
-                      ASYS_TEXT ("instead.\n")));
+                      "WARNING: -ORBGlobalCollocation option is obsolete."
+                      "  Please use '-ORBCollocation global/per-orb/no'"
+                      "instead.\n"));
 
           char *opt = current_arg;
           if (ACE_OS::strcasecmp (opt, "YES") == 0)
@@ -738,17 +743,17 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
               // may be dropped in future releases.
 
               ACE_DEBUG ((LM_WARNING,
-                          ASYS_TEXT ("(%P|%t) \nWARNING: The `host:port' pair style ")
-                          ASYS_TEXT ("for `-ORBPreconnect' is obsolete.\n")
-                          ASYS_TEXT ("In the future, use the URL style.\n")));
+                          "(%P|%t) \nWARNING: The `host:port' pair style "
+                          "for `-ORBPreconnect' is obsolete.\n"
+                          "In the future, use the URL style.\n"));
 
               preconnections =
                 ACE_CString ("iiop://") +
                 ACE_CString (preconnections);
 
               ACE_DEBUG ((LM_WARNING,
-                          ASYS_TEXT ("(%P|%t) \nWARNING: The following preconnection ")
-                          ASYS_TEXT ("will be used:\n%s\n"),
+                          "(%P|%t) \nWARNING: The following preconnection "
+                          "will be used:\n%s\n",
                           preconnections.c_str()));
 
               this->orb_params ()->preconnects (preconnections);
@@ -790,9 +795,9 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           if (this->orb_params ()->add_to_ior_table (init_ref) != 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          ASYS_TEXT ("Unable to add initial reference:\n")
-                          ASYS_TEXT ("%s\n")
-                          ASYS_TEXT ("to the initial reference lookup table.\n"),
+                          "Unable to add initial reference:\n"
+                          "%s\n"
+                          "to the initial reference lookup table.\n",
                           current_arg));
               ACE_THROW_RETURN (CORBA::INTERNAL (), -1);
             }
@@ -878,14 +883,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
 
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
-                ("-ORBUseIMR")))
-        {
-          // Use IR or not.
-          this->use_implrepo_ = ACE_OS::atoi (current_arg);
-
-          arg_shifter.consume_arg ();
-        }
 
       ////////////////////////////////////////////////////////////////
       // catch all the remaining -ORB args                          //
@@ -895,8 +892,8 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_WARNING,
-                        ASYS_TEXT ("WARNING: Unknown \"-ORB\" option <%s>.\n")
-                        ASYS_TEXT ("         Removing it from the argument list.\n"),
+                        "WARNING: Unknown \"-ORB\" option <%s>.\n"
+                        "         Removing it from the argument list.\n",
                         current_arg));
           arg_shifter.consume_arg ();
         }
@@ -945,9 +942,9 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   if (result != 0 && errno != ENOENT)
     {
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("(%P|%t) %p\n"),
-                  ASYS_TEXT ("ORB Core unable to initialize the ")
-                  ASYS_TEXT ("Service Configurator")));
+                  "(%P|%t) %p\n",
+                  "ORB Core unable to initialize the "
+                  "Service Configurator"));
       ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
     }
 
@@ -959,8 +956,8 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   if (trf == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("(%P|%t) %p\n"),
-                  ASYS_TEXT ("ORB Core unable to find a Resource Factory instance")));
+                  "(%P|%t) %p\n",
+                  "ORB Core unable to find a Resource Factory instance"));
       ACE_THROW_RETURN (CORBA::INTERNAL (), -1);
     }
 
@@ -982,8 +979,8 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   if (reactor == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("(%P|%t) %p\n"),
-                  ASYS_TEXT ("ORB Core unable to initialize reactor")));
+                  "(%P|%t) %p\n",
+                  "ORB Core unable to initialize reactor"));
       ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
     }
 
@@ -992,9 +989,9 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   if (ssf == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("(%P|%t) %p\n"),
-                  ASYS_TEXT ("ORB Core unable to find a Server Strategy Factory ")
-                  ASYS_TEXT ("instance")));
+                  "(%P|%t) %p\n",
+                  "ORB Core unable to find a Server Strategy Factory "
+                  "instance"));
       ACE_THROW_RETURN (CORBA::INTERNAL (), -1);
     }
 
@@ -1144,8 +1141,8 @@ TAO_ORB_Core::set_iiop_endpoint (int dotted_decimal_addresses,
       if (ACE_OS::hostname (name, MAXHOSTNAMELEN + 1) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("(%P|%t) %p\n"),
-                             ASYS_TEXT ("failed to look up local host name")),
+                             "(%P|%t) %p\n",
+                             "failed to look up local host name"),
                             -1);
         }
       host.set (name, 1);
@@ -1164,8 +1161,8 @@ TAO_ORB_Core::set_iiop_endpoint (int dotted_decimal_addresses,
                                  dotted_decimal_addresses) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%P|%t) %p\n"),
-                         ASYS_TEXT ("failed in addr_to_string ()")),
+                         "(%P|%t) %p\n",
+                         "failed in addr_to_string ()"),
                         -1);
     }
 
@@ -1182,12 +1179,10 @@ TAO_ORB_Core::fini (void)
   // Wait for any server threads, ignoring any failures.
   (void) this->thr_mgr ()->wait ();
 
-  CORBA::release (this->implrepo_service_);
-
   if (TAO_debug_level >= 3)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("Destroying ORB <%s>\n"),
+                  "Destroying ORB <%s>\n",
                   this->orbid_));
     }
 
@@ -1230,9 +1225,9 @@ TAO_ORB_Core::fini (void)
   }
 
   delete this->reactor_registry_;
-#if (TAO_HAS_RT_CORBA == 1)
+#if defined(TAO_HAS_RT_CORBA)
   delete this->priority_mapping_;
-#endif /* TAO_HAS_RT_CORBA == 1 */
+#endif /* TAO_HAS_RT_CORBA */
 
   delete this;
 
@@ -1261,10 +1256,10 @@ TAO_ORB_Core::resource_factory (void)
       // platforms.
       if (TAO_orbdebug)
         ACE_ERROR ((LM_WARNING,
-                    ASYS_TEXT ("(%P|%t) WARNING - No Resource Factory found ")
-                    ASYS_TEXT ("in Service Repository.\n")
-                    ASYS_TEXT ("  Using default instance with GLOBAL resource ")
-                    ASYS_TEXT ("source specifier.\n")));
+                    "(%P|%t) WARNING - No Resource Factory found "
+                    "in Service Repository.\n"
+                    "  Using default instance with GLOBAL resource "
+                    "source specifier.\n"));
 
       TAO_Default_Resource_Factory *default_factory;
       ACE_NEW_RETURN (default_factory,
@@ -1304,9 +1299,9 @@ TAO_ORB_Core::client_factory (void)
       // platforms.
       if (TAO_orbdebug)
         ACE_ERROR ((LM_WARNING,
-                    ASYS_TEXT ("(%P|%t) WARNING - No Client Strategy Factory found ")
-                    ASYS_TEXT ("in Service Repository.\n")
-                    ASYS_TEXT ("  Using default instance.\n")));
+                    "(%P|%t) WARNING - No Client Strategy Factory found "
+                    "in Service Repository.\n"
+                    "  Using default instance.\n"));
 
       ACE_NEW_RETURN (this->client_factory_,
                       TAO_Default_Client_Strategy_Factory,
@@ -1343,9 +1338,9 @@ TAO_ORB_Core::server_factory (void)
       // Still don't have one, so let's allocate the default.
       if (TAO_orbdebug)
         ACE_ERROR ((LM_WARNING,
-                    ASYS_TEXT ("(%P|%t) WARNING - No %s found in Service Repository.")
-                    ASYS_TEXT ("  Using default instance.\n"),
-                    ASYS_TEXT ("Server Strategy Factory")));
+                    "(%P|%t) WARNING - No %s found in Service Repository."
+                    "  Using default instance.\n",
+                    "Server Strategy Factory"));
 
       ACE_NEW_RETURN (this->server_factory_,
                       TAO_Default_Server_Strategy_Factory,
@@ -1599,7 +1594,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 {
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("TAO (%P|%t) - start of run\n")));
+                "TAO (%P|%t) - start of run\n"));
 
   TAO_Leader_Follower &leader_follower = this->leader_follower ();
   {
@@ -1641,7 +1636,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
     {
       if (TAO_debug_level >= 3)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) - blocking on handle events\n")));
+                    "TAO (%P|%t) - blocking on handle events\n"));
       switch (r->handle_events (tv))
         {
         case 0: // Timed out, so we return to caller.
@@ -1671,13 +1666,13 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 
     if (leader_follower.elect_new_leader () == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("TAO (%P|%t) Failed to wake up ")
-                         ASYS_TEXT ("a follower thread\n")),
+                         "TAO (%P|%t) Failed to wake up "
+                         "a follower thread\n"),
                         -1);
   }
 
   if (TAO_debug_level >= 3)
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("TAO (%P|%t) - end of run %d\n"), result));
+    ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - end of run %d\n", result));
 
   return result;
 }
@@ -1774,6 +1769,30 @@ TAO_ORB_Core::open (CORBA::Environment &ACE_TRY_ENV)
 
 // ****************************************************************
 
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
+TAO_None_Sync_Strategy &
+TAO_ORB_Core::none_sync_strategy (void)
+{
+  return *this->none_sync_strategy_;
+}
+
+TAO_Flush_Sync_Strategy &
+TAO_ORB_Core::flush_sync_strategy (void)
+{
+  return *this->flush_sync_strategy_;
+}
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
+TAO_Transport_Sync_Strategy &
+TAO_ORB_Core::transport_sync_strategy (void)
+{
+  return *this->transport_sync_strategy_;
+}
+
+// ****************************************************************
+
 ACE_Allocator*
 TAO_ORB_Core::input_cdr_dblock_allocator_i (TAO_ORB_Core_TSS_Resources *tss)
 {
@@ -1792,9 +1811,9 @@ TAO_ORB_Core::input_cdr_dblock_allocator (void)
       TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
       if (tss == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("(%P|%t) %p\n"),
-                           ASYS_TEXT ("TAO_ORB_Core::input_cdr_dblock_allocator (); ")
-                           ASYS_TEXT ("no more TSS keys")),
+                           "(%P|%t) %p\n",
+                           "TAO_ORB_Core::input_cdr_dblock_allocator (); "
+                           "no more TSS keys"),
                           0);
       return this->input_cdr_dblock_allocator_i (tss);
     }
@@ -1828,9 +1847,9 @@ TAO_ORB_Core::input_cdr_buffer_allocator (void)
       TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
       if (tss == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("(%P|%t) %p\n"),
-                           ASYS_TEXT ("TAO_ORB_Core::input_cdr_buffer_allocator (); ")
-                           ASYS_TEXT ("no more TSS keys")),
+                           "(%P|%t) %p\n",
+                           "TAO_ORB_Core::input_cdr_buffer_allocator (); "
+                           "no more TSS keys"),
                           0);
 
       return this->input_cdr_buffer_allocator_i (tss);
@@ -1857,9 +1876,9 @@ TAO_ORB_Core::output_cdr_dblock_allocator (void)
       TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
       if (tss == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("(%P|%t) %p\n"),
-                           ASYS_TEXT ("TAO_ORB_Core::output_cdr_dblock_allocator (); ")
-                           ASYS_TEXT ("no more TSS keys")),
+                           "(%P|%t) %p\n",
+                           "TAO_ORB_Core::output_cdr_dblock_allocator (); "
+                           "no more TSS keys"),
                           0);
 
       if (tss->output_cdr_dblock_allocator_ == 0)
@@ -1892,9 +1911,9 @@ TAO_ORB_Core::output_cdr_buffer_allocator (void)
       TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
       if (tss == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("(%P|%t) %p\n"),
-                           ASYS_TEXT ("TAO_ORB_Core::input_cdr_buffer_allocator (); ")
-                           ASYS_TEXT ("no more TSS keys")),
+                           "(%P|%t) %p\n",
+                           "TAO_ORB_Core::input_cdr_buffer_allocator (); "
+                           "no more TSS keys"),
                           0);
 
       if (tss->output_cdr_buffer_allocator_ == 0)
@@ -1930,9 +1949,9 @@ TAO_ORB_Core::create_input_cdr_data_block (size_t size)
       TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
       if (tss == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("(%P|%t) %p\n"),
-                           ASYS_TEXT ("TAO_ORB_Core::create_input_cdr_data_block (); ")
-                           ASYS_TEXT ("no more TSS keys")),
+                           "(%P|%t) %p\n",
+                           "TAO_ORB_Core::create_input_cdr_data_block (); "
+                           "no more TSS keys"),
                           0);
 
       dblock_allocator =
@@ -2009,10 +2028,46 @@ TAO_ORB_Core::reactor (TAO_Acceptor *acceptor)
   return this->reactor_;
 }
 
+TAO_POA_Current &
+TAO_ORB_Core::poa_current (void) const
+{
+  return *this->poa_current_;
+}
+
+CORBA_Environment*
+TAO_ORB_Core::default_environment (void) const
+{
+  return TAO_TSS_RESOURCES::instance ()->default_environment_;
+}
+
+void
+TAO_ORB_Core::default_environment (CORBA_Environment *env)
+{
+  TAO_TSS_RESOURCES::instance ()->default_environment_ = env;
+}
+
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
+TAO_Policy_Current &
+TAO_ORB_Core::policy_current (void)
+{
+  return *this->policy_current_;
+}
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
+#if defined (TAO_HAS_RT_CORBA)
+TAO_Priority_Mapping *
+TAO_ORB_Core::priority_mapping (void)
+{
+  return this->priority_mapping_;
+}
+#endif /* TAO_HAS_RT_CORBA */
+
 int
 TAO_ORB_Core::get_thread_priority (CORBA::Short &priority)
 {
-#if (TAO_HAS_RT_CORBA == 0)
+#if !defined (TAO_HAS_RT_CORBA)
   priority = 0;
   return 0;
 #else
@@ -2023,8 +2078,8 @@ TAO_ORB_Core::get_thread_priority (CORBA::Short &priority)
   if (ACE_Thread::getprio (current, native_priority) == -1)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("TAO (%P|%t) - ORB_Core::get_thread_priority: ")
-                  ASYS_TEXT (" ACE_Thread::get_prio\n")));
+                  "TAO (%P|%t) - ORB_Core::get_thread_priority: "
+                  " ACE_Thread::get_prio\n"));
       return -1;
     }
 
@@ -2034,19 +2089,19 @@ TAO_ORB_Core::get_thread_priority (CORBA::Short &priority)
   if (priority_mapping->to_CORBA (native_priority, priority) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("TAO (%P|%t) - ORB_Core::get_thread_priority: ")
-                  ASYS_TEXT (" Priority_Mapping::to_CORBA\n")));
+                  "TAO (%P|%t) - ORB_Core::get_thread_priority: "
+                  " Priority_Mapping::to_CORBA\n"));
       return -1;
     }
 
   return 0;
-#endif /* TAO_HAS_RT_CORBA == 0 */
+#endif /* TAO_HAS_RT_CORBA */
 }
 
 int
 TAO_ORB_Core::set_thread_priority (CORBA::Short priority)
 {
-#if (TAO_HAS_RT_CORBA == 0)
+#if !defined (TAO_HAS_RT_CORBA)
   ACE_UNUSED_ARG (priority);
   return 0;
 #else
@@ -2063,69 +2118,8 @@ TAO_ORB_Core::set_thread_priority (CORBA::Short priority)
     return -1;
 
   return 0;
-#endif /* TAO_HAS_RT_CORBA == 0 */
+#endif /* TAO_HAS_RT_CORBA */
 }
-
-CORBA::Object_ptr
-TAO_ORB_Core::implrepo_service (void)
-{
-  if (!this->use_implrepo_)
-    return CORBA::Object::_nil ();
-
-  if (CORBA::is_nil (this->implrepo_service_))
-    {
-
-      ACE_TRY_NEW_ENV
-        {
-          CORBA::Object_var temp = this->orb_->resolve_initial_references ("ImplRepoService", ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, CORBA::Object::_nil ());
-
-          // @@ Worry about assigning a different IOR? (brunsch)
-          this->implrepo_service_ = temp._retn ();
-        }
-      ACE_CATCHANY
-        {
-          // Just make sure that we have a null pointer.  Ignore the exception anyway.
-          this->implrepo_service_ = CORBA::Object::_nil ();
-        }
-      ACE_ENDTRY;
-    }
-
-  return CORBA::Object::_duplicate (this->implrepo_service_);
-}
-
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
-TAO_RelativeRoundtripTimeoutPolicy *
-TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
-{
-  TAO_RelativeRoundtripTimeoutPolicy *result = 0;
-
-  // No need to lock, the object is in TSS storage....
-  TAO_Policy_Current &policy_current =
-    this->policy_current ();
-  result = policy_current.relative_roundtrip_timeout ();
-
-  // @@ Must lock, but is is harder to implement than just modifying
-  //    this call: the ORB does take a lock to modify the policy
-  //    manager
-  if (result == 0)
-    {
-      TAO_Policy_Manager *policy_manager =
-        this->policy_manager ();
-      if (policy_manager != 0)
-        result = policy_manager->relative_roundtrip_timeout ();
-    }
-
-  if (result == 0)
-    result = this->default_relative_roundtrip_timeout ();
-
-  return result;
-}
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 // ****************************************************************
 
@@ -2181,9 +2175,9 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
 TAO_TSS_Resources::TAO_TSS_Resources (void)
   :  poa_current_impl_ (0),
      default_environment_ (&this->tss_environment_)
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if defined (TAO_HAS_CORBA_MESSAGING)
   , policy_current_ (&this->initial_policy_current_)
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
 {
 }
 

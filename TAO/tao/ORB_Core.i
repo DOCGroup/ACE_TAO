@@ -114,7 +114,7 @@ TAO_ORB_Core::to_unicode (void) const
   return this->to_unicode_;
 }
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if defined (TAO_HAS_CORBA_MESSAGING)
 ACE_INLINE TAO_Policy_Manager *
 TAO_ORB_Core::policy_manager (void)
 {
@@ -129,7 +129,7 @@ TAO_ORB_Core::get_default_policy (
   return this->default_policies_->get_policy (policy, ACE_TRY_ENV);
 }
 
-ACE_INLINE TAO_RelativeRoundtripTimeoutPolicy *
+ACE_INLINE TAO_RelativeRoundtripTimeoutPolicy_i *
 TAO_ORB_Core::default_relative_roundtrip_timeout (void) const
 {
   return this->default_policies_->relative_roundtrip_timeout ();
@@ -153,7 +153,7 @@ TAO_ORB_Core::default_buffering_constraint (void) const
   return this->default_policies_->buffering_constraint ();
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 ACE_INLINE TAO_ORB_Core_TSS_Resources*
 TAO_ORB_Core::get_tss_resources (void)
@@ -194,67 +194,6 @@ TAO_ORB_Core::orbid (void) const
   return this->orbid_;
 }
 
-ACE_INLINE void
-TAO_ORB_Core::implrepo_service (const CORBA::Object_ptr ir)
-{
-  this->implrepo_service_ = ir;
-}
-
-// ****************************************************************
-
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
-ACE_INLINE TAO_None_Sync_Strategy &
-TAO_ORB_Core::none_sync_strategy (void)
-{
-  return *this->none_sync_strategy_;
-}
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
-ACE_INLINE TAO_Transport_Sync_Strategy &
-TAO_ORB_Core::transport_sync_strategy (void)
-{
-  return *this->transport_sync_strategy_;
-}
-
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
-ACE_INLINE TAO_Policy_Current &
-TAO_ORB_Core::policy_current (void)
-{
-  return *this->policy_current_;
-}
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
-#if (TAO_HAS_RT_CORBA == 1)
-
-ACE_INLINE TAO_Priority_Mapping *
-TAO_ORB_Core::priority_mapping (void)
-{
-  return this->priority_mapping_;
-}
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
-ACE_INLINE TAO_POA_Current &
-TAO_ORB_Core::poa_current (void) const
-{
-  return *this->poa_current_;
-}
-
-ACE_INLINE CORBA_Environment *
-TAO_ORB_Core::default_environment (void) const
-{
-  return TAO_TSS_RESOURCES::instance ()->default_environment_;
-}
-
-ACE_INLINE void
-TAO_ORB_Core::default_environment (CORBA_Environment *env)
-{
-  TAO_TSS_RESOURCES::instance ()->default_environment_ = env;
-}
 
 // ****************************************************************
 

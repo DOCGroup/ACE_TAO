@@ -1,22 +1,30 @@
 // -*- C++ -*-
 // $Id$
 
-ACE_INLINE TAO_EndpointSet &
+ACE_INLINE int
+TAO_ORB_Parameters::preconnects (ACE_CString &preconnects)
+{
+  return this->parse_endpoints (preconnects,
+                                this->preconnect_insertion_strategy_);
+}
+
+ACE_INLINE TAO_PreconnectSet &
 TAO_ORB_Parameters::preconnects (void)
 {
   return this->preconnects_list_;
 }
 
-ACE_INLINE int
-TAO_ORB_Parameters::preconnects (ACE_CString &preconnects)
-{
-  return this->parse_endpoints (preconnects, this->preconnects ());
-}
-
 ACE_INLINE void
 TAO_ORB_Parameters::add_preconnect (ACE_CString &preconnect)
 {
-  this->preconnects ().enqueue_tail (preconnect);
+  this->preconnects_list_.enqueue_tail (preconnect);
+}
+
+ACE_INLINE int
+TAO_ORB_Parameters::endpoints (ACE_CString &endpoints)
+{
+  return this->parse_endpoints (endpoints,
+                                this->endpoint_insertion_strategy_);
 }
 
 ACE_INLINE TAO_EndpointSet &
@@ -25,16 +33,10 @@ TAO_ORB_Parameters::endpoints (void)
   return this->endpoints_list_;
 }
 
-ACE_INLINE int
-TAO_ORB_Parameters::endpoints (ACE_CString &endpoints)
-{
-  return this->parse_endpoints (endpoints, this->endpoints ());
-}
-
 ACE_INLINE void
 TAO_ORB_Parameters::add_endpoint (ACE_CString &endpoint)
 {
-  this->endpoints ().enqueue_tail (endpoint);
+  this->endpoints_list_.insert (endpoint);
 }
 
 ACE_INLINE int

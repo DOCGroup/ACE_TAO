@@ -29,12 +29,6 @@ TAO_Unknown_Profile::parse_string (const char *,
   return -1;
 }
 
-char 
-TAO_Unknown_Profile::object_key_delimiter (void) const
-{
-  return 0;
-}
-
 char *
 TAO_Unknown_Profile::to_string (CORBA::Environment &)
 {

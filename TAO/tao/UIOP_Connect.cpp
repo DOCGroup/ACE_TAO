@@ -2,21 +2,19 @@
 
 #include "tao/UIOP_Connect.h"
 
-#if TAO_HAS_UIOP == 1
+#if defined (TAO_HAS_UIOP)
 
 #include "tao/UIOP_Transport.h"
-#include "tao/GIOP.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/CDR.h"
 #include "tao/Timeprobe.h"
 
-#include "tao/Messaging_Policy_i.h"
-
 #if !defined (__ACE_INLINE__)
 # include "tao/UIOP_Connect.i"
 #endif /* ! __ACE_INLINE__ */
+
 
 ACE_RCSID(tao, UIOP_Connect, "$Id$")
 
@@ -91,6 +89,12 @@ TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (TAO_ORB_
     tss_resources_ (orb_core->get_tss_resources ()),
     refcount_ (1)
 {
+  // OK, Here is a small twist. By now the all the objects cached in
+  // this class would have been constructed. But we would like to make
+  // the one of the objects, precisely the transport object a pointer
+  // to the Messaging object. So, we set this up properly by calling
+  // the messaging_init method on the transport. 
+  this->transport_.messaging_init (& this->acceptor_factory_);
 }
 
 TAO_UIOP_Server_Connection_Handler::~TAO_UIOP_Server_Connection_Handler (void)
@@ -249,10 +253,11 @@ TAO_UIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
 {
   this->refcount_++;
 
-  int result = TAO_GIOP::handle_input (this->transport (),
-                                       this->orb_core_,
-                                       this->transport_.message_state_,
-                                       max_wait_time);
+  int result = 
+    this->acceptor_factory_.handle_input (this->transport (), 
+                                          this->orb_core_,
+                                          this->transport_.message_state_,
+                                          max_wait_time);
 
   if (result == -1 && TAO_debug_level > 0)
     {
@@ -293,11 +298,12 @@ TAO_UIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
   // Reset the message state.
   this->transport_.message_state_.reset (0);
 
-  result = TAO_GIOP::process_server_message (this->transport (),
-                                             this->orb_core_,
-                                             input_cdr,
-                                             message_type,
-                                             giop_version);
+  result = 
+    this->acceptor_factory_.process_connector_messages (this->transport (),
+                                                        this->orb_core_,
+                                                        input_cdr,
+                                                        message_type);
+                                                           
   if (result != -1)
     result = 0;
 
@@ -317,6 +323,12 @@ TAO_UIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
     transport_ (this, orb_core),
     orb_core_ (orb_core)
 {
+  // OK, Here is a small twist. By now the all the objecs cached in
+  // this class would have been constructed. But we would like to make
+  // the one of the objects, precisely the transport object a pointer
+  // to the Messaging object. So, we set this up properly by calling
+  // the messaging_init method on the transport. 
+  this->transport_.messaging_init (& this->message_factory_);
 }
 
 TAO_UIOP_Client_Connection_Handler::~TAO_UIOP_Client_Connection_Handler (void)
@@ -403,26 +415,8 @@ TAO_UIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &,
   // This method is called when buffering timer expires.
   //
 
-  ACE_Time_Value *max_wait_time = 0;
-
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-  TAO_RelativeRoundtripTimeoutPolicy *timeout_policy =
-    this->orb_core_->stubless_relative_roundtrip_timeout ();
-
-  ACE_Time_Value max_wait_time_value;
-
-  // If max_wait_time is not zero then this is not the first attempt
-  // to send the request, the timeout value includes *all* those
-  // attempts.
-  if (timeout_policy != 0)
-    {
-      timeout_policy->set_time_value (max_wait_time_value);
-      max_wait_time = &max_wait_time_value;
-    }
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
   // Cannot deal with errors, and therefore they are ignored.
-  this->transport ()->send_buffered_messages (max_wait_time);
+  this->transport ()->send_buffered_messages ();
 
   return 0;
 }
@@ -503,4 +497,4 @@ TAO_UIOP_Client_Connection_Handler::handle_cleanup (void)
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* TAO_HAS_UIOP == 1 */
+#endif /* TAO_HAS_UIOP */

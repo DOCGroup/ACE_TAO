@@ -207,7 +207,7 @@ void POA_CORBA::DomainManager::_dispatch (CORBA::ServerRequest &req, void *conte
   // find the skeleton corresponding to this opname
   if (this->_find (opname, skel, req.operation_length ()) == -1)
   {
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Bad operation <%s>\n"), opname));
+    ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
     ACE_THROW (CORBA_BAD_OPERATION ());
   }
   else
@@ -470,7 +470,7 @@ void POA_CORBA::ConstructionPolicy::_dispatch (CORBA::ServerRequest &req, void *
   // find the skeleton corresponding to this opname
   if (this->_find (opname, skel, req.operation_length ()) == -1)
   {
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Bad operation <%s>\n"), opname));
+    ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
     ACE_THROW (CORBA_BAD_OPERATION ());
   }
   else

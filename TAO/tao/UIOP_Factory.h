@@ -6,7 +6,7 @@
 //   TAO
 //
 // = FILENAME
-//   UIOP_Factory.h
+//   Protocol_Factory.h
 //
 // = AUTHOR
 //   Fred Kuhns <fredk@cs.wustl.edu>
@@ -19,7 +19,7 @@
 
 #include "tao/Protocol_Factory.h"
 
-# if TAO_HAS_UIOP == 1
+# if defined (TAO_HAS_UIOP)
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -64,6 +64,6 @@ private:
 ACE_STATIC_SVC_DECLARE (TAO_UIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_UIOP_Protocol_Factory)
 
-# endif  /* TAO_HAS_UIOP == 1 */
+# endif  /* TAO_HAS_UIOP */
 
 #endif /* TAO_UIOP_FACTORY_H */

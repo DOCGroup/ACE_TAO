@@ -18,7 +18,7 @@
 
 #include "tao/rtcorbafwd.h"
 
-#if (TAO_HAS_RT_CORBA == 1)
+#if defined (TAO_HAS_RT_CORBA)
 
 #include "tao/Exception.h"
 #include "tao/CurrentC.h"
@@ -143,6 +143,6 @@ private:
 # include "tao/RT_Current.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_HAS_RT_CORBA == 1 */
+#endif /* TAO_HAS_RT_CORBA */
 
 #endif /* TAO_RT_CURRENT_H */

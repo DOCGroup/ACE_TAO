@@ -19,7 +19,7 @@
 
 #include "tao/UIOP_Transport.h"
 
-#if TAO_HAS_UIOP == 1
+#if defined (TAO_HAS_UIOP)
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -34,6 +34,10 @@
 #include "tao/corbafwd.h"
 #include "tao/Wait_Strategy.h"
 
+
+// BALA Temporray include
+#include "tao/GIOP_Acceptors.h"
+#include "tao/GIOP_Message_Invocation.h"
 
 // Forward Decls
 class TAO_ORB_Core;
@@ -101,6 +105,11 @@ protected:
 
   TAO_ORB_Core *orb_core_;
   // Cached ORB Core.
+
+  //@@Added by Bala for the time being. This would change to the
+  // actual factory at a later date
+  TAO_GIOP_Client_Message_1_1 message_factory_;
+  // /////////////////////
 };
 
 // ****************************************************************
@@ -146,6 +155,11 @@ protected:
   TAO_UIOP_Server_Transport transport_;
   // @@ New transport object reference.
 
+  //@@Added by Bala for the time being. This would change to the
+  // actual factory at a later date
+  TAO_GIOP_Message_Acceptor acceptor_factory_;
+  // /////////////////////
+
   // = Event Handler overloads
 
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
@@ -175,6 +189,6 @@ protected:
 #include "tao/UIOP_Connect.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_HAS_UIOP == 1 */
+#endif /* TAO_HAS_UIOP */
 
 #endif /* TAO_UIOP_CONNECT_H */

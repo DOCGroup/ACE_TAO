@@ -84,8 +84,8 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
                                  "-ORBReactorLock") == 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO_Default_Resource obsolete -ORBReactorLock ")
-                    ASYS_TEXT ("option, please use -ORBReactorType\n")));
+                    "TAO_Default_Resource obsolete -ORBReactorLock "
+                    "option, please use -ORBReactorType\n"));
         curarg++;
         if (curarg < argc)
           {
@@ -129,8 +129,8 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
               this->reactor_registry_type_ = TAO_REACTOR_PER_PRIORITY;
             else
               ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("TAO_Default_Factory - unknown argument")
-                          ASYS_TEXT (" <%s> for -ORBReactorRegistry\n"), name));
+                          "TAO_Default_Factory - unknown argument"
+                          " <%s> for -ORBReactorRegistry\n", name));
           }
       }
 
@@ -154,16 +154,16 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
               reactor_type_ = TAO_REACTOR_FL;
 #else
               ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("TAO_Default_Factory - FlReactor")
-                          ASYS_TEXT (" not supported on this platform\n")));
+                          "TAO_Default_Factory - FlReactor"
+                          " not supported on this platform\n"));
 #endif /* ACE_HAS_FL */
             else if (ACE_OS::strcasecmp (name, "tk_reactor") == 0)
 #if defined(ACE_HAS_TK)
               reactor_type_ = TAO_REACTOR_TK;
 #else
               ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("TAO_Default_Factory - TkReactor")
-                          ASYS_TEXT (" not supported on this platform\n")));
+                          "TAO_Default_Factory - TkReactor"
+                          " not supported on this platform\n"));
 #endif /* ACE_HAS_TK */
             else if (ACE_OS::strcasecmp (name,
                                          "wfmo") == 0)
@@ -189,8 +189,8 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
               reactor_type_ = TAO_REACTOR_TP;
             else
               ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("TAO_Default_Factory - unknown argument")
-                          ASYS_TEXT (" <%s> for -ORBreactortype\n"), name));
+                          "TAO_Default_Factory - unknown argument"
+                          " <%s> for -ORBreactortype\n", name));
           }
       }
 
@@ -230,7 +230,7 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
                             -1);
             if (pset->insert (item) == -1)
               ACE_ERROR ((LM_ERROR,
-                          ASYS_TEXT ("(%P|%t) Unable to add protocol factories for %s: %p\n"),
+                          "(%P|%t) Unable to add protocol factories for %s: %p\n",
                           argv[curarg]));
           }
       }
@@ -257,8 +257,8 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
               this->connection_caching_type_ = TAO_Resource_Factory::NOOP;
             else
               ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("TAO_Default_Factory - unknown argument")
-                          ASYS_TEXT (" <%s> for -ORBConnectionCachingStrategy\n"), name));
+                          "TAO_Default_Factory - unknown argument"
+                          " <%s> for -ORBConnectionCachingStrategy\n", name));
           }
       }
 
@@ -270,8 +270,8 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
             this->purge_percentage_ = ACE_OS::atoi (argv[curarg]);
         else
            ACE_DEBUG ((LM_DEBUG,
-                       ASYS_TEXT ("TAO_Default_Factory - unknown argument")
-                       ASYS_TEXT ("for -ORBPurgePercentage\n")));
+                       "TAO_Default_Factory - unknown argument"
+                       "for -ORBPurgePercentage\n"));
       }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -293,8 +293,8 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
               this->sched_policy_ = ACE_SCHED_RR;
             else
               ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("TAO_Default_Factory - unknown argument")
-                          ASYS_TEXT (" <%s> for -ORBSchedPolicy\n"), name));
+                          "TAO_Default_Factory - unknown argument"
+                          " <%s> for -ORBSchedPolicy\n", name));
           }
       }
 
@@ -314,8 +314,8 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
               this->priority_mapping_type_ = TAO_PRIORITY_MAPPING_DIRECT;
             else
               ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("TAO_Default_Factory - unknown argument")
-                          ASYS_TEXT (" <%s> for -ORBPriorityMapping\n"), name));
+                          "TAO_Default_Factory - unknown argument"
+                          " <%s> for -ORBPriorityMapping\n", name));
           }
       }
 
@@ -351,9 +351,9 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
         {
           if (TAO_orbdebug)
             ACE_ERROR ((LM_WARNING,
-                        ASYS_TEXT ("TAO (%P|%t) No %s found in Service Repository. ")
-                        ASYS_TEXT ("Using default instance IIOP Protocol Factory.\n"),
-                        ASYS_TEXT ("IIOP Protocol Factory")));
+                        "TAO (%P|%t) No %s found in Service Repository. "
+                        "Using default instance IIOP Protocol Factory.\n",
+                        "IIOP Protocol Factory"));
 
           ACE_NEW_RETURN (protocol_factory,
                           TAO_IIOP_Protocol_Factory,
@@ -371,8 +371,8 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
           delete protocol_factory;
 
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("TAO (%P|%t) Unable to add ")
-                             ASYS_TEXT ("<%s> to protocol factory set.\n"),
+                             "TAO (%P|%t) Unable to add "
+                             "<%s> to protocol factory set.\n",
                              item->protocol_name ().c_str ()),
                             -1);
         }
@@ -380,10 +380,10 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("TAO (%P|%t) Loaded default protocol <IIOP_Factory>\n")));
+                      "TAO (%P|%t) Loaded default protocol <IIOP_Factory>\n"));
         }
 
-#if TAO_HAS_UIOP == 1
+#if defined (TAO_HAS_UIOP)
       protocol_factory =
         ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("UIOP_Factory");
 
@@ -420,7 +420,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) Loaded default protocol <UIOP_Factory>\n"));
         }
-#endif /* TAO_HAS_UIOP == 1 */
+#endif /* TAO_HAS_UIOP */
       return 0;
     }
 
@@ -432,7 +432,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
       if ((*factory)->factory () == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("TAO (%P|%t) Unable to load protocol <%s>, %p\n"),
+                             "TAO (%P|%t) Unable to load protocol <%s>, %p\n",
                              name.c_str (), ""),
                             -1);
         }
@@ -440,7 +440,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("TAO (%P|%t) Loaded protocol <%s>\n"),
+                      "TAO (%P|%t) Loaded protocol <%s>\n",
                       name.c_str ()));
         }
     }
@@ -558,7 +558,7 @@ TAO_Default_Resource_Factory::allocate_reactor_impl (void) const
       break;
 
     case TAO_REACTOR_MSGWFMO:
-#if defined(ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined(ACE_WIN32)
       ACE_NEW_RETURN (impl, ACE_Msg_WFMO_Reactor, 0);
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */
       break;
@@ -674,7 +674,7 @@ TAO_Default_Resource_Factory::purge_percentage (void) const
 TAO_Priority_Mapping *
 TAO_Default_Resource_Factory::get_priority_mapping (void)
 {
-#if (TAO_HAS_RT_CORBA == 0)
+#if !defined (TAO_HAS_RT_CORBA)
   return 0;
 #else
   TAO_Priority_Mapping *pm;
@@ -697,7 +697,7 @@ TAO_Default_Resource_Factory::get_priority_mapping (void)
       break;
     }
   return pm;
-#endif /* TAO_HAS_RT_CORBA == 0 */
+#endif /* TAO_HAS_RT_CORBA */
 }
 
 // ****************************************************************
@@ -714,9 +714,9 @@ ACE_FACTORY_DEFINE (TAO, TAO_Default_Resource_Factory)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX>;
-template class ACE_Malloc_T<ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX, ACE_Control_Block>;
-template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX> >;
+template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX>;
+template class ACE_Malloc_T<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX, ACE_Control_Block>;
+template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX> >;
 
 template class ACE_Select_Reactor_Token_T<ACE_Noop_Token>;
 template class ACE_Lock_Adapter<ACE_Select_Reactor_Token_T<ACE_Noop_Token> >;
@@ -724,8 +724,8 @@ template class ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> 
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Malloc_T<ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX, ACE_Control_Block>
+#pragma instantiate ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Malloc_T<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX, ACE_Control_Block>
 #pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX> >
 
 #pragma instantiate ACE_Select_Reactor_Token_T<ACE_Noop_Token>

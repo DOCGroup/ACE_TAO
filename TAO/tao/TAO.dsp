@@ -955,7 +955,83 @@ SOURCE=.\Forwarding_Servant.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP.cpp
+SOURCE=.\GIOP_Accept_State.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Acceptors.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Assorted_Headers.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Factory.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Invocation.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
 
@@ -975,6 +1051,25 @@ SOURCE=.\GIOP.cpp
 # Begin Source File
 
 SOURCE=.\GIOP_Server_Request.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Utils.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
 
@@ -1108,63 +1203,6 @@ SOURCE=.\IIOP_Profile.cpp
 # Begin Source File
 
 SOURCE=.\IIOP_Transport.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoC.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS_T.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
 
@@ -1754,6 +1792,25 @@ SOURCE=.\params.cpp
 # Begin Source File
 
 SOURCE=.\Pluggable.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Pluggable_Messaging.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
 
@@ -2437,6 +2494,25 @@ SOURCE=.\TAOS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\target_identifier.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\TimeBaseC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
@@ -2904,7 +2980,31 @@ SOURCE=.\giop.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOP_Accept_State.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Acceptors.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Assorted_Headers.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Factory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Invocation.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP_Server_Request.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Utils.h
 # End Source File
 # Begin Source File
 
@@ -2933,18 +3033,6 @@ SOURCE=.\IIOP_Profile.h
 # Begin Source File
 
 SOURCE=.\IIOP_Transport.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS_T.h
 # End Source File
 # Begin Source File
 
@@ -3073,6 +3161,10 @@ SOURCE=.\params.h
 # Begin Source File
 
 SOURCE=.\Pluggable.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Pluggable_Messaging.h
 # End Source File
 # Begin Source File
 
@@ -3228,6 +3320,10 @@ SOURCE=.\TAOS.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\target_identifier.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Timeprobe.h
 # End Source File
 # Begin Source File
@@ -3380,27 +3476,11 @@ SOURCE=.\GIOP_Server_Request.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOPC.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\IIOP_Connect.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\IIOP_ORB.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS_T.i
 # End Source File
 # Begin Source File
 
@@ -3609,14 +3689,6 @@ SOURCE=.\ValueFactory.i
 # Begin Source File
 
 SOURCE=.\ValueFactory_Map.i
-# End Source File
-# End Group
-# Begin Group "Resource files"
-
-# PROP Default_Filter "rc"
-# Begin Source File
-
-SOURCE=.\tao.rc
 # End Source File
 # End Group
 # End Target

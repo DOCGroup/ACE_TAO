@@ -21,14 +21,13 @@
 #define TAO_IIOP_PROFILE_H
 
 #include "tao/Profile.h"
-
+#include "tao/GIOP_Utils.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/ORB.h"
 #include "tao/Object_KeyC.h"
-#include "tao/GIOP.h"
 
 #include "ace/Synch.h"
 #include "ace/INET_Addr.h"
@@ -46,8 +45,7 @@ class TAO_Export TAO_IIOP_Profile : public TAO_Profile
   //   This class defines the IIOP profile as specified in the CORBA
   //   specification.
 public:
-  static const char object_key_delimiter_;
-  virtual char object_key_delimiter (void) const;
+  static const char object_key_delimiter;
   // The object key delimiter that IIOP uses or expects.
 
   static const char *prefix (void);

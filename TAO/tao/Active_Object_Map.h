@@ -184,13 +184,11 @@ public:
     TAO_Incremental_Key_Generator> user_id_hash_map;
   // Id hash map.
 
-#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
   typedef ACE_Map_Manager_Adapter<
   PortableServer::ObjectId,
     Map_Entry *,
     TAO_Incremental_Key_Generator> user_id_linear_map;
   // Id linear map.
-#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
   typedef ACE_Active_Map_Manager_Adapter<
   PortableServer::ObjectId,
@@ -211,13 +209,11 @@ public:
     ACE_Noop_Key_Generator<PortableServer::Servant> > servant_hash_map;
   // Servant hash map.
 
-#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
   typedef ACE_Map_Manager_Adapter<
   PortableServer::Servant,
     Map_Entry *,
     ACE_Noop_Key_Generator<PortableServer::Servant> > servant_linear_map;
   // Servant linear map.
-#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
   user_id_map *user_id_map_;
   // Id map.

@@ -39,9 +39,9 @@
 #include "tao/DynAnyC.h"
 #include "tao/DomainC.h"
 #include "tao/Servant_Base.h"
-#if (TAO_HAS_AMI_POLLER == 1)
+#if defined(TAO_HAS_AMI_POLLER)
 #include "tao/PollableC.h"
-#endif /* TAO_HAS_AMI_POLLER == 1 */
+#endif /* TAO_HAS_AMI_POLLER */
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -424,7 +424,7 @@ public:
 
   // ****************************************************************
 
-#if (TAO_HAS_AMI_POLLER == 1)
+#if defined (TAO_HAS_AMI_POLLER)
 
   class Pollable;
   typedef Pollable *Pollable_ptr;
@@ -763,7 +763,7 @@ public:
   private:
     PollableSet_ptr servant_;
   };
-#endif /* TAO_HAS_AMI_POLLER == 1 */
+#endif /* TAO_HAS_AMI_POLLER */
 
   // ****************************************************************
 

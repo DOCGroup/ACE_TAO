@@ -25,7 +25,7 @@
 
 #include "tao/corbafwd.h"
 
-#if (TAO_HAS_RT_CORBA == 1)
+#if defined (TAO_HAS_RT_CORBA)
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -69,6 +69,6 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) RTCORBA
 # include "tao/rtcorbafwd.i"
 #endif /* ! __ACE_INLINE__ */
 
-#endif /* TAO_HAS_RT_CORBA == 1 */
+#endif /* TAO_HAS_RT_CORBA */
 
 #endif /* TAO_RTCORBAFWD_H */

@@ -10,7 +10,7 @@
 
 #include "tao/orbconf.h"
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if defined (TAO_HAS_CORBA_MESSAGING)
 
 #include "tao/MessagingS.h"
 #include "tao/POA_CORBA.h"
@@ -211,14 +211,13 @@ CORBA::Boolean POA_Messaging::_tao_collocated_SyncScopePolicy::_is_a (
                                 );
 }
 
-Messaging::SyncScope POA_Messaging::_tao_collocated_SyncScopePolicy::synchronization  (CORBA::Environment &ACE_TRY_ENV)
+Messaging::SyncScope POA_Messaging::_tao_collocated_SyncScopePolicy::synchronization  (
+                                                                                       CORBA::Environment &ACE_TRY_ENV
+                                                                                       )
 {
-  return this->servant_->synchronization (ACE_TRY_ENV);
-}
-
-Messaging::SyncScope POA_Messaging::_tao_collocated_SyncScopePolicy::synchronization  (void)
-{
-  return this->servant_->synchronization ();
+  return this->servant_->synchronization (
+                                          ACE_TRY_ENV
+                                          );
 }
 
 
@@ -1003,14 +1002,13 @@ CORBA::Boolean POA_Messaging::_tao_collocated_RelativeRequestTimeoutPolicy::_is_
                                 );
 }
 
-TimeBase::TimeT POA_Messaging::_tao_collocated_RelativeRequestTimeoutPolicy::relative_expiry  (CORBA::Environment &ACE_TRY_ENV)
+TimeBase::TimeT POA_Messaging::_tao_collocated_RelativeRequestTimeoutPolicy::relative_expiry  (
+                                                                                               CORBA::Environment &ACE_TRY_ENV
+                                                                                               )
 {
-  return this->servant_->relative_expiry (ACE_TRY_ENV);
-}
-
-TimeBase::TimeT POA_Messaging::_tao_collocated_RelativeRequestTimeoutPolicy::relative_expiry  (void)
-{
-  return this->servant_->relative_expiry ();
+  return this->servant_->relative_expiry (
+                                          ACE_TRY_ENV
+                                          );
 }
 
 
@@ -1119,14 +1117,13 @@ CORBA::Boolean POA_Messaging::_tao_collocated_RelativeRoundtripTimeoutPolicy::_i
                                 );
 }
 
-TimeBase::TimeT POA_Messaging::_tao_collocated_RelativeRoundtripTimeoutPolicy::relative_expiry  (CORBA::Environment &ACE_TRY_ENV)
+TimeBase::TimeT POA_Messaging::_tao_collocated_RelativeRoundtripTimeoutPolicy::relative_expiry  (
+                                                                                                 CORBA::Environment &ACE_TRY_ENV
+                                                                                                 )
 {
-  return this->servant_->relative_expiry (ACE_TRY_ENV);
-}
-
-TimeBase::TimeT POA_Messaging::_tao_collocated_RelativeRoundtripTimeoutPolicy::relative_expiry  (void)
-{
-  return this->servant_->relative_expiry ();
+  return this->servant_->relative_expiry (
+                                          ACE_TRY_ENV
+                                          );
 }
 
 
@@ -1508,7 +1505,7 @@ POA_Messaging::QueueOrderPolicy::_dispatch (
 
 // ****************************************************************
 
-#if (TAO_HAS_AMI_CALLBACK == 1)
+#if defined (TAO_HAS_AMI_CALLBACK)
 
 
 class TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
@@ -1894,11 +1891,11 @@ CORBA::Boolean POA_Messaging::_tao_direct_collocated_ReplyHandler::_non_existent
   return this->servant_->_non_existent (ACE_TRY_ENV);
 }
 
-#endif /* TAO_HAS_AMI_CALLBACK == 1 */
+#endif /* TAO_HAS_AMI_CALLBACK */
 
 // ****************************************************************
 
-#if (TAO_HAS_AMI_POLLER == 1)
+#if defined (TAO_HAS_AMI_POLLER)
 
 class TAO_Messaging_Poller_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
@@ -2390,6 +2387,6 @@ POA_Messaging::Poller::_this (CORBA_Environment &ACE_TRY_ENV)
 
   return retval;
 }
-#endif /* TAO_HAS_AMI_POLLER == 1 */
+#endif /* TAO_HAS_AMI_POLLER */
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */

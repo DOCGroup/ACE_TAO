@@ -18,7 +18,7 @@
 #include "tao/Sequence_T.h"
 #include "tao/varout.h"
 
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
+#if defined TAO_HAS_INTERFACE_REPOSITORY
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -8543,5 +8543,5 @@ operator>> (TAO_InputCDR &, CORBA::ValueBoxDef_ptr &);
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#endif /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
+#endif /*TAO_HAS_INTERFACE_REPOSITORY */
 #endif /* ifndef */

@@ -2,13 +2,13 @@
 
 #include "tao/Buffering_Constraint_Policy.h"
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
-ACE_RCSID(TAO, Buffering_Constraint_Policy, "$Id$")
-
 #if ! defined (__ACE_INLINE__)
 #include "tao/Buffering_Constraint_Policy.i"
 #endif /* __ACE_INLINE__ */
+
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
+ACE_RCSID(TAO, Buffering_Constraint_Policy, "$Id$")
 
 TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO::BufferingConstraint &buffering_constraint,
                                                                   PortableServer::POA_ptr poa)
@@ -23,6 +23,18 @@ TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO_Buff
     buffering_constraint_ (rhs.buffering_constraint_),
     poa_ (rhs.poa_)
 {
+}
+
+TAO::BufferingConstraint
+TAO_Buffering_Constraint_Policy::buffering_constraint (CORBA::Environment &)
+{
+  return this->buffering_constraint_;
+}
+
+TAO::BufferingConstraint
+TAO_Buffering_Constraint_Policy::buffering_constraint (void)
+{
+  return this->buffering_constraint_;
 }
 
 CORBA::PolicyType
@@ -108,4 +120,4 @@ TAO_Buffering_Constraint_Policy::_default_POA (CORBA_Environment &)
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */

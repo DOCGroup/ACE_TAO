@@ -10,7 +10,9 @@ ACE_RCSID(tao, params, "$Id$")
 
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   : preconnects_list_ (),
+    preconnect_insertion_strategy_ (this->preconnects_list_),
     endpoints_list_ (),
+    endpoint_insertion_strategy_ (this->endpoints_list_),
     init_ref_ (),
     ior_lookup_table_ (),
     default_init_ref_ (),
@@ -46,7 +48,8 @@ TAO_ORB_Parameters::add_to_ior_table (ACE_CString init_ref)
 
 int
 TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
-                                     TAO_EndpointSet &endpoints_list)
+                                     TAO_Base_Endpoint_Insertion_Strategy &
+                                       endpoints_list)
 {
   // Parse the string into seperate endpoints, where `endpoints' is of
   // the form:
@@ -56,7 +59,7 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
   // A single endpoint, instead of several, can be added just as well.
 
   int status = 0;
-  // Return code:  0 = success,  -1 = failure
+  // Return code:  0 = success,  1 = failure
 
   const char endpoints_delimiter = ';';
 
@@ -107,7 +110,7 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
           if (check_offset > 0 &&
               check_offset != endpt.npos)
             {
-              endpoints_list.enqueue_tail (endpt);
+              endpoints_list.insert (endpt);
               // Insert endpoint into list
             }
           else
@@ -126,3 +129,28 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
   return status;
 }
 
+// Don't bother inlining since the most used methods are virtual.
+
+TAO_Preconnect_Insertion_Strategy::
+   TAO_Preconnect_Insertion_Strategy (TAO_PreconnectSet &preconnects)
+     : preconnects_ (preconnects)
+{
+}
+
+int
+TAO_Preconnect_Insertion_Strategy::insert (const ACE_CString &preconnect)
+{
+  return this->preconnects_.enqueue_tail (preconnect);
+}
+
+TAO_Endpoint_Insertion_Strategy::
+  TAO_Endpoint_Insertion_Strategy (TAO_EndpointSet &endpoints)
+    : endpoints_ (endpoints)
+{
+}
+
+int
+TAO_Endpoint_Insertion_Strategy::insert (const ACE_CString &endpoint)
+{
+  return this->endpoints_.insert (endpoint);
+}

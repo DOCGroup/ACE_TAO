@@ -436,8 +436,7 @@ public:
                            TAO_OutputCDR &stream,
                            TAO_ORB_Core* orb_core,
                            ACE_Time_Value *max_wait_time = 0,
-                           TAO_Stub *stub = 0,
-                           int two_way = 1);
+                           TAO_Stub *stub = 0);
   // Send message, returns TRUE if success, else FALSE.
 
   static void dump_msg (const char *label,

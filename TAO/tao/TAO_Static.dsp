@@ -83,7 +83,7 @@ LIB32=link.exe -lib
 # Name "TAO LIB - Win32 Debug"
 # Begin Group "Source Files"
 
-# PROP Default_Filter "cpp"
+# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=.\Acceptor_Registry.cpp
@@ -246,10 +246,6 @@ SOURCE=.\GIOP_Server_Request.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOPC.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\IIOP_Acceptor.cpp
 # End Source File
 # Begin Source File
@@ -271,18 +267,6 @@ SOURCE=.\IIOP_Profile.cpp
 # Begin Source File
 
 SOURCE=.\IIOP_Transport.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS_T.cpp
 # End Source File
 # Begin Source File
 
@@ -619,7 +603,7 @@ SOURCE=.\WrongTransactionC.cpp
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter "h"
+# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=.\Acceptor_Registry.h
@@ -766,10 +750,6 @@ SOURCE=.\GIOP_Server_Request.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOPC.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\IIOP_Acceptor.h
 # End Source File
 # Begin Source File
@@ -791,18 +771,6 @@ SOURCE=.\IIOP_Profile.h
 # Begin Source File
 
 SOURCE=.\IIOP_Transport.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS_T.h
 # End Source File
 # Begin Source File
 
@@ -1143,7 +1111,7 @@ SOURCE=.\WrongTransactionC.h
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter "i"
+# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=.\Acceptor_Registry.i
@@ -1234,27 +1202,11 @@ SOURCE=.\GIOP_Server_Request.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOPC.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\IIOP_Connect.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\IIOP_ORB.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ImplRepoS_T.i
 # End Source File
 # Begin Source File
 
@@ -1463,14 +1415,6 @@ SOURCE=.\ValueFactory.i
 # Begin Source File
 
 SOURCE=.\ValueFactory_Map.i
-# End Source File
-# End Group
-# Begin Group "Resource files"
-
-# PROP Default_Filter "rc"
-# Begin Source File
-
-SOURCE=.\tao.rc
 # End Source File
 # End Group
 # End Target

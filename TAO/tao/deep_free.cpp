@@ -130,7 +130,7 @@ TAO_Marshal_Primitive::deep_free (CORBA::TypeCode_ptr  tc,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO_Marshal_Primitive::deep_free detected error\n")));
+                    "TAO_Marshal_Primitive::deep_free detected error\n"));
       ACE_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), CORBA::TypeCode::TRAVERSE_STOP);
     }
 
@@ -159,7 +159,7 @@ TAO_Marshal_Primitive::deep_free (CORBA::TypeCode_ptr  tc,
     default:
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO_Marshal_Primitive::deep_free detected error\n")));
+                    "TAO_Marshal_Primitive::deep_free detected error\n"));
       ACE_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
                         CORBA::TypeCode::TRAVERSE_STOP);
     }
@@ -177,7 +177,7 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO_Marshal_Struct::deep_free detected error\n")));
+                    "TAO_Marshal_Struct::deep_free detected error\n"));
       ACE_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), CORBA::TypeCode::TRAVERSE_STOP);
     }
 
@@ -303,7 +303,7 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO_Marshal_Struct::deep_free detected error\n")));
+                    "TAO_Marshal_Struct::deep_free detected error\n"));
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
                         CORBA::TypeCode::TRAVERSE_STOP);
     }
@@ -502,7 +502,7 @@ TAO_Marshal_Array::deep_free (CORBA::TypeCode_ptr  tc,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO_Marshal_Struct::deep_free detected error\n")));
+                    "TAO_Marshal_Struct::deep_free detected error\n"));
       ACE_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
                         CORBA::TypeCode::TRAVERSE_STOP);
     }
@@ -647,7 +647,7 @@ TAO_Marshal_Array::deep_free (CORBA::TypeCode_ptr  tc,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO_Marshal_Sequence::deep_free detected error\n")));
+                    "TAO_Marshal_Sequence::deep_free detected error\n"));
       // error exit
       ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA::TypeCode::TRAVERSE_STOP);
     }
@@ -669,7 +669,7 @@ TAO_Marshal_Alias::deep_free (CORBA::TypeCode_ptr  tc,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO_Marshal_Alias::deep_free detected error\n")));
+                    "TAO_Marshal_Alias::deep_free detected error\n"));
       ACE_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
                         CORBA::TypeCode::TRAVERSE_STOP);
     }
@@ -749,7 +749,7 @@ TAO_Marshal_Alias::deep_free (CORBA::TypeCode_ptr  tc,
       // We should never reach here.
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO_Marshal_Alias::decode detected error\n")));
+                    "TAO_Marshal_Alias::decode detected error\n"));
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
                         CORBA::TypeCode::TRAVERSE_STOP);
     }
@@ -776,7 +776,7 @@ TAO_Marshal_Except::deep_free (CORBA::TypeCode_ptr  tc,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO_Marshal_Except::deep_free detected error\n")));
+                    "TAO_Marshal_Except::deep_free detected error\n"));
       ACE_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
                         CORBA::TypeCode::TRAVERSE_STOP);
     }

@@ -158,7 +158,7 @@ TAO_Exclusive_Wait_On_Leader_Follower::~TAO_Exclusive_Wait_On_Leader_Follower (v
 //    at this level since this is common for AMI also. (Alex).
 int
 TAO_Exclusive_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
-                                                        int two_way)
+                                              int two_way)
 {
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
@@ -174,7 +174,7 @@ TAO_Exclusive_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
     this->calling_thread_ = ACE_Thread::self ();
 
     if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("TAO (%P|%t) - sending request for <%x>\n"),
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - sending request for <%x>\n",
                   this->transport_));
   }
 
@@ -388,15 +388,15 @@ TAO_Exclusive_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
 
   if (leader_follower.elect_new_leader () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("TAO (%P|%t): TAO_Wait_On_LF::wait - ")
-                       ASYS_TEXT ("Failed to unset the leader and wake up a ")
-                       ASYS_TEXT ("new follower.\n")),
+                       "TAO (%P|%t): TAO_Wait_On_LF::wait - "
+                       "Failed to unset the leader and wake up a "
+                       "new follower.\n"),
                       -1);
 
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("TAO (%P|%t): TAO_Wait_On_LF::wait - ")
-                       ASYS_TEXT ("handle_events failed.\n")),
+                       "TAO (%P|%t): TAO_Wait_On_LF::wait - "
+                       "handle_events failed.\n"),
                       -1);
 
   // Return an error if there was a problem receiving the reply...
@@ -446,28 +446,15 @@ TAO_Exclusive_Wait_On_Leader_Follower::handle_input (void)
   // error, but we should do more....
   // @@ Alex: this could be a CloseConnection message or something
   //    similar, has to be handled...
-
-  //
-  // The following check is conflicting with the ability to buffer
-  // asynchronous calls.  If we mark the asynchronous call as a twoway
-  // call, then buffering cannot take place.  If we mark it as a
-  // oneway call, then the following check fails.  For now I have
-  // selected to disable the check.  The long term fix is to separate
-  // out the two concerns (a) can the call be buffered and (b) are we
-  // expecting a response.
-  //
-
-  /*
   if (!this->expecting_response_)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) - Wait_On_LF::handle_input, ")
-                    ASYS_TEXT ("unexpected on <%x>\n"),
+                    "TAO (%P|%t) - Wait_On_LF::handle_input, "
+                    "unexpected on <%x>\n",
                     this->transport_));
       return -1;
     }
-  */
 
   // Receive any data that is available, without blocking...
   int result = this->transport_->handle_client_input (0);
@@ -481,8 +468,8 @@ TAO_Exclusive_Wait_On_Leader_Follower::handle_input (void)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) - Wait_On_LF::handle_input, ")
-                    ASYS_TEXT ("handle_client_input == -1\n")));
+                    "TAO (%P|%t) - Wait_On_LF::handle_input, "
+                    "handle_client_input == -1\n"));
       this->reply_received_ = -1;
     }
 
@@ -624,7 +611,7 @@ TAO_Muxed_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
 
       if (TAO_debug_level >= 5)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) - wait (follower) on Transport <%x>, cond <%x>\n"),
+                    "TAO (%P|%t) - wait (follower) on Transport <%x>, cond <%x>\n",
                     this->transport_,
                     cond));
 
@@ -638,8 +625,8 @@ TAO_Muxed_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
         {
           if (leader_follower.add_follower (cond) == -1)
             ACE_ERROR ((LM_ERROR,
-                        ASYS_TEXT ("TAO (%P|%t) TAO_Muxed_Wait_On_Leader_Follower::wait - ")
-                        ASYS_TEXT ("add_follower failed for <%x>\n"),
+                        "TAO (%P|%t) TAO_Muxed_Wait_On_Leader_Follower::wait - "
+                        "add_follower failed for <%x>\n",
                         cond));
         }
 
@@ -653,8 +640,8 @@ TAO_Muxed_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
                 {
                   if (TAO_debug_level >= 5)
                     ACE_DEBUG ((LM_DEBUG,
-                                ASYS_TEXT ("TAO (%P|%t) - wait (follower) on <%x> ")
-                                ASYS_TEXT ("cond == 0 || cond->wait () == -1 : cond = %d\n"),
+                                "TAO (%P|%t) - wait (follower) on <%x> "
+                                "cond == 0 || cond->wait () == -1 : cond = %d\n",
                                 this->transport_, (cond == 0) ? 0 : cond));
                   return -1;
                 }
@@ -668,8 +655,8 @@ TAO_Muxed_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
                 {
                   if (TAO_debug_level >= 5)
                     ACE_DEBUG ((LM_DEBUG,
-                                ASYS_TEXT ("TAO (%P|%t) - wait (follower) on <%x> ")
-                                ASYS_TEXT ("cond == 0 || cond->wait (tv) == -1\n"),
+                                "TAO (%P|%t) - wait (follower) on <%x> "
+                                "cond == 0 || cond->wait (tv) == -1\n",
                                 this->transport_));
                   return -1;
                 }
@@ -690,7 +677,7 @@ TAO_Muxed_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
 
       if (TAO_debug_level >= 5)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) - done (follower) on <%x>, reply_received %d\n"),
+                    "TAO (%P|%t) - done (follower) on <%x>, reply_received %d\n",
                     this->transport_, reply_received));
 
       // Now somebody woke us up to become a leader or to handle
@@ -729,7 +716,7 @@ TAO_Muxed_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
 
     if (TAO_debug_level >= 5)
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("TAO (%P|%t) - wait (leader):to enter reactor event loop on <%x>\n"),
+                  "TAO (%P|%t) - wait (leader):to enter reactor event loop on <%x>\n",
                   this->transport_));
 
     while (result > 0 && reply_received == 0)
@@ -737,7 +724,7 @@ TAO_Muxed_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
 
     if (TAO_debug_level >= 5)
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("TAO (%P|%t) - wait : (leader) : done with reactor event loop on <%x>\n"),
+                  "TAO (%P|%t) - wait : (leader) : done with reactor event loop on <%x>\n",
                   this->transport_));
   }
 
@@ -753,14 +740,14 @@ TAO_Muxed_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
 
   if (leader_follower.elect_new_leader () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("TAO:%N:%l:(%P|%t):TAO_Muxed_Wait_On_Leader_Follower::send_request: ")
-                       ASYS_TEXT ("Failed to unset the leader and wake up a new follower.\n")),
+                       "TAO:%N:%l:(%P|%t):TAO_Muxed_Wait_On_Leader_Follower::send_request: "
+                       "Failed to unset the leader and wake up a new follower.\n"),
                       -1);
 
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("TAO:%N:%l:(%P|%t):TAO_Muxed_Wait_On_Leader_Follower::wait: ")
-                       ASYS_TEXT ("handle_events failed.\n")),
+                       "TAO:%N:%l:(%P|%t):TAO_Muxed_Wait_On_Leader_Follower::wait: "
+                       "handle_events failed.\n"),
                       -1);
 
   // Return an error if there was a problem receiving the reply...
@@ -801,7 +788,7 @@ TAO_Muxed_Wait_On_Leader_Follower::handle_input (void)
 
   if (TAO_debug_level >= 5)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("TAO (%P|%t) - reading reply on <%x>\n"),
+                "TAO (%P|%t) - reading reply on <%x>\n",
                 this->transport_));
 
   // Receive any data that is available, without blocking...
@@ -816,8 +803,8 @@ TAO_Muxed_Wait_On_Leader_Follower::handle_input (void)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) - Wait_On_LF::handle_input, ")
-                    ASYS_TEXT ("handle_client_input == -1\n")));
+                    "TAO (%P|%t) - Wait_On_LF::handle_input, "
+                    "handle_client_input == -1\n"));
       // this->reply_received_ = -1;
     }
 

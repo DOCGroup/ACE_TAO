@@ -12,30 +12,30 @@
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_Messaging::RebindPolicy_tie<T>::RebindPolicy_tie (T &t)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::RebindPolicy_tie<T>::RebindPolicy_tie (T &t, PortableServer::POA_ptr poa)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::RebindPolicy_tie<T>::RebindPolicy_tie (T *tp, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::RebindPolicy_tie<T>::RebindPolicy_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -123,30 +123,30 @@ void POA_Messaging::RebindPolicy_tie<T>::destroy  (
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_Messaging::SyncScopePolicy_tie<T>::SyncScopePolicy_tie (T &t)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::SyncScopePolicy_tie<T>::SyncScopePolicy_tie (T &t, PortableServer::POA_ptr poa)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::SyncScopePolicy_tie<T>::SyncScopePolicy_tie (T *tp, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::SyncScopePolicy_tie<T>::SyncScopePolicy_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -200,12 +200,6 @@ Messaging::SyncScope POA_Messaging::SyncScopePolicy_tie<T>::synchronization  (
 }
 
 template <class T> ACE_INLINE
-Messaging::SyncScope POA_Messaging::SyncScopePolicy_tie<T>::synchronization  (void)
-{
-  return this->ptr_->synchronization ();
-}
-
-template <class T> ACE_INLINE
 CORBA::PolicyType POA_Messaging::SyncScopePolicy_tie<T>::policy_type  (
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -240,30 +234,30 @@ void POA_Messaging::SyncScopePolicy_tie<T>::destroy  (
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_Messaging::RequestPriorityPolicy_tie<T>::RequestPriorityPolicy_tie (T &t)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::RequestPriorityPolicy_tie<T>::RequestPriorityPolicy_tie (T &t, PortableServer::POA_ptr poa)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::RequestPriorityPolicy_tie<T>::RequestPriorityPolicy_tie (T *tp, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::RequestPriorityPolicy_tie<T>::RequestPriorityPolicy_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -351,30 +345,30 @@ void POA_Messaging::RequestPriorityPolicy_tie<T>::destroy  (
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_Messaging::ReplyPriorityPolicy_tie<T>::ReplyPriorityPolicy_tie (T &t)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::ReplyPriorityPolicy_tie<T>::ReplyPriorityPolicy_tie (T &t, PortableServer::POA_ptr poa)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::ReplyPriorityPolicy_tie<T>::ReplyPriorityPolicy_tie (T *tp, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::ReplyPriorityPolicy_tie<T>::ReplyPriorityPolicy_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -462,30 +456,30 @@ void POA_Messaging::ReplyPriorityPolicy_tie<T>::destroy  (
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_Messaging::RequestStartTimePolicy_tie<T>::RequestStartTimePolicy_tie (T &t)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::RequestStartTimePolicy_tie<T>::RequestStartTimePolicy_tie (T &t, PortableServer::POA_ptr poa)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::RequestStartTimePolicy_tie<T>::RequestStartTimePolicy_tie (T *tp, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::RequestStartTimePolicy_tie<T>::RequestStartTimePolicy_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -573,30 +567,30 @@ void POA_Messaging::RequestStartTimePolicy_tie<T>::destroy  (
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_Messaging::RequestEndTimePolicy_tie<T>::RequestEndTimePolicy_tie (T &t)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::RequestEndTimePolicy_tie<T>::RequestEndTimePolicy_tie (T &t, PortableServer::POA_ptr poa)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::RequestEndTimePolicy_tie<T>::RequestEndTimePolicy_tie (T *tp, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::RequestEndTimePolicy_tie<T>::RequestEndTimePolicy_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -684,30 +678,30 @@ void POA_Messaging::RequestEndTimePolicy_tie<T>::destroy  (
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_Messaging::ReplyStartTimePolicy_tie<T>::ReplyStartTimePolicy_tie (T &t)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::ReplyStartTimePolicy_tie<T>::ReplyStartTimePolicy_tie (T &t, PortableServer::POA_ptr poa)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::ReplyStartTimePolicy_tie<T>::ReplyStartTimePolicy_tie (T *tp, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::ReplyStartTimePolicy_tie<T>::ReplyStartTimePolicy_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -795,30 +789,30 @@ void POA_Messaging::ReplyStartTimePolicy_tie<T>::destroy  (
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_Messaging::ReplyEndTimePolicy_tie<T>::ReplyEndTimePolicy_tie (T &t)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::ReplyEndTimePolicy_tie<T>::ReplyEndTimePolicy_tie (T &t, PortableServer::POA_ptr poa)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::ReplyEndTimePolicy_tie<T>::ReplyEndTimePolicy_tie (T *tp, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::ReplyEndTimePolicy_tie<T>::ReplyEndTimePolicy_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -906,30 +900,30 @@ void POA_Messaging::ReplyEndTimePolicy_tie<T>::destroy  (
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_Messaging::RelativeRequestTimeoutPolicy_tie<T>::RelativeRequestTimeoutPolicy_tie (T &t)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::RelativeRequestTimeoutPolicy_tie<T>::RelativeRequestTimeoutPolicy_tie (T &t, PortableServer::POA_ptr poa)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::RelativeRequestTimeoutPolicy_tie<T>::RelativeRequestTimeoutPolicy_tie (T *tp, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::RelativeRequestTimeoutPolicy_tie<T>::RelativeRequestTimeoutPolicy_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -1017,30 +1011,30 @@ void POA_Messaging::RelativeRequestTimeoutPolicy_tie<T>::destroy  (
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_Messaging::RelativeRoundtripTimeoutPolicy_tie<T>::RelativeRoundtripTimeoutPolicy_tie (T &t)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::RelativeRoundtripTimeoutPolicy_tie<T>::RelativeRoundtripTimeoutPolicy_tie (T &t, PortableServer::POA_ptr poa)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::RelativeRoundtripTimeoutPolicy_tie<T>::RelativeRoundtripTimeoutPolicy_tie (T *tp, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::RelativeRoundtripTimeoutPolicy_tie<T>::RelativeRoundtripTimeoutPolicy_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -1128,30 +1122,30 @@ void POA_Messaging::RelativeRoundtripTimeoutPolicy_tie<T>::destroy  (
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_Messaging::RoutingPolicy_tie<T>::RoutingPolicy_tie (T &t)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::RoutingPolicy_tie<T>::RoutingPolicy_tie (T &t, PortableServer::POA_ptr poa)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::RoutingPolicy_tie<T>::RoutingPolicy_tie (T *tp, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::RoutingPolicy_tie<T>::RoutingPolicy_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -1239,30 +1233,30 @@ void POA_Messaging::RoutingPolicy_tie<T>::destroy  (
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_Messaging::MaxHopsPolicy_tie<T>::MaxHopsPolicy_tie (T &t)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::MaxHopsPolicy_tie<T>::MaxHopsPolicy_tie (T &t, PortableServer::POA_ptr poa)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::MaxHopsPolicy_tie<T>::MaxHopsPolicy_tie (T *tp, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::MaxHopsPolicy_tie<T>::MaxHopsPolicy_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -1350,30 +1344,30 @@ void POA_Messaging::MaxHopsPolicy_tie<T>::destroy  (
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_Messaging::QueueOrderPolicy_tie<T>::QueueOrderPolicy_tie (T &t)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::QueueOrderPolicy_tie<T>::QueueOrderPolicy_tie (T &t, PortableServer::POA_ptr poa)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::QueueOrderPolicy_tie<T>::QueueOrderPolicy_tie (T *tp, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::QueueOrderPolicy_tie<T>::QueueOrderPolicy_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -1458,34 +1452,34 @@ void POA_Messaging::QueueOrderPolicy_tie<T>::destroy  (
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-#if (TAO_HAS_AMI_POLLER == 1)
+#if defined(TAO_POLLER)
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_Messaging::ReplyHandler_tie<T>::ReplyHandler_tie (T &t)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::ReplyHandler_tie<T>::ReplyHandler_tie (T &t, PortableServer::POA_ptr poa)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::ReplyHandler_tie<T>::ReplyHandler_tie (T *tp, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::ReplyHandler_tie<T>::ReplyHandler_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -1533,30 +1527,30 @@ POA_Messaging::ReplyHandler_tie<T>::_is_owner (CORBA::Boolean b)
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_Messaging::Poller_tie<T>::Poller_tie (T &t)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::Poller_tie<T>::Poller_tie (T &t, PortableServer::POA_ptr poa)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::Poller_tie<T>::Poller_tie (T *tp, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_Messaging::Poller_tie<T>::Poller_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -1694,4 +1688,4 @@ CORBA::PollableSet_ptr POA_Messaging::Poller_tie<T>::create_pollable_set  (
 }
 
 #endif /* ACE_HAS_USING_KEYWORD */
-#endif /* TAO_HAS_AMI_POLLER == 1 */
+#endif /* TAO_POLLER */

@@ -22,7 +22,7 @@
 
 #include "tao/orbconf.h"
 
-#if (TAO_HAS_RT_CORBA == 1)
+#if defined (TAO_HAS_RT_CORBA)
 
 #include "tao/rtcorbafwd.h"
 
@@ -58,6 +58,6 @@ public:
 # include "tao/Priority_Mapping.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_HAS_RT_CORBA == 1 */
+#endif /* TAO_HAS_RT_CORBA */
 
 #endif /* TAO_PRIORITY_MAPPING_H */

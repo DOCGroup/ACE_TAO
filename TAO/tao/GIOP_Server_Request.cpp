@@ -46,9 +46,8 @@ TAO_GIOP_ServerRequest::
     TAO_GIOP_ServerRequest (TAO_InputCDR &input,
                             TAO_OutputCDR &output,
                             TAO_ORB_Core *orb_core,
-                            const TAO_GIOP_Version &version,
-                            int &parse_error)
-  : incoming_ (&input),
+                            const TAO_GIOP_Version &version)
+      : incoming_ (&input),
     outgoing_ (&output),
     response_expected_ (0),
     lazy_evaluation_ (0),
@@ -71,152 +70,7 @@ TAO_GIOP_ServerRequest::
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_REQUEST_START);
 
-  parse_error = this->parse_header ();
-}
-
-int
-TAO_GIOP_ServerRequest::parse_header_std (void)
-{
-  // Tear out the service context ... we currently ignore it, but it
-  // should probably be passed to each ORB service as appropriate
-  // (e.g. transactions, security).
-  //
-  // NOTE: As security support kicks in, this is a good place to
-  // verify a digital signature, if that is required in this security
-  // environment.  It may be required even when using IPSEC security
-  // infrastructure.
-
-  TAO_InputCDR& input = *this->incoming_;
-
-  input >> this->service_info_;
-  CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
-
-  // Get the rest of the request header ...
-
-  hdr_status = hdr_status && input.read_ulong (this->request_id_);
-
-  CORBA::Octet response_flags;
-  hdr_status = hdr_status && input.read_octet (response_flags);
-  this->response_expected_ = (response_flags != 0);
-  this->sync_with_server_ = (response_flags == 1);
-
-  // We use ad-hoc demarshalling here: there is no need to increase
-  // the reference count on the CDR message block, because this key
-  // will not outlive the request (or the message block).
-
-  CORBA::Long key_length = 0;
-  hdr_status = hdr_status && input.read_long (key_length);
-  if (hdr_status)
-    {
-      this->object_key_.replace (key_length, key_length,
-                                 (CORBA::Octet*)input.rd_ptr (),
-                                 0);
-      input.skip_bytes (key_length);
-    }
-
-  if (input.char_translator () == 0)
-    {
-      CORBA::ULong length = 0;
-      hdr_status = hdr_status && input.read_ulong (length);
-      if (hdr_status)
-        {
-          // Do not include NULL character at the end.
-          // @@ This is not getting demarshaled using the codeset
-          //    translators!
-          this->operation_.set (input.rd_ptr (),
-                                length - 1,
-                                0);
-          hdr_status = input.skip_bytes (length);
-        }
-    }
-  else
-    {
-      // @@ We could optimize for this case too, i.e. do in-place
-      //    demarshaling of the string... But there is an issue
-      //    pending on the OMG as to whether the operation should be
-      //    sent in the connection negotiated codeset or always in
-      //    ISO8859-1.
-      CORBA::String_var tmp;
-      hdr_status = hdr_status && input.read_string (tmp.inout ());
-      this->operation_.set (tmp._retn (), 1);
-    }
-
-  if (hdr_status)
-    {
-      input >> this->requesting_principal_.out ();
-      hdr_status = (CORBA::Boolean) input.good_bit ();
-    }
-
-  return hdr_status ? 0 : -1;
-}
-
-int
-TAO_GIOP_ServerRequest::parse_header_lite (void)
-{
-  TAO_InputCDR& input = *this->incoming_;
-
-  CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
-
-  // Get the rest of the request header ...
-
-  hdr_status = hdr_status && input.read_ulong (this->request_id_);
-
-  CORBA::Octet response_flags;
-  hdr_status = hdr_status && input.read_octet (response_flags);
-  this->response_expected_ = (response_flags != 0);
-  this->sync_with_server_ = (response_flags == 1);
-
-  // We use ad-hoc demarshalling here: there is no need to increase
-  // the reference count on the CDR message block, because this key
-  // will not outlive the request (or the message block).
-
-  CORBA::Long key_length = 0;
-  hdr_status = hdr_status && input.read_long (key_length);
-  if (hdr_status)
-    {
-      this->object_key_.replace (key_length, key_length,
-                                 (CORBA::Octet*)input.rd_ptr (),
-                                 0);
-      input.skip_bytes (key_length);
-    }
-
-  if (input.char_translator () == 0)
-    {
-      CORBA::ULong length = 0;
-      hdr_status = hdr_status && input.read_ulong (length);
-      if (hdr_status)
-        {
-          // Do not include NULL character at the end.
-          // @@ This is not getting demarshaled using the codeset
-          //    translators!
-          this->operation_.set (input.rd_ptr (),
-                                length - 1,
-                                0);
-          hdr_status = input.skip_bytes (length);
-        }
-    }
-  else
-    {
-      // @@ We could optimize for this case too, i.e. do in-place
-      //    demarshaling of the string... But there is an issue
-      //    pending on the OMG as to whether the operation should be
-      //    sent in the connection negotiated codeset or always in
-      //    ISO8859-1.
-      CORBA::String_var tmp;
-      hdr_status = hdr_status && input.read_string (tmp.inout ());
-      this->operation_.set (tmp._retn (), 1);
-    }
-
-  return hdr_status ? 0 : -1;
-}
-
-int
-TAO_GIOP_ServerRequest::parse_header (void)
-{
-  if (this->orb_core_->orb_params ()->use_lite_protocol ())
-    return this->parse_header_lite ();
-  else
-    return this->parse_header_std ();
+  //  parse_error = this->parse_header ();
 }
 
 // This constructor is used, by the locate request code
@@ -556,10 +410,9 @@ void
 TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
 {
   // Construct a REPLY header.
-  TAO_GIOP::start_message (this->version_,
-                           TAO_GIOP::Reply,
-                           *this->outgoing_,
-                           this->orb_core_);
+  TAO_GIOP_Utils::start_message (this->version_,
+                                 TAO_GIOP_REPLY,
+                                 *this->outgoing_);
 
 #if defined (TAO_HAS_MINIMUM_CORBA)
   *this->outgoing_ << this->service_info_;
@@ -673,8 +526,8 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
       if ((*this->outgoing_ << object_ptr) == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("TAO_GIOP_ServerRequest::marshal - ")
-                      ASYS_TEXT ("encoding forwarded objref failed\n")));
+                      "TAO_GIOP_ServerRequest::marshal - "
+                      "encoding forwarded objref failed\n"));
           return;
         }
     }
@@ -719,10 +572,9 @@ TAO_GIOP_ServerRequest::exception_type (void)
 void
 TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
 {
-  TAO_GIOP::start_message (this->version_,
-                           TAO_GIOP::Reply,
-                           *this->outgoing_,
-                           this->orb_core_);
+  TAO_GIOP_Utils::start_message (this->version_,
+                                 TAO_GIOP_REPLY,
+                                 *this->outgoing_);
 
   IOP::ServiceContextList resp_ctx;
   resp_ctx.length (0);
@@ -731,9 +583,11 @@ TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
   this->outgoing_->write_ulong (this->request_id_);
   this->outgoing_->write_ulong (TAO_GIOP_NO_EXCEPTION);
 
-  int result = TAO_GIOP::send_message (transport,
-                                       *this->outgoing_,
-                                       this->orb_core_);
+  int result = TAO_GIOP_Utils::send_message (transport,
+                                             *this->outgoing_,
+                                             this->header_len_,
+                                             this->message_size_offset_);
+                                       
 
   if (result == -1)
     {
@@ -742,8 +596,8 @@ TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
           // No exception but some kind of error, yet a response
           // is required.
           ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("TAO: (%P|%t) %p: cannot send NO_EXCEPTION reply\n"),
-                      ASYS_TEXT ("TAO_GIOP_ServerRequest::send_no_exception_reply")));
+                      "TAO: (%P|%t) %p: cannot send NO_EXCEPTION reply\n",
+                      "TAO_GIOP_ServerRequest::send_no_exception_reply"));
         }
     }
 }

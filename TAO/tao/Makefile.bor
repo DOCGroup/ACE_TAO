@@ -51,8 +51,6 @@ OBJFILES = \
 	$(OBJDIR)\IIOP_Factory.obj \
 	$(OBJDIR)\IIOP_Profile.obj \
 	$(OBJDIR)\IIOP_Transport.obj \
-	$(OBJDIR)\ImplRepoC.obj \
-	$(OBJDIR)\ImplRepoS.obj \
 	$(OBJDIR)\InconsistentTypeCodeC.obj \
 	$(OBJDIR)\Interceptor.obj \
 	$(OBJDIR)\InterceptorC.obj \

@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-# if TAO_HAS_UIOP == 1
+# if defined (TAO_HAS_UIOP)
 
 ACE_INLINE const TAO_ObjectKey &
 TAO_UIOP_Profile::object_key (void) const
@@ -52,4 +52,4 @@ TAO_UIOP_Profile::hint (void)
   return this->hint_;
 }
 
-#endif  /* TAO_HAS_UIOP == 1 */
+#endif  /* TAO_HAS_UIOP */

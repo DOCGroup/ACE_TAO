@@ -191,6 +191,8 @@ private:
   TAO_IIOP_BASE_CONNECTOR base_connector_;
   // The connector initiating connection requests for IIOP.
 
+
+
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   TAO_CACHED_CONNECT_STRATEGY *cached_connect_strategy_;
   // Cached connect strategy.

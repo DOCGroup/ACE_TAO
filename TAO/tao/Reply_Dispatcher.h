@@ -20,8 +20,11 @@
 #ifndef TAO_REPLY_DISPATCHER_H
 #define TAO_REPLY_DISPATCHER_H
 
-#include "tao/GIOP.h"
 #include "tao/Request.h"
+
+/////Balas Include" They are not right. We need to set AMI properly 
+#include "tao/GIOP_Utils.h"
+///////////////////////////////////
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -140,9 +143,9 @@ private:
 
 // *********************************************************************
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if defined (TAO_HAS_CORBA_MESSAGING)
 
-#  if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+#  if defined (TAO_HAS_AMI_CALLBACK) || defined (TAO_HAS_AMI_POLLER)
 
 class TAO_Export TAO_Asynch_Reply_Dispatcher : public TAO_Reply_Dispatcher
 {
@@ -206,9 +209,9 @@ private:
   // Reply Handler passed in the Asynchronous Invocation.
 };
 
-#  endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
+#  endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING  */
 
 // *********************************************************************
 

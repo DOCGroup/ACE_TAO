@@ -1,12 +1,12 @@
 // $Id$
 
 #include "tao/Request.h"
+#include "tao/GIOP_Utils.h"
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
 #include "tao/Object.h"
 #include "tao/Stub.h"
-#include "tao/GIOP.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Request.i"
@@ -94,7 +94,7 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
 
 CORBA_Request::~CORBA_Request (void)
 {
-  ACE_ASSERT (refcount_ == 0);
+  assert (refcount_ == 0);
 
   CORBA::release (this->target_);
   CORBA::string_free ((char*) this->opname_);
@@ -219,7 +219,7 @@ CORBA_Request::handle_response (TAO_InputCDR &incoming,
     default:
       // @@ (JP) Don't know what to do about any of these yet.
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("(%P|%t) unhandled reply status\n")));
+                  "(%P|%t) unhandled reply status\n"));
   }
 }
 

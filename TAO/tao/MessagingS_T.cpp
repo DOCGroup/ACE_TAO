@@ -136,7 +136,7 @@ POA_Messaging::QueueOrderPolicy_tie<T>::_default_POA (CORBA::Environment &ACE_TR
   return this->QueueOrderPolicy::_default_POA (ACE_TRY_ENV);
 }
 
-#if (TAO_HAS_AMI_CALLBACK == 1)
+#if defined (TAO_HAS_AMI_CALLBACK)
 
 template <class T> PortableServer::POA_ptr
 POA_Messaging::ReplyHandler_tie<T>::_default_POA (CORBA::Environment &ACE_TRY_ENV)
@@ -147,9 +147,9 @@ POA_Messaging::ReplyHandler_tie<T>::_default_POA (CORBA::Environment &ACE_TRY_EN
   return this->ReplyHandler::_default_POA (ACE_TRY_ENV);
 }
 
-#endif /* TAO_HAS_AMI_CALLBACK == 1 */
+#endif /* TAO_HAS_AMI_CALLBACK */
 
-#if (TAO_HAS_AMI_POLLER == 1)
+#if defined (TAO_HAS_AMI_POLLER)
 
 template <class T> PortableServer::POA_ptr
 POA_Messaging::Poller_tie<T>::_default_POA (CORBA::Environment &ACE_TRY_ENV)
@@ -159,6 +159,6 @@ POA_Messaging::Poller_tie<T>::_default_POA (CORBA::Environment &ACE_TRY_ENV)
 
   return this->Poller::_default_POA (ACE_TRY_ENV);
 }
-#endif /* TAO_HAS_AMI_POLLER == 1 */
+#endif /* TAO_HAS_AMI_POLLER */
 
 #endif /* ifndef */

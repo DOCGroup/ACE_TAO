@@ -64,9 +64,6 @@ public:
   // Access the tagged components, notice that they they could be
   // empty (or ignored) for non-GIOP protocols (and even for GIOP-1.0)
 
-  virtual char object_key_delimiter (void) const = 0;
-  // The object key delimiter.
-
   virtual int parse_string (const char *string,
                             CORBA::Environment &ACE_TRY_ENV) = 0;
   // Initialize this object using the given input string.
@@ -94,18 +91,18 @@ public:
 
   virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile) = 0;
   // Return true if this profile is equivalent to other_profile.  Two
-  // profiles are equivalent iff their tag, port, host, object_key and
+  // profiles are equivalent iff their key, port, host, object_key and
   // version are the same.
 
   virtual CORBA::ULong hash (CORBA::ULong max,
                              CORBA::Environment &ACE_TRY_ENV) = 0;
   // Return a hash value for this object.
 
-  virtual int addr_to_string (char *buffer, size_t length) = 0;
+  virtual int addr_to_string(char *buffer, size_t length) = 0;
   // Return a string representation for the address.  Returns
   // -1 if buffer is too small.  The purpose of this method is to
   // provide a general interface to the underlying address object's
-  // addr_to_string method.  This allows the protocol implementor to
+  // addr_to_string method.  This allowsthe protocol implementor to
   // select the appropriate string format.
 
   virtual void reset_hint (void) = 0;
@@ -157,7 +154,6 @@ public:
   // = The TAO_Profile methods look above
   virtual int parse_string (const char *string,
                             CORBA::Environment &ACE_TRY_ENV);
-  virtual char object_key_delimiter (void) const;
   virtual char* to_string (CORBA::Environment &ACE_TRY_ENV);
   virtual int decode (TAO_InputCDR& cdr);
   virtual int encode (TAO_OutputCDR &stream) const;

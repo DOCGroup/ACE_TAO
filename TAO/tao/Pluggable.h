@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 // $Id$
 
 // ============================================================================
@@ -31,6 +30,7 @@
 #include "tao/Typecode.h"
 #include "tao/IOPC.h"
 
+
 // Forward declarations.
 class ACE_Addr;
 class ACE_Reactor;
@@ -45,16 +45,19 @@ class TAO_Reply_Dispatcher;
 class TAO_Transport_Mux_Strategy;
 class TAO_Wait_Strategy;
 
+class TAO_Pluggable_Message_Factory;
+class TAO_Target_Specification;
+
 typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Transport_Buffering_Queue;
 
 class TAO_Export TAO_Transport
 {
   // = TITLE
-  //   Generic definitions for the Transport class.
+  //   Generic definitions for the new Transport class.
   //
   // = DESCRIPTION
   //   The transport object is created in the Service handler
-  //   constructor and deleted in the Service Handler's destructor!!
+  //   constructor and deleted in the service handlers destructor!!
 
 public:
   TAO_Transport (CORBA::ULong tag,
@@ -67,7 +70,7 @@ public:
   CORBA::ULong tag (void) const;
   // The tag, each concrete class will have a specific tag value.
 
-  virtual void close_connection (void) = 0;
+  virtual void close_connection() = 0;
   // Call the corresponding connection handler's <close>
   // method.
 
@@ -83,7 +86,6 @@ public:
   // handler used by the reactor.
 
   virtual ssize_t send (TAO_Stub *stub,
-                        int two_way,
                         const ACE_Message_Block *mblk,
                         const ACE_Time_Value *s = 0) = 0;
   virtual ssize_t send (const ACE_Message_Block *mblk,
@@ -106,20 +108,21 @@ public:
   // not clear this this is the best place to specify this.  The actual
   // timeout values will be kept in the Policies.
 
+
   virtual void start_request (TAO_ORB_Core *orb_core,
-                              const TAO_Profile *profile,
+                              TAO_Target_Specification &spec,
                               TAO_OutputCDR &output,
                               CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ())
+                              TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Fill into <output> the right headers to make a request.
 
   virtual void start_locate (TAO_ORB_Core *orb_core,
-                             const TAO_Profile *profile,
+                             TAO_Target_Specification &spec,
                              CORBA::ULong request_id,
                              TAO_OutputCDR &output,
                              CORBA::Environment &ACE_TRY_ENV =
-                                 TAO_default_environment ())
+                             TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Fill into <output> the right headers to make a locate request.
 
@@ -134,6 +137,16 @@ public:
   // Using this method, instead of send(), allows the transport (and
   // wait strategy) to take appropiate action.
 
+  virtual CORBA::Boolean 
+  send_request_header (const IOP::ServiceContextList &svc_ctx,  
+                       CORBA::ULong request_id,
+                       CORBA::Octet response_flags,
+                       TAO_Target_Specification &spec,
+                       const char* opname,
+                       TAO_OutputCDR &msg) = 0;
+  // This is a request for the transport object to write a request
+  // header before it sends out a request
+                                
   TAO_ORB_Core *orb_core (void) const;
   // Access the ORB that owns this connection.
 
@@ -155,8 +168,8 @@ public:
   // Strategy if Reactor is used  for that strategy. Default
   // implementation out here returns -1 setting <errno> to ENOTSUP.
 
-  // = Setting the Transport object in Idle state. These methods are
-  //   routed through the TMS object. The TMS strategies implement the
+  // = Setting the Transport object in Idle state. Theese methods are
+  //   routed the TMS object. The TMS starategies implement the
   //   methods accordingly.
 
   virtual int idle_after_send (void);
@@ -190,13 +203,6 @@ protected:
 
   void reset_queued_message (ACE_Message_Block *message_block,
                              size_t bytes_delivered);
-
-  void reset_sent_message (ACE_Message_Block *message_block,
-                           size_t bytes_delivered);
-
-  void reset_message (ACE_Message_Block *message_block,
-                      size_t bytes_delivered,
-                      int queued_message);
 
   CORBA::ULong tag_;
   // IOP protocol tag.

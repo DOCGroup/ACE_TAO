@@ -145,8 +145,7 @@ ORB_CORE_FILES = \
   Linear_Priority_Mapping.cpp \
   Direct_Priority_Mapping.cpp \
   RT_Current.cpp \
-  Pool_Per_Endpoint.cpp \
-  GIOPC.cpp
+  Pool_Per_Endpoint.cpp
 
 DYNAMIC_ANY_FILES = \
   DynAnyC.cpp \
@@ -232,28 +231,47 @@ IDL_HEADERS = \
   orb.idl \
   Policy.pidl
 
-HEADER_FILES = \
+pkgincludedir = $(prefix)/include/tao
+pkginclude_HEADERS = \
   Acceptor_Impl.h \
+  Acceptor_Impl.i \
   Acceptor_Registry.h \
+  Acceptor_Registry.i \
   Active_Object_Map.h \
+  Active_Object_Map.i \
   Any.h \
+  Any.i \
   Asynch_Invocation.h \
+  Asynch_Invocation.i \
   BoundsC.h \
+  BoundsC.i \
   Buffering_Constraint_Policy.h \
+  Buffering_Constraint_Policy.i \
   CDR.h \
+  CDR.i \
   CDR_Interpreter.h \
   CONV_FRAMEC.h \
+  CONV_FRAMEC.i \
   CONV_FRAMES.h \
+  CONV_FRAMES.i \
   CONV_FRAMES_T.h \
+  CONV_FRAMES_T.i \
   Client_Priority_Policy.h \
+  Client_Priority_Policy.i \
   Client_Strategy_Factory.h \
   Connector_Registry.h \
   Context.h \
+  Context.i \
   CurrentC.h \
+  CurrentC.i \
   Direct_Priority_Mapping.h \
+  Direct_Priority_Mapping.i \
   DomainC.h \
+  DomainC.i \
   DomainS_T.h \
+  DomainS_T.i \
   DynAnyC.h \
+  DynAnyC.i \
   DynAny_i.h \
   DynArray_i.h \
   DynEnum_i.h \
@@ -262,231 +280,204 @@ HEADER_FILES = \
   DynUnion_i.h \
   DynUnion_i_T.h \
   Environment.h \
+  Environment.i \
   Exception.h \
+  Exception.i \
   Forwarding_Servant.h \
   GIOP.h \
-  GIOPC.h \
+  GIOP.i \
   GIOP_Server_Request.h \
+  GIOP_Server_Request.i \
   IIOP_Acceptor.h \
+  IIOP_Acceptor.i \
   IIOP_Connect.h \
+  IIOP_Connect.i \
   IIOP_Connector.h \
   IIOP_Factory.h \
   IIOP_Profile.h \
+  IIOP_Profile.i \
   IIOP_Transport.h \
   IOPC.h \
+  IOPC.i \
   IOPS.h \
+  IOPS.i \
   IOPS_T.h \
+  IOPS_T.i \
   IORC.h \
+  IORC.i \
   IORManipulation.h \
   IORS.h \
+  IORS.i \
   IOR_LookupTable.h \
   InconsistentTypeCodeC.h \
   Interceptor.h \
+  Interceptor.i \
   InterceptorC.h \
+  InterceptorC.i \
   InterceptorS.h \
   InterfaceC.h \
+  InterfaceC.i \
   Invocation.h \
+  Invocation.i \
   Key_Adapters.h \
+  Key_Adapters.i \
   Leader_Follower.h \
+  Leader_Follower.i \
   Linear_Priority_Mapping.h \
+  Linear_Priority_Mapping.i \
   MProfile.h \
+  MProfile.i \
   Managed_Types.h \
+  Managed_Types.i \
   Marshal.h \
+  Marshal.i \
   MessagingC.h \
+  MessagingC.i \
   MessagingS.h \
+  MessagingS.i \
   MessagingS_T.h \
+  MessagingS_T.i \
   Messaging_Policy_i.h \
+  Messaging_Policy_i.i \
   NVList.h \
+  NVList.i \
   ORB.h \
+  ORB.i \
   ORB_Core.h \
+  ORB_Core.i \
   Object.h \
+  Object.i \
   ObjectIDList.h \
+  ObjectIDList.i \
   Object_Adapter.h \
+  Object_Adapter.i \
   Object_KeyC.h \
+  Object_KeyC.i \
   Operation_Table.h \
   POA.h \
+  POA.i \
   POAC.h \
+  POAC.i \
   POAManager.h \
+  POAManager.i \
   POAS.h \
+  POAS.i \
   POA_CORBA.h \
   Pluggable.h \
+  Pluggable.i \
   PolicyC.h \
+  PolicyC.i \
   Policy_Manager.h \
+  Policy_Manager.i \
   PollableC.h \
+  PollableC.i \
   PollableS.h \
+  PollableS.i \
   PollableS_T.h \
+  PollableS_T.i \
   Pool_Per_Endpoint.h \
+  Pool_Per_Endpoint.i \
   Principal.h \
+  Principal.i \
   Priority_Mapping.h \
+  Priority_Mapping.i \
   Profile.h \
+  Profile.i \
   Protocol_Factory.h \
   RT_Current.h \
+  RT_Current.i \
   Reactor_Per_Priority.h \
+  Reactor_Per_Priority.i \
   Reactor_Registry.h \
+  Reactor_Registry.i \
   Reply_Dispatcher.h \
+  Reply_Dispatcher.i \
   Request.h \
+  Request.i \
   Resource_Factory.h \
   Sequence.h \
+  Sequence.i \
   Sequence_T.h \
+  Sequence_T.i \
   Servant_Base.h \
+  Servant_Base.i \
   Server_Request.h \
+  Server_Request.i \
   Server_Strategy_Factory.h \
   Services.h \
+  Services.i \
   Single_Reactor.h \
+  Single_Reactor.i \
   Stub.h \
+  Stub.i \
   Sync_Strategies.h \
+  Sync_Strategies.i \
   TAO.h \
   TAOC.h \
+  TAOC.i \
   TAOS.h \
+  TAOS.i \
   TAOS_T.h \
+  TAOS_T.i \
   TAO_Internal.h \
   Tagged_Components.h \
+  Tagged_Components.i \
   TimeBaseC.h \
+  TimeBaseC.i \
   TimeBaseS.h \
+  TimeBaseS.i \
   TimeBaseS_T.h \
+  TimeBaseS_T.i \
   Timeprobe.h \
   Transport_Mux_Strategy.h \
   Typecode.h \
+  Typecode.i \
   UIOP_Acceptor.h \
   UIOP_Connect.h \
+  UIOP_Connect.i \
   UIOP_Connector.h \
   UIOP_Factory.h \
   UIOP_Profile.h \
+  UIOP_Profile.i \
   UIOP_Transport.h \
   Union.h \
   ValueBase.h \
+  ValueBase.i \
   ValueFactory.h \
+  ValueFactory.i \
   ValueFactory_Map.h \
+  ValueFactory_Map.i \
   Version.h \
   Wait_Strategy.h \
   WrongTransactionC.h \
   corba.h \
   corbafwd.h \
+  corbafwd.i \
   debug.h \
   default_client.h \
+  default_client.i \
   default_resource.h \
+  default_resource.i \
   default_server.h \
+  default_server.i \
   orbconf.h \
   params.h \
+  params.i \
   poa_macros.h \
   qt_resource.h \
+  qt_resource.i \
   rtcorbafwd.h \
+  rtcorbafwd.i \
   singletons.h \
   try_macros.h \
   varout.h \
-  xt_resource.h
-
-INLINE_FILES = \
-  Acceptor_Impl.i \
-  Acceptor_Registry.i \
-  Active_Object_Map.i \
-  Any.i \
-  Asynch_Invocation.i \
-  BoundsC.i \
-  Buffering_Constraint_Policy.i \
-  CDR.i \
-  CONV_FRAMEC.i \
-  CONV_FRAMES.i \
-  CONV_FRAMES_T.i \
-  Client_Priority_Policy.i \
-  Connector_Registry.i \
-  Context.i \
-  CurrentC.i \
-  Direct_Priority_Mapping.i \
-  DomainC.i \
-  DomainS_T.i \
-  DynAnyC.i \
-  Environment.i \
-  Exception.i \
-  GIOP.i \
-  GIOPC.i \
-  GIOP_Server_Request.i \
-  IIOP_Acceptor.i \
-  IIOP_Connect.i \
-  IIOP_Profile.i \
-  IOPC.i \
-  IOPS.i \
-  IOPS_T.i \
-  IORC.i \
-  IORS.i \
-  Interceptor.i \
-  InterceptorC.i \
-  InterfaceC.i \
-  Invocation.i \
-  Key_Adapters.i \
-  Leader_Follower.i \
-  Linear_Priority_Mapping.i \
-  MProfile.i \
-  Managed_Types.i \
-  Marshal.i \
-  MessagingC.i \
-  MessagingS.i \
-  MessagingS_T.i \
-  Messaging_Policy_i.i \
-  NVList.i \
-  ORB.i \
-  ORB_Core.i \
-  Object.i \
-  ObjectIDList.i \
-  Object_Adapter.i \
-  Object_KeyC.i \
-  POA.i \
-  POAC.i \
-  POAManager.i \
-  POAS.i \
-  Pluggable.i \
-  PolicyC.i \
-  Policy_Manager.i \
-  PollableC.i \
-  PollableS.i \
-  PollableS_T.i \
-  Pool_Per_Endpoint.i \
-  Principal.i \
-  Priority_Mapping.i \
-  Profile.i \
-  RT_Current.i \
-  Reactor_Per_Priority.i \
-  Reactor_Registry.i \
-  Reply_Dispatcher.i \
-  Request.i \
-  Sequence.i \
-  Sequence_T.i \
-  Servant_Base.i \
-  Server_Request.i \
-  Services.i \
-  Single_Reactor.i \
-  Stub.i \
-  Sync_Strategies.i \
-  TAOC.i \
-  TAOS.i \
-  TAOS_T.i \
-  Tagged_Components.i \
-  TimeBaseC.i \
-  TimeBaseS.i \
-  TimeBaseS_T.i \
-  Typecode.i \
-  UIOP_Connect.i \
-  UIOP_Profile.i \
-  ValueBase.i \
-  ValueFactory.i \
-  ValueFactory_Map.i \
-  corbafwd.i \
-  default_client.i \
-  default_resource.i \
-  default_server.i \
-  params.i \
-  qt_resource.i \
-  rtcorbafwd.i \
   varout.i \
-  xt_resource.i
-
-
-pkgincludedir = $(prefix)/include/tao
-pkginclude_HEADERS = \
-  $(HEADER_FILES) \
-  $(INLINE_FILES) \
+  xt_resource.h \
+  xt_resource.i \
   $(TEMPLATE_FILES) \
   $(IDL_HEADERS)
+## Make sure $(TEMPLATE_FILES) and $(IDL_HEADERS) are in the above
+## header list!
 
 
 ## noinst_PROGRAMS = t-sizes

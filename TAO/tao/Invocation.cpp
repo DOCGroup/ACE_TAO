@@ -14,6 +14,7 @@
 
 #include "tao/Messaging_Policy_i.h"
 #include "tao/Client_Priority_Policy.h"
+#include "tao/target_identifier.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation.i"
@@ -96,9 +97,8 @@ TAO_GIOP_Invocation::select_profile_based_on_policy
 (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-#if (TAO_HAS_CORBA_MESSAGING == 0)
+#if !defined (TAO_HAS_CORBA_MESSAGING)
 
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   this->profile_ = this->stub_->profile_in_use ();
   return this->profile_;
 
@@ -151,7 +151,7 @@ TAO_GIOP_Invocation::select_profile_based_on_policy
         }
       if (TAO_debug_level > 3)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) - matching priority range %d %d\n"),
+                    "TAO (%P|%t) - matching priority range %d %d\n",
                     min_priority,
                     max_priority));
 
@@ -183,7 +183,7 @@ TAO_GIOP_Invocation::select_profile_based_on_policy
         return this->profile_;
     }
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 0 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 }
 
@@ -238,20 +238,35 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   // have the protocol) then we give it another profile to try.
   // So the invocation Object should handle policy decisions.
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-  TAO_RelativeRoundtripTimeoutPolicy *timeout_policy =
+#if defined (TAO_HAS_CORBA_MESSAGING)
+  TAO_RelativeRoundtripTimeoutPolicy_i *timeout =
     this->stub_->relative_roundtrip_timeout ();
 
   // If max_wait_time is not zero then this is not the first attempt
   // to send the request, the timeout value includes *all* those
   // attempts.
   if (this->max_wait_time_ == 0
-      && timeout_policy != 0)
+      && timeout != 0)
     {
-      timeout_policy->set_time_value (this->max_wait_time_value_);
+      TimeBase::TimeT t =
+        timeout->relative_expiry (ACE_TRY_ENV);
+      ACE_CHECK;
+      TimeBase::TimeT seconds = t / 10000000u;
+      TimeBase::TimeT microseconds = (t % 10000000u) / 10;
+      this->max_wait_time_value_.set (ACE_U64_TO_U32(seconds),
+                                      ACE_U64_TO_U32(microseconds));
       this->max_wait_time_ = &this->max_wait_time_value_;
+
+      if (TAO_debug_level > 0)
+        {
+          CORBA::ULong msecs =
+            ACE_static_cast(CORBA::ULong, microseconds / 1000);
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) Timeout is <%u>\n",
+                      msecs));
+        }
     }
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
   ACE_Countdown_Time countdown (this->max_wait_time_);
   // Loop until a connection is established or there aren't any more
@@ -317,18 +332,18 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
   // unverified user ID, and then verifying the message (i.e. a dummy
   // service context entry is set up to hold a digital signature for
   // this message, then patched shortly before it's sent).
-  static CORBA::Principal_ptr principal = 0;
+  TAO_Target_Specification spec;
+  spec.target_specifier (this->profile_->object_key ());
 
-  if (TAO_GIOP::write_request_header (this->service_info_,
-                                      this->request_id_,
-                                      response_flags,
-                                      this->profile_->object_key (),
-                                      this->opname_,
-                                      principal,
-                                      this->out_stream_,
-                                      this->orb_core_) == 0)
+  if (this->transport_->send_request_header (this->service_info_,
+                                             this->request_id_,
+                                             response_flags,
+                                             spec,
+                                             this->opname_,   
+                                             this->out_stream_) == 0)
     ACE_THROW (CORBA::MARSHAL ());
 }
+
 
 // Send request.
 int
@@ -538,8 +553,10 @@ TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
+  TAO_Target_Specification spec;
+  spec.target_specifier (this->profile_->object_key ());
   this->transport_->start_request (this->orb_core_,
-                                   this->profile_,
+                                   spec,
                                    this->out_stream_,
                                    ACE_TRY_ENV);
 }
@@ -693,7 +710,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
 
           if (TAO_debug_level > 5)
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("TAO: (%P|%t) Raising exception %s\n"),
+                        "TAO: (%P|%t) Raising exception %s\n",
                         buf.in ()));
 
           // @@ Think about a better way to raise the exception here,
@@ -772,7 +789,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
         this->max_wait_time_->msec ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("TAO (%P|%t) Timeout on recv is <%u>\n"),
+                  "TAO (%P|%t) Timeout on recv is <%u>\n",
                   msecs));
     }
 
@@ -787,7 +804,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
         this->max_wait_time_->msec ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("TAO (%P|%t) Timeout after recv is <%u> status <%d>\n"),
+                  "TAO (%P|%t) Timeout after recv is <%u> status <%d>\n",
                   msecs, reply_error));
     }
 
@@ -908,14 +925,14 @@ TAO_GIOP_Oneway_Invocation (TAO_Stub *stub,
   : TAO_GIOP_Invocation (stub, operation, orb_core),
     sync_scope_ (TAO::SYNC_WITH_TRANSPORT)
 {
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if defined (TAO_HAS_CORBA_MESSAGING)
   TAO_Sync_Scope_Policy *ssp = stub->sync_scope ();
 
   if (ssp)
     {
       this->sync_scope_ = ssp->synchronization ();
     }
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
 }
 
 TAO_GIOP_Oneway_Invocation::~TAO_GIOP_Oneway_Invocation (void)
@@ -931,8 +948,11 @@ TAO_GIOP_Oneway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
+  TAO_Target_Specification spec;
+  spec.target_specifier (this->profile_->object_key ());
+  
   this->transport_->start_request (this->orb_core_,
-                                   this->profile_,
+                                   spec,
                                    this->out_stream_,
                                    ACE_TRY_ENV);
 }
@@ -942,14 +962,15 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->sync_scope_ == TAO::SYNC_WITH_TRANSPORT
-      || this->sync_scope_ == TAO::SYNC_NONE)
+      || this->sync_scope_ == TAO::SYNC_NONE
+      || this->sync_scope_ == TAO::SYNC_FLUSH)
     {
       return TAO_GIOP_Invocation::invoke (0,
                                           ACE_TRY_ENV);
     }
 
   // Create this only if a reply is required.
-  TAO_Synch_Reply_Dispatcher rd (this->orb_core_,
+  TAO_Synch_Reply_Dispatcher rd (this->orb_core_, 
                                  this->service_info_);
 
   // The rest of this function is very similar to
@@ -983,7 +1004,7 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
         this->max_wait_time_->msec ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("TAO (%P|%t) Timeout on recv is <%u>\n"),
+                  "TAO (%P|%t) Timeout on recv is <%u>\n",
                   msecs));
     }
 
@@ -998,7 +1019,7 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
         this->max_wait_time_->msec ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("TAO (%P|%t) Timeout after recv is <%u> status <%d>\n"),
+                  "TAO (%P|%t) Timeout after recv is <%u> status <%d>\n",
                   msecs, reply_error));
     }
 
@@ -1090,8 +1111,8 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
             // @@ We should raise a CORBA::NO_MEMORY, but we ran out
             //    of memory already. We need a pre-allocated, TSS,
             //    CORBA::NO_MEMORY instance
-            ACE_NEW_RETURN (ex,
-                            CORBA::UNKNOWN,
+            ACE_NEW_RETURN (ex, 
+                            CORBA::UNKNOWN, 
                             TAO_INVOKE_EXCEPTION);
           }
 
@@ -1131,8 +1152,10 @@ TAO_GIOP_Locate_Request_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
+  TAO_Target_Specification spec;
+  spec.target_specifier (this->profile_->object_key ());
   this->transport_->start_locate (this->orb_core_,
-                                  this->profile_,
+                                  spec,
                                   this->request_id_,
                                   this->out_stream_,
                                   ACE_TRY_ENV);

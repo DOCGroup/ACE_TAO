@@ -22,7 +22,7 @@
 
 #include "tao/orbconf.h"
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if defined (TAO_HAS_CORBA_MESSAGING)
 
 #include "tao/POA_CORBA.h"
 
@@ -31,7 +31,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Forward declarations.
-class TAO_RelativeRoundtripTimeoutPolicy;
+class TAO_RelativeRoundtripTimeoutPolicy_i;
 class TAO_Client_Priority_Policy;
 class TAO_Sync_Scope_Policy;
 class TAO_Buffering_Constraint_Policy;
@@ -87,7 +87,7 @@ public:
 
   // = Direct accesors to the policy implementations, for speedy
   //   lookups.
-  TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
+  TAO_RelativeRoundtripTimeoutPolicy_i *relative_roundtrip_timeout (void) const;
 
   TAO_Client_Priority_Policy *client_priority (void) const;
 
@@ -107,7 +107,7 @@ private:
   // The known policies are kept as pointers to the implementation
   // objects, this allow us to query the supported policies really
   // fast, without memory allocations.
-  TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout_;
+  TAO_RelativeRoundtripTimeoutPolicy_i *relative_roundtrip_timeout_;
 
   TAO_Client_Priority_Policy *client_priority_;
 
@@ -150,7 +150,7 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-  TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
+  TAO_RelativeRoundtripTimeoutPolicy_i *relative_roundtrip_timeout (void) const;
 
   TAO_Client_Priority_Policy *client_priority (void) const;
 
@@ -188,7 +188,7 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-  TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
+  TAO_RelativeRoundtripTimeoutPolicy_i *relative_roundtrip_timeout (void) const;
 
   TAO_Client_Priority_Policy *client_priority (void) const;
 
@@ -229,7 +229,7 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-  TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
+  TAO_RelativeRoundtripTimeoutPolicy_i *relative_roundtrip_timeout (void) const;
 
   TAO_Client_Priority_Policy *client_priority (void) const;
 
@@ -246,6 +246,6 @@ public:
 # include "tao/Policy_Manager.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 #endif /* TAO_POLICY_MANAGER_H */

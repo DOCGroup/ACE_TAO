@@ -27,7 +27,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-# if TAO_HAS_UIOP == 1
+# if defined (TAO_HAS_UIOP)
 
 #include "ace/Connector.h"
 #include "ace/LSOCK_Connector.h"
@@ -203,6 +203,6 @@ private:
 
 };
 
-# endif  /* TAO_HAS_UIOP == 1 */
+# endif  /* TAO_HAS_UIOP */
 
 #endif  /* TAO_UIOP_CONNECTOR_H */

@@ -8,7 +8,7 @@
 
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID(tao, Active_Object_Map, "$Id$")
+ACE_RCSID(tao, POA, "$Id$")
 
 TAO_Active_Object_Map::Map_Entry::Map_Entry (void)
   : user_id_ (),
@@ -32,12 +32,10 @@ TAO_Active_Object_Map::set_system_id_size
         {
           switch (creation_parameters.object_lookup_strategy_for_system_id_policy_)
             {
-#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
             case TAO_LINEAR:
               TAO_Active_Object_Map::system_id_size_ =
                 sizeof (CORBA::ULong);
               break;
-#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
             case TAO_DYNAMIC_HASH:
             default:
@@ -56,7 +54,6 @@ TAO_Active_Object_Map::set_system_id_size
         {
           switch (creation_parameters.object_lookup_strategy_for_system_id_policy_)
             {
-#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
             case TAO_LINEAR:
               TAO_Active_Object_Map::system_id_size_ =
                 sizeof (CORBA::ULong);
@@ -66,7 +63,6 @@ TAO_Active_Object_Map::set_system_id_size
               TAO_Active_Object_Map::system_id_size_ =
                 sizeof (CORBA::ULong);
               break;
-#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
             case TAO_ACTIVE_DEMUX:
             default:
@@ -186,19 +182,11 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
       switch (creation_parameters.reverse_object_lookup_strategy_for_unique_id_policy_)
         {
         case TAO_LINEAR:
-#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
           ACE_NEW_THROW_EX (sm,
                             servant_linear_map (creation_parameters.active_object_map_size_),
                             CORBA::NO_MEMORY ());
           ACE_CHECK;
           break;
-#else
-          ACE_ERROR ((LM_ERROR,
-                      "linear option for -ORBUniqueidPolicyReverseDemuxStrategy "
-                      "not supported with minimum POA maps. "
-                      "Ingoring option to use default... \n"));
-          /* FALL THROUGH */
-#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
         case TAO_DYNAMIC_HASH:
         default:
@@ -220,19 +208,11 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
       switch (creation_parameters.object_lookup_strategy_for_user_id_policy_)
         {
         case TAO_LINEAR:
-#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
           ACE_NEW_THROW_EX (uim,
                             user_id_linear_map (creation_parameters.active_object_map_size_),
                             CORBA::NO_MEMORY ());
           ACE_CHECK;
           break;
-#else
-          ACE_ERROR ((LM_ERROR,
-                      "linear option for -ORBUseridPolicyDemuxStrategy "
-                      "not supported with minimum POA maps. "
-                      "Ingoring option to use default... \n"));
-          /* FALL THROUGH */
-#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
         case TAO_DYNAMIC_HASH:
         default:
@@ -247,7 +227,6 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
     {
       switch (creation_parameters.object_lookup_strategy_for_system_id_policy_)
         {
-#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
         case TAO_LINEAR:
           ACE_NEW_THROW_EX (uim,
                             user_id_linear_map (creation_parameters.active_object_map_size_),
@@ -261,15 +240,6 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
                             CORBA::NO_MEMORY ());
           ACE_CHECK;
           break;
-#else
-        case TAO_LINEAR:
-        case TAO_DYNAMIC_HASH:
-          ACE_ERROR ((LM_ERROR,
-                      "linear and dynamic options for -ORBSystemidPolicyDemuxStrategy "
-                      "are not supported with minimum POA maps. "
-                      "Ingoring option to use default... \n"));
-          /* FALL THROUGH */
-#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
         case TAO_ACTIVE_DEMUX:
         default:
@@ -1001,7 +971,6 @@ template class ACE_Hash_Map_Entry<servant, value>;
 template class ACE_Equal_To<id>;
 template class ACE_Equal_To<servant>;
 
-#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
 // Map Manager related.
 template class ACE_Map_Manager_Iterator_Adapter<id_value_type, id, value>;
 template class ACE_Map_Manager_Iterator_Adapter<servant_value_type, servant, value>;
@@ -1019,7 +988,6 @@ template class ACE_Map_Reverse_Iterator<id, value, ACE_Null_Mutex>;
 template class ACE_Map_Reverse_Iterator<servant, value, ACE_Null_Mutex>;
 template class ACE_Map_Entry<id, value>;
 template class ACE_Map_Entry<servant, value>;
-#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -1104,7 +1072,6 @@ typedef ACE_Noop_Key_Generator<servant> noop_servant_key_generator;
 #pragma instantiate ACE_Equal_To<id>
 #pragma instantiate ACE_Equal_To<servant>
 
-#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
 // Map Manager related.
 #pragma instantiate ACE_Map_Manager_Iterator_Adapter<id_value_type, id, value>
 #pragma instantiate ACE_Map_Manager_Iterator_Adapter<servant_value_type, servant, value>
@@ -1122,6 +1089,5 @@ typedef ACE_Noop_Key_Generator<servant> noop_servant_key_generator;
 #pragma instantiate ACE_Map_Reverse_Iterator<servant, value, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Entry<id, value>
 #pragma instantiate ACE_Map_Entry<servant, value>
-#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

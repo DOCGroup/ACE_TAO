@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 // $Id$
 
 // ============================================================================
@@ -19,12 +18,11 @@
 
 #include "tao/UIOP_Acceptor.h"
 
-#if TAO_HAS_UIOP == 1
+#if defined (TAO_HAS_UIOP)
 
 #include "tao/UIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
-#include "tao/GIOP.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/debug.h"
 
@@ -387,4 +385,4 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
     }
   return 0;
 }
-#endif  /* TAO_HAS_UIOP == 1 */
+#endif  /* TAO_HAS_UIOP */

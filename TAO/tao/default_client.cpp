@@ -77,9 +77,9 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, char ** argv)
                                    "-ORBIIOPProfileLock") == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("WARNING: The -ORBIIOPProfileLock option")
-                      ASYS_TEXT (" is deprecated and will be removed.\n")
-                      ASYS_TEXT ("         Please use -ORBProfileLock instead\n")));
+                      "WARNING: The -ORBIIOPProfileLock option"
+                      " is deprecated and will be removed.\n"
+                      "         Please use -ORBProfileLock instead\n"));
           curarg++;
           if (curarg < argc)
             {

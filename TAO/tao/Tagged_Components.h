@@ -100,11 +100,6 @@ public:
   int decode (TAO_InputCDR& cdr);
   // Marshal and demarshal the list.
 
-  IOP::MultipleComponentProfile &components (void);
-  // Read/Write access to the underlying
-  // MutipleComponentProfile. Added by request from Chris Hafey
-  // <chris@stentorsoft.com> 
-
 private:
   void set_code_sets_i (CONV_FRAME::CodeSetComponent &lhs,
                         CONV_FRAME::CodeSetComponent &rhs);

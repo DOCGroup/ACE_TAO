@@ -109,48 +109,6 @@ TAO_NAMESPACE_BEGIN (GIOP)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_IORAddressingInfo, &_tc_TAO_tc_GIOP_IORAddressingInfo)
 TAO_NAMESPACE_END
 
-#if !defined (_GIOP_TARGETADDRESS__TAO_SEQ_OCTET_CS_)
-#define _GIOP_TARGETADDRESS__TAO_SEQ_OCTET_CS_
-
-// *************************************************************
-// GIOP::TargetAddress::_tao_seq_Octet
-// *************************************************************
-
-GIOP::TargetAddress::_tao_seq_Octet::_tao_seq_Octet (void)
-{}
-GIOP::TargetAddress::_tao_seq_Octet::_tao_seq_Octet (CORBA::ULong max) // uses max size
-  : 
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max)
-{}
-GIOP::TargetAddress::_tao_seq_Octet::_tao_seq_Octet (CORBA::ULong max, CORBA::ULong length, CORBA::Octet *buffer, CORBA::Boolean release)
-  : 
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max, length, buffer, release)
-{}
-GIOP::TargetAddress::_tao_seq_Octet::_tao_seq_Octet (const _tao_seq_Octet &seq) // copy ctor
-  : 
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (seq)
-{}
-GIOP::TargetAddress::_tao_seq_Octet::~_tao_seq_Octet (void) // dtor
-{}
-
-
-#endif /* end #if !defined */
-
 // *************************************************************
 // Operations for union GIOP::TargetAddress
 // *************************************************************
@@ -174,7 +132,7 @@ GIOP::TargetAddress::TargetAddress (const GIOP::TargetAddress &u)
     {
       ACE_NEW (
           this->u_.object_key_,
-          GIOP::TargetAddress::_tao_seq_Octet (*u.u_.object_key_)
+          TAO_ObjectKey (*u.u_.object_key_)
         );
     }
     break;
@@ -211,7 +169,7 @@ GIOP::TargetAddress::operator= (const GIOP::TargetAddress &u)
     {
       ACE_NEW_RETURN (
           this->u_.object_key_,
-          GIOP::TargetAddress::_tao_seq_Octet (*u.u_.object_key_),
+          TAO_ObjectKey (*u.u_.object_key_),
           *this
         );
     }
@@ -269,7 +227,7 @@ void *GIOP::TargetAddress::_access (CORBA::Boolean alloc_flag)
   {
     case 0:
       if (alloc_flag)
-        ACE_NEW_RETURN (this->u_.object_key_, GIOP::TargetAddress::_tao_seq_Octet, 0);
+        ACE_NEW_RETURN (this->u_.object_key_, TAO_ObjectKey, 0);
       return this->u_.object_key_;
     case 1:
       if (alloc_flag)
@@ -543,68 +501,5 @@ CORBA::Boolean operator>>= (
   return 0;
 }
 
-#if !defined _TAO_CDR_OP_GIOP_TargetAddress__tao_seq_Octet_CPP_
-#define _TAO_CDR_OP_GIOP_TargetAddress__tao_seq_Octet_CPP_
 
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const GIOP::TargetAddress::_tao_seq_Octet &_tao_sequence
-  )
-{
-  if (strm << _tao_sequence.length ())
-  {
-    // encode all elements
-    
-#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
-    {
-      TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
-        ACE_static_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (GIOP::TargetAddress::_tao_seq_Octet *)&_tao_sequence);
-      if (oseq->mb ())
-        return strm.write_octet_array_mb (oseq->mb ());
-      else
-        return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-    }
-    
-#else /* TAO_NO_COPY_OCTET_SEQUENCES */
-    return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-  
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
-  }
-  return 0; // error
-}
-
-CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    GIOP::TargetAddress::_tao_seq_Octet &_tao_sequence
-  )
-{
-  CORBA::ULong _tao_seq_len;
-  if (strm >> _tao_seq_len)
-  {
-    // set the length of the sequence
-    _tao_sequence.length (_tao_seq_len);
-    // retrieve all the elements
-    
-#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
-    if (ACE_BIT_DISABLED (strm.start ()->flags (),ACE_Message_Block::DONT_DELETE))
-    {
-      TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
-        ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &_tao_sequence);
-      oseq->replace (_tao_seq_len, strm.start ());
-      oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
-      strm.skip_bytes (_tao_seq_len);
-      return 1;
-    }
-    else
-      return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
-    
-#else /* TAO_NO_COPY_OCTET_SEQUENCES */
-    return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-  
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
-  }
-  return 0; // error
-}
-
-#endif /* _TAO_CDR_OP_GIOP_TargetAddress__tao_seq_Octet_CPP_ */
 

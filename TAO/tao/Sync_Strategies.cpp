@@ -26,7 +26,7 @@ TAO_Transport_Sync_Strategy::send (TAO_Transport &transport,
                          max_wait_time);
 }
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if defined (TAO_HAS_CORBA_MESSAGING)
 
 ssize_t
 TAO_None_Sync_Strategy::send (TAO_Transport &transport,
@@ -86,7 +86,7 @@ TAO_None_Sync_Strategy::buffering_constraints_reached (TAO_Transport &transport,
   this->timer_check (transport,
                      buffering_constraint);
 
-  if (buffering_constraint.mode == TAO::BUFFER_FLUSH)
+  if (buffering_constraint.mode == TAO::BUFFER_NONE)
     return 1;
 
   if (ACE_BIT_ENABLED (buffering_constraint.mode,
@@ -106,6 +106,9 @@ void
 TAO_None_Sync_Strategy::timer_check (TAO_Transport &transport,
                                      const TAO::BufferingConstraint &buffering_constraint)
 {
+  // Get our reactor.
+  ACE_Reactor *reactor = transport.orb_core ()->reactor ();
+
   if (transport.buffering_timer_id () != 0)
     {
       //
@@ -113,10 +116,6 @@ TAO_None_Sync_Strategy::timer_check (TAO_Transport &transport,
       // still need the timeout or if the timeout value is correct or
       // not.
       //
-
-      // Get our reactor.
-      ACE_Reactor *reactor = transport.orb_core ()->reactor ();
-
       if (!ACE_BIT_ENABLED (buffering_constraint.mode,
                             TAO::BUFFER_TIMEOUT))
         {
@@ -148,9 +147,6 @@ TAO_None_Sync_Strategy::timer_check (TAO_Transport &transport,
       ACE_Time_Value timeout =
         this->time_conversion (buffering_constraint.timeout);
 
-      // Get our reactor.
-      ACE_Reactor *reactor = transport.orb_core ()->reactor ();
-
       long timer_id = reactor->schedule_timer (transport.event_handler (),
                                                0,
                                                timeout,
@@ -170,4 +166,13 @@ TAO_None_Sync_Strategy::time_conversion (const TimeBase::TimeT &time)
                          ACE_U64_TO_U32 (microseconds));
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+int
+TAO_Flush_Sync_Strategy::buffering_constraints_reached (TAO_Transport &,
+                                                        TAO_Stub &,
+                                                        TAO_Transport_Buffering_Queue &)
+{
+  // Always yes.
+  return 1;
+}
+
+#endif /* TAO_HAS_CORBA_MESSAGING */

@@ -15,7 +15,7 @@
 #include "tao/TAOC.i"
 #endif /* !defined INLINE */
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if defined (TAO_HAS_CORBA_MESSAGING)
 
 static const CORBA::Long _oc_TAO_PrioritySelectionMode[] =
 {
@@ -281,7 +281,7 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_BufferingConstraintMode, &_tc_TAO
 TAO_NAMESPACE_END
 TAO_NAMESPACE_TYPE (const CORBA::UShort)
 TAO_NAMESPACE_BEGIN (TAO)
-TAO_NAMESPACE_DEFINE (const CORBA::UShort, BUFFER_FLUSH, 0U)
+TAO_NAMESPACE_DEFINE (const CORBA::UShort, BUFFER_NONE, 0U)
 TAO_NAMESPACE_END
 TAO_NAMESPACE_TYPE (const CORBA::UShort)
 TAO_NAMESPACE_BEGIN (TAO)
@@ -529,7 +529,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO::BufferingConstraint
 #  pragma instantiate TAO_Object_Manager<TAO::BufferingConstraintPolicy,TAO::BufferingConstraintPolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 TAO_NAMESPACE_TYPE (const CORBA::Short)
 TAO_NAMESPACE_BEGIN (TAO)
@@ -546,4 +546,8 @@ TAO_NAMESPACE_END
 TAO_NAMESPACE_TYPE (const CORBA::Short)
 TAO_NAMESPACE_BEGIN (TAO)
 TAO_NAMESPACE_DEFINE (const CORBA::Short, SYNC_WITH_TARGET, 3)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (const CORBA::Short)
+TAO_NAMESPACE_BEGIN (TAO)
+TAO_NAMESPACE_DEFINE (const CORBA::Short, SYNC_FLUSH, 4)
 TAO_NAMESPACE_END

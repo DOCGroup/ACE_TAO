@@ -7,7 +7,7 @@
 // Information on TAO is available at
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 // skeleton destructor
 ACE_INLINE
@@ -33,7 +33,7 @@ ACE_INLINE void POA_PortableServer::ThreadPolicy::_get_policy_type_skel (CORBA::
 }
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 // skeleton destructor
 ACE_INLINE
@@ -107,7 +107,7 @@ ACE_INLINE void POA_PortableServer::IdAssignmentPolicy::_get_policy_type_skel (C
 }
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 // skeleton destructor
 ACE_INLINE
@@ -181,7 +181,7 @@ ACE_INLINE void POA_PortableServer::RequestProcessingPolicy::_get_policy_type_sk
 }
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 // skeleton destructor
 ACE_INLINE
@@ -189,7 +189,7 @@ POA_PortableServer::POAManager::~POAManager (void)
 {
 }
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 // skeleton destructor
 ACE_INLINE
@@ -212,7 +212,7 @@ POA_PortableServer::ServantLocator::~ServantLocator (void)
 {
 }
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 // skeleton destructor
 ACE_INLINE
