@@ -72,6 +72,7 @@ int
 ACE_Logging_Strategy::fini (void)
 {
   ACE_OS::free ((void *) this->filename_);
+  return 0;
 }
 
 int
