@@ -1,3 +1,7 @@
+Mon Feb 15 13:26:29 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.3.4 released.
+
 Mon Feb 15 10:45:10 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
         * TAO_IDL/be/be_visitor_argument/post_docall_cs.cpp:
