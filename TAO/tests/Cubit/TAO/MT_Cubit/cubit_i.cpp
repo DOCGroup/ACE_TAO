@@ -4,7 +4,8 @@
 #include "cubit_i.h"
 
 Cubit_i::Cubit_i (Task_State *ts)
-  :ts_ (ts)
+  :ts_ (ts),
+   util_started_ (0)
 {
 }
 
@@ -17,8 +18,12 @@ Cubit_i::cube_octet (CORBA::Octet o,
                      CORBA::Environment &)
 {
   if (ts_->run_server_utilization_test_ == 1 && 
-      ts_->utilization_task_started_ == 0)
-    ts_->barrier_->wait ();
+      ts_->utilization_task_started_ == 0 && 
+      this->util_started_ == 0 )
+    {
+      this->util_started_ = 1;
+      ts_->barrier_->wait ();
+    }
 
   return (CORBA::Octet) (o * o * o);
 }
@@ -57,5 +62,7 @@ Cubit_i::noop (CORBA::Environment &)
 
 void Cubit_i::shutdown (CORBA::Environment &)
 {
+  ACE_DEBUG ((LM_DEBUG, 
+	      "(%t) Calling TAO_ORB_Core_instance ()->orb ()->shutdown ()\n"));
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }
