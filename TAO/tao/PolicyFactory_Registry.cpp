@@ -19,6 +19,8 @@ TAO_PolicyFactory_Registry::~TAO_PolicyFactory_Registry (void)
 
   for (TABLE::ITERATOR i = this->factories_.begin (); i != end; ++i)
     CORBA::release ((*i).int_id_);
+
+  this->factories_.close ();
 }
 
 void

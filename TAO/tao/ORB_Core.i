@@ -566,6 +566,24 @@ TAO_ORB_Core::resolve_rt_current (CORBA::Environment &ACE_TRY_ENV)
 }
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+ACE_INLINE TAO_PICurrent *
+TAO_ORB_Core::pi_current (void)
+{
+  // A pointer/reference to PICurrent is cached in the ORB Core since
+  // it is accessed in the critical path (i.e. the request invocation
+  // path).  Caching it prevents additional overhead to due object
+  // resolution from occurring.
+  return this->pi_current_;
+}
+
+ACE_INLINE void
+TAO_ORB_Core::pi_current (TAO_PICurrent *current)
+{
+  // Not duplicated since the ORB Core's "object_ref_table" already
+  // contains a duplicate of the PICurrent object.
+  this->pi_current_ = current;
+}
+
 ACE_INLINE void
 TAO_ORB_Core::add_interceptor (
    PortableInterceptor::ClientRequestInterceptor_ptr interceptor,

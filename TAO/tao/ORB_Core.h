@@ -39,6 +39,7 @@
 // Interceptor definitions.
 #include "PortableInterceptorC.h"
 #include "Interceptor_List.h"
+#include "PICurrent.h"
 
 #include "Protocols_Hooks.h"
 
@@ -157,6 +158,13 @@ public:
   /// cleanup functions for the TSS objects stored in the TSS object
   /// array in this class.
   TAO_ORB_Core *orb_core_;
+
+#if TAO_HAS_INTERCEPTORS == 1
+  /// The thread-specific portion of the PICurrent object.
+  TAO_PICurrent_Impl pi_current_;
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
+
 };
 
 // ****************************************************************
@@ -789,10 +797,17 @@ public:
    * @name Portable Interceptor Related Methods
    *
    * These are support methods for interceptor registration and
-   * interceptor set (an array) access.
+   * interceptor set (an array) access, in addition to PICurrent
+   * access.
    */
   //@{
 #if TAO_HAS_INTERCEPTORS == 1
+
+  /// Return a pointer to the cached TAO_PICurrent object.
+  TAO_PICurrent *pi_current (void);
+
+  /// Set the pointer to the cached TAO_PICurrent object.
+  void pi_current (TAO_PICurrent *current);
 
   /// Register a client request interceptor.
   void add_interceptor (
@@ -1179,8 +1194,19 @@ protected:
   TAO_PolicyFactory_Registry policy_factory_registry_;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-  /// Request interceptor registries.
+  /// Cached pointer/reference to the PICurrent object.
+  /**
+   * A pointer/reference to the PICurrent object is cached in the ORB
+   * Core since it is accessed in the critical path (i.e. the request
+   * invocation path).  Caching it prevents additional overhead to due
+   * object resolution from occurring.
+   */
+  TAO_PICurrent *pi_current_;
+
+  /// Client request interceptor registry.
   TAO_ClientRequestInterceptor_List client_request_interceptors_;
+
+  /// Server request interceptor registry.
   TAO_ServerRequestInterceptor_List server_request_interceptors_;
 #endif /* TAO_HAS_INTERCEPTORS */
 
@@ -1284,7 +1310,7 @@ public:
   void *poa_current_impl_;
 
   /// The default environment for the thread.
-  CORBA_Environment* default_environment_;
+  CORBA_Environment *default_environment_;
 
   /// If the user (or library) provides no environment the ORB_Core
   /// still holds one.

@@ -8,6 +8,7 @@ DIRS = \
         Service_Context_Manipulation \
         IORInterceptor \
 	ForwardRequest \
-	Request_Interceptor_Flow
+	Request_Interceptor_Flow \
+	PICurrent
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

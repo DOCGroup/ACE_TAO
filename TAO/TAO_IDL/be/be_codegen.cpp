@@ -668,6 +668,8 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
   this->gen_standard_include (this->server_skeletons_,
                               "tao/RequestInfo_Util.h");
   this->gen_standard_include (this->server_skeletons_,
+                              "tao/PICurrent.h");
+  this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableServer/ServerRequestInfo.h");
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableServer/ServerInterceptorAdapter.h");

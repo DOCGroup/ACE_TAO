@@ -16,7 +16,8 @@ DIRS  = \
   Service_Context_Manipulation \
   IORInterceptor \
   ForwardRequest \
-  Request_Interceptor_Flow
+  Request_Interceptor_Flow \
+  PICurrent
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

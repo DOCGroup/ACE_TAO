@@ -1,6 +1,11 @@
-// $Id$
+// -*- C++ -*-
 
 #include "ORB.h"
+
+ACE_RCSID (tao,
+           ORB,
+           "$Id$")
+
 #include "ORB_Table.h"
 #include "Connector_Registry.h"
 #include "IOR_Parser.h"
@@ -28,6 +33,10 @@
 #if TAO_HAS_CORBA_MESSAGING == 1
 # include "Messaging_ORBInitializer.h"  /* @@ This should go away! */
 #endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
+
+#if TAO_HAS_INTERCEPTORS == 1
+# include "PICurrent_ORBInitializer.h"  /* @@ This should go away! */
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #if defined (TAO_HAS_VALUETYPE)
 #  include "ValueFactory_Map.h"
@@ -64,8 +73,6 @@ using std::set_unexpected;
 #if !defined (__ACE_INLINE__)
 # include "ORB.i"
 #endif /* ! __ACE_INLINE__ */
-
-ACE_RCSID(tao, ORB, "$Id$")
 
 static const char ior_prefix [] = "IOR:";
 
@@ -1189,6 +1196,23 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 #endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
 
+#if TAO_HAS_INTERCEPTORS == 1
+
+  /// Register the PICurrent ORBInitializer.
+  ACE_NEW_THROW_EX (temp_orb_initializer,
+                    TAO_PICurrent_ORBInitializer,
+                    CORBA::NO_MEMORY (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK;
+  orb_initializer = temp_orb_initializer;
+
+  PortableInterceptor::register_orb_initializer (orb_initializer.in (),
+                                                 ACE_TRY_ENV);
+  ACE_CHECK;
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 }
 
 void CORBA_ORB::_tao_unexpected_exception (void)
