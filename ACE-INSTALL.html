@@ -52,14 +52,14 @@ Mistakes page</a>.<P>
 <table width="100%" border=1>
   <tr valign=top>
     <td><b>Fully supported, i.e., continually tested and used daily</b></td>
-    <td>Solaris 2.5, 2.6, and 7, Windows NT (MSVC++ 4.x, 5.0, and 6.0),
+    <td>Solaris 2.5, 2.6, and 7, Windows NT 4.0 (MSVC++ 5.0, and 6.0),
         Linux/Intel, Linux/Alpha, VxWorks, LynxOS, Digital UNIX 4.0 and 5.0,
         HP/UX 10.x and 11.x, AIX 4.x, and IRIX 6.x
     </td>
   </tr>
   <tr valign=top bgcolor="#AFAFAF">
    <td><b>Nearly fully supported, i.e., periodically tested</b></td>
-   <td>Windows 95, MVS, DEC Alpha Windows NT (MSVC++ 5.0), Chorus,
+   <td>Windows 95, MVS, DEC Alpha Windows NT (MSVC++ 5.0, 6.0), Chorus,
      QNX Neutrino 2.0, PharLap TNT Embedded ToolSuite 9.1
    </td>
   </tr>
@@ -92,7 +92,7 @@ try to help you fix the problems.
 
       All of ACE has been ported to the Win32 API (which includes
       Windows NT and Windows '95).  The entire release now compiles
-      using the Microsoft Visual C++ 4.x, 5.0, and 6.0 compilers (the
+      using the Microsoft Visual C++ 5.0, and 6.0 compilers (the
       2.0 compiler may also work, but we haven't tested it recently).
       ACE can be built as both a static (LIB) and dynamic (DLL)
       library, using the Win32 installation process described below.<P>
@@ -198,7 +198,7 @@ try to help you fix the problems.
       "archive has no table of contents; add one using ranlib(1)" for
       certain libraries, e.g., libASX.a, libThreads.a, and libSPIPE.a.
       This occurs since SunOS 4.x does not support these features.<P>
-  
+
   <LI><B>AIX</B><P>
 
       The ACE port to AIX assumes that the user has installed the AIX
@@ -831,20 +831,20 @@ If you use the GNU GCC g++ compiler please note the following:
       cannot be processed at runtime: relocation ignored<P>
 
       Solution:<P>
- 
+
       Install the "binutils" package from GNU (www.gnu.org); specifically,
       "as" and "ld".<P>
 
       Conclusion:<P>
 
       Perfect build stats:<P>
- 
+
       OS:
       Kernel version: SunOS 5.6 Generic 105181-03 December 1999.<P>
 
       compiler:
       gcc version egcs-2.91.66 19990314 (egcs-1.1.2 release)<P>
- 
+
       loader:
       GNU ld version 2.9.1 (with BFD 2.9.1)
       Supported emulations:
@@ -853,7 +853,7 @@ If you use the GNU GCC g++ compiler please note the following:
       assembler:
       GNU assembler version 2.9.1 (sparc-sun-solaris2.6), using
       BFD version 2.9.1<P>
- 
+
       Thanks to <a href="mailto:johng@keck.hawii.edu">John Gathright</a> for providing this
       information.<P>
 
@@ -982,11 +982,10 @@ and delete all *.obj, *.dll, *.lib, *.ilk, *.pdb, *.idb, *.ncb, *.opt,
 and *.exp files in order to start over from scratch (the Clean command
 in MSVC may not do this).  <P>
 
-ACE contains project files for Microsoft Visual C++ 4.x (*.mdp) and
-5.0 with Service Pack 3, and 6.0 (*.dsw), Borland C++ 5.x (ace.ide),
-IBM's VisualAge C++ compiler (*.icc).  There are also Makefile.bor
-files to compile ACE, the ACE one-button tests, and TAO with Borland
-C++ Builder 4.0. <P>
+ACE contains project files for Microsoft Visual C++ 5.0 or later
+(*.dsw), Borland C++ 5.x (ace.ide), IBM's VisualAge C++ compiler
+(*.icc).  There are also Makefile.bor files to compile ACE, the ACE
+one-button tests, and TAO with Borland C++ Builder 4.0. <P>
 
 The Borland C++ Builder 4.0 port has been done by <A
 HREF="mailto:jody@atdesk.com">Jody Hagins</A>, so contact him for any
@@ -1008,6 +1007,9 @@ probably different), also works fine.  <P>
 So, if you are experiencing problems with SP3, get a newer one - it'll
 probably work.  Sheesh...
 <P>
+
+<P>We no longer actively support MSVC 4.x.  ACE might work with the
+compiler but not without some work.</p>
 
 Note, however, that regardless of the version of SP3, there are some
 STL bugs in SP3 which you should get corrected.  Please see <A
@@ -1619,13 +1621,8 @@ Here's what you need to do:<P>
 
 <H4><A NAME="win32svcs">Building and Installing ACE Network Services on Win32</A></H4>
 
-Once again, there are supplied project for both MSVC 4.x and 5.0 for
+Once again, there are supplied project for MSVC 5.0 or later for
 the Network Services.<P>
-
-If you are using MSVC 4.x, you will need to add another directory to
-your global include and library paths, ACE_ROOT/netsvcs/lib.  When you
-use the dynamic libraries, make sure to also include ACE_ROOT/netsvcs/lib
-in your PATH.<P>
 
 
 <HR><P>
