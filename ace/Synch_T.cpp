@@ -282,7 +282,12 @@ ACE_TSS<TYPE>::ACE_TSS (TYPE *ts_obj)
 	{
 	  int errnum = errno;
 	  // What should we do if this call fails?!
+#if defined (ACE_HAS_WINCE)
+          ::MessageBox (NULL, L"ACE_Thread::keycreate() failed!",
+                        L"ACE_TSS::ACE_TSS", MB_OK);
+#else
 	  ACE_OS::fprintf (stderr, "ACE_Thread::keycreate() failed!");
+#endif /* ACE_HAS_WINCE */
 	  errno = errnum;
 	  return;
 	}
