@@ -160,7 +160,6 @@ ACE_DynScheduler::anomaly_severity (ACE_DynScheduler::status_t status)
     case ST_CYCLE_IN_DEPENDENCIES :
     case ST_INVALID_PRIORITY_ORDERING :
       return RtecScheduler::ANOMALY_ERROR;
-      break;
 
     // Warnings reflect serious problems with given scheduling information
     case ST_TASK_ALREADY_REGISTERED :
@@ -172,12 +171,10 @@ ACE_DynScheduler::anomaly_severity (ACE_DynScheduler::status_t status)
     case UNRECOGNIZED_INFO_TYPE :
     case ST_NO_TASKS_REGISTERED :
       return RtecScheduler::ANOMALY_WARNING;
-      break;
 
     // Produce a lowest severity anomaly for any unknown status value
     default:
       return RtecScheduler::ANOMALY_NONE;
-      break;
   }
 }
 
@@ -770,6 +767,9 @@ ACE_DynScheduler::schedule (
                 status_ = temp_status;
               }
             break;
+
+          default:
+            break;
         }
     }
 
@@ -796,6 +796,9 @@ ACE_DynScheduler::schedule (
                 status_ = temp_status;
               }
             break;
+
+          default:
+            break;
         }
     }
 
@@ -821,6 +824,9 @@ ACE_DynScheduler::schedule (
                 severity = temp_severity;
                 status_ = temp_status;
               }
+            break;
+
+          default:
             break;
         }
     }
@@ -849,6 +855,9 @@ ACE_DynScheduler::schedule (
                 status_ = temp_status;
               }
             break;
+
+          default:
+            break;
         }
     }
 
@@ -874,6 +883,9 @@ ACE_DynScheduler::schedule (
                 severity = temp_severity;
                 status_ = temp_status;
               }
+            break;
+
+          default:
             break;
         }
     }
@@ -911,6 +923,9 @@ ACE_DynScheduler::schedule (
                 status_ = temp_status;
               }
             break;
+
+          default:
+            break;
         }
     }
 
@@ -946,6 +961,9 @@ ACE_DynScheduler::schedule (
                 severity = anomaly->severity;
                 status_ = temp_status;
               }
+            break;
+
+          default:
             break;
         }
     }
@@ -986,6 +1004,9 @@ ACE_DynScheduler::schedule (
                     status_ = temp_status;
                   }
                 break;
+
+              default:
+                break;
             }
         }
 
@@ -1021,6 +1042,9 @@ ACE_DynScheduler::schedule (
                     severity = anomaly->severity;
                     status_ = temp_status;
                   }
+                break;
+
+              default:
                 break;
             }
         }
@@ -2276,6 +2300,9 @@ template class ACE_Unbounded_Set_Iterator<Task_Entry_Link *>;
 template class ACE_Node<RtecScheduler::Config_Info *>;
 template class ACE_Unbounded_Set<RtecScheduler::Config_Info *>;
 template class ACE_Unbounded_Set_Iterator<RtecScheduler::Config_Info *>;
+template class ACE_Node<RtecScheduler::Scheduling_Anomaly *>;
+template class ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *>;
+template class ACE_Unbounded_Set_Iterator<RtecScheduler::Scheduling_Anomaly *>;
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Map_Entry<ACE_CString, RtecScheduler::RT_Info *>
 #pragma instantiate ACE_Map_Manager<ACE_CString, RtecScheduler::RT_Info *, ACE_SYNCH_MUTEX>
@@ -2302,6 +2329,12 @@ template class ACE_Unbounded_Set_Iterator<RtecScheduler::Config_Info *>;
 #pragma instantiate ACE_Node<RtecScheduler::Config_Info *>
 #pragma instantiate ACE_Unbounded_Set<RtecScheduler::Config_Info *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<RtecScheduler::Config_Info *>
+#pragma instantiate ACE_Node<RtecScheduler::Scheduling_Anomaly *>
+#pragma instantiate ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<RtecScheduler::Scheduling_Anomaly *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+
+
 
 // EOF

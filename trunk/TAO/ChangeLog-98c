@@ -1,3 +1,12 @@
+Tue Nov 10 13:12:48 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/Dump_Schedule/Dump_Schedule.cpp
+          orbsvcs/orbsvcs/Scheduler_Factory.cpp
+          orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp
+          orbsvcs/orbsvcs/Sched/DynSched.cpp
+          orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: Fixed compilation errors 
+          and warnings from g++, Sun C++ for scheduling anomaly features.
+
 Mon Nov  9 23:47:02 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Callback_Quoter/Notifier_i.cpp
@@ -54,7 +63,8 @@ Mon Nov 09 18:12:48 1998  Chris Gill  <cdgill@cs.wustl.edu>
           Implemented anomaly recording in the strategized
           scheduler so all warning and error level scheduling anomalies
           can be propagated to generated runtime header file without
-          halting the scheduler except for a fatal anomaly.
+          halting the scheduler (except for a fatal anomaly).  Thanks to 
+          Tom Venturella <thomas.e.venturella@boeing.com> for suggesting this.
 
         * orbsvcs/tests/Sched_Conf/Sched_Conf.{cpp, dsw}
           orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.{cpp, dsp}

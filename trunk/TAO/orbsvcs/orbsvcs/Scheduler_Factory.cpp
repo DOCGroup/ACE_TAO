@@ -287,7 +287,7 @@ int ACE_Scheduler_Factory::dump_schedule
             break;
         }
 
-      ACE_OS::fprintf (file, "%s\n", anomaly.description);
+      ACE_OS::fprintf (file, "%s\n", (const char*) anomaly.description);
     }
 
   // Print out operation QoS info.
