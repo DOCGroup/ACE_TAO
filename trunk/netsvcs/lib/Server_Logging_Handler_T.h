@@ -7,7 +7,7 @@
 //    ace
 // 
 // = FILENAME
-//    Server_Logging_Handler.h 
+//    Server_Logging_Handler_T.h 
 //
 // = AUTHOR
 //    Doug Schmidt and Per Andersson
@@ -28,9 +28,10 @@ template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1, class LOG_MESSAGE_RECEI
 class ACE_Server_Logging_Handler_T : public ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH_2>
 {
   // = TITLE
-  //    Product object created by an <ACE_Server_Logging_Acceptor>.  An
-  //    <ACE_Server_Logging_Handler_T> receives, frames, and processes logging
-  //    records.
+  //    Product object created by an <ACE_Server_Logging_Acceptor_T>.  An
+  //    <ACE_Server_Logging_Handler_T> receives, and frames logging
+  //    records. The logging record is then processed by the 
+  //    <LOG_MESSAGE_RECEIVER>
   // 
   // = DESCRIPTION
   //     Defines the classes that perform server logging daemon
@@ -58,6 +59,9 @@ protected:
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
   Base_Optimizer<LOG_MESSAGE_RECEIVER, ACE_CString> receiver_;
+  // Packs a LOG_MESSAGE_RECEIVER and ACE_CString attribute
+  // together in a optimized fashion. The LOG_MESSAGE_RECEIVER class 
+  // is often a class with no instance data.
   
   const char *host_name (void) { return receiver_.m_.fast_rep (); }
   // Name of the host we are connected to.
@@ -77,7 +81,9 @@ protected:
 template<class SERVER_LOGGING_HANDLER, class LOG_MESSAGE_RECEIVER, class SCHEDULE_STRATEGY>
 class ACE_Server_Logging_Acceptor_T : public ACE_Strategy_Acceptor<SERVER_LOGGING_HANDLER, LOGGING_PEER_ACCEPTOR>
   // = TITLE
-  //     This class implements the ACE single-threaded logging service.
+  //     Factory that creates <SERVER_LOGGING_HANDLER>s scheduled with
+  //     <SCHEDULE_STRATEGY> and logging records proccessed by a
+  //     <LOG_MESSAGE_RECEIVER>
   //
   // = DESCRIPTION
   //     This class contains the service-specific methods that can't
@@ -95,10 +101,23 @@ protected:
   virtual int make_svc_handler (SERVER_LOGGING_HANDLER *&);
   // Factory that creates a new <SERVER_LOGGING_HANDLER>.  We need to
   // specialize this since the <LOG_MESSAGE_RECEIVER> held by this Acceptor must be
-  // passed into the <SERVER_LOGGING_HANDLER>.
+  // passed into the <SERVER_LOGGING_HANDLER>. 
 
 private:
+  // At the moment each ACE_Server_Logging_Acceptor_T contains
+  // a <LOG_MESSAGE_RECEIVER> attribute that is passed to the
+  // <SERVER_LOGGING_HANDLER> at construction. A better idea might 
+  // be to have accessor class as template argument. The accessor
+  // should be a factory/strategy that hands the 
+  // ACE_Server_Logging_Acceptor_T instance references
+  // to a <LOG_MESSAGE_RECEIVER>. This makes it possible
+  // to change how <LOG_MESSAGE_RECEIVER> are created without chaning the
+  // ACE_Server_Logging_Acceptor_T code.
+  
   Base_Optimizer<LOG_MESSAGE_RECEIVER, SCHEDULE_STRATEGY> receiver_;
+  // Packs a LOG_MESSAGE_RECEIVER and ACE_CString attribute
+  // together in a optimized fashion. The LOG_MESSAGE_RECEIVER class 
+  // is often a class with no instance data.
   
   SCHEDULE_STRATEGY& scheduling_strategy (void){ return receiver_.m_; }
   // The scheduling strategy for the service.
@@ -111,12 +130,12 @@ template<class LOG_MESSAGE_RECEIVER>
 class ACE_Server_Logging_Handler : public ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, LOG_MESSAGE_RECEIVER> 
   // = TITLE
   //    Product object created by a 
-  //    <ACE_Server_Logging_Acceptor<ACE_Server_Logging_Handler> >.  An
-  //    <ACE_Server_Logging_Handler> receives, frames, and processes
-  //    logging records.
+  //    <ACE_Server_Logging_Acceptor_T<ACE_Server_Logging_Handler> >.  An
+  //    <ACE_Server_Logging_Handler> receives, frames. The logging record 
+  //    is then processed by the <LOG_MESSAGE_RECEIVER>
   //
   // = DESCRIPTION
-  //     Each client is handled in its own separate thread.
+  //     All clients are handled in the same thread.
 {
 public:
   ACE_Server_Logging_Handler (ACE_Thread_Manager * = 0);
@@ -138,9 +157,9 @@ template<class LOG_MESSAGE_RECEIVER>
 class ACE_Thr_Server_Logging_Handler : public ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_LOGGER_SYNCH, LOG_MESSAGE_RECEIVER> 
   // = TITLE
   //    Product object created by a 
-  //    <ACE_Server_Logging_Acceptor<ACE_Thr_Server_Logging_Handler> >.  An
-  //    <ACE_Thr_Server_Logging_Handler> receives, frames, and processes
-  //    logging records.
+  //    <ACE_Server_Logging_Acceptor_T<ACE_Thr_Server_Logging_Handler> >.  An
+  //    <ACE_Thr_Server_Logging_Handler> receives, frames. The logging record is then processed by the 
+  //    <LOG_MESSAGE_RECEIVER>
   //
   // = DESCRIPTION
   //     Each client is handled in its own separate thread.

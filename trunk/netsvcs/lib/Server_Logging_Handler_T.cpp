@@ -19,7 +19,9 @@ template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1, class LMR>
 ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LMR>::ACE_Server_Logging_Handler_T 
   (ACE_Thread_Manager *,
    LMR const& receiver) 
-    : receiver_ (receiver, ACE_CString (" ", 1))
+    : receiver_ (receiver, ACE_CString (" ", 1)) // Initialize the CString to something
+                                                 // that is not the empty string to avoid
+                                                 // problmes when calling fast_rep()
 {
 }
 
@@ -75,9 +77,11 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LMR>::hand
 	lp.decode ();
 
 	if (lp.length () == n)
-	  {
-      receiver().log_record(this->host_name(), lp);
-	  }
+  {
+    receiver().log_record(this->host_name(), lp);
+    // Send the log record to the log message receiver for
+    // processing.
+  }
 	else
 	  ACE_ERROR ((LM_ERROR, "error, lp.length = %d, n = %d\n",
 		     lp.length (), n));
