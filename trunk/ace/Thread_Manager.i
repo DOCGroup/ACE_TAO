@@ -299,8 +299,12 @@ ACE_Thread_Manager::wait_on_exit (void)
 ACE_INLINE int
 ACE_Thread_Manager::register_as_terminated (ACE_Thread_Descriptor *td)
 {
+#if defined (VXWORKS)
+  ACE_UNUSED_ARG (td);
+#else  /* ! VXWORKS */
   ACE_Thread_Descriptor_Base *tdb;
   ACE_NEW_RETURN (tdb, ACE_Thread_Descriptor_Base (*td), -1);
   this->terminated_thr_list_.insert_tail (tdb);
+#endif /* ! VXWORKS */
   return 0;
 }
