@@ -174,12 +174,14 @@ void
 CORBA_ORB::shutdown (CORBA::Boolean wait_for_completion
                      ACE_ENV_ARG_DECL)
 {
+  // We cannot lock the exceptions here. We need to propogate
+  // BAD_INV_ORDER  exceptions if needed to the caller. Locking
+  // exceptions down would render us non-compliant with the spec.
   this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->orb_core ()->shutdown (wait_for_completion
                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -201,8 +203,8 @@ CORBA_ORB::destroy (ACE_ENV_SINGLE_ARG_DECL)
   if (TAO_debug_level >= 3)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT("CORBA::ORB::destroy() has been called on ORB <%s>.\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR(this->orb_core ()->orbid ())));
+                  ACE_LIB_TEXT ("CORBA::ORB::destroy() has been called on ORB <%s>.\n"),
+                  ACE_TEXT_CHAR_TO_TCHAR (this->orb_core ()->orbid ())));
     }
 
   this->orb_core ()->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
