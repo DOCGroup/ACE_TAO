@@ -1,7 +1,8 @@
 Wed Jun 18 11:25:14 1997  Nanbor Wang  <nw1@lambada.cs.wustl.edu>
 
 	* examples/Threads/{task_four,token}.cpp: Changed the use of
-	  cerr/cout to ACE_DEBUG macro. 
+	  cerr/cout to ACE_DEBUG macro.  Thanks to Chuck Gehr
+ 	  <gehr@sweng.stortek.com> for pointing these out.
 	
 Tue Jun 17 15:11:09 1997  David L. Levine  <levine@cs.wustl.edu>
 
