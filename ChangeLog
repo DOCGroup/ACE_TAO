@@ -1,3 +1,9 @@
+Mon Feb  9 18:21:41 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Naming/Name_Binding.h: The Name_Binding destructor
+	  should use ACE_OS::free(), not delete[], to release type_. It
+	  was allocated using ACE_OS::strdup().
+
 Mon Feb  9 16:10:07 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Memory_Pool.cpp: ACE_Shared_Memory_Pool::commit_backing_store_name()
