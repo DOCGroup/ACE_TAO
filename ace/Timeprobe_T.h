@@ -48,11 +48,6 @@ class ACE_Timeprobe
   //     minimum_id for each table.  It is up to the user to make sure
   //     that multiple tables do not share the same event id range.
 public:
-  enum
-  {
-    ACE_DEFAULT_TABLE_SIZE = 4 * 1024
-    // Default size of the slots in Timeprobe
-  };
 
   typedef ACE_Timeprobe<ACE_LOCK>
           SELF;
@@ -62,7 +57,7 @@ public:
           EVENT_DESCRIPTIONS;
   // We can hold multiple event description tables.
 
-  ACE_Timeprobe (u_long size = ACE_DEFAULT_TABLE_SIZE);
+  ACE_Timeprobe (u_long size = ACE_DEFAULT_TIMEPROBE_TABLE_SIZE);
   // Create Timeprobes with <size> slots
 
   ~ACE_Timeprobe (void);
