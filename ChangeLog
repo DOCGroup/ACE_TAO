@@ -1,3 +1,9 @@
+Sat Nov  1 18:18:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+          Added defines to specify that MinGW lacks certain header files.
+          Because of the rework this was now found.
+
 Sat Nov  1 17:16:45 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/ace.mpc:
@@ -147,7 +153,7 @@ Sat Nov  1 05:40:21 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           contents of these files for testing purposes.
 
         * ace/OS_main.h:
-          Moved the ACE_TMAIN macros here. 
+          Moved the ACE_TMAIN macros here.
 
         * ace/Object_Manager_Base.{h,inl,cpp}:
           Moved the ACE_Object_Manager_Base, ACE_OS_Object_Manager, and
