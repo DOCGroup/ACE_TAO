@@ -24,6 +24,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Atomic_Op.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Guard_T.h"
 #include "ace/RW_Thread_Mutex.h"
 #include "ace/Time_Value.h"
 
