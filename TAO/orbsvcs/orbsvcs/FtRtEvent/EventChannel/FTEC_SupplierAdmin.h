@@ -30,7 +30,7 @@ class TAO_FTEC_Event_Channel_Impl;
 
 namespace FtRtecEventChannelAdmin {
   struct SupplierAdminState;
-};
+}
 /**
  * @class TAO_FTEC_SupplierAdmin
  *
