@@ -652,7 +652,10 @@ ACE_InputCDR::read_string (char *&x)
   ACE_CDR::ULong len;
 
   this->read_ulong (len);
-  if (len > 0)
+  // A check for the length being too great is done later in the
+  // call to read_char_array but we want to have it done before
+  // the memory is allocated.
+  if (len > 0 && len <= this->length())
     {
       ACE_NEW_RETURN (x,
                       ACE_CDR::Char[len],
@@ -660,6 +663,16 @@ ACE_InputCDR::read_string (char *&x)
       if (this->read_char_array (x, len))
         return 1;
       delete [] x;
+    }
+  else if (len == 0)
+    {
+      // Convert any null strings to empty strings since empty
+      // strings can cause crashes. (See bug 58.)
+      ACE_NEW_RETURN (x,
+                      ACE_CDR::Char[1],
+                      0);
+      ACE_OS::strcpy(x, "");
+      return 1;
     }
 
   x = 0;
@@ -692,7 +705,10 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
 
   ACE_CDR::ULong len;
   this->read_ulong (len);
-  if (this->good_bit())
+  // A check for the length being too great is done later in the
+  // call to read_char_array but we want to have it done before
+  // the memory is allocated.
+  if (len > 0 && len <= this->length())
     {
       ACE_NEW_RETURN (x,
                       ACE_CDR::WChar[len],
@@ -702,6 +718,17 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
 
       delete [] x;
     }
+  else if (len == 0)
+    {
+      // Convert any null strings to empty strings since empty
+      // strings can cause crashes. (See bug 58.)
+      ACE_NEW_RETURN (x,
+                      ACE_CDR::WChar[1],
+                      0);
+      ACE_OS::memcpy(x, "", 2);
+      return 1;
+    }
+
   x = 0;
   return 0;
 }
@@ -715,6 +742,7 @@ ACE_InputCDR::read_array (void* x,
   if (length == 0)
     return 1;
   char* buf;
+
   if (this->adjust (size * length, align, buf) == 0)
     {
 #if defined (ACE_DISABLE_SWAP_ON_READ)
@@ -757,6 +785,11 @@ ACE_CDR::Boolean
 ACE_InputCDR::read_boolean_array (ACE_CDR::Boolean *x,
                                   ACE_CDR::ULong length)
 {
+  // Make sure the length of the array isn't greater than the length of
+  // the stream.
+  if (length > this->length())
+    return 0;
+
   // It is hard to optimize this, the spec requires that on the wire
   // booleans be represented as a byte with value 0 or 1, but in
   // memoery it is possible (though very unlikely) that a boolean has
