@@ -19,7 +19,7 @@ Thu May  1 10:46:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/DynamicInterface/Request.cpp:
 
           Added explicit instantiations of the base template class
-          for CORBA::ORB::RequestSeq_var.s
+          for CORBA::ORB::RequestSeq_var.
 
 Thu May  1 10:27:40 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
