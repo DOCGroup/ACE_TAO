@@ -41,19 +41,13 @@
 
 #include "rtscheduler_export.h"
 
-#if 0
-#include "tao/CDR.h"
-#include "tao/Environment.h"
-#include "tao/Object.h"
-#include "tao/Sequence_T.h"
-#include "tao/Objref_VarOut_T.h"
-#include "tao/Seq_Var_T.h"
-#include "tao/Seq_Out_T.h"
-#endif /*if */
-
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/PortableServer/PortableServerC.h"
 #include "tao/PortableInterceptorC.h"
+
+#ifndef TAO_RTSCHEDULER_SAFE_INCLUDE
+#error "You should not include RTSchedulerC.h directly, use RTScheduler.h"
+#endif /* !TAO_RTSCHEDULER_SAFE_INCLUDE */
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
