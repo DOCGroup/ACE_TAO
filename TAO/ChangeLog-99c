@@ -1,3 +1,35 @@
+Thu Aug 26 17:37:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/include/ast_interface.h:
+	* TAO_IDL/ast/ast_interface.cpp:
+	  New method inherited_name_clash() checks for
+	  redefinitions (and case-only differences in spelling)
+	  between members of the interface and its parent(s),
+	  and between members of its parents, if there are
+	  more than one.
+
+	* TAO_IDL/fe/idl.yy:
+	* TAO_IDL/fe/y.tab.h:
+	* TAO_IDL/fe/y.tab.cpp:
+	  Added call to the above function when the parser
+	  sees closing parenthesis of an interface, a concrete
+	  valuetype or an abstract valuetype.
+
+	* TAO_IDL/include/utl_identifier.h:
+	* TAO_IDL/include/utl_string.h:
+	* TAO_IDL/util/utl_identifier.cpp:
+	* TAO_IDL/util/utl_string.cpp:
+	  Added case-compare methods that do not output
+	  any error or warning, so that a more informative 
+	  messsage (more suited to this particular case)
+	  can be output.
+
+	* TAO_IDL/include/utl_error.h:
+	* TAO_IDL/util/utl_error.cpp:
+	  Added warning0, warning1, warning2, and warning3
+	  utility functions, similar to error0, etc. I only needed
+	  two of them, but the others may come in handy later.
+
 Thu Aug 26 14:30:38 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tao/IIOP_Connector.{h,cpp}:
