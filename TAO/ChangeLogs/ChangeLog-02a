@@ -1,7 +1,14 @@
+Tue Jul 31 12:53:06 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.cpp (register_handler):
+          Fixed race condition, the register_handler_i() method may use
+          the connection_handler_, but we do not check if it is nil before
+          calling.
+
 Tue Jul 31 13:40:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Oneways_Invoking_Twoways/client.dsp: Fixed a compile error
-	  in release builds.
+        * tests/Oneways_Invoking_Twoways/client.dsp: Fixed a compile error
+          in release builds.
 
 Tue Jul 31 10:39:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -9,7 +16,7 @@ Tue Jul 31 10:39:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           New file in IDL_Test containing examples sent in by
           Karl Proese <karl.proese@mchp.siemens.de> and Vsevolod Novikov
- 	  <novikov@df.nnov.rfnet.ru> that uncovered bugs in gperf.
+          <novikov@df.nnov.rfnet.ru> that uncovered bugs in gperf.
 
         * tests/IDL_Test/idl_test.dsp:
         * tests/IDL_Test/Makefile:
@@ -43,45 +50,45 @@ Tue Jul 31 08:25:46 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Tue Jul 31 06:58:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	This checkin is for fixing a race condition while trying to
-	manipulate the number of upcalls. This was not a problem before
-	575 fix, as the manipulation was done when there was an implicit
-	synchronisation in the TP Reactor. As the implicit synchronisation
-	has been broken, we had a race condition. The surpsising element
-	was the fact that it took sometime to figure out this race
-	condition. We have now added a lock that will be held by the
-	thread  before the variable is manipulated.
+        This checkin is for fixing a race condition while trying to
+        manipulate the number of upcalls. This was not a problem before
+        575 fix, as the manipulation was done when there was an implicit
+        synchronisation in the TP Reactor. As the implicit synchronisation
+        has been broken, we had a race condition. The surpsising element
+        was the fact that it took sometime to figure out this race
+        condition. We have now added a lock that will be held by the
+        thread  before the variable is manipulated.
 
-	* tao/Connection_Handler.cpp:
-	* tao/Connection_Handler.h:
-	* tao/ Connection_Handler.inl: Added a lock to the class. Also
-	  added three methods, incr_pending_upcalls (),
-	  decr_pending_upcalls () and pending_upcalls (). The first two
-	  does the manipulation of the pending_upcalls_ variable after
-	  holding the lock.
+        * tao/Connection_Handler.cpp:
+        * tao/Connection_Handler.h:
+        * tao/ Connection_Handler.inl: Added a lock to the class. Also
+          added three methods, incr_pending_upcalls (),
+          decr_pending_upcalls () and pending_upcalls (). The first two
+          does the manipulation of the pending_upcalls_ variable after
+          holding the lock.
 
-	* tao/IIOP_Connection_Handler.cpp:
-	* tao/IIOP_Connection_Handler.h: Removed he peding_upcalls_
-	  variable and called the incr_pending_upcalls () and
-	  decr_pending_upcalls () to achieve what needs to be done.
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connection_Handler.h: Removed he peding_upcalls_
+          variable and called the incr_pending_upcalls () and
+          decr_pending_upcalls () to achieve what needs to be done.
 
-	* tao/Strategies/DIOP_Connection_Handler.cpp
-	* tao/Strategies/DIOP_Connection_Handler.h
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp
-	* tao/Strategies/SHMIOP_Connection_Handler.h
-	* tao/Strategies/UIOP_Connection_Handler.cpp
-	* tao/Strategies/UIOP_Connection_Handler.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
-	  Replicated the changes from IIOP to the above protocols.
+        * tao/Strategies/DIOP_Connection_Handler.cpp
+        * tao/Strategies/DIOP_Connection_Handler.h
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp
+        * tao/Strategies/SHMIOP_Connection_Handler.h
+        * tao/Strategies/UIOP_Connection_Handler.cpp
+        * tao/Strategies/UIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+          Replicated the changes from IIOP to the above protocols.
 
 
 Sun Jul 29 19:31:34 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* tao/RTCORBA/RT_Mutex.cpp (try_lock): Since we fixed the timed
-	  ACE_OS::mutex_lock() to set errno to ETIME we can cleanup the
- 	  code here to remove the checks for errno == EBUSY and errno ==
- 	  ETIMEDOUT.
+        * tao/RTCORBA/RT_Mutex.cpp (try_lock): Since we fixed the timed
+          ACE_OS::mutex_lock() to set errno to ETIME we can cleanup the
+          code here to remove the checks for errno == EBUSY and errno ==
+          ETIMEDOUT.
 
 Sun Jul 29 20:00:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -91,125 +98,125 @@ Sun Jul 29 20:00:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 Sun Jul 29 10:15:13 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/TAO_Internal.cpp (open_services_i):
+        * tao/TAO_Internal.cpp (open_services_i):
 
-	  Reverted my change that prevented the default resource factory
-	  from being inserted into the Service Repository.  The resource
-	  factory must be inserted into the Service Repository so that
-	  Service Configurator directives such as 'static Resource_Factory
-	  "-ORBResources global"' actually work properly.  An alternative
-	  solution for the dynamic loading problem related the default
-	  resource factory is necessary.
+          Reverted my change that prevented the default resource factory
+          from being inserted into the Service Repository.  The resource
+          factory must be inserted into the Service Repository so that
+          Service Configurator directives such as 'static Resource_Factory
+          "-ORBResources global"' actually work properly.  An alternative
+          solution for the dynamic loading problem related the default
+          resource factory is necessary.
 
 Sun Jul 29 00:59:28 2001  Ossama Othman  <ossama@uci.edu>
 
-	* docs/Options.html:
+        * docs/Options.html:
 
-	  Updated documentation for the "-ORBSkipServiceConfigOpen" ORB
-	  option.  It is no longer necessary the Service Configurator is
-	  now reentrant and thread-safe.  This option is deprecated, and
-	  will be removed in releases of TAO in the near future.
+          Updated documentation for the "-ORBSkipServiceConfigOpen" ORB
+          option.  It is no longer necessary the Service Configurator is
+          now reentrant and thread-safe.  This option is deprecated, and
+          will be removed in releases of TAO in the near future.
 
 Sun Jul 29 00:22:30 2001  Ossama Othman  <ossama@uci.edu>
 
-	* examples/Simple/time-date/svc.conf:
+        * examples/Simple/time-date/svc.conf:
 
-	  The support for nested Service Configurator directive processing
-	  that was just added to ACE made it possible to greatly simply
-	  this `svc.conf' file.  It is no longer necessary to pre-load
-	  services that are by default loaded by the ORB.  It is also no
-	  longer necessary to use the "-ORBSkipServiceConfigOpen" ORB
-	  option since the Service Configurator is now
-	  reentrant/thread-safe.
+          The support for nested Service Configurator directive processing
+          that was just added to ACE made it possible to greatly simply
+          this `svc.conf' file.  It is no longer necessary to pre-load
+          services that are by default loaded by the ORB.  It is also no
+          longer necessary to use the "-ORBSkipServiceConfigOpen" ORB
+          option since the Service Configurator is now
+          reentrant/thread-safe.
 
-	  Instead of the nine Service Configurator directives that were
-	  listed in this file, only three of them are now necessary.
+          Instead of the nine Service Configurator directives that were
+          listed in this file, only three of them are now necessary.
 
 Sat Jul 28 23:29:21 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/TAO_Internal.cpp (open_services_i):
+        * tao/TAO_Internal.cpp (open_services_i):
 
-	  We cannot insert the default resource factory into the Service
-	  Repository before the ORB is created since it will be finalized
-	  before the ORB is finalized.  The ORB requires that a resource
-	  factory exist in order to reclaim the reactor during
-	  finalization.
+          We cannot insert the default resource factory into the Service
+          Repository before the ORB is created since it will be finalized
+          before the ORB is finalized.  The ORB requires that a resource
+          factory exist in order to reclaim the reactor during
+          finalization.
 
-	  This was only a problem when the ORB was dynamically
-	  loaded/unloaded.
+          This was only a problem when the ORB was dynamically
+          loaded/unloaded.
 
 Wed Jul 25 23:48:58 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tests/Blocking_Sync_None/client.cpp (main): Changed an
-	  error messages so that the "Right Thing[TM]" will happen when
- 	  this test fails, i.e., the build system will automagically
- 	  detect it.  Thanks to Johnny Willemsen for reportng this.
+        * tests/Blocking_Sync_None/client.cpp (main): Changed an
+          error messages so that the "Right Thing[TM]" will happen when
+          this test fails, i.e., the build system will automagically
+          detect it.  Thanks to Johnny Willemsen for reportng this.
 
 Fri Jul 27 21:48:12 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl: Removed all
-	  the references to the GIOP lite protocol from this script.
+        * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl: Removed all
+          the references to the GIOP lite protocol from this script.
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/run_test_lite.pl: We dont
-	  seem to be having any sort of tests that are run for GIOP
-	  Lite. Now we will run this in our nightly builds. This test uses
-	  IIOP_Lite & UIOP_Lite to run the IDL_Cubit test. Having a
-	  protocol that we are not sure whether it works may be a bad
-	  idea.
+        * performance-tests/Cubit/TAO/IDL_Cubit/run_test_lite.pl: We dont
+          seem to be having any sort of tests that are run for GIOP
+          Lite. Now we will run this in our nightly builds. This test uses
+          IIOP_Lite & UIOP_Lite to run the IDL_Cubit test. Having a
+          protocol that we are not sure whether it works may be a bad
+          idea.
 
 Fri Jul 27 21:38:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Base.cpp: Added a TAO_debug_level guard around
-	  the places where dump_msg () is called. Though dump_msg ()
-	  prints out information only if the TAO_debug_level is set, this
-	  extra guard will prevent us from calling this method when we are
-	  trying to do performance measurements.
+        * tao/GIOP_Message_Base.cpp: Added a TAO_debug_level guard around
+          the places where dump_msg () is called. Though dump_msg ()
+          prints out information only if the TAO_debug_level is set, this
+          extra guard will prevent us from calling this method when we are
+          trying to do performance measurements.
 
-	* tao/GIOP_Message_Lite.cpp: For some reason this class never had
-	  a hexdump. Added the hexdump in dump_msg ().
+        * tao/GIOP_Message_Lite.cpp: For some reason this class never had
+          a hexdump. Added the hexdump in dump_msg ().
 
 Fri Jul 27 16:33:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/DIOP_Connection_Handler.cpp:
-	* tao/Strategies/UIOP_Connection_Handler.cpp:
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp: Enabled GIOP lite
-	  flag to pass through to their transport object.
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp: Enabled GIOP lite
+          flag to pass through to their transport object.
 
 Fri Jul 27 16:32:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connection_Handler.cpp: Enabled GIOP lite flag to pass
-	  through to their transport object.
+        * tao/IIOP_Connection_Handler.cpp: Enabled GIOP lite flag to pass
+          through to their transport object.
 
-	* tao/GIOP_Message_Lite.cpp: Transfered the reply that has been
-	  received to the another CDR which is used to dispatch the
-	  reply. This was actually fixed in my branch. Looks like this got
-	  missed when the branch was merged to the main trunk.  Added some
-	  cosmetic fixes to the debugging output. Thanks to Paul Calabrese
-	  for alerting me about this miss.
+        * tao/GIOP_Message_Lite.cpp: Transfered the reply that has been
+          received to the another CDR which is used to dispatch the
+          reply. This was actually fixed in my branch. Looks like this got
+          missed when the branch was merged to the main trunk.  Added some
+          cosmetic fixes to the debugging output. Thanks to Paul Calabrese
+          for alerting me about this miss.
 
 Fri Jul 27 14:43:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/BiDirectional_NestedUpcall/svc.conf: Removed from the
-	  repository.  It is no longer needed as this test will work with
-	  a TP Reactor (the default one).
+        * tests/BiDirectional_NestedUpcall/svc.conf: Removed from the
+          repository.  It is no longer needed as this test will work with
+          a TP Reactor (the default one).
 
 Fri Jul 27 12:58:51 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.cpp: Removed a debug statement.
+        * tao/Transport.cpp: Removed a debug statement.
 
 Fri Jul 27 12:25:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.cpp: Reverted the change made in this Wed Jul 25
-	  22:10:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>. We
-	  need to resume the handle as soon the reply is ready for
-	  dispatching.  The situation where it can create problems can be
-	  easily seen in $TAO_ROOT/tests/LongUpcalls/run_ami_test.pl.
+        * tao/Transport.cpp: Reverted the change made in this Wed Jul 25
+          22:10:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>. We
+          need to resume the handle as soon the reply is ready for
+          dispatching.  The situation where it can create problems can be
+          easily seen in $TAO_ROOT/tests/LongUpcalls/run_ami_test.pl.
 
-	  Further, the fix that was done earlier was to resume the handle
-	  after dispatching the reply. It was thought that it would fix a
-	  race condition. I had a long discussion with Irfan yesterday,
-	  and looks like the possibility of a race condition is not
-	  there at all.
+          Further, the fix that was done earlier was to resume the handle
+          after dispatching the reply. It was thought that it would fix a
+          race condition. I had a long discussion with Irfan yesterday,
+          and looks like the possibility of a race condition is not
+          there at all.
 
 Fri Jul 27 11:09:25 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -256,13 +263,13 @@ Thu Jul 26 21:48:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 Thu Jul 26 17:12:00 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/default_resource.cpp (get_parser_names):
+        * tao/default_resource.cpp (get_parser_names):
 
-	  Fixed problem where the FILE and DLL parser Service Objects were
-	  not inserted into the parser registry.  This problem surfaced
-	  when attempting to dynamically load the ORB, and manifested
-	  itself as a CORBA::INV_OBJREF exception when attempting to
-	  destringify an IOR such as "file://foo.ior".
+          Fixed problem where the FILE and DLL parser Service Objects were
+          not inserted into the parser registry.  This problem surfaced
+          when attempting to dynamically load the ORB, and manifested
+          itself as a CORBA::INV_OBJREF exception when attempting to
+          destringify an IOR such as "file://foo.ior".
 
 Thu Jul 26 09:44:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -272,9 +279,9 @@ Thu Jul 26 09:44:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 Thu Jul 26 07:37:29 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/RTCORBA/Server_Protocol/server.cpp:
-	* tests/RTCORBA/Client_Propagated/server.cpp:
-	* tests/RTCORBA/Thread_Pool/server.cpp: Fixed warnings in g++.
+        * tests/RTCORBA/Server_Protocol/server.cpp:
+        * tests/RTCORBA/Client_Propagated/server.cpp:
+        * tests/RTCORBA/Thread_Pool/server.cpp: Fixed warnings in g++.
 
 Wed Jul 25 23:37:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -293,71 +300,71 @@ Wed Jul 25 23:37:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 Wed Jul 25 22:45:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/SHMIOP_Transport.cpp:
-	* tao/Strategies/DIOP_Transport.cpp: Fixed a compile error that
-	  came up from my previous change.
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/DIOP_Transport.cpp: Fixed a compile error that
+          came up from my previous change.
 
 Wed Jul 25 22:39:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/RTCORBA/Server_Protocol/server.cpp:
-	* tests/RTCORBA/Client_Propagated/server.cpp:
-	* tests/RTCORBA/Thread_Pool/server.cpp: Added checks & debugging
-	  statments for a null RootPOA. thanks to Johnny Willemsen for
-	  pointing this out. Did some minor cosmetic fixes.
+        * tests/RTCORBA/Server_Protocol/server.cpp:
+        * tests/RTCORBA/Client_Propagated/server.cpp:
+        * tests/RTCORBA/Thread_Pool/server.cpp: Added checks & debugging
+          statments for a null RootPOA. thanks to Johnny Willemsen for
+          pointing this out. Did some minor cosmetic fixes.
 
 Wed Jul 25 22:10:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.cpp:
-	* tao/Transport.h: Fixed a subtle problem that seems to have lead
-	  to the  Muxing tests failing randomly. The problem is something
-	  like this
-	  - multiple client threads can try to share a connection
-	  - because of the above, more than one message are sent on the
-	    same connection
-	  - if the server is multi-threaded, the messages can be processed
-	    concurrently
-	  - there may be a possibility of more than two replies coming on
-	    the same connection.
-	  - one of the client threads can pick up both the replies
-	  - one of the replies would be queued up and the first one can be
-	    its own
-	  - after queueing up the second it would wake up another thread
-	  - if the woken up thread does not own the reply, it could just
-	    take the reply and try to transfer ownership to the right
-	    thread.
-	  - before the second thread transfers the reply, teh second
-	    thread would have resumed the handler and because of which one
-	    of the threads would have gone into the reactor from the LF.
-	  - at exactly the same instant the seccond thread will have
-	    difficulty in waking up the thread on select () is it is the
-	    owner.
-	  Fixed this problem by not resuming the handle till we dispatch
-	  the reply. We dont buy anything by resuming the handle before
-	  dispatching the reply because, the dispatching will not be
-	  unbounded. The forces that apply to the server thread, which
-	  resumes the handle before making an upcall does not apply to the
-	  client threads that reads and processes replies. This fix should
-	  ideally fix the Muxing test failure on different paltforms. If
-	  it doesnt, it will atleast prevent the race condition outlined
-	  above :-)
+        * tao/Transport.cpp:
+        * tao/Transport.h: Fixed a subtle problem that seems to have lead
+          to the  Muxing tests failing randomly. The problem is something
+          like this
+          - multiple client threads can try to share a connection
+          - because of the above, more than one message are sent on the
+            same connection
+          - if the server is multi-threaded, the messages can be processed
+            concurrently
+          - there may be a possibility of more than two replies coming on
+            the same connection.
+          - one of the client threads can pick up both the replies
+          - one of the replies would be queued up and the first one can be
+            its own
+          - after queueing up the second it would wake up another thread
+          - if the woken up thread does not own the reply, it could just
+            take the reply and try to transfer ownership to the right
+            thread.
+          - before the second thread transfers the reply, teh second
+            thread would have resumed the handler and because of which one
+            of the threads would have gone into the reactor from the LF.
+          - at exactly the same instant the seccond thread will have
+            difficulty in waking up the thread on select () is it is the
+            owner.
+          Fixed this problem by not resuming the handle till we dispatch
+          the reply. We dont buy anything by resuming the handle before
+          dispatching the reply because, the dispatching will not be
+          unbounded. The forces that apply to the server thread, which
+          resumes the handle before making an upcall does not apply to the
+          client threads that reads and processes replies. This fix should
+          ideally fix the Muxing test failure on different paltforms. If
+          it doesnt, it will atleast prevent the race condition outlined
+          above :-)
 
 Wed Jul 25 20:33:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/time-date/Makefile.bor:
-	* examples/Simple/time-date/server.bor:
-	* examples/Simple/time-date/time_date.bor: Fixed Borland builds
-	  for this example. This commit is for Johnny Willemsen who is
-	  away from his work.
+        * examples/Simple/time-date/Makefile.bor:
+        * examples/Simple/time-date/server.bor:
+        * examples/Simple/time-date/time_date.bor: Fixed Borland builds
+          for this example. This commit is for Johnny Willemsen who is
+          away from his work.
 
 Wed Jul 25 12:50:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
-	* tao/Strategies/DIOP_Factory.cpp:
+        * tao/Strategies/DIOP_Factory.cpp:
 
-	  Changed the return value of requires_explicit_endpoint () to 0
-	  and documented that this return code is not reflecting that
-	  the endpoints are not cleaned-up but that we disable it by default
-	  because DIOP is only suitable for certain use cases, e.g. it only
-	  supports one-ways.
+          Changed the return value of requires_explicit_endpoint () to 0
+          and documented that this return code is not reflecting that
+          the endpoints are not cleaned-up but that we disable it by default
+          because DIOP is only suitable for certain use cases, e.g. it only
+          supports one-ways.
 
 Wed Jul 25 08:41:39 2001  Jeff Parsons <parsons@cs.wustl.edu>
 

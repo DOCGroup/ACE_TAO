@@ -1571,6 +1571,9 @@ TAO_Transport::register_handler (void)
                             guard,
                             *this->handler_lock_,
                             -1));
+  if (this->check_event_handler_i ("Transport::register_handler") == -1)
+    return -1;
+
   return this->register_handler_i ();
 }
 
