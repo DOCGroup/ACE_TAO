@@ -1,3 +1,8 @@
+Mon May 17 15:46:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* apps/JAWS3/jaws3/Templates.cpp: Added missing ACE_Atomic_Op_Ex
+	  instantiation. Thanks to Johnny Willemsen for this fix.
+
 Mon May 17 13:29:11 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/Web_Crawler/URL.h: Changed return type of send_request()
