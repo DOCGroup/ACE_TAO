@@ -1,8 +1,13 @@
+Thu Jun 28 18:30:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Resume_Handle.cpp: Added a check for resumable_handlers
+	  before actually resuming the handle.
+
 Thu Jun 28 18:25:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.cpp (process_queue_head): 
+	* tao/Transport.cpp (process_queue_head):
 	* tao/Transport.h: Added a new method that would take the message
-	  from the head of the incoming queue and send it for processing. 
+	  from the head of the incoming queue and send it for processing.
 
 	* tao/GIOP_Message_Base.cpp: Minor formatting.
 
@@ -14,29 +19,29 @@ Thu Jun 28 17:16:50 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  TAO_ORB_Core as one of the arguments. GIOP classes hold a copy
 	  of the pointer to the ORB_Core and so it is no
 	  necessary. Removed the following methods
-	  
-	  - is_message_complete () 
+
+	  - is_message_complete ()
 	  - message_type ()
 
 	  The message_type () method is now local to the GIOP classes and
 	  it returns the Pluggable Message type from the
 	  GIOP_Message_State. This method is now used to fill the node
-	  with the right information type about the message. 
+	  with the right information type about the message.
 
 	* tao/Transport.cpp: Used the information from the node of the
-	  queue to determine the type of message before processing it. 
-	
+	  queue to determine the type of message before processing it.
+
 Thu Jun 28 15:12:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Base.cpp: 
+	* tao/GIOP_Message_Base.cpp:
 	* tao/GIOP_Message_Base.i: Moved the get_queued_data () from the
-	  .i  file to the .cpp file. 
+	  .i  file to the .cpp file.
 
 	* tao/Incoming_Message_Queue.h: #include'd a file.
 	* tao/Makefile: Added new files.
 	* tao/Resume_Handle.inl: Added the ACE_INLINE macros to the
 	  methods defined in this file.
-	
+
 Thu Jun 28 09:30:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport.cpp:

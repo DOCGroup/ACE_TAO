@@ -13,8 +13,8 @@ TAO_Resume_Handle::resume_handle (void)
 {
   // If we have a complete message, just resume the handler
   // Resume the handler.
-  // @@Bala: Try to solve this issue of reactor resumptions..
-  if (this->flag_ == 0 &&
+  if (this->orb_core_->reactor ()->resumable_handler () &&
+      this->flag_ == 0 &&
       this->handle_ != ACE_INVALID_HANDLE)
     this->orb_core_->reactor ()->resume_handler (this->handle_);
 
