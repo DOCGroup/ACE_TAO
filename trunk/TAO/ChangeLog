@@ -1,5 +1,11 @@
 2002-09-28  D A Hanvey  <dhanvey@qub.ac.uk>
 
+	* orbsvcs/examples/Log
+	 
+	  Removed the folders /Client and /test.
+
+2002-09-28  D A Hanvey  <dhanvey@qub.ac.uk>
+
 	* orbsvcs/Logging_Service/Basic_Logging_Service/README
 	* orbsvcs/Logging_Service/Event_Logging_Service/README
 	* orbsvcs/Logging_Service/Notify_Logging_Service/README
