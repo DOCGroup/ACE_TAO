@@ -1,3 +1,25 @@
+Thu May 31 09:44:05 2001  Ossama Othman  <ossama@uci.edu>
+
+	* TAO_IDL/be/be_visitor_argument/paramlist.cpp (visit_argument):
+
+	  Added a comment about potential changes that may be needed if
+	  insertion operators for valuetypes are implemented.
+
+	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp
+	  (generate_class_definition):
+	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp
+	  (generate_class_definition):
+
+	  Improved generated code slightly.  Don't bother generating a
+	  Dynamic::ParameterList_var if the non-out parameter count is
+	  zero.
+
+	* TAO_IDL/be/be_visitor_operation/operation.cpp
+	  (count_non_out_parameters):
+
+	  Do not include valuetype arguments in the parameter count.  We
+	  do not implement insertion operators for them yet.
+
 Thu May 31 08:33:50 2001  Ossama Othman  <ossama@uci.edu>
 
 	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
