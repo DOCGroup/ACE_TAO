@@ -12,10 +12,25 @@ shared_libs =
 static_libs = 1
 
 #
-# The following file includes definitions such as $(CC), $(XDIR), etc.
+# Directory where the Chorus Development System is installed
 #
-include         $(MERGEDIR)/dtool/htgt-cf.rf
-CLASSIXDIR=$(MERGEDIR)
+ifndef CLX_CDSPATH
+        CLX_CDSPATH = /vob/k_bbansw/chorus_r321_bin/CDS
+endif #CLX_CDSPATH
+ifndef CLX_CDSVERSION
+        CLX_CDSVERSION = 4.3
+endif #CLX_CDSVERSION
+ifndef CLX_CDSHOST
+        CLX_CDSHOST = solaris
+endif #CLX_CDSHOST
+ifndef CLASSIXDIR
+        CLASSIXDIR=$(MERGEDIR)
+endif #CLASSIXDIR
+
+XROOT = $(CLX_CDSPATH)/powerpc/$(CLX_CDSHOST)/$(CLX_CDSVERSION)
+XDIR = $(XROOT)/powerpc-elf
+CC = $(XDIR)/bin/gcc -B$(XROOT)/lib/gcc-lib/
+
 #
 # Tool PATH
 #
@@ -36,8 +51,19 @@ CCFLAGS         += $(CFLAGS) -fno-implicit-templates    \
                    -nostdinc                            \
                    -pipe                                \
                    -fno-rtti                            \
+                   -mstrict-align                       \
+                   -fwritable-strings                   \
+                   -fsigned-char                        \
+                   "-msoft-float"                       \
+                   -mno-sdata 				\
                    -D_POSIX_THREADS                     \
-                   -D_POSIX_THREAD_SAFE_FUNCTIONS
+                   -D_POSIX_THREAD_SAFE_FUNCTIONS	\
+                   "-DNO_FPU_SUPPORT"
+
+ifeq ($(exceptions),1)
+else  # ! exceptions
+  CCFLAGS += -fno-exceptions
+endif # ! exceptions     
 
 #DCFLAGS         += -gstabs+
 INCLDIRS        += -I$(INC_DIR)/posix                   \
@@ -47,7 +73,7 @@ INCLDIRS        += -I$(INC_DIR)/posix                   \
                    -I$(INC_DIR)/CC
 DLD             =
 LD              = $(XDIR)/bin/ld
-LDFLAGS         += -r $(CLASSIXDIR)/lib/CC/libC.a $(CLASSIXDIR)/lib/classix/libcx.u.a
+#LDFLAGS         += -r $(CLASSIXDIR)/lib/CC/libC.a $(CLASSIXDIR)/lib/classix/libcx.u.a
 MATHLIB         = -L$(CLASSIXDIR)/lib/libm -lm
 
 LINK.cc.override        =       $(LD) -u _main -u _premain
@@ -64,6 +90,15 @@ CHORUSLINK=true
 #       $(RM) helloCxx_u.xp.o
 #       $(RM) helloCxx_u.ct.o
 
+POSTLINK= -r $(CLASSIXDIR)/lib/CC/libC.a $(CLASSIXDIR)/lib/classix/libcx.u.a; \
+	mv $@ $@.xp.o;					\
+        $(CLASSIXDIR)/dtool/mkctors $@.xp.o > $@.ct.s;	\
+        $(CXX) -c $@.ct.s;				\
+        $(RM) $@.ct.s;					\
+        $(LD) $(LDOPTIONS) -e _start -o $@ $(MERGEDIR)/lib/crt/crth.u.o $(MERGEDIR)/lib/crt/crt0.o $(MERGEDIR)/lib/crt/crti.o $@.xp.o $@.ct.o $(MERGEDIR)/lib/crt/crtn.o -dn -T $(MERGEDIR)/src/act/slots/act_u.ld;	\
+        $(RM) $@.xp.o;					\
+        $(RM) $@.ct.o   
+	
 
 OCFLAGS         += -O
 PIC             = -fPIC

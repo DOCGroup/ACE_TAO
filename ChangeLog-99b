@@ -1,3 +1,13 @@
+Thu Sep 23 11:13:38 1999  Wei Chiang <wei.chiang@nokia.com>
+
+        * ace/OS.*,Synch.cpp: Chorus compiler (g++) seems to be
+          confused by "int" and "int&" in overloaded operations.
+          A dummy variables to full Chorus compiler is added to
+          cond_init (ACE_cond_t*, ACE_condattr_t&, LPCTSTR void*).
+
+        * include/makeinclude/rules.bin.GNU,platform_chorus.GNU:
+          updated to support linking of TAO executables for Chorus.
+
 Wed Sep 22 19:30:49 1999  Randall Sharo <rasb@eci.esys.com>
 
         * ace/OS.i (sema_wait): on VxWorks, update tv to return

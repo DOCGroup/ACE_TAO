@@ -772,8 +772,13 @@ ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &m,
 #endif  /*  ACE_HAS_FSU_PTHREADS */
 
 // ACE_TRACE ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex");
+#if defined(CHORUS)
+  if (ACE_OS::cond_init (&this->cond_, attributes.attributes_,
+                         name, arg, 0) != 0)
+#else  /* ! CHORUS */
   if (ACE_OS::cond_init (&this->cond_, attributes.attributes_,
                          name, arg) != 0)
+#endif /* ! CHORUS */
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex")));
 }
