@@ -1,5 +1,5 @@
 // $Id$
- 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -9,15 +9,15 @@
 //    Guage_Test.cpp
 //
 // = DESCRIPTION
-//  Test all the member functions of the Guage class. An Object 
-//  representing an ASN.1 Counter SMI GUAGE SYNTAX. 
+//  Test all the member functions of the Guage class. An Object
+//  representing an ASN.1 Counter SMI GUAGE SYNTAX.
 // = AUTHOR
 //    Michael R. MacFaden <mrm@cisco.com>
 //
 // ============================================================================
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 Copyright 1997 Cisco Systems, Inc.
- 
+
 Permission to use, copy, modify, and distribute this software for any
 purpose and without fee is hereby granted, provided that this
 copyright and permission notice appear on all copies of the software and
@@ -26,7 +26,7 @@ in advertising or publicity pertaining to distribution of the
 program without specific prior permission, and notice be given
 in supporting documentation that modification, copying and distribution is by
 permission of Cisco Systems, Inc.
- 
+
 Cisco Systems, Inc. makes no representations about the suitability of this
 software for any purpose.  THIS SOFTWARE IS PROVIDED ``AS IS''
 AND WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, WITHOUT
@@ -36,16 +36,12 @@ LIABLE FOR ANY DAMAGES ARISING OUT OF THIS LICENSE OR YOUR USE OF THE
 SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
- 
-#include "ace/OS.h" 
+
+#include "ace/OS.h"
 #include "asnmp/gauge.h"
 #include "test_config.h"
 
 ACE_RCSID(tests, Gauge_Test, "$Id$")
-
-// hack: do this so when linking SUNC 4.x compiler will instantiate template
-#include "ace/Containers.h"
-ACE_Unbounded_Set<ACE_Log_Msg*> x;
 
 /*
    Gauge32( void);
@@ -91,7 +87,7 @@ static void TestGuage()
    Gauge32 *g8 = new Gauge32(g5);
    ACE_ASSERT(g8 != 0);
    delete g8;
- 
+
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) g1(\"\") [%u]\n",
     (unsigned long)g1));
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) g2(\"%u\") [%u]\n",
@@ -118,19 +114,15 @@ static void TestGuage()
   ACE_ASSERT(g1 == us);
   g1 = si; // unsigned short
   ACE_ASSERT(g1 == si);
-} 
+}
 
 int
 main (int, char *[])
 {
   ACE_START_TEST ("Guage_Test");
- 
+
   TestGuage();
- 
+
   ACE_END_TEST;
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unbounded_Set<ACE_Log_Msg*>;
-#endif
