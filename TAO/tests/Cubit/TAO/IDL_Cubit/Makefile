@@ -45,6 +45,7 @@ COLLOCATION_OBJS = cubitC.o \
 		   Cubit_Server.o \
 		   Cubit_Client.o \
 		   Cubit_Client.o \
+		   Cubit_i.o \
 		   collocation_test.o \
 		   RTI_IO.o \
 		   tmplinst.o
