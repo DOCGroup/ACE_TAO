@@ -1,6 +1,6 @@
 //==================================================================
 /**
- *  @file  Deployment.h
+ *  @file  Config.h
  *
  *  $Id$
  *
@@ -8,10 +8,10 @@
  */
 //=====================================================================
 
-#ifndef DEPLOYMENT_H
-#define DEPLOYMENT_H
+#ifndef CIAO_DANCE_CONFIG_H
+#define CIAO_DANCE_CONFIG_H
 
 #define BEGIN_DEPLOYMENT_NAMESPACE namespace CIAO { namespace Config_Handler {
 #define END_DEPLOYMENT_NAMESPACE }; };
 
-#endif // DEPLOYMENT_H
+#endif // CIAO_DANCE_CONFIG_H

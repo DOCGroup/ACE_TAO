@@ -1292,7 +1292,7 @@ ExtractedTypeDeclEmitter::traverse (Double&)
 void
 ExtractedTypeDeclEmitter::traverse (String&)
 {
-  os << "char * " << STRS[EXTRACT] << " = 0;";
+  os << "const char * " << STRS[EXTRACT] << " = 0;";
 }
 
 void
