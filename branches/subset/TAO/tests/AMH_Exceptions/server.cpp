@@ -1,13 +1,7 @@
 
 // $Id$
 
-#include "ace/Reactor.h"
-#include "ace/Get_Opt.h"
-#include "tao/corba.h"
-#include "tao/ORB_Core.h"
-
 #include "TestS.h"
-#include "TestC.h"
 
 /***************************/
 /*** Servant Declaration ***/
@@ -65,9 +59,6 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
 
 /*** Server Declaration ***/
 
-#include "tao/PortableServer/PortableServer.h"
-#include "tao/PortableServer/Servant_Base.h"
-
 /**
  Class that performs all 'dirty' initialisation work that is common to
  all the AMH servers and 'hides' all the common ORB functions.
@@ -106,9 +97,6 @@ private:
 
 
 /*** Server Declaration ***/
-#include "ace/Sched_Params.h"
-#include "ace/Get_Opt.h"
-#include "tao/Strategies/advanced_resource.h"
 
 ST_AMH_Server::ST_AMH_Server (int* argc, char **argv)
   : argc_ (argc)

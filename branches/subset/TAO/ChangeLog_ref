@@ -1,3 +1,100 @@
+Fri May  2 16:28:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+	  Added detection and storage of info about
+	  declarations of valuetypes and abstract interfaces,
+	  checked to conditionally generate file includes
+	  for these types from the Valuetype library.
+
+        * examples/AMH/Sink_Server/AMH_Servant.h:
+        * examples/AMH/Sink_Server/Base_Server.cpp:
+        * examples/AMH/Sink_Server/Client_Task.cpp:
+        * examples/AMH/Sink_Server/MT_AMH_Server.cpp:
+        * examples/AMH/Sink_Server/Makefile:
+        * examples/AMH/Sink_Server/client.bor:
+        * examples/AMH/Sink_Server/client.dsp:
+        * examples/AMH/Sink_Server/mt_server.bor:
+        * examples/AMH/Sink_Server/mt_server.dsp:
+        * examples/AMH/Sink_Server/st_server.bor:
+        * examples/AMH/Sink_Server/st_server.dsp:
+        * examples/AMI/FL_Callback/AMI_Peer.dsp:
+        * examples/AMI/FL_Callback/AMI_Progress.dsp:
+        * examples/AMI/FL_Callback/Makefile:
+        * examples/AMI/FL_Callback/Progress_i.cpp:
+        * examples/AMI/FL_Callback/peer.cpp:
+        * examples/AMI/FL_Callback/progress.cpp:
+        * examples/Buffered_AMI/Makefile:
+        * examples/Buffered_AMI/client.bor:
+        * examples/Buffered_AMI/client.cpp:
+        * examples/Buffered_AMI/client.dsp:
+        * examples/Buffered_AMI/server.bor:
+        * examples/Buffered_AMI/server.cpp:
+        * examples/Buffered_AMI/server.dsp:
+        * tests/AMH_Exceptions/Makefile:
+        * tests/AMH_Exceptions/Test.idl:
+        * tests/AMH_Exceptions/client.bor:
+        * tests/AMH_Exceptions/client.dsp:
+        * tests/AMH_Exceptions/server.bor:
+        * tests/AMH_Exceptions/server.cpp:
+        * tests/AMH_Exceptions/server.dsp:
+        * tests/AMH_Oneway/Makefile:
+        * tests/AMH_Oneway/client.bor:
+        * tests/AMH_Oneway/client.dsp:
+        * tests/AMH_Oneway/server.bor:
+        * tests/AMH_Oneway/server.cpp:
+        * tests/AMH_Oneway/server.dsp:
+        * tests/AMI/AMI_Test_Client.dsp:
+        * tests/AMI/AMI_Test_Server.dsp:
+        * tests/AMI/AMI_Test_Simple_Client.dsp:
+        * tests/AMI/Makefile:
+        * tests/AMI/client.bor:
+        * tests/AMI/client.cpp:
+        * tests/AMI/server.bor:
+        * tests/AMI/simple_client.cpp:
+        * tests/AMI_Buffering/Makefile:
+        * tests/AMI_Buffering/admin.dsp:
+        * tests/AMI_Buffering/client.bor:
+        * tests/AMI_Buffering/client.dsp:
+        * tests/AMI_Buffering/server.bor:
+        * tests/AMI_Buffering/server.dsp:
+        * tests/AMI_Timeouts/Makefile:
+        * tests/AMI_Timeouts/client.bor:
+        * tests/AMI_Timeouts/client.cpp:
+        * tests/AMI_Timeouts/client.dsp:
+        * tests/AMI_Timeouts/server.bor:
+        * tests/AMI_Timeouts/server.cpp:
+        * tests/AMI_Timeouts/server.dsp:
+        * tests/AMI_Timeouts/timeout_client.h:
+        * tests/Abstract_Interface/Abstract_Interface_Client.dsp:
+        * tests/Abstract_Interface/Abstract_Interface_Server.dsp:
+        * tests/Abstract_Interface/Makefile:
+        * tests/Abstract_Interface/client.bor:
+        * tests/Abstract_Interface/server.bor:
+        * tests/ORT/Makefile:
+        * tests/ORT/ORT_test_IORInterceptor.h:
+        * tests/ORT/ObjectReferenceFactory.idl:
+        * tests/ORT/client.bor:
+        * tests/ORT/server.bor:
+        * tests/ORT/server.dsp:
+        * tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.h:
+        * tests/Portable_Interceptors/IORInterceptor/Makefile:
+        * tests/Portable_Interceptors/IORInterceptor/client.dsp:
+        * tests/Portable_Interceptors/IORInterceptor/server.bor:
+        * tests/Portable_Interceptors/IORInterceptor/server.dsp:
+
+	  Updated makefiles and project files for the TAO tests
+	  and examples that use valuetypes, abstract interfaces,
+	  IOR interceptors or object reference templates. Also 
+	  removed many unnecessary links, includes
+	  and IDL compiler command line options.
+
 Fri May  2 000:42:11 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * rules.tao.GNU:

@@ -3,7 +3,9 @@
 #include "Progress_i.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(FL_Callback, progress, "$Id$")
+ACE_RCSID (FL_Callback, 
+           progress, 
+           "$Id$")
 
 #if !defined (ACE_HAS_FL)
 

@@ -18,9 +18,7 @@
 
 
 #include "ace/Task.h"
-#include "tao/corba.h"
 
-#include "timeoutC.h"
 #include "timeout_i.h"
 
 class TimeoutClient

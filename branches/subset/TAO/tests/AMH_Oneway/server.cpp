@@ -1,13 +1,7 @@
 
 // $Id$
 
-#include "ace/Reactor.h"
-#include "ace/Get_Opt.h"
-#include "tao/corba.h"
-#include "tao/ORB_Core.h"
-
 #include "TestS.h"
-#include "TestC.h"
 
 const int num_calls = 10; // total calls client si going to make
 const int sleep_time = 1; // sleep for  1 sec on each call
@@ -46,7 +40,7 @@ ST_AMH_Servant::ST_AMH_Servant (CORBA::ORB_ptr orb)
 void
 ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
                              Test::Timestamp send_time
-                             ACE_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_OS::sleep (1);
@@ -62,9 +56,6 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
 
 
 /*** Server Declaration ***/
-
-#include "tao/PortableServer/PortableServer.h"
-#include "tao/PortableServer/Servant_Base.h"
 
 /**
  Class that performs all 'dirty' initialisation work that is common to
@@ -104,9 +95,6 @@ private:
 
 
 /*** Server Declaration ***/
-#include "ace/Sched_Params.h"
-#include "ace/Get_Opt.h"
-#include "tao/Strategies/advanced_resource.h"
 
 ST_AMH_Server::ST_AMH_Server (int* argc, char **argv)
   : argc_ (argc)
