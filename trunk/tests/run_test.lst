@@ -123,6 +123,7 @@ Simple_Message_Block_Test: !chorus
 Svc_Handler_Test
 TP_Reactor_Test: ALL
 TSS_Test
+TSS_Static_Test
 Task_Test
 Task_Ex_Test
 Thread_Manager_Test: !Unicos

@@ -4,6 +4,7 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Log_Msg.h"
+#include "ace/os_include/netinet/os_tcp.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/Pipe.i"

@@ -839,6 +839,13 @@ project(TSS Test) : acetest {
   }
 }
 
+project(TSS Static Test) : acetest {
+  exename = TSS_Static_Test
+  Source_Files {
+    TSS_Static_Test.cpp
+  }
+}
+
 project(Vector Test) : acetest {
   exename = Vector_Test
   Source_Files {

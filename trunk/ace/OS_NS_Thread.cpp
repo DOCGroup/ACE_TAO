@@ -16,6 +16,7 @@ ACE_RCSID(ace, OS_NS_Thread, "$Id$")
 #include "ace/Min_Max.h"
 #include "ace/Object_Manager_Base.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_ctype.h"
 
 // This is necessary to work around nasty problems with MVS C++.
 
@@ -206,7 +207,7 @@ ACE_Thread_ID::operator!= (const ACE_Thread_ID &rhs) const
 #if defined (ACE_HAS_TSS_EMULATION)
 u_int ACE_TSS_Emulation::total_keys_ = 0;
 
-ACE_TSS_Keys ACE_TSS_Emulation::tss_keys_used_;
+ACE_TSS_Keys* ACE_TSS_Emulation::tss_keys_used_ = 0;
 
 ACE_TSS_Emulation::ACE_TSS_DESTRUCTOR
 ACE_TSS_Emulation::tss_destructor_[ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX]
@@ -334,6 +335,12 @@ ACE_TSS_Emulation::next_key (ACE_thread_key_t &key)
                       ACE_OS_Object_Manager::preallocated_object[
                         ACE_OS_Object_Manager::ACE_TSS_KEY_LOCK]));
 
+  // Initialize the tss_keys_used_ pointer on first use.
+  if (tss_keys_used_ == 0)
+    {
+      ACE_NEW_RETURN (tss_keys_used_, ACE_TSS_Keys, -1);
+    }
+
   if (total_keys_ < ACE_TSS_THREAD_KEYS_MAX)
     {
        u_int counter = 0;
@@ -349,9 +356,9 @@ ACE_TSS_Emulation::next_key (ACE_thread_key_t &key)
 #  endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
             // If the key is not set as used, we can give out this key, if not
             // we have to search further
-            if (tss_keys_used_.is_set(localkey) == 0)
+            if (tss_keys_used_->is_set(localkey) == 0)
             {
-               tss_keys_used_.test_and_set(localkey);
+               tss_keys_used_->test_and_set(localkey);
                key = localkey;
                break;
             }
@@ -375,7 +382,8 @@ ACE_TSS_Emulation::release_key (ACE_thread_key_t key)
                       ACE_OS_Object_Manager::preallocated_object[
                         ACE_OS_Object_Manager::ACE_TSS_KEY_LOCK]));
 
-  if (tss_keys_used_.test_and_clear (key) == 0)
+  if (tss_keys_used_ != 0 &&
+      tss_keys_used_->test_and_clear (key) == 0)
   {
     --total_keys_;
     return 0;

@@ -48,6 +48,8 @@
 // for unlink(), close(), read(), write(), lseek(), chdir(), getcwd(), getwd(), 
 // and isatty()
 #  include /**/ <ioLib.h>
+// for gethostname()
+#  include /**/ <hostLib.h>
 #endif /* VXWORKS */
 
 // Place all additions (especially function declarations) within extern "C" {}

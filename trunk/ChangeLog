@@ -1,3 +1,42 @@
+Tue Dec  9 09:23:06 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/OS_NS_Thread.h:
+        * ace/OS_NS_Thread.cpp:
+
+          Worked around a bug in the VxWorks OS loader that caused complex
+          objects to be constructed multiple times.  Instead of having a
+          static ACE_TSS_Keys object within the ACE_TSS_Emulation class, we
+          have a static pointer that is allocated upon the first call of
+          ACE_TSS_Emulation::next_key().
+
+        * ace/OS_NS_dlfcn.inl:
+        * ace/OS_NS_string.cpp:
+        * ace/OS_NS_sys_utsname.cpp:
+        * ace/Pipe.cpp:
+        * ace/SV_Message_Queue.h:
+        * ace/SV_Semaphore_Simple.h:
+        * ace/SV_Shared_Memory.h:
+        * ace/config-lite.h:
+        * ace/config-vxworks5.x.h:
+
+          Added #includes necessary for building on VxWorks.
+
+        * ace/os_include/os_signal.h:
+
+          Changed NSIG to ACE_NSIG.
+
+        * ace/os_include/os_unistd.h:
+
+          Added #include <hostLib.h> for gethostname().
+
+        * tests/TSS_Static_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+
+          Added a test to ensure that TSS used during static construction
+          functions properly.  This test only performs a test if TSS
+          emulation is used.
+
 Tue Dec  9 15:09:55 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         Thanks to Bruce Jones <bruce.jones@cubic.com> for the

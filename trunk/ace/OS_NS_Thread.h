@@ -842,8 +842,18 @@ private:
   static ACE_TSS_DESTRUCTOR tss_destructor_ [ACE_TSS_THREAD_KEYS_MAX];
 
   /// TSS_Keys instance to administrate whether a specific key is in used
-  /// or not
-  static ACE_TSS_Keys tss_keys_used_;
+  /// or not.
+  /// or not.
+  // Static construction in VxWorks 5.4 and later is slightly broken.
+  // If the static object is more complex than an integral type, static
+  // construction will occur twice.  The tss_keys_used_ object is
+  // statically constructed and then modified by ACE_Log_Msg::instance()
+  // when two keys are created and TSS data is stored.  However, at
+  // the end of static construction the tss_keys_used_ object is again   
+  // initialized and therefore it will appear to next_key() that no
+  // TSS keys have been handed out.  That is all true unless the 
+  // tss_keys_used object is a static pointer instead of a static object.
+  static ACE_TSS_Keys* tss_keys_used_;
 
 #   if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
   /// Location of current thread's TSS array.

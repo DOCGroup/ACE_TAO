@@ -583,6 +583,7 @@ typedef ACE_HANDLE ACE_SOCKET;
 // everywhere to deal with the possibility of no return type.
 # if defined (VXWORKS)
 //typedef FUNCPTR ACE_THR_FUNC;  // where typedef int (*FUNCPTR) (...)
+# include <taskLib.h>
 typedef int ACE_THR_FUNC_RETURN;
 # elif defined (ACE_PSOS)
 typedef int ACE_THR_FUNC_RETURN;
