@@ -1,3 +1,29 @@
+Tue Sep 28 20:55:26 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Sequence_Unit_Tests/bounded_reference_allocation_traits.hpp:
+	* tests/Sequence_Unit_Tests/bounded_value_allocation_traits.hpp:
+	* tests/Sequence_Unit_Tests/unbounded_reference_allocation_traits.hpp:
+	* tests/Sequence_Unit_Tests/unbounded_value_allocation_traits.hpp:
+	* tests/Sequence_Unit_Tests/allocation_traits.hpp:
+	  Refactored each allocation trait to its own file.  Also
+	  eliminated some rather convoluted hierarchy between the
+	  reference and value allocation traits.  The code is much easier
+	  to understand now.
+
+	* tests/Sequence_Unit_Tests/testing_allocation_traits.hpp:
+	* tests/Sequence_Unit_Tests/bounded_basic_string_sequence.hpp:
+	* tests/Sequence_Unit_Tests/bounded_value_sequence.hpp:
+	* tests/Sequence_Unit_Tests/unbounded_basic_string_sequence.hpp:
+	* tests/Sequence_Unit_Tests/unbounded_value_sequence.hpp:
+	* tests/Sequence_Unit_Tests/testing_allocation_traits_ut.cpp:
+	* tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+	  Fixed the #includes and the class names.
+
+	* tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
+	* tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
+	  Fixed the #includes, define all types based on the tested
+	  sequence (do you see the template code asking to be refactored?)
+
 Tue Sep 28 20:22:16 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/Sequence_Unit_Tests/bounded_basic_string_sequence.hpp:

@@ -11,7 +11,7 @@
  * @author Carlos O'Ryan
  */
 
-#include "allocation_traits.hpp"
+#include "unbounded_value_allocation_traits.hpp"
 #include "value_traits.hpp"
 #include "generic_sequence.hpp"
 
@@ -25,7 +25,7 @@ public:
   typedef T value_type;
   typedef T const const_value_type;
 
-  typedef details::unbounded_allocation_traits<value_type,true> allocation_traits;
+  typedef details::unbounded_value_allocation_traits<value_type,true> allocation_traits;
   typedef details::value_traits<value_type,true> element_traits;
   typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
 
