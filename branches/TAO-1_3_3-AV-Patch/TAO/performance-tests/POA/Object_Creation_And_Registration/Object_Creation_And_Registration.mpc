@@ -1,0 +1,3 @@
+project(registration): taoserver {
+  exename = registration
+}

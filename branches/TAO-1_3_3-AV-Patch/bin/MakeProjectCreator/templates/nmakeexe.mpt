@@ -1,0 +1,116 @@
+conditional_include "idl_compiler_win32"
+
+type_description      = "Console Application"
+type_code             = 0x0103
+configurations        = Release Debug "Static Release" "Static Debug"
+platforms             = Win32
+default_configuration = Debug
+type_is_binary        = 1
+common_defines        = WIN32 _CONSOLE
+subsystem             = console
+pdb                   = 1
+
+Win32 {
+  machine_description = x86
+  machine             = I386
+}
+
+Win64 {
+  machine_description = IA64
+  machine             = IA64
+  cpu_defines         = WIN64
+  add_compile         = /Wp64
+}
+
+Release {
+  use_debug_libraries   = 0
+  compile_flags         = /W3 /GX /O2 /MD /GR
+  defines               = NDEBUG
+  compile_flags_removed = /YX
+  output_dir            = Release
+  intermediate_dir      = Release
+  debug_switch          =
+}
+
+Debug {
+  use_debug_libraries   = 1
+  compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
+  defines               = _DEBUG
+  compile_flags_removed = /YX
+  output_dir            = .
+  intermediate_dir      = Debug
+  lib_modifier          = d
+}
+
+Static Release {
+  use_debug_libraries   = 0
+  compile_flags         = /W3 /GX /O2 /MD /GR
+  defines               = NDEBUG
+  compile_flags_removed = /YX
+  lib_modifier          = s
+  need_staticflags      = 1
+  output_dir            = Static_Release
+  intermediate_dir      = Static_Release
+  debug_switch          =
+}
+
+Static Debug {
+  use_debug_libraries   = 1
+  compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
+  defines               = _DEBUG
+  compile_flags_removed = /YX
+  lib_modifier          = sd
+  need_staticflags      = 1
+  output_dir            = Static_Debug
+  intermediate_dir      = Static_Debug
+}
+
+MFC Release {
+  subsystem             = windows
+  use_debug_libraries   = 0
+  compile_flags         = /W3 /GX /O2 /MD /GR
+  defines               = NDEBUG _AFXDLL
+  compile_flags_removed = /YX
+  output_dir            = MFC_Release
+  intermediate_dir      = MFC_Release
+  lib_modifier          = mfc
+  debug_switch          =
+}
+
+MFC Debug {
+  subsystem             = windows
+  use_debug_libraries   = 1
+  compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
+  defines               = _DEBUG _AFXDLL
+  compile_flags_removed = /YX
+  output_dir            = MFC_Debug
+  intermediate_dir      = MFC_Debug
+  lib_modifier          = mfcd
+}
+
+Static MFC Release {
+  subsystem             = windows
+  use_debug_libraries   = 0
+  compile_flags         = /W3 /GX /O2 /MD /GR
+  defines               = NDEBUG _AFXDLL
+  compile_flags_removed = /YX
+  lib_modifier          = mfcs
+  need_staticflags      = 1
+  output_dir            = Static_MFC_Release
+  intermediate_dir      = Static_MFC_Release
+  debug_switch          =
+}
+
+Static MFC Debug {
+  subsystem             = windows
+  use_debug_libraries   = 1
+  compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
+  defines               = _DEBUG _AFXDLL
+  compile_flags_removed = /YX
+  lib_modifier          = mfcsd
+  need_staticflags      = 1
+  output_dir            = Static_MFC_Debug
+  intermediate_dir      = Static_MFC_Debug
+}
+
+conditional_include "vcfullmacros"

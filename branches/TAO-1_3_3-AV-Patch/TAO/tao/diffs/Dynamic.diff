@@ -1,0 +1,29 @@
+--- orig/DynamicC.h	2003-04-25 17:00:50.000000000 -0500
++++ DynamicC.h	2003-04-25 11:17:54.000000000 -0500
+@@ -30,19 +30,20 @@
+ 
+ #ifndef _TAO_IDL_ORIG_DYNAMICC_H_
+ #define _TAO_IDL_ORIG_DYNAMICC_H_
+-
+ #include "ace/pre.h"
++#include "tao/corbafwd.h"
+ 
+-#include "tao/corba.h"
+ 
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+ # pragma once
+ #endif /* ACE_LACKS_PRAGMA_ONCE */
+-
+-
+-#include "tao/corbafwd.h"
+-
+ #include "StringSeqC.h"
++#include "tao/TAO_Export.h"
++#include "tao/Any_T.h"
++#include "tao/Sequence.h"
++#include "tao/VarOut_T.h"
++#include "tao/Seq_Var_T.h"
++#include "tao/Seq_Out_T.h"
+ 
+ #if defined (TAO_EXPORT_MACRO)
+ #undef TAO_EXPORT_MACRO

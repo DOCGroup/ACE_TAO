@@ -1,0 +1,4 @@
+project : naming {
+  libs     += TAO_CosLifeCycle
+  after    += CosLifeCycle
+}

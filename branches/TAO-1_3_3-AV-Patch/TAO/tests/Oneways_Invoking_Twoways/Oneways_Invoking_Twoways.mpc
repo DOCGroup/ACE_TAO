@@ -1,0 +1,19 @@
+project(*Server): taoserver {
+  Source_Files {
+    Server_Task.cpp
+    Sender_i.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoserver {
+  exename = client
+
+  Source_Files {
+    Client_Task.cpp
+    Server_Task.cpp
+    Receiver_i.cpp
+    client.cpp
+  }
+}
+

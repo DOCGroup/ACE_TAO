@@ -1,0 +1,7 @@
+project {
+  staticflags += TAO_AS_STATIC_LIBS
+  // We tested with all orbsvcs libs going to $(TAO_ROOT)/orbsvcs/lib, but
+  // decided that it was easier to deal with all libs in one place. 
+  libpaths    += $(ACE_ROOT)/lib
+  libout       = $(ACE_ROOT)/lib 
+}

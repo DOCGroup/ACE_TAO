@@ -1,0 +1,5 @@
+project : taolib, core {
+  sharedname    = TAO_IORInterceptor
+  dynamicflags  = TAO_IORINTERCEPTOR_BUILD_DLL
+  include_dir   = tao/IORInterceptor
+}

@@ -1,0 +1,98 @@
+#----------------------------------------------------------------------------
+#
+# $Id$
+#
+#       Makefile for all the ACE ``one-button' tests
+#----------------------------------------------------------------------------
+
+MAKEFILE = Makefile.libs
+
+#----------------------------------------------------------------------------
+#       Local macros
+#----------------------------------------------------------------------------
+DIRS_PARALLEL = 1
+
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+
+ifdef purify
+  #### SIGINT is used by Thread_Manager_Test.
+  #### SIGHUP and SIGTERM are used by Signal_Test.
+  PURELINK += -ignore-signals=SIGHUP,SIGINT,SIGTERM
+endif # purify
+
+ifndef SOEXT
+  SOEXT=so
+endif
+ifdef shared_libs
+  ifndef VXWORKS
+    #### Build libFramework_Component_DLL, libDLL_Test, and
+    #### libService_Config_DLL libraries first, so that they
+    #### don't see the template instantiations from all of the
+    #### tests.
+    BUILD := \
+      libFramework_Component_DLL.$(SOEXT) \
+      libDLL_Test.$(SOEXT) \
+      libService_Config_DLL.$(SOEXT) \
+      $(BUILD)
+  endif # ! VXWORKS
+endif # shared_libs
+
+BUILD += libTest_Output.$(SOEXT)
+
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+
+# To build multiple executables in the same directory on AIX, it works
+# best to wipe out any previously-created tempinc directory.
+# The compiler/linker isn't too smart about instantiating templates...
+ifdef TEMPINCDIR
+COMPILE.cc := $(RM) -rf tempinc; $(COMPILE.cc)
+endif
+
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
+
+
+libTest_Output.$(SOEXT): Test_Output.cpp test_config.h
+	@$(MAKE) -f Makefile.Test_Output
+
+libFramework_Component_DLL.$(SOEXT): Framework_Component_DLL.cpp Framework_Component_DLL.h
+	@$(MAKE) -f Makefile.Framework_Component_DLL
+
+libDLL_Test.$(SOEXT): DLL_Test_Impl.cpp DLL_Test_Impl.h
+	@$(MAKE) -f Makefile.DLL_Test
+
+libService_Config_DLL.$(SOEXT): Service_Config_DLL.cpp Service_Config_DLL.h
+	@$(MAKE) -f Makefile.Service_Config_DLL
+
+ifdef VXWORKS
+all: run_test.vxworks
+
+run_test.vxworks: run_test.lst
+	run_test.pl -v -Config STATIC -Config CHECK_RESOURCES -o run_test.vxworks
+endif
+
+realclean: clean
+	-$(MAKE) -f Makefile.Test_Output realclean
+	-$(MAKE) -f Makefile.Framework_Component_DLL realclean
+	-$(MAKE) -f Makefile.DLL_Test realclean
+	-$(MAKE) -f Makefile.Service_Config_DLL realclean
+	-$(RM) log/compilations.log*
+
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
+# DO NOT DELETE THIS LINE -- g++dep uses it.
+# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+
+
+
+# IF YOU PUT ANYTHING HERE IT WILL GO AWAY

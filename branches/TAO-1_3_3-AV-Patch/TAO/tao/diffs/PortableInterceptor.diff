@@ -1,0 +1,49 @@
+--- orig/PortableInterceptorC.h	Tue Feb  5 14:36:22 2002
++++ PortableInterceptorC.h	Wed Feb  6 18:50:06 2002
+@@ -23,7 +23,7 @@
+ #define _TAO_IDL_ORIG_PORTABLEINTERCEPTORC_H_
+ 
+ #include "ace/pre.h"
+-#include "tao/corba.h"
++#include "tao/corbafwd.h"
+ 
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+ # pragma once
+@@ -34,6 +34,8 @@
+ #include "DynamicC.h"
+ #include "ObjectReferenceTemplateC.h"
+ #include "MessagingC.h"
++#include "IOPC.h"
++#include "PolicyC.h"
+ 
+ #if defined (TAO_EXPORT_MACRO)
+ #undef TAO_EXPORT_MACRO
+@@ -639,6 +641,7 @@
+         CORBA::SystemException
+       )) = 0;
+     
++#if TAO_HAS_CORBA_MESSAGING == 1
+     virtual Messaging::SyncScope sync_scope (
+         
+         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+@@ -646,6 +649,7 @@
+       ACE_THROW_SPEC ((
+         CORBA::SystemException
+       )) = 0;
++#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+     
+     virtual PortableInterceptor::ReplyStatus reply_status (
+         
+@@ -2272,6 +2276,12 @@
+   class ORBInitializer;
+   typedef ORBInitializer *ORBInitializer_ptr;
+   
++  /// Register an ORBInitializer with the global ORBInitializer
++  /// table.
++  TAO_NAMESPACE_STORAGE_CLASS void register_orb_initializer (
++      ORBInitializer_ptr init
++      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
++
+ #endif /* end #if !defined */
+   
+   
