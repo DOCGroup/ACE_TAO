@@ -153,7 +153,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
     }
 
   for (int n = ifc.ifc_len / sizeof (struct ifreq) ; n > 0;
-#if !defined(CHORUS_4)
+#if !defined(CHORUS_4) && !defined(AIX)
        n--, ifr++)
 #else
        n--,
