@@ -120,6 +120,13 @@ namespace CIAO
                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    // Install a component servant.
+    CORBA::Object_ptr install_component (PortableServer::Servant p,
+                                         PortableServer::ObjectId_out oid
+                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
     // Get an object reference to a component or home from the servant.
     CORBA::Object_ptr get_objref (PortableServer::Servant p
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -133,6 +140,12 @@ namespace CIAO
     // Uninstall a servant for component or home.
     void uninstall (PortableServer::Servant svt
                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    // Uninstall a servant for component or home.
+    void uninstall_component (CORBA::Object_ptr objref,
+                              PortableServer::ObjectId_out oid
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   protected:

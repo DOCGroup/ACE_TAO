@@ -1,3 +1,16 @@
+Mon Mar 17 23:10:47 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/Container_Base.cpp:
+	* ciao/Container_Base.h:
+	* examples/handcrafted/Hello/hello_servants.cpp:
+	* examples/handcrafted/Hello/hello_servants.h: Added support for
+	  SessionComponent specific operations,
+	  ccm_{activate,passivate,remove}.  These changes still need to be
+	  propagated to the CIDL templates.
+
+	  We also need to review how Deployment::Container and CCMHome
+	  manage the lifecyles of homes, components, and facet servants.
+
 Sun Mar 16 21:57:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/templates/CIAO_Glue_Session_Template.h:
