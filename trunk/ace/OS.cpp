@@ -1919,13 +1919,14 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #       endif /* ACE_HAS_DCE_DRAFT4_THREADS */
   ::pthread_attr_delete (&attr);
 #    else /* !ACE_HAS_DCETHREADS */
-#      if defined (ACE_HAS_THR_C_FUNC)
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id, &attr,
-                                                  ACE_THR_C_FUNC (&ACE_THREAD_FUNCTION), 
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id,
+						  &attr,
+                                                  ACE_THREAD_FUNCTION,
                                                   ACE_THREAD_ARGUMENT),
                                 result),
               int, -1, result);
   ::pthread_attr_destroy (&attr);
+#    endif /* ACE_HAS_DCETHREADS */
 
   // This is a Solaris, POSIX, or DCE implementation of pthreads,
   // where we assume that ACE_thread_t and ACE_hthread_t are the same.
