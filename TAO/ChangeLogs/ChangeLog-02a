@@ -1,106 +1,115 @@
+Wed Feb 23 14:42:16 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/IDL_Test/Makefile:
+          Added dependency on the IDL compiler so the reopeneded_modules
+          test is actually recompiled.
+
+        * examples/Persistent_Grid/Grid_i.cpp:
+          Fixed out of order in initialization list.
+
 Wed Feb 23 12:31:18 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
-	
-	* examples/Persistent_Grid/Grid_i.cpp:
-	* examples/Persistent_Grid/Simple_util.cpp: Fixed a warning on
-	  Linux egcs. 
+
+        * examples/Persistent_Grid/Grid_i.cpp:
+        * examples/Persistent_Grid/Simple_util.cpp: Fixed a warning on
+          Linux egcs.
 
 Tue Feb 22 18:13:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/util/utl_scope.cpp:
-	  In comparing names for name clashes, we now use the local name 
-	  for local declarations, and the top component of the scoped
-	  name for referenced types, as specified in CORBA 2.3.1. Thanks
-	  to Klaus Hofmann <Klaus.Hofmann@astrum.de> for sending in the
-	  IDL file that pointed this out.
+        * TAO_IDL/util/utl_scope.cpp:
+          In comparing names for name clashes, we now use the local name
+          for local declarations, and the top component of the scoped
+          name for referenced types, as specified in CORBA 2.3.1. Thanks
+          to Klaus Hofmann <Klaus.Hofmann@astrum.de> for sending in the
+          IDL file that pointed this out.
 
 Tue Feb 22 13:57:32 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* TAO/tao/Invocation.cpp (start and invoke): Removed extra updates
-	  that were being called on the countdown timer.
+        * TAO/tao/Invocation.cpp (start and invoke): Removed extra updates
+          that were being called on the countdown timer.
 
-	* TAO/tao/GIOP.cpp (send_message): Optimized away a call to
-	  TAO_OutputCDR::length().
+        * TAO/tao/GIOP.cpp (send_message): Optimized away a call to
+          TAO_OutputCDR::length().
 
-	* TAO/tao/Wait_Strategy.cpp (sending_request): The assignment of
-	  <reply_received_>, <expecting_response_>, and <calling_thread_>
-	  was protected by the leader/followers lock.  In the case of
-	  oneways, these fields are not used, so this seems excessive. In
-	  the case of twoways, this stuff is done before the request is
-	  actually sent, therefore, there isn't any chance of the leader
-	  resetting these fields simultaneously.  Therefore, the lock has
-	  been removed.
+        * TAO/tao/Wait_Strategy.cpp (sending_request): The assignment of
+          <reply_received_>, <expecting_response_>, and <calling_thread_>
+          was protected by the leader/followers lock.  In the case of
+          oneways, these fields are not used, so this seems excessive. In
+          the case of twoways, this stuff is done before the request is
+          actually sent, therefore, there isn't any chance of the leader
+          resetting these fields simultaneously.  Therefore, the lock has
+          been removed.
 
-	* TAO/tao/IIOP_Connector.cpp (connect):
-	* TAO/tao/UIOP_Connector.cpp (connect):
-	* TAO/tao/SHMIOP_Connector.cpp (connect):
+        * TAO/tao/IIOP_Connector.cpp (connect):
+        * TAO/tao/UIOP_Connector.cpp (connect):
+        * TAO/tao/SHMIOP_Connector.cpp (connect):
 
-	  Optimize the creation of the synch options.  Only create it is
-	  there is a timeout specified by the user.
+          Optimize the creation of the synch options.  Only create it is
+          there is a timeout specified by the user.
 
 Tue Feb 22 14:51:32 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_generator.cpp:
-	  Changes to create_module() to handle a module which is
-	  reopened by appearing once in each of a chain of
-	  #inclusions. Thanks to Lothar Werzinger
-	  <werzinger.lothar@krones.de> for the example IDL file
-	  that uncovered this bug.
+        * TAO_IDL/be/be_generator.cpp:
+          Changes to create_module() to handle a module which is
+          reopened by appearing once in each of a chain of
+          #inclusions. Thanks to Lothar Werzinger
+          <werzinger.lothar@krones.de> for the example IDL file
+          that uncovered this bug.
 
-	* tests/IDL_Test/included.idl:
-	* tests/IDL_Test/including.idl:
-	* tests/IDL_Test/reopened_modules.idl:
-	  Examples added to test the use case above.
+        * tests/IDL_Test/included.idl:
+        * tests/IDL_Test/including.idl:
+        * tests/IDL_Test/reopened_modules.idl:
+          Examples added to test the use case above.
 
 Tue Feb 22 13:28:19 2000  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Globals.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Globals.cpp:
 
           Fixed compile errors on Redhat Linux. Thanks to
           Alex Luk <fluk7@ie.cuhk.edu.hk> for reporting this.
 
 Tue Feb 22 10:33:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_codegen.cpp:
-	  Removed inclusion of server template header file in
-	  server header file, if tie classes are not generated.
-	  Thanks to Lothar Werzinger <werzinger.lothar@krones.de>
-	  for reporting this bug.
+        * TAO_IDL/be/be_codegen.cpp:
+          Removed inclusion of server template header file in
+          server header file, if tie classes are not generated.
+          Thanks to Lothar Werzinger <werzinger.lothar@krones.de>
+          for reporting this bug.
 
 Mon Feb 21 20:43:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Asynch_Invocation.h:
-	* tao/Asynch_Invocation.i:
-	* tao/Asynch_Invocation.cpp:
-	* tao/GIOP.h:
-	* tao/GIOP.cpp:
-	* tao.Invocation.h:
-	* tao/Invocation.i:
-	* tao/Invocation.cpp:
-	* tao/Object.cpp:
-	* tao/Stub.cpp:
-	* tao/DomainC.cpp:
-	* tao/ImplRepoC.cpp:
-	* tao/InterfaceC.cpp:
-	* tao/MessagingC.cpp:
-	* tao/POAC.cpp:
-	* tao/PolicyC.cpp:
-	* tao/PollableC.cpp:
-	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation.cpp:
-	  Optimization suggested by Irfan. Instead of marshaling the
-	  operation name into the request header by using the
-	  overloaded << operator for strings (which contains a
-	  call to strlen), we use the version of write_string that
-	  takes a length argument. The length then has to be
-	  precomputed. The signatures of the TAO_GIOP_*_Invocation
-	  constructors has been modified to carry this value,
-	  as has the write_request_header* functions of TAO_GIOP.
-	  For regular oneway, twoway, and AMI requests, this
-	  value is calculated by the IDL compiler and plugged in
-	  to the constructor call in the stub. For interpreted stubs
-	  and regular DII requests, the Stub object calculates the length.
-	  For deferred synchronous DII request, the length is calculated
-	  in the invocation constructor.
+        * tao/Asynch_Invocation.h:
+        * tao/Asynch_Invocation.i:
+        * tao/Asynch_Invocation.cpp:
+        * tao/GIOP.h:
+        * tao/GIOP.cpp:
+        * tao.Invocation.h:
+        * tao/Invocation.i:
+        * tao/Invocation.cpp:
+        * tao/Object.cpp:
+        * tao/Stub.cpp:
+        * tao/DomainC.cpp:
+        * tao/ImplRepoC.cpp:
+        * tao/InterfaceC.cpp:
+        * tao/MessagingC.cpp:
+        * tao/POAC.cpp:
+        * tao/PolicyC.cpp:
+        * tao/PollableC.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+          Optimization suggested by Irfan. Instead of marshaling the
+          operation name into the request header by using the
+          overloaded << operator for strings (which contains a
+          call to strlen), we use the version of write_string that
+          takes a length argument. The length then has to be
+          precomputed. The signatures of the TAO_GIOP_*_Invocation
+          constructors has been modified to carry this value,
+          as has the write_request_header* functions of TAO_GIOP.
+          For regular oneway, twoway, and AMI requests, this
+          value is calculated by the IDL compiler and plugged in
+          to the constructor call in the stub. For interpreted stubs
+          and regular DII requests, the Stub object calculates the length.
+          For deferred synchronous DII request, the length is calculated
+          in the invocation constructor.
 
 Mon Feb 21 16:19:59 2000  Carlos O'Ryan  <coryan@uci.edu>
 

@@ -64,7 +64,7 @@ CPPFLAGS += -I$(TAO_ROOT)
 
 .PRECIOUS: $(foreach file, $(IDL_SRC), $(foreach ext, $(IDL_EXT), $(file)$(ext))) .reopened_modules_stamp
 
-.reopened_modules_stamp $(foreach ext, $(IDL_EXT), reopened_modules$(ext)):
+.reopened_modules_stamp $(foreach ext, $(IDL_EXT), reopened_modules$(ext)): $(TAO_ROOT)/TAO_IDL/tao_idl
 	$(TAO_ROOT)/TAO_IDL/tao_idl -w -Ge 1 reopened_modules.idl
 	@touch $@
 

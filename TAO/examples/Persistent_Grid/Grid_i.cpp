@@ -24,27 +24,27 @@ Grid_i::Grid_i (CORBA::Short x,
   // First try to locate the matrix in the pool. If it is there then
   // it has already been created. In such a case we just get that
   // memory and assign it to array_
-  if (mem_pool->find ("Array", (void *&) array_) == -1) 
+  if (mem_pool->find ("Array", (void *&) array_) == -1)
     {
       // Allocate memory for the matrix.
-       ACE_ALLOCATOR (array_, 
-                      ACE_static_cast (CORBA::Long **, 
+       ACE_ALLOCATOR (array_,
+                      ACE_static_cast (CORBA::Long **,
                                        mem_pool->malloc (y * sizeof (CORBA::Long *))));
       //array_ = (CORBA::Long **) mem_pool->malloc (y * sizeof (CORBA::Long *));
-  
+
       if (array_ != 0)
         {
           for (int ctr = 0; ctr < y; ctr++)
             {
-              ACE_ALLOCATOR (array_[ctr], 
-                             ACE_static_cast (CORBA::Long *, 
-                                              mem_pool->malloc (x * 
+              ACE_ALLOCATOR (array_[ctr],
+                             ACE_static_cast (CORBA::Long *,
+                                              mem_pool->malloc (x *
                                                                 sizeof (CORBA::Long ))));
 
               //array_[ctr] = (CORBA::Long *)mem_pool->malloc (x *
               //                                            sizeof (CORBA::Long));
             }
-          
+
           mem_pool->bind ("Array", array_);
         }
     }
@@ -61,9 +61,9 @@ Grid_i::~Grid_i (void)
 
 void
 Grid_i::set (CORBA::Short x,
-	     CORBA::Short y,
-	     CORBA::Long value,
-	     CORBA::Environment &ACE_TRY_ENV)
+             CORBA::Short y,
+             CORBA::Long value,
+             CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Grid::RANGE_ERROR))
 {
@@ -112,7 +112,7 @@ Grid_i::height (CORBA::Environment &)
 
 void
 Grid_i::width (CORBA::Short x,
-	       CORBA::Environment &)
+               CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->width_ = x;
@@ -120,7 +120,7 @@ Grid_i::width (CORBA::Short x,
 
 void
 Grid_i::height (CORBA::Short y,
-		CORBA::Environment &)
+                CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->height_ = y;
@@ -143,7 +143,7 @@ Grid_i::destroy (CORBA::Environment & )
               "Grid has been destroyed"));
 }
 
-void 
+void
 Grid_i::set_pool (pool_t *pool)
 {
   this->pool_t_ = pool;
@@ -161,8 +161,8 @@ Grid_Factory_i::Grid_Factory_i (void)
 // Copy Constructor
 
 Grid_Factory_i::Grid_Factory_i (Grid_Factory_i &grid)
-  :pool_t_ (0),
-   POA_Grid_Factory (grid)
+  : POA_Grid_Factory (grid),
+    pool_t_ (0)
 {
   // no-op
 }
@@ -198,9 +198,9 @@ Grid_Factory_i::make_grid (CORBA::Short width,
   ACE_NEW_THROW_EX (pool_t_,
                     pool_t (pool_name_),
                     CORBA::NO_MEMORY ());
-  
+
   //  pool_t_ = new pool_t (pool_name_);
-  
+
   // This attempts to create a new Grid_i and throws an exception and
   // returns a null value if it fails
   int prev_no = errno;
@@ -209,11 +209,11 @@ Grid_Factory_i::make_grid (CORBA::Short width,
                                  pool_t_);
   if (errno == ENOMEM)
     ACE_THROW_RETURN (CORBA::NO_MEMORY (), 0);
-  
+
   errno = prev_no;
-  
+
   grid_ptr->set_pool (pool_t_);
-  
+
   // Register the Grid pointer.
   return grid_ptr->_this (ACE_TRY_ENV);
 }
@@ -255,5 +255,3 @@ Grid_Factory_i::pool_name (const char *name)
 {
   this->pool_name_ = ACE_OS::strdup (name);
 }
-
-
