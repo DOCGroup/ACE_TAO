@@ -151,7 +151,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /Gt0 nologo Gt0 W3 GX Zi Od Gy D "_DEBUG" D "_WINDOWS" FD I "..\\ /D " WIN32" c
-# ADD CPP /nologo /MTd /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\" /D "_DEBUG" /D "_WINDOWS" /D "WIN32" /D ACE_HAS_DLL=0 /FD /c
+# ADD CPP /nologo /MTd /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D " _DEBUG" /D "_WINDOWS" /D "WIN32" /D ACE_HAS_DLL=0 /FD /c
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
@@ -173,7 +173,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /Gt0 nologo Gt0 W3 GX O1 D "NDEBUG" D "_WINDOWS" FD I "..\\ /D " WIN32" c
-# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /I "..\\" /D "NDEBUG" /D "_WINDOWS" /D "WIN32" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /c
+# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /I "..\\ /D " NDEBUG" /D "_WINDOWS" /D "WIN32" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /c
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
@@ -195,7 +195,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /Gt0 nologo Gt0 W3 GX Zi Od Gy D "_DEBUG" D "_WINDOWS" D "UNICODE" FD I "..\\ /D " WIN32" c
-# ADD CPP /nologo /MTd /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\" /D "_DEBUG" /D "_WINDOWS" /D "UNICODE" /D "WIN32" /D ACE_HAS_DLL=0 /FD /c
+# ADD CPP /nologo /MTd /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D " _DEBUG" /D "_WINDOWS" /D "UNICODE" /D "WIN32" /D ACE_HAS_DLL=0 /FD /c
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
@@ -217,7 +217,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /Gt0 nologo Gt0 W3 GX O1 D "NDEBUG" D "_WINDOWS" D "UNICODE" FD I "..\\ /D " WIN32" c
-# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /I "..\\" /D "NDEBUG" /D "_WINDOWS" /D "UNICODE" /D "WIN32" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /c
+# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /I "..\\ /D " NDEBUG" /D "_WINDOWS" /D "UNICODE" /D "WIN32" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /c
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
@@ -5320,9 +5320,15 @@ SOURCE=.\Active_Map_Manager_T.cpp
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
 
+# PROP Exclude_From_Build 1
+
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
 
+# PROP Exclude_From_Build 1
+
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+# PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
 
@@ -5345,9 +5351,15 @@ SOURCE=.\Asynch_Acceptor.cpp
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
 
+# PROP Exclude_From_Build 1
+
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
 
+# PROP Exclude_From_Build 1
+
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+# PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
 
@@ -5371,6 +5383,161 @@ SOURCE=.\Auto_Ptr.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cache_Map_Manager_T.cpp
+
+!IF  "$(CFG)" == "ACE static library - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cached_Connect_Strategy_T.cpp
+
+!IF  "$(CFG)" == "ACE static library - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Caching_Strategies_T.cpp
+
+!IF  "$(CFG)" == "ACE static library - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Caching_Utility_T.cpp
+
+!IF  "$(CFG)" == "ACE static library - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cleanup_Strategies_T.cpp
+
+!IF  "$(CFG)" == "ACE static library - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connector.cpp
 
 !IF  "$(CFG)" == "ACE static library - Win32 Debug"
@@ -5379,9 +5546,15 @@ SOURCE=.\Connector.cpp
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
 
+# PROP Exclude_From_Build 1
+
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
 
+# PROP Exclude_From_Build 1
+
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+# PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
 
@@ -5419,9 +5592,46 @@ SOURCE=.\Functor_T.cpp
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
 
+# PROP Exclude_From_Build 1
+
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
 
+# PROP Exclude_From_Build 1
+
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Hash_Cache_Map_Manager_T.cpp
+
+!IF  "$(CFG)" == "ACE static library - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+# PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
 
@@ -5444,9 +5654,15 @@ SOURCE=.\Hash_Map_Manager_T.cpp
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
 
+# PROP Exclude_From_Build 1
+
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
 
+# PROP Exclude_From_Build 1
+
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+# PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
 
@@ -5490,9 +5706,15 @@ SOURCE=.\Managed_Object.cpp
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
 
+# PROP Exclude_From_Build 1
+
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
 
+# PROP Exclude_From_Build 1
+
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+# PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
 
