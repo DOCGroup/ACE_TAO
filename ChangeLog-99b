@@ -1,3 +1,57 @@
+Tue Oct 19 12:55:16 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/Codeset_IBM1047.h:
+
+	  Include `ace/inc_user_config.h' before check for definition of
+	  ACE_MVS macro since otherwise ACE_MVS may not get defined.
+
+	* ace/Codeset_IBM1047.cpp:
+
+	  Moved inclusion of `ace/Codeset_IBM1047.cpp' ahead of ACE_MVS
+	  macro definition check, and removed inclusing of
+	  `ace/inc_user_config.h'
+
+	* ace/OS.i (llseek):
+
+	  Use native lseek() if _FILE_OFFSET_BITS macro is defined and set
+	  to 64.
+
+	  Reenabled lseek64() on Linux.  If _LARGEFILE64_SOURCE is not
+	  defined then an external declaration for lseek64() is made in
+	  the config-linux-common.h header.
+
+	* ace/config-linux-common.h:
+
+	  Minor comment update.
+
+	  Added extern declaration of lseek64() if _LARGEFILE64_SOURCE is
+	  not defined.
+
+	* ace/Handle_Set.cpp:
+
+	  Check if _XOPEN_SOURCE is #defined instead of _GNU_SOURCE to
+	  determine if the fd_set structure has an fds_bits member.
+
+	* ace/Makefile:
+
+	  Updated dependencies.
+	
+	* ace/Makefile.am:
+
+	  Added ATM files to source lists.
+
+	* acconfig.h:
+
+	  Added entries for some additional "feature test" macros, such as
+	  _XOPEN_SOURCE.
+
+	* bin/g++dep:
+	* include/makeinclude/rules.local.GNU:
+
+	  Incorporated Jody Hagins <jody@atdesk.com> patches that get
+	  around a trailing backslash problem in generated Makefile
+	  dependencies.  Thanks Jody!
+
 Tue Oct 19 12:30:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Web_Crawler.dsp: Changed the settings to make the
