@@ -1,0 +1,35 @@
+#
+# Makefile for building the TAO DynamicAny library
+#
+
+NAME = TAO_DynamicAny
+
+OBJFILES = \
+	$(OBJDIR)\DynamicAny.obj \
+	$(OBJDIR)\DynamicAnyC.obj \
+	$(OBJDIR)\DynCommon.obj \
+	$(OBJDIR)\DynAny_i.obj \
+	$(OBJDIR)\DynAnyFactory.obj \
+	$(OBJDIR)\DynArray_i.obj \
+	$(OBJDIR)\DynEnum_i.obj \
+	$(OBJDIR)\DynSequence_i.obj \
+	$(OBJDIR)\DynStruct_i.obj \
+	$(OBJDIR)\DynUnion_i.obj
+
+RESOURCE = $(OBJDIR)\TAO_DynamicAny.res
+
+!ifdef STATIC
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_DYNAMICANY_CFLAGS)
+!else
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_DYNAMICANY_CFLAGS) \
+	-DTAO_DYNAMICANY_BUILD_DLL 
+!endif
+
+CPPDIR = .
+
+INCDIR_NAME = tao\DynamicAny
+INCLUDES = *.h *.i DynamicAny.pidl
+
+LIBFILES = $(ACE_LIB) $(TAO_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>

@@ -1,0 +1,16 @@
+project(Netsvsc_Client_Test_Lib): acelib {
+  sharedname    = Client_Test
+  dynamicflags += ACE_CLIENT_TEST_BUILD_DLL
+  Source_Files {
+    Client_Test.cpp
+  }
+}
+
+project(Netsvcs_Client_Test) : aceexe {
+  exename = main
+  libs    += Client_Test
+  after   += Netsvcs_Client_Test_Lib
+  Source_Files {
+    main.cpp
+  }
+}

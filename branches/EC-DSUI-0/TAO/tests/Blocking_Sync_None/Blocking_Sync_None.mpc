@@ -1,0 +1,16 @@
+project(*Server): taoserver, messaging, corba_messaging {
+  Source_Files {
+    Blocking_Sync_None.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoclient, messaging, corba_messaging {
+  exename  = client
+
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+}
+

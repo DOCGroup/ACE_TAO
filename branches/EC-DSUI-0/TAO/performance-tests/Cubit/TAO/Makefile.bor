@@ -1,0 +1,10 @@
+
+#
+# Makefile for building the TAO Cubit performance-tests
+#
+
+DIRS = \
+        IDL_Cubit \
+        MT_Cubit
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

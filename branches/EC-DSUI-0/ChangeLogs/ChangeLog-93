@@ -1,0 +1,52 @@
+Wed Dec 15 16:47:19 1993  Douglas C. Schmidt  (schmidt@net4.ics.uci.edu)
+
+        * Added a new parameter to the constructor and open() member
+          functions in the SOCK_Listener and LSOCK_Listener classes.  This
+          parameter indicates that the SO_REUSEADDR option needs to be
+          applied before attempting to bind an address.
+
+Sun Nov 21 14:46:18 1993  Douglas C. Schmidt  (schmidt@net4.ics.uci.edu)
+
+        * Added a new file called "testconfig.h" in the include directory.
+          This file gives defaults for the hostname and server port
+          numbers used in the ./tests directory.
+
+Wed Nov  3 18:41:14 1993  Douglas C. Schmidt  (schmidt@cupid.ics.uci.edu)
+
+        * Released version 2.12.
+
+        * Included Olaf Kruger's fix for templates/shared libs on Sun OS
+          4.  This solves a bunch of weird problems.  Now, most of the
+          tests compile and run correctly on Sun OS 4!
+
+Mon Nov  1 17:47:30 1993  Douglas C. Schmidt  (schmidt@cupid.ics.uci.edu)
+
+        * Split the release into two parts: (1) the documentation and
+          papers and (2) the library source code and test examples.
+
+        * Renamed and lightly redesigned the IPC_SAP* hierarchy.  Now the
+          overall C++ wrapper abstraction for local and remote IPC is
+          called IPC_SAP.  The specific wrappers for sockets, TLI, named
+          pipes, and STREAM pipes are called SOCK_SAP, TLI_SAP, FIFO_SAP,
+          and SPIPE_SAP, respectively.  This cleans up the interfaces,
+          shares more code, and is much easier to explain.
+
+          In addition, the Server_Daemon framework has been renamed the
+          Service Configurator framework, and the Server_Daemon class has
+          been renamed Service_Config.  The documentation is being updated
+          to reflect these changes, as well.
+
+          Note, the easiest way to upgrade existing apps is simply to use
+          perl as follows:
+          
+          % perl -p -i -e 's/Local_IPC/LSOCK/g;' *.[Chi] % perl -p -i -e
+          's/IPC_SAP_FIFO/FIFO/g;' *.[Chi] % perl -p -i -e
+          's/IPC_SAP_SPIPE/SPIPE/g;' *.[Chi] % perl -p -i -e
+          's/IPC_SAP/SOCK_SAP/g;' *.[Chi] % perl -p -i -e 's/SAP_//g;'
+          *.[Chi] % perl -p -i -e 's/Server_Daemon/Service_Config/g;'
+          *.[Chi]
+
+          etc.  Note that the order in which you do this is important!  In
+          addition, you need to check out your Makefiles, to be sure that
+          -lIPC_SAP linker lines are changed to include the appropriate
+          components.

@@ -1,0 +1,13 @@
+
+#
+# Makefile for building the RootPOA example
+#
+
+NAME = RootPOA
+
+OBJFILES = \
+        $(OBJDIR)\RootPOA.obj
+
+CPPDIR = .;..
+
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
