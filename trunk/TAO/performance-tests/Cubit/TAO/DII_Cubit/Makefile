@@ -56,6 +56,11 @@ ifeq ($(CXX),cxx)
     #### Digital Unix 4.0
     CCFLAGS += -ptr ../IDL_Cubit/ptrepository
   endif # CCFLAGS contains ptrepository
+else
+ifeq (-xildoff,$(findstring -xildoff,$(LDFLAGS)))
+  #### Sun CC
+  CCFLAGS += -ptr. -ptr../IDL_Cubit
+endif # Sun CC
 endif # cxx
 
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
