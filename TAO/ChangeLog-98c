@@ -1,3 +1,33 @@
+Fri Oct  9 16:44:14 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Receiver.idl: 
+	  Added this new interface for the Trader Agent to push the server
+	  mmdevice and the filenames to the mpeg client.
+
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.{h,cpp}:
+	  Added code to implement the Receiver interface. 
+	  Fixed memory leaks. 
+	  Fixed the code so that it works for multiple movies i.e
+	  tears down the stream after every movie and starts a new
+	  connection. 
+	  Also made code robust by using suspend and resume
+	  handlers for the video client to wait for the initial frame from
+	  the server. 
+	  Added an option to specify the data host to bind for
+	  the data which can be used for specify an ATM interface.
+	  Fixed the problem of Play command not playing from where
+	  fastforward/rewind stopped.
+
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ctr.cpp:
+
+	  Removed some unnecessary and redundant code and moved them into
+	  classes in Command_Handler.cpp.
+
+	* orbsvcs/tests/AVStreams/mpeg/source/client/vcr.cpp:
+
+	  Fixed the code so that it passes the command line arguments
+	  properly to the command_handler.
+	
 Fri Oct  9 16:27:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Throughput/ECT_Supplier.h: 
