@@ -22,12 +22,12 @@
 //   Ping Suspend/Resume Task and Suspend/Resume Task benchmarks.
 //   Laboratory benchmark
 //   It measures two different times:
-//   1) the time to resume a block high priority task, which does
-//      nothing other than block immediately;  A lower priority task
+//   1) The time to resume a blocked high priority task, which does
+//      nothing other than block immediately.  A lower priority task
 //      resumes the high priority task, so the elapsed time includes
 //      two context switches, one task suspend, and one task resume.
-//   2) the time to suspend and resume a low priority task that does
-//      nothing;  There is no context switching.  This time is subtracted
+//   2) The time to suspend and resume a low priority task that does
+//      nothing.  There is no context switching.  This time is subtracted
 //      from the one described in 1) above, and the result is divided by
 //      two to yield the context switch time.
 //
@@ -41,15 +41,6 @@
 //   THR_BOUND flag), so that they can compete for system-wide resources.
 //   In other words, if a thread is bound to an LWP, then the kernel is
 //   aware of it.
-//
-//   On Solaris 2.5.1, a call to thr_yield () is necessary after a call
-//   to thr_continue () by a low-priority task.  Without it, the high-priority
-//   task doesn't preempt the low-priority task.  This happens even with a
-//   10 nsec time quantum for the LWP.  Maybe it's because with this version
-//   of Solaris, the scheduling policy is SCHED_OTHER.
-//
-//   All threads are created with the THR_DETACHED flag so that their
-//   resources are released when they terminate.
 //
 // = CREATION DATE
 //    17 January 1997
@@ -74,16 +65,16 @@ static const char usage [] = "[-? |\n"
 #if defined (ACE_HAS_THREADS)
 
 #if !defined (DEBUG)
-#define DEBUG 0
+# define DEBUG 0
 #endif /* DEBUG */
 
-static unsigned int LOW_PRIORITY;
-static unsigned int HIGH_PRIORITY;
+static u_int LOW_PRIORITY;
+static u_int HIGH_PRIORITY;
 
-// global test configuration parameters
-static unsigned long count = 1;
-static unsigned long num_iterations = 1000;
-static unsigned int new_lwp = 0;
+// Global test configuration parameters.
+static ACE_UINT32 count = 1;
+static ACE_UINT32 num_iterations = 1000;
+static ACE_UINT32 new_lwp = 0;
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -100,8 +91,8 @@ public:
 
   virtual int svc ();
 
-  // called by other task:  it returns when this task is ready to
-  // continue
+  // Called by other task:  it returns when this task is ready to
+  // continue.
   void ready () { initialized_.acquire (); }
 
   void done ();
@@ -109,10 +100,10 @@ public:
   ACE_hthread_t thread_id () const { return thread_id_; }
 private:
   ACE_hthread_t thread_id_;
-  ACE_Semaphore initialized_;  // blocks until thread_id_ is assigned
+  ACE_Semaphore initialized_;  // Blocks until thread_id_ is assigned.
   ACE_Semaphore blocked_semaphore_;
 
-  // force proper construction of independent instances
+  // Force proper construction of independent instances.
   Low_Priority_Null_Task (const Low_Priority_Null_Task &);
   Low_Priority_Null_Task &operator= (const Low_Priority_Null_Task &);
 };
@@ -127,7 +118,7 @@ Low_Priority_Null_Task::Low_Priority_Null_Task() :
   ACE_DEBUG ((LM_DEBUG, "Low_Priority_Null_Task ctor\n"));
 #endif /* DEBUG */
 
-  this->activate (THR_BOUND | THR_DETACHED | new_lwp, 1, 0, LOW_PRIORITY);
+  this->activate (THR_BOUND | THR_SCHED_FIFO | new_lwp, 1, 0, LOW_PRIORITY);
 
 #if DEBUG > 0
   ACE_DEBUG ((LM_DEBUG, "Low_Priority_Null_Task ctor, activated\n"));
@@ -152,7 +143,7 @@ Low_Priority_Null_Task::svc ()
   ACE_DEBUG ((LM_DEBUG, "; thread ID is %u\n", thread_id_));
 #endif /* DEBUG */
 
-  // this task must never actually execute, so just have it block
+  // This task must never actually execute, so just have it block
   // on a semaphore forever . . .
   blocked_semaphore_.acquire ();
 
@@ -179,14 +170,14 @@ Low_Priority_Null_Task::done ()
 class Suspend_Resume_Test : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  Suspend_Resume_Test (const unsigned long iterations);
+  Suspend_Resume_Test (const ACE_UINT32 iterations);
   virtual ~Suspend_Resume_Test ();
 
   virtual int svc ();
 
   ACE_hrtime_t elapsed_time () const { return elapsed_time_; }
 private:
-  const unsigned long iterations_;
+  const ACE_UINT32 iterations_;
 
   Low_Priority_Null_Task low_;
 
@@ -194,13 +185,13 @@ private:
 
   ACE_hrtime_t elapsed_time_;
 
-  // force proper construction of independent instances
+  // Force proper construction of independent instances.
   Suspend_Resume_Test ();
   Suspend_Resume_Test (const Suspend_Resume_Test &);
   Suspend_Resume_Test &operator= (const Suspend_Resume_Test &);
 };
 
-Suspend_Resume_Test::Suspend_Resume_Test (const unsigned long iterations) :
+Suspend_Resume_Test::Suspend_Resume_Test (const ACE_UINT32 iterations) :
   ACE_Task<ACE_MT_SYNCH> (),
   iterations_ (iterations),
   low_ (),
@@ -210,7 +201,7 @@ Suspend_Resume_Test::Suspend_Resume_Test (const unsigned long iterations) :
   ACE_DEBUG ((LM_DEBUG, "Suspend_Resume_Test ctor\n"));
 #endif /* DEBUG */
 
-  this->activate (THR_BOUND | THR_DETACHED |  new_lwp, 1, 0, HIGH_PRIORITY);
+  this->activate (THR_BOUND | THR_SCHED_FIFO | new_lwp, 1, 0, HIGH_PRIORITY);
 }
 
 Suspend_Resume_Test::~Suspend_Resume_Test()
@@ -230,13 +221,13 @@ Suspend_Resume_Test::svc ()
 
   low_.ready ();
 
-  // for information:  the cost of the just the loop itself below,
+  // For information:  the cost of the just the loop itself below,
   // without the suspend and resume calls, on a 166 MHz Ultrasparc
-  // is about 12.3 nanoseconds per iteration
+  // is about 12.3 nanoseconds per iteration.
 
   timer_.start ();
 
-  for (unsigned long i = 0; i < iterations_; ++i)
+  for (ACE_UINT32 i = 0; i < iterations_; ++i)
     {
 #if DEBUG > 0
       if (i % (iterations_ >= 10  ?  iterations_ / 10  :  1) ==  0)
@@ -246,9 +237,21 @@ Suspend_Resume_Test::svc ()
         }
 #endif /* DEBUG */
 
-      ACE_OS::thr_suspend (low_.thread_id ());
-      ACE_OS::thr_continue (low_.thread_id ());
-      ACE_OS::thr_yield ();
+      if (ACE_OS::thr_suspend (low_.thread_id ()) != 0)
+        {
+          ACE_ERROR ((LM_ERROR, "%p\n", "thr_suspend"));
+          low_.done ();
+          return -1;
+        }
+
+      if (ACE_OS::thr_continue (low_.thread_id ()) != 0  &&
+          errno != EINVAL)
+        // EINVAL is OK:  it just means that the thread needs to be joined.
+        {
+          ACE_ERROR ((LM_ERROR, "%p\n", "thr_continue"));
+          low_.done ();
+          return -1;
+        }
     }
 
   timer_.stop ();
@@ -285,14 +288,14 @@ public:
   void done ();
 
   ACE_hthread_t thread_id () const { return thread_id_; }
-  unsigned long iterations () const { return iterations_; }
+  ACE_UINT32 iterations () const { return iterations_; }
 private:
   ACE_hthread_t thread_id_;
-  ACE_Semaphore initialized_;  // block until thread_id_ is assigned
+  ACE_Semaphore initialized_;  // Block until thread_id_ is assigned.
   int terminate_;
-  unsigned long iterations_;
+  ACE_UINT32 iterations_;
 
-  // force proper construction of independent instances
+  // Force proper construction of independent instances.
   High_Priority_Simple_Task (const High_Priority_Simple_Task &);
   High_Priority_Simple_Task &operator= (const High_Priority_Simple_Task &);
 };
@@ -300,7 +303,7 @@ private:
 inline
 High_Priority_Simple_Task::High_Priority_Simple_Task() :
   ACE_Task<ACE_MT_SYNCH> (ACE_Thread_Manager::instance ()),
-  initialized_ (0),  // initialize to locked, then unlock when ready
+  initialized_ (0),  // Initialize to locked, then unlock when ready.
   terminate_ (0),
   iterations_ (0)
 {
@@ -308,7 +311,7 @@ High_Priority_Simple_Task::High_Priority_Simple_Task() :
   ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task ctor\n"));
 #endif /* DEBUG */
 
-  this->activate (THR_BOUND | THR_DETACHED |  new_lwp, 1, 0, HIGH_PRIORITY);
+  this->activate (THR_BOUND | THR_SCHED_FIFO | new_lwp, 1, 0, HIGH_PRIORITY);
 
 #if DEBUG > 0
   ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task ctor, activated\n"));
@@ -333,7 +336,7 @@ High_Priority_Simple_Task::svc ()
   ACE_DEBUG ((LM_DEBUG, "; thread ID is %u\n", thread_id_));
 #endif /* DEBUG */
 
-  while (! terminate_)
+  for (ACE_UINT32 i = 0; ! terminate_; ++i)
     {
 #if DEBUG > 0
       ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task::svc, suspend self ("
@@ -343,7 +346,10 @@ High_Priority_Simple_Task::svc ()
       ++iterations_;
 
       // immediately suspend self
-      ACE_OS::thr_suspend (thread_id_);
+      if (ACE_OS::thr_suspend (thread_id_) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "thr_suspend"), -1);
+        }
 
 #if DEBUG > 0
       ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task::svc, resumed (%u)\n",
@@ -375,14 +381,14 @@ High_Priority_Simple_Task::done ()
 class Ping_Suspend_Resume_Test : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  Ping_Suspend_Resume_Test (const unsigned long iterations);
+  Ping_Suspend_Resume_Test (const ACE_UINT32 iterations);
   virtual ~Ping_Suspend_Resume_Test ();
 
   virtual int svc ();
 
   ACE_hrtime_t elapsed_time () const { return elapsed_time_; }
 private:
-  const unsigned long iterations_;
+  const ACE_UINT32 iterations_;
 
   High_Priority_Simple_Task high_;
 
@@ -390,14 +396,15 @@ private:
 
   ACE_hrtime_t elapsed_time_;
 
-  // force proper construction of independent instances
+  // Force proper construction of independent instances.
   Ping_Suspend_Resume_Test ();
   Ping_Suspend_Resume_Test (const Ping_Suspend_Resume_Test &);
   Ping_Suspend_Resume_Test &operator= (const Ping_Suspend_Resume_Test &);
 };
 
-Ping_Suspend_Resume_Test::Ping_Suspend_Resume_Test (const unsigned long
-                                                    iterations) :
+Ping_Suspend_Resume_Test::Ping_Suspend_Resume_Test (
+  const ACE_UINT32 iterations)
+:
   ACE_Task<ACE_MT_SYNCH> (),
   iterations_ (iterations),
   high_ (),
@@ -407,7 +414,7 @@ Ping_Suspend_Resume_Test::Ping_Suspend_Resume_Test (const unsigned long
   ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test ctor\n"));
 #endif /* DEBUG */
 
-  this->activate (THR_BOUND | THR_DETACHED |  new_lwp, 1, 0, LOW_PRIORITY);
+  this->activate (THR_BOUND | THR_SCHED_FIFO | new_lwp, 1, 0, LOW_PRIORITY);
 }
 
 Ping_Suspend_Resume_Test::~Ping_Suspend_Resume_Test()
@@ -437,13 +444,13 @@ Ping_Suspend_Resume_Test::svc ()
               priority, high_priority));
 #endif /* DEBUG */
 
-  // for information:  the cost of the just the loop itself below,
+  // For information:  the cost of the just the loop itself below,
   // without the suspend and resume calls, on a 166 MHz Ultrasparc
-  // is about 12.3 nanoseconds per iteration
+  // is about 12.3 nanoseconds per iteration.
 
   timer_.start ();
 
-  for (unsigned long i = 0; i < iterations_; ++i)
+  for (ACE_UINT32 i = 0; i < iterations_; ++i)
     {
 #if DEBUG > 0
       if (i % (iterations_ >= 10  ?  iterations_ / 10  :  1) ==  0)
@@ -453,8 +460,14 @@ Ping_Suspend_Resume_Test::svc ()
                       i, high_.thread_id ()));
         }
 #endif /* DEBUG */
-      ACE_OS::thr_continue (high_.thread_id ());
-      ACE_OS::thr_yield ();
+      if (ACE_OS::thr_continue (high_.thread_id ()) != 0  &&
+          errno != EINVAL)
+        // EINVAL is OK:  it just means that the thread needs to be joined.
+        {
+          ACE_ERROR ((LM_ERROR, "%p\n", "thr_continue"));
+          high_.done ();
+          return -1;
+        }
     }
 
   timer_.stop ();
@@ -466,12 +479,13 @@ Ping_Suspend_Resume_Test::svc ()
                         "task to terminate\n"));
 #endif /* DEBUG */
 
-  // resume the thread just one more time, to let it finish execution . . .
-  ACE_OS::thr_continue (high_.thread_id ());
-  ACE_OS::thr_yield ();
+  // Resume the thread until thr_continue fails, indicating that it has
+  // finished.
+  for (ACE_UINT32 i = 0; i < 10000  &&  ! ACE_OS::thr_continue (high_.thread_id ());
+       ++i) /* null */;
 
-  // don't count the one iteration that was used to allow the high-priority
-  // thread to terminate
+  // Don't count the one iteration that was used to allow the high-priority
+  // thread to terminate.
   if (high_.iterations () < iterations_)
     {
       ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test: high priority task "
@@ -496,25 +510,25 @@ Ping_Suspend_Resume_Test::svc ()
 class Yield_Test : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  Yield_Test (const unsigned long iterations);
+  Yield_Test (const ACE_UINT32 iterations);
   virtual ~Yield_Test ();
 
   virtual int svc ();
 
   ACE_hrtime_t elapsed_time () const { return elapsed_time_; }
 private:
-  const unsigned long iterations_;
+  const ACE_UINT32 iterations_;
   ACE_Barrier timer_barrier_;
   ACE_High_Res_Timer timer_;
   ACE_hrtime_t elapsed_time_;
 
-  // force proper construction of independent instances
+  // Force proper construction of independent instances.
   Yield_Test ();
   Yield_Test (const Yield_Test &);
   Yield_Test &operator= (const Yield_Test &);
 };
 
-Yield_Test::Yield_Test (const unsigned long iterations) :
+Yield_Test::Yield_Test (const ACE_UINT32 iterations) :
   ACE_Task<ACE_MT_SYNCH> (),
   iterations_ (iterations),
   timer_barrier_ (3),
@@ -526,7 +540,7 @@ Yield_Test::Yield_Test (const unsigned long iterations) :
 
   timer_.start ();
 
-  this->activate (THR_BOUND | THR_DETACHED |  new_lwp, 2, 0, LOW_PRIORITY);
+  this->activate (THR_BOUND | THR_SCHED_FIFO | new_lwp, 2, 0, LOW_PRIORITY);
 
   timer_barrier_.wait ();
 
@@ -554,7 +568,7 @@ Yield_Test::svc ()
               priority));
 #endif /* DEBUG */
 
-  for (unsigned long i = 0; i < iterations_; ++i)
+  for (ACE_UINT32 i = 0; i < iterations_; ++i)
     {
 #if DEBUG > 0
       if (i % (iterations_ >= 10  ?  iterations_ / 10  :  1) ==  0)
@@ -563,6 +577,7 @@ Yield_Test::svc ()
                       thread_id, i));
         }
 #endif /* DEBUG */
+
       ACE_OS::thr_yield ();
     }
 
@@ -583,7 +598,7 @@ Yield_Test::svc ()
 ///////////////////////////////////////////////////////////////////////////////
 
 static
-unsigned int
+u_int
 get_options (int argc, char *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, "c:n?");
@@ -648,9 +663,9 @@ get_options (int argc, char *argv[])
 int
 main (int argc, char *argv [])
 {
-  ACE_LOG_MSG->open (argv[0] ? argv[0] : "context_switch_time");
+  ACE_LOG_MSG->open (argv[0] > 0  ?  argv[0]  :  "context_switch_time");
 
-  // Disable LM_DEBUG
+  // Disable LM_DEBUG.
   ACE_Log_Msg::instance ()->priority_mask (ACE_LOG_MSG->priority_mask () ^
                                            LM_DEBUG);
 
@@ -674,68 +689,85 @@ main (int argc, char *argv [])
         }
     }
 
-  LOW_PRIORITY = ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
+  LOW_PRIORITY = ACE_THR_PRI_FIFO_DEF;
   HIGH_PRIORITY = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                                    LOW_PRIORITY);
-
   ACE_DEBUG ((LM_INFO, "low priority: %d, high priority: %d\n",
               LOW_PRIORITY, HIGH_PRIORITY));
+
+  // Set the priority of this thread so that it's higher than any of
+  // the test threads.  That might help avoid problems when waiting on
+  // those threads, below.  It also seems to help the times
+  // significantly on LynxOS.
+  ACE_hthread_t self;
+  ACE_OS::thr_self (self);
+  ACE_OS::thr_setprio (ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+                                                        HIGH_PRIORITY));
 
   int forever = count == 0;
 
   while (forever  ||  count-- > 0)
     {
-      // run suspend/resume test first . . .
-      Suspend_Resume_Test suspend_resume_test (num_iterations);
-      // Wait for all tasks to exit.
-      ACE_Thread_Manager::instance ()->wait ();
-
-      // then Ping Suspend/Resume test
-      Ping_Suspend_Resume_Test ping_suspend_resume_test (num_iterations);
-      // Wait for all tasks to exit.
-      ACE_Thread_Manager::instance ()->wait ();
-
-      // NOTE:  the divisions by (ACE_UINT32) 1u below allow transparent
-      // support of ACE_U_LongLongs.
-
-      if (ping_suspend_resume_test.elapsed_time () >
-           suspend_resume_test.elapsed_time ())
+      // Check to see if thr_continue (), and therefore thr_suspend (),
+      // probably, are supported.
+      if (ACE_OS::thr_continue (self) == 0  ||
+          errno != ENOTSUP)
         {
-          ACE_DEBUG ((LM_INFO, "context switch time is (%.3f - %.3f)/2 = "
-                               "%.3f microseconds\n",
-                      (double) (ping_suspend_resume_test.elapsed_time ()/
-                                (ACE_UINT32) 1u) /
-                        num_iterations,
-                      (double) (suspend_resume_test.elapsed_time ()/
-                                (ACE_UINT32) 1u) /
-                        num_iterations,
-                      (double) ((ping_suspend_resume_test.elapsed_time () -
-                                  suspend_resume_test.elapsed_time ())/
-                                (ACE_UINT32) 1u) /
-                        num_iterations / 2));
-        }
-      else
-        {
-          ACE_DEBUG ((LM_INFO, "ping suspend/resume time of %.3f usec was "
-                               "less than suspend/resume time of %.3f\n",
-                      (double) (ping_suspend_resume_test.elapsed_time ()/
-                                (ACE_UINT32) 1u) /
-                        num_iterations,
-                      (double) (suspend_resume_test.elapsed_time ()/
-                                (ACE_UINT32) 1u) /
-                        num_iterations));
+          // Run suspend/resume test first . . .
+          Suspend_Resume_Test suspend_resume_test (num_iterations);
+          // Wait for all tasks to exit.
+          ACE_Thread_Manager::instance ()->wait ();
+
+          // Then Ping Suspend/Resume test.
+          Ping_Suspend_Resume_Test ping_suspend_resume_test (num_iterations);
+          // Wait for all tasks to exit.
+          ACE_Thread_Manager::instance ()->wait ();
+
+          // NOTE:  the divisions by (ACE_UINT32) 1u below allow transparent
+          // support of ACE_U_LongLongs.
+
+          if (ping_suspend_resume_test.elapsed_time () >
+               suspend_resume_test.elapsed_time ())
+            {
+              ACE_DEBUG ((LM_INFO, "context switch time is (%.3f - %.3f)/2 = "
+                                   "%.3f microseconds\n",
+                          (double) (ping_suspend_resume_test.elapsed_time () /
+                                      (ACE_UINT32) 1u) /
+                                    num_iterations,
+                          (double) (suspend_resume_test.elapsed_time () /
+                                      (ACE_UINT32) 1u) /
+                                    num_iterations,
+                          (double) ((ping_suspend_resume_test.elapsed_time () -
+                                      suspend_resume_test.elapsed_time ()) /
+                                      (ACE_UINT32) 1u) /
+                                    num_iterations / 2));
+            }
+          else
+            {
+              ACE_DEBUG ((LM_INFO, "ping suspend/resume time of %.3f usec was "
+                                   "less than suspend/resume time of %.3f\n",
+                          (double) (ping_suspend_resume_test.elapsed_time () /
+                                      (ACE_UINT32) 1u) /
+                                    num_iterations,
+                          (double) (suspend_resume_test.elapsed_time () /
+                                      (ACE_UINT32) 1u) /
+                                    num_iterations));
+            }
         }
 
-      // then Yield test
+      // Then Yield test.
       Yield_Test yield_test (num_iterations);
       // Wait for all tasks to exit.
       ACE_Thread_Manager::instance ()->wait ();
 
-      ACE_DEBUG ((LM_INFO, "context switch time from yield test is %.3f "
+      // Try _really_ hard not to use floating point.
+      ACE_DEBUG ((LM_INFO, "context switch time from yield test is %u.%03u "
                            "microseconds\n",
-                  (double) (yield_test.elapsed_time ()/ (ACE_UINT32) 1u) /
-                           num_iterations /
-                    2));
+                  (ACE_UINT32)
+                    (yield_test.elapsed_time () / num_iterations / 2),
+                  (ACE_UINT32)
+                    (yield_test.elapsed_time () % (ACE_UINT32) 2000u) /
+                    (num_iterations / 1000u) / 2u));
     }
 
   return 0;
