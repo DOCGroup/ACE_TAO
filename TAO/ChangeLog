@@ -1,3 +1,14 @@
+Fri May 14 09:43:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicInterface/DII_Invocation.cpp (handle_user_exception):
+        
+          In the loop that checks for a match with the exception list, 
+          changed the local variable holding the list item to 
+          CORBA::TypeCode_var, since the list's item() method duplicates
+          the type code it returns. Thanks to Vinod Kumar 
+          <vinod_kumar@agilent.com> for reporting the potential memory
+          leak.
+
 Thu May 13 22:35:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Param_Test/helper.cpp (gen_fixed_struct, gen_step):
