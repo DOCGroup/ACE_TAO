@@ -1278,7 +1278,7 @@ UTL_Scope::lookup_pseudo (Identifier *e)
               else if (vb_lookup)
                 {
                   ACE_SET_BITS (idl_global->decls_seen_info_,
-                                idl_global->decls_seen_masks.valuetype_seen_);
+                                idl_global->decls_seen_masks.valuebase_seen_);
                 }
             }
 

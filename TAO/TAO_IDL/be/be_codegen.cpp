@@ -1343,8 +1343,6 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
   // Always included.
 
   this->gen_standard_include (this->client_header_,
-                              "tao/CDR.h");
-  this->gen_standard_include (this->client_header_,
                               "tao/Environment.h");
 
   // Conditionally included.
@@ -1385,11 +1383,24 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
     }
 
   if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                       idl_global->decls_seen_masks.valuetype_seen_))
+                       idl_global->decls_seen_masks.valuebase_seen_))
     {
       // Include files from the Valuetype library.
       this->gen_standard_include (this->client_header_,
                                   "tao/Valuetype/ValueBase.h");
+    }
+                                  
+  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                       idl_global->decls_seen_masks.valuetype_seen_))
+    {
+      // Don't want to generate this twice.
+      if (!ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                          idl_global->decls_seen_masks.valuebase_seen_))
+        {
+          this->gen_standard_include (this->client_header_,
+                                      "tao/Valuetype/ValueBase.h");
+        }
+                                  
       this->gen_standard_include (this->client_header_,
                                   "tao/Valuetype/Valuetype_Adapter_Impl.h");
 
@@ -1464,6 +1475,10 @@ TAO_CodeGen::gen_stub_src_includes (void)
                        << be_global->be_get_client_hdr_fname (1)
                        << "\"";
 
+  // Always generated.
+  this->gen_standard_include (this->client_stubs_,
+                              "tao/CDR.h");
+                              
   // Conditional includes.
 
   // Operations for local interfaces are pure virtual.
@@ -1500,9 +1515,15 @@ TAO_CodeGen::gen_stub_src_includes (void)
       if (!ACE_BIT_ENABLED (idl_global->decls_seen_info_,
                             idl_global->decls_seen_masks.valuetype_seen_))
         {
-          // For AMI exception holders.
-          this->gen_standard_include (this->client_stubs_,
-                                      "tao/Valuetype/ValueBase.h");
+          // This may already be in the generated header file.
+          if (!ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                           idl_global->decls_seen_masks.valuebase_seen_))
+            {
+              // For AMI exception holders.
+              this->gen_standard_include (this->client_stubs_,
+                                          "tao/Valuetype/ValueBase.h");
+            }
+            
           this->gen_standard_include (this->client_stubs_,
                                       "tao/Valuetype/Valuetype_Adapter_Impl.h");
         }
