@@ -1,3 +1,13 @@
+Wed Nov 25 00:47:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Invocation.cpp (invoke): Reordered error handling so
+	  handle_close (of client side connection) happens in the right
+	  places.
+	
+	* tao/GIOP.cpp (send_error): 
+	* tao/Connect.cpp (handle_input): Prevent handle_close from being
+	  called in here.  Simply return -1 should do the trick.
+
 Tue Nov 24 15:03:19 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Invocation.cpp (location_forward): Removed an unused
