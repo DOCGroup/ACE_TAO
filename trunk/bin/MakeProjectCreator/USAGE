@@ -15,7 +15,7 @@ Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
               [-noreldefs] [-notoplevel] [-static] [-static_only]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
-              [-feature_file <file name>]
+              [-feature_file <file name>] [-make_coexistence]
               [-type <borland | em3 | ghs | gnuace | make | nmake |
                       va4 | vc6 | vc7 | vc71>]
               [files]
@@ -42,6 +42,8 @@ Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
        -relative       Any $() variable in an mpc that is matched to NAME
                        is replaced by VAR only if VAR can be made into a
                        relative path based on the current working directory.
+       -make_coexistence If multiple 'make' based project types are
+                       generated, they will be named such that they can coexist.
        -noreldefs      Do not try to generate default relative definitions.
        -notoplevel     Do not generate the top level target file.  Files
                        are still process, but no top level file is created.
@@ -121,7 +123,7 @@ Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
               [-noreldefs] [-notoplevel] [-static] [-static_only]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
-              [-feature_file <file name>]
+              [-feature_file <file name>] [-make_coexistence]
               [-type <borland | em3 | ghs | gnuace | make | nmake |
                       va4 | vc6 | vc7 | vc71>]
               [files]
@@ -148,6 +150,8 @@ Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
        -relative       Any $() variable in an mpc that is matched to NAME
                        is replaced by VAR only if VAR can be made into a
                        relative path based on the current working directory.
+       -make_coexistence If multiple 'make' based project types are
+                       generated, they will be named such that they can coexist.
        -noreldefs      Do not try to generate default relative definitions.
        -notoplevel     Do not generate the top level target file.  Files
                        are still process, but no top level file is created.
