@@ -102,6 +102,41 @@ SOURCE=.\Job.idl
 
 !IF  "$(CFG)" == "Common_IDL_Gen - Win32 Release"
 
+# Begin Custom Build
+InputPath=.\Job.idl
+InputName=Job
+
+BuildCmds= \
+	..\..\..\bin\Release\tao_idl -Sc -Ge 1 -I$(TAO_ROOT)/tao/RTScheduling  -I$(TAO_ROOT)/tao/RTCORBA -I$(TAO_ROOT)/tao/PortableServer -I$(TAO_ROOT)/tao/PortableInterceptor  $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
 !ELSEIF  "$(CFG)" == "Common_IDL_Gen - Win32 Debug"
 
 # Begin Custom Build
@@ -147,6 +182,41 @@ BuildCmds= \
 SOURCE=.\Synch.idl
 
 !IF  "$(CFG)" == "Common_IDL_Gen - Win32 Release"
+
+# Begin Custom Build
+InputPath=.\Synch.idl
+InputName=Synch
+
+BuildCmds= \
+	..\..\..\bin\Release\tao_idl -Sc -Ge 1 -I$(TAO_ROOT)/tao/RTScheduling  -I$(TAO_ROOT)/tao/RTCORBA -I$(TAO_ROOT)/tao/PortableServer -I$(TAO_ROOT)/tao/PortableInterceptor  $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
 
 !ELSEIF  "$(CFG)" == "Common_IDL_Gen - Win32 Debug"
 
