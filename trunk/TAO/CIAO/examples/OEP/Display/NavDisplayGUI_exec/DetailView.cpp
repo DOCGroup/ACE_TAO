@@ -127,9 +127,9 @@ DetailView::currentNode(NavUnit *unit)
 void
 DetailView::updateLocation(const UnitLocation &loc)
 {
-  x_edit->setValue(loc.x_);
-  y_edit->setValue(loc.y_);
-  z_edit->setValue(loc.z_);
+  x_edit->setValue(static_cast<int>(loc.x_));
+  y_edit->setValue(static_cast<int>(loc.y_));
+  z_edit->setValue(static_cast<int>(loc.z_));
 }
 
 void
