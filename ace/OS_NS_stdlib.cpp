@@ -14,7 +14,7 @@ ACE_RCSID (ace,
 
 #include "ace/OS_NS_unistd.h"
 
-#if defined (ACE_LACKS_MKTEMP) \
+#if defined (ACE_LACKS_MKTEMP)
     || defined (ACE_LACKS_MKSTEMP) \
     || defined (ACE_LACKS_REALPATH)
 #  include "ace/OS_NS_stdio.h"
@@ -22,10 +22,12 @@ ACE_RCSID (ace,
 #endif /* ACE_LACKS_MKTEMP || ACE_LACKS_MKSTEMP || ACE_LACKS_REALPATH */
 
 #if defined (ACE_LACKS_MKSTEMP)
-#  include "ace/OS_NS_fcntl.h"
-#  include "ace/OS_NS_ctype.h"
-#  include "ace/OS_NS_sys_time.h"
-#  include "ace/os_include/os_limits.h"
+# include "ace/OS_NS_fcntl.h"
+# include "ace/OS_NS_ctype.h"
+# include "ace/OS_NS_sys_time.h"
+# if !defined (ACE_HAS_WINCE) && !defined (ACE_VXWORKS)
+#  include /**/ <limits>
+# endif
 #endif  /* ACE_LACKS_MKSTEMP */
 
 ACE_EXIT_HOOK ACE_OS::exit_hook_ = 0;
