@@ -95,6 +95,14 @@ SOURCE=.\Consumer.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Counting_Consumer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Counting_Supplier.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Driver.cpp
 # End Source File
 # Begin Source File
@@ -108,6 +116,14 @@ SOURCE=.\Supplier.cpp
 # Begin Source File
 
 SOURCE=.\Consumer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Counting_Consumer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Counting_Supplier.h
 # End Source File
 # Begin Source File
 
