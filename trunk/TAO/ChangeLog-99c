@@ -1,3 +1,17 @@
+Thu Aug  5 15:46:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp:
+	  Fixed the wildcard matching routines, wildcards on the producers 
+	  where not matched properly. This fixes [BUGID:96]
+
+	* orbsvcs/tests/Event/Basic/Makefile:
+	* orbsvcs/tests/Event/Basic/run_test.pl:
+	* orbsvcs/tests/Event/Basic/Wildcard.h:
+	* orbsvcs/tests/Event/Basic/Wildcard.cpp:
+	  Added a new test to verify that the wildcard features in the
+	  event channel do work. Thanks to Paul Calabrese for pointing out 
+	  these problems.
+
 Thu Aug 05 15:29:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp
