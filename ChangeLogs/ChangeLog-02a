@@ -2,11 +2,11 @@ Sat Feb 26 19:52:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/CDR_Stream.cpp:
           The grow() function was re-allocating the buffer even when there
-          was just enough memory, i.e. this was an off-by-one error, in
-          the form of a < instead of <= comparison.
-          When it finally decided to grow the buffer it was using the
-          global heap instead of the allocators in the message block, that
-          have to potential of beign more efficient.
+ 	  was just enough memory, i.e. this was an off-by-one error, in
+ 	  the form of a < instead of <= comparison.  When it finally
+ 	  decided to grow the buffer it was using the global heap instead
+ 	  of the allocators in the message block, which may be more
+ 	  efficient.
 
 Sat Feb 26 19:47:05 2000  Ossama Othman  <ossama@uci.edu>
 
