@@ -1,6 +1,9 @@
 /* -*- C++ -*- */
 // $Id$
 
+#if defined (ACE_HAS_PACE)
+#include "pace/dirent.h"
+#endif /* ACE_HAS_PACE */
 ACE_INLINE DIR *
 ACE_OS_Dirent::opendir (const ACE_TCHAR *filename)
 {
@@ -184,7 +187,7 @@ ACE_INLINE void
 ACE_OS_Dirent::rewinddir (DIR *d)
 {
 #if defined (ACE_HAS_PACE)
-  return pace_rewinddir (d);
+  pace_rewinddir (d);
 #elif defined (ACE_HAS_DIRENT)
 # if defined (ACE_LACKS_SEEKDIR)
 #  if defined (ACE_LACKS_REWINDDIR)
