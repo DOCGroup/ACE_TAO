@@ -89,6 +89,10 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\Interceptor_Type.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\interceptors.cpp
 # End Source File
 # Begin Source File
@@ -98,6 +102,10 @@ SOURCE=.\marker.cpp
 # Begin Source File
 
 SOURCE=.\server.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Server_ORBInitializer.cpp
 # End Source File
 # Begin Source File
 
@@ -117,11 +125,19 @@ SOURCE=.\testS.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\Interceptor_Type.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\interceptors.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\marker.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Server_ORBInitializer.h
 # End Source File
 # Begin Source File
 
