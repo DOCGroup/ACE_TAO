@@ -1,3 +1,13 @@
+Tue Oct 15 10:05:01 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * tao/Messaging/MessagingC.cpp:
+        * tao/Messaging/MessagingC.h:
+        * tao/PortableServer/Default_ORTC.cpp:
+        * tao/PortableServer/Default_ORTC.h:
+
+          Fixed some things I overlooked before get these files to match up
+          with generated code.
+
 Mon Oct 14 18:52:06 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.cpp
