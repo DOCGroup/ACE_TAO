@@ -58,7 +58,11 @@ ifeq ($(versioned_so),1)
   else
     ifeq ($(with_ld),openbsd)
     else
-      SOFLAGS += -Wl,-h -Wl,$(SONAME)
+      ifeq ($(with_ld),aix)
+      # What to do here???
+      else
+        SOFLAGS += -Wl,-h -Wl,$(SONAME)
+      endif
     endif
   endif
 endif

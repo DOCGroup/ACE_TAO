@@ -28,9 +28,6 @@ endif
 ifeq (,$(buildbits))
   buildbits = native
 endif
-ifeq (,$(versioned_so))
-  versioned_so = 0
-endif
 ifeq (,$(with_ld))
   with_ld = aix
 endif
@@ -79,7 +76,7 @@ ifeq ($(threads),1)
 SOFLAGS        += -pthread
 endif
 SOFLAGS        += -shared -Wl,-bexpall # -Wl,-bloadmap:lib.map
-LIBS           += -ltli_r -ldl
+LIBS           += -lxti -ldl
 ARFLAGS         = cruv
 RANLIB          = ranlib
 

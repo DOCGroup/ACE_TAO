@@ -1,3 +1,24 @@
+Tue Jan  6 17:50:31 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/TLI.cpp (get_option, set_option): For the XPG5 case, use
+	  a auto_ptr<char> to hold the allocated buff pointer, even though
+	  it's a void*, to compile correctly. Need to cast this to make
+	  it work.
+
+	* include/makeinclude/platform_aix_g++.GNU: Change -ltli_r to -lxti
+	  to use XTI instead of TLI. Also see:
+	  Mon Dec 29 17:09:29 2003  Steve Huston  <shuston@riverace.com>
+	  Removed the versioned_so=0 default - with versioned_so=0, the rule
+	  for making VLIB gets overridden by the one for VSHLIB: shr.o. Not
+	  sure how to remedy this, but by making a versioned_so, it's at
+	  least building it normally.
+
+	* include/makeinclude/platform_g++_common.GNU: Made with_ld=aix not
+	  try to set any versioned_so linker options. The default doesn't work,
+	  and as long as we're linking to archives that contain shr.o, this
+	  is probably fine. If we ever get rtl mode working, this probably
+	  needs to be revisited.
+
 Tue Jan  6 14:00:12 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/Logging/Trace.h:
