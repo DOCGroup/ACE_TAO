@@ -1,3 +1,9 @@
+Fri Jul 23 16:08:21 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/SOCK_Acceptor.cpp (accept): Added a check whether addr == 0
+	  before calling a method on it.  Thanks to Heiko Nardmann
+ 	  <heiko.nardmann@secunet.com> for reporting this.
+
 Fri Jul 23 10:19:00 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Proactor.cpp (timeout):
@@ -5,7 +11,7 @@ Fri Jul 23 10:19:00 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  Release the asynch_timer instance from the auto_ptr<> after the
 	  completion has been posted and prior to exiting this method
 	  successfully.  Once the completion is posted, the proactor
-	  becomes response for managing the asynch_timer memory.
+	  becomes responsible for managing the asynch_timer memory.
 	  Addresses memory access violations revealed by a
 	  Proactor_Timer_Test failure.  Thanks to Johnny for pointing out
 	  the failure.
