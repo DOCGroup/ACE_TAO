@@ -27,6 +27,7 @@
 
 #include "WrongTransactionC.h"
 #include "tao/Typecode.h"
+#include "tao/SystemException.h"
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
@@ -171,4 +172,3 @@ CORBA::Boolean operator>>= (
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

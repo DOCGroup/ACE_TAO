@@ -15,7 +15,7 @@ ACE_RCSID (tao,
 
 template <typename T>
 TAO_Objref_Var_T<T>::TAO_Objref_Var_T (void)
-  : ptr_ (TAO::Objref_Traits<T>::tao_nil ())
+  : ptr_ (TAO::Objref_Traits<T>::nil ())
 {
 }
 
@@ -24,21 +24,21 @@ TAO_Objref_Var_T<T>::TAO_Objref_Var_T (
     const TAO_Objref_Var_T<T> & p
   )
   : TAO_Base_var (),
-    ptr_ (TAO::Objref_Traits<T>::tao_duplicate (p.ptr ()))
+    ptr_ (TAO::Objref_Traits<T>::duplicate (p.ptr ()))
 {
 }
 
 template <typename T>
 TAO_Objref_Var_T<T>::~TAO_Objref_Var_T (void)
 {
-  TAO::Objref_Traits<T>::tao_release (this->ptr_);
+  TAO::Objref_Traits<T>::release (this->ptr_);
 }
 
 template <typename T>
 TAO_Objref_Var_T<T> &
 TAO_Objref_Var_T<T>::operator= (T * p)
 {
-  TAO::Objref_Traits<T>::tao_release (this->ptr_);
+  TAO::Objref_Traits<T>::release (this->ptr_);
   this->ptr_ = p;
   return *this;
 }
@@ -51,8 +51,8 @@ TAO_Objref_Var_T<T>::operator= (
 {
   if (this != &p)
     {
-      TAO::Objref_Traits<T>::tao_release (this->ptr_);
-      this->ptr_ = TAO::Objref_Traits<T>::tao_duplicate (p.ptr ());
+      TAO::Objref_Traits<T>::release (this->ptr_);
+      this->ptr_ = TAO::Objref_Traits<T>::duplicate (p.ptr ());
     }
 
   return *this;
@@ -95,8 +95,8 @@ template <typename T>
 T *&
 TAO_Objref_Var_T<T>::out (void)
 {
-  TAO::Objref_Traits<T>::tao_release (this->ptr_);
-  this->ptr_ = TAO::Objref_Traits<T>::tao_nil ();
+  TAO::Objref_Traits<T>::release (this->ptr_);
+  this->ptr_ = TAO::Objref_Traits<T>::nil ();
   return this->ptr_;
 }
 
@@ -105,7 +105,7 @@ T *
 TAO_Objref_Var_T<T>::_retn (void)
 {
   T * val = this->ptr_;
-  this->ptr_ = TAO::Objref_Traits<T>::tao_nil ();
+  this->ptr_ = TAO::Objref_Traits<T>::nil ();
   return val;
 }
 
@@ -120,14 +120,14 @@ template <typename T>
 void
 TAO_Objref_Var_T<T>::free (void)
 {
-  TAO::Objref_Traits<T>::tao_release (this->ptr_);
+  TAO::Objref_Traits<T>::release (this->ptr_);
 }
 
 template <typename T>
 void
 TAO_Objref_Var_T<T>::reset (T * p)
 {
-  TAO::Objref_Traits<T>::tao_release (this->ptr_);
+  TAO::Objref_Traits<T>::release (this->ptr_);
   this->ptr_ = p;
 }
 
@@ -137,7 +137,7 @@ template <typename T>
 TAO_Objref_Out_T<T>::TAO_Objref_Out_T (T *& p)
   : ptr_ (p)
 {
-  this->ptr_ = TAO::Objref_Traits<T>::tao_nil ();
+  this->ptr_ = TAO::Objref_Traits<T>::nil ();
 }
 
 template <typename T>
@@ -146,8 +146,8 @@ TAO_Objref_Out_T<T>::TAO_Objref_Out_T (
   )
   : ptr_ (p.out ())
 {
-  TAO::Objref_Traits<T>::tao_release (this->ptr_);
-  this->ptr_ = TAO::Objref_Traits<T>::tao_nil ();
+  TAO::Objref_Traits<T>::release (this->ptr_);
+  this->ptr_ = TAO::Objref_Traits<T>::nil ();
 }
 
 template <typename T>
@@ -174,7 +174,7 @@ TAO_Objref_Out_T<T>::operator= (
     const TAO_Objref_Var_T<T> & p
   )
 {
-  this->ptr_ = TAO::Objref_Traits<T>::tao_duplicate (p.ptr ());
+  this->ptr_ = TAO::Objref_Traits<T>::duplicate (p.ptr ());
   return *this;
 }
 

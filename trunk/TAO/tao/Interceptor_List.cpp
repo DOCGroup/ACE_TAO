@@ -1,6 +1,7 @@
 // $Id$
 
 #include "tao/Interceptor_List.h"
+#include "tao/SystemException.h"
 #include "tao/ORB_Constants.h"
 #include "ace/os_include/os_stddef.h"
 #include "ace/OS_NS_string.h"
@@ -88,7 +89,7 @@ TAO_Interceptor_List::add_interceptor_i (
       ACE_THROW_RETURN (
           CORBA::INV_OBJREF (
               CORBA::SystemException::_tao_minor_code (
-                  TAO_DEFAULT_MINOR_CODE,
+                  0,
                   EINVAL
                 ),
               CORBA::COMPLETED_NO

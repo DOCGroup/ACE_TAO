@@ -58,7 +58,7 @@ namespace TAO
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Current_ptr
-TAO::Objref_Traits<CORBA::Current>::tao_duplicate (
+TAO::Objref_Traits<CORBA::Current>::duplicate (
     CORBA::Current_ptr p
   )
 {
@@ -67,7 +67,7 @@ TAO::Objref_Traits<CORBA::Current>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<CORBA::Current>::tao_release (
+TAO::Objref_Traits<CORBA::Current>::release (
     CORBA::Current_ptr p
   )
 {
@@ -76,14 +76,14 @@ TAO::Objref_Traits<CORBA::Current>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Current_ptr
-TAO::Objref_Traits<CORBA::Current>::tao_nil (void)
+TAO::Objref_Traits<CORBA::Current>::nil (void)
 {
   return CORBA::Current::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<CORBA::Current>::tao_marshal (
+TAO::Objref_Traits<CORBA::Current>::marshal (
     CORBA::Current_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -92,7 +92,7 @@ TAO::Objref_Traits<CORBA::Current>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*CORBA__TAO_Current_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -103,7 +103,7 @@ CORBA::Current::Current (void)
 CORBA::Current::~Current (void)
 {}
 
-void 
+void
 CORBA::Current::_tao_any_destructor (void *_tao_void_pointer)
 {
   Current *_tao_tmp_pointer =
@@ -121,10 +121,10 @@ CORBA::Current::_narrow (
     {
       return Current::_nil ();
     }
-  
+
   Current_ptr proxy =
     dynamic_cast<Current_ptr> (_tao_objref);
-  
+
   return Current::_duplicate (proxy);
 }
 
@@ -138,10 +138,10 @@ CORBA::Current::_unchecked_narrow (
     {
       return Current::_nil ();
     }
-  
+
   Current_ptr proxy =
     dynamic_cast<Current_ptr> (_tao_objref);
-  
+
   return Current::_duplicate (proxy);
 }
 
@@ -152,7 +152,7 @@ CORBA::Current::_duplicate (Current_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -210,7 +210,7 @@ CORBA::Current::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T<
         CORBA::Current
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         CORBA::Current
@@ -227,11 +227,10 @@ CORBA::Current::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T< \
         CORBA::Current
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         CORBA::Current
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Exception.h"
+#include "tao/SystemException.h"
 #include "tao/PI_ForwardC.h"
 
 namespace PortableInterceptor

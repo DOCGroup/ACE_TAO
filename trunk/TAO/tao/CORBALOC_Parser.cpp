@@ -2,6 +2,7 @@
 #include "ORB_Core.h"
 #include "Stub.h"
 #include "Connector_Registry.h"
+#include "SystemException.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
@@ -280,7 +281,7 @@ TAO_CORBALOC_Parser::parse_string_mprofile_helper (
     {
       ACE_THROW (CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
-                      TAO_DEFAULT_MINOR_CODE,
+                      0,
                       EINVAL),
                    CORBA::COMPLETED_NO));
     }

@@ -2036,6 +2036,20 @@ TAO_ORB_Core::destroy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
+TAO_ORB_Core::check_shutdown (ACE_ENV_SINGLE_ARG_DECL)
+{
+  if (this->has_shutdown ())
+    {
+      // As defined by the CORBA 2.3 specification, throw a
+      // CORBA::BAD_INV_ORDER exception with minor code 4 if the ORB
+      // has shutdown by the time an ORB function is called.
+
+      ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 4,
+                                       CORBA::COMPLETED_NO));
+    }
+}
+
+void
 TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC (())
 {

@@ -7,10 +7,13 @@
 #include "ORB_Constants.h"
 #include "StringSeqC.h"
 #include "DynamicC.h"
+#include "SystemException.h"
 
-ACE_RCSID (tao, 
-           RequestInfo_Util, 
+
+ACE_RCSID (tao,
+           RequestInfo_Util,
            "$Id$")
+
 
 Dynamic::ParameterList *
 TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_DECL)
@@ -20,7 +23,7 @@ TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_DECL)
                     Dynamic::ParameterList,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
 
@@ -37,7 +40,7 @@ TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_DECL)
                     Dynamic::ExceptionList,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
 
@@ -54,7 +57,7 @@ TAO_RequestInfo_Util::make_context_list (ACE_ENV_SINGLE_ARG_DECL)
                     Dynamic::ContextList,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
 
@@ -71,7 +74,7 @@ TAO_RequestInfo_Util::make_request_context (ACE_ENV_SINGLE_ARG_DECL)
                     Dynamic::RequestContext,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
 
@@ -89,7 +92,7 @@ TAO_RequestInfo_Util::make_any (CORBA::Boolean tk_void_any
                     CORBA::Any,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
 

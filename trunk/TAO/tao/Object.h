@@ -422,11 +422,11 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<CORBA::Object>
   {
-    static CORBA::Object_ptr tao_duplicate (CORBA::Object_ptr);
-    static void tao_release (CORBA::Object_ptr);
-    static CORBA::Object_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (CORBA::Object_ptr p,
-                                       TAO_OutputCDR & cdr);
+    static CORBA::Object_ptr duplicate (CORBA::Object_ptr);
+    static void release (CORBA::Object_ptr);
+    static CORBA::Object_ptr nil (void);
+    static CORBA::Boolean marshal (CORBA::Object_ptr p,
+                                   TAO_OutputCDR & cdr);
   };
 
   /**

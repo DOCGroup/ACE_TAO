@@ -83,19 +83,19 @@ namespace TAO
   using namespace CORBA;
 
   void
-  Value_Traits<ValueFactoryBase>::tao_add_ref (ValueFactoryBase *p)
+  Value_Traits<ValueFactoryBase>::add_ref (ValueFactoryBase *p)
   {
     CORBA::add_ref (p);
   }
 
   void
-  Value_Traits<ValueFactoryBase>::tao_remove_ref (ValueFactoryBase * p)
+  Value_Traits<ValueFactoryBase>::remove_ref (ValueFactoryBase * p)
   {
     CORBA::remove_ref (p);
   }
 
   void
-  Value_Traits<ValueFactoryBase>::tao_release (ValueFactoryBase * p)
+  Value_Traits<ValueFactoryBase>::release (ValueFactoryBase * p)
   {
     CORBA::remove_ref (p);
   }

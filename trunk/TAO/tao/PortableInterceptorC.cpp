@@ -32,6 +32,7 @@
 #include "PortableInterceptorC.h"
 #include "tao/CDR.h"
 #include "tao/Typecode.h"
+#include "tao/SystemException.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -58,7 +59,7 @@ namespace TAO
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::Interceptor_ptr
-TAO::Objref_Traits<PortableInterceptor::Interceptor>::tao_duplicate (
+TAO::Objref_Traits<PortableInterceptor::Interceptor>::duplicate (
     PortableInterceptor::Interceptor_ptr p
   )
 {
@@ -67,7 +68,7 @@ TAO::Objref_Traits<PortableInterceptor::Interceptor>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableInterceptor::Interceptor>::tao_release (
+TAO::Objref_Traits<PortableInterceptor::Interceptor>::release (
     PortableInterceptor::Interceptor_ptr p
   )
 {
@@ -76,14 +77,14 @@ TAO::Objref_Traits<PortableInterceptor::Interceptor>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::Interceptor_ptr
-TAO::Objref_Traits<PortableInterceptor::Interceptor>::tao_nil (void)
+TAO::Objref_Traits<PortableInterceptor::Interceptor>::nil (void)
 {
   return PortableInterceptor::Interceptor::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableInterceptor::Interceptor>::tao_marshal (
+TAO::Objref_Traits<PortableInterceptor::Interceptor>::marshal (
     PortableInterceptor::Interceptor_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -581,7 +582,7 @@ CORBA::TypeCode_ptr PortableInterceptor::InvalidSlot::_type (void) const
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::Current_ptr
-TAO::Objref_Traits<PortableInterceptor::Current>::tao_duplicate (
+TAO::Objref_Traits<PortableInterceptor::Current>::duplicate (
     PortableInterceptor::Current_ptr p
   )
 {
@@ -590,7 +591,7 @@ TAO::Objref_Traits<PortableInterceptor::Current>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableInterceptor::Current>::tao_release (
+TAO::Objref_Traits<PortableInterceptor::Current>::release (
     PortableInterceptor::Current_ptr p
   )
 {
@@ -599,14 +600,14 @@ TAO::Objref_Traits<PortableInterceptor::Current>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::Current_ptr
-TAO::Objref_Traits<PortableInterceptor::Current>::tao_nil (void)
+TAO::Objref_Traits<PortableInterceptor::Current>::nil (void)
 {
   return PortableInterceptor::Current::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableInterceptor::Current>::tao_marshal (
+TAO::Objref_Traits<PortableInterceptor::Current>::marshal (
     PortableInterceptor::Current_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -730,7 +731,7 @@ PortableInterceptor::Current::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::RequestInfo_ptr
-TAO::Objref_Traits<PortableInterceptor::RequestInfo>::tao_duplicate (
+TAO::Objref_Traits<PortableInterceptor::RequestInfo>::duplicate (
     PortableInterceptor::RequestInfo_ptr p
   )
 {
@@ -739,7 +740,7 @@ TAO::Objref_Traits<PortableInterceptor::RequestInfo>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableInterceptor::RequestInfo>::tao_release (
+TAO::Objref_Traits<PortableInterceptor::RequestInfo>::release (
     PortableInterceptor::RequestInfo_ptr p
   )
 {
@@ -748,14 +749,14 @@ TAO::Objref_Traits<PortableInterceptor::RequestInfo>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::RequestInfo_ptr
-TAO::Objref_Traits<PortableInterceptor::RequestInfo>::tao_nil (void)
+TAO::Objref_Traits<PortableInterceptor::RequestInfo>::nil (void)
 {
   return PortableInterceptor::RequestInfo::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableInterceptor::RequestInfo>::tao_marshal (
+TAO::Objref_Traits<PortableInterceptor::RequestInfo>::marshal (
     PortableInterceptor::RequestInfo_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -875,7 +876,7 @@ PortableInterceptor::RequestInfo::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::ClientRequestInfo_ptr
-TAO::Objref_Traits<PortableInterceptor::ClientRequestInfo>::tao_duplicate (
+TAO::Objref_Traits<PortableInterceptor::ClientRequestInfo>::duplicate (
     PortableInterceptor::ClientRequestInfo_ptr p
   )
 {
@@ -884,7 +885,7 @@ TAO::Objref_Traits<PortableInterceptor::ClientRequestInfo>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableInterceptor::ClientRequestInfo>::tao_release (
+TAO::Objref_Traits<PortableInterceptor::ClientRequestInfo>::release (
     PortableInterceptor::ClientRequestInfo_ptr p
   )
 {
@@ -893,14 +894,14 @@ TAO::Objref_Traits<PortableInterceptor::ClientRequestInfo>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::ClientRequestInfo_ptr
-TAO::Objref_Traits<PortableInterceptor::ClientRequestInfo>::tao_nil (void)
+TAO::Objref_Traits<PortableInterceptor::ClientRequestInfo>::nil (void)
 {
   return PortableInterceptor::ClientRequestInfo::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableInterceptor::ClientRequestInfo>::tao_marshal (
+TAO::Objref_Traits<PortableInterceptor::ClientRequestInfo>::marshal (
     PortableInterceptor::ClientRequestInfo_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -1024,7 +1025,7 @@ PortableInterceptor::ClientRequestInfo::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::ServerRequestInfo_ptr
-TAO::Objref_Traits<PortableInterceptor::ServerRequestInfo>::tao_duplicate (
+TAO::Objref_Traits<PortableInterceptor::ServerRequestInfo>::duplicate (
     PortableInterceptor::ServerRequestInfo_ptr p
   )
 {
@@ -1033,7 +1034,7 @@ TAO::Objref_Traits<PortableInterceptor::ServerRequestInfo>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableInterceptor::ServerRequestInfo>::tao_release (
+TAO::Objref_Traits<PortableInterceptor::ServerRequestInfo>::release (
     PortableInterceptor::ServerRequestInfo_ptr p
   )
 {
@@ -1042,14 +1043,14 @@ TAO::Objref_Traits<PortableInterceptor::ServerRequestInfo>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::ServerRequestInfo_ptr
-TAO::Objref_Traits<PortableInterceptor::ServerRequestInfo>::tao_nil (void)
+TAO::Objref_Traits<PortableInterceptor::ServerRequestInfo>::nil (void)
 {
   return PortableInterceptor::ServerRequestInfo::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableInterceptor::ServerRequestInfo>::tao_marshal (
+TAO::Objref_Traits<PortableInterceptor::ServerRequestInfo>::marshal (
     PortableInterceptor::ServerRequestInfo_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -1173,7 +1174,7 @@ PortableInterceptor::ServerRequestInfo::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::ClientRequestInterceptor_ptr
-TAO::Objref_Traits<PortableInterceptor::ClientRequestInterceptor>::tao_duplicate (
+TAO::Objref_Traits<PortableInterceptor::ClientRequestInterceptor>::duplicate (
     PortableInterceptor::ClientRequestInterceptor_ptr p
   )
 {
@@ -1182,7 +1183,7 @@ TAO::Objref_Traits<PortableInterceptor::ClientRequestInterceptor>::tao_duplicate
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableInterceptor::ClientRequestInterceptor>::tao_release (
+TAO::Objref_Traits<PortableInterceptor::ClientRequestInterceptor>::release (
     PortableInterceptor::ClientRequestInterceptor_ptr p
   )
 {
@@ -1191,14 +1192,14 @@ TAO::Objref_Traits<PortableInterceptor::ClientRequestInterceptor>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::ClientRequestInterceptor_ptr
-TAO::Objref_Traits<PortableInterceptor::ClientRequestInterceptor>::tao_nil (void)
+TAO::Objref_Traits<PortableInterceptor::ClientRequestInterceptor>::nil (void)
 {
   return PortableInterceptor::ClientRequestInterceptor::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableInterceptor::ClientRequestInterceptor>::tao_marshal (
+TAO::Objref_Traits<PortableInterceptor::ClientRequestInterceptor>::marshal (
     PortableInterceptor::ClientRequestInterceptor_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -1322,7 +1323,7 @@ PortableInterceptor::ClientRequestInterceptor::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::ServerRequestInterceptor_ptr
-TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>::tao_duplicate (
+TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>::duplicate (
     PortableInterceptor::ServerRequestInterceptor_ptr p
   )
 {
@@ -1331,7 +1332,7 @@ TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>::tao_duplicate
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>::tao_release (
+TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>::release (
     PortableInterceptor::ServerRequestInterceptor_ptr p
   )
 {
@@ -1340,14 +1341,14 @@ TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::ServerRequestInterceptor_ptr
-TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>::tao_nil (void)
+TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>::nil (void)
 {
   return PortableInterceptor::ServerRequestInterceptor::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>::tao_marshal (
+TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>::marshal (
     PortableInterceptor::ServerRequestInterceptor_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -1482,7 +1483,7 @@ PortableInterceptor::PolicyFactory::_create_policy (CORBA::PolicyType
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::PolicyFactory_ptr
-TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::tao_duplicate (
+TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::duplicate (
     PortableInterceptor::PolicyFactory_ptr p
   )
 {
@@ -1491,7 +1492,7 @@ TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::tao_release (
+TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::release (
     PortableInterceptor::PolicyFactory_ptr p
   )
 {
@@ -1500,14 +1501,14 @@ TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::PolicyFactory_ptr
-TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::tao_nil (void)
+TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::nil (void)
 {
   return PortableInterceptor::PolicyFactory::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::tao_marshal (
+TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::marshal (
     PortableInterceptor::PolicyFactory_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -1627,7 +1628,7 @@ PortableInterceptor::PolicyFactory::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::ORBInitInfo_ptr
-TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>::tao_duplicate (
+TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>::duplicate (
     PortableInterceptor::ORBInitInfo_ptr p
   )
 {
@@ -1636,7 +1637,7 @@ TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>::tao_release (
+TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>::release (
     PortableInterceptor::ORBInitInfo_ptr p
   )
 {
@@ -1645,14 +1646,14 @@ TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::ORBInitInfo_ptr
-TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>::tao_nil (void)
+TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>::nil (void)
 {
   return PortableInterceptor::ORBInitInfo::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>::tao_marshal (
+TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>::marshal (
     PortableInterceptor::ORBInitInfo_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -2068,7 +2069,7 @@ PortableInterceptor::ORBInitInfo::marshal (TAO_OutputCDR &)
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::ORBInitializer_ptr
-TAO::Objref_Traits<PortableInterceptor::ORBInitializer>::tao_duplicate (
+TAO::Objref_Traits<PortableInterceptor::ORBInitializer>::duplicate (
     PortableInterceptor::ORBInitializer_ptr p
   )
 {
@@ -2077,7 +2078,7 @@ TAO::Objref_Traits<PortableInterceptor::ORBInitializer>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<PortableInterceptor::ORBInitializer>::tao_release (
+TAO::Objref_Traits<PortableInterceptor::ORBInitializer>::release (
     PortableInterceptor::ORBInitializer_ptr p
   )
 {
@@ -2086,14 +2087,14 @@ TAO::Objref_Traits<PortableInterceptor::ORBInitializer>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::ORBInitializer_ptr
-TAO::Objref_Traits<PortableInterceptor::ORBInitializer>::tao_nil (void)
+TAO::Objref_Traits<PortableInterceptor::ORBInitializer>::nil (void)
 {
   return PortableInterceptor::ORBInitializer::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<PortableInterceptor::ORBInitializer>::tao_marshal (
+TAO::Objref_Traits<PortableInterceptor::ORBInitializer>::marshal (
     PortableInterceptor::ORBInitializer_ptr p,
     TAO_OutputCDR & cdr
   )

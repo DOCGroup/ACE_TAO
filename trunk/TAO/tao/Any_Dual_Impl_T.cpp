@@ -8,7 +8,7 @@
 #include "tao/Marshal.h"
 #include "tao/CORBA_String.h"
 #include "tao/Environment.h"
-#include "tao/Exception.h"
+#include "tao/SystemException.h"
 #include "tao/CDR.h"
 #include "tao/Typecode.h"
 

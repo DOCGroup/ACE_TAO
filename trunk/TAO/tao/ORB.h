@@ -9,7 +9,7 @@
  *  Header file for CORBA's ORB type.
  *
  *  @author  Copyright 1994-1995 by Sun Microsystems Inc.
- *  @author Douglas C. Schmidt <schmidt@uci.edu>
+ *  @author Douglas C. Schmidt <schmidt@dre.vanderbilt.edu.edu>
  */
 //=============================================================================
 
@@ -18,12 +18,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Exception.h"
+#include "SystemException.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "UserException.h"
 #include "objectid.h"
 #include "PolicyC.h"
 #include "OBV_Constants.h"

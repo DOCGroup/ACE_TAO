@@ -4,6 +4,7 @@
 #include "tao/Typecode.h"
 #include "tao/Any.h"
 #include "tao/CDR.h"
+#include "tao/SystemException.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
@@ -19,49 +20,48 @@ namespace TAO
     : Any_Impl (0, tc),
       kind_ (tc ? tc->kind_ : CORBA::tk_null)
   {
-    CORBA::TCKind tckind = ACE_static_cast (CORBA::TCKind,
-                                            this->kind_);
+    CORBA::TCKind const tckind = static_cast<CORBA::TCKind> (this->kind_);
 
     switch (tckind)
     {
       case CORBA::tk_short:
-        this->u_.s = *ACE_static_cast (CORBA::Short *, value);
+        this->u_.s = *static_cast<CORBA::Short *> (value);
         break;
       case CORBA::tk_ushort:
-        this->u_.us = *ACE_static_cast (CORBA::UShort *, value);
+        this->u_.us = *static_cast<CORBA::UShort *> (value);
         break;
       case CORBA::tk_long:
-        this->u_.l = *ACE_static_cast (CORBA::Long *, value);
+        this->u_.l = *static_cast<CORBA::Long *> (value);
         break;
       case CORBA::tk_ulong:
-         this->u_.ul = *ACE_static_cast (CORBA::ULong *, value);
+         this->u_.ul = *static_cast<CORBA::ULong *> (value);
         break;
       case CORBA::tk_float:
-        this->u_.f = *ACE_static_cast (CORBA::Float *, value);
+        this->u_.f = *static_cast<CORBA::Float *> (value);
         break;
       case CORBA::tk_double:
-        this->u_.d = *ACE_static_cast (CORBA::Double *, value);
+        this->u_.d = *static_cast<CORBA::Double *> (value);
         break;
       case CORBA::tk_boolean:
-        this->u_.b = *ACE_static_cast (CORBA::Boolean *, value);
+        this->u_.b = *static_cast<CORBA::Boolean *> (value);
         break;
       case CORBA::tk_char:
-        this->u_.c = *ACE_static_cast (CORBA::Char *, value);
+        this->u_.c = *static_cast<CORBA::Char *> (value);
         break;
       case CORBA::tk_octet:
-        this->u_.o = *ACE_static_cast (CORBA::Octet *, value);
+        this->u_.o = *static_cast<CORBA::Octet *> (value);
         break;
       case CORBA::tk_longlong:
-        this->u_.ll = *ACE_static_cast (CORBA::LongLong *, value);
+        this->u_.ll = *static_cast<CORBA::LongLong *> (value);
         break;
       case CORBA::tk_ulonglong:
-        this->u_.ull = *ACE_static_cast (CORBA::ULongLong *, value);
+        this->u_.ull = *static_cast<CORBA::ULongLong *> (value);
         break;
       case CORBA::tk_longdouble:
-        this->u_.ld = *ACE_static_cast (CORBA::LongDouble *, value);
+        this->u_.ld = *static_cast<CORBA::LongDouble *> (value);
         break;
       case CORBA::tk_wchar:
-        this->u_.wc = *ACE_static_cast (CORBA::WChar *, value);
+        this->u_.wc = *static_cast<CORBA::WChar *> (value);
         break;
       default:
         break;
@@ -80,7 +80,7 @@ namespace TAO
     Any_Basic_Impl *new_impl = 0;
     ACE_NEW (new_impl,
              Any_Basic_Impl (tc,
-                             ACE_const_cast (void *, value)));
+                             const_cast<void *> (value)));
     any.replace (new_impl);
   }
 
@@ -150,7 +150,7 @@ namespace TAO
             Any_Basic_Impl::assign_value (_tao_elem,
                                           replacement,
 					  tck);
-            ACE_const_cast (CORBA::Any &, any).replace (replacement);
+            const_cast<CORBA::Any &> (any).replace (replacement);
             replacement_safety.release ();
             return 1;
           }
@@ -169,8 +169,7 @@ namespace TAO
   CORBA::Boolean
   Any_Basic_Impl::marshal_value (TAO_OutputCDR &cdr)
   {
-    CORBA::TCKind tckind = ACE_static_cast (CORBA::TCKind,
-                                            this->kind_);
+    CORBA::TCKind tckind = static_cast<CORBA::TCKind> (this->kind_);
 
     switch (tckind)
     {
@@ -216,9 +215,7 @@ namespace TAO
   Any_Basic_Impl::demarshal_value (TAO_InputCDR &cdr,
                                    CORBA::Long tck)
   {
-    CORBA::TCKind tckind =
-      ACE_static_cast (CORBA::TCKind,
-                       tck);
+    CORBA::TCKind const tckind = static_cast<CORBA::TCKind> (tck);
     switch (tckind)
     {
       case CORBA::tk_short:
@@ -265,7 +262,7 @@ namespace TAO
   Any_Basic_Impl *
   Any_Basic_Impl::create_empty (CORBA::TypeCode_ptr tc)
   {
-    CORBA::TCKind kind = ACE_static_cast (CORBA::TCKind, tc->kind_);
+    CORBA::TCKind const kind = static_cast<CORBA::TCKind> (tc->kind_);
     TAO::Any_Basic_Impl * retval = 0;
 
     switch (kind)
@@ -315,49 +312,48 @@ namespace TAO
                                 Any_Basic_Impl *src,
                                 CORBA::Long tck)
   {
-    CORBA::TCKind kind =
-      ACE_static_cast (CORBA::TCKind, tck);
+    CORBA::TCKind const kind = static_cast<CORBA::TCKind> (tck);
 
     switch (kind)
       {
       case CORBA::tk_short:
-        *ACE_static_cast (CORBA::Short *, dest) = src->u_.s;
+        *static_cast<CORBA::Short *> (dest) = src->u_.s;
         break;
       case CORBA::tk_ushort:
-        *ACE_static_cast (CORBA::UShort *, dest) = src->u_.us;
+        *static_cast<CORBA::UShort *> (dest) = src->u_.us;
         break;
       case CORBA::tk_long:
-        *ACE_static_cast (CORBA::Long *, dest) = src->u_.l;
+        *static_cast<CORBA::Long *> (dest) = src->u_.l;
         break;
       case CORBA::tk_ulong:
-        *ACE_static_cast (CORBA::ULong *, dest) = src->u_.ul;
+        *static_cast<CORBA::ULong *> (dest) = src->u_.ul;
         break;
       case CORBA::tk_float:
-        *ACE_static_cast (CORBA::Float *, dest) = src->u_.f;
+        *static_cast<CORBA::Float *> (dest) = src->u_.f;
         break;
       case CORBA::tk_double:
-        *ACE_static_cast (CORBA::Double *, dest) = src->u_.d;
+        *static_cast<CORBA::Double *> (dest) = src->u_.d;
         break;
       case CORBA::tk_boolean:
-        *ACE_static_cast (CORBA::Boolean *, dest) = src->u_.b;
+        *static_cast<CORBA::Boolean *> (dest) = src->u_.b;
         break;
       case CORBA::tk_char:
-        *ACE_static_cast (CORBA::Char *, dest) = src->u_.c;
+        *static_cast<CORBA::Char *> (dest) = src->u_.c;
         break;
       case CORBA::tk_octet:
-        *ACE_static_cast (CORBA::Octet *, dest) = src->u_.o;
+        *static_cast<CORBA::Octet *> (dest) = src->u_.o;
         break;
       case CORBA::tk_longlong:
-        *ACE_static_cast (CORBA::LongLong *, dest) = src->u_.ll;
+        *static_cast<CORBA::LongLong *> (dest) = src->u_.ll;
         break;
       case CORBA::tk_ulonglong:
-        *ACE_static_cast (CORBA::ULongLong *, dest) = src->u_.ull;
+        *static_cast<CORBA::ULongLong *> (dest) = src->u_.ull;
         break;
       case CORBA::tk_longdouble:
-        *ACE_static_cast (CORBA::LongDouble *, dest) = src->u_.ld;
+        *static_cast<CORBA::LongDouble *> (dest) = src->u_.ld;
         break;
       case CORBA::tk_wchar:
-        *ACE_static_cast (CORBA::WChar *, dest) = src->u_.wc;
+        *static_cast<CORBA::WChar *> (dest) = src->u_.wc;
         break;
       default:
         break;

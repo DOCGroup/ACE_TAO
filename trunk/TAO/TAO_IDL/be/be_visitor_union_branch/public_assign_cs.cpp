@@ -47,7 +47,7 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
   )
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  
+
   *os << be_nl;
 
   // This visitor is used when we are generating the copy ctor and
@@ -257,15 +257,15 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
       if (bt_is_defined)
         {
           *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
-              << bt->name () << "::";
+              << bt->name () << "::_";
         }
       else
         {
           *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
-              << "TAO::Objref_Traits<" << node->name () << ">::tao";
+              << "TAO::Objref_Traits<" << node->name () << ">::";
         }
 
-      *os << "_duplicate (" << be_idt << be_idt_nl
+      *os << "duplicate (" << be_idt << be_idt_nl
           << "u.u_." << ub->local_name () << "_->ptr ()" << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl << ")" << be_uidt << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl;
@@ -279,17 +279,17 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
       if (bt_is_defined)
         {
           *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
-              << bt->name () << "::";
+              << bt->name () << "::_";
         }
       else
         {
           *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
-              << "TAO::Objref_Traits<" << node->name () << ">::tao";
+              << "TAO::Objref_Traits<" << node->name () << ">::";
         }
 
-      *os << "_duplicate (" << be_idt << be_idt_nl
+      *os << "duplicate (" << be_idt << be_idt_nl
           << "u.u_." << ub->local_name ()
-          << "_->ptr ()" << be_uidt_nl 
+          << "_->ptr ()" << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl << ")," << be_uidt_nl
           << "*this" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl;
@@ -354,15 +354,15 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
       if (bt_is_defined)
         {
           *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
-              << bt->name () << "::";
+              << bt->name () << "::_";
         }
       else
         {
           *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
-              << "TAO::Objref_Traits<" << node->name () << ">::tao";
+              << "TAO::Objref_Traits<" << node->name () << ">::";
         }
 
-      *os << "_duplicate (" << be_idt << be_idt_nl
+      *os << "duplicate (" << be_idt << be_idt_nl
           << "u.u_." << ub->local_name () << "_->ptr ()" << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl << ")" << be_uidt << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl;
@@ -376,17 +376,17 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
       if (bt_is_defined)
         {
           *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
-              << bt->name () << "::";
+              << bt->name () << "::_";
         }
       else
         {
           *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
-              << "TAO::Objref_Traits<" << node->name () << ">::tao";
+              << "TAO::Objref_Traits<" << node->name () << ">::";
         }
 
-      *os << "_duplicate (" << be_idt << be_idt_nl
+      *os << "duplicate (" << be_idt << be_idt_nl
           << "u.u_." << ub->local_name ()
-          << "_->ptr ()" << be_uidt_nl 
+          << "_->ptr ()" << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl << ")," << be_uidt_nl
           << "*this" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl;

@@ -4459,14 +4459,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::Repository>
   {
-    static CORBA::Repository_ptr tao_duplicate (
+    static CORBA::Repository_ptr duplicate (
         CORBA::Repository_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::Repository_ptr
       );
-    static CORBA::Repository_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::Repository_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::Repository_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4480,14 +4480,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::ModuleDef>
   {
-    static CORBA::ModuleDef_ptr tao_duplicate (
+    static CORBA::ModuleDef_ptr duplicate (
         CORBA::ModuleDef_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::ModuleDef_ptr
       );
-    static CORBA::ModuleDef_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::ModuleDef_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::ModuleDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4501,14 +4501,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::ConstantDef>
   {
-    static CORBA::ConstantDef_ptr tao_duplicate (
+    static CORBA::ConstantDef_ptr duplicate (
         CORBA::ConstantDef_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::ConstantDef_ptr
       );
-    static CORBA::ConstantDef_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::ConstantDef_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::ConstantDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4522,14 +4522,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::StructDef>
   {
-    static CORBA::StructDef_ptr tao_duplicate (
+    static CORBA::StructDef_ptr duplicate (
         CORBA::StructDef_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::StructDef_ptr
       );
-    static CORBA::StructDef_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::StructDef_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::StructDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4543,14 +4543,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::UnionDef>
   {
-    static CORBA::UnionDef_ptr tao_duplicate (
+    static CORBA::UnionDef_ptr duplicate (
         CORBA::UnionDef_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::UnionDef_ptr
       );
-    static CORBA::UnionDef_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::UnionDef_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::UnionDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4564,14 +4564,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::EnumDef>
   {
-    static CORBA::EnumDef_ptr tao_duplicate (
+    static CORBA::EnumDef_ptr duplicate (
         CORBA::EnumDef_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::EnumDef_ptr
       );
-    static CORBA::EnumDef_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::EnumDef_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::EnumDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4585,14 +4585,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::AliasDef>
   {
-    static CORBA::AliasDef_ptr tao_duplicate (
+    static CORBA::AliasDef_ptr duplicate (
         CORBA::AliasDef_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::AliasDef_ptr
       );
-    static CORBA::AliasDef_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::AliasDef_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::AliasDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4606,14 +4606,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::InterfaceDef>
   {
-    static CORBA::InterfaceDef_ptr tao_duplicate (
+    static CORBA::InterfaceDef_ptr duplicate (
         CORBA::InterfaceDef_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::InterfaceDef_ptr
       );
-    static CORBA::InterfaceDef_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::InterfaceDef_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::InterfaceDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4627,14 +4627,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::ExceptionDef>
   {
-    static CORBA::ExceptionDef_ptr tao_duplicate (
+    static CORBA::ExceptionDef_ptr duplicate (
         CORBA::ExceptionDef_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::ExceptionDef_ptr
       );
-    static CORBA::ExceptionDef_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::ExceptionDef_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::ExceptionDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4648,14 +4648,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::NativeDef>
   {
-    static CORBA::NativeDef_ptr tao_duplicate (
+    static CORBA::NativeDef_ptr duplicate (
         CORBA::NativeDef_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::NativeDef_ptr
       );
-    static CORBA::NativeDef_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::NativeDef_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::NativeDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4669,14 +4669,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::AbstractInterfaceDef>
   {
-    static CORBA::AbstractInterfaceDef_ptr tao_duplicate (
+    static CORBA::AbstractInterfaceDef_ptr duplicate (
         CORBA::AbstractInterfaceDef_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::AbstractInterfaceDef_ptr
       );
-    static CORBA::AbstractInterfaceDef_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::AbstractInterfaceDef_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::AbstractInterfaceDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4690,14 +4690,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::LocalInterfaceDef>
   {
-    static CORBA::LocalInterfaceDef_ptr tao_duplicate (
+    static CORBA::LocalInterfaceDef_ptr duplicate (
         CORBA::LocalInterfaceDef_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::LocalInterfaceDef_ptr
       );
-    static CORBA::LocalInterfaceDef_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::LocalInterfaceDef_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::LocalInterfaceDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4711,14 +4711,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::ExtInterfaceDef>
   {
-    static CORBA::ExtInterfaceDef_ptr tao_duplicate (
+    static CORBA::ExtInterfaceDef_ptr duplicate (
         CORBA::ExtInterfaceDef_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::ExtInterfaceDef_ptr
       );
-    static CORBA::ExtInterfaceDef_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::ExtInterfaceDef_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::ExtInterfaceDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4732,14 +4732,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::ExtAbstractInterfaceDef>
   {
-    static CORBA::ExtAbstractInterfaceDef_ptr tao_duplicate (
+    static CORBA::ExtAbstractInterfaceDef_ptr duplicate (
         CORBA::ExtAbstractInterfaceDef_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::ExtAbstractInterfaceDef_ptr
       );
-    static CORBA::ExtAbstractInterfaceDef_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::ExtAbstractInterfaceDef_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::ExtAbstractInterfaceDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4753,14 +4753,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::ExtLocalInterfaceDef>
   {
-    static CORBA::ExtLocalInterfaceDef_ptr tao_duplicate (
+    static CORBA::ExtLocalInterfaceDef_ptr duplicate (
         CORBA::ExtLocalInterfaceDef_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::ExtLocalInterfaceDef_ptr
       );
-    static CORBA::ExtLocalInterfaceDef_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::ExtLocalInterfaceDef_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::ExtLocalInterfaceDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4774,14 +4774,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::PrimitiveDef>
   {
-    static CORBA::PrimitiveDef_ptr tao_duplicate (
+    static CORBA::PrimitiveDef_ptr duplicate (
         CORBA::PrimitiveDef_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::PrimitiveDef_ptr
       );
-    static CORBA::PrimitiveDef_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::PrimitiveDef_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::PrimitiveDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4795,14 +4795,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::StringDef>
   {
-    static CORBA::StringDef_ptr tao_duplicate (
+    static CORBA::StringDef_ptr duplicate (
         CORBA::StringDef_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::StringDef_ptr
       );
-    static CORBA::StringDef_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::StringDef_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::StringDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4816,14 +4816,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::SequenceDef>
   {
-    static CORBA::SequenceDef_ptr tao_duplicate (
+    static CORBA::SequenceDef_ptr duplicate (
         CORBA::SequenceDef_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::SequenceDef_ptr
       );
-    static CORBA::SequenceDef_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::SequenceDef_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::SequenceDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4837,14 +4837,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::ArrayDef>
   {
-    static CORBA::ArrayDef_ptr tao_duplicate (
+    static CORBA::ArrayDef_ptr duplicate (
         CORBA::ArrayDef_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::ArrayDef_ptr
       );
-    static CORBA::ArrayDef_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::ArrayDef_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::ArrayDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4858,14 +4858,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::WstringDef>
   {
-    static CORBA::WstringDef_ptr tao_duplicate (
+    static CORBA::WstringDef_ptr duplicate (
         CORBA::WstringDef_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::WstringDef_ptr
       );
-    static CORBA::WstringDef_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::WstringDef_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::WstringDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4879,14 +4879,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::FixedDef>
   {
-    static CORBA::FixedDef_ptr tao_duplicate (
+    static CORBA::FixedDef_ptr duplicate (
         CORBA::FixedDef_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::FixedDef_ptr
       );
-    static CORBA::FixedDef_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::FixedDef_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::FixedDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4900,14 +4900,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::AttributeDef>
   {
-    static CORBA::AttributeDef_ptr tao_duplicate (
+    static CORBA::AttributeDef_ptr duplicate (
         CORBA::AttributeDef_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::AttributeDef_ptr
       );
-    static CORBA::AttributeDef_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::AttributeDef_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::AttributeDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4921,14 +4921,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::ExtAttributeDef>
   {
-    static CORBA::ExtAttributeDef_ptr tao_duplicate (
+    static CORBA::ExtAttributeDef_ptr duplicate (
         CORBA::ExtAttributeDef_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::ExtAttributeDef_ptr
       );
-    static CORBA::ExtAttributeDef_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::ExtAttributeDef_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::ExtAttributeDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4942,14 +4942,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::OperationDef>
   {
-    static CORBA::OperationDef_ptr tao_duplicate (
+    static CORBA::OperationDef_ptr duplicate (
         CORBA::OperationDef_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::OperationDef_ptr
       );
-    static CORBA::OperationDef_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::OperationDef_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::OperationDef_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -4963,14 +4963,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IFR_Client_Export Objref_Traits<CORBA::InterfaceAttrExtension>
   {
-    static CORBA::InterfaceAttrExtension_ptr tao_duplicate (
+    static CORBA::InterfaceAttrExtension_ptr duplicate (
         CORBA::InterfaceAttrExtension_ptr
       );
-    static void tao_release (
+    static void release (
         CORBA::InterfaceAttrExtension_ptr
       );
-    static CORBA::InterfaceAttrExtension_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static CORBA::InterfaceAttrExtension_ptr nil (void);
+    static CORBA::Boolean marshal (
         CORBA::InterfaceAttrExtension_ptr p,
         TAO_OutputCDR & cdr
       );

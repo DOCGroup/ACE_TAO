@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Exception.h"
+#include "tao/SystemException.h"
 
 class TAO_ORB_Core;
 class TAO_Policy_Validator;

@@ -517,21 +517,21 @@ operator>> (TAO_InputCDR &strm,
 namespace TAO
 {
   void
-  Value_Traits<CORBA::ValueBase>::tao_add_ref (
+  Value_Traits<CORBA::ValueBase>::add_ref (
       CORBA::ValueBase *p)
   {
     CORBA::add_ref (p);
   }
 
   void
-  Value_Traits<CORBA::ValueBase>::tao_remove_ref (
+  Value_Traits<CORBA::ValueBase>::remove_ref (
       CORBA::ValueBase * p)
   {
     CORBA::remove_ref (p);
   }
 
   void
-  Value_Traits<CORBA::ValueBase>::tao_release (
+  Value_Traits<CORBA::ValueBase>::release (
       CORBA::ValueBase * p)
   {
     CORBA::remove_ref (p);

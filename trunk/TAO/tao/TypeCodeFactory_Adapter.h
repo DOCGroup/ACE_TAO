@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Exception.h"
+#include "tao/SystemException.h"
 #include "tao/OBV_Constants.h"
 #include "tao/default_environment.h"
 

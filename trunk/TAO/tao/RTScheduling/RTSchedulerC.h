@@ -1172,14 +1172,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_RTScheduler_Export Objref_Traits<RTScheduling::ThreadAction>
   {
-    static RTScheduling::ThreadAction_ptr tao_duplicate (
+    static RTScheduling::ThreadAction_ptr duplicate (
         RTScheduling::ThreadAction_ptr
       );
-    static void tao_release (
+    static void release (
         RTScheduling::ThreadAction_ptr
       );
-    static RTScheduling::ThreadAction_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static RTScheduling::ThreadAction_ptr nil (void);
+    static CORBA::Boolean marshal (
         RTScheduling::ThreadAction_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -1193,14 +1193,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_RTScheduler_Export Objref_Traits<RTScheduling::DistributableThread>
   {
-    static RTScheduling::DistributableThread_ptr tao_duplicate (
+    static RTScheduling::DistributableThread_ptr duplicate (
         RTScheduling::DistributableThread_ptr
       );
-    static void tao_release (
+    static void release (
         RTScheduling::DistributableThread_ptr
       );
-    static RTScheduling::DistributableThread_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static RTScheduling::DistributableThread_ptr nil (void);
+    static CORBA::Boolean marshal (
         RTScheduling::DistributableThread_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -1214,14 +1214,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_RTScheduler_Export Objref_Traits<RTScheduling::Current>
   {
-    static RTScheduling::Current_ptr tao_duplicate (
+    static RTScheduling::Current_ptr duplicate (
         RTScheduling::Current_ptr
       );
-    static void tao_release (
+    static void release (
         RTScheduling::Current_ptr
       );
-    static RTScheduling::Current_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static RTScheduling::Current_ptr nil (void);
+    static CORBA::Boolean marshal (
         RTScheduling::Current_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -1235,14 +1235,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_RTScheduler_Export Objref_Traits<RTScheduling::ResourceManager>
   {
-    static RTScheduling::ResourceManager_ptr tao_duplicate (
+    static RTScheduling::ResourceManager_ptr duplicate (
         RTScheduling::ResourceManager_ptr
       );
-    static void tao_release (
+    static void release (
         RTScheduling::ResourceManager_ptr
       );
-    static RTScheduling::ResourceManager_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static RTScheduling::ResourceManager_ptr nil (void);
+    static CORBA::Boolean marshal (
         RTScheduling::ResourceManager_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -1256,14 +1256,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_RTScheduler_Export Objref_Traits<RTScheduling::Scheduler>
   {
-    static RTScheduling::Scheduler_ptr tao_duplicate (
+    static RTScheduling::Scheduler_ptr duplicate (
         RTScheduling::Scheduler_ptr
       );
-    static void tao_release (
+    static void release (
         RTScheduling::Scheduler_ptr
       );
-    static RTScheduling::Scheduler_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static RTScheduling::Scheduler_ptr nil (void);
+    static CORBA::Boolean marshal (
         RTScheduling::Scheduler_ptr p,
         TAO_OutputCDR & cdr
       );

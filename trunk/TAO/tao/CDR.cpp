@@ -36,6 +36,7 @@
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Core.h"
 #include "tao/Environment.h"
+#include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/CDR.i"
@@ -172,7 +173,7 @@ TAO_OutputCDR::throw_skel_exception (int error_num ACE_ENV_ARG_DECL)
       ACE_NOTREACHED(break);
 
     default :
-      ACE_THROW (CORBA::MARSHAL(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA::MARSHAL(0, CORBA::COMPLETED_YES));
 
     }
 }
@@ -220,7 +221,7 @@ TAO_InputCDR::throw_stub_exception (int error_num ACE_ENV_ARG_DECL)
       ACE_THROW (CORBA::INV_OBJREF (CORBA::OMGVMCID | 2, CORBA::COMPLETED_YES));
       ACE_NOTREACHED(break);
     default :
-      ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+      ACE_THROW (CORBA::MARSHAL (0, CORBA::COMPLETED_YES));
     }
 }
 

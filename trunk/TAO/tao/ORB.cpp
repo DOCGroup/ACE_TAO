@@ -27,6 +27,7 @@ ACE_RCSID (tao,
 #include "TypeCodeFactory_Adapter.h"
 #include "debug.h"
 #include "CDR.h"
+#include "SystemException.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "PICurrent_ORBInitializer.h"  /* @@ This should go away! */
@@ -178,7 +179,7 @@ CORBA::ORB::destroy (ACE_ENV_SINGLE_ARG_DECL)
       // CORBA::OBJECT_NOT_EXIST exception if the ORB has been
       // destroyed by the time an ORB function is called.
 
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE,
+      ACE_THROW (CORBA::OBJECT_NOT_EXIST (0,
                                           CORBA::COMPLETED_NO));
     }
 
@@ -290,7 +291,7 @@ CORBA::ORB::create_list (CORBA::Long count,
                     CORBA::NVList,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
@@ -307,7 +308,7 @@ CORBA::ORB::create_list (CORBA::Long count,
                             CORBA::NamedValue,
                             CORBA::NO_MEMORY (
                               CORBA::SystemException::_tao_minor_code (
-                                TAO_DEFAULT_MINOR_CODE,
+                                0,
                                 ENOMEM),
                               CORBA::COMPLETED_NO));
           ACE_CHECK;
@@ -360,7 +361,7 @@ CORBA::ORB::create_environment (CORBA::Environment_ptr &environment
                     CORBA::Environment (),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
 }
@@ -373,7 +374,7 @@ CORBA::ORB::create_named_value (CORBA::NamedValue_ptr &nv
                     CORBA::NamedValue,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
 }
@@ -389,7 +390,7 @@ CORBA::ORB::get_service_information (
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        0,
                         ENOTSUP),
                       CORBA::COMPLETED_NO),
                     0);
@@ -401,7 +402,7 @@ CORBA::ORB::create_context_list (CORBA::ContextList_ptr &
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
-                 TAO_DEFAULT_MINOR_CODE,
+                 0,
                  ENOTSUP),
                CORBA::COMPLETED_NO));
 }
@@ -412,7 +413,7 @@ CORBA::ORB::get_default_context (CORBA::Context_ptr &
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
-                 TAO_DEFAULT_MINOR_CODE,
+                 0,
                  ENOTSUP),
                CORBA::COMPLETED_NO));
 }
@@ -423,7 +424,7 @@ CORBA::ORB::send_multiple_requests_oneway (const CORBA::ORB::RequestSeq &
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
-                 TAO_DEFAULT_MINOR_CODE,
+                 0,
                  ENOTSUP),
                CORBA::COMPLETED_NO));
 }
@@ -434,7 +435,7 @@ CORBA::ORB::send_multiple_requests_deferred (const CORBA::ORB::RequestSeq &
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
-                 TAO_DEFAULT_MINOR_CODE,
+                 0,
                  ENOTSUP),
                CORBA::COMPLETED_NO));
 }
@@ -445,7 +446,7 @@ CORBA::ORB::get_next_response (CORBA::Request_ptr &
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
-                 TAO_DEFAULT_MINOR_CODE,
+                 0,
                  ENOTSUP),
                CORBA::COMPLETED_NO));
 }
@@ -455,7 +456,7 @@ CORBA::ORB::poll_next_response (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        0,
                         ENOTSUP),
                       CORBA::COMPLETED_NO),
                     0);
@@ -1287,7 +1288,7 @@ CORBA::ORB::check_shutdown (ACE_ENV_SINGLE_ARG_DECL)
       // CORBA::OBJECT_NOT_EXIST exception if the ORB has been
       // destroyed by the time an ORB function is called.
 
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE,
+      ACE_THROW (CORBA::OBJECT_NOT_EXIST (0,
                                           CORBA::COMPLETED_NO));
     }
 }
@@ -1366,7 +1367,7 @@ CORBA::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
                     TAO_CodecFactory_ORBInitializer,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
@@ -1393,7 +1394,7 @@ CORBA::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
                     TAO_PICurrent_ORBInitializer,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
@@ -1514,7 +1515,7 @@ CORBA::ORB_init (int &argc,
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (
                           CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            0,
                             EINVAL),
                           CORBA::COMPLETED_NO),
                         CORBA::ORB::_nil ());
@@ -1589,7 +1590,7 @@ CORBA::ORB_init (int &argc,
                     TAO_ORB_Core (orbid_string.c_str ()),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
@@ -1628,7 +1629,7 @@ CORBA::ORB_init (int &argc,
                                      command_line.get_ASCII_argv()),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
@@ -1654,7 +1655,7 @@ CORBA::ORB_init (int &argc,
   if (result == -1)
       ACE_THROW_RETURN (CORBA::BAD_PARAM (
                           CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            0,
                             EINVAL),
                           CORBA::COMPLETED_NO),
                         CORBA::ORB::_nil ());
@@ -1684,7 +1685,7 @@ CORBA::ORB_init (int &argc,
   // Before returning remember to store the ORB into the table...
   if (TAO_ORB_Table::instance ()->bind (orbid_string.c_str (),
                                         safe_oc.get ()) != 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
+    ACE_THROW_RETURN (CORBA::INTERNAL (0,
                                        CORBA::COMPLETED_NO),
                       CORBA::ORB::_nil ());
 
@@ -1805,7 +1806,7 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj
 
           ACE_THROW_RETURN (CORBA::MARSHAL (
                               CORBA::SystemException::_tao_minor_code (
-                                TAO_DEFAULT_MINOR_CODE,
+                                0,
                                 EINVAL),
                               CORBA::COMPLETED_NO),
                             0);
@@ -1823,7 +1824,7 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj
 
           ACE_THROW_RETURN (CORBA::MARSHAL (
                               CORBA::SystemException::_tao_minor_code (
-                                TAO_DEFAULT_MINOR_CODE,
+                                0,
                                 EINVAL),
                               CORBA::COMPLETED_NO),
                             0);
@@ -1851,7 +1852,7 @@ CORBA::ORB::string_to_object (const char *str
   if (str == 0)
     ACE_THROW_RETURN (CORBA::INV_OBJREF (
                         CORBA::SystemException::_tao_minor_code (
-                          TAO_DEFAULT_MINOR_CODE,
+                          0,
                           EINVAL),
                         CORBA::COMPLETED_NO),
                       CORBA::Object::_nil ());
@@ -2010,7 +2011,7 @@ CORBA::ORB::url_ior_string_to_object (const char* str
     {
       ACE_THROW_RETURN (CORBA::INV_OBJREF (
                           CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            0,
                             EINVAL),
                           CORBA::COMPLETED_NO),
                         CORBA::Object::_nil ());

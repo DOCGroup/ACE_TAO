@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Exception.h"
+#include "tao/SystemException.h"
 
 class TAO_IORInterceptor_Adapter;
 
@@ -34,7 +34,7 @@ class TAO_IORInterceptor_Adapter;
  * ORB on the ORB's first usage of its ior_interceptor_adapter_. This is a base
  * class for the actual implementation in the TAO_IORInterceptor library.
  */
-class TAO_Export TAO_IORInterceptor_Adapter_Factory 
+class TAO_Export TAO_IORInterceptor_Adapter_Factory
   : public ACE_Service_Object
 {
 public:

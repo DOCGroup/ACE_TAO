@@ -11,6 +11,7 @@
 #include "Connection_Handler.h"
 #include "Profile_Transport_Resolver.h"
 #include "Wait_Strategy.h"
+#include "SystemException.h"
 
 #include "ace/OS_NS_string.h"
 
@@ -53,7 +54,7 @@ TAO_Connector::make_mprofile (const char *string,
     {
       ACE_THROW_RETURN (CORBA::INV_OBJREF (
                           CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            0,
                             EINVAL),
                           CORBA::COMPLETED_NO),
                         -1);

@@ -12,6 +12,7 @@ ACE_RCSID (tao,
 #include "tao/Connection_Handler.h"
 #include "tao/Transport.h"
 #include "tao/Connector_Registry.h"
+#include "tao/SystemException.h"
 
 #include "ace/Reactor.h"
 

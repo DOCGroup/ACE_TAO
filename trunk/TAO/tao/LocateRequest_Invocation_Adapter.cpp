@@ -30,7 +30,7 @@ namespace TAO
     if (stub == 0)
       ACE_THROW (CORBA::INTERNAL (
                      CORBA::SystemException::_tao_minor_code (
-                       TAO_DEFAULT_MINOR_CODE,
+                       0,
                          EINVAL),
                         CORBA::COMPLETED_NO));
 

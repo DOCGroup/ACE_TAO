@@ -9,6 +9,7 @@
 #include "Profile_Transport_Resolver.h"
 #include "Transport.h"
 #include "Wait_Strategy.h"
+#include "SystemException.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
@@ -330,7 +331,7 @@ TAO_IIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
                     TAO_IIOP_Profile (this->orb_core ()),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);

@@ -3,6 +3,8 @@
 // $Id$
 
 #include "tao/Environment.h"
+#include "tao/SystemException.h"
+
 
 ACE_INLINE ACE_Lock &
 TAO_POA_Manager::lock (void)

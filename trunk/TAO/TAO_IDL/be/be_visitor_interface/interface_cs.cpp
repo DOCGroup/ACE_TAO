@@ -67,7 +67,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
           << node->name () << "_ptr" << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">::tao_duplicate ("
+          << "TAO::Objref_Traits<" << node->name () << ">::duplicate ("
           << be_idt << be_idt_nl
           << node->name () << "_ptr p" << be_uidt_nl
           << ")" << be_uidt_nl
@@ -78,7 +78,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
           << "void" << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">::tao_release ("
+          << "TAO::Objref_Traits<" << node->name () << ">::release ("
           << be_idt << be_idt_nl
           << node->name () << "_ptr p" << be_uidt_nl
           << ")" << be_uidt_nl
@@ -89,7 +89,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
           << node->name () << "_ptr" << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">::tao_nil (void)"
+          << "TAO::Objref_Traits<" << node->name () << ">::nil (void)"
           << be_nl
           << "{" << be_idt_nl
           << "return " << node->name () << "::_nil ();" << be_uidt_nl
@@ -98,7 +98,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
           << "CORBA::Boolean" << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">::tao_marshal ("
+          << "TAO::Objref_Traits<" << node->name () << ">::marshal ("
           << be_idt << be_idt_nl
           << node->name () << "_ptr p," << be_nl
           << "TAO_OutputCDR & cdr" << be_uidt_nl

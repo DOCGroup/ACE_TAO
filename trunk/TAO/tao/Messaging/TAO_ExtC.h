@@ -227,14 +227,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Messaging_Export Objref_Traits<TAO::ConnectionTimeoutPolicy>
   {
-    static TAO::ConnectionTimeoutPolicy_ptr tao_duplicate (
+    static TAO::ConnectionTimeoutPolicy_ptr duplicate (
         TAO::ConnectionTimeoutPolicy_ptr
       );
-    static void tao_release (
+    static void release (
         TAO::ConnectionTimeoutPolicy_ptr
       );
-    static TAO::ConnectionTimeoutPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static TAO::ConnectionTimeoutPolicy_ptr nil (void);
+    static CORBA::Boolean marshal (
         TAO::ConnectionTimeoutPolicy_ptr p,
         TAO_OutputCDR & cdr
       );

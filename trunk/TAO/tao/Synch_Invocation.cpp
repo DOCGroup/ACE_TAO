@@ -86,7 +86,7 @@ namespace TAO
 
         ACE_THROW_RETURN (
             CORBA::INTERNAL (
-                TAO_DEFAULT_MINOR_CODE,
+                0,
                 CORBA::COMPLETED_NO),
             s);
       }
@@ -408,7 +408,7 @@ namespace TAO
             {
               // Could not demarshal the addressing disposition, raise an local
               // CORBA::MARSHAL
-            ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+            ACE_THROW_RETURN (CORBA::MARSHAL (0,
                                               CORBA::COMPLETED_MAYBE),
                               TAO_INVOKE_FAILURE);
             }
@@ -482,7 +482,7 @@ namespace TAO
       {
         // Could not demarshal the exception id, raise an local
         // CORBA::MARSHAL
-        ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+        ACE_THROW_RETURN (CORBA::MARSHAL (0,
                                           CORBA::COMPLETED_MAYBE),
                           TAO_INVOKE_FAILURE);
       }
@@ -541,7 +541,7 @@ namespace TAO
       {
         // Could not demarshal the exception id, raise an local
         // CORBA::MARSHAL
-        ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+        ACE_THROW_RETURN (CORBA::MARSHAL (0,
                                           CORBA::COMPLETED_MAYBE),
                           TAO_INVOKE_FAILURE);
       }
@@ -552,7 +552,7 @@ namespace TAO
     if ((cdr >> minor) == 0
         || (cdr >> completion) == 0)
       {
-        ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+        ACE_THROW_RETURN (CORBA::MARSHAL (0,
                                           CORBA::COMPLETED_MAYBE),
                           TAO_INVOKE_FAILURE);
       }

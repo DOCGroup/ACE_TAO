@@ -2426,14 +2426,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::PriorityModelPolicy>
   {
-    static RTCORBA::PriorityModelPolicy_ptr tao_duplicate (
+    static RTCORBA::PriorityModelPolicy_ptr duplicate (
         RTCORBA::PriorityModelPolicy_ptr
       );
-    static void tao_release (
+    static void release (
         RTCORBA::PriorityModelPolicy_ptr
       );
-    static RTCORBA::PriorityModelPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static RTCORBA::PriorityModelPolicy_ptr nil (void);
+    static CORBA::Boolean marshal (
         RTCORBA::PriorityModelPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2447,14 +2447,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::ThreadpoolPolicy>
   {
-    static RTCORBA::ThreadpoolPolicy_ptr tao_duplicate (
+    static RTCORBA::ThreadpoolPolicy_ptr duplicate (
         RTCORBA::ThreadpoolPolicy_ptr
       );
-    static void tao_release (
+    static void release (
         RTCORBA::ThreadpoolPolicy_ptr
       );
-    static RTCORBA::ThreadpoolPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static RTCORBA::ThreadpoolPolicy_ptr nil (void);
+    static CORBA::Boolean marshal (
         RTCORBA::ThreadpoolPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2468,14 +2468,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::ProtocolProperties>
   {
-    static RTCORBA::ProtocolProperties_ptr tao_duplicate (
+    static RTCORBA::ProtocolProperties_ptr duplicate (
         RTCORBA::ProtocolProperties_ptr
       );
-    static void tao_release (
+    static void release (
         RTCORBA::ProtocolProperties_ptr
       );
-    static RTCORBA::ProtocolProperties_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static RTCORBA::ProtocolProperties_ptr nil (void);
+    static CORBA::Boolean marshal (
         RTCORBA::ProtocolProperties_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2489,14 +2489,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::ServerProtocolPolicy>
   {
-    static RTCORBA::ServerProtocolPolicy_ptr tao_duplicate (
+    static RTCORBA::ServerProtocolPolicy_ptr duplicate (
         RTCORBA::ServerProtocolPolicy_ptr
       );
-    static void tao_release (
+    static void release (
         RTCORBA::ServerProtocolPolicy_ptr
       );
-    static RTCORBA::ServerProtocolPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static RTCORBA::ServerProtocolPolicy_ptr nil (void);
+    static CORBA::Boolean marshal (
         RTCORBA::ServerProtocolPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2510,14 +2510,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::ClientProtocolPolicy>
   {
-    static RTCORBA::ClientProtocolPolicy_ptr tao_duplicate (
+    static RTCORBA::ClientProtocolPolicy_ptr duplicate (
         RTCORBA::ClientProtocolPolicy_ptr
       );
-    static void tao_release (
+    static void release (
         RTCORBA::ClientProtocolPolicy_ptr
       );
-    static RTCORBA::ClientProtocolPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static RTCORBA::ClientProtocolPolicy_ptr nil (void);
+    static CORBA::Boolean marshal (
         RTCORBA::ClientProtocolPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2531,14 +2531,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::PrivateConnectionPolicy>
   {
-    static RTCORBA::PrivateConnectionPolicy_ptr tao_duplicate (
+    static RTCORBA::PrivateConnectionPolicy_ptr duplicate (
         RTCORBA::PrivateConnectionPolicy_ptr
       );
-    static void tao_release (
+    static void release (
         RTCORBA::PrivateConnectionPolicy_ptr
       );
-    static RTCORBA::PrivateConnectionPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static RTCORBA::PrivateConnectionPolicy_ptr nil (void);
+    static CORBA::Boolean marshal (
         RTCORBA::PrivateConnectionPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2552,14 +2552,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::TCPProtocolProperties>
   {
-    static RTCORBA::TCPProtocolProperties_ptr tao_duplicate (
+    static RTCORBA::TCPProtocolProperties_ptr duplicate (
         RTCORBA::TCPProtocolProperties_ptr
       );
-    static void tao_release (
+    static void release (
         RTCORBA::TCPProtocolProperties_ptr
       );
-    static RTCORBA::TCPProtocolProperties_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static RTCORBA::TCPProtocolProperties_ptr nil (void);
+    static CORBA::Boolean marshal (
         RTCORBA::TCPProtocolProperties_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2573,14 +2573,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::GIOPProtocolProperties>
   {
-    static RTCORBA::GIOPProtocolProperties_ptr tao_duplicate (
+    static RTCORBA::GIOPProtocolProperties_ptr duplicate (
         RTCORBA::GIOPProtocolProperties_ptr
       );
-    static void tao_release (
+    static void release (
         RTCORBA::GIOPProtocolProperties_ptr
       );
-    static RTCORBA::GIOPProtocolProperties_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static RTCORBA::GIOPProtocolProperties_ptr nil (void);
+    static CORBA::Boolean marshal (
         RTCORBA::GIOPProtocolProperties_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2594,14 +2594,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::UnixDomainProtocolProperties>
   {
-    static RTCORBA::UnixDomainProtocolProperties_ptr tao_duplicate (
+    static RTCORBA::UnixDomainProtocolProperties_ptr duplicate (
         RTCORBA::UnixDomainProtocolProperties_ptr
       );
-    static void tao_release (
+    static void release (
         RTCORBA::UnixDomainProtocolProperties_ptr
       );
-    static RTCORBA::UnixDomainProtocolProperties_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static RTCORBA::UnixDomainProtocolProperties_ptr nil (void);
+    static CORBA::Boolean marshal (
         RTCORBA::UnixDomainProtocolProperties_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2615,14 +2615,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::SharedMemoryProtocolProperties>
   {
-    static RTCORBA::SharedMemoryProtocolProperties_ptr tao_duplicate (
+    static RTCORBA::SharedMemoryProtocolProperties_ptr duplicate (
         RTCORBA::SharedMemoryProtocolProperties_ptr
       );
-    static void tao_release (
+    static void release (
         RTCORBA::SharedMemoryProtocolProperties_ptr
       );
-    static RTCORBA::SharedMemoryProtocolProperties_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static RTCORBA::SharedMemoryProtocolProperties_ptr nil (void);
+    static CORBA::Boolean marshal (
         RTCORBA::SharedMemoryProtocolProperties_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2636,14 +2636,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::PriorityBandedConnectionPolicy>
   {
-    static RTCORBA::PriorityBandedConnectionPolicy_ptr tao_duplicate (
+    static RTCORBA::PriorityBandedConnectionPolicy_ptr duplicate (
         RTCORBA::PriorityBandedConnectionPolicy_ptr
       );
-    static void tao_release (
+    static void release (
         RTCORBA::PriorityBandedConnectionPolicy_ptr
       );
-    static RTCORBA::PriorityBandedConnectionPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static RTCORBA::PriorityBandedConnectionPolicy_ptr nil (void);
+    static CORBA::Boolean marshal (
         RTCORBA::PriorityBandedConnectionPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2657,14 +2657,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::Current>
   {
-    static RTCORBA::Current_ptr tao_duplicate (
+    static RTCORBA::Current_ptr duplicate (
         RTCORBA::Current_ptr
       );
-    static void tao_release (
+    static void release (
         RTCORBA::Current_ptr
       );
-    static RTCORBA::Current_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static RTCORBA::Current_ptr nil (void);
+    static CORBA::Boolean marshal (
         RTCORBA::Current_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2678,14 +2678,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::Mutex>
   {
-    static RTCORBA::Mutex_ptr tao_duplicate (
+    static RTCORBA::Mutex_ptr duplicate (
         RTCORBA::Mutex_ptr
       );
-    static void tao_release (
+    static void release (
         RTCORBA::Mutex_ptr
       );
-    static RTCORBA::Mutex_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static RTCORBA::Mutex_ptr nil (void);
+    static CORBA::Boolean marshal (
         RTCORBA::Mutex_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -2699,14 +2699,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_RTCORBA_Export Objref_Traits<RTCORBA::RTORB>
   {
-    static RTCORBA::RTORB_ptr tao_duplicate (
+    static RTCORBA::RTORB_ptr duplicate (
         RTCORBA::RTORB_ptr
       );
-    static void tao_release (
+    static void release (
         RTCORBA::RTORB_ptr
       );
-    static RTCORBA::RTORB_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static RTCORBA::RTORB_ptr nil (void);
+    static CORBA::Boolean marshal (
         RTCORBA::RTORB_ptr p,
         TAO_OutputCDR & cdr
       );

@@ -59,7 +59,7 @@ namespace TAO
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::SyncScopePolicy_ptr
-TAO::Objref_Traits<Messaging::SyncScopePolicy>::tao_duplicate (
+TAO::Objref_Traits<Messaging::SyncScopePolicy>::duplicate (
     Messaging::SyncScopePolicy_ptr p
   )
 {
@@ -68,7 +68,7 @@ TAO::Objref_Traits<Messaging::SyncScopePolicy>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<Messaging::SyncScopePolicy>::tao_release (
+TAO::Objref_Traits<Messaging::SyncScopePolicy>::release (
     Messaging::SyncScopePolicy_ptr p
   )
 {
@@ -77,14 +77,14 @@ TAO::Objref_Traits<Messaging::SyncScopePolicy>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::SyncScopePolicy_ptr
-TAO::Objref_Traits<Messaging::SyncScopePolicy>::tao_nil (void)
+TAO::Objref_Traits<Messaging::SyncScopePolicy>::nil (void)
 {
   return Messaging::SyncScopePolicy::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<Messaging::SyncScopePolicy>::tao_marshal (
+TAO::Objref_Traits<Messaging::SyncScopePolicy>::marshal (
     Messaging::SyncScopePolicy_ptr p,
     TAO_OutputCDR & cdr
   )
