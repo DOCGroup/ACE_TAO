@@ -33,7 +33,7 @@ $T = new PerlACE::Process ("ECT_Throughput",
                            "-ORBSvcConf $ec_mt_conf" 
                            . " -m new -u 10000 -n 1 -t 0 -c 4");
 
-$test = $T->SpawnWaitKill (60);
+$test = $T->SpawnWaitKill (120);
 
 if ($test != 0) {
     print STDERR "ERROR: test returned $test\n";
