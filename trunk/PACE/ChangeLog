@@ -1,8 +1,24 @@
+Fri Dec 22 12:09:59 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/Makefile:
+	* pace/config/config.h:
+	
+	* pace/sys/socket.h:
+	* pace/posix/socket.h:
+	* pace/posix/socket.inl:
+	* pace/posix/socket.c: 	
+
+	  Updated. Linux is building sockets correctly now.
+
 Fri Dec 22 10:54:13 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* sys/socket.s
+	* socket.h
+	* sys/socket.h
+	* Makefile
 
 	  Moved socket.h to sys/socket.h.
+
+	  Started looking at Makefile to add socket.h
 
 Thu Dec 21 18:22:28 2000  Luther J Baker  <luther@cs.wustl.edu>
 

@@ -100,26 +100,30 @@
                                   one of the above units of functionality.
  */
 #if PACE_HAS_ALL_POSIX_FUNCS
-# define PACE_HAS_POSIX_SP_UOF 1
-# define PACE_HAS_POSIX_MP_UOF 1
-# define PACE_HAS_POSIX_SIG_UOF 1
-# define PACE_HAS_POSIX_UG_UOF 1
-# define PACE_HAS_POSIX_FS_UOF 1
-# define PACE_HAS_POSIX_FA_UOF 1
-# define PACE_HAS_POSIX_F_UOF 1
-# define PACE_HAS_POSIX_DI_UOF 1
-# define PACE_HAS_POSIX_FM_UOF 1
-# define PACE_HAS_POSIX_P_UOF 1
-# define PACE_HAS_POSIX_DS_UOF 1
-# define PACE_HAS_POSIX_SD_UOF 1
-# define PACE_HAS_POSIX_CLS_UOF 1
-# define PACE_HAS_POSIX_JC_UOF 1
-# define PACE_HAS_POSIX_UGR_UOF 1
-# define PACE_HAS_POSIX_FL_UOF 1
-# define PACE_HAS_POSIX_CLSR_UOF 1
-# define PACE_HAS_POSIX_SDR_UOF 1
+# define PACE_HAS_POSIX_UOF          1
+# define PACE_HAS_POSIX_SP_UOF       1
+# define PACE_HAS_POSIX_MP_UOF       1
+# define PACE_HAS_POSIX_SIG_UOF      1
+# define PACE_HAS_POSIX_UG_UOF       1
+# define PACE_HAS_POSIX_FS_UOF       1
+# define PACE_HAS_POSIX_FA_UOF       1
+# define PACE_HAS_POSIX_F_UOF        1
+# define PACE_HAS_POSIX_DI_UOF       1
+# define PACE_HAS_POSIX_FM_UOF       1
+# define PACE_HAS_POSIX_P_UOF        1
+# define PACE_HAS_POSIX_DS_UOF       1
+# define PACE_HAS_POSIX_SD_UOF       1
+# define PACE_HAS_POSIX_CLS_UOF      1
+# define PACE_HAS_POSIX_JC_UOF       1
+# define PACE_HAS_POSIX_UGR_UOF      1
+# define PACE_HAS_POSIX_FL_UOF       1
+# define PACE_HAS_POSIX_CLSR_UOF     1
+# define PACE_HAS_POSIX_SDR_UOF      1
 # define PACE_HAS_POSIX_NONUOF_FUNCS 1
 #else
+# if !defined PACE_HAS_POSIX_SOCK_UOF
+#   define PACE_HAS_POSIX_SOCK_UOF 0
+# endif /* ! PACE_HAS_POSIX_SOCK_UOF */
 # if !defined PACE_HAS_POSIX_SP_UOF
 #   define PACE_HAS_POSIX_SP_UOF 0
 # endif /* ! PACE_HAS_POSIX_SP_UOF */

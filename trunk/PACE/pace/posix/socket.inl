@@ -203,7 +203,7 @@ pace_sendmsg (int s,
 #if (PACE_HAS_POSIX_SOCK_UOF)
 PACE_INLINE
 int
-shutdown (int s, int how)
+pace_shutdown (int s, int how)
 {
     shutdown (s, how);
 }
@@ -212,7 +212,7 @@ shutdown (int s, int how)
 #if (PACE_HAS_POSIX_SOCK_UOF)
 PACE_INLINE
 int
-socket (int protofamily, int type, int protocol)
+pace_socket (int protofamily, int type, int protocol)
 {
     socket (protofamily, type, protocol);
 }
@@ -221,10 +221,10 @@ socket (int protofamily, int type, int protocol)
 #if (PACE_HAS_POSIX_SOCK_UOF)
 PACE_INLINE
 int
-socketpair (int protofamily,
-            int type,
-            int protocol,
-            int sv[2])
+pace_socketpair (int protofamily,
+                 int type,
+                 int protocol,
+                 int sv[2])
 {
     socketpair (protofamily, type, protocol, sy);
 }

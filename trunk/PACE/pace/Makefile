@@ -24,7 +24,6 @@ PACE_FILES = \
   semaphore \
   setjmp \
   signal \
-  socket \
   stdio \
   stdlib \
   string \
@@ -35,10 +34,34 @@ PACE_FILES = \
 CONFIG_FILES =
 SYS_FILES = \
   sys/mman \
+  sys/socket \
   sys/stat \
   sys/times \
   sys/utsname \
   sys/wait
+
+# POSIX_SOCKET Unit of Functionality
+# pace_accept      is in sys/socket.h
+# pace_bind        is in sys/socket.h
+# pace_connect     is in sys/socket.h
+# pace_getpeername is in sys/socket.h
+# pace_getsockname is in sys/socket.h
+# pace_getsockopt  is in sys/socket.h
+# pace_setsockopt  is in sys/socket.h
+# pace_isfdtype    is in sys/socket.h
+# pace_listen      is in sys/socket.h
+# pace_recv        is in sys/socket.h
+# pace_recvfrom    is in sys/socket.h
+# pace_rcvmsg      is in sys/socket.h
+# pace_send        is in sys/socket.h
+# pace_sendto      is in sys/socket.h
+# pace_sendmsg     is in sys/socket.h
+# pace_shutdown    is in sys/socket.h
+# pace_socket      is in sys/socket.h
+# pace_socketpair  is in sys/socket.h
+POSIX_SOCK_FILES = \
+  sys/socket	
+
 # POSIX_SINGLE_PROCESS Unit of Functionality (POSIX.1)
 # pace_sysconf is in unistd.h;
 # pace_time is in time.h;
@@ -47,6 +70,7 @@ POSIX_SP_FILES = \
   unistd \
   time \
   sys/utsname
+
 # POSIX_MULTI_PROCESS Unit of Functionality (POSIX.1)
 # pace__exit is in unistd.h
 # pace_assert is in assert.h
@@ -67,6 +91,7 @@ POSIX_MP_FILES = \
   locale \
   sys/times \
   sys/wait
+
 # POSIX_SIGNALS Unit of Functionality (POSIX.1)
 # pace_abort is in stdlib.h;
 # pace_alarm is in unistd.h;
@@ -83,12 +108,14 @@ POSIX_SIG_FILES = \
   unistd \
   signal \
   setjmp
+
 # POSIX_USER_GROUPS Unit of Functionality (POSIX.1)
 # pace_getegid, pace_geteuid, pace_getgid, pace_getgroups, pace_getlogin,
 #  pace_getpgrp, pace_getuid, pace_setgid, pace_setsid, pace_setuid are in
 #  unistd.h;
 POSIX_UG_FILES = \
   unistd
+
 # POSIX_FILE_SYSTEM Unit of Functionality (POSIX.1)
 # pace_access, pace_chdir are in unistd.h;
 # pace_closedir is in dirent.h;
@@ -114,6 +141,7 @@ POSIX_FS_FILES = \
   sys/stat \
   stdio \
   utime
+
 # POSIX_FILE_ATTRIBUTES Unit of Functionality (POSIX.1)
 # pace_chmod is in sys/stat.h;
 # pace_chown is in unistd.h;
@@ -121,10 +149,12 @@ POSIX_FS_FILES = \
 POSIX_FA_FILES = \
   sys/stat \
   unistd
+
 # POSIX_FIFO Unit of Functionality (POSIX.1)
 # pace_mkfifo is in sys/stat.h;
 POSIX_F_FILES = \
   sys/stat
+
 # POSIX_DEVICE_IO Unit of Functionality (POSIX.1)
 # pace_clearerr is in stdio.h;
 # pace_close is in unistd.h;
@@ -142,6 +172,7 @@ POSIX_DI_FILES = \
   stdio \
   unistd \
   fcntl
+
 # POSIX_FD_MGMT Unit of Functionality (POSIX.1)
 # pace_dup, pace_dup2 are in unistd.h;
 # pace_fcntl is in fcntl.h;
@@ -152,10 +183,12 @@ POSIX_FM_FILES = \
   unistd \
   fcntl \
   stdio
+
 # POSIX_PIPE Unit of Functionality (POSIX.1)
 # pace_pipe is in unistd.h;
 POSIX_P_FILES = \
   unistd
+
 # POSIX_DEVICE_SPECIFIC Unit of Functionality (POSIX.1)
 # pace_cfgetispeed, pace_cfgetospeed, pace_cfsetispeed, pace_cfsetospeed are
 #  in termios.h;
@@ -168,10 +201,12 @@ POSIX_DS_FILES = \
   termios \
   stdio \
   unistd
+
 # POSIX_SYSTEM_DATABASE Unit of Functionality (POSIX.1)
 # pace_getgrgid, pace_getgrnam, pace_getpwnam, pace_getpwuid are in grp.h;
 POSIX_SD_FILES = \
   grp
+
 # POSIX_C_LANG_SUPPORT Unit of Functionality (POSIX.1)
 # Character handling functions (e.g., isalnum, toupper) are in ctype.h;
 # Mathematics functions (e.g., acos, tanh) are in math.h;
@@ -185,22 +220,26 @@ POSIX_CLS_FILES = \
   setjmp \
   stdlib \
   time
+
 # _POSIX_JOB_CONTROL Unit of Functionality (POSIX.1)
 # pace_setpgid is in unistd.h;
 # pace_tcgetpgrp, pace_tcsetpgrp are in termios.h
 _POSIX_JC_FILES = \
   unistd \
   termios
+
 # POSIX_USER_GROUPS_R Unit of Functionality (POSIX.1)
 # pace_getlogin_r is in unistd.h;
 POSIX_UGR_FILES = \
   unistd
+
 # POSIX_FILE_LOCKING Unit of Functionality (POSIX.1)
 # pace_flockfile, pace_ftrylockfile, pace_funlockfile, pace_getc_unlocked,
 # pace_getchar_unlocked, pace_putc_unlocked, pace_putchar_unlocked are in
 # stdio.h;
 POSIX_FL_FILES = \
   stdio
+
 # POSIX_C_LANG_SUPPORT_R Unit of Functionality (POSIX.1)
 # pace_asctime_r, pace_ctime_r, pace_gmtime_r, pace_localtime_r are in time.h;
 # pace_rand_r is in stdlib.h;
@@ -211,6 +250,7 @@ POSIX_CLSR_FILES = \
   stdlib \
   string \
   dirent
+
 # POSIX_SYSTEM_DATABASE_R Unit of Functionality (POSIX.1)
 # pace_getgrgid_r, pace_getgrnam_r are in grp.h;
 # pace_getpwnam_r, pace_getpwuid_r are in pwd.h;
