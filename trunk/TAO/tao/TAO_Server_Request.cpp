@@ -107,7 +107,7 @@ TAO_ServerRequest::orb (void)
 }
 
 void
-TAO_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
+TAO_ServerRequest::init_reply (CORBA::Environment &)
 {
   // Construct our reply generator.
   TAO_Pluggable_Reply_Params reply_params;
@@ -149,8 +149,7 @@ TAO_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
                                         reply_params);
 
   // Finish the GIOP Reply header, then marshal the exception.
-  if (reply_params.reply_status_ ==
-      TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD)
+  if (reply_params.reply_status_ == TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD)
     {
       // Marshal the forward location pointer.
       CORBA::Object_ptr object_ptr = this->forward_location_.in ();
