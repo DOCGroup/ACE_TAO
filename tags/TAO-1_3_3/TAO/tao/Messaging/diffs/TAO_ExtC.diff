@@ -1,0 +1,24 @@
+--- orig/TAO_ExtC.h	Mon Apr 29 11:53:09 2002
++++ TAO_ExtC.h	Mon Apr 29 14:14:15 2002
+@@ -21,17 +21,16 @@
+ 
+ #ifndef _TAO_IDL_ORIG_TAO_EXTC_H_
+ #define _TAO_IDL_ORIG_TAO_EXTC_H_
+-
+ #include "ace/pre.h"
+-#include "tao/corba.h"
++#include "tao/orbconf.h"
+ 
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+ # pragma once
+ #endif /* ACE_LACKS_PRAGMA_ONCE */
+ 
+-#include "tao/corbafwd.h"
+-#include "PolicyC.h"
+-#include "TimeBaseC.h"
++#include "tao/PolicyC.h"
++#include "tao/TimeBaseC.h"
++#include "messaging_export.h"
+ 
+ #if defined (TAO_EXPORT_MACRO)
+ #undef TAO_EXPORT_MACRO
