@@ -20,6 +20,7 @@
 // TAO_Basic_StreamCtrl
 // ----------------------------------------------------------------------
 
+// Constructor
 TAO_Basic_StreamCtrl::TAO_Basic_StreamCtrl (CORBA::ORB_var orb)
   : orb_ (orb)
 {
