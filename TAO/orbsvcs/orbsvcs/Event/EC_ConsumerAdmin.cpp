@@ -41,9 +41,10 @@ void
 TAO_EC_ConsumerAdmin::connected (TAO_EC_ProxyPushConsumer *consumer,
 				 CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW (TAO_EC_ConsumerAdmin::Busy_Lock,
+  ACE_GUARD_THROW_EX (TAO_EC_ConsumerAdmin::Busy_Lock,
       ace_mon, this->busy_lock (),
       RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+  ACE_CHECK;
 
   SupplierSetIterator end = this->end ();
   for (SupplierSetIterator i = this->begin ();
@@ -59,9 +60,10 @@ void
 TAO_EC_ConsumerAdmin::disconnected (TAO_EC_ProxyPushConsumer *consumer,
 				    CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW (TAO_EC_ConsumerAdmin::Busy_Lock,
+  ACE_GUARD_THROW_EX (TAO_EC_ConsumerAdmin::Busy_Lock,
       ace_mon, this->busy_lock (),
       RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+  ACE_CHECK;
 
   SupplierSetIterator end = this->end ();
   for (SupplierSetIterator i = this->begin ();

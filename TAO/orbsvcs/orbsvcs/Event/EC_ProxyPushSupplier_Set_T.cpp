@@ -29,8 +29,9 @@ TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_LOCK>::connected (
       TAO_EC_ProxyPushSupplier* supplier,
       CORBA::Environment& ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW (ACE_LOCK, ace_mon, this->lock_,
+  ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->lock_,
       RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+  ACE_CHECK;
 
   supplier->_incr_refcnt ();
   this->connected_i (supplier, ACE_TRY_ENV);
@@ -41,8 +42,9 @@ TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_LOCK>::disconnected (
       TAO_EC_ProxyPushSupplier* supplier,
       CORBA::Environment& ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW (ACE_LOCK, ace_mon, this->lock_,
+  ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->lock_,
       RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+  ACE_CHECK;
 
   this->disconnected_i (supplier, ACE_TRY_ENV);
 }
@@ -82,8 +84,9 @@ TAO_EC_ProxyPushSupplier_Set_Delayed<ACE_SYNCH_USE>::connected (
       TAO_EC_ProxyPushSupplier* supplier,
       CORBA::Environment& ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_,
+  ACE_GUARD_THROW_EX (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_,
       RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+  ACE_CHECK;
 
   if (this->busy_count_ == 0)
     {
@@ -113,8 +116,9 @@ TAO_EC_ProxyPushSupplier_Set_Delayed<ACE_SYNCH_USE>::disconnected (
       TAO_EC_ProxyPushSupplier* supplier,
       CORBA::Environment& ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_,
+  ACE_GUARD_THROW_EX (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_,
       RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+  ACE_CHECK;
 
   if (this->busy_count_ == 0)
     {

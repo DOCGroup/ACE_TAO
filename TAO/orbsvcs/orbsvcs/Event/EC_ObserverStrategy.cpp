@@ -85,9 +85,9 @@ TAO_EC_Basic_ObserverStrategy::append_observer (
                      RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
                      RtecEventChannel::EventChannel::CANT_APPEND_OBSERVER))
 {
-  ACE_GUARD_THROW_RETURN (ACE_Lock, ace_mon, *this->lock_,
-      RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR(),
-      0);
+  ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
+      RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
+  ACE_CHECK_RETURN (0);
 
   this->handle_generator_++;
   Observer_Entry entry (this->handle_generator_,
@@ -122,8 +122,9 @@ TAO_EC_Basic_ObserverStrategy::remove_observer (
                      RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
                      RtecEventChannel::EventChannel::CANT_REMOVE_OBSERVER))
 {
-  ACE_GUARD_THROW (ACE_Lock, ace_mon, *this->lock_,
+  ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
       RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
+  ACE_CHECK;
 
   if (this->observers_.unbind (handle) == -1)
     ACE_THROW (
@@ -162,9 +163,10 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
   Headers headers;
 
   {
-    ACE_GUARD_THROW (TAO_EC_ConsumerAdmin::Busy_Lock,
+    ACE_GUARD_THROW_EX (TAO_EC_ConsumerAdmin::Busy_Lock,
         ace_mon, this->event_channel_->consumer_admin ()->busy_lock (),
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+    ACE_CHECK;
 
     TAO_EC_ConsumerAdmin::SupplierSetIterator end =
       this->event_channel_->consumer_admin ()->end ();
