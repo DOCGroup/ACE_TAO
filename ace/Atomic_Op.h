@@ -153,7 +153,6 @@ private:
 };
 #endif /* ACE_HAS_BUILTIN_ATOMIC_OP */
 
-
 #if defined (__ACE_INLINE__)
 #include "ace/Atomic_Op.inl"
 #endif /* __ACE_INLINE__ */
