@@ -3020,7 +3020,7 @@ case 254:
 	  } else {
  	    AST_Type *tp = AST_Type::narrow_from_decl(tao_yyvsp[-5].dcval);
 	    if (tp == NULL)
-	      tao_yyval.dcval = NULL;
+	      ; /* Error will be caught in FE_Declarator.*/
 	    else {
 	      tao_yyval.dcval = idl_global->gen()->create_sequence(tao_yyvsp[-2].exval, tp);
 	      /*
@@ -3049,7 +3049,7 @@ case 255:
 	  else {
 	    AST_Type *tp = AST_Type::narrow_from_decl(tao_yyvsp[-1].dcval);
 	    if (tp == NULL)
-	      tao_yyval.dcval = NULL;
+	      ; /* Error will be caught in FE_Declarator.*/
             else {
 	      tao_yyval.dcval =
 	        idl_global->gen()->create_sequence(
