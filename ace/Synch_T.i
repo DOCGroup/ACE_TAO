@@ -46,6 +46,20 @@ ACE_Guard<ACE_LOCK>::ACE_Guard (ACE_LOCK &l, int block)
     this->tryacquire ();
 }
 
+template <class ACE_LOCK> ACE_INLINE
+ACE_Guard<ACE_LOCK>::ACE_Guard (ACE_LOCK &l, int block, int become_owner)
+  : lock_ (&l),
+    owner_ (0)
+{
+  if (become_owner)
+    {
+      if (block)
+        this->acquire ();
+      else
+        this->tryacquire ();
+    }
+}
+
 // Implicitly and automatically acquire (or try to acquire) the
 // lock.
 
@@ -65,6 +79,12 @@ template <class ACE_LOCK> ACE_INLINE int
 ACE_Guard<ACE_LOCK>::remove (void)
 {
   return this->lock_->remove ();
+}
+
+template <class ACE_LOCK> ACE_INLINE void
+ACE_Guard<ACE_LOCK>::disown (void)
+{
+  this->owner_ = -1;
 }
 
 template <class ACE_LOCK> ACE_INLINE

@@ -719,3 +719,15 @@ Thr_Supplier_Handler::svc (void)
     }
   ACE_NOTREACHED(return 0);
 }
+
+int
+Thr_Consumer_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+{
+  return 0;
+}
+
+int
+Thr_Supplier_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+{
+  return 0;
+}
