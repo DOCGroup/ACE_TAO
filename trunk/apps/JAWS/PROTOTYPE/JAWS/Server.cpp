@@ -77,6 +77,8 @@ JAWS_Server::init (int argc, char *argv[])
       this->policy_.acceptor (JAWS_IO_Synch_Acceptor_Singleton::instance ());
     }
 
+  ACE_INET_Addr inet_addr (this->port_);
+  this->policy_.acceptor ()->open (inet_addr);
 }
 
 int
@@ -93,12 +95,6 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol,
                   "(%t) JAWS_Server::open, could not create Data_Block\n"));
       return -1;
     }
-
-  ACE_INET_Addr inet_addr (this->port_);
-  JAWS_IO_Synch_Acceptor_Singleton::instance ()->open (inet_addr);
-  ACE_HANDLE socket
-    = JAWS_IO_Synch_Acceptor_Singleton::instance ()->get_handle ();
-  JAWS_IO_Asynch_Acceptor_Singleton::instance ()->open (socket);
 
   // initialize data block
 
