@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_exception.h"
 
@@ -127,7 +127,8 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << "delete _tao_elem;" << be_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_nl
-      << "TAO_ENDTRY;" << be_uidt_nl
+      << "TAO_ENDTRY;" << be_nl
+      << "ACE_NOTREACHED (return 0);" << be_uidt_nl
       << "}\n\n";
 
 
