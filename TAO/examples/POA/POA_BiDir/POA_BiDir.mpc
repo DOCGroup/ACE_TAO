@@ -2,4 +2,5 @@
 // $Id$
 
 project: taoserver, bidir_giop, minimum_corba {
+  exename = POA_BiDir
 }
