@@ -134,8 +134,12 @@ ACE_URL_Property::value (const ACE_USHORT16 *v)
 ACE_INLINE size_t
 ACE_URL_Property::bsize (void) const
 {
-  return (this->name_->length () + this->value_->length () + 2) *
-    sizeof (ACE_USHORT16);
+  size_t len = 2;
+  if (this->name_ != 0)
+    len += this->name_->length ();
+  if (this->value_ != 0)
+    len += this->value_->length ();
+  return len * sizeof (ACE_USHORT16);
 }
 
 ACE_INLINE

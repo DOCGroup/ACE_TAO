@@ -77,6 +77,9 @@ public:
   // Decodes buf and modifies this object, you should
   // probably create this with default ctor.
 
+  void dump (void) const;
+  // Dump out this object for debug.
+  
 protected:
   ACE_WString *name_;
   // Property name pointer.
@@ -137,6 +140,9 @@ public:
   // Decodes buf into current object, you better use
   // the default ctor.
 
+  void dump (void) const;
+  // Dump this object for debug.
+
 protected:
   char *url_;
   // URL of this offer.
@@ -145,7 +151,7 @@ protected:
   // Properties associate with this offer.
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_URL_Offer (void))
+  //  ACE_UNIMPLEMENTED_FUNC (ACE_URL_Offer (void))
   // Do not allow access to default constructor
 };
 

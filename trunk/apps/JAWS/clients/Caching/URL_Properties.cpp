@@ -1,4 +1,4 @@
-// URL_Locator.cpp
+// URL_Properties.cpp
 // $Id$
 
 #if !defined (ACE_URL_PROPERTIES_C)
@@ -12,6 +12,7 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/OS.h"
+#include "ace/Auto_Ptr.h"
 
 template <class T>
 size_t ace_array_bsize (T &x)
@@ -44,6 +45,15 @@ void ace_array_decode (void *buf, T &x)
     }
 }
 
+void wstring_dump (const char *n, ACE_WString *wstr)
+{
+  if (wstr == 0)
+    ACE_DEBUG ((LM_DEBUG, "%s: %x\n", n, wstr));
+  else
+    ACE_DEBUG ((LM_DEBUG, "%s: %x  (\"%s\")\n", n, wstr,
+		ACE_Auto_Basic_Array_Ptr<char> (wstr->char_rep ()).get ()));
+}
+
 void
 ACE_URL_Property::encode (void *buf) const
 {
@@ -72,6 +82,15 @@ ACE_URL_Property::decode (void *buf)
   this->name (n);
   this->value (val);
   return this ;
+}
+
+void
+ACE_URL_Property::dump (void) const
+{
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  wstring_dump ("\n   name_", this->name_);
+  wstring_dump ("  value_", this->value_);
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 size_t
@@ -110,6 +129,16 @@ ACE_URL_Offer::decode (void *buf)
 			       + 1 + sizeof (ACE_UINT32)),
 		      this->prop_);
   return this;
+}
+
+void
+ACE_URL_Offer::dump (void) const
+{
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG, "\n URL: %s\n", this->url_));
+  for (int i = 0; i < this->prop_.size (); i++)
+    this->prop_[i].dump ();
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 #endif /* ACE_URL_PROPERTIES_C */
