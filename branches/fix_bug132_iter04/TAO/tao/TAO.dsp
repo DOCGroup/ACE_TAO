@@ -203,19 +203,7 @@ SOURCE=.\Base_Transport_Property.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\BiDir_ORBInitializer.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDir_Policy_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDir_PolicyFactory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDirPolicyC.cpp
+SOURCE=.\BiDir_Adapter.cpp
 # End Source File
 # Begin Source File
 
@@ -356,6 +344,10 @@ SOURCE=.\Encodable.cpp
 # Begin Source File
 
 SOURCE=.\Endpoint.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Endpoint_Selector_Factory.cpp
 # End Source File
 # Begin Source File
 
@@ -719,6 +711,10 @@ SOURCE=.\RT_Current.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_Endpoint_Selector_Factory.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RT_Invocation_Endpoint_Selectors.cpp
 # End Source File
 # Begin Source File
@@ -835,6 +831,10 @@ SOURCE=.\target_specification.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Thread_Pool.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\TimeBaseC.cpp
 # End Source File
 # Begin Source File
@@ -864,6 +864,10 @@ SOURCE=.\Typecode.cpp
 # Begin Source File
 
 SOURCE=.\Typecode_Constants.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\TypeCodeFactory_Adapter.cpp
 # End Source File
 # Begin Source File
 
@@ -947,19 +951,7 @@ SOURCE=.\Base_Transport_Property.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\BiDir_ORBInitializer.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDir_Policy_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDir_PolicyFactory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDirPolicyC.h
+SOURCE=.\BiDir_Adapter.h
 # End Source File
 # Begin Source File
 
@@ -1112,6 +1104,10 @@ SOURCE=.\Encodable.h
 # Begin Source File
 
 SOURCE=.\Endpoint.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Endpoint_Selector_Factory.h
 # End Source File
 # Begin Source File
 
@@ -1523,6 +1519,10 @@ SOURCE=.\RT_Current.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_Endpoint_Selector_Factory.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RT_Invocation_Endpoint_Selectors.h
 # End Source File
 # Begin Source File
@@ -1667,6 +1667,10 @@ SOURCE=.\target_specification.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Thread_Pool.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\TimeBaseC.h
 # End Source File
 # Begin Source File
@@ -1708,6 +1712,10 @@ SOURCE=.\try_macros.h
 # Begin Source File
 
 SOURCE=.\typecode.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TypeCodeFactory_Adapter.h
 # End Source File
 # Begin Source File
 
@@ -1776,14 +1784,6 @@ SOURCE=.\Asynch_Reply_Dispatcher.i
 # Begin Source File
 
 SOURCE=.\Base_Transport_Property.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDir_Policy_i.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDirPolicyC.i
 # End Source File
 # Begin Source File
 
