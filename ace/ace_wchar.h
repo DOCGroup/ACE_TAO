@@ -22,7 +22,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // These macros have been deprecated and should be replaced by their
-// ACE_TEXT_* equivalents.
+// ACE_TEXT_* equivalents.  These macros are just hacks and may not
+// completely provide the old functionality.
 #if !defined (ACE_ONLY_LATEST_AND_GREATEST)
 // Convert the old unicode indicators
 # if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
@@ -46,6 +47,19 @@
 # else /* ACE_USES_WCHAR */
 #   define ASYS_ONLY_WIDE_STRING(STRING) ACE_Ascii_To_Wide (STRING).wchar_rep ()
 # endif /* ACE_USES_WCHAR */
+
+
+# if !defined (ACE_WIN32)
+#   if (defined (ACE_HAS_UNICODE) && (defined (UNICODE)))
+typedef const wchar_t *LPCTSTR;
+typedef wchar_t *LPTSTR;
+typedef wchar_t TCHAR;
+#   else
+typedef const char *LPCTSTR;
+typedef char *LPTSTR;
+typedef char TCHAR;
+#   endif /* ACE_HAS_UNICODE && UNICODE */
+# endif /* ACE_WIN32 */
 
 #endif /* ACE_ONLY_LATEST_AND_GREATEST */
 
