@@ -164,15 +164,6 @@ private:
   // its wait () method on VxWorks, without interfering with the
   // server's (global) thread manager.
 
-  ACE_timer_t total_latency_;
-  // total latency time for all the threads.
-
-  ACE_timer_t total_latency_high_;
-  // latency time threads other than utilisation.
-
-  ACE_timer_t total_util_task_duration_;
-  // time taken by the utilization task.
-
   u_int context_switch_;
   // Stores the total number of context switches incurred by the
   // program while making CORBA requests
