@@ -105,7 +105,7 @@ public:
             size_t len,
             int release);
 
-  /// Clear this string. Memory is _not_ freed is <release> is 0.
+  /// Clear this string. Memory is _not_ freed if <release> is 0.
   void clear (int release = 0);
 
   /**
