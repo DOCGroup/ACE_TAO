@@ -179,10 +179,12 @@ JAWS_Server::parse_args (int argc, char *argv[])
         break;
       }
 
+#if (ACE_NTRACE != 1)
   if (t)
     ACE_Trace::start_tracing ();
   else
     ACE_Trace::stop_tracing ();
+#endif /* ACE_NTRACE != 1*/
 
   if (this->port_ == 0) this->port_ = 5432;
   if (this->nthreads_ == 0) this->nthreads_ = 5;

@@ -6,6 +6,7 @@
 # define JAWS_TRACE(X) ACE_Trace ____ (ACE_TEXT (X), \
                                        __LINE__, \
                                        ACE_TEXT (__FILE__))
+#include "ace/Trace.h"
 #endif /* JAWS_NTRACE */
 
 #ifndef JAWS_JAWS_H
