@@ -8,7 +8,7 @@ optimize = 1
 
 CC              = gcc
 CXX             = g++
-CFLAGS          += -w -fno-strict-prototypes -pipe
+CFLAGS          += -Wall -Wpointer-arith -fno-strict-prototypes -pipe
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates
 DCFLAGS         += -g
 DLD             = $(CXX)
