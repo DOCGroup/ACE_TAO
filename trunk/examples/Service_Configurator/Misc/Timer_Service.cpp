@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Timer_Service.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Misc, Timer_Service, "$Id$")
 

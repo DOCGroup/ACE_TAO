@@ -1,5 +1,7 @@
 // $Id$
 
+#include "ace/Log_Msg.h"
+
 #include "Logging_Handler.h"
 #include "Reactor_Singleton.h"
 

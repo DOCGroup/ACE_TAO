@@ -2,6 +2,7 @@
 
 #include "ace/Service_Config.h"
 #include "ace/FIFO_Recv_Msg.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(FIFO, server, "$Id$")
 

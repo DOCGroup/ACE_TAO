@@ -21,6 +21,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/ACE.h"
 #include "ace/Get_Opt.h"
+#include "ace/Log_Msg.h"
 #include <math.h>
 
 ACE_RCSID(UDP, udp_test, "$Id$")

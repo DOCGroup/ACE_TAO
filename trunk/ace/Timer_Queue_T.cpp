@@ -11,6 +11,7 @@
 
 #include "ace/Signal.h"
 #include "ace/Timer_Queue_T.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Timer_Queue_T.i"

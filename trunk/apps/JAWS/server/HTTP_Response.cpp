@@ -2,6 +2,7 @@
 
 #include "ace/Process.h"
 #include "ace/Mem_Map.h"
+#include "ace/Log_Msg.h"
 
 #include "HTTP_Response.h"
 #include "HTTP_Request.h"

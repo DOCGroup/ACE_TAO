@@ -5,6 +5,7 @@
 
 #include "ace/Synch.h"
 #include "ace/Signal.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Threads, process_semaphore, "$Id$")
 

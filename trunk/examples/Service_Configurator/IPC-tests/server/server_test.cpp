@@ -3,6 +3,7 @@
 // The main test driver for the dynamically configured server.
 
 #include "ace/Service_Config.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(server, server_test, "$Id$")
 
