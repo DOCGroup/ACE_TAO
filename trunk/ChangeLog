@@ -1,3 +1,10 @@
+Fri Jun 16 17:00:03 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * include/makeinclude/rules.bin.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+          Joe's change does not work. A *LOT* of makefiles in TAO do not
+          include the rules.bin.GNU file.
+
 Fri Jun 16 16:18:21 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Makefile (DIRS):
