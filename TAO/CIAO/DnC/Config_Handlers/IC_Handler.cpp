@@ -8,8 +8,8 @@
 #include "ace/Log_Msg.h"
 
 #include "Node_Handler.h"
-#include "IC_handler.h"
-#include "SR_handler.h"
+#include "IC_Handler.h"
+#include "SR_Handler.h"
 
 #include <iostream>
 
@@ -75,8 +75,8 @@ namespace CIAO
               ic.resource.length (i + 1);
 
               // delegate the populating process
-              Resource_Handler::process_resource (this->iter_,
-                                                  ic.resource[i]);
+              Resource_Handler resource_handler (this->iter_, false);
+              resource_handler.process_resource (ic.resource[i]);
             }
           else if (node_name == XStr (ACE_TEXT ("connect")))
             {
