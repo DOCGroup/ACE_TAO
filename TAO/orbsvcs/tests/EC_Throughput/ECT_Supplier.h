@@ -19,6 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/Channel_Clients_T.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
 #include "ace/Task.h"
 
 class Test_Supplier : public ACE_Task<ACE_SYNCH>
@@ -60,10 +61,11 @@ public:
   // We talk to the EC (as a supplier) using this proxy, no duplicates
   // are done here...
 
-  void dump_results (const char* name);
+  void dump_results (const char* name,
+                     ACE_UINT32 global_scale_factor);
   // Dump the results...
 
-  void accumulate (ECT_Driver::Throughput_Stats& stats) const;
+  void accumulate (ACE_Throughput_Stats& stats) const;
   // Add our statistics to <stats>
 
 private:
@@ -83,7 +85,7 @@ private:
   // We also connect to the EC as a consumer so we can receive the
   // timeout events.
 
-  ECT_Driver::Throughput_Stats throughput_;
+  ACE_Throughput_Stats throughput_;
   // Measure the elapsed time spent while sending the events.
 
   int burst_count_;
