@@ -1,3 +1,11 @@
+Mon Dec 18 01:14:25 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/docs/rtcorba/features.html
+	* tao/docs/rtcorba/content.html
+	* tao/docs/rtcorba/faq.html:
+
+	  Finished rtcorba online documentation.
+
 Sun Dec 17 19:43:39 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Strategies/SHMIOP_Acceptor.h:
