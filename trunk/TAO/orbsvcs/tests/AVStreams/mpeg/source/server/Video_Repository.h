@@ -59,7 +59,7 @@ public:
                               CORBA::TypeCode_ptr returned_type,
                               const CORBA::Any& extra_info,
                               CORBA::Environment& _env)
-    TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
+    ACE_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
 
   virtual void export_properties (TAO_Property_Exporter& prop_exporter);
 

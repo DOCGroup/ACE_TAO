@@ -28,26 +28,26 @@ MMDevice_Exporter_i::connections (void) const
 
 // CORBA::Object_ptr
 // MMDevice_Exporter_i::
-// audio_mmdevice_reference_ (CORBA_Environment &TAO_IN_ENV)
+// audio_mmdevice_reference_ (CORBA_Environment &ACE_TRY_ENV)
 // {
 //   return this->audio_mmdevice_;
 // }
 
 // CORBA::Object_ptr
 // MMDevice_Exporter_i::
-// video_mmdevice_reference_ (CORBA_Environment &TAO_IN_ENV)
+// video_mmdevice_reference_ (CORBA_Environment &ACE_TRY_ENV)
 // {
 //   return this->video_mmdevice_;
 // }
 
  CORBA::Object_ptr
-MMDevice_Exporter_i::get_audio_mmdevice (CORBA_Environment &TAO_IN_ENV)
+MMDevice_Exporter_i::get_audio_mmdevice (CORBA_Environment &ACE_TRY_ENV)
 {
   return CORBA::Object::_duplicate (this->audio_mmdevice_);
 }
 
 CORBA::Object_ptr
-MMDevice_Exporter_i::get_video_mmdevice (CORBA_Environment &TAO_IN_ENV)
+MMDevice_Exporter_i::get_video_mmdevice (CORBA_Environment &ACE_TRY_ENV)
 {
   return CORBA::Object::_duplicate (this->video_mmdevice_);
 }
@@ -292,7 +292,7 @@ AV_Server_Sig_Handler::clear_child (int sig)
 int
 AV_Server_Sig_Handler::remove_names (void)
 {
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       /*
       CORBA::Object_var naming_obj = TAO_ORB_Core_instance ()->orb ()->resolve_initial_references ("NameService");
@@ -303,8 +303,8 @@ AV_Server_Sig_Handler::remove_names (void)
 
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in (),
-                                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                           ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Unregister the video_mmdevice with the naming service.
 
@@ -314,7 +314,7 @@ AV_Server_Sig_Handler::remove_names (void)
 
       // Register the video control object with the naming server.
       naming_context->unbind (video_server_mmdevice_name,
-                              TAO_TRY_ENV);
+                              ACE_TRY_ENV);
       // Unregister the audio_mmdevice with the naming service.
 
       CosNaming::Name audio_server_mmdevice_name (1);
@@ -323,16 +323,16 @@ AV_Server_Sig_Handler::remove_names (void)
 
       // Register the audio control object with the naming server.
       naming_context->unbind (audio_server_mmdevice_name,
-                              TAO_TRY_ENV);
+                              ACE_TRY_ENV);
       */
       this->av_server_.shutdown ();
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("AV_Server_Sig_Handler::remove_names ()");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "AV_Server_Sig_Handler::remove_names ()");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
   return 0;
 }
 
@@ -437,7 +437,7 @@ AV_Server::parse_args (int argc,
 int
 AV_Server::init (int argc,
                  char **argv,
-                 CORBA::Environment& env)
+                 CORBA::Environment& ACE_TRY_ENV)
 {
   int result;
 
@@ -445,9 +445,8 @@ AV_Server::init (int argc,
   this->orb_manager_.init_child_poa (argc,
                                      argv,
                                      "child_poa",
-                                     env);
-  TAO_CHECK_ENV_RETURN (env,
-                        -1);
+                                     ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   CORBA::ORB_var orb =
     this->orb_manager_.orb ();
@@ -471,8 +470,8 @@ AV_Server::init (int argc,
 
   this->naming_context_ =
     CosNaming::NamingContext::_narrow (naming_obj.in (),
-                                       env);
-  TAO_CHECK_ENV_RETURN (env,-1);
+                                       ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
   */
 
 
@@ -483,10 +482,10 @@ AV_Server::init (int argc,
   // Register the video mmdevice object with the ORB
   this->orb_manager_.activate_under_child_poa ("Video_Server_MMDevice",
                                                this->video_mmdevice_,
-                                               env);
+                                               ACE_TRY_ENV);
   //  CORBA::String_var server_ior = this->orb_manager_.orb ()->object_to_string (mmdevice_reference,
-  //                                                                            TAO_TRY_ENV);
-  TAO_CHECK_ENV_RETURN (env,-1);
+  //                                                                            ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   /*
   // Register the video_mmdevice with the naming service.
@@ -497,15 +496,15 @@ AV_Server::init (int argc,
   // Register the video control object with the naming server.
   this->naming_context_->bind (video_server_mmdevice_name,
                                this->video_mmdevice_->_this (env),
-                               env);
+                               ACE_TRY_ENV);
 
   if (env.exception () != 0)
     {
       env.clear ();
       this->naming_context_->rebind (video_server_mmdevice_name,
                                      this->video_mmdevice_->_this (env),
-                                     env);
-      TAO_CHECK_ENV_RETURN (env,-1);
+                                     ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
     }
 
   */
@@ -517,15 +516,15 @@ AV_Server::init (int argc,
   // Register the audio mmdevice object with the ORB
   this->orb_manager_.activate_under_child_poa ("Audio_Server_MMDevice",
                                                this->audio_mmdevice_,
-                                               env);
-  TAO_CHECK_ENV_RETURN (env,-1);
+                                               ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
 
-  CORBA::Object_ptr audio_object_ptr = this->audio_mmdevice_->_this (env);
-  TAO_CHECK_ENV_RETURN (env,-1);
+  CORBA::Object_ptr audio_object_ptr = this->audio_mmdevice_->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
-  CORBA::Object_ptr video_object_ptr = this->video_mmdevice_->_this (env);
-  TAO_CHECK_ENV_RETURN (env,-1);
+  CORBA::Object_ptr video_object_ptr = this->video_mmdevice_->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   ACE_NEW_RETURN (this->mmdevice_exporter_,
                   MMDevice_Exporter_i (),
@@ -537,8 +536,8 @@ AV_Server::init (int argc,
   // Register the audio mmdevice object with the ORB
   this->orb_manager_.activate_under_child_poa ("MMDevice_Exporter",
                                                this->mmdevice_exporter_,
-                                               env);
-  TAO_CHECK_ENV_RETURN (env,-1);
+                                               ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
   /*
   // Register the audio_mmdevice with the naming service.
 
@@ -549,15 +548,15 @@ AV_Server::init (int argc,
   // Register the audio control object with the naming server.
   this->naming_context_->bind (audio_server_mmdevice_name,
                         this->audio_mmdevice_->_this (env),
-                        env);
+                        ACE_TRY_ENV);
 
   if (env.exception () != 0)
     {
       env.clear ();
       this->naming_context_->rebind (audio_server_mmdevice_name,
                               this->audio_mmdevice_->_this (env),
-                              env);
-      TAO_CHECK_ENV_RETURN (env,-1);
+                              ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
     }
 
   */
@@ -566,11 +565,11 @@ AV_Server::init (int argc,
 
 
 
-  if (this->resolve_trader (env) != -1)
+  if (this->resolve_trader (ACE_TRY_ENV) != -1)
     {
       // Invoke this for each offer.
-      this->export_properties (env);
-      TAO_CHECK_ENV_RETURN (env, -1);
+      this->export_properties (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
     }
 
   // Register the various signal handlers with the reactor.
@@ -587,10 +586,10 @@ AV_Server::init (int argc,
 
 // Runs the mpeg server
 int
-AV_Server::run (CORBA::Environment& env){
+AV_Server::run (CORBA::Environment& ACE_TRY_ENV){
   int result;
   // Run the ORB event loop
-  this->orb_manager_.run (env);
+  this->orb_manager_.run (ACE_TRY_ENV);
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) AV_Server::run () "
@@ -602,14 +601,14 @@ AV_Server::run (CORBA::Environment& env){
 }
 
 void
-AV_Server::export_properties (CORBA::Environment& TAO_IN_ENV)
+AV_Server::export_properties (CORBA::Environment& ACE_TRY_ENV)
 {
-  CORBA::Object_ptr mmdevice_object_ptr = this->mmdevice_exporter_->_this (TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+  CORBA::Object_ptr mmdevice_object_ptr = this->mmdevice_exporter_->_this (ACE_TRY_ENV);
+  ACE_CHECK;
 
   CosPropertyService::PropertySet_ptr mmdevice_prop_set =
-  CosPropertyService::PropertySet::_narrow (mmdevice_object_ptr, TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+  CosPropertyService::PropertySet::_narrow (mmdevice_object_ptr, ACE_TRY_ENV);
+  ACE_CHECK;
 
   // Instantiate the property exporter helper class.
   TAO_Property_Exporter mmdevice_prop_exporter (this->trader_, mmdevice_prop_set);
@@ -625,15 +624,15 @@ AV_Server::export_properties (CORBA::Environment& TAO_IN_ENV)
                           (CosTrading::ServiceTypeName) MMDEVICE_SERVICE_TYPE,
                           this->prop_seq_,
                           mmdevice_super_types,
-                          TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+                          ACE_TRY_ENV);
+  ACE_CHECK;
 
 
 
 }
 
 int
-AV_Server::resolve_trader (CORBA::Environment& TAO_IN_ENV)
+AV_Server::resolve_trader (CORBA::Environment& ACE_TRY_ENV)
 {
   if (this->trader_.ptr () == 0)
     {
@@ -651,17 +650,17 @@ AV_Server::resolve_trader (CORBA::Environment& TAO_IN_ENV)
 
       // Narrow the lookup interface.
       ACE_DEBUG ((LM_DEBUG, "Narrowing the lookup interface.\n"));
-      this->trader_ = CosTrading::Lookup::_narrow (trading_obj.in (), TAO_IN_ENV);
-      TAO_CHECK_ENV_RETURN (TAO_IN_ENV, -1);
+      this->trader_ = CosTrading::Lookup::_narrow (trading_obj.in (), ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
 
       // Add property definitions to the service type.
       CORBA::ULong offset = this->mmdevice_exporter_->define_properties (this->prop_seq_);
-      //      TAO_CHECK_ENV_RETURN (TAO_IN_ENV,-1);
+      //      ACE_TRY_CHECK_RETURN (ACE_TRY_ENV,-1);
       offset += this->mach_props_.define_properties (this->prop_seq_, offset);
       this->video_rep_.define_properties (this->prop_seq_, offset);
     }
   ACE_DEBUG ((LM_DEBUG,"Trader IOR: %s\n",
-              this->orb_manager_.orb ()->object_to_string (this->trader_.in (),TAO_IN_ENV)));
+              this->orb_manager_.orb ()->object_to_string (this->trader_.in (),ACE_TRY_ENV)));
 
 }
 
@@ -680,46 +679,46 @@ AV_Server::~AV_Server (void)
 void
 AV_Server::shutdown (void) const
 {
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       if (this->trader_.ptr () != 0)
         {
-          CosTrading::Register_var reg = this->trader_->register_if (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+          CosTrading::Register_var reg = this->trader_->register_if (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG, "Withdrawing offer...\n"));
-          reg->withdraw (this->mmdevice_offer_id_.in (), TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+          reg->withdraw (this->mmdevice_offer_id_.in (), ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
       ACE_DEBUG ((LM_DEBUG, "Failed to withdraw offer."));
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 }
 
 int
 main (int argc, char **argv)
 {
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       int return_value =
-        AV_SERVER::instance ()->init (argc, argv, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        AV_SERVER::instance ()->init (argc, argv, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (return_value != -1)
         {
-          AV_SERVER::instance ()->run (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+          AV_SERVER::instance ()->run (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Exception");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }
