@@ -6,7 +6,7 @@ Thu Jul 13 14:50:39 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  This was creating problems in the IRIX builds. Moreover this
 	  also busted the 'thread-per-connection' strategy in TAO. The
 	  change actually removed a conditional check. I have added that
-	  back. 
+	  back. Thanks to Nanbor Wang for guiding me through this.
 
 Thu Jul 13 14:41:58 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
