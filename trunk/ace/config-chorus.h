@@ -21,7 +21,7 @@
 #if defined (__GNUG__)
 # include "ace/config-g++-common.h"
 # undef ACE_HAS_ANSI_CASTS
-# define ACE_LACKS_UCHAR_STAR_RIGHT_SHIFT
+# define ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS
 #elif defined (ghs)
 # define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 # define ACE_HAS_TANDEM_SIGNALS
