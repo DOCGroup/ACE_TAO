@@ -4,7 +4,7 @@
 #include "ace/SString.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
-#include "ciao/CIAO_HomeRegistrar_i.h"
+#include "ciao/HomeRegistrar_i.h"
 
 char *ior_file_name_ = 0;
 char *component_list_ = 0;

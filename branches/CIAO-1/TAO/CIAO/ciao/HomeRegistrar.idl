@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file CIAO_HomeRegistrar.idl
+ * @file HomeRegistrar.idl
  *
  * This file define the interface supported by CIAO's HomeFinder
  * service.  It is basically an extension of Components::HomeFinder

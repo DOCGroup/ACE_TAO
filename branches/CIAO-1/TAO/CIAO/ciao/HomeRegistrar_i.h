@@ -1,17 +1,17 @@
 // $Id$
 
 /**
- * @file CIAO_HomeRegistrar_i.h
+ * @file HomeRegistrar_i.h
  *
  * A CIAO HomeFinder implementation that also support CIAO's home
  * registration operation.
  *
- * @sa CIAO_HomeRegistrar.idl
+ * @sa HomeRegistrar.idl
  *
  * @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 
-#include "CIAO_HomeRegistrarS.h"
+#include "HomeRegistrarS.h"
 #include <CosNamingC.h>
 
 namespace CIAO
@@ -67,5 +67,5 @@ namespace CIAO
 };
 
 #if defined (__ACE_INLINE__)
-#include "CIAO_HomeRegistrar_i.inl"
+#include "HomeRegistrar_i.inl"
 #endif /* !defined INLINE */

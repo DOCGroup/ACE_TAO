@@ -1,9 +1,9 @@
 // $Id$
 
-#include "CIAO_HomeRegistrar_i.h"
+#include "HomeRegistrar_i.h"
 
 #if !defined (__ACE_INLINE__)
-#include "CIAO_HomeRegistrar_i.inl"
+#include "HomeRegistrar_i.inl"
 #endif /* !defined INLINE */
 
 CIAO::HomeRegistrar_Impl::HomeRegistrar_Impl (CosNaming::NamingContext_ptr ns)
