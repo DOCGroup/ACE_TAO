@@ -90,6 +90,8 @@ TAO_GIOP_Invocation::location_forward_i (TAO_Stub *stubobj,
   ACE_CHECK;
 
   this->received_location_forward_ = 1;
+
+  this->restart_flag_ = 1;
 }
 
 // ****************************************************************
