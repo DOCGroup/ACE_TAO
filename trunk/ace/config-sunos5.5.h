@@ -78,6 +78,7 @@
 # endif /* !ACE_MT_SAFE */
 
 #elif defined (ghs)
+# define ACE_HAS_BROKEN_ENUMS /* Necessary with 1.8.9, not 1.8.8. */
 # define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_LONGLONG_T /* It really doesn't have it.  Boo. */
