@@ -231,21 +231,26 @@ JAWS_Asynch_IO::read (JAWS_IO_Handler *ioh,
                       ACE_Message_Block* mb,
                       unsigned int size)
 {
-  ACE_Asynch_Read_Stream ar;
   JAWS_Asynch_IO_Handler *aioh =
     ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, ioh);
 
+  ACE_Asynch_Read_Stream ar;
+
   if (ar.open (*(aioh->handler ()), aioh->handle ()) == -1
-      || ar.read (mb, size) == -1)
+      || ar.read (*mb, size) == -1)
     aioh->read_error ();
 }
 
 void
-JAWS_Asynch_IO::receive_file (const char *filename,
+JAWS_Asynch_IO::receive_file (JAWS_IO_Handler *ioh,
+                              const char *filename,
                               void *initial_data,
-                              int initial_data_length,
-                              int entire_length)
+                              unsigned int initial_data_length,
+                              unsigned int entire_length)
 {
+  JAWS_Asynch_IO_Handler *aioh =
+    ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, ioh);
+
   ACE_Message_Block *mb = 0;
   ACE_Filecache_Handle *handle;
 
@@ -273,7 +278,7 @@ JAWS_Asynch_IO::receive_file (const char *filename,
         {
           ACE_Asynch_Read_Stream ar;
 
-          if (ar.open (*this, this->handle_) == -1
+          if (ar.open (*(aioh->handler ()), aioh->handle ()) == -1
               || ar.read (*mb, mb->size () - mb->length (), handle) == -1)
             result = -1;
         }
@@ -288,12 +293,16 @@ JAWS_Asynch_IO::receive_file (const char *filename,
 }
 
 void
-JAWS_Asynch_IO::transmit_file (const char *filename,
+JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
+                               const char *filename,
                                const char *header,
-                               int header_size,
+                               unsigned int header_size,
                                const char *trailer,
-                               int trailer_size)
+                               unsigned int trailer_size)
 {
+  JAWS_Asynch_IO_Handler *aioh =
+    ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, ioh);
+
   ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer = 0;
   ACE_Filecache_Handle *handle = new ACE_Filecache_Handle (filename, NOMAP);
 
@@ -309,7 +318,7 @@ JAWS_Asynch_IO::transmit_file (const char *filename,
 
       ACE_Asynch_Transmit_File tf;
 
-      if (tf.open (*this, this->handle_) == -1
+      if (tf.open (*(aioh->handler ()), aioh->handle ()) == -1
           || tf.transmit_file (handle->handle (), // file handle
                                header_and_trailer, // header and trailer data
                                0,  // bytes_to_write
@@ -331,10 +340,11 @@ JAWS_Asynch_IO::transmit_file (const char *filename,
 }
 
 void
-JAWS_Asynch_IO::send_confirmation_message (const char *buffer,
-                                           int length)
+JAWS_Asynch_IO::send_confirmation_message (JAWS_IO_Handler *ioh,
+                                           const char *buffer,
+                                           unsigned int length)
 {
-  this->send_message (buffer, length, CONFORMATION);
+  this->send_message (buffer, length, CONFIRMATION);
 }
 
 void
@@ -345,8 +355,9 @@ JAWS_Asynch_IO::send_error_message (const char *buffer,
 }
 
 void
-JAWS_Asynch_IO::send_message (const char *buffer,
-                              int length,
+JAWS_Asynch_IO::send_message (JAWS_IO_Handler *ioh,
+                              const char *buffer,
+                              unsigned int length)
                               int act)
 {
   ACE_Message_Block *mb;
