@@ -1,3 +1,8 @@
+Wed Mar 26 14:40:55 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+	* utils/catior/catior.cpp (cat_codeset_info): Workaround for MS
+	  VC++ for loop scoping problem.
+
 Tue Mar 25 20:55:15 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Codeset_Manager.cpp:
