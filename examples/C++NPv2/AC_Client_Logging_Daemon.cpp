@@ -206,14 +206,17 @@ int AC_Output_Handler::svc () {
   ACE_Message_Block *blocks[ACE_IOV_MAX];
   size_t message_index = 0;
   ACE_Time_Value time_of_last_send (ACE_OS::gettimeofday ());
+  ACE_Time_Value timeout;
   ACE_Sig_Action no_sigpipe ((ACE_SignalHandler) SIG_IGN);
   ACE_Sig_Action original_action;
   no_sigpipe.register_action (SIGPIPE, &original_action);
 
   for (;;) {
+    if (message_index == 0) {
+      timeout = ACE_OS::gettimeofday ();
+      timeout += FLUSH_TIMEOUT;
+    }
     ACE_Message_Block *mblk = 0;
-    ACE_Time_Value timeout (ACE_OS::gettimeofday ());
-    timeout += FLUSH_TIMEOUT;
     if (getq (mblk, &timeout) == -1) {
       if (errno == ESHUTDOWN) {
         if (connector_->reconnect () == -1) break;
