@@ -297,10 +297,3 @@ main (int, ASYS_TCHAR *[])
 }
 
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Message_Queue_Factory<ACE_MT_SYNCH>;
-template class ACE_Dynamic_Message_Queue<ACE_MT_SYNCH>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Message_Queue_Factory<ACE_MT_SYNCH>
-#pragma instantiate ACE_Dynamic_Message_Queue<ACE_MT_SYNCH>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
