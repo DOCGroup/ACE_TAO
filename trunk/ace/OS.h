@@ -288,6 +288,7 @@ typedef struct timespec
   time_t tv_sec; // Seconds 
   long tv_nsec;	// Nanoseconds
 } timespec_t;
+typedef int clockid_t;
 #elif defined (ACE_HAS_BROKEN_POSIX_TIME)
 // OSF/1 defines struct timespec in <sys/timers.h> - Tom Marrs
 #include /**/ <sys/timers.h>
@@ -2378,6 +2379,7 @@ public:
   // = A set of wrappers for timers and resource stats.
   static u_int alarm (u_int delay);
   static ACE_hrtime_t gethrtime (void);
+  static int clock_gettime (clockid_t, struct timespec *);
   static ACE_Time_Value gettimeofday (void);
   static int getrusage (int who, struct rusage *rusage);
   static int getrlimit (int resource, struct rlimit *rl);
