@@ -1,3 +1,90 @@
+Sat May  3 14:00:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any_T.cpp:
+        * tao/Any_T.h:
+        * tao/Any_T.inl:
+
+	  Removed these files and replaced them with those below.
+
+        * tao/Any_Array_Impl_T.cpp:
+        * tao/Any_Array_Impl_T.h:
+        * tao/Any_Array_Impl_T.inl:
+        * tao/Any_Basic_Impl_T.cpp:
+        * tao/Any_Basic_Impl_T.h:
+        * tao/Any_Basic_Impl_T.inl:
+        * tao/Any_Dual_Impl_T.cpp:
+        * tao/Any_Dual_Impl_T.h:
+        * tao/Any_Dual_Impl_T.inl:
+        * tao/Any_Impl_T.cpp:
+        * tao/Any_Impl_T.h:
+        * tao/Any_Impl_T.inl:
+        * tao/Any_Special_Basic_Impl_T.cpp:
+        * tao/Any_Special_Basic_Impl_T.h:
+        * tao/Any_Special_Basic_Impl_T.inl:
+        * tao/Any_Special_Impl_T.cpp:
+        * tao/Any_Special_Impl_T.h:
+        * tao/Any_Special_Impl_T.inl:
+
+	  New files, each set containing one template class,
+	  allowing more fine-grained includes.
+
+        * tao/Any.cpp:
+        * tao/Any.h:
+        * tao/CONV_FRAMEC.cpp:
+        * tao/CurrentC.h:
+        * tao/DynamicC.h:
+        * tao/GIOPC.cpp:
+        * tao/IIOPC.cpp:
+        * tao/IOP_CodecC.h:
+        * tao/OctetSeqC.cpp:
+        * tao/PolicyC.h:
+        * tao/Policy_ForwardC.cpp:
+        * tao/Policy_ForwardC.h:
+        * tao/ServicesC.cpp:
+        * tao/StringSeqC.cpp:
+        * tao/TAO.dsp:
+        * tao/TAOC.cpp:
+        * tao/TimeBaseC.cpp:
+        * tao/TimeBaseC.h:
+        * tao/corba.h:
+        * tao/corbafwd.h:
+        * tao/DynamicAny/DynAny_i.h:
+        * tao/IFR_Client/IFR_BaseC.h:
+        * tao/IORManipulation/IORC.h:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
+        * tao/PortableServer/Default_ORTC.cpp:
+        * tao/PortableServer/ImplRepoC.h:
+        * tao/PortableServer/PortableServerC.h:
+        * tao/RTCORBA/RTCORBAC.h:
+
+	  Changes resulting from the new files above.
+
+        * tao/IORInterceptor/TAO_IORInterceptor.dsp:
+        * tao/ObjRefTemplate/TAO_ObjRefTemplate.dsp:
+
+	  Fixed settings in the release version.
+
+        * tao/Makefile.tao:
+        * tao/BiDir_GIOP/Makefile:
+        * tao/RTCORBA/Makefile:
+        * tao/RTPortableServer/Makefile:
+        * tao/Strategies/Makefile:
+        * tao/TypeCodeFactory/Makefile:
+        * tao/Utils/Makefile:
+        * tao/IORManipulation/Makefile:
+        * tao/IORTable/Makefile:
+        * tao/Messaging/Makefile:
+        * tao/Valuetype/Makefile:
+        * tao/ObjRefTemplate/Makefile:
+        * tao/PortableServer/Makefile:
+        * tao/IORInterceptor/Makefile:
+        * tao/IFR_Client/Makefile:
+        * tao/Domain/Makefile:
+        * tao/DynamicAny/Makefile:
+        * tao/DynamicInterface/Makefile:
+
+	  Updated dependencies.
+
 Fri May  2 16:28:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
