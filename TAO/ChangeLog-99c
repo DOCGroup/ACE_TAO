@@ -1,3 +1,24 @@
+Mon Nov 29 14:15:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Oneways/Reliable/Reliable.dsw:
+	* performance-tests/RTCorba/Oneways/Reliable/client.dsp:
+	* performance-tests/RTCorba/Oneways/Reliable/server.dsp:
+	* performance-tests/RTCorba/Oneways/Reliable/test.idl:
+	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+	* performance-tests/RTCorba/Oneways/Reliable/server.cpp:
+	* performance-tests/RTCorba/Oneways/Reliable/test_i.h:
+	* performance-tests/RTCorba/Oneways/Reliable/test_i.i:
+	* performance-tests/RTCorba/Oneways/Reliable/test_i.cpp:
+	* performance-tests/RTCorba/Oneways/Reliable/run_test.pl:
+	* performance-tests/RTCorba/Oneways/Reliable/Makefile:
+	* performance-tests/RTCorba/Oneways/Reliable/README:
+	  Test suite for reliable and buffered oneway requests. Latency
+	  and throughput measurements are made for each type of 
+	  SyncScope policy value (and for buffered oneway requests
+	  if the SyncScope policy value is SYNC_NONE). The same
+	  measurements are also made on twoway requests for
+	  comparison. See the README file for details.
+
 Mon Nov 29 11:45:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/fe/idl.yy:
