@@ -57,6 +57,8 @@ Hash_ReplicaControl::handle_timeout (const ACE_Time_Value &,
   this->request_count_ = 0;
   this->interval_start_ = ACE_OS::gettimeofday ();
 
+  // @@ Ossama: here is the dampening algorithm that i implemented, it
+  // is not rocket science, but helps...
   this->current_load_ =
     0.9F * this->current_load_ + 0.1F * load;
 
@@ -84,6 +86,8 @@ Hash_ReplicaControl::request_received (void)
 void
 Hash_ReplicaControl::request_rejected (CORBA::Environment &ACE_TRY_ENV)
 {
+  // @@ Ossama: notice how we reject a single request.  Maybe the
+  // advisory should include how many are we supposed to shed?
   this->replica_.reject_requests (0);
   ACE_THROW (PortableServer::ForwardRequest (
                  CORBA::Object::_duplicate (this->group_.in ())));

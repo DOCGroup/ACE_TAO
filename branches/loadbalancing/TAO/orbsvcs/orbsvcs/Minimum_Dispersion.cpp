@@ -16,6 +16,7 @@ Minimum_Dispersion_Strategy::Minimum_Dispersion_Strategy (void)
 
 Minimum_Dispersion_Strategy::~Minimum_Dispersion_Strategy (void)
 {
+  // @@ Ossama: more code that is not thread safe
   ReplicaProxySetIterator begin = this->proxies_.begin ();
   ReplicaProxySetIterator end = this->proxies_.end ();
 
@@ -31,6 +32,7 @@ Minimum_Dispersion_Strategy::~Minimum_Dispersion_Strategy (void)
 CORBA::Object_ptr
 Minimum_Dispersion_Strategy::replica (CORBA::Environment &ACE_TRY_ENV)
 {
+  // @@ Ossama: more code that is not thread safe
   while (!this->proxies_.is_empty ())
     {
       ReplicaProxySetIterator begin = this->proxies_.begin ();
@@ -49,9 +51,11 @@ Minimum_Dispersion_Strategy::replica (CORBA::Environment &ACE_TRY_ENV)
             }
         }
 
-      // @@ Setup a timeout
+      // @@ Ossama: we should setup a timeout policy here...
       ACE_TRY
         {
+          // Before returning an object reference to the client
+          // validate it first.
           CORBA::Object_var object =
             proxy->replica ();
           CORBA::Boolean non_existent =
@@ -66,7 +70,11 @@ Minimum_Dispersion_Strategy::replica (CORBA::Environment &ACE_TRY_ENV)
         {
         }
       ACE_ENDTRY;
-      // @@ A bit melodramatic...
+      // @@ Ossama: a bit melodramatic, we remove the object if *any*
+      // exception is thrown.  If the object really does not exist (we
+      // get non_existent==1) then this is exactly what we want to do,
+      // but if we get something like TRANSIENT we may want to do
+      // something less drastic, or at least strategize it ;-)
       this->proxies_.remove (proxy);
     }
   // @@ What do we do if the set is empty?
@@ -78,12 +86,14 @@ Minimum_Dispersion_Strategy::replica (CORBA::Environment &ACE_TRY_ENV)
 int
 Minimum_Dispersion_Strategy::insert (ReplicaProxy_Impl *proxy)
 {
+  // @@ Ossama: more code that is not thread safe
   return this->proxies_.insert (proxy);
 }
 
 int
 Minimum_Dispersion_Strategy::remove (ReplicaProxy_Impl *proxy)
 {
+  // @@ Ossama: more code that is not thread safe
   return this->proxies_.remove (proxy);
 }
 
@@ -91,6 +101,7 @@ void
 Minimum_Dispersion_Strategy::load_changed (ReplicaProxy_Impl *proxy,
                                            CORBA::Environment &ACE_TRY_ENV)
 {
+  // @@ Ossama: more code that is not thread safe
   if (this->proxies_.is_empty ())
     return;
 
@@ -114,9 +125,12 @@ Minimum_Dispersion_Strategy::load_changed (ReplicaProxy_Impl *proxy,
 
   float relative_load = cl / avg;
 
+  // @@ Ossama: no debug messages in production code, my fault....
   ACE_DEBUG ((LM_DEBUG, "Load[%x] %f %f %f\n",
               proxy, cl, avg, relative_load));
 
+  // @@ Ossama: Make the 1.5 factor adjustable, it is how much
+  // dispersion we tolerate before starting to send advisories.
   if (relative_load > 1 + 1.5F / n)
     {
       proxy->has_high_load_ = 1;
@@ -125,6 +139,12 @@ Minimum_Dispersion_Strategy::load_changed (ReplicaProxy_Impl *proxy,
       return;
     }
 
+  // @@ Ossama: notice that we wait until the load is signifcantly
+  // lower before sending the nominal load advisory, it does not
+  // matter that much because the replicas automatically restart after
+  // rejecting one client....
+  // @@ Ossama: make the 0.9 factor adjustable, at least at
+  // construction time...
   if (proxy->has_high_load_ && relative_load < 1 + 0.9F / n)
     {
       proxy->has_high_load_ = 0;

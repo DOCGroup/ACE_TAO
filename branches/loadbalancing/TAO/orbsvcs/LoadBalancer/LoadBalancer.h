@@ -56,12 +56,21 @@ private:
   const char *interface_repository_id_;
   // The interface repository ID for the object we load balance.
 
+  // @@ Ossama: the current version just dumps the IOR to a file, we
+  // may want to integrate it with the naming service too.
   const char *load_balancer_file_;
   // The load balancing service IOR is stored in this file
 
   int strategy_;
   // Select the right strategy
 
+  // @@ Ossama: the strategies should be created by a factory, the
+  // factory should be a Service Object that can be dynamically
+  // loaded.
+  // @@ Ossama: here is more food for thought, can we provide a
+  // generic load balancing service that can implement static,
+  // per-request and dynamic load balancing?  If not, can we share the
+  // current strategies among them?
   Round_Robin_Strategy round_robin_;
   Minimum_Dispersion_Strategy minimum_dispersion_;
 

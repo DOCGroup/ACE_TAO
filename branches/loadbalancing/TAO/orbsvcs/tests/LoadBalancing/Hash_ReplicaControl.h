@@ -10,6 +10,8 @@
 
 class Hash_ReplicaControl;
 
+// @@ Ossama: notice how i integrated the reactor into the control
+// loop, to periodically send the load...
 class Timeout_Adapter : public ACE_Event_Handler
 {
 public:
@@ -23,6 +25,8 @@ private:
   Hash_ReplicaControl *adaptee_;
 };
 
+// @@ Ossama: remember that we want to implement load balancing using
+// interceptors.
 class Hash_ReplicaControl : public virtual POA_LoadBalancing::ReplicaControl
 {
 public:

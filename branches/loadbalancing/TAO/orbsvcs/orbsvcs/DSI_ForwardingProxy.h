@@ -23,6 +23,13 @@
 // Forward declaration.
 class LoadBalancer_Impl;
 
+// @@ Ossama: we have to change the implementation to use a
+// ServantLocator, that can actually raise the ForwardingRequest
+// exception.
+// @@ Also: please remember to use the '#pragma once' madness, prefix
+// the names of your classes and don't forget the TAO_XXXX_Export
+// macros.
+
 class DSI_ForwardingProxy : public PortableServer::DynamicImplementation
 {
   // = TITLE

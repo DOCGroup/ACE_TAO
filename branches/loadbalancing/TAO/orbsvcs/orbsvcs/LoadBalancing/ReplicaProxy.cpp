@@ -26,6 +26,9 @@ ReplicaProxy_Impl::current_load (CORBA::Float load,
   ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::InvalidLoad,
                    CORBA::SystemException))
 {
+  // @@ Ossama: this is the point were the load dampening should
+  // happen. Probably strategized....
+
   if (load < 0)
     ACE_THROW (LoadBalancing::ReplicaProxy::InvalidLoad ());
 
@@ -40,6 +43,8 @@ ReplicaProxy_Impl::disconnect (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::NotConnected,
                    CORBA::SystemException))
 {
+  // @@ Ossama: this code is not thread safe...
+
   if (this->connected_)
     {
       this->balancer_->disconnect (this, ACE_TRY_ENV);
@@ -61,6 +66,11 @@ void ReplicaProxy_Impl::connect (LoadBalancer_Impl *balancer,
                    LoadBalancing::ReplicaProxy::NilReplica,
                    CORBA::SystemException))
 {
+  // @@ Ossama: this is a perfect example of code that is not thread
+  // safe: what if we get a 'current_load' message in another thread?
+  // Or a disconnect() message from a misbehaving replica? Or two
+  // calls to connect?
+
   if (balancer == 0)
     ACE_THROW (CORBA::BAD_PARAM (
       CORBA_SystemException::_tao_minor_code (

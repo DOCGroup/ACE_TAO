@@ -9,6 +9,7 @@ ACE_RCSID(LoadBalancer, LoadBalancer_Service, "$Id$")
 int
 main (int argc, char *argv[])
 {
+  // @@ Ossama: i'm not sure what the LoadBalancer class buys you.
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {

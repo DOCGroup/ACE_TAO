@@ -1,3 +1,26 @@
+Tue Mar 28 20:53:53 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/LoadBalancer/LoadBalancer.h:
+	* orbsvcs/LoadBalancer/LoadBalancer_Service.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing.idl:
+	* orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.h:
+	* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.h:
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
+	* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.h:
+	* orbsvcs/tests/LoadBalancing/Hash_Replica.idl:
+	* orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.cpp:
+	* orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.h:
+	* orbsvcs/tests/LoadBalancing/client.cpp:
+	  Left a ton of @@ comments for Ossama.
+
 Mon Mar 27 09:03:51 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.cpp:

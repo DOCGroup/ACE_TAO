@@ -25,6 +25,13 @@
 // Forward declarations
 class ReplicaProxy_Impl;
 
+// @@ Ossama: is this the kind of data structure that you want to use
+// in this case? I mean the iterator is invalidated on each insertion
+// and extraction, the class is not thread safe and it is hard to find
+// the element with the least load...  Then again the number of
+// servers should be small (say around 10), and additions/removals
+// rare, so the data structure is probably not a real problem.
+
 typedef ACE_Unbounded_Set<ReplicaProxy_Impl *> ReplicaProxySet;
 typedef ACE_Unbounded_Set_Iterator<ReplicaProxy_Impl *> ReplicaProxySetIterator;
 

@@ -18,6 +18,10 @@ LoadBalancer_Impl::LoadBalancer_Impl (const char *interface_id,
     strategy_ (strategy),
     poa_ (PortableServer::POA::_duplicate (poa))
 {
+  // @@ Ossama: in general it is a bad idea to perform operations like
+  // this in the constructor, the behavior on platforms with exception
+  // and without native exception support is simply too different.
+
   // Nothing else
 
   ACE_TRY_NEW_ENV
