@@ -30,7 +30,7 @@ DCFLAGS         += -g
 DLD             = $(CXX)
 
 #### Exception handling breaks on MP machines prior to Sun C++ 4.2
-#### with jumbo patch 104631-02, see ace/config-sunos5.5-sunc++-4.x.h.
+#### with jumbo patch 104631-02, see ace/config-sunos5.5.h.
 #### If you are using a version of Sun C++ prior to 4,2, or haven't
 #### applied that jumbo patch to your 4.2, or don't want to pay the
 #### performance penalty of exception handling, then use the default
