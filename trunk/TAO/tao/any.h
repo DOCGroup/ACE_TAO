@@ -22,7 +22,7 @@
 #define TAO_ANY_H
 
 class TAO_Export CORBA_Any
-  //
+{
   // = TITLE
   //   Class "Any" can wrap values of any type, with the assistance
   //   of a TypeCode to describe that type.
@@ -30,7 +30,6 @@ class TAO_Export CORBA_Any
   // = DESCRIPTION
   //   XXX should find a way to make its memory allocation always go
   //   within the appropriate OLE heap...
-{
 public:
   // = Minor codes for exceptional returns
   enum
@@ -58,8 +57,8 @@ public:
   CORBA_Any &operator= (const CORBA_Any &);
   // assignment operator
 
-  // = NOTE: 94-9-14 has assignment operator plus many insertion, as specified
-  // below
+  // = NOTE: 94-9-14 has assignment operator plus many insertion, as
+  // specified below.
 
   // =type safe insertion
 
@@ -113,8 +112,10 @@ public:
   CORBA::Boolean operator>>= (char*&) const;
   // extract an unbounded string
 
-  // special types needed for insertion and extraction of booleans, octets,
-  // chars, and bounded strings
+  // = Special types.
+
+  // These are needed for insertion and extraction of booleans,
+  // octets, chars, and bounded strings.
 
   struct from_boolean
   {
@@ -155,8 +156,10 @@ public:
   void operator<<= (from_string);
   // insert a bounded string
 
-  // special types for extracting octets, chars, booleans, bounded
-  // strings, and object references
+  // = Special types.
+  
+  // These extract octets, chars, booleans, bounded strings, and
+  // object references
 
   struct to_boolean
   {
@@ -208,19 +211,19 @@ public:
 		const void *value,
 		CORBA::Boolean orb_owns_data,
 		CORBA::Environment &env);
-  // replace the current typecode and data with the specified one - unsafe
+  // Replace the current typecode and data with the specified one -
+  // unsafe.
 
   CORBA::TypeCode_ptr type (void) const;
-  // Return TypeCode of the element stored in the Any
+  // Return TypeCode of the element stored in the Any.
 
   const void *value (void) const;
   // Returns 0 if the Any has not been assigned a value, following the
   // CORBA spec (TODO: give a reference) it returns a non-zero value
-  // otherwise. TAO does *not* guarantee that this value may be
-  // casted to the contained type safely.
+  // otherwise. TAO does *not* guarantee that this value may be casted
+  // to the contained type safely.
 
-  // = Methods required for COM <IUnknown> support.
-
+  // = Memory management methods.
   CORBA::ULong AddRef (void);
   CORBA::ULong Release (void);
 
@@ -243,16 +246,16 @@ private:
   // Helper for extraction operators that don't pass an environment
   // parameter.
 
-
   // 94-9-14 hides unsigned char insert/extract
   void operator<<= (unsigned char);
   CORBA::Boolean operator>>= (unsigned char&) const;
 };
 
 class TAO_Export CORBA_Any_var
-  // = TITLE
-  //   Provide for automatic storage deallocation on going out of scope.
 {
+  // = TITLE
+  //   Provide for automatic storage deallocation on going out of
+  //   scope.  
 public:
   CORBA_Any_var (void);
   // default constructor
@@ -295,6 +298,7 @@ public:
 
 private:
   CORBA_Any *ptr_;
+  // Holds the Any.
 };
 
 class TAO_Export CORBA_Any_out
@@ -330,7 +334,7 @@ public:
 
 private:
   CORBA_Any *&ptr_;
-  // instance
+  // Instance
 
   void operator= (const CORBA_Any_var &);
   // assignment from _var disallowed
