@@ -25,7 +25,7 @@ TAO_GIOP_Twoway_Invocation (STUB_Object *data,
 			    const char *operation,
 			    TAO_ORB_Core *orb_core)
   : TAO_GIOP_Invocation (data, operation, orb_core),
-    inp_stream_ (orb_core->create_input_cdr_data_block (CDR::DEFAULT_BUFSIZE),
+    inp_stream_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
                  TAO_ENCAP_BYTE_ORDER)
 {
 }
@@ -80,7 +80,7 @@ TAO_GIOP_Locate_Request_Invocation::
 TAO_GIOP_Locate_Request_Invocation (STUB_Object *data,
 				    TAO_ORB_Core *orb_core)
   : TAO_GIOP_Invocation (data, 0, orb_core),
-    inp_stream_ (orb_core->create_input_cdr_data_block (CDR::DEFAULT_BUFSIZE))
+    inp_stream_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE))
 {
 }
 

@@ -65,7 +65,7 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (STUB_Object *data,
   : data_ (data),
     opname_ (operation),
     my_request_id_ (0),
-    out_stream_ (buffer, sizeof buffer, /* CDR::DEFAULT_BUFSIZE */
+    out_stream_ (buffer, sizeof buffer, /* ACE_CDR::DEFAULT_BUFSIZE */
                  TAO_ENCAP_BYTE_ORDER,
                  orb_core->output_cdr_buffer_allocator (),
                  orb_core->output_cdr_dblock_allocator ()),

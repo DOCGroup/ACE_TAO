@@ -239,7 +239,7 @@ TAO_InputCDR::TAO_InputCDR (size_t bufsiz,
 {
 }
 
-TAO_InputCDR::TAO_InputCDR (ACE_Message_Block *data,
+TAO_InputCDR::TAO_InputCDR (const ACE_Message_Block *data,
                             int byte_order)
   : ACE_InputCDR (data,
                   byte_order)
@@ -255,7 +255,7 @@ TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
 
 TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
                             size_t size,
-                            CDR::Long offset)
+                            ACE_CDR::Long offset)
   : ACE_InputCDR (rhs,
                   size,
                   offset)

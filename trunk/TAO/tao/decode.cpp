@@ -200,10 +200,10 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
   // @@EXC@@ This doesn't seem to be exception safe.
   ACE_NEW_RETURN (cdr,
                   ACE_Message_Block (end - begin
-                                     + 2*CDR::MAX_ALIGNMENT),
+                                     + 2 * ACE_CDR::MAX_ALIGNMENT),
                   CORBA::TypeCode::TRAVERSE_STOP);
   // Align the buffer before creating the CDR stream.
-  CDR::mb_align (cdr);
+  ACE_CDR::mb_align (cdr);
   TAO_OutputCDR out (cdr);
 
   retval = out.append (elem_tc.in (), stream, env);

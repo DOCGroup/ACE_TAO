@@ -105,7 +105,7 @@ IDL_GlobalData::IDL_GlobalData (void)
       n_allocated_idl_files_ (0),
       pd_parse_state (PS_NoState),
       pd_idl_src_file (0),
-      changing_standard_include_files_ (0),
+      changing_standard_include_files_ (1),
       export_macro_ (0),
       export_include_ (0),
       client_hdr_ending_ (ACE::strnew ("C.h")),

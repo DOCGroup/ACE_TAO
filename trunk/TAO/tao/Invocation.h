@@ -129,7 +129,7 @@ protected:
   CORBA::ULong my_request_id_;
   // Request ID of this operation.
 
-  char buffer [CDR::DEFAULT_BUFSIZE];
+  char buffer [ACE_CDR::DEFAULT_BUFSIZE];
   // Buffer used for both the output and input CDR streams, this is
   // "safe" because we only one of the streams at a time.
 

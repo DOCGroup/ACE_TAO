@@ -123,10 +123,10 @@ ior_string_to_object (const char *str,
 {
   // Unhex the bytes, and make a CDR deencapsulation stream from the
   // resulting data.
-  ACE_Message_Block mb (ACE_OS::strlen ((char *) str) / 2
-                        + 1 + CDR::MAX_ALIGNMENT);
+  ACE_Message_Block mb (ACE_OS::strlen ((char *) str) / 2 + 1
+                        + ACE_CDR::MAX_ALIGNMENT + 1);
 
-  CDR::mb_align (&mb);
+  ACE_CDR::mb_align (&mb);
 
   char *buffer = mb.rd_ptr ();
 
