@@ -1,3 +1,10 @@
+Tue Jun 28 20:19:11 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
+
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+          Manually cleaned up these projects and fixed them so they should
+          work on NT Alpha again.
+
 Tue Jun 29 18:48:22 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Functor_T.h (class ACE_Pointer_Hash): Added new class for
@@ -5,6 +12,8 @@ Tue Jun 29 18:48:22 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Future_Set: Restored future map to be a
 	  ACE_Hash_Map_Manager_Ex.
+
+Tue Jun 29 14:45:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/run_tests.bat: Removed New_Fail_Test from the
 	  run_tests.bat (the script for NT).  This tests takes too long to
