@@ -1,29 +1,41 @@
+Mon Oct 27 11:36:39 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp (exit_cleanup_i): removed protection against recursive
+          calls.  This protection no longer is necessary, because
+          ACE_TSS_Cleanup () is only called by ACE_Thread_Adapter::invoke ().
+          It was problematic because it used the ACE_Allocator instance.
+
+        * ace/config-vxworks*.h,README: added ACE_LACKS_FCNTL.
+
+        * ace/OS.i,ACE.cpp: replaced #ifdef VXWORKS with #ifdef
+          ACE_LACKS_FCNTL.
+
+        * ace/ACE.i (get_flags): return 0 if ACE_LACKS_FCNTL.  It would
+          be better to store ACE's notion of the flags associated with
+          the handle so that they could be returned, but this works for now.
+
+        * tests/run_tests.vxworks: re-enabled Reactors_Test, because it
+          works with the ACE_LACKS_FCNTL mods.
+
 Mon Oct 27 11:11:33 1997  Nanbor Wang  <nw1@CUECA>
 
-	* netsvcs/servers/servers.dsp
-	* netsvcs/lib/netsvcs.dsp:
-	* tests/*.dsp: 
-	* ace/ace_{dll,lib}.dsp: Added project configurations for Alpha
- 	  machines.  Configurations are named by adding "Alpha" in front
-	  of the original config names, e.g., "Win32 Alpha Unicode Debug.
+        * netsvcs/servers/servers.dsp
+        * netsvcs/lib/netsvcs.dsp:
+        * tests/*.dsp: 
+        * ace/ace_{dll,lib}.dsp: Added project configurations for Alpha
+          machines.  Configurations are named by adding "Alpha" in front
+          of the original config names, e.g., "Win32 Alpha Unicode Debug.
 
 Mon Oct 27 06:40:18 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* include/makeinclude/rules.local.GNU (show_uninit): Added a
- 	  missing semi-colon for one of the install rules.  Thanks to
- 	  Manojkumar Acharya <mja@cvsf325.gpt.co.uk> for reporting this.
+        * include/makeinclude/rules.local.GNU (show_uninit): Added a
+          missing semi-colon for one of the install rules.  Thanks to
+          Manojkumar Acharya <mja@cvsf325.gpt.co.uk> for reporting this.
 
-	* ace/Synch_T.h: Make sure that ACE_Guard::remove() calls
- 	  this->lock_->remove() rather than this->lock_->release().
-  	  Thanks to Johannes Gutleber <Johannes.Gutleber@cern.ch> for
- 	  reporting this.
-
-Mon Oct 27 11:36:39 1997  David L. Levine  <levine@cs.wustl.edu>
-
-        * (exit_cleanup_i): removed protection against recursive calls.
-          This protection no longer is necessary, because ACE_TSS_Cleanup ()
-          is only called by ACE_Thread_Adapter::invoke ().  It was
-          problematic because it used the ACE_Allocator instance.
+        * ace/Synch_T.h: Make sure that ACE_Guard::remove() calls
+          this->lock_->remove() rather than this->lock_->release().
+          Thanks to Johannes Gutleber <Johannes.Gutleber@cern.ch> for
+          reporting this.
 
 Mon Oct 27 00:20:13 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
