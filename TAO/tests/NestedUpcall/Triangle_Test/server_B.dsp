@@ -17,13 +17,12 @@ CFG=NU Triangle Server_B - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "NU Triangle Server_B - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "NU Triangle Server_B - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "NU Triangle Server_B - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "NU Triangle Server_B - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -134,13 +133,13 @@ SOURCE=.\Triangle_Test.idl
 
 !IF  "$(CFG)" == "NU Triangle Server_B - Win32 Release"
 
-USERDEP__TRIAN="..\..\..\tao_idl\Release\tao_idl.exe"	
+USERDEP__TRIAN="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL compiler
 InputPath=.\Triangle_Test.idl
 InputName=Triangle_Test
 
 BuildCmds= \
-	..\..\..\tao_idl\Release\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -172,13 +171,13 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "NU Triangle Server_B - Win32 Debug"
 
-USERDEP__TRIAN="..\..\..\tao_idl\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL compiler
+USERDEP__TRIAN="..\..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler
 InputPath=.\Triangle_Test.idl
 InputName=Triangle_Test
 
 BuildCmds= \
-	..\..\..\tao_idl\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

@@ -17,13 +17,12 @@ CFG=NU MT_Client_Test Server - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "NU MT_Client_Test Server - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "NU MT_Client_Test Server - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "NU MT_Client_Test Server - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "NU MT_Client_Test Server - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -134,13 +133,13 @@ SOURCE=.\MT_Client_Test.idl
 
 !IF  "$(CFG)" == "NU MT_Client_Test Server - Win32 Release"
 
-USERDEP__MT_CL="..\..\..\tao_idl\Release\tao_idl.exe"	
+USERDEP__MT_CL="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL compiler
 InputPath=.\MT_Client_Test.idl
 InputName=MT_Client_Test
 
 BuildCmds= \
-	..\..\..\tao_idl\Release\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -172,13 +171,13 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "NU MT_Client_Test Server - Win32 Debug"
 
-USERDEP__MT_CL="..\..\..\tao_idl\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL compiler
+USERDEP__MT_CL="..\..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler
 InputPath=.\MT_Client_Test.idl
 InputName=MT_Client_Test
 
 BuildCmds= \
-	..\..\..\tao_idl\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

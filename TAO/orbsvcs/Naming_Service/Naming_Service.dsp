@@ -18,17 +18,14 @@ CFG=Naming_Service - Win32 Alpha Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Naming_Service - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Naming_Service - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Naming_Service - Win32 Alpha Debug" (based on\
- "Win32 (ALPHA) Console Application")
-!MESSAGE "Naming_Service - Win32 Alpha Release" (based on\
- "Win32 (ALPHA) Console Application")
+!MESSAGE "Naming_Service - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Naming_Service - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Naming_Service - Win32 Alpha Debug" (based on "Win32 (ALPHA) Console Application")
+!MESSAGE "Naming_Service - Win32 Alpha Release" (based on "Win32 (ALPHA) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 
@@ -304,7 +301,6 @@ DEP_CPP_NAMIN=\
 	"..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\ace\Synch_T.h"\
 	"..\..\..\ace\Synch_T.i"\
-	"..\..\..\ace\sys_conf.h"\
 	"..\..\..\ace\Task.h"\
 	"..\..\..\ace\Task.i"\
 	"..\..\..\ace\Task_T.cpp"\
@@ -418,6 +414,9 @@ DEP_CPP_NAMIN=\
 	"..\orbsvcs\Naming\Naming_Utils.h"\
 	"..\orbsvcs\orbsvcs_export.h"\
 	".\Naming_Service.h"\
+	
+NODEP_CPP_NAMIN=\
+	"..\..\..\ace\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "Naming_Service - Win32 Alpha Release"
