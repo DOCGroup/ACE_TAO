@@ -41,8 +41,7 @@
 #endif /* ACE_HAS_STRICT */
 #define ACE_HAS_STRICT 1
 
-// Non-static object manager does not quite work with CE (yet.)
-#define ACE_HAS_NONSTATIC_OBJECT_MANAGER 0
+#define ACE_HAS_NONSTATIC_OBJECT_MANAGER 1
 
 // We need to rename program entry name "main" with ace_ce_main here
 // so that we can call it from CE's bridge class.
