@@ -1,4 +1,4 @@
-// sender.cpp,v 1.1 2001/04/15 02:55:56 yamuna Exp
+// $Id$
 
 #include "sender.h"
 #include "tao/debug.h"
@@ -33,33 +33,33 @@ Sender_StreamEndPoint::set_protocol_object (const char *,
 
 CORBA::Boolean
 Sender_StreamEndPoint::modify_QoS (AVStreams::streamQoS &new_qos,
-				   const AVStreams::flowSpec &/* the_flows */,
-				   CORBA::Environment &/* ACE_TRY_ENV */)
+                                   const AVStreams::flowSpec &/* the_flows */,
+                                   CORBA::Environment &/* ACE_TRY_ENV */)
                             ACE_THROW_SPEC((CORBA::SystemException,
-		                            AVStreams::noSuchFlow,
+                                            AVStreams::noSuchFlow,
                                             AVStreams::QoSRequestFailed ))
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "Sender_StreamEndPoint::modify_QoS\n"));
+              "Sender_StreamEndPoint::modify_QoS\n"));
   
   // Check if the qos for the flow has changed.
   if (new_qos.length () != 0)
     {
       // Check which qos parameter has changed.
       if (strcmp (new_qos [0].QoSParams [0].property_name, "video_frame_rate") == 0)
-	{
-	  // The video frame rate for this flow has changed.
+        {
+          // The video frame rate for this flow has changed.
 
-	  // Get the new value of the frame rate.
-	  CORBA::Any frame_rate_any =
-	    new_qos [0].QoSParams [0].property_value;
-	  
-	  CORBA::Short frame_rate;
-	  frame_rate_any >>= frame_rate;
-	  
-	  // Calculate the new inter frame time.
-	  inter_frame_time.set (1 / (double) frame_rate);
-	}
+          // Get the new value of the frame rate.
+          CORBA::Any frame_rate_any =
+            new_qos [0].QoSParams [0].property_value;
+          
+          CORBA::Short frame_rate;
+          frame_rate_any >>= frame_rate;
+          
+          // Calculate the new inter frame time.
+          inter_frame_time.set (1 / (double) frame_rate);
+        }
     }
 
   return 1;
@@ -269,7 +269,7 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
 
       // Continue to send data till the file is read to the end.
       while (1)
-	{
+        {
           // Read from the file into a message block.
           int n = ACE_OS::fread (this->mb_.wr_ptr (),
                                  1,
@@ -350,14 +350,14 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
           // Reset the message block.
           this->mb_.reset ();
 
-	} // end while
+        } // end while
 
       // File reading is complete, destroy the stream.
       AVStreams::flowSpec stop_spec;
       this->streamctrl_->destroy (stop_spec,
-				  ACE_TRY_ENV);
+                                  ACE_TRY_ENV);
         ACE_TRY_CHECK;
-	
+        
         // Shut the orb down.
         TAO_AV_CORE::instance ()->orb ()->shutdown (1,
                                                     ACE_TRY_ENV);
