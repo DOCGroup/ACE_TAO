@@ -1,3 +1,10 @@
+Fri Mar 27 14:10:34 1998  Steve Huston  <shuston@riverace.com>
+
+	* TAO_IDL/driver/drv_preproc.cpp: (also see my entry from 09:50)
+	  Removed explicit char * operator call, and use the conversion
+	  as it was before.  However, I needed to change the ?: operator to
+	  an if/else for AIX xlC to compile it correctly.
+
 Fri Mar 27 13:38:04 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* orbsvcs/IOR_Multicast.{h,cpp}:
@@ -7,7 +14,6 @@ Fri Mar 27 13:38:04 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 	the class name to TAO_IOR_Multicast. It didn't logically belong
 	in the Naming directory, since other bootstrappable services
 	require it. 
-
 
 Fri Mar 27 11:47:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -27,10 +33,10 @@ Fri Mar 27 11:47:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Mar 27 09:50:52 1998  Steve Huston  <shuston@riverace.com>
 
-	* TAO/TAO_IDL/driver/drv_preproc.cpp: Use explicit char * operator on
+	* TAO_IDL/driver/drv_preproc.cpp: Use explicit char * operator on
 	  cpp_path (AIX xlC requires this).  Added CVS Id.
 
-	* TAO/tao/Sequence_T.h: Fully qualify the template type when used as a
+	* tao/Sequence_T.h: Fully qualify the template type when used as a
 	  function return.
 
 Fri Mar 27 04:45:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
