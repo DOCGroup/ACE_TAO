@@ -162,11 +162,11 @@ int TAO_PG::test_encode_decode ()
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template ACE_Hash_Map_Manager<
     ACE_CString,
-    PortableGroup::Value *,
+    const PortableGroup::Value *,
     ACE_SYNCH_NULL_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate ACE_Hash_Map_Manager<
     ACE_CString,
-    PortableGroup::Value *,
+    const PortableGroup::Value *,
     ACE_SYNCH_NULL_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
