@@ -9,7 +9,6 @@ CORBA::TypeCode::_incr_refcnt (void)
   return this->refcount_++;
 }
 
-
 ACE_INLINE CORBA::ULong
 CORBA::TypeCode::_decr_refcnt (void)
 {
@@ -23,16 +22,12 @@ CORBA::TypeCode::_decr_refcnt (void)
   return 0;
 }
 
-/*static*/ ACE_INLINE void
-CORBA::TypeCode::_release (CORBA::TypeCode_ptr tc)
+ACE_INLINE CORBA::TypeCode_ptr
+CORBA::TypeCode::_duplicate (CORBA::TypeCode_ptr tc)
 {
   if (tc)
-    {
-      if (tc->orb_owns_ == false)
-        return;
-
-      tc->_decr_refcnt ();
-    }
+    tc->_incr_refcnt ();
+  return tc;
 }
 
 ACE_INLINE CORBA::TypeCode_ptr
@@ -132,5 +127,7 @@ CORBA::is_nil (CORBA::TypeCode_ptr obj)
 ACE_INLINE void
 CORBA::release (CORBA::TypeCode_ptr obj)
 {
-  CORBA::TypeCode::_release (obj);
+  if (obj)
+    obj->_decr_refcnt ();
 }
+
