@@ -486,7 +486,7 @@ endif # CHORUS
 ifneq ($(GHS),)
   ifeq ($(CPU),86)
     $(VDIR)gethrtime.$(OBJEXT):
-	make $@ ghs=0
+	$(MAKE) $@ ghs=0
   endif # 86
 endif # GHS
 
