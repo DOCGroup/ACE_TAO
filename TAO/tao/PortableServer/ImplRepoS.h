@@ -15,12 +15,18 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:443
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:390
 
 #ifndef _TAO_IDL_ORIG_IMPLREPOS_H_
 #define _TAO_IDL_ORIG_IMPLREPOS_H_
@@ -32,6 +38,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Collocation_Proxy_Broker.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/PortableServer/Collocated_Object.h"
@@ -52,10 +59,12 @@
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:49
 
-TAO_NAMESPACE  POA_ImplementationRepository
+namespace POA_ImplementationRepository
 {
+  
+  
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:86
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:87
   
   class ServerObject;
   typedef ServerObject *ServerObject_ptr;
@@ -71,6 +80,11 @@ TAO_NAMESPACE  POA_ImplementationRepository
     ServerObject (void);
   
   public:
+    // Useful for template programming.
+    typedef ::ImplementationRepository::ServerObject _stub_type;
+    typedef ::ImplementationRepository::ServerObject_ptr _stub_ptr_type;
+    typedef ::ImplementationRepository::ServerObject_var _stub_var_type;
+    
     ServerObject (const ServerObject& rhs);
     virtual ~ServerObject (void);
     
@@ -156,115 +170,77 @@ TAO_NAMESPACE  POA_ImplementationRepository
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
-  };  
+  };
   
   ///////////////////////////////////////////////////////////////////////
   //               Strategized Proxy Broker Declaration 
   //
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:37
   
-  class TAO_PortableServer_Export _TAO_ServerObject_Strategized_Proxy_Broker : public virtual ::ImplementationRepository::_TAO_ServerObject_Proxy_Broker
+  class TAO_PortableServer_Export _TAO_ServerObject_Strategized_Proxy_Broker
+    : public virtual TAO::Collocation_Proxy_Broker
   {
   public: 
     _TAO_ServerObject_Strategized_Proxy_Broker (void);
     
     virtual ~_TAO_ServerObject_Strategized_Proxy_Broker (void);
     
-    virtual ::ImplementationRepository::_TAO_ServerObject_Proxy_Impl &select_proxy (
-      ::ImplementationRepository::ServerObject *object
-      ACE_ENV_ARG_DECL
-    );
-  
-  private:
-    // Helper methods that takes care to create the proxy
-    // as soon as their use is necessary.
-    void create_proxy (
-      int collocation_strategy
-      ACE_ENV_ARG_DECL
-    );
-    
-    // Caches the proxy implementations. The proxy implementation
-    // are totally stateless, and those can be shared by all the
-    // instances of a given IDL interface type.
-    ::ImplementationRepository::_TAO_ServerObject_Proxy_Impl
-    *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
-    
-    TAO_SYNCH_MUTEX mutex_;
-    // This funxtion is used to get an handle to the unique instance
-    // of the Strategized Proxy Broker that is available for a given
-    // interface.
-  
-  public:
-    static _TAO_ServerObject_Strategized_Proxy_Broker *the_TAO_ServerObject_Strategized_Proxy_Broker (void);
-  };
-  
-  //
-  //            End Strategized Proxy Broker Declaration 
-  ///////////////////////////////////////////////////////////////////////
-  
-  
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA  Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class TAO_PortableServer_Export _TAO_ServerObject_ThruPOA_Proxy_Impl : 
-    public virtual ::ImplementationRepository::_TAO_ServerObject_Proxy_Impl,
-    public virtual TAO_ThruPOA_Object_Proxy_Impl
-  {
-  public:
-    _TAO_ServerObject_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_ServerObject_ThruPOA_Proxy_Impl (void) {}
-    
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    virtual void ping (
-        CORBA::Object *_collocated_tao_target_
+    TAO::Collocation_Strategy
+    get_strategy (
+        CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+      ACE_THROW_SPEC ((CORBA::SystemException));
     
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    virtual void shutdown (
-        CORBA::Object *_collocated_tao_target_
+    void
+    dispatch (
+        CORBA::Object_ptr obj,
+        CORBA::Object_out forward_obj,
+        TAO::Argument ** args,
+        int num_args,
+        const char * op,
+        size_t op_len,
+        TAO::Collocation_Strategy strategy
         ACE_ENV_ARG_DECL
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
+      ACE_THROW_SPEC ((CORBA::Exception));
   
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
+  static
+  _TAO_ServerObject_Strategized_Proxy_Broker *
+  the_TAO_ServerObject_Strategized_Proxy_Broker (void);
+};
+
+//
+//            End Strategized Proxy Broker Declaration 
 ///////////////////////////////////////////////////////////////////////
-//                    Direct  Impl. Declaration
+
+
+///////////////////////////////////////////////////////////////////////
+//                    ThruPOA Proxy Impl. Declaration
 //
 
-class TAO_PortableServer_Export _TAO_ServerObject_Direct_Proxy_Impl : 
-  public virtual ImplementationRepository::_TAO_ServerObject_Proxy_Impl,
-  public virtual TAO_Direct_Object_Proxy_Impl
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+
+class TAO_PortableServer_Export _TAO_ServerObject_ThruPOA_Proxy_Impl
+  : public virtual TAO_ThruPOA_Object_Proxy_Impl
 {
 public:
-  _TAO_ServerObject_Direct_Proxy_Impl (void);
+  _TAO_ServerObject_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_ServerObject_Direct_Proxy_Impl (void) {}
+  virtual ~_TAO_ServerObject_ThruPOA_Proxy_Impl (void) {}
   
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual void ping (
-      CORBA::Object *_collocated_tao_target_
+  static void
+  ping (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -274,21 +250,77 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual void shutdown (
-      CORBA::Object *_collocated_tao_target_
+  static void
+  shutdown (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-    ));};
+    ));
+};
 
+//
+//                ThruPOA  Proxy Impl. Declaration
+///////////////////////////////////////////////////////////////////////
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/direct_proxy_impl_sh.cpp:31
+
+///////////////////////////////////////////////////////////////////////
+//                    Direct  Impl. Declaration
+//
+
+class TAO_PortableServer_Export _TAO_ServerObject_Direct_Proxy_Impl
+  : public virtual TAO_Direct_Object_Proxy_Impl
+{
+public:
+  _TAO_ServerObject_Direct_Proxy_Impl (void);
+  
+  virtual ~_TAO_ServerObject_Direct_Proxy_Impl (void) {}
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
+  
+  static void
+  ping (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
+      ACE_ENV_ARG_DECL
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
+  
+  static void
+  shutdown (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
+      ACE_ENV_ARG_DECL
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
+};
 
 //
 //                Direct  Proxy Impl. Declaration
 ///////////////////////////////////////////////////////////////////////
 
+
+
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:86
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:87
 
 class Administration;
 typedef Administration *Administration_ptr;
@@ -304,6 +336,11 @@ protected:
   Administration (void);
 
 public:
+  // Useful for template programming.
+  typedef ::ImplementationRepository::Administration _stub_type;
+  typedef ::ImplementationRepository::Administration_ptr _stub_ptr_type;
+  typedef ::ImplementationRepository::Administration_var _stub_var_type;
+  
   Administration (const Administration& rhs);
   virtual ~Administration (void);
   
@@ -560,41 +597,39 @@ public:
 //
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:37
 
-class TAO_PortableServer_Export _TAO_Administration_Strategized_Proxy_Broker : public virtual ::ImplementationRepository::_TAO_Administration_Proxy_Broker
+class TAO_PortableServer_Export _TAO_Administration_Strategized_Proxy_Broker
+  : public virtual TAO::Collocation_Proxy_Broker
 {
 public: 
   _TAO_Administration_Strategized_Proxy_Broker (void);
   
   virtual ~_TAO_Administration_Strategized_Proxy_Broker (void);
   
-  virtual ::ImplementationRepository::_TAO_Administration_Proxy_Impl &select_proxy (
-    ::ImplementationRepository::Administration *object
-    ACE_ENV_ARG_DECL
-  );
-
-private:
-  // Helper methods that takes care to create the proxy
-  // as soon as their use is necessary.
-  void create_proxy (
-    int collocation_strategy
-    ACE_ENV_ARG_DECL
-  );
+  TAO::Collocation_Strategy
+  get_strategy (
+      CORBA::Object_ptr obj
+      ACE_ENV_ARG_DECL
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
   
-  // Caches the proxy implementations. The proxy implementation
-  // are totally stateless, and those can be shared by all the
-  // instances of a given IDL interface type.
-  ::ImplementationRepository::_TAO_Administration_Proxy_Impl
-  *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
-  
-  TAO_SYNCH_MUTEX mutex_;
-  // This funxtion is used to get an handle to the unique instance
-  // of the Strategized Proxy Broker that is available for a given
-  // interface.
+  void
+  dispatch (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out forward_obj,
+      TAO::Argument ** args,
+      int num_args,
+      const char * op,
+      size_t op_len,
+      TAO::Collocation_Strategy strategy
+      ACE_ENV_ARG_DECL
+    )
+    ACE_THROW_SPEC ((CORBA::Exception));
 
-public:
-  static _TAO_Administration_Strategized_Proxy_Broker *the_TAO_Administration_Strategized_Proxy_Broker (void);
+static
+_TAO_Administration_Strategized_Proxy_Broker *
+the_TAO_Administration_Strategized_Proxy_Broker (void);
 };
 
 //
@@ -603,15 +638,14 @@ public:
 
 
 ///////////////////////////////////////////////////////////////////////
-//                    ThruPOA  Impl. Declaration
+//                    ThruPOA Proxy Impl. Declaration
 //
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
 
-class TAO_PortableServer_Export _TAO_Administration_ThruPOA_Proxy_Impl : 
-  public virtual ::ImplementationRepository::_TAO_Administration_Proxy_Impl,
-  public virtual TAO_ThruPOA_Object_Proxy_Impl
+class TAO_PortableServer_Export _TAO_Administration_ThruPOA_Proxy_Impl
+  : public virtual TAO_ThruPOA_Object_Proxy_Impl
 {
 public:
   _TAO_Administration_ThruPOA_Proxy_Impl (void);
@@ -621,9 +655,12 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual void activate_server (
-      CORBA::Object *_collocated_tao_target_,
-      const char * server
+  static void
+  activate_server (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -635,10 +672,12 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual char * activate_server_with_startup (
-      CORBA::Object *_collocated_tao_target_,
-      const char * server,
-      CORBA::Long check_startup
+  static void
+  activate_server_with_startup (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -650,10 +689,12 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual void register_server (
-      CORBA::Object *_collocated_tao_target_,
-      const char * server,
-      const ImplementationRepository::StartupOptions & options
+  static void
+  register_server (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -664,10 +705,12 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual void reregister_server (
-      CORBA::Object *_collocated_tao_target_,
-      const char * server,
-      const ImplementationRepository::StartupOptions & options
+  static void
+  reregister_server (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -677,22 +720,12 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual void remove_server (
-      CORBA::Object *_collocated_tao_target_,
-      const char * server
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-      , ImplementationRepository::NotFound
-    ));
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
-  
-  virtual void shutdown_server (
-      CORBA::Object *_collocated_tao_target_,
-      const char * server
+  static void
+  remove_server (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -703,11 +736,12 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual char * server_is_running (
-      CORBA::Object *_collocated_tao_target_,
-      const char * server,
-      const char * addr,
-      ImplementationRepository::ServerObject_ptr server_object
+  static void
+  shutdown_server (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -718,9 +752,12 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual void server_is_shutting_down (
-      CORBA::Object *_collocated_tao_target_,
-      const char * server
+  static void
+  server_is_running (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -731,10 +768,12 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual void find (
-      CORBA::Object *_collocated_tao_target_,
-      const char * server,
-      ImplementationRepository::ServerInformation_out info
+  static void
+  server_is_shutting_down (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -745,11 +784,28 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual void list (
-      CORBA::Object *_collocated_tao_target_,
-      CORBA::ULong how_many,
-      ImplementationRepository::ServerInformationList_out server_list,
-      ImplementationRepository::ServerInformationIterator_out server_iterator
+  static void
+  find (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
+      ACE_ENV_ARG_DECL
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+      , ImplementationRepository::NotFound
+    ));
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
+  
+  static void
+  list (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -760,13 +816,16 @@ public:
 //
 //                ThruPOA  Proxy Impl. Declaration
 ///////////////////////////////////////////////////////////////////////
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/direct_proxy_impl_sh.cpp:31
+
 ///////////////////////////////////////////////////////////////////////
 //                    Direct  Impl. Declaration
 //
 
-class TAO_PortableServer_Export _TAO_Administration_Direct_Proxy_Impl : 
-  public virtual ImplementationRepository::_TAO_Administration_Proxy_Impl,
-  public virtual TAO_Direct_Object_Proxy_Impl
+class TAO_PortableServer_Export _TAO_Administration_Direct_Proxy_Impl
+  : public virtual TAO_Direct_Object_Proxy_Impl
 {
 public:
   _TAO_Administration_Direct_Proxy_Impl (void);
@@ -776,9 +835,12 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual void activate_server (
-      CORBA::Object *_collocated_tao_target_,
-      const char * server
+  static void
+  activate_server (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -790,10 +852,12 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual char * activate_server_with_startup (
-      CORBA::Object *_collocated_tao_target_,
-      const char * server,
-      CORBA::Long check_startup
+  static void
+  activate_server_with_startup (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -805,10 +869,12 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual void register_server (
-      CORBA::Object *_collocated_tao_target_,
-      const char * server,
-      const ImplementationRepository::StartupOptions & options
+  static void
+  register_server (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -819,10 +885,12 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual void reregister_server (
-      CORBA::Object *_collocated_tao_target_,
-      const char * server,
-      const ImplementationRepository::StartupOptions & options
+  static void
+  reregister_server (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -832,9 +900,12 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual void remove_server (
-      CORBA::Object *_collocated_tao_target_,
-      const char * server
+  static void
+  remove_server (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -845,9 +916,12 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual void shutdown_server (
-      CORBA::Object *_collocated_tao_target_,
-      const char * server
+  static void
+  shutdown_server (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -858,11 +932,12 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual char * server_is_running (
-      CORBA::Object *_collocated_tao_target_,
-      const char * server,
-      const char * addr,
-      ImplementationRepository::ServerObject_ptr server_object
+  static void
+  server_is_running (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -873,9 +948,12 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual void server_is_shutting_down (
-      CORBA::Object *_collocated_tao_target_,
-      const char * server
+  static void
+  server_is_shutting_down (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -886,10 +964,12 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual void find (
-      CORBA::Object *_collocated_tao_target_,
-      const char * server,
-      ImplementationRepository::ServerInformation_out info
+  static void
+  find (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -900,24 +980,27 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual void list (
-      CORBA::Object *_collocated_tao_target_,
-      CORBA::ULong how_many,
-      ImplementationRepository::ServerInformationList_out server_list,
-      ImplementationRepository::ServerInformationIterator_out server_iterator
+  static void
+  list (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-    ));};
-
+    ));
+};
 
 //
 //                Direct  Proxy Impl. Declaration
 ///////////////////////////////////////////////////////////////////////
 
+
+
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:86
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:87
 
 class ServerInformationIterator;
 typedef ServerInformationIterator *ServerInformationIterator_ptr;
@@ -933,6 +1016,11 @@ protected:
   ServerInformationIterator (void);
 
 public:
+  // Useful for template programming.
+  typedef ::ImplementationRepository::ServerInformationIterator _stub_type;
+  typedef ::ImplementationRepository::ServerInformationIterator_ptr _stub_ptr_type;
+  typedef ::ImplementationRepository::ServerInformationIterator_var _stub_var_type;
+  
   ServerInformationIterator (const ServerInformationIterator& rhs);
   virtual ~ServerInformationIterator (void);
   
@@ -1027,41 +1115,39 @@ public:
 //
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:37
 
-class TAO_PortableServer_Export _TAO_ServerInformationIterator_Strategized_Proxy_Broker : public virtual ::ImplementationRepository::_TAO_ServerInformationIterator_Proxy_Broker
+class TAO_PortableServer_Export _TAO_ServerInformationIterator_Strategized_Proxy_Broker
+  : public virtual TAO::Collocation_Proxy_Broker
 {
 public: 
   _TAO_ServerInformationIterator_Strategized_Proxy_Broker (void);
   
   virtual ~_TAO_ServerInformationIterator_Strategized_Proxy_Broker (void);
   
-  virtual ::ImplementationRepository::_TAO_ServerInformationIterator_Proxy_Impl &select_proxy (
-    ::ImplementationRepository::ServerInformationIterator *object
-    ACE_ENV_ARG_DECL
-  );
-
-private:
-  // Helper methods that takes care to create the proxy
-  // as soon as their use is necessary.
-  void create_proxy (
-    int collocation_strategy
-    ACE_ENV_ARG_DECL
-  );
+  TAO::Collocation_Strategy
+  get_strategy (
+      CORBA::Object_ptr obj
+      ACE_ENV_ARG_DECL
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
   
-  // Caches the proxy implementations. The proxy implementation
-  // are totally stateless, and those can be shared by all the
-  // instances of a given IDL interface type.
-  ::ImplementationRepository::_TAO_ServerInformationIterator_Proxy_Impl
-  *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
-  
-  TAO_SYNCH_MUTEX mutex_;
-  // This funxtion is used to get an handle to the unique instance
-  // of the Strategized Proxy Broker that is available for a given
-  // interface.
+  void
+  dispatch (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out forward_obj,
+      TAO::Argument ** args,
+      int num_args,
+      const char * op,
+      size_t op_len,
+      TAO::Collocation_Strategy strategy
+      ACE_ENV_ARG_DECL
+    )
+    ACE_THROW_SPEC ((CORBA::Exception));
 
-public:
-  static _TAO_ServerInformationIterator_Strategized_Proxy_Broker *the_TAO_ServerInformationIterator_Strategized_Proxy_Broker (void);
+static
+_TAO_ServerInformationIterator_Strategized_Proxy_Broker *
+the_TAO_ServerInformationIterator_Strategized_Proxy_Broker (void);
 };
 
 //
@@ -1070,15 +1156,14 @@ public:
 
 
 ///////////////////////////////////////////////////////////////////////
-//                    ThruPOA  Impl. Declaration
+//                    ThruPOA Proxy Impl. Declaration
 //
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
 
-class TAO_PortableServer_Export _TAO_ServerInformationIterator_ThruPOA_Proxy_Impl : 
-  public virtual ::ImplementationRepository::_TAO_ServerInformationIterator_Proxy_Impl,
-  public virtual TAO_ThruPOA_Object_Proxy_Impl
+class TAO_PortableServer_Export _TAO_ServerInformationIterator_ThruPOA_Proxy_Impl
+  : public virtual TAO_ThruPOA_Object_Proxy_Impl
 {
 public:
   _TAO_ServerInformationIterator_ThruPOA_Proxy_Impl (void);
@@ -1088,10 +1173,12 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual CORBA::Boolean next_n (
-      CORBA::Object *_collocated_tao_target_,
-      CORBA::ULong how_many,
-      ImplementationRepository::ServerInformationList_out server_list
+  static void
+  next_n (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -1101,8 +1188,12 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual void destroy (
-      CORBA::Object *_collocated_tao_target_
+  static void
+  destroy (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -1113,13 +1204,16 @@ public:
 //
 //                ThruPOA  Proxy Impl. Declaration
 ///////////////////////////////////////////////////////////////////////
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/direct_proxy_impl_sh.cpp:31
+
 ///////////////////////////////////////////////////////////////////////
 //                    Direct  Impl. Declaration
 //
 
-class TAO_PortableServer_Export _TAO_ServerInformationIterator_Direct_Proxy_Impl : 
-  public virtual ImplementationRepository::_TAO_ServerInformationIterator_Proxy_Impl,
-  public virtual TAO_Direct_Object_Proxy_Impl
+class TAO_PortableServer_Export _TAO_ServerInformationIterator_Direct_Proxy_Impl
+  : public virtual TAO_Direct_Object_Proxy_Impl
 {
 public:
   _TAO_ServerInformationIterator_Direct_Proxy_Impl (void);
@@ -1129,10 +1223,12 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual CORBA::Boolean next_n (
-      CORBA::Object *_collocated_tao_target_,
-      CORBA::ULong how_many,
-      ImplementationRepository::ServerInformationList_out server_list
+  static void
+  next_n (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -1142,14 +1238,18 @@ public:
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
-  virtual void destroy (
-      CORBA::Object *_collocated_tao_target_
+  static void
+  destroy (
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
+      TAO::Argument ** args,
+      int num_args
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
-    ));};
-
+    ));
+};
 
 //
 //                Direct  Proxy Impl. Declaration
@@ -1160,11 +1260,10 @@ public:
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:80
 
-}
-TAO_NAMESPACE_CLOSE // module ImplementationRepository
+} // module ImplementationRepository
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1044
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:961
 
 #include "ImplRepoS_T.h"
 

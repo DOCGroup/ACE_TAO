@@ -1396,18 +1396,13 @@ TAO_CodeGen::gen_skel_src_includes (void)
                               "tao/Stub.h");
   this->gen_standard_include (this->server_skeletons_,
                               "tao/IFR_Client_Adapter.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/Object_T.h");
 
   if (be_global->gen_thru_poa_collocation () 
       || be_global->gen_direct_collocation ())
     {
       this->gen_arg_file_includes (this->server_skeletons_);
-    }
-
-  // Need _unchecked_narrow () for reply handler _this() method.
-  if (be_global->ami_call_back () == I_TRUE)
-    {
-      this->gen_standard_include (this->server_skeletons_,
-                                  "tao/Object_T.h");
     }
 
   // The following header must always be included.
