@@ -529,14 +529,12 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
           if (node->is_nested ())
             {
               // we have a scoped name
-              os->indent ();
               *os << "static CORBA::TypeCode_ptr "
                   << node->tc_name ()->last_component () << ";\n\n";
             }
           else
             {
               // we are in the ROOT scope
-              os->indent ();
               *os << "extern CORBA::TypeCode_ptr "
                   << node->tc_name ()->last_component () << ";\n\n";
             }
@@ -718,7 +716,7 @@ be_visitor_typedef_ch::visit_sequence (be_sequence *node)
     {
       // now generate the typedefs
       os->indent ();
-      // typedef the type and the _slice type
+      // typedef the type
       *os << "typedef " << bt->nested_type_name (scope)
           << " " << tdef->nested_type_name (scope) << ";" << be_nl;
       // typedef the _var, _out types
