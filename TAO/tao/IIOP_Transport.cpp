@@ -250,6 +250,15 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */)
   TAO_GIOP_Message_State* message_state =
     this->tms_->get_message_state ();
 
+  if (message_state == 0)
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) IIOP_Transport::handle_client_input -"
+                    " nil message state\n"));
+      return -1;
+    }
+
   int result = TAO_GIOP::handle_input (this,
                                        this->orb_core_,
                                        *message_state);

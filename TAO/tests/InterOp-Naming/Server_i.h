@@ -12,7 +12,7 @@
 //    The class is the driver for the INS test server.
 //
 // = AUTHOR
-//   Vishal Kachroo <vishal@cs.wustl.edu> 
+//   Vishal Kachroo <vishal@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -37,17 +37,17 @@ public:
   ~Server_i (void);
   // Destructor.
 
-  int init (int argc, 
-            char *argv[], 
+  int init (int argc,
+            char *argv[],
             CORBA::Environment &env);
   // Initialize the Server state - parsing arguments and waiting.
 
   int add_IOR_to_table (CORBA::String_var ior);
   // Add an IOR to the ORB-IOR table.
-  
+
   int run (CORBA::Environment &env);
   // Run the orb.
-  
+
 protected:
 
   INS_i servant_;
@@ -66,9 +66,6 @@ protected:
   FILE *ior_output_file_;
   // File where the IOR of the server object is stored.
 
-  int naming_;
-  // Flag to indicate whether naming service could be used
-       
   char * ins_;
   // Used test the INS.
 

@@ -36,10 +36,10 @@ if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
 }
 
 $CL = Process::Create ($EXEPREFIX."$client_process$EXE_EXT ",
-		       " -ORBsvcconf $client_conf "
-		       . "-ORBdebuglevel $debug_level"
-		       . " -k file://$iorfile "
-		       . " -n $threads -i 1000");
+                       " -ORBsvcconf $client_conf "
+                       . "-ORBdebuglevel $debug_level"
+                       . " -k file://$iorfile "
+                       . " -n $threads -i 1000");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
