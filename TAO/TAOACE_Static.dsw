@@ -204,7 +204,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Domain_static"=.\tao\Domain\TAO_Domain_Static.dsp - Package Owner=<4>
+Project: "Domain_Static"=.\tao\Domain\TAO_Domain_Static.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -212,9 +212,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name IFR_Client_Static
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -541,6 +538,39 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Svc_Utils_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler Static
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "SSLIOP_Static"=.\orbsvcs\orbsvcs\SSLIOP_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Security_Static
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Security_Static"=.\orbsvcs\orbsvcs\Security_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name PortableServer_Static
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO_IDL Compiler Static

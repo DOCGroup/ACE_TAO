@@ -222,6 +222,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "SSLIOP_Static"=.\SSLIOP_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Security_Static"=.\Security_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Svc_Utils_Static"=.\Svc_Utils_Static.dsp - Package Owner=<4>
 
 Package=<5>
