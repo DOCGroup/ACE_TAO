@@ -1,6 +1,15 @@
+Fri Jul 30 02:50:06 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Object_Adapter.cpp (servant_cleanup and poa_cleanup):
+	* tao/POA.cpp (is_servant_in_map, is_user_id_in_map, and
+	  wait_for_completions):
+
+	  Condition variables should only be used when <enable_locking_>
+	  is true.
+
 Fri Jul 30 02:40:24 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tao/orbconf.h (TAO_CONNECTION_CACHING_STRATEGY): 
+	* tao/orbconf.h (TAO_CONNECTION_CACHING_STRATEGY):
 	  Made the ConnectionCachingStrategy to be NOOP by default.
 
 Fri Jul 30 01:58:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
@@ -18,9 +27,9 @@ Fri Jul 30 01:58:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/UIOP_Connect.cpp:
 	* tao/IIOP_Connect.h:
 	* tao/IIOP_Connect.cpp:
-	  Fixed the concurrency problems of shutting down the ORB when the 
+	  Fixed the concurrency problems of shutting down the ORB when the
 	  thread-per-connection concurrency model was used.  The server
-	  threads poll the ORB to find out if they should shutdown, but at 
+	  threads poll the ORB to find out if they should shutdown, but at
 	  a very low rate (the default is 5 seconds).
 	  The user can control the rate or even disabled the polling
 	  completely using the -ORBThreadPerConnection server strategy
@@ -29,16 +38,16 @@ Fri Jul 30 01:58:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Thu Jul 29 23:03:32 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/benchmark/client.{h,cpp}: 
+	* orbsvcs/tests/AVStreams/benchmark/client.{h,cpp}:
 	  Fixed the direct usage of ACE_Condition to ACE_SYNCH_CONDITION.
-		
+
 	* orbsvcs/tests/AVStreams/mpeg/source:
 	  Fixed LIBS to LDLIBS in Makefile. Also removed a few warnings
 	  for egcs.
 
 	* orbsvcs/tests/AVStreams/mpeg/server_discovery:
 	  Fixed LIBS to LDLIBS in Makefile.
-	
+
 Thu Jul 29 22:11:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Faults/run_test.pl:
