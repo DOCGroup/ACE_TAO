@@ -191,7 +191,6 @@ public:
   CORBA::Boolean stop (CORBA::Long cmdsn);
 };
 
-// @@ Is there a particular reason we need these to be thread-specific singletons?!
 typedef ACE_Singleton <Video_Control_Waiting_State, ACE_SYNCH_MUTEX>
         VIDEO_CONTROL_WAITING_STATE;     
 typedef ACE_Singleton <Video_Control_Play_State, ACE_SYNCH_MUTEX>
