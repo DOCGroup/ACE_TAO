@@ -18,7 +18,6 @@
 #include "tao/LRU_Connection_Purging_Strategy.h"
 
 #include "tao/LF_Strategy_Complete.h"
-#include "tao/Codeset_Translator_Factory.h"
 #include "tao/Codeset_Manager.h"
 
 #include "ace/TP_Reactor.h"
@@ -52,10 +51,6 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
     factory_disabled_ (0),
     cached_connection_lock_type_ (TAO_THREAD_LOCK),
     flushing_strategy_type_ (TAO_LEADER_FOLLOWER_FLUSHING),
-    ncs_c_ (TAO_Codeset_Manager::default_char_codeset),
-    ncs_w_ (TAO_Codeset_Manager::default_wchar_codeset),
-    charcodeset_factories_ (),
-    wcharcodeset_factories_ (),
     codeset_manager_ (0)
 {
 }
@@ -71,22 +66,6 @@ TAO_Default_Resource_Factory::~TAO_Default_Resource_Factory (void)
     delete *iterator;
 
   this->protocol_factories_.reset ();
-
-  // Cleanup the character map
-  TAO_CodesetFactorySetItor cf_end = this->charcodeset_factories_.end ();
-  TAO_CodesetFactorySetItor cf_iter = this->charcodeset_factories_.begin ();
-  for (;cf_iter != cf_end; ++cf_iter)
-    delete *cf_iter;
-
-  this->charcodeset_factories_.reset ();
-
-  // Cleanup the wide character map
-  cf_end = this->wcharcodeset_factories_.end ();
-  cf_iter = this->wcharcodeset_factories_.begin ();
-  for (;cf_iter != cf_end; ++cf_iter)
-    delete *cf_iter;
-
-  this->wcharcodeset_factories_.reset ();
 
   for (int i = 0;
        i < this->parser_names_count_;
@@ -193,80 +172,77 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                                  ACE_LIB_TEXT("-ORBNativeCharCodeSet")) == 0)
     {
         curarg++;
-
-        ACE_CDR::ULong ncs;
-        if (ACE_Codeset_Registry::locale_to_registry(argv[curarg],ncs))
-          this->ncs_c_ = ncs;
-        else
+	CONV_FRAME::CodeSetId ncs;
+        if (ACE_Codeset_Registry::locale_to_registry(argv[curarg],
+						     ncs))
           {
             char **endPtr =0;
-            ncs = ACE_OS_String::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]), endPtr, 0);
-            // Validate the CodesetId
-            if (ACE_Codeset_Registry::get_max_bytes(ncs) == 0)
-              {
-                if (TAO_debug_level > 0)
-                  ACE_ERROR((LM_ERROR," [TAO_Default_Resource_Factory::init] Invalid Char NativeCodeSet, %x \n", ncs));
-                ACE_DECLARE_NEW_CORBA_ENV;
-                // thrown an exception
-                ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                              CORBA::SystemException::_tao_minor_code (
-                                TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                EINVAL),
-                              CORBA::COMPLETED_NO),
-                            -1);
-
-              }
-            this->ncs_c_ = ncs;
-          }
+            ncs = ACE_OS_String::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
+					 endPtr, 0);
+	  }
+	// Validate the CodesetId
+	if (ACE_Codeset_Registry::get_max_bytes(ncs) == 0)
+	  {
+	    if (TAO_debug_level > 0)
+	      ACE_ERROR((LM_ERROR,
+			 ACE_TEXT("(%P|%t) Invalid NativeCharCodeSet, %x\n"),
+			 ncs));
+	    ACE_DECLARE_NEW_CORBA_ENV;
+	    ACE_THROW_RETURN (CORBA::BAD_PARAM (
+			      CORBA::SystemException::_tao_minor_code (
+                                  TAO_ORB_CORE_INIT_LOCATION_CODE,
+                                  EINVAL),
+                                CORBA::COMPLETED_NO),
+                              -1);
+	  }
+	TAO_Codeset_Manager *csm = this->get_codeset_manager();
+	if (csm)
+	  csm->set_ncs_c(ncs);
     }
 
-    /// CodeSet Translators
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBNativeWCharCodeSet")) == 0)
     {
         curarg++;
-        ACE_CDR::ULong ncs;
-        if (ACE_Codeset_Registry::locale_to_registry( argv[curarg], ncs))
-          this->ncs_w_ = ncs;
-        else
+	CONV_FRAME::CodeSetId ncs;
+        if (!ACE_Codeset_Registry::locale_to_registry( argv[curarg],
+						       ncs))
           {
             char **endPtr = 0;
-            ncs = ACE_OS_String::strtoul( ACE_TEXT_ALWAYS_CHAR(argv[curarg]), endPtr, 0);
-            // Validate the CodesetId
-            if (ACE_Codeset_Registry::get_max_bytes(ncs) == 0)
-              {
-                if (TAO_debug_level > 0)
-                  ACE_ERROR((LM_ERROR," [TAO_Default_Resource_Factory::init] Invalid WChar NativeCodeSet, %x \n", ncs));
-                ACE_DECLARE_NEW_CORBA_ENV;
-                // thrown an exception
-                ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                              CORBA::SystemException::_tao_minor_code (
-                                TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                EINVAL),
-                              CORBA::COMPLETED_NO),
-                            -1);
-              }
-            this->ncs_w_ = ncs;
-          }
+            ncs = ACE_OS_String::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
+					 endPtr, 0);
+	  }
+	// Validate the CodesetId
+	int mb = ACE_Codeset_Registry::get_max_bytes(ncs);
+	if (mb == 0 || ACE_static_cast(size_t,mb) > sizeof (ACE_CDR::WChar))
+	  {
+	    if (TAO_debug_level > 0)
+	      ACE_ERROR((LM_ERROR,
+			 ACE_TEXT("(%P|%t) Invalid NativeWCharCodeSet, %x\n"),
+			 ncs));
+	    ACE_DECLARE_NEW_CORBA_ENV;
+	    ACE_THROW_RETURN (CORBA::BAD_PARAM (
+                                CORBA::SystemException::_tao_minor_code (
+			          TAO_ORB_CORE_INIT_LOCATION_CODE,
+                                  EINVAL),
+                                CORBA::COMPLETED_NO),
+                              -1);
+	  }
+	TAO_Codeset_Manager *csm = this->get_codeset_manager();
+	if (csm)
+	  csm->set_ncs_w(ncs,mb);
     }
 
-    /// CodeSet Translators
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBCharCodesetTranslator")) == 0)
     {
-      //        TAO_CodesetFactorySet *pset = this->get_char_codeset_factories ();
       curarg++;
       if (curarg < argc)
         {
-          TAO_Codeset_Item *item = 0;
-          ACE_NEW_RETURN (item,
-                          TAO_Codeset_Item (argv[curarg]),
-                          -1);
-          if (this->charcodeset_factories_.insert (item) == -1)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_LIB_TEXT ("(%P|%t) Unable to add Codeset ")
-			ACE_LIB_TEXT ("factories for %s: %p\n"),
-                        argv[curarg]));
+	  TAO_Codeset_Manager *csm = this->get_codeset_manager();
+	  if (csm)
+	    if (csm->add_char_translator(argv[curarg]) == -1)
+	      return -1;
         }
     }
 
@@ -274,20 +250,14 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBWCharCodesetTranslator")) == 0)
     {
-      //        TAO_CodesetFactorySet *pset = this->get_wchar_codeset_factories ();
       curarg++;
       if (curarg < argc)
-        {
-          TAO_Codeset_Item *item = 0;
-          ACE_NEW_RETURN (item,
-                          TAO_Codeset_Item (argv[curarg]),
-                          -1);
-            if (this->wcharcodeset_factories_.insert (item) == -1)
-              ACE_ERROR ((LM_ERROR,
-                          ACE_LIB_TEXT ("(%P|%t) Unable to add Codeset ")
-			  ACE_LIB_TEXT ("factories for %s: %p\n"),
-                          argv[curarg]));
-          }
+	{
+	  TAO_Codeset_Manager *csm = this->get_codeset_manager();
+	  if (csm)
+	    if (csm->add_wchar_translator(argv[curarg]) == -1)
+	      return -1;
+	}
     }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -459,6 +429,10 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                     ACE_LIB_TEXT ("ignoring option <%s>\n"),
                     argv[curarg]));
       }
+
+  TAO_Codeset_Manager *csm = this->get_codeset_manager();
+  if (csm)
+    csm->configure_codeset_factories();
 
   return 0;
 }
@@ -940,144 +914,15 @@ TAO_Default_Resource_Factory::disable_factory (void)
     }
 }
 
-
 TAO_Codeset_Manager *
 TAO_Default_Resource_Factory::get_codeset_manager()
 {
   if (this->codeset_manager_ == 0)
     {
-      CONV_FRAME::CodeSetComponentInfo *csi;
-      ACE_NEW_RETURN (csi,CONV_FRAME::CodeSetComponentInfo,0);
-      if (init_codeset_factories_i (charcodeset_factories_) == -1)
-	{
-          delete csi;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("TAO (%P|%t) resource factory ")
-			     ACE_LIB_TEXT ("failed to init char codeset ")
-			     ACE_LIB_TEXT ("factories\n")),0);
-        }
-      // Initialize the wide character codeset factories
-      if (init_codeset_factories_i (wcharcodeset_factories_) == -1)
-        {
-          delete csi;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("TAO (%P|%t) resource factory ")
-			     ACE_LIB_TEXT ("failed to init wchar codeset ")
-			     ACE_LIB_TEXT ("factories\n")),0);
-        }
-      //need autopointer for csi here...
-      this->get_codeset_ids_i (this->ncs_c_,
-                               this->charcodeset_factories_,
-                               &csi->ForCharData );
-      this->get_codeset_ids_i (this->ncs_w_,
-                               this->wcharcodeset_factories_,
-                               &csi->ForWcharData );
-
-      ACE_NEW_RETURN (this->codeset_manager_, TAO_Codeset_Manager(csi), 0);
+      ACE_NEW_RETURN (this->codeset_manager_, TAO_Codeset_Manager, 0);
     }
   return this->codeset_manager_;
 }
-
-/// Initialise the specific type codeset factories
-int
-TAO_Default_Resource_Factory::init_codeset_factories_i (TAO_CodesetFactorySet& factset )
-{
-  TAO_CodesetFactorySetItor end = factset.end ();
-  TAO_CodesetFactorySetItor iter = factset.begin ();
-
-  for (; iter != end; iter++)
-    {
-      const ACE_CString &name = (*iter)->codeset_name ();
-      (*iter)->factory (ACE_Dynamic_Service<TAO_Codeset_Translator_Factory>::instance (name.c_str ()));
-      if ((*iter)->factory () == 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("TAO (%P|%t) Unable to load ")
-                             ACE_LIB_TEXT ("CodeSet <%s>, %p\n"),
-                             ACE_TEXT_CHAR_TO_TCHAR(name.c_str ()), ""),
-                             -1);
-        }
-      if (TAO_debug_level > 2)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_LIB_TEXT ("TAO (%P|%t) Loaded CodeSet <%s>, ")
-		      ACE_LIB_TEXT ("ncs = %08x tcs = %08x\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(name.c_str ()),
-                      (*iter)->factory()->ncs(),(*iter)->factory()->tcs()));
-        }
-    }
-  return 0;
-}
-
-void
-TAO_Default_Resource_Factory::get_codeset_ids_i (CONV_FRAME::CodeSetId ncs,
-                                                 TAO_CodesetFactorySet& factset,
-                                                 CONV_FRAME::CodeSetComponent* cs_comp)
-{
-  TAO_CodesetFactorySetItor end = factset.end ();
-  TAO_CodesetFactorySetItor iter = factset.begin ();
-
-  cs_comp->native_code_set = ncs;
-  cs_comp->conversion_code_sets.length(factset.size());
-  if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
-		ACE_LIB_TEXT ("(%P|%t) default resource factory ")
-		ACE_LIB_TEXT ("get_codeset_ids_i, ncs = %08x ccs len = %d\n"),
-                ncs,factset.size()));
-
-  CORBA::ULong index;
-  for (index=0; iter != end; iter++)
-    {
-      TAO_Codeset_Translator_Factory *trans = (*iter)->factory ();
-      if (trans->ncs() == ncs)
-        {
-          cs_comp->conversion_code_sets[index++] = trans->tcs();
-          if (TAO_debug_level > 2)
-            ACE_DEBUG ((LM_DEBUG,
-			ACE_LIB_TEXT ("(%P|%t) adding tcs %08x\n"),
-                        trans->tcs()));
-        } else
-          if (TAO_debug_level > 2)
-            ACE_DEBUG ((LM_DEBUG,
-			ACE_LIB_TEXT ("(%P%t) skipping ncs %08x, tcs %08x\n)"),
-			trans->ncs(), trans->tcs()));
-
-    }
-  cs_comp->conversion_code_sets.length(index);
-}
-
-TAO_Codeset_Translator_Factory *
-TAO_Default_Resource_Factory::get_char_translator (CONV_FRAME::CodeSetId ncs,
-                                                   CONV_FRAME::CodeSetId tcs)
-{
-  return this->get_translator_i (this->charcodeset_factories_,ncs,tcs);
-}
-
-TAO_Codeset_Translator_Factory *
-TAO_Default_Resource_Factory::get_wchar_translator (CONV_FRAME::CodeSetId ncs,
-                                                    CONV_FRAME::CodeSetId tcs)
-{
-  return this->get_translator_i (this->wcharcodeset_factories_,ncs,tcs);
-}
-
-TAO_Codeset_Translator_Factory *
-TAO_Default_Resource_Factory::get_translator_i (TAO_CodesetFactorySet& factset,
-                                                CONV_FRAME::CodeSetId ncs,
-                                                CONV_FRAME::CodeSetId tcs)
-{
-  TAO_CodesetFactorySetItor end = factset.end ();
-  TAO_CodesetFactorySetItor iter = factset.begin ();
-
-  for (; iter != end; iter++)
-    {
-      TAO_Codeset_Translator_Factory *fact = (*iter)->factory ();
-      if( ncs == fact->ncs() && tcs == fact->tcs())
-          return fact;
-    }
-
-  return 0;
-}
-
 
 // ****************************************************************
 
@@ -1094,7 +939,6 @@ ACE_FACTORY_DEFINE (TAO, TAO_Default_Resource_Factory)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Dynamic_Service<TAO_Codeset_Translator_Factory>;
 template class auto_ptr<TAO_Protocol_Factory>;
 #  if defined (ACE_LACKS_AUTO_PTR) \
       || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
@@ -1104,7 +948,6 @@ template class ACE_Auto_Basic_Ptr<TAO_Protocol_Factory>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Dynamic_Service<TAO_Codeset_Translator_Factory>
 #pragma instantiate auto_ptr<TAO_Protocol_Factory>
 #  if defined (ACE_LACKS_AUTO_PTR) \
       || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \

@@ -24,27 +24,25 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Exception.h"
+#include "Transport_Descriptor_Interface.h"
 #include "Transport_Cache_Manager.h"
 #include "Transport_Timer.h"
 #include "Incoming_Message_Queue.h"
 #include "Synch_Refcountable.h"
-
 #include "CONV_FRAMEC.h"
-#include "Codeset_Translator_Factory.h"
 
 class TAO_ORB_Core;
 class TAO_Target_Specification;
 class TAO_Operation_Details;
 class TAO_Transport_Mux_Strategy;
-class TAO_Transport_Descriptor_Interface;
 class TAO_Wait_Strategy;
 class TAO_Connection_Handler;
 class TAO_Pluggable_Messaging;
+class TAO_Codeset_Translator_Factory;
 
 class TAO_Queued_Message;
 class TAO_Synch_Queued_Message;
 class TAO_Resume_Handle;
-
 
 /**
  * @class TAO_Transport
@@ -218,6 +216,9 @@ public:
   /// default creator, requres the tag value be supplied.
   TAO_Transport (CORBA::ULong tag,
                  TAO_ORB_Core *orb_core);
+
+  /// destructor
+  virtual ~TAO_Transport (void);
 
   // Maintain reference counting with these
   static TAO_Transport* _duplicate (TAO_Transport* transport);
@@ -418,14 +419,6 @@ public:
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);
 
 protected:
-
-  /// Destructor
-  /**
-   * Protected destructor to enforce proper memory management through
-   * the reference counting mechanism.
-   */
-  virtual ~TAO_Transport (void);
-
   /** @name Template methods
    *
    * The Transport class uses the Template Method Pattern to implement
@@ -784,12 +777,6 @@ public:
   ///
   void wchar_translator (TAO_Codeset_Translator_Factory *);
 
-  /// Inform the transport that wchar marshalling is allowed even if there is
-  /// no tranlator. It could be true that no translator is used because the
-  /// NCS-W for both sides match. But it is also true that no translator is
-  /// available because the other side did not define a codeset for wchars.
-  void wchar_allowed (CORBA::Boolean );
-
   /// Use the Transport's codeset factories to set the translator for input
   /// and output CDRs.
   void assign_translators (TAO_InputCDR *, TAO_OutputCDR *);
@@ -1027,11 +1014,6 @@ private:
   /// first request. After that, the translators are fixed for the life of the
   /// connection.
   CORBA::Boolean first_request_;
-  /// Wchar data is only permitted when both sides explicitly declare a wchar
-  /// codeset and a translator exists on one side or the other to convert
-  /// between them. Again, this is necessary since a null wchar_translator is
-  /// perfectly valid.
-  CORBA::Boolean wchar_allowed_;
 };
 
 /**
