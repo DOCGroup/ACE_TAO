@@ -27,6 +27,7 @@ if ($^O eq "MSWin32") {
       'TAO/tests/POA/Destruction , run_test.pl',
       'TAO/tests/IORManipulation , run_test.pl',
       'TAO/tests/Timeout , run_test.pl',
+      'TAO/tests/IDL_Test , run_test.pl',
       'TAO/examples/POA/Adapter_Activator , run_test.pl',
       'TAO/examples/POA/DSI , run_test.pl',
       'TAO/examples/POA/Default_Servant , run_test.pl',
