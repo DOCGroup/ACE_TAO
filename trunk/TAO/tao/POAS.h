@@ -22,9 +22,16 @@
 #include "tao/Servant_Base.h"
 #include "tao/POA_CORBA.h"
 
-class TAO_Export POA_PortableServer
+#if defined (TAO_EXPORT_MACRO)
+#undef TAO_EXPORT_MACRO
+#endif
+#define TAO_EXPORT_MACRO TAO_Export
+#if defined(_MSC_VER)
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
+TAO_NAMESPACE POA_PortableServer
 {
-public:
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
@@ -46,6 +53,8 @@ public:
     static void _get_value_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+    static void _non_existent_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
 
     static void copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
@@ -120,6 +129,8 @@ public:
     static void _get_value_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+    static void _non_existent_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
 
     static void copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
@@ -196,6 +207,8 @@ public:
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
+    static void _non_existent_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
+
     static void copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void destroy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -270,6 +283,8 @@ public:
     static void _get_value_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+    static void _non_existent_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
 
     static void copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
@@ -348,6 +363,8 @@ public:
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
+    static void _non_existent_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
+
     static void copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void destroy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -423,6 +440,8 @@ public:
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
+    static void _non_existent_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
+
     static void copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void destroy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -497,6 +516,8 @@ public:
     static void _get_value_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
+    static void _non_existent_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
 
     static void copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
@@ -1156,6 +1177,8 @@ public:
 
     static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
+    static void _non_existent_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
+
     virtual void _dispatch (CORBA::ServerRequest &req, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     PortableServer::Current *_this (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -1201,5 +1224,8 @@ public:
 #include "POAS.i"
 #endif // defined INLINE
 
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
+#endif /* _MSC_VER */
 
 #endif /* TAO_IDL_POAS_H */
