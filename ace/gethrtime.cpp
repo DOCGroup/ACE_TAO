@@ -9,6 +9,7 @@
 
 ACE_RCSID(ace, gethrtime, "$Id$")
 
+#if defined (ghs) && (defined (i386) || defined(__i386__))
 extern "C"
 ACE_hrtime_t
 ACE_gethrtime (void)
@@ -56,3 +57,4 @@ ACE_gethrtime (void)
 # error This file can _only_ be compiled with ACE_HAS_PENTIUM.
 #endif /* ! ACE_HAS_PENTIUM */
 }
+#endif /* ghs */
