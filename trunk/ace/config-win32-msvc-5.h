@@ -23,12 +23,6 @@
 #error Use config-win32.h in config.h instead of this header
 #endif /* ACE_CONFIG_WIN32_H */
 
-# if defined (ACE_HAS_PACE)
-#  ifndef PACE_HAS_ALL_POSIX_FUNCS
-#   define PACE_HAS_ALL_POSIX_FUNCS 1
-#  endif /* PACE_HAS_ALL_POSIX_FUNCS */
-# endif /* ACE_HAS_PACE */
-
 # if !defined (ACE_HAS_STANDARD_CPP_LIBRARY)
 #   define ACE_HAS_STANDARD_CPP_LIBRARY    0
 # endif

@@ -33,7 +33,6 @@
 #                   platform/compiler combination supports it, otherwise is
 #                   set to explicit.
 #  optimize         Enable optimization; see OCFLAGS and OCCFLAGS.
-#  pace             Enable PACE as the underpinnings of ACE_OS.
 #  probe            Enable ACE_Timeprobes.
 #  profile          Enable profiling; see PCFLAGS and PCCFLAGS.
 #  purify           Purify all executables.  purify must be in user's PATH!
@@ -514,27 +513,6 @@ else  # exceptions
   endif # g++ > 2.8.0
   endif # ! ACE_HAS_GNUG_PRE_2_8
 endif # exceptions
-
-ifeq ($(pace),0)
-  override pace=
-endif # pace
-
-ifneq ($(pace),)
-  ifneq ($(inline),0)
-    CPPFLAGS += -DPACE_HAS_INLINE=1
-  endif
-  CPPFLAGS += -DACE_HAS_PACE -DPACE_HAS_ALL_POSIX_FUNCS -I$(ACE_ROOT)/PACE
-  ACELIB = -lACE
-  ifeq ($(inline),0)
-    ACELIB += -lPACE
-    LDFLAGS += -L$(PACE_ROOT)/pace/
-  endif # inline == 0
-  ifdef VXWORKS
-    ACELIB += -lPACE
-    LDFLAGS += -L$(PACE_ROOT)/pace/
-  endif # inline == 0
-  include $(PACE_ROOT)/include/makeinclude/rules.common.GNU
-endif # pace
 
 ifeq ($(profile),0)
   override profile =

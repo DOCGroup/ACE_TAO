@@ -1,15 +1,10 @@
 // -*- C++ -*-
 // $Id$
 
-#if defined (ACE_HAS_PACE)
-#include /**/ "pace/dirent.h"
-#endif /* ACE_HAS_PACE */
 ACE_INLINE ACE_DIR *
 ACE_OS_Dirent::opendir (const ACE_TCHAR *filename)
 {
-#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
-  return pace_opendir (filename);
-#elif defined (ACE_HAS_DIRENT)
+#if defined (ACE_HAS_DIRENT)
 #  if defined (ACE_PSOS)
   // The pointer to the <ACE_DIR> buffer *must* be passed to
   // <ACE_OS_Dirent::closedir> to free it and avoid a memory leak.
@@ -37,15 +32,13 @@ ACE_OS_Dirent::opendir (const ACE_TCHAR *filename)
 #else
   ACE_UNUSED_ARG (filename);
   ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_PACE */
+#endif /* ACE_HAS_DIRENT */
 }
 
 ACE_INLINE void
 ACE_OS_Dirent::closedir (ACE_DIR *d)
 {
-#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
-  pace_closedir (d);
-#elif defined (ACE_HAS_DIRENT)
+#if defined (ACE_HAS_DIRENT)
 # if defined (ACE_PSOS)
 
   u_long result = ::close_dir (&(d->xdir));
@@ -66,15 +59,13 @@ ACE_OS_Dirent::closedir (ACE_DIR *d)
 # endif /* ACE_PSOS */
 #else /* ACE_HAS_DIRENT */
   ACE_UNUSED_ARG (d);
-#endif /* ACE_HAS_PACE */
+#endif /* ACE_HAS_DIRENT */
 }
 
 ACE_INLINE struct dirent *
 ACE_OS_Dirent::readdir (ACE_DIR *d)
 {
-#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
-  return pace_readdir (d);
-#elif defined (ACE_HAS_DIRENT)
+#if defined (ACE_HAS_DIRENT)
 #  if defined (ACE_PSOS)
 
   u_long result = ::read_dir (&d->xdir, &d->dirent);
@@ -96,7 +87,7 @@ ACE_OS_Dirent::readdir (ACE_DIR *d)
 #else
   ACE_UNUSED_ARG (d);
   ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_PACE */
+#endif /* ACE_HAS_DIRENT */
 }
 
 ACE_INLINE int
@@ -104,42 +95,40 @@ ACE_OS_Dirent::readdir_r (ACE_DIR *dirp,
                           struct dirent *entry,
                           struct dirent **result)
 {
-#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
-  return pace_readdir_r (dirp, entry, result);
-# elif !defined (ACE_HAS_REENTRANT_FUNCTIONS)
+#if !defined (ACE_HAS_REENTRANT_FUNCTIONS)
   ACE_UNUSED_ARG (entry);
   // <result> has better not be 0!
   *result = ACE_OS_Dirent::readdir (dirp);
   return 0;
-# elif defined (ACE_HAS_DIRENT)  &&  !defined (ACE_LACKS_READDIR_R)
-# if (defined (sun) && (defined (_POSIX_PTHREAD_SEMANTICS) || \
+#elif defined (ACE_HAS_DIRENT)  &&  !defined (ACE_LACKS_READDIR_R)
+#  if (defined (sun) && (defined (_POSIX_PTHREAD_SEMANTICS) || \
                         (_FILE_OFFSET_BITS == 64))) || \
       (!defined (sun) && (defined (ACE_HAS_PTHREADS_STD) || \
                          defined (ACE_HAS_PTHREADS_DRAFT7) || \
                          defined (__USE_POSIX) || \
                          defined (HPUX_11)))
-# if defined (__GNUG__) && defined (DIGITAL_UNIX)
+#    if defined (__GNUG__) && defined (DIGITAL_UNIX)
   return readdir_r (dirp, entry, result);
-# else
+#    else
   return ::readdir_r (dirp, entry, result);
-# endif /* defined (__GNUG__) && defined (DIGITAL_UNIX) */
-# else  /* ! POSIX.1c - this is draft 4 or draft 6 */
-#   if defined (HPUX_10)   /* But HP 10.x doesn't follow the draft either */
+#    endif /* defined (__GNUG__) && defined (DIGITAL_UNIX) */
+#  else  /* ! POSIX.1c - this is draft 4 or draft 6 */
+#    if defined (HPUX_10)   /* But HP 10.x doesn't follow the draft either */
     *result = entry;
     return ::readdir_r (dirp, entry);
-#   else
+#    else
     // <result> had better not be 0!
     *result = ::readdir_r (dirp, entry);
     return 0;
-#   endif /* HPUX_10 */
-# endif /* ! POSIX.1c */
+#    endif /* HPUX_10 */
+#  endif /* ! POSIX.1c */
 #else  /* ! ACE_HAS_DIRENT  ||  ACE_LACKS_READDIR_R */
   ACE_UNUSED_ARG (dirp);
   ACE_UNUSED_ARG (entry);
   ACE_UNUSED_ARG (result);
   ACE_NOTSUP_RETURN (0);
 
-#endif /* ACE_HAS_PACE */
+#endif /* ACE_HAS_REENTRANT_FUNCTIONS */
 }
 
 ACE_INLINE long
@@ -167,9 +156,7 @@ ACE_OS_Dirent::seekdir (ACE_DIR *d, long loc)
 ACE_INLINE void
 ACE_OS_Dirent::rewinddir (ACE_DIR *d)
 {
-#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
-  pace_rewinddir (d);
-#elif defined (ACE_HAS_DIRENT)
+#if defined (ACE_HAS_DIRENT)
 # if defined (ACE_LACKS_SEEKDIR)
 #  if defined (ACE_LACKS_REWINDDIR)
   ACE_UNUSED_ARG (d);
