@@ -1,3 +1,15 @@
+Sun Dec 28 15:09:34 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * etc/ace.doxygen:
+          Changed CASE_SENSE_NAMES=NO in order to fix problems on systems
+          without case sensitive file systems; doxygen adds enough of the
+          path to make each filename unique.  Enabled SHORT_NAMES to make
+          sure names don't grow too long.
+
+          Set FULL_PATH_NAMES=YES and STRIP_FROM_PATH=$(ACE_ROOT) to avoid
+          duplicate flenames on the file list page.  If this works out, we
+          may change some of the others also.
+
 Sun Dec 28 11:38:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/Message_Queue.h:
