@@ -1,3 +1,10 @@
+Fri Jan 28 09:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Network_Adapters_Test.{h,cpp}:
+          Fixed compile warnings when building this test with the Borland
+          compiler. Thanks to Robert Iakobashvili
+          <roberti at GoNetworks dot com> for supplying the patches
+
 Fri Jan 28 08:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Global_Macros.h
