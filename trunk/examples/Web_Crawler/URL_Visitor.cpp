@@ -526,12 +526,12 @@ URL_Download_Visitor::visit (HTTP_URL &http_url)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Manager<ACE_URL_Addr, URL_Status, ACE_LRU_Mutex>;
-template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_LRU_SYNCH>;
-template class ACE_Strategy_Connector<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_LRU_SYNCH>, ACE_SOCK_CONNECTOR>;
+template class ACE_Hash_Map_Manager<ACE_URL_Addr, URL_Status, ACE_Null_Mutex>;
+template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+template class ACE_Strategy_Connector<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>, ACE_SOCK_CONNECTOR>;
 template class ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>;
-template class ACE_NOOP_Creation_Strategy<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_LRU_SYNCH> >;
-template class ACE_NOOP_Concurrency_Strategy<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_LRU_SYNCH> >;
+template class ACE_NOOP_Creation_Strategy<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> >;
+template class ACE_NOOP_Concurrency_Strategy<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> >;
 template class ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex>;
