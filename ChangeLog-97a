@@ -10,10 +10,19 @@ Wed Feb  5 01:45:03 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 Wed Feb 05 10:45:41 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/IOStream.h: replaced __*manip with expanded types, because
-	  Sun C++ doesn't have those typedefs, and added complete prototypes
+	  Sun C++ doesn't have those typedefs; and added complete prototypes
 	  for send, recv, send_n, and recv_n.
 
 	* ace/IOStream.cpp: fixed "#define ACE_IOSTREAM_C" to keep g++ sane.
+
+	* ace/Hash_Map_Manager.{h,cpp},Map_Manager.{h,cpp}: replaced
+	  DEFAULT_SIZE with ACE_DEFAULT_MAP_SIZE so that Naming_Test runs
+	  on SunC++ 4.1.
+
+	* ace/High_Res_Timer.*: added optional scale factor.
+
+	* examples/IOStream/{client,server}/Makefile:  addd -g++ if building
+	  with gcc.
 
 	* tests/Naming_Test.cpp: moved declaration of "i" out of for loop
 	  because it is used after the loop.
