@@ -1,8 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 
-//
 // $Id$
-//
 
 // ============================================================================
 //
@@ -26,6 +24,12 @@
 template <class T> ACE_INLINE
 TAO_Unbounded_Sequence<T>::TAO_Unbounded_Sequence (void)
 {
+}
+
+template <class T> ACE_INLINE T *
+TAO_Unbounded_Sequence<T>::ptr (const) const
+{
+  return (T *) this->buffer_;
 }
 
 template <class T> ACE_INLINE
@@ -75,6 +79,12 @@ TAO_Unbounded_Sequence<T>::freebuf (T *buffer)
 // ***************************************************
 // operations on the generic Bounded sequence class
 // ***************************************************
+
+template <class T> ACE_INLINE T *
+TAO_Bounded_Sequence<T>::ptr (const) const
+{
+  return (T *) this->buffer_;
+}
 
 template <class T, CORBA::ULong MAX> ACE_INLINE
 TAO_Bounded_Sequence<T,MAX>::TAO_Bounded_Sequence (void)

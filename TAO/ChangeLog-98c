@@ -1,15 +1,19 @@
+Mon Mar  2 15:39:57 1998  Douglas C. Schmidt  <schmidt@waltz.cs.wustl.edu>
+
+	* tao/sequence_T.h: Added a ptr() accessor to both the
+ 	  TAO_Bounded_Sequence and TAO_Unbounded_Sequence classes.  Thanks
+ 	  to Carol Sanders <csanders@mdc.com> for suggesting this.
+
+	* tao/sequence[_T].{i,cpp}: Cleaned up a bunch of
+ 	  ACE_reinterpret_cast() operations.  Thanks to Russ Noseworthy
+ 	  <rnosewor@objectsciences.com> for reporting this.
+
 Mon Mar  2 13:13:19 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/fe/idl.ll:
 	* TAO_IDL/fe/lex.yy.cpp:
 	  Fixed pathname canonization for NT, we convert a double
 	  backslash into a single slash.
-
-Mon Mar  2 13:15:02 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
-
-	* tao/sequence[_T].{i,cpp}: Cleaned up a bunch of
- 	  ACE_reinterpret_cast() operations.  Thanks to Russ Noseworthy
- 	  <rnosewor@objectsciences.com> for reporting this.
 
 Mon Mar 02 08:00:41 1998  David L. Levine  <levine@cs.wustl.edu>
 
