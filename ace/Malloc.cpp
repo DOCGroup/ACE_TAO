@@ -29,8 +29,8 @@ ACE_Malloc_Header::dump (void) const
   ACE_TRACE ("ACE_Malloc_Header::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ns_.next_block = %x"), (ACE_Malloc_Header *) this->s_.next_block_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ns_.size = %d\n"), this->s_.size_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nnext_block = %x"), (ACE_Malloc_Header *) this->next_block_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nsize = %d\n"), this->size_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
