@@ -4,6 +4,9 @@ Tue May 05 08:35:18 1998  David L. Levine  <levine@cs.wustl.edu>
           of ACE_SIZEOF_LONG_DOUBLE.  Thanks to Bob Laferriere
           <laferrie@gsao.med.ge.com> for providing the fix.
 
+        * include/makeinclude/platform_sunos5_g++.GNU: use -gstabs+ instead
+          of -g on Solaris86.
+
 Tue May 05 02:15:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Svc_Conf_l.cpp: I know, I know.  I shouldn't mess with this
