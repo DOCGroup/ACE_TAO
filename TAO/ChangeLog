@@ -1,3 +1,12 @@
+Sun Mar 06 21:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Operation_Table_Factory.h:
+        * tao/PortableServer/Operation_Table_Parameters.h:
+          These files are splitted from Operation_Table.h but it seems
+          the Operation_Table_Factory and Operation_Table_Parameters
+          are not used anymore and nobody knows why we have them, so
+          zapped them.
+
 Sun Mar  6 02:03:25 2005  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* examples/Kokyu_dsrt_schedulers/fp_example/test_i.cpp:
@@ -14,7 +23,6 @@ Sun Mar  6 02:03:25 2005  Tao Lu  <lu@dre.vanderbilt.edu>
 	* tao/Wait_On_Read.cpp:
 	* tests/RTCORBA/Priority_Inversion_With_Bands/test_i.cpp:
 	Added proper include for Countdown_Time.h
-
 
 Sat Mar 05 11:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
