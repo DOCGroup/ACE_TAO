@@ -1679,7 +1679,7 @@ CORBA::Object_ptr Messaging::Poller::operation_target (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -1733,7 +1733,7 @@ char * Messaging::Poller::operation_name (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -1787,7 +1787,7 @@ Messaging::ReplyHandler_ptr Messaging::Poller::associated_handler (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -1841,7 +1841,7 @@ void Messaging::Poller::associated_handler (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK;
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -1896,7 +1896,7 @@ CORBA::Boolean Messaging::Poller::is_from_poller (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -1950,7 +1950,7 @@ CORBA::Object_ptr Messaging::Poller::target (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -2004,7 +2004,7 @@ char * Messaging::Poller::op_name (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);

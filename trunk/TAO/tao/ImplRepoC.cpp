@@ -110,7 +110,7 @@ void ImplementationRepository::ServerObject::ping (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+        CORBA::Short flag = 131;
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -218,7 +218,7 @@ void ImplementationRepository::ServerObject::shutdown (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+        CORBA::Short flag = 131;
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -1203,7 +1203,7 @@ void ImplementationRepository::Administration::activate_server (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+        CORBA::Short flag = 131;
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -1324,7 +1324,7 @@ void ImplementationRepository::Administration::register_server (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+        CORBA::Short flag = 131;
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -1440,7 +1440,7 @@ void ImplementationRepository::Administration::reregister_server (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+        CORBA::Short flag = 131;
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -1561,7 +1561,7 @@ void ImplementationRepository::Administration::remove_server (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+        CORBA::Short flag = 131;
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -1681,7 +1681,7 @@ void ImplementationRepository::Administration::shutdown_server (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+        CORBA::Short flag = 131;
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -1803,7 +1803,7 @@ char * ImplementationRepository::Administration::server_is_running (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
-        CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+        CORBA::Short flag = 131;
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN (0);
 
@@ -1932,7 +1932,7 @@ void ImplementationRepository::Administration::server_is_shutting_down (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+        CORBA::Short flag = 131;
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -2054,7 +2054,7 @@ void ImplementationRepository::Administration::find (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+        CORBA::Short flag = 131;
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -2175,7 +2175,7 @@ void ImplementationRepository::Administration::list (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+        CORBA::Short flag = 131;
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -2622,7 +2622,7 @@ CORBA::Boolean ImplementationRepository::ServerInformationIterator::next_n (
               )
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-        CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+        CORBA::Short flag = 131;
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
@@ -2743,7 +2743,7 @@ void ImplementationRepository::ServerInformationIterator::destroy (
               )
           );
         TAO_INTERCEPTOR_CHECK;
-        CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+        CORBA::Short flag = 131;
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
