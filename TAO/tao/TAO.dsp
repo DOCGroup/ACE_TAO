@@ -385,25 +385,6 @@ SOURCE=.\CDR.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\CDR_Interpreter.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Client_Priority_Policy.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3150,10 +3131,6 @@ SOURCE=.\Buffering_Constraint_Policy.h
 # Begin Source File
 
 SOURCE=.\cdr.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CDR_Interpreter.h
 # End Source File
 # Begin Source File
 
