@@ -1,3 +1,10 @@
+Wed Jul 15 16:00:39 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* client.cpp: Changed a few cast statments; added comments
+
+	* runtests.pl: New script to automate running of tests
+
+
 Wed Jul 15 15:44:10 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* tao/Invocation.cpp: Carlos corrected his omission of code to
