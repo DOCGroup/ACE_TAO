@@ -382,10 +382,22 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
   // the same operation, so we use the argument's flat name to
   // declare an empty struct, and use that struct as the template
   // parameter for Arg_Traits<>.
-  *os << be_nl << be_nl
-      << "struct " << node->flat_name () << " {};"
-      << be_nl << be_nl
-      << "template<>" << be_nl
+
+  *os << be_nl;
+
+  idl_bool const skel =
+    (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SS);
+
+  // Avoid generating a duplicate structure in the skeleton when
+  // generating Arg_Traits<> for ThruPOA and direct collocation code.
+  if (!skel
+      || (skel && ACE_OS::strlen (this->S_) != 0))
+    {
+      *os << "struct " << node->flat_name () << " {};"
+          << be_nl << be_nl;
+    }
+
+  *os << "template<>" << be_nl
       << "class " << be_global->stub_export_macro () << " "
       << this->S_ << "Arg_Traits<" << node->flat_name ()
       << ">" << be_idt_nl
