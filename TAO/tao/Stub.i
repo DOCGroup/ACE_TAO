@@ -1,9 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-// @@ Get rid of profile specific stuff, it is now in it's own class and
-// file. fredk
-#include <tao/debug.h>
 
 ACE_INLINE TAO_Profile *
 TAO_Stub::set_profile_in_use_i (TAO_Profile *pfile)
@@ -342,7 +339,8 @@ ACE_INLINE
 TAO_Stub_Auto_Ptr::~TAO_Stub_Auto_Ptr (void)
 {
   ACE_TRACE ("TAO_Stub_Auto_Ptr::~TAO_Stub_Auto_Ptr");
-  this->get ()->_decr_refcnt ();
+  if (this->get() != 0)
+    this->get ()->_decr_refcnt ();
 }
 
 // Accessor methods to the underlying Stub Object
@@ -351,5 +349,6 @@ ACE_INLINE TAO_Stub &
 TAO_Stub_Auto_Ptr::operator *() const
 {
   ACE_TRACE ("TAO_Stub_Auto_Ptr::operator *()");
+  // @@ Potential problem if this->p_ is zero!
   return *this->get ();
 }

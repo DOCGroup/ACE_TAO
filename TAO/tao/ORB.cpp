@@ -1,10 +1,5 @@
 // $Id$
 
-// @@ as with TAO, this has a strong coupling to the Internet ORB
-// (IIOP) code.  We should make it know less about that protocol
-// component and have a loose table-driven coupling to ORB/protocol
-// library components.
-
 #include "tao/ORB.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Connector_Registry.h"
@@ -903,6 +898,7 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
                                               type_id,
                                               ACE_TRY_ENV);
 }
+
 // Create an objref
 
 CORBA::Object_ptr
@@ -915,6 +911,8 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
   TAO_Stub *data = this->create_stub_object (key, type_id, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
+  TAO_Stub_Auto_Ptr safe_data (data);
+
   // Create the CORBA level proxy
   CORBA_Object *new_obj =
     this->orb_core_->optimize_collocation_objects () ?
@@ -923,12 +921,12 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
 
   // Clean up in case of errors.
   if (CORBA::is_nil (new_obj))
-    {
-      data->_decr_refcnt ();
       ACE_THROW_RETURN (CORBA::INTERNAL (), CORBA::Object::_nil ());
-    }
 
-  data->servant_orb (CORBA::ORB::_duplicate (this));
+  safe_data.get ()->servant_orb (CORBA::ORB::_duplicate (this));
+
+  data = safe_data.release ();
+
   return new_obj;
 }
 
@@ -1305,7 +1303,9 @@ CORBA::ORB_init (int &argc,
                  char *argv[],
                  const char * orb_name)
 {
-  return CORBA::ORB_init (argc, argv, orb_name,
+  return CORBA::ORB_init (argc,
+                          argv,
+                          orb_name,
                           TAO_default_environment ());
 }
 
@@ -1333,10 +1333,10 @@ CORBA::ORB_init (int &argc,
         {
           char *current_arg = arg_shifter.get_current ();
 
-          const char orbid_opt[] = "-ORBId";
+          const char orbid_opt[] = "-ORBid";
           const int orbid_len = sizeof (orbid_opt) - 1;
-          if (ACE_OS::strcmp (current_arg,
-                              orbid_opt) == 0)
+          if (ACE_OS::strcasecmp (current_arg,
+                                  orbid_opt) == 0)
             {
               arg_shifter.consume_arg ();
               if (arg_shifter.is_parameter_next ())
@@ -1345,8 +1345,8 @@ CORBA::ORB_init (int &argc,
                   arg_shifter.consume_arg ();
                 }
             }
-          else if (ACE_OS::strncmp (current_arg, orbid_opt,
-                                    orbid_len) == 0)
+          else if (ACE_OS::strncasecmp (current_arg, orbid_opt,
+                                        orbid_len) == 0)
             {
               arg_shifter.consume_arg ();
               // The rest of the argument is the ORB id...
@@ -1707,12 +1707,12 @@ CORBA_ORB::url_ior_string_to_object (const char* str,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  //  TAO_Stub_Auto_Ptr safe_data (data);
+  TAO_Stub_Auto_Ptr safe_data (data);
 
   // Figure out if the servant is collocated.
   TAO_ServantBase *servant = 0;
   TAO_SERVANT_LOCATION servant_location =
-    this->_get_collocated_servant (data,
+    this->_get_collocated_servant (safe_data.get (),
                                    servant);
 
   int collocated = 0;
@@ -1724,14 +1724,14 @@ CORBA_ORB::url_ior_string_to_object (const char* str,
   // Create the CORBA level proxy.  This will increase the ref_count
   // on data by one
   ACE_NEW_THROW_EX (obj,
-                    CORBA_Object (data,
+                    CORBA_Object (safe_data.get (),
                                   servant,
                                   (CORBA::Boolean) collocated),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // All is well, so release the stub object from its auto_ptr.
-  //  data = safe_data.release ();
+  data = safe_data.release ();
 
   return obj;
 }
