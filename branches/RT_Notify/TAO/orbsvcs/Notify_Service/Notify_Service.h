@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 // $Id$
-
 // ============================================================================
 //
 // = FILENAME
@@ -18,10 +17,11 @@
 #ifndef NOTIFY_SERVICE_H
 #define NOTIFY_SERVICE_H
 
+#include "ace/Task.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/CosNamingC.h"
-#include "ace/Task.h"
+#include "../orbsvcs/Notify/Service.h"
 
 #define NOTIFY_KEY "NotifyEventChannelFactory"
 #define NOTIFY_CHANNEL_NAME "NotifyEventChannel"
@@ -69,7 +69,7 @@ class TAO_Notify_Service
   // Initializes the Service.
   // Returns 0 on success, -1 on error.
 
-  int run (void);
+  int run (ACE_ENV_SINGLE_ARG_DECL);
   // run the Service.
   // Returns 0 on success, -1 on error.
 
@@ -77,12 +77,15 @@ class TAO_Notify_Service
   // Shutdown the Service.
   // Returns 0 on success, -1 on error.
 
+
   // CosNotifyChannelAdmin::EventChannelFactory_var obj;
   //
 protected:
   int init_ORB (int& argc, ACE_TCHAR *argv []
                 ACE_ENV_ARG_DECL);
   // initialize the ORB.
+
+  TAO_NS_Service* notify_service_;
 
   int resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
   // Resolve the naming service.
