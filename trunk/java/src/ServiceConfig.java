@@ -1,4 +1,4 @@
-/*************************************************
+ /*************************************************
  *
  * = PACKAGE
  *    JACE.ServiceConfigurator
@@ -175,7 +175,8 @@ public class ServiceConfig
     FileInputStream fileIn = new FileInputStream (configFile);
 
     // Parse the file
-    StreamTokenizer in = new StreamTokenizer (fileIn);
+    Reader r = new BufferedReader(new InputStreamReader(fileIn));
+    StreamTokenizer in = new StreamTokenizer (r);
 
     // Set '#' as comment character to be ignored and set '/' as
     // ordinary character (was original comment character) 
