@@ -8,12 +8,12 @@ factory object reference.
 You can either run the server in the background in the same window as
 the client or open a separate window for the client and server.
 
-The client and server can also make use of the Naming Service.
+The client and server by default make use of the Naming Service.
 The cubit server now has its own NamingServer implementation and hence
 you don't have to start the NamingService before starting the client
 and server.
 	You just have to use the -s flags on both the server and
-client to use the naming service.
+client if you don't want to use the naming service.
 
 server:
 -------
@@ -21,7 +21,7 @@ server:
 % server [-d] [-s] [-ORBhost <serverhost>] [-ORBport <portnum>]
            [-n <number-of-cubit-objects>] [-o <ior_output_file>] 
 
--s option tells the server to register the cubit-factory object 
+-s option tells the server not to register the cubit-factory object 
   with the Naming Service.
 
 The server cubit factory maintains num_of_cubit objects (default =
@@ -51,7 +51,7 @@ client:
 Options:
 -------
 	d	Debug flag
-	s	Use the Naming Service
+	s	Don't Use the Naming Service
 	x 	Tells the server to shutdown.
 	f	Reads the cubit factory ior from the file
 	k	Reads the cubit factory ior from commandline
@@ -64,14 +64,15 @@ Options:
 	
 	2. Directly on the commandline using the -k option.
 	
-	3. Get it from the Naming Service using the -s option.
+	3. Get it from the Naming Service (which is the default client
+       	   behavior).  
 
 Sample Run- Using files to communicate IOR:
 ------------------------------------------
 
 1. Start the server.
 
-% server -ORBport 20000 -ORBobjrefstyle url -o theior
+% server -s -ORBport 20000 -ORBobjrefstyle url -o theior 
 
 starting up daemon <unknown>
 opening dynamic service Resource_Factory
@@ -85,7 +86,7 @@ The IOR is: <iiop:1.0//tango:20000/Persistent/887665222/647179/RootPOA/RootPOA_i
 
 2.Start the client.
 
-%client -ORBport 19998 -f theior
+%client -s -ORBport 19998 -f theior
 
 starting up daemon <unknown>
 opening dynamic service Resource_Factory
@@ -102,10 +103,10 @@ Factory received OK
 Sample Run-Using Naming Service:
 --------------------------------
 1. Start the server
-	%server -ORBport 19999 -s
+	%server -ORBport 19999
 
 2. Start the client
-	%client -ORBport 19998 -s
+	%client -ORBport 19999
 		if you don't want the server to shutdown.
-	%client -ORBport 19998 -s -x
+	%client -ORBport 19998  -x
 		if you want to shutdown the server after this request.
