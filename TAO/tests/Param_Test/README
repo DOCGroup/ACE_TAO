@@ -73,6 +73,7 @@ To run the client, type
        var_array            for arrays of var sized types (strings)
        typecode             for typecode
        exception            for exceptions
+       multdim_array        for multi dimensional arrays
 
 
 	There are 2 options of giving the Param_obj-ref-key i.e IOR to

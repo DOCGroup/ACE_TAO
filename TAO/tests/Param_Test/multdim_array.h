@@ -6,13 +6,13 @@
 //    TAO/tests/Param_Test
 //
 // = FILENAME
-//    fixed_array.h
+//    multdim_array.h
 //
 // = DESCRIPTION
-//     Tests fixed size array
+//     Tests multi dimensional array
 //
 // = AUTHORS
-//      Aniruddha Gokhale
+//   Bala
 //
 // ============================================================================
 
