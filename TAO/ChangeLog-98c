@@ -1,10 +1,21 @@
+1998-06-18  Torben Worm  <tworm@cumbia.cs.wustl.edu>
+
+	* orbsvcs/tests/Concurrency/CC_command.cpp
+	  orbsvcs/tests/Concurrency/CC_command.l
+	  orbsvcs/tests/Concurrency/CC_command.tab.cpp
+	  orbsvcs/tests/Concurrency/CC_test_utils.h
+	  orbsvcs/tests/Concurrency/Makefile
+	  orbsvcs/tests/Concurrency/lex.CC_command.cpp:
+	  Removed warnings reported by DU cxx
+	  Now a patch file is used to patch the output from flex.
+
 Thu Jun 18 10:21:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
 	  Comparing an _var to a 0 is non-portable (and non-complaint),
 	  the right thing to do is CORBA::is_nil.
 
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: 
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
 	  Comparing a Time_Value to 0 is a bad idea (we can convert the 0
 	  to a Time_Value or the Time_Value to an int), we compare to
 	  ACE_Time_Value::zero.
@@ -289,9 +300,9 @@ Wed Jun 17 22:03:42 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 Wed Jun 17 23:29:06 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/Event_Channel.i:
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
 	  Fixed many bugs in the disconnection code. The main ones were
 	  related to memory managment (missing _duplicate() calls for
 	  ES_Consumer_Rep objects) and to agressive memory release
@@ -306,27 +317,27 @@ Wed Jun 17 23:29:06 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  area.
 	  Some stylistic changes here and there.
 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.h: 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.h:
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
 	  Added an option to connect and disconnect the consumers and/or
 	  suppliers before doing anything else. This was useful to debug
 	  the EC.
 
-	* orbsvcs/tests/EC_Multiple/Makefile: 
+	* orbsvcs/tests/EC_Multiple/Makefile:
 	  Updated dependencies.
 
-	* orbsvcs/tests/EC_Multiple/svc.conf: 
+	* orbsvcs/tests/EC_Multiple/svc.conf:
 	  Added more options to control the kind of lock used in the POA
 	  and similar things.
 
-	* orbsvcs/orbsvcs/Event/RT_Task.cpp: 
+	* orbsvcs/orbsvcs/Event/RT_Task.cpp:
 	  Failing to run in the real-time class is only a warning, added
 	  an explanation to the user in that sense.
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
 	  Added debug messages (now commented out).
 
-	* orbsvcs/orbsvcs/Event/CORBA_Utils_T.i: 
+	* orbsvcs/orbsvcs/Event/CORBA_Utils_T.i:
 	  Fixed off-by-one bug in Simple_Array_Iterator.
 
         * orbsvcs/orbsvcs/Event/Event_Channel.h:
@@ -363,7 +374,7 @@ Wed Jun 17 23:29:06 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
           Failing to run in the real-time class is only a warning, added
           an explanation to the user in that sense.
 
-	* orbsvcs/orbsvcs/Event_Utilities.cpp: 
+	* orbsvcs/orbsvcs/Event_Utilities.cpp:
 	  Initialize the rt_info field to 0.
 
         * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
@@ -444,6 +455,23 @@ Wed Jun 17 15:05:43 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
           orb_params.
 
 1998-06-17  Torben Worm  <tworm@cumbia.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory: Changed the
+	  factory not to use an ACE_Lock, but rather to use the
+	  ACE_Thread_Mutex directly.
+
+	* orbsvcs/orbsvcs/Concurrency/CC_LockSet: Changed _d to _i
+	  to be more consistent with ACE.
+
+	* orbsvcs/orbsvcs/Concurrency/CC_LockSet: Don't create the
+	  Thread_Mutex as a pointer since it doesn't change.
+
+	* orbsvcs/tests/Concurrency/CC_client.{h,cpp}
+	  orbsvcs/tests/Concurrency/CC_command.l
+	  orbsvcs/tests/Concurrency/CC_command.y
+	  orbsvcs/tests/Concurrency/Makefile
+	  Now using yacc. Now patching the generated files like SVC
+	  in order to make them more portable. Patching not used yet.
 
         * orbsvcs/tests/Concurrency/CC_client.{h,cpp}
           orbsvcs/tests/Concurrency/CC_command.l
