@@ -536,18 +536,18 @@ ACE_INLINE int
 ACE_OS::chdir (const ACE_TCHAR *path)
 {
   ACE_TRACE ("ACE_OS::chdir");
-#   if defined (VXWORKS)
+#if defined (VXWORKS)
   ACE_OSCALL_RETURN (::chdir (ACE_const_cast (char *, path)), int, -1);
 
-#    elif defined (ACE_PSOS_LACKS_PHILE)
+#elif defined (ACE_PSOS_LACKS_PHILE)
   ACE_UNUSED_ARG (path);
   ACE_NOTSUP_RETURN (-1);
 
-#    elif defined (ACE_PSOS)
+#elif defined (ACE_PSOS)
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::change_dir ((char *) path), ace_result_),
                      int, -1);
 
-#    elif defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+#elif !defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
   ACE_OSCALL_RETURN (::_chdir (path), int, -1);
 
 #elif defined (ACE_HAS_WINCE)
@@ -560,7 +560,7 @@ ACE_OS::chdir (const ACE_TCHAR *path)
 #else
   ACE_OSCALL_RETURN (::chdir (path), int, -1);
 
-#   endif /* VXWORKS */
+#endif /* VXWORKS */
 }
 
 #if !defined (ACE_LACKS_MKTEMP)

@@ -117,7 +117,7 @@ ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (const ACE_Name_Node &)
 {
   ACE_TRACE ("ACE_Name_Node::ACE_Name_Node");
 #if !defined (ACE_PSOS)
-  ACE_ASSERT (0 == "not implemented!");
+  ACE_ASSERT (!"not implemented!");
 #endif /* ! ACE_PSOS */
 }
 

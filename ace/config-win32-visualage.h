@@ -22,7 +22,6 @@
 #define ERRMAX 256 /* Needed for following define */
 #define ACE_LACKS_SYS_NERR /* Needed for sys_nerr in Log_Msg.cpp */
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES /* For signal handling */
-#define ACE_HAS_TYPENAME_KEYWORD
 #define ACE_LACKS_MKTEMP
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 #define NSIG 23 /* Maximum no. of signals + 1 */
