@@ -1,3 +1,27 @@
+Mon Jun 21 22:25:30 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/ORB.cpp (resolve_initial_references): 
+
+	  Added work-around for case when default initial reference ends
+	  with forward slash '/' object key delimiter.  The code will soon 
+	  be updated to work with pluggable protocols that use an object
+	  key delimiter other than '/', such as UIOP.
+
+	* tao/ORB_Core.cpp (init):
+
+	  Cosmetic updates.
+
+	* tao/Pluggable.cpp (make_mprofile): 
+
+	  Corrected object key string offset when searching for the object 
+	  key delimiter in the IOR.  Object keys are, once again, properly
+	  appended to endpoints during profile creation (during string to
+	  object conversions).
+
+	  Fixed error return value mismatch when checking for a full
+	  MProfile during MProfile::give_profile() call.  I incorrectly
+	  assumed that a return value other than zero was an error.
+
 Mon Jun 21 22:19:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/Event/Basic/Makefile:
