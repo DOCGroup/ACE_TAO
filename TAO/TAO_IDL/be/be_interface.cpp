@@ -568,7 +568,7 @@ int be_interface::gen_server_skeletons (void)
   *ss << "CORBA::POA_ptr oa = TAO_ORB_Core_instance ()->root_poa (); " <<
     "// underlying OA" << nl;
   *ss << "const ACE_INET_Addr &addr = ocp->orb_params ()->addr ();" << nl;
-  *ss << "this->optable_ = &tao_" << local_name () << "_optable;" << nl <<
+  *ss << "this->optable_ = &tao_" << this->flatname () << "_optable;" << nl <<
     nl;
   *ss << "// set up an IIOP object" << nl;
 #if 0
@@ -663,7 +663,7 @@ be_interface::gen_operation_table (void)
   ss = cg->server_skeletons ();
 
   ss->indent (); // start from current indentation level
-  *ss << "static const TAO_operation_db_entry " << local_name () <<
+  *ss << "static const TAO_operation_db_entry " << this->flatname () <<
     "_operations [] = {\n";
   ss->incr_indent ();
   if (this->nmembers () > 0)
@@ -689,6 +689,29 @@ be_interface::gen_operation_table (void)
                       << nl;
                   count++;
                 }
+              else if (d->node_type () == AST_Decl::NT_attr)
+                {
+                  AST_Attribute *attr;
+
+                  // generate only the "get" entry if we are readonly
+                  *ss << "{\"_get_" << d->local_name () << "\", &" <<
+                    this->full_skel_name () << "::_get_" << d->local_name () <<
+                    "_skel}," << nl;
+                  count++;
+
+                  attr = AST_Attribute::narrow_from_decl (d);
+                  if (!attr)
+                    return -1;
+
+                  if (!attr->readonly ())
+                    {
+                      // the set method
+                      *ss << "{\"_set_" << d->local_name () << "\", &" <<
+                        this->full_skel_name () << "::_set_" << d->local_name
+                        () << "_skel}," << nl;
+                      count++;
+                    }
+                }
             }
           si->next ();
         } // end of while
@@ -701,8 +724,8 @@ be_interface::gen_operation_table (void)
 
   // XXXASG - this code should be based on using different strategies for
   // demux - for next release
-  *ss << "TAO_Dynamic_Hash_OpTable tao_" << local_name () << "_optable " <<
-    "(" << local_name () << "_operations, " << count << ", " << 2*count << ");"
+  *ss << "TAO_Dynamic_Hash_OpTable tao_" << this->flatname () << "_optable " <<
+    "(" << this->flatname () << "_operations, " << count << ", " << 2*count << ");"
       << nl;
   return 0;
 }
