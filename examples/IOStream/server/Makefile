@@ -16,6 +16,8 @@ VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BUILD 	= $(VBIN)
 
+#### NOTE: VLDLIBS is (conditionally) defined below!!!!
+
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
