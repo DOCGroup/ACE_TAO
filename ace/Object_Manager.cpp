@@ -17,7 +17,7 @@ ACE_Object_Manager *ACE_Object_Manager::instance_ = 0;
 ACE_Object_Manager::ACE_Object_Manager (void)
   : shutting_down_(0)
 {
-  ACE_NEW (registered_objects_, ACE_Unbounded_Queue<object_info_t>);
+  ACE_NEW (registered_objects_, ACE_Unbounded_Queue<ACE_Cleanup_Info>);
 
 #if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
   // Store the address of this static instance so that instance ()
@@ -33,7 +33,7 @@ ACE_Object_Manager::ACE_Object_Manager (void)
 
 ACE_Object_Manager::~ACE_Object_Manager (void)
 {
-  object_info_t info;
+  ACE_Cleanup_Info info;
 
   // This call closes and deletes all ACE library services and
   // singletons.
@@ -92,8 +92,8 @@ ACE_Object_Manager::at_exit_i (void *object,
     return -1;
 
   // Check for already in queue, and return 1 if so.
-  object_info_t *info = 0;
-  for (ACE_Unbounded_Queue_Iterator<object_info_t> iter (*registered_objects_);
+  ACE_Cleanup_Info *info = 0;
+  for (ACE_Unbounded_Queue_Iterator<ACE_Cleanup_Info> iter (*registered_objects_);
        iter.next (info) != 0;
        iter.advance ())
     {
@@ -104,7 +104,7 @@ ACE_Object_Manager::at_exit_i (void *object,
         }
     }
 
-  object_info_t new_info;
+  ACE_Cleanup_Info new_info;
   new_info.object_ = object;
   new_info.cleanup_hook_ = cleanup_hook;
   new_info.param_ = param;
@@ -115,11 +115,11 @@ ACE_Object_Manager::at_exit_i (void *object,
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unbounded_Queue<ACE_Object_Manager::object_info_t>;
-template class ACE_Unbounded_Queue_Iterator<ACE_Object_Manager::object_info_t>;
-template class ACE_Node<ACE_Object_Manager::object_info_t>;
+template class ACE_Unbounded_Queue<ACE_Object_Manager::ACE_Cleanup_Info>;
+template class ACE_Unbounded_Queue_Iterator<ACE_Object_Manager::ACE_Cleanup_Info>;
+template class ACE_Node<ACE_Object_Manager::ACE_Cleanup_Info>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Unbounded_Queue<ACE_Object_Manager::object_info_t>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Object_Manager::object_info_t>
-#pragma instantiate ACE_Node<ACE_Object_Manager::object_info_t>
+#pragma instantiate ACE_Unbounded_Queue<ACE_Object_Manager::ACE_Cleanup_Info>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Object_Manager::ACE_Cleanup_Info>
+#pragma instantiate ACE_Node<ACE_Object_Manager::ACE_Cleanup_Info>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

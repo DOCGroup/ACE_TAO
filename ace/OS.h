@@ -2957,6 +2957,20 @@ struct ACE_Export ACE_Str_Buf : public strbuf
 // <ACE_Object_Manager> and the <ACE_Thread_Manager>.
 typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* throw () */;
 
+struct ACE_Cleanup_Info
+  // = TITLE
+  //     Hold cleanup information for thread/process
+{
+  void *object_;
+  // Point to object that gets passed into the <cleanup_hook_>.
+
+  ACE_CLEANUP_FUNC cleanup_hook_;
+  // Cleanup hook that gets called back.
+  
+  void *param_;
+  // Parameter passed to the <cleanup_hook_>.
+};
+
 // Run the thread entry point for the <ACE_Thread_Adapter>.  This must
 // be an extern "C" to make certain compilers happy...
 extern "C" void *ace_thread_adapter (void *args);

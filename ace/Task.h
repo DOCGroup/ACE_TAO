@@ -164,6 +164,10 @@ public:
   // Routine that runs the service routine as a daemon thread.
   static void *svc_run (void *);
 
+  static void cleanup (void *object, void *params);
+  // Cleanup hook that is called when a thread exits to gracefully
+  // shutdown an <ACE_Task>.
+
   // = Internal data (should be private...).
 // private:
 

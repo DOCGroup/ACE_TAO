@@ -37,6 +37,19 @@ ACE_Thread_Manager::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
+int
+ACE_Thread_Descriptor::at_exit (void *object,
+				ACE_CLEANUP_FUNC cleanup_hook,
+				void *param)
+{
+  ACE_TRACE ("ACE_Thread_Descriptor::at_exit");
+
+  this->cleanup_info_.object_ = object;
+  this->cleanup_info_.cleanup_hook_ = cleanup_hook;
+  this->cleanup_info_.param_ = param;
+  return 0;
+}
+
 void
 ACE_Thread_Descriptor::dump (void) const
 {
@@ -343,13 +356,6 @@ ACE_Thread_Exit::status (void)
 ACE_Thread_Exit::~ACE_Thread_Exit (void)
 {
   ACE_TRACE ("ACE_Thread_Exit::~ACE_Thread_Exit");
-
-#if 0
-  // The thread count must be decremented first in case the <close>
-  // hook does something crazy like "delete this".
-  this->t_->thr_count_dec ();
-  this->t_->close (u_long (this->status_));
-#endif /* 0 */
 }
 
 // Run the entry point for thread spawned under the control of the
@@ -663,6 +669,18 @@ ACE_Thread_Manager::insert_thr (ACE_thread_t t_id,
     return -1;
   else
     return grp_id;
+}
+
+// Run the registered hooks when the thread exits.
+
+void
+ACE_Thread_Manager::run_thread_exit_hooks (int i)
+{
+  ACE_TRACE ("ACE_Thread_Manager::run_thread_exit_hooks");
+
+  (*this->thr_table_[i].cleanup_info_.cleanup_hook_) 
+    (this->thr_table_[i].cleanup_info_.object_,
+     this->thr_table_[i].cleanup_info_.param_);
 }
 
 // Remove a thread from the pool.  Must be called with locks held.
@@ -1026,6 +1044,20 @@ ACE_Thread_Manager::wait_grp (int grp_id)
   return result;
 }
 
+int 
+ACE_Thread_Manager::at_exit (void *object,
+			     ACE_CLEANUP_FUNC cleanup_hook,
+			     void *param)
+{
+  // Locate thread id.
+  int i = this->find_thread (ACE_Thread::self ());
+
+  if (i != -1)
+    return this->thr_table_[i].at_exit (object, cleanup_hook, param);
+  else
+    return -1;
+}
+
 // Must be called when thread goes out of scope to clean up its table
 // slot.
 
@@ -1035,11 +1067,17 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
   ACE_TRACE ("ACE_Thread_Manager::exit");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
 
+  // Locate thread id.
   int i = this->find_thread (ACE_Thread::self ());
 
-  // Locate thread id.
   if (i != -1)
-    this->remove_thr (i);
+    {
+      // Run all the exit hooks.
+      this->run_thread_exit_hooks (i);
+
+      // Remove thread descriptor from the table.
+      this->remove_thr (i);
+    }
 
   if (do_thr_exit)
     {
