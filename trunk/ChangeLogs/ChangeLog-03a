@@ -1,3 +1,8 @@
+Sun Jan 20 12:38:28 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Framework_Component_Test.dsp: New dsp file for the test. 
+	* tests/tests.dsw: Added the above test to the workspace.
+
 Sun Jan 20 12:25:28 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Framework_Component.h: Removed the the definition of the
