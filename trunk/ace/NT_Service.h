@@ -115,11 +115,18 @@ public:
   // = Functions to operate the service
 
   /**
-   * Hook called to open the service.  By default, will set the status
-   * to <START>_PENDING, <svc>, <wait>, then set the status to
-   * STOPPED.
+   * Hook called to open the service.  By default, sets the service
+   * status to SERVICE_START_PENDING, calls the @c svc() method,
+   * interprets and sets the service status, and returns.
    */
   virtual int open (void *args = 0);
+
+  /**
+   * Hook called when terminating the service. Inherited from
+   * ACE_Shared_Object. Default implementation sets the service status
+   * to SERVICE_STOPPED.
+   */
+  virtual int fini (void);
 
   /**
    * The actual service implementation.  This function need not be overridden

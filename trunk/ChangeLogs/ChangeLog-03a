@@ -1,3 +1,18 @@
+Thu Jan 31 19:18:37 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/NT_Service.{h cpp}: To avoid race condition at shutdown time,
+          moved the call to report_status(SERVICE_STOPPED, 0) from the
+          open() method to a new override of the fini() method. Setting
+          status to SERVICE_STOPPED frees up Windows to do its own shutdown
+          for the service, and that can't be allowed to commence until all
+          ACE_NT_Service things are done. Thanks to Zoran Cetusic
+          <ZoranC@inter-intelli.com>, Patrick Bennett and Felix Wyss from
+          Interactive Intelligence, Inc. for diagnosing this problem and
+          sending in a fix.
+
+        * THANKS: Added Zoran Cetusic, Patrick Bennett, and Felix Wyss to
+          the Hall of Fame.
+
 Thu Jan 31 17:00:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/config-all.h: Need to include <new> with all versions of
