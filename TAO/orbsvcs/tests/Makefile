@@ -49,7 +49,8 @@ DIRS += Concurrency \
   ior_corbaname \
   tests_svc_loader \
   Security \
-  Miop
+  Miop \
+  Log
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
