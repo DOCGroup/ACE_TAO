@@ -451,6 +451,12 @@ The correct way to write that guard is:
          set.insert (2 * i + 1);
        </pre><p>
 
+    <li>Prefer using <strong> <code> if (...) else .... </code> </strong>
+    instead of <strong> <code> ?: </code> </strong> operator. It is a lot
+    less error prone, and will help you avoid bugs caused due to the
+    precedence of <strong> <code> ?: </code> </strong>, compared with other
+    operators in an expression.
+    
     <li>When a class provides operator==, it must also provide
         operator!=.  Also, both these operators must be const.
 
