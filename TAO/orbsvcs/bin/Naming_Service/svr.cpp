@@ -115,13 +115,13 @@ main (int argc, char ** argv)
 		      1);
 
   // Create a naming context object.
-  NS_NamingContext *naming_context = new NS_NamingContext;
+  NS_NamingContext *naming_context = new NS_NamingContext ("NameService");
   
   // Stringify the objref we'll be implementing, and print it to
   // stdout.  Someone will take that string and give it to a
   // client.  Then release the object.
   CORBA::String str;
-  str = orb_ptr->object_to_string (naming_context, env);
+  str = ACE_OS::strdup (orb_ptr->object_to_string (naming_context, env));
 
   if (env.exception () != 0)
     {
@@ -161,6 +161,9 @@ main (int argc, char ** argv)
     
   ACE_DEBUG ((LM_DEBUG, "The multicast server setup is done.\n"));
 #endif /* ACE_HAS_IP_MULTICAST */
+
+  // free memory with "free" because we used strdup which uses malloc
+  ACE_OS::free (str);
 
   // Handle requests for this object until we're killed, or one of the
   // methods asks us to exit.
