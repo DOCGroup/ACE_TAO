@@ -154,8 +154,9 @@ class TAO_Export TAO_Asynch_Reply_Dispatcher : public TAO_Reply_Dispatcher
 
 public:
   TAO_Asynch_Reply_Dispatcher (const TAO_Reply_Handler_Skeleton &reply_handler_skel,
-                               Messaging::ReplyHandler_ptr reply_handler_ptr);
-  // Constructor.
+                               Messaging::ReplyHandler_ptr reply_handler_ptr,
+                               IOP::ServiceContextList &sc);
+ // Constructor.
 
   virtual ~TAO_Asynch_Reply_Dispatcher (void);
   // Destructor.
@@ -177,6 +178,10 @@ public:
 
   virtual TAO_GIOP_Message_State *message_state (void);
   // Return the message state.
+
+protected:
+  IOP::ServiceContextList &reply_service_info_;
+  // The service context list
 
 private:
   CORBA::ULong reply_status_;
