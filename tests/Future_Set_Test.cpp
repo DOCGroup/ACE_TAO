@@ -18,7 +18,8 @@
 // = AUTHOR
 //    Andres Kruse <Andres.Kruse@cern.ch>,
 //    Douglas C. Schmidt <schmidt@cs.wustl.edu>,
-//    and Per Andersson <pera@ipso.se>
+//    Per Andersson <pera@ipso.se> and 
+//    Johnny Tucker <jtucker@infoglide.com>
 //
 // ============================================================================
 
