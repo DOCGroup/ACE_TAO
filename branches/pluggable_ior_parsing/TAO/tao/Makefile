@@ -223,7 +223,7 @@ DEFS    = $(addsuffix .h,$(PUB_HDRS))
 
 ACE_SHLIBS = -lACE
 
-DIRS += ior_dll
+DIRS += ior_dll ior_file ior_corbaloc
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
