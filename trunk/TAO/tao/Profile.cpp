@@ -23,7 +23,12 @@ void
 TAO_Profile::policies (CORBA::PolicyList *policy_list)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
-  
+
+  // @@ Angelo: using assert will crash the program, that is *NOT* the
+  // behavior we want, not in a production system.  We should log the
+  // error (if we had systematic logging in TAO, otherwise an
+  // ACE_DEBUG will have to do), and continue executing!
+
   ACE_ASSERT (policy_list != 0);
 
   Messaging::PolicyValue pv;
@@ -43,7 +48,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
 
       out_CDR << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
       (*policy_list)[i]->_tao_encode (out_CDR);
-      
+
       length = out_CDR.total_length ();
       policy_value_seq[i].pvalue.length (length);
 
@@ -60,13 +65,15 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
         }
 
       //policy_value_seq[i] = pv;
-      
+
       // Reset the CDR buffer index so that the buffer can
       // be reused for the next conversion.
 
       //out_CDR.reset ();
     }
-  
+
+  // @@ Angelo: may want to give this variable another name, to avoid
+  // confusion.
   TAO_OutputCDR out_CDR;
   // Now we have to embedd the Messaging::PolicyValueSeq into
   // a TaggedComponent.
@@ -76,12 +83,12 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
 
   out_CDR << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
   out_CDR << policy_value_seq;
- 
+
   length = out_CDR.total_length ();
 
-  tagged_component.component_data.length(length);
+  tagged_component.component_data.length (length);
   buf = tagged_component.component_data.get_buffer ();
-  
+
   int i_length;
   for (const ACE_Message_Block *iterator = out_CDR.begin ();
        iterator != 0;
@@ -92,13 +99,14 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
       ACE_OS::memcpy (buf, iterator->rd_ptr (), iterator->length ());
 
       buf += iterator->length ();
-  
+
       i_length = iterator->length ();
     }
 
   // Eventually we add the TaggedComponent to the TAO_TaggedComponents
   // member variable.
   tagged_components_.set_component (tagged_component);
+  // @@ Angelo: never forget your this->
   are_policies_parsed_ = 1;
 
 #else /* TAO_HAS_CORBA_MESSAGING == 1 */
@@ -113,8 +121,16 @@ CORBA::PolicyList&
 TAO_Profile::policies (void)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
-  
+
   CORBA::PolicyList *policies = this->stub_->base_profiles ().policy_list ();
+
+  // @@ Angelo: the following code does not seem to be thread safe.
+  //    Two threads could call this routine simulatenously and you
+  //    would leak memory like a hog.
+  //    If there are good reasons why that cannot happen please
+  //    document them, if not then please make the code thread safe, a
+  //    regular guard will do.
+
   if (!are_policies_parsed_
       && (policies->length () == 0))
     // None has already parsed the policies.
@@ -154,15 +170,17 @@ TAO_Profile::policies (void)
 
           for (CORBA::ULong i = 0; i < length; i++)
             {
+              // @@ Angelo: please check my comments on this stuff in
+              // the Policy_Factory.h file.
               policy =
                 TAO_Policy_Factory::create_policy (policy_value_seq[i].ptype);
               if (policy != 0)
                 {
                   buf = policy_value_seq[i].pvalue.get_buffer ();
-                  
+
                   TAO_InputCDR in_CDR (ACE_reinterpret_cast (const char*, buf),
                                        policy_value_seq[i].pvalue.length ());
-                  
+
                   in_CDR >> ACE_InputCDR::to_boolean (byte_order);
                   in_CDR.reset_byte_order (ACE_static_cast(int, byte_order));
 
@@ -175,12 +193,33 @@ TAO_Profile::policies (void)
                   // policies that TAO doesn't support, so as specified
                   // by the RT-CORBA spec. ptc/99-05-03 we just ignore
                   // this un-understood policies.
+                  // @@ Angelo: in this case we may still want to log
+                  // the problem (just use ACE_DEBUG right now if
+                  // TAO_debug_level is high enough).
                 }
             }
         }
       else
         {
           // @@ Marina, what should happen here?
+          // @@ Angelo: I find it easier to read code like this:
+          //
+          // if (!condition)
+          //   return; // Nothing bad happenned
+          // foo;
+          // bar;
+          //
+          // than code like this:
+          //
+          // if (condition)
+          //   {
+          //     foo;
+          //     bar;
+          //   }
+          // specially when the numbers of <foos> and <bars> is really
+          // high.
+          // In this case I think the code would be a *lot* more
+          // readable if you did that.
         }
 
     }
@@ -193,6 +232,9 @@ TAO_Profile::policies (void)
 void
 TAO_Profile::the_stub (TAO_Stub *stub)
 {
+  // @@ Angelo: Can the stub for a profile change?  When?  What about
+  // race conditions?  If it cannot change: shouldn't it be set in the
+  // constructor or something?
   this->stub_ = stub;
 }
 

@@ -36,6 +36,17 @@ class TAO_Export TAO_Policy_Factory
 
 public:
 
+  // @@ Angelo: I don't think this is a good design, in the future we
+  // may want to have the ORB create the policies, and maybe pluggin
+  // new policies on the fly (such as protocol specific policies,
+  // security policies, etc. etc.).
+  //    IMnsHO the right way to do this is to have it implemented in
+  //    the ORB, right now I guess we will have to hard code it, but
+  //    eventually we want to dynamically load the policies, much like
+  //    we can dynamically load protocols.  The ORB would use the
+  //    <ptype> to find the right protocol factory from a dynamically
+  //    constructed list.
+  //
   static CORBA::Policy * create_policy (CORBA::PolicyType ptype);
   // Creates a Policy of the type specified by <ptype>.  NULL is
   // returned if the policy type is unknown.

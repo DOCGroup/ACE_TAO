@@ -1,3 +1,20 @@
+Sat Aug 19 11:10:40 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/POA.cpp:
+        * tao/Policy_Factory.h:
+        * tao/Policy_Factory.i:
+        * tao/Profile.cpp:
+        * tao/RT_Policy_i.cpp:
+        * tao/RT_Policy_i.h:
+        * tao/Stub.cpp:
+        * tests/Exposed_Policies/Counter.idl:
+        * tests/Exposed_Policies/Counter_i.cpp:
+        * tests/Exposed_Policies/Counter_i.h:
+        * tests/Exposed_Policies/RT_Properties.cpp:
+        * tests/Exposed_Policies/client.cpp:
+        * tests/Exposed_Policies/server.cpp:
+	  Made a code review for Angelo, lots of @@ comments to address.
+
 Sat Aug 19 13:50:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
@@ -35,8 +52,10 @@ Fri Aug 18 23:20:56 2000  Marina Spivak  <marina@cs.wustl.edu>
           ptc/99-05-03).
 
 Fri Aug 18 19:30:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
+
 	Visitors implemented as part of the TAO_IDL to generate
 	infrastructure for Portable Interceptors:
+
 	* TAO_IDL/be_include/be_visitor_argument/paramlist.h
 	* TAO_IDL/be_include/be_visitor_argument/request_info_arglist.h:
 	* TAO_IDL/be_include/be_visitor_interface.h
@@ -65,25 +84,31 @@ Fri Aug 18 19:30:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp:
 	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
 	* TAO_IDL/be/be_visitor_operation/interceptors_info_rettype.cpp
-	A new visitor need to attach ACE_NESTED_CLASS macros needed for MSCV.
+	  A new visitor need to attach ACE_NESTED_CLASS macros needed for
+	  MSCV.
+
 	* TAO_IDL/be/be_visitor_argument.cpp:
 	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
-	This one has special MSVC related nested class macro generation
-	for sequences, structs, arrays & unions.
+	  This one has special MSVC related nested class macro generation
+	  for sequences, structs, arrays & unions.
+
 	* TAO_IDL/be/be_visitor_argument/request_info_cs.cpp:
 	* TAO_IDL/be/be_visitor_argument/request_info_result.cpp:
 	* TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
 	* TAO_IDL/be/be_visitor_argument/request_info_ss.cpp:
 	* TAO_IDL/be/be_visitor_argument/paramlist.cpp:
 	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
-	MSVC related changes for the constructor's formal args
-	for the request info classes.
+	  MSVC related changes for the constructor's formal args for the
+	  request info classes.
+
 	* TAO_IDL/be/be_visitor_attribute/attribute.cpp:
-	Most of the TAO_IDL changes are to add new visitors for generation
-	of the nested RequestInfo classes per operation of an interface
-	and also to be able to query the RequestInfo classes for argument
-	list etc on demand.
+	  Most of the TAO_IDL changes are to add new visitors for
+	  generation of the nested RequestInfo classes per operation of an
+	  interface and also to be able to query the RequestInfo classes
+	  for argument list etc on demand.
+
 	TAO/tao additions:
+
 	* tao/PortableInterceptor.{h,i,cpp}:
 	* tao/PortableInterceptorC.{h,i,cpp}:
 	* tao/DynamicC.{h,i,cpp}:
@@ -91,36 +116,47 @@ Fri Aug 18 19:30:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
 	* tao/Dynamic.pidl:
 	* tao/IOP_N.pidl:
 	* tao/Request_Info.{h,cpp}:
-	All the above are new Portable Interceptor related additions
-	to TAO/tao.
+	  All the above are new Portable Interceptor related additions
+	  to TAO/tao.
+
 	* tao/ORB.h:
 	* tao/corba.h:
-	included PortableInterceptor.h
+	  included PortableInterceptor.h
+
 	* tao/ImplRepoC,S.cpp:
-	commented out inclusion of PortbaleInterceptor.h
-	And removed all interceptor invocation portions.
+	  commented out inclusion of PortbaleInterceptor.h
+	  And removed all interceptor invocation portions.
+
 	* tao/InterfaceC.cpp:
-	commented out inclusion of PortbaleInterceptor.h
-	And removed all interceptor invocation portions.
+	  commented out inclusion of PortbaleInterceptor.h
+	  And removed all interceptor invocation portions.
+
 	* tao/FT_CORBAC.cpp:
-	commented out inclusion of PortbaleInterceptor.h
-	And removed all interceptor invocation portions.
+	  commented out inclusion of PortbaleInterceptor.h
+	  And removed all interceptor invocation portions.
+
 	* tao/FT_CORBAS.cpp:
-	removed all interceptor invocation portions.
+	  removed all interceptor invocation portions.
+
 	* tao/Policy{C,S}.cpp:
-	Removed interceptor points from invocations.
+	  Removed interceptor points from invocations.
+
 	* TAO/tao/Makefile: updated dependencies.
 	* TAO/tao/TAO.dsp:
 	* TAO/tao/TAO_Static.dsp:
-	Updated the NT projects.
+	  Updated the NT projects.
+
 	Removed the old interceptor files:
+
 	* TAO/tao/Interceptor.{h, i, cpp}:
 	* TAO/tao/InterceptorC.{h, i, cpp}:
 	* TAO/tao/Interceptor.pidl
 	* TAO/tests/Interceptors
-	All the above are no longer available!
+	  All the above are no longer available!
+
 	The following are tests to check out how well this feature
 	performs when providing a different functionality:
+
 	* tests/PortableInterceptors/Dynamic/Makefile:
 	* tests/PortableInterceptors/Dynamic/Makefile.bor:
 	* tests/PortableInterceptors/Dynamic/README:
@@ -134,8 +170,9 @@ Fri Aug 18 19:30:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
 	* tests/PortableInterceptors/Dynamic/test.idl:
 	* tests/PortableInterceptors/Dynamic/test_i.cpp:
 	* tests/PortableInterceptors/Dynamic/test_i.h:
-	This test tries out the various features provided by Module
-	Dynamic.
+	  This test tries out the various features provided by Module
+	  Dynamic.
+
 	* tests/PortableInterceptors/Service_Context_Manipulation/Makefile:
 	* tests/PortableInterceptors/Service_Context_Manipulation/Makefile.bor:
 	* tests/PortableInterceptors/Service_Context_Manipulation/README:
@@ -149,8 +186,9 @@ Fri Aug 18 19:30:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
 	* tests/PortableInterceptors/Service_Context_Manipulation/test.idl:
 	* tests/PortableInterceptors/Service_Context_Manipulation/test_i.cpp:
 	* tests/PortableInterceptors/Service_Context_Manipulation/test_i.h:
-	This test plays with piggybacking data via the service context
-	list of the invocation.
+	  This test plays with piggybacking data via the service context
+	  list of the invocation.
+
 	* tests/PortableInterceptors/Benchmark/Makefile:
 	* tests/PortableInterceptors/Benchmark/Makefile.bor:
 	* tests/PortableInterceptors/Benchmark/README:
@@ -166,13 +204,14 @@ Fri Aug 18 19:30:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
 	* tests/PortableInterceptors/Benchmark/test_i.h:
 	* tests/PortableInterceptors/Benchmark/marker.h:
 	* tests/PortableInterceptors/Benchmark/marker.cpp:
-	This is a benchamrking test used and explained in
-	http://www.cs.wustl.edu/~schmidt/PDF/COOTS-00.pdf
-	* TAO/docs/interceptor.html: updated documentation to
-	reflect these changes.
-	Thanks to Nanbor for brainstorming and guidance,
-	Jeff for help on nitty-gritty IDL bugs and Doug on helping
-	to put all this on white paper!
+	  This is a benchamrking test used and explained in
+	  http://www.cs.wustl.edu/~schmidt/PDF/COOTS-00.pdf
+
+	* TAO/docs/interceptor.html:
+	  updated documentation to reflect these changes.
+	  Thanks to Nanbor for brainstorming and guidance,
+	  Jeff for help on nitty-gritty IDL bugs and Doug on helping to
+	  put all this on white paper!
 
 Fri Aug 18 17:46:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -469,8 +508,8 @@ Mon Aug 14 10:23:01 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/POA.cpp (client_exposed_policies):
 	  Changed <client_exposed_policies> constructor, and
-	  setted the length of the policy list, (before it was
-	  set just the max size in the constructor but not the
+	  set the length of the policy list, (before it was
+	  just the max size in the constructor was initialized but not the
 	  size of the list).
 
 	* tao/POA.cpp (client_exposed_policies):

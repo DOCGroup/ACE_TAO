@@ -2,6 +2,8 @@
 
 interface Counter
 {
+  // @@ Angelo: please add some comments explaining how does this work
+  // or what it is supposed to do.
   void increment ();
   long get_count ();
   oneway void shutdown ();

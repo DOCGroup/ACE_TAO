@@ -138,6 +138,8 @@ TAO_Stub::~TAO_Stub (void)
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   this->orb_core_->_decr_refcnt ();
+
+  // @@ Angelo: you must destroy your parsed policies (if any too!)
 }
 
 void
@@ -203,7 +205,8 @@ TAO_Stub::hash (CORBA::ULong max,
 // object.)
 //
 // NOTE that this must NOT go across the network!
-// @@ Two object references are the same if any two profiles are the same!
+// @@ Two object references are the same if any two profiles are the
+//    same! This function is only test the profile in use!!!
 CORBA::Boolean
 TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj)
 {
@@ -323,6 +326,10 @@ TAO_Stub::do_dynamic_call (const char *opname,
                            int lazy_evaluation,
                            CORBA::Environment &ACE_TRY_ENV)
 {
+  // @@ TOCCST: why do we keep using this function when ACE+TAO code
+  // is clearly not cancel safe anymore?  Furthermore, all the
+  // generated code using the Invocation classes is probably not
+  // cancel safe!
   TAO_Synchronous_Cancellation_Required NOT_USED;
 
   // Do a locate_request if necessary/wanted.
@@ -331,6 +338,11 @@ TAO_Stub::do_dynamic_call (const char *opname,
   // be forwarded.  No standard way now to know.
   if (this->use_locate_request_ && this->first_locate_request_)
     {
+      // @@ TOCCST: notice how the locate request is only sent for
+      // dynamic and deferred (!!) calls, nothing is done for static
+      // calls, the far more common case.  IMHO this should just go
+      // away, after all we have _validate_connection to do the same
+      // thing!
       TAO_GIOP_Locate_Request_Invocation call (this,
                                                this->orb_core_);
 
@@ -457,7 +469,10 @@ void
 TAO_Stub::do_deferred_call (const CORBA::Request_ptr req,
                             CORBA::Environment &ACE_TRY_ENV)
 {
-
+  // @@ TOCCST: why do we keep using this function when ACE+TAO code
+  // is clearly not cancel safe anymore?  Furthermore, all the
+  // generated code using the Invocation classes is probably not
+  // cancel safe!
   TAO_Synchronous_Cancellation_Required NOT_USED;
 
   // Do a locate_request if necessary/wanted.
@@ -466,6 +481,11 @@ TAO_Stub::do_deferred_call (const CORBA::Request_ptr req,
   // be forwarded.  No standard way now to know.
   if (this->use_locate_request_ && this->first_locate_request_)
     {
+      // @@ TOCCST: notice how the locate request is only sent for
+      // dynamic and deferred (!!) calls, nothing is done for static
+      // calls, the far more common case.  IMHO this should just go
+      // away, after all we have _validate_connection to do the same
+      // thing!
       TAO_GIOP_Locate_Request_Invocation call (this,
                                                this->orb_core_);
 
@@ -584,6 +604,9 @@ TAO_Stub::exposed_priority_model (void)
 
   this->is_priority_model_policy_parsed_ = 1;
 
+  // @@ Angelo: I think you want to use a Policy_var here!  And
+  // avoid using <Policy*>, use Policy_ptr if you must, people read
+  // this code sometimes and we want them to learn good CORBA habits.
   CORBA::Policy *policy =
     this->parse_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE);
 
@@ -592,6 +615,8 @@ TAO_Stub::exposed_priority_model (void)
       RTCORBA::PriorityModelPolicy *pm_policy = 0;
       // @@ Angelo, I think there is a memory leak here.  <narrow>
       // method creates/adds ref to object... Same applies to other methods...
+      // @@ Angelo: I agree, who destroys the <policy> object?  And
+      // where do you destroy the cached policies?
       pm_policy =
         RTCORBA::PriorityModelPolicy::_narrow (policy);
 
@@ -693,6 +718,16 @@ TAO_Stub::get_policy (CORBA::PolicyType type,
 
   // Validity check.  Make sure requested policy type is appropriate
   // for this scope.
+  // @@ Angelo: is this the right exception to raise?  I would thing
+  //   that maybe CORBA::InvalidPolicies or something like that is
+  //   what the spec requires?
+  //   In fact, I could not find anything in the spec about raising
+  //   exceptions while querying policies, maybe you can always query
+  //   these policies, even at the object level, but the query just
+  //   results in a <nil> policy returned?
+  //   In that case the exception should only be raised when *setting*
+  //   the policy, and that raises another exception, as specified in
+  //   the 4.3.8 section of the spec....
   if (type == RTCORBA::THREADPOOL_POLICY_TYPE
       || type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE)
     ACE_THROW_RETURN (CORBA::NO_PERMISSION (),
@@ -741,6 +776,8 @@ TAO_Stub::get_client_policy (CORBA::PolicyType type,
   // construction time...
 
 #if (TAO_HAS_RT_CORBA == 1)
+
+  // @@ Angelo: please see my comments above...
 
   // Validity check.  Make sure requested policy type is appropriate
   // for this scope.
@@ -811,6 +848,11 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
       CORBA::ULong slot = policy->policy_type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
+      // @@ Angelo: I'm almost certain that you cannot raise this
+      // exception here, the only one allowed by the spec is
+      // CORBA::InvalidPolicies, please fix it.
+      // BTW, please add the throw specs while you are at it.
+      //
       if (slot == RTCORBA::THREADPOOL_POLICY_TYPE
           || slot == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE
           || slot == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
@@ -876,6 +918,7 @@ TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types,
     {
       CORBA::ULong type = types[i];
 
+      // @@ Angelo: please check the comments above.
       if (type == RTCORBA::THREADPOOL_POLICY_TYPE
           || type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE
           || type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)

@@ -85,6 +85,11 @@ TAO_PriorityModelPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
   // the order specified in the RTCORBA 1.0 spec (ptc/99-05-03)
   // section 4.7.3.
 
+  // @@ Angelo: how is the temporary useful?  What is wrong with
+  //
+  // if ((out_cdr << XXX) && (out_cdr << YYY))
+  //
+  // ????
   CORBA::Boolean b = (out_cdr << priority_model_);
   if (b  && (out_cdr << server_priority_))
     return 1;
