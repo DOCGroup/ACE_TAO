@@ -109,7 +109,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
-CPPFLAGS     += -I../../../Kokyu -I../../orbsvcs -I../.. -I../../tao -I../../..
+CPPFLAGS     += -I../../../Kokyu -I../../orbsvcs -I../.. -I../../tao -I../../.. 
 ifeq ($(shared_libs),1)
   ifneq ($(SHLIB),)
     CPPFLAGS += -DKOKYU_DSRT_SCHEDULERS_BUILD_DLL
@@ -121,7 +121,7 @@ ifeq ($(static_libs),1)
   endif
 endif
 
-
+# CPPFLAGS += -DKOKYU_DSRT_LOGGING 
 LDFLAGS      += -L../../../lib
 
 #----------------------------------------------------------------------------

@@ -20,19 +20,31 @@ endif
 
 %.tgt0:
 ifeq ($(KEEP_GOING),1)
-	-@$(MAKE) -f Makefile.dt_prio_client -C . $(*);
-        -@$(MAKE) -f Makefile.dt_twoway_client -C . $(*);
+#	-@$(MAKE) -f Makefile.prio_client -C . $(*);
+#        -@$(MAKE) -f Makefile.twoway_client -C . $(*);
+        -@$(MAKE) -f Makefile.oneway_client -C . $(*);
+#	-@$(MAKE) -f Makefile.dt_prio_client -C . $(*);
+#        -@$(MAKE) -f Makefile.dt_twoway_client -C . $(*);
 else
-	@$(MAKE) -f Makefile.dt_prio_client -C . $(*);
-	@$(MAKE) -f Makefile.dt_twoway_client -C . $(*);
+#	@$(MAKE) -f Makefile.prio_client -C . $(*);
+#	@$(MAKE) -f Makefile.twoway_client -C . $(*);
+	@$(MAKE) -f Makefile.oneway_client -C . $(*);
+#	@$(MAKE) -f Makefile.dt_prio_client -C . $(*);
+#	@$(MAKE) -f Makefile.dt_twoway_client -C . $(*);
 endif
 %.tgt1: %.tgt0
 ifeq ($(KEEP_GOING),1)
-	-@$(MAKE) -f Makefile.dt_prio_server -C . $(*);
-        -@$(MAKE) -f Makefile.dt_twoway_server -C . $(*);
+#	-@$(MAKE) -f Makefile.prio_server -C . $(*);
+#	-@$(MAKE) -f Makefile.twoway_server -C . $(*);
+        -@$(MAKE) -f Makefile.oneway_server -C . $(*);
+#	-@$(MAKE) -f Makefile.dt_prio_server -C . $(*);
+#        -@$(MAKE) -f Makefile.dt_twoway_server -C . $(*);
 else
-	@$(MAKE) -f Makefile.dt_prio_server -C . $(*);
-	@$(MAKE) -f Makefile.dt_twoway_server -C . $(*);
+#	@$(MAKE) -f Makefile.prio_server -C . $(*);
+#	@$(MAKE) -f Makefile.twoway_server -C . $(*);
+	@$(MAKE) -f Makefile.oneway_server -C . $(*);
+#	@$(MAKE) -f Makefile.dt_prio_server -C . $(*);
+#	@$(MAKE) -f Makefile.dt_twoway_server -C . $(*);
 endif
 
 
