@@ -35,7 +35,7 @@ static const char copyright[] =
 "//       Washington University\n"
 "//       St. Louis, MO\n"
 "//       USA\n"
-"//       http://www.cs.wustl.edu/~schmidt/doc-group.html\n"
+"//       http://www.cs.wustl.edu/~schmidt/doc-center.html\n"
 "// and\n"
 "//       Distributed Object Computing Laboratory\n"
 "//       University of California at Irvine\n"
@@ -102,8 +102,8 @@ TAO_OutStream::open (const char *fname,
           // file.
           if (st != TAO_OutStream::TAO_GPERF_INPUT)
             {
-              ACE_OS::fprintf (this->fp_, 
-                               "%s\n", 
+              ACE_OS::fprintf (this->fp_,
+                               "%s\n",
                                copyright);
 
               ACE_OS::fflush (this->fp_);
@@ -216,17 +216,17 @@ TAO_OutStream::nl (void)
 
 // Macro generation.
 int
-TAO_OutStream::gen_ifdef_macro (const char *flat_name, 
+TAO_OutStream::gen_ifdef_macro (const char *flat_name,
                                 const char *suffix)
 {
   static char macro [NAMEBUFSIZE];
 
-  ACE_OS::memset (macro, 
-                  '\0', 
+  ACE_OS::memset (macro,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::sprintf (macro, 
-                   "_%s_", 
+  ACE_OS::sprintf (macro,
+                   "_%s_",
                    tao_cg->upcase (flat_name));
   if (suffix != 0)
     {
@@ -323,11 +323,11 @@ TAO_OutStream::print (const char *format, ...)
   int result = 0;
   va_list ap;
   va_start (ap, format);
-  ACE_OSCALL (::vfprintf (this->fp_, 
-                          format, 
-                          ap), 
-              int, 
-              -1, 
+  ACE_OSCALL (::vfprintf (this->fp_,
+                          format,
+                          ap),
+              int,
+              -1,
               result);
 
   ACE_OS::fflush (this->fp_);
@@ -347,8 +347,8 @@ TAO_OutStream::operator<< (const char *str)
 TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::UShort num)
 {
-  ACE_OS::fprintf (this->fp_, 
-                   "%hu", 
+  ACE_OS::fprintf (this->fp_,
+                   "%hu",
                    num);
 
   ACE_OS::fflush (this->fp_);
@@ -359,8 +359,8 @@ TAO_OutStream::operator<< (const ACE_CDR::UShort num)
 TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::Short num)
 {
-  ACE_OS::fprintf (this->fp_, 
-                   "%hd", 
+  ACE_OS::fprintf (this->fp_,
+                   "%hd",
                    num);
 
   ACE_OS::fflush (this->fp_);
@@ -371,8 +371,8 @@ TAO_OutStream::operator<< (const ACE_CDR::Short num)
 TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::ULong num)
 {
-  ACE_OS::fprintf (this->fp_, 
-                   "%lu", 
+  ACE_OS::fprintf (this->fp_,
+                   "%lu",
                    (unsigned long) num);
 
   ACE_OS::fflush (this->fp_);
@@ -383,8 +383,8 @@ TAO_OutStream::operator<< (const ACE_CDR::ULong num)
 TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::Long num)
 {
-  ACE_OS::fprintf (this->fp_, 
-                   "%ld", 
+  ACE_OS::fprintf (this->fp_,
+                   "%ld",
                    (long) num);
 
   ACE_OS::fflush (this->fp_);
@@ -395,8 +395,8 @@ TAO_OutStream::operator<< (const ACE_CDR::Long num)
 TAO_OutStream &
 TAO_OutStream::operator<< (const unsigned long num)
 {
-  ACE_OS::fprintf (this->fp_, 
-                   "%lu", 
+  ACE_OS::fprintf (this->fp_,
+                   "%lu",
                    num);
 
   ACE_OS::fflush (this->fp_);
@@ -407,8 +407,8 @@ TAO_OutStream::operator<< (const unsigned long num)
 TAO_OutStream &
 TAO_OutStream::operator<< (const long num)
 {
-  ACE_OS::fprintf (this->fp_, 
-                   "%ld", 
+  ACE_OS::fprintf (this->fp_,
+                   "%ld",
                    num);
 
   ACE_OS::fflush (this->fp_);
@@ -419,7 +419,7 @@ TAO_OutStream::operator<< (const long num)
 TAO_OutStream &
 TAO_OutStream::operator<< (const TAO_NL&)
 {
-  ACE_OS::fprintf (this->fp_ , 
+  ACE_OS::fprintf (this->fp_ ,
                    "\n");
   this->indent ();
 
