@@ -11,6 +11,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Environment.h"
+#include "tao/Base_Connection_Property.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID(TAO_SSLIOP, SSLIOP_Connector, "$Id$")
@@ -42,22 +43,12 @@ TAO_SSLIOP_Connect_Creation_Strategy::make_svc_handler
 
 // ****************************************************************
 
-#if !defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-typedef ACE_Cached_Connect_Strategy<TAO_SSLIOP_Client_Connection_Handler,
-                                    ACE_SSL_SOCK_CONNECTOR,
-                                    TAO_Cached_Connector_Lock>
-        TAO_CACHED_CONNECT_STRATEGY;
-#endif /* ! TAO_USES_ROBUST_CONNECTION_MGMT */
-
 TAO_SSLIOP_Connector::TAO_SSLIOP_Connector (int no_protection)
   : TAO_IIOP_Connector (),
     no_protection_ (no_protection),
+    null_activation_strategy_ (),
+    connect_strategy_ (),
     base_connector_ ()
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-    ,
-    cached_connect_strategy_ (0),
-    caching_strategy_ (0)
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 {
 }
 
@@ -71,86 +62,26 @@ TAO_SSLIOP_Connector::open (TAO_ORB_Core *orb_core)
 
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_SSLIOP_Connect_Creation_Strategy
-                  (this->orb_core_->thr_mgr (),
-                   this->orb_core_,
+                  (this->orb_core ()->thr_mgr (),
+                   this->orb_core (),
                    &(this->tcp_properties_)),
                   -1);
 
-  auto_ptr<TAO_SSLIOP_Connect_Creation_Strategy>
-    new_connect_creation_strategy (connect_creation_strategy);
-
-  TAO_Cached_Connector_Lock *connector_lock = 0;
-  ACE_NEW_RETURN (connector_lock,
-                  TAO_Cached_Connector_Lock (this->orb_core_),
-                  -1);
-
-  auto_ptr<TAO_Cached_Connector_Lock> new_connector_lock (connector_lock);
-
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-  ACE_NEW_RETURN (this->cached_connect_strategy_,
-                  TAO_CACHED_CONNECT_STRATEGY (*this->caching_strategy_,
-                                               new_connect_creation_strategy.get (),
-                                               0,
-                                               0,
-                                               new_connector_lock.get (),
-                                               1),
-                  -1);
-#else /* TAO_USES_ROBUST_CONNECTION_MGMT */
-  TAO_CACHED_CONNECT_STRATEGY *cached_connect_strategy = 0;
-  ACE_NEW_RETURN (cached_connect_strategy,
-                  TAO_CACHED_CONNECT_STRATEGY
-                  (new_connect_creation_strategy.get (),
-                   0,
-                   0,
-                   new_connector_lock.get (),
-                   1),
-                  -1);
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
-
-  // Finally everything is fine.  Make sure to take ownership away
-  // from the auto pointer.
-  connect_creation_strategy =
-    new_connect_creation_strategy.release ();
-  connector_lock =
-    new_connector_lock.release ();
-
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-  return this->base_connector_.open (this->orb_core_->reactor (),
-                                     &this->null_creation_strategy_,
-                                     this->cached_connect_strategy_,
+  return this->base_connector_.open (this->orb_core ()->reactor (),
+                                     connect_creation_strategy,
+                                     &this->connect_strategy_,
                                      &this->null_activation_strategy_);
-#else /* TAO_USES_ROBUST_CONNECTION_MGMT */
-  return this->base_connector_.open (this->orb_core_->reactor (),
-                                     &this->null_creation_strategy_,
-                                     cached_connect_strategy,
-                                     &this->null_activation_strategy_);
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 }
 
 int
 TAO_SSLIOP_Connector::close (void)
 {
-  this->base_connector_.close ();
-
-  // Zap the creation strategy that we created earlier
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-  delete this->cached_connect_strategy_->creation_strategy ();
-  delete this->cached_connect_strategy_;
-  delete this->caching_strategy_;
-#else /* TAO_USES_ROBUST_CONNECTION_MGMT */
-  TAO_CACHED_CONNECT_STRATEGY *cached_connect_strategy =
-    ACE_dynamic_cast (TAO_CACHED_CONNECT_STRATEGY *,
-                      this->base_connector_.connect_strategy ());
-
-  delete cached_connect_strategy->creation_strategy ();
-  delete cached_connect_strategy;
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
-
-  return 0;
+  delete this->base_connector_.creation_strategy ();
+  return this->base_connector_.close ();
 }
 
 int
-TAO_SSLIOP_Connector::connect (TAO_Endpoint *endpoint,
+TAO_SSLIOP_Connector::connect (TAO_Base_Connection_Property *prop,
                                TAO_Transport *&transport,
                                ACE_Time_Value *max_wait_time,
                                CORBA::Environment &ACE_TRY_ENV)
@@ -160,8 +91,11 @@ TAO_SSLIOP_Connector::connect (TAO_Endpoint *endpoint,
                   ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
                   ACE_TEXT ("looking for SSLIOP connection.\n")));
 
+  TAO_Endpoint *endpoint = prop->endpoint ();
+
   if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)
     return -1;
+
 
   TAO_SSLIOP_Endpoint *ssl_endpoint =
     ACE_dynamic_cast (TAO_SSLIOP_Endpoint *,
@@ -197,7 +131,7 @@ TAO_SSLIOP_Connector::connect (TAO_Endpoint *endpoint,
                           -1);
 
       return this->TAO_IIOP_Connector::connect (
-                     ssl_endpoint->iiop_endpoint (),
+                     prop,
                      transport,
                      max_wait_time,
                      ACE_TRY_ENV);
@@ -243,42 +177,65 @@ TAO_SSLIOP_Connector::connect (TAO_Endpoint *endpoint,
 
   remote_address.set_port_number (ssl_component.port);
 
-  TAO_SSLIOP_Client_Connection_Handler *svc_handler = 0;
   int result = 0;
+  TAO_SSLIOP_Client_Connection_Handler *svc_handler = 0;
+  TAO_Connection_Handler *conn_handler = 0;
 
-  if (max_wait_time != 0)
+  // Check the Cache first for connections
+  if (this->orb_core ()->connection_cache ().find_handler (prop,
+                                                           conn_handler) == 0)
     {
-      ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
-                                       *max_wait_time);
+      if (TAO_debug_level > 5)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%P|%t) SSLIOP_Connector::connect ")
+                    ACE_TEXT ("got an existing connection \n")));
 
-      // The connect call will set the hint () stored in the Endpoint
-      // object; but we obtain the transport in the <svc_handler>
-      // variable. Other threads may modify the hint, but we are not
-      // affected.
-      result = this->base_connector_.connect (ssl_endpoint->ssl_hint (),
-                                              svc_handler,
-                                              remote_address,
-                                              synch_options);
+      // We have found a connection and a handler
+      svc_handler =
+        ACE_dynamic_cast (TAO_SSLIOP_Client_Connection_Handler *,
+                          conn_handler);
     }
   else
     {
-      // The connect call will set the hint () stored in the Endpoint
-      // object; but we obtain the transport in the <svc_handler>
-      // variable. Other threads may modify the hint, but we are not
-      // affected.
-      result = this->base_connector_.connect (ssl_endpoint->ssl_hint (),
-                                              svc_handler,
-                                              remote_address);
-    }
+      if (TAO_debug_level > 4)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%P|%t) SSLIOP_Connector::connect ")
+                    ACE_TEXT ("making a new connection \n")));
 
-  if (result == -1)
-    {
-      // Give users a clue to the problem.
-      if (TAO_orbdebug)
+      // @@ This needs to change in the next round when we implement a
+      // policy that will not allow new connections when a connection
+      // is busy.
+      if (max_wait_time != 0)
+        {
+          ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
+                                           *max_wait_time);
+
+          // We obtain the transport in the <svc_handler> variable. As
+          // we know now that the connection is not available in Cache
+          // we can make a new connection
+          result = this->base_connector_.connect (svc_handler,
+                                                  remote_address,
+                                                  synch_options);
+        }
+      else
+        {
+          // We obtain the transport in the <svc_handler> variable. As
+          // we know now that the connection is not available in Cache
+          // we can make a new connection
+          result = this->base_connector_.connect (svc_handler,
+                                                  remote_address);
+        }
+
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%P|%t) SSLIOP_Connector::connect ")
+                    ACE_TEXT ("The result is <%d> \n"), result));
+
+      if (result == -1)
         {
           char buffer [MAXHOSTNAMELEN + 6 + 1];
           ssl_endpoint->addr_to_string (buffer,
-                                    sizeof (buffer) - 1);
+                                        sizeof (buffer) - 1);
           ACE_DEBUG ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) %s:%u, connection to ")
                       ACE_TEXT ("%s, SSL port %d failed (%p)\n"),
@@ -287,8 +244,22 @@ TAO_SSLIOP_Connector::connect (TAO_Endpoint *endpoint,
                       buffer,
                       remote_address.get_port_number (),
                       ACE_TEXT ("errno")));
+
+          return -1;
         }
-      return -1;
+
+
+      // Add the handler to Cache
+      int retval =
+        this->orb_core ()->connection_cache ().cache_handler (prop,
+                                                              svc_handler);
+
+      if (retval != 0 && TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) SSLIOP_Connector::connect ")
+                      ACE_TEXT ("could not add the new connection to Cache \n")));
+        }
     }
 
   transport = svc_handler->transport ();
@@ -296,12 +267,13 @@ TAO_SSLIOP_Connector::connect (TAO_Endpoint *endpoint,
   return 0;
 }
 
+
 TAO_Profile *
 TAO_SSLIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
   TAO_Profile *pfile;
   ACE_NEW_RETURN (pfile,
-                  TAO_SSLIOP_Profile (this->orb_core_),
+                  TAO_SSLIOP_Profile (this->orb_core ()),
                   0);
 
   int r = pfile->decode (cdr);
@@ -316,8 +288,8 @@ TAO_SSLIOP_Connector::create_profile (TAO_InputCDR& cdr)
 
 void
 TAO_SSLIOP_Connector::make_profile (const char *endpoint,
-                                  TAO_Profile *&profile,
-                                  CORBA::Environment &ACE_TRY_ENV)
+                                    TAO_Profile *&profile,
+                                    CORBA::Environment &ACE_TRY_ENV)
 {
   // The endpoint should be of the form:
   //    N.n@host:port/object_key
@@ -326,12 +298,51 @@ TAO_SSLIOP_Connector::make_profile (const char *endpoint,
 
   ACE_NEW_THROW_EX (profile,
                     TAO_SSLIOP_Profile (endpoint,
-                                        this->orb_core_,
+                                        this->orb_core (),
                                         0, // @@ ssl_port
                                         ACE_TRY_ENV),
                     CORBA::NO_MEMORY ());
 
   ACE_CHECK;
 }
+
+
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_NOOP_Concurrency_Strategy<TAO_SSLIOP_Client_Connection_Handler>;
+template class ACE_Concurrency_Strategy<TAO_SSLIOP_Client_Connection_Handler>;
+template class ACE_Creation_Strategy<TAO_SSLIOP_Client_Connection_Handler>;
+template class ACE_Strategy_Connector<TAO_SSLIOP_Client_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
+template class ACE_Connect_Strategy<TAO_SSLIOP_Client_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
+template class ACE_Connector<TAO_SSLIOP_Client_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
+template class ACE_Svc_Tuple<TAO_SSLIOP_Client_Connection_Handler>;
+
+template class ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_SSLIOP_Client_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_SSLIOP_Client_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_SSLIOP_Client_Connection_Handler>*>;
+template class ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_SSLIOP_Client_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_SSLIOP_Client_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>;
+template class ACE_Auto_Basic_Array_Ptr<TAO_SSLIOP_Client_Connection_Handler*>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_NOOP_Concurrency_Strategy<TAO_SSLIOP_Client_Connection_Handler>
+#pragma instantiate ACE_Concurrency_Strategy<TAO_SSLIOP_Client_Connection_Handler>
+#pragma instantiate ACE_Strategy_Connector<TAO_SSLIOP_Client_Connection_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Connect_Strategy<TAO_SSLIOP_Client_Connection_Handler, ACE_SOCK_CONNECTOR>
+
+#pragma instantiate ACE_Connector<TAO_SSLIOP_Client_Connection_Handler, ACE_SOCK_Connector>
+#pragma instantiate ACE_Creation_Strategy<TAO_SSLIOP_Client_Connection_Handler>
+#pragma instantiate ACE_Svc_Tuple<TAO_SSLIOP_Client_Connection_Handler>
+#pragma instantiate ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_SSLIOP_Client_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_SSLIOP_Client_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_SSLIOP_Client_Connection_Handler>*>
+#pragma instantiate ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_SSLIOP_Client_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_SSLIOP_Client_Connection_Handler>*,ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<TAO_SSLIOP_Client_Connection_Handler*>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #endif  /* ACE_HAS_SSL */

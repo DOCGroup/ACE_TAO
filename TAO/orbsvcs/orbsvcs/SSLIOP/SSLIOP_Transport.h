@@ -31,6 +31,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/SSL/SSL_SOCK_Stream.h"
+#include "ace/Synch.h"
+#include "ace/Svc_Handler.h"
+
 #include "tao/Pluggable.h"
 #include "tao/operation_details.h"
 #include "tao/GIOP_Message_State.h"
@@ -44,6 +48,8 @@ class TAO_SSLIOP_Client_Connection_Handler;
 class TAO_SSLIOP_Server_Connection_Handler;
 class TAO_ORB_Core;
 
+typedef ACE_Svc_Handler<ACE_SSL_SOCK_STREAM, ACE_NULL_SYNCH>
+        TAO_SSL_SVC_HANDLER;
 class TAO_SSLIOP_Export TAO_SSLIOP_Transport : public TAO_Transport
 {
   // = TITLE
@@ -55,8 +61,7 @@ class TAO_SSLIOP_Export TAO_SSLIOP_Transport : public TAO_Transport
   //   protocol.  This class in turn will be further specialized for
   //   the client and server side.
 public:
-  TAO_SSLIOP_Transport (TAO_SSLIOP_Handler_Base *handler,
-                      TAO_ORB_Core *orb_core);
+  TAO_SSLIOP_Transport (TAO_ORB_Core *orb_core);
   // Base object's creator method.
 
   ~TAO_SSLIOP_Transport (void);
@@ -95,11 +100,10 @@ public:
                        TAO_Target_Specification &spec,
                        TAO_OutputCDR &msg);
 
-protected:
-  TAO_SSLIOP_Handler_Base *handler_;
-  // the connection service handler used for accessing lower layer
-  // communication protocols.
+  virtual TAO_SSL_SVC_HANDLER *service_handler (void) = 0;
+  // Return the connection service handler
 };
+
 
 class TAO_SSLIOP_Export TAO_SSLIOP_Client_Transport : public TAO_SSLIOP_Transport
 {
@@ -123,6 +127,8 @@ public:
 
   // = The TAO_Transport methods, please check the documentation in
   //   "tao/Pluggable.h" for more details.
+  virtual int idle (void);
+
   virtual void start_request (TAO_ORB_Core *orb_core,
                               TAO_Target_Specification &spec,
                               TAO_OutputCDR &output,
@@ -150,6 +156,8 @@ public:
                        TAO_Target_Specification &spec,
                        TAO_OutputCDR &msg);
 
+  virtual TAO_SSL_SVC_HANDLER *service_handler (void);
+
   int messaging_init (CORBA::Octet major,
                       CORBA::Octet minor);
   // Initialize the messaging object.
@@ -161,6 +169,10 @@ public:
   //       -Ossama
 
 private:
+  TAO_SSLIOP_Client_Connection_Handler *handler_;
+  // The connection service handler used for accessing lower layer
+  // communication protocols.
+
   TAO_Pluggable_Messaging *client_mesg_factory_;
   // The message_factor instance specific for this particular
   // transport protocol.
@@ -187,15 +199,26 @@ class TAO_SSLIOP_Export TAO_SSLIOP_Server_Transport : public TAO_SSLIOP_Transpor
 public:
 
   TAO_SSLIOP_Server_Transport (TAO_SSLIOP_Server_Connection_Handler *handler,
-                             TAO_ORB_Core *orb_core);
+                               TAO_ORB_Core *orb_core);
   //  Default creator method.
 
   ~TAO_SSLIOP_Server_Transport (void);
   // Default destructor
 
+    // Please see Pluggable.h for documentation
+  virtual int idle (void);
+
+  virtual TAO_SSL_SVC_HANDLER *service_handler (void);
+
   TAO_GIOP_Message_State message_state_;
   // This keep the state of the current message, to enable
   // non-blocking reads, fragment reassembly, etc.
+
+private:
+
+  TAO_SSLIOP_Server_Connection_Handler *handler_;
+  // The connection service handler used for accessing lower layer
+  // communication protocols.
 };
 
 #endif  /* ACE_HAS_SSL */
