@@ -1,3 +1,114 @@
+Mon Jul 05 04:11:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/version_tests/Future_Set_Test.dsp:
+	* tests/version_tests/version_tests.dsw: Added Future_Set_Test
+	  into version tests workspace.
+
+	* ACE.cpp:
+	* ACE.h:
+	* DLL.cpp:
+	* DLL.h:
+	* Env_Value_T.h:
+	* Env_Value_T.i:
+	* FIFO.cpp:
+	* FIFO.h:
+	* FIFO.i:
+	* FIFO_Recv.cpp:
+	* FIFO_Recv.h:
+	* FIFO_Recv_Msg.cpp:
+	* FIFO_Recv_Msg.h:
+	* FIFO_Send.cpp:
+	* FIFO_Send.h:
+	* FIFO_Send_Msg.cpp:
+	* FIFO_Send_Msg.h:
+	* FILE_Connector.i:
+	* Filecache.cpp:
+	* Get_Opt.cpp:
+	* INET_Addr.cpp:
+	* Local_Name_Space_T.cpp:
+	* Log_Record.cpp:
+	* Message_Queue_T.cpp:
+	* Name_Proxy.cpp:
+	* Naming_Context.cpp:
+	* Naming_Context.h:
+	* OS.cpp:
+	* OS.h:
+	* OS.i:
+	* Parse_Node.cpp:
+	* Parse_Node.h:
+	* Proactor.cpp:
+	* Process.cpp:
+	* RB_Tree.cpp:
+	* Registry_Name_Space.cpp:
+	* Remote_Name_Space.cpp:
+	* Remote_Name_Space.h:
+	* Remote_Tokens.cpp:
+	* Remote_Tokens.h:
+	* Remote_Tokens.i:
+	* SOCK_Dgram_Mcast.cpp:
+	* SPIPE_Connector.cpp:
+	* SV_Message_Queue.cpp:
+	* SV_Semaphore_Simple.cpp:
+	* SV_Shared_Memory.cpp:
+	* Stats.cpp:
+	* Stats.h:
+	* Strategies_T.cpp:
+	* Strategies_T.i:
+	* Svc_Conf.h:
+	* Svc_Conf.y:
+	* Svc_Conf_y.cpp:
+	* Token_Collection.cpp:
+	* Token_Collection.h:
+	* Token_Collection.i:
+	* Token_Invariants.cpp:
+	* Token_Invariants.h:
+	* UPIPE_Acceptor.cpp:
+	* UPIPE_Connector.cpp:
+	* UPIPE_Connector.i:
+	* WFMO_Reactor.cpp:
+	* WIN32_Asynch_IO.cpp:
+	* WIN32_Proactor.cpp:
+	* config-win32-common.h:
+	* CDR_Test.cpp:
+	* Cache_Map_Manager_Test.cpp:
+	* Collection_Test.cpp:
+	* DLL_Test.cpp:
+	* DLL_Test.h:
+	* DLList_Test.cpp:
+	* Dynamic_Priority_Test.cpp:
+	* Env_Value_Test.cpp:
+	* Handle_Set_Test.cpp:
+	* High_Res_Timer_Test.cpp:
+	* IOStream_Test.cpp:
+	* MT_Reactor_Timer_Test.cpp:
+	* Map_Manager_Test.cpp:
+	* Map_Test.cpp:
+	* Message_Queue_Test.cpp:
+	* Naming_Test.cpp:
+	* New_Fail_Test.cpp:
+	* Pipe_Test.cpp:
+	* Priority_Reactor_Test.cpp:
+	* Process_Mutex_Test.cpp:
+	* Process_Strategy_Test.cpp:
+	* Process_Strategy_Test.h:
+	* Reactor_Performance_Test.cpp:
+	* SOCK_Connector_Test.cpp:
+	* SPIPE_Test.cpp:
+	* SV_Shared_Memory_Test.cpp:
+	* Service_Config_Test.cpp:
+	* Thread_Manager_Test.cpp:
+	* Time_Service_Test.cpp:
+	* Tokens_Test.cpp:
+	* UPIPE_SAP_Test.cpp:
+	* Upgradable_RW_Test.cpp:
+	* test_config.h: Changes to make it possible to write pure UNICODE
+	  programs on NT.  Now it is possible to compile ACE on NT with
+	  ACE_HAS_MOSTLY_UNICODE_APIS defined.  Most tests passed without
+	  trouble.  However, Future_Set_Test is not yet included in the
+	  version_tests and Dynamic_Priority_Test also failed. Thanks to
+	  Valery Arkhangorodsky <valerya@servicesoft.com> for providing a
+	  preliminary patch for ACE to motivate the change.
+
 Sun Jul 04 18:57:13 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: when building tao_idl on NT to be
