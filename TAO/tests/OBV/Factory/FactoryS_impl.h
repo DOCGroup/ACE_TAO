@@ -31,16 +31,16 @@ public:
   Test_impl (CORBA::ORB_ptr orb);
   // ctor
 
-  virtual OBV_FactoryTest::BaseValue * get_base_value (CORBA::Environment&)
+  virtual OBV_FactoryTest::BaseValue * get_base_value (TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual OBV_FactoryTest::Value1 * get_value1 (CORBA::Environment&)
+  virtual OBV_FactoryTest::Value1 * get_value1 (TAO_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual OBV_FactoryTest::Value2 * get_value2 (CORBA::Environment&)
+  virtual OBV_FactoryTest::Value2 * get_value2 (TAO_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (CORBA::Environment&)
+  virtual void shutdown (TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

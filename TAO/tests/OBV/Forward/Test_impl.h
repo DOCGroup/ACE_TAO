@@ -32,11 +32,11 @@ public:
   // ctor
 
   virtual TreeController * reflect (
-      TreeController * tc,
-      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      TreeController * tc
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (CORBA::Environment&)
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -43,7 +43,7 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // All factories are kindly provided by
@@ -56,8 +56,8 @@ main (int argc, char *argv[])
                       1);
 
       orb->register_value_factory (bn_factory->tao_repository_id (),
-                                   bn_factory, 
-                                   ACE_TRY_ENV);
+                                   bn_factory
+                                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       bn_factory->_remove_ref (); // release ownership
 
@@ -68,8 +68,8 @@ main (int argc, char *argv[])
                       1);
 
       orb->register_value_factory (tc_factory->tao_repository_id (),
-                                   tc_factory, 
-                                   ACE_TRY_ENV);
+                                   tc_factory 
+                                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       tc_factory->_remove_ref (); // release ownership
 
@@ -80,19 +80,19 @@ main (int argc, char *argv[])
                       1);
 
       orb->register_value_factory (sn_factory->tao_repository_id (),
-                                   sn_factory, 
-                                   ACE_TRY_ENV);
+                                   sn_factory 
+                                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       sn_factory->_remove_ref (); // release ownership
 
       //Well, done with factories.
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
+        orb->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -101,7 +101,7 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -114,11 +114,11 @@ main (int argc, char *argv[])
 
       PortableServer::ServantBase_var owner_transfer(test_impl);
 
-      Test_var test = test_impl->_this (ACE_TRY_ENV);
+      Test_var test = test_impl->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-        orb->object_to_string (test.in (), ACE_TRY_ENV);
+        orb->object_to_string (test.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // If the ior_output_file exists, output the ior to it
@@ -131,18 +131,18 @@ main (int argc, char *argv[])
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->run (ACE_TRY_ENV);
+      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
-      root_poa->destroy (1, 1, ACE_TRY_ENV);
+      root_poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
