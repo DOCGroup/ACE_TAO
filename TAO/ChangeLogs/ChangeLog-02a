@@ -1,3 +1,19 @@
+Mon Nov 27 15:44:55 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* examples/POA/DSI/Database_i.cpp:
+	  removed template instantiation declaration of 
+	  ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>;
+	  and ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> - already
+	  declared in ace/System_Time.cpp
+	  
+	* examples/Load_Balancing/Load_Balancer_i.cpp:
+	  removed template instantiation declaration of
+	  ACE_Equal_To<ACE_CString> and ACE_Hash<ACE_CString> - already
+	  declared in ace/Capabilities.cpp
+
+	* TAO/examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
+	  Reworked the template instantiation code.
+
 Mon Nov 27 13:16:06 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/CORBALOC_Parser.cpp (parse_string_count_helper): 

@@ -1,7 +1,7 @@
 // $Id$
 #include "Load_Balancer_i.h"
 #include "ace/Auto_Ptr.h"
-
+#include "ace/Hash_Map_Manager_T.h"
 
 const char *rr_name_bind = "RR_Group";
 // Name binding for the location of the Round Robin info in the mem pool
@@ -1008,53 +1008,21 @@ RR_Object_Group::unbind (const char *id,
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX> >;
-template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX>;
-template class ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX, ACE_Control_Block>;
-template class ACE_Hash_Map_With_Allocator<char *, char *>;
-template class ACE_Hash_Map_Iterator_Base_Ex<char *,  Load_Balancer::Object_Group_var, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<char *, char *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<char *,  char *, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, CORBA_Object_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<char *, char *, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<char *, char *, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<char *, CORBA_Object_var, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>;
+
+template class ACE_Hash_Map_Iterator_Base_Ex<char *, char *, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<char *, char *, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<char *, Load_Balancer::Object_Group_var>;
 template class ACE_Hash_Map_Entry<char *, char *>;
-template class ACE_Hash_Map_Iterator_Base_Ex<char *, CORBA::Object_var, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<char *, CORBA::Object_var, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<char *, CORBA::Object_var, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<char *, CORBA::Object_var, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager<char *, CORBA::Object_var, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<char *, CORBA::Object_var>;
-
+template class ACE_Hash_Map_With_Allocator<char *, char *>;
+template class ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex>;
 template class ACE_DLList<char *>;
-template class ACE_DLList_Iterator<char *>;
-
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate  ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex> >
-#pragma instantaite  ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex>
-#pragma instantaite  ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex, ACE_Control_Block>
-#pragma instantiate  ACE_Hash_Map_With_Allocator<char *, char *>
-#pragma instantiate  ACE_Hash_Map_Iterator_Base_Ex<char *, char *, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>
-#pragma instantiate  ACE_Hash_Map_Iterator<char *, char *, ACE_Null_Mutex>
-#pragma instantiate  ACE_Hash_Map_Iterator_Ex<char *, char *, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>
-#pragma instantiate  ACE_Hash_Map_Reverse_Iterator_Ex<char *, char *, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>
-#pragma instantiate  ACE_Hash_Map_Reverse_Iterator_Ex<char *, CORBA_Object_var, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>
-#pragma instantiate  ACE_Hash_Map_Manager_Ex<char *, char *, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>
 
-#pragma instantiate  ACE_Hash_Map_Iterator_Base_Ex<char *, CORBA::Object_var, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>
-#pragma instantiate  ACE_Hash_Map_Iterator<char *, CORBA::Object_var, ACE_Null_Mutex>
-#pragma instantiate  ACE_Hash_Map_Iterator_Ex<char *, CORBA::Object_var, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>
-#pragma instantiate  ACE_Hash_Map_Manager_Ex<char *, CORBA::Object_var, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>
-#pragma instantiate  ACE_Hash_Map_Manager<char *, CORBA::Object_var, ACE_Null_Mutex>
-#pragma instantiate  ACE_Hash_Map_Entry<char *, CORBA::Object_var>
-
-#pragma instantiate  ACE_DLList<char *>
-#pragma instantiate  ACE_DLList_Iterator<char *>
-
+pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<char *, char *, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>
+pragma instantiate ACE_Hash_Map_Manager_Ex<char *, char *, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>
+pragma instantiate ACE_Hash_Map_Entry<char *, char *>
+pragma instantiate ACE_Hash_Map_With_Allocator<char *, char *>
+pragma instantiate ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex>
+pragma instantiate ACE_DLList<char *>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
