@@ -9,15 +9,18 @@ use lib '../../../bin';
 use PerlACE::Run_Test;
 
 $status = 0;
-$iorfile = PerlACE::LocalFile ("test.ior");
+$iorfile    = PerlACE::LocalFile ("test.ior");
+$svcconf    = PerlACE::LocalFile ("svc.conf");
+$advsvcconf = PerlACE::LocalFile ("advanced_svc.conf");
 
+print "$svcconf\n";
 unlink $iorfile;
 
 
 # Run with a static configuration
 
-$SV = new PerlACE::Process ("server", "-o $iorfile -ORBSvcConf svc.conf");
-$CL = new PerlACE::Process ("client", "-k file://$iorfile -x -ORBSvcConf svc.conf");
+$SV = new PerlACE::Process ("server", "-o $iorfile -ORBSvcConf $svcconf");
+$CL = new PerlACE::Process ("client", "-k file://$iorfile -x -ORBSvcConf $svcconf");
 
 print STDERR "\nrunning Strategies test with static config\n\n";
 
@@ -50,9 +53,9 @@ unlink $iorfile;
 # This will fail for builds lacking dynamic libraries.
 
 $SV2 = new PerlACE::Process ("server",
-                             "-o $iorfile -ORBSvcConf advanced_svc.conf");
+                             "-o $iorfile -ORBSvcConf $advsvcconf");
 $CL2 = new PerlACE::Process ("client",
-                             "-k file://$iorfile -x -ORBSvcConf advanced_svc.conf");
+                             "-k file://$iorfile -x -ORBSvcConf $advsvcconf");
 
 print STDERR "\nrunning Strategies test with dynamic config\n\n";
 
