@@ -73,9 +73,7 @@
 namespace TAO
 {
   class Collocation_Proxy_Broker;
-  
   template<typename T> class Narrow_Utils;
-  template<typename T> class AbstractBase_Narrow_Utils;
 }
 
 // TAO_IDL - Generated from

@@ -73,22 +73,22 @@
 
 namespace PortableServer
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
 
 #if !defined (_PORTABLESERVER_SERVANTLOCATOR__VAR_OUT_CH_)
 #define _PORTABLESERVER_SERVANTLOCATOR__VAR_OUT_CH_
-
+  
   class ServantLocator;
   typedef ServantLocator *ServantLocator_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         ServantLocator
       >
     ServantLocator_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         ServantLocator
@@ -96,13 +96,13 @@ namespace PortableServer
     ServantLocator_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_PORTABLESERVER_SERVANTLOCATOR_CH_)
 #define _PORTABLESERVER_SERVANTLOCATOR_CH_
-
+  
   class TAO_PortableServer_Export ServantLocator
     : public virtual ::PortableServer::ServantManager
   {
@@ -111,32 +111,32 @@ namespace PortableServer
 
     typedef ServantLocator_ptr _ptr_type;
     typedef ServantLocator_var _var_type;
-
+    
     // The static operations.
     static ServantLocator_ptr _duplicate (ServantLocator_ptr obj);
-
+    
     static void _tao_release (ServantLocator_ptr obj);
-
+    
     static ServantLocator_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ServantLocator_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ServantLocator_ptr _nil (void)
     {
       return static_cast<ServantLocator_ptr> (0);
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::PortableServer::Servant preinvoke (
         const ::PortableServer::ObjectId & oid,
         ::PortableServer::POA_ptr adapter,
@@ -148,10 +148,10 @@ namespace PortableServer
         CORBA::SystemException,
         ::PortableServer::ForwardRequest
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void postinvoke (
         const ::PortableServer::ObjectId & oid,
         ::PortableServer::POA_ptr adapter,
@@ -163,36 +163,36 @@ namespace PortableServer
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     // Abstract or local interface only.
     ServantLocator (void);
-
+    
     virtual ~ServantLocator (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     ServantLocator (const ServantLocator &);
-
+    
     void operator= (const ServantLocator &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   extern TAO_PortableServer_Export ::CORBA::TypeCode_ptr const _tc_ServantLocator;
 
 // TAO_IDL - Generated from

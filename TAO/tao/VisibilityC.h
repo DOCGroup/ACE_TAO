@@ -73,7 +73,7 @@ namespace CORBA
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_Visibility;
+  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_Visibility;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -99,7 +99,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:958
+// be\be_codegen.cpp:947
 
 #if defined (__ACE_INLINE__)
 #include "VisibilityC.inl"

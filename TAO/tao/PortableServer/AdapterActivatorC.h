@@ -75,16 +75,16 @@ namespace PortableServer
 
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR__VAR_OUT_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR__VAR_OUT_CH_
-
+  
   class AdapterActivator;
   typedef AdapterActivator *AdapterActivator_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         AdapterActivator
       >
     AdapterActivator_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         AdapterActivator
@@ -92,45 +92,45 @@ namespace PortableServer
     AdapterActivator_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR_CH_
-
+  
   class TAO_PortableServer_Export AdapterActivator
     : public virtual CORBA::Object
   {
   public:
     typedef AdapterActivator_ptr _ptr_type;
     typedef AdapterActivator_var _var_type;
-
+    
     // The static operations.
     static AdapterActivator_ptr _duplicate (AdapterActivator_ptr obj);
-
+    
     static void _tao_release (AdapterActivator_ptr obj);
-
+    
     static AdapterActivator_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static AdapterActivator_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static AdapterActivator_ptr _nil (void)
     {
       return static_cast<AdapterActivator_ptr> (0);
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Boolean unknown_adapter (
         ::PortableServer::POA_ptr parent,
         const char * name
@@ -139,36 +139,36 @@ namespace PortableServer
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     // Abstract or local interface only.
     AdapterActivator (void);
-
+    
     virtual ~AdapterActivator (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     AdapterActivator (const AdapterActivator &);
-
+    
     void operator= (const AdapterActivator &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   extern TAO_PortableServer_Export ::CORBA::TypeCode_ptr const _tc_AdapterActivator;
 
 // TAO_IDL - Generated from
@@ -185,7 +185,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR__TRAITS_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR__TRAITS_CH_
-
+  
   template<>
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::AdapterActivator>
   {

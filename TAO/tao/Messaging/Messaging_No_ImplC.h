@@ -71,17 +71,6 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from 
-// be\be_visitor_root/root_ch.cpp:62
-
-namespace TAO
-{
-  class Collocation_Proxy_Broker;
-  
-  template<typename T> class Narrow_Utils;
-  template<typename T> class AbstractBase_Narrow_Utils;
-}
-
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:48
 
@@ -97,7 +86,7 @@ namespace Messaging
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_Priority;
+  extern TAO_Messaging_Export ::CORBA::TypeCode_ptr const _tc_Priority;
   
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:379
@@ -108,7 +97,7 @@ namespace Messaging
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_RebindMode;
+  extern TAO_Messaging_Export ::CORBA::TypeCode_ptr const _tc_RebindMode;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -134,7 +123,7 @@ namespace Messaging
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_RoutingType;
+  extern TAO_Messaging_Export ::CORBA::TypeCode_ptr const _tc_RoutingType;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -160,7 +149,7 @@ namespace Messaging
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_Ordering;
+  extern TAO_Messaging_Export ::CORBA::TypeCode_ptr const _tc_Ordering;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -304,7 +293,7 @@ namespace Messaging
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_RebindPolicy;
+  extern TAO_Messaging_Export ::CORBA::TypeCode_ptr const _tc_RebindPolicy;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -341,7 +330,7 @@ namespace Messaging
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_PriorityRange;
+  extern TAO_Messaging_Export ::CORBA::TypeCode_ptr const _tc_PriorityRange;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -460,7 +449,7 @@ namespace Messaging
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_RequestPriorityPolicy;
+  extern TAO_Messaging_Export ::CORBA::TypeCode_ptr const _tc_RequestPriorityPolicy;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -584,7 +573,7 @@ namespace Messaging
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ReplyPriorityPolicy;
+  extern TAO_Messaging_Export ::CORBA::TypeCode_ptr const _tc_ReplyPriorityPolicy;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -708,7 +697,7 @@ namespace Messaging
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_RequestStartTimePolicy;
+  extern TAO_Messaging_Export ::CORBA::TypeCode_ptr const _tc_RequestStartTimePolicy;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -832,7 +821,7 @@ namespace Messaging
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_RequestEndTimePolicy;
+  extern TAO_Messaging_Export ::CORBA::TypeCode_ptr const _tc_RequestEndTimePolicy;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -956,7 +945,7 @@ namespace Messaging
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ReplyStartTimePolicy;
+  extern TAO_Messaging_Export ::CORBA::TypeCode_ptr const _tc_ReplyStartTimePolicy;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -1080,7 +1069,7 @@ namespace Messaging
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_ReplyEndTimePolicy;
+  extern TAO_Messaging_Export ::CORBA::TypeCode_ptr const _tc_ReplyEndTimePolicy;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -1204,7 +1193,7 @@ namespace Messaging
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_RelativeRequestTimeoutPolicy;
+  extern TAO_Messaging_Export ::CORBA::TypeCode_ptr const _tc_RelativeRequestTimeoutPolicy;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -1241,7 +1230,7 @@ namespace Messaging
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_RoutingTypeRange;
+  extern TAO_Messaging_Export ::CORBA::TypeCode_ptr const _tc_RoutingTypeRange;
   
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
@@ -1360,7 +1349,7 @@ namespace Messaging
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_RoutingPolicy;
+  extern TAO_Messaging_Export ::CORBA::TypeCode_ptr const _tc_RoutingPolicy;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -1484,7 +1473,7 @@ namespace Messaging
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_MaxHopsPolicy;
+  extern TAO_Messaging_Export ::CORBA::TypeCode_ptr const _tc_MaxHopsPolicy;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -1608,7 +1597,7 @@ namespace Messaging
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_QueueOrderPolicy;
+  extern TAO_Messaging_Export ::CORBA::TypeCode_ptr const _tc_QueueOrderPolicy;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66

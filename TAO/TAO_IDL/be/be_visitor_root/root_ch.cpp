@@ -72,7 +72,7 @@ be_visitor_root_ch::init (void)
           *os << "template<typename T> class AbstractBase_Narrow_Utils;" << be_nl;
         }
 
-      *os << "template<typename T> class Narrow_Utils;" << be_uidt_nl << "};" ;
+      *os << "template<typename T> class Narrow_Utils;" << be_uidt_nl << "}" ;
     }
 
   return 0;
