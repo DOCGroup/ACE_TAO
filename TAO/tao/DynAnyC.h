@@ -593,189 +593,78 @@ struct TAO_Export CORBA_NameValuePair
 
 };
 
-class _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq : public TAO_Unbounded_Base_Sequence
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+    
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_NAMEVALUEPAIRSEQ_CH_)
+#define __TAO_UNBOUNDED_SEQUENCE_CORBA_NAMEVALUEPAIRSEQ_CH_
+
+    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq : public TAO_Unbounded_Base_Sequence
+    {
+    public:
+      // = Initialization and termination methods.
+      
+      _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq (void); // Default constructor.
+      _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq (CORBA::ULong maximum); 
+      _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq (CORBA::ULong maximum,
+        CORBA::ULong length,
+        CORBA_NameValuePair *data,
+        CORBA::Boolean release = 0);
+      _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq (const _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq &rhs);
+      _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq &operator= (const _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq &rhs);
+      virtual ~_TAO_Unbounded_Sequence_CORBA_NameValuePairSeq (void); // Dtor.
+      // = Accessors.
+      CORBA_NameValuePair &operator[] (CORBA::ULong i);
+      const CORBA_NameValuePair &operator[] (CORBA::ULong i) const;
+      // = Static operations.
+      static CORBA_NameValuePair *allocbuf (CORBA::ULong size);
+      static void freebuf (CORBA_NameValuePair *buffer);
+      virtual void _allocate_buffer (CORBA::ULong length);
+      virtual void _deallocate_buffer (void);
+      // Implement the TAO_Base_Sequence methods (see Sequence.h)
+      
+      CORBA_NameValuePair *get_buffer (CORBA::Boolean orphan = 0);
+      const CORBA_NameValuePair *get_buffer (void) const;
+      void replace (CORBA::ULong max,
+        CORBA::ULong length,
+        CORBA_NameValuePair *data,
+        CORBA::Boolean release);
+    };
+
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+class CORBA_NameValuePairSeq_var;
+  
+// *************************************************************
+// CORBA::NameValuePairSeq
+// *************************************************************
+class TAO_Export CORBA_NameValuePairSeq : public
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
+       || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) \
+       || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
+  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq
+#else /* AHETI */
+  TAO_Unbounded_Sequence<CORBA_NameValuePair>
+#endif /* AHETI */
 {
 public:
-  // = Initialization and termination methods.
-
-  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq (void) // Default constructor.
-  {
-  }
-
-  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, allocbuf (maximum))
-  {
-  }
-
-  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq (CORBA::ULong maximum,
+  CORBA_NameValuePairSeq (void); // default ctor
+  CORBA_NameValuePairSeq (CORBA::ULong max); // uses max size
+  CORBA_NameValuePairSeq (
+    CORBA::ULong max,
     CORBA::ULong length,
-    CORBA_NameValuePair *data,
-    CORBA::Boolean release = 0)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
+    CORBA_NameValuePair *buffer,
+    CORBA::Boolean release=0
+  );
+  CORBA_NameValuePairSeq (const CORBA_NameValuePairSeq &); // copy ctor
+  ~CORBA_NameValuePairSeq (void); // dtor
 
-  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq (const _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    CORBA_NameValuePair *tmp1 = allocbuf (this->maximum_);
-    CORBA_NameValuePair * const tmp2 = ACE_reinterpret_cast (CORBA_NameValuePair * ACE_CAST_CONST, rhs.buffer_);
-
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-      tmp1[i] = tmp2[i];
-
-    this->buffer_ = tmp1;
-  }
-
-  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq &operator= (const _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        CORBA_NameValuePair *tmp = ACE_reinterpret_cast (CORBA_NameValuePair *, this->buffer_);
-        freebuf (tmp);
-        this->buffer_ = allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = allocbuf (rhs.maximum_);
-
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-
-    CORBA_NameValuePair *tmp1 = ACE_reinterpret_cast (CORBA_NameValuePair *, this->buffer_);
-    CORBA_NameValuePair * const tmp2 = ACE_reinterpret_cast (CORBA_NameValuePair * ACE_CAST_CONST, rhs.buffer_);
-
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-      tmp1[i] = tmp2[i];
-
-    return *this;
-  }
-
-  ~_TAO_Unbounded_Sequence_CORBA_NameValuePairSeq (void) // Dtor.
-  {
-    this->_deallocate_buffer ();
-  }
-
-  // = Accessors.
-  CORBA_NameValuePair &operator[] (CORBA::ULong i)
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    CORBA_NameValuePair* tmp = ACE_reinterpret_cast(CORBA_NameValuePair*,this->buffer_);
-    return tmp[i];
-  }
-
-  const CORBA_NameValuePair &operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    CORBA_NameValuePair * const tmp = ACE_reinterpret_cast (CORBA_NameValuePair* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-
-  // = Static operations.
-  static CORBA_NameValuePair *allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
-  {
-    return new CORBA_NameValuePair[size];
-  }
-
-  static void freebuf (CORBA_NameValuePair *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
-
-  virtual void _allocate_buffer (CORBA::ULong length)
-  {
-    CORBA_NameValuePair* tmp = allocbuf (length);
-
-    if (this->buffer_ != 0)
-    {
-      CORBA_NameValuePair *old = ACE_reinterpret_cast (CORBA_NameValuePair *,this->buffer_);
-
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        tmp[i] = old[i];
-
-      if (this->release_)
-        freebuf (old);
-
-    }
-    this->buffer_ = tmp;
-  }
-
-  virtual void _deallocate_buffer (void)
-  {
-    if (this->buffer_ == 0 || this->release_ == 0)
-      return;
-
-    CORBA_NameValuePair *tmp = ACE_reinterpret_cast (CORBA_NameValuePair *,this->buffer_);
-
-    freebuf (tmp);
-    this->buffer_ = 0;
-  }
-
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-
-  CORBA_NameValuePair *get_buffer (CORBA::Boolean orphan = 0)
-  {
-    CORBA_NameValuePair *result = 0;
-    if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = allocbuf (this->length_);
-        this->buffer_ = result;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (CORBA_NameValuePair*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(CORBA_NameValuePair*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-
-  const CORBA_NameValuePair *get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const CORBA_NameValuePair * ACE_CAST_CONST, this->buffer_);
-  }
-
-  void replace (CORBA::ULong max,
-  CORBA::ULong length,
-  CORBA_NameValuePair *data,
-  CORBA::Boolean release)
-  {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      CORBA_NameValuePair *tmp = ACE_reinterpret_cast(CORBA_NameValuePair*,this->buffer_);
-      freebuf (tmp);
-    }
-    this->buffer_ = data;
-    this->release_ = release;
-  }
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef CORBA_NameValuePairSeq_var _var_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
 
 };
 
@@ -828,37 +717,6 @@ private:
   CORBA_NameValuePairSeq *&ptr_;
   // assignment from T_var not allowed
   void operator= (const CORBA_NameValuePairSeq_var &);
-};
-
-// *************************************************************
-// CORBA::NameValuePairSeq
-// *************************************************************
-class TAO_Export CORBA_NameValuePairSeq : public
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
-       || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) \
-       || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
-  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq
-#else /* AHETI */
-  TAO_Unbounded_Sequence<CORBA_NameValuePair>
-#endif /* AHETI */
-{
-public:
-  CORBA_NameValuePairSeq (void); // default ctor
-  CORBA_NameValuePairSeq (CORBA::ULong max); // uses max size
-  CORBA_NameValuePairSeq (
-    CORBA::ULong max,
-    CORBA::ULong length,
-    CORBA_NameValuePair *buffer,
-    CORBA::Boolean release=0
-  );
-  CORBA_NameValuePairSeq (const CORBA_NameValuePairSeq &); // copy ctor
-  ~CORBA_NameValuePairSeq (void); // dtor
-
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-  typedef CORBA_NameValuePairSeq_var _var_type;
-#endif /* __GNUC__ */
-  // Useful for template programming.
-
 };
 
 class CORBA_DynStruct;
@@ -1261,6 +1119,8 @@ public:
   }
 
 };
+
+class CORBA_AnySeq;
 
 // *************************************************************
 // class CORBA::AnySeq_var
