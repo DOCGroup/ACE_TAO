@@ -1,3 +1,9 @@
+Thu Jul 13 20:25:51 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ACE-INSTALL.html: Updated this file to reflect current reality
+	  wrt Borland C++.  Thanks to Christopher Kohlhoff
+ 	  <chris@kohlhoff.com> for reporting this.
+
 Thu Jul 13 16:34:36 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* include/makeinclude/wrapper_macros.GNU:
