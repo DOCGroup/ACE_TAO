@@ -5,7 +5,7 @@
 
 ACE_Thread_Mutex HTTP_Status_Code::lock_;
 int HTTP_Status_Code::instance_ = 0;
-char * HTTP_Status_Code::Reason[HTTP_Status_Code::MAX_STATUS_CODE+1];
+const char * HTTP_Status_Code::Reason[HTTP_Status_Code::MAX_STATUS_CODE+1];
 
 char const * const * const
 HTTP_Status_Code::instance (void)

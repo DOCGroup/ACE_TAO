@@ -9,7 +9,7 @@
 #include "ace/Svc_Handler.h"
 
 class HTTP_Handler
-  : public ACE_Svc_Handler<ACE_SOCK_Stream, ACE_INET_Addr, ACE_NULL_SYNCH>
+  : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 
 public:

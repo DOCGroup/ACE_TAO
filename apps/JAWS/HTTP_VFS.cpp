@@ -26,7 +26,9 @@ HTTP_VFS_Node::HTTP_VFS_Node (char *uri)
       ACE_ERROR((LM_ERROR, "%p\n", "HTTP_VFS_Node::ctr"));
       break;
     case ENOENT:
+#if !defined (ACE_WIN32)
     case ENOLINK:
+#endif /* ACE_WIN32 */
       this->status_ = HTTP_Status_Code::STATUS_NOT_FOUND;
       break;
     default:
@@ -36,18 +38,21 @@ HTTP_VFS_Node::HTTP_VFS_Node (char *uri)
     return;
   }
 
-  ACE_OS::fstat(this->handle_, &(this->stat_));
-  if (this->stat_.st_mode & S_IFDIR) {
-    if ((this->stat_.st_mode & (S_IXUSR|S_IXGRP|S_IXOTH))
-        == (S_IXUSR|S_IXGRP|S_IXOTH))
-      this->status_ = HTTP_Status_Code::STATUS_FORBIDDEN;
-    else this->status_ = HTTP_Status_Code::STATUS_UNAUTHORIZED;
-  }
-  else if ((this->stat_.st_mode & (S_IRUSR|S_IRGRP|S_IROTH))
-           != (S_IRUSR|S_IRGRP|S_IROTH))
-    this->status_ = HTTP_Status_Code::STATUS_UNAUTHORIZED;
-  else this->status_ = HTTP_Status_Code::STATUS_OK;
-    
+  if (ACE_OS::stat(this->path_, &(this->stat_)) == -1)
+    this->status_ = HTTP_Status_Code::STATUS_INTERNAL_SERVER_ERROR;
+  else 
+    {
+      if (this->stat_.st_mode & S_IFDIR) {
+	if ((this->stat_.st_mode & (S_IXUSR|S_IXGRP|S_IXOTH))
+	    == (S_IXUSR|S_IXGRP|S_IXOTH))
+	  this->status_ = HTTP_Status_Code::STATUS_FORBIDDEN;
+	else this->status_ = HTTP_Status_Code::STATUS_UNAUTHORIZED;
+      }
+      else if ((this->stat_.st_mode & (S_IRUSR|S_IRGRP|S_IROTH))
+	       != (S_IRUSR|S_IRGRP|S_IROTH))
+	this->status_ = HTTP_Status_Code::STATUS_UNAUTHORIZED;
+      else this->status_ = HTTP_Status_Code::STATUS_OK;
+    }
   if (this->status_ != HTTP_Status_Code::STATUS_OK) {
     ACE_OS::close(this->handle_);
     return;
@@ -92,6 +97,8 @@ HTTP_VFS_Node::uritopath(void)
 {
   char const *file_name = this->uri_;
  
+  this->buf_[0] = '\0';
+
   if (*file_name == '/') file_name++;
   if (*file_name == '~') {
     char *ptr = this->buf_;
@@ -104,18 +111,24 @@ HTTP_VFS_Node::uritopath(void)
     if (ptr == this->buf_)
       ACE_OS::strcpy (this->buf_, ACE_OS::getenv ("HOME"));
     else {
+#if !defined (ACE_WIN32)
       char pw_buf[BUFSIZ];
       struct passwd pw_struct;
       if (::getpwnam_r(this->buf_, &pw_struct, pw_buf, sizeof(pw_buf)) == 0)
         return;
       ACE_OS::strcpy (this->buf_, pw_struct.pw_dir);
+#endif /* ACE_WIN32 */
     }
  
-    ACE_OS::strcat (this->buf_, "/.www-docs");
+    ACE_OS::strcat (this->buf_, "/.www-docs/");
     ACE_OS::strcat (this->buf_, file_name);
- 
-    ACE_OS::strcpy (this->path_, this->buf_);
   }
+  else {
+    ACE_OS::strcat (this->buf_, "./");
+    ACE_OS::strcat (this->buf_, file_name);
+  }
+
+  ACE_OS::strcpy (this->path_, this->buf_);
 }
 
 
