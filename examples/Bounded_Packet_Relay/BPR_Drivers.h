@@ -147,19 +147,15 @@ public:
   // provides an abstract interface to allow modifying device settings
 };
 
-template <class SYNCH>
-class Bounded_Packet_Relay
+class Bounded_Packet_Relay_Base
 {
   // = TITLE
   //   @@ Chris, please fill in here.
   //
   // = DESCRIPTION
-  //   @@ Chris, please fill in here.
+  //     This enum must go here to avoid confusing certain broken C++
+  //     compilers...
 public:
-  typedef int (Input_Task::*ACTION) (void *);
-  // Command entry point type definition
-
-  // = Enumerates possible status values at the end of a transmission.
   enum Transmission_Status 
   {
     UN_INITIALIZED,
@@ -169,6 +165,22 @@ public:
     CANCELLED,
     ERROR
   };
+};
+
+template <class SYNCH>
+class Bounded_Packet_Relay : public Bounded_Packet_Relay_Base
+{
+  // = TITLE
+  //   @@ Chris, please fill in here.
+  //
+  // = DESCRIPTION
+  //   @@ Chris, please fill in here.
+public:
+  // @@ Chris, where is Input_Task:: defined?
+  typedef int (Input_Task::*ACTION) (void *);
+  // Command entry point type definition
+
+  // = Enumerates possible status values at the end of a transmission.
 
   Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,
                         Input_Device_Wrapper_Base *input_wrapper,
