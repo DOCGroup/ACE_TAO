@@ -28,6 +28,7 @@ public:
                         const char* name,
                         CORBA::Short policy,
                         unsigned int expected,
+                        CORBA::Long max_events_per_consumer,
                         CORBA::Boolean& done);
 
   void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin
@@ -42,6 +43,7 @@ protected:
   ACE_CString name_;
   CORBA::Short discard_policy_;
   unsigned int expected_;
+  CORBA::Long max_events_per_consumer_;
   unsigned int count_;
   CORBA::Boolean& done_;
 };

@@ -19,7 +19,8 @@
 
 static const char* ior = "file://supplier.ior";
 static CORBA::Short discard_policy = CosNotification::FifoOrder;
-static unsigned int expected = 12;
+static unsigned int expected = 13;
+CORBA::Long max_events_per_consumer = 10;
 
 // ******************************************************************
 // Subroutine Section
@@ -120,6 +121,8 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
                   Notify_Test_Client* client
                   ACE_ENV_ARG_DECL)
 {
+  ACE_DEBUG ((LM_DEBUG, "Max Events per Consumer = %d...\n", max_events_per_consumer));
+
   // startup the consumer
   Notify_Structured_Push_Consumer* consumer_1;
   ACE_NEW_THROW_EX (consumer_1,
@@ -127,6 +130,7 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
                                           "consumer1",
                                           discard_policy,
                                           expected,
+                                          max_events_per_consumer,
                                           client->done ()),
                     CORBA::NO_MEMORY ());
   consumer_1->init (client->root_poa () ACE_ENV_ARG_PARAMETER);

@@ -1,3 +1,75 @@
+Fri Dec 13 00:10:23 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/AdminProperties.cpp:
+	  Added missing template instantiation for TAO_NS_AdminProperties_var 
+
+	* orbsvcs/orbsvcs/Notify/Builder.cpp:
+	  Added a 2 step initialization of TAO_NS_AdminProperties object
+	  to appease Borland compiler.
+
+	* orbsvcs/orbsvcs/Notify/CosNotify_Initializer.cpp:
+ 	* orbsvcs/orbsvcs/Notify/CosNotify_Initializer.h:
+	  Moved Initializer from Notify_Service.cpp to a seperate file.
+	  This should fix the bug related to multiple instances of the
+	  Initalizer. Thanks to Shelton Tang <stang@altigen.com> for
+	  reporting this.
+ 	
+	* orbsvcs/orbsvcs/Notify/Notify_Service.cpp:
+ 	* orbsvcs/orbsvcs/Notify/Notify_Service.h:
+	  Removed Initializer class and implementation.
+	
+	* orbsvcs/orbsvcs/Makefile.CosNotification:
+        * orbsvcs/Orbsvcs/CosNotification.dsp:
+        * orbsvcs/Orbsvcs/CosNotification_Static.dsp:
+        * orbsvcs/Orbsvcs/CosNotification.bor:
+          Updated.
+
+	* orbsvcs/Notify_Service/Makefile:
+	* orbsvcs/Notify_Service/Notify_Service.h:
+	  Replaced include for Initializer to "CosNotify_Initializer.h"  
+	
+	* orbsvcs/tests/Notify/Basic/AdminProperties.h:
+	* orbsvcs/tests/Notify/Basic/AdminProperties.cpp:
+	  Modified the test to check MaxQueueLength and MaxSuppliers and
+	  MaxConsumers seperately. Events are dispatched in a seperate
+	  thread. The main thread receives events, an initial delay and
+	  a consumer delay can be configured to provide a lag in event
+	  delivery to force the Notification to buffer events. 
+
+	* orbsvcs/tests/Notify/Basic/Sequence.h:
+	* orbsvcs/tests/Notify/Basic/Sequence.cpp:
+	  Added a test for sequences. In the default run, this test sends 15 events in batches
+	  of 5 events via a sequence supplier. It sets the consumer's batch
+	  size to 3 and sets a pacing interval of 2 seconds. it checks to
+	  see if 15 events are indeed received.
+	  
+	* orbsvcs/tests/Notify/Basic/adminproperties.conf:
+	  Svc Conf file for the AdminProperties test - This prevents the
+	  supplier's event sending thread from reading incomming requests.  
+
+	* orbsvcs/tests/Notify/Basic/Makefile:
+	* orbsvcs/tests/Notify/Basic/Makefile.bor:
+	* orbsvcs/tests/Notify/Basic/Sequence.dsp:
+	* orbsvcs/tests/Notify/Notify_Tests.dsw:
+	* orbsvcs/tests/Notify/Basic/run_test.pl:
+	  Added Sequence Test.
+
+	* orbsvcs/tests/Notify/Discarding/notify.conf:
+	  To apply the MaxEventsPerConsumer QoS we need configure a queue
+	  per proxysupplier.  
+
+	* orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.h:
+	* orbsvcs/tests/Notify/Discarding/Structured_Consumer.cpp:
+	* orbsvcs/tests/Notify/Discarding/Structured_Supplier.cpp:
+	  This test was expecting to receive the same number of events as
+	  the MaxEventsPerConsumer. We know that atleast 1 *extra* event
+	  will be delivered because the 1st event delivery causes the
+	  channel queue to fill up and discard events. Thus, we send 40
+	  events, set the MaxEventsPerConsumer at 10 and really expect to
+	  see 11 events, but we give some leeway and set the expected count
+	  at 13. far less compared to 40.
+	
 Thu Dec 12 10:10:53 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp: Fixed
