@@ -86,7 +86,7 @@ public:
       TAO_VALUETYPE_OBV_CH,                 // OBV_ class
       TAO_VALUETYPE_OBV_CI,
       TAO_VALUETYPE_OBV_CS,
-      
+
       // Emitting code for the module,
       TAO_MODULE_OBV_CH,                    // for OBV_ (cmp. POA_ namespace)
       TAO_MODULE_OBV_CI,
@@ -177,9 +177,7 @@ public:
       TAO_LINEAR_SEARCH,
       TAO_DYNAMIC_HASH,
       TAO_PERFECT_HASH,
-      TAO_BINARY_SEARCH,
-      TAO_ACTIVE_DEMUX,
-      TAO_USER_DEFINED
+      TAO_BINARY_SEARCH
     };
 
   enum CG_SUB_STATE
