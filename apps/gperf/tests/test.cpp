@@ -11,7 +11,7 @@ ACE_RCSID(tests, test, "$Id$")
 
 static const int MAX_LEN = 80;
 
-char *in_word_set (const char *str, int len);
+char *in_word_set (const char *str, unsigned int len);
 
 int 
 main (int argc, char *argv[])

@@ -1,3 +1,9 @@
+Mon Sep 28 13:18:05 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/test.cpp: Fixed the signature of in_word_set() to be
+	  consistent with the new gperf.  Thanks to David Levine and
+	  Carlos O'Ryan for this fix.
+
 Sun Sep 27 00:04:18 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* src/Key_List.cpp (dump): Reverted back to using int for
