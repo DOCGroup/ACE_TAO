@@ -1,6 +1,9 @@
 # $Id$
+#
+# NOTE: the above file from ACE 4.6 has been modified by Mike P. to get rid of 
+# thread related stuff until we can obtain fsu-threads library.
 
-# Requires FSU pthreads and gcc 2.7.2 Skunkware 97
+# Requires gcc 2.7.2 Skunkware 97
 # to produce libACE.so correctly changed the specs file for gcc 2.7.2
 # for not link -lc and -lgcc and other not shared libraries
 
@@ -8,23 +11,17 @@ debug = 1
 optimize = 1
 
 CC              = gcc
-# for threads
 # for no threads
-#CXX		= gcc -fno-implicit-templates -w -fno-strict-prototypes
-# LDFLAGS	+= -L $(ACE_ROOT)/ace -L ./ ${FSU_PTHREADS_DIR}/init/init.o # -z muldefs
-# LDLIBS	+= -L $(ACE_ROOT)/ace -L ./ ${FSU_PTHREADS_DIR}/init/init.o -lACE # -z muldefs
-LDLIBS	+= -lm -L $(ACE_ROOT)/ace # -z muldefs
+LDLIBS		+= -lm -L $(ACE_ROOT)/ace 
 CXX		= g++
 CFLAGS		+= -melf -w 
-CCFLAGS		+= -melf -fno-implicit-templates -I ${FSU_PTHREADS_DIR}/include 
-DCFLAGS		+= -g
+CCFLAGS		+= -melf -fno-implicit-templates 
+# -g option not supported for C++ on systems using the DWARF debugging format
+#DCFLAGS		+= -g
 DCCFLAGS	+= $(DCFLAGS)
 DLD             = $(CXX)
 LD              = $(CXX) /usr/lib/libc.so.1
-#LD              = $(CXX)
-#LIBS            = -lm -L${FSU_PTHREADS_DIR}/lib -lgthreads -lnsl -lsocket  -lgthreads
-LIBS            = -L${FSU_PTHREADS_DIR}/lib -lgthreads -lnsl -lsocket  -lgthreads
-#OCFLAGS		+= -O2
+LIBS            = -lnsl -lsocket
 OCCFLAGS        += $(OCFLAGS)
 PIC             = -fPIC
 AR              = ar
@@ -33,5 +30,4 @@ RANLIB          = /bin/true
 
 SOFLAGS = $(CPPFLAGS) -melf -fPIC -G
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
-# SOLINK	= $(SOLINK.cc) -o $@ $(LDFLAGS) $<
 PRELIB  = @true
