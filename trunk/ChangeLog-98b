@@ -1,24 +1,33 @@
+Thu Sep 03 16:43:34 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp (thr_create): play the zero thread priority game
+          on Solaris if defined (sun), not if defined (ACE_HAS_STHREADS).
+          This allows POSIX threads to be created with a thread priority
+          of 0 if _POSIX_C_SOURCE=199506L and _POSIX_PTHREAD_SEMANTICS
+          are defined.  Thanks to Russ Noseworthy
+          <rnosewor@objectsciences.com> for reporting this problem.
+
 Thu Sep 03 16:14:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Synch.i (ACE_Process_Mutex::remove): Reset this->lock_ to 0
-	  after removing the lock so we can avoid destroying the same
-	  kernel object twice.  Thanks to Detlef Becker
-	  <Detlef.Becker@med.siemens.de> for reporting this.
-	
+        * ace/Synch.i (ACE_Process_Mutex::remove): Reset this->lock_ to 0
+          after removing the lock so we can avoid destroying the same
+          kernel object twice.  Thanks to Detlef Becker
+          <Detlef.Becker@med.siemens.de> for reporting this.
+
 Thu Sep 03 15:43:22 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Upgradable_RW_Test.cpp: Fixed this file so that it works
- 	  with egcs.
+        * tests/Upgradable_RW_Test.cpp: Fixed this file so that it works
+          with egcs.
 
 Thu Sep  3 14:51:06 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* docs: Moved ACE-{tutorials,guidelines,subsets,porting}.html
-	  into the docs directory from the etc directory.  This is
-	  a more "fitting" location...
+        * docs: Moved ACE-{tutorials,guidelines,subsets,porting}.html
+          into the docs directory from the etc directory.  This is
+          a more "fitting" location...
 
 Thu Sep  3 13:23:39 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* Makefile (CONTROLLED_FILES): Added docs/ into CONTROLLED_FILES.
+        * Makefile (CONTROLLED_FILES): Added docs/ into CONTROLLED_FILES.
 
 Thu Sep 03 09:24:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
