@@ -4,6 +4,7 @@ common_defines     = WIN32 _CONSOLE
 configuration_type = 1
 subsystem          = 1
 ssl_libs           = libeay32 ssleay32
+zzip_libs          = z zzip
 pdb                = 1
 
 Release {
@@ -88,3 +89,4 @@ Static MFC Debug {
 }
 
 conditional_include "vcfullmacros"
+conditional_include "zziplib"

@@ -1,3 +1,50 @@
+Thu May 29 22:18:00 2003  Krishnakumar B  <kitty@spam.invalid.domain>
+
+        * bin/MakeProjectCreator/config/zziplib.mpt (zzip):
+
+          New template for compiling ACEXML with and without ZZIPLIB.
+          An environment variable ZZIP_ROOT needs to be set to point to
+          the place where the ZZIPLIB sources are installed. Specifically,
+          $ZZIP_ROOT/include should contain the header files, and
+          $ZZIP_ROOT/lib should contain the libraries. Then MPC should be
+          run as follows
+
+            $(ACE_ROOT)/bin/mwc.pl -value_template zzip=1
+
+          in $(ACE_ROOT)/ACEXML to generate your favourite build tools.
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+        * bin/MakeProjectCreator/templates/bordll.mpt:
+        * bin/MakeProjectCreator/templates/borexe.mpt:
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/em3vcpdll.mpt:
+        * bin/MakeProjectCreator/templates/em3vcpdllexe.mpt:
+        * bin/MakeProjectCreator/templates/em3vcplib.mpt:
+        * bin/MakeProjectCreator/templates/em3vcplibexe.mpt:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * bin/MakeProjectCreator/templates/gnudll.mpt:
+        * bin/MakeProjectCreator/templates/gnuexe.mpt:
+        * bin/MakeProjectCreator/templates/make.mpd:
+        * bin/MakeProjectCreator/templates/makedll.mpt:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+        * bin/MakeProjectCreator/templates/nmakedll.mpt:
+        * bin/MakeProjectCreator/templates/nmakeexe.mpt:
+        * bin/MakeProjectCreator/templates/va4icc.mpd:
+        * bin/MakeProjectCreator/templates/va4iccdll.mpt:
+        * bin/MakeProjectCreator/templates/va4iccdllexe.mpt:
+        * bin/MakeProjectCreator/templates/va4icclib.mpt:
+        * bin/MakeProjectCreator/templates/va4icclibexe.mpt:
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc6dspdll.mpt:
+        * bin/MakeProjectCreator/templates/vc6dspdllexe.mpt:
+        * bin/MakeProjectCreator/templates/vc6dsplib.mpt:
+        * bin/MakeProjectCreator/templates/vc6dsplibexe.mpt:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+        * bin/MakeProjectCreator/templates/vc7dll.mpt:
+        * bin/MakeProjectCreator/templates/vc7exe.mpt:
+
+          Changes to existing files to support ZZIPLIB.
+
 Fri May 30 01:43:12 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * include/makeinclude/wrapper_macros.GNU:

@@ -6,6 +6,7 @@ type_is_binary        = 1
 type_is_dynamic       = 1
 common_defines        = UNICODE _UNICODE
 ssl_libs              = libeay32 ssleay32
+zzip_libs             = z zzip
 pdb                   = 1
 stack                 =
 
@@ -76,3 +77,4 @@ MFC Debug {
 }
 
 conditional_include "vcpartialmacros"
+conditional_include "zziplib"

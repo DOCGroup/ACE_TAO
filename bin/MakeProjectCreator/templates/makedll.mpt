@@ -1,5 +1,6 @@
 configurations = gcc
 soext          = so
+zzip_libs      = z zziplib
 
 gcc {
   cxx       = g++
@@ -34,4 +35,6 @@ solaris {
 hpux {
   soext  = sl
   ldlibs = -lxti -lpthread -lrt -ldld
-}
+  }
+
+conditional_include "zziplib"

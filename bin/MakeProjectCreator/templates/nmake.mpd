@@ -10,19 +10,19 @@ CFG=<%platform%> <%default_configuration%>
 !MESSAGE Invalid configuration "$(CFG)" specified.
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 <%foreach(platforms)%>
 !MESSAGE NMAKE /f "<%project_file%>" CFG="<%platform%> <%default_configuration%>"
 <%endfor%>
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 <%foreach(platforms)%>
 <%foreach(configurations)%>
 !MESSAGE "<%platform%> <%configuration%>" (based on "<%platform%> (<%machine_description%>) <%type_description("Dynamic-Lynk Library")%>")
 <%endfor%>
 <%endfor%>
-!MESSAGE 
+!MESSAGE
 !ERROR An invalid configuration is specified.
 !ENDIF
 
@@ -51,7 +51,7 @@ INTDIR=<%intermediate_dir%>\<%noextension(project_file)%>
 ALL : <%if(idl_files)%>IDL_STUBS <%endif%><%if(exename)%><%if(install)%>"$(INSTALLDIR)" <%endif%><%endif%>"<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.lib<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>"<%foreach(custom_types)%><%foreach(custom_type->input_files)%><%foreach(custom_type->input_file->output_files)%> "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%>.\<%custom_type->input_file->output_file%><%endif%>"<%endfor%><%endfor%><%endfor%>
 
 DEPEND :
-	perl <%depgen("$(ACE_ROOT)\\bin\\depgen.pl")%><%foreach(includes)%> -I"<%include%>"<%endfor%><%foreach(defines cpu_defines common_defines)%> -D<%define%>=1<%endfor%><%if(type_is_dynamic)%><%foreach(dllflags)%> -D<%dllflag%>=1<%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%> -D<%libflag%>=1<%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%> -D<%pch_define%>=1<%endfor%><%endif%> -f "<%noextension(project_file)%>.dep"<%foreach(source_files)%> <%source_file%><%endfor%>
+	perl <%depgen("$(ACE_ROOT)\\bin\\depgen.pl")%><%foreach(includes)%> -I"<%include%>"<%endfor%><%foreach(defines cpu_defines common_defines)%> -D<%define%>=1<%endfor%><%if(type_is_dynamic)%><%foreach(dllflags)%> -D<%dllflag%>=1<%endfor%><%endif%><%if(zzip)%><%foreach(zzip_defines)%> -D<%zzip_define%>=1<%endfor%> -I"$(ZZIP_ROOT)\include" <%endif%><%if(need_libflags)%><%foreach(libflags)%> -D<%libflag%>=1<%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%> -D<%pch_define%>=1<%endfor%><%endif%> -f "<%noextension(project_file)%>.dep"<%foreach(source_files)%> <%source_file%><%endfor%>
 
 <%if(idl_files)%>
 IDL_STUBS :<%foreach(idl_files)%> "<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%dirname(idl_file)%><%endif%><%endif%>\<%basenoextension(idl_file)%>C.cpp"<%endfor%>
@@ -110,7 +110,7 @@ REALCLEAN : CLEAN
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 CPP=cl.exe
-CPP_PROJ=/nologo <%if(add_compile)%><%add_compile%> <%endif%><%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%><%foreach(defines cpu_defines common_defines)%>/D <%define%>=1 <%endfor%><%if(type_is_dynamic)%><%foreach(dllflags)%>/D <%dllflag%>=1 <%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%>/D <%libflag%>=1 <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%>=1 <%endfor%><%if(pch_source)%>/Yu<%else%>/YX<%endif%>"<%pch_header%>" /Fp"$(INTDIR)\<%noextension(pch_header)%>.pch" <%endif%>/Fo"<%fo_flag("$(INTDIR)\\\\")%>" /Fd"<%fd_flag("$(INTDIR)\\\\")%>" /FD /c
+CPP_PROJ=/nologo <%if(add_compile)%><%add_compile%> <%endif%><%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%><%foreach(defines cpu_defines common_defines)%>/D <%define%>=1 <%endfor%><%if(zzip)%><%foreach(zzip_defines)%> /D <%zzip_define%>=1<%endfor%> /I "$(ZZIP_ROOT)\include" <%endif%><%if(type_is_dynamic)%><%foreach(dllflags)%>/D <%dllflag%>=1 <%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%>/D <%libflag%>=1 <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%>=1 <%endfor%><%if(pch_source)%>/Yu<%else%>/YX<%endif%>"<%pch_header%>" /Fp"$(INTDIR)\<%noextension(pch_header)%>.pch" <%endif%>/Fo"<%fo_flag("$(INTDIR)\\\\")%>" /Fd"<%fd_flag("$(INTDIR)\\\\")%>" /FD /c
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -151,10 +151,10 @@ BSC32=bscmake.exe
 BSC32_FLAGS=/nologo <%if(type_is_dynamic)%>/o"$(OUTDIR)\<%sharedname%>.bsc"<%endif%>
 <%endif%>
 BSC32_SBRS= \
-	
+
 <%if(type_is_binary)%>
 LINK32=link.exe
-LINK32_FLAGS=<%systemlibs("advapi32.lib user32.lib")%> <%if(ssl)%><%foreach(ssl_libs)%><%ssl_lib%>.lib <%endfor%><%endif%>/INCREMENTAL:<%incremental("NO")%> <%foreach(lit_libs)%><%lit_lib%>.lib <%endfor%><%foreach(libs defaultlibs)%><%lib%><%lib_modifier%>.lib <%endfor%><%foreach(libpaths)%>/libpath:"<%libpath%>" <%endfor%>/nologo /version:<%version("1.0")%> /subsystem:<%subsystem("windows")%><%if(type_is_dynamic)%> /dll<%endif%> <%debug_switch("/debug")%> <%if(pdb)%>/pdb:"<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.pdb<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.pdb<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.pdb<%endif%>" <%endif%>/machine:<%machine("I386")%> /out:"<%if(sharedname)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>"<%if(sharedname)%> /implib:"$(OUTDIR)\<%sharedname%><%lib_modifier%>.lib"<%endif%>
+LINK32_FLAGS=<%systemlibs("advapi32.lib user32.lib")%> <%if(ssl)%><%foreach(ssl_libs)%><%ssl_lib%>.lib <%endfor%><%endif%><%if(zzip)%><%foreach(zzip_libs)%><%zzip_lib%>.lib <%endfor%><%endif%>/INCREMENTAL:<%incremental("NO")%> <%foreach(lit_libs)%><%lit_lib%>.lib <%endfor%><%foreach(libs defaultlibs)%><%lib%><%lib_modifier%>.lib <%endfor%><%foreach(libpaths)%>/libpath:"<%libpath%>" <%endfor%><%if(zzip)%>/libpath: "$(ZZIP_ROOT)\lib" <%endif%>/nologo /version:<%version("1.0")%> /subsystem:<%subsystem("windows")%><%if(type_is_dynamic)%> /dll<%endif%> <%debug_switch("/debug")%> <%if(pdb)%>/pdb:"<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.pdb<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.pdb<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.pdb<%endif%>" <%endif%>/machine:<%machine("I386")%> /out:"<%if(sharedname)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>"<%if(sharedname)%> /implib:"$(OUTDIR)\<%sharedname%><%lib_modifier%>.lib"<%endif%>
 <%endif%>
 <%if(type_is_static)%>
 LINK32=link.exe -lib
@@ -288,4 +288,3 @@ SOURCE=.\<%resource_file%>
 <%endfor%>
 
 !ENDIF
-
