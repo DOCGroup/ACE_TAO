@@ -67,8 +67,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging/MessagingS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/Messaging/messaging_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -308,14 +306,16 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Transport_Timer.h \
- $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
  $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.inl \
  $(TAO_ROOT)/tao/Transport.inl \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
@@ -372,8 +372,8 @@ realclean: clean
  $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- testC.i testS_T.h testS_T.i testS_T.cpp testS.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i testC.i \
+ testS_T.h testS_T.i testS_T.cpp testS.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -387,15 +387,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i
 
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
- $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -493,8 +490,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Get_Opt.i test_i.h \
- testS.h \
+ $(ACE_ROOT)/ace/Get_Opt.i test_i.h testS.h \
  $(TAO_ROOT)/tao/Messaging/MessagingS.h \
  $(TAO_ROOT)/tao/Messaging/messaging_export.h \
  $(TAO_ROOT)/tao/Messaging/Messaging.h \
@@ -643,14 +639,16 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Transport_Timer.h \
- $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
  $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.inl \
  $(TAO_ROOT)/tao/Transport.inl \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
@@ -707,15 +705,13 @@ realclean: clean
  $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- testC.i testS_T.h testS_T.i testS_T.cpp testS.i
+ $(TAO_ROOT)/tao/PortableInterceptorC.i testC.i \
+ testS_T.h testS_T.i testS_T.cpp testS.i
 
 .obj/test_i.o .obj/test_i.so .shobj/test_i.o .shobj/test_i.so: test_i.cpp test_i.h testS.h \
  $(TAO_ROOT)/tao/Messaging/MessagingS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/Messaging/messaging_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -955,14 +951,16 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Transport_Timer.h \
- $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
  $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.inl \
  $(TAO_ROOT)/tao/Transport.inl \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
@@ -1019,14 +1017,11 @@ realclean: clean
  $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- testC.i testS_T.h testS_T.i testS_T.cpp testS.i
+ $(TAO_ROOT)/tao/PortableInterceptorC.i testC.i \
+ testS_T.h testS_T.i testS_T.cpp testS.i
 
-.obj/testC.o .obj/testC.so .shobj/testC.o .shobj/testC.so: testC.cpp testC.h \
- $(TAO_ROOT)/tao/corba.h \
+.obj/testC.o .obj/testC.so .shobj/testC.o .shobj/testC.so: testC.cpp testC.h $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1276,12 +1271,14 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Transport_Timer.h \
- $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
  $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.inl \
  $(TAO_ROOT)/tao/Transport.inl \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
@@ -1365,8 +1362,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging/MessagingS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/Messaging/messaging_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1606,14 +1601,16 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Transport_Timer.h \
- $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
  $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.inl \
  $(TAO_ROOT)/tao/Transport.inl \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
@@ -1670,13 +1667,11 @@ realclean: clean
  $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- testC.i testS_T.h testS_T.i testS_T.cpp testS.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i testC.i \
+ testS_T.h testS_T.i testS_T.cpp testS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
- $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \

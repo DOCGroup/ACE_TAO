@@ -105,11 +105,8 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/GridC.o .obj/GridC.so .shobj/GridC.o .shobj/GridC.so: GridC.cpp GridC.h \
- $(TAO_ROOT)/tao/corba.h \
+.obj/GridC.o .obj/GridC.so .shobj/GridC.o .shobj/GridC.so: GridC.cpp GridC.h $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -288,8 +285,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- GridC.i $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i GridC.i \
+ $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -406,8 +403,6 @@ realclean: clean
 .obj/GridS.o .obj/GridS.so .shobj/GridS.o .shobj/GridS.so: GridS.cpp GridS.h GridC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -586,8 +581,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- GridC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i GridC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -605,9 +599,7 @@ realclean: clean
  GridS_T.h GridS_T.i GridS_T.cpp GridS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
- $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
@@ -749,8 +741,6 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -903,8 +893,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i \
- Simple_util.cpp \
+ $(ACE_ROOT)/ace/Read_Buffer.i Simple_util.cpp \
  $(TAO_ROOT)/tao/debug.h GridC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Typecode.h \
@@ -946,16 +935,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- GridC.i
+ $(TAO_ROOT)/tao/PortableInterceptorC.i GridC.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1108,10 +1094,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i \
- Simple_util.cpp \
- $(TAO_ROOT)/tao/debug.h Grid_i.h \
- GridS.h GridC.h \
+ $(ACE_ROOT)/ace/Read_Buffer.i Simple_util.cpp \
+ $(TAO_ROOT)/tao/debug.h Grid_i.h GridS.h GridC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -1152,8 +1136,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- GridC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i GridC.i \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -1169,8 +1152,6 @@ realclean: clean
 .obj/Grid_i.o .obj/Grid_i.so .shobj/Grid_i.o .shobj/Grid_i.so: Grid_i.cpp Grid_i.h GridS.h GridC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1349,8 +1330,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- GridC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i GridC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1372,8 +1352,6 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1526,8 +1504,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i \
- Simple_util.cpp \
+ $(ACE_ROOT)/ace/Read_Buffer.i Simple_util.cpp \
  $(TAO_ROOT)/tao/debug.h GridC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Typecode.h \
@@ -1569,16 +1546,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- GridC.i
+ $(TAO_ROOT)/tao/PortableInterceptorC.i GridC.i
 
 .obj/Simple_util.o .obj/Simple_util.so .shobj/Simple_util.o .shobj/Simple_util.so: Simple_util.cpp Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1731,8 +1705,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i \
- Simple_util.cpp \
+ $(ACE_ROOT)/ace/Read_Buffer.i Simple_util.cpp \
  $(TAO_ROOT)/tao/debug.h
 
 .obj/Persistent_Client_i.o .obj/Persistent_Client_i.so .shobj/Persistent_Client_i.o .shobj/Persistent_Client_i.so: Persistent_Client_i.cpp Persistent_Client.h \
@@ -1741,8 +1714,6 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1895,8 +1866,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i \
- Simple_util.cpp \
+ $(ACE_ROOT)/ace/Read_Buffer.i Simple_util.cpp \
  $(TAO_ROOT)/tao/debug.h GridC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Typecode.h \
@@ -1938,8 +1908,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- GridC.i
+ $(TAO_ROOT)/tao/PortableInterceptorC.i GridC.i
 
 .obj/persistent_client.o .obj/persistent_client.so .shobj/persistent_client.o .shobj/persistent_client.so: persistent_client.cpp Persistent_Client.h \
  Simple_util.h \
@@ -1947,8 +1916,6 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2101,8 +2068,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i \
- Simple_util.cpp \
+ $(ACE_ROOT)/ace/Read_Buffer.i Simple_util.cpp \
  $(TAO_ROOT)/tao/debug.h GridC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Typecode.h \
@@ -2144,7 +2110,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- GridC.i
+ $(TAO_ROOT)/tao/PortableInterceptorC.i GridC.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -91,8 +91,6 @@ realclean: clean
 .obj/Event_TypesC.o .obj/Event_TypesC.so .shobj/Event_TypesC.o .shobj/Event_TypesC.so: Event_TypesC.cpp Event_TypesC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -272,8 +270,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Event_TypesC.i \
- $(TAO_ROOT)/tao/Stub.h \
+ Event_TypesC.i $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -390,8 +387,6 @@ realclean: clean
 .obj/Event_TypesS.o .obj/Event_TypesS.so .shobj/Event_TypesS.o .shobj/Event_TypesS.so: Event_TypesS.cpp Event_TypesS.h Event_TypesC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -589,9 +584,7 @@ realclean: clean
  Event_TypesS_T.h Event_TypesS_T.i Event_TypesS_T.cpp Event_TypesS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
- $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
@@ -733,8 +726,6 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -887,10 +878,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i \
- ../Simple_util.cpp \
- $(TAO_ROOT)/tao/debug.h \
- Event_TypesC.h \
+ $(ACE_ROOT)/ace/Read_Buffer.i ../Simple_util.cpp \
+ $(TAO_ROOT)/tao/debug.h Event_TypesC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -939,8 +928,6 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1093,11 +1080,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i \
- ../Simple_util.cpp \
- $(TAO_ROOT)/tao/debug.h \
- Server_i.h Event_TypesS.h Event_TypesC.h \
- $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/Read_Buffer.i ../Simple_util.cpp \
+ $(TAO_ROOT)/tao/debug.h Server_i.h Event_TypesS.h \
+ Event_TypesC.h $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Any.h \
@@ -1154,8 +1139,6 @@ realclean: clean
 .obj/Server_i.o .obj/Server_i.so .shobj/Server_i.o .shobj/Server_i.so: Server_i.cpp Server_i.h Event_TypesS.h Event_TypesC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1351,8 +1334,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  Event_TypesS_T.h Event_TypesS_T.i Event_TypesS_T.cpp Event_TypesS.i \
- Event_Types_impl.h \
- $(TAO_ROOT)/tao/ORB_Core.h \
+ Event_Types_impl.h $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Set.h \
  $(TAO_ROOT)/tao/Policy_Set.i \
@@ -1446,8 +1428,6 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1600,10 +1580,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i \
- ../Simple_util.cpp \
- $(TAO_ROOT)/tao/debug.h \
- Event_TypesC.h \
+ $(ACE_ROOT)/ace/Read_Buffer.i ../Simple_util.cpp \
+ $(TAO_ROOT)/tao/debug.h Event_TypesC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -1727,11 +1705,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/Event_Types_impl.o .obj/Event_Types_impl.so .shobj/Event_Types_impl.o .shobj/Event_Types_impl.so: Event_Types_impl.cpp Event_Types_impl.h \
- Event_TypesC.h \
- $(TAO_ROOT)/tao/corba.h \
+ Event_TypesC.h $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1918,8 +1893,6 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2072,8 +2045,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i \
- ../Simple_util.cpp \
+ $(ACE_ROOT)/ace/Read_Buffer.i ../Simple_util.cpp \
  $(TAO_ROOT)/tao/debug.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -92,11 +92,8 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/BankC.o .obj/BankC.so .shobj/BankC.o .shobj/BankC.so: BankC.cpp BankC.h \
- $(TAO_ROOT)/tao/corba.h \
+.obj/BankC.o .obj/BankC.so .shobj/BankC.o .shobj/BankC.so: BankC.cpp BankC.h $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -275,8 +272,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- BankC.i $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i BankC.i \
+ $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -393,8 +390,6 @@ realclean: clean
 .obj/BankS.o .obj/BankS.so .shobj/BankS.o .shobj/BankS.so: BankS.cpp BankS.h BankC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -573,8 +568,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- BankC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i BankC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -592,9 +586,7 @@ realclean: clean
  BankS_T.h BankS_T.i BankS_T.cpp BankS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
- $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
@@ -736,8 +728,6 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -978,22 +968,18 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i \
- ../Simple_util.cpp \
+ $(ACE_ROOT)/ace/Read_Buffer.i ../Simple_util.cpp \
  $(TAO_ROOT)/tao/IORTable/IORTable.h \
  $(TAO_ROOT)/tao/IORTable/iortable_export.h \
  $(TAO_ROOT)/tao/IORTable/IORTableC.h \
  $(TAO_ROOT)/tao/IORTable/IORTableC.i \
- $(TAO_ROOT)/tao/debug.h BankC.h \
- BankC.i
+ $(TAO_ROOT)/tao/debug.h BankC.h BankC.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp ../Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1234,15 +1220,13 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i \
- ../Simple_util.cpp \
+ $(ACE_ROOT)/ace/Read_Buffer.i ../Simple_util.cpp \
  $(TAO_ROOT)/tao/IORTable/IORTable.h \
  $(TAO_ROOT)/tao/IORTable/iortable_export.h \
  $(TAO_ROOT)/tao/IORTable/IORTableC.h \
  $(TAO_ROOT)/tao/IORTable/IORTableC.i \
- $(TAO_ROOT)/tao/debug.h \
- AccountManager_i.h BankS.h BankC.h BankC.i BankS_T.h BankS_T.i \
- BankS_T.cpp BankS.i Account_i.h \
+ $(TAO_ROOT)/tao/debug.h AccountManager_i.h BankS.h \
+ BankC.h BankC.i BankS_T.h BankS_T.i BankS_T.cpp BankS.i Account_i.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -1267,8 +1251,6 @@ realclean: clean
 .obj/Account_i.o .obj/Account_i.so .shobj/Account_i.o .shobj/Account_i.so: Account_i.cpp Account_i.h BankS.h BankC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1447,8 +1429,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- BankC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i BankC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1468,8 +1449,6 @@ realclean: clean
 .obj/AccountManager_i.o .obj/AccountManager_i.so .shobj/AccountManager_i.o .shobj/AccountManager_i.so: AccountManager_i.cpp AccountManager_i.h BankS.h \
  BankC.h $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1648,8 +1627,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- BankC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i BankC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1705,8 +1683,6 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1947,22 +1923,18 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i \
- ../Simple_util.cpp \
+ $(ACE_ROOT)/ace/Read_Buffer.i ../Simple_util.cpp \
  $(TAO_ROOT)/tao/IORTable/IORTable.h \
  $(TAO_ROOT)/tao/IORTable/iortable_export.h \
  $(TAO_ROOT)/tao/IORTable/IORTableC.h \
  $(TAO_ROOT)/tao/IORTable/IORTableC.i \
- $(TAO_ROOT)/tao/debug.h BankC.h \
- BankC.i
+ $(TAO_ROOT)/tao/debug.h BankC.h BankC.i
 
 .obj/Simple_util.o .obj/Simple_util.so .shobj/Simple_util.o .shobj/Simple_util.so: ../Simple_util.cpp ../Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2203,8 +2175,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
- $(ACE_ROOT)/ace/Read_Buffer.i \
- ../Simple_util.cpp \
+ $(ACE_ROOT)/ace/Read_Buffer.i ../Simple_util.cpp \
  $(TAO_ROOT)/tao/IORTable/IORTable.h \
  $(TAO_ROOT)/tao/IORTable/iortable_export.h \
  $(TAO_ROOT)/tao/IORTable/IORTableC.h \

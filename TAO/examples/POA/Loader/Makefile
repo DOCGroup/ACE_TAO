@@ -48,12 +48,9 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/Server_Manager.o .obj/Server_Manager.so .shobj/Server_Manager.o .shobj/Server_Manager.so: Server_Manager.cpp Server_Manager.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- Servant_Activator.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl Servant_Activator.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -234,8 +231,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
- $(ACE_ROOT)/ace/DLL.h \
- Servant_Locator.h \
+ $(ACE_ROOT)/ace/DLL.h Servant_Locator.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -250,8 +246,6 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/Servant_Activator.o .obj/Servant_Activator.so .shobj/Servant_Activator.o .shobj/Servant_Activator.so: Servant_Activator.cpp Servant_Activator.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -440,8 +434,6 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/Servant_Locator.o .obj/Servant_Locator.so .shobj/Servant_Locator.o .shobj/Servant_Locator.so: Servant_Locator.cpp Servant_Locator.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -630,12 +622,9 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Server_Manager.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- Servant_Activator.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl Servant_Activator.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -816,7 +805,6 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
- $(ACE_ROOT)/ace/DLL.h \
- Servant_Locator.h
+ $(ACE_ROOT)/ace/DLL.h Servant_Locator.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
