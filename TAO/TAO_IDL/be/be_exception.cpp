@@ -211,7 +211,7 @@ be_exception::gen_client_inline (void)
       *ci << "// default constructor" << nl;
       *ci << "ACE_INLINE" << nl;
       *ci << this->name () << "::" << this->local_name () << " (void)" << nl;
-      *ci << "\t: CORBA_UserException (CORBA::TypeCode::_duplicate (" <<
+      *ci << "  : CORBA_UserException (CORBA::TypeCode::_duplicate (" <<
         this->tc_name () << "))\n";
       *ci << "{" << nl;
       *ci << "}\n\n";
@@ -269,7 +269,7 @@ be_exception::gen_client_stubs (void)
       *cs << "// copy constructor" << nl;
       *cs << this->name () << "::" << this->local_name () << "(const " <<
         this->name () << " &_tao_excp)" << nl;
-      *cs << "\t:CORBA_UserException (" <<
+      *cs << "  :CORBA_UserException (" <<
         "CORBA::TypeCode::_duplicate (_tao_excp.type ()))" << nl;
       *cs << "{\n";
       cs->incr_indent ();
@@ -325,7 +325,7 @@ be_exception::gen_client_stubs (void)
           cg->pop ();
           *cs  << ")" << nl;
 
-          *cs << "\t: CORBA_UserException " <<
+          *cs << "  : CORBA_UserException " <<
             "(CORBA::TypeCode::_duplicate (" << this->tc_name () <<
             "))" << nl;
           *cs << "{\n";
@@ -352,10 +352,10 @@ be_exception::gen_client_stubs (void)
       cs->incr_indent ();
       *cs << "if (!ACE_OS::strcmp (\"" << this->repoID () <<
         "\", exc->id ())) // same type" << nl;
-      *cs << "\treturn ACE_dynamic_cast (" << this->name () << "_ptr, exc);" <<
+      *cs << "  return ACE_dynamic_cast (" << this->name () << "_ptr, exc);" <<
         nl;
       *cs << "else" << nl;
-      *cs << "\treturn 0;\n";
+      *cs << "  return 0;\n";
       cs->decr_indent ();
       *cs << "}\n\n";
 
