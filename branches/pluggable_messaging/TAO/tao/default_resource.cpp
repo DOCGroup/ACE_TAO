@@ -330,6 +330,17 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
 
   if (factory == end)
     {
+      // If the user did not list any protocols in her svc.conf file
+      // then default to TAO's basic protocols.
+      // You do *NOT* need modify this code to add your own protocol,
+      // instead simply add the following to your svc.conf file:
+      //
+      // dynamic PN_Factory Service_Object * LIB:_make_PN_Protocol_Factory() ""
+      // static Resource_Factory "-ORBProtocolFactory PN_Factory"
+      //
+      // where PN is the name of your protocol and LIB is the base
+      // name of the shared library that implements the protocol.
+      //
       TAO_Protocol_Factory *protocol_factory = 0;
       TAO_Protocol_Item *item = 0;
 
@@ -340,15 +351,18 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
         {
           if (TAO_orbdebug)
             ACE_ERROR ((LM_WARNING,
-                        "TAO (%P|%t) No %s found in Service Repository.  "
-                        "Using default instance IIOP Protocol Factory.\n"));
+                        "TAO (%P|%t) No %s found in Service Repository. "
+                        "Using default instance IIOP Protocol Factory.\n",
+                        "IIOP Protocol Factory"));
 
           ACE_NEW_RETURN (protocol_factory,
                           TAO_IIOP_Protocol_Factory,
                           -1);
         }
 
-      ACE_NEW_RETURN (item, TAO_Protocol_Item ("IIOP_Factory"), -1);
+      ACE_NEW_RETURN (item,
+                      TAO_Protocol_Item ("IIOP_Factory"),
+                      -1);
       item->factory (protocol_factory);
 
       if (this->protocol_factories_.insert (item) == -1)
@@ -701,6 +715,7 @@ ACE_FACTORY_DEFINE (TAO, TAO_Default_Resource_Factory)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX>;
+template class ACE_Malloc_T<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX, ACE_Control_Block>;
 template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX> >;
 
 template class ACE_Select_Reactor_Token_T<ACE_Noop_Token>;
@@ -710,6 +725,7 @@ template class ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Malloc_T<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX, ACE_Control_Block>
 #pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX> >
 
 #pragma instantiate ACE_Select_Reactor_Token_T<ACE_Noop_Token>

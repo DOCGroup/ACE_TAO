@@ -458,7 +458,6 @@ public:
   static CORBA::TypeCode_ptr _tc_InconsistentTypeCode;
 
   // Dynamic Any factory functions.
-  // @@EXC@@ Add the ACE_THROW_SPEC for these functions...
 
   CORBA_DynAny_ptr       create_dyn_any       (const CORBA_Any& any,
                                                CORBA::Environment &ACE_TRY_ENV
@@ -525,16 +524,14 @@ public:
 
   // = ORB event loop methods.
 
-  int run (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  int run (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Instructs the ORB to initialize itself and run its event loop in
   // the current thread, not returning until the ORB has shut down.
   // If an error occurs during initialization or a run-time this
   // method will return -1.
 
   int run (ACE_Time_Value &tv,
-           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Instructs the ORB to initialize itself and run its event loop in
   // the current thread, not returning until the ORB has shut down.
   // If an error occurs during initialization or a run-time this
@@ -545,8 +542,7 @@ public:
   // is returned.
 
   int run (ACE_Time_Value *tv,
-           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Instructs the ORB to initialize itself and run its event loop in
   // the current thread, not returning until the ORB has shut down.
   // If an error occurs during initialization or a run-time this
@@ -557,8 +553,7 @@ public:
   // the value of 1 is returned.
 
   void shutdown (CORBA::Boolean wait_for_completion = 0,
-                 CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                 CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // This operation instructs the ORB to shut down. Shutting down the
   // ORB causes all Object Adapters to be shut down. If
   // <wait_for_completion> parameter is TRUE, this operation blocks
@@ -566,26 +561,25 @@ public:
   // deactivation or other operations associated with object adapters)
   // has completed.
 
-  void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
+  void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  // Destroy the ORB, releasing any resources.  Notice that TAO *cannot*
+  // release the resources even if you have destroyed all the
+  // references to a particular ORB.  CORBA::ORB_init() is required to
+  // return the same pointer if called with the same ORBid, only after
+  // ORB::destroy() is called it may return a new one.
 
   CORBA::Boolean work_pending (CORBA_Environment &ACE_TRY_ENV =
-                               TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                               TAO_default_environment ());
   // Returns an indication of whether the ORB needs to perform some
   // work.
 
   int perform_work (const ACE_Time_Value & = ACE_Time_Value::zero,
                     CORBA_Environment &ACE_TRY_ENV =
-                    TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                    TAO_default_environment ());
   // This operation performs an implementation-defined unit of
   // work. Note that the default behavior is not to block; this
   // behavior can be modified by passing an appropriate
   // <ACE_Time_Value>.
-
-  // @@EXC@@ Add the ACE_THROW_SPEC for these two functions
 
   CORBA_Object_ptr resolve_initial_references (const char *name,
                                                CORBA_Environment &ACE_TRY_ENV =
@@ -617,8 +611,7 @@ public:
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    const CORBA::Any& val,
                                    CORBA_Environment &ACE_TRY_ENV =
-                                       TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException, CORBA::PolicyError));
+                                       TAO_default_environment ());
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
   // ----------------------------------------------------------------
@@ -737,8 +730,7 @@ protected:
 
   int run (ACE_Time_Value *tv,
            int break_on_timeouts,
-           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Implements the run routine
 
 private:
@@ -747,7 +739,7 @@ private:
                                     ACE_Time_Value *timeout,
                                     CORBA::Environment& ACE_TRY_ENV);
   // Resolve the given service based on the service ID.
-  
+
   int multicast_query (char* &buf,
                        const char *service_name,
                        u_short port,
@@ -775,8 +767,7 @@ private:
                                               CORBA::Environment &ACE_TRY_ENV);
   // Convert an URL style IOR into an object reference.
 
-  void check_shutdown (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void check_shutdown (CORBA::Environment &ACE_TRY_ENV);
   // Check if ORB has shutdown.  If it has, throw an exception.
 
 private:
@@ -862,34 +853,34 @@ private:
   CORBA::ORB_ptr &ptr_;
 };
 
-extern TAO_Export void
+TAO_Export void
 operator<<= (CORBA::Any &, const CORBA::ORB::InvalidName &);
-extern TAO_Export void
+TAO_Export void
 operator<<= (CORBA::Any &, CORBA::ORB::InvalidName*);
-extern TAO_Export CORBA::Boolean
+TAO_Export CORBA::Boolean
 operator>>= (const CORBA::Any &, CORBA::ORB::InvalidName *&);
-extern TAO_Export CORBA::Boolean
+TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR &, const CORBA::ORB::InvalidName &);
-extern TAO_Export CORBA::Boolean
+TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR &, CORBA::ORB::InvalidName &);
 
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
-extern TAO_Export ostream &
+TAO_Export ostream &
 operator<< (ostream &, const CORBA::String_var &);
-extern TAO_Export istream &
+TAO_Export istream &
 operator>> (istream &, CORBA::String_var &);
-extern TAO_Export ostream &
+TAO_Export ostream &
 operator<< (ostream &, CORBA::String_out &);
-extern TAO_Export istream &
+TAO_Export istream &
 operator>> (istream &, CORBA::String_out &);
-extern TAO_Export ostream &
+TAO_Export ostream &
 operator<< (ostream &, const CORBA::WString_var &);
-extern TAO_Export istream &
+TAO_Export istream &
 operator>> (istream &, CORBA::WString_var &);
-extern TAO_Export ostream &
+TAO_Export ostream &
 operator<< (ostream &, CORBA::WString_out &);
-extern TAO_Export istream &
+TAO_Export istream &
 operator>> (istream &, CORBA::WString_out &);
 
 # endif /* ACE_LACKS_IOSTREAM_TOTALLY */

@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "tao/IIOP_Connect.h"
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
@@ -13,6 +14,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, IIOP_Connect, "$Id$")
+
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -436,8 +438,12 @@ int
 TAO_IIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &,
                                                     const void *)
 {
-  // Called when buffering timer expires.
-  this->transport ()->flush_buffered_messages ();
+  //
+  // This method is called when buffering timer expires.
+  //
+
+  // Cannot deal with errors, and therefore they are ignored.
+  this->transport ()->send_buffered_messages ();
 
   return 0;
 }

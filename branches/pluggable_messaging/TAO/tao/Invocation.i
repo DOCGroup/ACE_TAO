@@ -47,12 +47,6 @@ TAO_GIOP_Oneway_Invocation::sync_scope (void)
   return this->sync_scope_;
 }
 
-ACE_INLINE TAO_InputCDR &
-TAO_GIOP_Oneway_Invocation::inp_stream (void)
-{
-  return this->rd_.reply_cdr ();
-}
-
 // *********************************************************************
 
 ACE_INLINE

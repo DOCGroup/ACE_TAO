@@ -369,26 +369,22 @@ public:
 
   int run (ACE_Time_Value *tv,
            int break_on_timeouts,
-           CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+           CORBA::Environment &ACE_TRY_ENV);
   // Run the event loop
 
   void shutdown (CORBA::Boolean wait_for_completion,
                  CORBA::Environment &ACE_TRY_ENV =
-                     TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                     TAO_default_environment ());
   // End the event loop
 
   int has_shutdown (void);
   // Get the shutdown flag value
 
   void destroy (CORBA::Environment &ACE_TRY_ENV =
-                    TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                    TAO_default_environment ());
   // Shutdown the ORB and free resources
 
-  void check_shutdown (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void check_shutdown (CORBA::Environment &ACE_TRY_ENV);
   // Check if ORB has shutdown.  If it has, throw an exception.
 
   int thread_per_connection_timeout (ACE_Time_Value &timeout) const;
@@ -438,8 +434,7 @@ protected:
   // Implement the input_cdr_*_allocator() routines using pre-fetched
   // TSS resources.  This minimizes the number of calls to them.
 
-  int open (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  int open (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Set up the ORB Core's acceptor to listen on the
   // previously-specified port for requests.  Returns -1 on failure,
   // else 0.
@@ -733,7 +728,7 @@ private:
 
 // ****************************************************************
 
-extern TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
+TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
 
 #if defined (__ACE_INLINE__)
 # include "tao/ORB_Core.i"

@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 // $Id$
 
 #include "tao/Pluggable.h"
@@ -99,7 +98,7 @@ TAO_Transport::send_buffered_messages (const ACE_Time_Value *max_wait_time)
   // appropriately.
   this->reset_queued_message (queued_message,
                               result);
-  
+
   // Indicate success.
   return result;
 }
@@ -130,26 +129,47 @@ TAO_Transport::dequeue_all (void)
     }
 }
 
-
 void
-TAO_Transport::flush_buffered_messages (void)
+TAO_Transport::reset_queued_message (ACE_Message_Block *message_block,
+                                     size_t bytes_delivered)
 {
-  // If we have a buffering queue.
-  if (this->buffering_queue_)
+  while (message_block != 0 &&
+         bytes_delivered != 0)
     {
-      // Flush all queued messages.
-      while (!this->buffering_queue_->is_empty ())
+      // Partial send.
+      if (message_block->length () > bytes_delivered)
         {
-          // Get the first message from the queue.
-          ACE_Message_Block *queued_message = 0;
-          this->buffering_queue_->dequeue_head (queued_message);
+          // Reset so that we skip this in the next send.
+          message_block->rd_ptr (bytes_delivered);
 
-          // Actual network send. Cannot deal with errors, and
-          // therefore they are ignored.
-          this->send (queued_message);
+          // Hand adjust <message_length>.
+          this->buffering_queue_->message_length (this->buffering_queue_->message_length () - bytes_delivered);
 
-          // Release the memory.
-          queued_message->release ();
+          break;
+        }
+
+      // <message_block> was completely sent.
+      bytes_delivered -= message_block->length ();
+
+      // Check continuation chain.
+      if (message_block->cont ())
+        {
+          // Reset so that we skip this message block in the next send.
+          message_block->rd_ptr (message_block->length ());
+
+          // Hand adjust <message_length>.
+          this->buffering_queue_->message_length (this->buffering_queue_->message_length () - bytes_delivered);
+
+          // Next selection.
+          message_block = message_block->cont ();
+        }
+      else
+        {
+          // Go to the next one.
+          message_block = message_block->next ();
+
+          // Release this <message_block>.
+          this->dequeue_head ();
         }
     }
 }

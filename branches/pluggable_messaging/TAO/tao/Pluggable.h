@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 // $Id$
 
 // ============================================================================
@@ -87,9 +86,9 @@ public:
 
   virtual ssize_t send (TAO_Stub *stub,
                         const ACE_Message_Block *mblk,
-                        ACE_Time_Value *s = 0) = 0;
+                        const ACE_Time_Value *s = 0) = 0;
   virtual ssize_t send (const ACE_Message_Block *mblk,
-                        ACE_Time_Value *s = 0) = 0;
+                        const ACE_Time_Value *s = 0) = 0;
   // Write the complete Message_Block chain to the connection.
   // @@ The ACE_Time_Value *s is just a place holder for now.  It is
   // not clear this this is the best place to specify this.  The actual
@@ -97,12 +96,12 @@ public:
 
   virtual ssize_t send (const u_char *buf,
                         size_t len,
-                        ACE_Time_Value *s = 0) = 0;
+                        const ACE_Time_Value *s = 0) = 0;
   // Write the contents of the buffer of length len to the connection.
 
   virtual ssize_t recv (char *buf,
                         size_t len,
-                        ACE_Time_Value *s = 0) = 0;
+                        const ACE_Time_Value *s = 0) = 0;
   // Read len bytes from into buf.
   // @@ The ACE_Time_Value *s is just a place holder for now.  It is
   // not clear this this is the best place to specify this.  The actual
@@ -199,11 +198,9 @@ public:
   void buffering_timeout_value (const ACE_Time_Value &time);
   // Timeout value associated with buffering.
 
-  void flush_buffered_messages (void);
-  // Flush any messages that have been buffered.
-
   ssize_t send_buffered_messages (const ACE_Time_Value *max_wait_time = 0);
   // Send any messages that have been buffered.
+
 protected:
 
   void dequeue_head (void);
@@ -212,7 +209,7 @@ protected:
 
   void reset_queued_message (ACE_Message_Block *message_block,
                              size_t bytes_delivered);
-  
+
   CORBA::ULong tag_;
   // IOP protocol tag.
 
@@ -310,7 +307,7 @@ public:
 
   CORBA::ULong tag (void) const;
   // The tag identifying the specific ORB transport layer protocol.
-  // For example TAO_IOP_TAG_INTERNET_IOP = 0.  The tag is used in the
+  // For example TAO_TAG_IIOP_PROFILE = 0.  The tag is used in the
   // IOR to identify the type of profile included. IOR -> {{tag0,
   // profile0} {tag1, profole1} ...}  GIOP.h defines typedef
   // CORBA::ULong TAO_IOP_Profile_ID;

@@ -2300,111 +2300,111 @@ TAO_NAMESPACE_CLOSE
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const PortableServer::ThreadPolicyValue &); //
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, PortableServer::ThreadPolicyValue &);
-CORBA::Boolean TAO_Export
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ThreadPolicyValue &); //
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::ThreadPolicyValue &);
+TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR &, const PortableServer::ThreadPolicy_ptr );
-CORBA::Boolean TAO_Export
+TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR &, PortableServer::ThreadPolicy_ptr &);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const PortableServer::LifespanPolicyValue &); //
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, PortableServer::LifespanPolicyValue &);
-CORBA::Boolean TAO_Export
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::LifespanPolicyValue &); //
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::LifespanPolicyValue &);
+TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR &, const PortableServer::LifespanPolicy_ptr );
-CORBA::Boolean TAO_Export
+TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR &, PortableServer::LifespanPolicy_ptr &);
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const PortableServer::IdUniquenessPolicyValue &); //
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, PortableServer::IdUniquenessPolicyValue &);
-CORBA::Boolean TAO_Export
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::IdUniquenessPolicyValue &); //
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::IdUniquenessPolicyValue &);
+TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR &, const PortableServer::IdUniquenessPolicy_ptr );
-CORBA::Boolean TAO_Export
+TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR &, PortableServer::IdUniquenessPolicy_ptr &);
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const PortableServer::IdAssignmentPolicyValue &); //
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, PortableServer::IdAssignmentPolicyValue &);
-CORBA::Boolean TAO_Export
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::IdAssignmentPolicyValue &); //
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::IdAssignmentPolicyValue &);
+TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR &, const PortableServer::IdAssignmentPolicy_ptr );
-CORBA::Boolean TAO_Export
+TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR &, PortableServer::IdAssignmentPolicy_ptr &);
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const PortableServer::ImplicitActivationPolicyValue &); //
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, PortableServer::ImplicitActivationPolicyValue &);
-CORBA::Boolean TAO_Export
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ImplicitActivationPolicyValue &); //
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::ImplicitActivationPolicyValue &);
+TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR &, const PortableServer::ImplicitActivationPolicy_ptr );
-CORBA::Boolean TAO_Export
+TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR &, PortableServer::ImplicitActivationPolicy_ptr &);
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const PortableServer::ServantRetentionPolicyValue &); //
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, PortableServer::ServantRetentionPolicyValue &);
-CORBA::Boolean TAO_Export
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ServantRetentionPolicyValue &); //
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::ServantRetentionPolicyValue &);
+TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR &, const PortableServer::ServantRetentionPolicy_ptr );
-CORBA::Boolean TAO_Export
+TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR &, PortableServer::ServantRetentionPolicy_ptr &);
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const PortableServer::RequestProcessingPolicyValue &); //
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, PortableServer::RequestProcessingPolicyValue &);
-CORBA::Boolean TAO_Export
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::RequestProcessingPolicyValue &); //
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::RequestProcessingPolicyValue &);
+TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR &, const PortableServer::RequestProcessingPolicy_ptr );
-CORBA::Boolean TAO_Export
+TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR &, PortableServer::RequestProcessingPolicy_ptr &);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 // POA's exceptions.
-void TAO_Export operator<<= (CORBA::Any &, const PortableServer::POA::AdapterAlreadyExists &); // copying version
-void TAO_Export operator<<= (CORBA::Any &, PortableServer::POA::AdapterAlreadyExists*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableServer::POA::AdapterAlreadyExists *&);
+TAO_Export void operator<<= (CORBA::Any &, const PortableServer::POA::AdapterAlreadyExists &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, PortableServer::POA::AdapterAlreadyExists*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POA::AdapterAlreadyExists *&);
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-void TAO_Export operator<<= (CORBA::Any &, const PortableServer::POA::AdapterInactive &); // copying version
-void TAO_Export operator<<= (CORBA::Any &, PortableServer::POA::AdapterInactive*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableServer::POA::AdapterInactive *&);
+TAO_Export void operator<<= (CORBA::Any &, const PortableServer::POA::AdapterInactive &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, PortableServer::POA::AdapterInactive*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POA::AdapterInactive *&);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-void TAO_Export operator<<= (CORBA::Any &, const PortableServer::POA::AdapterNonExistent &); // copying version
-void TAO_Export operator<<= (CORBA::Any &, PortableServer::POA::AdapterNonExistent*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableServer::POA::AdapterNonExistent *&);
-void TAO_Export operator<<= (CORBA::Any &, const PortableServer::POA::InvalidPolicy &); // copying version
-void TAO_Export operator<<= (CORBA::Any &, PortableServer::POA::InvalidPolicy*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableServer::POA::InvalidPolicy *&);
+TAO_Export void operator<<= (CORBA::Any &, const PortableServer::POA::AdapterNonExistent &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, PortableServer::POA::AdapterNonExistent*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POA::AdapterNonExistent *&);
+TAO_Export void operator<<= (CORBA::Any &, const PortableServer::POA::InvalidPolicy &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, PortableServer::POA::InvalidPolicy*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POA::InvalidPolicy *&);
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-void TAO_Export operator<<= (CORBA::Any &, const PortableServer::POA::NoServant &); // copying version
-void TAO_Export operator<<= (CORBA::Any &, PortableServer::POA::NoServant*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableServer::POA::NoServant *&);
+TAO_Export void operator<<= (CORBA::Any &, const PortableServer::POA::NoServant &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, PortableServer::POA::NoServant*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POA::NoServant *&);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-void TAO_Export operator<<= (CORBA::Any &, const PortableServer::POA::ObjectAlreadyActive &); // copying version
-void TAO_Export operator<<= (CORBA::Any &, PortableServer::POA::ObjectAlreadyActive*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableServer::POA::ObjectAlreadyActive *&);
-void TAO_Export operator<<= (CORBA::Any &, const PortableServer::POA::ObjectNotActive &); // copying version
-void TAO_Export operator<<= (CORBA::Any &, PortableServer::POA::ObjectNotActive*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableServer::POA::ObjectNotActive *&);
-void TAO_Export operator<<= (CORBA::Any &, const PortableServer::POA::ServantAlreadyActive &); // copying version
-void TAO_Export operator<<= (CORBA::Any &, PortableServer::POA::ServantAlreadyActive*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableServer::POA::ServantAlreadyActive *&);
-void TAO_Export operator<<= (CORBA::Any &, const PortableServer::POA::ServantNotActive &); // copying version
-void TAO_Export operator<<= (CORBA::Any &, PortableServer::POA::ServantNotActive*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableServer::POA::ServantNotActive *&);
-void TAO_Export operator<<= (CORBA::Any &, const PortableServer::POA::WrongAdapter &); // copying version
-void TAO_Export operator<<= (CORBA::Any &, PortableServer::POA::WrongAdapter*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableServer::POA::WrongAdapter *&);
-void TAO_Export operator<<= (CORBA::Any &, const PortableServer::POA::WrongPolicy &); // copying version
-void TAO_Export operator<<= (CORBA::Any &, PortableServer::POA::WrongPolicy*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableServer::POA::WrongPolicy *&);
+TAO_Export void operator<<= (CORBA::Any &, const PortableServer::POA::ObjectAlreadyActive &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, PortableServer::POA::ObjectAlreadyActive*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POA::ObjectAlreadyActive *&);
+TAO_Export void operator<<= (CORBA::Any &, const PortableServer::POA::ObjectNotActive &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, PortableServer::POA::ObjectNotActive*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POA::ObjectNotActive *&);
+TAO_Export void operator<<= (CORBA::Any &, const PortableServer::POA::ServantAlreadyActive &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, PortableServer::POA::ServantAlreadyActive*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POA::ServantAlreadyActive *&);
+TAO_Export void operator<<= (CORBA::Any &, const PortableServer::POA::ServantNotActive &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, PortableServer::POA::ServantNotActive*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POA::ServantNotActive *&);
+TAO_Export void operator<<= (CORBA::Any &, const PortableServer::POA::WrongAdapter &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, PortableServer::POA::WrongAdapter*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POA::WrongAdapter *&);
+TAO_Export void operator<<= (CORBA::Any &, const PortableServer::POA::WrongPolicy &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, PortableServer::POA::WrongPolicy*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POA::WrongPolicy *&);
 
 // POA::Current && its exception.
-CORBA::Boolean TAO_Export
+TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR &, const PortableServer::Current_ptr );
-CORBA::Boolean TAO_Export
+TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR &, PortableServer::Current_ptr &);
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const PortableServer::Current::NoContext &); //
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, PortableServer::Current::NoContext &);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::Current::NoContext &); //
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::Current::NoContext &);
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

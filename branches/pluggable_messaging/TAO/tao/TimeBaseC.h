@@ -134,20 +134,20 @@ TAO_NAMESPACE  TimeBase
 }
 TAO_NAMESPACE_CLOSE // module TimeBase
 
-void TAO_Export operator<<= (CORBA::Any &, const TimeBase::UtcT &); // copying version
-void TAO_Export operator<<= (CORBA::Any &, TimeBase::UtcT*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, TimeBase::UtcT *&);
-void TAO_Export operator<<= (CORBA::Any &, const TimeBase::IntervalT &); // copying version
-void TAO_Export operator<<= (CORBA::Any &, TimeBase::IntervalT*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, TimeBase::IntervalT *&);
+TAO_Export void operator<<= (CORBA::Any &, const TimeBase::UtcT &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, TimeBase::UtcT*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, TimeBase::UtcT *&);
+TAO_Export void operator<<= (CORBA::Any &, const TimeBase::IntervalT &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, TimeBase::IntervalT*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, TimeBase::IntervalT *&);
 
 #if defined (__ACE_INLINE__)
 #include "tao/TimeBaseC.i"
 #else
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const TimeBase::UtcT &);
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, TimeBase::UtcT &);
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const TimeBase::IntervalT &);
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, TimeBase::IntervalT &);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TimeBase::UtcT &);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, TimeBase::UtcT &);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TimeBase::IntervalT &);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, TimeBase::IntervalT &);
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

@@ -1591,7 +1591,6 @@ int
 TAO_ORB_Core::run (ACE_Time_Value *tv,
                    int break_on_timeouts,
                    CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG,
@@ -1681,7 +1680,6 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 void
 TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
                         CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Is the <wait_for_completion> semantics for this thread correct?
   TAO_POA::check_for_valid_wait_for_completions (wait_for_completion,
@@ -1716,7 +1714,6 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
 
 void
 TAO_ORB_Core::destroy (CORBA_Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->has_shutdown () == 0)
     {
@@ -1746,7 +1743,6 @@ TAO_ORB_Core::destroy (CORBA_Environment &ACE_TRY_ENV)
 
 int
 TAO_ORB_Core::open (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Double check pattern
   if (this->open_called_ == 1)

@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 // $Id$
 
 #include "tao/UIOP_Transport.h"
@@ -321,7 +320,7 @@ TAO_UIOP_Client_Transport::register_handler (void)
 ssize_t
 TAO_UIOP_Transport::send (TAO_Stub *stub,
                           const ACE_Message_Block *message_block,
-                          ACE_Time_Value *max_wait_time)
+                          const ACE_Time_Value *max_wait_time)
 {
   if (stub == 0)
     {
@@ -341,7 +340,7 @@ TAO_UIOP_Transport::send (TAO_Stub *stub,
 
 ssize_t
 TAO_UIOP_Transport::send (const ACE_Message_Block *message_block,
-                          ACE_Time_Value *max_wait_time)
+                          const ACE_Time_Value *max_wait_time)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_SEND_START);
 
@@ -353,7 +352,7 @@ TAO_UIOP_Transport::send (const ACE_Message_Block *message_block,
 ssize_t
 TAO_UIOP_Transport::send (const u_char *buf,
                           size_t len,
-                          ACE_Time_Value *max_wait_time)
+                          const ACE_Time_Value *max_wait_time)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_SEND_START);
 
@@ -365,7 +364,7 @@ TAO_UIOP_Transport::send (const u_char *buf,
 ssize_t
 TAO_UIOP_Transport::recv (char *buf,
                           size_t len,
-                          ACE_Time_Value *max_wait_time)
+                          const ACE_Time_Value *max_wait_time)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_RECEIVE_START);
 
