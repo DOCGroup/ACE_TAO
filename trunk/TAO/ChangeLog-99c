@@ -1,3 +1,21 @@
+Sat Aug 21 03:32:52 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/Simple/time-date/Time_Date.dsp:
+	* examples/Simple/time-date/client.dsp:
+	* examples/Simple/time-date/server.dsp: Added definition of
+	  Alt_Resource_Factory_HAS_DLL=1 to all projects.
+
+	* examples/Simple/time-date/Time_Date.cpp
+	  (Alt_Resource_Factory_BUILD_DLL): Define this macro.
+
+	* tao/default_resource.h (TAO_Default_Resource_Factory): Added
+	  TAO_Export specifier to the class.
+
+	* tao/ORB.cpp (open): Moved the setting of <open_called_> *after*
+	  the ORB has actually opened.  Otherwise, the double-checked
+	  locking here would be useless and race condition might occurred
+	  (it did, in time-date example.)
+
 Fri Aug 20 15:51:29 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB.cpp (resolve_initial_references): Changed to search for
