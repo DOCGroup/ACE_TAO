@@ -1,3 +1,14 @@
+Wed Oct  6 15:40:11 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* ace/OS.i : Initialised the qos_len variable to sizeof (QOS)
+	  within the ioctl () method for ACE_SIO_GET_QOS.
+ 	
+	* ACE_wrappers/examples/QOS/client.cpp: 
+        * ACE_wrappers/examples/QOS/server.cpp: Added a test for the 
+	  ACE_SIO_GET_QOS io control code. The Sending and Receiving
+	  QOS flowspec parameters are extracted and printed for both the
+	  sender and receiver using this control code.
+	
 Wed Oct  6 08:36:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.h: Changed
