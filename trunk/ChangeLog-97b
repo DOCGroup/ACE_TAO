@@ -115,9 +115,6 @@ Tue Sep 09 09:14:07 1997  David L. Levine  <levine@cs.wustl.edu>
 	  in OS.cpp.  Thanks to Nanbor for reporting problems at shutdown
 	  with the old ACE_TSS_Cleanup_Lock static instance.
 
-	* ace/config-hpux-10.x.h: added ACE_LACKS_LINEBUFFERED_STREAMBUF.
-	  Thanks to Gonzo for reporting this.
-
 	* include/makeinclude/platform_sunos5_sunc++.GNU: when building
 	  libraries only, don't use CC to create individual .shobj/*.so
 	  files.  The .so files are not needed to build libraries, because
