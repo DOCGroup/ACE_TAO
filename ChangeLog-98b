@@ -1,4 +1,4 @@
-Thu Dec 24 03:14:25 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+Fri Dec 25 01:55:32 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Hash_Map_Manager: There are two problems with the current
  	  implementation of Hash_Map_Manager:
