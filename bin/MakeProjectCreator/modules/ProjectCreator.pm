@@ -2616,6 +2616,12 @@ sub preserve_assignment_order {
   return 1;
 }
 
+
+sub dependency_combined_static_library {
+  #my($self) = shift;
+  return defined $ENV{MPC_DEPENDENCY_COMBINED_STATIC_LIBRARY};
+}
+
 # ************************************************************
 # Virtual Methods To Be Overridden
 # ************************************************************

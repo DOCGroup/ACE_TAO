@@ -111,6 +111,17 @@ vc71 and va4 project names will no longer automatically have _Static
 appended to the project name when generating static projects.  This can
 still be achieved by using the -name_modifier option.
 
+When generating static projects, inter-project dependencies will not be
+generated for libraries within vc6, em3, vc7 or vc71 workspaces.  The reason
+is due to the fact that each static library that depended upon another would
+be combined at the library creation stage, resulting in extremely large
+libraries.
+
+This behavior can be modified by setting the
+MPC_DEPENDENCY_COMBINED_STATIC_LIBRARY environment variable.  It will force
+MPC to generate inter-project dependencies for libraries within a single
+workspace.
+
 The -name_modifier option can be used to modify the generated workspace or
 project name.  The parameter to the -name_modifier option is a pattern where
 an asterisk (*) within the pattern is replaced by the actual workspace or

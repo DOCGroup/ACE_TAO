@@ -46,8 +46,10 @@ sub translate_value {
     $val = '';
 
     ## Only write dependencies for non-static projects
-    ## and static exe projects
-    if ($self->get_static() == 0 || $self->exe_target()) {
+    ## and static exe projects, unless the user wants the
+    ## dependency combined static library.
+    if ($self->dependency_combined_static_library() ||
+        $self->get_static() == 0 || $self->exe_target()) {
       foreach my $entry (@$arr) {
         $val .= '"' . $entry . '" ';
       }
