@@ -6,11 +6,15 @@
 #include "orbsvcs/Security/Security_ORBInitializer.h"  // @todo:
                                                        // should go away
 
+#include "tao/debug.h"
+
 #include "ace/SSL/SSL_Context.h"
+
 
 ACE_RCSID (TAO_SSLIOP,
            SSLIOP_Factory,
            "$Id$")
+
 
 static const char prefix_[] = "iiop";
 
@@ -220,7 +224,7 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
       dhparams_path = certificate_path;
       dhparams_type = certificate_type;
     }
-  
+
   if (dhparams_path != 0)
     {
       if (ACE_SSL_Context::instance ()->dh_params (dhparams_path,
@@ -237,7 +241,7 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
                             ACE_TEXT ("unable to set ")
                             ACE_TEXT ("DH parameters <%s>"),
                             dhparams_path));
-              return -1; 
+              return -1;
             }
           else
             {
