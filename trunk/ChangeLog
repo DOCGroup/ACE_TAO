@@ -1,3 +1,7 @@
+Tue Jul 17 13:00:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/run_test.lst: Enabled the MEM_Stream test on Linux. 
+
 Mon Jul 16 14:59:32 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Log_Msg_UNIX_Syslog.cpp (open): Add an ACE_const_cast()
