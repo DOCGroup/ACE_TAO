@@ -69,6 +69,8 @@ protected:
 //    that can minimize the footprint of systems that use only one of
 //    the strategies....
 
+// *********************************************************************
+
 class TAO_Export TAO_Wait_On_Reactor : public TAO_Wait_Strategy
 {
   // = TITLE
@@ -99,6 +101,8 @@ private:
   // to exit the event loop.
 };
 
+// *********************************************************************
+
 class TAO_Export TAO_Wait_On_Leader_Follower : public TAO_Wait_Strategy
 {
   // = TITLE
@@ -116,7 +120,45 @@ public:
 
   virtual ~TAO_Wait_On_Leader_Follower (void);
   // Destructor.
+  
+  // = Documented in TAO_Wait_Strategy.
 
+  // virtual int sending_request (TAO_ORB_Core *orb_core,
+  //                              int two_way);
+  
+  // virtual int wait (ACE_Time_Value *max_wait_time,
+  //                   int &reply_received);
+
+  // virtual int handle_input (void);
+  
+  virtual int register_handler (void);
+};
+
+// *********************************************************************
+
+class TAO_Export TAO_Exclusive_Wait_On_Leader_Follower : public TAO_Wait_On_Leader_Follower
+{
+  // = TITLE
+  //
+  //    Wait according to the Leader-Follower model. Leader does the
+  //    event loop of the Reactor and the Followers wait on the
+  //    condition variable.
+  //
+  // = DESCRIPTION
+  //    
+  //     This is strategy is to work with the Exclusive Transport Mux
+  //     Strategy. This was the original implementation of Leader
+  //     Follower before Muxed Transport was introduced. Here the
+  //     state variables such as Condition Variable etc are kept in
+  //     the <Wait Strategy> which is a per Transport object.
+
+public:
+  TAO_Exclusive_Wait_On_Leader_Follower (TAO_Transport *transport);
+  // Constructor.
+
+  virtual ~TAO_Exclusive_Wait_On_Leader_Follower (void);
+  // Destructor.
+  
   // = Documented in TAO_Wait_Strategy.
 
   virtual int sending_request (TAO_ORB_Core *orb_core,
@@ -124,7 +166,7 @@ public:
   virtual int wait (ACE_Time_Value *max_wait_time,
                     int &reply_received);
   virtual int handle_input (void);
-  virtual int register_handler (void);
+  // virtual int register_handler (void);
 
 protected:
   ACE_SYNCH_CONDITION* cond_response_available (void);
@@ -150,6 +192,44 @@ protected:
   // that happens we block on the leader/follower condition variable
   // or the reactor event loop.
 };
+
+// *********************************************************************
+
+class TAO_Export TAO_Muxed_Wait_On_Leader_Follower : public TAO_Wait_On_Leader_Follower
+{
+  // = TITLE
+  //
+  //    Wait according to the Leader-Follower model. Leader does the
+  //    event loop of the Reactor and the Followers wait on the
+  //    condition variable.
+  //
+  // = DESCRIPTION
+  //
+  //    This impelementation is to work with the Muxed Transport
+  //    Mechanism. Here the state variables such as <Condition
+  //    Variable> etc cannot be kept in the Wait Strategy, since the
+  //    Wait Strategy is per Transport object and here the Transport
+  //    is Muxed and hence there are multiple threads running in the
+  //    same Transport context. 
+
+public:
+  TAO_Muxed_Wait_On_Leader_Follower (TAO_Transport *transport);
+  // Constructor.
+
+  virtual ~TAO_Muxed_Wait_On_Leader_Follower (void);
+  // Destructor.
+  
+  // = Documented in TAO_Wait_Strategy.
+  
+  virtual int sending_request (TAO_ORB_Core *orb_core,
+                               int two_way);
+  virtual int wait (ACE_Time_Value *max_wait_time,
+                    int &reply_received);
+  virtual int handle_input (void);
+  // virtual int register_handler (void);
+};
+
+// *********************************************************************
 
 class TAO_Export TAO_Wait_On_Read :  public TAO_Wait_Strategy
 {

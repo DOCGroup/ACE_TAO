@@ -107,7 +107,27 @@ TAO_Wait_On_Reactor::register_handler (void)
 
 // Constructor.
 TAO_Wait_On_Leader_Follower::TAO_Wait_On_Leader_Follower (TAO_Transport *transport)
-  : TAO_Wait_Strategy (transport),
+  : TAO_Wait_Strategy (transport)
+{
+}
+
+// Destructor.
+TAO_Wait_On_Leader_Follower::~TAO_Wait_On_Leader_Follower (void)
+{
+}
+
+// Register the handler.
+int
+TAO_Wait_On_Leader_Follower::register_handler (void)
+{
+  return this->transport_->register_handler ();
+}
+
+// *********************************************************************
+
+// Constructor.
+TAO_Exclusive_Wait_On_Leader_Follower::TAO_Exclusive_Wait_On_Leader_Follower (TAO_Transport *transport)
+  : TAO_Wait_On_Leader_Follower (transport),
     calling_thread_ (ACE_OS::NULL_thread),
     cond_response_available_ (0),
     expecting_response_ (0),
@@ -116,7 +136,7 @@ TAO_Wait_On_Leader_Follower::TAO_Wait_On_Leader_Follower (TAO_Transport *transpo
 }
 
 // Destructor.
-TAO_Wait_On_Leader_Follower::~TAO_Wait_On_Leader_Follower (void)
+TAO_Exclusive_Wait_On_Leader_Follower::~TAO_Exclusive_Wait_On_Leader_Follower (void)
 {
   delete this->cond_response_available_;
   this->cond_response_available_ = 0;
@@ -127,7 +147,7 @@ TAO_Wait_On_Leader_Follower::~TAO_Wait_On_Leader_Follower (void)
 //    with the <Transport> object and <two_way> flag wont make sense
 //    at this level since this is common for AMI also. (Alex).
 int
-TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
+TAO_Exclusive_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
                                               int two_way)
 {
   {
@@ -172,7 +192,7 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
 }
 
 int
-TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
+TAO_Exclusive_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
                                    int &)
 {
   // Cache the ORB core, it won't change and is used multiple times
@@ -214,7 +234,7 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
       // wake up multiple times from the CV loop
       if (leader_follower.add_follower (cond) == -1)
         ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) TAO_Wait_On_Leader_Follower::wait - "
+                    "TAO (%P|%t) TAO_Exclusive_Wait_On_Leader_Follower::wait - "
                     "add_follower failed for <%x>\n",
                     cond));
 
@@ -239,7 +259,7 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
       countdown.update ();
       if (leader_follower.remove_follower (cond) == -1)
         ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) TAO_Wait_On_Leader_Follower::wait - "
+                    "TAO (%P|%t) TAO_Exclusive_Wait_On_Leader_Follower::wait - "
                     "remove_follower failed for <%x>\n", cond));
 
       //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - done (follower:%d) on <%x>\n",
@@ -318,13 +338,13 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
 
   if (leader_follower.elect_new_leader () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO:%N:%l:(%P|%t):TAO_Wait_On_Leader_Follower::send_request: "
+                       "TAO:%N:%l:(%P|%t):TAO_Exclusive_Wait_On_Leader_Follower::send_request: "
                        "Failed to unset the leader and wake up a new follower.\n"),
                       -1);
 
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO:%N:%l:(%P|%t):TAO_Wait_On_Leader_Follower::wait: "
+                       "TAO:%N:%l:(%P|%t):TAO_Exclusive_Wait_On_Leader_Follower::wait: "
                        "handle_events failed.\n"),
                       -1);
 
@@ -357,7 +377,7 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
 
 // Handle the input. Return -1 on error, 0 on success.
 int
-TAO_Wait_On_Leader_Follower::handle_input (void)
+TAO_Exclusive_Wait_On_Leader_Follower::handle_input (void)
 {
   TAO_ORB_Core* orb_core =
     this->transport_->orb_core ();
@@ -416,15 +436,8 @@ TAO_Wait_On_Leader_Follower::handle_input (void)
   return result;
 }
 
-// Register the handler.
-int
-TAO_Wait_On_Leader_Follower::register_handler (void)
-{
-  return this->transport_->register_handler ();
-}
-
 ACE_SYNCH_CONDITION *
-TAO_Wait_On_Leader_Follower::cond_response_available (void)
+TAO_Exclusive_Wait_On_Leader_Follower::cond_response_available (void)
 {
   // @@ TODO This condition variable should per-ORB-per-thread, not
   // per-connection, it is a waste to have more than one of this in
@@ -441,7 +454,7 @@ TAO_Wait_On_Leader_Follower::cond_response_available (void)
 }
 
 void
-TAO_Wait_On_Leader_Follower::wake_up (void)
+TAO_Exclusive_Wait_On_Leader_Follower::wake_up (void)
 {
   if (ACE_OS::thr_equal (this->calling_thread_, ACE_Thread::self ()))
     {
@@ -462,6 +475,43 @@ TAO_Wait_On_Leader_Follower::wake_up (void)
 
   if (cond != 0)
     (void) cond->signal ();
+}
+
+// *********************************************************************
+
+// Constructor.
+TAO_Muxed_Wait_On_Leader_Follower::TAO_Muxed_Wait_On_Leader_Follower (TAO_Transport *transport)
+  : TAO_Wait_On_Leader_Follower (transport)
+{
+}
+
+// Destructor.
+TAO_Muxed_Wait_On_Leader_Follower::~TAO_Muxed_Wait_On_Leader_Follower (void)
+{
+}
+
+// @@ Why do we need <orb_core> and the <two_way> flag? <orb_core> is
+//    with the <Transport> object and <two_way> flag wont make sense
+//    at this level since this is common for AMI also. (Alex).
+int
+TAO_Muxed_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
+                                                    int two_way)
+{
+  return 0;
+}
+
+int
+TAO_Muxed_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
+                                         int &reply_received)
+{
+  return 0;
+}
+
+// Handle the input. Return -1 on error, 0 on success.
+int
+TAO_Muxed_Wait_On_Leader_Follower::handle_input (void)
+{
+  return 0;
 }
 
 // *********************************************************************
