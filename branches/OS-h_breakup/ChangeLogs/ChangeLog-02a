@@ -1,3 +1,10 @@
+Mon May  6 19:11:05 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/Sched_Params.cpp:
+
+	  Added include of OS.h when ACE_HAS_PRIOCNTL && ACE_HAS_STHREADS
+	  are defined.
+
 Mon May  6 15:53:39 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/Array_Base.cpp:

@@ -24,6 +24,7 @@
 
 #if defined (ACE_HAS_PRIOCNTL) && defined (ACE_HAS_STHREADS)
 # include "ace/OS_String.h"
+# include "ace/OS.h"
 #endif /* ACE_HAS_PRIOCNTL && ACE_HAS_STHREADS */
 
 ACE_RCSID(ace, Sched_Params, "$Id$")
