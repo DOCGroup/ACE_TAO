@@ -3404,7 +3404,6 @@ ACE_OS::thr_setspecific (ACE_OS_thread_key_t key, void *data)
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setspecific (key, data), ace_result_), int, -1);
 #     elif defined (ACE_HAS_WTHREADS)
     ::TlsSetValue (key, data);
-    ACE_TSS_Cleanup::instance ()->key_used (key);
     return 0;
 #     endif /* ACE_HAS_STHREADS */
 #   else
