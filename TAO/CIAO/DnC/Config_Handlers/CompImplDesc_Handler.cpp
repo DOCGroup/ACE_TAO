@@ -13,6 +13,9 @@
 #include "CompIntrDesc_Handler.h"
 #include "CompImplDesc_Handler.h"
 
+#include "Process_Basic_Type.h"
+#include "Process_Element.h"
+
 #include <iostream>
 
 using std::cerr;
@@ -37,7 +40,7 @@ void CompImplDesc_Handler::process_ComponentImplementationDescription
       else if
         (process_string (this->iter_, node_name, "UUID", cid.UUID));
       else if
-        (process_sequence_remote<Deployment::ComponentInterfaceDescription, CompIntrDesc_Handler>
+        (process_element_remote<Deployment::ComponentInterfaceDescription, CompIntrDesc_Handler>
          (this->doc_, this->iter_, node,
           node_name, "implements", cid.implements,
           &CompIntrDesc_Handler::process_ComponentInterfaceDescription, this->id_map_));
@@ -49,7 +52,7 @@ void CompImplDesc_Handler::process_ComponentImplementationDescription
       else if
         (process_sequence_remote<Deployment::MonolithicImplementationDescription, MID_Handler>
          (this->doc_, this->iter_, node,
-          node_name, "monolithicImpl", cid.monolothicImpl,
+          node_name, "monolithicImpl", cid.monolithicImpl,
           &MID_Handler::process_MonolithicImplementationDescription, this->id_map_));
       else if
         (process_sequence_common<Deployment::Property>
@@ -83,4 +86,4 @@ void CompImplDesc_Handler::process_ComponentImplementationDescription
   return;
 }
 
-END_DEPLOYMENT_NAMESAPCE
+END_DEPLOYMENT_NAMESPACE

@@ -274,7 +274,7 @@ void Plan_Handler::process_ccd
 (DOMNodeIterator* iter,
  Deployment::ComponentInterfaceDescription& cid)
 {
-  CCD_Handler handler (iter, false);
+  CompIntrDesc_Handler handler (iter, false);
   handler.process_ComponentInterfaceDescription (cid);
 }
 

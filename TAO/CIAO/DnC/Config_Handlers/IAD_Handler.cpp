@@ -9,6 +9,9 @@
 #include "NIA_Handler.h"
 #include "IAD_Handler.h"
 
+#include "Process_Basic_Type.h"
+#include "Process_Element.h"
+
 #include <iostream>
 
 using std::cerr;
@@ -39,7 +42,7 @@ void IAD_Handler::process_ImplementationArtifactDescription
                                                        &Property_Handler::process_Property,
                                                        this->id_map_));
       else if
-        (process_sequence_common<Deployment::Requirement>(node->getOwnerDocument(), iter, node,
+        (process_sequence_common<Deployment::Requirement>(node->getOwnerDocument(), this->iter_, node,
                                                           node_name, "deployRequirement", iad.deployRequirement,
                                                           &Requirement_Handler::process_Requirement,
                                                           this->id_map_));

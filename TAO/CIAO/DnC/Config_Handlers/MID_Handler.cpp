@@ -25,7 +25,7 @@ void MID_Handler::process_MonolithicImplementationDescription
        node != 0;
        node = this->iter_->nextNode())
     {
-      XStr name (node->getNodeName());
+      XStr node_name (node->getNodeName());
 
       if (false);
       else if

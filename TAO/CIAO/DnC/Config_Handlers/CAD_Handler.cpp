@@ -4,10 +4,14 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
 
+#include "ERE_Handler.h"
+#include "CEPE_Handler.h"
+#include "CPR_Handler.h"
 #include "CAD_Handler.h"
 #include "Property_Handler.h"
 #include "Requirement_Handler.h"
 #include "CompPkgDesc_Handler.h"
+#include "Process_Basic_Type.h"
 #include "Process_Element.h"
 
 #include <iostream>
@@ -29,7 +33,7 @@ void CAD_Handler::process_ComponentAssemblyDescription
 
       if (false);
       else if
-        (process_sequence_local<Deployment::SubcomponentInstantiationDescriptions>
+        (process_sequence_local<Deployment::SubcomponentInstantiationDescription>
          (this->doc_, this->iter_, node,
           node_name, "instance", cad.instance,
           this, &CAD_Handler::process_instance));
@@ -39,7 +43,7 @@ void CAD_Handler::process_ComponentAssemblyDescription
           node_name, "connection", cad.connection,
           this, &CAD_Handler::process_connection));
       else if
-        (process_sequence_local<Deployment::AssemblyPropertyMappings>
+        (process_sequence_local<Deployment::AssemblyPropertyMapping>
          (this->doc_, this->iter_, node,
           node_name, "externalProperty", cad.externalProperty,
           this, &CAD_Handler::process_property));
@@ -120,7 +124,7 @@ void CAD_Handler::process_instance (DOMNodeIterator* iter,
       else if
         (process_sequence_remote<Deployment::ComponentPackageDescription, CompPkgDesc_Handler>
          (this->doc_, this->iter_, node,
-          node_name, "Package", sid.Package,
+          node_name, "package", sid.package,
           &CompPkgDesc_Handler::process_ComponentPackageDescription, this->id_map_));
       else if
         (process_sequence_common<Deployment::Property>(this->doc_, this->iter_, node,
@@ -174,10 +178,10 @@ void CAD_Handler::process_connection (DOMNodeIterator* iter,
           node_name, "internalEndpoint", acd.internalEndpoint,
           this, &CAD_Handler::process_spe));
       else if
-        (process_sequence_common<Deployment::ExternalReferenceEndpoints>
+        (process_sequence_common<Deployment::ExternalReferenceEndpoint>
          (node->getOwnerDocument(), iter, node,
           node_name, "externalReference", acd.externalReference,
-          &ERE_Handler::process_ExternalReferenceEndpoints,
+          &ERE_Handler::process_ExternalReferenceEndpoint,
           this->id_map_));
       else
         {
