@@ -1,5 +1,5 @@
 Thu Sep  9 16:16:48 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
-	
+
 	* tao/ORB.cpp:
 	* tao/TAO_Singleton_Manager.h:
 	* tao/TAO_Singleton_Manager.cpp:
