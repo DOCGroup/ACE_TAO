@@ -946,8 +946,8 @@ Client::make_request (void)
           this->call_count_++;
           START_QUANTIFY;
           this->cubit_->noop (ACE_TRY_ENV);
-          STOP_QUANTIFY;
           ACE_TRY_CHECK;
+          STOP_QUANTIFY;
         }
       ACE_CATCHANY
         {
