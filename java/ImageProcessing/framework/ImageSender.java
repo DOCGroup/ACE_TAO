@@ -3,11 +3,17 @@ package imaging.framework;
 import java.awt.*;
 import java.net.*;
 import java.io.*;
+import java.applet.*;
 import JACE.OS.*;
 import JACE.Connection.*;
 
 public class ImageSender 
 {
+  public ImageSender (Applet parent)
+  {
+    this.parent_ = parent;
+  }
+
   public void open (Image image, String url)
   {
     this.image_ = image;
@@ -42,8 +48,8 @@ public class ImageSender
 
   public int send ()
   {
+    ImageByteCounter byteCounter = new ImageByteCounter ("", this.image_, this.parent_);
     //    StatusIndicator indicator = new StatusIndicator ("");
-    ImageByteCounter byteCounter = new ImageByteCounter ("", this.image_);
     //    ImageByteCounter byteCounter = new ImageByteCounter ("", this.image_, indicator);
     int length = byteCounter.count ();
     //    indicator.dispose ();
@@ -99,5 +105,6 @@ public class ImageSender
   String hostname_;
   int port_;
   Connector connector_ = new Connector ();
+  Applet parent_;
 }
 

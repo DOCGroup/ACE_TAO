@@ -145,7 +145,7 @@ public class ImageApp extends Applet
 
   public void saveFile (String url)
   {
-    ImageSender imageSender = new ImageSender ();
+    ImageSender imageSender = new ImageSender (this);
     imageSender.open (this.imageCanvas_.getImage (), url);
     int bytesSent = imageSender.send ();
     if (bytesSent == -1)
