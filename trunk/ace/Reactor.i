@@ -446,3 +446,9 @@ ACE_Reactor::implementation (ACE_Reactor_Impl *impl)
 {
   this->implementation_ = impl;
 }
+
+ACE_INLINE int
+ACE_Reactor::reset_new_handle (void)
+{
+  return this->implementation ()->reset_new_handle ();
+}

@@ -203,7 +203,10 @@ public:
   // Resume all <handles> in handle set. 
 
   virtual int resume_handlers (void) = 0;
-  // Resume all <handles>. 
+  // Resume all <handles>.
+
+  virtual int reset_new_handle (void) = 0;
+  // If we need to reset handles returned from accept/connect.
 
   // Timer management.
 

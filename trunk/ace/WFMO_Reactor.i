@@ -643,6 +643,12 @@ ACE_WFMO_Reactor::handle_events (ACE_Time_Value &how_long)
 }
 
 ACE_INLINE int
+ACE_WFMO_Reactor::reset_new_handle (void)
+{
+  return 1;                     // WFMO Reactor needs to reset handles.
+}
+
+ACE_INLINE int
 ACE_WFMO_Reactor::alertable_handle_events (ACE_Time_Value &how_long)
 {
   return this->event_handling (&how_long, 1);

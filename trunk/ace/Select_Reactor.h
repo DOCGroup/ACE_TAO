@@ -486,6 +486,9 @@ public:
   virtual int resume_handlers (void);
   // Resume all the <Event_Handlers> in the Select_Reactor.
 
+  virtual int reset_new_handle (void);
+  // If we need to reset handles returned from accept/connect.
+
   // = Timer management. 
   virtual long schedule_timer (ACE_Event_Handler *, 
                                const void *arg,
