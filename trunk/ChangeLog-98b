@@ -1,3 +1,8 @@
+Thu Jul 30 02:22:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Synch_T.cpp (ts_init): Casted away constness of key_.
+	  Changed to cast away constness of the pointer to once_.
+
 Thu Jul 30 01:12:30 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Synch_T.cpp: It wasn't possible to call ts_object() to set
