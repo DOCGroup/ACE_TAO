@@ -461,7 +461,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       << "CORBA::UNKNOWN ex;" << be_nl
       << be_nl
       << "_tao_ri.exception (&ex);"<< be_nl
-      << "_tao_vfr.receive_exception (" << be_idt << be_idt_nl
+      << "_tao_vfr.send_exception (" << be_idt << be_idt_nl
       << "&_tao_ri" << be_nl
       << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
       << ");" << be_uidt_nl
