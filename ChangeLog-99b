@@ -1,4 +1,8 @@
-Wed Jun 16 00:48:12 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Wed Jun 16 02:07:29 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (spawn_i):  Fixed possible access before
+	  initialization warnings when compiling with egcs with exception
+	  enabled.  Thanks to Carlos for pointing this out.
 
 	* ACE-INSTALL.html: Updated FreeBSD and Win32 static library
 	  instructions.
