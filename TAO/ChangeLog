@@ -1,3 +1,16 @@
+Sat Oct 19 08:40:46 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Log/EventLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLog_i.h:
+	* orbsvcs/orbsvcs/Log/NotifyLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLog_i.h:
+	* orbsvcs/orbsvcs/Log/RTEventLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/RTEventLog_i.h: Renamed the class
+	  LogConsumer declared by the same name in all the translation
+	  units as TAO_Rtec_LogConsumer, TAO_Notify_LogConsumer and
+	  TAO_Event_LogConsumer. This should fix link time warnings in
+	  SUNCC builds.
+
 Fri Oct 18 23:32:11 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* examples/AMH/Sink_Server/Timer_Handler.cpp (handle_timeout):

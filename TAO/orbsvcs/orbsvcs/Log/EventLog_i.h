@@ -8,7 +8,7 @@
  *
  *  Implementation of the DsLogAdmin::EventLog interface.
  *
- * 
+ *
  *
  *  @author Rob Ruff <rruff@scires.com>
  *  @D A Hanvey <d.hanvey@qub.ac.uk>
@@ -17,17 +17,19 @@
 
 #ifndef TLS_EVENTLOG_I_H
 #define TLS_EVENTLOG_I_H
+#include "ace/pre.h"
 
-#include "orbsvcs/DsLogAdminS.h"
-#include "orbsvcs/DsEventLogAdminS.h"
-#include "orbsvcs/Log/Log_i.h"
-#include "orbsvcs/CosEvent/CEC_EventChannel.h"
 
 #include "eventlog_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "orbsvcs/DsLogAdminS.h"
+#include "orbsvcs/DsEventLogAdminS.h"
+#include "orbsvcs/Log/Log_i.h"
+#include "orbsvcs/CosEvent/CEC_EventChannel.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -46,25 +48,25 @@ using DsLogAdmin::wrap;
 #endif /* (_MSC_VER) && (_MSC_VER == 1100) */
 
 
-class LogConsumer : public virtual POA_CosEventComm::PushConsumer
+class TAO_Event_LogConsumer : public virtual POA_CosEventComm::PushConsumer
 {
   public:
-    LogConsumer (EventLog_i *log);
-    ~LogConsumer (void);
+    TAO_Event_LogConsumer (EventLog_i *log);
+    ~TAO_Event_LogConsumer (void);
 
     void
       connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
   private:
     void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
-	ACE_THROW_SPEC ((
-		CORBA::SystemException
-	));
+        ACE_THROW_SPEC ((
+                CORBA::SystemException
+        ));
     void push (const CORBA::Any& data ACE_ENV_ARG_DECL)
-	ACE_THROW_SPEC ((
-		CORBA::SystemException,
-		CosEventComm::Disconnected
-	));
+        ACE_THROW_SPEC ((
+                CORBA::SystemException,
+                CosEventComm::Disconnected
+        ));
 
     CosEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
 
@@ -77,7 +79,7 @@ class LogConsumer : public virtual POA_CosEventComm::PushConsumer
  * @brief EventLog_i
  *
  * The class supports the @c destroy> method to destroy the Log.
- */ 
+ */
 class EventLog_i : public Log_i,
                    public POA_DsEventLogAdmin::EventLog,
                    public virtual PortableServer::RefCountServantBase
@@ -114,16 +116,16 @@ public:
 
   CosEventChannelAdmin::ConsumerAdmin_ptr
   for_consumers (ACE_ENV_SINGLE_ARG_DECL)
-	ACE_THROW_SPEC ((
-		CORBA::SystemException
-	));
+        ACE_THROW_SPEC ((
+                CORBA::SystemException
+        ));
   // The CosEventChannelAdmin::EventChannel interface.
 
   CosEventChannelAdmin::SupplierAdmin_ptr
   for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
-	ACE_THROW_SPEC ((
-		CORBA::SystemException
-	));
+        ACE_THROW_SPEC ((
+                CORBA::SystemException
+        ));
   // The CosEventChannelAdmin::EventChannel interface.
 
   void write_recordlist (const DsLogAdmin::RecordList & list
@@ -137,14 +139,14 @@ public:
   // Used to write records to the log.
 
  protected:
-   
+
    /// Destructor
    /**
     * Protected destructor to enforce proper memory management through
     * reference counting.
     */
   ~EventLog_i ();
- 
+
  protected:
   LogMgr_i &logmgr_i_;
   // Used to access the hash map that holds all the Logs created.
@@ -153,7 +155,7 @@ public:
   TAO_CEC_EventChannel *event_channel_;
   // The Event Channel that the log uses.
 
-  LogConsumer *my_log_consumer_;
+  TAO_Event_LogConsumer *my_log_consumer_;
   // The PushConsumer that consumes the events and stores them
   // in the log.
 };
@@ -162,4 +164,5 @@ public:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TLS_EVENTLOG_I_H */
