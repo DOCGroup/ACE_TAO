@@ -120,6 +120,15 @@ DRV_init (int &argc, char *argv[])
   DRV_nfiles = 0;
   DRV_file_index = 0;
   
+#if defined (TAO_IDL_PREPROCESSOR)
+  idl_global->set_cpp_location (TAO_IDL_PREPROCESSOR);
+#elif defined (ACE_CC_PREPROCESSOR)
+  idl_global->set_cpp_location (ACE_CC_PREPROCESSOR);
+#else
+  // Just default to cc
+  idl_global->set_cpp_location ("cc");
+#endif /* TAO_IDL_PREPROCESSOR */
+
   // Initialize BE global data object.
   ACE_NEW_RETURN (be_global,
                   BE_GlobalData,
