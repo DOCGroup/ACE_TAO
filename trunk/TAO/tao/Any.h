@@ -408,6 +408,10 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const CORBA::WChar *&);
 
+#if defined (__ACE_INLINE__)
+# include "tao/Any.i"
+#else
+
 /// Copying versions of insertion operators for basic types
 /// must also be defined for CORBA::Any_var.
 
@@ -472,8 +476,6 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
                                        CORBA::Any::to_object);
 
-#if defined (__ACE_INLINE__)
-# include "tao/Any.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
