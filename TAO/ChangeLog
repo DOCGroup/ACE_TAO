@@ -4,7 +4,7 @@ Wed Nov 27 16:35:03 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h: 
 	* orbsvcs/orbsvcs/Log/NotifyLogNotification.h: 
 
-	Removed includes to deprecated files.
+	  Removed includes to deprecated files.
 	
 
 Wed Nov 27 13:54:55 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
@@ -14,7 +14,7 @@ Wed Nov 27 13:54:55 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.h:
 	* orbsvcs/tests/Log/Basic_Log_Test/Makefile:
 
-	Documentation changes to files.
+	  Documentation changes to files.
 	
 
 Wed Nov 27 13:48:19 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
@@ -29,7 +29,7 @@ Wed Nov 27 13:48:19 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
 	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
 
-	Documentation changes to files.
+	  Documentation changes to files.
 	
 
 Wed Nov 27 13:36:11 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
@@ -50,7 +50,7 @@ Wed Nov 27 13:36:11 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 	* orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.cpp:
 	* orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.h:
 
-	Documenation changes to files.
+	  Documenation changes to files.
 
 Wed Nov 27 07:18:54 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
