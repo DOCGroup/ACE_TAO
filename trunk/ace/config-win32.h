@@ -11,7 +11,7 @@
 // ----------------------- user configuration defines --------------------
 
 // Define this if you want to use the standard C++ library
-//define ACE_HAS_STANDARD_CPP_LIBRARY = 1
+//#define ACE_HAS_STANDARD_CPP_LIBRARY 1
 
 // Define this if you're running NT 4.x
 //  Setting applies to  : building ACE
