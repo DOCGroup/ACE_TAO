@@ -35,7 +35,7 @@ be_visitor_array_ci::~be_visitor_array_ci (void)
 int be_visitor_array_ci::visit_array (be_array *node)
 {
   // Nothing to do if we are imported or code is already generated.
-  if (node->imported () || (node->cli_inline_gen ()))
+  if (node->imported () || node->cli_inline_gen ())
     {
       return 0;
     }
@@ -186,7 +186,6 @@ int be_visitor_array_ci::visit_array (be_array *node)
     }
 
   unique += "_traits";
-//  os->gen_ifdef_macro (unique.fast_rep ());
 
   *os << be_nl << be_nl
       << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
@@ -247,10 +246,8 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << "return " << fname << "_alloc ();" << be_uidt_nl
       << "}";
 
-//  os->gen_endif ();
-
   *os << be_nl;
 
-  node->cli_inline_gen (1);
+  node->cli_inline_gen (I_TRUE);
   return 0;
 }

@@ -780,6 +780,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
                       0);
 
       field_type->set_defined_in (node->defined_in ());
+      field_type->set_name (field_name);
 
       // Create the argument.
       ACE_NEW_RETURN (id,
