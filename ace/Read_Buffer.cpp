@@ -146,12 +146,13 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
           return 0;
         }
       result += this->size_;
+	  
+      // Null terminate the buffer.
+      *result = '\0';
     }
   else if ((result = this->rec_read (term, search, replace)) == 0)
     return 0;
 
-  // Null terminate the buffer.
-  *result = '\0';
 
   // Copy buf into the appropriate location starting from end of
   // buffer.  Peter says this is confusing and that we should use
