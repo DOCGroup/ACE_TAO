@@ -600,13 +600,14 @@ public:
   // ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-private:
+protected:
   ACE_cond_t cond_;
   // Condition variable.
 
   MUTEX &mutex_; 
   // Reference to mutex lock.
 
+private:
   // = Prevent assignment and initialization.
   void operator= (const ACE_Condition<MUTEX> &);
   ACE_Condition (const ACE_Condition<MUTEX> &c): mutex_ (c.mutex_) {}
