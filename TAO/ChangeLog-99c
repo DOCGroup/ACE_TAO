@@ -1,6 +1,7 @@
 Tue Jun 08 16:10:09 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * tao/corbafwd.h: fixed comments that describe the minor code format.
+        * tao/corbafwd.h: fixed comments that describe the minor code
+    	  format.
 
 Tue Jun  8 16:06:15 1999  Pradeep Gore  <pradeep@danzon.cs.wustl.edu>
 
@@ -19,7 +20,11 @@ Tue Jun 08 15:47:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
           functions being used before declared inlined warnings.  Thanks
           to David for pointing this out.
 
-Tue Jun  8 14:43:52 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Tue Jun  8 15:53:54 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
+
+	* orbsvcs/LifeCycle_Service/Criteria_Evaluator.cpp
+ 	  (getCriteriaMember): Fixed a const-correctness problem.  Thanks
+ 	  to Michael Kircher for this.
 
         * Fixed the capitalization of all options in TAO's svc.conf files.
 

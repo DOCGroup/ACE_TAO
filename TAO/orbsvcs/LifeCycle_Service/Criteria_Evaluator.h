@@ -24,10 +24,9 @@ class Criteria_Evaluator// : public LifeCycleService::Criteria_Evaluator
 {
   // = TITLE
   //
-
 public:
-  Criteria_Evaluator (const CosLifeCycle::Criteria & criteria);
-  ~Criteria_Evaluator ();
+  Criteria_Evaluator (const CosLifeCycle::Criteria &criteria);
+  ~Criteria_Evaluator (void);
 
   LifeCycleService::Criteria_Evaluator::SeqNamedValuePair * getInitialization (CORBA::Environment &_tao_environment);
 
@@ -44,7 +43,7 @@ public:
     }
 
 private:
-  CORBA::Any *getCriteriaMember (const CORBA::String member_name);
+  CORBA::Any *getCriteriaMember (const char *member_name);
 
   const CosLifeCycle::Criteria &criteria_;
 };
