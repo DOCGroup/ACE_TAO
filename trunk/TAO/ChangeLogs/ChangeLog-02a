@@ -1,3 +1,25 @@
+Mon Oct  2 13:38:38 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp
+	  (TAO_SSLIOP_Acceptor):
+
+	  Added Security::NoDelegation security association bit to both
+	  the "target_requires" and "target_supports" field of the SSL
+	  component.  It is apparently not possible to support delegation
+	  in SSLIOP.
+
+	  Removed the Security::NoProtection bit from the
+	  "target_supports" field of the SSL component.  SSLIOP will soon
+	  disable request invocation on the unencrypted port by default.
+	  It will of course be possible to override this default on a
+	  per-object basis once the secure invocation policies are
+	  implemented.
+
+	  (parse_options):
+
+	  Don't bother setting the SSL port to zero.  It's already
+	  initialized to zero in the constructor.
+
 Mon Oct  2 14:59:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_argument.cpp:

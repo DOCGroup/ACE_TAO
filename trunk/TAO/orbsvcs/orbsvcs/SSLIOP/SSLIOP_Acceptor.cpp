@@ -52,14 +52,9 @@ TAO_SSLIOP_Acceptor::TAO_SSLIOP_Acceptor (void)
     concurrency_strategy_ (0),
     accept_strategy_ (0)
 {
+  // Clear all bits in the SSLIOP::SSL association option fields.
   this->ssl_component_.target_supports = 0;
   this->ssl_component_.target_requires = 0;
-
-  // @@ Verify that these initial settings are correct.
-
-  // @@ Security::NoDelegation is part of the Security Service 1.7
-  //    spec.  Enable bit below once the Security.pidl file is
-  //    updated.
 
   // SSLIOP requires these Security::AssociationOptions by default.
   ACE_SET_BITS (this->ssl_component_.target_requires,
@@ -67,18 +62,17 @@ TAO_SSLIOP_Acceptor::TAO_SSLIOP_Acceptor (void)
                 | Security::Confidentiality
                 | Security::DetectReplay
                 | Security::DetectMisordering
-                /* | Security::NoDelegation */);
+                | Security::NoDelegation);
 
   // SSLIOP supports these Security::AssociationOptions by default.
   ACE_SET_BITS (this->ssl_component_.target_supports,
-                Security::NoProtection   // @@ Yeah?
-                | Security::Integrity
+                Security::Integrity
                 | Security::Confidentiality
                 | Security::DetectReplay
                 | Security::DetectMisordering
-                /* | Security::NoDelegation */);
+                | Security::NoDelegation);
 
-  // Initialize the default SSL port to zero.
+  // Initialize the default SSL port to zero (wild card port).
   this->ssl_component_.port = 0;
 }
 
@@ -156,10 +150,20 @@ TAO_SSLIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
 
       IOP::TaggedComponent component;
       component.tag = SSLIOP::TAG_SSL_SEC_TRANS;
+
       // @@???? Check this code, only intended as guideline...
       TAO_OutputCDR cdr;
       cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
+
+      // @@ We need to create an SSLIOP::SSL component for the object
+      //    we're creating an MProfile for.  This will allow us to
+      //    properly embed secure invocation policies in the generated
+      //    IOR, i.e. secure invocation policies on a per-object
+      //    basis, rather than on a per-endpoint basis.  If no secure
+      //    invocation policies have been set then we should use the
+      //    below default SSLIOP::SSL component.      
       cdr << this->ssl_component_;
+
       // TAO extension, replace the contents of the octet sequence with
       // the CDR stream
       CORBA::ULong length = cdr.total_length ();
@@ -194,13 +198,13 @@ TAO_SSLIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
     {
       pfile = mprofile.get_profile (i);
       if (pfile->tag () == TAO_TAG_IIOP_PROFILE)
-      {
-        ssliop_profile = ACE_dynamic_cast (TAO_SSLIOP_Profile *,
-                                           pfile);
-        if (ssliop_profile == 0)
-          return -1;
-        break;
-      }
+        {
+          ssliop_profile = ACE_dynamic_cast (TAO_SSLIOP_Profile *,
+                                             pfile);
+          if (ssliop_profile == 0)
+            return -1;
+          break;
+        }
     }
 
   // If <mprofile> doesn't contain SSLIOP_Profile, we need to create
@@ -247,7 +251,17 @@ TAO_SSLIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
           // @@???? Check this code, only intended as guideline...
           TAO_OutputCDR cdr;
           cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
+
+          // @@ We need to create an SSLIOP::SSL component for the
+          //    object we're creating an MProfile for.  This will
+          //    allow us to properly embed secure invocation policies
+          //    in the generated IOR, i.e. secure invocation policies
+          //    on a per-object basis, rather than on a per-endpoint
+          //    basis.  If no secure invocation policies have been set
+          //    then we should use the below default SSLIOP::SSL
+          //    component.
           cdr << this->ssl_component_;
+
           // TAO extension, replace the contents of the octet sequence with
           // the CDR stream
           CORBA::ULong length = cdr.total_length ();
@@ -453,10 +467,6 @@ TAO_SSLIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
 int
 TAO_SSLIOP_Acceptor::parse_options (const char *str)
 {
-  // Set the SSL port to the default value...
-  // @@ Do we really need to do this...
-  this->ssl_component_.port = 0;
-
   if (str == 0)
     return 0;  // No options to parse.  Not a problem.
 
@@ -493,7 +503,9 @@ TAO_SSLIOP_Acceptor::parse_options (const char *str)
   int end = -1;
 
   // @@ We should add options to set the security association options,
-  // or are those controlled by Policies?
+  //    or are those controlled by Policies?
+  // @@ They are controlled by the SecureInvocation policies defined
+  //    in the Security Service specification.
   for (CORBA::ULong j = 0; j < option_count; ++j)
     {
       begin += end + 1;
