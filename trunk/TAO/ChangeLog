@@ -4,7 +4,6 @@ Wed Dec  4 12:50:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* tao/Connection_Handler.cpp: Added a new method is_finalized ()
 	  which returns whether the connection handler has reached its
 	  final state or not.
-	
 
 Wed Dec  4 12:24:52 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
