@@ -198,8 +198,8 @@ int be_visitor_union_cs::visit_union (be_union *node)
       *os << "void "
           << node->name () << "::_tao_any_destructor (void *x)" << be_nl
           << "{" << be_idt_nl
-          << node->name () << " *tmp = ACE_static_cast ("
-          << node->name () << "*,x);" << be_nl
+          << node->local_name () << " *tmp = ACE_static_cast ("
+          << node->local_name () << "*,x);" << be_nl
           << "delete tmp;" << be_uidt_nl
           << "}\n" << be_nl;
 
