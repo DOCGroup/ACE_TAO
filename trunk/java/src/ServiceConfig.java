@@ -210,8 +210,10 @@ public class ServiceConfig
 	    if (in.ttype == StreamTokenizer.TT_WORD) {
 	      commandName = in.sval;
 
-	      // This is a hack, but it should work until CUP is easier
-	      // to deal with when multiple parsers are needed
+	      // **** This should be changed so that instantiation is only done
+	      // when we find out the type (ServiceObject or something else) a few
+	      // words later.  Right now it works because we only have ServiceObjects
+	      // to load.
 	      if (commandName.equals("load"))
 		result = new AddServiceObjectNode();
 	      else
@@ -256,6 +258,7 @@ public class ServiceConfig
 	    state = ServiceConfig.CLASS_TYPE;
 	    break;
 	  case ServiceConfig.CLASS_TYPE:
+	    // This is only Service_Object or ServiceObject at this time
 	    if (in.ttype == StreamTokenizer.TT_WORD)
 	      classType = in.sval;
 	    else

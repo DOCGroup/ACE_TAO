@@ -57,7 +57,7 @@ public class SOCKStream
 
     this.iStream_ = new DataInputStream(new BufferedInputStream(s.getInputStream()));
 
-    this.oStream_ = new PrintStream(new DataOutputStream(new BufferedOutputStream(s.getOutputStream())));
+    this.oStream_ = new DataOutputStream(new BufferedOutputStream(s.getOutputStream()));
   }
 
   /* Get the underlying Socket.
@@ -91,7 +91,9 @@ public class SOCKStream
       // Get the data out
       String buf = s.toString ();
 
-      this.oStream_.println(buf);
+      //this.oStream_.println(buf);
+      this.oStream_.writeChars(buf.toString());
+      this.oStream_.writeChar('\n');
       this.oStream_.flush ();
 
       return buf.length ();
@@ -104,7 +106,10 @@ public class SOCKStream
    */
   public int send (String s) throws IOException
     {
-      this.oStream_.println(s);
+      this.oStream_.writeChars(s);
+      this.oStream_.writeChar('\n');
+
+      //this.oStream_.println(s);
       this.oStream_.flush();
 
       return s.length ();
@@ -132,13 +137,16 @@ public class SOCKStream
    */
   public int recv (StringBuffer s) throws IOException
     {
-      String temp = this.iStream_.readLine ();
-      s.append (temp);
+      int len = 0;
+      char in = (char)this.iStream_.readByte();
 
-      if (temp == null) // Possible if user sends just a line feed, but        
-        return -1;      // not checking would cause a null ptr exception       
-      else                    
-        return temp.length ();  
+      while (in != '\n') {
+	s.append(in);
+	in = (char)this.iStream_.readByte();
+	len++;
+      }
+
+      return len;
     }
 
   /**
@@ -180,7 +188,7 @@ public class SOCKStream
    */
   public void outputStream (OutputStream oStream)
     {    
-      this.oStream_ = new PrintStream(new DataOutputStream(new BufferedOutputStream(oStream)));
+      this.oStream_ = new DataOutputStream(new BufferedOutputStream(oStream));
     }
 
   /**
@@ -206,5 +214,5 @@ public class SOCKStream
 
   // = The input and output streams (by default null)
   private DataInputStream iStream_;
-  private PrintStream oStream_;
+  private DataOutputStream oStream_;
 }
