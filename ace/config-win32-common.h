@@ -213,6 +213,7 @@
 #define ACE_LACKS_REWINDDIR
 #define ACE_LACKS_READDIR_R
 #define ACE_LACKS_INET_ATON
+#define ACE_LACKS_PARAM_H
 
 #define ACE_HAS_VSWPRINTF
 #define ACE_HAS_VFWPRINTF
@@ -495,13 +496,13 @@ typedef unsigned long long ACE_UINT64;
 #define ACE_LACKS_MKSTEMP
 
 // If we are using winsock2 then the SO_REUSEADDR feature is broken
-// SO_REUSEADDR=1 behaves like SO_REUSEPORT=1. (SO_REUSEPORT is an 
+// SO_REUSEADDR=1 behaves like SO_REUSEPORT=1. (SO_REUSEPORT is an
 // extension to sockets on some platforms)
-// We define SO_REUSEPORT here so that ACE_OS::setsockopt() can still 
-// allow the user to specify that a socketaddr can *always* be reused. 
+// We define SO_REUSEPORT here so that ACE_OS::setsockopt() can still
+// allow the user to specify that a socketaddr can *always* be reused.
 #if defined (ACE_HAS_WINSOCK2) && ACE_HAS_WINSOCK2 != 0 && ! defined(SO_REUSEPORT)
 #define SO_REUSEPORT 0x0400  // We just have to pick a value that won't conflict
-#endif 
+#endif
 
 #include "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_COMMON_H */
