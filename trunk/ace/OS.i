@@ -953,6 +953,8 @@ ACE_OS::rename (const char *old_name, const char *new_name)
 #if 0
   ACE_OSCALL_RETURN (::rename (old_name, new_name), int, -1);
 #else
+  ACE_UNUSED_ARG (old_name);
+  ACE_UNUSED_ARG (new_name);
   ACE_NOTSUP_RETURN (-1);
 #endif /* 0 */
 }
