@@ -1,11 +1,16 @@
+Fri May 15 11:12:26 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Makefile: re-enabled EC_Gateway build.  The
+          problem appears to be only with g++.
+
 Fri May 15 10:42:22 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/POA/Makefile: 
-	* tests/POA/Forwarding/Makefile: 
-	  Removed the Forwarding test because it only compiles on NT.
+        * tests/POA/Makefile:
+        * tests/POA/Forwarding/Makefile:
+          Removed the Forwarding test because it only compiles on NT.
 
-	* tests/POA/Generic_Servant/Makefile: 
-	  Removed outdated comment.
+        * tests/POA/Generic_Servant/Makefile:
+          Removed outdated comment.
 
 Fri May 15 09:33:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
