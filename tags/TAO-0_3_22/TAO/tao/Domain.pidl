@@ -1,0 +1,49 @@
+//
+// $Id$
+//
+// ================================================================
+//
+// = LIBRARY
+//   TAO
+//
+// = FILENAME
+//   Domain.pidl
+//
+// = DESCRIPTION
+//   This file was used to generate the code in Domain{C,S,S_T}.{h,i,cpp}
+//   The code is then hand-crafted to compile it inside the ORB, avoid
+//   cyclic dependencies and enforce the locality constraints on
+//   certain objects.
+//
+// ================================================================
+
+#if !defined POLICY_DOMAIN_IDL
+#define POLICY_DOMAIN_IDL
+
+
+
+#pragma prefix "omg.org"
+
+#include "Policy.pidl"
+
+module CORBA
+{
+  interface DomainManager
+  {
+    Policy get_domain_policy (
+      in PolicyType policy_type);
+  };
+
+  const PolicyType SecConstruction = 11;
+
+  interface ConstructionPolicy : Policy
+  {
+    void make_domain_manager (
+      in InterfaceDef object_type,
+      in boolean constr_policy);
+  };
+
+  typedef sequence <DomainManager> DomainManagerList;
+};
+
+#endif /* !defined POLICY_DOMAIN_IDL */

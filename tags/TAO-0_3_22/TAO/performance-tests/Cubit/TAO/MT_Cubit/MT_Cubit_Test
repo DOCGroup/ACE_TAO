@@ -1,0 +1,101 @@
+#! /bin/sh
+# $Id$
+#
+# Spawns MT_Cubit server and client executables on a single host.
+
+usage="usage: $0 [-n <iterations>] [-r <host>] [-t] [-l] <# low priority threads>"
+usage2="    [-l] suppresses use of -ORBgioplite, [-r runs client on <host>], [-t] uses /tmp"
+
+user=`whoami`
+ior_file=/tmp/MT_Cubit-ior.${user}
+iterations=1000
+client_exec_prefix=time
+gioplite=-ORBgioplite
+remote_host=
+
+if [ "$HOSTTYPE" = "lynxos" ]; then
+  server_exec_prefix='prio 30'
+  tmp='/tmp/'
+else
+  server_exec_prefix=
+  tmp=
+fi
+
+if [ ! "$PWD" ]; then
+  PWD=`pwd`
+fi
+
+########
+######## Interpret command arguments.
+########
+while getopts ?ln:r:t arg; do
+  case $arg in
+      l   ) gioplite= ;;
+      n   ) iterations=$OPTARG ;;
+      r   ) remote_host=$OPTARG
+            ior_file=MT_Cubit-ior ;;
+      t   ) tmp='/tmp/' ;;
+      '?' ) echo $usage; echo $usage2; exit 0 ;;
+  esac
+done
+
+if [ "$OPTIND" ]; then
+  shift `expr $OPTIND - 1`
+
+  if [ $# -ne 1 ]; then
+    echo $usage; echo $usage2
+    exit 1
+  fi
+else
+  #### sh does not support $OPTIND.  Arg error checking isn't as good.
+  if [ $# -lt 1 ]; then
+    echo $usage; echo $usage2
+    exit 1
+  fi
+
+  shift `expr $# - 1`
+fi
+
+threads=`expr $1 + 1`
+
+
+########
+######## Make sure that the executables have been built.
+########
+if [ ! -f ./server  -o  ! -f ./client ]; then
+  echo $0: 'server and/or client need to be built!'
+  exit -1
+fi
+
+
+########
+######## Enable signal handler.
+########
+trap 'kill -15 $server_pid; /bin/rm -f $ior_file; exit 0' 0 1 2 15
+
+
+########
+######## Start server and save its pid.
+########
+$server_exec_prefix ./server -f $ior_file -t $threads $gioplite > \
+  ${tmp}server.log 2>&1 &
+server_pid=$!
+
+while [ ! -f $ior_file ]; do
+  sleep 2
+done
+
+
+########
+######## Start client.
+########
+if [ "$remote_host" ]; then
+  rsh $remote_host \
+    "cd $PWD; LD_LIBRARY_PATH=$LD_LIBRARY_PATH $client_exec_prefix \
+    ./client -f $ior_file -t $threads -n $iterations $gioplite" > \
+    ${tmp}client-${threads}.log 2>&1
+else
+  $client_exec_prefix \
+    ./client -f $ior_file -t $threads -n $iterations $gioplite  > \
+    ${tmp}client-${threads}.log 2>&1
+fi

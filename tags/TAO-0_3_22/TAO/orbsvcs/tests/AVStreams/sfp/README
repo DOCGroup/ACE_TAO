@@ -1,0 +1,16 @@
+This directory contains the test server and client for 
+the SFP implementation in
+
+$TAO_ROOT/orbsvcs/orbsvcs/AV/
+
+To test a simple frame transfer:
+================================
+
+just run the server and client 
+
+To test a large frame transfer with fragmentation:
+==================================================
+
+Run the server 
+
+Run the client with the -f option.
