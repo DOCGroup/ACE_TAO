@@ -1,3 +1,9 @@
+Tue Mar  5 11:37:52 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile:
+	  Made changes to have the Makefile.RTCORBAEvent used in
+	  compilation only when the option corba_messaging is set to 1.
+
 Tue Mar  5 10:52:44 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Security/Security_PolicyFactory.cpp
