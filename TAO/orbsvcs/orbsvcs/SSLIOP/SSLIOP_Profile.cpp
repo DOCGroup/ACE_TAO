@@ -2,6 +2,7 @@
 #include "ssl_endpoints.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
+#include "ace/OS_NS_string.h"
 
 
 ACE_RCSID (TAO_SSLIOP,
