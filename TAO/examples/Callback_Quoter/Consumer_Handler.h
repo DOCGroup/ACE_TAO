@@ -52,14 +52,13 @@ class Consumer_Handler
 
 public:
   // = Initialization and termination methods.
-  Consumer_Handler ();
+  Consumer_Handler (void);
   // Constructor.
 
-  ~Consumer_Handler ();
+  ~Consumer_Handler (void);
   // Destructor.
 
   int init (int argc, char *argv[]);
-
   // Initialize the client communication with the server.
 
   int run (void);

@@ -15,11 +15,13 @@ module Callback_Quoter
     // = TITLE
     //   Requested stock does not exist
   };
+
   exception Invalid_Handle
   {
     // = TITLE
     //   Requested stock does not exist
   };
+
   struct Info
   {
     // = TITLE

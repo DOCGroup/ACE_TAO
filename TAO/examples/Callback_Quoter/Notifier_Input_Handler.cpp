@@ -245,9 +245,9 @@ Notifier_Input_Handler::handle_input (ACE_HANDLE)
 
       if (tolower(buf[0]) == 'q')
 	{
-
+          // @@ Please remove this call if it's not used.
 	  // (this->notifier_i_.consumer_map_).close();
-	  this->notifier_i_.shutdown(TAO_TRY_ENV);
+	  this->notifier_i_.shutdown (TAO_TRY_ENV);
           TAO_CHECK_ENV;
 	}
     }
@@ -258,5 +258,5 @@ Notifier_Input_Handler::handle_input (ACE_HANDLE)
     }
   TAO_ENDTRY;
 
-return 0;
+  return 0;
 }

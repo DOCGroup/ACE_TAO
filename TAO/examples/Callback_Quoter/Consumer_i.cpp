@@ -29,22 +29,22 @@ Consumer_i::~Consumer_i (void)
 
 void
 Consumer_i::push (const Callback_Quoter::Info &data,
- 		        CORBA::Environment &env)
+                  CORBA::Environment &env)
 {
   // On getting the needed information you now proceed to the next
   // step, which could be obtaining the shares.
 
+  // @@ Please see if you can remove this.
   this->done_ = 1;
 
   ACE_DEBUG ((LM_DEBUG,
               "Selling 10,000 %s shares at %d!!\n",
 	      data.stock_name.in (),
               data.value));
-
 }
 
 void
-Consumer_i::shutdown ( CORBA::Environment &)
+Consumer_i::shutdown (CORBA::Environment &)
 {
 
   // Instruct the ORB to shutdown.
@@ -58,7 +58,7 @@ Consumer_i::shutdown ( CORBA::Environment &)
 void
 Consumer_i::orb (CORBA::ORB_ptr o)
 {
-  // makes a copy of the ORB pointer.
+  // Makes a copy of the ORB pointer.
 
   this->orb_ = CORBA::ORB::_duplicate (o);
 }
