@@ -1,3 +1,11 @@
+Sun Nov 19 16:09:39 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/PortableServer/POA.h
+	* tao/PortableServer/POA.i:
+
+	  Added back #if RTCORBA protections that Priyanka commented out
+	  for no apparent reason.  This fixes minimum CORBA build problems.
+
 Sun Nov 19 13:05:51 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/Latency/dii_client.cpp:
