@@ -28,7 +28,7 @@ CosNaming_Client::CosNaming_Client (void)
     factory_ (CORBA::Object::_nil ()),
     objref_ (CORBA::Object::_nil ()),
     CosNaming_ (CosNaming::NamingContext::_nil ()),
-    cosnaming_factory_key_ ("naming_context")
+    cosnaming_factory_key_ ("NameService")
 {
 }
 
@@ -109,12 +109,12 @@ CosNaming_Client::init (int argc, char **argv)
   if (this->env_.exception () != 0)
     {
       this->env_.print_exception ("ORB initialization");
-      return 1;
+      return -1;
     }
 
   // Parse command line and verify parameters.
   if (this->parse_args () == -1)
-    return 1;
+    return -1;
 
   // Retrieve a factory objref.
   this->objref_ = CosNaming::NamingContext::_bind (this->hostname_,
@@ -125,7 +125,7 @@ CosNaming_Client::init (int argc, char **argv)
   if (this->env_.exception () != 0)
     {
       this->env_.print_exception ("CosNaming_Factory::_bind");
-      return 1;
+      return -1;
     }
 
   if (CORBA::is_nil (this->objref_) == CORBA::B_TRUE)
@@ -134,7 +134,7 @@ CosNaming_Client::init (int argc, char **argv)
 		       this->cosnaming_factory_key_,
                        this->hostname_,
                        this->portnum_),
-                      1);
+                      -1);
 
   // Narrow the CORBA::Object reference to the stub object, checking
   // the type along the way using _is_a.  There is really no need to
@@ -148,18 +148,18 @@ CosNaming_Client::init (int argc, char **argv)
   if (this->CosNaming_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       " (%P|%t) Unable to narrow object reference to a CosNaming_ptr.\n"),
-		      1);
+		      -1);
 
   if (this->env_.exception () != 0)
     {
       this->env_.print_exception ("CosNaming::NamingContext::_narrow");
-      return 1;
+      return -1;
     }
 
   if (CORBA::is_nil (this->CosNaming_))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "null CosNaming objref returned by factory\n"),
-                      1);
+                      -1);
 
   return 0;
 }
