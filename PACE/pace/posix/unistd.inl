@@ -227,13 +227,13 @@ PACE_INLINE
 int
 pace_getlogin_r (char * name, size_t namesize)
 {
-# if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
+#if (PACE_SUNOS) || (PACE_LYNXOS)
+  if (getlogin_r (name, (int) namesize) == 0)
+    return errno;
+  return 0;
+#else
   return getlogin_r (name, namesize);
-# else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
-  PACE_UNUSED_ARG (name);
-  PACE_UNUSED_ARG (namesize);
-  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-# endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+#endif /* SUN_OS */
 }
 #endif /* PACE_HAS_POSIX_UGR_UOF */
 
@@ -433,14 +433,13 @@ pace_ttyname_r (PACE_HANDLE fildes,
                 char * name,
                 size_t namesize)
 {
-#if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
+#if (PACE_SUNOS) || (PACE_LYNXOS)
+  if (ttyname_r (fildes, name, (int) namesize) == 0)
+    return errno;
+  return 0;
+#else
   return ttyname_r (fildes, name, namesize);
-#else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
-  PACE_UNUSED_ARG (fildes);
-  PACE_UNUSED_ARG (name);
-  PACE_UNUSED_ARG (namesize);
-  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-#endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+#endif /* PACE_SUNOS */
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 

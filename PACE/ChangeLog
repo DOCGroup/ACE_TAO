@@ -1,3 +1,26 @@
+Thu Jul 27 08:36:01 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* pace/fcntl.h
+	* pace/mqueue.h
+	* pace/semaphore.h
+	* pace/stdio.h
+	  Added :: qualifier to macros, but of course these should
+	  be defined by the user, so these will go away once
+	  I update OS.*.
+
+	* pace/config/config.h
+	  Added _REENTRANT for solaris.
+
+	* pace/posix/time.inl
+	* pace/posix/unistd.inl
+	  Took away PACE_HAS_PTHREAD_SEMANTICS in favor of platform
+	  specific code. It appears PAC_HAS_PTHREAD_SEMANTICS is now
+	  superfluous.
+
+	* ../ace/OS.i
+	  Qualified two functions with pace_ as they should
+	  have been originally. Paceified ACE_OS::gettimeofday.
+
 Wed Jul 26 17:13:51 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* pace/emulation/mqueue.c:

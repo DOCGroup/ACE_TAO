@@ -49,7 +49,11 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.5.2.
    */
 #if (PACE_HAS_POSIX_FM_UOF)
-# define pace_fcntl fcntl
+# if defined (PACE_HAS_CPLUSPLUS)
+#  define pace_fcntl ::fcntl
+# else
+#  define pace_fcntl fcntl
+# endif /* PACE_HAS_CPLUSPLUS */
 #endif /* PACE_HAS_POSIX_FM_UOF */
   /* int fcntl (int fildes, int cmd, *//* arg *//* ... ); */
 
@@ -59,7 +63,11 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 5.3.1.
    */
 #if (PACE_HAS_POSIX_DI_UOF)
-# define pace_open open
+# if defined (PACE_HAS_CPLUPLUS)
+#  define pace_open ::open
+# else
+#  define pace_open open
+# endif /* PACE_HAS_CPLUSPLUS */
 #endif /* PACE_HAS_POSIX_DI_UOF */
   /* int open (const char *path, int oflag, *//* pace_mode_t mode *//* ... );*/
 

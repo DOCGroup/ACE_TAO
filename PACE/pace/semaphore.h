@@ -72,9 +72,12 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 11.2.3.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  # define pace_sem_open sem_open
+# if defined (PACE_HAS_CPLUSPLUS)
+#  define pace_sem_open ::sem_open
+# else
+#  define pace_sem_open sem_open
+# endif /* PACE_HAS_CPLUSPLUS */
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
-  /* int fprintf (FILE *stream, const char *format, (*//* args *//*) ... ); */
 
   /**
      PACE's implementation of the POSIX function sem_post.
