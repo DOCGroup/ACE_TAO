@@ -10,7 +10,6 @@
 #include "Transport_Mux_Strategy.h"
 #include "Wait_Strategy.h"
 #include "Sync_Strategies.h"
-#include "Stub.h"
 #include "ORB_Core.h"
 #include "debug.h"
 #include "GIOP_Message_Base.h"

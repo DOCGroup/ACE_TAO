@@ -49,6 +49,7 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   , options_processed_ (0)
   , factory_disabled_ (0)
   , cached_connection_lock_type_ (TAO_THREAD_LOCK)
+  , object_key_table_lock_type_ (TAO_THREAD_LOCK)
   , corba_object_lock_type_ (TAO_THREAD_LOCK)
   , flushing_strategy_type_ (TAO_LEADER_FOLLOWER_FLUSHING)
   , codeset_manager_ (0)
@@ -370,6 +371,29 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               }
             else
               this->report_option_value_error (ACE_LIB_TEXT("-ORBConnectionCacheLock"), name);
+          }
+      }
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 ACE_LIB_TEXT("-ORBObjectKeyTableLock")) == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            ACE_TCHAR* name = argv[curarg];
+
+            if (ACE_OS::strcasecmp (name,
+                                    ACE_LIB_TEXT("thread")) == 0)
+              this->object_key_table_lock_type_ = TAO_THREAD_LOCK;
+            else if (ACE_OS::strcasecmp (name,
+                                         ACE_LIB_TEXT("null")) == 0)
+              {
+                // @@ Bug 940 :This is a sort of hack now. We need to put
+                // this in a common place once we get the common
+                // switch that is documented in bug 940...
+                this->object_key_table_lock_type_ = TAO_NULL_LOCK;
+              }
+            else
+              this->report_option_value_error (ACE_LIB_TEXT("-ORBObjectKeyTableLock"), name);
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -872,6 +896,23 @@ TAO_Default_Resource_Factory::locked_transport_cache (void)
   return 1;
 }
 
+
+ACE_Lock *
+TAO_Default_Resource_Factory::create_object_key_table_lock (void)
+{
+  ACE_Lock *the_lock = 0;
+
+  if (this->object_key_table_lock_type_ == TAO_NULL_LOCK)
+    ACE_NEW_RETURN (the_lock,
+                    ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>,
+                    0);
+  else
+    ACE_NEW_RETURN (the_lock,
+                    ACE_Lock_Adapter<TAO_SYNCH_MUTEX>,
+                    0);
+
+  return the_lock;
+}
 
 ACE_Lock *
 TAO_Default_Resource_Factory::create_corba_object_lock (void)

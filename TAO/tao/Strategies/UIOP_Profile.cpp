@@ -133,7 +133,10 @@ TAO_UIOP_Profile::parse_string_i (const char *string
 
   start = ++cp;  // increment past the object key separator
 
-  TAO::ObjectKey::decode_string_to_sequence (this->object_key_, start);
+  TAO::ObjectKey &ok = ACE_const_cast (TAO::ObjectKey&,
+                                       this->ref_object_key_->object_key ());
+  TAO::ObjectKey::decode_string_to_sequence (ok,
+                                             start);
 }
 
 CORBA::Boolean
@@ -146,7 +149,8 @@ TAO_UIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
   const TAO_UIOP_Profile *op =
     ACE_dynamic_cast (const TAO_UIOP_Profile *, other_profile);
 
-  if (!(this->object_key_ == op->object_key_
+  if (!(this->ref_object_key_->object_key () ==
+        op->ref_object_key_->object_key ()
         && this->version_ == op->version_
         && this->count_ == op->count_))
     return 0;
@@ -182,10 +186,13 @@ TAO_UIOP_Profile::hash (CORBA::ULong max
   hashval += this->version_.minor;
   hashval += this->tag ();
 
-  if (this->object_key_.length () >= 4)
+  const TAO::ObjectKey &ok =
+    this->ref_object_key_->object_key ();
+
+  if (ok.length () >= 4)
     {
-      hashval += this->object_key_ [1];
-      hashval += this->object_key_ [3];
+      hashval += ok[1];
+      hashval += ok[3];
     }
 
   return hashval % max;
@@ -206,7 +213,7 @@ TAO_UIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   CORBA::String_var key;
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),
-                                            this->object_key_);
+                                            this->ref_object_key_->object_key ());
 
   u_int buflen = (8 /* "corbaloc" */ +
                   1 /* colon separator */ +
@@ -289,7 +296,14 @@ TAO_UIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
   encap.write_string (this->endpoint_.rendezvous_point ());
 
   // OCTET SEQUENCE for object key
-  encap << this->object_key_;
+  if (this->ref_object_key_)
+    encap << this->ref_object_key_->object_key ();
+  else
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) TAO - UIOP_Profile::create_profile_body ",
+                  "no object key marshalled \n"));
+    }
 
   if (this->version_.major > 1
       || this->version_.minor > 0)
