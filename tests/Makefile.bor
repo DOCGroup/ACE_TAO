@@ -2,6 +2,8 @@
 # Makefile for building the ACE tests
 #
 
+!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+
 TESTS = \
 	Aio_Platform_Test \
 	Atomic_Op_Test \
@@ -78,29 +80,16 @@ TESTS = \
 
 all_tests: $(TESTS)
 
-!ifdef DEBUG
-DEBUGFLAG = -DDEBUG
-!endif
-
-!ifdef STATIC
-STATICFLAG = -DSTATIC
-!endif
-
-!ifdef PASCAL
-PASCALFLAG = -DPASCAL
-!endif
-
 $(TESTS):
-	$(MAKE) -fMakefile.bor -DNAME=$@ $(DEBUGFLAG) $(STATICFLAG) \
-		$(PASCALFLAG) $(BINDIR)\$@.exe
+	$(MAKE) -fMakefile.bor -DNAME=$@ $(MAKE_FLAGS) $(BINDIR)\$@.exe
 
 OBJFILES = $(OBJDIR)\$(NAME).obj
-CFLAGS = -I.. $(ACE_CFLAGS)
+
+CFLAGS = $(ACE_CFLAGS)
+
 CPPDIR = .
-BINDIR=.\bor\bin
-BASE_OBJDIR=.\bor\obj
-LIBFILES = \
-        $(ACE_ROOT)\bin\ace$(LIB_DECORATOR).lib
+
+LIBFILES = $(ACE_LIB)
 
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
 

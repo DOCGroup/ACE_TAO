@@ -4,14 +4,11 @@
 
 NAME = orbsvcs
 
-TAO_IDL = $(BINDIR)\tao_idl$(DECORATOR) -g \
-        $(BINDIR)\gperf$(DECORATOR).exe \
-	-I..\.. -Wb,export_macro=TAO_ORBSVCS_Export \
-        -Wb,export_include=orbsvcs_export.h
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe \
+	-I..\.. -Ge 1 -Wb,export_macro=TAO_ORBSVCS_Export \
+	-Wb,export_include=orbsvcs_export.h
 
 OBJFILES = \
-	$(OBJDIR)\CosConcurrencyControlC.obj \
-	$(OBJDIR)\CosConcurrencyControlS.obj \
 	$(OBJDIR)\CosEventCommC.obj \
 	$(OBJDIR)\CosEventCommS.obj \
 	$(OBJDIR)\CosEventChannelAdminC.obj \
@@ -30,14 +27,10 @@ OBJFILES = \
 	$(OBJDIR)\CosTradingDynamicS.obj \
 	$(OBJDIR)\CosTradingReposC.obj \
 	$(OBJDIR)\CosTradingReposS.obj \
-	$(OBJDIR)\PingC.obj \
-	$(OBJDIR)\PingS.obj \
 	$(OBJDIR)\ImplRepoC.obj \
 	$(OBJDIR)\ImplRepoS.obj \
 	$(OBJDIR)\LifeCycleServiceC.obj \
 	$(OBJDIR)\LifeCycleServiceS.obj \
-	$(OBJDIR)\LoggerC.obj \
-	$(OBJDIR)\LoggerS.obj \
 	$(OBJDIR)\Null_MediaCtrlC.obj \
 	$(OBJDIR)\Null_MediaCtrlS.obj \
 	$(OBJDIR)\TimeBaseC.obj \
@@ -54,11 +47,9 @@ OBJFILES = \
 	$(OBJDIR)\sfpS.obj \
 	$(OBJDIR)\TimeServiceC.obj \
 	$(OBJDIR)\TimeServiceS.obj \
+	\
 	$(OBJDIR)\AVStreams_i.obj \
 	$(OBJDIR)\BCU.obj \
-	$(OBJDIR)\CC_LockSet.obj \
-	$(OBJDIR)\CC_LockSetFactory.obj \
-	$(OBJDIR)\Concurrency_Utils.obj \
 	$(OBJDIR)\Config_Scheduler.obj \
 	$(OBJDIR)\Constraint_Interpreter.obj \
 	$(OBJDIR)\Constraint_l.obj \
@@ -116,8 +107,8 @@ OBJFILES = \
 	$(OBJDIR)\EventChannel_i.obj \
 	$(OBJDIR)\Hash_Naming_Context.obj \
 	$(OBJDIR)\IOR_Multicast.obj \
+	$(OBJDIR)\IR_Helper.obj \
 	$(OBJDIR)\Local_ESTypes.obj \
-	$(OBJDIR)\Logger_i.obj \
 	$(OBJDIR)\Memory_Pools.obj \
 	$(OBJDIR)\Module_Factory.obj \
 	$(OBJDIR)\Naming_Context.obj \
@@ -129,6 +120,8 @@ OBJFILES = \
 	$(OBJDIR)\ProxyPushConsumer_i.obj \
 	$(OBJDIR)\ProxyPushSupplier_i.obj \
 	$(OBJDIR)\ReactorTask.obj \
+	$(OBJDIR)\Reconfig_Sched_Utils.obj \
+	$(OBJDIR)\Reconfig_Scheduler.obj \
 	$(OBJDIR)\RT_Task.obj \
 	$(OBJDIR)\Runtime_Scheduler.obj \
 	$(OBJDIR)\SchedEntry.obj \
@@ -151,28 +144,21 @@ OBJFILES = \
 	$(OBJDIR)\Trader_Utils.obj \
 	$(OBJDIR)\Transient_Naming_Context.obj
 
-CFLAGS = -I..\..\.. -I..\.. -I.. $(ACE_CFLAGS) $(TAO_CFLAGS) \
-	$(ORBSVCS_BUILD_CFLAGS) $(ORBSVCS_CFLAGS)
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(ORBSVCS_BUILD_CFLAGS) $(ORBSVCS_CFLAGS)
 
 CPPDIR = .;AV;Event;concurrency;Sched;Trader;Naming;CosEvent;Time;Property;Log
-BASE_OBJDIR = .\bor\obj
-BINDIR = $(ACE_ROOT)\bin
+
 IDLDIR = .
 
-LIBFILES = \
-	$(ACE_ROOT)\bin\ace$(LIB_DECORATOR).lib \
-	$(ACE_ROOT)\bin\tao$(LIB_DECORATOR).lib
+LIBFILES = $(ACE_LIB) $(TAO_LIB)
 
-!include <$(ACE_ROOT)\include\makeinclude\build_library.bor>
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
 
 #
 # IDL Build rules
 #
 
 $(IDLDIR)\AVStreamsC.cpp $(IDLDIR)\AVStreamsS.cpp: $(IDLDIR)\AVStreams.idl
-	$(TAO_IDL) $**
-
-$(IDLDIR)\CosConcurrencyControlC.cpp $(IDLDIR)\CosConcurrencyControlS.cpp: $(IDLDIR)\CosConcurrencyControl.idl
 	$(TAO_IDL) $**
 
 $(IDLDIR)\CosEventCommC.cpp $(IDLDIR)\CosEventCommS.cpp: $(IDLDIR)\CosEventComm.idl
@@ -199,16 +185,10 @@ $(IDLDIR)\CosTradingDynamicC.cpp $(IDLDIR)\CosTradingDynamicS.cpp: $(IDLDIR)\Cos
 $(IDLDIR)\CosTradingReposC.cpp $(IDLDIR)\CosTradingReposS.cpp: $(IDLDIR)\CosTradingRepos.idl
 	$(TAO_IDL) $**
 
-$(IDLDIR)\PingC.cpp $(IDLDIR)\PingS.cpp: $(IDLDIR)\Ping.idl
-	$(TAO_IDL) $**
-
 $(IDLDIR)\ImplRepoC.cpp $(IDLDIR)\ImplRepoS.cpp: $(IDLDIR)\ImplRepo.idl
 	$(TAO_IDL) $**
 
 $(IDLDIR)\LifeCycleServiceC.cpp $(IDLDIR)\LifeCycleServiceS.cpp: $(IDLDIR)\LifeCycleService.idl
-	$(TAO_IDL) $**
-
-$(IDLDIR)\LoggerC.cpp $(IDLDIR)\LoggerS.cpp: $(IDLDIR)\Logger.idl
 	$(TAO_IDL) $**
 
 $(IDLDIR)\Null_MediaCtrlC.cpp $(IDLDIR)\Null_MediaCtrlS.cpp: $(IDLDIR)\Null_MediaCtrl.idl

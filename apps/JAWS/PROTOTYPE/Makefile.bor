@@ -8,11 +8,11 @@ OBJFILES = \
 	$(OBJDIR)\HTTP_10_Parse.obj \
 	$(OBJDIR)\HTTP_10_Write.obj
 
-CFLAGS=-I. -I$(ACE_ROOT) $(ACE_CFLAGS) -DJAWS_HAS_THREAD_SAFE_ACCEPT
+CFLAGS=-I. -DJAWS_HAS_THREAD_SAFE_ACCEPT
 LIBFILES= \
         .\HTTPU$(LIB_DECORATOR).lib \
         .\JAWS$(LIB_DECORATOR).lib \
-        $(ACE_ROOT)\bin\ace$(LIB_DECORATOR).lib
+        $(ACE_LIB)
 
 !include <$(ACE_ROOT)\apps\build.bor>
 

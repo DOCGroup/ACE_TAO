@@ -9,14 +9,15 @@
 #
 # Outputs:
 # ~~~~~~~~
-# DECORATOR - suffix to be added to output file name
+# LIB_DECORATOR - suffix to be added to library output file name
+# EXE_DECORATOR - suffix to be added to executable output file name
 #    
      
 DECO_PREFIX=
 
 # If you want decoration for Borland, set this to something like "B"
 # otherwise, make it blank
-BORLAND_DECO=B
+BORLAND_DECO=b
 
 !ifdef BORLAND_DECO
 DECO_PREFIX=_
@@ -40,7 +41,7 @@ DEBUG_DECO=d
 LIB_DECORATOR=$(DECO_PREFIX)$(BORLAND_DECO)$(PASCAL_DECO)$(STATIC_DECO)$(DEBUG_DECO)
 
 !ifdef NO_EXE_DECORATION
-EXE_DECORATION=
+EXE_DECORATOR=
 !else
 EXE_DECORATOR=$(DECO_PREFIX)$(BORLAND_DECO)$(PASCAL_DECO)$(STATIC_DECO)$(DEBUG_DECO)
 !endif
