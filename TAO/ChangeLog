@@ -1,3 +1,9 @@
+Tue Feb 24 18:36:54 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/performance-tests/LoadBalancing/server.cpp:
+	* orbsvcs/performance-tests/LoadBalancing/ServerRequestInterceptor.cpp:
+	  Fixed wrong exception macro usage
+
 Tue Feb 24 18:32:06 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly.mpc:
