@@ -673,7 +673,7 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
     {
       *this->server_skeletons_ << "#include \""
                                << be_global->pch_include ()
-                               << "\"";
+                               << "\"\n";
     }
 
   // Generate the #ifndef clause.
