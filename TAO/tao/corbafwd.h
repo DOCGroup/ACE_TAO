@@ -160,6 +160,11 @@ class CORBA_Object_var;
 class CORBA_Object_out;
 typedef class CORBA_Object *CORBA_Object_ptr;
 
+class CORBA_Context;
+class CORBA_Context_var;
+class CORBA_Context_out;
+typedef class CORBA_Context *CORBA_Context_ptr;
+
 class CORBA_Policy;
 class CORBA_Policy_var;
 class CORBA_Policy_out;
@@ -320,6 +325,11 @@ public:
   typedef CORBA_Object_var Object_var;
   typedef CORBA_Object_out Object_out;
 
+  typedef CORBA_Context Context;
+  typedef CORBA_Context *Context_ptr;
+  typedef CORBA_Context_var Context_var;
+  typedef CORBA_Context_out Context_out;
+
   typedef CORBA_Principal Principal;
   typedef CORBA_Principal *Principal_ptr;
 
@@ -411,7 +421,7 @@ TAO_SYSTEM_EXCEPTION_LIST
   static void release (NVList_ptr);
   static void release (Request_ptr);
   static void release (Principal_ptr);
-  //  static Boolean release (Context_ptr);
+  static void release (Context_ptr);
   static void release (TypeCode_ptr);
   static void release (ORB_ptr);
   static void release (ServerRequest_ptr req);

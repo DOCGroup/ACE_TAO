@@ -21,6 +21,7 @@ ORBCORE_SRCS = \
 	Any \
 	CurrentC \
 	CurrentS \
+	Context \
 	DynAnyC \
 	DynAnyS \
 	DynAny_i \

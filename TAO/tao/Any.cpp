@@ -257,7 +257,7 @@ CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
 
   this->any_owns_data_ = any_owns_data;
 
-  this->cdr_ = mb->duplicate ();
+  this->cdr_ = ACE_Message_Block::duplicate (mb);
   // We can save the decode operation
   // if there's no need to extract the object.
  }

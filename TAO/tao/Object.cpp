@@ -427,14 +427,20 @@ CORBA::Object::_use_locate_requests (CORBA::Boolean use_it)
 }
 
 void
-CORBA_Object::_create_request (const CORBA::Char *operation,
+CORBA_Object::_create_request (CORBA::Context_ptr ctx, 
+                               const CORBA::Char *operation,
                                CORBA::NVList_ptr arg_list,
                                CORBA::NamedValue_ptr result,
                                CORBA::Request_ptr &request,
                                CORBA::Flags req_flags,
                                CORBA::Environment &TAO_IN_ENV)
 {
-  TAO_IN_ENV.clear ();
+  // Since we don't really support Context, anything but a null pointer
+  // is a no-no.
+  if (ctx) 
+    {
+      TAO_THROW(CORBA::NO_IMPLEMENT (CORBA::COMPLETED_NO));
+    }
   request = new CORBA::Request (this, operation, arg_list, result, req_flags);
 }
 
