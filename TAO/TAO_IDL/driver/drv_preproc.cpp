@@ -497,7 +497,7 @@ DRV_pre_proc (const char *myfile)
 
   cpp_options.set_handles (ACE_INVALID_HANDLE, fd);
 
-  if (process.spawn (cpp_options) == -1)
+  if (process.spawn (cpp_options) == ACE_INVALID_PID)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT (idl_global->prog_name ()),
@@ -525,7 +525,7 @@ DRV_pre_proc (const char *myfile)
   argcount -= 2;
 
   ACE_exitcode status = 0;
-  if (process.wait (&status) == -1)
+  if (process.wait (&status) == ACE_INVALID_PID)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT (idl_global->prog_name ()),
