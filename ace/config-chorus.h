@@ -30,7 +30,7 @@
 #define ACE_LACKS_EXEC
 #define ACE_LACKS_SIGACTION
 #define ACE_LACKS_SIGSET
-#define ACE_LACKS_FILELOCKS
+// #define ACE_LACKS_FILELOCKS
 
 // got struct timespec
 #define ACE_HAS_POSIX_TIME
@@ -94,6 +94,7 @@
 // And they're even POSIX pthreads
 #define ACE_HAS_PTHREADS
 #define ACE_LACKS_PTHREAD_CLEANUP
+#define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 #define ACE_LACKS_RWLOCK_T
 #define ACE_HAS_SIGWAIT
 #define ACE_LACKS_CONDATTR_PSHARED
