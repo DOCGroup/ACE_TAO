@@ -111,7 +111,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/QuoterC.o .obj/QuoterC.o .obj/QuoterC.o .obj/QuoterC.o: QuoterC.cpp QuoterC.h \
+.obj/QuoterC.o .obj/QuoterC.so .shobj/QuoterC.o .shobj/QuoterC.so: QuoterC.cpp QuoterC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -423,7 +423,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.i \
  QuoterC.i
 
-.obj/QuoterS.o .obj/QuoterS.o .obj/QuoterS.o .obj/QuoterS.o: QuoterS.cpp QuoterS.h \
+.obj/QuoterS.o .obj/QuoterS.so .shobj/QuoterS.o .shobj/QuoterS.so: QuoterS.cpp QuoterS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
@@ -745,7 +745,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.i \
  QuoterC.h QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1073,7 +1073,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.i \
  QuoterC.i
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp server.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp server.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1416,7 +1416,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.i \
  QuoterC.h QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
-.obj/Quoter_i.o .obj/Quoter_i.o .obj/Quoter_i.o .obj/Quoter_i.o: Quoter_i.cpp \
+.obj/Quoter_i.o .obj/Quoter_i.so .shobj/Quoter_i.o .shobj/Quoter_i.so: Quoter_i.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1739,7 +1739,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.i \
  QuoterC.h QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
-.obj/Factory_Finder.o .obj/Factory_Finder.o .obj/Factory_Finder.o .obj/Factory_Finder.o: Factory_Finder.cpp \
+.obj/Factory_Finder.o .obj/Factory_Finder.so .shobj/Factory_Finder.o .shobj/Factory_Finder.so: Factory_Finder.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2066,7 +2066,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.i \
  QuoterC.h QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
-.obj/Factory_Finder_i.o .obj/Factory_Finder_i.o .obj/Factory_Finder_i.o .obj/Factory_Finder_i.o: Factory_Finder_i.cpp \
+.obj/Factory_Finder_i.o .obj/Factory_Finder_i.so .shobj/Factory_Finder_i.o .shobj/Factory_Finder_i.so: Factory_Finder_i.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -2391,7 +2391,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.i \
  QuoterC.h QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
-.obj/Generic_Factory.o .obj/Generic_Factory.o .obj/Generic_Factory.o .obj/Generic_Factory.o: Generic_Factory.cpp \
+.obj/Generic_Factory.o .obj/Generic_Factory.so .shobj/Generic_Factory.o .shobj/Generic_Factory.so: Generic_Factory.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2720,7 +2720,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.i \
  QuoterC.h QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
-.obj/Generic_Factory_i.o .obj/Generic_Factory_i.o .obj/Generic_Factory_i.o .obj/Generic_Factory_i.o: Generic_Factory_i.cpp \
+.obj/Generic_Factory_i.o .obj/Generic_Factory_i.so .shobj/Generic_Factory_i.o .shobj/Generic_Factory_i.so: Generic_Factory_i.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \

@@ -69,7 +69,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Peer_i.o .obj/Peer_i.o .obj/Peer_i.o .obj/Peer_i.o: Peer_i.cpp Peer_i.h testS.h \
+.obj/Peer_i.o .obj/Peer_i.so .shobj/Peer_i.o .shobj/Peer_i.so: Peer_i.cpp Peer_i.h testS.h \
  $(TAO_ROOT)/tao/MessagingS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -389,7 +389,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
  Peer_i.i
 
-.obj/Progress_i.o .obj/Progress_i.o .obj/Progress_i.o .obj/Progress_i.o: Progress_i.cpp Progress_i.h testS.h \
+.obj/Progress_i.o .obj/Progress_i.so .shobj/Progress_i.o .shobj/Progress_i.so: Progress_i.cpp Progress_i.h testS.h \
  $(TAO_ROOT)/tao/MessagingS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -698,7 +698,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  testC.i testS_T.h testS_T.i testS_T.cpp testS.i
 
-.obj/testC.o .obj/testC.o .obj/testC.o .obj/testC.o: testC.cpp testC.h \
+.obj/testC.o .obj/testC.so .shobj/testC.o .shobj/testC.so: testC.cpp testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1006,7 +1006,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Asynch_Invocation.i \
  testC.i
 
-.obj/testS.o .obj/testS.o .obj/testS.o .obj/testS.o: testS.cpp testS.h \
+.obj/testS.o .obj/testS.so .shobj/testS.o .shobj/testS.so: testS.cpp testS.h \
  $(TAO_ROOT)/tao/MessagingS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \

@@ -101,7 +101,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/cubitC.o .obj/cubitC.o .obj/cubitC.o .obj/cubitC.o: cubitC.cpp cubitC.h \
+.obj/cubitC.o .obj/cubitC.so .shobj/cubitC.o .shobj/cubitC.so: cubitC.cpp cubitC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -407,7 +407,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  cubitC.i
 
-.obj/cubitS.o .obj/cubitS.o .obj/cubitS.o .obj/cubitS.o: cubitS.cpp cubitS.h cubitC.h \
+.obj/cubitS.o .obj/cubitS.so .shobj/cubitS.o .shobj/cubitS.so: cubitS.cpp cubitS.h cubitC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -713,7 +713,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  cubitC.i cubitS_T.h cubitS_T.i cubitS_T.cpp cubitS.i
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1044,7 +1044,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Profile_Timer.i \
  Globals.h Timer.h Util_Thread.h Cubit_Task.h
 
-.obj/cubit_i.o .obj/cubit_i.o .obj/cubit_i.o .obj/cubit_i.o: cubit_i.cpp \
+.obj/cubit_i.o .obj/cubit_i.so .shobj/cubit_i.o .shobj/cubit_i.so: cubit_i.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1373,7 +1373,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Sched_Params.i \
  Globals.h Timer.h
 
-.obj/Task_Client.o .obj/Task_Client.o .obj/Task_Client.o .obj/Task_Client.o: Task_Client.cpp Task_Client.h \
+.obj/Task_Client.o .obj/Task_Client.so .shobj/Task_Client.o .shobj/Task_Client.so: Task_Client.cpp Task_Client.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1705,7 +1705,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Stats.i \
  $(TAO_ROOT)/tao/TAO_Internal.h
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -2036,7 +2036,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Profile_Timer.i \
  Globals.h Timer.h Util_Thread.h Cubit_Task.h client.h
 
-.obj/Util_Thread.o .obj/Util_Thread.o .obj/Util_Thread.o .obj/Util_Thread.o: Util_Thread.cpp Util_Thread.h Task_Client.h \
+.obj/Util_Thread.o .obj/Util_Thread.so .shobj/Util_Thread.o .shobj/Util_Thread.so: Util_Thread.cpp Util_Thread.h Task_Client.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -2365,7 +2365,7 @@ realclean: clean
  cubitC.i cubit_i.h cubitS.h cubitS_T.h cubitS_T.i cubitS_T.cpp \
  cubitS.i Globals.h Timer.h
 
-.obj/tmplinst.o .obj/tmplinst.o .obj/tmplinst.o .obj/tmplinst.o: tmplinst.cpp cubitC.h \
+.obj/tmplinst.o .obj/tmplinst.so .shobj/tmplinst.o .shobj/tmplinst.so: tmplinst.cpp cubitC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2671,7 +2671,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  cubitC.i
 
-.obj/Cubit_Task.o .obj/Cubit_Task.o .obj/Cubit_Task.o .obj/Cubit_Task.o: Cubit_Task.cpp \
+.obj/Cubit_Task.o .obj/Cubit_Task.so .shobj/Cubit_Task.o .shobj/Cubit_Task.so: Cubit_Task.cpp \
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2998,7 +2998,7 @@ realclean: clean
  cubitC.i cubitS_T.h cubitS_T.i cubitS_T.cpp cubitS.i \
  $(TAO_ROOT)/tao/TAO_Internal.h
 
-.obj/Globals.o .obj/Globals.o .obj/Globals.o .obj/Globals.o: Globals.cpp Globals.h \
+.obj/Globals.o .obj/Globals.so .shobj/Globals.o .shobj/Globals.so: Globals.cpp Globals.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -3053,7 +3053,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp
 
-.obj/Timer.o .obj/Timer.o .obj/Timer.o .obj/Timer.o: Timer.cpp Timer.h \
+.obj/Timer.o .obj/Timer.so .shobj/Timer.o .shobj/Timer.so: Timer.cpp Timer.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \

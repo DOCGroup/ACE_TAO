@@ -53,7 +53,7 @@ endif # SUPPRESS_DASH_G
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/TS_Server_Handler.o .obj/TS_Server_Handler.o .obj/TS_Server_Handler.o .obj/TS_Server_Handler.o: TS_Server_Handler.cpp \
+.obj/TS_Server_Handler.o .obj/TS_Server_Handler.so .shobj/TS_Server_Handler.o .shobj/TS_Server_Handler.so: TS_Server_Handler.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -217,7 +217,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  $(ACE_ROOT)/ace/Time_Request_Reply.h
 
-.obj/TS_Clerk_Handler.o .obj/TS_Clerk_Handler.o .obj/TS_Clerk_Handler.o .obj/TS_Clerk_Handler.o: TS_Clerk_Handler.cpp \
+.obj/TS_Clerk_Handler.o .obj/TS_Clerk_Handler.so .shobj/TS_Clerk_Handler.o .shobj/TS_Clerk_Handler.so: TS_Clerk_Handler.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -384,7 +384,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Time_Request_Reply.h
 
-.obj/Client_Logging_Handler.o .obj/Client_Logging_Handler.o .obj/Client_Logging_Handler.o .obj/Client_Logging_Handler.o: Client_Logging_Handler.cpp \
+.obj/Client_Logging_Handler.o .obj/Client_Logging_Handler.so .shobj/Client_Logging_Handler.o .shobj/Client_Logging_Handler.so: Client_Logging_Handler.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -556,7 +556,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/SPIPE_Stream.i \
  Client_Logging_Handler.h
 
-.obj/Name_Handler.o .obj/Name_Handler.o .obj/Name_Handler.o .obj/Name_Handler.o: Name_Handler.cpp \
+.obj/Name_Handler.o .obj/Name_Handler.so .shobj/Name_Handler.o .shobj/Name_Handler.so: Name_Handler.cpp \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -728,7 +728,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Name_Request_Reply.h \
  $(ACE_ROOT)/ace/Name_Space.h
 
-.obj/Server_Logging_Handler_T.o .obj/Server_Logging_Handler_T.o .obj/Server_Logging_Handler_T.o .obj/Server_Logging_Handler_T.o: Server_Logging_Handler_T.cpp \
+.obj/Server_Logging_Handler_T.o .obj/Server_Logging_Handler_T.so .shobj/Server_Logging_Handler_T.o .shobj/Server_Logging_Handler_T.so: Server_Logging_Handler_T.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -895,7 +895,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Acceptor.cpp \
  Server_Logging_Handler_T.cpp
 
-.obj/Log_Message_Receiver.o .obj/Log_Message_Receiver.o .obj/Log_Message_Receiver.o .obj/Log_Message_Receiver.o: Log_Message_Receiver.cpp \
+.obj/Log_Message_Receiver.o .obj/Log_Message_Receiver.so .shobj/Log_Message_Receiver.o .shobj/Log_Message_Receiver.so: Log_Message_Receiver.cpp \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -939,7 +939,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Synch_T.cpp \
  Log_Message_Receiver.h Log_Message_Receiver.cpp
 
-.obj/Server_Logging_Handler.o .obj/Server_Logging_Handler.o .obj/Server_Logging_Handler.o .obj/Server_Logging_Handler.o: Server_Logging_Handler.cpp \
+.obj/Server_Logging_Handler.o .obj/Server_Logging_Handler.so .shobj/Server_Logging_Handler.o .shobj/Server_Logging_Handler.so: Server_Logging_Handler.cpp \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1107,7 +1107,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/Token_Handler.o .obj/Token_Handler.o .obj/Token_Handler.o .obj/Token_Handler.o: Token_Handler.cpp \
+.obj/Token_Handler.o .obj/Token_Handler.so .shobj/Token_Handler.o .shobj/Token_Handler.so: Token_Handler.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1279,7 +1279,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Token_Request_Reply.h \
  $(ACE_ROOT)/ace/Token_Request_Reply.i
 
-.obj/Logging_Strategy.o .obj/Logging_Strategy.o .obj/Logging_Strategy.o .obj/Logging_Strategy.o: Logging_Strategy.cpp \
+.obj/Logging_Strategy.o .obj/Logging_Strategy.so .shobj/Logging_Strategy.o .shobj/Logging_Strategy.so: Logging_Strategy.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1309,15 +1309,68 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Get_Opt.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
  Logging_Strategy.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Service_Object.i
 
-.obj/Base_Optimizer.o .obj/Base_Optimizer.o .obj/Base_Optimizer.o .obj/Base_Optimizer.o: Base_Optimizer.cpp Base_Optimizer.h \
+.obj/Base_Optimizer.o .obj/Base_Optimizer.so .shobj/Base_Optimizer.o .shobj/Base_Optimizer.so: Base_Optimizer.cpp Base_Optimizer.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \

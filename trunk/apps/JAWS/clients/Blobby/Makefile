@@ -41,7 +41,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Blob.o .obj/Blob.o .obj/Blob.o .obj/Blob.o: Blob.cpp Blob.h \
+.obj/Blob.o .obj/Blob.so .shobj/Blob.o .shobj/Blob.so: Blob.cpp Blob.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -205,7 +205,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SOCK_Connector.i \
  Blob_Handler.h
 
-.obj/Blob_Handler.o .obj/Blob_Handler.o .obj/Blob_Handler.o .obj/Blob_Handler.o: Blob_Handler.cpp Blob_Handler.h \
+.obj/Blob_Handler.o .obj/Blob_Handler.so .shobj/Blob_Handler.o .shobj/Blob_Handler.so: Blob_Handler.cpp Blob_Handler.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -360,7 +360,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i
 
-.obj/Options.o .obj/Options.o .obj/Options.o .obj/Options.o: Options.cpp \
+.obj/Options.o .obj/Options.so .shobj/Options.o .shobj/Options.so: Options.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \

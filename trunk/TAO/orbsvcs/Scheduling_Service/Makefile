@@ -47,7 +47,7 @@ Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Scheduling_Service.o .obj/Scheduling_Service.o .obj/Scheduling_Service.o .obj/Scheduling_Service.o: Scheduling_Service.cpp \
+.obj/Scheduling_Service.o .obj/Scheduling_Service.so .shobj/Scheduling_Service.o .shobj/Scheduling_Service.so: Scheduling_Service.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \

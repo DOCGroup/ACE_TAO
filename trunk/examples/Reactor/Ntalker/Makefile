@@ -41,7 +41,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/ntalker.o .obj/ntalker.o .obj/ntalker.o .obj/ntalker.o: ntalker.cpp \
+.obj/ntalker.o .obj/ntalker.so .shobj/ntalker.o .shobj/ntalker.so: ntalker.cpp \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \

@@ -64,7 +64,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Subscribe.o .obj/Subscribe.o .obj/Subscribe.o .obj/Subscribe.o: Subscribe.cpp Subscribe.h \
+.obj/Subscribe.o .obj/Subscribe.so .shobj/Subscribe.o .shobj/Subscribe.so: Subscribe.cpp Subscribe.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
@@ -416,7 +416,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i
 
-.obj/main.o .obj/main.o .obj/main.o .obj/main.o: main.cpp Subscribe.h \
+.obj/main.o .obj/main.so .shobj/main.o .shobj/main.so: main.cpp Subscribe.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \

@@ -93,7 +93,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Time_Date.o .obj/Time_Date.o .obj/Time_Date.o .obj/Time_Date.o: Time_Date.cpp \
+.obj/Time_Date.o .obj/Time_Date.so .shobj/Time_Date.o .shobj/Time_Date.so: Time_Date.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -417,7 +417,7 @@ realclean: clean
  Time_DateC.i Time_DateS_T.h Time_DateS_T.i Time_DateS_T.cpp \
  Time_DateS.i Alt_Resource_Factory.h
 
-.obj/Time_Date_i.o .obj/Time_Date_i.o .obj/Time_Date_i.o .obj/Time_Date_i.o: Time_Date_i.cpp Time_Date_i.h Time_DateS.h Time_DateC.h \
+.obj/Time_Date_i.o .obj/Time_Date_i.so .shobj/Time_Date_i.o .shobj/Time_Date_i.so: Time_Date_i.cpp Time_Date_i.h Time_DateS.h Time_DateC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -724,7 +724,7 @@ realclean: clean
  Time_DateC.i Time_DateS_T.h Time_DateS_T.i Time_DateS_T.cpp \
  Time_DateS.i
 
-.obj/Time_DateS.o .obj/Time_DateS.o .obj/Time_DateS.o .obj/Time_DateS.o: Time_DateS.cpp Time_DateS.h Time_DateC.h \
+.obj/Time_DateS.o .obj/Time_DateS.so .shobj/Time_DateS.o .shobj/Time_DateS.so: Time_DateS.cpp Time_DateS.h Time_DateC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1031,7 +1031,7 @@ realclean: clean
  Time_DateC.i Time_DateS_T.h Time_DateS_T.i Time_DateS_T.cpp \
  Time_DateS.i
 
-.obj/Time_DateC.o .obj/Time_DateC.o .obj/Time_DateC.o .obj/Time_DateC.o: Time_DateC.cpp Time_DateC.h \
+.obj/Time_DateC.o .obj/Time_DateC.so .shobj/Time_DateC.o .shobj/Time_DateC.so: Time_DateC.cpp Time_DateC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1337,7 +1337,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  Time_DateC.i
 
-.obj/Time_DateC.o .obj/Time_DateC.o .obj/Time_DateC.o .obj/Time_DateC.o: Time_DateC.cpp Time_DateC.h \
+.obj/Time_DateC.o .obj/Time_DateC.so .shobj/Time_DateC.o .shobj/Time_DateC.so: Time_DateC.cpp Time_DateC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1643,7 +1643,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  Time_DateC.i
 
-.obj/Time_DateS.o .obj/Time_DateS.o .obj/Time_DateS.o .obj/Time_DateS.o: Time_DateS.cpp Time_DateS.h Time_DateC.h \
+.obj/Time_DateS.o .obj/Time_DateS.so .shobj/Time_DateS.o .shobj/Time_DateS.so: Time_DateS.cpp Time_DateS.h Time_DateC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1950,7 +1950,7 @@ realclean: clean
  Time_DateC.i Time_DateS_T.h Time_DateS_T.i Time_DateS_T.cpp \
  Time_DateS.i
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp Time_Date_Client_i.h ../Simple_util.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Time_Date_Client_i.h ../Simple_util.h \
  $(TAO_ROOT)/tao/TAO.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -2286,7 +2286,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Read_Buffer.i \
  ../Simple_util.cpp Time_DateC.h Time_DateC.i
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -2379,7 +2379,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h
 
-.obj/Time_Date_i.o .obj/Time_Date_i.o .obj/Time_Date_i.o .obj/Time_Date_i.o: Time_Date_i.cpp Time_Date_i.h Time_DateS.h Time_DateC.h \
+.obj/Time_Date_i.o .obj/Time_Date_i.so .shobj/Time_Date_i.o .shobj/Time_Date_i.so: Time_Date_i.cpp Time_Date_i.h Time_DateS.h Time_DateC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2686,7 +2686,7 @@ realclean: clean
  Time_DateC.i Time_DateS_T.h Time_DateS_T.i Time_DateS_T.cpp \
  Time_DateS.i
 
-.obj/Time_Date_Client_i.o .obj/Time_Date_Client_i.o .obj/Time_Date_Client_i.o .obj/Time_Date_Client_i.o: Time_Date_Client_i.cpp Time_Date_Client_i.h \
+.obj/Time_Date_Client_i.o .obj/Time_Date_Client_i.so .shobj/Time_Date_Client_i.o .shobj/Time_Date_Client_i.so: Time_Date_Client_i.cpp Time_Date_Client_i.h \
  ../Simple_util.h \
  $(TAO_ROOT)/tao/TAO.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -3023,7 +3023,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Read_Buffer.i \
  ../Simple_util.cpp Time_DateC.h Time_DateC.i
 
-.obj/Simple_util.o .obj/Simple_util.o .obj/Simple_util.o .obj/Simple_util.o: ../Simple_util.cpp ../Simple_util.h \
+.obj/Simple_util.o .obj/Simple_util.so .shobj/Simple_util.o .shobj/Simple_util.so: ../Simple_util.cpp ../Simple_util.h \
  $(TAO_ROOT)/tao/TAO.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \

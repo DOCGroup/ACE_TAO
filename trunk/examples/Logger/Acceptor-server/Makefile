@@ -40,7 +40,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/server_loggerd.o .obj/server_loggerd.o .obj/server_loggerd.o .obj/server_loggerd.o: server_loggerd.cpp \
+.obj/server_loggerd.o .obj/server_loggerd.so .shobj/server_loggerd.o .shobj/server_loggerd.so: server_loggerd.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \

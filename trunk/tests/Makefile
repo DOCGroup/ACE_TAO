@@ -179,7 +179,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Aio_Platform_Test.o .obj/Aio_Platform_Test.o .obj/Aio_Platform_Test.o .obj/Aio_Platform_Test.o: Aio_Platform_Test.cpp test_config.h \
+.obj/Aio_Platform_Test.o .obj/Aio_Platform_Test.so .shobj/Aio_Platform_Test.o .shobj/Aio_Platform_Test.so: Aio_Platform_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -230,7 +230,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp
 
-.obj/ARGV_Test.o .obj/ARGV_Test.o .obj/ARGV_Test.o .obj/ARGV_Test.o: ARGV_Test.cpp \
+.obj/ARGV_Test.o .obj/ARGV_Test.so .shobj/ARGV_Test.o .shobj/ARGV_Test.so: ARGV_Test.cpp \
  $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -308,7 +308,7 @@ realclean: clean
  $(ACE_ROOT)/ace/ARGV.i \
  test_config.h
 
-.obj/Atomic_Op_Test.o .obj/Atomic_Op_Test.o .obj/Atomic_Op_Test.o .obj/Atomic_Op_Test.o: Atomic_Op_Test.cpp \
+.obj/Atomic_Op_Test.o .obj/Atomic_Op_Test.so .shobj/Atomic_Op_Test.o .shobj/Atomic_Op_Test.so: Atomic_Op_Test.cpp \
  test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -360,7 +360,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp
 
-.obj/Auto_IncDec_Test.o .obj/Auto_IncDec_Test.o .obj/Auto_IncDec_Test.o .obj/Auto_IncDec_Test.o: Auto_IncDec_Test.cpp \
+.obj/Auto_IncDec_Test.o .obj/Auto_IncDec_Test.so .shobj/Auto_IncDec_Test.o .shobj/Auto_IncDec_Test.so: Auto_IncDec_Test.cpp \
  $(ACE_ROOT)/ace/Auto_IncDec_T.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -441,7 +441,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread_Manager.i \
  test_config.h
 
-.obj/Barrier_Test.o .obj/Barrier_Test.o .obj/Barrier_Test.o .obj/Barrier_Test.o: Barrier_Test.cpp test_config.h \
+.obj/Barrier_Test.o .obj/Barrier_Test.so .shobj/Barrier_Test.o .shobj/Barrier_Test.so: Barrier_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -518,7 +518,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Thread_Manager.i
 
-.obj/Basic_Types_Test.o .obj/Basic_Types_Test.o .obj/Basic_Types_Test.o .obj/Basic_Types_Test.o: Basic_Types_Test.cpp \
+.obj/Basic_Types_Test.o .obj/Basic_Types_Test.so .shobj/Basic_Types_Test.o .shobj/Basic_Types_Test.so: Basic_Types_Test.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -571,7 +571,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp
 
-.obj/Buffer_Stream_Test.o .obj/Buffer_Stream_Test.o .obj/Buffer_Stream_Test.o .obj/Buffer_Stream_Test.o: Buffer_Stream_Test.cpp test_config.h \
+.obj/Buffer_Stream_Test.o .obj/Buffer_Stream_Test.so .shobj/Buffer_Stream_Test.o .shobj/Buffer_Stream_Test.so: Buffer_Stream_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -713,7 +713,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream.i \
  $(ACE_ROOT)/ace/Stream.cpp
 
-.obj/Cache_Map_Manager_Test.o .obj/Cache_Map_Manager_Test.o .obj/Cache_Map_Manager_Test.o .obj/Cache_Map_Manager_Test.o: Cache_Map_Manager_Test.cpp \
+.obj/Cache_Map_Manager_Test.o .obj/Cache_Map_Manager_Test.so .shobj/Cache_Map_Manager_Test.o .shobj/Cache_Map_Manager_Test.so: Cache_Map_Manager_Test.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -865,7 +865,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.i \
  Cache_Map_Manager_Test.h
 
-.obj/Cached_Accept_Conn_Test.o .obj/Cached_Accept_Conn_Test.o .obj/Cached_Accept_Conn_Test.o .obj/Cached_Accept_Conn_Test.o: Cached_Accept_Conn_Test.cpp test_config.h \
+.obj/Cached_Accept_Conn_Test.o .obj/Cached_Accept_Conn_Test.so .shobj/Cached_Accept_Conn_Test.o .shobj/Cached_Accept_Conn_Test.so: Cached_Accept_Conn_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1056,7 +1056,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/Cached_Conn_Test.o .obj/Cached_Conn_Test.o .obj/Cached_Conn_Test.o .obj/Cached_Conn_Test.o: Cached_Conn_Test.cpp test_config.h \
+.obj/Cached_Conn_Test.o .obj/Cached_Conn_Test.so .shobj/Cached_Conn_Test.o .shobj/Cached_Conn_Test.so: Cached_Conn_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1247,7 +1247,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Handle_Gobbler.h \
  $(ACE_ROOT)/ace/Handle_Gobbler.i
 
-.obj/Capabilities_Test.o .obj/Capabilities_Test.o .obj/Capabilities_Test.o .obj/Capabilities_Test.o: Capabilities_Test.cpp \
+.obj/Capabilities_Test.o .obj/Capabilities_Test.so .shobj/Capabilities_Test.o .shobj/Capabilities_Test.so: Capabilities_Test.cpp \
  $(ACE_ROOT)/ace/Capabilities.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1352,7 +1352,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Capabilities.i \
  test_config.h
 
-.obj/CDR_File_Test.o .obj/CDR_File_Test.o .obj/CDR_File_Test.o .obj/CDR_File_Test.o: CDR_File_Test.cpp \
+.obj/CDR_File_Test.o .obj/CDR_File_Test.so .shobj/CDR_File_Test.o .shobj/CDR_File_Test.so: CDR_File_Test.cpp \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -1454,7 +1454,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.i \
  test_config.h
 
-.obj/CDR_Test.o .obj/CDR_Test.o .obj/CDR_Test.o .obj/CDR_Test.o: CDR_Test.cpp test_config.h \
+.obj/CDR_Test.o .obj/CDR_Test.so .shobj/CDR_Test.o .shobj/CDR_Test.so: CDR_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1543,7 +1543,7 @@ realclean: clean
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i
 
-.obj/Collection_Test.o .obj/Collection_Test.o .obj/Collection_Test.o .obj/Collection_Test.o: Collection_Test.cpp test_config.h \
+.obj/Collection_Test.o .obj/Collection_Test.so .shobj/Collection_Test.o .shobj/Collection_Test.so: Collection_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1618,7 +1618,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i
 
-.obj/Conn_Test.o .obj/Conn_Test.o .obj/Conn_Test.o .obj/Conn_Test.o: Conn_Test.cpp test_config.h \
+.obj/Conn_Test.o .obj/Conn_Test.so .shobj/Conn_Test.o .shobj/Conn_Test.so: Conn_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1793,7 +1793,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.i \
  Conn_Test.h
 
-.obj/DLList_Test.o .obj/DLList_Test.o .obj/DLList_Test.o .obj/DLList_Test.o: DLList_Test.cpp test_config.h \
+.obj/DLList_Test.o .obj/DLList_Test.so .shobj/DLList_Test.o .shobj/DLList_Test.so: DLList_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1870,7 +1870,7 @@ realclean: clean
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i
 
-.obj/DLL_Test.o .obj/DLL_Test.o .obj/DLL_Test.o .obj/DLL_Test.o: DLL_Test.cpp test_config.h \
+.obj/DLL_Test.o .obj/DLL_Test.so .shobj/DLL_Test.o .shobj/DLL_Test.so: DLL_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1926,7 +1926,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/Enum_Interfaces_Test.o .obj/Enum_Interfaces_Test.o .obj/Enum_Interfaces_Test.o .obj/Enum_Interfaces_Test.o: Enum_Interfaces_Test.cpp test_config.h \
+.obj/Enum_Interfaces_Test.o .obj/Enum_Interfaces_Test.so .shobj/Enum_Interfaces_Test.o .shobj/Enum_Interfaces_Test.so: Enum_Interfaces_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1981,7 +1981,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i
 
-.obj/Env_Value_Test.o .obj/Env_Value_Test.o .obj/Env_Value_Test.o .obj/Env_Value_Test.o: Env_Value_Test.cpp test_config.h \
+.obj/Env_Value_Test.o .obj/Env_Value_Test.so .shobj/Env_Value_Test.o .shobj/Env_Value_Test.so: Env_Value_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -2040,7 +2040,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Env_Value_T.i \
  $(ACE_ROOT)/ace/Env_Value_T.cpp
 
-.obj/Future_Test.o .obj/Future_Test.o .obj/Future_Test.o .obj/Future_Test.o: Future_Test.cpp test_config.h \
+.obj/Future_Test.o .obj/Future_Test.so .shobj/Future_Test.o .shobj/Future_Test.so: Future_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -2186,7 +2186,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/Future_Set_Test.o .obj/Future_Set_Test.o .obj/Future_Set_Test.o .obj/Future_Set_Test.o: Future_Set_Test.cpp test_config.h \
+.obj/Future_Set_Test.o .obj/Future_Set_Test.so .shobj/Future_Set_Test.o .shobj/Future_Set_Test.so: Future_Set_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -2334,7 +2334,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/Handle_Set_Test.o .obj/Handle_Set_Test.o .obj/Handle_Set_Test.o .obj/Handle_Set_Test.o: Handle_Set_Test.cpp test_config.h \
+.obj/Handle_Set_Test.o .obj/Handle_Set_Test.so .shobj/Handle_Set_Test.o .shobj/Handle_Set_Test.so: Handle_Set_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -2416,7 +2416,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i
 
-.obj/High_Res_Timer_Test.o .obj/High_Res_Timer_Test.o .obj/High_Res_Timer_Test.o .obj/High_Res_Timer_Test.o: High_Res_Timer_Test.cpp test_config.h \
+.obj/High_Res_Timer_Test.o .obj/High_Res_Timer_Test.so .shobj/High_Res_Timer_Test.o .shobj/High_Res_Timer_Test.so: High_Res_Timer_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -2473,7 +2473,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/OrdMultiSet_Test.o .obj/OrdMultiSet_Test.o .obj/OrdMultiSet_Test.o .obj/OrdMultiSet_Test.o: OrdMultiSet_Test.cpp \
+.obj/OrdMultiSet_Test.o .obj/OrdMultiSet_Test.so .shobj/OrdMultiSet_Test.o .shobj/OrdMultiSet_Test.so: OrdMultiSet_Test.cpp \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -2549,7 +2549,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i
 
-.obj/Hash_Map_Manager_Test.o .obj/Hash_Map_Manager_Test.o .obj/Hash_Map_Manager_Test.o .obj/Hash_Map_Manager_Test.o: Hash_Map_Manager_Test.cpp test_config.h \
+.obj/Hash_Map_Manager_Test.o .obj/Hash_Map_Manager_Test.so .shobj/Hash_Map_Manager_Test.o .shobj/Hash_Map_Manager_Test.so: Hash_Map_Manager_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -2651,7 +2651,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h
 
-.obj/Hash_Map_Bucket_Iterator_Test.o .obj/Hash_Map_Bucket_Iterator_Test.o .obj/Hash_Map_Bucket_Iterator_Test.o .obj/Hash_Map_Bucket_Iterator_Test.o: Hash_Map_Bucket_Iterator_Test.cpp \
+.obj/Hash_Map_Bucket_Iterator_Test.o .obj/Hash_Map_Bucket_Iterator_Test.so .shobj/Hash_Map_Bucket_Iterator_Test.o .shobj/Hash_Map_Bucket_Iterator_Test.so: Hash_Map_Bucket_Iterator_Test.cpp \
  test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -2756,7 +2756,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/IOStream_Test.o .obj/IOStream_Test.o .obj/IOStream_Test.o .obj/IOStream_Test.o: IOStream_Test.cpp test_config.h \
+.obj/IOStream_Test.o .obj/IOStream_Test.so .shobj/IOStream_Test.o .shobj/IOStream_Test.so: IOStream_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -2922,7 +2922,7 @@ realclean: clean
  $(ACE_ROOT)/ace/IOStream_T.i \
  $(ACE_ROOT)/ace/IOStream_T.cpp
 
-.obj/Lazy_Map_Manager_Test.o .obj/Lazy_Map_Manager_Test.o .obj/Lazy_Map_Manager_Test.o .obj/Lazy_Map_Manager_Test.o: Lazy_Map_Manager_Test.cpp test_config.h \
+.obj/Lazy_Map_Manager_Test.o .obj/Lazy_Map_Manager_Test.so .shobj/Lazy_Map_Manager_Test.o .shobj/Lazy_Map_Manager_Test.so: Lazy_Map_Manager_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -3023,7 +3023,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp
 
-.obj/Log_Msg_Test.o .obj/Log_Msg_Test.o .obj/Log_Msg_Test.o .obj/Log_Msg_Test.o: Log_Msg_Test.cpp \
+.obj/Log_Msg_Test.o .obj/Log_Msg_Test.so .shobj/Log_Msg_Test.o .shobj/Log_Msg_Test.so: Log_Msg_Test.cpp \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -3093,7 +3093,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp
 
-.obj/Malloc_Test.o .obj/Malloc_Test.o .obj/Malloc_Test.o .obj/Malloc_Test.o: Malloc_Test.cpp test_config.h \
+.obj/Malloc_Test.o .obj/Malloc_Test.so .shobj/Malloc_Test.o .shobj/Malloc_Test.so: Malloc_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -3176,7 +3176,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  Malloc_Test.h
 
-.obj/Map_Test.o .obj/Map_Test.o .obj/Map_Test.o .obj/Map_Test.o: Map_Test.cpp test_config.h \
+.obj/Map_Test.o .obj/Map_Test.so .shobj/Map_Test.o .shobj/Map_Test.so: Map_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -3300,7 +3300,7 @@ realclean: clean
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/Profile_Timer.i
 
-.obj/Map_Manager_Test.o .obj/Map_Manager_Test.o .obj/Map_Manager_Test.o .obj/Map_Manager_Test.o: Map_Manager_Test.cpp test_config.h \
+.obj/Map_Manager_Test.o .obj/Map_Manager_Test.so .shobj/Map_Manager_Test.o .shobj/Map_Manager_Test.so: Map_Manager_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -3458,7 +3458,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Caching_Strategies_T.i \
  $(ACE_ROOT)/ace/Caching_Strategies_T.cpp
 
-.obj/Mem_Map_Test.o .obj/Mem_Map_Test.o .obj/Mem_Map_Test.o .obj/Mem_Map_Test.o: Mem_Map_Test.cpp test_config.h \
+.obj/Mem_Map_Test.o .obj/Mem_Map_Test.so .shobj/Mem_Map_Test.o .shobj/Mem_Map_Test.so: Mem_Map_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -3511,7 +3511,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i
 
-.obj/MM_Shared_Memory_Test.o .obj/MM_Shared_Memory_Test.o .obj/MM_Shared_Memory_Test.o .obj/MM_Shared_Memory_Test.o: MM_Shared_Memory_Test.cpp test_config.h \
+.obj/MM_Shared_Memory_Test.o .obj/MM_Shared_Memory_Test.so .shobj/MM_Shared_Memory_Test.o .shobj/MM_Shared_Memory_Test.so: MM_Shared_Memory_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -3591,7 +3591,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Thread_Manager.i
 
-.obj/MT_Reactor_Timer_Test.o .obj/MT_Reactor_Timer_Test.o .obj/MT_Reactor_Timer_Test.o .obj/MT_Reactor_Timer_Test.o: MT_Reactor_Timer_Test.cpp test_config.h \
+.obj/MT_Reactor_Timer_Test.o .obj/MT_Reactor_Timer_Test.so .shobj/MT_Reactor_Timer_Test.o .shobj/MT_Reactor_Timer_Test.so: MT_Reactor_Timer_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -3732,7 +3732,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Pipe.h \
  $(ACE_ROOT)/ace/Pipe.i
 
-.obj/MT_SOCK_Test.o .obj/MT_SOCK_Test.o .obj/MT_SOCK_Test.o .obj/MT_SOCK_Test.o: MT_SOCK_Test.cpp test_config.h \
+.obj/MT_SOCK_Test.o .obj/MT_SOCK_Test.so .shobj/MT_SOCK_Test.o .shobj/MT_SOCK_Test.so: MT_SOCK_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -3829,7 +3829,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i
 
-.obj/Message_Block_Test.o .obj/Message_Block_Test.o .obj/Message_Block_Test.o .obj/Message_Block_Test.o: Message_Block_Test.cpp test_config.h \
+.obj/Message_Block_Test.o .obj/Message_Block_Test.so .shobj/Message_Block_Test.o .shobj/Message_Block_Test.so: Message_Block_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -3972,7 +3972,7 @@ realclean: clean
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/Profile_Timer.i
 
-.obj/Message_Queue_Test.o .obj/Message_Queue_Test.o .obj/Message_Queue_Test.o .obj/Message_Queue_Test.o: Message_Queue_Test.cpp test_config.h \
+.obj/Message_Queue_Test.o .obj/Message_Queue_Test.so .shobj/Message_Queue_Test.o .shobj/Message_Queue_Test.so: Message_Queue_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -4102,7 +4102,7 @@ realclean: clean
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i
 
-.obj/Message_Queue_Notifications_Test.o .obj/Message_Queue_Notifications_Test.o .obj/Message_Queue_Notifications_Test.o .obj/Message_Queue_Notifications_Test.o: \
+.obj/Message_Queue_Notifications_Test.o .obj/Message_Queue_Notifications_Test.so .shobj/Message_Queue_Notifications_Test.o .shobj/Message_Queue_Notifications_Test.so: \
  Message_Queue_Notifications_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -4241,7 +4241,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
-.obj/New_Fail_Test.o .obj/New_Fail_Test.o .obj/New_Fail_Test.o .obj/New_Fail_Test.o: New_Fail_Test.cpp test_config.h \
+.obj/New_Fail_Test.o .obj/New_Fail_Test.so .shobj/New_Fail_Test.o .shobj/New_Fail_Test.so: New_Fail_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -4293,7 +4293,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/CORBA_macros.h
 
-.obj/Notify_Performance_Test.o .obj/Notify_Performance_Test.o .obj/Notify_Performance_Test.o .obj/Notify_Performance_Test.o: Notify_Performance_Test.cpp test_config.h \
+.obj/Notify_Performance_Test.o .obj/Notify_Performance_Test.so .shobj/Notify_Performance_Test.o .shobj/Notify_Performance_Test.so: Notify_Performance_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -4444,7 +4444,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/Object_Manager_Test.o .obj/Object_Manager_Test.o .obj/Object_Manager_Test.o .obj/Object_Manager_Test.o: Object_Manager_Test.cpp test_config.h \
+.obj/Object_Manager_Test.o .obj/Object_Manager_Test.so .shobj/Object_Manager_Test.o .shobj/Object_Manager_Test.so: Object_Manager_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -4495,7 +4495,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp
 
-.obj/Process_Mutex_Test.o .obj/Process_Mutex_Test.o .obj/Process_Mutex_Test.o .obj/Process_Mutex_Test.o: Process_Mutex_Test.cpp test_config.h \
+.obj/Process_Mutex_Test.o .obj/Process_Mutex_Test.so .shobj/Process_Mutex_Test.o .shobj/Process_Mutex_Test.so: Process_Mutex_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -4553,7 +4553,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/Process_Strategy_Test.o .obj/Process_Strategy_Test.o .obj/Process_Strategy_Test.o .obj/Process_Strategy_Test.o: Process_Strategy_Test.cpp test_config.h \
+.obj/Process_Strategy_Test.o .obj/Process_Strategy_Test.so .shobj/Process_Strategy_Test.o .shobj/Process_Strategy_Test.so: Process_Strategy_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -4718,7 +4718,7 @@ realclean: clean
  $(ACE_ROOT)/ace/SOCK_Connector.i \
  Process_Strategy_Test.h
 
-.obj/Priority_Buffer_Test.o .obj/Priority_Buffer_Test.o .obj/Priority_Buffer_Test.o .obj/Priority_Buffer_Test.o: Priority_Buffer_Test.cpp test_config.h \
+.obj/Priority_Buffer_Test.o .obj/Priority_Buffer_Test.so .shobj/Priority_Buffer_Test.o .shobj/Priority_Buffer_Test.so: Priority_Buffer_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -4846,7 +4846,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i
 
-.obj/Dynamic_Priority_Test.o .obj/Dynamic_Priority_Test.o .obj/Dynamic_Priority_Test.o .obj/Dynamic_Priority_Test.o: Dynamic_Priority_Test.cpp test_config.h \
+.obj/Dynamic_Priority_Test.o .obj/Dynamic_Priority_Test.so .shobj/Dynamic_Priority_Test.o .shobj/Dynamic_Priority_Test.so: Dynamic_Priority_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -4978,7 +4978,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/Sched_Params.i
 
-.obj/Priority_Task_Test.o .obj/Priority_Task_Test.o .obj/Priority_Task_Test.o .obj/Priority_Task_Test.o: Priority_Task_Test.cpp test_config.h \
+.obj/Priority_Task_Test.o .obj/Priority_Task_Test.so .shobj/Priority_Task_Test.o .shobj/Priority_Task_Test.so: Priority_Task_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -5118,7 +5118,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/Sched_Params.i
 
-.obj/Priority_Reactor_Test.o .obj/Priority_Reactor_Test.o .obj/Priority_Reactor_Test.o .obj/Priority_Reactor_Test.o: Priority_Reactor_Test.cpp test_config.h \
+.obj/Priority_Reactor_Test.o .obj/Priority_Reactor_Test.so .shobj/Priority_Reactor_Test.o .shobj/Priority_Reactor_Test.so: Priority_Reactor_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -5305,7 +5305,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Select_Reactor_T.i \
  Priority_Reactor_Test.h
 
-.obj/Process_Manager_Test.o .obj/Process_Manager_Test.o .obj/Process_Manager_Test.o .obj/Process_Manager_Test.o: Process_Manager_Test.cpp test_config.h \
+.obj/Process_Manager_Test.o .obj/Process_Manager_Test.so .shobj/Process_Manager_Test.o .shobj/Process_Manager_Test.so: Process_Manager_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -5397,7 +5397,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/Pipe_Test.o .obj/Pipe_Test.o .obj/Pipe_Test.o .obj/Pipe_Test.o: Pipe_Test.cpp test_config.h \
+.obj/Pipe_Test.o .obj/Pipe_Test.so .shobj/Pipe_Test.o .shobj/Pipe_Test.so: Pipe_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -5457,7 +5457,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/RB_Tree_Test.o .obj/RB_Tree_Test.o .obj/RB_Tree_Test.o .obj/RB_Tree_Test.o: RB_Tree_Test.cpp test_config.h \
+.obj/RB_Tree_Test.o .obj/RB_Tree_Test.so .shobj/RB_Tree_Test.o .shobj/RB_Tree_Test.so: RB_Tree_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -5541,7 +5541,7 @@ realclean: clean
  $(ACE_ROOT)/ace/RB_Tree.cpp \
  RB_Tree_Test.h
 
-.obj/Reactors_Test.o .obj/Reactors_Test.o .obj/Reactors_Test.o .obj/Reactors_Test.o: Reactors_Test.cpp test_config.h \
+.obj/Reactors_Test.o .obj/Reactors_Test.so .shobj/Reactors_Test.o .shobj/Reactors_Test.so: Reactors_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -5679,7 +5679,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
-.obj/Reactor_Exceptions_Test.o .obj/Reactor_Exceptions_Test.o .obj/Reactor_Exceptions_Test.o .obj/Reactor_Exceptions_Test.o: Reactor_Exceptions_Test.cpp \
+.obj/Reactor_Exceptions_Test.o .obj/Reactor_Exceptions_Test.so .shobj/Reactor_Exceptions_Test.o .shobj/Reactor_Exceptions_Test.so: Reactor_Exceptions_Test.cpp \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -5777,7 +5777,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread_Manager.i \
  test_config.h
 
-.obj/Reactor_Notify_Test.o .obj/Reactor_Notify_Test.o .obj/Reactor_Notify_Test.o .obj/Reactor_Notify_Test.o: Reactor_Notify_Test.cpp test_config.h \
+.obj/Reactor_Notify_Test.o .obj/Reactor_Notify_Test.so .shobj/Reactor_Notify_Test.o .shobj/Reactor_Notify_Test.so: Reactor_Notify_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -5931,7 +5931,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Select_Reactor_T.i
 
-.obj/Reactor_Performance_Test.o .obj/Reactor_Performance_Test.o .obj/Reactor_Performance_Test.o .obj/Reactor_Performance_Test.o: Reactor_Performance_Test.cpp test_config.h \
+.obj/Reactor_Performance_Test.o .obj/Reactor_Performance_Test.so .shobj/Reactor_Performance_Test.o .shobj/Reactor_Performance_Test.so: Reactor_Performance_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -6121,7 +6121,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/Reactor_Timer_Test.o .obj/Reactor_Timer_Test.o .obj/Reactor_Timer_Test.o .obj/Reactor_Timer_Test.o: Reactor_Timer_Test.cpp test_config.h \
+.obj/Reactor_Timer_Test.o .obj/Reactor_Timer_Test.so .shobj/Reactor_Timer_Test.o .shobj/Reactor_Timer_Test.so: Reactor_Timer_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -6205,7 +6205,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h
 
-.obj/Reader_Writer_Test.o .obj/Reader_Writer_Test.o .obj/Reader_Writer_Test.o .obj/Reader_Writer_Test.o: Reader_Writer_Test.cpp test_config.h \
+.obj/Reader_Writer_Test.o .obj/Reader_Writer_Test.so .shobj/Reader_Writer_Test.o .shobj/Reader_Writer_Test.so: Reader_Writer_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -6284,7 +6284,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/Recursive_Mutex_Test.o .obj/Recursive_Mutex_Test.o .obj/Recursive_Mutex_Test.o .obj/Recursive_Mutex_Test.o: Recursive_Mutex_Test.cpp test_config.h \
+.obj/Recursive_Mutex_Test.o .obj/Recursive_Mutex_Test.so .shobj/Recursive_Mutex_Test.o .shobj/Recursive_Mutex_Test.so: Recursive_Mutex_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -6363,7 +6363,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Thread_Manager.i
 
-.obj/Reverse_Lock_Test.o .obj/Reverse_Lock_Test.o .obj/Reverse_Lock_Test.o .obj/Reverse_Lock_Test.o: Reverse_Lock_Test.cpp test_config.h \
+.obj/Reverse_Lock_Test.o .obj/Reverse_Lock_Test.so .shobj/Reverse_Lock_Test.o .shobj/Reverse_Lock_Test.so: Reverse_Lock_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -6414,7 +6414,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp
 
-.obj/Semaphore_Test.o .obj/Semaphore_Test.o .obj/Semaphore_Test.o .obj/Semaphore_Test.o: Semaphore_Test.cpp test_config.h \
+.obj/Semaphore_Test.o .obj/Semaphore_Test.so .shobj/Semaphore_Test.o .shobj/Semaphore_Test.so: Semaphore_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -6493,7 +6493,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/Service_Config_Test.o .obj/Service_Config_Test.o .obj/Service_Config_Test.o .obj/Service_Config_Test.o: Service_Config_Test.cpp test_config.h \
+.obj/Service_Config_Test.o .obj/Service_Config_Test.so .shobj/Service_Config_Test.o .shobj/Service_Config_Test.so: Service_Config_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -6586,7 +6586,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h
 
-.obj/Signal_Test.o .obj/Signal_Test.o .obj/Signal_Test.o .obj/Signal_Test.o: Signal_Test.cpp test_config.h \
+.obj/Signal_Test.o .obj/Signal_Test.so .shobj/Signal_Test.o .shobj/Signal_Test.so: Signal_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -6671,7 +6671,7 @@ realclean: clean
  $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i
 
-.obj/Sigset_Ops_Test.o .obj/Sigset_Ops_Test.o .obj/Sigset_Ops_Test.o .obj/Sigset_Ops_Test.o: Sigset_Ops_Test.cpp test_config.h \
+.obj/Sigset_Ops_Test.o .obj/Sigset_Ops_Test.so .shobj/Sigset_Ops_Test.o .shobj/Sigset_Ops_Test.so: Sigset_Ops_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -6722,7 +6722,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp
 
-.obj/Simple_Message_Block_Test.o .obj/Simple_Message_Block_Test.o .obj/Simple_Message_Block_Test.o .obj/Simple_Message_Block_Test.o: Simple_Message_Block_Test.cpp \
+.obj/Simple_Message_Block_Test.o .obj/Simple_Message_Block_Test.so .shobj/Simple_Message_Block_Test.o .shobj/Simple_Message_Block_Test.so: Simple_Message_Block_Test.cpp \
  test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -6803,7 +6803,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp
 
-.obj/SOCK_Test.o .obj/SOCK_Test.o .obj/SOCK_Test.o .obj/SOCK_Test.o: SOCK_Test.cpp test_config.h \
+.obj/SOCK_Test.o .obj/SOCK_Test.so .shobj/SOCK_Test.o .shobj/SOCK_Test.so: SOCK_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -6900,7 +6900,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i
 
-.obj/SOCK_Connector_Test.o .obj/SOCK_Connector_Test.o .obj/SOCK_Connector_Test.o .obj/SOCK_Connector_Test.o: SOCK_Connector_Test.cpp test_config.h \
+.obj/SOCK_Connector_Test.o .obj/SOCK_Connector_Test.so .shobj/SOCK_Connector_Test.o .shobj/SOCK_Connector_Test.so: SOCK_Connector_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -6967,7 +6967,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i
 
-.obj/SOCK_Send_Recv_Test.o .obj/SOCK_Send_Recv_Test.o .obj/SOCK_Send_Recv_Test.o .obj/SOCK_Send_Recv_Test.o: SOCK_Send_Recv_Test.cpp test_config.h \
+.obj/SOCK_Send_Recv_Test.o .obj/SOCK_Send_Recv_Test.so .shobj/SOCK_Send_Recv_Test.o .shobj/SOCK_Send_Recv_Test.so: SOCK_Send_Recv_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -7062,7 +7062,7 @@ realclean: clean
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i
 
-.obj/SPIPE_Test.o .obj/SPIPE_Test.o .obj/SPIPE_Test.o .obj/SPIPE_Test.o: SPIPE_Test.cpp test_config.h \
+.obj/SPIPE_Test.o .obj/SPIPE_Test.so .shobj/SPIPE_Test.o .shobj/SPIPE_Test.so: SPIPE_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -7154,7 +7154,7 @@ realclean: clean
  $(ACE_ROOT)/ace/SPIPE_Connector.i \
  $(ACE_ROOT)/ace/SPIPE_Acceptor.h
 
-.obj/SString_Test.o .obj/SString_Test.o .obj/SString_Test.o .obj/SString_Test.o: SString_Test.cpp test_config.h \
+.obj/SString_Test.o .obj/SString_Test.so .shobj/SString_Test.o .shobj/SString_Test.so: SString_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -7208,7 +7208,7 @@ realclean: clean
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Malloc_Base.h
 
-.obj/SV_Shared_Memory_Test.o .obj/SV_Shared_Memory_Test.o .obj/SV_Shared_Memory_Test.o .obj/SV_Shared_Memory_Test.o: SV_Shared_Memory_Test.cpp test_config.h \
+.obj/SV_Shared_Memory_Test.o .obj/SV_Shared_Memory_Test.so .shobj/SV_Shared_Memory_Test.o .shobj/SV_Shared_Memory_Test.so: SV_Shared_Memory_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -7283,7 +7283,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i
 
-.obj/Svc_Handler_Test.o .obj/Svc_Handler_Test.o .obj/Svc_Handler_Test.o .obj/Svc_Handler_Test.o: Svc_Handler_Test.cpp test_config.h \
+.obj/Svc_Handler_Test.o .obj/Svc_Handler_Test.so .shobj/Svc_Handler_Test.o .shobj/Svc_Handler_Test.so: Svc_Handler_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -7437,7 +7437,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i
 
-.obj/Task_Test.o .obj/Task_Test.o .obj/Task_Test.o .obj/Task_Test.o: Task_Test.cpp test_config.h \
+.obj/Task_Test.o .obj/Task_Test.so .shobj/Task_Test.o .shobj/Task_Test.so: Task_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -7575,7 +7575,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
-.obj/Thread_Manager_Test.o .obj/Thread_Manager_Test.o .obj/Thread_Manager_Test.o .obj/Thread_Manager_Test.o: Thread_Manager_Test.cpp test_config.h \
+.obj/Thread_Manager_Test.o .obj/Thread_Manager_Test.so .shobj/Thread_Manager_Test.o .shobj/Thread_Manager_Test.so: Thread_Manager_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -7652,7 +7652,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Thread_Manager.i
 
-.obj/Thread_Mutex_Test.o .obj/Thread_Mutex_Test.o .obj/Thread_Mutex_Test.o .obj/Thread_Mutex_Test.o: Thread_Mutex_Test.cpp test_config.h \
+.obj/Thread_Mutex_Test.o .obj/Thread_Mutex_Test.so .shobj/Thread_Mutex_Test.o .shobj/Thread_Mutex_Test.so: Thread_Mutex_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -7729,7 +7729,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Thread_Manager.i
 
-.obj/Thread_Pool_Test.o .obj/Thread_Pool_Test.o .obj/Thread_Pool_Test.o .obj/Thread_Pool_Test.o: Thread_Pool_Test.cpp test_config.h \
+.obj/Thread_Pool_Test.o .obj/Thread_Pool_Test.so .shobj/Thread_Pool_Test.o .shobj/Thread_Pool_Test.so: Thread_Pool_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -7867,7 +7867,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
-.obj/Timeprobe_Test.o .obj/Timeprobe_Test.o .obj/Timeprobe_Test.o .obj/Timeprobe_Test.o: Timeprobe_Test.cpp \
+.obj/Timeprobe_Test.o .obj/Timeprobe_Test.so .shobj/Timeprobe_Test.o .shobj/Timeprobe_Test.so: Timeprobe_Test.cpp \
  test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -7920,7 +7920,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Timeprobe.h
 
-.obj/Time_Service_Test.o .obj/Time_Service_Test.o .obj/Time_Service_Test.o .obj/Time_Service_Test.o: Time_Service_Test.cpp test_config.h \
+.obj/Time_Service_Test.o .obj/Time_Service_Test.so .shobj/Time_Service_Test.o .shobj/Time_Service_Test.so: Time_Service_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -7976,7 +7976,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Process.i
 
-.obj/Time_Value_Test.o .obj/Time_Value_Test.o .obj/Time_Value_Test.o .obj/Time_Value_Test.o: Time_Value_Test.cpp \
+.obj/Time_Value_Test.o .obj/Time_Value_Test.so .shobj/Time_Value_Test.o .shobj/Time_Value_Test.so: Time_Value_Test.cpp \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -8028,7 +8028,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp
 
-.obj/Timer_Queue_Test.o .obj/Timer_Queue_Test.o .obj/Timer_Queue_Test.o .obj/Timer_Queue_Test.o: Timer_Queue_Test.cpp test_config.h \
+.obj/Timer_Queue_Test.o .obj/Timer_Queue_Test.so .shobj/Timer_Queue_Test.o .shobj/Timer_Queue_Test.so: Timer_Queue_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -8124,7 +8124,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Hash_T.h \
  $(ACE_ROOT)/ace/Timer_Hash_T.cpp
 
-.obj/TSS_Test.o .obj/TSS_Test.o .obj/TSS_Test.o .obj/TSS_Test.o: TSS_Test.cpp test_config.h \
+.obj/TSS_Test.o .obj/TSS_Test.so .shobj/TSS_Test.o .shobj/TSS_Test.so: TSS_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -8202,7 +8202,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread_Manager.i \
  TSS_Test_Errno.h
 
-.obj/UPIPE_SAP_Test.o .obj/UPIPE_SAP_Test.o .obj/UPIPE_SAP_Test.o .obj/UPIPE_SAP_Test.o: UPIPE_SAP_Test.cpp test_config.h \
+.obj/UPIPE_SAP_Test.o .obj/UPIPE_SAP_Test.so .shobj/UPIPE_SAP_Test.o .shobj/UPIPE_SAP_Test.so: UPIPE_SAP_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -8362,7 +8362,7 @@ realclean: clean
  $(ACE_ROOT)/ace/UPIPE_Connector.h \
  $(ACE_ROOT)/ace/UPIPE_Connector.i
 
-.obj/Upgradable_RW_Test.o .obj/Upgradable_RW_Test.o .obj/Upgradable_RW_Test.o .obj/Upgradable_RW_Test.o: Upgradable_RW_Test.cpp Upgradable_RW_Test.h \
+.obj/Upgradable_RW_Test.o .obj/Upgradable_RW_Test.so .shobj/Upgradable_RW_Test.o .shobj/Upgradable_RW_Test.so: Upgradable_RW_Test.cpp Upgradable_RW_Test.h \
  test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -8508,7 +8508,7 @@ realclean: clean
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/Profile_Timer.i
 
-.obj/Naming_Test.o .obj/Naming_Test.o .obj/Naming_Test.o .obj/Naming_Test.o: Naming_Test.cpp test_config.h \
+.obj/Naming_Test.o .obj/Naming_Test.so .shobj/Naming_Test.o .shobj/Naming_Test.so: Naming_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -8627,7 +8627,7 @@ realclean: clean
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/Profile_Timer.i
 
-.obj/Thread_Pool_Reactor_Test.o .obj/Thread_Pool_Reactor_Test.o .obj/Thread_Pool_Reactor_Test.o .obj/Thread_Pool_Reactor_Test.o: Thread_Pool_Reactor_Test.cpp \
+.obj/Thread_Pool_Reactor_Test.o .obj/Thread_Pool_Reactor_Test.so .shobj/Thread_Pool_Reactor_Test.o .shobj/Thread_Pool_Reactor_Test.so: Thread_Pool_Reactor_Test.cpp \
  test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -8808,7 +8808,7 @@ realclean: clean
  $(ACE_ROOT)/ace/TP_Reactor.i \
  Thread_Pool_Reactor_Test.h
 
-.obj/XtReactor_Test.o .obj/XtReactor_Test.o .obj/XtReactor_Test.o .obj/XtReactor_Test.o: XtReactor_Test.cpp test_config.h \
+.obj/XtReactor_Test.o .obj/XtReactor_Test.so .shobj/XtReactor_Test.o .shobj/XtReactor_Test.so: XtReactor_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -8859,7 +8859,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp
 
-.obj/FlReactor_Test.o .obj/FlReactor_Test.o .obj/FlReactor_Test.o .obj/FlReactor_Test.o: FlReactor_Test.cpp test_config.h \
+.obj/FlReactor_Test.o .obj/FlReactor_Test.so .shobj/FlReactor_Test.o .shobj/FlReactor_Test.so: FlReactor_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -8910,7 +8910,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp
 
-.obj/TkReactor_Test.o .obj/TkReactor_Test.o .obj/TkReactor_Test.o .obj/TkReactor_Test.o: TkReactor_Test.cpp test_config.h \
+.obj/TkReactor_Test.o .obj/TkReactor_Test.so .shobj/TkReactor_Test.o .shobj/TkReactor_Test.so: TkReactor_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -8961,7 +8961,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp
 
-.obj/Tokens_Test.o .obj/Tokens_Test.o .obj/Tokens_Test.o .obj/Tokens_Test.o: Tokens_Test.cpp test_config.h \
+.obj/Tokens_Test.o .obj/Tokens_Test.so .shobj/Tokens_Test.o .shobj/Tokens_Test.so: Tokens_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -9090,7 +9090,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Token_Invariants.h
 
-.obj/CDR_Array_Test.o .obj/CDR_Array_Test.o .obj/CDR_Array_Test.o .obj/CDR_Array_Test.o: CDR_Array_Test.cpp test_config.h \
+.obj/CDR_Array_Test.o .obj/CDR_Array_Test.so .shobj/CDR_Array_Test.o .shobj/CDR_Array_Test.so: CDR_Array_Test.cpp test_config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \

@@ -43,7 +43,7 @@ endif # SUPPRESS_DASH_G
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/URL_Addr.o .obj/URL_Addr.o .obj/URL_Addr.o .obj/URL_Addr.o: URL_Addr.cpp URL_Addr.h \
+.obj/URL_Addr.o .obj/URL_Addr.so .shobj/URL_Addr.o .shobj/URL_Addr.so: URL_Addr.cpp URL_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \

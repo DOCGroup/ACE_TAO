@@ -60,7 +60,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/FileC.o .obj/FileC.o .obj/FileC.o .obj/FileC.o: FileC.cpp FileC.h \
+.obj/FileC.o .obj/FileC.so .shobj/FileC.o .shobj/FileC.so: FileC.cpp FileC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -366,7 +366,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  FileC.i
 
-.obj/FileS.o .obj/FileS.o .obj/FileS.o .obj/FileS.o: FileS.cpp FileS.h FileC.h \
+.obj/FileS.o .obj/FileS.so .shobj/FileS.o .shobj/FileS.so: FileS.cpp FileS.h FileC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -672,7 +672,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  FileC.i FileS_T.h FileS_T.i FileS_T.cpp FileS.i
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -981,7 +981,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  FileC.i FileS_T.h FileS_T.i FileS_T.cpp FileS.i
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -1292,7 +1292,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  FileC.i
 
-.obj/File_i.o .obj/File_i.o .obj/File_i.o .obj/File_i.o: File_i.cpp File_i.h FileS.h FileC.h \
+.obj/File_i.o .obj/File_i.so .shobj/File_i.o .shobj/File_i.so: File_i.cpp File_i.h FileS.h FileC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \

@@ -48,7 +48,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/rw_locks.o .obj/rw_locks.o .obj/rw_locks.o .obj/rw_locks.o: rw_locks.cpp \
+.obj/rw_locks.o .obj/rw_locks.so .shobj/rw_locks.o .shobj/rw_locks.so: rw_locks.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \

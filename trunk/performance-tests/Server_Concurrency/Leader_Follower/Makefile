@@ -35,7 +35,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/leader_follower.o .obj/leader_follower.o .obj/leader_follower.o .obj/leader_follower.o: leader_follower.cpp \
+.obj/leader_follower.o .obj/leader_follower.so .shobj/leader_follower.o .shobj/leader_follower.so: leader_follower.cpp \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \

@@ -58,7 +58,7 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/test_dump.o .obj/test_dump.o .obj/test_dump.o .obj/test_dump.o: test_dump.cpp \
+.obj/test_dump.o .obj/test_dump.so .shobj/test_dump.o .shobj/test_dump.so: test_dump.cpp \
  $(ACE_ROOT)/ace/Dump.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -146,7 +146,7 @@ endif
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h
 
-.obj/test_get_opt.o .obj/test_get_opt.o .obj/test_get_opt.o .obj/test_get_opt.o: test_get_opt.cpp \
+.obj/test_get_opt.o .obj/test_get_opt.so .shobj/test_get_opt.o .shobj/test_get_opt.so: test_get_opt.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -177,7 +177,7 @@ endif
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/test_profile_timer.o .obj/test_profile_timer.o .obj/test_profile_timer.o .obj/test_profile_timer.o: test_profile_timer.cpp \
+.obj/test_profile_timer.o .obj/test_profile_timer.so .shobj/test_profile_timer.o .shobj/test_profile_timer.so: test_profile_timer.cpp \
  $(ACE_ROOT)/ace/Profile_Timer.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -211,7 +211,7 @@ endif
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/Profile_Timer.i
 
-.obj/test_read_buffer.o .obj/test_read_buffer.o .obj/test_read_buffer.o .obj/test_read_buffer.o: test_read_buffer.cpp \
+.obj/test_read_buffer.o .obj/test_read_buffer.so .shobj/test_read_buffer.o .shobj/test_read_buffer.so: test_read_buffer.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -306,7 +306,7 @@ endif
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i
 
-.obj/test_set.o .obj/test_set.o .obj/test_set.o .obj/test_set.o: test_set.cpp \
+.obj/test_set.o .obj/test_set.so .shobj/test_set.o .shobj/test_set.so: test_set.cpp \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -381,7 +381,7 @@ endif
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i
 
-.obj/test_sstring.o .obj/test_sstring.o .obj/test_sstring.o .obj/test_sstring.o: test_sstring.cpp \
+.obj/test_sstring.o .obj/test_sstring.so .shobj/test_sstring.o .shobj/test_sstring.so: test_sstring.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -413,7 +413,7 @@ endif
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Malloc_Base.h
 
-.obj/test_trace.o .obj/test_trace.o .obj/test_trace.o .obj/test_trace.o: test_trace.cpp \
+.obj/test_trace.o .obj/test_trace.so .shobj/test_trace.o .shobj/test_trace.so: test_trace.cpp \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch.h \

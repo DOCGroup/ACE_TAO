@@ -80,7 +80,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/EC_Sched_Filter.o .obj/EC_Sched_Filter.o .obj/EC_Sched_Filter.o .obj/EC_Sched_Filter.o: Event/EC_Sched_Filter.cpp Event/EC_Sched_Filter.h \
+.obj/EC_Sched_Filter.o .obj/EC_Sched_Filter.so .shobj/EC_Sched_Filter.o .shobj/EC_Sched_Filter.so: Event/EC_Sched_Filter.cpp Event/EC_Sched_Filter.h \
  $(ACE_ROOT)/ace/pre.h \
  Event/EC_Filter.h \
  RtecEventCommC.h \
@@ -402,7 +402,7 @@ realclean: clean
  Event/sched_event_export.h Event/EC_Sched_Filter.i \
  Event/EC_QOS_Info.h Event/EC_QOS_Info.i
 
-.obj/EC_Sched_Filter_Builder.o .obj/EC_Sched_Filter_Builder.o .obj/EC_Sched_Filter_Builder.o .obj/EC_Sched_Filter_Builder.o: Event/EC_Sched_Filter_Builder.cpp \
+.obj/EC_Sched_Filter_Builder.o .obj/EC_Sched_Filter_Builder.so .shobj/EC_Sched_Filter_Builder.o .shobj/EC_Sched_Filter_Builder.so: Event/EC_Sched_Filter_Builder.cpp \
  Event/EC_Sched_Filter.h \
  $(ACE_ROOT)/ace/pre.h \
  Event/EC_Filter.h \
@@ -763,7 +763,7 @@ realclean: clean
  RtecEventChannelAdminS.i \
  Event/EC_Event_Channel.i
 
-.obj/EC_Priority_Scheduling.o .obj/EC_Priority_Scheduling.o .obj/EC_Priority_Scheduling.o .obj/EC_Priority_Scheduling.o: Event/EC_Priority_Scheduling.cpp \
+.obj/EC_Priority_Scheduling.o .obj/EC_Priority_Scheduling.so .shobj/EC_Priority_Scheduling.o .shobj/EC_Priority_Scheduling.so: Event/EC_Priority_Scheduling.cpp \
  Event/EC_Priority_Scheduling.h \
  $(ACE_ROOT)/ace/pre.h \
  Event/EC_Scheduling_Strategy.h \
@@ -1118,7 +1118,7 @@ realclean: clean
  Event/EC_ProxyConsumer.i Event/EC_ProxySupplier.h \
  Event/EC_ProxySupplier.i
 
-.obj/EC_Priority_Dispatching.o .obj/EC_Priority_Dispatching.o .obj/EC_Priority_Dispatching.o .obj/EC_Priority_Dispatching.o: Event/EC_Priority_Dispatching.cpp \
+.obj/EC_Priority_Dispatching.o .obj/EC_Priority_Dispatching.so .shobj/EC_Priority_Dispatching.o .shobj/EC_Priority_Dispatching.so: Event/EC_Priority_Dispatching.cpp \
  Event/EC_Priority_Dispatching.h \
  $(ACE_ROOT)/ace/pre.h \
  Event/EC_Dispatching.h \
@@ -1489,7 +1489,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/Sched_Params.i
 
-.obj/EC_Sched_Factory.o .obj/EC_Sched_Factory.o .obj/EC_Sched_Factory.o .obj/EC_Sched_Factory.o: Event/EC_Sched_Factory.cpp \
+.obj/EC_Sched_Factory.o .obj/EC_Sched_Factory.so .shobj/EC_Sched_Factory.o .shobj/EC_Sched_Factory.so: Event/EC_Sched_Factory.cpp \
  Event/EC_Sched_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
  Event/EC_Default_Factory.h Event/EC_Factory.h \
@@ -1850,7 +1850,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/Sched_Params.i
 
-.obj/EC_Gateway_Sched.o .obj/EC_Gateway_Sched.o .obj/EC_Gateway_Sched.o .obj/EC_Gateway_Sched.o: Event/EC_Gateway_Sched.cpp \
+.obj/EC_Gateway_Sched.o .obj/EC_Gateway_Sched.so .shobj/EC_Gateway_Sched.o .shobj/EC_Gateway_Sched.so: Event/EC_Gateway_Sched.cpp \
  Event/EC_Gateway_Sched.h \
  $(ACE_ROOT)/ace/pre.h \
  Event/EC_Gateway.h \

@@ -47,7 +47,7 @@ CPPFLAGS += -I$(ACE_ROOT)/netsvcs/lib
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/main.o .obj/main.o .obj/main.o .obj/main.o: main.cpp \
+.obj/main.o .obj/main.so .shobj/main.o .shobj/main.so: main.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \

@@ -41,7 +41,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/IO_Test.o .obj/IO_Test.o .obj/IO_Test.o .obj/IO_Test.o: IO_Test.cpp \
+.obj/IO_Test.o .obj/IO_Test.so .shobj/IO_Test.o .shobj/IO_Test.so: IO_Test.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \

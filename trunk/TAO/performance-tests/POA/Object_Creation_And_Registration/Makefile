@@ -50,7 +50,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/testC.o .obj/testC.o .obj/testC.o .obj/testC.o: testC.cpp testC.h \
+.obj/testC.o .obj/testC.so .shobj/testC.o .shobj/testC.so: testC.cpp testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -356,7 +356,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  testC.i
 
-.obj/testS.o .obj/testS.o .obj/testS.o .obj/testS.o: testS.cpp testS.h testC.h \
+.obj/testS.o .obj/testS.so .shobj/testS.o .shobj/testS.so: testS.cpp testS.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -662,7 +662,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  testC.i testS_T.h testS_T.i testS_T.cpp testS.i
 
-.obj/registration.o .obj/registration.o .obj/registration.o .obj/registration.o: registration.cpp testS.h testC.h \
+.obj/registration.o .obj/registration.so .shobj/registration.o .shobj/registration.so: registration.cpp testS.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \

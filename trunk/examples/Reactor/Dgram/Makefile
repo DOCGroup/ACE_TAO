@@ -42,7 +42,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/CODgram.o .obj/CODgram.o .obj/CODgram.o .obj/CODgram.o: CODgram.cpp \
+.obj/CODgram.o .obj/CODgram.so .shobj/CODgram.o .shobj/CODgram.so: CODgram.cpp \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -143,7 +143,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i
 
-.obj/Dgram.o .obj/Dgram.o .obj/Dgram.o .obj/Dgram.o: Dgram.cpp \
+.obj/Dgram.o .obj/Dgram.so .shobj/Dgram.o .shobj/Dgram.so: Dgram.cpp \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Handle_Set.h \

@@ -1,3 +1,9 @@
+Wed Jun 14 08:30:53 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * */Makefile:
+          Updated dependencies (again), the last time I had
+          static_libs_only enabled that broke a number of things.
+
 Tue Jun 13 17:46:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Connector.cpp:
