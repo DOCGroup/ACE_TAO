@@ -804,9 +804,6 @@ ACE_Process_Manager::wait (pid_t pid,
                                WNOHANG);
       else
         {
-          ACE_Time_Value wait_until =
-            timeout + ACE_OS::gettimeofday();
-
           for (;;)
             {
               pid = ACE_OS::waitpid (-(ACE_OS::getpid()),
@@ -858,7 +855,7 @@ ACE_Process_Manager::wait (pid_t pid,
               // this is that once ualarm is enabled, the SIGALRM will fire
               // whether we're still here waiting or not. On some platforms,
               // this will cause a core dump on uncaught signal.
-              ACE_Time_Value time_left = wait_until - ACE_OS::gettimeofday ();
+              ACE_Time_Value time_left (timeout);
 
               // if ACE_OS::ualarm doesn't have sub-second resolution:
               time_left += ACE_Time_Value (0, 500000);
