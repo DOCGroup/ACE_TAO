@@ -1,13 +1,13 @@
 // $Id$
 
 #include "Property_Exporter.h"
-#include "orbsvcs/Trader/Property_Evaluator.h"
+
 
 // *************************************************************
 // DP_Adapter
 // *************************************************************
 
-class DP_Adapter : public TAO_DP_Evaluation_Handler
+class DP_Adapter : public TAO_Dynamic_Property
 // = TITLE
 //   This class links the a dynamic property in a Trading Service
 //   Offer with its value in a CosPropertyService::PropertySet.
@@ -19,8 +19,9 @@ public:
 
   ~DP_Adapter (void);
   
-  virtual CORBA::Any* evalDP (const CORBA::Any& extra_info,
-			      CORBA::TypeCode_ptr returned_type,
+  virtual CORBA::Any* evalDP (const char* name,
+                              CORBA::TypeCode_ptr returned_type,
+                              const CORBA::Any& extra_info,
 			      CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
   // Call back to the Property Service interface. The Property
@@ -45,8 +46,9 @@ DP_Adapter::~DP_Adapter (void)
 }
 
 CORBA::Any*
-DP_Adapter::evalDP (const CORBA::Any& extra_info,
-		    CORBA::TypeCode_ptr returned_type,
+DP_Adapter::evalDP (const char* name,
+                    CORBA::TypeCode_ptr returned_type,
+                    const CORBA::Any& extra_info,
 		    CORBA::Environment& _env)
   TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
 {
@@ -103,10 +105,12 @@ TAO_Property_Exporter::add_static_property (const char* name,
   if (plength == this->pcount_)
     this->pprops_.length (plength + this->increment_);
 
+  // Add the value to the property service sequence.
   this->tprops_[this->tcount_].name = name;
   this->tprops_[this->tcount_].value = value;
   this->tcount_++;
-  
+
+  // Add the value to the trading service sequence.
   this->pprops_[this->pcount_].property_name = name;
   this->pprops_[this->pcount_].property_value = value;
   this->pcount_++;
@@ -117,7 +121,7 @@ void
 TAO_Property_Exporter::
 add_dynamic_property (const char* name,
 		      const CORBA::Any& value,
-		      TAO_DP_Dispatcher& dynamic_prop)
+		      TAO_Dynamic_Property& dynamic_prop)
 {
   // Add a property to the PropSet and a dynamic property to the
   // Offer. Have the dynamic property connect to the PropSet accessor
@@ -136,13 +140,12 @@ add_dynamic_property (const char* name,
 
   CORBA::Any extra_info;
 
-  CosTradingDynamic::DynamicProp* dp_struct =
+  CosTradingDynamic::DynamicProp_var dp_struct =
     dynamic_prop.construct_dynamic_prop (name, value.type (), extra_info);
   
-  dynamic_prop.register_handler (name, dp_adapter, CORBA::B_TRUE);
-  
+  // Copy the dynamic property struct into the property value
   this->tprops_[this->tcount_].name = name;
-  this->tprops_[this->tcount_].value <<= *dp_struct;
+  this->tprops_[this->tcount_].value <<= dp_struct.in ();
   this->tcount_++;
   
   this->pprops_[this->pcount_].property_name = name;

@@ -19,8 +19,9 @@ TAO_Video_Repository::~TAO_Video_Repository (void)
 }
 
 CORBA::Any*
-TAO_Video_Repository::evalDP (const CORBA::Any& extra_info,
-			      CORBA::TypeCode_ptr returned_type,
+TAO_Video_Repository::evalDP (const char* name,
+                              CORBA::TypeCode_ptr returned_type,
+                              const CORBA::Any& extra_info,
 			      CORBA::Environment& _env)
   TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
 {
@@ -111,18 +112,16 @@ TAO_Video_Repository::parse_file (const char* database, int num_lines)
 
 void
 TAO_Video_Repository::
-export_dynamic_properties (TAO_Property_Exporter& prop_exporter,
-			   TAO_DP_Dispatcher& dp_dispatcher) const
+export_properties (TAO_Property_Exporter& prop_exporter)
 {
   CORBA::Any extra_info;
 
   extra_info <<= MOVIE_INFO;
-  CosTradingDynamic::DynamicProp* dp_struct = 
-    dp_dispatcher.construct_dynamic_prop (MOVIE_INFO,
-					  TAO_VR::_tc_Movie_Info,
-					  extra_info);    
+  CosTradingDynamic::DynamicProp* dp_struct =
+    this->construct_dynamic_prop (MOVIE_INFO,
+                                  TAO_VR::_tc_Movie_Info,
+                                  extra_info);  
 
-  dp_dispatcher.register_handler (MOVIE_INFO, (TAO_DP_Evaluation_Handler*) this);
   prop_exporter.add_dynamic_property (MOVIE_INFO, dp_struct);
 }
 
