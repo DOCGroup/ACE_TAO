@@ -1,3 +1,11 @@
+Thu Dec 09 15:53:20 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
+	* examples/POA/DSI/Database_i.cpp:
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
+	* tao/default_resource.cpp: Added template instantiation for
+	  ACE_Malloc_T in correspond to the change in ACE.
+
 Thu Dec  9 14:57:16 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Oneway/Reliable/run_test.pl:

@@ -1,3 +1,86 @@
+Thu Dec 09 15:53:20 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc.cpp:
+	* ace/Malloc.h:
+	* ace/Malloc.i: Separated the control block implementation into
+	  "position independent control block" and "lean and mean control
+	  block."  Each control block implementation has its own
+	  definitions of Malloc_Header and Name_Node as inner classes.
+	  ACE_Control_Block implements the "old, lean and mean" control
+	  structure for ACE_Malloc_T and ACE_PI_Control_Block implements
+	  the "new, position independent" control structure for
+	  ACE_Malloc_T.
+
+	  Added several macros to finer control the padding and alignment
+	  because calculating the padding requires using some operations
+	  that can not be evaluated during the compile time and the
+	  original padding length calculation don't always work.  Usually,
+	  you don't have to worry about the padding.  But if you are
+	  interested in tweaking these parameters, here are some hints.
+
+	- (ACE_MALLOC_PADDING): defines the minimum size of a Malloc_Header.
+	  The actual size of Malloc_Header should always be the a multiple
+	  of ACE_MALLOC_ALIGN and may be larger then ACE_MALLOC_PADDING.
+
+	- (ACE_MALLOC_PADDING_SIZE): define the actual size of the array
+	  of long used to pad the ACE_Control_Block::ACE_Malloc_Header.
+	  If it is not defined by the user, ACE will try to calculate it
+	  for you.  If it is defined as 0, there'll be no padding at all.
+	  This macro is compiler/platform dependent.
+
+	- (ACE_CONTROL_BLOCK_ALIGN_LONGS): define the actual size of the
+	  array of long used to pad the ACE_Control_Block so that the
+	  first Malloc_Header always starts from the alignment boundary.
+	  If it is not defined by the user, ACE will try to calculate it
+	  for you.  If it is defined as 0, there'll be no padding at all.
+	  This macro is compiler/platform dependent.
+
+	- (ACE_PI_MALLOC_PADDING_SIZE): similar to ACE_MALLOC_PADDING_SIZE
+	  but applied to ACE_PI_Control_Block::ACE_Malloc_Header.
+
+	- (ACE_PI_CONTROL_BLOCK_ALIGN_LONGS): similar to
+	  ACE_CONTROL_BLOCK_ALIGN_LONGS but applied to
+	  ACE_PI_Control_Block.
+
+	* ace/Malloc_T.cpp:
+	* ace/Malloc_T.h:
+	* ace/Malloc_T.i: Parameterized the type of control block used in
+	  ACE_Malloc, which is now renamed to ACE_Malloc_T, as a template
+	  parameter so that we can control tradeoff between efficiency and
+	  flexibility.
+
+	  Another ACE_Malloc template class was added which simply use
+	  ACE_Malloc_T with ACE_Control_Block as its internal control
+	  structure so that we don't have to change the existing programs
+	  using ACE_Malloc.  However, for platforms/compilers using
+	  explicit template instantiation, you still need to add the
+	  instantiations for the based template class.  For example, if
+	  you instantiated "ACE_Malloc<A,B>", you'll need to add
+	  "ACE_Malloc_T<A,B,ACE_Control_Block>".  Likewise for
+	  ACE_Malloc_LIFO_Iterator and ACE_Malloc_FIFO_Iterator.
+
+	* ace/Based_Pointer_T.h: Renamed arguments "overload" to "o".  KCC
+	  complained about using "overload" as variable names
+
+	* ace/Configuration.cpp:
+	* ace/Naming_Context.cpp:
+	* ace/Service_Config.cpp:
+	* ace/System_Time.cpp:
+	* ace/Template_Instantiations.cpp:
+	* docs/tutorials/021/client.cpp:
+	* docs/tutorials/021/server.cpp:
+	* examples/Reactor/Misc/demuxing.dsp:
+	* examples/Shared_Malloc/Malloc.cpp:
+	* examples/Shared_Malloc/test_persistence.cpp:
+	* examples/System_V_IPC/SV_Semaphores/Semaphores.cpp:
+	* examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp:
+	* examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp:
+	* performance-tests/TCP/TCP.dsp:
+	* tests/Malloc_Test.cpp:
+	* tests/SV_Shared_Memory_Test.cpp: Added explicit template
+	  instantiations for base malloc class in corresponding with the
+	  above change.
+
 Thu Dec 09 15:40:03 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (mmap): on LynxOS, fixed use of file_mapping

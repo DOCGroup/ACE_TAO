@@ -79,8 +79,8 @@ public:
   ACE_Based_Pointer_Basic (const ACE_Based_Pointer_Basic<CONCRETE> &);
   // Copy constructor.
 
-  ACE_Based_Pointer_Basic (const void *base_addr, int overload);
-  // Constructor for know base address. <overload> is only used to
+  ACE_Based_Pointer_Basic (const void *base_addr, int o);
+  // Constructor for know base address. <o> is only used to
   // resolve overload ambiguity.
 
   void operator = (CONCRETE *from);
@@ -155,8 +155,8 @@ public:
   ACE_Based_Pointer (CONCRETE *initial);
   // Initialize this object using the <initial> pointer.
 
-  ACE_Based_Pointer (const void *base_addr, int overload);
-  // Initialize this object with known <base_addr>.  <overload> is
+  ACE_Based_Pointer (const void *base_addr, int o);
+  // Initialize this object with known <base_addr>.  <o> is
   // only used to resolve overload ambiguity.
 
   ACE_Based_Pointer (const ACE_Based_Pointer<CONCRETE> &);

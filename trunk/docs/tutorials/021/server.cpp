@@ -143,11 +143,13 @@ main (int, char *[])
  */
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_SV_Semaphore_Simple>;
+template class ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_SV_Semaphore_Simple, ACE_Control_Block>;
 template class ACE_Guard<ACE_SV_Semaphore_Simple>;
 template class ACE_Write_Guard<ACE_SV_Semaphore_Simple>;
 template class ACE_Read_Guard<ACE_SV_Semaphore_Simple>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_SV_Semaphore_Simple>
+#pragma instantiate ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_SV_Semaphore_Simple, ACE_Control_Block>
 #pragma instantiate ACE_Guard<ACE_SV_Semaphore_Simple>
 #pragma instantiate ACE_Write_Guard<ACE_SV_Semaphore_Simple>
 #pragma instantiate ACE_Read_Guard<ACE_SV_Semaphore_Simple>

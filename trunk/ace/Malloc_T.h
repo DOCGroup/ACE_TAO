@@ -237,18 +237,18 @@ private:
 };
 
 // Forward declaration.
-template <ACE_MEM_POOL_1, class ACE_LOCK>
-class ACE_Malloc_LIFO_Iterator;
+template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
+class ACE_Malloc_LIFO_Iterator_T;
 
 // Ensure backwards compatibility...
 #define ACE_Malloc_Iterator ACE_Malloc_LIFO_Iterator
 
 // Forward declaration.
-template <ACE_MEM_POOL_1, class ACE_LOCK>
-class ACE_Malloc_FIFO_Iterator;
+template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
+class ACE_Malloc_FIFO_Iterator_T;
 
-template <ACE_MEM_POOL_1, class ACE_LOCK>
-class ACE_Malloc
+template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
+class ACE_Malloc_T
 {
   // = TITLE
   //     Define a C++ class that uses parameterized types to provide
@@ -260,21 +260,23 @@ class ACE_Malloc
   //     MEMORY_POOL strategies and different types of ACE_LOCK
   //     strategies.
 public:
-  friend class ACE_Malloc_LIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>;
-  friend class ACE_Malloc_FIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>;
+  friend class ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>;
+  friend class ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>;
   typedef ACE_MEM_POOL MEMORY_POOL;
   typedef ACE_MEM_POOL_OPTIONS MEMORY_POOL_OPTIONS;
+  typedef ACE_TYPENAME ACE_CB::ACE_Name_Node NAME_NODE;
+  typedef ACE_TYPENAME ACE_CB::ACE_Malloc_Header MALLOC_HEADER;
 
   // = Initialization and termination methods.
-  ACE_Malloc (LPCTSTR pool_name = 0);
+  ACE_Malloc_T (LPCTSTR pool_name = 0);
   // Initialize ACE_Malloc.  This constructor passes <pool_name> to
   // initialize the memory pool, and uses <ACE::basename> to
   // automatically extract out the name used for the underlying lock
   // name (if necessary).
 
-  ACE_Malloc (LPCTSTR pool_name,
-              LPCTSTR lock_name,
-              const ACE_MEM_POOL_OPTIONS *options = 0);
+  ACE_Malloc_T (LPCTSTR pool_name,
+                LPCTSTR lock_name,
+                const ACE_MEM_POOL_OPTIONS *options = 0);
   // Initialize ACE_Malloc.  This constructor passes <pool_name> to
   // initialize the memory pool, and uses <lock_name> to automatically
   // extract out the name used for the underlying lock name (if
@@ -282,14 +284,14 @@ public:
   // initialize the underlying memory pool.
 
 #if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
-  ACE_Malloc (LPCTSTR pool_name,
-              LPCTSTR lock_name,
-              const void *options = 0);
+  ACE_Malloc_T (LPCTSTR pool_name,
+                LPCTSTR lock_name,
+                const void *options = 0);
   // This is necessary to work around template bugs with certain C++
   // compilers.
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
-  ~ACE_Malloc (void);
+  ~ACE_Malloc_T (void);
   // Destructor
 
   int remove (void);
@@ -398,19 +400,16 @@ private:
   int open (void);
   // Initialize the Malloc pool.
 
-  void init_malloc_header_ptr (void *);
-  // Helper function to initialize a null malloc header (position
-  // independent) pointer.
-
   int shared_bind (const char *name,
                    void *pointer);
   // Associate <name> with <pointer>.  Assumes that locks are held by
   // callers.
 
-  ACE_Name_Node *shared_find (const char *name);
+  void *shared_find (const char *name);
   // Try to locate <name>.  If found, return the associated
   // <ACE_Name_Node>, else returns 0 if can't find the <name>.
-  // Assumes that locks are held by callers.
+  // Assumes that locks are held by callers.  Remember to cast the
+  // return value to ACE_CB::ACE_Name_Node*.
 
   void *shared_malloc (size_t nbytes);
   // Allocate memory.  Assumes that locks are held by callers.
@@ -418,7 +417,7 @@ private:
   void shared_free (void *ptr);
   // Deallocate memory.  Assumes that locks are held by callers.
 
-  ACE_Control_Block *cb_ptr_;
+  ACE_CB *cb_ptr_;
   // Pointer to the control block that is stored in memory controlled
   // by <MEMORY_POOL>.
 
@@ -429,8 +428,8 @@ private:
   // Lock that ensures mutual exclusion for the <MEMORY_POOL>.
 };
 
-template <ACE_MEM_POOL_1, class ACE_LOCK>
-class ACE_Malloc_LIFO_Iterator
+template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
+class ACE_Malloc_LIFO_Iterator_T
 {
   // = TITLE
   //     LIFO iterator for names stored in Malloc'd memory.
@@ -438,13 +437,16 @@ class ACE_Malloc_LIFO_Iterator
   // = DESCRIPTION
   //     Does not support deletions while iteration is occurring.
 public:
+  typedef ACE_TYPENAME ACE_CB::ACE_Name_Node NAME_NODE;
+  typedef ACE_TYPENAME ACE_CB::ACE_Malloc_Header MALLOC_HEADER;
+
   // = Initialization method.
-  ACE_Malloc_LIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
-                            const char *name = 0);
+  ACE_Malloc_LIFO_Iterator_T (ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB> &malloc,
+                              const char *name = 0);
   // if <name> = 0 it will iterate through everything else only
   // through those entries whose <name> match.
 
-  ~ACE_Malloc_LIFO_Iterator (void);
+  ~ACE_Malloc_LIFO_Iterator_T (void);
 
   // = Iteration methods.
 
@@ -472,10 +474,10 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc_;
+  ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB> &malloc_;
   // Malloc we are iterating over.
 
-  ACE_Name_Node *curr_;
+  NAME_NODE *curr_;
   // Keeps track of how far we've advanced...
 
   ACE_Read_Guard<ACE_LOCK> guard_;
@@ -485,8 +487,8 @@ private:
   // Name that we are searching for.
 };
 
-template <ACE_MEM_POOL_1, class ACE_LOCK>
-class ACE_Malloc_FIFO_Iterator
+template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
+class ACE_Malloc_FIFO_Iterator_T
 {
   // = TITLE
   //     FIFO iterator for names stored in Malloc'd memory.
@@ -494,13 +496,16 @@ class ACE_Malloc_FIFO_Iterator
   // = DESCRIPTION
   //     Does not support deletions while iteration is occurring.
 public:
+  typedef ACE_TYPENAME ACE_CB::ACE_Name_Node NAME_NODE;
+  typedef ACE_TYPENAME ACE_CB::ACE_Malloc_Header MALLOC_HEADER;
+
   // = Initialization method.
-  ACE_Malloc_FIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
-                            const char *name = 0);
+  ACE_Malloc_FIFO_Iterator_T (ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB> &malloc,
+                              const char *name = 0);
   // if <name> = 0 it will iterate through everything else only
   // through those entries whose <name> match.
 
-  ~ACE_Malloc_FIFO_Iterator (void);
+  ~ACE_Malloc_FIFO_Iterator_T (void);
 
   // = Iteration methods.
 
@@ -532,10 +537,10 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc_;
+  ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB> &malloc_;
   // Malloc we are iterating over.
 
-  ACE_Name_Node *curr_;
+  NAME_NODE *curr_;
   // Keeps track of how far we've advanced...
 
   ACE_Read_Guard<ACE_LOCK> guard_;
@@ -543,6 +548,57 @@ private:
 
   const char *name_;
   // Name that we are searching for.
+};
+
+template <ACE_MEM_POOL_1, class ACE_LOCK>
+class ACE_Malloc : public ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Block>
+{
+public:
+  // = Initialization and termination methods.
+  ACE_Malloc (LPCTSTR pool_name = 0);
+  // Initialize ACE_Malloc.  This constructor passes <pool_name> to
+  // initialize the memory pool, and uses <ACE::basename> to
+  // automatically extract out the name used for the underlying lock
+  // name (if necessary).
+
+  ACE_Malloc (LPCTSTR pool_name,
+              LPCTSTR lock_name,
+              const ACE_MEM_POOL_OPTIONS *options = 0);
+  // Initialize ACE_Malloc.  This constructor passes <pool_name> to
+  // initialize the memory pool, and uses <lock_name> to automatically
+  // extract out the name used for the underlying lock name (if
+  // necessary).  In addition, <options> is passed through to
+  // initialize the underlying memory pool.
+
+#if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
+  ACE_Malloc (LPCTSTR pool_name,
+              LPCTSTR lock_name,
+              const void *options = 0);
+  // This is necessary to work around template bugs with certain C++
+  // compilers.
+#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
+};
+
+template <ACE_MEM_POOL_1, class ACE_LOCK>
+class ACE_Malloc_LIFO_Iterator : public ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Block>
+{
+public:
+  // = Initialization method.
+  ACE_Malloc_LIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
+                            const char *name = 0);
+  // if <name> = 0 it will iterate through everything else only
+  // through those entries whose <name> match.
+};
+
+template <ACE_MEM_POOL_1, class ACE_LOCK>
+class ACE_Malloc_FIFO_Iterator : public ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Block>
+{
+public:
+  // = Initialization method.
+  ACE_Malloc_FIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
+                            const char *name = 0);
+  // if <name> = 0 it will iterate through everything else only
+  // through those entries whose <name> match.
 };
 
 #if defined (__ACE_INLINE__)

@@ -8,7 +8,7 @@ const char *rr_name_bind = "RR_Group";
 
 const char *random_name_bind = "Random_Group";
 // Name binding for the location of the Random info in the mem pool
-  
+
 const char *flags_name_bind = "FLAGS";
 // Name binding for the location of the flags info in the mem pool
 
@@ -52,8 +52,8 @@ Object_Group_Factory_i::make_round_robin (const char * id,
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::duplicate_group))
 {
-  
-  if (this->mem_pool_->find (rr_name_bind, 
+
+  if (this->mem_pool_->find (rr_name_bind,
                              (void *&)this->rr_groups_) == -1)
     {
       void *hash_map = this->mem_pool_->malloc (sizeof (HASH_MAP));
@@ -89,19 +89,19 @@ Object_Group_Factory_i::unbind_round_robin (const char * id,
                                  (void *&)this->rr_groups_) == -1)
         ACE_THROW (Load_Balancer::no_such_group ());
     }
-  
+
   char *int_id = 0;
-  
+
   // Throw an exception if not found in the HASH MAP
   if (this->rr_groups_->find (ACE_const_cast (char *, id),
                               this->mem_pool_) < 0)
     ACE_THROW (Load_Balancer::no_such_group ());
-    
+
   // Unbind the entry
   this->rr_groups_->unbind (ACE_const_cast (char *, id),
                             int_id,
                             this->mem_pool_);
-  
+
   // Free the memory from the pool
   this->mem_pool_->free (int_id - (ACE_OS::strlen (id) + 1));
 
@@ -112,10 +112,10 @@ Object_Group_Factory_i::unbind_round_robin (const char * id,
                                  (void *&)this->flags_) == -1)
         return;
     }
-  
+
   // Bump down the flags value
   --this->flags_;
-  
+
 }
 
 Load_Balancer::Object_Group_ptr
@@ -124,11 +124,11 @@ Object_Group_Factory_i::make_random (const char * id,
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::duplicate_group))
 {
-  
+
   if (this->mem_pool_->find (random_name_bind, (void * &)this->random_groups_) == -1)
     {
       void *hash_map = this->mem_pool_->malloc (sizeof (HASH_MAP));
-      
+
       ACE_NEW_THROW_EX (this->random_groups_,
                         (hash_map) HASH_MAP (this->mem_pool_),
                         CORBA::NO_MEMORY ());
@@ -162,9 +162,9 @@ Object_Group_Factory_i::unbind_random (const char * id,
                                  (void *&)this->random_groups_) == -1)
         ACE_THROW (Load_Balancer::no_such_group ());
     }
-  
+
   char *int_id = 0;
-  
+
   // Throw an exception if not found in the HASH MAP
   if (this->random_groups_->find (ACE_const_cast (char *, id),
                                   this->mem_pool_) < 0)
@@ -177,7 +177,7 @@ Object_Group_Factory_i::unbind_random (const char * id,
 
   // Free the memory from the pool
   this->mem_pool_->free (int_id - (ACE_OS::strlen (id) + 1));
-  
+
   // Change the FLAGS variable
   if (this->flags_ == 0)
     {
@@ -185,7 +185,7 @@ Object_Group_Factory_i::unbind_random (const char * id,
                                  (void *&)this->flags_) == -1)
         return;
     }
-  
+
   // Bump down the flags value
   this->flags_ -= 2;
 }
@@ -205,7 +205,7 @@ Object_Group_Factory_i::make_group (int random,
 
   // Check to make sure we don't already have a group with the same
   // <id>.
-  
+
   if (random)
     {
       if (this->random_groups_->find (ACE_const_cast (char *,id),
@@ -235,61 +235,61 @@ Object_Group_Factory_i::make_group (int random,
                                        this->poa_.in ()),
                       CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (group._retn ());
-  
+
   // Register with the poa, begin using ref. counting.
   group = group_servant->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (group._retn ());
-  
+
   group_servant->_remove_ref (ACE_TRY_ENV);
   ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());
-  
-  CORBA::String_var ior = 
+
+  CORBA::String_var ior =
     this->orb_->object_to_string (group.in (),
                                   ACE_TRY_ENV);
   ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());
 
-    
+
   // Calculate and allocate the memory we need to store this name to
   // object binding.
   size_t id_len = ACE_OS::strlen (id) + 1;
   size_t kind_len = ACE_OS::strlen (ior.in ()) + 1;
-  
+
   char *ptr = (char *) this->mem_pool_->malloc (id_len + kind_len);
 
   if (ptr == 0)
     ACE_THROW_RETURN (CORBA::NO_MEMORY (),
                       Load_Balancer::Object_Group::_nil ());
-  
+
   char * id_ptr =  ptr;
   char * ior_ptr = ptr + id_len;
-  
+
   ACE_OS::strcpy (id_ptr, id);
   ACE_OS::strcpy (ior_ptr, ior.in ());
-  
+
   // Store the results here
   CORBA::Long result = 0;
-  
+
   // Make an entry in appropriate map of groups.
   if (random)
     {
-      result = this->random_groups_->bind (id_ptr, 
+      result = this->random_groups_->bind (id_ptr,
                                            ior_ptr,
                                            this->mem_pool_);
     }
   else
     {
-      result = this->rr_groups_->bind (id_ptr, 
+      result = this->rr_groups_->bind (id_ptr,
                                        ior_ptr,
                                        this->mem_pool_);
     }
-  
+
 
 
   // Update the value of flags_
   this->update_flags (random,
                       ACE_TRY_ENV);
   ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());
-  
+
   if (result == -1)
     {
       // For some reason the  bind failed. Free our
@@ -297,12 +297,12 @@ Object_Group_Factory_i::make_group (int random,
       this->mem_pool_->free ((void *) ptr);
       ACE_THROW_RETURN (Load_Balancer::duplicate_group (),
                         Load_Balancer::Object_Group::_nil ());
-      
+
     }
-  
+
   // Return.
   ACE_DEBUG ((LM_DEBUG, "Successfully created new group: %s\n", id));
-  
+
   return group._retn ();
 }
 
@@ -331,7 +331,7 @@ Object_Group_Factory_i::resolve (const char * id,
   // MMAP file for the relevant info..
   if (!this->rr_groups_)
     {
-      if (this->mem_pool_->find (rr_name_bind, 
+      if (this->mem_pool_->find (rr_name_bind,
                                  (void *&)this->rr_groups_) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -343,36 +343,36 @@ Object_Group_Factory_i::resolve (const char * id,
 
   if (!this->random_groups_)
     {
-      if (this->mem_pool_->find (random_name_bind, 
+      if (this->mem_pool_->find (random_name_bind,
                                  (void *&)this->random_groups_) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ASYS_TEXT ("(%N|%l) The factory does not have any references "),
                              ASYS_TEXT ("to the group that you have sought \n\n")),
                             0);
-                             
+
         }
     }
 
   if (!this->flags_)
     {
-      this->mem_pool_->find (flags_name_bind, 
+      this->mem_pool_->find (flags_name_bind,
                              (void *&)this->flags_);
       this->update_objects (ACE_TRY_ENV);
     }
 
-  char *ior = 0;  
+  char *ior = 0;
 
-  if (rr_groups_->find (ACE_const_cast (char *, id), 
+  if (rr_groups_->find (ACE_const_cast (char *, id),
                         ior,
                         this->mem_pool_) == -1
-      && random_groups_->find (ACE_const_cast (char *, id), 
+      && random_groups_->find (ACE_const_cast (char *, id),
                                ior,
                                this->mem_pool_) == -1)
     ACE_THROW_RETURN (Load_Balancer::no_such_group (),
                       0);
-    
-  CORBA_Object_var objref = 
+
+  CORBA_Object_var objref =
     this->orb_->string_to_object (ior,
                                   ACE_TRY_ENV);
   ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());
@@ -380,7 +380,7 @@ Object_Group_Factory_i::resolve (const char * id,
   Load_Balancer::Object_Group_ptr
     object_group = Load_Balancer::Object_Group::_narrow (objref,
                                                          ACE_TRY_ENV);
-  
+
   ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());
 
 
@@ -394,7 +394,7 @@ Object_Group_Factory_i::resolve (const char * id,
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
   ACE_OS::printf ("*=*=*=*=Aggregated result *=*=*=*=*= \n");
   this->throughput_.dump_results ("Aggregated", gsf);
-  
+
 #endif /*DOORS_MEASURE_STATS*/
 
   return object_group;
@@ -435,7 +435,7 @@ Object_Group_Factory_i::list_groups (int random,
     {
       group_iter->next (hash_entry);
       group_iter->advance ();
-      
+
       (*list)[i] = ACE_OS::strdup (hash_entry->ext_id_);
     }
 
@@ -464,22 +464,22 @@ Object_Group_Factory_i::update_flags (int random,
   //First check whether we have memory for flags_
   if (!this->flags_)
     {
-      if (this->mem_pool_->find (flags_name_bind, 
+      if (this->mem_pool_->find (flags_name_bind,
                                  (void *&) this->flags_) == -1)
         {
-          void *value = 
+          void *value =
             this->mem_pool_->malloc (sizeof (CORBA::Short));
           ACE_NEW_THROW_EX (this->flags_,
                             (value) CORBA::Short (0),
                             CORBA::NO_MEMORY ());
           ACE_CHECK;
-     
+
           // Initialize the variable
-          this->mem_pool_->bind (flags_name_bind, 
+          this->mem_pool_->bind (flags_name_bind,
                                  (void *)this->flags_);
         }
     }
- 
+
   CORBA::Short val = *(this->flags_);
   switch (val)
     {
@@ -497,7 +497,7 @@ Object_Group_Factory_i::update_flags (int random,
       if (!random)
         *(this->flags_) = 3;
       break;
-    
+
     }
 }
 
@@ -509,8 +509,8 @@ Object_Group_Factory_i::update_objects (CORBA::Environment &ACE_TRY_ENV)
   Object_Group_i *group_servant_rep = 0;
 
   // Check the value of of flags_ & do the instantiation and
-  // registration 
-  
+  // registration
+
   switch (*(this->flags_))
     {
     case 1:
@@ -542,19 +542,19 @@ Object_Group_Factory_i::update_objects (CORBA::Environment &ACE_TRY_ENV)
       group_servant->_this ();
       break;
     }
-    
+
 }
 
 
 Object_Group_i::Object_Group_i (const char * id,
                                 PortableServer::POA_ptr poa)
-  :poa_ (PortableServer::POA::_duplicate (poa)), 
+  :poa_ (PortableServer::POA::_duplicate (poa)),
    member_id_list_ (0),
    members_ (0),
    id_ (id),
-   allocator_ (0) 
+   allocator_ (0)
 {
-  
+
   if (!this->allocator_)
     {
       ACE_MMAP_Memory_Pool::OPTIONS options (ACE_DEFAULT_BASE_ADDR);
@@ -576,7 +576,7 @@ Object_Group_i::~Object_Group_i (void)
     {
       delete (iter.next ());
     } while (iter.advance ());
-  
+
   delete this->allocator_;
 }
 
@@ -603,12 +603,12 @@ Object_Group_i::bind (const Load_Balancer::Member & member,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Load_Balancer::duplicate_member))
 {
-  
+
   if (this->members_ == 0)
     {
       ACE_CString id = this->id (ACE_TRY_ENV);
       ACE_CHECK;
-      
+
       id += server_id_name_bind;
 
       if (this->allocator_->find (id.c_str (), (void *&)this->members_) == -1)
@@ -618,32 +618,32 @@ Object_Group_i::bind (const Load_Balancer::Member & member,
                             (hash_map) HASH_MAP (this->allocator_),
                             CORBA::NO_MEMORY ());
           ACE_CHECK;
-          
+
           // Bind it in the mem pool with a name
           if (this->allocator_->bind (id.c_str (),
                                       (void *)this->members_) != 0)
             {
               ACE_ERROR ((LM_ERROR,
                           "Unable to bind \n"));
-              
+
             }
         }
     }
 
-  // Check whether the element already exists.. 
-  if (this->members_->find (ACE_const_cast (char *, 
-                                            (const char *) member.id), 
+  // Check whether the element already exists..
+  if (this->members_->find (ACE_const_cast (char *,
+                                            (const char *) member.id),
                             this->allocator_) == 0)
     ACE_THROW (Load_Balancer::duplicate_member ());
-  
+
   size_t id_len = ACE_OS::strlen (member.id) + 1;
   size_t ref_len = ACE_OS::strlen (member.obj) + 1;
 
   char *mem_alloc = (char *)this->allocator_->malloc (id_len + ref_len);
-  
+
   if (mem_alloc == 0)
      ACE_THROW (CORBA::NO_MEMORY ());
-        
+
   char **id_ptr = (char **)this->allocator_->malloc (sizeof (char *));
   *id_ptr = mem_alloc;
   char *ior_ptr = mem_alloc + id_len;
@@ -651,25 +651,25 @@ Object_Group_i::bind (const Load_Balancer::Member & member,
   ACE_OS::strcpy (*id_ptr, member.id);
   ACE_OS::strcpy (ior_ptr, member.obj);
 
-  
+
   // Insert new member into <members_> and check for duplicates/failures.
   int result = this->members_->trybind (*id_ptr,
                                         ior_ptr);
-                                       
+
   if (result == 1)
     ACE_THROW (Load_Balancer::duplicate_member ());
   else if (result == -1)
     ACE_THROW (CORBA::INTERNAL ());
 
   // Search the list first from the mem mapp pool and then Insert new
-  // member's id into <member_id_list_>. 
+  // member's id into <member_id_list_>.
 
   ACE_CString id = dll_name_bind;
   id += this->id (ACE_TRY_ENV);
-  
 
 
-  if (this->allocator_->find (id.c_str (), 
+
+  if (this->allocator_->find (id.c_str (),
                               (void *&)this->member_id_list_)
       == -1)
     {
@@ -678,7 +678,7 @@ Object_Group_i::bind (const Load_Balancer::Member & member,
                         (dll_list) LIST (this->allocator_),
                         CORBA::NO_MEMORY ());
       ACE_CHECK;
-      
+
       // Bind it in the mem pool with a name
       if (this->allocator_->bind (id.c_str (),
                                  (void *)this->member_id_list_) != 0)
@@ -688,7 +688,7 @@ Object_Group_i::bind (const Load_Balancer::Member & member,
           return;
         }
     }
-  
+
   if (member_id_list_->insert_tail (id_ptr) == 0)
     ACE_THROW (CORBA::NO_MEMORY ());
 
@@ -708,43 +708,43 @@ Object_Group_i::unbind (const char * id,
     {
       ACE_CString id = this->id (ACE_TRY_ENV);
       id += server_id_name_bind;
- 
-      if (this->allocator_->find (id.c_str (), 
+
+      if (this->allocator_->find (id.c_str (),
                                   (void *&)this->members_) == -1)
         {
           ACE_THROW (Load_Balancer::no_such_member);
         }
     }
   // Check to make sure we have it.
-  if (this->members_->find (ACE_const_cast (char *, id), 
+  if (this->members_->find (ACE_const_cast (char *, id),
                             this->allocator_) == -1)
     ACE_THROW (Load_Balancer::no_such_member ());
 
   // Remove all entries for this member.
-  this->members_->unbind (ACE_const_cast(char *, id), 
+  this->members_->unbind (ACE_const_cast(char *, id),
                           this->allocator_);
 
   if (this->member_id_list_ == 0)
     {
       ACE_CString id = dll_name_bind;
       id += this->id (ACE_TRY_ENV);
-      
-      if (this->allocator_->find (id.c_str (), 
+
+      if (this->allocator_->find (id.c_str (),
                                   (void *&)this->member_id_list_)
           == -1)
         ACE_THROW (Load_Balancer::no_such_member);
-        
+
     }
 
 
-  
+
   Object_Group_i::ITERATOR iter (*(this->member_id_list_));
 
   while (ACE_OS::strcmp (id,*(iter.next ())))
     iter.advance ();
 
   this->allocator_->free ((void *) iter.next ());
-  
+
   iter.remove ();
 }
 
@@ -755,7 +755,7 @@ Object_Group_i::resolve_with_id (const char * id,
                    Load_Balancer::no_such_member))
 {
   CORBA::String_var ior;
-  
+
 
   if (this->members_->find (ACE_const_cast (char *,
                                             id),
@@ -764,9 +764,9 @@ Object_Group_i::resolve_with_id (const char * id,
                       0);
 
   char *retn_ptr = CORBA::string_dup (ior.in ());
-  
+
   return retn_ptr;
-  
+
 }
 
 Load_Balancer::Member_ID_List *
@@ -777,7 +777,7 @@ Object_Group_i::members (CORBA::Environment &ACE_TRY_ENV)
 
   this->read_from_memory (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   // Figure out the length of the list.
   CORBA::ULong len = this->members_->current_size ();
 
@@ -828,26 +828,26 @@ Object_Group_i::read_from_memory (CORBA::Environment &ACE_TRY_ENV)
     // Sanity check needs to be done in all the places
   ACE_CString id = this->id (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   if (!this->members_)
     {
       id += server_id_name_bind;
-      
-      if (this->allocator_->find (id.c_str (), 
+
+      if (this->allocator_->find (id.c_str (),
                                   (void *&)this->members_) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       "Unable to find tha HASH MAP  in the MMAP file \n"));
         }
     }
-  
+
 
   if (!this->member_id_list_)
     {
       id = dll_name_bind;
       id += this->id (ACE_TRY_ENV);
-      
-      if (this->allocator_->find (id.c_str (), 
+
+      if (this->allocator_->find (id.c_str (),
                                   (void *&)this->member_id_list_) == -1)
         {
           ACE_ERROR ((LM_ERROR,
@@ -892,7 +892,7 @@ Random_Object_Group::resolve (CORBA::Environment &ACE_TRY_ENV)
   // Return the object reference corresponding to the found id to the
   // client.
   char *objref = 0;
-  this->members_->find (*id, 
+  this->members_->find (*id,
                         objref,
                         this->allocator_);
   char *string_ptr = CORBA::string_dup (objref);
@@ -914,7 +914,7 @@ RR_Object_Group::resolve (CORBA::Environment &ACE_TRY_ENV)
   char *objref = 0;
 
   this->read_from_memory (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0); 
+  ACE_CHECK_RETURN (0);
 
   size_t group_size = this->members_->current_size ();
   if (group_size == 0)
@@ -924,22 +924,22 @@ RR_Object_Group::resolve (CORBA::Environment &ACE_TRY_ENV)
   // Get the id of the member to return to the client.
   char **id;
   this->member_id_list_->get (id, next_);
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "In RR Group resolved to: %s\n", *id));
 
   // Adjust <next_> for the next invocation.
   next_ = (next_ + 1) % group_size;
 
-  
+
   // Return the object reference corresponding to the found id to the client.
-  if (this->members_->find (*id, 
+  if (this->members_->find (*id,
                             objref,
                             this->allocator_) == -1)
     ACE_THROW_RETURN (CORBA::INTERNAL (),
                       0);
 
   char *retn_ptr = CORBA::string_dup (objref);
-  
+
   return retn_ptr;
 }
 
@@ -954,8 +954,8 @@ RR_Object_Group::unbind (const char *id,
     {
       ACE_CString id = this->id (ACE_TRY_ENV);
       id += server_id_name_bind;
-      
-      if (this->allocator_->find (id.c_str (), 
+
+      if (this->allocator_->find (id.c_str (),
                                   (void *&)this->members_) == -1)
         {
           ACE_THROW (Load_Balancer::no_such_member);
@@ -977,12 +977,12 @@ RR_Object_Group::unbind (const char *id,
     {
       ACE_CString id = dll_name_bind;
       id += this->id (ACE_TRY_ENV);
-      
-      if (this->allocator_->find (id.c_str (), 
+
+      if (this->allocator_->find (id.c_str (),
                                   (void *&)this->member_id_list_)
           == -1)
         ACE_THROW (Load_Balancer::no_such_member);
-      
+
     }
 
   size_t position = 0;
@@ -996,7 +996,7 @@ RR_Object_Group::unbind (const char *id,
   iter.remove ();
 
   int curr_size = this->members_->current_size ();
-  
+
   // Update <next_> if necessary to reflect the deletion.
   if (position < next_)
     this->next_--;
@@ -1010,6 +1010,7 @@ RR_Object_Group::unbind (const char *id,
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_Memory_Pool, ACE_Thread_Mutex> >;
 template class ACE_Malloc<ACE_MMAP_Memory_Pool, ACE_Thread_Mutex>;
+template class ACE_Malloc_T<ACE_MMAP_Memory_Pool, ACE_Thread_Mutex, ACE_Control_Block>;
 template class ACE_Hash_Map_With_Allocator<char *, char *>;
 template class ACE_Hash_Map_Iterator_Base_Ex<char *,  Load_Balancer::Object_Group_var, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<char *, char *, ACE_Null_Mutex>;
@@ -1043,6 +1044,7 @@ template class ACE_DLList_Iterator<char *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate  ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_Memory_Pool, ACE_Thread_Mutex> >
 #pragma instantaite  ACE_Malloc<ACE_MMAP_Memory_Pool, ACE_Thread_Mutex>
+#pragma instantaite  ACE_Malloc_T<ACE_MMAP_Memory_Pool, ACE_Thread_Mutex, ACE_Control_Block>
 #pragma instantiate  ACE_Hash_Map_With_Allocator<char *, char *>
 #pragma instantiate  ACE_Hash_Map_Iterator_Base_Ex<char *, char *, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>
 #pragma instantiate  ACE_Hash_Map_Iterator<char *, char *, ACE_Null_Mutex>
