@@ -1,3 +1,9 @@
+Tue Mar 16 12:20:53 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Service_Config.h (ACE_Service_Config): 
+	Added documentation for the parse_args () method. This was in 
+	request to Bill Rizzi <rizzi@softserv.com>.
+
 Tue Mar 16 10:57:46 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Svc_Conf.l: Added a new method ace_yy_delete_parse_buffer()
