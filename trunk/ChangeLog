@@ -1,31 +1,39 @@
+Thu Dec  2 13:38:33 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * apps/soreduce/Library.h:
+        * apps/soreduce/Library.cpp:
+        * apps/soreduce/README:
+
+          Modified soreduce to output mpc files instead of makefiles.
+
 Thu Dec  2 11:09:07 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* apps/gperf/tests/Makefile.am:
+        * apps/gperf/tests/Makefile.am:
 
-	  Revert my previous change.  Fixed orignal problem by putting the
-	  stamp file in the same directory as the output file.  Thanks to
-	  Chad Elliott for letting me know that the gperf options for the
-	  two invocations of gperf on idl.gperf were different.
+          Revert my previous change.  Fixed orignal problem by putting the
+          stamp file in the same directory as the output file.  Thanks to
+          Chad Elliott for letting me know that the gperf options for the
+          two invocations of gperf on idl.gperf were different.
 
 Thu Dec 2 16:42:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/platform_vxworks5.5.x.GNU:
-	  Added explicit 'signed-char' flags for ppc and arm builds.
+          Added explicit 'signed-char' flags for ppc and arm builds.
 
 Thu Dec  2 11:08:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Threads/Guards.cpp: Fixed "unused parameter" warning.
+        * examples/APG/Threads/Guards.cpp: Fixed "unused parameter" warning.
 
 Thu Dec 2 15:06:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Timeprobe_T.cpp:
-	  Fixed another compile problem (missing include for ACE_OS::memcpy).
+          Fixed another compile problem (missing include for ACE_OS::memcpy).
 
 Thu Dec 2 14:26:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Timeprobe_T.cpp:
-	  Fixed error in ACE_Timeprobe_Ex<>::print_absolute_times() where ACE_hrtime_t
-	  was incorrectly assumed to be a structure/class (it's an integer type).
+          Fixed error in ACE_Timeprobe_Ex<>::print_absolute_times() where ACE_hrtime_t
+          was incorrectly assumed to be a structure/class (it's an integer type).
 
 Thu Dec 2 09:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -49,11 +57,11 @@ Thu Dec 2 08:32:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
 Wed Dec  1 15:01:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Threads/Guards.cpp:
-	* examples/APG/Threads/Message_Blocks.cpp: Enabled the code here that
-	  was previously blocked out. Fixed narrow/wide-char spec for a
-	  string to ACE_Log_Msg. Thanks to Johnny Willemsen for pointing
-	  out that none of this code was actually getting compiled.
+        * examples/APG/Threads/Guards.cpp:
+        * examples/APG/Threads/Message_Blocks.cpp: Enabled the code here that
+          was previously blocked out. Fixed narrow/wide-char spec for a
+          string to ACE_Log_Msg. Thanks to Johnny Willemsen for pointing
+          out that none of this code was actually getting compiled.
 
 Wed Dec 1 08:49:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
@@ -64,24 +72,24 @@ Tue Nov 30 16:38:08 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * apps/gperf/tests/Makefile.am:
 
-	  Changed to only generate idl.cpp from idl.gperf once.  The
-	  attempt to generate it twice, the a second time in a different
-	  directory failed because the "stamp" file was the same.
+          Changed to only generate idl.cpp from idl.gperf once.  The
+          attempt to generate it twice, the a second time in a different
+          directory failed because the "stamp" file was the same.
 
 Tue Nov 30 17:32:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* m4/ace.m4: Added two new options, --enable-pthreads and
-	  --enable-uithreads. These en/dis-able the use of Pthreads and
-	  UI Threads (aka Solaris threads), respectively. Some platforms
-	  (namely AIX) offer a hokey UI Threads that barely functions but
-	  can't be used for any real work. Efforts to detect this and
-	  automatically disable it have been unfruitful, so this option was
-	  added. Pthreads defaults to yes, UI threads defaults to, except on
-	  Solaris where it defaults to yes.
+        * m4/ace.m4: Added two new options, --enable-pthreads and
+          --enable-uithreads. These en/dis-able the use of Pthreads and
+          UI Threads (aka Solaris threads), respectively. Some platforms
+          (namely AIX) offer a hokey UI Threads that barely functions but
+          can't be used for any real work. Efforts to detect this and
+          automatically disable it have been unfruitful, so this option was
+          added. Pthreads defaults to yes, UI threads defaults to, except on
+          Solaris where it defaults to yes.
 
-	* m4/threads.m4: Only do Pthreads/UIthreads checks if the corresponding
-	  implementation is enabled by the command line (or default) using
-	  the above new options.
+        * m4/threads.m4: Only do Pthreads/UIthreads checks if the corresponding
+          implementation is enabled by the command line (or default) using
+          the above new options.
 
 Tue Nov 30 07:32:18 2004  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -731,9 +739,9 @@ Thu Nov 18 07:38:34 2004  Chad Elliott  <elliott_c@ociweb.com>
         * ace/Service_Config.cpp:
 
           Distinguish between the existence of and the file permissions
- 	  for the default service configurator file (svc.conf).  Thanks to
- 	  Dipa Suri <dipa.suri@lmco.com> and Adam Howell
- 	  <adam.s.howell@lmco.com> for reporting this.
+          for the default service configurator file (svc.conf).  Thanks to
+          Dipa Suri <dipa.suri@lmco.com> and Adam Howell
+          <adam.s.howell@lmco.com> for reporting this.
 
 Thu Nov 18 07:10:26 2004  Chad Elliott  <elliott_c@ociweb.com>
 
