@@ -1,6 +1,12 @@
+Sat Jul 29 09:08:15 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * pace/config/config.h,pace/posix/aio.inl (aio_suspend):
+          added PACE_AIO_SUSPEND_LIST_ARG_CAST, with special value
+          on OSF1 (DIGITAL_UNIX).
+
 Fri Jul 28 18:11:24 2000  David L. Levine <levine@cs.wustl.edu>
 
-        * RAEDME: mention LynxOS' non-standard signal interface.
+        * README: mention LynxOS' non-standard signal interface.
 
 Fri Jul 28 15:54:38 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 

@@ -58,9 +58,15 @@
 #if PACE_HAS_POSIX == PACE_LYNXOS
 # define PACE_NONCONST_ARG_CAST(TYPE) (TYPE)
 # define PACE_VOIDSTARTSTAR_ARG_CAST(TYPE) (TYPE)
+# define PACE_AIO_SUSPEND_LIST_ARG_CAST (struct aiocb **)
+#elif PACE_HAS_POSIX == DIGITAL_UNIX
+# define PACE_NONCONST_ARG_CAST(TYPE) (TYPE)
+# define PACE_VOIDSTARTSTAR_ARG_CAST(TYPE)
+# define PACE_AIO_SUSPEND_LIST_ARG_CAST (const struct aiocb **)
 #else  /* ! PACE_LYNXOS */
 # define PACE_NONCONST_ARG_CAST(TYPE)
 # define PACE_VOIDSTARTSTAR_ARG_CAST(TYPE)
+# define PACE_AIO_SUSPEND_LIST_ARG_CAST
 #endif /* ! PACE_LYNXOS */
 
 /* Adding appropriate macros for the different POSIX units of
