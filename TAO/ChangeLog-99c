@@ -1,3 +1,8 @@
+Fri Jun 11 20:04:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+	  Removed obsolete options
+
 Fri Jun 11 19:26:30 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/POA/TIE/server.cpp (main): Fixed a small problem on
