@@ -141,8 +141,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_valuetype (be_valuetype *node)
 
   os->indent ();
 
-  *os << bt->name () << "_ptr _tao_retval = " 
-      << bt->name () << "::_nil ();" << be_nl;
+  *os << bt->name () << "_ptr _tao_retval = 0;" << be_nl;
   *os << bt->name () << "_var _tao_safe_retval (_tao_retval);";
 
   *os << be_nl << be_nl;
@@ -162,8 +161,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_valuetype_fwd (be_valuetype_fwd *
     bt = node;
 
   os->indent ();
-  *os << bt->name () << "_ptr _tao_retval = " 
-      << bt->name () << "::_nil ();" << be_nl;
+  *os << bt->name () << "_ptr _tao_retval = 0;" << be_nl;
   *os << bt->name () << "_var _tao_safe_retval (_tao_retval);";
 
   *os << be_nl << be_nl;
