@@ -22,8 +22,6 @@ SHOBJ	= $(addsuffix .so,$(FILES))
 
 INCLDIRS += -I../..
 
-LDLIBS	= $(addprefix $(VSHDIR),$(SHOBJ))
- 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BUILD 	= $(VBIN)

@@ -1,3 +1,10 @@
+Sun Oct 12 16:21:32 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* clients/Caching/Makefile: 
+	* stress_testing/Makefile: 
+	  There is no need to set LDLIBS to add local object files
+	  anymore, using FILES is enough.
+
 Fri Oct 10 18:41:47 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* clients/Blobby/Makefile: 
