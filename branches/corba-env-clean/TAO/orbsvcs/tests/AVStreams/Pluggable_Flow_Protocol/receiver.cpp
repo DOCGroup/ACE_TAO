@@ -46,26 +46,26 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   // Write the received data to the file.
   size_t result =
     ACE_OS::fwrite (frame->rd_ptr (),
-		    frame_size,
-		    1,
-		    output_file);
-  
+                    frame_size,
+                    1,
+                    output_file);
+
   if (result == frame->length ())
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "Receiver_Callback::fwrite failed\n"),
-		      -1);
+                       "Receiver_Callback::fwrite failed\n"),
+                      -1);
   frame->rd_ptr (frame_size);
 
   ACE_hrtime_t stamp;
   ACE_OS_String::memcpy (&stamp, frame->rd_ptr (), sizeof (stamp));
-  
+
   ACE_UINT64 usec = stamp;
   ACE_UINT32 val_1 = ACE_CU64_TO_CU32 (usec);
-  
+
   ACE_DEBUG ((LM_DEBUG,
-	      "Time Stamp %u\n",
-	      val_1));
-  
+              "Time Stamp %u\n",
+              val_1));
+
   frame->reset ();
   return 0;
 }
@@ -92,8 +92,8 @@ Receiver::~Receiver (void)
 
 int
 Receiver::init (int,
-                char **,
-                CORBA::Environment &ACE_TRY_ENV)
+                char **
+                TAO_ENV_ARG_DECL)
 {
   // Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -112,7 +112,7 @@ Receiver::init (int,
     this->mmdevice_;
 
   CORBA::Object_var mmdevice =
-    this->mmdevice_->_this (ACE_TRY_ENV);
+    this->mmdevice_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Register the mmdevice with the naming service.
@@ -130,8 +130,8 @@ Receiver::init (int,
 
   // Register the receiver object with the naming server.
   this->naming_client_->rebind (name,
-                                mmdevice.in (),
-                                ACE_TRY_ENV);
+                                mmdevice.in ()
+                                TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -177,32 +177,32 @@ main (int argc,
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0,
-                         ACE_TRY_ENV);
+                         0
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA",
-                                           ACE_TRY_ENV);
+        = orb->resolve_initial_references ("RootPOA"
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in (),
-                                      ACE_TRY_ENV);
+        PortableServer::POA::_narrow (obj.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (ACE_TRY_ENV);
+        = root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      mgr->activate (ACE_TRY_ENV);
+      mgr->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Initialize the AVStreams components.
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      root_poa.in (),
-                                      ACE_TRY_ENV);
+                                      root_poa.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       int result =
@@ -228,23 +228,23 @@ main (int argc,
       Receiver receiver;
       result =
         receiver.init (argc,
-                       argv,
-                       ACE_TRY_ENV);
+                       argv
+                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (result != 0)
         return result;
-      
+
       while (!endstream)
-	{
-	  orb->perform_work (ACE_TRY_ENV);
-	  ACE_TRY_CHECK;
-	}
+        {
+          orb->perform_work (TAO_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
 
       // Hack for now....
       ACE_OS::sleep (1);
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
