@@ -376,17 +376,21 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
         {
           // ... we are going to block, so there is no need to clone
           // the message block...
-          queued_message =
-            new TAO_Queued_Message (
-                    ACE_const_cast(ACE_Message_Block*,message_block),
-                    0);
+          // @@ It seems wasteful to allocate a TAO_Queued_Message in
+          //    this case, but it is simpler to do it this way.
+          ACE_NEW (queued_message,
+                   TAO_Queued_Message (
+                       ACE_const_cast(ACE_Message_Block*,message_block),
+                       0),
+                   -1);
         }
       else
         {
           queued_message =
             this->copy_message_block (message_block);
+          if (queued_message == 0)
+            return -1;
         }
-      // @@ Revisit message queue allocations
 
       if (TAO_debug_level > 6)
         {
