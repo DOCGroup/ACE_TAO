@@ -74,7 +74,9 @@ PCCFLAGS	+= #### set in platform_macros.GNU file, e.g., -p
 RM		= /bin/rm
 VAR		=
 VDIR		= .obj/
+ifndef  VSHDIR
 VSHDIR		= .shobj/
+endif # VSHDIR
 ifdef SHLIBA
 VLDLIBS :=$(VLDLIBS) -lACEshr $(LIBS)
 else
