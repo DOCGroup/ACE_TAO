@@ -252,12 +252,15 @@ CORBA_ORB::work_pending (CORBA_Environment &ACE_TRY_ENV)
 void
 CORBA_ORB::create_list (CORBA::Long count,
                         CORBA::NVList_ptr &new_list,
-                        CORBA_Environment &)
+                        CORBA_Environment &ACE_TRY_ENV)
 {
   assert (CORBA::ULong (count) <= UINT_MAX);
 
   // Create an empty list
-  new_list = new CORBA::NVList;
+  ACE_NEW_THROW_EX (new_list,
+                    CORBA::NVList,
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK;
 
   // If count is greater than 0, create a list of NamedValues.
   if (count != 0)
@@ -294,17 +297,20 @@ CORBA_ORB::create_environment (CORBA::Environment_ptr &,
 CORBA::Boolean
 CORBA_ORB::get_service_information (CORBA::ServiceType /* service_type */,
                                     CORBA::ServiceInformation_out /* service_information */,
-                                    CORBA::Environment &)
+                                    CORBA::Environment &ACE_TRY_ENV)
 {
-  return 0;
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                         CORBA::COMPLETED_NO),
+                    0);
 }
 
 void
 CORBA_ORB::create_named_value (CORBA::NamedValue_ptr &nv,
                                CORBA_Environment &ACE_TRY_ENV)
 {
-  ACE_NEW (nv,
-           CORBA::NamedValue);
+  ACE_NEW_THROW_EX (nv,
+                    CORBA::NamedValue,
+                    CORBA::NO_MEMORY ());
 }
 
 void
@@ -1054,7 +1060,7 @@ CORBA_ORB::create_interface_tc (const char * id,
   // Send the name
   cdr << name;
 
-  CORBA_TypeCode_ptr interface_typecode = 0;
+  CORBA_TypeCode_ptr interface_typecode = CORBA::TypeCode_ptr::_nil ();
   ACE_NEW_THROW_EX (interface_typecode,
                     CORBA_TypeCode (CORBA::tk_objref,
                                     cdr.total_length (),
@@ -1062,6 +1068,7 @@ CORBA_ORB::create_interface_tc (const char * id,
                                     0,
                                     0),
                     CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::TypeCode_ptr::_nil ());
 
   return interface_typecode;
 }
@@ -1091,7 +1098,7 @@ CORBA_ORB::create_enum_tc (const char *id,
       cdr << members[index].in ();
     } 
 
-  CORBA_TypeCode_ptr interface_typecode = 0;
+  CORBA_TypeCode_ptr interface_typecode = CORBA::TypeCode_ptr::_nil ();
   ACE_NEW_THROW_EX (interface_typecode,
                     CORBA_TypeCode (CORBA::tk_enum,
                                     cdr.total_length (),
@@ -1099,6 +1106,7 @@ CORBA_ORB::create_enum_tc (const char *id,
                                     0,
                                     0),
                     CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::TypeCode_ptr::_nil ());
 
   return interface_typecode;
 }
@@ -1133,7 +1141,7 @@ CORBA_ORB::create_exception_tc (const char *id,
       cdr << struct_member.type.in ();
     }
 
-  CORBA_TypeCode_ptr interface_typecode = 0;
+  CORBA_TypeCode_ptr interface_typecode = CORBA::TypeCode_ptr::_nil ();
   ACE_NEW_THROW_EX (interface_typecode,
                     CORBA_TypeCode (CORBA::tk_except,
                                     cdr.total_length (),
@@ -1141,6 +1149,7 @@ CORBA_ORB::create_exception_tc (const char *id,
                                     0,
                                     0),
                     CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::TypeCode_ptr::_nil ());
 
   return interface_typecode;
 }
