@@ -2,7 +2,9 @@
 <!-- $Id$ -->
 
 <HEAD>
-<TITLE>Building and Installing ACE and Its Network Services</TITLE>
+  <TITLE>Building and Installing ACE and Its Network Services</TITLE>
+  <link rev=made href="mailto:schmidt@cs.wustl.edu">
+</HEAD>
 
 <BODY text = "#000000"
 link="#000fff"
@@ -31,8 +33,7 @@ HREF="ACE.FAQ.html">FAQ</A> before building and installing ACE.
 </UL>
 
 <P><HR><P>
-<A NAME="platforms">
-<H3>Supported Platforms and Compilers</H3>
+<H3><A NAME="platforms">Supported Platforms and Compilers</A></H3>
 
 The ADAPTIVE Communication Environment has been ported and tested
 extensively on a wide range of C++ compilers and uni-processor and
@@ -169,12 +170,48 @@ for help with this port. <P>
 	has ported ACE to work with UnixWare 2.01 and
 	  its standard C++ compiler.
 
-<DT><B>VxWorks</B> <P>
+<DT><STRONG>VxWorks</STRONG> <P>
 <DD>
      <A HREF="http://www.cs.wustl.edu/~levine/">David Levine</A> &lt<A
 HREF="mailto:levine@cs.wustl.edu">levine@cs.wustl.edu</A>&gt has
 ported ACE to VxWorks 5.2/5.3/5.3.1 with the GreenHills 1.8.8
 and g++ 2.7.2 compilers.<P>
+
+In addition to all of the other benefits of ACE, it helps
+work around some deficiencies with VxWorks 5.3/5.3.1.
+These apply only with g++, at least thru version 2.7.2.
+That is the version that is shipped with Tornado 1.0.1/
+VxWorks 5.3.1.  The problems are:<P>
+
+<OL>
+  <LI> There a gory problem with munch that is severely aggravated
+       by the presence of a static in the Wind River/g++ iostream.h.
+       ACE hides this and provides an easy-to-use workaround in the
+       very unlikely situation where it becomes a problem.
+       Please see ace/config-vxworks5.2-g++.h for more information.<P>
+
+  <LI> Unsigned long long support is not available with the g++ that
+       is distributed with Tornado 1.0.1/VxWorks 5.3.1.  The
+       documentation says that it is supported, but try using it :-)
+       Wind River technical support will verify this.  ACE provides
+       its own 64-bit unsigned integer type, ACE_hrtime_t, so you
+       don't even have to worry about this problem if you use it.<P>
+
+  <LI> The program entry point cannot be called ``main''.  ACE
+       renames it to ``ace_main'' on VxWorks.  While this may seem
+       trivial, it is important with legacy code.  ACE itself ran
+       into this problem.<P>
+</OL>
+
+In addition, as noted <A HREF="#g++">below</A> following the
+discussion of the g++ -fno-implicit-templates option,
+-fno-implicit-templates is broken.  And, -O2 is not supported on some
+targets.<P>
+
+The current version of ACE, 4.3, has limited support for destroying
+static objects after program termination on VxWorks.  To destroy
+static objects, the module must be unloaded, using unld.  Static
+constructors are called when loading the module, with ld.<P>
 
 <DT><B>MVS OpenEdition</B> <P>
 
@@ -204,35 +241,77 @@ clean.  There are still some problems that need to be ironed out: <P>
 </DL>
 
 <HR>
-<H4>Compiling ACE with GNU C++</H4>
+<H4><A NAME="g++">Compiling ACE with GNU C++</A></H4>
 
 If you use the GNU GCC C++ compiler please note the following: <P>
 	
 <UL>
-	 	<LI> Earlier versions of G++ may not compile certain
-		  parts of ACE correctly due to compiler bugs.  Please
-		  upgrade to G++ 2.7.2 or greater. <P>
+ 	<LI> Earlier versions of G++ may not compile certain
+	  parts of ACE correctly due to compiler bugs.  Please
+	  upgrade to G++ 2.7.2 or greater. <P>
 
-		<LI> Make sure to update your gcc "config.status" file -
-		  this specifies whether your gcc install uses, for
-		  example, Solaris's "/usr/ccs/bin" binary utils or
-		  GNU binary utils. <P>
+	<LI> Make sure to update your gcc "config.status" file -
+	  this specifies whether your gcc install uses, for
+	  example, Solaris's "/usr/ccs/bin" binary utils or
+	  GNU binary utils. <P>
 
-	     <LI> Make sure that the linker invoked by GCC produces code 
+        <LI> Make sure that the linker invoked by GCC produces code 
 	  that initializes static objects.  Please see GCC's 
 	  documentation for using <CODE>collect2</CODE>.<P>
+
+	<LI> By default, gcc (thru version 2.7.2, at least) uses
+	  implicit template instantiation.  Besides wasting space,
+	  this breaks the use of ACE_Singleton:  instead of one
+	  singleton instance, there could be one instance per object
+	  (.o) file that "sees" the template.  Therefore, we have
+	  overridden this default in ACE by enabling the
+	  -fno-implicit-templates option to CCFLAGS in all
+	  include/makeinclude/platform_*.GNU files that set CXX to g++.<P>
+
+	<LI> The disadvantage of this approach is that you must
+	  add template specializations for all templates that your
+	  application uses to your own code.  (The ACE libraries are
+	  self-contained:  you don't need to add the templates that
+	  they use internally.)  Examples of template specializations
+	  occur in quite a few ACE .cpp files; see
+	  apps/Gateway/Gateway/Proxy_Handler.cpp for one example.
+	  An easy way to figure out what template instantiations are
+	  need is to try to build your executable and pipe the output
+	  through c++filt.  The linker will report the missing
+	  instantiations as undefined symbols.  Iteration may be
+	  necessary, if the template instantiations themselves reference
+	  other templates.<P>
+
+	<LI> Alternatively, you could apply the Cygnus template repository
+	  patches and use the -repo option instead of
+	  -fno-implicit-templates.  Please see the g++ FAQ and gcc
+	  manual for more information.  The g++ FAQ indicates that
+	  a new implementation of templates planned for version 2.8
+	  will eliminate the restriction against static data members
+	  in template classes, which would allow ready implementation
+	  of a correct ACE_Singleton.  A final alternative is to
+	  remove the -fno-implicit-templates option from the CCFLAGS
+	  macro in your include/makeinclude/platform_macros.GNU, and
+	  thereby use the default g++ implicit template instantiation.<P>
+
+	<LI> Thanks to Thilo Kielmann &lt;kielmann@informatik.uni-siegen.de&gt;
+	  for reporting the problem with ACE_Singleton on g++, and
+	  for helping to find and implement these solutions.<P>
+
+	<LI> On VxWorks only, g++ (thru version 2.7.2, at least, distributed
+	  with Tornado 1.0.1/VxWorks 5.3.1), -fno-implicit-templates is
+	  broken.  In addition, -O2 is not supported on some targets.<P>
+
 </UL>
 
 <P><HR><P>
 
-<A NAME="aceinstall">
-<H3>Building and Installing ACE</H3>
+<H3><A NAME="aceinstall">Building and Installing ACE</A></H3>
 
 The following explains how to build the ACE on <A
 HREF="#unixsvcs">UNIX</A> and <A HREF="#win32svcs">Win32</A>.
 
-<A NAME="unix">
-<H4>Building and Installing ACE on UNIX</H3> 
+<H4><A NAME="unix">Building and Installing ACE on UNIX</A></H4>
 
 Building and installing ACE on UNIX is relatively simple (the <A
 HREF="#win32">process</A> for Win32 is different).  Here's what you
@@ -250,7 +329,7 @@ need to do: <P>
 
 <pre><code>
 % setenv ACE_ROOT /home/cs/faculty/schmidt/ACE_wrappers <P>
-</pre></code>
+</code></pre>
 
 However, if you're building a number of versions of ACE (e.g., for
 different OS platforms or for different releases of ACE) you might use
@@ -258,7 +337,7 @@ the following approach:
 
 <pre><code>
 % setenv ACE_ROOT $cwd 
-</pre></code>
+</code></pre>
 
 <LI> Edit the $ACE_ROOT/ace/OS.h file to update things like default
    hostname and port numbers you'd like the programs in the
@@ -290,13 +369,13 @@ the following approach:
 
 <pre><code>
 % setenv LD_LIBRARY_PATH $ACE_ROOT/ace:$LD_LIBRARY_PATH <P>
-</pre></code>
+</code></pre>
 
 <LI> When all this is done, hopefully all you'll need to do is type:<P>
 
 <pre><code>
 % make <P>
-</pre></code>
+</code></pre>
 
    at the root of the ACE source tree.  This will build the static and
    shared object libraries and build the tests and the sample
@@ -304,8 +383,7 @@ the following approach:
 </OL>
 
 <P><HR><P>
-<A NAME="win32">
-<H4>Building and Installing ACE on Win32</H3>
+<H4><A NAME="win32">Building and Installing ACE on Win32</A></H4>
 
 The installation process for NT is a bit different than UNIX.  We
 assume you're using MSVC++ 4.x (things are a little different for the
@@ -376,10 +454,10 @@ assume you're using MSVC++ 4.x (things are a little different for the
    If you are going to compile ACE with UNICODE on, please add UNICODE
    to the pre-processor definitions through: <P>
 
-   Build -> Settings -> C/C++ -> Preprocessor -> Preprocessor
-   definitions <P>
+   Build -&gt; Settings -&gt; C/C++ -&gt; Preprocessor -&gt; Preprocessor
+   definitions<P>
 
-<LI> SET UP THE LINKER. <P>
+<LI> SET UP THE LINKER.<P>
 
    You might want to link with the wsock32.lib into the ACE project,
    as well, so that you don't have to include it with every
@@ -388,7 +466,7 @@ assume you're using MSVC++ 4.x (things are a little different for the
 
    When building a DLL we must ensure that both dll and exe are using
    the same libraries In order to allow standard C library functions
-   to share common variables (particular <TT>errno</TT>) across dll
+   to share common variables (particular <CODE>errno</CODE>) across dll
    and exe boundaries.  Go to
    Build/Settings/C++/Category:Code_Generation.  Set Use run-time
    library to "Multithreaded DLL" or "Debug Multithreaded DLL"
@@ -416,7 +494,7 @@ assume you're using MSVC++ 4.x (things are a little different for the
 When it's done, you should have a static or dynamic library
    called ace.lib.  You can use this to link with test applications
    (such as those in the $ACE_ROOT/examples directory).  This
-   process is described below. <P><P>
+   process is described below.<P>
 </OL>
 
 <LI> <B>MAKING TEST APPLICATIONS FOR WIN32</B> <P>
@@ -508,15 +586,77 @@ card.  This is one method: <P>
 </UL>
 
 <HR>
-<A NAME="svcsinstall">
-<H3>Building and Installing ACE Network Services</H3>
+<H4><A NAME="vxworks">Building and Installing ACE on VxWorks</A></H4>
+For the most part, you should be able to follow the instructions above
+to build ACE and applications that use it.  Use the
+<a href="#unix">Unix instructions</a> for Unix hosts, or
+<a href="#win32">Win32</a> instructions for Windows NT hosts.<P>
+
+You'll have to let ACE know the target type at compile time.
+There are several ways to do this; please see the
+$ACE_ROOT/include/makeinclude/platform_vxworks5.x_g++.GNU
+platform file for detailed information.<P>
+
+The VxWorks platform_vxworks*.GNU files are set up so that shared
+libraries are not built on VxWorks.  Only static libraries,
+with .a extension, are built.  Therefore, it's not necessary
+to set the LD_LIBRARY_PATH environment variable on your host
+system when building for VxWorks targets.<P>
+
+These non-default VxWorks kernel configuration <code>#defines</code>
+are required with ACE:<P>
+
+<pre>
+#define INCLUDE_CPLUS		/* include C++ support */
+#define INCLUDE_CPLUS_IOSTREAMS	/* include iostreams classes */
+#define INCLUDE_POSIX_ALL       /* include all available POSIX functions */
+</pre>
+
+For completeness, here are the non-default <code>#defines</code> that
+we use for VxWorks 5.3.1/g++ 2.7.2:
+
+<pre>
+#define INCLUDE_CPLUS		/* include C++ support */
+#define INCLUDE_CPLUS_IOSTREAMS	/* include iostreams classes */
+#define INCLUDE_CONFIGURATION_5_2 /* pre-tornado tools */
+#define INCLUDE_DEBUG           /* pre-tornado debugging */
+#define INCLUDE_LOADER          /* object module loading */
+#define INCLUDE_NET_SYM_TBL     /* load symbol table from network */
+#define INCLUDE_SYM_TBL_SYNC	/* synchronize host and target symbol tables */
+#define INCLUDE_NFS             /* nfs package */
+#define INCLUDE_PING		/* ping() utility */
+#define INCLUDE_POSIX_ALL       /* include all available POSIX functions */
+#define INCLUDE_RDB             /* remote debugging package */
+#define INCLUDE_RLOGIN          /* remote login */
+#define INCLUDE_RPC		/* rpc package */
+#define INCLUDE_SECURITY	/* shell security for network access */
+#define INCLUDE_SHELL           /* interactive c-expression interpreter */
+#define INCLUDE_SHOW_ROUTINES   /* show routines for system facilities*/
+#define INCLUDE_SPY             /* spyLib for task monitoring */
+#define INCLUDE_STARTUP_SCRIPT  /* execute start-up script */
+#define INCLUDE_STAT_SYM_TBL    /* create user-readable error status */
+#define INCLUDE_SYM_TBL         /* symbol table package */
+#define INCLUDE_UNLOADER        /* object module unloading */
+#define INCLUDE_WINDVIEW	/* WindView command server */
+</pre>
+
+It probably wouldn't take much effort to modify the
+ACE library to not require <code>INCLUDE_CPLUS_IOSTREAMS</code>,
+if necessary.
+
+If you're first getting started with ACE and/or VxWorks,
+I recommend just building the ACE library and tests first.
+Then try running the tests.  Please see $ACE_ROOT/tests/README
+for the latest status of the ACE tests on VxWorks.<P>
+
+<HR>
+<H3><A NAME="svcsinstall">Building and Installing ACE Network Services</A></H3>
 
 The following explains how to build the ACE <A
 HREF="ACE-netsvcs.html">network services</A> on <A
 HREF="#unixsvcs">UNIX</A> and <A HREF="#win32svcs">Win32</A>.
 
-<A NAME="unixsvcs">
-<H4>Building and Installing ACE Network Services on UNIX</H3>
+<H4><A NAME="unixsvcs">Building and Installing ACE Network Services on UNIX</A></H4>
 
 Building and installing ACE Network Services on UNIX is relatively
 simple (the <A HREF="#win32svcs">process</A> for Win32 is different).
@@ -539,7 +679,7 @@ $ACE_ROOT/netsvcs/servers/main.cpp</A> should also be compiled and ready to run.
 
 <pre><code>
 % setenv LD_LIBRARY_PATH $ACE_ROOT/ace:$LD_LIBRARY_PATH <P>
-</pre></code>
+</code></pre>
 
 <LI> By default, if the shared object library is built, the services
      are linked into the <CODE>main</CODE> driver program dynamically.
@@ -561,8 +701,7 @@ $ACE_ROOT/netsvcs/servers/svc.conf</A> file.  During your editing,
 
 </OL>
 
-<A NAME="win32svcs">
-<H4>Building and Installing ACE Network Services on Win32</H3>
+<H4><A NAME="win32svcs">Building and Installing ACE Network Services on Win32</A></H4>
 
 The installation process for ACE network services on Win32 is a bit
 different than UNIX.  We assume you're using MSVC++ 4.x (things are a
@@ -629,14 +768,14 @@ HREF="#win32">earlier</A>. <P>
    If you are going to compile ACE with UNICODE on, please add UNICODE
    to the pre-processor definitions through: <P>
 
-   Build -> Settings -> C/C++ -> Preprocessor -> Preprocessor
-   definitions <P>
+   Build -&gt; Settings -&gt; C/C++ -&gt; Preprocessor -&gt; Preprocessor
+   definitions<P>
 
 <LI> SET UP THE LINKER. <P>
 
    When building a DLL we must ensure that both dll and exe are using
    the same libraries in order to allow standard C library functions
-   to share common variables (particular <TT>errno</TT>) across dll
+   to share common variables (particular <CODE>errno</CODE>) across dll
    and exe boundaries.  Go to
    Build/Settings/C++/Category:Code_Generation.  Set Use run-time
    library to "Multithreaded DLL" or "Debug Multithreaded DLL"
@@ -668,8 +807,7 @@ When it's done, you should have a static or dynamic library
 </UL>
 
 <P><HR><P>
-<A NAME="advanced">
-<H3>Advanced Topics</H3>
+<H3><A NAME="advanced">Advanced Topics</A></H3>
 
 <UL>
 <LI><A HREF="#cloning">Cloning the Source Tree</A>
@@ -679,7 +817,7 @@ When it's done, you should have a static or dynamic library
 <LI><A HREF="http://www.cs.wustl.edu/~cleeland/ace/makefile-hints.html">ACE Makefile hints</a>
 </UL>
 
-<H4><A NAME="cloning">Cloning the Source Tree</H4>
+<H4><A NAME="cloning">Cloning the Source Tree</A></H4>
 
 On UNIX platforms, I typically like to support multiple platform
 builds using the same ACE source tree.  This idiom is supported by ACE
@@ -726,8 +864,7 @@ files or directories) in all subdirectories before starting the build
 on your cloned tree. <P>
 
 <HR><P>
-<A NAME="corba">
-<H4>Building CORBA Versions of ACE</H4>
+<H4><A NAME="corba">Building CORBA Versions of ACE</A></H4>
 
 Note that if you are compiling with IONA's Orbix implementation of
 CORBA or Visigenix's implementation of CORBA, you'll also need to set
@@ -741,8 +878,7 @@ $ACE_ROOT/ace/config.h to point to the the config* and platform*
 files that have "-orbix" in them!
 
 <P><HR><P>
-<A NAME="mvs">
-<H4>Additional Build Tips for MVS</H4>
+<H4><A NAME="mvs">Additional Build Tips for MVS</A></H4>
 
 For all intents and purpose, MVS OpenEdition (OE) is another flavor of
 UNIX, therefore, the instructions under <A HREF="#aceinstall">Building
@@ -775,9 +911,9 @@ additional tips: <P>
    warnings about unresolved references which should get resolved during the
    link step.  Note, however, there shouldn't be any unresolved references
    from the binder (linkage editor).   You can get pre-link and link maps by
-   uncommenting the PMAP and LMAP lines in the platform_mvs.GNU file. <P>
+   uncommenting the PMAP and LMAP lines in the platform_mvs.GNU file.<P>
 
-<P><HR><P>
+<HR><P>
 Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">
 ACE</A> home page.
 
