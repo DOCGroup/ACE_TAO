@@ -204,14 +204,23 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   TAO_Transport *transport =
     svc_handler->transport ();
 
+  bool wait_result = true;
+
   if (result == -1 && errno == EWOULDBLOCK)
     {
       // Try to wait until connection completion. Incase we block, then we
       // get a connected transport or not. In case of non block we get
       // a connected or not connected transport
-      transport = this->wait_for_connection_completion (r,
-                                                        transport,
-                                                        timeout);
+      if (!this->wait_for_connection_completion (r,
+                                                 transport,
+                                                 timeout))
+        {
+          if (TAO_debug_level > 2)
+            ACE_ERROR ((LM_ERROR, "TAO (%P|%t) - IIO_Connector::"
+                                  "make_connection, "
+                                  "wait for completion failed\n"));
+        }
+
     }
 
   // In case of errors transport is zero
@@ -219,13 +228,11 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     {
       // Give users a clue to the problem.
       if (TAO_debug_level > 3)
-        {
           ACE_DEBUG ((LM_ERROR,
                       "TAO (%P|%t) - IIOP_Connector::make_connection, "
                       "connection to <%s:%d> failed (%p)\n",
                       iiop_endpoint->host (), iiop_endpoint->port (),
                       ACE_TEXT("errno")));
-        }
 
       return 0;
     }

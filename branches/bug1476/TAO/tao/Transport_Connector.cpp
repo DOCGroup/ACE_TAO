@@ -254,15 +254,22 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
   if (base_transport->is_connected ())
     return base_transport;
 
-  return this->wait_for_connection_completion (r,
-                                               base_transport,
-                                               timeout);
+  if (!this->wait_for_connection_completion (r,
+                                             base_transport,
+                                             timeout))
+      if (TAO_debug_level > 2)
+        ACE_ERROR ((LM_ERROR,
+                    "TAO (%P|%t) - Transport_Connector::"
+                    "connect, "
+                    "wait for completion failed\n"));
+
+  return base_transport;
 }
 
-TAO_Transport*
+bool
 TAO_Connector::wait_for_connection_completion (
     TAO::Profile_Transport_Resolver *r,
-    TAO_Transport *base_transport,
+    TAO_Transport *&transport,
     ACE_Time_Value *timeout)
 {
   if (TAO_debug_level > 2)
@@ -270,7 +277,7 @@ TAO_Connector::wait_for_connection_completion (
                   "TAO (%P|%t) - Transport_Connector::wait_for_connection_completion, "
                   "going to wait for connection completion on transport"
                   "[%d]\n",
-                  base_transport->id ()));
+                  transport->id ()));
 
   // If we don't need to block for a transport just set the timeout to
   // be zero.
@@ -284,14 +291,14 @@ TAO_Connector::wait_for_connection_completion (
   // with zero time
   int result =
     this->active_connect_strategy_->wait (
-      base_transport,
+      transport,
       timeout);
 
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - Transport_Connector::wait_for_connection_completion, "
                 "transport [%d], wait done result = %d\n",
-                base_transport->id(), result));
+                transport->id(), result));
 
   // There are three possibilities when wait() returns: (a)
   // connection succeeded; (b) connection failed; (c) wait()
@@ -313,7 +320,7 @@ TAO_Connector::wait_for_connection_completion (
           // When we need to get a connected transport
           result =
             this->check_connection_closure (
-              base_transport->connection_handler ());
+              transport->connection_handler ());
         }
 
       // In case of errors.
@@ -326,15 +333,19 @@ TAO_Connector::wait_for_connection_completion (
                         "TAO (%P|%t) - Transport_Connector::"
                         "wait_for_connection_completion, "
                         "transport [%d], wait for completion failed\n",
-                        base_transport->id()));
-          return 0;
+                        transport->id()));
+
+          // Set transport to zero, it is not usable
+          transport = 0;
+
+          return false;
         }
     }
 
-  // Connection not ready yet, just use this base_transport, if
+  // Connection not ready yet but we can use this transport, if
   // we need a connected one we will block later to make sure
   // it is connected
-  return base_transport;
+  return true;
 }
 
 int

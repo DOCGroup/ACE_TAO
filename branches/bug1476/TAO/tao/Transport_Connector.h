@@ -133,9 +133,9 @@ protected:
 
   /// Check whether the connection is not closed
   /**
-   * @return 0 The connection happens to be not closed, but is now open
+   * @retval 0 The connection happens to be not closed, but is now open
    * because an other thread managed to open the handler
-   * @return -1 The connection is closed
+   * @retval -1 The connection is closed
    */
   virtual int check_connection_closure (
       TAO_Connection_Handler *connection_handler);
@@ -143,10 +143,12 @@ protected:
   /**
    * Wait for connection completion. We have a transport that is not
    * connected yet, wait until it is connected.
+   * @retval true When we could use @a transport
+   * @return false When we can't use the @a transport
    */
-  virtual TAO_Transport* wait_for_connection_completion(
+  virtual bool wait_for_connection_completion(
       TAO::Profile_Transport_Resolver *r,
-      TAO_Transport *base_transport,
+      TAO_Transport *&transport,
       ACE_Time_Value *timeout);
 
   /// Set the ORB Core pointer
