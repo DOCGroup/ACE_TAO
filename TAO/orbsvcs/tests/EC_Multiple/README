@@ -8,11 +8,6 @@ user must remember to assign a different port to each one:
 $ Naming_Service
 $ Scheduling_Service -ORBport 10030
 
-	we must run at least two EC, each one with a different name:
-
-$ Event_Service -ORBport 10040 -n EC1
-$ Event_Service -ORBport 10050 -n EC2
-
 	then we run two instances of the test, configuring the events
 that are local, only remote, remote and local:
 
