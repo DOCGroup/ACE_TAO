@@ -181,15 +181,18 @@ TAO_NAMESPACE  PortableInterceptor
     
     virtual CORBA::Object_ptr make_object (
         const char *, const PortableInterceptor::ObjectId & ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      ) = 0;
-  
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+
 protected:
   ObjectReferenceFactory ();
   virtual ~ObjectReferenceFactory ();
 
   // TAO internals
   virtual void *_tao_obv_narrow (ptr_arith_t);
-  
+  virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
+  virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
+
 private:
   ObjectReferenceFactory (const ObjectReferenceFactory &);
   void operator= (const ObjectReferenceFactory &);
@@ -315,7 +318,9 @@ protected:
 
   // TAO internals
   virtual void *_tao_obv_narrow (ptr_arith_t);
-  
+  virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
+  virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
+
 private:
   ObjectReferenceTemplate (const ObjectReferenceTemplate &);
   void operator= (const ObjectReferenceTemplate &);
