@@ -214,6 +214,14 @@ CORBA_ContextList::_nil (void)
   return (CORBA_ContextList_ptr)0;
 }
 
+ACE_INLINE CORBA_ContextList *
+CORBA_ContextList::_duplicate (CORBA_ContextList* x)
+{
+  if (x != 0)
+    x->_incr_refcnt ();
+  return x;
+}
+
 // *************************************************************
 // Inline operations for class CORBA_ContextList_var
 // *************************************************************

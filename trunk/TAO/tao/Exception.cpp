@@ -829,6 +829,22 @@ CORBA_ExceptionList::_destroy (void)
     delete this;
 }
 
+void
+CORBA_ExceptionList::_incr_refcnt (void)
+{
+  this->ref_count_++;
+}
+
+void
+CORBA_ExceptionList::_decr_refcnt (void)
+{
+  this->ref_count_--;
+  if (this->ref_count_ == 0)
+    delete this;
+  
+}
+
+
 #if defined (TAO_DONT_CATCH_DOT_DOT_DOT)
 TAO_DONT_CATCH::TAO_DONT_CATCH (void)
 {}
