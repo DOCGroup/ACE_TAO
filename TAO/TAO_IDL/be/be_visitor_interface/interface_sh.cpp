@@ -180,13 +180,27 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
                          "inheritance graph traversal failed\n"),
                         -1);
     }
-
-  *os << be_uidt_nl << "};\n\n";
-
-
+// Generate the embedded RequestInfo classes per operation.
+  // This is to be used by interceptors.
   be_visitor_context ctx (*this->ctx_);
   be_visitor *visitor = 0;
+  // Interceptor related classes.
+  ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SH);
+  visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor || (node->accept (visitor) == -1))
+    {
+      delete visitor;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_ch::"
+                         "visit_interface - "
+                         "codegen for interceptor classes failed\n"),
+                        -1);
+    }
+  delete visitor;
+  visitor = 0;
 
+  *os << be_uidt_nl << "};\n\n";
+  ctx = *this->ctx_;
   // generate the collocated class
   if (idl_global->gen_thru_poa_collocation ())
     {

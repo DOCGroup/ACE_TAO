@@ -461,5 +461,24 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << "\n\n";
 
+  // Interceptor classes
+  
+  be_visitor_context ctx (*this->ctx_);
+  be_visitor *visitor = 0;
+
+  ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS);
+  visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor || (node->accept (visitor) == -1))
+    {
+      delete visitor;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_cs::"
+                         "visit_interface - "
+                         "codegen for interceptors classes failed\n"),
+                        -1);
+    }
+  delete visitor;
+  visitor = 0;
+
   return 0;
 }
