@@ -107,8 +107,8 @@ private:
   TAO_CEC_EventChannel *event_channel_;
   // The Event Channel we belong to
 
-  TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPushConsumer> push_admin_;
-  TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPullConsumer> pull_admin_;
+  TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPushConsumer,CosEventChannelAdmin::ProxyPushConsumer> push_admin_;
+  TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPullConsumer,CosEventChannelAdmin::ProxyPullConsumer> pull_admin_;
   // The push and pull aspects are implemented using these classes
 
   PortableServer::POA_var default_POA_;

@@ -26,8 +26,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-template<class EVENT_CHANNEL, class PROXY, class PEER>
-class TAO_ESF_Peer_Admin : public TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY>
+template<class EVENT_CHANNEL, class PROXY, class INTERFACE, class PEER>
+class TAO_ESF_Peer_Admin : public TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>
 {
   // = TITLE
   //   ESF_Peer_Admin

@@ -107,10 +107,10 @@ private:
   PortableServer::POA_var default_POA_;
   // Store the default POA.
 
-  TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPushSupplier> push_admin_;
+  TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPushSupplier,CosEventChannelAdmin::ProxyPushSupplier> push_admin_;
   // Implement the push side of this class
 
-  TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPullSupplier> pull_admin_;
+  TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPullSupplier,CosEventChannelAdmin::ProxyPullSupplier> pull_admin_;
   // Implement the pull side of this class
 
 };

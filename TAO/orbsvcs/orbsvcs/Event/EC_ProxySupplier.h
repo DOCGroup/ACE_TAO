@@ -62,7 +62,7 @@ class TAO_RTEvent_Export TAO_EC_ProxyPushSupplier : public POA_RtecEventChannelA
   //   is properly configured, we need to explore this...
   //
 public:
-  typedef RtecEventChannelAdmin::ProxyPushSupplier_ptr _ptr_type;
+  typedef RtecEventChannelAdmin::ProxyPushSupplier Interface;
   typedef RtecEventChannelAdmin::ProxyPushSupplier_var _var_type;
 
   TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel* event_channel);

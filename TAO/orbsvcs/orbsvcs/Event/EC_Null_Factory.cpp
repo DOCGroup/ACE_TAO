@@ -13,6 +13,7 @@
 #include "EC_Reactive_Timeout_Generator.h"
 #include "EC_ConsumerControl.h"
 #include "EC_SupplierControl.h"
+#include "EC_Event_Channel.h" // @@ MSVC 6 bug
 #include "orbsvcs/ESF/ESF_Proxy_List.h"
 #include "orbsvcs/ESF/ESF_Immediate_Changes.h"
 

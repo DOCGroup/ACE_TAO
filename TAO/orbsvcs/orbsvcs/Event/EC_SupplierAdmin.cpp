@@ -12,7 +12,7 @@
 ACE_RCSID(Event, EC_SupplierAdmin, "$Id$")
 
 TAO_EC_SupplierAdmin::TAO_EC_SupplierAdmin (TAO_EC_Event_Channel *ec)
-  : TAO_ESF_Peer_Admin<TAO_EC_Event_Channel,TAO_EC_ProxyPushConsumer,TAO_EC_ProxyPushSupplier> (ec)
+  : TAO_ESF_Peer_Admin<TAO_EC_Event_Channel,TAO_EC_ProxyPushConsumer,RtecEventChannelAdmin::ProxyPushConsumer,TAO_EC_ProxyPushSupplier> (ec)
 {
   this->default_POA_ =
     this->event_channel_->supplier_poa ();
@@ -37,8 +37,8 @@ TAO_EC_SupplierAdmin::_default_POA (CORBA::Environment&)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_ESF_Peer_Admin<TAO_EC_Event_Channel,TAO_EC_ProxyPushConsumer,TAO_EC_ProxyPushSupplier>;
-template class TAO_ESF_Proxy_Admin<TAO_EC_Event_Channel,TAO_EC_ProxyPushConsumer>;
+template class TAO_ESF_Peer_Admin<TAO_EC_Event_Channel,TAO_EC_ProxyPushConsumer,RtecEventChannelAdmin::ProxyPushConsumer,TAO_EC_ProxyPushSupplier>;
+template class TAO_ESF_Proxy_Admin<TAO_EC_Event_Channel,TAO_EC_ProxyPushConsumer,RtecEventChannelAdmin::ProxyPushConsumer>;
 template class TAO_ESF_Worker<TAO_EC_ProxyPushConsumer>;
 template class TAO_ESF_Shutdown_Proxy<TAO_EC_ProxyPushConsumer>;
 template class TAO_ESF_Peer_Connected<TAO_EC_ProxyPushConsumer,TAO_EC_ProxyPushSupplier>;
@@ -47,8 +47,8 @@ template class TAO_ESF_Peer_Disconnected<TAO_EC_ProxyPushConsumer,TAO_EC_ProxyPu
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_ESF_Peer_Admin<TAO_EC_Event_Channel,TAO_EC_ProxyPushConsumer,TAO_EC_ProxyPushSupplier>
-#pragma instantiate TAO_ESF_Proxy_Admin<TAO_EC_Event_Channel,TAO_EC_ProxyPushConsumer>
+#pragma instantiate TAO_ESF_Peer_Admin<TAO_EC_Event_Channel,TAO_EC_ProxyPushConsumer,RtecEventChannelAdmin::ProxyPushConsumer,TAO_EC_ProxyPushSupplier>
+#pragma instantiate TAO_ESF_Proxy_Admin<TAO_EC_Event_Channel,TAO_EC_ProxyPushConsumer,RtecEventChannelAdmin::ProxyPushConsumer>
 #pragma instantiate TAO_ESF_Worker<TAO_EC_ProxyPushConsumer>
 #pragma instantiate TAO_ESF_Shutdown_Proxy<TAO_EC_ProxyPushConsumer>
 #pragma instantiate TAO_ESF_Peer_Connected<TAO_EC_ProxyPushConsumer,TAO_EC_ProxyPushSupplier>

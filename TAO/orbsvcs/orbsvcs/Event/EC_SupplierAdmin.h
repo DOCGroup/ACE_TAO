@@ -40,7 +40,7 @@ class TAO_EC_ProxyPushSupplier;
 
 class TAO_RTEvent_Export TAO_EC_SupplierAdmin
   : public POA_RtecEventChannelAdmin::SupplierAdmin
-  , public TAO_ESF_Peer_Admin<TAO_EC_Event_Channel,TAO_EC_ProxyPushConsumer,TAO_EC_ProxyPushSupplier>
+  , public TAO_ESF_Peer_Admin<TAO_EC_Event_Channel,TAO_EC_ProxyPushConsumer,RtecEventChannelAdmin::ProxyPushConsumer,TAO_EC_ProxyPushSupplier>
 {
   // = TITLE
   //   ProxyPushSupplier
