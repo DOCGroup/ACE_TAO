@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:323
+// be\be_codegen.cpp:301
 
 
 #include "Messaging_SyncScopeC.h"
@@ -37,7 +37,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "Messaging_SyncScopeC.i"
+#include "Messaging_SyncScopeC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
@@ -47,5 +47,4 @@
 namespace TAO
 {
 }
-
 
