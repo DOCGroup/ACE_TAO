@@ -1375,6 +1375,8 @@ CORBA_Any::operator>>= (CORBA::Any &a) const
                                &a,
                                0,
                                ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+
               return (CORBA::Boolean) ((retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                                        ? 1
                                        : 0);
@@ -1392,6 +1394,68 @@ CORBA_Any::operator>>= (CORBA::Any &a) const
     }
   ACE_ENDTRY;
 
+  return 0;
+}
+
+CORBA::Boolean
+CORBA_Any::operator>>= (const CORBA::Any *&a) const
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
+    {
+      CORBA::Boolean result =
+        this->type_->equivalent (CORBA::_tc_any,
+                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (result)
+        {
+          if (this->any_owns_data_ && this->value_)
+            {
+              a = (CORBA::Any *) this->value_;
+              return 1;
+            }
+          else
+            {
+              ACE_NEW_RETURN (a,
+                              CORBA::Any,
+                              0);
+              TAO_InputCDR stream (this->cdr_);
+              // decode the CDR
+              CORBA::TypeCode::traverse_status retval =
+                stream.decode (CORBA::_tc_any,
+                               a,
+                               0,
+                               ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+
+              if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+                {
+                  return 1;
+                }
+              else
+                {
+                  delete a;
+                  a = 0;
+                  return 0;
+                }                                      
+            }
+        }
+      else
+        {
+          a = 0;
+          return 0;
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("Exception in CORBA::Any extraction\n")));
+    }
+  ACE_ENDTRY;
+
+  a = 0;
   return 0;
 }
 
@@ -1435,11 +1499,16 @@ CORBA_Any::operator>>= (char *&s) const
 
                   return 1;
                 }
-              return 0;
+              else
+                {
+                  s = 0;
+                  return 0;
+                }
             }
         }
       else
         {
+          s = 0;
           return 0;
         }
     }
@@ -1450,6 +1519,71 @@ CORBA_Any::operator>>= (char *&s) const
     }
   ACE_ENDTRY;
 
+  s = 0;
+  return 0;
+}
+
+CORBA::Boolean
+CORBA_Any::operator>>= (const char *&s) const
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
+    {
+      CORBA::Boolean result =
+        this->type_->equivalent (CORBA::_tc_string,
+                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (result)
+        {
+          if (this->any_owns_data_ && this->value_)
+            {
+              s = *(char **) this->value_;
+              return 1;
+            }
+          else
+            {
+              TAO_InputCDR stream (this->cdr_);
+              if (stream.read_string ((char *&)s))
+                {
+                  ACE_const_cast (CORBA_Any *,
+                                  this)->any_owns_data_ = 1;
+
+                  char **tmp;
+
+                  ACE_NEW_RETURN (tmp,
+                                  char *,
+                                  0);
+
+                  *tmp = (char *)s;
+
+                  ACE_const_cast (CORBA_Any *,
+                                  this)->value_ = tmp;
+
+                  return 1;
+                }
+              else
+                {
+                  s = 0;
+                  return 0;
+                }
+            }
+        }
+      else
+        {
+          s = 0;
+          return 0;
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("Exception in unbounded string extraction\n")));
+    }
+  ACE_ENDTRY;
+
+  s = 0;
   return 0;
 }
 
@@ -1493,11 +1627,16 @@ CORBA_Any::operator>>= (CORBA::WChar *&ws) const
 
                   return 1;
                 }
-              return 0;
+              else
+                {
+                  ws = 0;
+                  return 0;
+                }
             }
         }
       else
         {
+          ws = 0;
           return 0;
         }
     }
@@ -1508,6 +1647,71 @@ CORBA_Any::operator>>= (CORBA::WChar *&ws) const
     }
   ACE_ENDTRY;
 
+  ws = 0;
+  return 0;
+}
+
+CORBA::Boolean
+CORBA_Any::operator>>= (const CORBA::WChar *&ws) const
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
+    {
+      CORBA::Boolean result =
+        this->type_->equivalent (CORBA::_tc_wstring,
+                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (result)
+        {
+          if (this->any_owns_data_ && this->value_)
+            {
+              ws = *(CORBA::WChar **) this->value_;
+              return 1;
+            }
+          else
+            {
+              TAO_InputCDR stream (this->cdr_);
+              if (stream.read_wstring ((CORBA::WChar *&)ws))
+                {
+                  ACE_const_cast (CORBA_Any *,
+                                  this)->any_owns_data_ = 1;
+
+                  CORBA::WChar **tmp;
+
+                  ACE_NEW_RETURN (tmp,
+                                  CORBA::WChar *,
+                                  0);
+
+                  *tmp = (CORBA::WChar *)ws;
+
+                  ACE_const_cast (CORBA_Any *,
+                                  this)->value_ = tmp;
+
+                  return 1;
+                }
+              else
+                {
+                  ws = 0;
+                  return 0;
+                }
+            }
+        }
+      else
+        {
+          ws = 0;
+          return 0;
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("Exception in unbounded wstring extraction\n")));
+    }
+  ACE_ENDTRY;
+
+  ws = 0;
   return 0;
 }
 
