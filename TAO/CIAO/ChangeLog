@@ -1,3 +1,10 @@
+Fri Jun 11 13:07:35 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/RepositoryManager/Repository_Manager.cpp:
+
+          Uncommented some code which was accidentally
+          commented in my previous commit.
+
 Fri Jun 11 12:55:49 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/Process_Element.tpp:
