@@ -1,4 +1,3 @@
-// -*- c++ -*-
 // $Id$
 
 // ============================================================================
@@ -10,7 +9,7 @@
 //    local_server.cpp
 //
 // = DESCRIPTION
-//    This server will run the ORB briefly and then make 
+//    This server will run the ORB briefly and then make
 //    several calls on the distant MT Object.
 //
 // = AUTHORS
@@ -22,20 +21,20 @@
 #include "local_server.h"
 
 MT_Server_Task::MT_Server_Task (ACE_Thread_Manager* thr_mgr_ptr,
-                                int argc, 
-                                char **argv, 
+                                int argc,
+                                char **argv,
                                 TAO_ORB_Manager* orb_manager_ptr)
    :ACE_Task<ACE_SYNCH> (thr_mgr_ptr),
-    argc_ (argc), 
+    argc_ (argc),
     argv_ (argv),
     orb_manager_ptr_ (orb_manager_ptr)
 {
 }
 
-int 
+int
 MT_Server_Task::svc (void)
 {
-  if (this->mT_Server_.init (this->argc_, 
+  if (this->mT_Server_.init (this->argc_,
                              this->argv_,
                              this->orb_manager_ptr_) == -1)
     return 1;
@@ -45,9 +44,9 @@ MT_Server_Task::svc (void)
 
 
 MT_Server::MT_Server ()
-  : ior_output_file_ (0),
+  : object_key_ (0),
+    ior_output_file_ (0),
     orb_manager_ptr_ (0),
-    object_key_ (0),
     iterations_ (1)
 {
 }
@@ -93,7 +92,7 @@ MT_Server::parse_args (void)
         break;
       case 'h': // read the IOR from the file.
         int result;
-        result = this->read_ior (get_opts.optarg); 
+        result = this->read_ior (get_opts.optarg);
         // read IOR for MT Object
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -102,7 +101,7 @@ MT_Server::parse_args (void)
                             -1);
         break;
       case 'f':
-      case 'g': 
+      case 'g':
       case 'i':
       case 'n':
         break;
@@ -113,9 +112,9 @@ MT_Server::parse_args (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " [-d]\n"
-                           " [-f] first server ior file\n" 
-                           " [-g] second server ior file\n" 
-                           " [-h] third server ior file\n" 
+                           " [-f] first server ior file\n"
+                           " [-g] second server ior file\n"
+                           " [-h] third server ior file\n"
                            " [-i] client iterations\n"
                            " [-n] number of client threads\n"
                            " [-s] number of server iterations\n"
@@ -136,9 +135,9 @@ MT_Server::init (int argc,
   this->argc_ = argc;
   this->argv_ = argv;
   if ((this->orb_manager_ptr_ = orb_manager_ptr) == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        "MT_Server::init: ORB_Manager is nil!\n"),
-                       -1);  
+                       -1);
 
   TAO_TRY
   {
@@ -188,12 +187,12 @@ MT_Server::init (int argc,
                            "No proper object has been returned.\n"),
                           -1);
 
-    this->mT_Object_var_ = MT_Object::_narrow (object_var.in(), 
-                                               TAO_TRY_ENV);     
+    this->mT_Object_var_ = MT_Object::_narrow (object_var.in(),
+                                               TAO_TRY_ENV);
     TAO_CHECK_ENV;
-    
+
     if (CORBA::is_nil (this->mT_Object_var_.in()))
-    { 
+    {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "We have no proper reference to the Object.\n"),
                           -1);
@@ -232,28 +231,28 @@ MT_Server::~MT_Server (void)
 }
 
 
-int 
+int
 MT_Server::run_ORB_briefly (void)
 {
   if (this->iterations_ > 0)
   {
     CORBA::Environment env;
 
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) MT_Server::run: "
                 "going to call distant MT Object\n"));
-  
+
     for (unsigned int i = 0; i < this->iterations_; i++)
     {
-      this->mT_Object_var_->yadda (0, 
-                                   this->mT_Object_Impl_._this (env), 
+      this->mT_Object_var_->yadda (0,
+                                   this->mT_Object_Impl_._this (env),
                                    env);
 
       if (env.exception () != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "MT_Server::run: failed to call distant MT object\n"),
                           -1);
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) MT_Server::run: "
                   "called distant MT Object i = %d\n",
                   i));
@@ -261,4 +260,3 @@ MT_Server::run_ORB_briefly (void)
   }
   return 0;
 }
-
