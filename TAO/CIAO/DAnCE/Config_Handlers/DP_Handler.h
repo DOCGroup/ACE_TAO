@@ -12,7 +12,7 @@
 #define CIAO_CONFIG_HANDLERS_DP_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers/Config_Handlers_Export.h"
+#include "Config_Handlers_Export.h"
 #include "ace/Auto_Ptr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -1,14 +1,15 @@
 //$Id$
 
-project (Config_Handlers) : ciao_deployment_stub {
-  sharedname = Config_Handlers
+project (Config_Handlers) : acelib, ciao_deployment_stub {
+  sharedname = XSC_Config_Handlers
   dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
   macros   += XML_USE_PTHREADS
   requires += exceptions
   includes += $(XERCESCROOT)/include  .
   libpaths += $(XERCESCROOT)/lib
   libs     += xerces-c
-
+  includes += $(CIAO_ROOT)/DAnCE/Config_Handlers
+  
   Source_Files {
     ccd.cpp
     cdd.cpp
@@ -48,6 +49,7 @@ project (Config_Handlers) : ciao_deployment_stub {
     XML_Error_Handler.cpp
     XML_Helper.cpp
     XML_File_Intf.cpp
+    IDREF_Base.cpp
   }
 
   Header_Files {
@@ -66,7 +68,11 @@ project (XSC_Config_Handlers_Tests) : ciao_deployment_stub {
                                                                                 
   Source_Files {
     test.cpp
+    DnC_Dump.cpp
+    DnC_Dump_T.cpp
+    Dump_Obj.cpp
   }
+
                                                                                 
                                                                                 
 }

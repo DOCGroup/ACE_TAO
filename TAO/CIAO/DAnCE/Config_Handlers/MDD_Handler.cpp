@@ -5,15 +5,17 @@
 #include "ADD_Handler.h"
 #include "Property_Handler.h"
 #include "Req_Handler.h"
-#include "Singleton_IDREF_Map.h"
+#include "cdp.hpp"
 
 namespace CIAO
 {
   namespace Config_Handlers
   {
+    IDREF_Base MDD_Handler::IDREF;
+    
     bool
     MDD_Handler::mono_deployment_descriptions (
-        const MonolithicDeploymentDescription& src,
+        const DeploymentPlan& src,
         Deployment::MonolithicDeploymentDescriptions& dest)
     {
       /* @@ This has changed.  The schema has maxoccurred = unbounded */
@@ -34,9 +36,16 @@ namespace CIAO
           dest.length (len + 1);
 
           bool retval = MDD_Handler::mono_deployment_description (*imp_b,
-                                                                  dest[len]);
+                                                                  dest[len],
+                                                                  len);
           if (!retval)
-            return false;
+            {
+              ACE_DEBUG ((LM_ERROR,
+                          "(%P|%t) MDD_Handler: Error parsing element %i\n",
+                          len));
+              return false;
+            }
+          
         }
       return true;
     }
@@ -44,7 +53,8 @@ namespace CIAO
     bool
     MDD_Handler::mono_deployment_description (
         const MonolithicDeploymentDescription& desc,
-        Deployment::MonolithicDeploymentDescription& toconfig)
+        Deployment::MonolithicDeploymentDescription& toconfig,
+        CORBA::ULong pos)
     {
       toconfig.name =
         CORBA::string_dup (desc.name ().c_str ());
@@ -77,13 +87,14 @@ namespace CIAO
           CORBA::ULong tmp = 0;
 
           bool r =
-            Singleton_IDREF_Map::instance ()->find_ref (
-              ab->id ().c_str (),
-              tmp);
+            ADD_Handler::IDREF.find_ref (ab->id ().c_str (),
+                                         tmp);
 
           if (!r)
             {
               // @@MAJO: What should we do if find_ref fails?
+              ACE_DEBUG ((LM_ERROR,
+                          "(%P|%t) MDD_Handler:  Find ref failed!  Uh oh!\n"));
               return false;
             }
 
@@ -125,6 +136,21 @@ namespace CIAO
         }
 #endif /*if 0*/
 
+      // Handle the idref
+      if (desc.id_p ())
+        {
+          ACE_CString cstr (desc.id ().c_str ());
+          
+          if (!MDD_Handler::IDREF.bind_ref (cstr, pos))
+            return false;
+        }
+      else
+        {
+          ACE_DEBUG((LM_ERROR,
+                     "(%P|%t) Warning:  MDD %s has no idref \n",
+                     desc.name ().c_str ()));
+        }
+      
       return true;
     }
 

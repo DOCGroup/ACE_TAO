@@ -77,6 +77,7 @@ namespace CIAO
                                           dest.configProperty[len]);
         }
 
+#if 0 /* MAJO:  Handle this next round */
       InstanceDeploymentDescription::deployedResource_const_iterator drend =
         src.end_deployedResource ();
 
@@ -96,6 +97,7 @@ namespace CIAO
 
         }
 
+#endif
 #if 0
      // @@ MAJO: Need to handle this in the next round
       if (desc.deployedSharedResource_p ())
