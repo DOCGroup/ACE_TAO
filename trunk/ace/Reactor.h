@@ -18,8 +18,11 @@
 #if !defined (ACE_REACTOR_H)
 #define ACE_REACTOR_H
 
-class ACE_Handle_Set;
 class ACE_Reactor_Impl;
+
+// Need the class def for ACE_Handle_Set to compile references to it in
+// programs.
+#include "ace/Handle_Set.h"
 
 // Timer Queue is a complicated template class. A simple forward
 // declaration will not work
