@@ -326,11 +326,41 @@ AC_DEFUN(ACE_SET_COMPILER_FLAGS, dnl
 ])
 
 
-# serial 31 AC_PROG_LIBTOOL
+# serial 35 AC_PROG_LIBTOOL
 AC_DEFUN(AC_PROG_LIBTOOL,
-[AC_PREREQ(2.12.2)dnl
+[AC_REQUIRE([AC_LIBTOOL_SETUP])dnl
+
+# Save cache, so that ltconfig can load it
+AC_CACHE_SAVE
+
+# Actually configure libtool.  ac_aux_dir is where install-sh is found.
+CC="$CC" CFLAGS="$CFLAGS" CPPFLAGS="$CPPFLAGS" \
+LD="$LD" NM="$NM" RANLIB="$RANLIB" LN_S="$LN_S" \
+DLLTOOL="$DLLTOOL" AS="$AS" \
+${CONFIG_SHELL-/bin/sh} $ac_aux_dir/ltconfig --no-reexec \
+$libtool_flags --no-verify $ac_aux_dir/ltmain.sh $host \
+|| AC_MSG_ERROR([libtool configure failed])
+
+# Reload cache, that may have been modified by ltconfig
+AC_CACHE_LOAD
+
+# This can be used to rebuild libtool when needed
+LIBTOOL_DEPS="$ac_aux_dir/ltconfig $ac_aux_dir/ltmain.sh"
+
+# Always use our own libtool.
+LIBTOOL='$(SHELL) $(top_builddir)/libtool'
+AC_SUBST(LIBTOOL)dnl
+
+# Redirect the config.log output again, so that the ltconfig log is not
+# clobbered by the next message.
+exec 5>>./config.log
+])
+
+AC_DEFUN(AC_LIBTOOL_SETUP,
+[AC_PREREQ(2.13)dnl
 AC_REQUIRE([AC_ENABLE_SHARED])dnl
 AC_REQUIRE([AC_ENABLE_STATIC])dnl
+AC_REQUIRE([AC_ENABLE_FAST_INSTALL])dnl
 AC_REQUIRE([AC_CANONICAL_HOST])dnl
 AC_REQUIRE([AC_CANONICAL_BUILD])dnl
 AC_REQUIRE([AC_PROG_RANLIB])dnl
@@ -341,14 +371,13 @@ AC_REQUIRE([AC_SYS_NM_PARSE])dnl
 AC_REQUIRE([AC_SYS_SYMBOL_UNDERSCORE])dnl
 AC_REQUIRE([AC_PROG_LN_S])dnl
 dnl
-# Always use our own libtool.
-LIBTOOL='$(SHELL) $(top_builddir)/libtool'
-AC_SUBST(LIBTOOL)dnl
 
 # Check for any special flags to pass to ltconfig.
-libtool_flags=
+libtool_flags="--cache-file=$cache_file"
 test "$enable_shared" = no && libtool_flags="$libtool_flags --disable-shared"
 test "$enable_static" = no && libtool_flags="$libtool_flags --disable-static"
+test "$enable_fast_install" = no && libtool_flags="$libtool_flags --disable-fast-install"
+test "$lt_dlopen" = yes && libtool_flags="$libtool_flags --enable-dlopen"
 test "$silent" = yes && libtool_flags="$libtool_flags --silent"
 test "$ac_cv_prog_gcc" = yes && libtool_flags="$libtool_flags --with-gcc"
 test "$ac_cv_prog_gnu_ld" = yes && libtool_flags="$libtool_flags --with-gnu-ld"
@@ -387,8 +416,8 @@ case "$host" in
   fi
   ;;
 
-*-*-cygwin32*)
-  AC_SYS_LIBTOOL_CYGWIN32
+*-*-cygwin*)
+  AC_SYS_LIBTOOL_CYGWIN
   ;;
 
 esac
@@ -403,23 +432,10 @@ need_locks=yes)
 if test x"$need_locks" = xno; then
   libtool_flags="$libtool_flags --disable-lock"
 fi
-
-
-# Actually configure libtool.  ac_aux_dir is where install-sh is found.
-CC="$CC" CFLAGS="$CFLAGS" CPPFLAGS="$CPPFLAGS" \
-LD="$LD" NM="$NM" RANLIB="$RANLIB" LN_S="$LN_S" \
-DLLTOOL="$DLLTOOL" AS="$AS" \
-${CONFIG_SHELL-/bin/sh} $ac_aux_dir/ltconfig --no-reexec \
-$libtool_flags --no-verify $ac_aux_dir/ltmain.sh $host \
-|| AC_MSG_ERROR([libtool configure failed])
-
-# This can be used to rebuild libtool when needed
-LIBTOOL_DEPS="$ac_aux_dir/ltconfig $ac_aux_dir/ltmain.sh"
-
-# Redirect the config.log output again, so that the ltconfig log is not
-# clobbered by the next message.
-exec 5>>./config.log
 ])
+
+# AC_LIBTOOL_DLOPEN - check for dlopen support
+AC_DEFUN(AC_LIBTOOL_DLOPEN, [lt_dlopen=yes])
 
 # AC_ENABLE_SHARED - implement the --enable-shared flag
 # Usage: AC_ENABLE_SHARED[(DEFAULT)]
@@ -454,10 +470,6 @@ enable_shared=AC_ENABLE_SHARED_DEFAULT)dnl
 AC_DEFUN(AC_DISABLE_SHARED,
 [AC_ENABLE_SHARED(no)])
 
-# AC_DISABLE_STATIC - set the default static flag to --disable-static
-AC_DEFUN(AC_DISABLE_STATIC,
-[AC_ENABLE_STATIC(no)])
-
 # AC_ENABLE_STATIC - implement the --enable-static flag
 # Usage: AC_ENABLE_STATIC[(DEFAULT)]
 #   Where DEFAULT is either `yes' or `no'.  If omitted, it defaults to
@@ -487,6 +499,44 @@ esac],
 enable_static=AC_ENABLE_STATIC_DEFAULT)dnl
 ])
 
+# AC_DISABLE_STATIC - set the default static flag to --disable-static
+AC_DEFUN(AC_DISABLE_STATIC,
+[AC_ENABLE_STATIC(no)])
+
+
+# AC_ENABLE_FAST_INSTALL - implement the --enable-fast-install flag
+# Usage: AC_ENABLE_FAST_INSTALL[(DEFAULT)]
+#   Where DEFAULT is either `yes' or `no'.  If omitted, it defaults to
+#   `yes'.
+AC_DEFUN(AC_ENABLE_FAST_INSTALL,
+[define([AC_ENABLE_FAST_INSTALL_DEFAULT], ifelse($1, no, no, yes))dnl
+AC_ARG_ENABLE(fast-install,
+changequote(<<, >>)dnl
+<<  --enable-fast-install[=PKGS]  optimize for fast installation [default=>>AC_ENABLE_FAST_INSTALL_DEFAULT],
+changequote([, ])dnl
+[p=${PACKAGE-default}
+case "$enableval" in
+yes) enable_fast_install=yes ;;
+no) enable_fast_install=no ;;
+*)
+  enable_fast_install=no
+  # Look at the argument we got.  We use all the common list separators.
+  IFS="${IFS= 	}"; ac_save_ifs="$IFS"; IFS="${IFS}:,"
+  for pkg in $enableval; do
+    if test "X$pkg" = "X$p"; then
+      enable_fast_install=yes
+    fi
+  done
+  IFS="$ac_save_ifs"
+  ;;
+esac],
+enable_fast_install=AC_ENABLE_FAST_INSTALL_DEFAULT)dnl
+])
+
+# AC_ENABLE_FAST_INSTALL - set the default to --disable-fast-install
+AC_DEFUN(AC_DISABLE_FAST_INSTALL,
+[AC_ENABLE_FAST_INSTALL(no)])
+
 
 # AC_PROG_LD - find the path to the GNU or non-GNU linker
 AC_DEFUN(AC_PROG_LD,
@@ -504,47 +554,15 @@ if test "$ac_cv_prog_gcc" = yes; then
   case "$ac_prog" in
     # Accept absolute paths.
 changequote(,)dnl
-    /* | [A-Za-z]:/*)
-      # Canonicalize the path of ld
+    /* | [A-Za-z]:[\\/]*)
       re_direlt='/[^/][^/]*/\.\./'
-      sub_uncdrive='s%^\([A-Za-z]\):/%//\1/%'
 changequote([,])dnl
+      # Canonicalize the path of ld
+      ac_prog=`echo $ac_prog| sed 's%\\\\%/%g'`
       while echo $ac_prog | grep "$re_direlt" > /dev/null 2>&1; do
 	ac_prog=`echo $ac_prog| sed "s%$re_direlt%/%"`
       done
-      case "$host_os" in
-      cygwin*)
-	# Convert to a UNC path for cygwin
-	test -z "$LD" && LD=`echo X$ac_prog | sed -e "1s/^X//" -e "$sub_uncdrive"`
-	;;
-      *)
-	test -z "$LD" && LD="$ac_prog"
-	;;
-      esac
-      ;;
-    ##
-    ## FIXME:  The code fails later on if we try to use an $LD with
-    ##         '\\' path separators.
-    ##
-changequote(,)dnl
-    [A-Za-z]:[\\]*)
-      # Canonicalize the path of ld
-      re_direlt='\\[^\\][^\\]*\\\.\.\(\\\)'
-      sub_uncdrive='s%^\([A-Za-z]\):\\%//\1/%'
-changequote([,])dnl
-      sub_uncdir='s%\\%/%g'
-      while echo $ac_prog | grep "$re_direlt" > /dev/null 2>&1; do
-	ac_prog=`echo $ac_prog| sed "s%$re_direlt%\1%"`
-      done
-      case "$host_os" in
-      cygwin*)
-	# Convert to a UNC path for cygwin
-	test -z "$LD" && LD=`echo X$ac_prog | sed -e 's%^X%%' -e "$sub_uncdrive" -e "$sub_uncdir"`
-	;;
-      *)
-	test -z "$LD" && LD="$ac_prog"
-	;;
-      esac
+      test -z "$LD" && LD="$ac_prog"
       ;;
   "")
     # If it fails, then pretend we aren't using GCC.
@@ -637,7 +655,7 @@ AC_MSG_RESULT([$NM])
 AC_SUBST(NM)
 ])
 
-# AC_SYS_NM_PARSE - Check for command ro grab the raw symbol name followed
+# AC_SYS_NM_PARSE - Check for command to grab the raw symbol name followed
 # by C symbol name from nm.
 AC_DEFUN(AC_SYS_NM_PARSE,
 [AC_REQUIRE([AC_CANONICAL_HOST])dnl
@@ -656,15 +674,21 @@ ac_symcode='[BCDEGRST]'
 ac_sympat='\([_A-Za-z][_A-Za-z0-9]*\)'
 
 # Transform the above into a raw symbol and a C symbol.
-ac_symxfrm='\1 \1'
+ac_symxfrm='\1 \2\3 \3'
+
+# Transform an extracted symbol line into a proper C declaration
+ac_global_symbol_to_cdecl="sed -n -e 's/^. .* \(.*\)$/extern char \1;/p'"
 
 # Define system-specific variables.
 case "$host_os" in
 aix*)
   ac_symcode='[BCDT]'
   ;;
-cygwin32* | mingw32*)
+cygwin* | mingw*)
   ac_symcode='[ABCDGISTW]'
+  ;;
+hpux*)
+  ac_global_symbol_to_cdecl="sed -n -e 's/^T .* \(.*\)$/extern char \1();/p' -e 's/^. .* \(.*\)$/extern char \1;/p'"
   ;;
 irix*)
   ac_symcode='[BCDEGRST]'
@@ -683,10 +707,7 @@ changequote([,])dnl
 # Try without a prefix undercore, then with it.
 for ac_symprfx in "" "_"; do
 
-  # Write the raw and C identifiers.
-  # Unlike in ltconfig.in, we need $ac_symprfx before $ac_symxfrm here,
-  # otherwise AC_SYS_SYMBOL_UNDERSCORE will always be false
-  ac_cv_sys_global_symbol_pipe="sed -n -e 's/^.*[ 	]$ac_symcode[ 	][ 	]*$ac_symprfx$ac_sympat$/$ac_symprfx$ac_symxfrm/p'"
+  ac_cv_sys_global_symbol_pipe="sed -n -e 's/^.*[ 	]\($ac_symcode\)[ 	][ 	]*\($ac_symprfx\)$ac_sympat$/$ac_symxfrm/p'"
 
   # Check to see that the pipe works correctly.
   ac_pipe_works=no
@@ -726,7 +747,7 @@ extern "C" {
 
 EOF
 	  # Now generate the symbol file.
-	  sed 's/^.* \(.*\)$/extern char \1;/' < "$ac_nlist" >> conftest.c
+	  eval "$ac_global_symbol_to_cdecl"' < "$ac_nlist" >> conftest.c'
 
 	  cat <<EOF >> conftest.c
 #if defined (__STDC__) && __STDC__
@@ -746,7 +767,7 @@ lt_preloaded_symbols[] =
 changequote([,])dnl
 {
 EOF
-	sed 's/^\(.*\) \(.*\)$/  {"\1", (lt_ptr_t) \&\2},/' < "$ac_nlist" >> conftest.c
+	sed 's/^. \(.*\) \(.*\)$/  {"\2", (lt_ptr_t) \&\2},/' < "$ac_nlist" >> conftest.c
 	cat <<\EOF >> conftest.c
   {0, (lt_ptr_t) 0}
 };
@@ -805,8 +826,8 @@ fi
 AC_MSG_RESULT($ac_result)
 ])
 
-# AC_SYS_LIBTOOL_CYGWIN32 - find tools needed on cygwin32
-AC_DEFUN(AC_SYS_LIBTOOL_CYGWIN32,
+# AC_SYS_LIBTOOL_CYGWIN - find tools needed on cygwin
+AC_DEFUN(AC_SYS_LIBTOOL_CYGWIN,
 [AC_CHECK_TOOL(DLLTOOL, dlltool, false)
 AC_CHECK_TOOL(AS, as, false)
 ])
@@ -828,10 +849,10 @@ if AC_TRY_EVAL(ac_compile); then
   ac_nlist=conftest.nm
   if AC_TRY_EVAL(NM conftest.$ac_objext \| $ac_cv_sys_global_symbol_pipe \> $ac_nlist) && test -s "$ac_nlist"; then
     # See whether the symbols have a leading underscore.
-    if egrep '^_nm_test_func' "$ac_nlist" >/dev/null; then
+    if egrep '^. _nm_test_func' "$ac_nlist" >/dev/null; then
       ac_cv_sys_symbol_underscore=yes
     else
-      if egrep '^nm_test_func ' "$ac_nlist" >/dev/null; then
+      if egrep '^. nm_test_func ' "$ac_nlist" >/dev/null; then
 	:
       else
 	echo "configure: cannot find nm_test_func in $ac_nlist" >&AC_FD_CC
@@ -851,6 +872,62 @@ USE_SYMBOL_UNDERSCORE=${ac_cv_sys_symbol_underscore=no}
 AC_SUBST(USE_SYMBOL_UNDERSCORE)dnl
 ])
 
+# AC_CHECK_LIBM - check for math library
+AC_DEFUN(AC_CHECK_LIBM,
+[AC_REQUIRE([AC_CANONICAL_HOST])dnl
+case "$host" in
+*-*-beos* | *-*-cygwin*)
+  # These system don't have libm
+  ;;
+*-ncr-sysv4.3*)
+  AC_CHECK_LIB(mw, _mwvalidcheckl)
+  AC_CHECK_LIB(m, cos)
+  ;;
+*)
+  AC_CHECK_LIB(m, cos)
+  ;;
+esac
+])
+
+# AC_LIBLTDL_CONVENIENCE[(dir)] - sets LIBLTDL to the link flags for
+# the libltdl convenience library, adds --enable-ltdl-convenience to
+# the configure arguments.  Note that LIBLTDL is not AC_SUBSTed, nor
+# is AC_CONFIG_SUBDIRS called.  If DIR is not provided, it is assumed
+# to be `${top_builddir}/libltdl'.  Make sure you start DIR with
+# '${top_builddir}/' (note the single quotes!) if your package is not
+# flat, and, if you're not using automake, define top_builddir as
+# appropriate in the Makefiles.
+AC_DEFUN(AC_LIBLTDL_CONVENIENCE, [
+  case "$enable_ltdl_convenience" in
+  no) AC_MSG_ERROR([this package needs a convenience libltdl]) ;;
+  "") enable_ltdl_convenience=yes
+      ac_configure_args="$ac_configure_args --enable-ltdl-convenience" ;;
+  esac
+  LIBLTDL=ifelse($#,1,$1,['${top_builddir}/libltdl'])/libltdlc.la
+])
+
+# AC_LIBLTDL_INSTALLABLE[(dir)] - sets LIBLTDL to the link flags for
+# the libltdl installable library, and adds --enable-ltdl-install to
+# the configure arguments.  Note that LIBLTDL is not AC_SUBSTed, nor
+# is AC_CONFIG_SUBDIRS called.  If DIR is not provided, it is assumed
+# to be `${top_builddir}/libltdl'.  Make sure you start DIR with
+# '${top_builddir}/' (note the single quotes!) if your package is not
+# flat, and, if you're not using automake, define top_builddir as
+# appropriate in the Makefiles.
+# In the future, this macro may have to be called after AC_PROG_LIBTOOL.
+AC_DEFUN(AC_LIBLTDL_INSTALLABLE, [
+  AC_CHECK_LIB(ltdl, main, LIBLTDL="-lltdl", [
+    case "$enable_ltdl_install" in
+    no) AC_MSG_WARN([libltdl not installed, but installation disabled]) ;;
+    "") enable_ltdl_install=yes
+        ac_configure_args="$ac_configure_args --enable-ltdl-install" ;;
+    esac
+  ])
+  if test x"$enable_ltdl_install" != x"no"; then
+    LIBLTDL=ifelse($#,1,$1,['${top_builddir}/libltdl'])/libltdl.la
+  fi
+])
+
 dnl old names
 AC_DEFUN(AM_PROG_LIBTOOL, [indir([AC_PROG_LIBTOOL])])dnl
 AC_DEFUN(AM_ENABLE_SHARED, [indir([AC_ENABLE_SHARED], $@)])dnl
@@ -861,7 +938,7 @@ AC_DEFUN(AM_PROG_LD, [indir([AC_PROG_LD])])dnl
 AC_DEFUN(AM_PROG_NM, [indir([AC_PROG_NM])])dnl
 AC_DEFUN(AM_SYS_NM_PARSE, [indir([AC_SYS_NM_PARSE])])dnl
 AC_DEFUN(AM_SYS_SYMBOL_UNDERSCORE, [indir([AC_SYS_SYMBOL_UNDERSCORE])])dnl
-AC_DEFUN(AM_SYS_LIBTOOL_CYGWIN32, [indir([AC_SYS_LIBTOOL_CYGWIN32])])dnl
+AC_DEFUN(AM_SYS_LIBTOOL_CYGWIN, [indir([AC_SYS_LIBTOOL_CYGWIN])])dnl
 
 dnl -------------------------------------------------------------------------
 dnl       $Id$
@@ -895,8 +972,27 @@ dnl Begin ACE_CHECK_SUBSETS
 dnl Assume all subsets will be built, including the full ACE library.
 dnl If any of the components is explicitly enabled or disabled by the user
 dnl then do NOT build the full ACE library.
+AC_ARG_ENABLE(lib-all,
+              [  --enable-lib-all       build all ACE components         [default=yes]],
+              [
+               case "${enableval}" in
+                yes)
+                  ace_user_enable_lib_all=yes
+                  ;;
+                no)
+                  ace_user_enable_lib_all=no
+                  ;;
+                *)
+                  AC_MSG_ERROR(bad value ${enableval} for --enable-lib-all)
+                  ;;
+               esac
+              ],
+              [
+               ace_user_enable_lib_all=yes
+              ])
+
 AC_ARG_ENABLE(lib-full,
-              [  --enable-lib-full       build ALL ACE components        [default=yes]],
+              [  --enable-lib-full      build the full ACE library       [default=yes]],
               [
                case "${enableval}" in
                 yes)
@@ -1164,40 +1260,35 @@ AC_ARG_ENABLE(lib-other,
 
 dnl If no ACE subsets were explicitly enabled or disabled then build
 dnl all of them.
-if test $ace_user_enable_lib_full = yes; then
-  ace_user_enable_lib_os=yes
-  ace_user_enable_lib_utils=yes
-  ace_user_enable_lib_logging=yes
-  ace_user_enable_lib_threads=yes
-  ace_user_enable_lib_demux=yes
-  ace_user_enable_lib_connection=yes
-  ace_user_enable_lib_sockets=yes
-  ace_user_enable_lib_ipc=yes
-  ace_user_enable_lib_svcconf=yes
-  ace_user_enable_lib_streams=yes
-  ace_user_enable_lib_memory=yes
-  ace_user_enable_lib_token=yes
-  ace_user_enable_lib_other=yes
-else
+if test $ace_user_enable_lib_all = yes; then
 
-  dnl If we get here then no ACE components will be built!
-  if test $ace_user_enable_lib_os = no &&
-     test $ace_user_enable_lib_utils = no &&
-     test $ace_user_enable_lib_logging = no &&
-     test $ace_user_enable_lib_threads = no &&
-     test $ace_user_enable_lib_demux = no &&
-     test $ace_user_enable_lib_connection = no &&
-     test $ace_user_enable_lib_sockets = no &&
-     test $ace_user_enable_lib_ipc = no &&
-     test $ace_user_enable_lib_svcconf = no &&
-     test $ace_user_enable_lib_streams = no &&
-     test $ace_user_enable_lib_memory = no &&
-     test $ace_user_enable_lib_token = no &&
-     test $ace_user_enable_lib_other = no; then
-    AC_MSG_ERROR(no ACE components will be built.  Specify which components to build)
-  fi
+  ACE_CREATE_ALL_COMPONENTS
 
-fi  dnl test $ace_user_enable_lib_full=yes
+elif test $ace_user_enable_lib_all = no; then
+
+  ACE_DISABLE_ALL_COMPONENTS
+
+fi
+
+if test $ace_user_enable_lib_full = no &&
+   test $ace_user_enable_lib_os = no &&
+   test $ace_user_enable_lib_utils = no &&
+   test $ace_user_enable_lib_logging = no &&
+   test $ace_user_enable_lib_threads = no &&
+   test $ace_user_enable_lib_demux = no &&
+   test $ace_user_enable_lib_connection = no &&
+   test $ace_user_enable_lib_sockets = no &&
+   test $ace_user_enable_lib_ipc = no &&
+   test $ace_user_enable_lib_svcconf = no &&
+   test $ace_user_enable_lib_streams = no &&
+   test $ace_user_enable_lib_memory = no &&
+   test $ace_user_enable_lib_token = no &&
+   test $ace_user_enable_lib_other = no; then
+
+  dnl If we get here then no ACE libraries will be built!
+  AC_MSG_ERROR(no ACE components will be built.  Specify which components to build)
+
+fi  dnl No components will be built!
 
 dnl Set which ACE subsets to build
 AM_CONDITIONAL(BUILD_OS_FILES,
@@ -1239,7 +1330,7 @@ AM_CONDITIONAL(BUILD_TOKEN_FILES,
 AM_CONDITIONAL(BUILD_OTHER_FILES,
                test X$ace_user_enable_lib_other = Xyes)
 
-AM_CONDITIONAL(BUILD_ALL_COMPONENTS,
+AM_CONDITIONAL(BUILD_FULL_LIBRARY,
                test X$ace_user_enable_lib_full = Xyes)
 
 dnl End ACE_CHECK_SUBSETS
@@ -1258,7 +1349,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_UTILS,
 [
  ace_user_enable_lib_utils=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
 ])
 
@@ -1268,7 +1359,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_LOGGING,
 [
  ace_user_enable_lib_logging=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
 ])
 
@@ -1278,7 +1369,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_THREADS,
 [
  ace_user_enable_lib_threads=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
 ])
 
@@ -1288,7 +1379,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_DEMUX,
 [
  ace_user_enable_lib_demux=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
  ACE_CREATE_LIBACE_THREADS
 ])
@@ -1299,7 +1390,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_CONNECTION,
 [
  ace_user_enable_lib_connection=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
  ACE_CREATE_LIBACE_THREADS
  ACE_CREATE_LIBACE_DEMUX
@@ -1311,7 +1402,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_SOCKETS,
 [
  ace_user_enable_lib_sockets=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
 ])
 
@@ -1321,7 +1412,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_IPC,
 [
  ace_user_enable_lib_ipc=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
  ACE_CREATE_LIBACE_SOCKETS
 ])
@@ -1332,7 +1423,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_SVCCONF,
 [
  ace_user_enable_lib_svcconf=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
  ACE_CREATE_LIBACE_THREADS
  ACE_CREATE_LIBACE_DEMUX
@@ -1345,7 +1436,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_STREAMS,
 [
  ace_user_enable_lib_streams=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
  ACE_CREATE_LIBACE_THREADS
  ACE_CREATE_LIBACE_DEMUX
@@ -1357,7 +1448,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_MEMORY,
 [
  ace_user_enable_lib_memory=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
 ])
 
@@ -1367,7 +1458,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_TOKEN,
 [
  ace_user_enable_lib_token=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
  ACE_CREATE_LIBACE_UTILS
  ACE_CREATE_LIBACE_LOGGING
@@ -1388,7 +1479,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_OTHER,
 [
  ace_user_enable_lib_other=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
  ACE_CREATE_LIBACE_UTILS
  ACE_CREATE_LIBACE_LOGGING
@@ -1401,6 +1492,44 @@ AC_DEFUN(ACE_CREATE_LIBACE_OTHER,
  ACE_CREATE_LIBACE_STREAMS
  ACE_CREATE_LIBACE_MEMORY
  dnl ACE_CREATE_LIBACE_TOKEN
+])
+
+dnl Build all ACE component libraries
+dnl Usage: ACE_CREATE_ALL_COMPONENTS
+AC_DEFUN(ACE_CREATE_ALL_COMPONENTS,
+[
+ ace_user_enable_lib_os=yes
+ ace_user_enable_lib_utils=yes
+ ace_user_enable_lib_logging=yes
+ ace_user_enable_lib_threads=yes
+ ace_user_enable_lib_demux=yes
+ ace_user_enable_lib_connection=yes
+ ace_user_enable_lib_sockets=yes
+ ace_user_enable_lib_ipc=yes
+ ace_user_enable_lib_svcconf=yes
+ ace_user_enable_lib_streams=yes
+ ace_user_enable_lib_memory=yes
+ ace_user_enable_lib_token=yes
+ ace_user_enable_lib_other=yes
+])
+
+dnl Disable all ACE component libraries
+dnl Usage: ACE_CREATE_ALL_COMPONENTS
+AC_DEFUN(ACE_DISABLE_ALL_COMPONENTS,
+[
+ ace_user_enable_lib_os=no
+ ace_user_enable_lib_utils=no
+ ace_user_enable_lib_logging=no
+ ace_user_enable_lib_threads=no
+ ace_user_enable_lib_demux=no
+ ace_user_enable_lib_connection=no
+ ace_user_enable_lib_sockets=no
+ ace_user_enable_lib_ipc=no
+ ace_user_enable_lib_svcconf=no
+ ace_user_enable_lib_streams=no
+ ace_user_enable_lib_memory=no
+ ace_user_enable_lib_token=no
+ ace_user_enable_lib_other=no
 ])
 
 dnl -------------------------------------------------------------------------

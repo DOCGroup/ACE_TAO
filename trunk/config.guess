@@ -23,6 +23,7 @@
 
 # Written by Per Bothner <bothner@cygnus.com>.
 # The master version of this file is at the FSF in /home/gd/gnu/lib.
+# Please send patches to the Autoconf mailing list <autoconf@gnu.org>.
 #
 # This script attempts to guess a canonical system name similar to
 # config.sub.  If it succeeds, it prints the system name on stdout, and
@@ -151,7 +152,7 @@ EOF
 		echo pyramid-pyramid-bsd
 	fi
 	exit 0 ;;
-    NILE:*:*:dcosx)
+    NILE*:*:*:dcosx)
 	echo pyramid-pyramid-svr4
 	exit 0 ;;
     sun4H:SunOS:5.*:*)
@@ -240,7 +241,11 @@ EOF
 	exit 0 ;;
     mips:*:*:UMIPS | mips:*:*:RISCos)
 	sed 's/^	//' << EOF >$dummy.c
-	int main (argc, argv) int argc; char **argv; {
+#ifdef __cplusplus
+	int main (int argc, char *argv[]) {
+#else
+	int main (argc, argv) int argc; char *argv[]; {
+#endif
 	#if defined (host_mips) && defined (MIPSEB)
 	#if defined (SYSTYPE_SYSV)
 	  printf ("mips-mips-riscos%ssysv\n", argv[1]); exit (0);
@@ -369,25 +374,25 @@ EOF
 	case "${UNAME_MACHINE}" in
 	    9000/31? )            HP_ARCH=m68000 ;;
 	    9000/[34]?? )         HP_ARCH=m68k ;;
-	    9000/6?? | 9000/7?? | 9000/80[24] | 9000/8?[13679] | 9000/892 )
+	    9000/6?? | 9000/7?? | 9000/80[024] | 9000/8?[136790] | 9000/892 )
               sed 's/^              //' << EOF >$dummy.c
               #include <stdlib.h>
               #include <unistd.h>
-              
+
               int main ()
               {
               #if defined(_SC_KERNEL_BITS)
                   long bits = sysconf(_SC_KERNEL_BITS);
-              #endif 
+              #endif
                   long cpu  = sysconf (_SC_CPU_VERSION);
-              
-                  switch (cpu) 
+
+                  switch (cpu)
               	{
               	case CPU_PA_RISC1_0: puts ("hppa1.0"); break;
               	case CPU_PA_RISC1_1: puts ("hppa1.1"); break;
-              	case CPU_PA_RISC2_0: 
+              	case CPU_PA_RISC2_0:
               #if defined(_SC_KERNEL_BITS)
-              	    switch (bits) 
+              	    switch (bits)
               		{
               		case 64: puts ("hppa2.0w"); break;
               		case 32: puts ("hppa2.0n"); break;
@@ -395,7 +400,7 @@ EOF
               		} break;
               #else  /* !defined(_SC_KERNEL_BITS) */
               	    puts ("hppa2.0"); break;
-              #endif 
+              #endif
               	default: puts ("hppa1.0"); break;
               	}
                   exit (0);
@@ -442,6 +447,12 @@ EOF
 	exit 0 ;;
     9000/8??:4.3bsd:*:*)
 	echo hppa1.0-hp-bsd
+	exit 0 ;;
+    *9??*:MPE*:*:*)
+	echo hppa1.0-hp-mpeix
+	exit 0 ;;
+    *9??*:MPE*:*:*)
+	echo hppa1.0-hp-mpeix
 	exit 0 ;;
     hp7??:OSF1:*:* | hp8?[79]:OSF1:*:* )
 	echo hppa1.1-hp-osf
@@ -521,6 +532,12 @@ EOF
 	echo ${UNAME_MACHINE}-unknown-bsdi${UNAME_RELEASE}
 	exit 0 ;;
     *:FreeBSD:*:*)
+	if test -x /usr/bin/objformat; then
+	    if test "elf" = "`/usr/bin/objformat`"; then
+		echo ${UNAME_MACHINE}-unknown-freebsdelf`echo ${UNAME_RELEASE}|sed -e 's/[-_].*//'`
+		exit 0
+	    fi
+	fi
 	echo ${UNAME_MACHINE}-unknown-freebsd`echo ${UNAME_RELEASE}|sed -e 's/[-(].*//'`
 	exit 0 ;;
     *:NetBSD:*:*)
@@ -548,6 +565,7 @@ EOF
 	# uname on the ARM produces all sorts of strangeness, and we need to
 	# filter it out.
 	case "$UNAME_MACHINE" in
+	  armv*)		      UNAME_MACHINE=$UNAME_MACHINE ;;
 	  arm* | sa110*)	      UNAME_MACHINE="arm" ;;
 	esac
 
@@ -607,22 +625,23 @@ EOF
 			16)
 				UNAME_MACHINE="alphaev6"
 				;;
-			esac	
+			esac
 
 			objdump --private-headers $dummy | \
 			  grep ld.so.1 > /dev/null
 			if test "$?" = 0 ; then
 				LIBC="libc1"
 			fi
-		fi	
+		fi
 		rm -f $dummy.s $dummy
 		echo ${UNAME_MACHINE}-unknown-linux-gnu${LIBC} ; exit 0
 	elif test "${UNAME_MACHINE}" = "mips" ; then
 	  cat >$dummy.c <<EOF
-main(argc, argv)
-     int argc;
-     char *argv[];
-{
+#ifdef __cplusplus
+	int main (int argc, char *argv[]) {
+#else
+	int main (argc, argv) int argc; char *argv[]; {
+#endif
 #ifdef __MIPSEB__
   printf ("%s-unknown-linux-gnu\n", argv[1]);
 #endif
@@ -654,10 +673,11 @@ EOF
 	  # Determine whether the default compiler is a.out or elf
 	  cat >$dummy.c <<EOF
 #include <features.h>
-main(argc, argv)
-     int argc;
-     char *argv[];
-{
+#ifdef __cplusplus
+	int main (int argc, char *argv[]) {
+#else
+	int main (argc, argv) int argc; char *argv[]; {
+#endif
 #ifdef __ELF__
 # ifdef __GLIBC__
 #  if __GLIBC__ >= 2
@@ -759,7 +779,7 @@ EOF
     mc68030:UNIX_System_V:4.*:*)
 	echo m68k-atari-sysv4
 	exit 0 ;;
-    i?86:LynxOS:2.*:*)
+    i?86:LynxOS:2.*:* | i?86:LynxOS:3.[01]*:*)
 	echo i386-unknown-lynxos${UNAME_RELEASE}
 	exit 0 ;;
     TSUNAMI:LynxOS:2.*:*)
@@ -770,6 +790,9 @@ EOF
 	exit 0 ;;
     SM[BE]S:UNIX_SV:*:*)
 	echo mips-dde-sysv${UNAME_RELEASE}
+	exit 0 ;;
+    RM*:ReliantUNIX-*:*:*)
+	echo mips-sni-sysv4
 	exit 0 ;;
     RM*:SINIX-*:*:*)
 	echo mips-sni-sysv4
@@ -801,7 +824,7 @@ EOF
     news*:NEWS-OS:*:6*)
 	echo mips-sony-newsos6
 	exit 0 ;;
-    R3000:*System_V*:*:* | R4000:UNIX_SYSV:*:* | R4000:UNIX_SV:*:*)
+    R[34]000:*System_V*:*:* | R4000:UNIX_SYSV:*:* | R4000:UNIX_SV:*:*)
 	if [ -d /usr/nec ]; then
 	        echo mips-nec-sysv${UNAME_RELEASE}
 	else

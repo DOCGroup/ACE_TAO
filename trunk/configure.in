@@ -1050,8 +1050,43 @@ AC_CHECK_HEADER(sys/param.h, dnl
 
 AC_CHECK_HEADER(sys/priocntl.h, ,)
 
+dnl Check for <ucontext.h> _before_ <sys/procfs.h>
+AC_CHECK_HEADER(ucontext.h, dnl
+  ,
+  AC_DEFINE(ACE_LACKS_UCONTEXT_H))
+
 AC_CHECK_HEADER(sys/procfs.h, dnl
-  AC_DEFINE(ACE_HAS_PROC_FS))
+  [
+   dnl Check if <sys/procfs.h> conflicts with <ucontext.h>
+   dnl Some (early?) versions of glibc2.1 define the same variables
+   dnl in <sys/procfs.h> and <ucontext.h>.
+   ACE_CACHE_CHECK(if sys/procfs.h conflicts with ucontext.h,
+     ace_has_procfs_conflict,
+     [
+      AC_TRY_COMPILE(
+        [
+#ifndef ACE_LACKS_UCONTEXT_H
+# include <ucontext.h>
+#endif
+
+#include <sys/procfs.h>
+        ],
+        [
+         int a = 0;
+        ],
+        [
+         ace_has_procfs_conflict=no
+        ],
+        [
+         ace_has_procfs_conflict=yes
+        ])
+     ],
+     [
+     ],
+     [
+      AC_DEFINE(ACE_HAS_PROC_FS)
+     ])
+  ],)
 
 AC_CHECK_HEADER(sys/select.h, dnl
   AC_DEFINE(ACE_HAS_SELECT_H))
@@ -1328,10 +1363,6 @@ AC_CHECK_HEADER(unistd.h, dnl
   ,
   AC_DEFINE(ACE_LACKS_UNISTD_H))
 
-AC_CHECK_HEADER(ucontext.h, dnl
-  ,
-  AC_DEFINE(ACE_LACKS_UCONTEXT_H))
-
 AC_CHECK_HEADER(utime.h, dnl
   AC_DEFINE(ACE_HAS_UTIME),)
 
@@ -1438,7 +1469,7 @@ AC_CHECK_HEADER(iostream.h, dnl
 
 dnl Check if platform needs to #include <sched.h> to get thread 
 dnl scheduling defs.
-ACE_CACHE_CHECK(if platform needs sched.h for thread scheduling definitions,
+ACE_CACHE_CHECK(sched.h for thread scheduling definitions,
    ace_cv_needs_sched_h,[
    AC_EGREP_HEADER(sched_yield, sched.h,
      [
@@ -1451,7 +1482,7 @@ ACE_CACHE_CHECK(if platform needs sched.h for thread scheduling definitions,
 
 dnl Check if platform needs to #include <regexpr.h> for
 dnl regular expression support
-ACE_CACHE_CHECK(if platform needs regexpr.h for regular expression support,
+ACE_CACHE_CHECK(regexpr.h for regular expression support,
    ace_cv_needs_regexpr_h, [
    AC_EGREP_HEADER(compile, regexpr.h,
      [
@@ -2392,6 +2423,40 @@ ACE_CACHE_CHECK(for new style C++ include file support,
    AC_DEFINE(ACE_HAS_STRING_CLASS)
   ],)
 
+dnl Check whether platform supports the standard C++ library
+dnl TODO: For now, check whether headers <new>, <iomanip>
+dnl       and <memory> exist; is there a better way?
+if test "$ac_cv_header_new" = yes &&
+   test "$ac_cv_header_iomanip" = yes &&
+   test "$ac_cv_header_memory" = yes; then
+
+  dnl Check for auto_ptr class
+  ACE_CACHE_CHECK(for C++ auto_ptr class,
+    ace_cv_lib_auto_ptr_class,
+    [
+     AC_TRY_COMPILE(
+       [
+#include <memory>
+       ],
+       [
+#ifdef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
+        std::auto_ptr<int> Foo;
+#else
+        auto_ptr<int> Foo;
+#endif
+       ],
+       [
+        ace_cv_lib_auto_ptr_class=yes
+       ],
+       [
+        ace_cv_lib_auto_ptr_class=no
+       ])
+    ],
+    [
+     AC_DEFINE(ACE_HAS_STANDARD_CPP_LIBRARY)
+    ],)
+fi
+
 dnl Check for ANSI C++ cast support
 ACE_CACHE_CHECK(for ANSI C++ cast support,
   ace_cv_lib_posix_standard_casts,[
@@ -2474,7 +2539,7 @@ ACE_CACHE_CHECK(if const char * can be rvalue in conditional operator,
   ], , AC_DEFINE(ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS))
 
 dnl Check if platform supports explicit template instantiation
-ACE_CACHE_CHECK(if platform supports explicit template instantiation,
+ACE_CACHE_CHECK(for explicit template instantiation,
   ace_cv_feature_explicit_template_instantiation,[
     AC_TRY_COMPILE([
                     template <class T>
@@ -2501,7 +2566,7 @@ ACE_CACHE_CHECK(if platform supports explicit template instantiation,
    AC_DEFINE(ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   ],
   [
-   ACE_CACHE_CHECK(if platform supports pragma template instantiation,
+   ACE_CACHE_CHECK(for pragma template instantiation,
      ace_cv_feature_pragma_template_instantiation,[
        AC_TRY_COMPILE([
                        template <class T>
@@ -2528,7 +2593,7 @@ ACE_CACHE_CHECK(if platform supports explicit template instantiation,
 
 dnl Check if templates require source on platform
 dnl FIXME:  This test may be broken.
-ACE_CACHE_CHECK(if templates require source on platform,
+ACE_CACHE_CHECK(if templates require source,
   ace_cv_feature_templates_require_source,[
     AC_TRY_LINK([
 /*
@@ -2552,7 +2617,7 @@ AM_CONDITIONAL(TEMPLATES_REQUIRE_SOURCE,
                test X$ace_cv_feature_templates_require_source = Xyes)
 
 dnl Check if platform supports template specialization
-ACE_CACHE_CHECK(if platform supports template specialization,
+ACE_CACHE_CHECK(for template specialization,
   ace_cv_feature_posix_template_specialization,[
     AC_TRY_COMPILE([
                     template <class T>
@@ -2583,7 +2648,7 @@ ACE_CACHE_CHECK(if platform supports template specialization,
   ], AC_DEFINE(ACE_HAS_TEMPLATE_SPECIALIZATION),)
 
 dnl Check if platform supports typename keyword
-ACE_CACHE_CHECK(if platform supports typename keyword,
+ACE_CACHE_CHECK(for C++ typename keyword,
   ace_cv_feature_posix_typename_keyword,[
     AC_TRY_COMPILE([
                      class Bar
@@ -2625,7 +2690,7 @@ ACE_CACHE_CHECK(if platform supports typename keyword,
   ], AC_DEFINE(ACE_HAS_TYPENAME_KEYWORD),)
 
 dnl Check if platform supports template typedefs
-ACE_CACHE_CHECK(if platform supports template typedefs,
+ACE_CACHE_CHECK(for template typedefs,
   ace_cv_feature_posix_template_typedefs,[
     AC_TRY_COMPILE([
 #if defined (ACE_HAS_TYPENAME_KEYWORD)
@@ -2674,7 +2739,7 @@ ACE_CACHE_CHECK(if platform supports template typedefs,
   ], AC_DEFINE(ACE_HAS_TEMPLATE_TYPEDEFS),)
 
 dnl Check if platform supports static data member templates
-ACE_CACHE_CHECK(if platform supports static data member templates,
+ACE_CACHE_CHECK(for static data member templates,
   ace_cv_feature_posix_static_data_member_templates,[
     AC_TRY_COMPILE([
                      template <class T>
@@ -2698,7 +2763,7 @@ ACE_CACHE_CHECK(if platform supports static data member templates,
 
 dnl if platform supports C++ exceptions
 if test "$ace_user_enable_exceptions" = yes; then
-  ACE_CACHE_CHECK(if platform supports C++ exceptions,
+  ACE_CACHE_CHECK(for C++ exceptions,
     ace_cv_feature_posix_exceptions,[
       AC_TRY_COMPILE(,
                      [
@@ -2738,15 +2803,6 @@ dnl   [
    dnl Don't define anything until we have a test for this.
    dnl AC_DEFINE(ACE_HAS_NONSTATIC_OBJECT_MANAGER)
 dnl   ],)
-
-dnl Check whether platform supports the standard C++ library
-dnl TODO: For now, check whether headers <new>, <iomanip>
-dnl       and <memory> exist; is there a better way?
-if test "$ac_cv_header_new" = yes &&
-   test "$ac_cv_header_iomanip" = yes &&
-   test "$ac_cv_header_memory" = yes; then
-  AC_DEFINE(ACE_HAS_STANDARD_CPP_LIBRARY)
-fi
 
 
 dnl
@@ -3080,7 +3136,7 @@ if test "$ac_cv_header_sys_priocntl_h" = yes; then
 
 dnl Some platforms define priocntl as a macro!
   if test "$ac_cv_func_priocntl" = no; then
-    ACE_CACHE_CHECK(if platform defines priocntl as a macro,
+    ACE_CACHE_CHECK(if priocntl macro,
       ace_cv_lib_has_priocntl_macro,
       [
        AC_EGREP_CPP(ACE_PRIOCNTL_MACRO,
@@ -3344,7 +3400,7 @@ dnl Check if platform has thread_self() rather than pthread_self()
 
 dnl Check if pthread.h declares an enum with PTHREAD_PROCESS_PRIVATE and
 dnl PTHREAD_PROCESS_SHARED values
-  ACE_CACHE_CHECK(for PTHREAD_PROCESS_* values in <pthread.h>,
+  ACE_CACHE_CHECK(for PTHREAD_PROCESS_* values in pthread.h,
                   ace_cv_lib_pthread_process_enum,
                   [
                    AC_TRY_COMPILE(
@@ -3366,7 +3422,7 @@ int foo = PTHREAD_PROCESS_SHARED;
                   ],)
                   
 dnl FIXME: These tests look sloppy to me.  -Ossama
-  AC_CACHE_CHECK(if platform defines a minimum thread priority,
+  AC_CACHE_CHECK(for minimum thread priority,
     ace_cv_lib_pthread_pthread_min_priority,[
       ace_cv_lib_pthread_pthread_min_priority=0
       AC_EGREP_HEADER(PTHREAD_MIN_PRIORITY, pthread.h,
@@ -3377,7 +3433,7 @@ dnl FIXME: These tests look sloppy to me.  -Ossama
   AC_DEFINE_UNQUOTED(ACE_THREAD_MIN_PRIORITY,
     $ace_cv_lib_pthread_pthread_min_priority)
 
-  AC_CACHE_CHECK(if platform defines a maximum thread priority,
+  AC_CACHE_CHECK(for maximum thread priority,
     ace_cv_lib_pthread_pthread_max_priority,[
       ace_cv_lib_pthread_pthread_max_priority=99
       case "$target" in
@@ -3745,8 +3801,8 @@ dnl Now check if select will actually take int* arguments
 ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
 
-dnl Check if setrlimit() takes an enum as 1st parameter (a)
-AC_CACHE_CHECK(if setrlimit() takes an enum as 1st parameter (a),
+dnl Check if setrlimit() takes an enum as 1st argument (a)
+AC_CACHE_CHECK(if setrlimit() takes an enum as 1st argument (a),
   ace_cv_lib_posix_setrlimit_enum_1_a,[
     ace_cv_lib_posix_setrlimit_enum_1_a=no
     AC_TRY_COMPILE([#include <sys/resource.h>],
@@ -3756,8 +3812,8 @@ AC_CACHE_CHECK(if setrlimit() takes an enum as 1st parameter (a),
       ace_cv_lib_posix_setrlimit_enum_1_a=yes)
   ])
 
-dnl Check if setrlimit() takes an enum as 1st parameter (b)
-AC_CACHE_CHECK(if setrlimit() takes an enum as 1st parameter (b),
+dnl Check if setrlimit() takes an enum as 1st argument (b)
+AC_CACHE_CHECK(if setrlimit() takes an enum as 1st argument (b),
   ace_cv_lib_posix_setrlimit_enum_1_b,[
     ace_cv_lib_posix_setrlimit_enum_1_b=no
     AC_TRY_COMPILE([#include <sys/resource.h>],
@@ -3781,8 +3837,8 @@ dnl                                      -Ossama
 
 ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
 [
-dnl Check if setrlimit() takes a const pointer as 2nd parameter (a)
-AC_CACHE_CHECK(if setrlimit() takes a const pointer as 2nd parameter (a),
+dnl Check if setrlimit() takes a const pointer as 2nd argument (a)
+AC_CACHE_CHECK(if setrlimit() takes a const pointer as 2nd argument (a),
   ace_cv_lib_posix_setrlimit_const_2_a,[
     AC_TRY_COMPILE(
       [
@@ -3801,8 +3857,8 @@ AC_CACHE_CHECK(if setrlimit() takes a const pointer as 2nd parameter (a),
       ])
   ])
 
-dnl Check if setrlimit() takes a const pointer as 2nd parameter (b)
-AC_CACHE_CHECK(if setrlimit() takes a const pointer as 2nd parameter (b),
+dnl Check if setrlimit() takes a const pointer as 2nd argument (b)
+AC_CACHE_CHECK(if setrlimit() takes a const pointer as 2nd argument (b),
   ace_cv_lib_posix_setrlimit_const_2_b,[
     ace_cv_lib_posix_setrlimit_const_2_b=no
     AC_TRY_COMPILE([#include <sys/resource.h>],
@@ -3818,9 +3874,9 @@ if test "$ace_cv_lib_posix_setrlimit_const_2_a" != yes &&
 fi
 ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
-dnl Check if getrusage() takes an enum as 1st parameter
+dnl Check if getrusage() takes an enum as 1st argument
 if test "$ac_cv_func_getrusage" = yes; then
-  ACE_CACHE_CHECK(if getrusage() takes an enum as 1st parameter,
+  ACE_CACHE_CHECK(if getrusage() takes an enum as 1st argument,
     ace_cv_lib_posix_getrusage_enum_1,[
       AC_TRY_COMPILE(
         [
@@ -3847,8 +3903,8 @@ dnl FIXED by adding "-Werror" to compiler flags when using GNU C++
 dnl                                 -Ossama
 ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
 [
-dnl Check if select takes a const fifth parameter
-ACE_CACHE_CHECK(if select takes a const fifth parameter,
+dnl Check if select takes a const fifth argument
+ACE_CACHE_CHECK(if select takes a const fifth argument,
   ace_cv_lib_posix_select_const_5,[
     AC_TRY_COMPILE(
       [
@@ -3885,8 +3941,8 @@ if test "$ace_cv_struct_msghdr" = yes &&
    test "$ac_cv_func_sendmsg" = yes; then
  ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
  [
-dnl Check if sendmsg takes a const 2nd parameter
- ACE_CACHE_CHECK(if sendmsg omits the const from the second parameter,
+dnl Check if sendmsg takes a const 2nd argument
+ ACE_CACHE_CHECK(if sendmsg omits the const from the second argument,
   ace_cv_lib_broken_sendmsg,[
     AC_TRY_COMPILE(
       [
@@ -3919,8 +3975,8 @@ if test "$ac_cv_header_sys_uio_h" = yes &&
    test "$ac_cv_func_writev" = yes; then
  ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
  [
-dnl Check if writev omits the const from the iovec parameter
- ACE_CACHE_CHECK(if writev omits the const from the iovec parameter,
+dnl Check if writev omits the const from the iovec argument
+ ACE_CACHE_CHECK(if writev omits the const from the iovec argument,
   ace_cv_lib_broken_writev,[
     AC_TRY_COMPILE(
       [
@@ -4029,7 +4085,7 @@ ACE_CACHE_CHECK(for (struct sockaddr *) msg_name field,
 
 ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
 [
-ACE_CACHE_CHECK(if setsockopt() takes a char* fourth parameter,
+ACE_CACHE_CHECK(if setsockopt() takes a char* fourth argument,
   ace_cv_lib_posix_setsockopt_charp_4,[
     AC_TRY_COMPILE(
       [
@@ -4061,7 +4117,7 @@ ACE_CACHE_CHECK(if setsockopt() takes a char* fourth parameter,
 
 ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
 [
-ACE_CACHE_CHECK(if setsockopt() takes a void* fourth parameter,
+ACE_CACHE_CHECK(if setsockopt() takes a void* fourth argument,
   ace_cv_lib_posix_setsockopt_voidp_4,[
     AC_TRY_COMPILE(
       [
@@ -4190,7 +4246,7 @@ ACE_CACHE_CHECK(if msync accepts a third "sync" argument,
 fi  dnl test "$ac_cv_func_msync" = yes
 
 dnl Check if platform has iostream method ipfx()
-ACE_CACHE_CHECK(if platform has iostream method ipfx(),
+ACE_CACHE_CHECK(for iostream method ipfx(),
   ace_cv_feature_has_iostream_ipfx,[
     AC_TRY_COMPILE(
       [
@@ -4208,7 +4264,7 @@ ACE_CACHE_CHECK(if platform has iostream method ipfx(),
   ], , AC_DEFINE(ACE_LACKS_IOSTREAM_FX))
 
 dnl Check if platform has line-buffered streambufs
-ACE_CACHE_CHECK(if platform has line-buffered streambufs,
+ACE_CACHE_CHECK(for line-buffered streambufs,
   ace_cv_feature_has_linebuffered_streambuf,[
     AC_TRY_COMPILE(
       [
@@ -4226,7 +4282,7 @@ ACE_CACHE_CHECK(if platform has line-buffered streambufs,
   ], , AC_DEFINE(ACE_LACKS_LINEBUFFERED_STREAMBUF))
 
 dnl Check if platform has unbuffered streambufs
-ACE_CACHE_CHECK(if platform has unbuffered streambufs,
+ACE_CACHE_CHECK(for unbuffered streambufs,
   ace_cv_feature_has_unbuffered_streambuf,[
     AC_TRY_COMPILE(
       [
@@ -4243,8 +4299,8 @@ ACE_CACHE_CHECK(if platform has unbuffered streambufs,
       ])
   ], , AC_DEFINE(ACE_LACKS_UNBUFFERED_STREAMBUF))
 
-dnl Check if signal takes a void (*)(int) as second parameter
-AC_CACHE_CHECK(if signal takes a void (*)(int) as second parameter,
+dnl Check if signal takes a void (*)(int) as second argument
+AC_CACHE_CHECK(if signal takes a void (*)(int) as second argument,
   ace_cv_lib_signal_vi1_2,[
     AC_TRY_COMPILE(
       [
@@ -4266,8 +4322,8 @@ AC_CACHE_CHECK(if signal takes a void (*)(int) as second parameter,
       ])
   ])
 
-dnl Check if signal takes a void (*)(void) as second parameter
-AC_CACHE_CHECK(if signal takes a void (*)(void) as second parameter,
+dnl Check if signal takes a void (*)(void) as second argument
+AC_CACHE_CHECK(if signal takes a void (*)(void) as second argument,
   ace_cv_lib_signal_vv1_2,[
     AC_TRY_COMPILE(
       [
@@ -4287,8 +4343,8 @@ AC_CACHE_CHECK(if signal takes a void (*)(void) as second parameter,
       ])
   ])
 
-dnl Check if signal takes a void (*)(int, ...) as second parameter
-AC_CACHE_CHECK(if signal takes a void (*)(int, ...) as second parameter,
+dnl Check if signal takes a void (*)(int, ...) as second argument
+AC_CACHE_CHECK(if signal takes a void (*)(int, ...) as second argument,
   ace_cv_lib_signal_vi1a2_2,[
     AC_TRY_COMPILE(
       [
@@ -4308,8 +4364,8 @@ AC_CACHE_CHECK(if signal takes a void (*)(int, ...) as second parameter,
       ])
   ])
 
-dnl Check if signal takes a void (*)(...) as second parameter
-AC_CACHE_CHECK(if signal takes a void (*)(...) as second parameter,
+dnl Check if signal takes a void (*)(...) as second argument
+AC_CACHE_CHECK(if signal takes a void (*)(...) as second argument,
   ace_cv_lib_signal_va1_2,[
     AC_TRY_COMPILE(
       [
@@ -4513,8 +4569,8 @@ dnl FIXED by adding "-Werror" to compiler flags when using GNU C++
 dnl                                 -Ossama
 ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
 [
-dnl Check if msgsnd() takes a struct msgbuf* second parameter
-ACE_CACHE_CHECK(if msgsnd() takes a struct msgbuf* second parameter,
+dnl Check if msgsnd() takes a struct msgbuf* second argument
+ACE_CACHE_CHECK(if msgsnd() takes a struct msgbuf* second argument,
   ace_cv_lib_posix_msgsnd_msgbufp_2,[
     AC_TRY_COMPILE(
       [
@@ -4544,8 +4600,8 @@ ACE_CACHE_CHECK(if msgsnd() takes a struct msgbuf* second parameter,
    dnl "ACTIONS-IF-SUCCESSFUL" handled later in configure.in
   ],
   [
-   dnl Check if msgsnd() takes a const void* second parameter
-   ACE_CACHE_CHECK(if msgsnd() takes a const void* second parameter,
+   dnl Check if msgsnd() takes a const void* second argument
+   ACE_CACHE_CHECK(if msgsnd() takes a const void* second argument,
      ace_cv_lib_posix_msgsnd_cvoidp_2,[
        AC_TRY_COMPILE(
          [
@@ -4572,7 +4628,7 @@ ACE_CACHE_CHECK(if msgsnd() takes a struct msgbuf* second parameter,
          ])
      ],
      [
-      dnl Do nothing if msgsnd takes a const void* second parameter
+      dnl Do nothing if msgsnd takes a const void* second argument
      ],
      [
       dnl If we get this far we presumably have a non-const void* second param
@@ -4589,8 +4645,8 @@ dnl FIXED by adding "-Werror" to compiler flags when using GNU C++
 dnl                                 -Ossama
 ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
 [
-dnl Check if msgrcv() takes a void* second parameter
-AC_CACHE_CHECK(if msgrcv() takes a void* second parameter,
+dnl Check if msgrcv() takes a void* second argument
+AC_CACHE_CHECK(if msgrcv() takes a void* second argument,
   ace_cv_lib_posix_msgrcv_voidp_2,[
     AC_TRY_COMPILE(
       [
@@ -4627,8 +4683,8 @@ dnl FIXED by adding "-Werror" to compiler flags when using GNU C++
 dnl                                 -Ossama
 ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
 [
-dnl Check if shmat() takes a void* second parameter
-AC_CACHE_CHECK(if shmat() takes a void* second parameter,
+dnl Check if shmat() takes a void* second argument
+AC_CACHE_CHECK(if shmat() takes a void* second argument,
   ace_cv_lib_posix_shmat_voidp_2,[
     AC_TRY_COMPILE(
       [
@@ -4660,8 +4716,8 @@ dnl FIXED by adding "-Werror" to compiler flags when using GNU C++
 dnl                                 -Ossama
 ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
 [
-dnl Check if sigaction() takes a const* second parameter
-AC_CACHE_CHECK(if sigaction() takes a const* second parameter,
+dnl Check if sigaction() takes a const* second argument
+AC_CACHE_CHECK(if sigaction() takes a const* second argument,
   ace_cv_lib_posix_sigaction_constp_2,[
     AC_TRY_COMPILE(
       [
@@ -4823,9 +4879,9 @@ dnl We don't have a gettimeofday prototype
 fi dnl Check for gettimeofday() protoype
 
 
-dnl Check if ctime_r() takes two parameters
+dnl Check if ctime_r() takes two arguments
 if test "$ac_cv_func_ctime_r" = yes; then
-  ACE_CACHE_CHECK(if ctime_r() takes two parameters,
+  ACE_CACHE_CHECK(if ctime_r() takes two arguments,
     ace_cv_lib_posix_ctime_r_2_params,
     [
      AC_TRY_COMPILE(
@@ -5042,7 +5098,7 @@ if test "$cross_compiling" != yes; then
 fi
 
 dnl Check if platform defines ctime() as a macro
-ACE_CACHE_CHECK(if platform defines ctime() as a macro,
+ACE_CACHE_CHECK(for ctime() macro,
   ace_cv_feature_have_ctime_macro,
   [
    AC_EGREP_CPP(ACE_CTIME_MACRO,
@@ -5067,7 +5123,7 @@ ACE_CACHE_CHECK(if platform defines ctime() as a macro,
 
 dnl Check if platform defines ctime_r, asctime_r, rand_r or getpwnam_r
 dnl as macros.
-ACE_CACHE_CHECK(if platform defines some reentrant functions as macros,
+ACE_CACHE_CHECK(for reentrant function macros,
   ace_cv_feature_has_broken_r_routines,
   [
    AC_EGREP_CPP(ACE_R_MACROS,
@@ -5102,7 +5158,7 @@ ACE_CACHE_CHECK(if platform defines some reentrant functions as macros,
   ], AC_DEFINE(ACE_HAS_BROKEN_R_ROUTINES),)
 
 dnl Check if platform defines sig{empty,fill,add,del}set as macros
-ACE_CACHE_CHECK(if platform defines sig{empty fill add del}set as macros,
+ACE_CACHE_CHECK(for sig{empty fill add del}set macros,
   ace_cv_feature_have_sig_macros,
   [
    AC_EGREP_CPP(ACE_SIG_MACROS,
@@ -5189,7 +5245,7 @@ ACE_CACHE_CHECK(for POSIX O_NONBLOCK semantics,
   ], AC_DEFINE(ACE_HAS_POSIX_NONBLOCK),)
 
 dnl Check if platform defines MAP_FAILED as a long constant
-ACE_CACHE_CHECK(if platform defines MAP_FAILED as a long constant,
+ACE_CACHE_CHECK(for MAP_FAILED long constant,
   ace_cv_feature_long_map_failed,[
     dnl We need the square brackets around "ACEMAPFAILED.+[0-9]L" to
     dnl prevent the character class "[0-9]" from becoming "0-9" due to
@@ -5208,7 +5264,7 @@ ACE_CACHE_CHECK(if platform defines MAP_FAILED as a long constant,
   ], AC_DEFINE(ACE_HAS_LONG_MAP_FAILED),)
 
 dnl Check if platform supports SO_SNDBUF/SO_RCVBUF socket options
-ACE_CACHE_CHECK(if platform supports SO_SNDBUF/SO_RCVBUF socket options,
+ACE_CACHE_CHECK(for SO_SNDBUF/SO_RCVBUF socket options,
   ace_cv_feature_so_sndbuf_rcvbuf,[
     AC_EGREP_CPP(ACE_SO_BUF,
       [
@@ -5235,7 +5291,7 @@ dnl have SVR4 dynamic linking since ACE doesn't support it otherwise.
 if test "$ac_cv_header_dlfcn_h" = yes &&
    test "$ace_has_svr4_dynamic_linking" = yes; then
 dnl Check if platform calls init/fini automatically
- ACE_CACHE_CHECK(if platform calls init/fini automatically,
+ ACE_CACHE_CHECK(for automatic init/fini calls,
   ace_cv_feature_auto_init_fini,[
     ace_cv_feature_auto_init_fini=yes
     # TODO: We know how to check for this, but we need to:
@@ -5350,7 +5406,7 @@ dnl Some platforms define ip_mreq in <sys/netinet/in.h>.
       ])
   ], AC_DEFINE(ACE_HAS_IP_MULTICAST),)
 
-ACE_CACHE_CHECK(if platform runs on an Alpha,
+ACE_CACHE_CHECK(if running on an Alpha,
   ace_cv_feature_alpha,[
     case "$target" in
       alpha*)
@@ -5373,7 +5429,7 @@ ACE_CACHE_CHECK(if platform runs on an Alpha,
    esac
   ],)
 
-ACE_CACHE_CHECK(if platform runs on a Power PC,
+ACE_CACHE_CHECK(if running on a Power PC,
   ace_cv_feature_powerpc,[
     case "$target" in
       powerpc*)
@@ -5399,7 +5455,7 @@ ACE_CACHE_CHECK(if platform runs on a Power PC,
    esac
   ],)
 
-ACE_CACHE_CHECK(if platform runs on a Pentium(tm) processor,
+ACE_CACHE_CHECK(if running on a Pentium(tm) processor,
   ace_cv_feature_pentium,[    
     case "$target" in
       i386-* | i486-* |i586-* | i686-*)
@@ -5423,7 +5479,7 @@ ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
 [
 dnl getpgid() requires _GNU_SOURCE to be defined in some platforms.
 dnl First check to see if getgpid calls fail without _GNU_SOURCE defines
-ACE_CACHE_CHECK(if platform requires _GNU_SOURCE for getpgid definition,
+ACE_CACHE_CHECK(if _GNU_SOURCE is needed,
   ace_cv_feature_gnu_source,[
     AC_TRY_COMPILE(
        [
@@ -5461,7 +5517,7 @@ dnl Now check to make sure that these defines actually fix getpgid
 ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
 dnl Check if platform only supports SCHED_OTHER scheduling policy
-ACE_CACHE_CHECK(if platform only supports SCHED_OTHER scheduling policy,
+ACE_CACHE_CHECK(for scheduling policy besides SCHED_OTHER,
   ace_cv_feature_only_have_sched_other,[
     AC_EGREP_CPP(WE_ONLY_HAVE_SCHED_OTHER,
       [

@@ -30,8 +30,27 @@ dnl Begin ACE_CHECK_SUBSETS
 dnl Assume all subsets will be built, including the full ACE library.
 dnl If any of the components is explicitly enabled or disabled by the user
 dnl then do NOT build the full ACE library.
+AC_ARG_ENABLE(lib-all,
+              [  --enable-lib-all       build all ACE components         [default=yes]],
+              [
+               case "${enableval}" in
+                yes)
+                  ace_user_enable_lib_all=yes
+                  ;;
+                no)
+                  ace_user_enable_lib_all=no
+                  ;;
+                *)
+                  AC_MSG_ERROR(bad value ${enableval} for --enable-lib-all)
+                  ;;
+               esac
+              ],
+              [
+               ace_user_enable_lib_all=yes
+              ])
+
 AC_ARG_ENABLE(lib-full,
-              [  --enable-lib-full       build ALL ACE components        [default=yes]],
+              [  --enable-lib-full      build the full ACE library       [default=yes]],
               [
                case "${enableval}" in
                 yes)
@@ -299,40 +318,35 @@ AC_ARG_ENABLE(lib-other,
 
 dnl If no ACE subsets were explicitly enabled or disabled then build
 dnl all of them.
-if test $ace_user_enable_lib_full = yes; then
-  ace_user_enable_lib_os=yes
-  ace_user_enable_lib_utils=yes
-  ace_user_enable_lib_logging=yes
-  ace_user_enable_lib_threads=yes
-  ace_user_enable_lib_demux=yes
-  ace_user_enable_lib_connection=yes
-  ace_user_enable_lib_sockets=yes
-  ace_user_enable_lib_ipc=yes
-  ace_user_enable_lib_svcconf=yes
-  ace_user_enable_lib_streams=yes
-  ace_user_enable_lib_memory=yes
-  ace_user_enable_lib_token=yes
-  ace_user_enable_lib_other=yes
-else
+if test $ace_user_enable_lib_all = yes; then
 
-  dnl If we get here then no ACE components will be built!
-  if test $ace_user_enable_lib_os = no &&
-     test $ace_user_enable_lib_utils = no &&
-     test $ace_user_enable_lib_logging = no &&
-     test $ace_user_enable_lib_threads = no &&
-     test $ace_user_enable_lib_demux = no &&
-     test $ace_user_enable_lib_connection = no &&
-     test $ace_user_enable_lib_sockets = no &&
-     test $ace_user_enable_lib_ipc = no &&
-     test $ace_user_enable_lib_svcconf = no &&
-     test $ace_user_enable_lib_streams = no &&
-     test $ace_user_enable_lib_memory = no &&
-     test $ace_user_enable_lib_token = no &&
-     test $ace_user_enable_lib_other = no; then
-    AC_MSG_ERROR(no ACE components will be built.  Specify which components to build)
-  fi
+  ACE_CREATE_ALL_COMPONENTS
 
-fi  dnl test $ace_user_enable_lib_full=yes
+elif test $ace_user_enable_lib_all = no; then
+
+  ACE_DISABLE_ALL_COMPONENTS
+
+fi
+
+if test $ace_user_enable_lib_full = no &&
+   test $ace_user_enable_lib_os = no &&
+   test $ace_user_enable_lib_utils = no &&
+   test $ace_user_enable_lib_logging = no &&
+   test $ace_user_enable_lib_threads = no &&
+   test $ace_user_enable_lib_demux = no &&
+   test $ace_user_enable_lib_connection = no &&
+   test $ace_user_enable_lib_sockets = no &&
+   test $ace_user_enable_lib_ipc = no &&
+   test $ace_user_enable_lib_svcconf = no &&
+   test $ace_user_enable_lib_streams = no &&
+   test $ace_user_enable_lib_memory = no &&
+   test $ace_user_enable_lib_token = no &&
+   test $ace_user_enable_lib_other = no; then
+
+  dnl If we get here then no ACE libraries will be built!
+  AC_MSG_ERROR(no ACE components will be built.  Specify which components to build)
+
+fi  dnl No components will be built!
 
 dnl Set which ACE subsets to build
 AM_CONDITIONAL(BUILD_OS_FILES,
@@ -374,7 +388,7 @@ AM_CONDITIONAL(BUILD_TOKEN_FILES,
 AM_CONDITIONAL(BUILD_OTHER_FILES,
                test X$ace_user_enable_lib_other = Xyes)
 
-AM_CONDITIONAL(BUILD_ALL_COMPONENTS,
+AM_CONDITIONAL(BUILD_FULL_LIBRARY,
                test X$ace_user_enable_lib_full = Xyes)
 
 dnl End ACE_CHECK_SUBSETS
@@ -393,7 +407,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_UTILS,
 [
  ace_user_enable_lib_utils=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
 ])
 
@@ -403,7 +417,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_LOGGING,
 [
  ace_user_enable_lib_logging=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
 ])
 
@@ -413,7 +427,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_THREADS,
 [
  ace_user_enable_lib_threads=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
 ])
 
@@ -423,7 +437,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_DEMUX,
 [
  ace_user_enable_lib_demux=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
  ACE_CREATE_LIBACE_THREADS
 ])
@@ -434,7 +448,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_CONNECTION,
 [
  ace_user_enable_lib_connection=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
  ACE_CREATE_LIBACE_THREADS
  ACE_CREATE_LIBACE_DEMUX
@@ -446,7 +460,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_SOCKETS,
 [
  ace_user_enable_lib_sockets=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
 ])
 
@@ -456,7 +470,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_IPC,
 [
  ace_user_enable_lib_ipc=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
  ACE_CREATE_LIBACE_SOCKETS
 ])
@@ -467,7 +481,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_SVCCONF,
 [
  ace_user_enable_lib_svcconf=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
  ACE_CREATE_LIBACE_THREADS
  ACE_CREATE_LIBACE_DEMUX
@@ -480,7 +494,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_STREAMS,
 [
  ace_user_enable_lib_streams=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
  ACE_CREATE_LIBACE_THREADS
  ACE_CREATE_LIBACE_DEMUX
@@ -492,7 +506,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_MEMORY,
 [
  ace_user_enable_lib_memory=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
 ])
 
@@ -502,7 +516,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_TOKEN,
 [
  ace_user_enable_lib_token=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
  ACE_CREATE_LIBACE_UTILS
  ACE_CREATE_LIBACE_LOGGING
@@ -523,7 +537,7 @@ AC_DEFUN(ACE_CREATE_LIBACE_OTHER,
 [
  ace_user_enable_lib_other=yes
 
- dnl Be careful not to go into a recursive loop with these macros!
+ dnl Be careful not to go into a circular/recursive loop with these macros!
  ACE_CREATE_LIBACE_OS
  ACE_CREATE_LIBACE_UTILS
  ACE_CREATE_LIBACE_LOGGING
@@ -536,4 +550,42 @@ AC_DEFUN(ACE_CREATE_LIBACE_OTHER,
  ACE_CREATE_LIBACE_STREAMS
  ACE_CREATE_LIBACE_MEMORY
  dnl ACE_CREATE_LIBACE_TOKEN
+])
+
+dnl Build all ACE component libraries
+dnl Usage: ACE_CREATE_ALL_COMPONENTS
+AC_DEFUN(ACE_CREATE_ALL_COMPONENTS,
+[
+ ace_user_enable_lib_os=yes
+ ace_user_enable_lib_utils=yes
+ ace_user_enable_lib_logging=yes
+ ace_user_enable_lib_threads=yes
+ ace_user_enable_lib_demux=yes
+ ace_user_enable_lib_connection=yes
+ ace_user_enable_lib_sockets=yes
+ ace_user_enable_lib_ipc=yes
+ ace_user_enable_lib_svcconf=yes
+ ace_user_enable_lib_streams=yes
+ ace_user_enable_lib_memory=yes
+ ace_user_enable_lib_token=yes
+ ace_user_enable_lib_other=yes
+])
+
+dnl Disable all ACE component libraries
+dnl Usage: ACE_CREATE_ALL_COMPONENTS
+AC_DEFUN(ACE_DISABLE_ALL_COMPONENTS,
+[
+ ace_user_enable_lib_os=no
+ ace_user_enable_lib_utils=no
+ ace_user_enable_lib_logging=no
+ ace_user_enable_lib_threads=no
+ ace_user_enable_lib_demux=no
+ ace_user_enable_lib_connection=no
+ ace_user_enable_lib_sockets=no
+ ace_user_enable_lib_ipc=no
+ ace_user_enable_lib_svcconf=no
+ ace_user_enable_lib_streams=no
+ ace_user_enable_lib_memory=no
+ ace_user_enable_lib_token=no
+ ace_user_enable_lib_other=no
 ])
