@@ -31,7 +31,7 @@ inventory_i::getCDinfo (const char * artist,
 
           price = 13.49f;
 
-          in_stock = TRUE;
+          in_stock = 1;
         }
       else
         {
