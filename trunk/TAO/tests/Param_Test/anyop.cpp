@@ -121,9 +121,9 @@ main (int argc, char *argv[])
                             "Mismatched Param_Test extraction\n"));
               }
 
-            CORBA::Object_ptr other;
+            CORBA::Object_var other;
 
-            if (!(any >>= CORBA::Any::to_object (other)))
+            if (!(any >>= CORBA::Any::to_object (other.inout ())))
               {
                 ACE_DEBUG ((LM_DEBUG,
                             "Cannot extract Param_Test as Object\n"));

@@ -101,6 +101,10 @@ SOURCE=.\TestC.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\testC.h
+# End Source File
 # End Group
 # Begin Group "IDL Files"
 
