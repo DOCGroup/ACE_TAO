@@ -4,6 +4,10 @@ Wed Jan  3 12:06:20 2001  Darrell Brunsch <brunsch@uci.edu>
 
           Projects are listed in tests.dsw, so this is unneeded.
 
+        * tests/tests.dsw:
+
+          Added Refcounted_Auto_Ptr_Test.dsp.
+
 Tue Jan  3 10:30:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * docs/msvc_notes.txt:
