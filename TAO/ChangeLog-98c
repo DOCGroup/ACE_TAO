@@ -1,3 +1,8 @@
+Thu Jun 25 10:53:12 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/NestedUpcall/NestedUpCalls_Test.cpp: Removed unnecessary
+	Backing store code. 
+
 Thu Jun 25 08:44:03 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
