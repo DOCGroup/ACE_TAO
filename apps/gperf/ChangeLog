@@ -1,6 +1,6 @@
 Tue Sep 22 21:30:59 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * corba.exp: added this file, it hadn't been checked in.
+        * tests/corba.exp: added this file, it hadn't been checked in.
 
 Tue Sep 22 18:02:01 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
