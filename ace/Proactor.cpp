@@ -1159,8 +1159,20 @@ template class ACE_Timer_Wheel_Iterator_T<ACE_Handler *,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Framework_Component_T<ACE_Proactor>;
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
+template class ACE_Auto_Basic_Ptr<ACE_Asynch_Result_Impl>;
+#  endif  /* ACE_LACKS_AUTO_PTR */
+template class auto_ptr<ACE_Asynch_Result_Impl>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Framework_Component_T<ACE_Proactor>
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
+#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Asynch_Result_Impl>
+#  endif  /* ACE_LACKS_AUTO_PTR */
+#pragma instanstiate auto_ptr<ACE_Asynch_Result_Impl>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #else /* !ACE_WIN32 || !ACE_HAS_AIO_CALLS */
@@ -1209,25 +1221,5 @@ ACE_Proactor::event_loop_done (void)
 {
   return sig_atomic_t (1);
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#  if defined (ACE_LACKS_AUTO_PTR) \
-      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-template class ACE_Auto_Basic_Ptr<ACE_Asynch_Result_Impl>;
-#  endif  /* ACE_LACKS_AUTO_PTR */
-template class auto_ptr<ACE_Asynch_Result_Impl>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#  if defined (ACE_LACKS_AUTO_PTR) \
-      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Asynch_Result_Impl>
-#  endif  /* ACE_LACKS_AUTO_PTR */
-#pragma instanstiate auto_ptr<ACE_Asynch_Result_Impl>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS*/

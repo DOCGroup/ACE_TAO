@@ -357,8 +357,13 @@ template class ACE_Hash_Map_Manager_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TS
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>;
+// I'm not sure that these instantiations are necessary for any
+// platform.  But it definitely won't compile on VxWorks due to a
+// conflict with the template specializations in Functor_String.h
+#if !defined(VXWORKS)
 template class ACE_Hash<ACE_TString>;
 template class ACE_Equal_To<ACE_TString>;
+#endif /* VXWORKS */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Entry<ACE_TString,ACE_CapEntry*>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>
