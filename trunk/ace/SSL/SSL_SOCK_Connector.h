@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 // $Id$
 
 // ============================================================================
@@ -10,7 +10,10 @@
 //    SSL_SOCK_Connector.h
 //
 // = AUTHOR
-//    John Heitmann and Chris Zimman
+//    John Heitmann 
+//    Chris Zimman
+//    Carlos O'Ryan <coryan@cs.wustl.edu>
+//    Ossama Othman <othman@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -46,14 +49,14 @@ public:
   // Default constructor.
 
   ACE_SSL_SOCK_Connector (ACE_SSL_SOCK_Stream &new_stream,
-                             const ACE_Addr &remote_sap,
-                             ACE_Time_Value *timeout = 0,
-                             const ACE_Addr &local_sap = ACE_Addr::sap_any,
-                             int reuse_addr = 0,
-                             int flags = 0,
-                             int perms = 0,
-                             int protocol_family = PF_INET,
-                             int protocol = 0);
+                          const ACE_Addr &remote_sap,
+                          ACE_Time_Value *timeout = 0,
+                          const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                          int reuse_addr = 0,
+                          int flags = 0,
+                          int perms = 0,
+                          int protocol_family = PF_INET,
+                          int protocol = 0);
   // Actively connect and produce a <new_stream> if things go well.
   // The <remote_sap> is the address that we are trying to connect
   // with.  The <timeout> is the amount of time to wait to connect.
@@ -69,17 +72,17 @@ public:
   // <local_addr> is reused, even if it hasn't been cleanedup yet.
 
   ACE_SSL_SOCK_Connector (ACE_SSL_SOCK_Stream &new_stream,
-                             const ACE_Addr &remote_sap,
-                             ACE_QoS_Params qos_params,
-                             ACE_Time_Value *timeout = 0,
-                             const ACE_Addr &local_sap = ACE_Addr::sap_any,
-                             ACE_Protocol_Info *protocolinfo = 0,
-                             ACE_SOCK_GROUP g = 0,
-                             u_long flags = 0,
-                             int reuse_addr = 0,
-                             int perms = 0,
-                             int protocol_family = PF_INET,
-                             int protocol = 0);
+                          const ACE_Addr &remote_sap,
+                          ACE_QoS_Params qos_params,
+                          ACE_Time_Value *timeout = 0,
+                          const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                          ACE_Protocol_Info *protocolinfo = 0,
+                          ACE_SOCK_GROUP g = 0,
+                          u_long flags = 0,
+                          int reuse_addr = 0,
+                          int perms = 0,
+                          int protocol_family = PF_INET,
+                          int protocol = 0);
   // Actively connect and produce a <new_stream> if things go well.
   // The <remote_sap> is the address that we are trying to connect
   // with.  The <qos_params> contains QoS parameters that are passed
