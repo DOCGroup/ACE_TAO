@@ -241,6 +241,15 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value &cur_ti
   return number_of_timers_expired;
 }
 
+
+template <class TYPE, class FUNCTOR, class ACE_LOCK> void 
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::return_node (ACE_Timer_Node_T<TYPE> *node)
+{
+  ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
+  this->free_node (node);
+}
+
+
 template <class ACE_LOCK> int
 ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::timeout (ACE_Timer_Queue_T<ACE_Event_Handler *, 
                                                             ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>, 
