@@ -1,3 +1,13 @@
+Tue Jun  9 19:35:26 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/XtReactor: Integrated the new XtReactor, which should now
+ 	  work for Windows NT!  Thanks to Kirill Rybaltchenko
+ 	  <Kirill.Rybaltchenko@cern.ch> for this.
+
+	* tests: Added the new XtReactor_Test.cpp to test the features of
+ 	  the XtReactor.  Thanks to Kirill Rybaltchenko
+ 	  <Kirill.Rybaltchenko@cern.ch> for this test.
+
 Tue Jun 09 16:18:54 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * Makefile: removed old release targets.  They're no longer
