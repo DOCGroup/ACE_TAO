@@ -60,7 +60,7 @@ public:
   // The argument is a bitwise OR of desired Trader_Components as listed
   // in enumerated type above.
 
-  ~TAO_Trader (void);
+  virtual ~TAO_Trader (void);
   // destructor.
   
   Offer_Database& offer_database (void);
