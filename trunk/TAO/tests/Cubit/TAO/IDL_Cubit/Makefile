@@ -12,7 +12,7 @@
 LDLIBS = -lTAO
 
 IDL_SRC	= cubitC.cpp cubitS.cpp
-PROG_SRCS =	$(IDL_SRC) svr.cpp clnt.cpp tmplinst.cpp
+PROG_SRCS = $(IDL_SRC) svr.cpp clnt.cpp tmplinst.cpp
 
 LSRC = $(PROG_SRCS)
 
@@ -33,9 +33,12 @@ include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-#include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
+
+#----------------------------------------------------------------------------
+#	Local targets
+#----------------------------------------------------------------------------
 
 DCFLAGS = -g
 
