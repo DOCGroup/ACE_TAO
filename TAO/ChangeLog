@@ -1,3 +1,40 @@
+Thu Jul  4 11:50:51 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_array.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_field.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        * TAO_IDL/include/ast_array.h:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_field.h:
+        * TAO_IDL/include/ast_sequence.h:
+        * TAO_IDL/include/ast_structure.h:
+
+          Added methods to determine if an aggregate type contains
+          a wstring at some nested level. This will be useful for
+          generating (de)marshaling code, since the encoding of
+          wstrings depends on the GIOP version. What's been added
+          above will not affect generated code at all, that part
+          is still TODO.
+
+        * TAO_IDL/ast/ast_enum.cpp:
+        * TAO_IDL/be/be_enum.cpp:
+
+          Moved size type initialization to the front end node.
+
+        * TAO_IDL/be/be_tmplinst.cpp:
+
+          Added #include file. Thanks to Marvin Wolfthal <maw@weichi.com> 
+          for pointing it out.
+
+        * TAO_IDL/include/ast_native.h:
+
+          Cosmetic changes.
+
+        * TAO_IDL/include/ast_visitor.h:
+
+          Corrected some comments.
+
 Thu Jul 04 08:17:11 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport.h:
