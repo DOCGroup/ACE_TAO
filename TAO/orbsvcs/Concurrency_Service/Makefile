@@ -14,7 +14,6 @@ endif
 
 SRC = Concurrency_Service.cpp
 
-LDLIBS  = -lTAO_CosConcurrency -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
 
 BIN2 = Concurrency_Service
 
@@ -39,6 +38,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
+LDLIBS  = -lTAO_CosConcurrency -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable $(TAO_SRVR_LIBS)
 
 #----------------------------------------------------------------------------
 #       Dependencies

@@ -24,7 +24,7 @@ LSRC= \
 LIFECYCLE_SERVICE_OBJS = LifeCycle_Service.o LifeCycle_Service_i.o \
         Factory_Trader.o Criteria_Evaluator.o
 
-LDLIBS = -lTAO_CosLifeCycle -lTAO_CosTrading -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_DynamicAny -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_CosLifeCycle -lTAO_CosTrading -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_DynamicAny $(TAO_SRVR_LIBS)
 
 BIN2 = LifeCycle_Service
 

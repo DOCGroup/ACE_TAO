@@ -1,3 +1,25 @@
+Sat May 10 15:21:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Client_Leaks/Makefile:
+	* tests/Crashed_Callback/Makefile:
+	* tests/IDL_Test/Makefile:
+	* tests/ORB_destroy/Makefile:
+	* tests/Object_Loader/Makefile:
+	* tests/Smart_Proxies/On_Demand/Makefile:
+	* orbsvcs/Concurrency_Service/Makefile:
+	* orbsvcs/CosEvent_Service/Makefile:
+	* orbsvcs/Dump_Schedule/Makefile:
+	* orbsvcs/Event_Service/Makefile:
+	* orbsvcs/ImplRepo_Service/Makefile:
+	* orbsvcs/LifeCycle_Service/Makefile:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile:
+	* orbsvcs/Naming_Service/Makefile:
+	* orbsvcs/Notify_Service/Makefile:
+	* orbsvcs/Scheduling_Service/Makefile:
+	* orbsvcs/Time_Service/Makefile:
+	* orbsvcs/tests/Notify/lib/Makefile: A set fixes to get static
+	  builds linking fine. 
+
 Sat May 10 12:24:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Collocation/Makefile.test: Fixes to get it linking
