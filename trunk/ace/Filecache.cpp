@@ -448,8 +448,10 @@ ACE_Filecache_Object::ACE_Filecache_Object (void)
 }
 
 ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
-                                            ACE_SYNCH_RW_MUTEX &lock)
+                                            ACE_SYNCH_RW_MUTEX &lock,
+                                            LPSECURITY_ATTRIBUTES sa)
   : stale_ (0),
+    sa_ (sa),
     lock_ (lock)
 {
   this->init ();
@@ -477,7 +479,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
   this->tempname_ = (char *) this->filename_;
 
   // Can we open the file?
-  this->handle_ = ACE_OS::open (this->tempname_, READ_FLAGS, R_MASK);
+  this->handle_ = ACE_OS::open (this->tempname_, READ_FLAGS, R_MASK, this->sa_);
   if (this->handle_ == ACE_INVALID_HANDLE)
     {
       this->error_i (ACE_Filecache_Object::OPEN_FAILED,
@@ -487,7 +489,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
 
   // Can we map the file?
    if (this->mmap_.map (this->handle_, -1,
-                            PROT_READ, MAP_PRIVATE) != 0)
+                            PROT_READ, MAP_PRIVATE, 0, 0, this->sa_) != 0)
     {
       this->error_i (ACE_Filecache_Object::MEMMAP_FAILED,
                      "ACE_Filecache_Object::acquire: map");
@@ -502,8 +504,10 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
 
 ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
                                             int size,
-                                            ACE_SYNCH_RW_MUTEX &lock)
+                                            ACE_SYNCH_RW_MUTEX &lock,
+                                            LPSECURITY_ATTRIBUTES sa)
   : stale_ (0),
+    sa_ (sa),
     lock_ (lock)
 {
   this->init ();
@@ -525,7 +529,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
   this->tempname_ = this->filename_;
 
   // Can we open the file?
-  this->handle_ = ACE_OS::open (this->tempname_, WRITE_FLAGS, W_MASK);
+  this->handle_ = ACE_OS::open (this->tempname_, WRITE_FLAGS, W_MASK, this->sa_);
   if (this->handle_ == ACE_INVALID_HANDLE)
     {
       this->error_i (ACE_Filecache_Object::OPEN_FAILED,
@@ -552,7 +556,8 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
     }
 
   // Can we map?
-  if (this->mmap_.map (this->handle_, this->size_, PROT_RDWR, MAP_SHARED) != 0)
+  if (this->mmap_.map (this->handle_, this->size_, PROT_RDWR, MAP_SHARED,
+                       0, 0, this->sa_) != 0)
     {
       this->error_i (ACE_Filecache_Object::MEMMAP_FAILED,
                      "ACE_Filecache_Object::acquire: map");
@@ -585,7 +590,8 @@ ACE_Filecache_Object::release (void)
     {
       // We are safe since only one thread has a writable Filecache_Object
 
-      ACE_HANDLE original = ACE_OS::open (this->filename_, WRITE_FLAGS, W_MASK);
+      ACE_HANDLE original = ACE_OS::open (this->filename_, WRITE_FLAGS, W_MASK,
+                                          this->sa_);
       if (original == ACE_INVALID_HANDLE)
         this->error_ = ACE_Filecache_Object::OPEN_FAILED;
       else if (ACE_OS::write (original, this->mmap_.addr (),
@@ -610,7 +616,11 @@ ACE_Filecache_Object::release (void)
                          "ACE_Filecache_Object::acquire: open");
         }
       else if (this->mmap_.map (this->handle_, -1,
-                                PROT_READ, MAP_PRIVATE) != 0)
+                                PROT_READ,
+                                MAP_PRIVATE,
+                                0,
+                                0,
+                                this->sa_) != 0)
         {
           this->error_i (ACE_Filecache_Object::MEMMAP_FAILED,
                          "ACE_Filecache_Object::acquire: map");

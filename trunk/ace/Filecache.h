@@ -89,7 +89,7 @@ public:
   // opened for reading.
 
   ACE_Filecache_Handle (const char *filename,
-                    int size);
+                        int size);
   // Create new entry, and acquire it.  Presence of SIZE assumes the
   // file is being opened for writing.
 
@@ -230,12 +230,14 @@ class ACE_Filecache_Object
 
 public:
   ACE_Filecache_Object (const char *filename,
-                        ACE_SYNCH_RW_MUTEX &lock);
+                        ACE_SYNCH_RW_MUTEX &lock,
+                        LPSECURITY_ATTRIBUTES sa = 0);
   // Creates a file for reading.
 
   ACE_Filecache_Object (const char *filename,
                         int size,
-                        ACE_SYNCH_RW_MUTEX &lock);
+                        ACE_SYNCH_RW_MUTEX &lock,
+                        LPSECURITY_ATTRIBUTES sa = 0);
   // Creates a file for writing.
 
   ~ACE_Filecache_Object (void);
@@ -319,6 +321,9 @@ private:
 
   int stale_;
   // If set to 1, means the object is flagged for removal.
+
+  LPSECURITY_ATTRIBUTES sa_;
+  // Security attribute object. 
 
   ACE_SYNCH_RW_MUTEX junklock_;
   ACE_SYNCH_RW_MUTEX &lock_;

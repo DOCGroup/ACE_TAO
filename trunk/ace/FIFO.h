@@ -25,7 +25,8 @@ class ACE_Export ACE_FIFO : public ACE_IPC_SAP
   //    Abstract base class for UNIX FIFOs (a.k.a. Named Pipes).
 {
 public:
-  int open (const char *rendezvous, int flags, int perms);
+  int open (const char *rendezvous, int flags, int perms,
+            LPSECURITY_ATTRIBUTES sa = 0);
   // Open up the named pipe on the <rendezvous> in accordance with the
   // flags.
 
@@ -50,7 +51,8 @@ protected:
   ACE_FIFO (void);
   // Default constructor.
 
-  ACE_FIFO (const char *rendezvous, int flags, int perms);
+  ACE_FIFO (const char *rendezvous, int flags, int perms,
+            LPSECURITY_ATTRIBUTES sa = 0);
   // Open up the named pipe on the <rendezvous> in accordance with the
   // flags.
 

@@ -58,7 +58,8 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
 		     int prot, 
 		     int share, 
 		     void *addr, 
-		     off_t pos) 
+		     off_t pos,
+                     LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_Mem_Map::map_it");
   this->base_addr_ = addr;
@@ -111,7 +112,8 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
 				   share, 
 				   this->handle_, 
 				   off_t (ACE::round_to_pagesize (pos)),
-				   &this->file_mapping_);
+				   &this->file_mapping_,
+                                   sa);
 
   return this->base_addr_ == MAP_FAILED ? -1 : 0; 
 }
@@ -119,13 +121,14 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
 int
 ACE_Mem_Map::open (LPCTSTR file_name,
 		   int flags,
-		   int mode)
+		   int mode,
+                   LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_Mem_Map::open");
 
   ACE_OS::strncpy (this->filename_, file_name, MAXPATHLEN);
 
-  this->handle_ = ACE_OS::open (file_name, flags, mode);
+  this->handle_ = ACE_OS::open (file_name, flags, mode, sa);
 
   if (this->handle_ == ACE_INVALID_HANDLE)
     return -1;
@@ -144,15 +147,16 @@ ACE_Mem_Map::map (LPCTSTR file_name,
 		  int prot, 
 		  int share, 
 		  void *addr, 
-		  off_t pos)
+		  off_t pos,
+                  LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_Mem_Map::map");
   this->length_ = 0;
 
-  if (this->open (file_name, flags, mode) == -1)
+  if (this->open (file_name, flags, mode, sa) == -1)
     return -1;
   else 
-    return this->map_it (this->handle (), len, prot, share, addr, pos);
+    return this->map_it (this->handle (), len, prot, share, addr, pos, sa);
 }
 
 ACE_Mem_Map::ACE_Mem_Map (void)
@@ -175,7 +179,8 @@ ACE_Mem_Map::ACE_Mem_Map (LPCTSTR file_name,
 			  int prot, 
 			  int share, 
 			  void *addr, 
-			  off_t pos)
+			  off_t pos,
+                          LPSECURITY_ATTRIBUTES sa)
   : base_addr_ (MAP_FAILED), 
     length_ (0),
     handle_ (ACE_INVALID_HANDLE),
@@ -183,7 +188,7 @@ ACE_Mem_Map::ACE_Mem_Map (LPCTSTR file_name,
     close_handle_ (0)
 {
   ACE_TRACE ("ACE_Mem_Map::ACE_Mem_Map");
-  if (this->map (file_name, len, flags, mode, prot, share, addr, pos) < 0)
+  if (this->map (file_name, len, flags, mode, prot, share, addr, pos, sa) < 0)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Mem_Map::ACE_Mem_Map"));
 }
 
@@ -195,7 +200,8 @@ ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
 			  int prot, 
 			  int share, 
 			  void *addr, 
-			  off_t pos)
+			  off_t pos,
+                          LPSECURITY_ATTRIBUTES sa)
   : base_addr_ (MAP_FAILED), 
     length_ (0),
     handle_ (ACE_INVALID_HANDLE),
@@ -206,7 +212,7 @@ ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
 
   ACE_OS::memset (this->filename_, 0, sizeof this->filename_);
 
-  if (this->map (handle, len, prot, share, addr, pos) < 0)
+  if (this->map (handle, len, prot, share, addr, pos, sa) < 0)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Mem_Map::ACE_Mem_Map"));
 }
 

@@ -106,7 +106,8 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (LPCTSTR backing_store_name,
   : base_addr_ (0),
     flags_ (MAP_SHARED),
     write_each_page_ (0),
-    minimum_bytes_ (0)
+    minimum_bytes_ (0),
+    sa_ (options->sa_)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool");
 
@@ -201,7 +202,7 @@ ACE_MMAP_Memory_Pool::map_file (off_t file_offset)
 
   // Remap the file.
   if (this->mmap_.map (file_offset, PROT_RDWR,
-		       this->flags_, this->base_addr_, 0) == -1
+		       this->flags_, this->base_addr_, 0, this->sa_) == -1
       || this->base_addr_ != 0 && this->mmap_.addr () != this->base_addr_)
     ACE_ERROR_RETURN ((LM_ERROR, 
 		       "(%P|%t) base_addr = %u, addr = %u, file_offset = %u, %p\n", 
@@ -257,7 +258,7 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
 
   if (this->mmap_.open (this->backing_store_name_, 
 			O_RDWR | O_CREAT | O_TRUNC | O_EXCL, 
-			ACE_DEFAULT_FILE_PERMS) != -1)
+			ACE_DEFAULT_FILE_PERMS, this->sa_) != -1)
     {
       // First time in, so need to acquire memory. 
       first_time = 1;
@@ -273,7 +274,9 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
 			   ACE_DEFAULT_FILE_PERMS,
 			   PROT_RDWR,
 			   this->flags_,
-			   this->base_addr_) == -1)
+			   this->base_addr_,
+                           0,
+                           this->sa_) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 0);
 
       return this->mmap_.addr ();
@@ -303,13 +306,15 @@ ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (void *base_addr,
 							    int write_each_page,
 							    off_t minimum_bytes,
 							    u_int flags,
-							    int guess_on_fault)
+							    int guess_on_fault,
+                                                            LPSECURITY_ATTRIBUTES sa)
   : base_addr_ (base_addr),
     use_fixed_addr_ (use_fixed_addr),
     write_each_page_ (write_each_page),
     minimum_bytes_ (minimum_bytes),
     flags_ (flags),
-    guess_on_fault_ (guess_on_fault)
+    guess_on_fault_ (guess_on_fault),
+    sa_ (sa)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options");
 }

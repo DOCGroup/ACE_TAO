@@ -311,7 +311,8 @@ public:
 				int write_each_page = 1,
 				off_t minimum_bytes = 0,
 				u_int flags = 0,
-				int guess_on_fault = 1);
+				int guess_on_fault = 1,
+                                LPSECURITY_ATTRIBUTES sa = 0);
 
   void *base_addr_;
   // Base address of the memory-mapped backing store.
@@ -333,6 +334,9 @@ public:
   // Try to remap without knowing the faulting address.  This
   // parameter is ignored on platforms that know the faulting address
   // (UNIX with SI_ADDR and Win32).
+
+  LPSECURITY_ATTRIBUTES sa_;
+  // Pointer to a security attributes object.  Only used on NT.
 };
 
 class ACE_Export ACE_MMAP_Memory_Pool : public ACE_Event_Handler
@@ -441,6 +445,9 @@ protected:
   // Try to remap without knowing the faulting address.  This
   // parameter is ignored on platforms that know the faulting address
   // (UNIX with SI_ADDR and Win32).
+
+  LPSECURITY_ATTRIBUTES sa_;
+  // Security attributes object, only used on NT.
 };
 
 class ACE_Export ACE_Lite_MMAP_Memory_Pool : public ACE_MMAP_Memory_Pool
