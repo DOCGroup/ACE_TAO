@@ -24,17 +24,17 @@
 //
 //   Apply patches using the following commands:
 //
-//   patch < diffs\Policy.pidl.diff
+//   patch < diffs/Policy.pidl.diff
 //
 //   2. Run the tao_idl compiler on the patched pidl file.  The
 //   command used for this is:
 //
-//     tao_idl.exe \
-//          -Ge 1 \
-//          -Wb,export_macro=TAO_Export \
-//          -Wb,export_include="tao/corbafwd.h" \
-//          -Wb,pre_include="ace/pre.h" \
-//          -Wb,post_include="ace/post.h" \
+//     tao_idl.exe
+//          -Ge 1
+//          -Wb,export_macro=TAO_Export
+//          -Wb,export_include="tao/corbafwd.h"
+//          -Wb,pre_include="ace/pre.h"
+//          -Wb,post_include="ace/post.h"
 //          Policy.pidl
 //
 //   3. Then patch the generated code.  This patch (a) fixes the
@@ -47,11 +47,11 @@
 //
 //   Apply patches using the following commands:
 //
-//   patch < diffs\PolicyC.h.diff
-//   patch < diffs\PolicyC.i.diff
-//   patch < diffs\PolicyC.cpp.diff
+//   patch < diffs/PolicyC.h.diff
+//   patch < diffs/PolicyC.i.diff
+//   patch < diffs/PolicyC.cpp.diff
 //
-//   patch < diffs\PolicyS.cpp.diff
+//   patch < diffs/PolicyS.cpp.diff
 //
 //   4. You'll have to move the Policy skeleton definition from
 //   PolicyS.h to the POA_CORBA.h by hand.
@@ -60,13 +60,13 @@
 //
 //   Note: The diffs were generated with these commands:
 //
-//   diff -wbu Policy.pidl Policy.pidl.mod > diffs\Policy.pidl.diff
+//   diff -wbu Policy.pidl Policy.pidl.mod > diffs/Policy.pidl.diff
 //
-//   diff -wbu PolicyC.h PolicyC.h.mod > diffs\PolicyC.h.diff
-//   diff -wbu PolicyC.i PolicyC.i.mod > diffs\PolicyC.i.diff
-//   diff -wbu PolicyC.cpp PolicyC.cpp.mod > diffs\PolicyC.cpp.diff
+//   diff -wbu PolicyC.h PolicyC.h.mod > diffs/PolicyC.h.diff
+//   diff -wbu PolicyC.i PolicyC.i.mod > diffs/PolicyC.i.diff
+//   diff -wbu PolicyC.cpp PolicyC.cpp.mod > diffs/PolicyC.cpp.diff
 //
-//   diff -wbu PolicyS.cpp PolicyS.cpp.mod > diffs\PolicyS.cpp.diff
+//   diff -wbu PolicyS.cpp PolicyS.cpp.mod > diffs/PolicyS.cpp.diff
 //
 // ================================================================
 
