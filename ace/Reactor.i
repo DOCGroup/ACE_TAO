@@ -4,6 +4,18 @@
 #include "ace/Reactor_Impl.h"
 #include "ace/Handle_Set.h"
 
+ACE_INLINE ACE_Reactor_Impl *
+ACE_Reactor::implementation (void)
+{
+  return this->implementation_;
+}
+
+ACE_INLINE void
+ACE_Reactor::implementation (ACE_Reactor_Impl *impl)
+{
+  this->implementation_ = impl;
+}
+
 ACE_INLINE int 
 ACE_Reactor::open (size_t size,
 		   int restart,
@@ -444,18 +456,6 @@ ACE_INLINE size_t
 ACE_Reactor::size (void)
 {
   return this->implementation ()->size ();
-}
-
-ACE_INLINE ACE_Reactor_Impl *
-ACE_Reactor::implementation (void)
-{
-  return this->implementation_;
-}
-
-ACE_INLINE void
-ACE_Reactor::implementation (ACE_Reactor_Impl *impl)
-{
-  this->implementation_ = impl;
 }
 
 ACE_INLINE int
