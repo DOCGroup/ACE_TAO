@@ -33,7 +33,8 @@ public:
   {
     delete this->name_;
     delete this->value_;
-    delete this->type_;
+    ACE_OS::free (ACE_const_cast (char*, this->type_));
+    this->type_ = 0;
   }
 
   char *name (void)
