@@ -381,11 +381,20 @@ public:
   int start_server_header (const char *fname);
   // set the server header stream
 
+  int start_server_template_header (const char *fname);
+  // set the server template header stream
+
   int start_server_inline (const char *fname);
   // set the server inline stream
 
+  int start_server_template_inline (const char *fname);
+  // set the server template inline stream
+
   int start_server_skeletons (const char *fname);
   // set the server skeletons stream
+
+  int start_server_template_skeletons (const char *fname);
+  // set the server template skeletons stream
 
   int end_client_header (void);
   // generate code at the end such as the <<= and >>= operators alongwith the
@@ -393,6 +402,12 @@ public:
 
   int end_server_header (void);
   // put a last #endif in the server header
+
+  int end_server_template_header (void);
+  // put a last #endif in the server template header
+
+  int end_server_template_skeletons (void);
+  // put a last #endif in the server skeletons
 
   TAO_OutStream *client_header (void);
   // get the client header stream
@@ -406,11 +421,20 @@ public:
   TAO_OutStream *server_header (void);
   // get the server header stream
 
+  TAO_OutStream *server_template_header (void);
+  // get the server header template stream
+
   TAO_OutStream *server_skeletons (void);
   // get the server skeletons stream
 
+  TAO_OutStream *server_template_skeletons (void);
+  // get the server template skeletons stream
+
   TAO_OutStream *server_inline (void);
   // get the server inline stream
+
+  TAO_OutStream *server_template_inline (void);
+  // get the server template inline stream
 
   void outstream (TAO_OutStream *os);
   // set current out stream
@@ -443,11 +467,20 @@ private:
   TAO_OutStream *server_header_;
   // server header stream
 
+  TAO_OutStream *server_template_header_;
+  // server header template stream
+
   TAO_OutStream *server_skeletons_;
   // server skeleton stream
 
+  TAO_OutStream *server_template_skeletons_;
+  // server skeleton template stream
+
   TAO_OutStream *server_inline_;
   // server side inline file
+
+  TAO_OutStream *server_template_inline_;
+  // server side template inline file
 
   TAO_OutStream *curr_os_;
   // currently used out stream
@@ -465,4 +498,4 @@ typedef ACE_Singleton<TAO_CodeGen, ACE_SYNCH_RECURSIVE_MUTEX> TAO_CODEGEN;
 
 extern TAO_CodeGen *tao_cg; // code generator instance which is used everywhere
 
-#endif // if !defined
+#endif /* if !defined */
