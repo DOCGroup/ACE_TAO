@@ -10,6 +10,11 @@ Wed Mar 04 09:32:32 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Basic_Types.i (ACE_U_LongLong): added missing ACE_INLINE's.
 
+        * ace/Svc_Conf.y,Svc_Conf_y.cpp, etc/Svc_Conf_y.cpp.diff
+          (svc_location): delete svc_initializer after initializing
+          svc_location.  Thanks to Tom Arbuckle
+          <arbuckle@uran.informatik.uni-bonn.de> for reporting this.
+
 Tue Mar 03 22:15:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Remote_Name_Space.cpp: Replaced a bunch of usages of
