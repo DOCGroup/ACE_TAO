@@ -59,11 +59,13 @@ TAO_Server_Strategy_Factory::create_object_table (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Creation_Strategy<TAO_OA_Connection_Handler>;
+template class ACE_Acceptor<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR>
 template class ACE_Accept_Strategy<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Concurrency_Strategy<TAO_OA_Connection_Handler>;
 template class ACE_Scheduling_Strategy<TAO_OA_Connection_Handler>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Creation_Strategy<TAO_OA_Connection_Handler>
+#pragma instantiate ACE_Acceptor<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Accept_Strategy<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Concurrency_Strategy<TAO_OA_Connection_Handler>
 #pragma instantiate ACE_Scheduling_Strategy<TAO_OA_Connection_Handler>
