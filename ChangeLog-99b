@@ -39,6 +39,10 @@ Thu Jun  3 17:05:36 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 		
 	  Strategy which deals with destruction and cleanup in general.
 	
+	* ace/Makefile
+	  
+	  Added the above under the TEMPLATE_FILES.
+	  
 	* examples/Web_Crawler/Optimal_Cache_Map_Manager_T.h
         * examples/Web_Crawler/Optimal_Cache_Map_Manager_T.i
 	* examples/Web_Crawler/Optimal_Cache_Map_Manager_T.cpp
