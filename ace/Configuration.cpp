@@ -305,7 +305,7 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
                   --binary_length;
                   ++ptr;
                 }
-                delete(binary_data);
+                delete (char *)binary_data;
                 break;
               }
             default:
