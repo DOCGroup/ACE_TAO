@@ -178,7 +178,7 @@ public:
   void sync (const ASYS_TCHAR *program_name);
   // Call after doing a <fork> to resynchronize the process id and
   // <program_name> variables.
-  // @@ Does this function mean anything on Windows?  
+  // @@ Does this function mean anything on Windows?
 
   // = Set/get methods.  Note that these are non-static and thus will
   // be thread-specific.
@@ -250,10 +250,9 @@ public:
   ACE_Thread_Descriptor *thr_desc (void) const;
   // Get the TSS thread descriptor.
 
-  void thr_desc (ACE_Thread_Descriptor *td,
-		 ACE_Thread_Manager *thr_mgr = 0);
+  void thr_desc (ACE_Thread_Descriptor *td);
   // Set the TSS thread descriptor.  This method will call
-  // thr_mgr->acquire_release to block execution until this call
+  // td->acquire_release to block execution until this call
   // return.
 
   // = Stop/start/query tracing status on a per-thread basis...
