@@ -1,3 +1,10 @@
+Fri Dec 26 12:47:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/IDL_Test/Makefile:
+
+	  Cosmetic fix to get it working in builds where Messaging is
+	  turned off. 
+
 Fri Dec 26 00:43:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/GIOP.pidl:
