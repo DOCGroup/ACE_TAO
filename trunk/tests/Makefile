@@ -12,6 +12,7 @@ BIN = 	Barrier_Test \
 	Buffer_Stream_Test \
 	Future_Test \
 	Handle_Set_Test \
+	IOStream_Test \
 	MM_Shared_Memory_Test \
 	Map_Manager_Test \
 	Mem_Map_Test \
