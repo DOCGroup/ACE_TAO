@@ -89,7 +89,8 @@ public:
                       const ACE_Addr &local_sap = ACE_Addr::sap_any,
                       int reuse_addr = 0,
                       int flags = 0,
-                      int perms = 0);
+                      int perms = 0,
+                      int protocol = 0);
 
 #if !defined (ACE_HAS_WINCE)
   /**
@@ -191,7 +192,8 @@ public:
                const ACE_Addr &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = 0,
-               int perms = 0);
+               int perms = 0,
+               int protocol = 0);
 
 #if !defined (ACE_HAS_WINCE)
   /**
