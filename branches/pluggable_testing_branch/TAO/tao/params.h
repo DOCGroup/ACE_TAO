@@ -35,7 +35,6 @@ class TAO_IOR_LookupTable;
 #endif /* ! __ACE_INLINE__ */
 
 typedef ACE_Unbounded_Set<ACE_CString> TAO_EndpointSet;
-
 typedef ACE_Unbounded_Set_Iterator<ACE_CString> TAO_EndpointSetIterator;
 
 class TAO_Export TAO_ORB_Parameters
@@ -57,13 +56,13 @@ public:
   ~TAO_ORB_Parameters (void);
   // Destructor.
 
-  const endpoint_set &endpoints (void);
   int preconnects (ACE_CString &preconnects);
+  TAO_EndpointSet &preconnects (void);
   void add_preconnect (ACE_CString &preconnect);
   // Specifies the endpoints to pre-establish connections on.
 
-  const endpoint_set &endpoints (void);
   int endpoints (ACE_CString &endpoints);
+  TAO_EndpointSet &endpoints (void);
   void add_endpoint (ACE_CString &endpoint);
   // Specifies the endpoints on which this server is willing to
   // listen for requests.
@@ -139,7 +138,7 @@ public:
   // Set/Get the Init Reference of an arbitrary ObjectID.
 
 private:
-  //  Each "endpoint" is of the form:
+  // Each "endpoint" is of the form:
   //
   //   protocol:V.v//addr1,addr2,...,addrN/
   //
@@ -147,15 +146,22 @@ private:
   //
   //   protocol://addr1,addr2,...,addrN/
   //
-  // where "V.v" is an optional version.  All preconnect or endpoint
-  // strings should be of the above form(s).
+  // where "V.v" is an optional version.
+  //
+  // Multiple sets of endpoint may be seperated by a semi-colon `;'.
+  // For example:
+  //
+  //   iiop://space:2001,odyssey:2010/;uiop://foo,bar/
+  //
+  // All preconnect or endpoint strings should be of the above form(s).
 
-  int parse_endpoints (ACE_CString &endpoints, TAO_EndpointSet endpoints_list);
+  int parse_endpoints (ACE_CString &endpoints,
+                       TAO_EndpointSet &endpoints_list);
 
-  endpoint_set preconnections_list_;
+  TAO_EndpointSet preconnects_list_;
   // List of endpoints used to pre-establish connections.
 
-  endpoint_set endpoints_list_;
+  TAO_EndpointSet endpoints_list_;
   // List of endpoints this server is willing to accept requests
   // on.
 

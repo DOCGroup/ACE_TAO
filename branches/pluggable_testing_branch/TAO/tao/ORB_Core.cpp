@@ -232,7 +232,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         }
       else if (ACE_OS::strcmp (current_arg, "-ORBendpoint") == 0)
         {
-          //  Each "endpoint" is of the form:
+          // Each "endpoint" is of the form:
           //
           //   protocol:V.v//addr1,addr2,...,addrN/
           //
@@ -242,6 +242,13 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           //
           // where "V.v" is an optional version.  All preconnect or endpoint
           // strings should be of the above form(s).
+          //
+          // Multiple sets of endpoint may be seperated by a semi-colon `;'.
+          // For example:
+          //
+          //   iiop://space:2001,odyssey:2010/;uiop://foo,bar/
+          //
+          // All preconnect or endpoint strings should be of the above form(s).
 
           arg_shifter.consume_arg ();
 
@@ -283,7 +290,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           // may be dropped in future releases.
 
           ACE_DEBUG ((LM_WARNING,
-                      "(%P|%t) The `-ORBhost' option is obsolete.\n"
+                      "(%P|%t) WARNING: The `-ORBhost' option is obsolete.\n"
                       "In the future, use the `-ORBendpoint' option.\n"));
 
           if (arg_shifter.is_parameter_next())
@@ -345,7 +352,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           // may be dropped in future releases.
 
           ACE_DEBUG ((LM_WARNING,
-                      "(%P|%t) The `-ORBport' option is obsolete.\n"
+                      "(%P|%t) WARNING: The `-ORBport' option is obsolete.\n"
                       "In the future, use the `-ORBendpoint' option.\n"));
 
           // Specify the port number/name on which we should listen
@@ -492,8 +499,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
                   // may be dropped in future releases.
 
                   ACE_DEBUG ((LM_WARNING,
-                              "(%P|%t) The `host:port' pair style for "
-                              "`-ORBpreconnect' is obsolete.\n"
+                              "(%P|%t) WARNING: The `host:port' pair style "
+                              "for `-ORBpreconnect' is obsolete.\n"
                               "In the future, use the URL style.\n"));
 
                   p =

@@ -15,6 +15,7 @@
 
 #include "tao/IIOP_Acceptor.h"
 #include "tao/IIOP_Profile.h"
+#include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/GIOP.h"
@@ -30,7 +31,7 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
 //    And isn't this the right place to setup the tagged components of
 //    a v1.[12] profile?
 
-/s/ @@ Fred&Ossama: We need to check this interface: a single
+// @@ Fred&Ossama: We need to check this interface: a single
 //    TAO_Acceptor may be bound to multiple addresses (think of a
 //    multihomed machine with an acceptor listening on the wildcard
 //    address), hence the "Right Thing" seems to be that we pass an
@@ -38,36 +39,40 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
 
 int
 TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
-                                    TAO_MProfile  *&mprofile)
+                                    TAO_MProfile &mprofile)
 {
 
   // @@ For now we use teh IIOP address that has been
   // stored away in the ORB core.  This is an optimization to get
   // around DNS lookups!
-  // ACE_INET_Addr new_address;
-  // if (base_acceptor_.acceptor ().get_local_addr (new_address) == -1)
-  //  return 0;
+  ACE_INET_Addr new_address;
+  if (base_acceptor_.acceptor ().get_local_addr (new_address) == -1)
+    return 0;
 
   // we only make one
-  int count = mprofile->profile_count ();
-  if ((mprofile->size () - count) < 1)
+  int count = mprofile.profile_count ();
+  if ((mprofile.size () - count) < 1)
     {
-      if (mprofile->grow (count + 1) == -1)
+      if (mprofile.grow (count + 1) == -1)
         return -1;
     }
 
-  TAO_IIOP_Profile pfile;
-  // ACE_NEW_RETURN (pfile
-  //                 TAO_IIOP_Profile (new_address, object_key),
-  //                 -1);
-  ACE_NEW_RETURN (pfile
-                  TAO_IIOP_Profile (orb_params->host (),
-                                    orb_params->addr ().get_port_number (),
-                                    key,
-                                    orb_params->addr ()),
+  TAO_IIOP_Profile *pfile;
+  ACE_NEW_RETURN (pfile,
+                  TAO_IIOP_Profile (new_address, object_key),
                   -1);
+  // @@ Fred:  I removed the host() and addr() methods from the ORB core
+  //           before you added this method.  Any ideas on how to cache
+  //           this value as per Carlos' suggestion in the is_collocated()
+  //           method below?
+//   ACE_NEW_RETURN (pfile,
+//                   TAO_IIOP_Profile (orb_params->host (),
+//                                     orb_params->addr ().get_port_number (),
+//                                     key,
+//                                     orb_params->addr ()),
+//                   -1);
 
-  if (mprofile->give_profile (pfile) == -1)
+  if (mprofile.give_profile (pfile) == -1)
     return -1;
 
   return 0;
@@ -86,7 +91,7 @@ TAO_IIOP_Acceptor::is_collocated (const TAO_Profile* pfile)
   if (this->base_acceptor_.acceptor ().get_local_addr (address) == -1)
     return 0;
 
-  // @@ Osssama: can you verify that this operator does the right thing?
+  // @@ Ossama: can you verify that this operator does the right thing?
   return profile->object_addr () == address;
 }
 
@@ -118,7 +123,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
 
 CORBA::ULong 
-TAO_IIOP_Profile::endpoint_count (void)
+TAO_IIOP_Acceptor::endpoint_count (void)
 {
   // @@ for now just assume one!
   // we should take a look at the local address, if it is zero then

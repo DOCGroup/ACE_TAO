@@ -28,8 +28,8 @@ TAO_ORB_Parameters::~TAO_ORB_Parameters (void)
 }
 
 int 
-TAO_ORB_Parameters::parse_endpoints (ACE_CString endpoints,
-                                     TAO_EndpointSet endpoints_list)
+TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
+                                     TAO_EndpointSet &endpoints_list)
 {
   // Parse the string into seperate endpoints, where `endpoints' is of
   // the form:
@@ -54,8 +54,8 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString endpoints,
     {
       int endpoints_count = 1;
 
-      for (size_t i = 0;
-           i < ACE_static_cast (int, length);
+      for (int i = 0;
+           i < length;
            ++i)
         {
           if (endpoints[i] == endpoints_delimiter)
@@ -83,7 +83,7 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString endpoints,
           // from the offset `begin' to the end of the string.
 
           begin += end + 1;
-          end = endpoints_list.find (endpoints_delimiter, begin);
+          end = endpoints.find (endpoints_delimiter, begin);
         }
 
       return 0;  // Success

@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "ace/Dynamic_Service.h"
@@ -107,7 +108,7 @@ TAO_ORB_Core::protocol_factories (TAO_ProtocolFactorySet *pf)
   return old;
 }
 
-ACE_INLINE  TAO_ProtocolFactorySet *
+ACE_INLINE TAO_ProtocolFactorySet *
 TAO_ORB_Core::protocol_factories (void)
 {
   return TAO_OC_RETRIEVE (protocol_factories);

@@ -94,8 +94,10 @@ TAO_UIOP_Connector::close (void)
 }
 
 int
-TAO_UIOP_Connector::preconnect (char *preconnections)
+TAO_UIOP_Connector::preconnect (const char *preconnects)
 {
+  char *preconnections = ACE_OS::strdup (preconnects);
+
 #if 0
   if (preconnections)
     {
@@ -215,6 +217,9 @@ TAO_UIOP_Connector::preconnect (char *preconnections)
         }
     }
 #endif /* 0 */
+
+  ACE_OS::free (preconnections);
+
   return successes;
 }
 

@@ -53,7 +53,7 @@ public:
   // initialize acceptor for this address.
 
   int create_mprofile (const TAO_ObjectKey &object_key,
-                      TAO_MProfile  *&mprofile);
+                       TAO_MProfile &mprofile);
   // create profile objects for this Acceptor using the SAP
   // (service access point, Host and Port) and object_key.
 

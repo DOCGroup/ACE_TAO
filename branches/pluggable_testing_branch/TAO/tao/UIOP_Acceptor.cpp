@@ -22,6 +22,7 @@
 
 #include "tao/UIOP_Acceptor.h"
 #include "tao/UIOP_Profile.h"
+#include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/GIOP.h"
@@ -38,9 +39,9 @@ TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
 {
 }
 
-TAO_Profile *
+int
 TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
-                                    TAO_MProfile  *&mprofile) 
+                                    TAO_MProfile &mprofile) 
 {
   ACE_UNIX_Addr new_address;
 
@@ -48,24 +49,22 @@ TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
     return 0;
 
   // we only make one
-  int count = mprofile->profile_count ();
-  if ((mprofile->size () - count) < 1)
+  int count = mprofile.profile_count ();
+  if ((mprofile.size () - count) < 1)
     {
-      if (mprofile->grow (count + 1) == -1)
+      if (mprofile.grow (count + 1) == -1)
         return -1;
     }
 
-  TAO_UIOP_Profile pfile;
-  ACE_NEW_RETURN (pfile
+  TAO_UIOP_Profile *pfile;
+  ACE_NEW_RETURN (pfile,
                   TAO_UIOP_Profile (new_address, object_key),
                   -1);
 
-  if (mprofile->give_profile (pfile) == -1)
+  if (mprofile.give_profile (pfile) == -1)
     return -1;
 
   return 0;
-}
-
 }
 
 int
@@ -81,7 +80,7 @@ TAO_UIOP_Acceptor::is_collocated (const TAO_Profile* pfile)
   if (this->base_acceptor_.acceptor ().get_local_addr (address) == -1)
     return 0;
 
-  // @@ Osssama: can you verify that this operator does the right thing?
+  // @@ Ossama: can you verify that this operator does the right thing?
   return profile->object_addr () == address;
 }
 
@@ -110,6 +109,12 @@ TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   return 0;  // Success
 }
 
+CORBA::ULong 
+TAO_UIOP_Acceptor::endpoint_count (void)
+{
+  // @@ for now just assume one!
+  return 1;
+}
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

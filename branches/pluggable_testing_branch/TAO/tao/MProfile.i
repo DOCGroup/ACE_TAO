@@ -164,7 +164,7 @@ TAO_MProfile::profile_count (void) const
 }
 
 ACE_INLINE CORBA::ULong
-TAO_MProfile::size (void) const;
+TAO_MProfile::size (void) const
 {
   return this->size_;
 }
@@ -193,14 +193,14 @@ TAO_MProfile::grow (CORBA::ULong sz)
 
   // get the additional space
   TAO_Profile_ptr *new_pfiles, *old_pfiles;
-  ACE_NEW_RETURN (pfiles,
+  ACE_NEW_RETURN (new_pfiles,
                   TAO_Profile_ptr[sz],
                   -1);
   
   old_pfiles = this->pfiles_;
 
   // got it, now copy profiles
-  for (TAO_PHandle h = 0; h < this->size_; h++)
+  for (TAO_PHandle h = 0; h < this->size_; ++h)
     {
       new_pfiles[h] = old_pfiles[h]; 
       old_pfiles[h] = 0;

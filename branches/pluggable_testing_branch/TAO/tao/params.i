@@ -20,7 +20,7 @@ TAO_ORB_Parameters::preconnects (ACE_CString &preconnects)
   return this->parse_endpoints (preconnects, this->preconnects_list_);
 }
 
-ACE_INLINE const endpoint_set &
+ACE_INLINE TAO_EndpointSet &
 TAO_ORB_Parameters::preconnects (void)
 {
   return this->preconnects_list_;
@@ -38,7 +38,7 @@ TAO_ORB_Parameters::endpoints (ACE_CString &endpoints)
   return this->parse_endpoints (endpoints, this->endpoints_list_);
 }
 
-ACE_INLINE const endpoint_set &
+ACE_INLINE TAO_EndpointSet &
 TAO_ORB_Parameters::endpoints (void)
 {
   return this->endpoints_list_;

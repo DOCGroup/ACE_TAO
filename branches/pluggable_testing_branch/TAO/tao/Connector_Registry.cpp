@@ -43,11 +43,10 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
                 orb_core->protocol_factories ()->end ();
   TAO_ProtocolFactorySetItor factory =
                 orb_core->protocol_factories ()->begin ();
-  TAO_Connector *connector;
 
-  for (connector = 0;
-       factory != end ;
-       factory++)
+  for (TAO_Connector *connector = 0;
+       factory != end;
+       ++factory)
     {
       connector = (*factory)->factory ()->make_connector ();
 
@@ -83,29 +82,28 @@ TAO_Connector_Registry::close_all (void)
 }
 
 int
-TAO_Connector_Registry::preconnect (const char *the_preconnections)
+TAO_Connector_Registry::preconnect (TAO_EndpointSet &preconnections)
 {
-  // @@ It would be good to use auto_ptr<> to guard against premature
-  // termination and, thus, leaks.
-  char *preconnections = ACE_OS::strdup (the_preconnections);
+  TAO_EndpointSetIterator first_endpoint_set = preconnections.begin ();
+  TAO_EndpointSetIterator last_endpoint_set  = preconnections.end ();
 
-  TAO_ConnectorSetItor end =
-                this->connectors_.end ();
-  TAO_ConnectorSetItor connector =
-                this->connectors_.begin ();
-
-  for (;
-       connector != end ;
-       connector++)
+  for (TAO_EndpointSetIterator i = first_endpoint_set;
+       i != last_endpoint_set;
+       ++i)
     {
-      if (*connector)
-        (*connector)->preconnect (preconnections);
+      TAO_ConnectorSetItor first_connector = this->connectors_.begin ();
+      TAO_ConnectorSetItor last_connector  = this->connectors_.end ();
+
+      for (TAO_ConnectorSetItor connector = first_connector;
+           connector != last_connector ;
+           ++connector)
+        {
+          if (*connector)
+            (*connector)->preconnect ((*i).c_str ());
+        }
     }
 
-
-  ACE_OS::free (preconnections);
-
-  return 0;
+  return 0;  // Success
 }
 
 int
