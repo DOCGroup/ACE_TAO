@@ -16,6 +16,7 @@ OBJFILES = \
 	$(OBJDIR)\Object_Adapter.obj \
 	$(OBJDIR)\Operation_Table.obj \
 	$(OBJDIR)\ORB_Manager.obj \
+	$(OBJDIR)\ImplRepo_i.obj \
 	$(OBJDIR)\POA.obj \
 	$(OBJDIR)\POAManager.obj \
 	$(OBJDIR)\PolicyS.obj \
@@ -23,6 +24,7 @@ OBJFILES = \
 	$(OBJDIR)\PortableServerC.obj \
 	$(OBJDIR)\Servant_Base.obj \
         $(OBJDIR)\Servant_Dispatcher.obj \
+	$(OBJDIR)\ServerInterceptorAdapter.obj \
 	$(OBJDIR)\ServerRequestInfo.obj \
 	$(OBJDIR)\RT_Acceptor_Filters.obj \
         $(OBJDIR)\RT_Servant_Dispatcher.obj \

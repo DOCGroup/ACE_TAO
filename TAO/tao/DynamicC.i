@@ -68,11 +68,12 @@ Dynamic::Parameter_var::operator= (const ::Dynamic::Parameter_var &p)
         }
       else
         {
-          Dynamic::Parameter *deep_copy = new Dynamic::Parameter (*p.ptr_);
+          Parameter *deep_copy =
+            new Parameter (*p.ptr_);
           
           if (deep_copy != 0)
             {
-              Dynamic::Parameter *tmp = deep_copy;
+              Parameter *tmp = deep_copy;
               deep_copy = this->ptr_;
               this->ptr_ = tmp;
               delete deep_copy;
@@ -428,8 +429,8 @@ Dynamic::ParameterList_var::operator= (ParameterList *p)
   return *this;
 }
 
-ACE_INLINE Dynamic::ParameterList_var &
-Dynamic::ParameterList_var::operator= (const ::Dynamic::ParameterList_var &p) // deep copy
+ACE_INLINE ::Dynamic::ParameterList_var &
+Dynamic::ParameterList_var::operator= (const ::Dynamic::ParameterList_var &p)
 {
   if (this != &p)
     {
@@ -440,12 +441,12 @@ Dynamic::ParameterList_var::operator= (const ::Dynamic::ParameterList_var &p) //
         }
       else
         {
-          Dynamic::ParameterList *deep_copy = 
-            new Dynamic::ParameterList (*p.ptr_);
+          ParameterList *deep_copy =
+            new ParameterList (*p.ptr_);
           
           if (deep_copy != 0)
             {
-              Dynamic::ParameterList *tmp = deep_copy;
+              ParameterList *tmp = deep_copy;
               deep_copy = this->ptr_;
               this->ptr_ = tmp;
               delete deep_copy;
@@ -619,7 +620,9 @@ Dynamic::ParameterList_out::operator[] (CORBA::ULong index)
     ACE_NEW_RETURN (buf, CORBA::TypeCode*[nelems], 0);
     
     for (CORBA::ULong i = 0; i < nelems; i++)
-      buf[i] = CORBA::TypeCode::_nil ();
+      {
+        buf[i] = CORBA::TypeCode::_nil ();
+      }
     
     return buf;
   }
@@ -662,7 +665,9 @@ Dynamic::ParameterList_out::operator[] (CORBA::ULong index)
       CORBA::TypeCode ** const tmp2 = ACE_reinterpret_cast (CORBA::TypeCode ** ACE_CAST_CONST, rhs.buffer_);
       
       for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-        tmp1[i] = CORBA::TypeCode::_duplicate (tmp2[i]);
+        {
+          tmp1[i] = CORBA::TypeCode::_duplicate (tmp2[i]);
+        }
       
       this->buffer_ = tmp1;
     }
@@ -702,7 +707,9 @@ Dynamic::ParameterList_out::operator[] (CORBA::ULong index)
     CORBA::TypeCode ** const tmp2 = ACE_reinterpret_cast (CORBA::TypeCode ** ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-      tmp1[i] = CORBA::TypeCode::_duplicate (tmp2[i]);
+      {
+        tmp1[i] = CORBA::TypeCode::_duplicate (tmp2[i]);
+      }
     
     return *this;
   }
@@ -802,8 +809,8 @@ Dynamic::ExceptionList_var::operator= (ExceptionList *p)
   return *this;
 }
 
-ACE_INLINE Dynamic::ExceptionList_var &
-Dynamic::ExceptionList_var::operator= (const ::Dynamic::ExceptionList_var &p) // deep copy
+ACE_INLINE ::Dynamic::ExceptionList_var &
+Dynamic::ExceptionList_var::operator= (const ::Dynamic::ExceptionList_var &p)
 {
   if (this != &p)
     {
@@ -814,12 +821,12 @@ Dynamic::ExceptionList_var::operator= (const ::Dynamic::ExceptionList_var &p) //
         }
       else
         {
-          Dynamic::ExceptionList *deep_copy = 
-            new Dynamic::ExceptionList (*p.ptr_);
+          ExceptionList *deep_copy =
+            new ExceptionList (*p.ptr_);
           
           if (deep_copy != 0)
             {
-              Dynamic::ExceptionList *tmp = deep_copy;
+              ExceptionList *tmp = deep_copy;
               deep_copy = this->ptr_;
               this->ptr_ = tmp;
               delete deep_copy;
@@ -972,25 +979,6 @@ Dynamic::ExceptionList_out::operator[] (CORBA::ULong index)
 
 
 #endif /* end #if !defined */
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Dynamic::ParameterMode &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = _tao_enumval;
-  return strm << _tao_temp;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Dynamic::ParameterMode &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = 0;
-  CORBA::Boolean _tao_result = strm >> _tao_temp;
-  
-  if (_tao_result == 1)
-    {
-      _tao_enumval = ACE_static_cast (Dynamic::ParameterMode, _tao_temp);
-    }
-  
-  return _tao_result;
-}
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Dynamic::Parameter &_tao_aggregate)
 {

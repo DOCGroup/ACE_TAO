@@ -178,7 +178,20 @@ TAO_Object_Adapter::Servant_Upcall::object_adapter (void) const
 ACE_INLINE const PortableServer::ObjectId &
 TAO_Object_Adapter::Servant_Upcall::id (void) const
 {
-  return this->id_;
+  return this->system_id_;
+}
+
+ACE_INLINE void
+TAO_Object_Adapter::Servant_Upcall::user_id (
+  const PortableServer::ObjectId *id)
+{
+  this->user_id_ = id;
+}
+
+ACE_INLINE const PortableServer::ObjectId &
+TAO_Object_Adapter::Servant_Upcall::user_id (void) const
+{
+  return *(this->user_id_);
 }
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -288,4 +301,3 @@ TAO_POA_Current_Impl::priority (void) const
 {
   return this->priority_;
 }
-

@@ -247,5 +247,3 @@ ACE_TRY_ENV
 }
 
 #endif /* ACE_HAS_USING_KEYWORD */
-
-

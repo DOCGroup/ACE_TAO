@@ -71,29 +71,6 @@ TAO_GIOP_Invocation::get_inconsistent_policies (void)
   return this->inconsistent_policies_._retn ();
 }
 
-ACE_INLINE void
-TAO_GIOP_Invocation::location_forward_i (TAO_Stub *stubobj,
-                                         CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  /**
-   * Add the profiles in the given stub object to the list of forward
-   * profiles.
-   */
-  if (stubobj == 0)
-    ACE_THROW (CORBA::INTERNAL ());
-
-  // Modify the state as appropriate to include new forwarding profiles.
-  this->endpoint_selector_->forward (this,
-                                     stubobj->base_profiles (),
-                                     ACE_TRY_ENV);
-  ACE_CHECK;
-
-  this->received_location_forward_ = 1;
-
-  this->restart_flag_ = 1;
-}
-
 ACE_INLINE TAO_Stub *
 TAO_GIOP_Invocation::stub (void)
 {

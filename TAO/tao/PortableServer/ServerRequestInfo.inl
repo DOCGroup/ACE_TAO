@@ -30,8 +30,8 @@ TAO_ServerRequestInfo::forward_reference (
 
   this->reply_status_ = PortableInterceptor::LOCATION_FORWARD;
 
-  this->forward_reference_ =
-    CORBA::Object::_duplicate (exc.forward.in ());
+  // Store the forward reference in the TAO_ServerRequest object.
+  this->server_request_.forward_location (exc.forward.in ());
 }
 
 ACE_INLINE void
@@ -42,5 +42,6 @@ TAO_ServerRequestInfo::forward_reference (CORBA::Object_ptr obj)
 
   this->reply_status_ = PortableInterceptor::LOCATION_FORWARD;
 
-  this->forward_reference_ = CORBA::Object::_duplicate (obj);
+  // Store the forward reference in the TAO_ServerRequest object.
+  this->server_request_.forward_location (obj);
 }

@@ -1,4 +1,4 @@
-// @(#) $Id$
+// $Id$
 
 #include "RT_Servant_Dispatcher.h"
 #include "POA.h"
@@ -6,7 +6,9 @@
 #include "tao/TAO_Server_Request.h"
 #include "tao/debug.h"
 
-ACE_RCSID(tao, Default_Acceptor_Filter, "$Id$")
+ACE_RCSID (tao,
+           Default_Acceptor_Filter,
+           "$Id$")
 
 #if (TAO_HAS_RT_CORBA == 1)
 
@@ -20,24 +22,33 @@ RT_Priority_Model_Processing::RT_Priority_Model_Processing (TAO_POA &poa)
 RT_Priority_Model_Processing::~RT_Priority_Model_Processing (void)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
-
-  if (this->state_ == PRIORITY_RESET_REQUIRED)
+  ACE_TRY
     {
-      this->state_ = NO_ACTION_REQUIRED;
+      if (this->state_ == PRIORITY_RESET_REQUIRED)
+        {
+          this->state_ = NO_ACTION_REQUIRED;
 
-      // Reset the priority of the current thread back to its original
-      // value.
-      if (poa_.orb_core ().get_protocols_hooks ()->
-          set_thread_priority (&poa_.orb_core (),
-                               this->original_priority_,
-                               ACE_TRY_ENV)
-          == -1)
-        // At this point we cannot throw an exception.  Just log the
-        // error.
-        ACE_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) - Priority_Model_Processing:: ")
-                    ACE_TEXT (" Priority_Model_Processing\n")));
+          // Reset the priority of the current thread back to its original
+          // value.
+          int result =
+            poa_.orb_core ().get_protocols_hooks ()->
+            set_thread_priority (&poa_.orb_core (),
+                                 this->original_priority_,
+                                 ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          if (result == -1)
+            ACE_DEBUG ((LM_ERROR,
+                        ACE_TEXT ("TAO (%P|%t) - Priority_Model_Processing:: ")
+                        ACE_TEXT (" Priority_Model_Processing\n")));
+        }
     }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "~RT_Priority_Model_Processing:");
+    }
+  ACE_ENDTRY;
 }
 
 void
@@ -55,12 +66,15 @@ RT_Priority_Model_Processing::pre_invoke (
       != TAO_INVALID_PRIORITY)
     {
       // Remember current thread's priority.
-      if (poa_.orb_core ().get_protocols_hooks ()->
+      int result =
+        poa_.orb_core ().get_protocols_hooks ()->
           get_thread_priority (&poa_.orb_core (),
                                this->original_priority_,
-                               ACE_TRY_ENV)
-          == -1)
-        ACE_THROW (CORBA::DATA_CONVERSION (1,
+                               ACE_TRY_ENV);
+      ACE_CHECK;
+
+      if (result == -1)
+        ACE_THROW (CORBA::DATA_CONVERSION (TAO_OMG_VMCID | 1, // @@ Correct?
                                            CORBA::COMPLETED_NO));
 
       // Attempt to extract client-propagated priority from the
@@ -79,7 +93,7 @@ RT_Priority_Model_Processing::pre_invoke (
           CORBA::Boolean byte_order;
           if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
             ACE_THROW (CORBA::MARSHAL ());
-          cdr.reset_byte_order (ACE_static_cast(int,byte_order));
+          cdr.reset_byte_order (ACE_static_cast (int, byte_order));
 
           if ((cdr >> target_priority) == 0)
             ACE_THROW (CORBA::MARSHAL ());
@@ -108,12 +122,16 @@ RT_Priority_Model_Processing::pre_invoke (
                         ACE_TEXT (" temporarily changed to %d\n"),
                         original_priority_, target_priority));
 
-          if (poa_.orb_core ().get_protocols_hooks ()->
+          result =
+            poa_.orb_core ().get_protocols_hooks ()->
               set_thread_priority (&poa_.orb_core (),
                                    target_priority,
-                                   ACE_TRY_ENV)
-              == -1)
-            ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
+                                   ACE_TRY_ENV);
+          ACE_CHECK;
+
+          if (result == -1)
+            ACE_THROW (CORBA::DATA_CONVERSION (TAO_OMG_VMCID | 1, //@@ Correct?
+                                               CORBA::COMPLETED_NO));
 
           this->state_ = PRIORITY_RESET_REQUIRED;
         }
@@ -136,12 +154,16 @@ RT_Priority_Model_Processing::post_invoke (
 
       // Reset the priority of the current thread back to its original
       // value.
-      if (poa_.orb_core ().get_protocols_hooks ()->
+      int result =
+        poa_.orb_core ().get_protocols_hooks ()->
           set_thread_priority (&poa_.orb_core (),
                                this->original_priority_,
-                               ACE_TRY_ENV)
-          == -1)
-        ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
+                               ACE_TRY_ENV);
+      ACE_CHECK;
+
+      if (result == -1)
+        ACE_THROW (CORBA::DATA_CONVERSION (TAO_OMG_VMCID | 1, //@@ Correct?
+                                           CORBA::COMPLETED_NO));
     }
 }
 
@@ -154,7 +176,6 @@ TAO_RT_Servant_Dispatcher::~TAO_RT_Servant_Dispatcher (void)
 void
 TAO_RT_Servant_Dispatcher::dispatch (TAO_Object_Adapter::Servant_Upcall &servant_upcall,
                                      TAO_ServerRequest &req,
-                                     void *context,
                                      CORBA::Environment &ACE_TRY_ENV)
 {
   // RTCORBA PriorityModelPolicy processing (may need to be
@@ -172,7 +193,7 @@ TAO_RT_Servant_Dispatcher::dispatch (TAO_Object_Adapter::Servant_Upcall &servant
 
   // Servant dispatch.
   servant_upcall.servant ()->_dispatch (req,
-                                        context,
+                                        &servant_upcall,
                                         ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -184,4 +205,3 @@ TAO_RT_Servant_Dispatcher::dispatch (TAO_Object_Adapter::Servant_Upcall &servant
 }
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
-

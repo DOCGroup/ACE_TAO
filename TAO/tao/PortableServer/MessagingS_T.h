@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_ORIG_MESSAGINGS_T_H_
-#define _TAO_IDL_ORIG_MESSAGINGS_T_H_
+#ifndef _TAO_IDL_MESSAGINGS_T_H_
+#define _TAO_IDL_MESSAGINGS_T_H_
 
 #include "ace/pre.h"
 #if defined(_MSC_VER)

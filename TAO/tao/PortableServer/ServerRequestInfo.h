@@ -32,8 +32,9 @@
 #include "tao/StringSeqC.h"
 #include "tao/OctetSeqC.h"
 #include "tao/Service_Context.h"
+#include "tao/TAO_Server_Request.h"
 
-//#include "PortableServerC.h"
+#include "Object_Adapter.h"
 
 #include "portableserver_export.h"
 
@@ -44,13 +45,11 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_ServerRequest;
-
 
 /**
- * @class TAO_ClientRequestInfo
+ * @class TAO_ServerRequestInfo
  *
- * @brief Implementation of the PortableInterceptor::ClientRequestInfo
+ * @brief Implementation of the PortableInterceptor::ServerRequestInfo
  *        interface.
  */
 class TAO_PortableServer_Export TAO_ServerRequestInfo
@@ -60,7 +59,8 @@ class TAO_PortableServer_Export TAO_ServerRequestInfo
 public:
 
   /// Constructor.
-  TAO_ServerRequestInfo (TAO_ServerRequest &server_request);
+  TAO_ServerRequestInfo (TAO_ServerRequest &server_request,
+                         TAO_Object_Adapter::Servant_Upcall *servant_upcall);
 
   /// Return an ID unique to the current request.  This request ID may
   /// or may not be the same as the GIOP request ID.
@@ -251,13 +251,9 @@ protected:
   /// encapsulated by this TAO_ServerRequestInfo class.
   TAO_ServerRequest &server_request_;
 
-  /// Reference to the target the request will be forwarded.  This
-  /// reference is only valid if the reply status is
-  /// PortableInterceptor::LOCATION_FORWARD or LOCATION_FORWARD_PERMANENT.
-  CORBA::Object_var forward_reference_;
-
-  //  PortableServer::Current_var poa_current_;
-  //  CORBA::OctetSeq_var adapter_id_;
+  /// Pointer to the Servant_Upcall object that contains the object
+  /// ID, among other things.
+  TAO_Object_Adapter::Servant_Upcall *servant_upcall_;
 
   /// Pointer to the caught exception.
   CORBA::Exception *caught_exception_;
