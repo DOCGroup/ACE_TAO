@@ -477,9 +477,8 @@ ACE_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
       // object.
       ACE_TCHAR *function_name = ACE_const_cast (ACE_TCHAR *,
                                                  this->function_name_);
-      func = ACE_reinterpret_cast (ACE_Service_Factory_Ptr,
-                                   this->dll_.symbol (function_name));
-      if (func == 0)
+      void *func_p = this->dll_.symbol (function_name);
+      if (func_p == 0)
         {
           ace_yyerrno++;
 
@@ -496,6 +495,13 @@ ACE_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
               return 0;
             }
         }
+#if defined (__GNUG__)
+      // g++ won't allow void*->func*
+      ptrdiff_t temp_p = ACE_reinterpret_cast (ptrdiff_t, func_p);
+      func = ACE_reinterpret_cast (ACE_Service_Factory_Ptr, temp_p);
+#else
+      func = ACE_reinterpret_cast (ACE_Service_Factory_Ptr, func_p);
+#endif /* __GNUG__ */
       // Invoke the factory function and record it's return value.
       this->symbol_ = (*func) (gobbler);
 
