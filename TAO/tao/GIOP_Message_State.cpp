@@ -35,9 +35,7 @@ TAO_GIOP_Message_State::TAO_GIOP_Message_State (
 int
 TAO_GIOP_Message_State::parse_message_header (ACE_Message_Block &incoming)
 {
-  // @@Bala:  Need to make a check whether we are waiting for the
-  // header...
-  if (incoming.length () > TAO_GIOP_MESSAGE_HEADER_LEN)
+  if (incoming.length () >= TAO_GIOP_MESSAGE_HEADER_LEN)
     {
       // Parse the GIOP header
       if (this->parse_message_header_i (incoming) == -1)

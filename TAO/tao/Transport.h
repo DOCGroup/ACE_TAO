@@ -595,8 +595,7 @@ protected:
                                   TAO_Resume_Handle &rh);
 
   /// @@ Bala: Documentation
-  virtual int process_parsed_messages (TAO_Queued_Data *qd,
-                                       TAO_Resume_Handle &rh);
+  virtual int process_parsed_messages (TAO_Queued_Data *qd);
 
 public:
   /// Method for the connection handler to signify that it

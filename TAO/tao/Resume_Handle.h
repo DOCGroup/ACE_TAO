@@ -52,6 +52,19 @@ public:
   /// Dtor
   ~TAO_Resume_Handle (void);
 
+  enum TAO_Handle_Resume_Flag
+  {
+    TAO_HANDLE_RESUMABLE = 0,
+    TAO_HANDLE_ALREADY_RESUMED,
+    TAO_HANDLE_LEAVE_SUSPENDED
+  };
+
+  /// Allow the users of this class to change the underlying flag.
+  void set_flag (TAO_Handle_Resume_Flag fl);
+
+  /// Equal to operator..
+  TAO_Resume_Handle &operator= (const TAO_Resume_Handle &rhs);
+
   /// Resume the handle in the reactor only if the ORB uses a TP
   /// reactor. Else we dont resume the handle.
   void resume_handle (void);
@@ -66,7 +79,7 @@ private:
 
   /// Th flag for indicating whether the handle has been resumed or
   /// not. A value of '0' indicates that the handle needs resumption.
-  int flag_;
+  TAO_Handle_Resume_Flag flag_;
 };
 
 #if defined (__ACE_INLINE__)

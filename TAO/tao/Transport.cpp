@@ -791,6 +791,16 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
                                ACE_Time_Value * max_wait_time,
                                int /*block*/)
 {
+  // First try to process messages of the head of the incoming queue.
+  int retval = this->process_queue_head (rh);
+
+  if (retval <= 0)
+    {
+      return retval;
+    }
+  // If there are no messages then we can go ahead to read from the
+  // handle for further reading..
+
   // The buffer on the stack which will be used to hold the input
   // messages
   char buf [TAO_CONNECTION_HANDLER_BUF_SIZE];
@@ -819,6 +829,7 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
   // Align the message block
   ACE_CDR::mb_align (&message_block);
 
+
   // Read the message into the  message block that we have created on
   // the stack.
   ssize_t n =
@@ -826,33 +837,24 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
                 message_block.space (),
                 max_wait_time);
 
-
-
   if (n <= 0)
     {
-      // Even if we have read failure just try to see if we have a
-      // message on the head of the queue and try to process that...
-      this->process_queue_head (rh);
-
-      if (this->incoming_message_queue_.queue_length () == 0)
-        return n;
-
-      return 0;
+      return n;
     }
 
-  /*  if (TAO_debug_level > 2)
-      {*/
+  if (TAO_debug_level > 2)
+    {
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) Read [%d] bytes \n",
                   n));
-      // }
+    }
 
   // Set the write pointer in the stack buffer
   message_block.wr_ptr (n);
 
-  int retval = this->parse_consolidate_messages (message_block,
-                                                 rh,
-                                                 max_wait_time);
+  retval = this->parse_consolidate_messages (message_block,
+                                             rh,
+                                             max_wait_time);
 
   if (retval <= 0)
     {
@@ -872,9 +874,11 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
   // Extract the data for the node..
   this->messaging_object ()->get_message_data (&qd);
 
+  // Resume before starting to process the request..
+  rh.resume_handle ();
+
   // Process the message
-  return this->process_parsed_messages (&qd,
-                                        rh);
+  return this->process_parsed_messages (&qd);
 }
 
 int
@@ -1015,10 +1019,12 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
 
   this->messaging_object ()->get_message_data (&pqd);
 
+  // Resume the handle before processing the request
+  rh.resume_handle ();
+
   // Now we have a full message in our buffer. Just go ahead and
   // process that
-  return this->process_parsed_messages (&pqd,
-                                        rh);
+  return this->process_parsed_messages (&pqd);
 }
 
 int
@@ -1060,6 +1066,8 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
             }
           return retval;
         }
+
+      return 0;
     }
 
   // If we still have some missing data..
@@ -1110,9 +1118,14 @@ TAO_Transport::consolidate_extra_messages (ACE_Message_Block
 
   if (tail)
     {
+      size_t rd_pos = incoming.rd_ptr () - incoming.base ();
+
       if (this->messaging_object ()->consolidate_node (tail,
                                                        incoming) == -1)
         return -1;
+
+      rd_pos = incoming.rd_ptr () - incoming.base ();
+
       // .. put the tail back in queue..
       this->incoming_message_queue_.enqueue_tail (tail);
     }
@@ -1129,6 +1142,7 @@ TAO_Transport::consolidate_extra_messages (ACE_Message_Block
       retval =
         this->messaging_object ()->extract_next_message (incoming,
                                                          q_data);
+
       if (q_data)
         this->incoming_message_queue_.enqueue_tail (q_data);
     }
@@ -1142,12 +1156,8 @@ TAO_Transport::consolidate_extra_messages (ACE_Message_Block
 }
 
 int
-TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
-                                        TAO_Resume_Handle &rh)
+TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd)
 {
-  // As we have the message now just resume the handle..
-  rh.resume_handle ();
-
   // Get the <message_type> that we have received
   TAO_Pluggable_Message_Type t =
     qd->msg_type_;
@@ -1287,6 +1297,7 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
                   this->id ()));
     }
 
+
   // See if the message in the head of the queue is complete...
   if (this->incoming_message_queue_.is_head_complete () == 1)
     {
@@ -1294,25 +1305,30 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
       TAO_Queued_Data *qd =
         this->incoming_message_queue_.dequeue_head ();
 
+      // Get the event handler..
+      ACE_Event_Handler *eh = this->event_handler_i ();
+      if (eh == 0)
+        return -1;
+
       // Now that we have pulled out out one message out of the queue,
       // check whether we have one more message in the queue...
       if (this->incoming_message_queue_.is_head_complete () == 1)
         {
-          // If we do have, then we get the event handler..
-          ACE_Event_Handler *eh = this->event_handler_i ();
-          if (eh == 0)
-            return -1;
-
+          // Get the reactor associated with the event handler
           ACE_Reactor *reactor = eh->reactor ();
           if (reactor == 0)
             return -1;
 
-          if (TAO_debug_level > 3)
+          if (TAO_debug_level > 0)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "TAO (%P|%t) - Transport[%d]::notify to Reactor\n",
                           this->id ()));
             }
+
+          // Let the class know that it doesn't need to resume  the
+          // handle..
+          rh.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
 
           // Send a notification to the reactor...
           int retval = reactor->notify (eh,
@@ -1323,14 +1339,26 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
               // @@todo: need to think about what is the action that
               // we can take when we get here.
               ACE_DEBUG ((LM_DEBUG,
-                          "TAO (%P|%t) - Transport::process_queue_head ",
-                          "notify to the reactor failed.. \n"));
+                          ACE_TEXT ("TAO (%P|%t) - Transport::process_queue_head ")
+                          ACE_TEXT ("notify to the reactor failed.. \n")));
             }
 
         }
+      else
+        {
+          // We dont have any more messages in the queue. Get the
+          // handle associated with the Transport and make a
+          // TAO_Resume_Handle out of it
+          TAO_Resume_Handle new_rh (this->orb_core_,
+                                    eh->get_handle ());
+
+          // As we are ready to process the last message just resume
+          // the handle
+          new_rh.resume_handle ();
+        }
+
       // Process the message...
-      if (this->process_parsed_messages (qd,
-                                         rh) == -1)
+      if (this->process_parsed_messages (qd) == -1)
         return -1;
 
       // Delete the Queued_Data..
@@ -1339,7 +1367,7 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
       return 0;
     }
 
-  return -1;
+  return 1;
 }
 
 
