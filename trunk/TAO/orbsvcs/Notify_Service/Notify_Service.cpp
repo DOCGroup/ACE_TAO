@@ -71,6 +71,16 @@ Notify_Service::startup (int argc, char *argv[],
   if (this->parse_args(argc, argv) != 0)
     return -1;
 
+  // Check first if the naming service
+  if (this->use_name_svc_)
+    {
+      // Resolve the naming service.
+      if (this->resolve_naming_service (ACE_TRY_ENV) != 0)
+        return -1;
+
+      ACE_CHECK_RETURN (-1);
+  }
+
   ACE_DEBUG ((LM_DEBUG,
               "\nStarting up the Notification Service...\n"));
 
@@ -85,6 +95,7 @@ Notify_Service::startup (int argc, char *argv[],
   // Write IOR to a file, if asked.
   CORBA::String_var str =
     this->orb_->object_to_string (this->notify_factory_.in (), ACE_TRY_ENV);
+
   if (this->ior_output_file_)
     {
       ACE_OS::fprintf (this->ior_output_file_,
@@ -113,53 +124,49 @@ Notify_Service::startup (int argc, char *argv[],
   // Register with the Name service, if asked
   if (this->use_name_svc_)
   {
-      // Resolve the naming service.
-      this->resolve_naming_service (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
+    // Register the Factory
+    ACE_ASSERT(!CORBA::is_nil (this->naming_.in ()));
 
-      // Register the Factory
-      ACE_ASSERT(!CORBA::is_nil (this->naming_.in ()));
+    CosNaming::Name name (1);
+    name.length (1);
+    name[0].id =
+      CORBA::string_dup (this->notify_factory_name_.c_str ());
 
-      CosNaming::Name name (1);
-      name.length (1);
-      name[0].id =
-          CORBA::string_dup (this->notify_factory_name_.c_str ());
+    this->naming_->rebind (name,
+                           this->notify_factory_.in (),
+                           ACE_TRY_ENV);
+    ACE_CHECK_RETURN (-1);
 
-      this->naming_->rebind (name,
-                             this->notify_factory_.in (),
-                             ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
+    ACE_DEBUG ((LM_DEBUG,
+                "Registered with the naming service as: %s\n",
+                this->notify_factory_name_.c_str()));
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Registered with the naming service as: %s\n",
-                  this->notify_factory_name_.c_str()));
+    if (this->register_event_channel_ == 1)
+      {
+        // create an event channel
+        CosNotifyChannelAdmin::ChannelID id;
 
-      if (this->register_event_channel_ == 1)
-        {
-          // create an event channel
-          CosNotifyChannelAdmin::ChannelID id;
+        CosNotification::QoSProperties initial_qos;
+        CosNotification::AdminProperties initial_admin;
 
-          CosNotification::QoSProperties initial_qos;
-          CosNotification::AdminProperties initial_admin;
+        CosNotifyChannelAdmin::EventChannel_var ec =
+          this->notify_factory_->create_channel (initial_qos,
+                                                 initial_admin,
+                                                 id,
+                                                 ACE_TRY_ENV);
+        name[0].id =
+          CORBA::string_dup (this->notify_channel_name_.c_str ());
 
-          CosNotifyChannelAdmin::EventChannel_var ec =
-            this->notify_factory_->create_channel (initial_qos,
-                                                   initial_admin,
-                                                   id,
-                                                   ACE_TRY_ENV);
-          name[0].id =
-            CORBA::string_dup (this->notify_channel_name_.c_str ());
+        this->naming_->rebind (name,
+                               ec.in (),
+                               ACE_TRY_ENV);
+        ACE_CHECK_RETURN (-1);
 
-          this->naming_->rebind (name,
-                                 ec.in (),
-                                 ACE_TRY_ENV);
-          ACE_CHECK_RETURN (-1);
+        ACE_DEBUG ((LM_DEBUG,
+                    "Registered an Event Channel with the naming service as: %s\n",
+                    this->notify_channel_name_.c_str()));
 
-          ACE_DEBUG ((LM_DEBUG,
-                      "Registered an Event Channel with the naming service as: %s\n",
-                      this->notify_channel_name_.c_str()));
-
-        }
+      }
   }
 
   return 0;
