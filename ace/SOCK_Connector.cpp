@@ -42,7 +42,7 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
   sockaddr *raddr = (sockaddr *) remote_sap.get_addr ();
   size_t rsize = remote_sap.get_size ();
 
-  if (&local_sap != &ACE_Addr::sap_any)
+  if (local_sap != ACE_Addr::sap_any)
     {
       sockaddr *laddr = (sockaddr *) local_sap.get_addr ();
       size_t size = local_sap.get_size ();
