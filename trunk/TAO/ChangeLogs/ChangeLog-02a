@@ -1,3 +1,10 @@
+Mon Nov 27 12:33:23 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* orbsvcs/Trading_Service/Trading_Service.cpp:
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
+	  Removed auto_ptr and ACE_Auto_Basic_Ptr from Trading_Service.cpp
+	  and added it back to Trading_Loader.cpp.
+	
 Sun Nov 26 19:47:25 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Invocation.cpp (start): Reset the reply_received field in
