@@ -1,3 +1,8 @@
+Thu Oct 22 21:35:17 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* TAO-INSTALL.html: Since we've been successfully using MSVC 6.0
+	  for a while, might as well mention it here in the documentation,
+
 Thu Oct 22 20:43:06 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
         * tao/DynAnyC.h:
