@@ -56,17 +56,10 @@ public:
   virtual TAO_GIOP_Message_State *message_state (void);
   // Get the Message State into which the reply has been read.
 
-  IOP::ServiceContextList& reply_service_info ();
-  // Accessing the reply service context list.
-
   virtual int leader_follower_condition_variable (TAO_Transport *);
   // Obtain the condition variable used in the Leader Follower Wait
   // Strategy. This is valid only for the synchronous reply dispatcher
   // and only when the Leader Follower wait strategy is used.
-
-protected:
-  IOP::ServiceContextList reply_service_info_;
-  // The service context list
 };
 
 // *********************************************************************
@@ -81,7 +74,8 @@ class TAO_Export TAO_Synch_Reply_Dispatcher : public TAO_Reply_Dispatcher
   //
 
 public:
-  TAO_Synch_Reply_Dispatcher (TAO_ORB_Core *orb_core);
+  TAO_Synch_Reply_Dispatcher (TAO_ORB_Core *orb_core,
+                              IOP::ServiceContextList &sc);
   // Constructor.
 
   virtual ~TAO_Synch_Reply_Dispatcher (void);
@@ -117,6 +111,10 @@ public:
   virtual int leader_follower_condition_variable (TAO_Transport *);
   // Obtain the condition variable used in the Leader Follower Wait
   // Strategy.
+
+protected:
+  IOP::ServiceContextList &reply_service_info_;
+  // The service context list
 
 private:
   CORBA::ULong reply_status_;

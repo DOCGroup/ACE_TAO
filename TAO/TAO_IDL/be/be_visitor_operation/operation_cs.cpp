@@ -796,7 +796,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
       *os << "1";
     }
   *os << ", this, " << this->compute_operation_name (node)
-      << ", _tao_call.request_service_info (), "
+      << ", _tao_call.service_info (), "
       << "_tao_cookies, ACE_TRY_ENV));\n";
   if (this->gen_check_interceptor_exception (bt) == -1)
     {
@@ -1028,7 +1028,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
       *os << "1";
     }
   *os << ", this, " << this->compute_operation_name (node)
-      << ", _tao_call.reply_service_info (), "
+      << ", _tao_call.service_info (), "
       << "_tao_cookies, ACE_TRY_ENV));\n";
   if (this->gen_check_interceptor_exception (bt) == -1)
     {
@@ -1059,7 +1059,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
       *os << "1";
     }
   *os << ", this, " << this->compute_operation_name (node)
-      << ", " // _tao_call.reply_service_info (), "
+      << ", " // _tao_call.service_info (), "
       << "_tao_cookies, ACE_TRY_ENV);" << be_nl
       << "ACE_RETHROW;" << be_uidt_nl
       << "}" << be_uidt_nl

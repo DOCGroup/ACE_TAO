@@ -163,8 +163,7 @@ public:
                                TAO_default_environment ()) = 0;
   // Start a Reply message.
 
-  virtual IOP::ServiceContextList &request_service_info (void) = 0;
-  virtual IOP::ServiceContextList &reply_service_info (void) = 0;
+  virtual IOP::ServiceContextList &service_info (void) = 0;
   // Accessor to the underlying ServiceContextList for request/reply
   // message.
 

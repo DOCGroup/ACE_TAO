@@ -115,19 +115,9 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
         *os << "_get_";
     }
   *os << node->local_name ()
-      << "_skel (" << be_idt << be_idt_nl;
-
-  if (node->flags () == AST_Operation::OP_oneway
-      && !this->has_param_type (node, AST_Argument::dir_IN))
-    {
-      *os << "CORBA::ServerRequest &/* _tao_server_request */, " << be_nl;
-    }
-  else
-    {
-      *os << "CORBA::ServerRequest &_tao_server_request, " << be_nl;
-    }
-
-  *os << "void *_tao_object_reference, " << be_nl
+      << "_skel (" << be_idt << be_idt_nl
+      << "CORBA::ServerRequest &_tao_server_request," << be_nl
+      << "void *_tao_object_reference, " << be_nl
       << "void * /* context */, " << be_nl
       << "CORBA::Environment &ACE_TRY_ENV" << be_uidt << be_uidt_nl
       << ")" << be_nl;
@@ -204,10 +194,17 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   else
     *os << "1";
   *os << ", 0, " << this->compute_operation_name (node)
-      << ", _tao_server_request.request_service_info (), "
+      << ", _tao_server_request.service_info (), "
       << "_tao_cookies, ACE_TRY_ENV);" << be_nl
-      << "TAO_INTERCEPTOR_CHECK;\n"
-      << "#endif /* TAO_HAS_INTERCEPTOR */\n\n";
+      << "TAO_INTERCEPTOR_CHECK;\n";
+  if (node->flags () == AST_Operation::OP_oneway
+      && !this->has_param_type (node, AST_Argument::dir_IN))
+    {
+      *os << "#else" << be_nl
+          << "ACE_UNUSED_ARG (_tao_server_request);\n";
+    }
+
+  *os << "#endif /* TAO_HAS_INTERCEPTOR */\n\n";
 
   // do pre upcall processing if any
   ctx = *this->ctx_;
@@ -263,7 +260,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   else
     *os << "1";
   *os << ", 0, " << this->compute_operation_name (node)
-      << ", _tao_server_request.reply_service_info (), "
+      << ", _tao_server_request.service_info (), "
       << "_tao_cookies, ACE_TRY_ENV);" << be_nl
       << "TAO_INTERCEPTOR_CHECK;" << be_uidt_nl
       << "}" << be_uidt_nl
@@ -275,7 +272,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   else
     *os << "1";
   *os << ", 0, " << this->compute_operation_name (node)
-      << ", "// _tao_server_request.reply_service_info (), "
+      << ", "// _tao_server_request.service_info (), "
       << "_tao_cookies, ACE_TRY_ENV);" << be_nl
       << "ACE_RETHROW;" << be_uidt_nl
       << "}" << be_uidt_nl
