@@ -25,7 +25,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/ACE_export.h"
-#include "ace/Basic_Types.h"
 #include "ace/SStringfwd.h"
 
 ////////////////////////////////////////////////////////////
@@ -133,9 +132,6 @@ public:
 #if defined (__ACE_INLINE__)
 #include "ace/Functor_String.inl"
 #endif /* __ACE_INLINE__ */
-
-// Include the templates here.
-#include "ace/Functor_T.h"
 
 #include /**/ "ace/post.h"
 #endif /*ACE_FUNCTOR_STRING_H*/

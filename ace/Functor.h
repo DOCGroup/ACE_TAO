@@ -460,8 +460,5 @@ public:
 #include "ace/Functor.i"
 #endif /* __ACE_INLINE__ */
 
-// Include the templates here.
-#include "ace/Functor_T.h"
-
 #include /**/ "ace/post.h"
 #endif /* ACE_FUNCTOR_H */

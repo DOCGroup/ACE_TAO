@@ -1,4 +1,3 @@
-#include "ace/Functor_T.h"
 #include "ace/Functor_String.h"
 
 #if !defined (__ACE_INLINE__)
