@@ -1,3 +1,14 @@
+Tue Jun 15 20:28:30 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao/Strategies/SCIOP_Endpoint.cpp: 
+
+	  Added missing include files.
+
+	* performance-tests/Protocols/server.cpp:
+	* performance-tests/Protocols/client.cpp: 
+
+	  Minor fix.
+	
 Tue Jun 15 16:13:30 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	* performance-tests\Protocols:
