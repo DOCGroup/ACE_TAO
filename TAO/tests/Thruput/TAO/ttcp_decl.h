@@ -59,7 +59,7 @@ extern ACE_Svc_Export CORBA::Char fmt;		/* output format:k=kilobits,K=kilobytes,
 extern ACE_Svc_Export CORBA::Char *title;
 
 extern ACE_Svc_Export CORBA::Char stats[128];
-extern ACE_Svc_Export CORBA::ULong srcDataSize;	/* Total amount of source data */
+extern ACE_Svc_Export unsigned long srcDataSize;	/* Total amount of source data */
 extern ACE_Svc_Export CORBA::ULong nbytes;		/* bytes on net */
 extern ACE_Svc_Export CORBA::ULong numCalls;		/* # of I/O system calls */
 extern ACE_Svc_Export CORBA::Double cput, realt;		/* user, real time (seconds) */
