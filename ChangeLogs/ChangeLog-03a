@@ -1,3 +1,10 @@
+Fri Feb  4 16:31:22 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/Message_Queue_Notifications_Test.cpp: Use ACE_HAS_THREADS
+          rather than ACE_MT to leave out the ACE_Barriers in Watermark_Test
+          class when building without threads to avoid compile errors on
+          Sun C++ 4.2.
+
 Fri Feb  4 15:11:53 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/config-hpux-11.00.h: New config file to handle building on
