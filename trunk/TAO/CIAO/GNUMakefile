@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
 #       $Id$
 #
-#       Top-level Makefile for the CIAO
+#       Top-level Makefile for CIAO
 #----------------------------------------------------------------------------
 
 #### The "release" targets can be used to create the ACE+TAO+CIAO kit.  By
@@ -22,7 +22,7 @@ ALT_DIRS = CIDLC \
            examples \
            tests
 
-CLONE   = Makefile \
+CLONE   = GNUMakefile \
 	  CIDLC \
 	  bin \
 	  ciao \
@@ -47,7 +47,7 @@ ifneq ($(static_libs_only),1)
 endif #static_libs_only
 
 # Need boost and utility libs in order to compile these.  You
-# may need to run MPC in these directories to create the Makefiles
+# may need to run MPC in these directories to create the GNUMakefiles
 # first.
 ifdef BOOST_ROOT
   ifdef UTILITY_ROOT
