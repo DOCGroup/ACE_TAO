@@ -435,33 +435,20 @@ Connection_Manager::add_streamctrl (const ACE_CString &flowname,
                                     ACE_ENV_ARG_DECL)
 {
   // Get the stream controller for this endpoint.
-  CORBA::Any_ptr streamctrl_any =
+  CORBA::Any_var streamctrl_any =
     endpoint->get_property_value ("Related_StreamCtrl"
                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   AVStreams::StreamCtrl_ptr streamctrl;
 
-  *streamctrl_any >>= streamctrl;
-
-  this->streamctrls_.bind (flowname,
-                           streamctrl);
-}
-
-void
-Connection_Manager::destroy (ACE_ENV_SINGLE_ARG_DECL)
-{
-  AVStreams::flowSpec stop_spec;
-
-  // Destroy all the stream controls.
-  for (StreamCtrls::iterator iterator = this->streamctrls_.begin ();
-       iterator != this->streamctrls_.end ();
-       ++iterator)
-    {
-      (*iterator).int_id_->destroy (stop_spec
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }
+  if( streamctrl_any.in() >>= streamctrl )
+  {
+     // Any still owns the pointer, so we duplicate it 
+     AVStreams::StreamCtrl::_duplicate( streamctrl );
+     this->streamctrls_.bind (flowname,
+                             streamctrl);
+  }
 }
 
 void
@@ -471,14 +458,8 @@ Connection_Manager::destroy (const ACE_CString &flowname
   this->protocol_objects_.unbind (flowname);
   this->receivers_.unbind (flowname);
 
-  AVStreams::StreamCtrl_var streamctrl;
-  this->streamctrls_.unbind (flowname,
-                             streamctrl);
+  this->streamctrls_.unbind (flowname );
 
-  AVStreams::flowSpec stop_spec;
-  streamctrl->destroy (stop_spec
-                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 Connection_Manager::Receivers &
