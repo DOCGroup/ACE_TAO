@@ -63,8 +63,12 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
             return -1;
     }
 
+  ACE_Time_Value t;
+  if (timeout != 0)
+    t = *timeout;   // Need a non-const copy.
+
   // Take into account the time between each select() call below.
-  ACE_Countdown_Time countdown (timeout);
+  ACE_Countdown_Time countdown ((timeout == 0 ? 0 : &t));
 
   int status;
   do

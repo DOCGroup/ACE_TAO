@@ -1,3 +1,17 @@
+Thu Feb 20 18:20:19 2003  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_SOCK_Acceptor.h (ACE_SSL_SOCK_Acceptor):
+
+	  Reverted the change that made this class inherit privately from
+	  ACE_SSL_SOCK instead of publically.  While this isn't strictly
+	  the correct thing to do, IMO, it does correct some compile-time
+	  problems.
+
+	* ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
+
+	  Fixed compile-time error related to violation of a const
+	  qualifier on a pointer to the timeout value.
+
 Thu Feb 20 19:18:17 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ChangeLogs/ChangeLog-02b:
@@ -310,7 +324,7 @@ Thu Feb 20 09:23:51 2003  Ossama Othman  <ossama@uci.edu>
 
 	  Use ACE_Countdown_Time to take into account the time between
 	  each call to select() instead of using the same timeout value in
-	  each loop iteration.
+	  each loop iteration.  [Bug 1110]
 
 	* ace/SSL/SSL_SOCK_Stream.cpp (get_remote_addr):
 
