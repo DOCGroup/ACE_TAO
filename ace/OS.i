@@ -6182,6 +6182,8 @@ ACE_OS::open (const char *filename,
 
   if ((mode & (_O_CREAT | _O_EXCL)) == (_O_CREAT | _O_EXCL))
     creation = CREATE_NEW;
+  else if ((mode & (_O_CREAT | _O_TRUNC)) == (_O_CREAT | _O_TRUNC))
+    creation = CREATE_ALWAYS;
   else if (ACE_BIT_ENABLED (mode, _O_CREAT))
     creation = OPEN_ALWAYS;
   else if (ACE_BIT_ENABLED (mode, _O_TRUNC))
