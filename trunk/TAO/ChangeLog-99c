@@ -1,39 +1,39 @@
 Wed Aug 11 13:35:11 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Typecode_Constants.cpp (init): I didn't remove all
-	  ServiceContextList related code completely.  Thanks to Carlos
-	  for pointing this out.
+        * tao/Typecode_Constants.cpp (init): I didn't remove all
+          ServiceContextList related code completely.  Thanks to Carlos
+          for pointing this out.
 
-	* tao/UIOP_Transport.cpp (handle_client_input): Changed
-	  TAO_GIOP_ServiceContextList to IOP::ServiceContextList.  Thanks
-	  to David for reporting this.
+        * tao/UIOP_Transport.cpp (handle_client_input): Changed
+          TAO_GIOP_ServiceContextList to IOP::ServiceContextList.  Thanks
+          to David for reporting this.
 
 Wed Aug 11 13:06:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* rules.tao.GNU:
-	  Put some sanity back into the definition of the interface_repo
-	  macro. If set to 1 then we enable the interface repository
-	  features in TAO, otherwise it is disabled.  The default is to
-	  have them enabled.
+        * rules.tao.GNU:
+          Put some sanity back into the definition of the interface_repo
+          macro. If set to 1 then we enable the interface repository
+          features in TAO, otherwise it is disabled.  The default is to
+          have them enabled.
 
 Wed Aug 11 12:13:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
-	  Fixed memory managment problems in the connected_fep()
-	  implemenation.
-	  Fixed connection when using multiple flows.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+          Fixed memory managment problems in the connected_fep()
+          implemenation.
+          Fixed connection when using multiple flows.
 
-	* orbsvcs/tests/AVStreams/Makefile:
-	* orbsvcs/tests/AVStreams/Latency/Makefile:
-	* orbsvcs/tests/AVStreams/Latency/README:
-	* orbsvcs/tests/AVStreams/Latency/control.cpp:
-	* orbsvcs/tests/AVStreams/Latency/ping.cpp:
-	* orbsvcs/tests/AVStreams/Latency/ping.h:
-	* orbsvcs/tests/AVStreams/Latency/pong.cpp:
-	* orbsvcs/tests/AVStreams/Latency/pong.h:
-	* orbsvcs/tests/AVStreams/Latency/svc.conf:
-	  A simple latency test for the AV streams pluggable protocol
-	  framework.
+        * orbsvcs/tests/AVStreams/Makefile:
+        * orbsvcs/tests/AVStreams/Latency/Makefile:
+        * orbsvcs/tests/AVStreams/Latency/README:
+        * orbsvcs/tests/AVStreams/Latency/control.cpp:
+        * orbsvcs/tests/AVStreams/Latency/ping.cpp:
+        * orbsvcs/tests/AVStreams/Latency/ping.h:
+        * orbsvcs/tests/AVStreams/Latency/pong.cpp:
+        * orbsvcs/tests/AVStreams/Latency/pong.h:
+        * orbsvcs/tests/AVStreams/Latency/svc.conf:
+          A simple latency test for the AV streams pluggable protocol
+          framework.
 
 Wed Aug 11 11:18:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
