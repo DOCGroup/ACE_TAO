@@ -302,19 +302,21 @@ be_union::gen_var_impl (char *,
   // constr from a pointer
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << this->name () << " *p)" << nl;
+  *ci << fname << "::" << lname << " (" << ACE_GLOBAL_COLONS 
+      << this->name () << " *p)" << nl;
   *ci << "  : ptr_ (p)" << nl;
   *ci << "{}\n\n";
 
   // copy constructor
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (const " << fname <<
+  *ci << fname << "::" << lname << " (const ::" << fname <<
     " &p) // copy constructor" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "if (p.ptr_)" << nl;
-  *ci << "  ACE_NEW (this->ptr_, " << this->name () << " (*p.ptr_));" << nl;
+  *ci << "  ACE_NEW (this->ptr_, ::" << this->name () 
+      << " (*p.ptr_));" << nl;
   *ci << "else" << nl;
   *ci << "  this->ptr_ = 0;\n";
   ci->decr_indent ();
@@ -325,11 +327,11 @@ be_union::gen_var_impl (char *,
     {
       *ci << "// fixed-size types only" << nl;
       *ci << "ACE_INLINE" << nl;
-      *ci << fname << "::" << lname << " (const " 
+      *ci << fname << "::" << lname << " (const ::" 
           << this->name () << " &p)" << nl;
       *ci << "{\n";
       ci->incr_indent ();
-      *ci << "ACE_NEW (this->ptr_, " << this->name () 
+      *ci << "ACE_NEW (this->ptr_, ::" << this->name () 
           << " (p));\n";
       ci->decr_indent ();
       *ci << "}\n\n";
@@ -347,9 +349,9 @@ be_union::gen_var_impl (char *,
 
   // assignment operator from a pointer
   ci->indent ();
-  *ci << "ACE_INLINE " << fname << " &" << nl;
-  *ci << fname << "::operator= (" << this->name () <<
-    " *p)" << nl;
+  *ci << "ACE_INLINE ::" << fname << " &" << nl;
+  *ci << fname << "::operator= (" << ACE_GLOBAL_COLONS 
+      << this->name () << " *p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "delete this->ptr_;" << nl;
@@ -360,8 +362,8 @@ be_union::gen_var_impl (char *,
 
   // assignment operator from _var
   ci->indent ();
-  *ci << "ACE_INLINE " << fname << " &" << nl;
-  *ci << fname << "::operator= (const " << fname <<
+  *ci << "ACE_INLINE ::" << fname << " &" << nl;
+  *ci << fname << "::operator= (const ::" << fname <<
     " &p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -369,7 +371,7 @@ be_union::gen_var_impl (char *,
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "delete this->ptr_;" << nl;
-  *ci << "ACE_NEW_RETURN (this->ptr_, " << this->name () 
+  *ci << "ACE_NEW_RETURN (this->ptr_, ::" << this->name () 
       << " (*p.ptr_), *this);\n";
   ci->decr_indent ();
   *ci << "}" << nl;
@@ -382,8 +384,8 @@ be_union::gen_var_impl (char *,
     {
       ci->indent ();
       *ci << "// fixed-size types only" << nl;
-      *ci << "ACE_INLINE " << fname << " &" << nl;
-      *ci << fname << "::operator= (const " << this->name () 
+      *ci << "ACE_INLINE ::" << fname << " &" << nl;
+      *ci << fname << "::operator= (const ::" << this->name () 
           << " &p)" << nl;
       *ci << "{\n";
       ci->incr_indent ();
@@ -391,7 +393,7 @@ be_union::gen_var_impl (char *,
       *ci << "{\n";
       ci->incr_indent ();
       *ci << "delete this->ptr_;" << nl;
-      *ci << "ACE_NEW_RETURN (this->ptr_, " 
+      *ci << "ACE_NEW_RETURN (this->ptr_, ::" 
           << this->name () << " (p), *this);\n";
       ci->decr_indent ();
       *ci << "}" << nl;
@@ -402,7 +404,7 @@ be_union::gen_var_impl (char *,
 
   // two arrow operators
   ci->indent ();
-  *ci << "ACE_INLINE const " << this->name () << " *" << nl;
+  *ci << "ACE_INLINE const ::" << this->name () << " *" << nl;
   *ci << fname << "::operator-> (void) const" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -411,7 +413,7 @@ be_union::gen_var_impl (char *,
   *ci << "}\n\n";
 
   ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << " *" << nl;
+  *ci << "ACE_INLINE ::" << this->name () << " *" << nl;
   *ci << fname << "::operator-> (void)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -422,7 +424,7 @@ be_union::gen_var_impl (char *,
   // other extra methods - 3 cast operator ()
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator const " << this->name () 
+  *ci << fname << "::operator const ::" << this->name () 
       << " &() const // cast" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -432,7 +434,8 @@ be_union::gen_var_impl (char *,
 
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator " << this->name () << " &() // cast " << nl;
+  *ci << fname << "::operator ::" << this->name () 
+      << " &() // cast " << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "return *this->ptr_;\n";
@@ -441,7 +444,7 @@ be_union::gen_var_impl (char *,
 
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator " << this->name () 
+  *ci << fname << "::operator ::" << this->name () 
       << " &() const// cast " << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -455,7 +458,7 @@ be_union::gen_var_impl (char *,
       ci->indent ();
       *ci << "// variable-size types only" << nl;
       *ci << "ACE_INLINE" << nl;
-      *ci << fname << "::operator " << this->name () 
+      *ci << fname << "::operator ::" << this->name () 
           << " *&() // cast " << nl;
       *ci << "{\n";
       ci->incr_indent ();
@@ -466,7 +469,7 @@ be_union::gen_var_impl (char *,
 
   // in, inout, out, _retn, and ptr
   ci->indent ();
-  *ci << "ACE_INLINE const " << this->name () << " &" << nl;
+  *ci << "ACE_INLINE const ::" << this->name () << " &" << nl;
   *ci << fname << "::in (void) const" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -475,7 +478,7 @@ be_union::gen_var_impl (char *,
   *ci << "}\n\n";
 
   ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << " &" << nl;
+  *ci << "ACE_INLINE ::" << this->name () << " &" << nl;
   *ci << fname << "::inout (void)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -488,7 +491,7 @@ be_union::gen_var_impl (char *,
   if (this->size_type () == be_decl::VARIABLE)
     {
       *ci << "// mapping for variable size " << nl;
-      *ci << "ACE_INLINE " << this->name () << " *&" << nl;
+      *ci << "ACE_INLINE ::" << this->name () << " *&" << nl;
       *ci << fname << "::out (void)" << nl;
       *ci << "{\n";
       ci->incr_indent ();
@@ -499,11 +502,11 @@ be_union::gen_var_impl (char *,
       *ci << "}\n\n";
 
       ci->indent ();
-      *ci << "ACE_INLINE " << this->name () << " *" << nl;
+      *ci << "ACE_INLINE ::" << this->name () << " *" << nl;
       *ci << fname << "::_retn (void)" << nl;
       *ci << "{\n";
       ci->incr_indent ();
-      *ci << this->name () << " *tmp = this->ptr_;" << nl;
+      *ci << "::" << this->name () << " *tmp = this->ptr_;" << nl;
       *ci << "this->ptr_ = 0;" << nl;
       *ci << "return tmp;\n";
       ci->decr_indent ();
@@ -513,7 +516,7 @@ be_union::gen_var_impl (char *,
   else
     {
       *ci << "// mapping for fixed size " << nl;
-      *ci << "ACE_INLINE " << this->name () << " &" << nl;
+      *ci << "ACE_INLINE ::" << this->name () << " &" << nl;
       *ci << fname << "::out (void)" << nl;
       *ci << "{\n";
       ci->incr_indent ();
@@ -522,7 +525,7 @@ be_union::gen_var_impl (char *,
       *ci << "}\n\n";
 
       ci->indent ();
-      *ci << "ACE_INLINE " << this->name () << nl;
+      *ci << "ACE_INLINE ::" << this->name () << nl;
       *ci << fname << "::_retn (void)" << nl;
       *ci << "{\n";
       ci->incr_indent ();
@@ -533,7 +536,7 @@ be_union::gen_var_impl (char *,
 
   // the additional ptr () member function
   ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << " *" << nl;
+  *ci << "ACE_INLINE ::" << this->name () << " *" << nl;
   *ci << fname << "::ptr (void) const" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -650,7 +653,8 @@ be_union::gen_out_impl (char *,
   // constr from a pointer
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << this->name () << " *&p)" << nl;
+  *ci << fname << "::" << lname << " (" << ACE_GLOBAL_COLONS 
+      << this->name () << " *&p)" << nl;
   *ci << "  : ptr_ (p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -661,8 +665,8 @@ be_union::gen_out_impl (char *,
   // constructor from _var &
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << this->name () <<
-    "_var &p) // constructor from _var" << nl;
+  *ci << fname << "::" << lname << " (" << ACE_GLOBAL_COLONS 
+      << this->name () << "_var &p) // constructor from _var" << nl;
   *ci << "  : ptr_ (p.out ())" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -674,19 +678,21 @@ be_union::gen_out_impl (char *,
   // copy constructor
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (const " << fname <<
-    " &p) // copy constructor" << nl;
-  *ci << "  : ptr_ (ACE_const_cast (" << fname << "&,p).ptr_)" << nl;
+  *ci << fname << "::" << lname << " (const ::" << fname 
+      << " &p) // copy constructor" << nl;
+  *ci << "  : ptr_ (ACE_const_cast (" << ACE_GLOBAL_COLONS 
+      << fname << "&, p).ptr_)" << nl;
   *ci << "{}\n\n";
 
   // assignment operator from _out &
   ci->indent ();
-  *ci << "ACE_INLINE " << fname << " &" << nl;
-  *ci << fname << "::operator= (const " << fname <<
-    " &p)" << nl;
+  *ci << "ACE_INLINE ::" << fname << " &" << nl;
+  *ci << fname << "::operator= (const ::" << fname 
+      << " &p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
-  *ci << "this->ptr_ = ACE_const_cast (" << fname << "&,p).ptr_;" << nl;
+  *ci << "this->ptr_ = ACE_const_cast (" << ACE_GLOBAL_COLONS 
+      << fname << "&, p).ptr_;" << nl;
   *ci << "return *this;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
@@ -695,9 +701,9 @@ be_union::gen_out_impl (char *,
 
   // assignment operator from pointer
   ci->indent ();
-  *ci << "ACE_INLINE " << fname << " &" << nl;
-  *ci << fname << "::operator= (" << this->name () <<
-    " *p)" << nl;
+  *ci << "ACE_INLINE ::" << fname << " &" << nl;
+  *ci << fname << "::operator= (" << ACE_GLOBAL_COLONS 
+      << this->name () << " *p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "this->ptr_ = p;" << nl;
@@ -708,8 +714,8 @@ be_union::gen_out_impl (char *,
   // other extra methods - cast operator ()
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator " << this->name () <<
-    " *&() // cast" << nl;
+  *ci << fname << "::operator ::" << this->name () 
+      << " *&() // cast" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "return this->ptr_;\n";
@@ -718,7 +724,7 @@ be_union::gen_out_impl (char *,
 
   // ptr function
   ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << " *&" << nl;
+  *ci << "ACE_INLINE ::" << this->name () << " *&" << nl;
   *ci << fname << "::ptr (void) // ptr" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -728,7 +734,7 @@ be_union::gen_out_impl (char *,
 
   // operator ->
   ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << " *" << nl;
+  *ci << "ACE_INLINE ::" << this->name () << " *" << nl;
   *ci << fname << "::operator-> (void)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
