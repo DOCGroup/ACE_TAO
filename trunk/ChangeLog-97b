@@ -17,6 +17,8 @@ Thu Oct 16 02:07:54 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 Thu Oct 16 01:18:48 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
+	* ace/OS.cpp (socket_init): Changed to use ACE_UNUSED_ARG.
+	
 	* ace/SV_Semaphore_Simple.cpp (name_2_key): Explicitly cast the
 	  return value to (key_t).  It was causing problem on Win32.
 
