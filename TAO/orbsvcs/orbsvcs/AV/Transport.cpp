@@ -235,10 +235,10 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
       if (address == 0)
         {
           retv = this->open_default (endpoint,
-        		             av_core,
-			             entry);
-	  if(retv < 0)
-		  return retv;
+                                     av_core,
+                                     entry);
+          if(retv < 0)
+                  return retv;
           continue;
         }
       else

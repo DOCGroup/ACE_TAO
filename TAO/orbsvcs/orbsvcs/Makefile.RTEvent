@@ -136,8 +136,7 @@ realclean: clean
 
 .obj/EC_Event_Channel.o .obj/EC_Event_Channel.so .shobj/EC_Event_Channel.o .shobj/EC_Event_Channel.so: Event/EC_Event_Channel.cpp \
  Event/EC_Event_Channel.h \
- $(ACE_ROOT)/ace/pre.h \
- Event/EC_Factory.h \
+ $(ACE_ROOT)/ace/pre.h Event/EC_Factory.h \
  Event/event_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -3337,8 +3336,7 @@ realclean: clean
  Event/event_export.h Event/EC_QOS_Info.i
 
 .obj/EC_Null_Factory.o .obj/EC_Null_Factory.so .shobj/EC_Null_Factory.o .shobj/EC_Null_Factory.so: Event/EC_Null_Factory.cpp Event/EC_Null_Factory.h \
- $(ACE_ROOT)/ace/pre.h \
- Event/EC_Factory.h \
+ $(ACE_ROOT)/ace/pre.h Event/EC_Factory.h \
  Event/event_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -3709,8 +3707,7 @@ realclean: clean
 
 .obj/EC_Disjunction_Filter.o .obj/EC_Disjunction_Filter.so .shobj/EC_Disjunction_Filter.o .shobj/EC_Disjunction_Filter.so: Event/EC_Disjunction_Filter.cpp \
  Event/EC_Disjunction_Filter.h \
- $(ACE_ROOT)/ace/pre.h \
- Event/EC_Filter.h \
+ $(ACE_ROOT)/ace/pre.h Event/EC_Filter.h \
  RtecEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
@@ -3913,8 +3910,7 @@ realclean: clean
 
 .obj/EC_Conjunction_Filter.o .obj/EC_Conjunction_Filter.so .shobj/EC_Conjunction_Filter.o .shobj/EC_Conjunction_Filter.so: Event/EC_Conjunction_Filter.cpp \
  Event/EC_Conjunction_Filter.h \
- $(ACE_ROOT)/ace/pre.h \
- Event/EC_Filter.h \
+ $(ACE_ROOT)/ace/pre.h Event/EC_Filter.h \
  RtecEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
@@ -4117,8 +4113,7 @@ realclean: clean
 
 .obj/EC_Negation_Filter.o .obj/EC_Negation_Filter.so .shobj/EC_Negation_Filter.o .shobj/EC_Negation_Filter.so: Event/EC_Negation_Filter.cpp \
  Event/EC_Negation_Filter.h \
- $(ACE_ROOT)/ace/pre.h \
- Event/EC_Filter.h \
+ $(ACE_ROOT)/ace/pre.h Event/EC_Filter.h \
  RtecEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
@@ -4320,8 +4315,7 @@ realclean: clean
  Event/event_export.h Event/EC_Filter.i Event/EC_Negation_Filter.i
 
 .obj/EC_Type_Filter.o .obj/EC_Type_Filter.so .shobj/EC_Type_Filter.o .shobj/EC_Type_Filter.so: Event/EC_Type_Filter.cpp Event/EC_Type_Filter.h \
- $(ACE_ROOT)/ace/pre.h \
- Event/EC_Filter.h \
+ $(ACE_ROOT)/ace/pre.h Event/EC_Filter.h \
  RtecEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
@@ -4744,8 +4738,7 @@ realclean: clean
 
 .obj/EC_Basic_Factory.o .obj/EC_Basic_Factory.so .shobj/EC_Basic_Factory.o .shobj/EC_Basic_Factory.so: Event/EC_Basic_Factory.cpp \
  Event/EC_Basic_Factory.h \
- $(ACE_ROOT)/ace/pre.h \
- Event/EC_Factory.h \
+ $(ACE_ROOT)/ace/pre.h Event/EC_Factory.h \
  Event/event_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -5126,8 +5119,7 @@ realclean: clean
 
 .obj/EC_Default_Factory.o .obj/EC_Default_Factory.so .shobj/EC_Default_Factory.o .shobj/EC_Default_Factory.so: Event/EC_Default_Factory.cpp \
  Event/EC_Default_Factory.h \
- $(ACE_ROOT)/ace/pre.h \
- Event/EC_Factory.h \
+ $(ACE_ROOT)/ace/pre.h Event/EC_Factory.h \
  Event/event_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -6128,8 +6120,7 @@ realclean: clean
 
 .obj/EC_Timeout_Filter.o .obj/EC_Timeout_Filter.so .shobj/EC_Timeout_Filter.o .shobj/EC_Timeout_Filter.so: Event/EC_Timeout_Filter.cpp \
  Event/EC_Timeout_Filter.h \
- $(ACE_ROOT)/ace/pre.h \
- Event/EC_Filter.h \
+ $(ACE_ROOT)/ace/pre.h Event/EC_Filter.h \
  RtecEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
@@ -8909,8 +8900,7 @@ realclean: clean
 
 .obj/EC_Bitmask_Filter.o .obj/EC_Bitmask_Filter.so .shobj/EC_Bitmask_Filter.o .shobj/EC_Bitmask_Filter.so: Event/EC_Bitmask_Filter.cpp \
  Event/EC_Bitmask_Filter.h \
- $(ACE_ROOT)/ace/pre.h \
- Event/EC_Filter.h \
+ $(ACE_ROOT)/ace/pre.h Event/EC_Filter.h \
  RtecEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
@@ -9113,8 +9103,7 @@ realclean: clean
 
 .obj/EC_Masked_Type_Filter.o .obj/EC_Masked_Type_Filter.so .shobj/EC_Masked_Type_Filter.o .shobj/EC_Masked_Type_Filter.so: Event/EC_Masked_Type_Filter.cpp \
  Event/EC_Masked_Type_Filter.h \
- $(ACE_ROOT)/ace/pre.h \
- Event/EC_Filter.h \
+ $(ACE_ROOT)/ace/pre.h Event/EC_Filter.h \
  RtecEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
@@ -9536,8 +9525,7 @@ realclean: clean
  Event/EC_Timeout_Filter.i
 
 .obj/EC_And_Filter.o .obj/EC_And_Filter.so .shobj/EC_And_Filter.o .shobj/EC_And_Filter.so: Event/EC_And_Filter.cpp Event/EC_And_Filter.h \
- $(ACE_ROOT)/ace/pre.h \
- Event/EC_Filter.h \
+ $(ACE_ROOT)/ace/pre.h Event/EC_Filter.h \
  RtecEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
@@ -11420,8 +11408,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/RtecEventCommS.o .obj/RtecEventCommS.so .shobj/RtecEventCommS.o .shobj/RtecEventCommS.so: RtecEventCommS.cpp RtecEventCommS.h \
- $(ACE_ROOT)/ace/pre.h \
- TimeBaseS.h \
+ $(ACE_ROOT)/ace/pre.h TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -11561,8 +11548,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
- TimeBaseC.h \
- $(TAO_ROOT)/tao/corba.h \
+ TimeBaseC.h $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -11773,8 +11759,8 @@ realclean: clean
 
 .obj/RtecEventChannelAdminS.o .obj/RtecEventChannelAdminS.so .shobj/RtecEventChannelAdminS.o .shobj/RtecEventChannelAdminS.so: RtecEventChannelAdminS.cpp \
  RtecEventChannelAdminS.h \
- $(ACE_ROOT)/ace/pre.h \
- RtecEventCommS.h TimeBaseS.h \
+ $(ACE_ROOT)/ace/pre.h RtecEventCommS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -11914,8 +11900,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
- TimeBaseC.h \
- $(TAO_ROOT)/tao/corba.h \
+ TimeBaseC.h $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -12129,8 +12114,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/RtecUDPAdminS.o .obj/RtecUDPAdminS.so .shobj/RtecUDPAdminS.o .shobj/RtecUDPAdminS.so: RtecUDPAdminS.cpp RtecUDPAdminS.h \
- $(ACE_ROOT)/ace/pre.h \
- RtecEventCommS.h TimeBaseS.h \
+ $(ACE_ROOT)/ace/pre.h RtecEventCommS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -12270,8 +12255,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
- TimeBaseC.h \
- $(TAO_ROOT)/tao/corba.h \
+ TimeBaseC.h $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \

@@ -163,8 +163,7 @@ realclean: clean
 
 .obj/AbstractInterfaceDef_i.o .obj/AbstractInterfaceDef_i.so .shobj/AbstractInterfaceDef_i.o .shobj/AbstractInterfaceDef_i.so: AbstractInterfaceDef_i.cpp \
  AbstractInterfaceDef_i.h InterfaceDef_i.h Container_i.h IRObject_i.h \
- IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFR_BasicS.h IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -266,6 +265,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -281,8 +288,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -405,6 +410,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -471,8 +478,8 @@ realclean: clean
 
 .obj/AliasDef_i.o .obj/AliasDef_i.so .shobj/AliasDef_i.o .shobj/AliasDef_i.so: AliasDef_i.cpp AliasDef_i.h TypedefDef_i.h Contained_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -573,6 +580,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -588,8 +603,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -712,6 +725,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -775,14 +790,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
- Servant_Factory.h \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
- $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp
+ Servant_Factory.h
 
 .obj/ArrayDef_i.o .obj/ArrayDef_i.so .shobj/ArrayDef_i.o .shobj/ArrayDef_i.so: ArrayDef_i.cpp ArrayDef_i.h IDLType_i.h IRObject_i.h \
- IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFR_BasicS.h IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -884,6 +895,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -899,8 +918,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -1023,6 +1040,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -1086,15 +1105,12 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
- Servant_Factory.h \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
- $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp
+ Servant_Factory.h
 
 .obj/AttributeDef_i.o .obj/AttributeDef_i.so .shobj/AttributeDef_i.o .shobj/AttributeDef_i.so: AttributeDef_i.cpp AttributeDef_i.h Contained_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -1195,6 +1211,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -1210,8 +1234,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -1334,6 +1356,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -1397,15 +1421,12 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
- IDLType_i.h ExceptionDef_i.h Servant_Factory.h \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
- $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp
+ IDLType_i.h ExceptionDef_i.h Servant_Factory.h
 
 .obj/ComponentDef_i.o .obj/ComponentDef_i.so .shobj/ComponentDef_i.o .shobj/ComponentDef_i.so: ComponentDef_i.cpp Repository_i.h Container_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -1506,6 +1527,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -1521,8 +1550,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -1645,6 +1672,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -1717,8 +1746,7 @@ realclean: clean
 
 .obj/ComponentRepository_i.o .obj/ComponentRepository_i.so .shobj/ComponentRepository_i.o .shobj/ComponentRepository_i.so: ComponentRepository_i.cpp \
  ComponentRepository_i.h Repository_i.h Container_i.h IRObject_i.h \
- IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFR_BasicS.h IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -1820,6 +1848,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -1835,8 +1871,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -1959,6 +1993,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -2030,8 +2066,8 @@ realclean: clean
 
 .obj/ConstantDef_i.o .obj/ConstantDef_i.so .shobj/ConstantDef_i.o .shobj/ConstantDef_i.so: ConstantDef_i.cpp ConstantDef_i.h Contained_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -2132,6 +2168,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -2147,8 +2191,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -2271,6 +2313,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -2334,15 +2378,12 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
- IDLType_i.h Servant_Factory.h \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
- $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp
+ IDLType_i.h Servant_Factory.h
 
 .obj/ConsumesDef_i.o .obj/ConsumesDef_i.so .shobj/ConsumesDef_i.o .shobj/ConsumesDef_i.so: ConsumesDef_i.cpp Repository_i.h Container_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -2443,6 +2484,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -2458,8 +2507,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -2582,6 +2629,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -2649,8 +2698,7 @@ realclean: clean
 
 .obj/Contained_i.o .obj/Contained_i.so .shobj/Contained_i.o .shobj/Contained_i.so: Contained_i.cpp concrete_classes.h \
  ComponentRepository_i.h Repository_i.h Container_i.h IRObject_i.h \
- IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFR_BasicS.h IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -2752,6 +2800,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -2767,8 +2823,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -2891,6 +2945,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -2967,15 +3023,12 @@ realclean: clean
  OperationDef_i.h FinderDef_i.h AttributeDef_i.h ConstantDef_i.h \
  ComponentDef_i.h InterfaceDef_i.h HomeDef_i.h ValueDef_i.h \
  ExceptionDef_i.h ModuleDef_i.h AbstractInterfaceDef_i.h \
- LocalInterfaceDef_i.h Servant_Factory.h \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
- $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp
+ LocalInterfaceDef_i.h Servant_Factory.h
 
 .obj/Container_i.o .obj/Container_i.so .shobj/Container_i.o .shobj/Container_i.so: Container_i.cpp Repository_i.h Container_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -3076,6 +3129,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -3091,8 +3152,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -3215,6 +3274,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -3278,14 +3339,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
- InterfaceDef_i.h Contained_i.h IDLType_i.h Servant_Factory.h \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
- $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp
+ InterfaceDef_i.h Contained_i.h IDLType_i.h Servant_Factory.h
 
 .obj/EmitsDef_i.o .obj/EmitsDef_i.so .shobj/EmitsDef_i.o .shobj/EmitsDef_i.so: EmitsDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFR_BasicS.h IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -3387,6 +3444,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -3402,8 +3467,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -3526,6 +3589,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -3593,8 +3658,8 @@ realclean: clean
 
 .obj/EnumDef_i.o .obj/EnumDef_i.so .shobj/EnumDef_i.o .shobj/EnumDef_i.so: EnumDef_i.cpp EnumDef_i.h TypedefDef_i.h Contained_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -3695,6 +3760,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -3710,8 +3783,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -3834,6 +3905,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -3900,8 +3973,7 @@ realclean: clean
  Servant_Factory.h
 
 .obj/EventDef_i.o .obj/EventDef_i.so .shobj/EventDef_i.o .shobj/EventDef_i.so: EventDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFR_BasicS.h IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -4003,6 +4075,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -4018,8 +4098,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -4142,6 +4220,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -4209,8 +4289,8 @@ realclean: clean
 
 .obj/ExceptionDef_i.o .obj/ExceptionDef_i.so .shobj/ExceptionDef_i.o .shobj/ExceptionDef_i.so: ExceptionDef_i.cpp ExceptionDef_i.h Contained_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -4311,6 +4391,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -4326,8 +4414,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -4450,6 +4536,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -4513,15 +4601,12 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
- IDLType_i.h Servant_Factory.h \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
- $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp
+ IDLType_i.h Servant_Factory.h
 
 .obj/FactoryDef_i.o .obj/FactoryDef_i.so .shobj/FactoryDef_i.o .shobj/FactoryDef_i.so: FactoryDef_i.cpp Repository_i.h Container_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -4622,6 +4707,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -4637,8 +4730,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -4761,6 +4852,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -4828,8 +4921,8 @@ realclean: clean
 
 .obj/FinderDef_i.o .obj/FinderDef_i.so .shobj/FinderDef_i.o .shobj/FinderDef_i.so: FinderDef_i.cpp Repository_i.h Container_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -4930,6 +5023,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -4945,8 +5046,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -5069,6 +5168,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -5135,8 +5236,7 @@ realclean: clean
  FinderDef_i.h OperationDef_i.h Contained_i.h
 
 .obj/FixedDef_i.o .obj/FixedDef_i.so .shobj/FixedDef_i.o .shobj/FixedDef_i.so: FixedDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFR_BasicS.h IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -5238,6 +5338,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -5253,8 +5361,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -5377,6 +5483,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -5443,8 +5551,7 @@ realclean: clean
  FixedDef_i.h IDLType_i.h
 
 .obj/HomeDef_i.o .obj/HomeDef_i.so .shobj/HomeDef_i.o .shobj/HomeDef_i.so: HomeDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFR_BasicS.h IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -5546,6 +5653,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -5561,8 +5676,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -5685,6 +5798,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -5756,8 +5871,8 @@ realclean: clean
  IFR_ComponentsS.i
 
 .obj/IDLType_i.o .obj/IDLType_i.so .shobj/IDLType_i.o .shobj/IDLType_i.so: IDLType_i.cpp IDLType_i.h IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -5858,6 +5973,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -5873,8 +5996,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -5997,6 +6118,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -6156,6 +6279,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -6171,8 +6302,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -6295,6 +6424,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -6391,8 +6522,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/IFR_BasicS.o .obj/IFR_BasicS.so .shobj/IFR_BasicS.o .shobj/IFR_BasicS.so: IFR_BasicS.cpp IFR_BasicS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -6493,6 +6623,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -6508,8 +6646,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -6632,6 +6768,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -6731,8 +6869,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/IFR_ComponentsS.o .obj/IFR_ComponentsS.so .shobj/IFR_ComponentsS.o .shobj/IFR_ComponentsS.so: IFR_ComponentsS.cpp IFR_ComponentsS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_ExtendedS.h IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_ExtendedS.h \
+ IFR_BasicS.h IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -6833,6 +6971,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -6848,8 +6994,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -6972,6 +7116,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -7079,8 +7225,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/IFR_ExtendedS.o .obj/IFR_ExtendedS.so .shobj/IFR_ExtendedS.o .shobj/IFR_ExtendedS.so: IFR_ExtendedS.cpp IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -7181,6 +7327,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -7196,8 +7350,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -7320,6 +7472,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -7531,6 +7685,12 @@ realclean: clean
  $(TAO_ROOT)/tao/Encodable.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Environment.h \
@@ -7669,6 +7829,12 @@ realclean: clean
  $(TAO_ROOT)/tao/Encodable.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Environment.h \
@@ -7806,6 +7972,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -7904,15 +8072,12 @@ realclean: clean
  $(TAO_ROOT)/tao/IORTable/IORTable.h \
  $(TAO_ROOT)/tao/IORTable/iortable_export.h \
  $(TAO_ROOT)/tao/IORTable/IORTableC.h \
- $(TAO_ROOT)/tao/IORTable/IORTableC.i \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
- $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp
+ $(TAO_ROOT)/tao/IORTable/IORTableC.i
 
 .obj/InterfaceDef_i.o .obj/InterfaceDef_i.so .shobj/InterfaceDef_i.o .shobj/InterfaceDef_i.so: InterfaceDef_i.cpp InterfaceDef_i.h Container_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -8013,6 +8178,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -8028,8 +8201,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -8152,6 +8323,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -8218,8 +8391,8 @@ realclean: clean
  AttributeDef_i.h OperationDef_i.h Servant_Factory.h
 
 .obj/IRObject_i.o .obj/IRObject_i.so .shobj/IRObject_i.o .shobj/IRObject_i.so: IRObject_i.cpp IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -8320,6 +8493,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -8335,8 +8516,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -8459,6 +8638,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -8518,8 +8699,8 @@ realclean: clean
 
 .obj/LocalInterfaceDef_i.o .obj/LocalInterfaceDef_i.so .shobj/LocalInterfaceDef_i.o .shobj/LocalInterfaceDef_i.so: LocalInterfaceDef_i.cpp LocalInterfaceDef_i.h \
  InterfaceDef_i.h Container_i.h IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -8620,6 +8801,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -8635,8 +8824,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -8759,6 +8946,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -8825,8 +9014,8 @@ realclean: clean
 
 .obj/ModuleDef_i.o .obj/ModuleDef_i.so .shobj/ModuleDef_i.o .shobj/ModuleDef_i.so: ModuleDef_i.cpp ModuleDef_i.h Container_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -8927,6 +9116,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -8942,8 +9139,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -9066,6 +9261,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -9132,8 +9329,8 @@ realclean: clean
 
 .obj/NativeDef_i.o .obj/NativeDef_i.so .shobj/NativeDef_i.o .shobj/NativeDef_i.so: NativeDef_i.cpp NativeDef_i.h TypedefDef_i.h \
  Contained_i.h IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -9234,6 +9431,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -9249,8 +9454,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -9373,6 +9576,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -9439,8 +9644,8 @@ realclean: clean
 
 .obj/OperationDef_i.o .obj/OperationDef_i.so .shobj/OperationDef_i.o .shobj/OperationDef_i.so: OperationDef_i.cpp OperationDef_i.h Contained_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -9541,6 +9746,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -9556,8 +9769,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -9680,6 +9891,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -9743,10 +9956,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
- IDLType_i.h ExceptionDef_i.h Servant_Factory.h \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
- $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp
+ IDLType_i.h ExceptionDef_i.h Servant_Factory.h
 
 .obj/Options.o .obj/Options.so .shobj/Options.o .shobj/Options.so: Options.cpp Options.h \
  $(ACE_ROOT)/ace/Singleton.h \
@@ -9765,6 +9975,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/OS_String.inl \
  $(ACE_ROOT)/ace/OS_Memory.h \
  $(ACE_ROOT)/ace/OS_Memory.inl \
@@ -9772,8 +9984,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -9816,8 +10026,8 @@ realclean: clean
 
 .obj/PrimaryKeyDef_i.o .obj/PrimaryKeyDef_i.so .shobj/PrimaryKeyDef_i.o .shobj/PrimaryKeyDef_i.so: PrimaryKeyDef_i.cpp Repository_i.h Container_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -9918,6 +10128,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -9933,8 +10151,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -10057,6 +10273,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -10124,8 +10342,8 @@ realclean: clean
 
 .obj/PrimitiveDef_i.o .obj/PrimitiveDef_i.so .shobj/PrimitiveDef_i.o .shobj/PrimitiveDef_i.so: PrimitiveDef_i.cpp Repository_i.h Container_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -10226,6 +10444,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -10241,8 +10467,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -10365,6 +10589,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -10432,8 +10658,8 @@ realclean: clean
 
 .obj/ProvidesDef_i.o .obj/ProvidesDef_i.so .shobj/ProvidesDef_i.o .shobj/ProvidesDef_i.so: ProvidesDef_i.cpp Repository_i.h Container_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -10534,6 +10760,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -10549,8 +10783,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -10673,6 +10905,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -10740,8 +10974,8 @@ realclean: clean
 
 .obj/PublishesDef_i.o .obj/PublishesDef_i.so .shobj/PublishesDef_i.o .shobj/PublishesDef_i.so: PublishesDef_i.cpp Repository_i.h Container_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -10842,6 +11076,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -10857,8 +11099,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -10981,6 +11221,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -11048,8 +11290,8 @@ realclean: clean
 
 .obj/Repository_i.o .obj/Repository_i.so .shobj/Repository_i.o .shobj/Repository_i.so: Repository_i.cpp Repository_i.h Container_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -11150,6 +11392,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -11165,8 +11415,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -11289,6 +11537,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -11353,15 +11603,12 @@ realclean: clean
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
  IDLType_i.h ExceptionDef_i.h Contained_i.h Options.h \
- Servant_Factory.h \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
- $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp
+ Servant_Factory.h
 
 .obj/SequenceDef_i.o .obj/SequenceDef_i.so .shobj/SequenceDef_i.o .shobj/SequenceDef_i.so: SequenceDef_i.cpp SequenceDef_i.h IDLType_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -11462,6 +11709,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -11477,8 +11732,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -11601,6 +11854,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -11664,10 +11919,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
- Servant_Factory.h \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
- $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp
+ Servant_Factory.h
 
 .obj/Servant_Factory.o .obj/Servant_Factory.so .shobj/Servant_Factory.o .shobj/Servant_Factory.so: Servant_Factory.cpp Servant_Factory.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -11778,6 +12030,12 @@ realclean: clean
  $(TAO_ROOT)/tao/Encodable.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Environment.h \
@@ -11920,6 +12178,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -11987,10 +12247,7 @@ realclean: clean
  OperationDef_i.h FinderDef_i.h AttributeDef_i.h ConstantDef_i.h \
  ComponentDef_i.h InterfaceDef_i.h HomeDef_i.h ValueDef_i.h \
  ExceptionDef_i.h ModuleDef_i.h AbstractInterfaceDef_i.h \
- LocalInterfaceDef_i.h \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
- $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp
+ LocalInterfaceDef_i.h
 
 .obj/Servant_Locator.o .obj/Servant_Locator.so .shobj/Servant_Locator.o .shobj/Servant_Locator.so: Servant_Locator.cpp Servant_Locator.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -12101,6 +12358,12 @@ realclean: clean
  $(TAO_ROOT)/tao/Encodable.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Environment.h \
@@ -12244,6 +12507,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -12301,8 +12566,8 @@ realclean: clean
 
 .obj/StringDef_i.o .obj/StringDef_i.so .shobj/StringDef_i.o .shobj/StringDef_i.so: StringDef_i.cpp Repository_i.h Container_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -12403,6 +12668,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -12418,8 +12691,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -12542,6 +12813,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -12609,8 +12882,8 @@ realclean: clean
 
 .obj/StructDef_i.o .obj/StructDef_i.so .shobj/StructDef_i.o .shobj/StructDef_i.so: StructDef_i.cpp StructDef_i.h TypedefDef_i.h \
  Contained_i.h IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -12711,6 +12984,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -12726,8 +13007,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -12850,6 +13129,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -12913,15 +13194,12 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
- Servant_Factory.h \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
- $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp
+ Servant_Factory.h
 
 .obj/tmplinst.o .obj/tmplinst.so .shobj/tmplinst.o .shobj/tmplinst.so: tmplinst.cpp concrete_classes.h ComponentRepository_i.h \
  Repository_i.h Container_i.h IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -13022,6 +13300,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -13037,8 +13323,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -13161,6 +13445,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -13237,15 +13523,12 @@ realclean: clean
  OperationDef_i.h FinderDef_i.h AttributeDef_i.h ConstantDef_i.h \
  ComponentDef_i.h InterfaceDef_i.h HomeDef_i.h ValueDef_i.h \
  ExceptionDef_i.h ModuleDef_i.h AbstractInterfaceDef_i.h \
- LocalInterfaceDef_i.h \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
- $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp
+ LocalInterfaceDef_i.h
 
 .obj/TypedefDef_i.o .obj/TypedefDef_i.so .shobj/TypedefDef_i.o .shobj/TypedefDef_i.so: TypedefDef_i.cpp Repository_i.h Container_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -13346,6 +13629,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -13361,8 +13652,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -13485,6 +13774,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -13552,8 +13843,8 @@ realclean: clean
 
 .obj/UnionDef_i.o .obj/UnionDef_i.so .shobj/UnionDef_i.o .shobj/UnionDef_i.so: UnionDef_i.cpp UnionDef_i.h TypedefDef_i.h Contained_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -13654,6 +13945,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -13669,8 +13968,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -13793,6 +14090,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -13856,14 +14155,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
- Servant_Factory.h \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
- $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp
+ Servant_Factory.h
 
 .obj/UsesDef_i.o .obj/UsesDef_i.so .shobj/UsesDef_i.o .shobj/UsesDef_i.so: UsesDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFR_BasicS.h IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -13965,6 +14260,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -13980,8 +14283,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -14104,6 +14405,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -14171,8 +14474,8 @@ realclean: clean
 
 .obj/ValueBoxDef_i.o .obj/ValueBoxDef_i.so .shobj/ValueBoxDef_i.o .shobj/ValueBoxDef_i.so: ValueBoxDef_i.cpp ValueBoxDef_i.h TypedefDef_i.h \
  Contained_i.h IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -14273,6 +14576,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -14288,8 +14599,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -14412,6 +14721,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -14475,14 +14786,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
- Servant_Factory.h \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
- $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp
+ Servant_Factory.h
 
 .obj/ValueDef_i.o .obj/ValueDef_i.so .shobj/ValueDef_i.o .shobj/ValueDef_i.so: ValueDef_i.cpp Repository_i.h Container_i.h IRObject_i.h \
- IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFR_BasicS.h IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -14584,6 +14891,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -14599,8 +14914,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -14723,6 +15036,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -14790,8 +15105,8 @@ realclean: clean
 
 .obj/ValueMemberDef_i.o .obj/ValueMemberDef_i.so .shobj/ValueMemberDef_i.o .shobj/ValueMemberDef_i.so: ValueMemberDef_i.cpp Repository_i.h Container_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -14892,6 +15207,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -14907,8 +15230,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -15031,6 +15352,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -15098,8 +15421,8 @@ realclean: clean
 
 .obj/WstringDef_i.o .obj/WstringDef_i.so .shobj/WstringDef_i.o .shobj/WstringDef_i.so: WstringDef_i.cpp Repository_i.h Container_i.h \
  IRObject_i.h IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFR_BasicS.h IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFR_BasicS.h \
+ IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -15200,6 +15523,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Stub.h \
@@ -15215,8 +15546,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/IOPC.h \
@@ -15339,6 +15668,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
+ $(TAO_ROOT)/tao/PICurrent.h \
+ $(TAO_ROOT)/tao/PICurrent.inl \
  $(TAO_ROOT)/tao/Protocols_Hooks.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \

@@ -2173,8 +2173,7 @@ realclean: clean
  Log/log_export.h Log/Log_Constraint_Visitors.h
 
 .obj/DsLogAdminS.o .obj/DsLogAdminS.so .shobj/DsLogAdminS.o .shobj/DsLogAdminS.so: DsLogAdminS.cpp DsLogAdminS.h \
- $(ACE_ROOT)/ace/pre.h \
- TimeBaseS.h \
+ $(ACE_ROOT)/ace/pre.h TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -2314,8 +2313,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
- TimeBaseC.h \
- $(TAO_ROOT)/tao/corba.h \
+ TimeBaseC.h $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -2713,8 +2711,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Log/log_export.h TimeBaseC.h svc_utils_export.h TimeBaseC.i \
- DsLogAdminC.i \
- $(TAO_ROOT)/tao/Stub.h \
+ DsLogAdminC.i $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \

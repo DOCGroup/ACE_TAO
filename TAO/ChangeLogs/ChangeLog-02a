@@ -1,3 +1,7 @@
+Thu Dec 13 22:22:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* Updated dependencies of many Makefile's.
+
 Thu Dec 13 21:16:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Objref_Sequence_Test: A new test that passes big sequences
