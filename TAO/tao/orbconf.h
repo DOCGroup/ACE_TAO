@@ -368,6 +368,13 @@
 #define TAO_OBJID_PRIORITYMAPPINGMANAGER  "PriorityMappingManager"
 #define TAO_OBJID_SECURITYCURRENT     "SecurityCurrent"
 #define TAO_OBJID_TRANSACTIONCURRENT  "TransactionCurrent"
+#define TAO_OBJID_NOTIFICATIONSERVICE "NotificationService"
+#define TAO_OBJID_TYPEDNOTIFICATIONSERVICE "TypedNotificationService"
+#define TAO_OBJID_COMPONENTHOMEFINDER "ComponentHomeFinder"
+#define TAO_OBJID_PSS "PSS"
+#define TAO_OBJID_CODECFACTORY "CodecFactory"
+#define TAO_OBJID_PICurrent "PICurrent"
+
 
 // Comma separated list of the above ObjectIDs.
 // DO NOT include unimplemented services!
@@ -387,8 +394,12 @@
         TAO_OBJID_DYNANYFACTORY, \
         TAO_OBJID_TYPECODEFACTORY, \
         TAO_OBJID_RTORB, \
-        TAO_OBJID_RTCURRENT, \
-        TAO_OBJID_PRIORITYMAPPINGMANAGER
+        TAO_OBJID_RTCURRENT
+// @@ Some initial references are added via other means, such as
+//    ORBInitInfo::register_initial_references().  Those should not be
+//    placed in the above list.  Ideally, we should no longer need the
+//    above list once the above services register their references
+//    dynamically.
 
 // Service IDs for the services that are located through Multicast.
 enum MCAST_SERVICEID
@@ -855,10 +866,11 @@ enum MCAST_SERVICEID
 #define TAO_MESSAGING_QUEUE_ORDER_POLICY_TYPE 35
 
 // Control the default version of GIOP used by TAO.
-// The ORB is always able to communicate with 1.0 and 1.1 servers, and
-// it creates 1.1 endpoints (and profiles).  If you need to talk to
-// old clients that only understand 1.0 (and do not attempt to use 1.0
-// with 1.1 servers), then change the values below.
+// The ORB is always able to communicate with 1.0, 1.1 and 1.2
+// servers, and it creates 1.2 endpoints (and profiles).  If you need
+// to talk to old clients that only understand 1.0 or 1.1 (and do not
+// attempt to use 1.0 or 1.1 with 1.2 servers), then change the values
+// below.
 #if !defined (TAO_DEF_GIOP_MAJOR)
 #define TAO_DEF_GIOP_MAJOR 1
 #endif /* TAO_DEF_GIOP_MAJOR */
