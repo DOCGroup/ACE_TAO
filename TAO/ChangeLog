@@ -1,28 +1,37 @@
+Mon Jan 27 09:48:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/Common.mpc:
+          Add missing dllflags
+
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
+          Set the correct x_BUILD_DLL defines. These are needed for the
+          Cygwin/MingW and Kylix compiler.
+
 Sun Jan 26 17:29:34 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Leader_Follower.cpp (wait_for_event): Set LFS_TIMEOUT on the
 	  LF_Event only if the follower timesout. The follower could
 	  return with a -1 from wait () even if errors other than timeout
-	  occurs, like connection closure and such. 
+	  occurs, like connection closure and such.
 
 	* tao/LF_CH_Event.cpp: Added a comment
 
 Sun Jan 26 17:23:22 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
- 	* tao/Notify_Handler.cpp (TAO_Notify_Handler): 
-	* tao/Notify_Handler.h: 
+ 	* tao/Notify_Handler.cpp (TAO_Notify_Handler):
+	* tao/Notify_Handler.h:
 
 	  - Added a new constructor and a create_handler () method which
 	    takes in a transport and the ACE_HANDLE that this handler would
 	    be used for.
 
 	  - Deprecating the old create_handler () and the constructor.
-	    They have been left there for backward compatibility. 
+	    They have been left there for backward compatibility.
 
 	  The above changes were made to get around a problem that Yakov
 	  Becker and Johnny Willemsen observed in one of their
 	  applications. We havent been able to reproduce the problem here
-	  at all. The gist of the problem is 
+	  at all. The gist of the problem is
 
 	   - A server thread after buffering lots of incoming messages
 	     starts processing one of the messages. Keeping the handle
@@ -31,12 +40,12 @@ Sun Jan 26 17:23:22 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	   - The first thread after processing the request tries to write
 	     a reply only to find the socket closed. It starts the
 	     cleanup and disassociates the transport and the handler. So
-	     far so good.  
+	     far so good.
 
 	   - The second thread that is woken up now tries to get to the
 	     handler and then to the transport to process the queued
 	     messages. But the transport is already disassociated from the
-	     handler and the assert fails. 
+	     handler and the assert fails.
 
 	   We address this problem by using the transport as the mechanism
 	   to process messages instead of the handler. The above changes
@@ -47,15 +56,15 @@ Sun Jan 26 17:23:22 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 Sat Jan 25 18:10:10 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* orbsvcs/tests/Security/MT_IIOP_SSL/Makefile: Fixed dependencies. 
-	* orbsvcs/tests/Security/MT_IIOP_SSL/test_i.cpp: Cosmetic fixes. 
+	* orbsvcs/tests/Security/MT_IIOP_SSL/Makefile: Fixed dependencies.
+	* orbsvcs/tests/Security/MT_IIOP_SSL/test_i.cpp: Cosmetic fixes.
 	* orbsvcs/tests/Security/Makefile: Added the new file to the DIRS
-	  section. 
-	
+	  section.
+
 Sat Jan 25 17:55:10 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/MT_IIOP_SSL/client.dsp:
-	* orbsvcs/tests/Security/MT_IIOP_SSL/server.dsp: Added necessary 
+	* orbsvcs/tests/Security/MT_IIOP_SSL/server.dsp: Added necessary
 	  libraries for linking.
 
 Sat Jan 25 18:55:47 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
@@ -79,7 +88,7 @@ Sat Jan 25 18:06:51 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* tao/Transport_Cache_Manager.h:
 	* tao/Transport_Cache_Manager.inl: Added an accessor for the hash
 	  map used inside the Cache_Manager. Useful for writing regression
-	  tests as we will demonstrate shortly in a test. 
+	  tests as we will demonstrate shortly in a test.
 
 Fri Jan 24 11:42:57 2003  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
 
