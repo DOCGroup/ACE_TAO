@@ -2094,6 +2094,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
   ACE_UNUSED_ARG (m);
   ACE_UNUSED_ARG (timeout);
   ACE_NOTSUP_RETURN (-1);
+# endif /* ACE_HAS_MUTEX_TIMEOUTS */
 #endif  /* ACE_HAS_THREADS */
 }
 
