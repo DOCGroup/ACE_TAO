@@ -161,7 +161,7 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
       // Merge it with the passed set.
       offset = offers->length ();
       offers->length (out_offers->length () + offset);
-      for (int j = out_offers->length () - 1; j >= 0; j--)
+      for (CORBA::ULong j = out_offers->length () - 1; j >= 0; j--)
         offers[j + offset] = out_offers[j];
 
       offers_left -= out_offers->length ();
