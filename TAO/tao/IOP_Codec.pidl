@@ -20,8 +20,9 @@
  *
  * and then apply the patches in  diffs/IOP_Codec.diff.
  *
- * The code left in IOP_CodecC.{h,i,cpp} and IOP_CodecA.cpp is
- * ready to use.
+ * Move the typecodes for exceptions in IOP_CodecA.cpp to
+ * IOP_CodecC.cpp.  The code left in IOP_CodecC.{h,i,cpp} and
+ * IOP_CodecA.cpp is ready to use.
  */
 
 #ifndef TAO_IOP_CODEC_PIDL

@@ -1,3 +1,29 @@
+Tue Apr 27 16:39:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/PortableInterceptor.pidl:	
+ 	* tao/Bounds.pidl:
+	* tao/BoundsA.cpp:
+	* tao/BoundsC.cpp:
+	* tao/IOP_Codec.pidl:
+	* tao/IOP_CodecA.cpp:
+	* tao/IOP_CodecC.cpp:
+	* tao/Policy.pidl:
+	* tao/PolicyA.cpp:
+	* tao/PolicyC.cpp:
+
+	* tao/PortableInterceptorA.cpp:
+	* tao/PortableInterceptorC.cpp:
+
+	  Moved typecodes for exceptions *C.cpp. This will ensure that
+	  *A.o are not linked in while making a binary. The *A.o can
+	  increase the footprint drastically. The last regeneration just
+	  increased simple client footprint by just 25K. 
+	
+	* tao/Valuetype/ValueFactory.h:
+
+	  Added additional includes to fix compile errors in builds where
+	  native exceptions are disabled. 
+
 Tue Apr 27 13:37:38 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_codegen.cpp:

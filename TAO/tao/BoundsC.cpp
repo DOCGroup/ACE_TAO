@@ -51,7 +51,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 CORBA::Bounds::Bounds (void)
@@ -134,7 +134,7 @@ void CORBA::Bounds::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -147,18 +147,48 @@ void CORBA::Bounds::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_CORBA_Bounds[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  29,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f426f),
+  ACE_NTOHL (0x756e6473),
+  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Bounds:1.0
+    7,
+  ACE_NTOHL (0x426f756e),
+  ACE_NTOHL (0x64730000),  // name = Bounds
+  0, // member count
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_CORBA_Bounds (
+    CORBA::tk_except,
+    sizeof (_oc_CORBA_Bounds),
+    (char *) &_oc_CORBA_Bounds,
+    0,
+    sizeof (CORBA::Bounds)
+  );
+
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr _tc_Bounds =
+    &_tc_TAO_tc_CORBA_Bounds;
 }
 
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr CORBA::Bounds::_type (void) const
 {
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("This TAO-specific method is now")
-              ACE_LIB_TEXT (" deprecated and will be removed")
-              ACE_LIB_TEXT (" in future versions.\n")));
-  
   return ::CORBA::_tc_Bounds;
 }
 
@@ -196,5 +226,4 @@ CORBA::Boolean operator>> (
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
