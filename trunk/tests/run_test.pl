@@ -7,7 +7,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # This file is for running the tests in the ACE tests directory.
 # It is usually used for auto_compiles.
 
-use lib '../bin';
+use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 use Cwd;
@@ -128,7 +128,7 @@ sub run_program ($)
 
     check_log ($program);
 
-    if (defined $opt_g) {
+    if ($config_list->check_config ('Codeguard')) {
     	check_codeguard_log ($program);
     }
 }
@@ -361,22 +361,21 @@ sub delete_temp_files ()
 
 $config_list->load ("run_test.lst");
 
-if (!getopts ('gdhtvo:') || $opt_h) {
-    print "run_test.pl [-h] [-g] [-v] [-o <output file>] [-t file1 file2 ...]\n";
+if (!getopts ('dhtvo:') || $opt_h) {
+    print "run_test.pl [-h] [-v] [-o <output file>] [-t file1 file2 ...]\n";
     print "\n";
     print "Runs the tests listed in run_test.lst\n";
     print "\n";
     print "Options:\n";
     print "    -d         Debug mode (do not run tests)\n";
     print "    -h         Display this help\n";
-    print "    -g         Look for codeguard logs\n";
     print "    -t         Runs all the tests passed via the cmd line\n";
     print "    -v         Generate commands for VxWorks\n";
     print "    -o         Put VxWorks commands in output file\n";
     print "\n";
     print "Pass in configs using \"-Config XXXXX\"\n";
     print "\n";
-    print "Possible Configs: CHECK_RESOURCES Purify",
+    print "Possible Configs: CHECK_RESOURCES Purify Codeguard",
            $config_list->list_configs (), "\n";
     exit (1);
 }
