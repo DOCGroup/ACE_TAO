@@ -39,6 +39,9 @@ public:
   virtual CORBA::Long get_event_count (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  virtual void ping (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
 private:
   ACE_SYNCH_MUTEX mutex_;
   CORBA::ULong message_count_;
