@@ -157,7 +157,10 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
                            "%n: %p\n",
 			   "remove_handler"), 
                           0);
-      ACE_OS::closesocket (handle);
+      if (handle == this->peer ().get_handle ())
+        this->peer ().close ();
+      else
+        ACE_OS::closesocket (handle);
       ACE_DEBUG ((LM_DEBUG,
                   "client closing down\n"));
       return 0;
