@@ -2522,10 +2522,12 @@ TAO_StreamEndPoint_A::disconnect_leaf (AVStreams::StreamEndPoint_B_ptr /* the_ep
 
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::streamOpFailed,
-                   AVStreams::noSuchFlow))
-
+                   AVStreams::noSuchFlow,
+                   AVStreams::notSupported))
 {
+
   ACE_THROW (AVStreams::notSupported ());
+
 }
 
 TAO_StreamEndPoint_A::~TAO_StreamEndPoint_A (void)
@@ -3319,7 +3321,8 @@ TAO_MMDevice::remove_fdev (const char *flow_name,
 
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::notSupported,
-                   AVStreams::noSuchFlow))
+                   AVStreams::noSuchFlow,
+                   AVStreams::streamOpFailed))
 {
   ACE_TRY
     {
