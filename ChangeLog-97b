@@ -1,3 +1,17 @@
+Wed Nov 19 11:38:23 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* STL/bstring.h: Added a special-case for BorlandC++.  However, I
+ 	  think this can be generalized for all compilers.  Thanks to
+ 	  Valik Solorzano Barboza <valik@xs4all.nl> for reporting this.
+
+	* ace/OS: Fixed strpbrk() to handle the const char * and char *
+ 	  cases of ANSI C++.  Thanks to Valik Solorzano Barboza
+ 	  <valik@xs4all.nl> for reporting this.
+
+	* ace/OS.h: Added a special case for _MSC_VER since BC++ doesn't
+ 	  have wchar.h!  Thanks to Valik Solorzano Barboza
+ 	  <valik@xs4all.nl> for reporting this.
+
 Wed Nov 19 09:20:05 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.52, released Wed Nov 19 09:20:05 1997.
