@@ -2,67 +2,31 @@
 // $Id$
 
 ACE_INLINE
-CIAO::controller::controller ()
+CIAO::Daemon_i::controller::controller ()
   : cmd_ (0)
 {
 }
 
 ACE_INLINE
-CIAO::controller::~controller ()
+CIAO::Daemon_i::controller::~controller ()
 {
   //  this->fini ();
 }
 
 ACE_INLINE CIAO::Daemon_ptr
-CIAO::controller::daemon (void)
+CIAO::Daemon_i::controller::daemon (void)
 {
   return this->daemon_.in ();
 }
 
 ACE_INLINE CORBA::ORB_ptr
-CIAO::controller::orb (void)
+CIAO::Daemon_i::controller::orb (void)
 {
   return this->orb_.in ();
 }
 
 ACE_INLINE
-CIAO::Command::Command (CIAO::controller *c)
+CIAO::Daemon_i::Command_Base::Command_Base (CIAO::Daemon_i::controller *c)
   : controller_ (c)
-{
-}
-
-ACE_INLINE
-CIAO::CMD_Install::CMD_Install (CIAO::controller *c)
-  : Command (c)
-{
-}
-
-ACE_INLINE
-CIAO::CMD_Uninstall::CMD_Uninstall (CIAO::controller *c)
-  : Command (c)
-{
-}
-
-ACE_INLINE
-CIAO::CMD_Query::CMD_Query (CIAO::controller *c)
-  : Command (c)
-{
-}
-
-ACE_INLINE
-CIAO::CMD_Replace::CMD_Replace (CIAO::controller *c)
-  : Command (c)
-{
-}
-
-ACE_INLINE
-CIAO::CMD_Get_IOR::CMD_Get_IOR (CIAO::controller *c)
-  : Command (c)
-{
-}
-
-ACE_INLINE
-CIAO::CMD_Shutdown::CMD_Shutdown (CIAO::controller *c)
-  : Command (c)
 {
 }
