@@ -572,7 +572,10 @@ ACE::recv_n (ACE_HANDLE handle, void *buf, size_t len, int flags)
 
   for (bytes_read = 0; bytes_read < len; bytes_read += n)
     {
-      n = ACE::recv (handle, (char *) buf + bytes_read, len - bytes_read, flags);
+      n = ACE::recv (handle,
+		     (char *) buf + bytes_read,
+		     len - bytes_read,
+		     flags);
 
       if (n == -1)
 	{
@@ -617,6 +620,242 @@ ACE::read_n (ACE_HANDLE handle,
     }
 
   return bytes_read;
+}
+
+int 
+ACE::enter_recv_timedwait (ACE_HANDLE handle,
+			   const ACE_Time_Value *timeout,
+			   int &val)
+{
+  if (timeout == 0)
+    return 0;
+
+  ACE_Handle_Set handle_set;
+  handle_set.set_bit (handle);
+
+  // Wait for input to arrive or for the timeout to elapse.
+  switch (ACE_OS::select (int (handle) + 1,
+			  (fd_set *) handle_set, // read_fds.
+			  (fd_set *) 0, // write_fds.
+			  (fd_set *) 0, // exception_fds.
+			  timeout))
+    {
+    case 1: // OK to read now.
+      // We need to record whether we are already *in* nonblocking
+      // mode, so that we can correctly reset the state when we're
+      // done.
+      val = ACE::get_flags (handle);
+
+      if (ACE_BIT_ENABLED (val, ACE_NONBLOCK) == 0)
+	// Set the descriptor into non-blocking mode if it's not
+	// already in it.
+	ACE::set_flags (handle, ACE_NONBLOCK);
+      return 1;
+    case 0: // Timer expired.
+      errno = ETIME;
+      /* FALLTHRU */
+    default: // if we got here directly select() must have returned -1.
+      return -1;
+    }
+}
+
+void 
+ACE::leave_recv_timedwait (ACE_HANDLE handle,
+			   const ACE_Time_Value *timeout,
+			   int val)
+{
+  if (timeout != 0 
+      && ACE_BIT_ENABLED (val, ACE_NONBLOCK) == 0)
+    {
+      // We need to stash errno here because ACE::clr_flags() may
+      // reset it.
+      int error = errno;
+
+      // Only disable ACE_NONBLOCK if we weren't in non-blocking mode
+      // originally.
+      ACE::clr_flags (handle, ACE_NONBLOCK);
+      errno = error;
+    }
+}
+
+int 
+ACE::enter_send_timedwait (ACE_HANDLE handle,
+			   const ACE_Time_Value* timeout,
+			   int &val)
+{
+  if (timeout==0)
+    return 0;
+
+  ACE_Handle_Set handle_set;
+  handle_set.set_bit (handle);
+
+  // On timed writes we always go into select(); only if the
+  // descriptor is available for writing within the specified amount
+  // of time do we put it in non-blocking mode
+
+  switch (ACE_OS::select (int (handle) + 1,
+			  (fd_set *) 0, 
+			  (fd_set *) handle_set,
+			  (fd_set *) 0,
+			  timeout))
+    {
+    case 1: // Ok to write now.
+      // We need to record whether we are already *in* nonblocking
+      // mode, so that we can correctly reset the state when we're
+      // done.
+      val = ACE::get_flags (handle);
+
+      if (ACE_BIT_ENABLED (val, ACE_NONBLOCK) == 0)
+	// Set the descriptor into non-blocking mode if it's not
+	// already in it.
+	ACE::set_flags (handle, ACE_NONBLOCK);
+      return 1;
+    case 0: // Timer expired.
+      errno = ETIME;
+      /* FALLTHRU */
+    default: // if we got here directly select() must have returned -1.
+      return -1;
+    }
+}
+
+void 
+ACE::leave_send_timedwait (ACE_HANDLE handle,
+			   const ACE_Time_Value *timeout,
+			   int val)
+{
+  if (timeout != 0
+      && ACE_BIT_ENABLED (val, ACE_NONBLOCK) == 0)
+    {
+      // We need to stash errno here because ACE::clr_flags() may
+      // reset it.
+      int error = errno;
+
+      // Only disable ACE_NONBLOCK if we weren't in non-blocking mode
+      // originally.
+      ACE::clr_flags (handle, ACE_NONBLOCK);
+      errno = error;
+    }
+}
+
+ssize_t
+ACE::sendto (ACE_HANDLE handle,
+	     const char *buf,
+	     int len, 
+	     int flags,
+	     const struct sockaddr *addr,
+	     int addrlen,
+	     const ACE_Time_Value *timeout)
+{
+  // ACE_TRACE ("ACE::sendto");
+#if defined (ACE_HAS_SENDTO_TIMEDWAIT)
+  if (timeout == 0)
+     return ACE_OS::sendto (handle, buf, len, flags, addr, addrlen);
+  else
+    {
+      ACE_Time_Value copy = *timeout;
+      copy += ACE_OS::gettimeofday ();
+      timestruc_t ts = copy;
+      return ::sendto_timedwait (handle, buf, len, flags, addr, addrlen, &ts);
+    }
+#else
+  int val;
+  if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
+    return -1;
+  else 
+    {
+      int bytes_written = ACE_OS::sendto (handle, buf, len, flags, addr, addrlen);
+      ACE::leave_send_timedwait (handle, timeout, val);
+      return bytes_written;
+    }
+#endif /* ACE_HAS_SENDTO_TIMEDWAIT */
+}
+
+ssize_t
+ACE::sendmsg (ACE_HANDLE handle, 
+	      const struct msghdr *msg,
+	      int flags,
+	      const ACE_Time_Value *timeout)
+{
+  // ACE_TRACE ("ACE::sendmsg");
+#if defined (ACE_HAS_SENDMSG_TIMEDWAIT)
+  if (timeout == 0)
+     return ACE_OS::sendmsg (handle, msg, flags);
+  else 
+    {
+      ACE_Time_Value copy = *timeout;
+      copy += ACE_OS::gettimeofday ();
+      timestruc_t ts = copy;
+      return ::sendmsg_timedwait (handle, msg, flags, &ts);
+    }
+#else
+  int val;
+  if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
+    return -1;
+  else 
+    {
+      int bytes_written = ACE_OS::sendmsg (handle, msg, flags);
+      ACE::leave_send_timedwait (handle, timeout, val);
+      return bytes_written;
+    }
+#endif /* ACE_HAS_SENDMSG_TIMEDWAIT */
+}
+
+ssize_t
+ACE::readv (ACE_HANDLE handle,
+	    struct iovec *iov,
+	    int iovcnt,
+	    const ACE_Time_Value *timeout)
+{
+  // ACE_TRACE ("ACE::readv");
+#if defined (ACE_HAS_READV_TIMEDWAIT)
+  if (timeout == 0)
+     return ACE_OS::readv (handle, iov, iovcnt);
+  else {
+     ACE_Time_Value copy = *timeout;
+     copy += ACE_OS::gettimeofday ();
+     timestruc_t ts = copy;
+     return ::readv_timedwait (handle, iov, iovcnt, &ts);
+  }
+#else
+  int val;
+  if (ACE::enter_recv_timedwait (handle, timeout, val) == -1)
+     return -1;
+  else 
+    {
+      ssize_t bytes_read = ACE_OS::readv (handle, iov, iovcnt);
+      ACE::leave_recv_timedwait (handle, timeout, val);
+      return bytes_read;
+    }
+#endif /* ACE_HAS_READV_TIMEDWAIT */
+}
+
+ssize_t
+ACE::writev (ACE_HANDLE handle,
+	     const struct iovec *iov,
+	     int iovcnt,
+	     const ACE_Time_Value *timeout)
+{
+  // ACE_TRACE ("ACE::writev");
+#if defined (ACE_HAS_WRITEV_TIMEDWAIT)
+  if (timeout == 0)
+     return ACE_OS::writev (handle, iov, iovcnt);
+  else {
+     ACE_Time_Value copy = *timeout;
+     copy += ACE_OS::gettimeofday ();
+     timestruc_t ts = copy;
+     return ::writev_timedwait (handle, iov, iovcnt, &ts);
+  }
+#else
+  int val;
+  if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
+     return -1;
+  else
+    {
+      ssize_t bytes_written = ACE_OS::writev (handle, iov, iovcnt);
+      ACE::leave_send_timedwait (handle, timeout, val);
+      return bytes_written;
+    }
+#endif /* ACE_HAS_WRITEV_TIMEDWAIT */
 }
 
 // Format buffer into printable format.  This is useful for debugging.
@@ -1128,54 +1367,28 @@ ACE::send (ACE_HANDLE handle,
 	   int flags,
 	   const ACE_Time_Value *timeout)
 {
+#if defined (ACE_HAS_SEND_TIMEDWAIT)
   if (timeout == 0)
-    // Use the blocking send.
     return ACE::send (handle, buf, n, flags);
-  else
+  else 
     {
-      // On timed writes we always go into select(); only if the
-      // descriptor is available for writing within the specified
-      // amount of time do we put it in non-blocking mode
-
-      ACE_Handle_Set handle_set;
-      handle_set.set_bit (handle);
-
-      switch (ACE_OS::select (int (handle) + 1, 0, handle_set, 0, timeout))
-	{
-	case 1: // Ok to write now
-	  // We need to record whether we are already *in* nonblocking
-	  // mode, so that we can correctly reset the state when we're
-	  // done.
-	  {
-	    int val = ACE::get_flags (handle);
-
-	    if (ACE_BIT_ENABLED (val, ACE_NONBLOCK) == 0)
-	      // Set the descriptor into non-blocking mode if it's not
-	      // already in it.
-	      ACE::set_flags (handle, ACE_NONBLOCK);
-
-	    ssize_t bytes_written = ACE_OS::send (handle, (const char *) buf, n, flags);
-
-	    if (ACE_BIT_ENABLED (val, ACE_NONBLOCK) == 0)
-	      {
-		// We need to stash errno here because ACE::clr_flags() may
-		// reset it.
-		int error = errno;
-
-		// Only disable ACE_NONBLOCK if we weren't in non-blocking mode
-		// originally.
-		ACE::clr_flags (handle, ACE_NONBLOCK);
-		errno = error;
-	      }
-	    return bytes_written;
-	  }
-	case 0: // Timer expired.
-	  errno = ETIME;
-	  /* FALLTHRU */
-	default: // if we got here directly select() must have returned -1.
-	  return -1;
-	}
+      ACE_Time_Value copy = *timeout;
+      copy += ACE_OS::gettimeofday();
+      timestruc_t ts = copy;
+      return ::send_timedwait (handle, buf, n, flags, &ts);
     }
+#else
+  int val;
+
+  if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
+    return -1;
+  else 
+    {
+      ssize_t bytes_written = ACE::send (handle, buf, n, flags);
+      ACE::leave_send_timedwait (handle, timeout, val);
+      return bytes_written;
+    }
+#endif /* ACE_HAS_SEND_TIMEDWAIT */
 }
 
 ssize_t
@@ -1184,59 +1397,29 @@ ACE::send (ACE_HANDLE handle,
 	   size_t n,
 	   const ACE_Time_Value *timeout)
 {
+  // ACE_TRACE ("ACE_OS::write");
+#if defined (ACE_HAS_WRITE_TIMEDWAIT)
   if (timeout == 0)
-    // Use the blocking send.
     return ACE::send (handle, buf, n);
   else
-#if defined (ACE_WIN32)
-    // Use the socket timed send();
-    return ACE::send (handle, buf, n, 0, timeout);
-#else
     {
-      // On timed writes we always go into select(); only if the
-      // descriptor is available for writing within the specified
-      // amount of time do we put it in non-blocking mode
-
-      ACE_Handle_Set handle_set;
-      handle_set.set_bit (handle);
-
-      switch (ACE_OS::select (int (handle) + 1, 0, handle_set, 0, timeout))
-	{
-	case 1: // Ok to write now
-	  // We need to record whether we are already *in* nonblocking
-	  // mode, so that we can correctly reset the state when we're
-	  // done.
-	  {
-	    int val = ACE::get_flags (handle);
-
-	    if (ACE_BIT_ENABLED (val, ACE_NONBLOCK) == 0)
-	      // Set the descriptor into non-blocking mode if it's not
-	      // already in it.
-	      ACE::set_flags (handle, ACE_NONBLOCK);
-
-	    ssize_t bytes_written = ACE_OS::write (handle, (const char *) buf, n);
-
-	    if (ACE_BIT_ENABLED (val, ACE_NONBLOCK) == 0)
-	      {
-		// We need to stash errno here because ACE::clr_flags() may
-		// reset it.
-		int error = errno;
-
-		// Only disable ACE_NONBLOCK if we weren't in non-blocking mode
-		// originally.
-		ACE::clr_flags (handle, ACE_NONBLOCK);
-		errno = error;
-	      }
-	    return bytes_written;
-	  }
-	case 0: // Timer expired.
-	  errno = ETIME;
-	  /* FALLTHRU */
-	default: // if we got here directly select() must have returned -1.
-	  return -1;
-	}
+      ACE_Time_Value copy = *timeout;
+      copy += ACE_OS::gettimeofday ();
+      timestruc_t ts = copy;
+      return ::write_timedwait (handle, buf, n, &ts);
     }
-#endif /* ACE_WIN32 */
+#else
+  int val;
+
+  if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
+    return -1;
+  else 
+    {
+      ssize_t bytes_written = ACE::send (handle, buf, n);
+      ACE::leave_send_timedwait (handle, timeout, val);
+      return bytes_written;
+    }
+#endif /* ACE_HAS_WRITE_TIMEDWAIT */
 }
 
 ssize_t
@@ -1246,12 +1429,15 @@ ACE::send_n (ACE_HANDLE handle,
 	     int flags,
 	     const ACE_Time_Value *timeout)
 {
+  // Total number of bytes written.
   size_t bytes_written;
 
-  // Actual number of bytes written in each attempt.
+  // Actual number of bytes written in each <send> attempt.
   ssize_t i = 0;
 
-  for (bytes_written = 0; bytes_written < n; bytes_written += i)
+  for (bytes_written = 0; 
+       bytes_written < n;
+       bytes_written += i)
     {
       i = ACE::send (handle, (char *) buf + bytes_written,
 		     n - bytes_written, flags, timeout);
@@ -1263,36 +1449,128 @@ ACE::send_n (ACE_HANDLE handle,
 }
 
 ssize_t
+ACE::recvfrom (ACE_HANDLE handle,
+	       char *buf,
+	       int len, 
+	       int flags,
+	       struct sockaddr *addr,
+	       int *addrlen,
+	       const ACE_Time_Value *timeout)
+{
+  // ACE_TRACE ("ACE::recvfrom");
+#if defined (ACE_HAS_RECVFROM_TIMEDWAIT)
+  if (timeout == 0)
+     return ACE_OS::recvfrom (handle, buf, len, flags, addr, addrlen);
+  else
+    {
+      ACE_Time_Value copy = *timeout;
+      copy += ACE_OS::gettimeofday ();
+      timestruc_t ts = copy;
+      return ::recvfrom_timedwait (handle, buf, len, flags, addr, addrlen, &ts);
+    }
+#else
+  int val;
+  if (ACE::enter_recv_timedwait (handle, timeout, val) == -1)
+     return -1;
+  else 
+    {
+      int bytes_read = ACE_OS::recvfrom (handle, buf, len, flags, addr, addrlen);
+      ACE::leave_recv_timedwait (handle, timeout, val);
+      return bytes_read;
+    }
+#endif /* ACE_HAS_RECVFROM_TIMEDWAIT */
+}
+
+ssize_t
+ACE::recvmsg (ACE_HANDLE handle,
+	      struct msghdr *msg,
+	      int flags,
+	      const ACE_Time_Value *timeout)
+{
+  // ACE_TRACE ("ACE::recvmsg");
+#if defined (ACE_HAS_RECVMSG_TIMEDWAIT)
+  if (timeout == 0)
+     return ACE_OS::recvmsg (handle, msg, flags);
+  else 
+    {
+      ACE_Time_Value copy = *timeout;
+      copy += ACE_OS::gettimeofday ();
+      timestruc_t ts = copy;
+      return ::recvmsg_timedwait (handle, msg, flags, &ts);
+    }
+#else
+  int val;
+  if (ACE::enter_recv_timedwait (handle, timeout, val) == -1)
+    return -1;
+  else 
+    {
+      int bytes_read = ACE_OS::recvmsg (handle, msg, flags);
+      ACE::leave_recv_timedwait (handle, timeout, val);
+      return bytes_read;
+    }
+#endif /* ACE_HAS_RECVMSG_TIMEDWAIT */
+}
+
+ssize_t
 ACE::recv (ACE_HANDLE handle,
 	   void *buf,
 	   size_t n,
+	   const ACE_Time_Value *timeout)
+{
+  // ACE_TRACE ("ACE::read");
+#if defined (ACE_HAS_READ_TIMEDWAIT)
+  if (timeout == 0)
+     return ACE::recv (handle, buf, n);
+  else 
+    {
+      ACE_Time_Value copy = *timeout;
+      copy += ACE_OS::gettimeofday ();
+      timestruc_t ts = copy;
+      return ::read_timedwait (handle, buf, n, &ts);
+    }
+#else
+  int val;
+
+  if (ACE::enter_recv_timedwait (handle, timeout, val) == -1)
+    return -1;
+  else
+    {
+      ssize_t bytes_read = ACE::recv (handle, buf, n);
+      ACE::leave_recv_timedwait (handle, timeout, val);
+      return bytes_read;
+    }
+#endif /* ACE_HAS_READ_TIMEDWAIT */
+}
+
+ssize_t 
+ACE::recv (ACE_HANDLE handle,
+	   void *buf,
+	   size_t len,
 	   int flags,
 	   const ACE_Time_Value *timeout)
 {
+  // ACE_TRACE ("ACE::recv");
+#if defined (ACE_HAS_RECV_TIMEDWAIT)
   if (timeout == 0)
-    return ACE::recv (handle, buf, n, flags);
+     return ACE::recv (handle, buf, len, flags);
   else
     {
-      ACE_Handle_Set handle_set;
-
-      handle_set.set_bit (handle);
-
-      // Wait for input to arrive or for the timeout to elapse.
-      switch (ACE_OS::select (int (handle) + 1,
-			      (fd_set *) handle_set, // read_fds.
-			      (fd_set *) 0, // write_fds.
-			      (fd_set *) 0, // exception_fds.
-			      timeout))
-	{
-	case -1:
-	  return -1;
-	case 0:
-	  errno = ETIME;
-	  return -1;
-	default:
-	  return ACE::recv (handle, buf, n, flags);
-	}
+      ACE_Time_Value copy = *timeout;
+      copy += ACE_OS::gettimeofday ();
+      timestruc_t ts = copy;
+      return ::recv_timedwait (handle, buf, len, flags, &ts);
     }
+#else
+  int val;
+  if (ACE::enter_recv_timedwait (handle, timeout, val)==-1)
+     return -1;
+  else
+    {
+      ssize_t bytes_recv = ACE::recv (handle, buf, len, flags);
+      ACE::leave_recv_timedwait (handle, timeout, val);
+      return bytes_recv;
+    }
+#endif /* ACE_HAS_RECV_TIMEDWAIT */
 }
 
 ssize_t
@@ -1321,8 +1599,8 @@ ACE::recv_n (ACE_HANDLE handle,
 
 u_long
 ACE::is_prime (const u_long n,
-          const u_long min_factor,
-          const u_long max_factor)
+	       const u_long min_factor,
+	       const u_long max_factor)
 {
   if (n > 3)
     {
@@ -1668,15 +1946,15 @@ get_reg_value (const TCHAR *key,
 {
   HKEY hk;
   DWORD buf_type;
-  LONG rc = RegOpenKeyEx (HKEY_LOCAL_MACHINE, key, 0, KEY_READ, &hk);
+  LONG rc = ::RegOpenKeyEx (HKEY_LOCAL_MACHINE, key, 0, KEY_READ, &hk);
 
   // 1. open key that defines the interfaces used for TCP/IP?
   if (rc != ERROR_SUCCESS)
     // print_error_string(TEXT("RegOpenKeyEx"), rc);
     return -1;
 
-  rc = RegQueryValueEx (hk, name, 0, &buf_type,
-		       (unsigned char *) buffer, &buf_len);
+  rc = ::RegQueryValueEx (hk, name, 0, &buf_type,
+			  (u_char *) buffer, &buf_len);
 
   if (rc != ERROR_SUCCESS)
     {
@@ -1685,7 +1963,7 @@ get_reg_value (const TCHAR *key,
       return -2;
     }
 
-  RegCloseKey (hk);
+  ::RegCloseKey (hk);
   return 0;
 }
 #endif /* ACE_WIN32 */
@@ -1701,7 +1979,6 @@ ACE::get_ip_interfaces (size_t &count,
   ACE_TRACE ("ACE::get_ip_interfaces");
 
 #if defined (ACE_WIN32)
-
   const TCHAR *SVCS_KEY1 =  __TEXT ("SYSTEM\\CurrentControlSet\\Services\\");
   const TCHAR *LINKAGE_KEY1 =
     __TEXT ("SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Linkage");
@@ -1762,7 +2039,7 @@ ACE::get_ip_interfaces (size_t &count,
 	    continue;		// Don't count this device
 
 	  // c. store in hostinfo object array and up the counter
-	  addrs[count++] = ACE_INET_Addr ((unsigned short) 0,
+	  addrs[count++] = ACE_INET_Addr ((u_short) 0,
 					  ACE_MULTIBYTE_STRING (buffer));
 	}
     }
@@ -1839,38 +2116,43 @@ ACE::get_ip_interfaces (size_t &count,
 #endif /* ACE_WIN32 */
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-
-// The ACE_Object_Manager_Destroyer class is placed in this file, rather
-// than Object_Manager.cpp, to be sure that the static Object_Manager gets
-// linked into applications that statically link libACE.a.
 class ACE_Export ACE_Object_Manager_Destroyer
+  // = TITLE
+  //    Ensure that the <ACE_Object_Manager> gets initialized before any
+  //    application threads have been spawned.  
+  //
+  // = DESCRIPTION
+  //    The <ACE_Object_Manager_Destroyer> class is placed in this
+  //    file, rather than Object_Manager.cpp, to be sure that the
+  //    static Object_Manager gets linked into applications that
+  //    statically link libACE.a.
 {
 public:
-  ACE_Object_Manager_Destroyer ();
-  ~ACE_Object_Manager_Destroyer ();
+  ACE_Object_Manager_Destroyer (void);
+  ~ACE_Object_Manager_Destroyer (void);
 };
 
-static ACE_Object_Manager_Destroyer ACE_Object_Manager_Destroyer_internal;
-
-ACE_Object_Manager_Destroyer::ACE_Object_Manager_Destroyer ()
+ACE_Object_Manager_Destroyer::ACE_Object_Manager_Destroyer (void)
 {
-  // Ensure that the Object_Manager gets before any application threads
-  // have been spawned.  Because this will be call during construction
-  // of static objects, that should always be the case.
-  ACE_Object_Manager &object_manager = *ACE_Object_Manager::instance ();
-  if (&object_manager) /* null */;
+  // Ensure that the Object_Manager gets initialized before any
+  // application threads have been spawned.  Because this will be call
+  // during construction of static objects, that should always be the
+  // case.
+  ACE_Object_Manager &object_manager =
+    *ACE_Object_Manager::instance ();
+
+  if (&object_manager)
+    /* null */;
 }
 
-ACE_Object_Manager_Destroyer::~ACE_Object_Manager_Destroyer ()
+ACE_Object_Manager_Destroyer::~ACE_Object_Manager_Destroyer (void)
 {
   delete ACE_Object_Manager::instance_;
+
   ACE_Object_Manager::instance_ = 0;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-
+static ACE_Object_Manager_Destroyer ACE_Object_Manager_Destroyer_internal;
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class auto_array_ptr<struct ifreq>;
