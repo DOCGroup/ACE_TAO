@@ -105,7 +105,10 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
   os << " " << node->local_name () << ";" << nl;
 
-      // Generate the typecode decl
+  os << "typedef " << node->local_name () << "* "
+     << node->local_name () << "_ptr;\n";
+
+  // Generate the typecode decl
   if (node->is_nested ())
     {
       // we have a scoped name
@@ -117,8 +120,8 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
     {
       // we are in the ROOT scope
       os.indent ();
-      os << "extern CORBA::TypeCode_ptr " << node->tc_name
-        ()->last_component () << ";\n\n";
+      os << "extern CORBA::TypeCode_ptr "
+	 << node->tc_name ()->last_component () << ";\n\n";
     }
 
 

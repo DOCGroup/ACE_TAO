@@ -32,6 +32,8 @@ class be_typedef;
 class be_root;
 class be_native;
 
+class TAO_OutStream;
+
 class be_visitor
 {
   //

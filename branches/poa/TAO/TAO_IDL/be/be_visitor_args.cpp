@@ -15,6 +15,16 @@ be_visitor_args_decl::~be_visitor_args_decl (void)
 {
 }
 
+void be_visitor_args_decl::argument_direction (int direction)
+{
+  this->argument_direction_ = direction;
+}
+
+void be_visitor_args_decl::current_type_name (UTL_ScopedName* name)
+{
+  this->current_type_name_ = name;
+}
+
 inline TAO_OutStream& be_visitor_args_decl::stream (void) const
 {
   return *this->stream_;

@@ -35,8 +35,7 @@ public:
 
   virtual int visit_interface (be_interface *node);
   virtual int visit_operation (be_operation *node);
-  // virtual int visit_argument (be_argument *node);
-  // virtual int visit_attribute (be_attribute *node);
+  virtual int visit_attribute (be_attribute *node);
 };
 
 class be_visitor_collocated_ss : public be_visitor
@@ -51,7 +50,7 @@ public:
   virtual int visit_interface (be_interface *node);
   virtual int visit_operation (be_operation *node);
   virtual int visit_argument (be_argument *node);
-  // virtual int visit_attribute (be_attribute *node);
+  virtual int visit_attribute (be_attribute *node);
 
 private:
   be_interface* current_interface_;

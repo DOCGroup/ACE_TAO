@@ -690,10 +690,7 @@ int be_interface::gen_server_header (void)
         {
           *sh << ", public virtual ";
           intf = be_interface::narrow_from_decl (inherits ()[i]);
-          *sh << intf->relative_skel_name (this->full_skel_name ());  // dump
-                                                                      // the
-                                                                      // scoped
-                                                                      // name
+          *sh << intf->relative_skel_name (this->full_skel_name ());
         }  // end of for loop
     }
   else
@@ -711,6 +708,13 @@ int be_interface::gen_server_header (void)
   *sh << "public:\n";
   sh->incr_indent ();
   *sh << "virtual ~" << namebuf << " (void);\n";
+
+  sh->indent ();
+  *sh << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
+      << "const char* logical_type_id," << be_nl
+      << "CORBA::Environment &_tao_environment" << be_uidt
+      << ");\n" << be_uidt;
+
   // generate code for elements in the scope (e.g., operations)
   if (be_scope::gen_server_header () == -1)
     {
@@ -813,39 +817,60 @@ int be_interface::gen_server_skeletons (void)
 
   // generate code for the _is_a skeleton
   ss->indent ();
-  *ss << "void " << this->full_skel_name () <<
-    "::_is_a_skel (CORBA::ServerRequest &req, " <<
-    "void * /* obj */, void * /*context*/, CORBA::Environment &env)" << nl;
+  *ss << "void " << this->full_skel_name ()
+      << "::_is_a_skel (" << be_idt << be_idt_nl
+      << "CORBA::ServerRequest &req, " << be_nl
+      << "void * _tao_object_reference," << be_nl
+      << "void * /*context*/," << be_nl
+      << "CORBA::Environment &_tao_environment" << be_uidt_nl
+      << ")" << be_uidt_nl;
+
   *ss << "{\n";
   ss->incr_indent ();
   *ss << "CORBA::NVList_ptr nvlist;" << nl;
   *ss << "CORBA::NamedValue_ptr nv;" << nl;
   *ss << "CORBA::Any temp_value (CORBA::_tc_string);" << nl;
   *ss << "CORBA::Any *any;" << nl;
-  *ss << "CORBA::Boolean *retval;" << nl;
+  *ss << "CORBA::Boolean *retval = new CORBA::Boolean;" << nl;
   *ss << "CORBA::String value;" << nl;
   *ss << nl;
   *ss << "req.orb()->create_list (0, nvlist);" << nl;
   *ss << "nv = nvlist->add_value (0, temp_value, CORBA::ARG_IN, env);" << nl;
   *ss << "req.params (nvlist, env); // parse the args" << nl;
-  *ss << "if (env.exception () != 0) return;" << nl;
+  *ss << "if (_tao_environment.exception () != 0) return;" << nl;
   *ss << "value = *(CORBA::String *)nv->value ()->value ();" << nl;
-  *ss << "if (\n";
-  ss->incr_indent (0);
-  if (this->traverse_inheritance_graph (be_interface::is_a_helper, ss) == -1)
-    {
-    }
-  ss->indent ();
-  *ss << "(!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))\n";
-  *ss << "\tretval = new CORBA::Boolean (CORBA::B_TRUE);\n";
-  ss->decr_indent ();
-  *ss << "else" << nl;
-  *ss << "\tretval = new CORBA::Boolean (CORBA::B_FALSE);" << nl;
-  *ss << "any = new CORBA::Any (CORBA::_tc_boolean, retval, CORBA::B_TRUE);" <<
-    nl;
+
+  *ss << this->full_skel_name () << "_ptr \t impl = ("
+      << this->full_skel_name () << "_ptr) _tao_object_reference;"
+      << nl;
+
+  *ss << "*retval = impl->_is_a (value, _tao_environment);" << be_nl
+      << "if (_tao_environment.exception () != 0) return;" << be_nl;
+  *ss << "any = new CORBA::Any (CORBA::_tc_boolean, "
+      << "retval, CORBA::B_TRUE);" << nl;
   *ss << "req.result (any, env);\n";
   ss->decr_indent ();
   *ss << "}\n\n";
+
+  ss->indent ();
+  *ss << "CORBA::Boolean " << this->full_skel_name ()
+      << "::_is_a (" << be_idt << be_idt_nl
+      << "const char* value," << be_nl
+      << "CORBA::Environment &_tao_environment" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "if (\n" << be_idt;
+  if (this->traverse_inheritance_graph (be_interface::is_a_helper, ss) == -1)
+    {
+      return -1;
+    }
+
+  ss->indent ();
+  *ss << "(!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))"
+      << be_idt_nl << "return CORBA::B_TRUE;" << be_uidt_nl
+      << "else" << be_idt_nl
+      << "return CORBA::B_TRUE;" << be_uidt << be_uidt << be_uidt_nl
+      << "}\n\n";
 
   // now the dispatch method
   ss->indent ();
