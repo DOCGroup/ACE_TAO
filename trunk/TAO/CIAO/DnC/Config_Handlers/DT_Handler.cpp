@@ -5,13 +5,10 @@
 #include "Utils.h"
 
 void
-CIAO::Config_Handler::DT_Handler::process_DataType (DOMNodeIterator * iter, 
+CIAO::Config_Handler::DT_Handler::process_basic_tc (DOMNodeIterator * iter,
                                                     ::CORBA::TypeCode_ptr type)
 {
-  DOMNode * node = iter->nextNode ();
-  XStr name (node->getNodeName ());
-  if (name == XStr (ACE_TEXT ("Deployment:TCKind")))
-  {
+
     // For all types defined return the appropriate typecode
     char * code_value = Utils::parse_string (iter);
 
@@ -55,19 +52,39 @@ CIAO::Config_Handler::DT_Handler::process_DataType (DOMNodeIterator * iter,
     else if (code_value == "tk_TypeCode")
      type = CORBA::_tc_TypeCode;
     else if (code_value == "tk_Object")
-     type = CORBA::_tc_Object; 
+     type = CORBA::_tc_Object;
     else
     {
       ACE_DEBUG ((LM_DEBUG, "Config_Handlers::DT_Handler::process_Datatype \
-                            currently unsupported TCkind value %s encountered \
-                            abortingi\n", type)); 
+                            unsupported TCkind value %s encountered \
+                            abortingi\n", type));
       ACE_THROW (CORBA::INTERNAL ());
     }
-  }
-  else
+}
+
+void
+CIAO::Config_Handler::DT_Handler::process_enum_tc (DOMNodeIterator * iter,
+                                                   ::CORBA::TypeCode_ptr type,
+                                                   ::CORBA::ORB_ptr orb)
+{
+
+}
+
+void
+CIAO::Config_Handler::DT_Handler::process_DataType (DOMNodeIterator * iter, 
+                                                    ::CORBA::TypeCode_ptr type,
+                                                    ::CORBA::ORB_ptr orb)
+{
+  DOMNode * node = iter->nextNode ();
+  XStr name (node->getNodeName ());
+  if (name == XStr (ACE_TEXT ("Deployment:TCKind")))
+    DT_Handler::process_basic_tc (iter, type);
+  else if (name == XStr (ACE_TEXT ("Deployment:EnumType")))
+    DT_Handler::process_enum_tc (iter, type, orb);
+  else 
   {
      ACE_DEBUG ((LM_DEBUG, "Config_Handlers::Property_Handler::process_ \
-                           DataType supports only <TCKind> simple type \
+                           DataType supports only TCKind, Enum types \
                            support for recursive types will be added later\n"));
       ACE_THROW (CORBA::INTERNAL ());
 

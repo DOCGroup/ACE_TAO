@@ -1,4 +1,3 @@
-
 //==================================================================
 /**
  *  @file  DT_Handler.h
@@ -15,6 +14,7 @@
 
 #include "DeploymentC.h"
 #include "Config_Handler_export.h"
+#include "tao/ORB.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -42,15 +42,29 @@ namespace CIAO
      *
      * This class defines handler methods to parse the aforementioned type
      * in the descriptor files. The corresponding CORBA IDL mapped type in this
-     * a CORBA::Typecode is created and returned. 
+     * a CORBA::Typecode is created and returned. Dynamic creation of typecodes
+     * also requires operations defined on the ORB interface, hence the 
+     * process_DataType requires an ORB_ptr as a formal parameter.
      */
 
     class Config_Handler_Export DT_Handler
     {
     public:
       static void process_DataType (DOMNodeIterator * iter, 
-                                    ::CORBA::TypeCode_ptr type);
+                                    ::CORBA::TypeCode_ptr type,
+                                    ::CORBA::ORB_ptr orb);
       // process <type> definitions in the descriptor files
+    private:
+      static void process_basic_tc (DOMNodeIterator * iter,
+                                    ::CORBA::TypeCode_ptr type);
+      // process <Deployment:TCKind> definitions in the descriptor
+      // files
+
+      static void process_enum_tc (DOMNodeIterator * iter,
+                                   ::CORBA::TypeCode_ptr type,
+                                   CORBA::ORB_ptr orb);
+      // process <Deployment:EnumType> definitions in the 
+      // descriptor files
 
     };
   }
