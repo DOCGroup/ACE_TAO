@@ -1,0 +1,2 @@
+# What to do to make the parser
+java java_cup.Main < Svc_Conf.y
