@@ -157,7 +157,9 @@ ACE_INLINE void
 ACE_OutputCDR::reset (void)
 {
   this->current_ = &this->start_;
-  ACE_CDR::mb_align (&this->start_);
+
+  for (ACE_Message_Block *i = &this->start_; i; i = i->cont())
+    ACE_CDR::mb_align (i);
 }
 
 // Decode the CDR stream.
