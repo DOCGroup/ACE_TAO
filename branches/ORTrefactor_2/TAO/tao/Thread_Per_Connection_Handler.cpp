@@ -1,4 +1,5 @@
 //$Id$
+
 #include "Thread_Per_Connection_Handler.h"
 #include "Connection_Handler.h"
 #include "debug.h"
@@ -61,8 +62,9 @@ TAO_Thread_Per_Connection_Handler::activate (long flags,
 int
 TAO_Thread_Per_Connection_Handler::svc (void)
 {
-  ACE::clr_flags (this->ch_->transport ()->event_handler_i ()->get_handle (),
-                  ACE_NONBLOCK);
+  ACE::clr_flags (
+      this->ch_->transport ()->event_handler_i ()->get_handle (),
+      ACE_NONBLOCK);
 
   // Call the implementation here
   return this->ch_->svc_i ();

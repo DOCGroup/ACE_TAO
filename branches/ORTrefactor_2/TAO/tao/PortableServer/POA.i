@@ -466,13 +466,27 @@ TAO_POA::adapter_name (ACE_ENV_SINGLE_ARG_DECL)
 ACE_INLINE PortableInterceptor::ObjectReferenceTemplate *
 TAO_POA::get_adapter_template ()
 {
-  return this->ort_template_;
+  if (this->object_reference_template_adapter ())
+    {
+      return this->ort_adapter_->get_adapter_template();
+    }
+  else
+    {
+      ACE_THROW (CORBA::INTERNAL ());
+    }
 }
 
 ACE_INLINE PortableInterceptor::ObjectReferenceFactory *
 TAO_POA::get_obj_ref_factory ()
 {
-  return this->obj_ref_factory_;
+  if (this->object_reference_template_adapter ())
+    {
+      return this->ort_adapter_->get_obj_ref_factory();
+    }
+  else
+    {
+      ACE_THROW (CORBA::INTERNAL ());
+    }
 }
 
 #if (TAO_HAS_MINIMUM_POA == 0)

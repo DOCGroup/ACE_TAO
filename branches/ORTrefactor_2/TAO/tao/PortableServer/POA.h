@@ -42,12 +42,9 @@
 #include "tao/LocalObject.h"
 
 // Portable Interceptor
-#include "tao/PortableInterceptorC.h"
+#include "tao/PI_ForwardC.h"
 
-// Map
 #include "ace/Hash_Map_Manager_T.h"
-
-// ACE_Array_Base
 #include "ace/Array_Base.h"
 
 // Locking
@@ -59,6 +56,8 @@
 // OctetSeq
 #include "tao/OctetSeqC.h"
 
+#include "ObjectReferenceTemplate_Adapter.h"
+
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined(_MSC_VER)
@@ -68,15 +67,11 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Acceptor_Filter;
-class TAO_Acceptor_Registry;
 class TAO_Temporary_Creation_Time;
-class TAO_ObjectReferenceTemplate;
 
 class TAO_Creation_Time
 {
 public:
-
   TAO_Creation_Time (const ACE_Time_Value &creation_time);
 
   TAO_Creation_Time (void);
@@ -136,12 +131,22 @@ protected:
 
 // Forward Declaration
 class ServerObject_i;
+class TAO_Acceptor_Filter;
+class TAO_Acceptor_Registry;
+
 
 namespace PortableInterceptor
 {
   class IORInfo;
   typedef IORInfo *IORInfo_ptr;
 }
+
+namespace TAO
+{
+  class ObjectReferenceTemplate_Adapter;
+}
+
+class TAO_ObjectReferenceTemplate_Adapter_Factory;
 
 /**
  * @class TAO_POA
@@ -162,7 +167,6 @@ public:
   friend class TAO_POA_Current_Impl;
   friend class TAO_POA_Manager;
   friend class TAO_RT_Collocation_Resolver;
-  friend class TAO_ObjectReferenceTemplate;
 
   typedef ACE_CString String;
 
@@ -272,16 +276,15 @@ public:
   PortableInterceptor::AdapterName *adapter_name (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  // @@ Johnny, why are the following two methods public?
+  // Can't you make the IORInfo class private?
   /// Accessor methods to ObjectReferenceTemplate
-  PortableInterceptor::ObjectReferenceTemplate * get_adapter_template (void);
-
-  void set_adapter_template (PortableInterceptor::ObjectReferenceTemplate *
-                             object_ref_template
-                             ACE_ENV_ARG_DECL);
+  PortableInterceptor::ObjectReferenceTemplate *get_adapter_template (void);
 
   /// Accessor methods to PortableInterceptor::ObjectReferenceFactory
-  PortableInterceptor::ObjectReferenceFactory * get_obj_ref_factory (void);
+  PortableInterceptor::ObjectReferenceFactory *get_obj_ref_factory (void);
 
+  /// Set the object reference factory
   void set_obj_ref_factory (
     PortableInterceptor::ObjectReferenceFactory *current_factory
     ACE_ENV_ARG_DECL);
@@ -406,8 +409,9 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-  // Methods added by the MIOP specification.
-
+  // Methods added by the
+  /// @name MIOP specification methods
+  //@{
   virtual PortableServer::ObjectId * create_id_for_reference (
       CORBA::Object_ptr the_ref
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -446,10 +450,8 @@ public:
       CORBA::SystemException,
       PortableServer::NotAGroupObject
     ));
-
-  // End methods added by MIOP.
+  //@}
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
-
 
   /// Accessor for POA policies.
   TAO_POA_Policy_Set &policies (void);
@@ -557,6 +559,12 @@ public:
 
   CORBA::Boolean waiting_destruction (void) const;
 
+  static void ort_adapter_factory_name (const char *name);
+
+  static const char *ort_adapter_factory_name (void);
+
+  CORBA::Object_ptr invoke_key_to_object (ACE_ENV_SINGLE_ARG_DECL);
+
 protected:
 
   /// Template method for creating new POA's of this type.
@@ -613,10 +621,9 @@ protected:
   /// Method to notify the IOR Interceptors when there is a state
   /// changed not related to POAManager.
   void adapter_state_changed (
-      const PortableInterceptor::ObjectReferenceTemplateSeq &seq_obj_ref_template,
+      const TAO::ObjectReferenceTemplate_Array &array_obj_ref_template,
       PortableInterceptor::AdapterState state
-      ACE_ENV_ARG_DECL
-    )
+      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Add the given tagged component to all profiles.
@@ -658,20 +665,17 @@ protected:
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-//
-// ImplRepo related.
-//
 #if (TAO_HAS_MINIMUM_CORBA == 0)
+  /// @name Implementation repository related methods
+  //@{
 
   /// ImplRepo helper method, notify the ImplRepo on startup
   void imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL);
 
   /// ImplRepo helper method, notify the ImplRepo on shutdown
   void imr_notify_shutdown (void);
-
+  //@}
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
-  CORBA::Object_ptr invoke_key_to_object (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Wrapper for the ORB's key_to_object that will alter the object pointer
   /// if the ImplRepo is used.
@@ -873,6 +877,18 @@ protected:
       ACE_ENV_ARG_DECL
     );
 
+  CORBA::Object_ptr
+  invoke_key_to_object_helper (const char * repository_id,
+                               const PortableServer::ObjectId & id
+                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  TAO::ObjectReferenceTemplate_Adapter *
+    object_reference_template_adapter (void);
+
+  TAO_ObjectReferenceTemplate_Adapter_Factory *
+    object_reference_template_adapter_factory (void);
+
   const TAO_Creation_Time &creation_time (void);
 
   CORBA::Boolean persistent (void);
@@ -935,13 +951,8 @@ protected:
 
   CORBA::OctetSeq id_;
 
-  /// Keep a copy of the pointer to the actual implementation around
-  /// so that we can call some TAO-specific methods on it.
-  TAO_ObjectReferenceTemplate * def_ort_template_;
-
-  PortableInterceptor::ObjectReferenceTemplate_var ort_template_;
-
-  PortableInterceptor::ObjectReferenceFactory_var obj_ref_factory_;
+  /// Pointer to the object reference template adapter.
+  TAO::ObjectReferenceTemplate_Adapter *ort_adapter_;
 
   /// Adapter can be accepting, rejecting etc.
   PortableInterceptor::AdapterState adapter_state_;
@@ -1072,6 +1083,56 @@ protected:
 };
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+/**
+ * @class TAO_POA_Static_Resources
+ *
+ * @brief The static (global) resoures of all POA's.
+ *
+ * This class is used by the POA to store the resources global to
+ * all POA's.  All instance variables that would have been
+ * declared "static" in TAO_POA, should be declared in this class
+ * to avoid the "static initialization order fiasco" as described in
+ * http://www.parashift.com/c++-faq-lite/ctors.html#faq-10.11.
+ * Briefly, this is the problem that occurs if any static initializers
+ * in any other code call into set static members of TAO_POA.
+ * Since the order in which these initializers execute is unspecified,
+ * uninitialized members can be accessed.
+ */
+class TAO_PortableServer_Export TAO_POA_Static_Resources
+{
+public:
+
+  /// Return the singleton instance.
+  static TAO_POA_Static_Resources* instance (void);
+
+public:
+
+  /**
+   * Name of the factory object used to adapt function calls on the
+   * PortableInterceptor interfaces ORT. The default value is
+   * "ObjectReferenceTemplate_Adapter_Factory". If the ORT library is linked,
+   * the corresponding accessor function
+   * objectreferencefactory_adapter_factory_name() will be called to set
+   * the value to "Concrete_ObjectReferenceTemplate_Adapter_Factory".
+   */
+  CORBA::String_var ort_adapter_factory_name_;
+
+private:
+  /// Constructor.
+  TAO_POA_Static_Resources (void);
+
+private:
+  /// The singleton instance.
+  static TAO_POA_Static_Resources* instance_;
+
+  /// Mostly unused variable whose sole purpose is to enforce
+  /// the instantiation of a TAO_POA_Static_Resources instance
+  /// at initialization time.
+  static TAO_POA_Static_Resources* initialization_reference_;
+};
+
+// ****************************************************************
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)

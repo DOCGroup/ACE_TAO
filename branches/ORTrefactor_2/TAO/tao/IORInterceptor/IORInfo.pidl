@@ -1,11 +1,11 @@
 // -*- IDL -*-
 
 /**
- * @file IORInterceptor.pidl
+ * @file IORInfo.pidl
  *
  * $Id$
  *
- * @brief Pre-compiled IDL source for the IOR Interceptor
+ * @brief Pre-compiled IDL source for the IORInfo
  * components in the ORB.
  *
  * The following is from orbos/99-12-02 Portable Interceptors spec,
@@ -16,7 +16,7 @@
  * has been created to remove the dependency from the rest of module
  * PortableInterceptor.
  *
- * This file was used to generate the code in IORInterceptorC.*
+ * This file was used to generate the code in IORInfoC.*
  * The command used to generate code is:
  *
  *  tao_idl
@@ -26,36 +26,39 @@
  *          -Wb,export_include="iorinterceptor_export.h"
  *          -Wb,pre_include="ace/pre.h"
  *          -Wb,post_include="ace/post.h"
- *          IORInterceptor.pidl
+ *          IORInfo.pidl
  */
 
-// File: IORInterceptor.idl
-#ifndef _IOR_INTERCEPTOR_IDL_
-#define _IOR_INTERCEPTOR_IDL_
+// File: IORInfo.idl
+#ifndef _IORINFO_IDL_
+#define _IORINFO_IDL_
 
 #include "tao/PortableInterceptor.pidl"
-#include "tao/IORInterceptor/IORInfo.pidl"
 #include "tao/ObjRefTemplate/ObjectReferenceTemplate.pidl"
 
 module PortableInterceptor
 {
   typeprefix PortableInterceptor "omg.org";
 
-  local interface IORInterceptor : Interceptor
+  local interface IORInfo
   {
-    void establish_components (in IORInfo info);
+    CORBA::Policy get_effective_policy (in CORBA::PolicyType type);
 
-    void components_established (in IORInfo info);
+    void add_ior_component (in IOP::TaggedComponent a_component);
 
-    void adapter_manager_state_changed (
-        in AdapterManagerId id,
-        in AdapterState state
+    void add_ior_component_to_profile (
+        in IOP::TaggedComponent a_component,
+        in IOP::ProfileId profile_id
       );
-    void adapter_state_changed (
-        in ObjectReferenceTemplateSeq templates,
-        in AdapterState state
-      );
+
+    readonly attribute AdapterManagerId manager_id;
+
+    readonly attribute AdapterState state;
+
+    readonly attribute ObjectReferenceTemplate adapter_template;
+
+    attribute ObjectReferenceFactory current_factory;
   };
 };
 
-#endif  /* _IOR_INTERCEPTOR_IDL_ */
+#endif  /* _IORINFO_IDL_ */

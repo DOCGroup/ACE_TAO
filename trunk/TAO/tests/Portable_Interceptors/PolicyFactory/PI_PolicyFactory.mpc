@@ -2,9 +2,8 @@
 //
 // $Id$
 
-project(*Server): taoexe, portableserver {
+project(*Server): taoexe, portableserver, iorinterceptor {
   requires += interceptors
-  idlflags += -I$(TAO_ROOT)
 
   Source_Files {
     testC.cpp
