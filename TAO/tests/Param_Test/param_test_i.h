@@ -288,10 +288,6 @@ private:
 
   Coffee_i obj_;
   // the coffee object reference we maintain
-
-  int test_exception_count_;
-  // Count the number of calls to test_exception() so we can throw
-  // every 3 calls or so.
 };
 
 #endif /* PARAM_TEST_I_H */

@@ -1,3 +1,16 @@
+Thu Jun 24 13:46:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB.h:
+	* tao/ORB.cpp:
+	  Added an unexpected() function to transform unexpected
+	  exceptions into CORBA::UNKNOWN
+
+	* tests/Param_Test/client.cpp:
+	* tests/Param_Test/except.cpp:
+	* tests/Param_Test/param_test_i.h:
+	* tests/Param_Test/param_test_i.cpp:
+	  The test was broken but SII and DII (!) exceptions where ok.
+
 Thu Jun 24 12:20:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/Event_Service/Event_Service.cpp:
