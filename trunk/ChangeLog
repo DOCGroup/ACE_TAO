@@ -1,3 +1,8 @@
+Thu May 25 12:26:36 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * examples/IPC_SAP/ATM_SAP/Makefile:
+          Removed  libraries that FORE used to need.
+
 Thu May 25 09:07:16 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/OS_String.cpp:
