@@ -1,7 +1,7 @@
-CAOCHost corbaloc:iiop:pc119.emulab.net:20000/ServerActivator
-EngagementBattleHost  corbaloc:iiop:pc112.emulab.net:20000/ServerActivator
-SatelliteHost corbaloc:iiop:pc157.emulab.net:20000/ServerActivator
-UAVGSHost  corbaloc:iiop:pc144.emulab.net:20000/ServerActivator
-UAVHost corbaloc:iiop:pc96.emulab.net:20000/ServerActivator
-UCAVGSHost  corbaloc:iiop:pc168.emulab.net:20000/ServerActivator
-UCAVHost corbaloc:iiop:pc107.emulab.net:20000/ServerActivator
+CAOCHost corbaloc:iiop:pc115.emulab.net:20000/ServerActivator
+EngagementBattleHost  corbaloc:iiop:pc142.emulab.net:20000/ServerActivator
+SatelliteHost corbaloc:iiop:pc113.emulab.net:20000/ServerActivator
+UAVGSHost  corbaloc:iiop:pc126.emulab.net:20000/ServerActivator
+UAVHost corbaloc:iiop:pc98.emulab.net:20000/ServerActivator
+UCAVGSHost  corbaloc:iiop:pc111.emulab.net:20000/ServerActivator
+UCAVHost corbaloc:iiop:pc103.emulab.net:20000/ServerActivator
