@@ -1,3 +1,13 @@
+Sat May 29 16:33:13 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/DynAny_Test/da_tests.idl:
+	* TAO/tests/DynAny_Test/test_dynenum.cpp:
+	* TAO/tests/DynAny_Test/test_dynunion.cpp:
+	  Changed some enum value names in the IDl file to
+	  be not so likely to clash with something else in the
+	  namespace. Hopefully this will get rid of some DU
+	  errors, reported by David Levine.
+
 Sat May 29 13:40:41 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/TAO.{h, cpp} (TAO_ORB_Manager):
