@@ -1,3 +1,15 @@
+Mon Jul 28 09:04:14 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          Minor change to make the return type of atoui(), modified
+          in
+
+          Mon Jul 21 15:58:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          compatible with its usage to set the line number.
+
 Mon Jul 28 14:04:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/RTScheduling/DT_Creator.cpp:

@@ -2601,7 +2601,7 @@ idl_parse_line_and_file (char *buf)
     }
 
   *r++ = 0;
-  idl_global->set_lineno (idl_atoui (h, 10));
+  idl_global->set_lineno ((long) idl_atoui (h, 10));
 
   // Find file name, if present.
   for (; *r != '"'; r++)
