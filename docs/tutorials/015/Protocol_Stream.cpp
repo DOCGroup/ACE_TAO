@@ -7,15 +7,12 @@
 #include "Recv.h"
 
 #include "Compressor.h"
-#include "Crypt.h"
 
 #include "ace/Stream_Modules.h"
 
 /* You can choose at compile time to include/exclude the protocol
    pieces.
 */
-#define ENABLE_COMPRESSION
-#define ENABLE_ENCRYPTION
 
 // The usual typedefs to make things easier to type.
 typedef ACE_Module<ACE_MT_SYNCH> Module;
@@ -49,7 +46,8 @@ Protocol_Stream::~Protocol_Stream (void)
  */
 int
 Protocol_Stream::open (ACE_SOCK_Stream &peer,
-                       Protocol_Task *reader)
+                       Protocol_Task *reader,
+                       bool isOriginator)
 {
   // Initialize our peer() to read/write the socket we're given
   peer_.set_handle (peer.get_handle ());
@@ -73,7 +71,7 @@ Protocol_Stream::open (ACE_SOCK_Stream &peer,
 
   // Add any other protocol tasks to the stream.  Each one is added at
   // the head.  The net result is that Xmit/Recv are at the tail.
-  if (this->open () == -1)
+  if (this->open (isOriginator) == -1)
     return -1;
 
   // If a reader task was provided then push that in as the upstream
@@ -96,32 +94,115 @@ Protocol_Stream::open (ACE_SOCK_Stream &peer,
   return 0;
 }
 
-/* Add the necessary protocol objects to the stream.  The way we're
-   pushing things on we will compress the data before encrypting it.
+/* Add the necessary protocol objects to the stream.
 */
-int
-Protocol_Stream::open (void)
-{
-#if defined (ENABLE_ENCRYPTION)
-  if (stream ().push (new Module ("crypt",
-                                  new Crypt (),
-                                  new Crypt ())) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "stream().push(crypt)"),
-                      -1);
-#endif /* ENABLE_ENCRYPTION */
 
-#if defined (ENABLE_COMPRESSION)
-  if (stream ().push (new Module ("compress",
-                                  new Compressor (),
-                                  new Compressor ())) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "stream().push(comprssor)"),
-                      -1);
-#endif /* ENABLE_COMPRESSION */
-  return 0;
+int
+Protocol_Stream::open (bool isOriginator)
+{
+    // We are protocol version 1, we only support ZLIB compression currently.
+
+    ProtocolVersion pversion = PROTOCOL_VERSION_1;
+    Compressor::AlgorithmCode acode = Compressor::COMPRESSION_ZLIB;
+
+     // If we are the originator, we put a message asking for
+    // what compression is to be used.
+
+    if (isOriginator)
+    {
+        ACE_Message_Block * message = new ACE_Message_Block( 1024 );
+
+        CompressionNegotiation neg;
+        neg.protocolVersion = pversion;
+        neg.algorithmCount = 1;
+        neg.algorithm[0] = acode;
+
+        memcpy(message->wr_ptr(), &neg, sizeof(neg));
+        message->wr_ptr(sizeof(neg));
+
+        if (put(message, 0) < 0)
+        {
+            return -1;
+        }
+
+        ACE_Message_Block * response;
+        if (get(response, 0) < 0)
+        {
+            return -1;
+        }
+
+        CompressionNegotiationReply negResponse;
+        memcpy(&negResponse, response->rd_ptr(), sizeof(negResponse));
+
+        response->release();
+        if (negResponse.errorCode != NEGOTIATE_OK)
+        {
+            return -1;
+        }
+    }
+    else
+    {
+        // Read the message to see what algorithm the originator speaks.
+
+        ACE_Message_Block* message;
+        if (get(message, 0) < 0)
+        {
+            return -1;
+        }
+
+        CompressionNegotiation neg;
+        memcpy(&neg, message->rd_ptr(), sizeof(neg));
+        message->release();
+
+        // Reply to handshake message.
+
+        CompressionNegotiationReply negResponse;
+        negResponse.errorCode = NEGOTIATE_OK;
+        negResponse.protocolVersion = PROTOCOL_VERSION_1;
+
+        if (neg.protocolVersion == PROTOCOL_VERSION_1)
+        {
+            // Ensure that incoming algorithms include the one we support.
+
+            negResponse.algorithm = Compressor::COMPRESSION_NONE;
+            for (int i = 0; i < neg.algorithmCount; i++)
+            {
+                if (neg.algorithm[i] == acode)
+                {
+                    negResponse.algorithm = acode;
+                    break;
+                }
+            }
+            if (negResponse.algorithm == Compressor::COMPRESSION_NONE)
+            {
+                negResponse.errorCode = NEGOTIATE_UNSUPPORTED_ALGORITHM;
+            }
+        }
+        else
+        {
+            negResponse.errorCode = NEGOTIATE_UNSUPPORTED_VERSION;
+        }
+
+        ACE_Message_Block* reply = new ACE_Message_Block( 1024 );
+        memcpy(reply->wr_ptr(), &negResponse, sizeof(negResponse));
+        reply->wr_ptr(sizeof(neg));
+
+        if (put(reply, 0) < 0)
+        {
+            return -1;
+        }
+    }
+
+    // Add the compression component to the pipeline.
+
+    if (stream ().push (new Module ("compress",
+                                  new Compressor (acode),
+                                  new Compressor (acode))) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                          "%p\n",
+                           "stream().push(compressor)"),
+                         -1);
+    return 0;
 }
 
 // Closing the Protocol_Stream is as simple as closing the ACE_Stream.
