@@ -125,6 +125,18 @@ CORBA_Any::to_char::to_char (CORBA::Char &c)
 }
 
 ACE_INLINE
+CORBA_Any::from_wchar::from_wchar (CORBA::WChar wc)
+  : val_ (wc)
+{
+}
+
+ACE_INLINE
+CORBA_Any::to_wchar::to_wchar (CORBA::WChar &wc)
+  : ref_ (wc)
+{
+}
+
+ACE_INLINE
 CORBA_Any::from_string::from_string (char *s,
                                      CORBA::ULong b,
                                      CORBA::Boolean nocopy)
