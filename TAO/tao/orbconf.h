@@ -66,7 +66,12 @@
 // If set the ORB will use dotted decimal addresses in the IIOP IORs
 // it exports.  This is useful for platforms or environments that
 // cannot depend on a DNS being available.  This macro only affects
-// the server side of a TAO-based CORBA application.
+// the server side of a TAO-based CORBA application. If we are on Win32
+// the DNS is perenially broken. Set it to 1 regardless.
+#if !defined (TAO_USE_DOTTED_DECIMAL_ADDRESSES) && defined (ACE_WIN32)
+# define TAO_USE_DOTTED_DECIMAL_ADDRESSES 1
+#endif /*TAO_USE_DOTTED_DECIMAL_ADDRESSES*/
+
 #if !defined (TAO_USE_DOTTED_DECIMAL_ADDRESSES)
 # define TAO_USE_DOTTED_DECIMAL_ADDRESSES 0
 #endif /* TAO_USE_DOTTED_DECIMAL_ADDRESSES */
