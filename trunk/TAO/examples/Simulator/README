@@ -125,31 +125,21 @@ Compiling:
                 Be sure that you have _not_ built with
                 TAO_LACKS_EVENT_CHANNEL_ANY enabled.
 
+                And, be sure that the following are built:
+
                 "compile $TAO_ROOT/orbsvcs/orbsvcs"
                 "compile $TAO_ROOT/orbsvcs/Event_Service"
                 "compile $TAO_ROOT/orbsvcs/Naming_Service"
                 "compile $TAO_ROOT/orbsvcs/Scheduling_Service"
 
+                Then, just run "make" in top level Simulator
+                directory.  The DOVEBrowser requires VisiJava's
+                idl2java and vbjc.  If they are not on your PATH,
+                or in the default location specified in
+                DOVEBrowser/Makefile, you'll have to specify the
+                location in the "make" invocation.  For example:
 
-        Supplier:
-                make
-
-
-    DOVE Browser:
-                cp ../NavWeap.idl .
-                cp $TAO_ROOT/orbsvcs/orbsvcs/CosNaming.idl .
-                cp $TAO_ROOT/orbsvcs/orbsvcs/CosTimeBase.idl .
-                cp $TAO_ROOT/orbsvcs/orbsvcs/RtecEventChannelAdmin.idl .
-                cp $TAO_ROOT/orbsvcs/orbsvcs/RtecEventComm.idl .
-                cp $TAO_ROOT/orbsvcs/orbsvcs/RtecScheduler.idl .
-                idl2java *.idl
-
-                vbjc *.java
-
-
-        DOVE MIB:
-                make
-
+                  make VISIJAVA_BIN=/usr/local/VisiJava-3.2
 
 Starting:
         Start in the following order on different ORB ports:
