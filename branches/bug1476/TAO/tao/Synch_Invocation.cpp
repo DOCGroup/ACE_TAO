@@ -291,7 +291,7 @@ namespace TAO
         if (TAO_debug_level > 3)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) - Synch_Twoway_Invocation::wait_for_reply , "
+                        "TAO (%P|%t) - Synch_Twoway_Invocation::wait_for_reply, "
                         "recovering after an error \n"));
           }
 
@@ -629,7 +629,7 @@ namespace TAO
     if (TAO_debug_level > 4)
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Synch_Twoway_Invocation::"
-                  "handle_system_exception  about to raise\n"));
+                  "handle_system_exception, about to raise\n"));
 
     mon.set_status (TAO_INVOKE_SYSTEM_EXCEPTION);
 
@@ -713,6 +713,16 @@ namespace TAO
           }
         else
           {
+            if (TAO_debug_level > 4)
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - Synch_Oneway_Invocation::"
+                          "remote_oneway, queueing message\n"));
+
+            // Format the message in the stream first
+// @bala is the return ok, how to handle the format failure?
+            if (transport->messaging_object ()->format_message (cdr) != 0)
+              return TAO_INVOKE_FAILURE;
+
             // The transport is not connected yet, so queue the message
             transport->queue_message(cdr.begin());
           }
