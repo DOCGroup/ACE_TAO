@@ -2,8 +2,6 @@
 //---------------------------------------------------------------------------
 #include "pch.h"
 #pragma hdrstop
-#include <cctype>
-#include <dos.h>
 #include "ChatClientWnd.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
@@ -60,7 +58,7 @@ __fastcall TChatClientWindow::TChatClientWindow (TComponent* Owner)
     }
   catch (CORBA::Exception &e)
     {
-      ShowMessage ("CORBA Exception in TChatClientWindow constructor: " 
+      ShowMessage ("CORBA Exception in TChatClientWindow constructor: "
                    + String (e._rep_id ()));
       throw;
     }
@@ -68,7 +66,7 @@ __fastcall TChatClientWindow::TChatClientWindow (TComponent* Owner)
 //---------------------------------------------------------------------------
 void __fastcall TChatClientWindow::ReadIOR (String filename)
 {
-  std::auto_ptr<TStringList> ior (new TStringList);
+  auto_ptr<TStringList> ior (new TStringList);
   ior->LoadFromFile (filename);
   ior_ = ior->Text;
 }
