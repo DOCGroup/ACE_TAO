@@ -474,18 +474,21 @@ TCP_OA::get_client_principal (
 //
 // Generic routine to handle a message.
 //
-void
+int
 TCP_OA::handle_message (Dispatch_Context& ctx, CORBA_Environment& env)
 {
-  GIOP::incoming_message (ctx.endpoint,
-			  ctx.check_forward ? tcp_oa_forwarder : 0,
-			  tcp_oa_dispatcher, &ctx, env);
+  int result =
+    GIOP::incoming_message (ctx.endpoint,
+			    ctx.check_forward ? tcp_oa_forwarder : 0,
+			    tcp_oa_dispatcher, &ctx, env);
 
 #ifdef	_POSIX_THREADS
   Critical region (&tcpoa_mutex);
 #endif	// _POSIX_THREADS
 
   call_count--;
+
+  return result;
 }
 
 

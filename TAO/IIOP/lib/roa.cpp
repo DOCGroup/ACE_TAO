@@ -80,7 +80,21 @@ ROA_Handler::handle_input(ACE_HANDLE fd)
 #endif
 
   // Need to have a handle to a TCP_OA instance to make this call!!
-  ACE_ROA::oa()->handle_message (ctx, env);
+  int ret;
+
+  switch(ACE_ROA::oa()->handle_message (ctx, env))
+    {
+    case 1:
+    default:
+      ret = 0;
+      break;
+    case 0:
+      peer().close();
+
+    case -1:
+      ret = -1;
+      break;
+    }
 
   //
   // Don't report any errors from the application/skeleton back to the
@@ -92,7 +106,7 @@ ROA_Handler::handle_input(ACE_HANDLE fd)
     dexc (env, "ROA_Handler, handle incoming message");
     env.clear ();
   }
-  return 1;
+  return ret;
 }
 
 #if ! defined(__ACE_INLINE__)
