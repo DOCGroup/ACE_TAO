@@ -19,6 +19,7 @@
 
 
 #include "ace/OS.h"
+#include "ace/streams.h"
 
 static void
 cleanup (void)

@@ -1,3 +1,27 @@
+Thu Dec 04 03:46:04 1997    <irfan@TWOSTEP>
+
+	* ace/OS.h: Removed stdcpp.h. Moved the standard C library
+ 	  includes from stdcpp.h to OS.h.  Also added ace/iosfwd.h to give
+ 	  forward declaration for the stream classes.
+
+	* ace/IOStream_T.cpp: Reorganized include files so that inclusion
+ 	  of config.h is not necessary.
+
+	* ace/IOStream_T.h (stdcpp.h): Removed inclusion of stdcpp.h.  It
+ 	  is redundant because IOStream.h includes it.
+
+	* ace/IOStream.cpp: Changed inclusion of config.h to OS.h.
+
+	* ace/Makefile (Svc_Conf_l.cpp): Changed the sed macros to produce
+ 	  OS.h include instead of stdcpp.h.
+
+	* ACE: Added explicit inclusion of ace/streams.h to the following
+ 	  files:
+	  
+	  IOStream.cpp
+	  Log_Record.cpp
+	  OS.cpp
+
 Thu Dec  4 00:26:46 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* netsvcs/lib/Client_Logging_Handler: Changed "rendezvous" to
