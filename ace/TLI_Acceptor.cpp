@@ -22,7 +22,7 @@ class ACE_TLI_Request_Queue
 public:
   ACE_TLI_Request_Queue (void);
 
-  int open (int fd, int size);
+  ACE_HANDLE open (ACE_HANDLE fd, int size); 
   int close (void);
 
   int enqueue (const char device[], int restart, int rwflag);
@@ -42,9 +42,9 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  int     handle_;
-  int     size_;
-  int     current_count_;
+  ACE_HANDLE handle_; 
+  int size_;
+  int current_count_;
   ACE_TLI_Request *base_;
   ACE_TLI_Request *tail_;
   ACE_TLI_Request *free_list_;
@@ -137,7 +137,7 @@ open_new_endpoint (ACE_HANDLE listen_handle,
 #endif /* ACE_PSOS */
 
   if (fd == ACE_INVALID_HANDLE
-      || ACE_OS::t_bind (fd, 0, 0) == ACE_INVALID_HANDLE)
+      || ACE_OS::t_bind (fd, 0, 0) == -1)
     fd = ACE_INVALID_HANDLE;
 #if defined (I_PUSH) && !defined (ACE_HAS_FORE_ATM_XTI)
   else if (rwf != 0 && ACE_OS::ioctl (fd,
@@ -168,7 +168,7 @@ ACE_TLI_Request_Queue::close (void)
       item.handle_ = ACE_INVALID_HANDLE;
       if (ACE_OS::t_free ((char *) item.callp_,
                           T_CALL) != 0)
-        res = ACE_INVALID_HANDLE;
+        res = -1; 
     }
 
   delete [] this->base_;
@@ -231,12 +231,12 @@ ACE_TLI_Request_Queue::enqueue (const char device[],
 
   do
     res = ACE_OS::t_listen (this->handle_, req.callp_);
-  while (res == ACE_INVALID_HANDLE 
+  while (res == -1  
          && restart 
          && t_errno == TSYSERR 
          && errno == EINTR);
 
-  if (res != ACE_INVALID_HANDLE)
+  if (res != -1) 
     {
       req.handle_ = open_new_endpoint (this->handle_,
                                        device,
@@ -254,7 +254,7 @@ ACE_TLI_Request_Queue::enqueue (const char device[],
 
   // Something must have gone wrong, so free up allocated space.
   this->free (temp);
-  return ACE_INVALID_HANDLE;
+  return -1; 
 }
 
 // Locate and remove SEQUENCE_NUMBER from the list of pending
@@ -298,7 +298,7 @@ ACE_TLI_Acceptor::open (const ACE_Addr &remote_sap,
                         const char dev[])
 {
   ACE_TRACE ("ACE_TLI_Acceptor::open");
-  int res = 0;
+  ACE_HANDLE res = 0; 
   int one = 1;
 
   this->disp_ = 0;
@@ -320,7 +320,7 @@ ACE_TLI_Acceptor::open (const ACE_Addr &remote_sap,
            && this->set_option (SOL_SOCKET,
                                 SO_REUSEADDR,
                                 &one,
-                                sizeof one) == ACE_INVALID_HANDLE)
+                                sizeof one) == -1) 
     res = ACE_INVALID_HANDLE;
 #endif /* ACE_HAS_FORE_ATM_XTI */
   else if ((this->disp_ =
@@ -353,14 +353,15 @@ ACE_TLI_Acceptor::open (const ACE_Addr &remote_sap,
           req.addr.buf = (char *) remote_sap.get_addr ();
         }
 
-      res = ACE_OS::t_bind (this->get_handle (),
-                            &req,
-                            0);
+      int bind_res = ACE_OS::t_bind (this->get_handle (), 
+                                     &req,
+                                     0);
       if (res != ACE_INVALID_HANDLE)
+      if (bind_res != -1) // Geisler: see above
         {
           ACE_NEW_RETURN (this->queue_,
                           ACE_TLI_Request_Queue,
-                          -1);
+                          ACE_INVALID_HANDLE); 
           res = this->queue_->open (this->get_handle (),
                                     this->backlog_);
         }
@@ -385,8 +386,8 @@ ACE_TLI_Acceptor::ACE_TLI_Acceptor (const ACE_Addr &remote_sap,
                   back,
                   dev) == ACE_INVALID_HANDLE)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_TLI_Acceptor::ACE_TLI_Acceptor")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_TLI_Acceptor::ACE_TLI_Acceptor")));
 }
 
 int
@@ -451,7 +452,6 @@ ACE_TLI_Acceptor::accept (ACE_TLI_Stream &new_tli_sap,
 
   ACE_TLI_Request *req = 0;
   int res = 0;
-
   if (timeout != 0
       && ACE::handle_timed_accept (this->get_handle (),
                                    timeout,
@@ -463,16 +463,22 @@ ACE_TLI_Acceptor::accept (ACE_TLI_Stream &new_tli_sap,
 
       do
         res = ACE_OS::t_listen (this->get_handle (),
-                                req->callp_);
-      while (res == ACE_INVALID_HANDLE
+                                    req->callp_);
+      while (res == -1  
              && restart
              && errno == EINTR);
 
-      if (res != ACE_INVALID_HANDLE)
-        res = req->handle_ = open_new_endpoint (this->get_handle (),
-                                                this->device_,
-                                                req->callp_,
-                                                rwf);
+      if (res != -1) 
+      {
+        req->handle_ = open_new_endpoint (this->get_handle (), 
+                                          this->device_,
+                                          req->callp_,
+                                          rwf);
+        if (req->handle_ == ACE_INVALID_HANDLE)
+          res = -1;
+        else
+          res = 0;
+      }
     }
   else
     res = this->queue_->dequeue (req);
@@ -486,17 +492,20 @@ ACE_TLI_Acceptor::accept (ACE_TLI_Stream &new_tli_sap,
                     (void *) opt,
                     sizeof *opt);
 
-  while (res != ACE_INVALID_HANDLE)
-    if ((res = ACE_OS::t_accept (this->get_handle (),
-                                 req->handle_,
-                                 req->callp_)) != ACE_INVALID_HANDLE)
-      break; // Got one!
-    else if (t_errno == TLOOK)
-      res = this->handle_async_event (restart, rwf);
-    else if (restart && t_errno == TSYSERR && errno == EINTR)
-      res = 0;
+  while (res != -1) 
+    {
+      res = ACE_OS::t_accept (this->get_handle (),
+                              req->handle_,
+                              req->callp_);
+      if (res != -1)
+        break; // Got one!
+      else if (t_errno == TLOOK)
+        res = this->handle_async_event (restart, rwf);
+      else if (restart && t_errno == TSYSERR && errno == EINTR)
+        res = 0;
+    }
 
-  if (res == ACE_INVALID_HANDLE)
+  if (res == -1) 
     {
       if (errno != EWOULDBLOCK)
         {
