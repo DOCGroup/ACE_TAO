@@ -82,6 +82,18 @@ ACE_Sched_Params::quantum (const ACE_Time_Value &quant)
   this->quantum_ = quant;
 }
 
+ACE_INLINE const ACE_Sched_Params::Policy &
+ACE_Sched_Priority_Iterator::policy (void) const
+{
+  return this->policy_;
+}
+
+ACE_INLINE int 
+ACE_Sched_Priority_Iterator::scope (void) const
+{
+  return this->scope_;
+}
+
 ACE_INLINE
 ACE_Sched_Priority_Iterator::ACE_Sched_Priority_Iterator (const ACE_Sched_Params::Policy &policy,
 							  int scope)
@@ -117,16 +129,4 @@ ACE_Sched_Priority_Iterator::next (void)
 					       this->priority (),
 					       this->scope ());
   this->done_ = old_priority == priority_;
-}
-
-ACE_INLINE const ACE_Sched_Params::Policy &
-ACE_Sched_Priority_Iterator::policy (void) const
-{
-  return this->policy_;
-}
-
-ACE_INLINE int 
-ACE_Sched_Priority_Iterator::scope (void) const
-{
-  return this->scope_;
 }
