@@ -1,3 +1,10 @@
+Tue Jul 29 01:08:10 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>	
+
+	* examples/RTScheduling/DT_Creator.cpp: 
+
+	  Removed the inclusion of file Task.h. This should fix the Debian
+	  builds.
+
 Mon Jul 28 18:37:27 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* tao/Muxed_TMS.cpp
