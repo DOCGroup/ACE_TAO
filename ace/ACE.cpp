@@ -786,7 +786,9 @@ ACE::ldfind (const ASYS_TCHAR filename[],
             }
 
           ACE_OS::free ((void *) ld_path);
+#if defined (ACE_WIN32) && defined (_DEBUG) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
           if (result == 0 || tag == 0)
+#endif /* ACE_WIN32 && _DEBUG && !ACE_DISABLE_DEBUG_DLL_CHECK */
             return result;
         }
     }
