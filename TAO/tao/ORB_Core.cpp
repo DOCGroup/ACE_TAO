@@ -2023,7 +2023,7 @@ TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
 
       if (adapter == 0)
         {
-          ACE_THROW (CORBA::INTERNAL ());
+          ACE_TRY_THROW (CORBA::INTERNAL ());
         }
 
       for (size_t k = 0; k < len; ++k)
