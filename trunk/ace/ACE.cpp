@@ -475,7 +475,7 @@ ACE::timestamp (char date_and_time[], int date_and_timelen)
   SYSTEMTIME local;
   ::GetLocalTime (&local);
 
-  ::sprintf (date_and_time, "%02d/%02d/%04d %02d.%02d.%02d.%06d"
+  ::sprintf (date_and_time, "%02d/%02d/%04d %02d.%02d.%02d.%06d",
 	     (int) local.wMonth, // new, also the %02d in sprintf
 	     (int) local.wDay,   // new, also the %02d in sprintf
 	     (int) local.wYear,  // new, also the %02d in sprintf
