@@ -1,3 +1,9 @@
+Sat Mar  2 19:26:34 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Latency/AMH/Single_Threaded/client.bor:
+        * performance-tests/Latency/AMH/Single_Threaded/server.bor:
+          Added TAO_Messaging library
+
 Sat Mar  2 09:30:35 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Stub.cpp (sync_scope): Do not check for policies at other
