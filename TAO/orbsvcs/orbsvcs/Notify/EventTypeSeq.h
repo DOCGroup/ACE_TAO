@@ -20,8 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "EventType.h"
-
-template<class T> class ACE_Unbounded_Set;
+#include "ace/Unbounded_Set.h"
 
 /**
  * @class TAO_NS_EventTypeSeq

@@ -1,3 +1,13 @@
+Thu Jan  2 13:33:01 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Refcounted_Auto_Ptr.i:
+
+          Added #include of ace/Log_Msg.h for ACE_ASSERT.
+
+        * bin/aix_shr:
+                      
+          Added -DTAO_INSTANTIATING_TEMPLATES to the link command line.
+
 Thu Jan  2 12:38:55 2003  Johnny Willemsen <jwillemsen@remedy.nl>
 
 	* ace/Makefile.ace: Set the dllflags in Makefile. This makes it

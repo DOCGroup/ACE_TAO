@@ -22,6 +22,7 @@
 
 #include "orbsvcs/ESF/ESF_Worker.h"
 #include "tao/corba.h"
+#include "ace/Event_Handler.h"
 
 class TAO_CEC_ProxyPullConsumer;
 class TAO_CEC_EventChannel;
