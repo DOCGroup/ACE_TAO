@@ -143,6 +143,7 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
                         -1);
     }
   delete visitor;
+ *os  << ");\n\n";
 
   os->indent ();
   // Here I still need to generate the other methods + private args

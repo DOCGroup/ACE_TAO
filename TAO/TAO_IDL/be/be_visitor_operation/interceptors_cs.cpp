@@ -364,11 +364,13 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
     }
   else
     {
+      //      bt = be_type::narrow_from_decl (node->arguments ()->return_type ());
       // Generate the insertion of result into Any.
         ctx = *this->ctx_;
         ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_RESULT);
         visitor = tao_cg->make_visitor (&ctx);
-        if (!visitor || (node->accept (visitor) == -1))
+        //        if (!visitor || (node->accept (visitor) == -1))
+        if (!visitor || (bt->accept (visitor) == -1))
           {
             delete visitor;
             ACE_ERROR_RETURN ((LM_ERROR,
