@@ -39,19 +39,15 @@ namespace TAO
     public:
       virtual ~Servant_Manager_Request_Processing_Strategy (void);
 
-      PortableServer::Servant
-      get_servant (ACE_ENV_SINGLE_ARG_DECL)
+      PortableServer::Servant get_servant (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));
 
-      void
-      set_servant (PortableServer::Servant servant
-                   ACE_ENV_ARG_DECL)
+      void set_servant (PortableServer::Servant servant ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));
 
-      void
-      validate_servant_manager (
+      void validate_servant_manager (
         PortableServer::ServantManager_ptr servant_manager
         ACE_ENV_ARG_DECL);
     };
