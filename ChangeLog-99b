@@ -1,3 +1,8 @@
+Sat Jul 31 20:29:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h: Removed an extra trailing semicolumn following
+	  IPPROTO_TCP.
+
 Sat Jul 31 19:27:50 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Shared_Malloc/test_position_independent_malloc.cpp:
@@ -37,8 +42,8 @@ Sat Jul 31 12:07:48 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 	  to method names like ACE_Event_Handler::handle_input() were
  	  changed to <ACE_Event_Handler::handle_input>.  This change
  	  enables the class2man scripts to use the appropriate "code" font
- 	  for these names in the auto-generated documentation.	
-  
+ 	  for these names in the auto-generated documentation.
+
 	* ace/Asynch_IO_Impl: Moved the
 	  virtual destructors for all the ACE_Asynch_*_Impl classes into
  	  the *.cpp file, which is where they belong.
@@ -50,10 +55,10 @@ Sat Jul 31 12:07:48 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 	  the ACE_SCHED_{FIFO,RR,OTHER} policies explicitly.  Thanks to
  	  Peter Mueller <pmueller@decrc.abb.de> for motivating this.
 
-	* ace/Synch_T: Moved the implementations of ACE_Read_Guard and 
+	* ace/Synch_T: Moved the implementations of ACE_Read_Guard and
 	  ACE_Write_Guard out of the class header and into the *.i file,
  	  which is where they belong.
-  
+
 	* ace/Based_Pointer_T.i (operator *): In order to distinquish a
 	  "NULL" pointer we keep a value of -1 in target.
 
