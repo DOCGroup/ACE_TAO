@@ -27,6 +27,10 @@ int
 TAO_GIOP_Message_NonReactive_Handler::read_parse_message(TAO_Transport *transport,
                                                          ACE_Time_Value *max_wait_time)
 {
+  // Reset the input_cdr before we do anything with it
+  this->input_cdr_.reset_contents ();
+
+  // Before we do this let us reset the
   char *buf = this->input_cdr_.rd_ptr ();
 
   // This is of the following pieces:
