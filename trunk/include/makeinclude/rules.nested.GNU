@@ -29,7 +29,7 @@ endif
 # Triggered by the $(TARGETS_NESTED) target, below.
 
 %.subdir: %
-	$(MAKE) -f $(SUBDIR_MAKEFILE) -C $< $(SUBDIR_TARGET)
+	cd $< && $(MAKE) -f $(SUBDIR_MAKEFILE) $(SUBDIR_TARGET)
 
 # Build FOO.nested by calling MAKE again, this time with DIRS (with
 # ".subdir" appended to each) as the targets, and passing FOO as the
