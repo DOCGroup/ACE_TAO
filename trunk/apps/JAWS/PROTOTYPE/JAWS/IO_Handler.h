@@ -180,6 +180,9 @@ protected:
 };
 
 class JAWS_Export JAWS_IO_Handler_Factory
+#if defined(ACE_WIN32) || defined(ACE_HAS_AIO_CALLS)
+  : public ACE_Service_Handler
+#endif /* defined(ACE_WIN32) || defined(ACE_HAS_AIO_CALLS) */
 {
 public:
   virtual ~JAWS_IO_Handler_Factory (void);
