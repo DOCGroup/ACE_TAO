@@ -1,3 +1,9 @@
+Mon Sep 20 10:52:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ACE-INSTALL.html: Clarified that the --unix flag must be given for
+	  Cygwin tools on Vxworks and NT.  Thanks to Uwe Landrock
+	  <Uwe.Landrock@med.siemens.de> for reporting this.
+  
 Mon Sep 20 10:34:51 1999  Steve Huston  <shuston@riverace.com>
 
 	* ACE-INSTALL.html: Fixed broken link to Riverace's HP-UX info.

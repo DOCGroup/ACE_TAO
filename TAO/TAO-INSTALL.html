@@ -383,6 +383,10 @@ TAO_HAS_MINIMUM_CORBA. This can be accomplished in two ways: by
 defining TAO_HAS_MINIMUM_CORBA in the config.h or orbconf.h files or
 by using <CODE>make minimum_corba=1</CODE> when you compile TAO.</P>
 
+<strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
+Make sure that if you build liborbsvcs with minimum_corba=1 you also
+build libTAO with minimum_corba=1!<P>
+
 <HR>
 <P>
 

@@ -1609,6 +1609,13 @@ on Windows NT hosts:
       CPU = I80486
       include $(ACE_ROOT)/include/makeinclude/platform_vxworks5.x_g++.GNU
       </pre>
+
+ <LI>When using cygnus windows GNUTools on WinNT you have to start
+ make with "--unix" option, otherwise WinNT shell cmd.exe is responded and
+ not sh.exe, i.e., 
+ <PRE>
+ make --unix static_libs=1
+ </PRE>
 </ol>
 
 <h5>TAO on NT Tornado host, VxWorks target.</h5>

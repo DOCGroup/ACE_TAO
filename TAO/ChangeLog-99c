@@ -1,3 +1,11 @@
+Mon Sep 20 10:55:48 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* TAO-INSTALL.html,
+	  docs/minimumTAO.html: Clarified that you must build TAO with
+ 	  minimum_corba=1 in order to build the liborbsvcs with
+ 	  minimum_corba=1.  Thanks to Klaus Banzer
+ 	  <klaus.banzer@mchp.siemens.de> for reporting this.
+
 Mon Sep 20 11:00:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/be/be_visitor_interface/ami_exception_holder_ch.cpp,
