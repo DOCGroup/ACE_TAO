@@ -1,0 +1,34 @@
+
+#
+# Makefile for building the Load_Balancing example
+#
+
+NAME = server
+
+OBJFILES = \
+        $(OBJDIR)\IdentityC.obj \
+        $(OBJDIR)\Load_BalancerC.obj \
+        $(OBJDIR)\IdentityS.obj \
+        $(OBJDIR)\Identity_Server.obj \
+        $(OBJDIR)\Identity_i.obj
+
+IDLFILES = \
+        $(IDLDIR)\Load_Balancer.idl \
+        $(IDLDIR)\Identity.idl
+
+CPPDIR = .;..
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\Load_BalancerC.cpp $(IDLDIR)\Load_BalancerS.cpp: $(IDLDIR)\Load_Balancer.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\IdentityC.cpp $(IDLDIR)\IdentityS.cpp: $(IDLDIR)\Identity.idl
+	$(TAO_IDL) $**
+

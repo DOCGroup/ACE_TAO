@@ -1,0 +1,10 @@
+/*
+ * $Id$
+ */
+
+interface SLevel1_Server
+{
+  boolean authorize_level1 (void);
+
+  boolean authorize_level2 (void);
+};
