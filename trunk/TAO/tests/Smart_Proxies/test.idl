@@ -1,10 +1,19 @@
 // $Id$
 
-interface test
+interface Test
 {
- exception Oops {string reason;};
+  // = TITLE
+  //   @@ Kirthika, please fill in here.
+  //
+  // = DESCRIPTION
+  //   @@ Kirthika, please fill in here.
 
- short method (in short boo) raises (Oops);
+  exception Oops 
+    {
+      string reason;
+    };
 
- oneway void shutdown ();
+  short method (in short boo) raises (Oops);
+
+  oneway void shutdown ();
 };

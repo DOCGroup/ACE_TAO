@@ -1,4 +1,12 @@
-Mon Nov 22 07:50:48 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Mon Nov 22 14:15:23 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
+
+	* examples/Configuration/config_test.cpp: ACE-ified this example.
+
+	* ace/OS.i: Replaced all the uses of ACE_Time_Value private methods
+	  within the overloaded global relational operator to use inline
+ 	  methods.  This change should work around bugs with MSVC++.
+  	  Thanks to Alok Gupta <alokg@ssind.stpn.soft.net> for reporting
+ 	  this.
 
 	* ace/Service_Config.cpp (parse_args): Reverted the behavior
 	  of parse_args() so that it doesn't return an error when it runs
