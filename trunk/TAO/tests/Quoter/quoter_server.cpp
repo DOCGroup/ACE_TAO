@@ -157,9 +157,9 @@ Quoter_Server::~Quoter_Server (void)
       this->my_name_server_->unbind (factory_name,TAO_TRY_ENV);
       TAO_CHECK_ENV;
       // Destroy all the POAs.
-      this->root_poa_->destroy (CORBA::B_TRUE,
-                                CORBA::B_TRUE,
-                                TAO_TRY_ENV);
+//      this->root_poa_->destroy (CORBA::B_TRUE,
+//                                CORBA::B_TRUE,
+//                                TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCH (CORBA::SystemException, sysex)

@@ -26,7 +26,7 @@
 #include "quoter_impl.h"
 #include "quoterC.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
-#include "tao/tao_util.h"
+#include "tao/tao.h"
 
 
 class Quoter_Server : public TAO_ORB_Manager

@@ -1,6 +1,9 @@
 // $Id$
 // -*- C++ -*-
 
+#if !defined (QUOTER_CLIENT_H)
+#define QUOTER_CLIENT_H
+
 // ============================================================================
 //
 // = LIBRARY
@@ -18,6 +21,8 @@
 // ============================================================================
 
 #include "ace/Get_Opt.h"
+#include "ace/Task.h"
+#include "ace/Thread_Manager.h"
 #include "tao/corba.h"
 #include "quoterC.h"
 
@@ -86,3 +91,18 @@ private:
   // Flag to tell client not to use Namingservice to find the cubit
   // Factory.
 };
+
+class Quoter_Task : public ACE_Task<ACE_SYNCH>
+{
+public:
+  Quoter_Task (int argc, char **argv);
+
+  virtual int svc (void);
+
+private:
+  Quoter_Client quoter_client;
+  int argc_;
+  char **argv_;
+};
+
+#endif /* QUOTER_CLIENT_H */
