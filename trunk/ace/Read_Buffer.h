@@ -62,6 +62,9 @@ public:
   // Returns the size of the allocated buffer obtained during a <read>,
   // not including the null terminator.
 
+  ACE_Allocator *alloc (void) const;
+  // Returns a pointer to its allocator.
+
   void dump (void) const;
   // Dump the state of the object.
 

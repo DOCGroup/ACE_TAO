@@ -1,5 +1,9 @@
 Sat Aug 22 00:27:06 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* ace/Read_Buffer.i (alloc): Added new method to get to
+ 	  Read_Buffer's allocator.  This is necessary because we need to
+ 	  free up the memory that it allocates for us.
+
 	* ace/Service_Object.cpp (fini): New method calls fini() on
  	  <type_> and sets the <fini_already_called_> flag.  This flag is
  	  tested in the destructor so that the <type_> is not fini'ed
