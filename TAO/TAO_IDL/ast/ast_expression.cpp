@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -85,7 +85,7 @@ ACE_RCSID(ast, ast_expression, "$Id$")
 void
 AST_Expression::fill_definition_details()
 {
-  pd_defined_in = idl_global->scopes()->depth() > 0 
+  pd_defined_in = idl_global->scopes()->depth() > 0
     ? idl_global->scopes()->top()
     : 0 ;
   pd_line       = idl_global->lineno();
@@ -260,7 +260,7 @@ AST_Expression::AST_Expression(ACE_CDR::ULongLong ullv)
   pd_ev->u.ullval = ullv;
 }
 
-/* 
+/*
  * An AST_Expression denoting a 32-bit floating point number
  */
 AST_Expression::AST_Expression(float fv)
@@ -680,7 +680,7 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       return ev;
       return ev;
     case AST_Expression::EV_ulonglong:
-      if (ev->u.ullval > LL_MAX)
+      if (ev->u.ullval > ACE_INT64_MAX)
 	      return NULL;
       ev->u.llval = (ACE_CDR::LongLong) ev->u.ullval;
       ev->et = AST_Expression::EV_longlong;
@@ -690,13 +690,15 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->et = AST_Expression::EV_longlong;
       return ev;
     case AST_Expression::EV_float:
-      if (ev->u.fval > (float) LL_MAX || ev->u.fval < (float) -(LL_MAX))
+      if (ev->u.fval > (float) ACE_INT64_MAX
+          || ev->u.fval < (float) ACE_INT64_MIN)
 	      return NULL;
       ev->u.llval = (ACE_CDR::LongLong) ev->u.fval;
       ev->et = AST_Expression::EV_longlong;
       return ev;
     case AST_Expression::EV_double:
-      if (ev->u.dval > (double) ULL_MAX || ev->u.dval < (double) -(LL_MAX))
+      if (ev->u.dval > (double) ACE_INT64_MAX
+          || ev->u.dval < (double) ACE_INT64_MIN)
 	      return NULL;
       ev->u.llval = (ACE_CDR::LongLong) ev->u.dval;
       ev->et = AST_Expression::EV_longlong;
@@ -756,13 +758,13 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->et = AST_Expression::EV_ulonglong;
       return ev;
     case AST_Expression::EV_float:
-      if (ev->u.fval < 0.0 || ev->u.fval > (float) ULL_MAX)
+      if (ev->u.fval < 0.0 || ev->u.fval > (float) ACE_UINT64_MAX)
 	      return NULL;
       ev->u.ullval = (ACE_CDR::ULongLong) ev->u.fval;
       ev->et = AST_Expression::EV_ulonglong;
       return ev;
     case AST_Expression::EV_double:
-      if (ev->u.dval < 0.0 || ev->u.dval > (double) ULL_MAX)
+      if (ev->u.dval < 0.0 || ev->u.dval > (double) ACE_UINT64_MAX)
 	      return NULL;
       ev->u.ullval = (ACE_CDR::ULongLong) ev->u.dval;
       ev->et = AST_Expression::EV_ulonglong;
@@ -872,7 +874,8 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
     case AST_Expression::EV_ulonglong:
       // Some compilers don't implement unsigned 64-bit to float conversions,
       // so we are stuck with the signed 64-bit max value.
-      if (ev->u.ullval > LL_MAX || (ACE_CDR::LongLong) ev->u.ullval > FLT_MAX)
+      if (ev->u.ullval > ACE_UINT64_MAX
+          || (ACE_CDR::LongLong) ev->u.ullval > ACE_FLT_MAX)
        return NULL;
       ev->u.fval = (float) ((ACE_CDR::LongLong) ev->u.ullval);
       ev->et = AST_Expression::EV_float;
@@ -932,9 +935,9 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->et = AST_Expression::EV_double;
       return ev;
     case AST_Expression::EV_ulonglong:
-      // Some compilers don't implement unsigned 64-bit to double 
+      // Some compilers don't implement unsigned 64-bit to double
       // conversions, so we are stuck with the signed 64-bit max value.
-      if (ev->u.ullval > LL_MAX)
+      if (ev->u.ullval > ACE_INT64_MAX)
         return NULL;
       ev->u.dval = (double) ((ACE_CDR::LongLong) ev->u.ullval);
       ev->et = AST_Expression::EV_double;
@@ -1866,7 +1869,7 @@ AST_Expression::dump(ostream &o)
   case EC_none:
     break;
   default:
-    o << GTDEVEL("unsupported dump mode for expression with ec == ") 
+    o << GTDEVEL("unsupported dump mode for expression with ec == ")
       << (int) pd_ec ;
     break;
   }
