@@ -1,0 +1,35 @@
+#
+# $Id$
+#
+
+NAME = client
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Gv -Ge 1
+
+OBJFILES = \
+	$(OBJDIR)\AnyC.obj \
+	$(OBJDIR)\client.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS)
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB)
+
+IDLFILES = \
+        $(IDLDIR)\Any.idl
+
+CPPDIR = .
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\AnyS.cpp $(IDLDIR)\AnyC.cpp: $(IDLDIR)\Factory.idl
+	$(TAO_IDL) $**

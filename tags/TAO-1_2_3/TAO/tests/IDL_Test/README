@@ -1,0 +1,47 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    README
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ============================================================================
+
+This test is a collection of IDL files that once caused IDL compiler
+or C++ compiler errors, plus a dummy main.cpp for the build. There is
+no execution check in this test, the only outcome of interest being
+the build. The examples in the IDL files come from many sources - some
+are made from scratch, some are adapted from other tests, and some are
+adapted from examples sent in by ACE and/or TAO users. To all of these
+last, many thanks for your help in digging out these bugs!
+
+Each IDL file contains examples that are related, either by the IDL
+type involved or by the context in which the error occurs. As new bugs
+are uncovered and fixed, new examples will be added to the suite, to
+ensure that the bugs do not recur.
+
+To build the test files, type 'make' at the command line. The TAO IDL
+compiler will open each IDL file in the directory and generate code
+that will then be compiled by the C++ compiler on your platform.
+
+To run the test, type 'main' at the command line. The generation of
+correct IOR prefixes in pragma.idl is checked in the body of main().
+The rest of the .idl files need only to build cleanly. To test the 
+client/server functionality of the various IDL types and operations, 
+see the test suite in ACE_wrappers/TAO/tests/Param_Test.
+
+The generated code from reopened_modules.idl is not included in the
+Makefile per se. Platforms without namespaces cannot handle
+reopened modules, so reopened_modulesC.cpp and reopened_modulesS.cpp
+have been conditionally included in a file called namespace_check.cpp.
+On platforms without namespaces, the IDL compiler will output a 
+warning that the generated code may not compile, each time a module
+is reopened in the .idl file. If seen when building this test, the
+warning can safely be ignored. It can also be ignored if you are
+cross-compiling onto a platform that has namespaces.
