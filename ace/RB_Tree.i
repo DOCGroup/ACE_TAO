@@ -10,7 +10,7 @@
 
 // Key accessor.
 
-template <class EXT_ID, class INT_ID> 
+template <class EXT_ID, class INT_ID>
 ACE_INLINE EXT_ID &
 ACE_RB_Tree_Node<EXT_ID, INT_ID>::key ()
 {
@@ -54,7 +54,7 @@ ACE_RB_Tree_Node<EXT_ID, INT_ID>::color ()
 
 // Accessor for node's parent pointer.
 
-template <class EXT_ID, class INT_ID> 
+template <class EXT_ID, class INT_ID>
 ACE_INLINE ACE_RB_Tree_Node<EXT_ID, INT_ID> *
 ACE_RB_Tree_Node<EXT_ID, INT_ID>::parent ()
 {
@@ -72,12 +72,12 @@ ACE_RB_Tree_Node<EXT_ID, INT_ID>::parent (ACE_RB_Tree_Node<EXT_ID, INT_ID> * p)
   ACE_TRACE ("ACE_RB_Tree_Node<EXT_ID, INT_ID>::parent mutator");
   parent_ = p;
 }
-  
+
 
 
 // Accessor for node's left child pointer.
 
-template <class EXT_ID, class INT_ID> 
+template <class EXT_ID, class INT_ID>
 ACE_INLINE ACE_RB_Tree_Node<EXT_ID, INT_ID> *
 ACE_RB_Tree_Node<EXT_ID, INT_ID>::left ()
 {
@@ -99,7 +99,7 @@ ACE_RB_Tree_Node<EXT_ID, INT_ID>::left (ACE_RB_Tree_Node<EXT_ID, INT_ID> * l)
 
 // Accessor for node's right child pointer.
 
-template <class EXT_ID, class INT_ID> 
+template <class EXT_ID, class INT_ID>
 ACE_INLINE ACE_RB_Tree_Node<EXT_ID, INT_ID> *
 ACE_RB_Tree_Node<EXT_ID, INT_ID>::right ()
 {
@@ -138,7 +138,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::open (ACE_Allocator *alloc)
   // memory before allocating new memory.
   this->close_i ();
 
-  // If we were passed an allocator use it, 
+  // If we were passed an allocator use it,
   // otherwise use the default instance.
 
   if (alloc == 0)
@@ -152,7 +152,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::open (ACE_Allocator *alloc)
 // Close down an RB_Tree and release dynamically allocated
 // resources.
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE int
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::close (void)
 {
@@ -168,9 +168,9 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::close (void)
 // new entry is bound successfully, returns 1 if an attempt is made
 // to bind an existing entry, and returns -1 if failures occur.
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
-ACE_INLINE int 
-ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::bind (const EXT_ID &item, 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
+ACE_INLINE int
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::bind (const EXT_ID &item,
                                                            const INT_ID &int_id)
 {
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::bind (const EXT_ID &item, const INT_ID &int_id)");
@@ -185,7 +185,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::bind (const EXT_ID &item,
 // to the caller.  The entry in this case will either be the newly
 // created entry, or the existing one.
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE int
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::bind (const EXT_ID &ext_id,
                                                            const INT_ID &int_id,
@@ -207,7 +207,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::bind (const EXT_ID &ext_id,
 // if a new entry is bound successfully, returns 1 if an attempt is
 // made to bind an existing entry, and returns -1 if failures occur.
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE int
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::trybind (const EXT_ID &ext_id,
                                                              INT_ID &int_id)
@@ -225,7 +225,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::trybind (const EXT_ID &ext_
 // back to the caller.  The entry in this case will either be the
 // newly created entry, or the existing one.
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE int
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::trybind (const EXT_ID &ext_id,
                                                               INT_ID &int_id,
@@ -246,7 +246,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::trybind (const EXT_ID &ext_
 // bound successfully, returns 1 if an existing entry was rebound,
 // and returns -1 if failures occur.
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE int
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::rebind (const EXT_ID &ext_id,
                                                              const INT_ID &int_id)
@@ -264,7 +264,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::rebind (const EXT_ID &ext_i
 // to the caller.  The entry in this case will either be the newly
 // created entry, or the existing one.
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE int
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::rebind (const EXT_ID &ext_id,
                                                              const INT_ID &int_id,
@@ -286,7 +286,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::rebind (const EXT_ID &ext_i
 // Returns 0 if a new entry is bound successfully, returns 1 if an
 // existing entry was rebound, and returns -1 if failures occur.
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE int
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::rebind (const EXT_ID &ext_id,
                                                              const INT_ID &int_id,
@@ -305,7 +305,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::rebind (const EXT_ID &ext_i
 // to the caller.  The entry in this case will either be the newly
 // created entry, or the existing one.
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE int
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::rebind (const EXT_ID &ext_id,
                                                              const INT_ID &int_id,
@@ -331,7 +331,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::rebind (const EXT_ID &ext_i
 // bound successfully, returns 1 if an existing entry was rebound,
 // and returns -1 if failures occur.
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE int
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::rebind (const EXT_ID &ext_id,
                                                              const INT_ID &int_id,
@@ -352,7 +352,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::rebind (const EXT_ID &ext_i
 // to the caller.  The entry in this case will either be the newly
 // created entry, or the existing one.
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE int
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::rebind (const EXT_ID &ext_id,
                                                              const INT_ID &int_id,
@@ -374,7 +374,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::rebind (const EXT_ID &ext_i
 // Locate <ext_id> and pass out parameter via <int_id>.  If found,
 // return 0, returns -1 if not found.
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE int
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::find (const EXT_ID &ext_id,
                                                            INT_ID &int_id)
@@ -383,12 +383,12 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::find (const EXT_ID &ext_id,
              "find (const EXT_ID &ext_id, INT_ID &int_id)");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> *entry;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *entry = 0;
 
-  int result = this->find_i (k, entry);
+  int result = this->find_i (ext_id, entry);
   if (result == 0)
-    { 
-      int_id = &(entry->item ());
+    {
+      int_id = entry->item ();
     }
 
   return result;
@@ -397,7 +397,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::find (const EXT_ID &ext_id,
 // Locate <ext_id> and pass out parameter via <entry>.  If found,
 // return 0, returns -1 if not found.
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE int
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::find (const EXT_ID &ext_id,
                                                            ACE_RB_Tree_Node<EXT_ID, INT_ID> *&entry)
@@ -406,7 +406,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::find (const EXT_ID &ext_id,
              "find (const EXT_ID &ext_id, ACE_RB_Tree_Node<EXT_ID, INT_ID> *&entry)");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
-  return this->find_i (k, entry);
+  return this->find_i (ext_id, entry);
 }
 
 
@@ -414,7 +414,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::find (const EXT_ID &ext_id,
 // <int_id> to the caller (this is useful for collections where the
 // <int_id>s are *not* dynamically allocated...).
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE int
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::unbind (const EXT_ID &ext_id)
 {
@@ -449,7 +449,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::unbind (const EXT_ID &ext_i
 // Break any association of <ext_id>.  Returns the value of <int_id>
 // in case the caller needs to deallocate memory.
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE int
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::unbind (const EXT_ID &ext_id,
                                                              INT_ID &int_id)
@@ -485,7 +485,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::unbind (const EXT_ID &ext_i
 // Remove entry from the tree.  This method should be used with *extreme*
 // caution, and only for optimization purposes.  The node being passed
 // in had better have been allocated by the tree that is unbinding it.
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE int
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::unbind (ACE_RB_Tree_Node<EXT_ID, INT_ID> *entry)
 {
@@ -503,7 +503,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::unbind (ACE_RB_Tree_Node<EX
 // guard the state of an iterator.  NOTE: the right name would be
 // <lock>, but HP/C++ will choke on that!
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE ACE_LOCK &
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::mutex (void)
 {
@@ -514,7 +514,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::mutex (void)
 
 // Dump the state of an object.
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE void
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::dump (void) const
 {
@@ -575,10 +575,10 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::rend (void)
 }
 
 
-// Returns a pointer to the item corresponding to the given key, 
+// Returns a pointer to the item corresponding to the given key,
 // or 0 if it cannot find the key in the tree.  DEPRECATED.
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE INT_ID*
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::find (const EXT_ID &k)
 {
@@ -620,7 +620,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert (const EXT_ID &k, co
 // and successfully destroyed it, 0 if it did not find the
 // item, or -1 if an error occurred.  DEPRECATED.
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE int
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::remove (const EXT_ID &k)
 {
@@ -634,12 +634,12 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::remove (const EXT_ID &k)
 
 // Destroys all nodes and sets the root pointer null.  DEPRECATED
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE void
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::clear ()
 {
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::clear");
-  ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
+  ACE_WRITE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
   this->close_i ();
 }
@@ -647,7 +647,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::clear ()
 // Returns the current number of nodes in the tree.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
-ACE_INLINE size_t 
+ACE_INLINE size_t
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::current_size ()
 {
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::current_size");
@@ -668,13 +668,13 @@ ACE_INLINE int
 ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::next (ACE_RB_Tree_Node<EXT_ID, INT_ID> *&next_entry) const
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::next");
-  
-  if (this->tree_ && this->node_)
+
+  if (this->node_)
     {
       next_entry = this->node_;
       return 1;
     }
-  
+
   return 0;
 }
 
@@ -699,14 +699,14 @@ ACE_INLINE ACE_RB_Tree_Node<EXT_ID, INT_ID> &
 ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator* (void) const
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator*");
-  return node_;
+  return *(this->node_);
 }
 
 
 // Returns a reference to the tree over which we're iterating.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
-ACE_INLINE ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &
+ACE_INLINE const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &
 ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::tree (void)
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::tree");
@@ -718,7 +718,7 @@ ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::tree (void)
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE int
-ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator== 
+ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator==
   (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &rbt) const
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator==");
@@ -731,7 +731,7 @@ ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator==
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE int
 ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator!=
-  (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &) const
+  (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &rbt) const
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator!=");
   return (this->node_ == rbt.node_) ? 0 : 1;
@@ -746,7 +746,7 @@ ACE_INLINE int
 ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::forward_i (void)
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::forward_i");
-  
+
   node_ = tree_.RB_tree_successor (node_);
   return node_ ? 1 : 0;
 }
@@ -817,7 +817,7 @@ ACE_INLINE ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &
 ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator++ (void)
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> operator++ (void)");
-  
+
   this->forward_i ();
   return *this;
 }
@@ -830,7 +830,7 @@ ACE_INLINE ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>
 ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator++ (int)
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> operator++ (int)");
-  
+
   ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> retv (*this);
   this->forward_i ();
   return retv;
@@ -877,7 +877,7 @@ ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::key ()
 
 // Accessor for item of node under iterator (if any). DEPRECATED.
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE INT_ID *
 ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::item ()
 {
@@ -913,7 +913,7 @@ ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::last ()
 // Moves to the next item in the tree,
 // returns 1 if there is a next item, 0 otherwise. DEPRECATED.
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE int
 ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::next ()
 {
@@ -926,7 +926,7 @@ ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::next ()
 // Moves to the previous item in the tree,
 // returns 1 if there is a previous item, 0 otherwise. DEPRECATED.
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE int
 ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::previous ()
 {
@@ -939,7 +939,7 @@ ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::previous ()
 // Returns 0 if the iterator is positioned over a valid ACE_RB_Tree
 // node, returns 1 if not. DEPRECATED.
 
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_INLINE int
 ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::is_done ()
 {
@@ -999,7 +999,7 @@ ACE_INLINE ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>
 ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator++ (int)
 {
   ACE_TRACE ("ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator++ (int)");
-  
+
   ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> retv (*this);
   this->reverse_i ();
   return retv;
@@ -1031,4 +1031,3 @@ ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator--
   this->forward_i ();
   return retv;
 }
-
