@@ -1,5 +1,29 @@
 Tue Apr 29 00:58:06 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/Reactor.cpp: It looks as if Windows NT isn't returning
+ 	  the number of bytes requested by a WinSock recv() used in
+	  the ACE_Reactor::notify() in some situations.  This is
+	  causing problems for test programs under heavy load.  The
+	  fix appears to be to add an additional ACE::recv() to obtain
+	  the remaining bytes.  Thanks to Karlheinz for reporting this
+	  and to Irfan for helping to fix it.
+
+	* ace/OS.i: Fixed a very subtle bug with ACE_OS::cond_wait() and
+ 	  ACE_OS::cond_signal() that only manifests itself when
+ 	  ACE_HAS_SIGNAL_OBJECT_AND_WAIT is enabled (which isn't the
+ 	  default).  The problem stemmed from the fact that we were
+ 	  assuming that if we used condition variables it implied that the
+ 	  external mutex had USYNC_PROCESS scope.  In fact, the external
+ 	  mutexes typically have USYNC_THREAD scope, so
+	  SignalObjectAndWait() was hanging indefinitely.  Fortunately,
+	  the fix was easy -- just add a run-time check for the type of
+	  the external mutex and take the appropriate action.  Thanks to
+	  Irfan for noticing this.
+
+	* tests/Reader_Writer_Test.cpp: Added a parse_args() function that
+ 	  allows us to override the default number of reader/writer
+ 	  threads + the number of iterations.
+
 	* ace/OS: Added patches for Digital UNIX to handle the
  	  getpwnam_r() name.  Thanks to Thilo Kielmann
  	  <kielmann@informatik.uni-siegen.de> for these patches.
