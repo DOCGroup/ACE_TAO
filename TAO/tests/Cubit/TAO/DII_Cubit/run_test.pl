@@ -1,4 +1,4 @@
-#!/pkg/gnu/bin/perl -I../../../bin
+#!/pkg/gnu/bin/perl -I../../../../../bin
 #$Id$
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
@@ -36,4 +36,4 @@ $SV = Process::Create ("..$DIR_SEPARATOR"."IDL_Cubit".$DIR_SEPARATOR."server".$P
 
 sleep (2);
 
-system ("client".$Process::EXE_EXT." -x -ORBnameserviceport ".$nsport." -ORBport ".$client_port );
+system ("client".$Process::EXE_EXT." -x -ORBnameserviceport ".$nsport." -ORBobjrefstyle url -ORBport ".$client_port );
