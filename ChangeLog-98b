@@ -1,11 +1,19 @@
+Fri May 22 07:26:06 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Stats.cpp: added some casts to avoid MSVC++ warnings
+          about narrowing.
+
+        * ace/config-osf1-4.0.h: removed commented-out
+          ACE_LACKS_{COND,MUTEX}ATTR_PSHARED.
+
 Fri May 22 00:09:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Local_Tokens.{h,cpp} (ACE_Null_Token): Only defined default
-	  ctor/dtor explicitly when ACE_LACKS_INLINE_FUNCTIONS.
+        * ace/Local_Tokens.{h,cpp} (ACE_Null_Token): Only defined default
+          ctor/dtor explicitly when ACE_LACKS_INLINE_FUNCTIONS.
 
-	* ace/Stats.cpp: Defined ACE_BUILD_DLL at the beginning.
-	  Win32 needs to define ULONGLONG literals as 999ui64.
-	  This is the only place that uses i64 literals.
+        * ace/Stats.cpp: Defined ACE_BUILD_DLL at the beginning.
+          Win32 needs to define ULONGLONG literals as 999ui64.
+          This is the only place that uses i64 literals.
 
 Thu May 21 21:55:09 1998  David L. Levine  <levine@cs.wustl.edu>
 
