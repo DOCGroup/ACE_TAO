@@ -348,7 +348,7 @@ ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_name, host_name) == -1)
-    ACE_ERROR ((LM_ERROR, 
+    ACE_ERROR ((LM_ERROR,
                 "ACE_INET_Addr::ACE_INET_Addr"));
 }
 
@@ -390,7 +390,6 @@ ACE_INET_Addr::get_host_name (char hostname[], size_t len) const
           return -1;
         }
 #else
-      hostent hentry;
       int a_len = sizeof this->inet_addr_.sin_addr.s_addr;
       int error = 0;
 
@@ -399,6 +398,7 @@ ACE_INET_Addr::get_host_name (char hostname[], size_t len) const
                                            a_len,
                                            this->addr_type_);
 #else
+      hostent hentry;
       ACE_HOSTENT_DATA buf;
       hostent *hp = ACE_OS::gethostbyaddr_r ((char *) &this->inet_addr_.sin_addr,
                                              a_len,
