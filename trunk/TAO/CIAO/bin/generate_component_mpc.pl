@@ -12,7 +12,7 @@ use Getopt::Std;
 
 $flags = join (" ", @ARGV);
 
-if (!getopts ('dcnip:l:h') || $opt_h) {
+if (!getopts ('dcnip:l:u:h') || $opt_h) {
     print "generate_component_mpc.pl [-d] [-h] component_name\n";
     print "\n";
     print "    -d         Turn on debug mode\n";
@@ -21,6 +21,7 @@ if (!getopts ('dcnip:l:h') || $opt_h) {
     print "    -i         Use an executor definition IDL file\n";
     print "    -n         Supress component make/project\n";
     print "    -c         Create a client makefile\n";
+    print "    -u         Unique project name prefix (if not defined, name for -p flag will be used. \n";
     print "\n";
     print "generate_component_mpc creates and save a minimum mpc file\n";
     print "called $com_name.mpc that is needed for a single component implementation\n";
@@ -34,7 +35,6 @@ if (defined $opt_d) {
         print "Dependency to $opt_f\n";
     }
 }
-
 
 if ($#ARGV < 0) {
     print STDERR "No component_name specified, use -h for help\n";
@@ -57,6 +57,16 @@ else {
     $client_depend = "$com_name".'_stub';
 }
 
+$unique_prefix = "";
+
+if (defined $opt_u) {
+    $unique_prefix = "$opt_u" . "_";
+}
+elsif (defined $opt_p) {
+    $unique_prefix = "$opt_p" . "_";
+}
+
+
 if (defined $opt_l) {
     $lib_paths = "libpaths += $opt_l";
 }
@@ -64,7 +74,7 @@ if (defined $opt_l) {
 if (defined $opt_c) {
     $client_def =
 '
-project ('."$opt_p"._."$com_name".'_client) : ciao_client {
+project ('."$unique_prefix"."$com_name".'_client) : ciao_client {
   exename = client
   depends += '."$client_depend
   $lib_paths".'
@@ -88,7 +98,7 @@ if (defined $opt_i) {
 if (! defined $opt_n) {
     $component_def =
 '
-project('."$opt_p"._."$com_name".'_exec) : ciao_component {
+project('."$unique_prefix"."$com_name".'_exec) : ciao_component {
   depends   += '."$com_name".'_svnt
   sharedname = '."$com_name".'_exec
   libs      += '."$com_name".'_stub '."$com_name".'_svnt'." $lib_depend
@@ -111,7 +121,7 @@ project('."$opt_p"._."$com_name".'_exec) : ciao_component {
 $mpc_template = '// $Id$
 // This file is generated with "'."generate_component_mpc.pl $flags".'"
 
-project('."$opt_p"._."$com_name".'_stub): ciao_client {'."
+project('."$unique_prefix"."$com_name".'_stub): ciao_client {'."
   $stub_depend".'
   sharedname = '."$com_name".'_stub
   idlflags += -Wb,stub_export_macro='."$UCOM_NAME".'_STUB_Export -Wb,stub_export_include='."$com_name".'_stub_export.h -Wb,skel_export_macro='."$UCOM_NAME".'_SVNT_Export -Wb,skel_export_include='."$com_name".'_svnt_export.h
@@ -126,7 +136,7 @@ project('."$opt_p"._."$com_name".'_stub): ciao_client {'."
   }
 }
 
-project('."$opt_p"._."$com_name".'_svnt) : ciao_servant {
+project('."$unique_prefix"."$com_name".'_svnt) : ciao_servant {
   depends += '."$svnt_depend $com_name".'_stub
   sharedname  = '."$com_name".'_svnt
   libs    += '."$com_name".'_stub'." $lib_depend

@@ -1,3 +1,15 @@
+Thu Oct 09 00:50:24 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/generate_component_mpc.pl: Minor enhancement to the previous
+	  change.  This script now allows an optional project name prefix
+	  to be define via the [-u] flag.  If this flag is not used, the
+	  dependent component's name will be used as project name prefix.
+	  Since there are possibly many component depending on the same
+	  component, using the depending componant name may not help much.
+	  If neither -u and -p flag are used, no project name prefix will
+	  be added (the redundant leading underscore from the previous
+	  change has been removed.)
+
 Fri Oct  6 10:00:12 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/Documentation/TODO: merged items from my off-line TODO.
