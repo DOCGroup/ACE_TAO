@@ -979,9 +979,9 @@ enum TAO_Policy_Scope
 #endif /*TAO_RESUMES_CONNECTION_HANDLER*/
 
 /// By default we use Muxed Transports
-#if !defined (TAO_USE_MUXED_TRANSPORT_MUX_STRAGEGY)
-#  define TAO_USE_MUXED_TRANSPORT_MUX_STRAGEGY 1
-#endif /* TAO_USE_MUXED_TRANSPORT_MUX_STRAGEGY */
+#if !defined (TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY)
+#  define TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY 1
+#endif /* TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY */
 
 #include "ace/post.h"
 #endif  /* TAO_ORB_CONFIG_H */
