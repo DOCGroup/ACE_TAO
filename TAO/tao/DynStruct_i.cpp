@@ -305,7 +305,7 @@ TAO_DynStruct_i::from_any (const CORBA_Any& any,
       // If we have an exception type, unmarshal the repository ID.
 	    CORBA::TCKind kind = TAO_DynAny_i::unalias (this->type_.in (),
                                                   ACE_TRY_ENV);
-	    ACE_TRY_CHECK;
+	    ACE_CHECK;
 
 	    if (kind == CORBA::tk_except) 
         {
@@ -356,7 +356,7 @@ TAO_DynStruct_i::to_any (CORBA::Environment& ACE_TRY_ENV)
   // If we have an exception type, marshal the repository ID.
   CORBA::TCKind kind = TAO_DynAny_i::unalias (this->type_.in (),
                                               ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (0);
 
   if (kind == CORBA::tk_except) 
     {
