@@ -487,8 +487,9 @@ public:
 
   // = The continuation field chains together composite messages.
   /// Get the continuation field.
-  /// Set the continuation field.
   ACE_Message_Block *cont (void) const;
+
+  /// Set the continuation field.
   void cont (ACE_Message_Block *);
 
   // = Pointer to the <Message_Block> directly ahead in the <ACE_Message_Queue>.

@@ -115,8 +115,10 @@ private:
   /// Indicates whether the tirdwr module should be pushed
   int rwflag_;
 
-  // = Get/set rwflag
+  /// Get rwflag
   int  get_rwflag (void);
+
+  /// Set rwflag
   void set_rwflag (int);
 };
 

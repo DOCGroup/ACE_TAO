@@ -709,9 +709,11 @@ public:
   int cancel_grp (int grp_id, int async_cancel = 0);
   int testcancel (ACE_thread_t t_id);
 
-  // = Set/get group ids for a particular thread id.
+  /// Set group ids for a particular thread id.
   int set_grp (ACE_thread_t,
                int grp_id);
+
+  /// Get group ids for a particular thread id.
   int get_grp (ACE_thread_t,
                int &grp_id);
 
@@ -830,8 +832,10 @@ public:
   int thread_all_list (ACE_thread_t thread_list[],
                        size_t n);
 
-  // = Set/get group ids for a particular task.
+  /// Set group ids for a particular task.
   int set_grp (ACE_Task_Base *task, int grp_id);
+
+  /// Get group ids for a particular task.
   int get_grp (ACE_Task_Base *task, int &grp_id);
 
   /// Return a count of the current number of threads active in the
