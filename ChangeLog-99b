@@ -1,7 +1,14 @@
+Tue Feb 23 20:28:45 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* ace/SString.{h,i,cpp}
+	Added a private member <buf_len_> to the ACE_CString class to keep
+	track of the size of data buffer, and avoid unnecessary memory
+	reallocations.  Updated class methods to use buf_len_.
+
 Tue Feb 23 19:54:55 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* ace/POSIX_Asynch_IO.h:
-	* ace/POSIX_Asynch_IO.cpp: 	
+	* ace/POSIX_Asynch_IO.cpp:
 	Fixed the potential dominance warnings in POSIX
 	implementation. Updated the documentation.
 
