@@ -6466,14 +6466,14 @@ protected:
 
 public:
   virtual int init (void) = 0;
-  // Explicitly initialize.  Returns 0 on success, -1 on failure
-  // due to either already having been initialized, or dynamic
-  // allocation failure (in which case errno is set to ENOMEM).
+  // Explicitly initialize.  Returns 0 on success, -1 on failure due
+  // to dynamic allocation failure (in which case errno is set to
+  // ENOMEM), or 1 if it had already been called.
 
   virtual int fini (void) = 0;
-  // Explicitly destroy.  Returns 0 on success, -1 on failure due to
-  // already having been destroyed, or 1 because the number of fini ()
-  // calls hasn't reached the number of init () calls.
+  // Explicitly destroy.  Returns 0 on success, -1 on failure because
+  // the number of fini () calls hasn't reached the number of init ()
+  // calls, or 1 if it had already been called.
 
   enum Object_Manager_State
     {

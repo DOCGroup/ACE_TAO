@@ -6356,7 +6356,7 @@ ACE_OS_Object_Manager::init (void)
       return 0;
     } else {
       // Had already initialized.
-      return -1;
+      return 1;
     }
 }
 
@@ -6370,7 +6370,7 @@ ACE_OS_Object_Manager::fini (void)
   if (instance_ == 0  ||  shutting_down_i ())
     // Too late.  Or, maybe too early.  Either fini () has already
     // been called, or init () was never called.
-    return -1;
+    return object_manager_state_ == OBJ_MAN_SHUT_DOWN  ?  1  :  -1;
 
   // No mutex here.  Only the main thread should destroy the singleton
   // ACE_OS_Object_Manager instance.
