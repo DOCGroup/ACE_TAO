@@ -25,7 +25,7 @@ Fri May  7 14:58:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 Fri May  7 16:44:33 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
-        
+
           When creating implied IDL nodes for home declarations,
           appended 'Explicit' to the name of the parent (which,
           if it exists, will have already been created as implied
