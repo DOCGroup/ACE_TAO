@@ -1,3 +1,12 @@
+Mon Mar 13 15:37:05 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	  Removed the deep_free.cpp file from the projects.
+
+	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+	  Corrected indentation.
+
 Mon Mar 13 14:19:27 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
