@@ -27,7 +27,8 @@ Fri Apr 16 19:40:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  can tell, there are no more instances in Typecode where a CDR
 	  stream hangs around, so this should be the only place where
 	  this fix is needed (but a better one will come along someday).
-	  Thanks to Irfan for mucho help with this.
+	  Thanks to Irfan for mucho help with this and to Frank Buschmann 
+	  <frank.buschmann@mchp.siemens.de> for reporting the problem.
 
 Fri Apr 16 19:02:07 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
