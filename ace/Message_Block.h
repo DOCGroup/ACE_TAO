@@ -195,7 +195,7 @@ public:
   ACE_Message_Block *duplicate (void) const;
   // Return a "shallow" copy that increments our reference count by 1.
 
-  static ACE_Message_Block *duplicate (ACE_Message_Block *mb);
+  static ACE_Message_Block *duplicate (const ACE_Message_Block *mb);
   // Return a "shallow" copy that increments our reference count by 1.
   // This is similar to CORBA's <_duplicate> method, which is useful
   // if you want to eliminate lots of checks for NULL <mb> pointers
