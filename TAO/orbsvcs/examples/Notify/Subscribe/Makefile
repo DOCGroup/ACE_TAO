@@ -65,8 +65,10 @@ realclean: clean
 
 
 .obj/Subscribe.o .obj/Subscribe.so .shobj/Subscribe.o .shobj/Subscribe.so: Subscribe.cpp Subscribe.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
@@ -271,8 +273,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
- $(TAO_ROOT)/tao/rtcorbafwd.h \
- $(TAO_ROOT)/tao/rtcorbafwd.i \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -360,23 +362,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_PushConsumer.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
@@ -384,34 +370,46 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_PushSupplier.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.h
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i
 
 .obj/main.o .obj/main.so .shobj/main.o .shobj/main.so: main.cpp Subscribe.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
@@ -616,8 +614,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Adapter.i \
  $(TAO_ROOT)/tao/POAManager.h \
  $(TAO_ROOT)/tao/POAManager.i \
- $(TAO_ROOT)/tao/rtcorbafwd.h \
- $(TAO_ROOT)/tao/rtcorbafwd.i \
+ $(TAO_ROOT)/tao/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBAC.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -705,17 +703,45 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i
