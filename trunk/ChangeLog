@@ -1,3 +1,11 @@
+Mon May 10 12:15:45 2004  Simon McQueen  <sm@prismtechnologies.com>
+
+        * ace/CDR_Stream.cpp (read_wchar):
+
+          Replaced use of read_octet_array with read_array to take
+          account of the endianness of the stream when demarshalling
+          a wchar. This closes bug 1807.
+
 Mon May 10 10:24:23 UTC 2004  Johnny WIllemsen  <jwillemsen@remedy.nl>
 
         * ace/Time_Value.inl:
@@ -140,6 +148,7 @@ Fri May  7 09:38:06 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Include "ace/Log_Msg.h" to pull in ACE_ERROR macros.
 
+>>>>>>> 4.6897
 Fri May  7 08:08:05 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
