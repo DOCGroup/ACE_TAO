@@ -105,7 +105,8 @@ client (void *arg)
                                                      arg);
 
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
-                             ACE_LOCALHOST);
+                             ACE_LOCALHOST,
+                             AF_INET);
 
   ACE_SOCK_Stream cli_stream;
   ACE_SOCK_Connector con;
