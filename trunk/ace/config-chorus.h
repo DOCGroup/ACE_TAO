@@ -5,7 +5,7 @@
 // platforms using one of these compilers:
 //   * GNU g++
 //   * GreenHills
-// It uses the Chorus POSIX threads interface. 
+// It uses the Chorus POSIX threads interface.
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
@@ -75,8 +75,6 @@
 // Platforms lacks UNIX domain sockets.
 #define ACE_LACKS_UNIX_DOMAIN_SOCKETS
 #define ACE_LACKS_UTSNAME_T
-#define ACE_HAS_PTHREADS
-#define ACE_HAS_PTHREADS_STD
 //#define ACE_LACKS_SETSCHED
 
 #define ACE_LACKS_MSYNC
@@ -112,6 +110,8 @@
 #endif
 // And they're even POSIX pthreads
 #define ACE_HAS_PTHREADS
+#define ACE_HAS_PTHREADS_STD
+#define ACE_LACKS_PTHREAD_CANCEL
 #define ACE_LACKS_PTHREAD_CLEANUP
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 #define ACE_LACKS_RWLOCK_T
