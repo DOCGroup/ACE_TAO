@@ -25,11 +25,11 @@ ifdef PRELIB
 ifdef PRELIB_USES_OBJ_ONLY
 VSHOBJS = $(LSRC:%.cpp=$(VSHDIR)%.o)
 else
-VSHOBJS	= $(LSRC:%.cpp=$(VSHDIR)%.so)
+VSHOBJS	= $(LSRC:%.cpp=$(VSHDIR)%.$(SOEXT))
 endif
 VSHOBJS1 = $(VSHOBJS)
 else
-VSHOBJS = $(LSRC:%.cpp=$(VSHDIR)%.so)
+VSHOBJS = $(LSRC:%.cpp=$(VSHDIR)%.$(SOEXT))
 VSHOBJS1 = $(LSRC:%.cpp=$(VSHDIR)%.o)
 endif
 endif
