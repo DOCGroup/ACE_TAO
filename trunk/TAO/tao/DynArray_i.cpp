@@ -53,7 +53,7 @@ TAO_DynArray_i::TAO_DynArray_i (const CORBA_Any& any)
 
           TAO_InputCDR cdr (mb);
 
-          CORBA::TypeCode_ptr field_tc =
+          CORBA::TypeCode_var field_tc =
             this->get_element_type (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -173,7 +173,7 @@ TAO_DynArray_i::set_elements (const CORBA_AnySeq& value,
       ACE_THROW (CORBA_DynAny::InvalidSeq ());
     }
 
-  CORBA::TypeCode_ptr element_type =
+  CORBA::TypeCode_var element_type =
     this->get_element_type (ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -287,7 +287,7 @@ TAO_DynArray_i::from_any (const CORBA_Any& any,
           ACE_THROW (CORBA_DynAny::Invalid ());
         }
 
-      CORBA::TypeCode_ptr field_tc = this->get_element_type (ACE_TRY_ENV);
+      CORBA::TypeCode_var field_tc = this->get_element_type (ACE_TRY_ENV);
       ACE_CHECK;
 
       for (CORBA::ULong i = 0; i < arg_length; i++)
@@ -323,7 +323,7 @@ TAO_DynArray_i::to_any (CORBA::Environment& ACE_TRY_ENV)
 {
   TAO_OutputCDR out_cdr;
 
-  CORBA_TypeCode_ptr field_tc = this->get_element_type (ACE_TRY_ENV);
+  CORBA_TypeCode_var field_tc = this->get_element_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   for (CORBA::ULong i = 0;
@@ -386,7 +386,7 @@ TAO_DynArray_i::current_component (CORBA::Environment &ACE_TRY_ENV)
 
   if (!this->da_members_[this->current_index_].in ())
     {
-      CORBA_TypeCode_ptr tc = this->get_element_type (ACE_TRY_ENV);
+      CORBA_TypeCode_var tc = this->get_element_type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA_DynAny::_nil ());
 
       this->da_members_[this->current_index_] =
@@ -444,7 +444,7 @@ void
 TAO_DynArray_i::insert_boolean (CORBA::Boolean value,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA_TypeCode_ptr type = this->get_element_type (ACE_TRY_ENV);
+  CORBA_TypeCode_var type = this->get_element_type (ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::TCKind kind = type->kind (ACE_TRY_ENV);
@@ -472,7 +472,7 @@ void
 TAO_DynArray_i::insert_octet (CORBA::Octet value,
                               CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA_TypeCode_ptr type = this->get_element_type (ACE_TRY_ENV);
+  CORBA_TypeCode_var type = this->get_element_type (ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::TCKind kind = type->kind (ACE_TRY_ENV);
@@ -500,7 +500,7 @@ void
 TAO_DynArray_i::insert_char (CORBA::Char value,
                              CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA_TypeCode_ptr type = this->get_element_type (ACE_TRY_ENV);
+  CORBA_TypeCode_var type = this->get_element_type (ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::TCKind kind = type->kind (ACE_TRY_ENV);
@@ -528,7 +528,7 @@ void
 TAO_DynArray_i::insert_short (CORBA::Short value,
                               CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA_TypeCode_ptr type = this->get_element_type (ACE_TRY_ENV);
+  CORBA_TypeCode_var type = this->get_element_type (ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::TCKind kind = type->kind (ACE_TRY_ENV);
@@ -556,7 +556,7 @@ void
 TAO_DynArray_i::insert_ushort (CORBA::UShort value,
                                CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA_TypeCode_ptr type = this->get_element_type (ACE_TRY_ENV);
+  CORBA_TypeCode_var type = this->get_element_type (ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::TCKind kind = type->kind (ACE_TRY_ENV);
@@ -584,7 +584,7 @@ void
 TAO_DynArray_i::insert_long (CORBA::Long value,
                              CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA_TypeCode_ptr type = this->get_element_type (ACE_TRY_ENV);
+  CORBA_TypeCode_var type = this->get_element_type (ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::TCKind kind = type->kind (ACE_TRY_ENV);
@@ -612,7 +612,7 @@ void
 TAO_DynArray_i::insert_ulong (CORBA::ULong value,
                               CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA_TypeCode_ptr type = this->get_element_type (ACE_TRY_ENV);
+  CORBA_TypeCode_var type = this->get_element_type (ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::TCKind kind = type->kind (ACE_TRY_ENV);
@@ -640,7 +640,7 @@ void
 TAO_DynArray_i::insert_float (CORBA::Float value,
                               CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA_TypeCode_ptr type = this->get_element_type (ACE_TRY_ENV);
+  CORBA_TypeCode_var type = this->get_element_type (ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::TCKind kind = type->kind (ACE_TRY_ENV);
@@ -668,7 +668,7 @@ void
 TAO_DynArray_i::insert_double (CORBA::Double value,
                                CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA_TypeCode_ptr type = this->get_element_type (ACE_TRY_ENV);
+  CORBA_TypeCode_var type = this->get_element_type (ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::TCKind kind = type->kind (ACE_TRY_ENV);
@@ -696,7 +696,7 @@ void
 TAO_DynArray_i::insert_string (const char * value,
                                CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA_TypeCode_ptr type = this->get_element_type (ACE_TRY_ENV);
+  CORBA_TypeCode_var type = this->get_element_type (ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::TCKind kind = type->kind (ACE_TRY_ENV);
@@ -724,7 +724,7 @@ void
 TAO_DynArray_i::insert_reference (CORBA::Object_ptr value,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA_TypeCode_ptr type = this->get_element_type (ACE_TRY_ENV);
+  CORBA_TypeCode_var type = this->get_element_type (ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::TCKind kind = type->kind (ACE_TRY_ENV);
@@ -752,7 +752,7 @@ void
 TAO_DynArray_i::insert_typecode (CORBA::TypeCode_ptr value,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA_TypeCode_ptr type = this->get_element_type (ACE_TRY_ENV);
+  CORBA_TypeCode_var type = this->get_element_type (ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::TCKind kind = type->kind (ACE_TRY_ENV);
@@ -780,7 +780,7 @@ void
 TAO_DynArray_i::insert_longlong (CORBA::LongLong value,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA_TypeCode_ptr type = this->get_element_type (ACE_TRY_ENV);
+  CORBA_TypeCode_var type = this->get_element_type (ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::TCKind kind = type->kind (ACE_TRY_ENV);
@@ -808,7 +808,7 @@ void
 TAO_DynArray_i::insert_ulonglong (CORBA::ULongLong value,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA_TypeCode_ptr type = this->get_element_type (ACE_TRY_ENV);
+  CORBA_TypeCode_var type = this->get_element_type (ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::TCKind kind = type->kind (ACE_TRY_ENV);
@@ -836,7 +836,7 @@ void
 TAO_DynArray_i::insert_wchar (CORBA::WChar value,
                               CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA_TypeCode_ptr type = this->get_element_type (ACE_TRY_ENV);
+  CORBA_TypeCode_var type = this->get_element_type (ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::TCKind kind = type->kind (ACE_TRY_ENV);
@@ -864,7 +864,7 @@ void
 TAO_DynArray_i::insert_any (const CORBA::Any& value,
                             CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA_TypeCode_ptr type = this->get_element_type (ACE_TRY_ENV);
+  CORBA_TypeCode_var type = this->get_element_type (ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::TCKind kind = type->kind (ACE_TRY_ENV);
@@ -902,7 +902,7 @@ TAO_DynArray_i::get_boolean (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      CORBA_TypeCode_ptr tc = this->get_element_type (ACE_TRY_ENV);
+      CORBA_TypeCode_var tc = this->get_element_type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (val);
 
       CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
@@ -935,7 +935,7 @@ TAO_DynArray_i::get_octet (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      CORBA_TypeCode_ptr tc = this->get_element_type (ACE_TRY_ENV);
+      CORBA_TypeCode_var tc = this->get_element_type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (val);
 
       CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
@@ -968,7 +968,7 @@ TAO_DynArray_i::get_char (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      CORBA_TypeCode_ptr tc = this->get_element_type (ACE_TRY_ENV);
+      CORBA_TypeCode_var tc = this->get_element_type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (val);
 
       CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
@@ -1001,7 +1001,7 @@ TAO_DynArray_i::get_short (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      CORBA_TypeCode_ptr tc = this->get_element_type (ACE_TRY_ENV);
+      CORBA_TypeCode_var tc = this->get_element_type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (val);
 
       CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
@@ -1034,7 +1034,7 @@ TAO_DynArray_i::get_ushort (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      CORBA_TypeCode_ptr tc = this->get_element_type (ACE_TRY_ENV);
+      CORBA_TypeCode_var tc = this->get_element_type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (val);
 
       CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
@@ -1067,7 +1067,7 @@ TAO_DynArray_i::get_long (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      CORBA_TypeCode_ptr tc = this->get_element_type (ACE_TRY_ENV);
+      CORBA_TypeCode_var tc = this->get_element_type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (val);
 
       CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
@@ -1100,7 +1100,7 @@ TAO_DynArray_i::get_ulong (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      CORBA_TypeCode_ptr tc = this->get_element_type (ACE_TRY_ENV);
+      CORBA_TypeCode_var tc = this->get_element_type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (val);
 
       CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
@@ -1133,7 +1133,7 @@ TAO_DynArray_i::get_float (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      CORBA_TypeCode_ptr tc = this->get_element_type (ACE_TRY_ENV);
+      CORBA_TypeCode_var tc = this->get_element_type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (val);
 
       CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
@@ -1166,7 +1166,7 @@ TAO_DynArray_i::get_double (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      CORBA_TypeCode_ptr tc = this->get_element_type (ACE_TRY_ENV);
+      CORBA_TypeCode_var tc = this->get_element_type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (val);
 
       CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
@@ -1199,7 +1199,7 @@ TAO_DynArray_i::get_string (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      CORBA_TypeCode_ptr tc = this->get_element_type (ACE_TRY_ENV);
+      CORBA_TypeCode_var tc = this->get_element_type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (val);
 
       CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
@@ -1232,7 +1232,7 @@ TAO_DynArray_i::get_reference (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      CORBA_TypeCode_ptr tc = this->get_element_type (ACE_TRY_ENV);
+      CORBA_TypeCode_var tc = this->get_element_type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (val);
 
       CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
@@ -1265,7 +1265,7 @@ TAO_DynArray_i::get_typecode (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      CORBA_TypeCode_ptr tc = this->get_element_type (ACE_TRY_ENV);
+      CORBA_TypeCode_var tc = this->get_element_type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (val);
 
       CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
@@ -1303,7 +1303,7 @@ TAO_DynArray_i::get_longlong (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      CORBA_TypeCode_ptr tc = this->get_element_type (ACE_TRY_ENV);
+      CORBA_TypeCode_var tc = this->get_element_type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (val);
 
       CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
@@ -1336,7 +1336,7 @@ TAO_DynArray_i::get_ulonglong (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      CORBA_TypeCode_ptr tc = this->get_element_type (ACE_TRY_ENV);
+      CORBA_TypeCode_var tc = this->get_element_type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (val);
 
       CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
@@ -1369,7 +1369,7 @@ TAO_DynArray_i::get_wchar (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      CORBA_TypeCode_ptr tc = this->get_element_type (ACE_TRY_ENV);
+      CORBA_TypeCode_var tc = this->get_element_type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (val);
 
       CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
@@ -1402,7 +1402,7 @@ TAO_DynArray_i::get_any (CORBA::Environment &ACE_TRY_ENV)
 
   if (dp)
     {
-      CORBA_TypeCode_ptr tc = this->get_element_type (ACE_TRY_ENV);
+      CORBA_TypeCode_var tc = this->get_element_type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (val);
 
       CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
@@ -1432,7 +1432,8 @@ TAO_DynArray_i::get_any (CORBA::Environment &ACE_TRY_ENV)
 CORBA::TypeCode_ptr
 TAO_DynArray_i::get_element_type (CORBA::Environment& ACE_TRY_ENV)
 {
-  CORBA::TypeCode_ptr element_type = this->type_.in ();
+  CORBA::TypeCode_var element_type = 
+    CORBA_TypeCode::_duplicate (this->type_.in ());
 
   // Strip away aliases (if any) on top of the outer type
   CORBA::TCKind kind = element_type->kind (ACE_TRY_ENV);
@@ -1459,18 +1460,19 @@ CORBA::ULong
 TAO_DynArray_i::get_arg_length (CORBA::TypeCode_ptr tc,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
+  CORBA::TypeCode_var tctmp = CORBA::TypeCode::_duplicate (tc);
+  CORBA::TCKind kind = tctmp->kind (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   while (kind == CORBA::tk_alias)
     {
-      tc = tc->content_type (ACE_TRY_ENV);
+      tctmp = tctmp->content_type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
-      kind = tc->kind (ACE_TRY_ENV);
+      kind = tctmp->kind (ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
     }
 
-  CORBA::ULong retval = tc->length (ACE_TRY_ENV);
+  CORBA::ULong retval = tctmp->length (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   return retval;

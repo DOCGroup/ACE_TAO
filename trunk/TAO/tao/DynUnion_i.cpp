@@ -80,7 +80,7 @@ TAO_DynUnion_i::TAO_DynUnion_i (CORBA_TypeCode_ptr tc)
           this->type_ =
             CORBA::TypeCode::_duplicate (tc);
 
-          CORBA::TypeCode_ptr disc_tc =
+          CORBA::TypeCode_var disc_tc =
             tc->discriminator_type (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -143,7 +143,7 @@ TAO_DynUnion_i::discriminator (CORBA::Environment &)
 CORBA::TCKind
 TAO_DynUnion_i::discriminator_kind (CORBA::Environment& ACE_TRY_ENV)
 {
-  CORBA_TypeCode_ptr tc = this->type_->discriminator_type (ACE_TRY_ENV);
+  CORBA_TypeCode_var tc = this->type_->discriminator_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::tk_null);
 
   CORBA::TCKind retval = TAO_DynAny_i::unalias (tc,
