@@ -183,3 +183,5 @@ TAO/orbsvcs/tests/Security/Secure_Invocation/run_test.pl: SSL
 TAO/orbsvcs/tests/Security/SecurityLevel1/run_test.pl: SSL
 
 TAO/orbsvcs/tests/Miop/McastHello/run_test.pl: !MINIMUM !STATIC
+
+TAO/tests/Two_Objects/run_test.pl: !ST
