@@ -147,13 +147,13 @@ public:
   STARTUPINFO *startup_info (void);
   // Used for setting and getting.
 
-  const LPSECURITY_ATTRIBUTES get_process_attributes (void) const;
+  LPSECURITY_ATTRIBUTES get_process_attributes (void) const;
   // Get the process_attributes.  Returns NULL if
   // set_process_attributes has not been set.
   LPSECURITY_ATTRIBUTES set_process_attributes (void);
   // If this is called, a non-null process attributes is sent to
   // CreateProcess.
-  const LPSECURITY_ATTRIBUTES get_thread_attributes (void) const;
+  LPSECURITY_ATTRIBUTES get_thread_attributes (void) const;
   // Get the thread_attributes.  Returns NULL if set_thread_attributes
   // has not been set.
   LPSECURITY_ATTRIBUTES set_thread_attributes (void);
