@@ -108,9 +108,9 @@ Distributer_Receiver_Callback::handle_destroy (void)
 }
 
 Distributer::Distributer (void)
-  : done_ (0),
-    sender_name_ ("sender"),
-    distributer_name_ ("distributer")
+  : sender_name_ ("sender")
+  , distributer_name_ ("distributer")
+  , done_ (0)
 {
 }
 
