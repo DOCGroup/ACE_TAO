@@ -3,8 +3,8 @@
 
 // ***** This configuration file is still under testing. *****
 
-// The following configuration file is designed to work for FreeBSD
-// platforms using GNU C++ but without the POSIX (pthread) threads package
+// The following configuration file is designed to work for NetBSD
+// platforms using GNU C++ 
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
