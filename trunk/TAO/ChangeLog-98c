@@ -4,6 +4,9 @@ Mon Oct 05 13:52:17 1998  David L. Levine  <levine@cs.wustl.edu>
           DynStruct_i.cpp,DynUnion_i.cpp,DynUnion_i_T.cpp:
           added ACE_LACKS_LONG_LONG_T support.
 
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp (print_priority_info):
+          use ACE_OS::getpid () instead of getpid ().
+
 Mon Oct  5 11:28:02 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
