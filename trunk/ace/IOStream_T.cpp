@@ -8,7 +8,7 @@
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION) && defined (__GNUG__)
-# if ! defined (ACE_IOSTREAM_T_H)
+# if !defined (ACE_IOSTREAM_T_H)
     // _Only_ define this when compiling this .cpp file standalone, not
     // when instantiating templates.  Its purpose is to provide something
     // for global constructors and destructors to be tied to.  Without it,
@@ -116,9 +116,11 @@ ACE_IOStream<STREAM>::operator>> (ACE_IOStream_String &v)
   if (ipfx0 ())
     {
       char c;
-      iostream::operator>> (c);
+      this->get (c);
 
-      for (v = c; this->get (c) && !isspace (c); v += c)
+      for (v = c; 
+           this->get (c) && !isspace (c);
+           v += c)
 	continue;
     }
 
@@ -144,6 +146,7 @@ ACE_IOStream<STREAM>::operator<< (ACE_IOStream_String &v)
 
   return *this;
 }
+
 // A more clever put operator for strings that knows how to deal with
 // quoted strings containing back-quoted quotes.
 

@@ -1,13 +1,14 @@
+Mon Nov 17 02:03:21 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/IOStream_T.cpp: Added a few more fixes for KCC C++ and its
+ 	  standard C++ library support.
+
 Mon Nov 17 01:34:34 1997    <nw1@COYOTE>
 
 	* netsvcs/servers/main.cpp (main): Removed daemon and changed to
  	  use the singleton service configurator.  Thanks to John Mulhern
 	  and Stephen Coy for tracing this down and Irfan for coming out
 	  with the fix. 
-
-Mon Nov 17 00:59:15 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-
-        * ACE version 4.3.49, released Mon Nov 17 00:59:15 1997.
 
 Sun Nov 16 21:58:51 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
