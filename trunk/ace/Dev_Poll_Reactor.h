@@ -925,12 +925,18 @@ public:
 
   /// GET/SET/ADD/CLR the dispatch mask "bit" bound with the
   /// event_handler and mask.
+  /**
+   * @return Old mask on success, -1 on error.
+   */
   virtual int mask_ops (ACE_Event_Handler *event_handler,
                         ACE_Reactor_Mask mask,
                         int ops);
 
   /// GET/SET/ADD/CLR the dispatch MASK "bit" bound with the handle
   /// and mask.
+  /**
+   * @return Old mask on success, -1 on error.
+   */
   virtual int mask_ops (ACE_HANDLE handle,
                         ACE_Reactor_Mask mask,
                         int ops);
@@ -1021,6 +1027,9 @@ protected:
 
   /// GET/SET/ADD/CLR the dispatch MASK "bit" bound with the handle
   /// and mask.  This internal helper method acquires no lock.
+  /**
+   * @return Old mask on success, -1 on error.
+   */
   int mask_ops_i (ACE_HANDLE handle,
                   ACE_Reactor_Mask mask,
                   int ops);
