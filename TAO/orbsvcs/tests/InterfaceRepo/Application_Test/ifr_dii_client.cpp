@@ -194,16 +194,16 @@ IFR_DII_Client::get_operation_def (TAO_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   CORBA::ULong n_operations = operations->length ();
-  CORBA::String_var op_name;
+  CORBA::String_var operation_name;
 
   // The length is 1 in this case, but in general, it could
   // be any length.
   for (CORBA::ULong i = 0; i < n_operations; ++i)
     {
-      op_name = operations[i]->name (TAO_ENV_SINGLE_ARG_PARAMETER);
+      operation_name = operations[i]->name (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-      if (!ACE_OS::strcmp (op_name.in (), this->op_name.in ()))
+      if (!ACE_OS::strcmp (operation_name.in (), this->op_name.in ()))
         {
           this->op_ =
             CORBA::OperationDef::_narrow (operations[i].in ()
