@@ -510,7 +510,7 @@ public:
 
   // = Initialization methods.
 
-  ACE_Time_Value ();
+  ACE_Time_Value (void);
   // Default Constructor.
 
   ACE_Time_Value (long sec, long usec = 0);
@@ -526,7 +526,7 @@ public:
   ACE_Time_Value (const ACE_Time_Value &tv);
   // Copy constructor.
 
-#if defined(ACE_WIN32)
+#if defined (ACE_WIN32)
   ACE_Time_Value (const FILETIME &ft);
   //  Initializes the ACE_Time_Value object from a Win32 FILETIME
 #endif
