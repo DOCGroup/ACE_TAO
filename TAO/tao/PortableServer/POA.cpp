@@ -69,6 +69,7 @@ public:
     ACE_THROW_SPEC (())
     {
       this->orb_->shutdown (0, ACE_TRY_ENV);
+      ACE_CHECK;
     }
 private:
   CORBA::ORB_ptr orb_;

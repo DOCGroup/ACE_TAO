@@ -1,3 +1,7 @@
+Wed Mar 28 21:40:36 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/PortableServer/POA.cpp (ServerObject_i): Added ACE_CHECK;
+
 Wed Mar 28 20:16:32 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
@@ -9,21 +13,21 @@ Wed Mar 28 20:16:32 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
 Wed Mar 28 17:24:57 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
 
 	* orbsvcs/tests/ImplRepo/NameService/Makefile : Added
-	libTAO_PortableServer and libTAO_IORTable to LinkList to make QNX
-	happy. Thanks to Thomas Groth <groth.th@nord-com.net> for the 
-    suggestion.
+	  libTAO_PortableServer and libTAO_IORTable to LinkList to make
+	  QNX happy. Thanks to Thomas Groth <groth.th@nord-com.net> for
+	  the suggestion.
 
 Wed Mar 28 17:12:06 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
 
 	* orbsvcs/examples/Log/test/Makefile : Added libTAO_DynamicAny and
-	libTAO_IORTable to LinkList to make QNX happy. Thanks to Thomas 
-    Groth <groth.th@nord-com.net> for the suggestion.
+	  libTAO_IORTable to LinkList to make QNX happy. Thanks to Thomas 
+          Groth <groth.th@nord-com.net> for the suggestion.
 
 Wed Mar 28 16:54:47 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
 
 	* orbsvcs/examples/Log/Client/Makefile: Added libTAO_DynamicAny to
-	LinkList to make QNX happy. Thanks to Thomas Groth 
-    <groth.th@nord-com.net> for the suggestion.
+	  LinkList to make QNX happy. Thanks to Thomas Groth 
+          <groth.th@nord-com.net> for the suggestion.
 
 Wed Mar 28 16:51:01 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -447,6 +451,12 @@ Tue Mar 27 14:20:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Changed
           all the occurences of TAO_orbdebug to TAO_debug_level. That
           should hopefully fix the DLL Core builds.
+
+Tue Mar 27 12:46:46 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp:
+	* orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.cpp:
+	  Receivers are stored in the map with their flownames.
 
 Tue Mar 27 08:15:34 2001  Carlos O'Ryan  <coryan@uci.edu>
 
