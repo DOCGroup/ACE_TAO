@@ -5,6 +5,7 @@
 int         ACE_ROA::end_reactor_event_loop_ = 0;
 ACE_Reactor ACE_ROA::theReactor;
 int         ACE_ROA::usingThreads_ = 0;
+unsigned int ACE_ROA::theThreadFlags = THR_NEW_LWP;
 void*       ACE_ROA::context_p = 0;
 ACE_ROA::UpcallFunc ACE_ROA::theUpcall = 0;
 ACE_ROA::ForwardFunc ACE_ROA::theForwarder = 0;
@@ -21,6 +22,12 @@ ROA_Handler::open(void*)
 
   if (this->peer().get_remote_addr(addr) == -1)
     return -1;
+
+  if (ACE_ROA::usingThreads())
+    {
+      if (activate(ACE_ROA::threadFlags()) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "ROA_Handler unable to spawn a thread: %p\n", "spawn"), -1);
+    }
   else
     {
       if (ACE_ROA::reactor()->register_handler(this, ACE_Event_Handler::READ_MASK) == -1)
@@ -37,6 +44,19 @@ ROA_Handler::open(void*)
 int
 ROA_Handler::handle_close(ACE_HANDLE fd, ACE_Reactor_Mask rm)
 {
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) ROA_Handler::handle_close(%d,%d)\n", fd, rm));
+  return 0;
+}
+
+int
+ROA_Handler::svc()
+{
+  int result = 0;
+
+  while ((result = handle_input()) > 0)
+    ;
+
+  return result;
 }
 
 int
@@ -72,6 +92,7 @@ ROA_Handler::handle_input(ACE_HANDLE fd)
     dexc (env, "ROA_Handler, handle incoming message");
     env.clear ();
   }
+  return 1;
 }
 
 #if ! defined(__ACE_INLINE__)

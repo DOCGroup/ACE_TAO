@@ -1,3 +1,23 @@
+Wed Apr  9 15:43:37 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* svr.cpp: The -p option is gone, and -e takes its place and is
+ 	required.  This requires the user to specify not only the port
+ 	number, but also the IP address of on which the server should
+ 	listen for requests.  See ACE_INET_Addr documentation for valid
+ 	string formats for addresses.  Also, the -t option sets the "use
+ 	threads" global.
+
+	* orbconf.hh: Hopefully resolved the tension between MS and Unix
+ 	platforms in inferring endian-ness of the target platform based on
+ 	preprocessor defines.  We now check for i386, _M_X86, and vax
+ 	(yeah, like we really worry about that, but it's easy to do).
+
+	* roa.{hh,i,cpp}: Added support for spawning threads to handle
+ 	incoming requests.  This involves a state flag for whether or not
+ 	to use threads, calling activate() in ROA_Handler::open() if that
+ 	flag is set, and creating ROA_Handler::svc() that simply loops
+ 	calling handle_input().
+	
 Tue Apr  8 11:14:57 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* IIOP/test/svr.cpp: Moved setting of upcall(), forwarder(),
