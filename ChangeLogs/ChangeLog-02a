@@ -1,3 +1,9 @@
+Mon Feb 21 08:35:58 2000  Chad Elliott  <elliott_c@ociweb.com>
+
+	* ace/config-hpux-11.00.h
+	  Corrected a build problem with KCC.  Things were lost in the
+	  transition to the new header file.
+
 Sun Feb 20 18:31:46 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace: Removed ACED.cpp and ACER.cpp.  These were only
