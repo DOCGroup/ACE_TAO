@@ -23,7 +23,7 @@
 #include "debug.h"
 #include "Valuetype_Adapter.h"
 #include "ORB_Core.h"
-#include "Typecode.h"
+#include "TypeCode.h"
 #include "Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"
 #include "SystemException.h"
@@ -44,7 +44,10 @@ TAO_Marshal_Primitive::skip (CORBA::TypeCode_ptr  tc,
   // Status of skip operation.
   TAO::traverse_status retval = TAO::TRAVERSE_CONTINUE;
 
-  switch (tc->kind_)
+  CORBA::TCKind const k = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP)
+
+  switch (k)
     {
     case CORBA::tk_null:
     case CORBA::tk_void:
@@ -132,7 +135,7 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
       // Typecodes with empty parameter lists all have preallocated
       // constants.  We use those to reduce memory consumption and
       // heap access ... also, to speed things up!
-      if ((kind < CORBA::TC_KIND_COUNT) ||
+      if ((kind < CORBA::TAO_TC_KIND_COUNT) ||
           (kind == ~0u))
         {
           // Either a non-constant typecode or an indirected typecode.
@@ -507,8 +510,8 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
               {
                 TAO::Unknown_IDL_Type *unk =
                   dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-                  
-                // We don't want unk's rd_ptr to move, in case 
+
+                // We don't want unk's rd_ptr to move, in case
                 // we are shared by another Any, so we use this
                 // to copy the state, not the buffer.
                 TAO_InputCDR for_reading (unk->_tao_get_cdr ());

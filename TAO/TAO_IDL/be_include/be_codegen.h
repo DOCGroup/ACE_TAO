@@ -384,6 +384,7 @@ private:
   void gen_cond_file_include (bool condition_green,
                               const char *filepath,
                               TAO_OutStream *stream);
+  void gen_typecode_includes (TAO_OutStream * stream);
 
 private:
   TAO_OutStream *client_header_;

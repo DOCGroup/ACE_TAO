@@ -9,7 +9,6 @@ ACE_RCSID (tao,
 #include "ORB_Table.h"
 #include "Connector_Registry.h"
 #include "IOR_Parser.h"
-#include "Typecode_Constants.h"
 #include "Stub.h"
 #include "ORB_Core.h"
 #include "TAO_Internal.h"
@@ -1304,7 +1303,7 @@ TAO::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   // initialize the system TypeCodes
-  TAO::TypeCode_Constants::init ();
+//   TAO::TypeCode_Constants::init ();
 
   // initialize the system exceptions
   TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_PARAMETER);

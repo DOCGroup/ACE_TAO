@@ -223,8 +223,8 @@ be_valuetype::determine_factory_style (void)
       // Initialize an iterator to iterate thru our scope
       // Continue until each element is visited.
       for (UTL_ScopeActiveIterator si (this,
-                                       UTL_Scope::IK_decls); 
-           !si.is_done (); 
+                                       UTL_Scope::IK_decls);
+           !si.is_done ();
            si.next())
         {
           AST_Decl *d = si.item ();
@@ -284,8 +284,8 @@ be_valuetype::have_operation (void)
       // Initialize an iterator to iterate thru our scope
       // Continue until each element is checked.
       for (UTL_ScopeActiveIterator si (this,
-                                       UTL_Scope::IK_decls); 
-           !si.is_done (); 
+                                       UTL_Scope::IK_decls);
+           !si.is_done ();
            si.next())
         {
           AST_Decl *d = si.item ();
@@ -340,7 +340,7 @@ be_valuetype::have_operation (void)
 
           if (intf != 0)
             {
-	            have_operation = be_valuetype::have_supported_op (intf);
+                    have_operation = be_valuetype::have_supported_op (intf);
             }
         }
     }
@@ -352,39 +352,38 @@ idl_bool
 be_valuetype::have_supported_op (be_interface * node)
 {
 
-	idl_bool have_supported_op = 0;
+  idl_bool have_supported_op = 0;
 
   if (node->nmembers () == 0)
     {
       return I_FALSE;
     }
 
-	// Initialize an iterator for supported interface elements
-	for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls); 
+  // Initialize an iterator for supported interface elements
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        si.is_done ();
        si.next())
-		{
-			AST_Decl *d = si.item ();
+    {
+      AST_Decl *d = si.item ();
 
-			if (!d)
-				{
-					ACE_ERROR_RETURN ((LM_ERROR,
-						                 "(%N:%l) be_valuetype::"
-							               "have_supported_op"
-								             "bad node in this scope\n"),
-										          0);
+      if (!d)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_valuetype::"
+                             "have_supported_op"
+                             "bad node in this scope\n"),
+                            0);
+        }
 
-				}
-
-			AST_Decl::NodeType nt = d->node_type ();
+      AST_Decl::NodeType nt = d->node_type ();
 
       // Check the type of each element in the supported interface
-			if (nt == AST_Decl::NT_op || nt == AST_Decl::NT_attr)
-				{
-					have_supported_op = 1;
-					break;
-				}
-		} // end for loop
+      if (nt == AST_Decl::NT_op || nt == AST_Decl::NT_attr)
+        {
+          have_supported_op = 1;
+          break;
+        }
+    } // end for loop
 
   if (! have_supported_op)
     {
@@ -628,7 +627,7 @@ idl_bool
 be_valuetype::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 {
   list.enqueue_tail (this);
-        
+
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next())

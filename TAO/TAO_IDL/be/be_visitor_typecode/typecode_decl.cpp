@@ -46,9 +46,9 @@ be_visitor_typecode_decl::visit_type (be_type *node)
   if (node->is_nested ())
     {
       // We have a scoped name.
-      // Is our enclosing scope a module? We need this check because for
-      // platforms that support namespaces, the typecode must be declared
-      // extern.
+      // Is our enclosing scope a module? We need this check because
+      // for platforms that support namespaces, the TypeCode must be
+      // declared extern.
       if (node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
         {
           *os << "TAO_NAMESPACE_STORAGE_CLASS ";

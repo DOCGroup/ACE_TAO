@@ -4,7 +4,7 @@
 #include "Marshal.h"
 #include "CORBA_String.h"
 #include "SystemException.h"
-#include "Typecode.h"
+#include "TypeCode.h"
 
 
 #include "ace/Guard_T.h"

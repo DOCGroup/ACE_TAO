@@ -42,8 +42,8 @@ be_string::be_string (void)
 }
 
 be_string::be_string (AST_Decl::NodeType nt,
-                      UTL_ScopedName *n,
-                      AST_Expression *v,
+                      UTL_ScopedName * n,
+                      AST_Expression * v,
                       long width)
   : COMMON_Base (),
     AST_Decl (nt,
@@ -67,18 +67,62 @@ be_string::be_string (AST_Decl::NodeType nt,
 void
 be_string::compute_tc_name (void)
 {
-  // Start with the head as the CORBA namespace.
-  Identifier *corba_id = 0;
-  ACE_NEW (corba_id,
-           Identifier ("CORBA"));
+  Identifier * id = 0;
 
-  ACE_NEW (this->tc_name_,
-           UTL_ScopedName (corba_id,
-                           0));
+  AST_Expression zero (static_cast<unsigned long> (0));
 
-  Identifier *id = 0;
-  ACE_NEW (id,
-           Identifier ("_tc_string"));
+  if (*this->max_size () == &zero)
+    {
+      // If the string is unbounded, use the string TypeCode
+      // constants.
+
+      // Start with the head as the CORBA namespace.
+      Identifier * corba_id = 0;
+      ACE_NEW (corba_id,
+               Identifier ("CORBA"));
+
+      ACE_NEW (this->tc_name_,
+               UTL_ScopedName (corba_id,
+                               0));
+
+      ACE_NEW (id,
+               Identifier (this->width () == 1
+                           ? "_tc_string"
+                           : "_tc_wstring"));
+    }
+  else
+    {
+      // We have a bounded string.  Generate a TypeCode name that is
+      // meant for internal use alone.
+
+//       Identifier * tao_id = 0;
+//       ACE_NEW (tao_id,
+//                Identifier ("TAO"));
+
+      Identifier * tao_id = 0;
+      ACE_NEW (tao_id,
+               Identifier (""));
+
+      ACE_NEW (this->tc_name_,
+               UTL_ScopedName (tao_id,
+                               0));
+
+//       char bound[30] = { 0 };
+
+//       ACE_OS::sprintf (bound,
+//                        "_%u",
+//                        this->max_size ()->ev ()->u.ulval);
+
+//       ACE_CString local_tc_name =
+//         ACE_CString (this->width () == 1
+//                      ? "_tc_string"
+//                      : "_tc_wstring")
+//         + ACE_CString (bound);
+
+      ACE_NEW (id,
+               Identifier (this->flat_name ()));
+
+    }
 
   UTL_ScopedName *conc_name = 0;
   ACE_NEW (conc_name,
@@ -89,7 +133,7 @@ be_string::compute_tc_name (void)
 }
 
 int
-be_string::accept (be_visitor *visitor)
+be_string::accept (be_visitor * visitor)
 {
   return visitor->visit_string (this);
 }

@@ -7,7 +7,7 @@
 #include "tao/Any_Unknown_IDL_Type.h"
 #include "tao/Marshal.h"
 #include "tao/Environment.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 
 #include "ace/CORBA_macros.h"
 
@@ -47,36 +47,36 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::insert (CORBA::Any & any,
                                                   CORBA::ULong bound
   )
 {
-  CORBA::TypeCode_ptr bounded_tc = CORBA::TypeCode::_nil ();
+//   CORBA::TypeCode_ptr bounded_tc = CORBA::TypeCode::_nil ();
 
-  if (bound > 0)
-    {
-      CORBA::TCKind kind = static_cast<CORBA::TCKind> (tc->kind_);
-      CORBA::Long _oc_buffer [] =
-        {
-          TAO_ENCAP_BYTE_ORDER,
-          static_cast<CORBA::Long> (bound)
-        };
+//   if (bound > 0)
+//     {
+//       CORBA::TCKind kind = static_cast<CORBA::TCKind> (tc->kind_);
+//       static CORBA::Long _oc_buffer [] =
+//         {
+//           TAO_ENCAP_BYTE_ORDER,
+//           static_cast<CORBA::Long> (bound)
+//         };
 
-      ACE_NEW (bounded_tc,
-               CORBA::TypeCode (kind,
-                                sizeof _oc_buffer,
-                                (char *) &_oc_buffer,
-                                1,
-                                0));
-    }
-  else
-    {
-      bounded_tc = CORBA::TypeCode::_duplicate (tc);
-    }
+//       ACE_NEW (bounded_tc,
+//                CORBA::TypeCode (kind,
+//                                 sizeof _oc_buffer,
+//                                 (char *) &_oc_buffer,
+//                                 1,
+//                                 0));
+//     }
+//   else
+//     {
+//       bounded_tc = CORBA::TypeCode::_duplicate (tc);
+//     }
 
-  Any_Special_Impl_T<T, from_T, to_T> *new_impl = 0;
+  Any_Special_Impl_T<T, from_T, to_T> * new_impl = 0;
   ACE_NEW (new_impl,
            Any_Special_Impl_T (destructor,
-                               bounded_tc,
+                               /* bounded_ */ tc,
                                value,
                                bound));
-  CORBA::release (bounded_tc);
+//   CORBA::release (bounded_tc);
   any.replace (new_impl);
 }
 
@@ -95,7 +95,8 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
     {
       CORBA::TypeCode_ptr any_type = any._tao_get_typecode ();
       CORBA::TypeCode_var unaliased_any_type =
-        any_type->unalias (ACE_ENV_SINGLE_ARG_PARAMETER);
+        TAO::unaliased_typecode (any_type
+                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::TCKind any_kind =

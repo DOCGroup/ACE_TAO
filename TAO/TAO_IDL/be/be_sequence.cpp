@@ -697,6 +697,48 @@ be_sequence::field_node (be_field *node)
   this->field_node_ = node;
 }
 
+// Overriden method.
+void
+be_sequence::compute_tc_name (void)
+{
+  // Sequence TypeCodes can only be accessed through an alias
+  // TypeCode.  Generate a TypeCode name that is meant for internal
+  // use alone.
+
+//   Identifier * tao_id = 0;
+//   ACE_NEW (tao_id,
+//            Identifier ("TAO"));
+
+  Identifier * tao_id = 0;
+  ACE_NEW (tao_id,
+           Identifier (""));
+
+  ACE_NEW (this->tc_name_,
+           UTL_ScopedName (tao_id,
+                           0));
+
+  char bound[30] = { 0 };
+
+  ACE_OS::sprintf (bound,
+                   "_%u",
+                   this->max_size ()->ev ()->u.ulval);
+
+  ACE_CString local_tc_name =
+    ACE_CString (this->flat_name ())
+    + ACE_CString (bound);
+
+  Identifier * id = 0;
+  ACE_NEW (id,
+           Identifier (local_tc_name.c_str ()));
+
+  UTL_ScopedName * conc_name = 0;
+  ACE_NEW (conc_name,
+           UTL_ScopedName (id,
+                           0));
+
+  this->tc_name_->nconc (conc_name);
+}
+
 const char *
 be_sequence::smart_fwd_helper_name (AST_Decl *ctx_scope,
                                     be_type *elem)

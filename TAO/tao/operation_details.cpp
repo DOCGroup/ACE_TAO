@@ -1,7 +1,7 @@
 //$Id$
 #include "operation_details.h"
 #include "Stub.h"
-#include "Typecode.h"
+#include "TypeCode.h"
 #include "ORB_Constants.h"
 #include "DynamicC.h"
 #include "Exception_Data.h"
