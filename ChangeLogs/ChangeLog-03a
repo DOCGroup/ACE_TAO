@@ -1,5 +1,15 @@
 Tue Dec 19 15:08:40 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/Logging_Strategy.cpp: If ACE_LACKS_IOSTREAM_TOTALLY we'll
+	  use a "regular" file.  Thanks to Sangwoo Jin for contributing
+ 	  this fix.
+
+	* ace/Mem_Map.cpp (map_it): In using ACE_Mem_Map, if the
+	  ACE_Mam_Map::map's <offset> parameter is set to non-zero and the
+ 	  <len> parameter is set to -1 then the right value to map should
+ 	  be <mapped file size> - offset.  Thanks to Sangwoo Jin for
+ 	  reporting this and suggesting the fix!
+
 	* ace/INET_Addr.{h,i}: Make operator < const.  Thanks to
 	  Michael Lindner <mikel@att.net> for reporting this.
 
