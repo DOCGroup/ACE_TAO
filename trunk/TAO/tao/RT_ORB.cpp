@@ -99,9 +99,7 @@ TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr mutex,
   const char *name = tao_mutex->name ();
   if (name != 0)
     {
-      //
       // The following should be atomic.
-      //
       ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
                           monitor,
                           this->lock_,
@@ -112,9 +110,7 @@ TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr mutex,
         this->map_.unbind (name);
 
       if (result != 0)
-        {
-          ACE_THROW (CORBA::INTERNAL ());
-        }
+        ACE_THROW (CORBA::INTERNAL ());
     }
 }
 
@@ -124,9 +120,7 @@ TAO_Named_RT_Mutex_Manager::create_named_mutex (const char *name,
                                                 CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  //
   // The following should be atomic.
-  //
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
                       monitor,
                       this->lock_,
@@ -164,10 +158,8 @@ TAO_Named_RT_Mutex_Manager::create_named_mutex (const char *name,
                          mutex);
 
       if (result != 0)
-        {
-          ACE_THROW_RETURN (CORBA::INTERNAL (),
-                            RTCORBA::Mutex::_nil ());
-        }
+        ACE_THROW_RETURN (CORBA::INTERNAL (),
+                          RTCORBA::Mutex::_nil ());
     }
 
   // Return the one we found or created.
@@ -180,9 +172,7 @@ TAO_Named_RT_Mutex_Manager::open_named_mutex (const char *name,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RTCORBA::RTORB::MutexNotFound))
 {
-  //
   // The following should be atomic.
-  //
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
                       monitor,
                       this->lock_,
@@ -193,10 +183,8 @@ TAO_Named_RT_Mutex_Manager::open_named_mutex (const char *name,
   RTCORBA::Mutex_var mutex;
   if (this->map_.find (name,
                        mutex) != 0)
-    {
-      ACE_THROW_RETURN (RTCORBA::RTORB::MutexNotFound (),
-                        RTCORBA::Mutex::_nil ());
-    }
+    ACE_THROW_RETURN (RTCORBA::RTORB::MutexNotFound (),
+                      RTCORBA::Mutex::_nil ());
 
   // Return the one we found.
   return mutex._retn ();

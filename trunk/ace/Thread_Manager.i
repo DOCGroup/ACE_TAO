@@ -122,7 +122,7 @@ ACE_Thread_Descriptor_Base::operator!=(const ACE_Thread_Descriptor_Base &rhs) co
 }
 
 ACE_INLINE ACE_Task_Base *
-ACE_Thread_Descriptor_Base::task (void)
+ACE_Thread_Descriptor_Base::task (void) const
 {
   ACE_TRACE ("ACE_Thread_Descriptor_Base::task");
   return this->task_;
@@ -131,7 +131,7 @@ ACE_Thread_Descriptor_Base::task (void)
 // Group ID.
 
 ACE_INLINE int
-ACE_Thread_Descriptor_Base::grp_id (void)
+ACE_Thread_Descriptor_Base::grp_id (void) const
 {
   ACE_TRACE ("ACE_Thread_Descriptor_Base::grp_id");
   return grp_id_;
@@ -139,7 +139,7 @@ ACE_Thread_Descriptor_Base::grp_id (void)
 
 // Current state of the thread.
 ACE_INLINE ACE_UINT32
-ACE_Thread_Descriptor_Base::state (void)
+ACE_Thread_Descriptor_Base::state (void) const
 {
   ACE_TRACE ("ACE_Thread_Descriptor_Base::state");
   return thr_state_;
@@ -160,7 +160,7 @@ ACE_Thread_Descriptor_Base::reset (void)
 
 // Unique thread id.
 ACE_INLINE ACE_thread_t
-ACE_Thread_Descriptor::self (void)
+ACE_Thread_Descriptor::self (void) const
 {
   ACE_TRACE ("ACE_Thread_Descriptor::self");
   return this->thr_id_;
@@ -194,7 +194,7 @@ ACE_Thread_Descriptor::set_next (ACE_Thread_Descriptor *td)
 
 // Get the <next_> pointer
 ACE_INLINE ACE_Thread_Descriptor *
-ACE_Thread_Descriptor::get_next (void)
+ACE_Thread_Descriptor::get_next (void) const
 {
   ACE_TRACE ("ACE_Thread_Descriptor::get_next");
   return ACE_static_cast (ACE_Thread_Descriptor *, this->next_);

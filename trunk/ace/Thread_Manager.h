@@ -181,14 +181,14 @@ public:
   int operator!= (const ACE_Thread_Descriptor_Base &rhs) const;
 
   /// Group ID.
-  int grp_id (void);
+  int grp_id (void) const;
 
   /// Current state of the thread.
-  ACE_UINT32 state (void);
-
+  ACE_UINT32 state (void) const;
+ 
   /// Return the pointer to an <ACE_Task_Base> or NULL if there's no
   /// <ACE_Task_Base> associated with this thread.;
-  ACE_Task_Base *task (void);
+  ACE_Task_Base *task (void) const; 
 
 protected:
   /// Reset this base thread descriptor.
@@ -236,7 +236,7 @@ public:
 
   // = Accessor methods.
   /// Unique thread id.
-  ACE_thread_t self (void);
+  ACE_thread_t self (void) const;
 
   /// Unique handle to thread (used by Win32 and AIX).
   void self (ACE_hthread_t &);
@@ -299,7 +299,7 @@ public:
    * of g++ couldn't grok this code without it.
    */
   ACE_INLINE_FOR_GNUC void set_next (ACE_Thread_Descriptor *td);
-  ACE_INLINE_FOR_GNUC ACE_Thread_Descriptor *get_next (void);
+  ACE_INLINE_FOR_GNUC ACE_Thread_Descriptor *get_next (void) const;
 
 private:
   /// Reset this thread descriptor.
