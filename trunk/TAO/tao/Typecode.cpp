@@ -1919,7 +1919,9 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
       ACE_CHECK_RETURN (0);
 
       if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
-        return 0;
+        {
+          return 0;
+        }
 
       char* end = temp.rd_ptr ();
 
@@ -1933,17 +1935,49 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
                          ACE_Allocator::instance (),
                          ACE_Allocator::instance ());
 
-      retval =
-        TAO_Marshal_Object::perform_append (disc_tc,
-                                            &stream,
-                                            &out,
-                                            ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
-      if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
-        return 0;
+      CORBA::TypeCode_ptr label_tc;
+
+      // If we are computing the label for the default index,
+      // the label must contain an octet value of 0.
+      if (i == (ACE_static_cast (CORBA::ULong, this->private_default_index ())))
+        {
+          label_tc = CORBA::_tc_octet;
+
+          if (out.write_octet (ACE_static_cast (CORBA::Octet, 0)) == 0)
+            {
+              return 0;
+            }
+
+          retval =
+            TAO_Marshal_Object::perform_skip (disc_tc,
+                                              &stream,
+                                              ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+          if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
+            {
+              return 0;
+            }
+        }
+      else
+        {
+          label_tc = disc_tc;
+
+          retval =
+            TAO_Marshal_Object::perform_append (label_tc,
+                                                &stream,
+                                                &out,
+                                                ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+          if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
+            {
+              return 0;
+            }
+        }
 
       ACE_NEW_THROW_EX (label_list[i],
-                        CORBA::Any (disc_tc,
+                        CORBA::Any (label_tc,
                                     0,
                                     ACE_CDR_BYTE_ORDER,
                                     out.begin ()),
