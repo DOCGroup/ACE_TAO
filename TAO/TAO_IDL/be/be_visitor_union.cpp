@@ -673,7 +673,7 @@ be_visitor_union_discriminant_ch::visit_typedef (be_typedef *node)
                          "Bad primitive type\n"
                          ), -1);
     }
-
+  this->ctx_->alias (0);
   return 0;
 }
 
@@ -783,6 +783,7 @@ be_visitor_union_discriminant_ci::visit_typedef (be_typedef *node)
                          "Bad primitive type\n"
                          ), -1);
     }
+  this->ctx_->alias (0);
 
   return 0;
 }

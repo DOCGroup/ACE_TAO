@@ -687,7 +687,14 @@ int be_visitor_exception_ctor::visit_union (be_union *node)
 int be_visitor_exception_ctor::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
-  (void) node->primitive_base_type ()->accept (this);
+  if (node->primitive_base_type ()->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_exception_ctor::"
+                         "visit_typedef - "
+                         "accept on primitive type failed\n"),
+                        -1);
+    }
   this->ctx_->alias (0);
   return 0;
 }
@@ -962,5 +969,12 @@ int be_visitor_exception_ctor_assign::visit_union (be_union *)
 int be_visitor_exception_ctor_assign::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
-  return node->primitive_base_type ()->accept (this);
+  if (node->primitive_base_type ()->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_exception_ctor_assign::"
+                         "visit_typedef - "
+                         "accept on primitive type failed\n"),
+                        -1);
+    }
 }

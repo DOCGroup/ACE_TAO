@@ -495,6 +495,7 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
                              "failed to accept visitor\n"
                              ),  -1);
         }
+      this->ctx_->alias (0);
     }
   else
     {
@@ -870,6 +871,7 @@ be_visitor_typedef_ci::visit_typedef (be_typedef *node)
                              "bad primitive base type\n"
                              ),  -1);
         }
+      this->ctx_->alias (0);
     }
   else
     {
@@ -1088,6 +1090,7 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
                              "failed to accept visitor\n"
                              ),  -1);
         }
+      this->ctx_->alias (0);
     }
   else
     {
