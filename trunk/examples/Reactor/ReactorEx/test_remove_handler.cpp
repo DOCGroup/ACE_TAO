@@ -86,7 +86,7 @@ main (int argc, char *argv[])
 {
   int close_down = argc > 1 ? 1 : 0;
 
-  for (int i = 0; i < ACE_ReactorEx::MAX_SIZE; i++)
+  for (int i = 0; i < ACE_ReactorEx::DEFAULT_SIZE; i++)
     new Event_Handler (i, close_down);
 
   ACE_Service_Config::reactorEx ()->handle_events ();
