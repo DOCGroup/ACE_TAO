@@ -20,6 +20,15 @@ Collocation_Test::Collocation_Test (void)
   // no-op.
 }
 
+void
+Collocation_Test::shutdown (CORBA::Environment &ACE_TRY_ENV)
+{
+  this->root_poa_->destroy (1, 1, ACE_TRY_ENV);
+  ACE_CHECK;
+  this->orb_->destroy (ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
 int
 Collocation_Test::init (int argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 {

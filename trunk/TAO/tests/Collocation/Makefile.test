@@ -20,7 +20,7 @@ LDLIBS = -lCollocation_Test_Stub \
 
 SRC = Coll_Tester.cpp
 
-BIN = main
+BIN = Collocation
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
