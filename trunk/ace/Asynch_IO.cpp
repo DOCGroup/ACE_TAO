@@ -982,7 +982,6 @@ ACE_Asynch_Accept_Handler::handle_input (ACE_HANDLE fd)
 ACE_Asynch_Accept::ACE_Asynch_Accept (void)
   : accept_handler_ (0)
 {
-
 }
 #else /* Not ACE_HAS_AIO_CALLS */
 ACE_Asynch_Accept::ACE_Asynch_Accept (void)
@@ -1244,13 +1243,10 @@ class ACE_Export ACE_Asynch_Transmit_Handler : public ACE_Handler
   //     This is a helper class for implementing
   //     <ACE_Asynch_Transmit_File> in Unix systems.
 public:
-  ACE_Asynch_Transmit_Handler (ACE_Asynch_Transmit_File::Result *result,
-                               ACE_Proactor *proactor);
+  ACE_Asynch_Transmit_Handler (ACE_Asynch_Transmit_File::Result *result);
   // Constructor. Result pointer will have all the information to do
   // the file transmission (socket, file, application handler, bytes
-  // to write....)  and the the <proactor> pointer tells this class
-  // the <proactor> that is being used by the
-  // Asynch_Transmit_Operation and the application.
+  // to write).
 
   virtual ~ACE_Asynch_Transmit_Handler (void);
   // Destructor.
@@ -1272,11 +1268,7 @@ private:
   ACE_Asynch_Transmit_File::Result *result_;
   // The asynch result pointer made from the initial transmit file
   // request.
-
-  ACE_Proactor *proactor_;
-  // The Proactor that is being used by the application handler and
-  // so the Asynch_Transmit_File.
-
+  
   ACE_Asynch_Read_File rf_;
   // To read from the file to be transmitted.
 
@@ -1284,7 +1276,7 @@ private:
   // Write stream to write the header, trailer and the data.
 
   ACE_Message_Block *mb_;
-  // Message bloack used to do the txn.
+  // Message bloack used to do the transmission.
 
   enum ACT
   {
@@ -1306,24 +1298,18 @@ private:
 
   size_t bytes_transferred_;
   // Number of bytes transferred on the stream.
-
-  size_t transmit_file_done_;
-  // Flag to indicate that the transmitting is over.
 };
 
 // Constructor.
-ACE_Asynch_Transmit_Handler::ACE_Asynch_Transmit_Handler (ACE_Asynch_Transmit_File::Result *result,
-                                                          ACE_Proactor *proactor)
+ACE_Asynch_Transmit_Handler::ACE_Asynch_Transmit_Handler (ACE_Asynch_Transmit_File::Result *result)
   : result_ (result),
-    proactor_ (proactor),
     mb_ (0),
     header_act_ (this->HEADER_ACT),
     data_act_ (this->DATA_ACT),
     trailer_act_ (this->TRAILER_ACT),
     file_offset_ (result->offset ()),
     file_size_ (0),
-    bytes_transferred_ (0),
-    transmit_file_done_ (0)
+    bytes_transferred_ (0)
 {
   // Allocate memory for the message block.
   ACE_NEW (this->mb_,
@@ -1367,25 +1353,7 @@ ACE_Asynch_Transmit_Handler::transmit (void)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Asynch_Transmit_Handler:transmitting header:write_stream failed\n"),
                       -1);
-
-  // @@ We need to finish the transmitting, before returning to the
-  // user code. Otherwise <transmit> may not be atmoic. User's other
-  // <read> or <write> on the same socket might damage the order of
-  // the current file transmission.
-  int error = 0;
-  while (!error && !this->transmit_file_done_)
-    error = this->proactor_->handle_events ();
-
-  if (!error)
-    {
-      // No error, transmission done.
-      delete this;
-      return 0;
-    }
-  else
-    {
-      return -1;
-    }
+  return 0;
 }
 
 void
@@ -1399,18 +1367,27 @@ ACE_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_Stream:
     {
       ACE_ERROR ((LM_ERROR,
                   "Asynch_Transmit_File failed.\n"));
-
-      ACE_SEH_TRY
+      
+      // Check the success parameter.
+      if (result.success () == 0)
         {
-          this->result_->complete (this->bytes_transferred_,
-                                   0,      // Failure.
-                                   0,      // @@ Completion key.
-                                   0);     // @@ Error no.
-        }
-      ACE_SEH_FINALLY
-        {
-          // This is crucial to prevent memory leaks
-          delete this;
+          // Failure.
+          ACE_ERROR ((LM_ERROR,
+                      "Asynch_Transmit_File failed.\n"));
+          
+          ACE_SEH_TRY
+            {
+              this->result_->complete (this->bytes_transferred_,
+                                       0,      // Failure.
+                                       0,      // @@ Completion key.
+                                       0);     // @@ Error no.
+            }
+          ACE_SEH_FINALLY
+            {
+              // This is crucial to prevent memory leaks. This deletes
+              // the result pointer also.
+              delete this;
+            }
         }
     }
 
@@ -1441,8 +1418,8 @@ ACE_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_Stream:
       // always possible.
       return;
     }
-
-  // Not a partial write.
+  
+  // Not a partial write. A full write.
 
   // Check ACT to see what was sent.
   ACT act = *(ACT *) result.act ();
@@ -1451,7 +1428,8 @@ ACE_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_Stream:
     {
     case TRAILER_ACT:
       // If it is the "trailer" that is just sent, then transmit file
-      // is complete.
+      // is complete. 
+      // Call the application handler.
       ACE_SEH_TRY
         {
           this->result_->complete (this->bytes_transferred_,
@@ -1461,7 +1439,7 @@ ACE_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_Stream:
         }
       ACE_SEH_FINALLY
         {
-          transmit_file_done_ = 1;
+          delete this;
         }
       break;
 
@@ -1473,7 +1451,7 @@ ACE_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_Stream:
         ACE_ERROR ((LM_ERROR,
                     "Error:Asynch_Transmit_Handler:read_file couldnt be initiated\n"));
       break;
-
+      
     default:
       // @@ Handle this error.
       ACE_ERROR ((LM_ERROR,
@@ -1610,8 +1588,7 @@ ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
   ACE_Asynch_Transmit_Handler *transmit_handler = 0;
 
   ACE_NEW_RETURN (transmit_handler,
-                  ::ACE_Asynch_Transmit_Handler (result,
-                                                 this->proactor_),
+                  ::ACE_Asynch_Transmit_Handler (result),
                   -1);
 
   ssize_t return_val = transmit_handler->transmit ();
@@ -1932,14 +1909,6 @@ ACE_Handler::handle_write_file (const ACE_Asynch_Write_File::Result &result)
 {
   ACE_UNUSED_ARG (result);
 }
-
-/*
-void
-ACE_Handler::handle_notify (const ACE_Asynch_Notify::Result &result)
-{
-  ACE_UNUSED_ARG (result);
-}
-*/
 
 void
 ACE_Handler::handle_time_out (const ACE_Time_Value &tv,
