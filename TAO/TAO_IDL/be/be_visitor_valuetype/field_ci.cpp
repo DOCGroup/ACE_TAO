@@ -150,7 +150,7 @@ be_visitor_valuetype_field_ci::visit_predefined_type (be_predefined_type *)
 }
 
 int
-be_visitor_valuetype_field_ci::visit_sequence (be_sequence *node)
+be_visitor_valuetype_field_ci::visit_sequence (be_sequence *)
 {
   return 0;
 }
