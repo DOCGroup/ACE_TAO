@@ -1,3 +1,13 @@
+Mon Nov 25 18:20:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-hpux-11.00.h: Added #define ACE_SIZEOF_WCHAR _WCHAR_T
+          to get ACEXML to compile. ACEXML's usage of ACE_SIZEOF_WCHAR breaks
+          the previous allowance for ACE_SIZEOF_WCHAR to be sizeof (wchar_t)
+          because it uses ACE_SIZEOF_WCHAR in a math expression.
+
+        * examples/C++NPv2/Reactor_Logging_Server_Adapter.cpp: Added
+          #include "ace/INET_Addr.h" to build clean on HP-UX.
+
 Mon Nov 25 20:32:02 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/README:  Added ACE_LACKS_PERFECT_MULTICAST_FILTERING.
