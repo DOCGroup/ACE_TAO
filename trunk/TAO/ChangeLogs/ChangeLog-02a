@@ -82,23 +82,21 @@ Fri Aug 11 09:51:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
 	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
 
-	  Code generation from nested_scopes.idl in IDL_Test
-	  was producing errors when the AMI option (-GC) was
-	  used. Had to change some fully scoped names to local
-	  names for args to exception holder _var and _out
-	  constructors and assignment operators, as well as
-	  the _tao_unmarshal and tao_repository_id functions.
-	  Thanks to Johnny Willemsen <Johnny.Willemsen@meco.nl>
-	  for reporting these errors, which cropped up with the
-	  Borland and MSVC compilers.
+	  Code generation from nested_scopes.idl in IDL_Test was producing
+ 	  errors when the AMI option (-GC) was used. Had to change some
+ 	  fully scoped names to local names for args to exception holder
+ 	  _var and _out constructors and assignment operators, as well as
+ 	  the _tao_unmarshal and tao_repository_id functions.  Thanks to
+ 	  Johnny Willemsen <Johnny.Willemsen@meco.nl> for reporting these
+ 	  errors, which cropped up with the Borland and MSVC compilers.
 
 Fri Aug 11 08:12:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Exception.cpp:
 
-	  In the macros that generate Any operators for system
-	  exceptions, changed some ACE_CHECKs to ACE_TRY_CHECKs.
-	  This was caught by the g++ minimum CORBA build.
+	  In the macros that generate Any operators for system exceptions,
+ 	  changed some ACE_CHECKs to ACE_TRY_CHECKs.  This was caught by
+ 	  the g++ minimum CORBA build.
 
 Fri Aug 11 05:50:59 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -4461,15 +4459,14 @@ Thu Jun 15 16:23:55 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_interface.cpp:
 
-          In the _tao_QueryInterface() function, we had two cases
-          for generating the address of the ancestor's _narrow()
-          function - if the ancestor was defined in the root scope,
-          we used it's local name, and otherwise we used the
-          ACE_NESTED_CLASS macro. However, the macro doesn't work
-          when the ancestor is defined in a different scope from
-          that of the derived class. In this case, we now use the
-          fully scoped name. Thanks to Irfan for coming up with
-          this use case.
+          In the _tao_QueryInterface() function, we had two cases for
+ 	  generating the address of the ancestor's _narrow() function - if
+ 	  the ancestor was defined in the root scope, we used it's local
+ 	  name, and otherwise we used the ACE_NESTED_CLASS macro. However,
+ 	  the macro doesn't work when the ancestor is defined in a
+ 	  different scope from that of the derived class. In this case, we
+ 	  now use the fully scoped name. Thanks to Irfan for coming up
+ 	  with this use case.
 
 Thu Jun 15 12:44:55 2000  Ossama Othman  <ossama@uci.edu>
 
@@ -4847,11 +4844,11 @@ Fri Jun 09 21:38:12 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tao/POA.cpp (ObjectId_to_wstring): Carlos's change wasn't quite
           accurate since over-allocating can cause problems, e.g., id
-          contains A0B0; result will be "A0B0??\0?"; though it should be
-          "A0B0\0?".  This was fixed by only creating/using the extra
-          space when needed.  The need for the extra space was determined
-          by using % (modulus) rather than ceil().  Thanks for the help
-          Carlos.
+ 	  contains A0B0; result will be "A0B0??\0?"; though it should be
+ 	  "A0B0\0?".  This was fixed by only creating/using the extra
+ 	  space when needed.  The need for the extra space was determined
+ 	  by using % (modulus) rather than ceil().  Thanks for the help
+ 	  Carlos.
 
 Fri Jun  9 19:06:10 2000  Marina Spivak  <marina@cs.wustl.edu>
 
