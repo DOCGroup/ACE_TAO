@@ -37,6 +37,10 @@ ld < Basic_Types_Test
 write 2, "Basic_Types_Test ", 17
 ace_main; unld "Basic_Types_Test"
 
+ld < CDR_Test
+write 2, "CDR_Test ", 9
+ace_main; unld "CDR_Test"
+
 ld < Env_Value_Test
 write 2, "Env_Value_Test ", 15
 ace_main; unld "Env_Value_Test"
