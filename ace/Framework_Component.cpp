@@ -11,6 +11,9 @@
 
 ACE_RCSID(ace, Framework_Component, "$Id$")
 
+#undef ACE_TRACE
+#define ACE_TRACE(X) ACE_TRACE_IMPL(X)
+
 ACE_Framework_Component::~ACE_Framework_Component (void)
 {
   ACE_TRACE ("ACE_Framework_Component::~ACE_Framework_Component");
@@ -21,6 +24,8 @@ ACE_Framework_Component::~ACE_Framework_Component (void)
 /***************************************************************/
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Framework_Repository)
+
+sig_atomic_t ACE_Framework_Repository::shutting_down_ = 0;
 
 // Pointer to the Singleton instance.
 ACE_Framework_Repository *ACE_Framework_Repository::repository_ = 0;
@@ -43,8 +48,6 @@ ACE_Framework_Repository::open (int size)
                   -1);
 
   this->component_vector_ = temp;
-  //this->component_vector_ = ACE_const_cast (const ACE_Framework_Component **,
-  //                                          temp);
   this->total_size_ = size;
   return 0;
 }
@@ -54,6 +57,8 @@ ACE_Framework_Repository::close (void)
 {
   ACE_TRACE ("ACE_Framework_Repository::close");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+
+  this->shutting_down_ = 1;
 
   if (this->component_vector_ != 0)
     {
@@ -65,8 +70,9 @@ ACE_Framework_Repository::close (void)
               ACE_Framework_Component *s = ACE_const_cast (ACE_Framework_Component *,
                                                            this->component_vector_[i]);
 
-              --this->current_size_;
-              s->close_singleton ();
+              this->component_vector_[i] = 0;
+              if (s)
+                s->close_singleton ();
             }
         }
 
@@ -75,6 +81,7 @@ ACE_Framework_Repository::close (void)
       this->current_size_ = 0;
     }
 
+  //ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("AFR::close: end\n")));
   return 0;
 }
 
@@ -164,18 +171,30 @@ ACE_Framework_Repository::remove_component (const ACE_TCHAR *name)
 int
 ACE_Framework_Repository::remove_dll_components (const ACE_TCHAR *dll_name)
 {
-  ACE_TRACE ("ACE_Framework_Repository::register_component");
+  ACE_TRACE ("ACE_Framework_Repository::remove_dll_component");
+
+  if (this->shutting_down_)
+    return this->remove_dll_components_i (dll_name);
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+
+  return this->remove_dll_components_i (dll_name);
+}
+
+int
+ACE_Framework_Repository::remove_dll_components_i (const ACE_TCHAR *dll_name)
+{
+  ACE_TRACE ("ACE_Framework_Repository::remove_dll_components_i");
+
   int i;
   int retval = -1;
 
- ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("AFR::remove_dll_components ('%s')\n"), dll_name));
+  //ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("AFR::remove_dll_components ('%s')\n"), dll_name));
 
   for (i = 0; i < this->current_size_; i++)
     if (this->component_vector_[i] &&
         ACE_OS_String::strcmp (this->component_vector_[i]->dll_name_, dll_name) == 0)
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("AFR::remove_dll_c...()\n")));
+        //ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("AFR::remove_dll_c...()\n")));
         this->component_vector_[i]->close_singleton ();
         this->component_vector_[i] = 0;
         ++retval;
@@ -193,7 +212,7 @@ ACE_Framework_Repository::dump (void) const
 ACE_Framework_Repository::ACE_Framework_Repository (int size)
   : current_size_ (0)
 {
-  ACE_TRACE ("ACE_Framework_Repository::ctor");
+  ACE_TRACE ("ACE_Framework_Repository::ACE_Framework_Repository");
 
   if (this->open (size) == -1)
     ACE_ERROR ((LM_ERROR,

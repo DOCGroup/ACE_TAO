@@ -8,6 +8,26 @@ ACE_RCSID (tests,
            Framework_Component_DLL,
            "$Id$")
 
+
+Simple_Service::Simple_Service (void)
+{
+  FRAMEWORK_COMPONENT_DLL_TRACE ("Simple_Service::Simple_Service");
+}
+
+Simple_Service::~Simple_Service (void)
+{
+  FRAMEWORK_COMPONENT_DLL_TRACE ("Simple_Service::~Simple_Service");
+}
+
+const ACE_TCHAR *
+Simple_Service::dll_name (void) 
+{
+  FRAMEWORK_COMPONENT_DLL_TRACE ("Simple_Service::dll_name");
+  return 0;
+}
+
+/***************************************************************************/
+
 /// This is just a simple server that can be loaded via the ACE
 /// Service Configuration framework and uses the singleton that 
 /// also lives in this library.

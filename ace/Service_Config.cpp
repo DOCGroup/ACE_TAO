@@ -11,7 +11,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
-#include "ace/Framework_Component.h"
 
 #include "ace/Service_Config.h"
 #include "ace/XML_Svc_Conf.h"
@@ -129,8 +128,6 @@ ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
 
   // Initialize the Service Repository.
   ACE_Service_Repository::instance (size);
-
-  ACE_Framework_Repository::instance ();
 
   // Initialize the ACE_Reactor (the ACE_Reactor should be the same
   // size as the ACE_Service_Repository).
@@ -857,8 +854,6 @@ int
 ACE_Service_Config::close_singletons (void)
 {
   ACE_TRACE ("ACE_Service_Config::close_singletons");
-
-  ACE_Framework_Repository::close_singleton ();
 
 #if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
   ACE_Thread_Manager::close_singleton ();

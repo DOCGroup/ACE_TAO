@@ -11,14 +11,14 @@
 //    via the Service Configurator framework, this test uses that framework
 //    to load services from a dll that has a singleton based on ACE_DLL_Singleton.
 //    When the dll is finally ready to be unloaded, the singleton will be 
-//    automatically cleaned up just-in-time.//    
+//    automatically cleaned up just-in-time.
 //
 // = AUTHOR
 //    Don Hinton <dhinton@ieee.org>
 //
 // ============================================================================
 
-#include "Framework_Component_DLL.h"
+//#include "Framework_Component_DLL.h"
 #include "ace/Service_Config.h"
 #include "ace/ARGV.h"
 #include "tests/test_config.h"
@@ -36,20 +36,12 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   args.add (ACE_TEXT ("Framework_Component_Test"));
   args.add (ACE_TEXT ("-n"));
   args.add (ACE_TEXT ("-d"));
-  //args.add (ACE_TEXT ("-f"));
-  //args.add (ACE_TEXT ("Framework_Component_Test.conf"));
   args.add (ACE_TEXT ("-S"));
   args.add (ACE_TEXT ("\"dynamic Server_1 Service_Object * "
                       "Framework_Component_DLL:_make_Server_1() 'xxx' \""));
 
   // Load it, should load a dll.
   ACE_Service_Config::open (args.argc (), args.argv ());
-
-  // Now that the dll has been loaded, the singleton is available.
-  Simple_Service *ss = SS_SINGLETON::instance ();
-  ACE_DEBUG ((LM_DEBUG, 
-              ACE_TEXT ("Simple_Service lives in library: %s\n"),
-              ss->dll_name ()));
 
   // Now load another service from the same library.
   ACE_Service_Config::process_directive 
@@ -59,14 +51,12 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // And unload the first one, should *not* unload the dll.
   ACE_Service_Config::process_directive (ACE_TEXT ("remove Server_1"));  
 
-  // Make sure our singlton is still happy..
-  // This will blow up now that simple service is deleted when the first
-  // ACE_DLL is destoyed--that's why we need to ref count the dlls ourselves
-  //ACE_DEBUG ((LM_DEBUG, 
-  //            ACE_TEXT ("Simple_Service is still alive in library: %s\n"),
-  //            ss->dll_name ()));
-
-  ACE_Service_Config::close ();
+  // And unload the second service.  Since the ACE_DLL_Handle will no longer 
+  // have any references, the ACE_DLL_Manager will apply it's current unloading
+  // strategy and either call ACE_OS::dlclose() immediately, schedule a timeout 
+  // the the reactor to call dlclose() some time in the future, or keep the 
+  // dll loaded until program termination.
+  ACE_Service_Config::process_directive (ACE_TEXT ("remove Server_2"));  
 
   ACE_END_TEST;
   return 0;

@@ -6,7 +6,6 @@
 #endif /* ! ACE_LACKS_ACE_TOKEN */
 #if defined (ACE_LACKS_ACE_SVCCONF)
 #  include "ace/Thread_Manager.h"
-#  include "ace/Framework_Component.h"
 #else  /* ! ACE_LACKS_ACE_SVCCONF */
 #  include "ace/Service_Manager.h"
 #  include "ace/Service_Config.h"
@@ -17,6 +16,7 @@
 #include "ace/Synch.h"
 #include "ace/Malloc.h"
 #include "ace/Signal.h"
+#include "ace/Framework_Component.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ace/Object_Manager.i"
@@ -605,8 +605,6 @@ ACE_Object_Manager::fini (void)
 
 #if defined (ACE_LACKS_ACE_SVCCONF)
 
-      ACE_Framework_Repository::close_singleton ();
-
 #  if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
       ACE_Thread_Manager::close_singleton ();
 #  endif /* ! ACE_THREAD_MANAGER_LACKS_STATICS */
@@ -618,8 +616,6 @@ ACE_Object_Manager::fini (void)
       ACE_Service_Config::fini_svcs ();
 
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
-
-
 
       // Close the main thread's TSS, including its Log_Msg instance.
       ACE_OS::cleanup_tss (1 /* main thread */);
@@ -633,6 +629,10 @@ ACE_Object_Manager::fini (void)
       // all ACE library services and singletons.
       ACE_Service_Config::close ();
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
+
+      // This must come after closing ACE_Service_Config, since it will
+      // close down it's dlls--it manages ACE_DLL_Manager.
+      ACE_Framework_Repository::close_singleton ();
 
       // Close the ACE_Allocator.
       ACE_Allocator::close_singleton ();

@@ -1,3 +1,52 @@
+Thu May 23 17:39:02 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* tests/Framework_Component_Test.cpp:
+
+	  Removed singleton calls, since they didn't belong there.
+
+	* tests/Framework_Component_DLL.{h,cpp}:
+
+	  Moved the Simple_Service method definitions to cpp.	  
+	
+	* ace/Service_Object.cpp:  Removed temporary tracing definition.
+	
+	* ace/Service_Config.cpp:
+	* ace/Object_Manager.cpp:
+
+	  Removed the ACE_Framework_Repository calls from ACE_Service_Config, 
+	  and made ACE_Object_Manager always responsible for cleanup and moved
+	  the call to close_singleton() to after ACE_Service_Repository cleanup 
+	  since it is responsible for actually destroying singletons and 
+	  unloading dlls that might still be used during ACE_Service_Repository 
+	  cleanup.
+
+	* ace/Framework_Component.{h,cpp}:
+
+	  added shutting_down_ flag to help avoid self deadlocking on 
+	  shutdown.  Cleaned up problems in cleanup code.  
+
+	* ace/Parse_Node.{h,cpp}:
+
+	  Removed ACE_Location_Node::handle() method since it isn't,
+	  and can't be, used anymore.
+	
+	* ace/DLL.{h,cpp}:
+
+	  Removed all functionality and defered all calls to the new
+	  ACE_DLL_Manager and ACE_DLL_Handle classes below.  Also 
+	  removed the get/set_handle() methods since no longer make 
+	  sense--this may require creating a new class, ACE_DLL_Ex,
+	  and restoring the orginal ACE_DLL, but we'll try to get 
+	  away with this way if possible.
+	
+	* ace/DLL_Manager.{h,cpp}:
+	* ace/Makefile:
+
+	  Added new ACE_DLL_Handle and ACE_DLL_Manager classes (as
+	  well as the new files).  ACE_DLL_Handle basically includes
+	  most of the code and functionality of ACE_DLL, but is refcounted
+	  and managed by ACE_DLL_Manager.  And added files to Makefile.
+
 Mon May 20 09:39:32 UTC 2002  Don Hinton  <dhinton@ieee.org>
 	
 	* ace/Service_Object.{h,cpp}:

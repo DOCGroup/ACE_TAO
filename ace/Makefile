@@ -185,6 +185,7 @@ IPC_FILES = \
   MEM_Stream
 SVCCONF_FILES = \
   DLL \
+  DLL_Manager \
   Dynamic_Service_Base \
   Parse_Node \
   Service_Config \

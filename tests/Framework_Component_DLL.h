@@ -32,20 +32,11 @@
 class Framework_Component_DLL_Export Simple_Service
 {
 public:
-  Simple_Service (void)
-    {
-      FRAMEWORK_COMPONENT_DLL_TRACE ("Simple_Service::Simple_Service");
-    }
-  virtual ~Simple_Service (void)
-    {
-      FRAMEWORK_COMPONENT_DLL_TRACE ("Simple_Service::~Simple_Service");
-    }
+  Simple_Service (void);
 
-  virtual const ACE_TCHAR *dll_name (void) 
-    {
-      FRAMEWORK_COMPONENT_DLL_TRACE ("Simple_Service::dll_name");
-      return 0;
-    }
+  virtual ~Simple_Service (void);
+
+  virtual const ACE_TCHAR *dll_name (void);
 
 };
 
