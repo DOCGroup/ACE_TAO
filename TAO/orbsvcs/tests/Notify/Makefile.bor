@@ -7,6 +7,7 @@ DIRS = \
         lib \
         Basic \
         Blocking \
+        Discarding \
         Ordering \
         performance-tests
 
