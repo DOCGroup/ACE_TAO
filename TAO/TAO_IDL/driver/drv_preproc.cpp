@@ -354,17 +354,7 @@ DRV_pre_proc(char *myfile)
   // version the current process would exit if the pre-processor
   // returned with error.
 
-#if defined (ACE_WIN32)
-  // @@ TODO: This is currently a quick hack to allow removal of
-  //          temp file properly on Win32.  We should reimplement
-  //          ACE_OS::fopen using these lower level APIs to
-  //          emulate the behavior.
-  ACE_HANDLE h = ACE_OS::open (tmp_file,  O_RDONLY);
-  int fdx = _open_osfhandle ((long) h, _O_TEXT);
-  FILE *yyin = _fdopen (fdx, "r");
-#else
   FILE * yyin = ACE_OS::fopen(tmp_file, "r");
-#endif /* ACE_WIN32 */
   if (yyin == NULL) {
     cerr << idl_global->prog_name()
          << GTDEVEL(": Could not open cpp output file ")
