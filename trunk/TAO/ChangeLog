@@ -1,6 +1,6 @@
 Wed Aug 27 21:45:59 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Big_Oneways/Session.h: 
+	* tests/Big_Oneways/Session.h:
 	* tests/Big_Twoways/Session.h:
 
 	  Include "ace/Null_Barrier.h" in the single-threaded case to pull
@@ -22,7 +22,7 @@ Wed Aug 27 21:13:21 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/IFRService/Options.cpp:
 
-	  Include "ace/Null_Mutex.h" to pull ACE_Null_Mutex class
+	  Include "ace/Null_Mutex.h" to pull in ACE_Null_Mutex class
 	  declaration.
 
 Wed Aug 27 21:00:41 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
