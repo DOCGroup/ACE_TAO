@@ -1,3 +1,13 @@
+Tue Sep  5 10:51:53 2000  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.cpp
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.i
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.cpp
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.i
+
+          Moved some methods from inline to the .cpp.  This is a workaround
+          for the SunCC 4.2 Compiler patch level 104631-07.
+
 Mon Sep  4 22:18:16 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/Stub.cpp:
