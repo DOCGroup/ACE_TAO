@@ -26,7 +26,7 @@
 #include "CosNaming_i.h"
 #include "Ior_Multicast.h"
 
-class TAO_Naming_Server
+class TAO_ORBSVCS_Export TAO_Naming_Server
 {
   // = TITLE
   //    Defines a wrapper class which holds a Naming Context
