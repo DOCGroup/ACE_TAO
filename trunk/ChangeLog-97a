@@ -1,3 +1,13 @@
+Mon Jun  2 16:29:48 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* ace/Process.*:
+	  - Fixed ACE_Process::spawn to close descriptors after having
+	  been duped.
+	  - Fixed ACE_Process::spawn to exit () after an error is
+	  encountered in the child process, rather than returning.
+	  - Fixed ACE_Process_Options::set_handles to duplicate handles
+	  that are passed in, and then to close them in the destructor.
+
 Sun Jun 01 22:21:28 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* examples/Threads/tss1.cpp: made some globals non-static or
