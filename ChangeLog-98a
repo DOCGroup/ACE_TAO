@@ -13,6 +13,9 @@ Thu Dec 11 13:13:17 1997  David L. Levine  <levine@cs.wustl.edu>
         * examples/Reactor/Dgram/{CODgram,Dgram}.cpp (run_test): added
           return 0 at end so that the function always returns a value.
 
+        * include/makeinclude/platform_lynxos.GNU: added comment indicator
+          to comment describing POSTLINK.
+
 Wed Dec 10 23:57:00 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
         * ACE version 4.4.4, released Wed Dec 10 23:57:00 1997.
