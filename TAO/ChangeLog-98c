@@ -1,3 +1,8 @@
+Thu Mar 20 16:12:42 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+        * $TAO_ROOT/orbsvcs/tests/Simulator/Event_Supplier: 
+	  New Project and Workspace files for NT
+
 Fri Mar 20 11:53:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/NestedUpcall/client.cpp: Use EventHandler_vare.in() to
