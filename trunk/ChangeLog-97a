@@ -1,5 +1,9 @@
 Thu May 15 22:19:59 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* examples/ASX/Event_Server/Event_Server: Removed the THR_DETACHED
+	  flag from options so that we can wait on the threads
+	  correctly.
+
 	* ace/Stream_Modules.cpp: Changed the logic for determining when
  	  to compile the Stream_Modules.cpp code.  Now, we compile it
  	  unless ACE_LACKS_STREAM_MODULES is defined (i.e., we're on HP/UX
