@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Log_Record.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 // These need to go outside of the #ifdef to avoid problems with
@@ -28,13 +28,13 @@ public:
   // = TITLE
   //     Defines the structure of an ACE logging record.
 
-  enum 
+  enum
   {
     MAXLOGMSGLEN = ACE_MAXLOGMSGLEN,
-    // Maximum size of a logging message. 
+    // Maximum size of a logging message.
 
-    ALIGN_WORDB	 = 8,
-    // Most restrictive alignment. 
+    ALIGN_WORDB  = 8,
+    // Most restrictive alignment.
 
     VERBOSE_LEN = 128
     // Size used by verbose mode.
@@ -44,30 +44,30 @@ public:
 
   // = Initialization
   ACE_Log_Record (void);
-  ACE_Log_Record (ACE_Log_Priority lp, 
-		  long time_stamp,
-		  long pid);
+  ACE_Log_Record (ACE_Log_Priority lp,
+                  long time_stamp,
+                  long pid);
   // Create a <Log_Record> and set its priority, time stamp, and
   // process id.
-  ACE_Log_Record (ACE_Log_Priority lp, 
-		  const ACE_Time_Value &time_stamp,
-		  long pid);
+  ACE_Log_Record (ACE_Log_Priority lp,
+                  const ACE_Time_Value &time_stamp,
+                  long pid);
   // Create a <Log_Record> and set its priority, time stamp, and
   // process id.
 
   ~ACE_Log_Record (void);
   // Default dtor.
 
-#if !defined (ACE_HAS_WINCE)    // @@ Sould this be ACE_LACKS_IOSTREAM_TOTALLY?
-  int print (const ASYS_TCHAR host_name[], 
-	     u_long verbose_flag,
-	     FILE *fp = stderr);
+#if !defined (ACE_HAS_WINCE) /* @@ Sould this be ACE_LACKS_IOSTREAM_TOTALLY? */
+  int print (const ASYS_TCHAR host_name[],
+             u_long verbose_flag,
+             FILE *fp = stderr);
   // Write the contents of the logging record to the appropriate
   // <FILE>.
 
-  int print (const ASYS_TCHAR host_name[], 
-	     u_long verbose_flag, 
-	     ostream &stream);
+  int print (const ASYS_TCHAR host_name[],
+             u_long verbose_flag,
+             ostream &stream);
   // Write the contents of the logging record to the appropriate
   // <ostream>.
 #else
@@ -75,9 +75,9 @@ public:
                   u_long verbose_flag,
                   CString *msg);
 
-  int print (const ASYS_TCHAR host_name[], 
-	     u_long verbose_flag, 
-	     FILE *fp);
+  int print (const ASYS_TCHAR host_name[],
+             u_long verbose_flag,
+             FILE *fp);
   // Write the contents of the logging record to the appropriate
   // <FILE>.
 
@@ -154,7 +154,7 @@ private:
   void round_up (void);
   // Round up to the alignment restrictions.
 
-  ACE_INT32 length_;      
+  ACE_INT32 length_;
   // Total length of the logging record in bytes.  This field *must*
   // come first in order for various IPC framing mechanisms to work
   // correctly.  In addition, the field must be an ACE_INT32 in order
@@ -163,14 +163,14 @@ private:
   long type_;
   // Type of logging record.
 
-  ACE_Time_Value time_stamp_;  
+  ACE_Time_Value time_stamp_;
   // Time that the logging record was generated.
 
-  long pid_;         
+  long pid_;
   // Id of process that generated the logging record.
 
-  ASYS_TCHAR msg_data_[MAXLOGMSGLEN]; 
-  // Logging record data 
+  ASYS_TCHAR msg_data_[MAXLOGMSGLEN];
+  // Logging record data
 
   static const ASYS_TCHAR *priority_names_[];
   // Symbolic names for the <ACE_Log_Priority> enums.

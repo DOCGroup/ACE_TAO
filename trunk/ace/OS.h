@@ -382,7 +382,7 @@
 // hard-coded to Microsoft proprietary extensions to C++.
 
 // First, we define how to properly export/import objects.
-# if defined (ACE_WIN32)         // Only Win32 needs special treatment.
+# if defined (ACE_WIN32) /* Only Win32 needs special treatment. */
 #   if defined(_MSC_VER) || defined(__BORLANDC__)
 /*  Microsoft, Borland: */
 #     define ACE_Proper_Export_Flag __declspec (dllexport)
