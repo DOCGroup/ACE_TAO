@@ -13,13 +13,13 @@
 #define TAO_PORTABLESERVER_POLICYFACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "ace/Service_Object.h"
-#include "tao/orbconf.h"
 #include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Service_Object.h"
 
 namespace TAO
 {

@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file ThreadPolicyFactory.h
+ *  @file ThreadPolicyFactoryImpl.h
  *
  *  $Id$
  *
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_PORTABLESERVER_THREADPOLICYFACTORY_H
-#define TAO_PORTABLESERVER_THREADPOLICYFACTORY_H
+#ifndef TAO_LOADABLE_THREAD_POLICY_H
+#define TAO_LOADABLE_THREAD_POLICY_H
 #include /**/ "ace/pre.h"
 
 #include "tao/PortableServer/portableserver_export.h"
@@ -20,9 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PolicyC.h"
-#include "tao/PortableServer/PolicyFactory.h"
-#include "tao/PortableServer/PortableServerC.h"
+#include "ace/Service_Config.h"
+#include "tao/PortableServer/ThreadPolicyFactory.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -30,10 +29,12 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export ThreadPolicyFactory :
-       public virtual PolicyFactory
+    class TAO_PortableServer_Export ThreadPolicyFactoryImpl :
+       public virtual ThreadPolicyFactory
     {
     public:
+      virtual ~ThreadPolicyFactoryImpl (void);
+
       /// Create a new thread policy
       /**
        * @note If all the compilers supported covariant return types we could
@@ -41,17 +42,20 @@ namespace TAO
        * as pure virtual in the base. This is something for the future.
        */
       virtual ::PortableServer::ThreadPolicy_ptr create (
-        ::PortableServer::ThreadPolicyValue value) = 0;
+        ::PortableServer::ThreadPolicyValue value);
 
       /// Create a new thread policy
       virtual ::PortableServer::ThreadPolicy_ptr create (
         const CORBA::Any &value ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::PolicyError)) = 0;
+        ACE_THROW_SPEC ((CORBA::PolicyError));
     };
+
+    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ThreadPolicyFactoryImpl)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, ThreadPolicyFactoryImpl)
   }
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #include /**/ "ace/post.h"
-#endif /* TAO_PORTABLESERVER_THREADPOLICYFACTORY_H */
+#endif /* TAO_LOADABLE_THREAD_POLICY_H */

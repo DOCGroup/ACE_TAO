@@ -9,7 +9,7 @@
 #include "ThreadPolicyC.h"
 #include "Policy_Creator_T.h"
 
-#include "ThreadPolicyFactory.h"
+#include "ThreadPolicyFactoryImpl.h"
 #include "LifespanPolicyFactory.h"
 #include "IdAssignmentPolicyFactory.h"
 #include "IdUniquenessPolicyFactory.h"
@@ -37,7 +37,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
             CORBA::Policy_ptr,
             PortableServer::ThreadPolicyValue>::create (
               "ThreadPolicyFactory",
-              TAO::Portable_Server::ace_svc_desc_ThreadPolicyFactory,
+              TAO::Portable_Server::ace_svc_desc_ThreadPolicyFactoryImpl,
               value ACE_ENV_ARG_PARAMETER);
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

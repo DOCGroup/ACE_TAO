@@ -7,7 +7,7 @@ ACE_RCSID (PortableServer,
 //
 #include "tao/StringSeqC.h"
 
-#include "tao/PortableServer/ThreadPolicyFactory.h"
+#include "tao/PortableServer/ThreadPolicyFactoryImpl.h"
 #include "tao/PortableServer/LifespanPolicyFactory.h"
 #include "tao/PortableServer/IdAssignmentPolicyFactory.h"
 #include "tao/PortableServer/IdUniquenessPolicyFactory.h"
@@ -78,7 +78,7 @@ TAO_POA::create_thread_policy (PortableServer::ThreadPolicyValue value
           ::PortableServer::ThreadPolicy_ptr,
           PortableServer::ThreadPolicyValue>::create (
             "ThreadPolicyFactory",
-            TAO::Portable_Server::ace_svc_desc_ThreadPolicyFactory,
+            TAO::Portable_Server::ace_svc_desc_ThreadPolicyFactoryImpl,
             value);
 }
 

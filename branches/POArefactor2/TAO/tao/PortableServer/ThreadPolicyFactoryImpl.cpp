@@ -1,11 +1,11 @@
 // $Id$
 
-#include "ThreadPolicyFactory.h"
+#include "ThreadPolicyFactoryImpl.h"
 #include "ace/Dynamic_Service.h"
 #include "ThreadPolicy.h"
 
 ACE_RCSID (PortableServer,
-           ThreadPolicyFactory,
+           ThreadPolicyFactoryImpl,
            "$Id$")
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -14,12 +14,12 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    ThreadPolicyFactory::~ThreadPolicyFactory (void)
+    ThreadPolicyFactoryImpl::~ThreadPolicyFactoryImpl (void)
     {
     }
 
     ::PortableServer::ThreadPolicy_ptr
-    ThreadPolicyFactory::create (
+    ThreadPolicyFactoryImpl::create (
       ::PortableServer::ThreadPolicyValue value)
     {
       POA_ThreadPolicy* policy = 0;
@@ -34,7 +34,7 @@ namespace TAO
     }
 
     ::PortableServer::ThreadPolicy_ptr
-    ThreadPolicyFactory::create (
+    ThreadPolicyFactoryImpl::create (
       const CORBA::Any &value
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::PolicyError))
@@ -52,23 +52,23 @@ namespace TAO
     }
 
     ACE_STATIC_SVC_DEFINE (
-        ThreadPolicyFactory,
+        ThreadPolicyFactoryImpl,
         ACE_TEXT ("ThreadPolicyFactory"),
         ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (ThreadPolicyFactory),
+        &ACE_SVC_NAME (ThreadPolicyFactoryImpl),
         ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
         0
       )
 
-    ACE_FACTORY_DEFINE (TAO_PortableServer, ThreadPolicyFactory)
+    ACE_FACTORY_DEFINE (TAO_PortableServer, ThreadPolicyFactoryImpl)
 
     #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-    template class ACE_Dynamic_Service<ThreadPolicyFactory>;
+    template class ACE_Dynamic_Service<ThreadPolicyFactoryImpl>;
 
     #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-    #pragma instantiate ACE_Dynamic_Service<ThreadPolicyFactory>
+    #pragma instantiate ACE_Dynamic_Service<ThreadPolicyFactoryImpl>
 
     #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
   }

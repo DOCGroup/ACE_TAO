@@ -45,7 +45,7 @@
 
 #include "ace/OS_NS_string.h"
 
-#include "ThreadPolicyFactory.h"
+#include "ThreadPolicyFactoryImpl.h"
 #include "LifespanPolicyFactory.h"
 #include "IdAssignmentPolicyFactory.h"
 #include "IdUniquenessPolicyFactory.h"
@@ -248,7 +248,7 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
             CORBA::Policy_ptr,
             PortableServer::ThreadPolicyValue>::create (
               "ThreadPolicyFactory",
-              TAO::Portable_Server::ace_svc_desc_ThreadPolicyFactory,
+              TAO::Portable_Server::ace_svc_desc_ThreadPolicyFactoryImpl,
               PortableServer::ORB_CTRL_MODEL);
   policies.merge_policy (thread_policy ACE_ENV_ARG_PARAMETER);
 
