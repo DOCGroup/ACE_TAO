@@ -1,3 +1,9 @@
+Thu Dec 06 00:06:52 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Misc/test_naming.cpp: Replaced the use of
+	  ACE_WString with ACE_NS_WString as ACE_WString no longer support
+	  initization using char string.
+
 Wed Dec 05 17:13:15 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/SString.h: The concatenation oeprator needed to be
