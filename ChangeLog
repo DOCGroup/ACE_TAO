@@ -1,3 +1,24 @@
+Wed Jan 12 22:52:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/OS_NS_stdio.h (gets):
+	* ace/OS_NS_stdio.cpp (gets):
+
+	  Removed this implementation.  While this ACE implementation of
+	  gets() did not contain the security holes that all standard
+	  gets() implementations have, keeping it around only serves to
+	  foster confusion since (1) some may incorrectly assume that this
+	  ACE-specific gets() implementation has the same holes as
+	  standard ones, and (2) invoking it with a default size argument
+	  so that it looks like a standard gets() call results in behavior
+	  that is different from the standard.  Use fgets() instead.
+
+	* examples/C++NPv2/Select_Reactor_Logging_Server.cpp:
+	* examples/C++NPv2/Server_Shutdown.cpp:
+	* examples/C++NPv2/TP_Reactor_Logging_Server.cpp:
+
+	  Replaced all gets() calls with their fgets() counterparts.
+	  gets() is evil (read insecure), and should not be used.
+
 Wed Jan 12 14:02:03 2005  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* ace/TMCast/Group.cpp:
