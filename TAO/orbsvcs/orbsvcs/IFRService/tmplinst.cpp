@@ -146,7 +146,6 @@ template class TAO_Port_Utils<CORBA::ComponentIR::PublishesDef>;
 template class TAO_Port_Utils<CORBA::ComponentIR::ConsumesDef>;
 template class TAO_IFR_Strseq_Utils<CORBA::RepositoryIdSeq>;
 template class TAO_IFR_Strseq_Utils<CORBA::ContextIdSeq>;
-template class TAO_IFR_Desc_Utils<CORBA::OperationDescription, TAO_OperationDef_i>;
 template class TAO_IFR_Desc_Utils<CORBA::ComponentIR::HomeDescription, TAO_HomeDef_i>;
 template class TAO_IFR_Desc_Utils<CORBA::ExceptionDescription, TAO_ExceptionDef_i>;
 template class TAO_IFR_Desc_Utils<CORBA::ExtAttributeDescription, TAO_AttributeDef_i>;
@@ -288,7 +287,6 @@ template class TAO_IFR_Desc_Utils<CORBA::ExtAttributeDescription, TAO_AttributeD
 #pragma instantiate TAO_Port_Utils<CORBA::ComponentIR::ConsumesDef>
 #pragma instantiate TAO_IFR_Strseq_Utils<CORBA::RepositoryIdSeq>
 #pragma instantiate TAO_IFR_Strseq_Utils<CORBA::ContextIdSeq>
-#pragma instantiate TAO_IFR_Desc_Utils<CORBA::OperationDescription, TAO_OperationDef_i>
 #pragma instantiate TAO_IFR_Desc_Utils<CORBA::ComponentIR::HomeDescription, TAO_HomeDef_i>
 #pragma instantiate TAO_IFR_Desc_Utils<CORBA::ExceptionDescription, TAO_ExceptionDef_i>
 #pragma instantiate TAO_IFR_Desc_Utils<CORBA::ExtAttributeDescription, TAO_AttributeDef_i>

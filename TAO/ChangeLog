@@ -1,3 +1,23 @@
+Tue Jun 10 09:33:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs\orbsvcs\IFRService\ComponentDef_i.cpp:
+
+          Cosmetic changes.
+
+        * orbsvcs\orbsvcs\IFRService\HomeDef_i.cpp:
+        * orbsvcs\orbsvcs\IFRService\tmplinst.cpp:
+
+          Added a specialization for the 
+          TAO_IFR_Desc_Utils<>::fill_desc_begin_ex() method when the
+          template parameters are CORBA::OperationDescription and
+          TAO_OperationDef_i, since this method, although not called
+          with these parameters, requires a type code member 'type' that
+          OperationDescription calls 'result'. Also removed
+          the explicit instantiation for the template class from
+          tmplinst.cpp and put it immediately after the specialization,
+          to make sure that things are seen by the compiler in the
+          necessary order.
+
 Mon Jun  9 19:20:27 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
