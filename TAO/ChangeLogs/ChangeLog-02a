@@ -12,7 +12,7 @@ Mon Mar 26 06:38:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp: Fixed a
 	  compilation error in Borland C++. Converting a void * to in with
 	  a static cast does not go well in Borland. Changed all the
-	  static_cast to reinterpret_cast. Thanks to Johnny Willemsen for
+	  static_cast to reinterpret_cast. Thanks to Chris K for
 	  reporting this problem and suggesting a fix.
 
 Sun Mar 25 20:18:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
