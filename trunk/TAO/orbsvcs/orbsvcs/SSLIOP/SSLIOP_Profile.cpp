@@ -3,7 +3,6 @@
 
 #include "SSLIOP_Profile.h"
 #include "SSLIOP_Connect.h"
-#include "tao/GIOP.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/ORB.h"

@@ -3,13 +3,14 @@
 // ============================================================================
 //
 // = LIBRARY
-//   TAO
+//     TAO_SSLIOP
 //
 // = FILENAME
-//   Protocol_Factory.h
+//     SSLIOP_Factory.h
 //
 // = AUTHOR
-//   Fred Kuhns <fredk@cs.wustl.edu>
+//     Carlos O'Ryan <coryan@ece.uci.edu>
+//     Ossama Othman <ossama@ece.uci.edu>
 //
 // ============================================================================
 
@@ -19,6 +20,7 @@
 #include "tao/Protocol_Factory.h"
 
 #include "SSL_Context.h"
+#include "SSLIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,7 +29,7 @@
 class TAO_Acceptor;
 class TAO_Connector;
 
-class TAO_Export TAO_SSLIOP_Protocol_Factory : public TAO_Protocol_Factory
+class TAO_SSLIOP_Export TAO_SSLIOP_Protocol_Factory : public TAO_Protocol_Factory
 {
 public:
   TAO_SSLIOP_Protocol_Factory (void);
@@ -63,6 +65,6 @@ private:
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_SSLIOP_Protocol_Factory)
-ACE_FACTORY_DECLARE (TAO, TAO_SSLIOP_Protocol_Factory)
+ACE_FACTORY_DECLARE (TAO_SSLIOP, TAO_SSLIOP_Protocol_Factory)
 
 #endif /* TAO_SSLIOP_FACTORY_H */

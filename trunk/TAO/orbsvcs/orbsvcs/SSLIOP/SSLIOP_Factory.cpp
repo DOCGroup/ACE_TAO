@@ -166,4 +166,4 @@ ACE_STATIC_SVC_DEFINE (TAO_SSLIOP_Protocol_Factory,
                                   ACE_Service_Type::DELETE_OBJ,
                        0)
 
-ACE_FACTORY_DEFINE (TAO, TAO_SSLIOP_Protocol_Factory)
+ACE_FACTORY_DEFINE (TAO_SSLIOP, TAO_SSLIOP_Protocol_Factory)

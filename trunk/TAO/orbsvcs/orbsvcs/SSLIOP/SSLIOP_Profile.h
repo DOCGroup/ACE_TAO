@@ -4,16 +4,17 @@
 // ============================================================================
 //
 // = LIBRARY
-//     TAO
+//     TAO_SSLIOP
 //
 // = FILENAME
 //     SSLIOP_Profile.h
 //
 // = DESCRIPTION
-//     IIOP profile specific processing
+//     SSLIOP profile specific processing
 //
 // = AUTHOR
-//     Fred Kuhns <fredk@cs.wustl.edu>
+//     Carlos O'Ryan <coryan@ece.uci.edu>
+//     Ossama Othman <ossama@ece.uci.edu>
 //
 // ============================================================================
 
@@ -27,11 +28,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "SSLIOPC.h"
+#include "SSLIOP_Export.h"
 
 class TAO_SSLIOP_Client_Connection_Handler;
 
 // TAO SSLIOP_Profile concrete Profile definitions
-class TAO_Export TAO_SSLIOP_Profile : public TAO_IIOP_Profile
+class TAO_SSLIOP_Export TAO_SSLIOP_Profile : public TAO_IIOP_Profile
 {
   // = TITLE
   //   This class defines the protocol specific attributes required

@@ -4,17 +4,17 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO
+//    TAO_SSLIOP
 //
 // = FILENAME
 //    SSLIOP_Connector.h
 //
 // = DESCRIPTION
-//    IIOP specific connector processing
+//    SSLIOP specific connector processing
 //
 // = AUTHOR
-//   Carlos O'Ryan <coryan@cs.wustl.edu> &
-//   Ossama Othman <othman@cs.wustl.edu>
+//     Carlos O'Ryan <coryan@ece.uci.edu>
+//     Ossama Othman <ossama@ece.uci.edu>
 //
 // ============================================================================
 
@@ -45,7 +45,7 @@ typedef ACE_Strategy_Connector<TAO_SSLIOP_Client_Connection_Handler,
 
 // ****************************************************************
 
-class TAO_Export TAO_SSLIOP_Connect_Creation_Strategy : public ACE_Creation_Strategy<TAO_SSLIOP_Client_Connection_Handler>
+class TAO_SSLIOP_Export TAO_SSLIOP_Connect_Creation_Strategy : public ACE_Creation_Strategy<TAO_SSLIOP_Client_Connection_Handler>
 {
   // = TITLE
   //   Helper creation strategy
@@ -69,7 +69,7 @@ private:
 
 // ****************************************************************
 
-class TAO_Export TAO_SSLIOP_Connector : public TAO_IIOP_Connector
+class TAO_SSLIOP_Export TAO_SSLIOP_Connector : public TAO_IIOP_Connector
 {
   // = TITLE
   //   IIOP-specific Connector bridge for pluggable protocols.

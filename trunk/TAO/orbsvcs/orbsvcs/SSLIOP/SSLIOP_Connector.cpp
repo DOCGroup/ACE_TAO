@@ -3,7 +3,6 @@
 
 #include "SSLIOP_Connector.h"
 #include "SSLIOP_Profile.h"
-#include "tao/GIOP.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
@@ -468,22 +467,39 @@ TAO_SSLIOP_Connector::connect (TAO_Profile *pfile,
     profile->object_addr ();
   oa.set_port_number (profile->ssl_port ());
 
+  TAO_SSLIOP_Client_Connection_Handler *svc_handler = 0;
+  int result = 0;
+
   ACE_Synch_Options synch_options;
   if (max_wait_time != 0)
-    synch_options.set (ACE_Synch_Options::USE_TIMEOUT,
-                       *max_wait_time);
+    {
+      ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
+                                       *max_wait_time);
+      
+      // The connect call will set the hint () stored in the Profile
+      // object; but we obtain the transport in the <result>
+      // variable. Other threads may modify the hint, but we are not
+      // affected.
+      result = this->base_connector_.connect (profile->ssl_hint (),
+                                              svc_handler,
+                                              oa,
+                                              synch_options);
+    }
+  else
+    {
+      // The connect call will set the hint () stored in the Profile
+      // object; but we obtain the transport in the <result>
+      // variable. Other threads may modify the hint, but we are not
+      // affected.
+      result = this->base_connector_.connect (profile->ssl_hint (),
+                                              svc_handler,
+                                              oa);
 
-  TAO_SSLIOP_Client_Connection_Handler* result;
+    }
 
-  // The connect call will set the hint () stored in the Profile
-  // object; but we obtain the transport in the <result>
-  // variable. Other threads may modify the hint, but we are not
-  // affected.
-  if (this->base_connector_.connect (profile->ssl_hint (),
-                                     result,
-                                     oa,
-                                     synch_options) == -1)
-    { // Give users a clue to the problem.
+  if (result == -1)
+    {
+      // Give users a clue to the problem.
       if (TAO_orbdebug)
         {
           char buffer [MAXHOSTNAMELEN + 6 + 1];
@@ -497,23 +513,27 @@ TAO_SSLIOP_Connector::connect (TAO_Profile *pfile,
                       buffer,
                       "errno"));
         }
-      // @@ Without this reset_hint() call the ORB crashes after
-      // several attempts to reconnect, apparently because the cached
-      // connector already destroyed the object.  Using reset_hint()
-      // seems to eliminate the problem, and actually purify is happy
-      // with it, but i have some doubts about it: wasn't the hint
-      // destroyed already by the connector?  We (Fred and Carlos)
-      // thought about just setting the hint to 0, but that would not
-      // be thread-safe (other threads may be touching the same
-      // profile).  At this point (the day before 1.0) i'm reluctant
-      // to change ACE, and this fix passes all the TAO tests
-      // (including the new ping/pong test in the tests/Faults
-      // directory).
-      profile->reset_hint ();
       return -1;
     }
 
-  transport = result->transport ();
+  transport = svc_handler->transport ();
+
+  // Now that we have the client connection handler object we need to
+  // set the right messaging protocol for in the client side transport.
+  const TAO_GIOP_Version& version = profile->version ();
+  int ret_val = transport->messaging_init (version.major,
+                                           version.minor);
+  if (ret_val == -1)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("(%N|%l|%p|%t) messaging_init() ")
+                      ASYS_TEXT ("failed\n")));
+        }
+      return -1;
+    }
+
   return 0;
 }
 

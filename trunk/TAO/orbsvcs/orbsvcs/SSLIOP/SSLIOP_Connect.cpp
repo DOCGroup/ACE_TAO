@@ -6,7 +6,9 @@
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/CDR.h"
-#include "tao/GIOP.h"
+#include "tao/Messaging_Policy_i.h"
+#include "tao/GIOP_Message_Lite.h"
+#include "tao/GIOP_Message_Acceptors.h"
 
 #if !defined (__ACE_INLINE__)
 # include "SSLIOP_Connect.i"
@@ -32,7 +34,7 @@ static const char *TAO_SSLIOP_Connect_Timeprobe_Description[] =
 enum
 {
   // Timeprobe description table start key
-  TAO_SSLIOP_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START = 300,
+  TAO_SSLIOP_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START = 310,
   TAO_SSLIOP_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_END,
 
   TAO_SSLIOP_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_START,
@@ -65,6 +67,7 @@ TAO_SSLIOP_Handler_Base::TAO_SSLIOP_Handler_Base (ACE_Thread_Manager *t)
 TAO_SSLIOP_Server_Connection_Handler::TAO_SSLIOP_Server_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_SSLIOP_Handler_Base (t),
     transport_ (this, 0),
+    acceptor_factory_ (0),
     orb_core_ (0),
     tss_resources_ (0),
     refcount_ (1)
@@ -78,13 +81,20 @@ TAO_SSLIOP_Server_Connection_Handler::TAO_SSLIOP_Server_Connection_Handler (ACE_
   ACE_ASSERT (this->orb_core_ != 0);
 }
 
-TAO_SSLIOP_Server_Connection_Handler::TAO_SSLIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core)
+TAO_SSLIOP_Server_Connection_Handler::TAO_SSLIOP_Server_Connection_Handler
+ (TAO_ORB_Core *orb_core,
+  CORBA::Boolean /*lite_flag */)
   : TAO_SSLIOP_Handler_Base (orb_core),
     transport_ (this, orb_core),
+    acceptor_factory_ (orb_core),
     orb_core_ (orb_core),
     tss_resources_ (orb_core->get_tss_resources ()),
     refcount_ (1)
 {
+  // The flag that is used to enable GIOPlite is *not* used for
+  // SSLIOP.  GIOPlite introduces security holes.  It should not be
+  // enabled for SSLIOP, so mark it as an unused argument in the
+  // argument list.
 }
 
 TAO_SSLIOP_Server_Connection_Handler::~TAO_SSLIOP_Server_Connection_Handler (void)
@@ -258,14 +268,15 @@ TAO_SSLIOP_Server_Connection_Handler::handle_input (ACE_HANDLE h)
 
 int
 TAO_SSLIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
-                                                    ACE_Time_Value *max_wait_time)
+                                                      ACE_Time_Value *max_wait_time)
 {
   this->refcount_++;
 
-  int result = TAO_GIOP::handle_input (this->transport (),
-                                       this->orb_core_,
-                                       this->transport_.message_state_,
-                                       max_wait_time);
+  int result =
+    this->acceptor_factory_.handle_input (this->transport (),
+                                          this->orb_core_,
+                                          this->transport_.message_state_,
+                                          max_wait_time);
 
   if (result == -1 && TAO_debug_level > 0)
     {
@@ -280,6 +291,7 @@ TAO_SSLIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
       --this->refcount_;
       if (this->refcount_ == 0)
         this->TAO_SSL_SVC_HANDLER::handle_close ();
+
       return result;
     }
 
@@ -306,17 +318,19 @@ TAO_SSLIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
   // Reset the message state.
   this->transport_.message_state_.reset (0);
 
-  result = TAO_GIOP::process_server_message (this->transport (),
-                                             this->orb_core_,
-                                             input_cdr,
-                                             message_type,
-                                             giop_version);
+  result = 
+    this->acceptor_factory_.process_client_message (this->transport (),
+                                                    this->orb_core_,
+                                                    input_cdr,
+                                                    message_type);
+
   if (result != -1)
     result = 0;
 
   --this->refcount_;
   if (this->refcount_ == 0)
     this->TAO_SSL_SVC_HANDLER::handle_close ();
+
 
   return result;
 }
@@ -326,11 +340,16 @@ TAO_SSLIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
 //    transport obj.
 TAO_SSLIOP_Client_Connection_Handler::
 TAO_SSLIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
-                                    TAO_ORB_Core* orb_core)
+                                      TAO_ORB_Core* orb_core,
+                                      CORBA::Boolean /* flag */)
   : TAO_SSLIOP_Handler_Base (t),
     transport_ (this, orb_core),
     orb_core_ (orb_core)
 {
+  // The flag that is used to enable GIOPlite is *not* used for
+  // SSLIOP.  GIOPlite introduces security holes.  It should not be
+  // enabled for SSLIOP, so mark it as an unused argument in the
+  // argument list.
 }
 
 TAO_SSLIOP_Client_Connection_Handler::~TAO_SSLIOP_Client_Connection_Handler (void)
