@@ -1,21 +1,26 @@
+Wed Feb  7 11:34:56 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Message_Queue_Test_Ex.cpp:
+          Fix build problems for single threaded environments.
+
 Tue Feb  6 20:11:28 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* include/makeinclude/platform_sunos5_sunc++.GNU:
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
 
-	Remove double inclusion of $(CFLAGS) for Sun CC 5.0.
+        Remove double inclusion of $(CFLAGS) for Sun CC 5.0.
 
 Tue Feb  6 19:30:26 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* ace/Malloc_T.cpp (shared_malloc):
-	Added a #ifdef to remove the warnings from Digital Tru64 cxx. This
-	is a temporary workaround. TODO: Change ACE_SEH_* macros so that such
-	hacks are unnecessary.
+        * ace/Malloc_T.cpp (shared_malloc):
+        Added a #ifdef to remove the warnings from Digital Tru64 cxx. This
+        is a temporary workaround. TODO: Change ACE_SEH_* macros so that such
+        hacks are unnecessary.
 
 Tue Feb  6 19:23:16 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* include/makeinclude/platform_sunos5_sunc++.GNU:
-	Complete reverting the changes made by Irfan on Sat Jan 27
-	01:06:09 2001. This file was missed in the last revert done by me.
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+        Complete reverting the changes made by Irfan on Sat Jan 27
+        01:06:09 2001. This file was missed in the last revert done by me.
 
 Tue Feb 06 19:03:35 2001  Steve Huston  <shuston@riverace.com>
 
@@ -51,30 +56,30 @@ Tue Feb 06 17:16:43 2001  Steve Huston  <shuston@riverace.com>
 
 Mon Feb  5 16:19:20 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Basic_Types.h: Changed the ACE_BIG_ENDIAN and ACE_LITTLE_ENDIAN
-	  macros to use the form 0x0123 rather than 0123X.  Thanks to
- 	  Craig Rodrigues <crodrigu@bbn.com> for helping find this
- 	  problem.
+        * ace/Basic_Types.h: Changed the ACE_BIG_ENDIAN and ACE_LITTLE_ENDIAN
+          macros to use the form 0x0123 rather than 0123X.  Thanks to
+          Craig Rodrigues <crodrigu@bbn.com> for helping find this
+          problem.
 
 Mon Feb  5 18:20:11 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* ace/config-sunos5.5.h (ACE_USES_OLD_IOSTREAMS):
+        * ace/config-sunos5.5.h (ACE_USES_OLD_IOSTREAMS):
 
-	  Reverted the change to config-sunos5.5.h and turned on
- 	  ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION,
- 	  ACE_TEMPLLATES_REQUIRE_SOURCE and ACE_USES_OLD_IOSTREAMS for the
- 	  SunCC 5.0 compiler.
+          Reverted the change to config-sunos5.5.h and turned on
+          ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION,
+          ACE_TEMPLLATES_REQUIRE_SOURCE and ACE_USES_OLD_IOSTREAMS for the
+          SunCC 5.0 compiler.
 
 Mon Feb  5 16:19:20 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* examples/RMCast/Send_File/Receiver.cpp (init): Replaced
-	  a hard-coded file permission of 0644 with
- 	  ACE_DEFAULT_FILE_PERMS.  Thanks to Chris Kohlhoff
- 	  <chris@kohlhoff.com> for reporting this.
+        * examples/RMCast/Send_File/Receiver.cpp (init): Replaced
+          a hard-coded file permission of 0644 with
+          ACE_DEFAULT_FILE_PERMS.  Thanks to Chris Kohlhoff
+          <chris@kohlhoff.com> for reporting this.
 
 Mon Feb  5 13:00:17 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* tests/Thread_Mutex_Test.cpp: (reported_notsup)
+        * tests/Thread_Mutex_Test.cpp: (reported_notsup)
           Removed a warning about defined but not used.
 
 Sat Feb  3 14:41:17 2001  Darrell Brunsch <brunsch@uci.edu>
@@ -108,36 +113,36 @@ Fri Feb 02 18:36:42 2001  Steve Huston  <shuston@riverace.com>
 
 Fri Feb  2 08:38:37 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/WFMO_Reactor.cpp (handler): Set the existing_masks variable to 0
-	  to avoid warnings from static analysis tools.  Thanks to Ivan
- 	  Murphy for reporting this.
+        * ace/WFMO_Reactor.cpp (handler): Set the existing_masks variable to 0
+          to avoid warnings from static analysis tools.  Thanks to Ivan
+          Murphy for reporting this.
 
 Thu Feb 01 22:00:17 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
-	* tests/Message_Queue_Test_Ex.cpp
+        * tests/Message_Queue_Test_Ex.cpp
 
           Fixed the bugs which were giving runtime error on
           Win32 - removed "queue_type" from single_thread_performance_test
           and performance_test functions. Now these funtions dont
           have args.
 
-	* tests/tests.dsw
+        * tests/tests.dsw
 
-	  Just an update of the workspace.
+          Just an update of the workspace.
 
 Thu Feb  1 21:00:57 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* bin/auto_compile_win32.pl:
-	* bin/run_all_list.pm:
+        * bin/auto_compile_win32.pl:
+        * bin/run_all_list.pm:
 
-	  Added TAO RT Mutex unit tests to auto build and test
-	  lists.
+          Added TAO RT Mutex unit tests to auto build and test
+          lists.
 
 Thu Feb 01 18:52:27 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* RTJava:
-	  Added Directory for RTJava related research. Check the
-	  ChangeLog included in the newly directory for more info.
+        * RTJava:
+          Added Directory for RTJava related research. Check the
+          ChangeLog included in the newly directory for more info.
 
 Thu Feb 01 18:23:17 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
@@ -151,9 +156,9 @@ Thu Feb 01 18:23:17 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
 Thu Feb  1 18:01:26 2001  Luther J Baker  <luther@cs.wustl.edu>
 
-	* ace/OS.i (mutex_init):
+        * ace/OS.i (mutex_init):
 
-	  Removed call into PACE.
+          Removed call into PACE.
 
 Thu Feb 01 18:21:15 2001  Steve Huston  <shuston@riverace.com>
 
@@ -210,8 +215,8 @@ Wed Jan 31 22:01:00 2001  Rick Stille  <stille_r@ociweb.com>
 
 Wed Jan 31 18:43:26 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* tests/Message_Queue_Test_Ex.cpp (single_thread_performance_test):
-	  Removed the warning about queue_type using ACE_UNUSED_ARG.
+        * tests/Message_Queue_Test_Ex.cpp (single_thread_performance_test):
+          Removed the warning about queue_type using ACE_UNUSED_ARG.
 
 Wed Jan 31 17:27:35 2001  Steve Huston  <shuston@riverace.com>
 
@@ -222,9 +227,9 @@ Wed Jan 31 17:27:35 2001  Steve Huston  <shuston@riverace.com>
 
 Wed Jan 31 15:55:23 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* ace/Synch.i:
-	  Added ACE_Null_Mutex::acquire (ACE_Time_Value &tv)
-	  to fix link error.
+        * ace/Synch.i:
+          Added ACE_Null_Mutex::acquire (ACE_Time_Value &tv)
+          to fix link error.
 
 Wed Jan 31 15:12:00 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -246,9 +251,9 @@ Wed Jan 31 12:19:51 2001  Steve Huston  <shuston@riverace.com>
 
 Wed Jan 31 06:43:27 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Message_Queue_T.cpp: Make sure that dequeue_head() returns
-	  the number of items still on the queue.  Thanks to Johnny
-	  Willemsen for reporting this.
+        * ace/Message_Queue_T.cpp: Make sure that dequeue_head() returns
+          the number of items still on the queue.  Thanks to Johnny
+          Willemsen for reporting this.
 
 Tue Jan 30 21:39:15 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
@@ -261,9 +266,9 @@ Tue Jan 30 21:39:15 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
 Tue Jan 30 18:04:08 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tests/Message_Queue_Test_Ex.cpp (single_thread_performance_test):
-	  Zap the Win32 and VxWorks-specific code from this function.
-	  Thanks to Sharath for reporting this.
+        * tests/Message_Queue_Test_Ex.cpp (single_thread_performance_test):
+          Zap the Win32 and VxWorks-specific code from this function.
+          Thanks to Sharath for reporting this.
 
 Tue Jan 30 11:34:26 2001  Steve Huston  <shuston@riverace.com>
 
@@ -290,13 +295,13 @@ Tue Jan 30 10:47:52 2001  Steve Huston  <shuston@riverace.com>
 
 Tue Jan 30 01:05:51 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tests/Message_Queue_Test_Ex.cpp (single_thread_performance_test):
-	  Add cases for VxWorks and NT.  Thanks to Sharath for reporting
- 	  this.
+        * tests/Message_Queue_Test_Ex.cpp (single_thread_performance_test):
+          Add cases for VxWorks and NT.  Thanks to Sharath for reporting
+          this.
 
-	* ace/OS.h: #define _SC_AIO_MAX to 1 if it's not set by default.
-	  Thanks to Jean-Francois Daune <Daune@IBA.be> for reporting this
-	  fix for VxWorks.
+        * ace/OS.h: #define _SC_AIO_MAX to 1 if it's not set by default.
+          Thanks to Jean-Francois Daune <Daune@IBA.be> for reporting this
+          fix for VxWorks.
 
 Mon Jan 20 18:36:41 2001  Steve Huston  <shuston@riverace.com>
 
@@ -325,8 +330,8 @@ Mon Jan 29 15:30:27 2001  Steve Huston  <shuston@riverace.com>
 
 Sun Jan 28 08:39:17 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tests/Thread_Mutex_Test.cpp:
-	  Fixed use of ACE_TEXT and string concatenation.
+        * tests/Thread_Mutex_Test.cpp:
+          Fixed use of ACE_TEXT and string concatenation.
 
 Sun Jan 28 08:03:08 2001  Carlos O'Ryan  <coryan@uci.edu>
 
