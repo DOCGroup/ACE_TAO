@@ -152,6 +152,10 @@ SOURCE=.\cubitC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\cubitS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Task_Client.cpp
 # End Source File
 # Begin Source File
