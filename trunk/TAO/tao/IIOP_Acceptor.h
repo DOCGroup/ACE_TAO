@@ -86,7 +86,7 @@ private:
 
   int hostname (TAO_ORB_Core *orb_core,
                 ACE_INET_Addr &addr,
-                ACE_CString &host);
+                char *&host);
   // Set the host name for the given addr.
 
   int probe_interfaces (TAO_ORB_Core *orb_core);
@@ -111,7 +111,7 @@ private:
 protected:
   ACE_INET_Addr *addrs_;
 
-  ACE_CString *hosts_;
+  char **hosts_;
   // Cache the information about the endpoints serviced by this
   // acceptor.
   // There may in fact be multiple hostnames for this endpoint. For

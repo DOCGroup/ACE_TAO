@@ -10,7 +10,10 @@ char *
 CORBA::string_dup (const char *str)
 {
   if (!str)
-    return 0;
+    {
+      errno = EINVAL;
+      return 0;
+    }
 
   size_t len = ACE_OS::strlen (str);
 
@@ -29,7 +32,10 @@ CORBA::WChar*
 CORBA::wstring_dup (const WChar *const str)
 {
   if (!str)
-    return 0;
+    {
+      errno = EINVAL;
+      return 0;
+    }
 
   CORBA::WChar* retval = CORBA::wstring_alloc (ACE_OS::wslen (str));
   return ACE_OS::wscpy (retval, str);

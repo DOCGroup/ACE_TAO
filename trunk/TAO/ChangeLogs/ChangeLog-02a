@@ -1,3 +1,109 @@
+Mon Sep 25 11:09:20 2000  Ossama Othman  <ossama@uci.edu>
+	
+	* TAO_IDL/be/be_helper.cpp (copyright):
+
+	  Cosmetic update for the RCS ID in generated files.  Updated the
+	  copyright information to include the UCI wing of the DOC group.
+
+	* tao/params.h:
+	* tao/params.cpp:
+	* tao/params.i:
+
+	  Removed unused "init_ref_" attribute.  The new IOR table
+	  obviates the need for this attribute.
+
+	  Changed "mcast_discovery_endpoint_" attribute from an
+	  ACE_CString to a CORBA::String_var.  This get around an access
+	  violation that was occuring when allocating space for a string
+	  inside the ACE_CString assignment operator.  A fix for thThe
+	  reason for the access violation itself will be committed soon.
+	  [Bug 665]
+
+	* tao/corbafwd.cpp (string_dup, wstring_dup):
+
+	  Set e rrno to EINVAL if a null pointer was passed as an
+	  argument.
+
+	* tao/corbafwd.h:
+	* tao/CORBA_String.cpp:
+
+	  Removed CORBA::string_copy() TAO extension.  The standard
+	  CORBA::string_dup() should be used instead.
+
+	* tao/corbafwd.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+
+	  Moved macro definition of TAO_TAG_SSL_ENDPOINTS to
+	  SSLIOP_Endpoint.h.  Security-specific code should not be placed
+	  anywhere within the ORB core.
+
+	* tao/IOP.pidl:
+
+	  Removed all security related tags.  They are superseded by those
+	  in the SSLIOP and SECIOP modules in the Security Service IDL.
+
+	* tao/IOPC.cpp:
+	* tao/IOPC.h:
+	* tao/IOPC.i:
+	* tao/IOPS.cpp:
+	* tao/IOPS.h:
+	* tao/IOPS.i:
+	* tao/IOPS_T.cpp:
+	* tao/IOPS_T.h:
+	* tao/IOPS_T.i:
+
+	  Regenerated these files from newly modified `IOP.pidl'.
+
+	* tao/diffs/IOP.diff:
+
+	  Added a patch file for the hand modified IOP stubs and
+	  skeletons.
+
+	* tao/Tagged_Components.i (unique_tag):
+
+	  Removed references to all security related tags.  Those tags are
+	  now in defined in the Security Service IDL sources, and
+	  supersede the ones formerly in `IOP.pidl.'  Again, no security
+	  related code should exist in the ORB core.
+
+	* tao/IIOP_Acceptor.h:
+	* tao/IIOP_Acceptor.cpp (hostname, create_mprofile,
+	  create_rt_mprofile, open_i):
+	* orbsvcs/orbsvcs/SSLIOP_Acceptor.cpp (create_mprofile,
+	  create_rt_mprofile, open_i):
+
+	  Use "char *" in place of "ACE_CString" since the latter is
+	  lighter weight, and since the additional functionality provided
+	  by the ACE_CString class is not needed.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp
+	  (create_mprofile, create_rt_mprofile):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp (decode):
+
+	  Use SSL tag value from the SSLIOP module instead of the one in
+	  the IOP module since security service 1.7 specification
+	  explicitly states that the tag in the SSLIOP module should be
+	  used to identify an SSLIOP tagged component.
+
+	* orbsvcs/orbsvcs/Security.idl:
+	* orbsvcs/orbsvcs/SecurityLevel1.idl:
+	* orbsvcs/orbsvcs/SecurityLevel2.idl:
+	* orbsvcs/orbsvcs/SecurityAdmin.idl:
+	* orbsvcs/orbsvcs/SecurityReplaceable.idl:
+	* orbsvcs/orbsvcs/SSLIOP.idl:
+	* orbsvcs/orbsvcs/SECIOP.idl:
+
+	  Added '#pragma prefix ""' to the end of these IDL sources to
+	  to prevent the prefix pragma specific to each of these IDL
+	  sources from being unintentionally used in other IDL sources
+	  that include them.
+
+	* orbsvcs/examples/Security/Send_File/Send_File_Client.dsp:
+	* orbsvcs/examples/Security/Send_File/Send_File_Server.dsp:
+
+	  Changed binary names to match those used in the `run_test.pl'
+	  script so that the script may be used to run them.
+
 Mon Sep 25 12:44:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Makefile.bor:

@@ -125,7 +125,7 @@ TAO_SSLIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
     {
       TAO_SSLIOP_Profile *pfile = 0;
       ACE_NEW_RETURN (pfile,
-                      TAO_SSLIOP_Profile (this->hosts_[i].c_str (),
+                      TAO_SSLIOP_Profile (this->hosts_[i],
                                           this->addrs_[i].get_port_number (),
                                           object_key,
                                           this->addrs_[i],
@@ -154,7 +154,7 @@ TAO_SSLIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
       pfile->tagged_components ().set_code_sets (code_set_info);
 
       IOP::TaggedComponent component;
-      component.tag = IOP::TAG_SSL_SEC_TRANS;
+      component.tag = SSLIOP::TAG_SSL_SEC_TRANS;
       // @@???? Check this code, only intended as guideline...
       TAO_OutputCDR cdr;
       cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
@@ -207,7 +207,7 @@ TAO_SSLIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
   if (ssliop_profile == 0)
     {
       ACE_NEW_RETURN (ssliop_profile,
-                      TAO_SSLIOP_Profile (this->hosts_[0].c_str (),
+                      TAO_SSLIOP_Profile (this->hosts_[0],
                                           this->addrs_[0].get_port_number (),
                                           object_key,
                                           this->addrs_[0],
@@ -242,7 +242,7 @@ TAO_SSLIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
           ssliop_profile->tagged_components ().set_code_sets (code_set_info);
 
           IOP::TaggedComponent component;
-          component.tag = IOP::TAG_SSL_SEC_TRANS;
+          component.tag = SSLIOP::TAG_SSL_SEC_TRANS;
           // @@???? Check this code, only intended as guideline...
           TAO_OutputCDR cdr;
           cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
@@ -273,7 +273,7 @@ TAO_SSLIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
       TAO_SSLIOP_Endpoint *ssl_endp = 0;
       TAO_IIOP_Endpoint *iiop_endp = 0;
       ACE_NEW_RETURN (iiop_endp,
-                      TAO_IIOP_Endpoint (this->hosts_[index].c_str (),
+                      TAO_IIOP_Endpoint (this->hosts_[index],
                                          this->addrs_[index].get_port_number (),
                                          this->addrs_[index]),
                       -1);
@@ -418,8 +418,8 @@ TAO_SSLIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
 
   ACE_INET_Addr ssl_address;
 
-  // We do this make sure the port number the endpoint is listening on
-  // gets set in the addr.
+  // We do this to make sure the port number the endpoint is listening
+  // on gets set in the addr.
   if (this->ssl_acceptor_.acceptor ().get_local_addr (ssl_address) != 0)
     {
       // @@ Should this be a catastrophic error???
@@ -443,7 +443,7 @@ TAO_SSLIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
                       ACE_TEXT ("TAO (%P|%t) ")
                       ACE_TEXT ("SSLIOP_Acceptor::open_i - ")
                       ACE_TEXT ("listening on: <%s:%u>\n"),
-                      this->hosts_[i].c_str (),
+                      this->hosts_[i],
                       this->ssl_component_.port));
         }
     }

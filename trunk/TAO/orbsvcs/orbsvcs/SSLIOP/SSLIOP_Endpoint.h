@@ -32,6 +32,9 @@
 #include "SSLIOP_Export.h"
 #include "orbsvcs/SSLIOPC.h"
 
+// Tag for storing multiple endpoints within a single profile.
+#define TAO_TAG_SSL_ENDPOINTS 0x54414f01U
+
 class TAO_SSLIOP_Client_Connection_Handler;
 class TAO_IIOP_Endpoint;
 

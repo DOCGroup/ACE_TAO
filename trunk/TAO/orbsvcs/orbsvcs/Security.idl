@@ -360,4 +360,7 @@ module Security {
     const CORBA::PolicyType SecDelegationDirectivePolicy = 38;
     const CORBA::PolicyType SecEstablishTrustPolicy      = 39;
 };
+
+#pragma prefix ""
+
 #endif /* _SECURITY_IDL_ */
