@@ -605,15 +605,28 @@ ACE_Process_Options::inherit_environment (void)
 #endif /* ACE_WIN32 */
 
 int
-ACE_Process_Options::setenv (char *[])
+ACE_Process_Options::setenv (char *envp[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, "ACE_Process_Options::setenv not implemented.\n"), -1);
+  int i = 0;
+  while (envp[i])
+    {
+      if (this->setenv_i (envp[i], ACE_OS::strlen (envp[i])) == -1)
+        return -1;
+      i++;
+    }
+
+#if defined (ACE_WIN32)
+  if (inherit_environment_)
+    this->inherit_environment ();
+#endif /* ACE_WIN32 */
+
+  return 0;
 }
 
 int
 ACE_Process_Options::setenv (const char *format, ...)
 {
-  char stack_buf[1024];
+  char stack_buf[DEFAULT_COMMAND_LINE_BUF_LEN];
 
   // Start varargs.
   va_list argp;
@@ -641,13 +654,33 @@ int
 ACE_Process_Options::setenv (const char *variable_name,
 			     const char *format, ...)
 {
-  char newformat[1024];
+  char newformat[DEFAULT_COMMAND_LINE_BUF_LEN];
 
   // Add in the variable name.
   ACE_OS::sprintf (newformat, "%s=%s", variable_name, format);
 
-  // Delegate.
-  return this->setenv (newformat);
+  char stack_buf[DEFAULT_COMMAND_LINE_BUF_LEN];
+
+  // Start varargs.
+  va_list argp;
+  va_start (argp, format);
+
+  // Add the rest of the varargs.
+  ::vsprintf (stack_buf, newformat, argp);
+
+  // End varargs.
+  va_end (argp);
+
+  // Append the string to our environment buffer.
+  if (this->setenv_i (stack_buf, ACE_OS::strlen (stack_buf)) == -1)
+    return -1;
+
+#if defined (ACE_WIN32)
+  if (inherit_environment_)
+    this->inherit_environment ();
+#endif /* ACE_WIN32 */
+
+  return 0;
 }
 
 int
@@ -746,9 +779,21 @@ ACE_Process_Options::set_handles (ACE_HANDLE std_in,
 }
 
 int
-ACE_Process_Options::command_line (char *[])
+ACE_Process_Options::command_line (char *argv[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, "ACE_Process_Options::command_line not implemented.\n"), -1);
+  int i;
+
+  if (argv[i = 0])
+    {
+      ACE_OS::strcat (command_line_buf_, argv[i]);
+      while (argv[++i])
+        {
+          ACE_OS::strcat (command_line_buf_, " ");
+          ACE_OS::strcat (command_line_buf_, argv[i]);
+        }
+    }
+
+  return 0; // Success.
 }
 
 int
