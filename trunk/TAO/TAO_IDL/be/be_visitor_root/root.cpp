@@ -390,7 +390,7 @@ int be_visitor_root::visit_root (be_root *node)
                         -1);
     }
 
-  // Generate any final code such as #endifs.
+  // Generate any final code such as #endifs and/or EOF newlines.
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_ROOT_CH:
@@ -398,6 +398,7 @@ int be_visitor_root::visit_root (be_root *node)
       break;
     case TAO_CodeGen::TAO_ROOT_CI:
     case TAO_CodeGen::TAO_ROOT_CS:
+    case TAO_CodeGen::TAO_ROOT_SI:
       *os << "\n\n";
       break;
     default:
