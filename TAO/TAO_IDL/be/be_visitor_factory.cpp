@@ -232,6 +232,24 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
 
 #   endif /* IDL_HAS_VALUETYPE */
 
+// #if defined TAO_IDL_HAS_AMI
+    case TAO_CodeGen::TAO_OPERATION_AMI:
+      return new be_visitor_operation_ami (new_ctx);
+
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_AMI:
+      return new be_visitor_operation_arglist_ami (new_ctx);
+      
+    case TAO_CodeGen::TAO_OPERATION_ARG_AMI:
+      return new be_visitor_operation_argument (new_ctx);
+      
+    case TAO_CodeGen::TAO_ARGUMENT_AMI:
+      // @@ I am not sure about this case, yet (Alex).     
+      return new be_visitor_decl (new_ctx); // noop
+
+    case TAO_CodeGen::TAO_ARGUMENT_ARGLIST_AMI:
+      return new be_visitor_args_arglist_ami (new_ctx);
+// #endif /* TAO_IDL_HAS_AMI */
+      
     case TAO_CodeGen::TAO_STRUCT_CH:
       return new be_visitor_structure_ch (new_ctx);
     case TAO_CodeGen::TAO_STRUCT_CS:
@@ -639,8 +657,8 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_decl (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
-        case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
-        case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS:
       return new be_visitor_operation_arglist (new_ctx);
