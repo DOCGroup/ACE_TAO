@@ -708,6 +708,20 @@ TAO_TypeCodes::fini (void)
 
   CORBA::release (CORBA::_tc_PolicyType);
 
+  CORBA::release (CORBA::_tc_PolicyErrorCode);
+
+  CORBA::release (CORBA::_tc_PolicyError);
+
+  CORBA::release (CORBA::_tc_InvalidPolicies);
+
+  CORBA::release (CORBA::_tc_PolicyTypeSeq);
+
+  CORBA::release (CORBA::_tc_SetOverrideType);
+
+  CORBA::release (CORBA::_tc_PolicyManager);
+
+  CORBA::release (CORBA::_tc_PolicyCurrent);
+
   // TAO specific
   CORBA::release (TC_opaque);
 
