@@ -15,8 +15,8 @@ IDL_SRC	= ReceiverC.cpp ReceiverS.cpp BroadcasterC.cpp BroadcasterS.cpp
 PROG_SRCS = \
 	Receiver_i.cpp \
 	Broadcaster_i.cpp \
-	Chat.cpp \
-	Server.cpp
+	client.cpp \
+	server.cpp
 
 
 SRC = $(IDL_SRC) $(PROG_SRCS)
@@ -27,8 +27,8 @@ SIMPLE_CLT_OBJS = \
 		BroadcasterC.o \
 		BroadcasterS.o \
 		Receiver_i.o \
-		Chat_i.o \
-		Chat.o
+		Client_i.o \
+		client.o
 
 SIMPLE_SVR_OBJS = \
                 ReceiverS.o \
@@ -37,10 +37,10 @@ SIMPLE_SVR_OBJS = \
 		BroadcasterS.o \
 		Broadcaster_i.o \
 		Server_i.o \
-		Server.o
+		server.o
 
-BIN = Server \
-      Chat
+BIN = server \
+      client
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
@@ -71,10 +71,10 @@ CPPFLAGS +=
 .PRECIOUS: BroadcasterS.cpp  BroadcasterS.i BroadcasterS.h
 .PRECIOUS: BroadcasterS_T.cpp BroadcasterS_T.i BroadcasterS_T.h
 
-Server:	$(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
+server:	$(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-Chat:	$(addprefix $(VDIR),$(SIMPLE_CLT_OBJS))
+client:	$(addprefix $(VDIR),$(SIMPLE_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
