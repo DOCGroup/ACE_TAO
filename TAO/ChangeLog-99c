@@ -1,3 +1,18 @@
+Wed Aug 25 15:58:44 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_visitor_interface/interface_ih.h: 
+	* TAO_IDL/be/be_visitor_interface/interface_ih.cpp: 
+	* TAO_IDL/be_include/be_visitor_interface/interface_is.h:
+	* TAO_IDL/be/be_visitor_interface/interface_is.cpp: 
+	* TAO_IDL/be/be_visitor_operation/operation_is.cpp:
+	Made changes in order to remove the generation of the constructors
+	for the base classes, generate code for the operations of all the
+	base interfaces correctly.
+	Thanks to Timothy Canham <Timothy.Canham@jpl.nasa.gov>, Byron
+	Harris <harris_b@ociweb.com> and Jeff Parsons
+	<parsons@cs.wustl.edu> for pointing out the bugs
+	
+
 Wed Aug 25 12:15:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB.pidl:
