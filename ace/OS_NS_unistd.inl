@@ -1009,32 +1009,22 @@ ACE_OS::setreuid (uid_t ruid, uid_t euid)
   return 0;
 #else
   ACE_OSCALL_RETURN (::setreuid (ruid, euid), int, -1);
-#endif /* ACE_WIN32 */
+#endif /* ACE_LACKS_SETREUID */
 }
-
-#if !defined (ACE_WIN32)
 
 ACE_INLINE pid_t
 ACE_OS::setsid (void)
 {
   ACE_OS_TRACE ("ACE_OS::setsid");
-# if defined (VXWORKS) || defined (CHORUS) || defined (ACE_PSOS) || defined (INTEGRITY)
+#if defined (ACE_LACKS_SETSID)
   ACE_NOTSUP_RETURN (-1);
-# else
+#elif defined (VXWORKS) || defined (ACE_PSOS)
+  // <setsid> is not supported, only one process anyway.
+  return 0;
+#else
   ACE_OSCALL_RETURN (::setsid (), int, -1);
-# endif /* VXWORKS || CHORUS || ACE_PSOS */
+# endif /* ACE_LACKS_SETSID */
 }
-
-#else /* ACE_WIN32 */
-
-ACE_INLINE pid_t
-ACE_OS::setsid (void)
-{
-  ACE_OS_TRACE ("ACE_OS::setsid");
-  ACE_NOTSUP_RETURN (-1);
-}
-
-#endif /* WIN32 */
 
 ACE_INLINE int
 ACE_OS::setuid (uid_t uid)
