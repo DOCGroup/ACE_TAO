@@ -436,7 +436,7 @@ ACE_OS_String::strtok_r_emulation (ACE_WCHAR_T *s, const ACE_WCHAR_T *tokens, AC
   if (*s == 0)                  // We have reached the end
     return 0;
   int l_org = ACE_OS_String::strlen (s);
-  s = ::wcstok (s, tokens);
+  s = ACE_OS_String::strtok (s, tokens);
   if (s == 0)
     return 0;
   int l_sub = ACE_OS_String::strlen (s);

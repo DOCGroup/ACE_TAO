@@ -448,6 +448,26 @@ string_emulation_test (void)
     strncpy2[26] = 0;
     ACE_ASSERT (ACE_OS_String::strcmp (strncpy2, strncpy1) == 0);
 
+    // ========================================================================
+    // Test strtok (wchar_t version)
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strtok (wchar_t version)\n")));
+    wchar_t strtok_r1[] = ACE_TEXT_WIDE ("A string of tokens");
+
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok (strtok_r1,
+                                                                ACE_TEXT_WIDE (" ")),
+                                       ACE_TEXT_WIDE ("A")) == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok (0,
+                                                                ACE_TEXT_WIDE (" ")),
+                                       ACE_TEXT_WIDE ("string") ) == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok (0,
+                                                                ACE_TEXT_WIDE (" ")),
+                                       ACE_TEXT_WIDE ("of") ) == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok (0,
+                                                                ACE_TEXT_WIDE (" ")),
+                                       ACE_TEXT_WIDE ("tokens") ) == 0);
+    ACE_ASSERT (ACE_OS_String::strtok (0, ACE_TEXT_WIDE (" ")) == 0);
+
+
   }
 #endif /* ACE_HAS_WCHAR */
 
