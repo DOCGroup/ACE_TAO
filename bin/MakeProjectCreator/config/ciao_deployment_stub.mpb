@@ -4,5 +4,5 @@
 project : protableserver {
   after += Deployment_stub
   libs  += Deployment_stub
-  includes += $(CIAO_ROOT)/DnC
+  includes += $(CIAO_ROOT)/DnC/Core
 }
