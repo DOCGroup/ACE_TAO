@@ -169,18 +169,18 @@ TAO_Offer_Exporter::export_offers_to_all (CORBA::Environment& _env)
                           ACE_static_cast (const char*, link_name_seq[i])));
             }
 
-          CosTrading::Register_ptr remote_reg;
+          CosTrading::Register_var remote_reg;
 #ifdef TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
           CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()-> orb ();
           CORBA::Object_var obj = orb->string_to_object (link_info->target_reg, TAO_TRY_ENV);
           TAO_CHECK_ENV;
-          remote_reg = CosTrading::Register::_narrow (obj, TAO_TRY_ENV);
+          remote_reg = CosTrading::Register::_narrow (obj.in (), TAO_TRY_ENV);
           TAO_CHECK_ENV;
 #else 
           remote_reg = link_info->target_reg;
 #endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
           
-          this->export_to (remote_reg, _env);
+          this->export_to (remote_reg.in (), _env);
           TAO_CHECK_ENV_RETURN_VOID (_env);
         }
       TAO_CATCHANY

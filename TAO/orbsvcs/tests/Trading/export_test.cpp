@@ -60,7 +60,7 @@ main (int argc, char** argv)
             
       // Run the Service Type Exporter tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Service Type Exporter tests.\n"));
-      TAO_Service_Type_Exporter type_exporter (lookup_if,
+      TAO_Service_Type_Exporter type_exporter (lookup_if.in (),
                                                verbose,
                                                TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -96,7 +96,7 @@ main (int argc, char** argv)
 
       // Run the Offer Exporter tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Offer Exporter tests.\n"));
-      TAO_Offer_Exporter offer_exporter (lookup_if, verbose, TAO_TRY_ENV);
+      TAO_Offer_Exporter offer_exporter (lookup_if.in (), verbose, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       // = Test series.

@@ -88,7 +88,7 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& _env)
       CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()-> orb ();
       CORBA::Object_var obj = orb->string_to_object (link_info->target, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
-      lookup_if = CosTrading::Lookup::_narrow (obj, _env);
+      lookup_if = CosTrading::Lookup::_narrow (obj.in (), _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
 #else 
       lookup_if = CosTrading::Lookup::_duplicate (link_info->target);
@@ -219,7 +219,7 @@ perform_queries_with_policies (const TAO_Policy_Manager& policies,
                 {
                   ACE_DEBUG ((LM_DEBUG, "%s\n",
                               ACE_static_cast (const char *,
-                                               (*limits_applied_out)[j])));
+                                               limits_applied_out[j])));
                 }
             }
         }
@@ -248,7 +248,7 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
         {
           // Call back to the exported object.
           TAO_Trader_Test::Remote_Output_var remote_output =
-            TAO_Trader_Test::Remote_Output::_narrow (offer_seq[i].reference,
+            TAO_Trader_Test::Remote_Output::_narrow (offer_seq[i].reference.in (),
                                                      TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
@@ -281,7 +281,7 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
 		{
                   // Call back to the exported object.
                   TAO_Trader_Test::Remote_Output_var remote_output =
-                    TAO_Trader_Test::Remote_Output::_narrow (offer_seq[i].reference,
+                    TAO_Trader_Test::Remote_Output::_narrow (offer_seq[i].reference.in (),
                                                              TAO_TRY_ENV);
                   TAO_CHECK_ENV;
 
