@@ -1,23 +1,15 @@
-Wed Apr  7 01:10:55 1999  Darrell Brunsch  <brunsch@cs.wustl.edu
+Wed Apr 07 01:02:31 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/Quoter/Makefile: Now cleans up all IDL generated files
-          with realclean.
-
-1999-04-07  Irfan Pyarali  <irfan@cs.wustl.edu>
+	* tao/POA.cpp (parse_key and create_object_key): Improved the
+	  parsing of object keys belonging to the RootPOA.  Since this is
+	  the default POA and is commonly used, we have given it a
+	  reserved byte in the object key in order to quickly identify
+	  it. With the reserved bit, the active demux key for the RootPOA
+	  is not used, and no map lookups are required.
 
 	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.h
 	  (ServiceTypeRepository): Used Service_Type_Map_Iterator instead
 	  of Service_Type_Map::iterator.  Stupid g++ could not gork it.
-
-Tue Apr  6 19:52:55 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
-
-	* orbsvcs/tests/Property/PropertyTest.dsw:
-	* orbsvcs/tests/Property/server.dsp:
-	* orbsvcs/tests/Property/client.dsp:
-	* orbsvcs/tests/Property/README:
-	  Tested on WIN NT.
-	
-Tue Apr 06 18:51:22 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/default_server.cpp (parse_args): Removed parsing for
 	  POAManager lock since it is no longer supported.
@@ -34,6 +26,19 @@ Tue Apr 06 18:51:22 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  id. The fix was to modify the Active_Object_Map to always
 	  recover the user id. Thanks to Steve Totten
 	  <totten_s@ociweb.com> for pointing this out.
+
+Wed Apr  7 01:10:55 1999  Darrell Brunsch  <brunsch@cs.wustl.edu
+
+	* examples/Quoter/Makefile: Now cleans up all IDL generated files
+          with realclean.
+
+Tue Apr  6 19:52:55 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* orbsvcs/tests/Property/PropertyTest.dsw:
+	* orbsvcs/tests/Property/server.dsp:
+	* orbsvcs/tests/Property/client.dsp:
+	* orbsvcs/tests/Property/README:
+	  Tested on WIN NT.
 
 Tue Apr  6 18:20:48 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
