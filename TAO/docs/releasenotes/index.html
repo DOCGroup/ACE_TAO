@@ -88,6 +88,9 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <a href="#locate">Locate requests</a></li>
 
 <li>
+<a href="#ami">Asynchronous Method Invocation</a></li>
+
+<li>
 <a href="TODO.html">Our TODO list</a></li>
 </ul>
 A complete list of all modifications to TAO is available in the <a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/ChangeLog">ChangeLog</a>.
@@ -1280,6 +1283,25 @@ Point of contact: <a href="mailto:irfan@cs.wustl.edu">Irfan Pyarali</a>,
 <a href="mailto:mk1@mk1.wustl.edu">Michael
 Kircher</a>.
 <p>For more information see <a href="../locate_request.html">Locate request</a>
+<p>
+<hr>
+<h3>
+<a NAME="ami"></a>Asynchronous Method Invocation</h3>
+Points of contact: <a href="mailto:alex@cs.wustl.edu">Alexander Arulanthu</a>
+, <a href="mailto:Michael.Kircher@mchp.siemens.de">Michael Kircher</a> and
+<a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a>
+<p>Status:
+<ul>
+Currently only the callback model of the Messaging Specification is implemented. 
+The TAO IDL compiler can generate the stubs and client-side skeletons
+using the -GC switch.
+</ul>
+<p> Future Work:
+<ul>
+<li>Support for exceptions</li>
+<li>Implementation of the poller model.</li>
+<li>Supporting deferred synchronous invocations.</li>
+</ul>
 <p>
 <hr>
 <p>Back to the TAO <a href="../index.html">documentation index</a>.<!--#include virtual="/~schmidt/cgi-sig.html" -->
