@@ -13,16 +13,18 @@ CFG=Simple Time Server Static - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "server_static.mak" CFG="Simple Time Server Static - Win32 Debug"
+!MESSAGE NMAKE /f "server_static.mak"\
+ CFG="Simple Time Server Static - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Simple Time Server Static - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "Simple Time Server Static - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Simple Time Server Static - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "Simple Time Server Static - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -97,10 +99,6 @@ SOURCE=.\server.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Server_i.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Time_i.cpp
 # End Source File
 # Begin Source File
@@ -140,7 +138,7 @@ InputPath=.\Time.idl
 InputName=Time
 
 BuildCmds= \
-	..\..\..\tao_idl\tao_idl $(InputName).idl
+	..\..\..\..\bin\tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
