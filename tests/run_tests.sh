@@ -219,12 +219,8 @@ fi
 test $TOKEN && (test $chorus || test $Unicos || run Tokens_Test) # tests ACE_Token
 
 run Cache_Map_Manager_Test              # tests ACE_Cache_Map_Manager and ACE_Hash_Cache_Manager and caching features.
-
-# These two tests are known to leak memory when compiled with gcc
-if [ $purify_with_old_gcc -ne 1 ]; then
-  run Cached_Conn_Test                  # tests connection management features (with OneShot Acceptor).
-  run Cached_Accept_Conn_Test           # tests connection management features (with regular Acceptor).
-fi
+run Cached_Conn_Test                    # tests connection management features (with OneShot Acceptor).
+run Cached_Accept_Conn_Test             # tests connection management features (with regular Acceptor).
 
 run Map_Manager_Test                    # tests ACE_Map Manager and ACE_Hash_Map_Manager + Forward and Reverse Map Iterators.
 run Hash_Map_Manager_Test               # tests ACE_Hash_Map_Manager + Forward and Reverse Map Iterators.
