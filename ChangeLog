@@ -1,3 +1,12 @@
+Fri May 14 22:13:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/event.mpb:
+
+	  Reordered subprojects to force TAO_Messaging library to be
+	  listed in static link commands after TAO_DynamicInterface
+	  library.  The latter depends on the former.  Addresses static
+	  build link-time errors.  Thanks to Chad for providing a patch.
+
 Fri May 14 14:22:49 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/Service_Repository.{h cpp} (insert): If there's no space left in
