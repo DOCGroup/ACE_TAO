@@ -571,6 +571,11 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
 
   PortableServer::POAManager_var safe_poa_manager = poa_manager;
 
+  // This makes sure that the default resources are open when the Root
+  // POA is created.
+  this->orb_core_.thread_lane_resources_manager ().open_default_resources (TAO_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
   // Set the default Server Protocol Policy.
   this->set_default_server_protocol_policy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;

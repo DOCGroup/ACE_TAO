@@ -390,16 +390,10 @@ ACE_INLINE PortableInterceptor::AdapterManagerId
 TAO_POA::get_manager_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return TAO_POA_Manager::poa_manager_id_;
+  return this->poa_manager_.get_manager_id ();
 }
 
-
-// @@ Priyanka, shouldn't this method return a
-//    PortableInterceptor::AdapterName, not a CORBA::StringSeq?  One
-//    may be a typedef of the other but they have different
-//    TypeCodes!
-//
-ACE_INLINE CORBA::StringSeq *
+ACE_INLINE PortableInterceptor::AdapterName *
 TAO_POA::adapter_name (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

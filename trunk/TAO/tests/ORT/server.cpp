@@ -98,13 +98,9 @@ int main (int argc, char *argv[])
 
       // First lets check if the new -ORBId, -ORBServerId options are
       // working correctly.
-      // @@ Priyanka, use "orb->id (ACE_ENV_SINGLE_ARG_PARAMETER)"
-      //    here.  It is standard and portable.  Don't forget the
-      //    ACE_TRY_CHECK.
-      // @@ On second thought.  The ORB_init test already tests the
-      //    -ORBid, and has been doing so for a very long time.  Is
-      //    the below code necessary?
-      CORBA::String_var orb_id = orb->orb_core ()->orbid ();
+      CORBA::String_var orb_id =
+        orb->orb_core ()->orbid (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       if (ACE_OS::strcmp (orb_id.in (), "ORT_test_ORB") != 0)
         {

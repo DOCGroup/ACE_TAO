@@ -34,3 +34,14 @@ create_reference_with_id again .. may be.
 working. But, this can be checked by passing command line parameters
 and invoking the corresponding functions to check if they are working
 perfectly. 
+
+How to run:
+===========
+
+Run the server.
+
+./server -o ior_file -ORBId ORT_test_ORB -ORBServerId ORT_test_server
+
+Run the client.
+
+./client -k file://ior_file
