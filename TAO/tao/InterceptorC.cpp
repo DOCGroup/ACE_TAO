@@ -7,8 +7,9 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#if (TAO_HAS_INTERCEPTORS == 1)
 #include "InterceptorC.h"
+
+#if (TAO_HAS_INTERCEPTORS == 1)
 
 #if !defined (__ACE_INLINE__)
 #include "InterceptorC.i"
