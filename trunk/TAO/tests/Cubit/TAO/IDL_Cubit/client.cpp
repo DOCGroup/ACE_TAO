@@ -547,8 +547,7 @@ Cubit_Client::print_stats (const char *call_name,
       ACE_DEBUG ((LM_DEBUG,
                   "\treal_time\t= %u ms,\n"
                   "\t%u calls/second\n",
-                  elapsed_time.real_time < 0 ? 0 :
-                    elapsed_time.real_time / 1000u,
+                  elapsed_time.real_time / 1000u,
                   calls_per_sec));
 #else  /* ! ACE_LACKS_FLOATING_POINT */
       // elapsed_time.real_time is in units of seconds.
