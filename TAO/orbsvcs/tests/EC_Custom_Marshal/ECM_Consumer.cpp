@@ -173,7 +173,7 @@ void
 Driver::push_consumer (void* /* consumer_cookie */,
                        ACE_hrtime_t /* arrival */,
                        const RtecEventComm::EventSet& events,
-                       CORBA::Environment &ACE_TRY_ENV)
+                       CORBA::Environment &)
 {
   // int ID =
   //   (ACE_reinterpret_cast(Test_Consumer**,consumer_cookie)
