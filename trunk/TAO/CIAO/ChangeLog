@@ -1,3 +1,10 @@
+Fri Feb 27 11:35:41 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Fixed code generation errors reported by Edward Mulholland 
+          <emulholl@atl.lmco.com>.
+
 Thu Feb 26 14:21:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* CIAOTAO.mwc:

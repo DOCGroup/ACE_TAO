@@ -89,12 +89,6 @@ namespace
     {
       os << endl << STRS[ENV_ARG] << ");";
     }
-
-    virtual void
-    comma (Type&)
-    {
-      os << "," << endl;
-    }
   };
 
   struct OpExecReturnEmitter : Traversal::Type,
@@ -1372,7 +1366,12 @@ namespace
 
         if (!scope.simple ())
         {
-          os << "_" << Name (scope.begin () + 1, scope.end ());
+//          os << "_" << Name (scope.begin () + 1, scope.end ());
+          
+          for (Name::Iterator i (scope.begin () + 1); i != scope.end (); ++i)
+          {
+            os << "_" << i->str ();
+          }
         }
 
         os << "::" << t.name () << "_Servant";
@@ -2885,7 +2884,7 @@ namespace
          << endl
          << "::Components::CCMHome_var home =" << endl
          << "::Components::CCMHome::_narrow (" << endl
-         << "hobj" << endl
+         << "hobj.in ()" << endl
          << STRS[ENV_ARG] << ");"
          << "ACE_CHECK_RETURN (";
 
