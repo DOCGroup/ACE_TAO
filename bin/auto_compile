@@ -29,9 +29,6 @@ use File::Basename;
 use FileHandle;
 require POSIX;
 
-use lib "$ENV{ACE_ROOT}/bin";
-require run_all_list;
-
 # This is the module we will checkout, someday someone could define a
 # smaller module.
 $MODULE='ACE_wrappers';
@@ -41,38 +38,52 @@ $MODULE='ACE_wrappers';
 # Find out the command name.
 $CMD = basename($0);
 
-# Extract configuration information from command line.
-# TODO: Some validation and checking should be done here.
-$CHECKOUT = $ARGV[0];
-$BUILD    = $ARGV[1];
-$LOGDIR   = $ARGV[2];
-$ADMIN    = $ARGV[3];
-$MAIL = "mail";
-if ($#ARGV >= 4) {
-  $MAIL     = $ARGV[4];
+$single_threaded = 0;
+$minimum_corba = 0;
+$dont_update = 0;
+$pre_realclean = 0;
+$post_realclean = 0;
+$debug = 0;
+
+@ARGS = ();
+while ($#ARGV >= 0) {
+  if (!($ARGV[0] =~ m/-/)) {
+    push @ARGS, $ARGV[0];
+    shift;
+  } elsif ($ARGV[0] eq "-single_threaded") {
+    $single_threaded = 1;
+    shift;
+  } elsif ($ARGV[0] eq "-minimum_corba") {
+    $minimum_corba = 1;
+    shift;
+  } elsif ($ARGV[0] eq "-dont_update") {
+    $dont_update = 1;
+    shift;
+  } elsif ($ARGV[0] eq "-pre_realclean") {
+    $pre_realclean = 1;
+    shift;
+  } elsif ($ARGV[0] eq "-post_realclean") {
+    $post_realclean = 1;
+    shift;
+  } elsif ($ARGV[0] eq "-debug") {
+    $debug = 1;
+    shift;
+  }
 }
 
-if (0) {
+# Extract configuration information from command line.
+  # TODO: Some validation and checking should be done here.
+$CHECKOUT = $ARGS[0];
+$BUILD    = $ARGS[1];
+$LOGDIR   = $ARGS[2];
+$ADMIN    = $ARGS[3];
+$MAIL = "mail";
+if ($#ARGS >= 4) {
+  $MAIL     = $ARGS[4];
+}
 
-  @BUILD_LIST = ('ace');
-  @RUN_LIST = ('TAO/tests/OctetSeq , run_test.pl');
-  $ADMIN = $ENV{'USER'};
-
-} else {
-
-@BUILD_LIST=
-    ('ace',
-     'netsvcs',
-     'tests',
-     'apps/gperf',
-     'websvcs',
-#     'TAO/tao',
-#     'TAO/TAO_IDL',
-#     'TAO/orbsvcs',
-#     'TAO/tests',
-#     'TAO/examples/POA',
-#     'TAO/performance-tests');
-     'TAO');
+$ENV{'ACE_ROOT'} = $CHECKOUT . '/' . $MODULE . '/build/' . $BUILD;
+$ENV{'TAO_ROOT'} = $CHECKOUT . '/' . $MODULE . '/build/' . $BUILD . '/TAO';
 
 # We obtain our revision to report errors.
 $REVISION='$Revision$ ';
@@ -87,6 +98,44 @@ $LOGFILE = $LOGDIR . '/' . $LOGBASE;
 $HOST = `hostname`;
 chop $HOST;
 $LOG_NAME =  $HOST . "_" . $BUILD . "_" . $LOGBASE;
+
+if ($debug) {
+  print "CHECKOUT = $CHECKOUT\n";
+  print "BUILD = $BUILD\n";
+  print "LOGDIR = $LOGDIR\n";
+  print "ADMIN = $ADMIN\n";
+  print "MAIL = $MAIL\n";
+  print "ACE_ROOT = $ENV{ACE_ROOT}\n";
+  print "TAO_ROOT = $ENV{TAO_ROOT}\n";
+}
+
+push @INC, "$ENV{ACE_ROOT}/bin";
+require run_all_list;
+
+if ($debug) {
+
+  @BUILD_LIST = ('ace');
+  @RUN_LIST = ('TAO/tests/OctetSeq , run_test.pl');
+  @SINGLE_THREADED_LIST = ('TAO/tests/OctetSeq , run_test.pl');
+  @MINIMUM_CORBA_LIST = ('TAO/tests/OctetSeq , run_test.pl');
+  $ADMIN = $ENV{'USER'};
+
+} else {
+
+  @BUILD_LIST=
+    ('ace',
+     'netsvcs',
+     'tests',
+     'apps/gperf',
+     'websvcs',
+#     'TAO/tao',
+#     'TAO/TAO_IDL',
+#     'TAO/orbsvcs',
+#     'TAO/tests',
+#     'TAO/examples/POA',
+#     'TAO/performance-tests');
+     'TAO');
+}
 
 sub mydie {
   # First clear the lock, so the next execution works...
@@ -150,7 +199,7 @@ if (-f $disable_file) {
 
   local $to = $ENV{'USER'};
   open (MAIL, "|".$MAIL.' -s [AUTO_COMPILE] '.$to)
-    || die ("Cannot open mail pipe for: $msg\n");
+    || die "Cannot open mail pipe for DISABLED error\n";
 
   print MAIL 'The following message is brought to you by: ', "\n";
   print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $CHECKOUT\n";
@@ -158,7 +207,7 @@ if (-f $disable_file) {
   print MAIL "DISABLED\n";
 
   close (MAIL)
-    || die ("Cannot send mail for DISABLED execution\n");
+    || die "Cannot send mail for DISABLED execution\n";
 
   exit 0;
 }
@@ -183,25 +232,27 @@ LOG->autoflush ();
 chdir($CHECKOUT)
     || mydie "Cannot chdir to $CHECKOUT";
 
-$date = localtime;
-print LOG "$CMD: starting checkout at ", $date, "\n";
-open(CVS, "cvs -q checkout -P $MODULE 2>&1 |")
+if ($dont_update == 0) {
+  $date = localtime;
+  print LOG "$CMD: starting checkout at ", $date, "\n";
+  open(CVS, "cvs -q checkout -P $MODULE 2>&1 |")
     || mydie "cannot start checkout of $MODULE";
 
-$conflicts = 0;
-while (<CVS>) {
+  $conflicts = 0;
+  while (<CVS>) {
     if (m/^C /) {
-	$conflicts = 1;
+      $conflicts = 1;
     }
     print LOG $_;
-}
-close(CVS)
+  }
+  close(CVS)
     || mydie "error while checking out $MODULE";
-$date = localtime;
-print LOG "$CMD: checkout finished at ", $date, "\n";
+  $date = localtime;
+  print LOG "$CMD: checkout finished at ", $date, "\n";
 
-if ($conflicts != 0) {
+  if ($conflicts != 0) {
     mydie "conflicts on checkout";
+  }
 }
 
 chdir($MODULE)
@@ -222,11 +273,27 @@ print LOG "$CMD: clone finished at ", $date, "\n";
 chdir('build/' . $BUILD)
     || mydie "cannot chdir to $BUILD";
 
-# This is needed for real make run....
-$ENV{'ACE_ROOT'} = $CHECKOUT . '/' . $MODULE . '/build/' . $BUILD;
-$ENV{'TAO_ROOT'} = $CHECKOUT . '/' . $MODULE . '/build/' . $BUILD . '/TAO';
-
 @failures = ();
+
+if ($pre_realclean) {
+  foreach $i (@BUILD_LIST) {
+    $date = localtime;
+    print LOG "$CMD: =============================================\n";
+    print LOG "$CMD: make realclean in $i started at ", $date, "\n";
+    open(MAKE, "make -k $MAKEFLAGS -C $i 2>&1 |");
+
+    while (<MAKE>) {
+      # Ignore errors....
+    }
+    if (close(MAKE) == 0) {
+	push @failures, "errors while cleaning $i";
+    }
+    $date = localtime;
+    print LOG "$CMD: make realclean in $i finished at ", $date, "\n";
+    print LOG "$CMD: =============================================\n\n";
+  }
+}
+
 $MAKEFLAGS .= "";
 foreach $i (@BUILD_LIST) {
     $date = localtime;
@@ -272,7 +339,14 @@ foreach $i (@BUILD_LIST) {
     print LOG "$CMD: =============================================\n\n";
 }
 
-foreach $i (@RUN_LIST) {
+@LIST = @RUN_LIST;
+if ($single_threaded) {
+  @LIST = @SINGLE_THREADED_LIST;
+} elsif ($minimum_corba) {
+  @LIST = @MINIMUM_CORBA_LIST;
+}
+
+foreach $i (@LIST) {
     local @test_info = split (/\ \,\ /, $i);
     local $directory = $test_info[0];
     local $program = $test_info[1];
