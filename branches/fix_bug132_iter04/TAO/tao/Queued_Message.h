@@ -170,7 +170,7 @@ public:
    * @return Returns 1 if the TAO_Queued_Message has any more data to
    *         send.
    */
-  virtual int bytes_transferred (size_t &byte_count) = 0;
+  virtual void bytes_transferred (size_t &byte_count) = 0;
 
   /// Reclaim resources
   /**
