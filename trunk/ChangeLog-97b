@@ -1,3 +1,9 @@
+Thu Nov 20 08:36:54 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* ace/Thread_Manager.{h,cpp}:  Added a dummy argument to internal
+	  thread functions.  Without them, MSVC wrongly optimizes codes
+	  and the stack were all clobbered when entering these functions.
+
 Wed Nov 19 23:24:03 1997    <nw1@CHA-CHA>
 
 	* ace/Reactor.h: Rearragned macros so we use Select_Reactor as
