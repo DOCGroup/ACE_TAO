@@ -1,3 +1,75 @@
+Mon Oct  2 14:59:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_argument.cpp:
+	* TAO_IDL/ast/ast_array.cpp:
+	* TAO_IDL/ast/ast_attribute.cpp:
+	* TAO_IDL/ast/ast_check.cpp:
+	* TAO_IDL/ast/ast_concrete_type.cpp:
+	* TAO_IDL/ast/ast_constant.cpp:
+	* TAO_IDL/ast/ast_decl.cpp:
+	* TAO_IDL/ast/ast_enum.cpp:
+	* TAO_IDL/ast/ast_enum_val.cpp:
+	* TAO_IDL/ast/ast_exception.cpp:
+	* TAO_IDL/ast/ast_expression.cpp:
+	* TAO_IDL/ast/ast_field.cpp:
+	* TAO_IDL/ast/ast_interface.cpp:
+	* TAO_IDL/ast/ast_operation.cpp:
+	* TAO_IDL/ast/ast_predefined_type.cpp:
+	* TAO_IDL/ast/ast_redef.cpp:
+	* TAO_IDL/ast/ast_sequence.cpp:
+	* TAO_IDL/ast/ast_structure.cpp:
+	* TAO_IDL/ast/ast_type.cpp:
+	* TAO_IDL/ast/ast_union.cpp:
+	* TAO_IDL/be/be_decl.cpp:
+	* TAO_IDL/be/be_enum.cpp:
+	* TAO_IDL/be/be_exception.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_operation.cpp:
+	* TAO_IDL/be/be_predefined_type.cpp:
+	* TAO_IDL/be/be_sequence.cpp:
+	* TAO_IDL/be/be_structure.cpp:
+	* TAO_IDL/be/be_type.cpp:
+	* TAO_IDL/be/be_union.cpp:
+	* TAO_IDL/be/be_valuetype.cpp:
+	* TAO_IDL/be_include/be_decl.h:
+	* TAO_IDL/be_include/be_enum.h:
+	* TAO_IDL/be_include/be_exception.h:
+	* TAO_IDL/be_include/be_operation.h:
+	* TAO_IDL/be_include/be_sequence.h:
+	* TAO_IDL/be_include/be_structure.h:
+	* TAO_IDL/be_include/be_type.h:
+	* TAO_IDL/be_include/be_union.h:
+	* TAO_IDL/be_include/be_valuetype.h:
+	* TAO_IDL/include/ast_argument.h:
+	* TAO_IDL/include/ast_array.h:
+	* TAO_IDL/include/ast_attribute.h:
+	* TAO_IDL/include/ast_concrete_type.h:
+	* TAO_IDL/include/ast_constant.h:
+	* TAO_IDL/include/ast_decl.h:
+	* TAO_IDL/include/ast_enum.h:
+	* TAO_IDL/include/ast_enum_val.h:
+	* TAO_IDL/include/ast_exception.h:
+	* TAO_IDL/include/ast_expression.h:
+	* TAO_IDL/include/ast_field.h:
+	* TAO_IDL/include/ast_generator.h:
+	* TAO_IDL/include/ast_interface.h:
+	* TAO_IDL/include/ast_operation.h:
+	* TAO_IDL/include/ast_predefined_type.h:
+	* TAO_IDL/include/ast_sequence.h:
+	* TAO_IDL/include/ast_structure.h:
+	* TAO_IDL/include/ast_type.h:
+	* TAO_IDL/include/ast_union.h:
+
+	  Moved some functions and members in the be_<node> 
+	  classes to the corresponding AST_node> base class, in
+	  preparation for writing visitors for the IfR pluggable BE
+	  that visit the AST_<node> classes only. This way, none
+	  of the be_<node> classes need be included in the IfR
+	  pluggable BE, making it much smaller than the IDL compiler
+	  BE. Also did the ususal code cleanup in these files -
+	  replaced 'new' with 'ACE_NEW*', cleaned up indentation,
+	  format, etc.
+
 Mon Oct  2 13:50:08 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/FaultTolerance/IOGR/README: Updated the file.
