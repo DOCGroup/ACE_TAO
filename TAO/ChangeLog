@@ -1,3 +1,19 @@
+Tue Nov 25 14:13:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/Kokyu_dsrt_schedulers/FP_SchedulingC.cpp:
+        * examples/Kokyu_dsrt_schedulers/FP_SchedulingC.h:
+        * examples/Kokyu_dsrt_schedulers/FP_SchedulingC.i:
+        * examples/Kokyu_dsrt_schedulers/Kokyu_qosC.cpp:
+        * examples/Kokyu_dsrt_schedulers/Kokyu_qosC.h:
+        * examples/Kokyu_dsrt_schedulers/Kokyu_qosC.i:
+        * examples/Kokyu_dsrt_schedulers/MIF_SchedulingC.cpp:
+        * examples/Kokyu_dsrt_schedulers/MIF_SchedulingC.h:
+        * examples/Kokyu_dsrt_schedulers/MIF_SchedulingC.i:
+        * examples/Kokyu_dsrt_schedulers/MUF_SchedulingC.cpp:
+        * examples/Kokyu_dsrt_schedulers/MUF_SchedulingC.h:
+        * examples/Kokyu_dsrt_schedulers/MUF_SchedulingC.i:
+          Removed these files from repo--they are automatically generated.
+
 Tue Nov 25 07:16:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/Naming_Service/Makefile:

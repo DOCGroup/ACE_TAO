@@ -51,12 +51,12 @@ endif # COMPILE_COMPONENT
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 
-ifdef BIN
-  include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-endif # BIN
-
+ifdef DIRS
+  include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
+else # !DIRS
+  include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+endif # DIRS
 ifdef LIB
   include_lib = 1
 endif # LIB
@@ -69,6 +69,9 @@ ifeq ($(include_lib),1)
   include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 endif
 
+ifdef BIN
+  include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+endif # BIN
 
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
