@@ -6,10 +6,8 @@
 
 module RtecEventChannelAdmin {
 
-  exception AlreadyConnected {
-  };
-  exception TypeError {
-  };
+  exception AlreadyConnected {};
+  exception TypeError {};
 
   struct Dependency {
     RtecEventComm::Event event_;
@@ -55,31 +53,12 @@ module RtecEventChannelAdmin {
   };
 
   interface EventChannel {
-    exception SYNCHRONIZATION_ERROR {
-      long minor;
-      long status;
-      string name;
-    };
-    exception QOS_ERROR {
-      long minor;
-      long status;
-      string name;
-    };
-    exception SUBSCRIPTION_ERROR {
-      long minor;
-      long status;
-      string name;
-    };
-    exception CORRELATION_ERROR {
-      long minor;
-      long status;
-      string name;
-    };
-    exception DISPATCH_ERROR {
-      long minor;
-      long status;
-      string name;
-    };
+    exception SYNCHRONIZATION_ERROR {};
+    exception QOS_ERROR {};
+    exception SUBSCRIPTION_ERROR {};
+    exception CORRELATION_ERROR {};
+    exception DISPATCH_ERROR {};
+
     ConsumerAdmin for_consumers();
     SupplierAdmin for_suppliers();
 

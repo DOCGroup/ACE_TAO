@@ -50,9 +50,9 @@ LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
 
 # Leave the scheduler output out if this is a config run.
-ifneq ($(config),1)
+ifeq ($(runtime),1)
 EVENT_LATENCY_CONFIG_OBJS=Event_Latency_Scheduler_Runtime.o
-endif # config
+endif # runtime
 
 ifeq ($(probe),1)
     CCFLAGS += -DACE_ENABLE_TIMEPROBES

@@ -25,7 +25,7 @@ Preemption_Priority (RtecScheduler::handle_t rtinfo)
   RtecScheduler::Sub_Priority subpriority;
   RtecScheduler::Preemption_Priority preemption_priority;
 
-  ACE_TRY
+  TAO_TRY
     {
       ACE_TIMEPROBE ("  Preemption_Priority - priority requested");
       ACE_Scheduler_Factory::server ()->priority
@@ -33,22 +33,22 @@ Preemption_Priority (RtecScheduler::handle_t rtinfo)
 	 thread_priority,
 	 subpriority,
 	 preemption_priority,
-	 ACE_TRY_ENV);
-      ACE_CHECK_ENV
+	 TAO_TRY_ENV);
+      TAO_CHECK_ENV
       ACE_TIMEPROBE ("  connected - priority obtained");
     }
-  ACE_CATCH (RtecScheduler::UNKNOWN_TASK, ex_ut)
+  TAO_CATCH (RtecScheduler::UNKNOWN_TASK, ex_ut)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "UNKNOWN_TASK %p.\n",
 			 "Preemption_Priority"), 0);
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Unexpected exception %p.\n",
 			 "Preemption_Priority"), 0);
 
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
   return preemption_priority;
 }
 
@@ -209,19 +209,19 @@ public:
 
   virtual void execute (void)
     {
-      ACE_TRY
+      TAO_TRY
 	{
 	  ACE_ES_Dispatch_Request *request = request_;
-	  dispatching_module_->push (request, ACE_TRY_ENV);
-	  ACE_CHECK_ENV;
+	  dispatching_module_->push (request, TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
 	  delete this;
 	}
-      ACE_CATCHANY
+      TAO_CATCHANY
 	{
 	  ACE_ERROR ((LM_ERROR, "(%t) Flush_Queue_ACT::execute: "
 		      "Unknown exception..\n"));
 	}
-      ACE_ENDTRY;
+      TAO_ENDTRY;
     }
 
   ACE_ES_Dispatch_Request *request_;
@@ -247,21 +247,21 @@ ACE_ES_Priority_Timer::schedule_timer (RtecScheduler::handle_t rt_info,
       RtecScheduler::handle_t timer_rtinfo =
 	ACE_Task_Manager::instance()->GetReactorTask (preemption_priority)->rt_info ();
 
-      ACE_TRY
+      TAO_TRY
 	{
 	  ACE_Scheduler_Factory::server()->add_dependency
-	    (rt_info, timer_rtinfo, 1, ACE_TRY_ENV);
-	  ACE_CHECK_ENV;
+	    (rt_info, timer_rtinfo, 1, TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
 
 	  ACE_DEBUG ((LM_ERROR, "ACE_ES_Priority_Timer::schedule_timer - "
 		      "add_dependency (%d,%d,%d)\n",
 		      rt_info, timer_rtinfo, 1));
 	}
-      ACE_CATCHANY
+      TAO_CATCHANY
 	{
 	  ACE_ERROR ((LM_ERROR, "add dependency failed"));
 	}
-      ACE_ENDTRY;
+      TAO_ENDTRY;
     }
 
   // @@ We're losing resolution here.
@@ -387,7 +387,7 @@ ACE_Push_Supplier_Proxy::connect_push_supplier (RtecEventComm::PushSupplier_ptr 
 						CORBA::Environment &_env)
 {
   if (this->connected ())
-    ACE_THROW (RtecEventChannelAdmin::AlreadyConnected);
+    TAO_THROW (RtecEventChannelAdmin::AlreadyConnected);
 
   push_supplier_ =
     RtecEventComm::PushSupplier::_duplicate(push_supplier);
@@ -413,13 +413,13 @@ ACE_Push_Supplier_Proxy::push (const RtecEventComm::EventSet &event,
 {
   ACE_TIMEPROBE ("  enter Push_Supplier_Proxy::push");
   if (!this->connected ())
-    ACE_THROW (RtecEventComm::Disconnected);
+    TAO_THROW (RtecEventComm::Disconnected);
 
   // @@ TOTAL HACK
   ACE_hrtime_t ec_recv = ACE_OS::gethrtime ();
   for (CORBA::ULong i = 0; i < event.length (); ++i)
     {
-      ACE_OS::memcpy (&event[i].ec_recv_time_, &ec_recv,
+      ACE_OS::memcpy (ACE_const_cast(void*,&event[i].ec_recv_time_), &ec_recv,
 		      sizeof (RtecEventComm::Time));
     }
   supplier_module_->push (this, event, _env);
@@ -439,16 +439,16 @@ ACE_Push_Supplier_Proxy::disconnect_push_consumer (CORBA::Environment &_env)
 void
 ACE_Push_Supplier_Proxy::shutdown (void)
 {
-  ACE_TRY
+  TAO_TRY
     {
-      push_supplier_->disconnect_push_supplier (ACE_TRY_ENV);
-      ACE_CHECK_ENV;
+      push_supplier_->disconnect_push_supplier (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
       ACE_ERROR ((LM_ERROR, "ACE_Push_Supplier_Proxy::shutdown failed.\n"));
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 }
 
 // ************************************************************
@@ -471,7 +471,7 @@ ACE_Push_Consumer_Proxy::connect_push_consumer (RtecEventComm::PushConsumer_ptr 
 						CORBA::Environment &_env)
 {
   if (this->connected ())
-    ACE_THROW (RtecEventChannelAdmin::AlreadyConnected);
+    TAO_THROW (RtecEventChannelAdmin::AlreadyConnected);
 
   push_consumer_ =
     RtecEventComm::PushConsumer::_duplicate(push_consumer);
@@ -511,16 +511,16 @@ ACE_Push_Consumer_Proxy::resume (CORBA::Environment &)
 void
 ACE_Push_Consumer_Proxy::shutdown (void)
 {
-  ACE_TRY
+  TAO_TRY
     {
-      push_consumer_->disconnect_push_consumer (ACE_TRY_ENV);
-      ACE_CHECK_ENV;
+      push_consumer_->disconnect_push_consumer (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
       ACE_ERROR ((LM_ERROR, "ACE_Push_Consumer_Proxy::shutdown failed.\n"));
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 }
 
 // ************************************************************
@@ -562,16 +562,16 @@ ACE_EventChannel::~ACE_EventChannel (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) ACE_EventChannel deleting all modules.\n"));
 
-  ACE_TRY
+  TAO_TRY
     {
-      this->destroy (ACE_TRY_ENV);
-      ACE_CHECK_ENV;
+      this->destroy (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
       ACE_ERROR ((LM_ERROR, "%p.\n", "ACE_EventChannel::~ACE_EventChannel"));
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
   // @@ TODO: Shouldn't we use _release() instead?
   delete rtu_manager_;
   delete consumer_module_;
@@ -604,14 +604,14 @@ ACE_EventChannel::destroy (CORBA::Environment &_env)
   // Flush all messages in the channel.
   Shutdown_Channel *sc = new Shutdown_Channel (this);
   if (sc == 0)
-    ACE_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+    TAO_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
   // @@ TODO: Orbix parameters
   // (0, CORBA::COMPLETED_NO, "ACE_EventChannel::destroy"));
 
   // Create a wrapper around the dispatch request.
   Flush_Queue_ACT *act = new Flush_Queue_ACT (sc, dispatching_module_);
   if (act == 0)
-    ACE_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+    TAO_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
   // @@ TODO Orbix parameters
   // (0, CORBA::COMPLETED_NO, "ACE_EventChannel::destroy"));
 
@@ -982,7 +982,7 @@ ACE_ES_Consumer_Module::disconnecting (ACE_Push_Consumer_Proxy *consumer,
   {
     ACE_ES_GUARD ace_mon (lock_);
     if (ace_mon.locked () == 0)
-      ACE_THROW (SYNC_ERROR);
+      TAO_THROW (SYNC_ERROR);
     // @@ TODO Orbix parameters
     // (0, CORBA::COMPLETED_NO, "ACE_ES_Consumer_Module::disconnected"));
 
@@ -1007,14 +1007,14 @@ ACE_ES_Consumer_Module::disconnecting (ACE_Push_Consumer_Proxy *consumer,
   // delete the proxy.
   Shutdown_Consumer *sc = new Shutdown_Consumer (this, consumer);
   if (sc == 0)
-    ACE_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+    TAO_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
   // @@ TODO Orbix parameters:
   // (0, CORBA::COMPLETED_NO, "ACE_ES_Consumer_Module::disconnected"));
 
   // Create a wrapper around the dispatch request.
   Flush_Queue_ACT *act = new Flush_Queue_ACT (sc, channel_->dispatching_module_);
   if (act == 0)
-    ACE_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+    TAO_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
   // @@ TODO Orbix parameters:
   // (0, CORBA::COMPLETED_NO, "ACE_ES_Consumer_Module::disconnecting"));
 
@@ -1070,7 +1070,7 @@ ACE_ES_Consumer_Module::obtain_push_supplier (CORBA::Environment &_env)
     {
       ACE_ERROR ((LM_ERROR, "ACE_EventChannel"
 		  "::obtain_push_supplier failed.\n"));
-      ACE_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), 0);
+      TAO_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), 0);
       // @@ TODO Orbix parameters:
       // (0, CORBA::COMPLETED_NO, "ACE_ES_Consumer_Module::obtain_push_supplier"));
     }
@@ -1080,7 +1080,7 @@ ACE_ES_Consumer_Module::obtain_push_supplier (CORBA::Environment &_env)
     if (ace_mon.locked () == 0)
       {
 	delete new_consumer;
-	ACE_THROW_RETURN (SYNC_ERROR, 0);
+	TAO_THROW_RETURN (SYNC_ERROR, 0);
 	// @@ TODO Orbix parameters:
 	// (0, CORBA::COMPLETED_NO,
 	//  "ACE_ES_Consumer_Module::obtain_push_supplier"), 0);
@@ -1117,7 +1117,7 @@ ACE_ES_Correlation_Module::connected (ACE_Push_Consumer_Proxy *consumer,
 {
   // Initialize the consumer correlation filter.
   if (consumer->correlation ().connected (consumer, this) == -1)
-    ACE_THROW (CORRELATION_ERROR);
+    TAO_THROW (CORRELATION_ERROR);
   // @@ TODO Orbix parameters:
   // (0, CORBA::COMPLETED_NO, "ACE_ES_Correlation_Module::connected"));
 }
@@ -1830,7 +1830,7 @@ ACE_ES_Subscription_Module::connected (ACE_Push_Supplier_Proxy *supplier,
  {
     ACE_ES_WGUARD ace_mon (lock_);
     if (ace_mon.locked () == 0)
-      ACE_THROW (SYNC_ERROR);
+      TAO_THROW (SYNC_ERROR);
     // @@ TODO: Orbix parameters
     // (0, CORBA::COMPLETED_NO, "ACE_ES_Subscription_Module::connected"));
 
@@ -1906,7 +1906,7 @@ ACE_ES_Subscription_Module::connected (ACE_Push_Supplier_Proxy *supplier,
 			    new_subscribers->dependency_info_->number_of_calls));
 		if (_env.exception () != 0)
 		  return;
-		// @@ TODO use the ACE_TRY macros.
+		// @@ TODO use the TAO_TRY macros.
 
 		if (new_subscribers->consumers_.insert (*proxy) == -1)
 		  {
@@ -1968,12 +1968,12 @@ ACE_ES_Subscription_Module::disconnecting (ACE_Push_Supplier_Proxy *supplier,
 {
   ACE_ES_WGUARD ace_mon (lock_);
   if (ace_mon.locked () == 0)
-    ACE_THROW (SYNC_ERROR);
+    TAO_THROW (SYNC_ERROR);
   // @@ TODO: Orbix parameters
   // (0, CORBA::COMPLETED_NO, "ACE_ES_Subscription_Module::disconnected"));
 
   if (all_suppliers_.remove (supplier) == -1)
-    ACE_THROW (SUBSCRIPTION_ERROR);
+    TAO_THROW (SUBSCRIPTION_ERROR);
   // @@ TODO: Orbix parameters.
   // (0, CORBA::COMPLETED_NO, "ACE_ES_Subscription_Module remove failed"));
 
@@ -2059,14 +2059,14 @@ ACE_ES_Subscription_Module::subscribe_source (ACE_ES_Consumer_Rep *consumer,
 		     iter2.next (temp) != 0;
 		     iter2.advance ())
 		  {
-		    ACE_TRY
+		    TAO_TRY
 		      {
 			ACE_Scheduler_Factory::server()->add_dependency
 			  (consumer->dependency()->rt_info,
 			   temp->int_id_->dependency_info_->rt_info,
 			   temp->int_id_->dependency_info_->number_of_calls,
-			   ACE_TRY_ENV);
-			ACE_CHECK_ENV;
+			   TAO_TRY_ENV);
+			TAO_CHECK_ENV;
 
 			ACE_DEBUG ((LM_DEBUG,
 				    "%s - add_dependency (%d,%d,%d)\n",
@@ -2075,12 +2075,12 @@ ACE_ES_Subscription_Module::subscribe_source (ACE_ES_Consumer_Rep *consumer,
 				    temp->int_id_->dependency_info_->rt_info,
 				    temp->int_id_->dependency_info_->number_of_calls));
 		      }
-		    ACE_CATCHANY
+		    TAO_CATCHANY
 		      {
-			ACE_TRY_ENV.print_exception ("error adding dependency");
+			TAO_TRY_ENV.print_exception ("error adding dependency");
 			return -1;
 		      }
-		    ACE_ENDTRY;
+		    TAO_ENDTRY;
 		  }
 	      }
 
@@ -2136,27 +2136,27 @@ ACE_ES_Subscription_Module::subscribe_type (ACE_ES_Consumer_Rep *consumer,
 	  // Success.  Add the supplier dependency info to the
 	  // consumer's dependency list.
 	  // @@ TODO handle exceptions.
-	  ACE_TRY
+	  TAO_TRY
 	    {
 	      ACE_Scheduler_Factory::server()->add_dependency
 		(consumer->dependency ()->rt_info,
 		 dependency_info->rt_info,
 		 dependency_info->number_of_calls,
-		 ACE_TRY_ENV);
+		 TAO_TRY_ENV);
 	      ACE_DEBUG ((LM_ERROR, "%s - add_dependency (%d,%d,%d)\n",
 			  "ACE_ES_Priority_Timer::schedule_timer - ",
 			  consumer->dependency ()->rt_info,
 			  dependency_info->rt_info,
 			  dependency_info->number_of_calls));
-	      ACE_CHECK_ENV;
+	      TAO_CHECK_ENV;
 	    }
-	  ACE_CATCHANY
+	  TAO_CATCHANY
 	    {
 	      ACE_ERROR ((LM_ERROR, "Subscription_Module::subscribe_type:"
 			  " add_dependency failed.\n"));
 	      return -1;
 	    }
-	  ACE_ENDTRY;
+	  TAO_ENDTRY;
 	}
     }
 
@@ -2202,27 +2202,27 @@ ACE_ES_Subscription_Module::subscribe_source_type (ACE_ES_Consumer_Rep *consumer
 		// Success.
 		// Add the supplier to the consumer's dependency list.
 		// @@ TODO handle exceptions.
-		ACE_TRY
+		TAO_TRY
 		  {
 		    ACE_Scheduler_Factory::server()->add_dependency
 		      (consumer->dependency ()->rt_info,
 		       dependency_info->rt_info,
 		       dependency_info->number_of_calls,
-		       ACE_TRY_ENV);
+		       TAO_TRY_ENV);
 		    ACE_DEBUG ((LM_ERROR, "%s - add_dependency (%d,%d,%d)\n",
 				"ACE_Subscription_Module::subscribe_source_type - ",
 				consumer->dependency ()->rt_info,
 				dependency_info->rt_info,
 				dependency_info->number_of_calls));
-		    ACE_CHECK_ENV;
+		    TAO_CHECK_ENV;
 		  }
-		ACE_CATCHANY
+		TAO_CATCHANY
 		  {
 		    ACE_ERROR_RETURN ((LM_ERROR, "Subscription_Module::subscribe_source_type:"
 				       " add_dependency failed.\n"),
 				      -1);
 		  }
-		ACE_ENDTRY;
+		TAO_ENDTRY;
 		consumer->_duplicate ();
 	      }
 	      /* FALLTHROUGH */
@@ -2523,12 +2523,12 @@ ACE_ES_Supplier_Module::disconnecting (ACE_Push_Supplier_Proxy *supplier,
 {
   ACE_ES_GUARD ace_mon (lock_);
   if (ace_mon.locked () == 0)
-    ACE_THROW (SYNC_ERROR);
+    TAO_THROW (SYNC_ERROR);
   // @@ TODO Orbix parameters:
   // (0, CORBA::COMPLETED_NO, "ACE_ES_Supplier_Module::disconnected"));
 
   if (all_suppliers_.remove (supplier) == -1)
-    ACE_THROW (SUBSCRIPTION_ERROR);
+    TAO_THROW (SUBSCRIPTION_ERROR);
   // @@ TODO Orbix parameters:
   // (0, CORBA::COMPLETED_NO, "ACE_ES_Supplier_Module remove failed"));
 
@@ -2583,7 +2583,7 @@ ACE_ES_Supplier_Module::obtain_push_consumer (CORBA::Environment &_env)
   ACE_Push_Supplier_Proxy *new_supplier = new ACE_Push_Supplier_Proxy (this);
 
   if (new_supplier == 0)
-    ACE_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), 0);
+    TAO_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), 0);
   // @@ TODO Orbix parameters:
   // (0, CORBA::COMPLETED_NO, "ACE_ES_Supplier_Module::obtain_push_consumer"));
 
@@ -2592,7 +2592,7 @@ ACE_ES_Supplier_Module::obtain_push_consumer (CORBA::Environment &_env)
     if (ace_mon.locked () == 0)
       {
 	delete new_supplier;
-	ACE_THROW_RETURN (SYNC_ERROR, 0);
+	TAO_THROW_RETURN (SYNC_ERROR, 0);
 	// @@ TODO Orbix parameters:
 	// (0, CORBA::COMPLETED_NO,
 	// "ACE_ES_Supplier_Module::obtain_push_consumer"), 0);
@@ -2610,7 +2610,7 @@ ACE_ES_Supplier_Module::push (ACE_Push_Supplier_Proxy *proxy,
 			      const RtecEventComm::EventSet &event,
 			      CORBA::Environment &_env)
 {
-  ACE_TRY
+  TAO_TRY
     {
       for (CORBA::ULong i = 0; i < event.length(); ++i)
 	{
@@ -2619,7 +2619,7 @@ ACE_ES_Supplier_Module::push (ACE_Push_Supplier_Proxy *proxy,
 	  //RtecEventComm::Event *temp = new RtecEventComm::Event (event);
 
 	  if (temp == 0)
-	    ACE_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+	    TAO_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 	  // @@ TODO Orbix parameters:
 	  // (0, CORBA::COMPLETED_NO,
 	  //  "ACE_ES_Supplier_Module::obtain_push_consumer"));
@@ -2629,41 +2629,41 @@ ACE_ES_Supplier_Module::push (ACE_Push_Supplier_Proxy *proxy,
 	  ACE_ES_Event_Container_var event_copy (temp);
 	  temp->_release ();
 	  ACE_TIMEPROBE ("  deliver to Supplier Module (thru Supplier Proxy)");
-	  up_->push (proxy, event_copy, ACE_TRY_ENV);
-	  ACE_CHECK_ENV;
+	  up_->push (proxy, event_copy, TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
 	}
     }
-  ACE_CATCH (RtecEventComm::Disconnected, d)
+  TAO_CATCH (RtecEventComm::Disconnected, d)
     {
       ACE_ERROR ((LM_ERROR, "%p Disconnected.\n",
 		  "ACE_ES_Supplier_Module::push"));
-      ACE_RETHROW;
+      TAO_RETHROW;
     }
-  ACE_CATCH (RtecEventChannelAdmin::TypeError, t)
+  TAO_CATCH (RtecEventChannelAdmin::TypeError, t)
     {
       ACE_ERROR ((LM_ERROR, "%p Type Error.\n",
 		  "ACE_ES_Supplier_Module::push"));
-      ACE_RETHROW;
+      TAO_RETHROW;
     }
-  ACE_CATCH (CORBA::NO_MEMORY, e)
+  TAO_CATCH (CORBA::NO_MEMORY, e)
     {
       ACE_ERROR ((LM_ERROR, "%p No Memory.\n",
 		  "ACE_ES_Supplier_Module::push"));
-      ACE_RETHROW;
+      TAO_RETHROW;
     }
-  ACE_CATCH (CORBA::SystemException, e)
+  TAO_CATCH (CORBA::SystemException, e)
     {
       ACE_ERROR ((LM_ERROR, "%p CORBA System Exception.\n",
 		  "ACE_ES_Supplier_Module::push"));
-      ACE_RETHROW;
+      TAO_RETHROW;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
       ACE_ERROR ((LM_ERROR, "ACE_ES_Supplier_Module::push: "
 		  "Unknown exception.\n"));
-      ACE_RETHROW;
+      TAO_RETHROW;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 }
 
 // ************************************************************
@@ -2679,26 +2679,26 @@ ACE_ES_Priority_Timer::connected (RtecScheduler::handle_t rt_info)
   RtecScheduler::Sub_Priority subpriority;
   RtecScheduler::Preemption_Priority preemption_priority;
 
-  ACE_TRY
+  TAO_TRY
     {
       ACE_TIMEPROBE ("  connected - priority requested");
       ACE_Scheduler_Factory::server ()->priority
 	(rt_info, thread_priority,
-	 subpriority, preemption_priority, ACE_TRY_ENV);
-      ACE_CHECK_ENV;
+	 subpriority, preemption_priority, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       ACE_TIMEPROBE ("  connected - priority obtained");
 #if 0
       ACE_ERROR_RETURN ((LM_ERROR, "%p RtecScheduler::Scheduler::priority failed.\n",
 			 "ACE_ES_Priority_Timer::connected"), -1);
 #endif /* 0 */
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
       ACE_ERROR_RETURN ((LM_ERROR,
 			 "%p RtecScheduler::Scheduler::priority failed.\n",
 			 "ACE_ES_Priority_Timer::connected"), -1);
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   // Just make sure the ORB allocates resources for this priority.
   if (ACE_Task_Manager::instance()->GetReactorTask (preemption_priority) == 0)
@@ -2734,21 +2734,21 @@ ACE_ES_Consumer_Name (const RtecEventChannelAdmin::ConsumerQOS &qos)
 {
   // The first dependency should designate a correlation group.
 
-  ACE_TRY
+  TAO_TRY
     {
       ACE_TIMEPROBE ("  Consumer_Name - priority requested");
       RtecScheduler::RT_Info* rt_info = ACE_Scheduler_Factory::server ()->get
-	(qos.dependencies[1].rt_info, ACE_TRY_ENV);
-      ACE_CHECK_ENV;
+	(qos.dependencies[1].rt_info, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       ACE_TIMEPROBE ("  Consumer_Name - priority obtained");
 
       return rt_info->entry_point;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
       return "no-name";
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
   ACE_NOTREACHED (return "no-name");
 }
 

@@ -68,6 +68,7 @@ RtecEventCommC.cpp RtecEventCommS.cpp RtecEventCommC.h RtecEventCommS.h: RtecEve
 RtecEventChannelAdminC.cpp RtecEventChannelAdminS.cpp RtecEventChannelAdminC.h RtecEventChannelAdminS.h: RtecEventChannelAdmin.idl
 	$(TAO_ROOT)/TAO_IDL/tao_idl $^
 
+clean:
 	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
  
 realclean: clean

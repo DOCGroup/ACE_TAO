@@ -192,94 +192,105 @@
 //
 #if defined (ACE_HAS_EXCEPTIONS) && defined (TAO_IDL_COMPILER_HAS_EXCEPTIONS)
 
-#define ACE_TRY_ENV __env
+#define TAO_TRY_ENV __env
 // The first "do" scope is for the env.
-// The second "do" scope is for the ACE_CHECK_ENV continues.
-#define ACE_TRY \
-try { CORBA::Environment ACE_TRY_ENV;
-#define ACE_CATCH(TYPE,VAR) \
+// The second "do" scope is for the TAO_CHECK_ENV continues.
+#define TAO_TRY \
+try { CORBA::Environment TAO_TRY_ENV;
+#define TAO_CATCH(TYPE,VAR) \
 } catch (TYPE VAR) {
-#define ACE_CATCHANY \
+#define TAO_CATCHANY \
 } catch (...) {
-#define ACE_ENDTRY }
+#define TAO_ENDTRY }
 
 // No need to do checking, exception handling does it for us.
-#define ACE_CHECK_ENV
-#define ACE_CHECK_ENV_RETURN(X, Y)
+#define TAO_CHECK_ENV
+#define TAO_CHECK_ENV_RETURN(X, Y)
 
-#define ACE_THROW(EXCEPTION) throw EXCEPTION;
-#define ACE_THROW_RETURN(EXCEPTION, RETURN) throw EXCEPTION
-#define ACE_RETHROW throw;
+#define TAO_THROW(EXCEPTION) throw EXCEPTION;
+#define TAO_THROW_RETURN(EXCEPTION, RETURN) throw EXCEPTION
+#define TAO_RETHROW throw;
 
-#define ACE_THROW_SPEC(X) throw X
+#define TAO_THROW_SPEC(X) throw X
 
 #else /* ACE_HAS_EXCEPTIONS && TAO_IDL_COMPILES_HAS_EXCEPTIONS */
 
-#define ACE_TRY_ENV __env
-// The first "do" scope is for the env.
-// The second "do" scope is for the ACE_CHECK_ENV continues.
+// Define a local enviroment variable...
+#define TAO_TRY_ENV __env
 
-#define ACE_TRY \
-do { CORBA::Environment ACE_TRY_ENV; \
-int ACE_TRY_FLAG = 1; \
-ACE_TRY_LABEL: \
-if (ACE_TRY_FLAG) \
+// I would like to experiment with this idea in the future....
+// #define TAO_TRY_VAR(X) \
+// do { CORBA::Environment &TAO_TRY_ENV = X; \
+// int TAO_TRY_FLAG = 1; \
+// TAO_TRY_LABEL: \
+// if (TAO_TRY_FLAG) \
+// do {
+
+// The first "do" scope is for the env.
+// The second "do" scope is for the TAO_CHECK_ENV continues.
+#define TAO_TRY \
+do { CORBA::Environment TAO_TRY_ENV; \
+int TAO_TRY_FLAG = 1; \
+TAO_TRY_LABEL: \
+if (TAO_TRY_FLAG) \
 do {
 
 // Each CATCH statement ends the previous scope and starts a new one.
-// Since all CATCH statements can end the ACE_TRY macro, they must all
-// start a new scope for the next potential ACE_CATCH.  The ACE_ENDTRY
+// Since all CATCH statements can end the TAO_TRY macro, they must all
+// start a new scope for the next potential TAO_CATCH.  The TAO_ENDTRY
 // will finish them all.  Cool, eh?
-#define ACE_CATCH(TYPE,VAR) \
+#define TAO_CATCH(TYPE,VAR) \
 } while (0); \
-do { \
-if (ACE_TRY_ENV.exception () != 0)
+do \
+if (TAO_TRY_ENV.exception () != 0 && \
+    TYPE::_narrow(TAO_TRY_ENV.exception ()) != 0) { \
+  TYPE &VAR = *TYPE::_narrow (TAO_TRY_ENV.exception ()); \
 
 
-#define ACE_CATCHANY \
+#define TAO_CATCHANY \
 } while (0); \
 do { \
-if (ACE_TRY_ENV.exception () != 0)
+if (TAO_TRY_ENV.exception () != 0)
 
 // The first "while" closes the local scope.  The second "while"
-// closes the ACE_TRY_ENV scope.
-#define ACE_ENDTRY \
+// closes the TAO_TRY_ENV scope.
+#define TAO_ENDTRY \
 } while (0); \
 } while (0)
 
-// If continue is called, control will skip to the next ACE_CATCHANY
+// If continue is called, control will skip to the next TAO_CATCHANY
 // statement.
-#define ACE_CHECK_ENV \
+#define TAO_CHECK_ENV \
 {\
-if (ACE_TRY_ENV.exception () != 0) \
+if (TAO_TRY_ENV.exception () != 0) \
   { \
-    ACE_TRY_FLAG = 0; \
-    goto ACE_TRY_LABEL; \
+    TAO_TRY_FLAG = 0; \
+    goto TAO_TRY_LABEL; \
   } \
 }
 
-#define ACE_CHECK_ENV_RETURN(X, Y) \
+#define TAO_CHECK_ENV_RETURN(X, Y) \
 if ( X . exception () != 0) return Y
 
-#define ACE_THROW(EXCEPTION) \
+#define TAO_THROW(EXCEPTION) \
 do {\
- _env.exception (new EXCEPTION); \
+  _env.exception (new EXCEPTION); \
   return; } while (0)
 
-#define ACE_THROW_RETURN(EXCEPTION, RETURN) \
+#define TAO_THROW_RETURN(EXCEPTION, RETURN) \
 do {\
  _env.exception (new EXCEPTION); \
  return RETURN; } while (0)
 
-#define ACE_RETHROW \
-_env.exception (ACE_TRY_ENV.exception ()); \
+#define TAO_RETHROW \
+_env.exception (TAO_TRY_ENV.exception ()); \
 return
 
-#define ACE_RETHROW_RETURN (RETURN) \
-_env.exception (ACE_TRY_ENV.exception ()); \
+#define TAO_RETHROW_RETURN (RETURN) \
+_env.exception (TAO_TRY_ENV.exception ()); \
 return RETURN
 
-#define ACE_THROW_SPEC(X)
+#define TAO_THROW_SPEC(X)
 
 #endif /* ACE_HAS_EXCEPTIONS */
 

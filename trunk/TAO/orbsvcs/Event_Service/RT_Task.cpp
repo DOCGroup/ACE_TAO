@@ -159,16 +159,16 @@ ACE_RT_Task::open_task (const char* name)
       tempname = tempbuffer;
     }
 
-  ACE_TRY
+  TAO_TRY
     {
       rt_info_ = 
 	ACE_Scheduler_Factory::server()->create (tempname,
-						 ACE_TRY_ENV);
-      ACE_CHECK_ENV;
+						 TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       // @@ TODO: We do no initialization of the new rt_info, the
       // caller does, this is (IMnsHO) very error prone.
     }
-  ACE_CATCH (RtecScheduler::DUPLICATE_NAME, dn_ex)
+  TAO_CATCH (RtecScheduler::DUPLICATE_NAME, dn_ex)
     {
       // @@ TODO: Its already registered, IMHO this should at least
       // report a warning, but I'll stick to the previous code.
@@ -177,7 +177,7 @@ ACE_RT_Task::open_task (const char* name)
       // tempname), 0);
       return 0;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -209,7 +209,7 @@ ACE_RT_Task::synch_threads (size_t threads)
       RtecScheduler::Sub_Priority subpriority;
       RtecScheduler::Preemption_Priority preemption_priority;
       
-      ACE_TRY
+      TAO_TRY
 	{
 	  // @@ TODO handle exceptions
 	  ACE_TIMEPROBE ("  synch_threads - priority requested");
@@ -217,8 +217,8 @@ ACE_RT_Task::synch_threads (size_t threads)
 	    (rt_info_,
 	     thread_priority,
 	     subpriority,
-	     preemption_priority, ACE_TRY_ENV);
-	  ACE_CHECK_ENV;
+	     preemption_priority, TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
 	  ACE_TIMEPROBE ("  synch_threads - priority obtained");
 
 	  ACE_DEBUG ((LM_DEBUG, "(%t) spawning %d threads at os thread"
@@ -242,11 +242,11 @@ ACE_RT_Task::synch_threads (size_t threads)
 	    }
 	  
 	}
-      ACE_CATCHANY
+      TAO_CATCHANY
 	{
 	  ACE_ERROR_RETURN ((LM_ERROR, "priority failed\n"), -1);
 	}
-      ACE_ENDTRY;
+      TAO_ENDTRY;
 
     }
   else
