@@ -21,6 +21,11 @@ const long ACE_ATM_Addr::LINE_RATE = 353207;
 const int ACE_ATM_Addr::OPT_FLAGS_CPID = 0x1;
 const int ACE_ATM_Addr::OPT_FLAGS_PMP = 0x2;
 const int ACE_ATM_Addr::SELECTOR = 0x99;
+#else
+const long ACE_ATM_Addr::LINE_RATE = 0L;
+const int ACE_ATM_Addr::OPT_FLAGS_CPID = 0;
+const int ACE_ATM_Addr::OPT_FLAGS_PMP = 0;
+const int ACE_ATM_Addr::SELECTOR = 0;
 #endif /* ACE_HAS_FORE_ATM_XTI */
 
 // Default constructor
