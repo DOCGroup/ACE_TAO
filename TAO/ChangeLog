@@ -1,3 +1,9 @@
+Wed Nov 24 13:16:59 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * performance-tests/Protocols/sender.cpp:
+
+          Added a static_cast to double to silence vc71.
+
 Wed Nov 24 19:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_global.cpp:
@@ -11,18 +17,18 @@ Wed Nov 24 18:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Nov 24 08:06:14 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Updated.
+          Updated.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/params_dup.c:
-	* orbsvcs/orbsvcs/SSLIOP/params_dup.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/params_dup.c:
+        * orbsvcs/orbsvcs/SSLIOP/params_dup.h:
 
-	  OpenSSL's DHparams_dup() and DSAparams_dup() macros contain
-	  casts that are invalid C++.  Added C wrapper functions that
-	  allow them to be called from C++.  Changed SSLIOP_EVP_PKEY.cpp
-	  to call the wrappers instead of the macros.
+          OpenSSL's DHparams_dup() and DSAparams_dup() macros contain
+          casts that are invalid C++.  Added C wrapper functions that
+          allow them to be called from C++.  Changed SSLIOP_EVP_PKEY.cpp
+          to call the wrappers instead of the macros.
 
 Wed Nov 24 10:02:12 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -54,33 +60,33 @@ Wed Nov 24 08:07:21 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Nov 24 14:03:11 2004  Martin Corino  <mcorino@remedy.nl>
 
-	* orbsvcs/orbsvcs/CosLoadBalancing.idl:
-	* orbsvcs/examples/LoadBalancing/RPS_Monitor.h:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.h:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.h:
-	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/RPS_Monitor.h:
-	* orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/client.cpp:
+        * orbsvcs/orbsvcs/CosLoadBalancing.idl:
+        * orbsvcs/examples/LoadBalancing/RPS_Monitor.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.h:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/RPS_Monitor.h:
+        * orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/client.cpp:
 
-	  Changed CosLoadBalancing::CPU to CosLoadBalancing::LoadAverage because
-	  of nameclash with CPU macro in VxWorks builds (which is absolutely essential
-	  there:-).
+          Changed CosLoadBalancing::CPU to CosLoadBalancing::LoadAverage because
+          of nameclash with CPU macro in VxWorks builds (which is absolutely essential
+          there:-).
 
 Tue Nov 23 21:34:11 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/CDR_Encaps_Codec.cpp (encode_value):
+        * tao/CDR_Encaps_Codec.cpp (encode_value):
 
-	  Fixed a memory leak that occured when the CORBA::Any being
-	  marshaled into the CDR encapsulation didn't contain a populated
-	  ACE_Message_Block.  Thanks to Lothar Werzinger <lothar at xcerla
-	  dot com> for reporting the leak.
+          Fixed a memory leak that occured when the CORBA::Any being
+          marshaled into the CDR encapsulation didn't contain a populated
+          ACE_Message_Block.  Thanks to Lothar Werzinger <lothar at xcerla
+          dot com> for reporting the leak.
 
 Tue Nov 23 11:45:27 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Update for new Notification Service implementation.
+          Update for new Notification Service implementation.
 
 Tue Nov 23 13:33:35 2004  Dale Wilson  <wilson_d@ociweb.com>
 
@@ -95,10 +101,10 @@ Tue Nov 23 13:33:35 2004  Dale Wilson  <wilson_d@ociweb.com>
         * orbsvcs/orbsvcs/Notify/Topology_Object.cpp:
           Diamond inheritance is bad news.
           Diamond inheritence mixed with templates, and child classes
-	  overloading (not overriding) base class methods (mea culpa) is
-	  really bad news.  Thanks to a suggestion by Chad I got rid of
-	  the method overload.  That should make the various compilers
-	  that care about such things happier.
+          overloading (not overriding) base class methods (mea culpa) is
+          really bad news.  Thanks to a suggestion by Chad I got rid of
+          the method overload.  That should make the various compilers
+          that care about such things happier.
 
 Tue Nov 23 11:30:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
