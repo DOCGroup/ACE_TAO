@@ -1030,7 +1030,7 @@ ACE_OS::mktemp (wchar_t *s)
           // getting this filename back (so, yes, there is a race
           // condition if multiple threads in a process use the same
           // template).  This appears to match the behavior of the
-          // Solaris 2.5 mktemp().
+          // SunOS 5.5 mktemp().
           ACE_OS::sprintf (xxxxxx, ACE_TEXT ("%05d%c"), getpid (), unique_letter);
           while (ACE_OS::stat (s, &sb) >= 0)
             {
@@ -1150,7 +1150,7 @@ ACE_OS::set_scheduling_params (const ACE_Sched_Params &sched_params,
 
   if (sched_params.policy () == ACE_SCHED_OTHER  &&
       sched_params.quantum () == ACE_Time_Value::zero)
-      // Solaris doesn't support non-zero quantums in time-sharing class:  use
+      // SunOS doesn't support non-zero quantums in time-sharing class:  use
       // real-time class instead.
     {
       tsparms_t tsparms;
@@ -2230,9 +2230,9 @@ ACE_Thread_Adapter::invoke (void)
   delete this;
 
 #if defined (ACE_NEEDS_LWP_PRIO_SET)
-  // On Solaris 2.5.x and 2.6, the LWP priority needs to be set in
-  // order to get preemption when running in the RT class.  This is
-  // the ACE way to do that . . .
+  // On SunOS, the LWP priority needs to be set in order to get
+  // preemption when running in the RT class.  This is the ACE way to
+  // do that . . .
   ACE_hthread_t thr_handle;
   ACE_OS::thr_self (thr_handle);
   int prio;
@@ -2628,7 +2628,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           int spolicy;
 
 #       if defined (ACE_HAS_ONLY_SCHED_OTHER)
-            // Solaris, thru version 2.6, only supports SCHED_OTHER.
+            // SunOS, thru version 5.6, only supports SCHED_OTHER.
             spolicy = SCHED_OTHER;
 #       else
           // Make sure to enable explicit scheduling, in case we didn't
@@ -2750,12 +2750,12 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
            }
 #       else
          {
-#         if defined (sun)
-           // Solaris POSIX only allows priorities > 0 to
+#         if defined (sun)  &&  defined (ACE_HAS_ONLY_SCHED_OTHER)
+           // SunOS, through 5.6, POSIX only allows priorities > 0 to
            // ::pthread_attr_setschedparam.  If a priority of 0 was
            // requested, set the thread priority after creating it, below.
            if (priority > 0)
-#         endif /* sun */
+#         endif /* sun && ACE_HAS_ONLY_SCHED_OTHER */
              {
 #         if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
                result = ::pthread_attr_setprio (&attr,
@@ -2827,7 +2827,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       if (ACE_BIT_ENABLED (flags, THR_NEW_LWP))
         {
           // Increment the number of LWPs by one to emulate the
-          // Solaris semantics.
+          // SunOS semantics.
           int lwps = ACE_OS::thr_getconcurrency ();
           if (lwps == -1)
             {
@@ -2838,7 +2838,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                 }
               else
                 {
-                  // This should never happen on Solaris:
+                  // This should never happen on SunOS:
                   // ::thr_getconcurrency () should always succeed.
                   return -1;
                 }
@@ -2904,13 +2904,15 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   ::pthread_attr_destroy (&attr);
 #     endif /* ACE_HAS_PTHREADS_DRAFT4 */
 
-  // This is a Solaris or POSIX implementation of pthreads,
+  // This is a SunOS or POSIX implementation of pthreads,
   // where we assume that ACE_thread_t and ACE_hthread_t are the same.
   // If this *isn't* correct on some platform, please let us know.
   if (result != -1)
     *thr_handle = *thr_id;
 
-#     if defined (sun)
+#     if defined (sun)  &&  defined (ACE_HAS_ONLY_SCHED_OTHER)
+        // SunOS prior to 5.7:
+
         // If the priority is 0, then we might have to set it now
         // because we couldn't set it with
         // ::pthread_attr_setschedparam, as noted above.  This doesn't
@@ -2919,9 +2921,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         // applies regardless of the inherit_sched attribute: if it
         // was PTHREAD_INHERIT_SCHED, then it certainly inherited its
         // parent's priority.  If it was PTHREAD_EXPLICIT_SCHED, then
-        // "attr" was initialized by the Solaris ::pthread_attr_init
+        // "attr" was initialized by the SunOS ::pthread_attr_init
         // () to contain NULL for the priority, which indicated to
-        // Solaris ::pthread_create () to inherit the parent
+        // SunOS ::pthread_create () to inherit the parent
         // priority.)
         if (priority == 0)
           {
@@ -2937,18 +2939,20 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                           result), int,
                         -1, result);
 
+            // The only policy supported by by SunOS, thru version 5.6,
+            // is SCHED_OTHER, so that's hard-coded here.
+            policy = ACE_SCHED_OTHER;
+
             if (sparam.sched_priority != 0)
               {
                 ACE_OS::memset ((void *) &sparam, 0, sizeof sparam);
                 // The memset to 0 sets the priority to 0, so we don't need
                 // to explicitly set sparam.sched_priority.
 
-                // The only policy supported by by Solaris, thru version 2.6,
-                // is SCHED_OTHER, so that's hard-coded below.
                 ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (
-                                                        *thr_id,
-                                                        SCHED_OTHER,
-                                                        &sparam),
+                                                       *thr_id,
+                                                       policy,
+                                                       &sparam),
                                                      result),
                                    int, -1);
               }
@@ -2965,10 +2969,12 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
             // If the thread is bound, then set the priority on its LWP.
             if (ACE_BIT_ENABLED (flags, THR_BOUND))
               {
-                ACE_Sched_Params sched_params (ACE_BIT_ENABLED (flags,
-                  THR_SCHED_FIFO) || ACE_BIT_ENABLED (flags,
-                  THR_SCHED_RR)  ?  ACE_SCHED_FIFO  :ACE_SCHED_OTHER,
-                                               priority);
+                ACE_Sched_Params sched_params (
+                  ACE_BIT_ENABLED (flags, THR_SCHED_FIFO) ||
+                    ACE_BIT_ENABLED (flags, THR_SCHED_RR)  ?
+                    ACE_SCHED_FIFO  :
+                    ACE_SCHED_OTHER,
+                  priority);
                 result = ACE_OS::lwp_setparams (sched_params,
                                       /* ? How do we find the ID of the LWP
                                            to which *thr_id is bound? */);
@@ -2976,7 +2982,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #         endif /* 0 */
 #       endif /* ACE_NEEDS_LWP_PRIO_SET */
 
-#     endif /* sun */
+#     endif /* sun && ACE_HAS_ONLY_SCHED_OTHER */
   return result;
 #   elif defined (ACE_HAS_STHREADS)
   int result;
@@ -2995,7 +3001,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   if (result != -1)
     {
-      // With Solaris threads, ACE_thread_t and ACE_hthread_t are the same.
+      // With SunOS threads, ACE_thread_t and ACE_hthread_t are the same.
       *thr_handle = *thr_id;
 
       if (priority != ACE_DEFAULT_THREAD_PRIORITY)
@@ -4116,7 +4122,7 @@ ACE_OS::mktemp (char *s)
           // getting this filename back (so, yes, there is a race
           // condition if multiple threads in a process use the same
           // template).  This appears to match the behavior of the
-          // Solaris 2.5 mktemp().
+          // SunOS 5.5 mktemp().
           ACE_OS::sprintf (xxxxxx, "%05d%c", getpid (), unique_letter);
           while (ACE_OS::stat (s, &sb) >= 0)
             {
