@@ -3005,7 +3005,7 @@ TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object)
   TAO_Stub *stub = object->_stubobj ();
   if (!CORBA::is_nil (stub->servant_orb_var ().in ()) &&
       stub->servant_orb_var ()->orb_core () != 0 &&
-      object->_servant () != 0)
+      object->_is_collocated () == 1)
     {
       switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
         {
@@ -3013,7 +3013,15 @@ TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object)
           return TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY;
 
         case DIRECT:
-          return TAO_Collocation_Strategies::CS_DIRECT_STRATEGY;
+          {
+            /////////////////////////////////////////////////////////////
+            // If the servant is null and you are collocated this means
+            // that the POA policy NON-RETAIN is set, and with that policy
+            // using the DIRECT collocation strategy is just insane.
+            /////////////////////////////////////////////////////////////
+            ACE_ASSERT (object->_servant () != 0);
+            return TAO_Collocation_Strategies::CS_DIRECT_STRATEGY;
+          }
         }
     }
 
