@@ -55,8 +55,8 @@ static ACE_TCHAR *input_file = ACE_TEXT("Proactor_Scatter_Gather_Test.cpp");
 // Name of the output file.
 static ACE_TCHAR *output_file = ACE_TEXT("output");
 
-static bool client_only = false;
-static bool server_only = false;
+static int client_only = 0;
+static int server_only = 0;
 static size_t chunk_size = 0;
 
 enum
@@ -504,7 +504,9 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
       // write everything or only complete chunks?
 
       // write everything - when no new bytes were transferred
-      bool write_everything = !result.bytes_transferred ();
+      int write_everything = 0;
+      if (!result.bytes_transferred ())
+        write_everything = 1;
       if (write_everything)
         Receiver::writer_->handle_read_chunks_chain (mb,
                                                      this->odd_ ? ODD : EVEN);
@@ -1306,12 +1308,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
           input_file = get_opt.opt_arg ();
           break;
         case 'c':
-          client_only = true;
-          server_only = false;
+          client_only = 1;
+          server_only = 0;
           break;
         case 's':
-          server_only = true;
-          client_only = false;
+          server_only = 1;
+          client_only = 0;
           break;
         case 'h':
           host = get_opt.opt_arg ();

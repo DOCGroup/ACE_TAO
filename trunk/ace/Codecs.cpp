@@ -8,7 +8,7 @@ const ACE_Byte ACE_Base64::alphabet_[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkl
 
 const ACE_Byte ACE_Base64::pad_ = '=';
 
-bool ACE_Base64::init_ = false;
+int ACE_Base64::init_ = 0;
 
 int ACE_Base64::max_columns_ = 72;
 
@@ -206,7 +206,7 @@ ACE_Base64::init ()
           ACE_Base64::decoder_[ACE_Base64::alphabet_[i]] = i;
           ACE_Base64::member_[ACE_Base64::alphabet_[i]] = 1;
         }
-      ACE_Base64::init_ = true;
+      ACE_Base64::init_ = 1;
     }
   return;
 }

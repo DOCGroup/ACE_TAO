@@ -47,7 +47,7 @@ void ACE_Vector<T, DEFAULT_SIZE>::dump (void) const
 {
 #if 0
   // Can't do this unless the vector is an object with a dump
-  // function.   
+  // function.
   for (size_t i = 0; i < this->size (); ++i)
     (*this)[i].dump ();
 #endif /* 0 */
@@ -55,7 +55,7 @@ void ACE_Vector<T, DEFAULT_SIZE>::dump (void) const
 
 #if 0
 template<class T>
-bool compare(const ACE_Vector<T>& v1,
+int compare(const ACE_Vector<T>& v1,
 	     const ACE_Vector<T>& v2,
              const size_t from_ndx,
 	     const size_t to_ndx)
@@ -91,7 +91,7 @@ bool compare(const ACE_Vector<T>& v1,
 }
 
 template<class T>
-bool partial_compare(const ACE_Vector<T>& v1,
+int partial_compare(const ACE_Vector<T>& v1,
 		     const ACE_Vector<T>& v2,
                      const size_t from_ndx,
 		     const size_t to_ndx)
@@ -123,4 +123,3 @@ bool partial_compare(const ACE_Vector<T>& v1,
 #endif
 
 #endif /* ACE_VECTOR_T_C */
-
