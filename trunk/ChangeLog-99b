@@ -1,3 +1,8 @@
+Wed Jun 23 15:27:48 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/libsize.pl: added this script, which provide a size
+          breakdown of either the ACE or TAO libraries.
+
 Wed Jun 23 14:34:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: added link to ACE Library Size Breakdown
