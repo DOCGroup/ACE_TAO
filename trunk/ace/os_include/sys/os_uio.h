@@ -63,27 +63,15 @@ extern "C"
 #endif /* __rtems__ */
 
 
-#if defined (ACE_HAS_BROKEN_WRITEV)
-   typedef struct iovec ACE_WRITEV_TYPE;
-#else
-   typedef const struct iovec ACE_WRITEV_TYPE;
-#endif /* ACE_HAS_BROKEN_WRITEV */
-
-#if defined (ACE_HAS_BROKEN_READV)
-   typedef const struct iovec ACE_READV_TYPE;
-#else
-   typedef struct iovec ACE_READV_TYPE;
-#endif /* ACE_HAS_BROKEN_READV */
-
 # if defined (ACE_LACKS_TIMEDWAIT_PROTOTYPES)
 
   ssize_t readv_timedwait (ACE_HANDLE handle,
-                           iovec *iov,
+                           const iovec *iov,
                            int iovcnt,
                            struct timespec* timeout);
 
   ssize_t writev_timedwait (ACE_HANDLE handle,
-                            ACE_WRITEV_TYPE *iov,
+                            const iovec *iov,
                             int iovcnt,
                             struct timespec *timeout);
 

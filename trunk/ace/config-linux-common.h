@@ -49,7 +49,7 @@
 // Then glibc/libc5 specific parts
 
 #if defined(__GLIBC__)
-# define ACE_HAS_BROKEN_SETRLIMIT
+# define ACE_HAS_NONCONST_SETRLIMIT
 # define ACE_HAS_RUSAGE_WHO_ENUM enum __rusage_who
 # define ACE_HAS_RLIMIT_RESOURCE_ENUM enum __rlimit_resource
 # define ACE_HAS_SOCKLEN_T

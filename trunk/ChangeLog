@@ -1,3 +1,69 @@
+Fri Aug  6 08:17:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* m4/ace.m4:
+	  Split new ACE_WITH_RMCAST, ACE_WITH_QOS, and ACE_WITH_SSL macros
+	  out of ACE_CONFIGURATION_OPTIONS so they can be used with other
+	  packages.
+
+	* ace/OS_NS_sys_uio.cpp:
+	* ace/OS_NS_sys_uio.h:
+	* ace/OS_NS_sys_uio.inl:
+	  Changed ACE_OS::readv_emulation() and ACE_OS::writev_emulation()
+	  to use const iovec * instead of type of system iovec parameter.
+	  Changed ACE_OS::readv() to cast const qualification of iovec
+	  parameter away if ACE_HAS_NONCONST_READV.
+	  Changed ACE_OS::writev() to cast const qualifiaction of iovec
+	  parameter away if ACE_HAS_NONCONST_WRITEV.
+	* ace/os_include/os_uio.h:
+	  Removed ACE_READV_TYPE type definition.
+	  Removed ACE_WRITEV_TYPE type definition.
+	  Changed readv_timedwait and writev_timedwait definitions to
+	  use const iovec *'s for iovec parameter.
+
+	* ace/OS_sys_socket.inl:
+	  Cast const qualifiaction away if ACE_HAS_NONCONST_SENDMSG.
+	* ace/os_include/sys/os_socket.h:
+	  Removed ACE_SENDMSG_TYPE type definition.
+
+	* ace/OS_sys_resource.h:
+	* ace/OS_sys_resource.inl:
+	  Changed ACE_OS::setrlimit() to use const struct rlimit*
+	  instead of type of system rlimit parameter.  Cast const
+	  qualification away if ACE_HAS_NONCONST_SETRLIMIT.
+	* ace/os_include/sys/os_resource.h:
+	  Removed ACE_SETRLIMIT_TYPE type definition.
+
+	* ace/config-chorus.h:
+	* ace/config-linux-common.h:
+	* ace/config-lynxos.h:
+	* ace/config-m88k.h:
+	* ace/config-osf1-3.2.h:
+	* ace/config-osf1-4.0.h:
+	* ace/config-psos-diab-mips.h:
+	* ace/config-psos-diab-ppc.h:
+	* ace/config-psos-diab.h:
+	* ace/config-psos-tm.h:
+	* ace/config-psosim-g++.h
+	* ace/config-rtems.h:
+	* ace/config-sunos5.4-centerline-2.x.h:
+	* ace/config-sunos5.4-g++.h:
+	* ace/config-sunos5.4-sunc++-4.x.h:
+	* ace/config-tandem-nsk-mips-v2.h:
+	* ace/config-tandem.h:
+	* ace/config-vxworks5.x.h:
+	* configure.ac:
+	* m4/config_h.m4:
+	  Rename ACE_HAS_BROKEN_SETRLIMIT, ACE_HAS_BROKEN_SENDMSG,
+	  ACE_HAS_BROKEN_READV, and ACE_HAS_BROKEN_WRITEV to
+	  ACE_HAS_NONCONST_SETRLIMIT, ACE_HAS_NONCONST_SENDMSG,
+	  ACE_HAS_NONCONST_READV, and ACE_HAS_NONCONST_WRITEV to
+	  be more descriptive of what's really broken.
+
+	* bin/MakeProjectCreator/config/ec_used_typed_events.mpb:
+          Changed to inherit from dynamicinterface and ifr_client instead
+          of providing libs and after statements so that dependency chain
+          is complete.
+
 Fri Aug  6 10:26:20 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/OS_NS_string.h:

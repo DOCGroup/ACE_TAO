@@ -50,12 +50,6 @@ extern "C"
    struct msghdr {};
 #endif /* ACE_HAS_MSG */
 
-#if defined (ACE_HAS_BROKEN_SENDMSG)
-   typedef struct msghdr ACE_SENDMSG_TYPE;
-#else
-   typedef const struct msghdr ACE_SENDMSG_TYPE;
-#endif /* ACE_HAS_BROKEN_SENDMSG */
-
 #if defined (ACE_HAS_MSG) && defined (ACE_LACKS_MSG_ACCRIGHTS)
 #  if !defined (msg_accrights)
 #    undef msg_control
@@ -202,7 +196,7 @@ extern "C"
                           struct timespec *timeout);
 
   ssize_t sendmsg_timedwait (ACE_HANDLE handle,
-                             ACE_SENDMSG_TYPE *msg,
+			     const struct msghdr *msg,
                              int flags,
                              struct timespec *timeout);
 

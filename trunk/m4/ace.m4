@@ -310,65 +310,9 @@ dnl line, then "no_x" is set to "yes."
   ])
  AM_CONDITIONAL([COMPILE_GPERF], [test X$ace_user_with_gperf = Xyes])
 
- AC_ARG_WITH([rmcast],
-  AS_HELP_STRING(--with-rmcast,compile the ACE_RMCast library [[[yes]]]),
-  [
-   case "${withval}" in
-    yes)
-      ace_user_with_rmcast=yes
-      ;;
-    no)
-      ace_user_with_rmcast=no
-      ;;
-    *)
-      AC_MSG_ERROR([bad value ${withval} for --with-rmcast])
-      ;;
-   esac
-  ],
-  [
-   ace_user_with_rmcast=yes
-  ])
- AM_CONDITIONAL([BUILD_RMCAST], [test X$ace_user_with_rmcast = Xyes])
-
- AC_ARG_WITH([qos],
-  AS_HELP_STRING(--with-qos,compile the ACE_QoS library [[[no]]]),
-  [
-   case "${withval}" in
-    yes)
-      ace_user_with_qos=yes
-      ;;
-    no)
-      ace_user_with_qos=no
-      ;;
-    *)
-      AC_MSG_ERROR([bad value ${withval} for --with-qos])
-      ;;
-   esac
-  ],
-  [
-   ace_user_with_qos=no
-  ])
- AM_CONDITIONAL([BUILD_QOS], [test X$ace_user_with_qos = Xyes])
-
- AC_ARG_WITH([ssl],
-  AS_HELP_STRING(--with-ssl,compile the ACE_SSL library [[[yes]]]),
-  [
-   case "${withval}" in
-    yes)
-      ace_user_with_ssl=yes
-      ;;
-    no)
-      ace_user_with_ssl=no
-      ;;
-    *)
-      AC_MSG_ERROR([bad value ${withval} for --with-ssl])
-      ;;
-   esac
-  ],
-  [
-   ace_user_with_ssl=yes
-  ])
-AM_CONDITIONAL([BUILD_SSL], [test X$ace_user_with_ssl = Xyes])
+ ACE_WITH_RMCAST
+ ACE_WITH_QOS
+ ACE_WITH_SSL
 
  AC_ARG_WITH([tao],
   AS_HELP_STRING(--with-tao,build TAO (the ACE ORB) [[[yes]]]),
@@ -710,4 +654,64 @@ dnl    fi
    ace_user_enable_stdcpplib=yes
   ])
 
+])
+
+AC_DEFUN([ACE_WITH_RMCAST],
+[AC_ARG_WITH([rmcast],
+             AS_HELP_STRING([--with-rmcast],
+                            [compile/use the ACE_RMCast library [[yes]]]),
+             [case "${withval}" in
+               yes) 
+                ace_user_with_rmcast=yes
+                ;;
+               no)
+                ace_user_with_rmcast=no
+                ;;
+               *)
+                AC_MSG_ERROR(bad value ${withval} for --with-rmcast)
+                ;;
+              esac])
+AC_CACHE_CHECK([whether to compile/use the ACE_RMCast library],
+               [ace_user_with_rmcast],[ace_user_with_rmcast=yes])
+AM_CONDITIONAL([BUILD_RMCAST], [test X$ace_user_with_rmcast = Xyes])
+])
+
+AC_DEFUN([ACE_WITH_QOS],
+[AC_ARG_WITH([qos],
+             AS_HELP_STRING([--with-qos],
+                            [compile/use the ACE_QoS library [[no]]]),
+             [case "${withval}" in
+               yes) 
+                ace_user_with_qos=yes
+                ;;
+               no)
+                ace_user_with_qos=no
+                ;;
+               *)
+                AC_MSG_ERROR(bad value ${withval} for --with-qos)
+                ;;
+              esac])
+AC_CACHE_CHECK([whether to compile/use the ACE_QoS library],
+               [ace_user_with_qos],[ace_user_with_qos=no])
+AM_CONDITIONAL([BUILD_QOS], [test X$ace_user_with_qos = Xyes])
+])
+
+AC_DEFUN([ACE_WITH_SSL],
+[AC_ARG_WITH([ssl],
+             AS_HELP_STRING([--with-ssl],
+                            [compile/use the ACE_SSL library [[yes]]]),
+             [case "${withval}" in
+               yes) 
+                ace_user_with_ssl=yes
+                ;;
+               no)
+                ace_user_with_ssl=no
+                ;;
+               *)
+                AC_MSG_ERROR(bad value ${withval} for --with-ssl)
+                ;;
+              esac])
+AC_CACHE_CHECK([whether to compile/use the ACE_SSL library],
+               [ace_user_with_ssl], [ace_user_with_ssl=yes])
+AM_CONDITIONAL([BUILD_SSL], [test X$ace_user_with_ssl = Xyes])
 ])
