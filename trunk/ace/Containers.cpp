@@ -1,4 +1,3 @@
-// Containers.cpp
 // $Id$
 
 #if !defined (ACE_CONTAINERS_C)
@@ -51,14 +50,14 @@ ACE_Bounded_Stack<T>::operator= (const ACE_Bounded_Stack<T> &s)
   if (&s != this)
     {
       if (this->size_ < s.size_)
-	{
-	  delete [] this->stack_;
-	  ACE_NEW (this->stack_, T[s.size_]);
-	}
+        {
+          delete [] this->stack_;
+          ACE_NEW (this->stack_, T[s.size_]);
+        }
       this->top_ = s.top_;
 
       for (size_t i = 0; i < this->top_; i++)
-	this->stack_[i] = s.stack_[i];
+        this->stack_[i] = s.stack_[i];
     }
 }
 
@@ -106,7 +105,7 @@ ACE_Fixed_Stack<T, SIZE>::operator= (const ACE_Fixed_Stack<T, SIZE> &s)
       this->top_ = s.top_;
 
       for (size_t i = 0; i < this->top_; i++)
-	this->stack_[i] = s.stack_[i];
+        this->stack_[i] = s.stack_[i];
     }
 }
 
@@ -139,8 +138,8 @@ ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack (ACE_Allocator *alloc)
     this->allocator_ = ACE_Allocator::instance ();
 
   ACE_NEW_MALLOC (this->head_,
-		  (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
-		  ACE_Node<T>);
+                  (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
+                  ACE_Node<T>);
   this->head_->next_ = this->head_;
 }
 
@@ -154,13 +153,13 @@ ACE_Unbounded_Stack<T>::delete_all_nodes (void)
       ACE_Node<T> *temp = this->head_->next_;
       this->head_->next_ = temp->next_;
       ACE_DES_FREE_TEMPLATE (temp, this->allocator_->free,
-			     ACE_Node, <T>);
+                             ACE_Node, <T>);
     }
 
   this->cur_size_ = 0;
 
   ACE_ASSERT (this->head_ == this->head_->next_
-	      && this->is_empty ());
+              && this->is_empty ());
 }
 
 template<class T> void
@@ -178,8 +177,8 @@ ACE_Unbounded_Stack<T>::copy_all_nodes (const ACE_Unbounded_Stack<T> &s)
     {
       ACE_Node<T> *nptr = temp->next_;
       ACE_NEW_MALLOC (temp->next_,
-		      (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
-		      ACE_Node<T> (s_temp->item_, nptr));
+                      (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
+                      ACE_Node<T> (s_temp->item_, nptr));
       temp = temp->next_;
     }
   this->cur_size_ = s.cur_size_;
@@ -195,8 +194,8 @@ ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack (const ACE_Unbounded_Stack<T> &s)
     this->allocator_ = ACE_Allocator::instance ();
 
   ACE_NEW_MALLOC (this->head_,
-		  (ACE_Node<T>*) this->allocator_->malloc( sizeof (ACE_Node<T>)),
-		  ACE_Node<T>);
+                  (ACE_Node<T>*) this->allocator_->malloc( sizeof (ACE_Node<T>)),
+                  ACE_Node<T>);
   this->head_->next_ = this->head_;
 
   //  ACE_TRACE ("ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack");
@@ -221,7 +220,7 @@ ACE_Unbounded_Stack<T>::~ACE_Unbounded_Stack (void)
 
   this->delete_all_nodes ();
   ACE_DES_FREE_TEMPLATE (head_, this->allocator_->free,
-			 ACE_Node, <T>);
+                         ACE_Node, <T>);
 }
 
 template<class T> int
@@ -232,8 +231,8 @@ ACE_Unbounded_Stack<T>::push (const T &new_item)
   ACE_Node<T> *temp = 0;
 
   ACE_NEW_MALLOC_RETURN (temp,
-			 (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
-			 ACE_Node<T> (new_item, this->head_->next_), -1);
+                         (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
+                         ACE_Node<T> (new_item, this->head_->next_), -1);
 
   this->head_->next_ = temp;
   this->cur_size_++;
@@ -254,7 +253,7 @@ ACE_Unbounded_Stack<T>::pop (T &item)
       this->head_->next_ = temp->next_;
 
       ACE_DES_FREE_TEMPLATE (temp, this->allocator_->free,
-			     ACE_Node, <T>);
+                             ACE_Node, <T>);
       this->cur_size_--;
       return 0;
     }
@@ -311,7 +310,7 @@ ACE_Unbounded_Stack<T>::remove (const T &item)
       curr->next_ = temp->next_;
       this->cur_size_--;
       ACE_DES_FREE_TEMPLATE (temp, this->allocator_->free,
-			     ACE_Node, <T>);
+                             ACE_Node, <T>);
       return 0;
     }
 }
@@ -328,8 +327,8 @@ ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (ACE_Allocator *alloc)
     this->allocator_ = ACE_Allocator::instance ();
 
   ACE_NEW_MALLOC (this->head_,
-		  (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
-		  ACE_Node<T>);
+                  (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
+                  ACE_Node<T>);
 
   // Make the list circular by pointing it back to itself.
   this->head_->next_ = this->head_;
@@ -347,8 +346,8 @@ ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (const ACE_Unbounded_Queue<T> &us)
     this->allocator_ = ACE_Allocator::instance ();
 
   ACE_NEW_MALLOC (this->head_,
-		  (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
-		  ACE_Node<T>);
+                  (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
+                  ACE_Node<T>);
   this->head_->next_ = this->head_;
   this->copy_nodes (us);
 }
@@ -412,8 +411,8 @@ ACE_Unbounded_Queue<T>::delete_nodes (void)
       curr = curr->next_;
 
       ACE_DES_FREE_TEMPLATE (temp,
-			     this->allocator_->free,
-			     ACE_Node, <T>);
+                             this->allocator_->free,
+                             ACE_Node, <T>);
       this->cur_size_--;
     }
 
@@ -428,7 +427,7 @@ ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue (void)
 
   this->delete_nodes ();
   ACE_DES_FREE_TEMPLATE (head_, this->allocator_->free,
-			 ACE_Node, <T>);
+                         ACE_Node, <T>);
   this->head_ = 0;
 }
 
@@ -441,8 +440,8 @@ ACE_Unbounded_Queue<T>::enqueue_head (const T &new_item)
 
   // Create a new node that points to the original head.
   ACE_NEW_MALLOC_RETURN (temp,
-			 (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
-			 ACE_Node<T> (new_item, this->head_->next_), -1);
+                         (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
+                         ACE_Node<T> (new_item, this->head_->next_), -1);
 
   // Link this pointer into the front of the list.
   this->head_->next_ = temp;
@@ -463,8 +462,8 @@ ACE_Unbounded_Queue<T>::enqueue_tail (const T &new_item)
 
   // Create a new dummy node.
   ACE_NEW_MALLOC_RETURN (temp,
-			 (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
-			 ACE_Node<T> (this->head_->next_), -1);
+                         (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
+                         ACE_Node<T> (this->head_->next_), -1);
 
   // Link this dummy pointer into the list.
   this->head_->next_ = temp;
@@ -490,7 +489,7 @@ ACE_Unbounded_Queue<T>::dequeue_head (T &item)
   item = temp->item_;
   this->head_->next_ = temp->next_;
   ACE_DES_FREE_TEMPLATE (temp, this->allocator_->free,
-			 ACE_Node, <T>);
+                         ACE_Node, <T>);
   --this->cur_size_;
   return 0;
 }
@@ -515,7 +514,7 @@ ACE_Unbounded_Queue<T>::get (T *&item, size_t index) const
   for (i = 0; i < this->cur_size_; i++)
     {
       if (i == index)
-	break;
+        break;
 
       curr = curr->next_;
     }
@@ -531,7 +530,7 @@ ACE_Unbounded_Queue<T>::get (T *&item, size_t index) const
 
 template <class T> int
 ACE_Unbounded_Queue<T>::set (const T &item,
-			     size_t index)
+                             size_t index)
 {
 //   ACE_TRACE ("ACE_Unbounded_Queue<T>::set");
 
@@ -557,34 +556,34 @@ ACE_Unbounded_Queue<T>::set (const T &item,
       // A common case will be increasing the set size by 1.
       // Therefore, we'll optimize for this case.
       if (i == index)
-	{
-	  // Try to expand the size of the set by 1.
-	  if (this->enqueue_tail (item) == -1)
-	    return -1;
-	  else
-	    return 0;
-	}
+        {
+          // Try to expand the size of the set by 1.
+          if (this->enqueue_tail (item) == -1)
+            return -1;
+          else
+            return 0;
+        }
       else
-	{
-	  T dummy;
+        {
+          T dummy;
 
-	  // We need to expand the list by multiple (dummy) items.
-	  for (; i < index; i++)
-	    {
-	      // This head points to the existing dummy node, which is
-	      // about to be overwritten when we add the new dummy
-	      // node.
-	      curr = this->head_;
+          // We need to expand the list by multiple (dummy) items.
+          for (; i < index; i++)
+            {
+              // This head points to the existing dummy node, which is
+              // about to be overwritten when we add the new dummy
+              // node.
+              curr = this->head_;
 
-	      // Try to expand the size of the set by 1, but don't
-	      // store anything in the dummy node (yet).
-	      if (this->enqueue_tail (dummy) == -1)
-		return -1;
-	    }
+              // Try to expand the size of the set by 1, but don't
+              // store anything in the dummy node (yet).
+              if (this->enqueue_tail (dummy) == -1)
+                return -1;
+            }
 
-	  curr->item_ = item;
-	  return 0;
-	}
+          curr->item_ = item;
+          return 0;
+        }
     }
 }
 
@@ -696,8 +695,8 @@ ACE_Double_Linked_List<T>:: ACE_Double_Linked_List (ACE_Allocator *alloc)
     this->allocator_ = ACE_Allocator::instance ();
 
   ACE_NEW_MALLOC (this->head_,
-		  (T *) this->allocator_->malloc (sizeof (T)),
-		  T);
+                  (T *) this->allocator_->malloc (sizeof (T)),
+                  T);
 
   this->init_head ();
 }
@@ -710,8 +709,8 @@ ACE_Double_Linked_List<T>::ACE_Double_Linked_List (ACE_Double_Linked_List<T> &cx
     this->allocator_ = ACE_Allocator::instance ();
 
   ACE_NEW_MALLOC (this->head_,
-		  (T *) this->allocator_->malloc (sizeof (T)),
-		  T);
+                  (T *) this->allocator_->malloc (sizeof (T)),
+                  T);
   this->init_head ();
   this->copy_nodes (cx);
 }
@@ -974,7 +973,7 @@ ACE_Fixed_Set<T, SIZE>::operator= (const ACE_Fixed_Set<T, SIZE> &fs)
       this->cur_size_ = fs.cur_size_;
 
       for (size_t i = 0; i < this->cur_size_; i++)
-	this->search_structure_[i] = fs.search_structure_[i];
+        this->search_structure_[i] = fs.search_structure_[i];
     }
 }
 
@@ -995,7 +994,7 @@ ACE_Fixed_Set<T, SIZE>::find (const T &item) const
 
   for (size_t i = 0; i < this->cur_size_; i++)
     if (this->search_structure_[i].item_ == item
-	&& this->search_structure_[i].is_free_ == 0)
+        && this->search_structure_[i].is_free_ == 0)
       return 0;
 
   return -1;
@@ -1013,10 +1012,10 @@ ACE_Fixed_Set<T, SIZE>::insert (const T &item)
     // First, make sure we don't allow duplicates.
 
     if (this->search_structure_[i].item_ == item
-	&& this->search_structure_[i].is_free_ == 0)
+        && this->search_structure_[i].is_free_ == 0)
       return 1;
     else if (this->search_structure_[i].is_free_
-	     && first_free == -1)
+             && first_free == -1)
       first_free = i;
 
   // If we found a free spot let's reuse it.
@@ -1049,24 +1048,24 @@ ACE_Fixed_Set<T, SIZE>::remove (const T &item)
   for (size_t i = 0; i < this->cur_size_; i++)
     if (this->search_structure_[i].item_ == item)
       {
-	// Mark this entry as being free.
-	this->search_structure_[i].is_free_ = 1;
+        // Mark this entry as being free.
+        this->search_structure_[i].is_free_ = 1;
 
-	// If we just unbound the highest entry, then we need to
-	// figure out where the next highest active entry is.
-	if (i + 1 == this->cur_size_)
-	  {
-	    while (i > 0
-		   && this->search_structure_[--i].is_free_)
-	      continue;
+        // If we just unbound the highest entry, then we need to
+        // figure out where the next highest active entry is.
+        if (i + 1 == this->cur_size_)
+          {
+            while (i > 0
+                   && this->search_structure_[--i].is_free_)
+              continue;
 
-	    if (i == 0
-		&& this->search_structure_[i].is_free_)
-	      this->cur_size_ = 0;
-	    else
-	      this->cur_size_ = i + 1;
-	  }
-	return 0;
+            if (i == 0
+                && this->search_structure_[i].is_free_)
+              this->cur_size_ = 0;
+            else
+              this->cur_size_ = i + 1;
+          }
+        return 0;
       }
 
   return -1;
@@ -1173,17 +1172,17 @@ ACE_Bounded_Set<T>::operator= (const ACE_Bounded_Set<T> &bs)
   if (this != &bs)
     {
       if (this->max_size_ < bs.cur_size_)
-	{
-	  delete [] this->search_structure_;
-	  ACE_NEW (this->search_structure_,
-		   ACE_Bounded_Set<T>::Search_Structure[bs.cur_size_]);
-	  this->max_size_ = bs.cur_size_;
-	}
+        {
+          delete [] this->search_structure_;
+          ACE_NEW (this->search_structure_,
+                   ACE_Bounded_Set<T>::Search_Structure[bs.cur_size_]);
+          this->max_size_ = bs.cur_size_;
+        }
 
       this->cur_size_ = bs.cur_size_;
 
       for (size_t i = 0; i < this->cur_size_; i++)
-	this->search_structure_[i] = bs.search_structure_[i];
+        this->search_structure_[i] = bs.search_structure_[i];
     }
 }
 
@@ -1206,7 +1205,7 @@ ACE_Bounded_Set<T>::find (const T &item) const
 
   for (size_t i = 0; i < this->cur_size_; i++)
     if (this->search_structure_[i].item_ == item
-	&& this->search_structure_[i].is_free_ == 0)
+        && this->search_structure_[i].is_free_ == 0)
       return 0;
 
   return -1;
@@ -1223,7 +1222,7 @@ ACE_Bounded_Set<T>::insert (const T &item)
     // First, make sure we don't allow duplicates.
 
     if (this->search_structure_[i].item_ == item
-	&& this->search_structure_[i].is_free_ == 0)
+        && this->search_structure_[i].is_free_ == 0)
       return 1;
     else if (this->search_structure_[i].is_free_ && first_free == -1)
       first_free = i;
@@ -1255,22 +1254,22 @@ ACE_Bounded_Set<T>::remove (const T &item)
   for (size_t i = 0; i < this->cur_size_; i++)
     if (this->search_structure_[i].item_ == item)
       {
-	// Mark this entry as being free.
-	this->search_structure_[i].is_free_ = 1;
+        // Mark this entry as being free.
+        this->search_structure_[i].is_free_ = 1;
 
-	// If we just unbound the highest entry, then we need to
-	// figure out where the next highest active entry is.
-	if (i + 1 == this->cur_size_)
-	  {
-	    while (i > 0 && this->search_structure_[--i].is_free_)
-	      continue;
+        // If we just unbound the highest entry, then we need to
+        // figure out where the next highest active entry is.
+        if (i + 1 == this->cur_size_)
+          {
+            while (i > 0 && this->search_structure_[--i].is_free_)
+              continue;
 
-	    if (i == 0 && this->search_structure_[i].is_free_)
-	      this->cur_size_ = 0;
-	    else
-	      this->cur_size_ = i + 1;
-	  }
-	return 0;
+            if (i == 0 && this->search_structure_[i].is_free_)
+              this->cur_size_ = 0;
+            else
+              this->cur_size_ = i + 1;
+          }
+        return 0;
       }
 
   return -1;
@@ -1384,8 +1383,8 @@ ACE_Unbounded_Set<T>::insert_tail (const T &item)
 
   // Create a new dummy node.
   ACE_NEW_MALLOC_RETURN (temp,
-			 (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
-			 ACE_Node<T> (this->head_->next_), -1);
+                         (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
+                         ACE_Node<T> (this->head_->next_), -1);
 
   // Link this pointer into the list.
   this->head_->next_ = temp;
@@ -1447,7 +1446,7 @@ ACE_Unbounded_Set<T>::delete_nodes (void)
       ACE_Node<T> *temp = curr;
       curr = curr->next_;
       ACE_DES_FREE_TEMPLATE (temp, this->allocator_->free,
-			     ACE_Node, <T>);
+                             ACE_Node, <T>);
       this->cur_size_--;
     }
 
@@ -1464,7 +1463,7 @@ ACE_Unbounded_Set<T>::~ACE_Unbounded_Set (void)
 
   // Delete the dummy node.
   ACE_DES_FREE_TEMPLATE (head_, this->allocator_->free,
-			 ACE_Node, <T>);
+                         ACE_Node, <T>);
   this->head_ = 0;
 }
 
@@ -1480,8 +1479,8 @@ ACE_Unbounded_Set<T>::ACE_Unbounded_Set (ACE_Allocator *alloc)
     this->allocator_ = ACE_Allocator::instance ();
 
   ACE_NEW_MALLOC (this->head_,
-		  (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
-		  ACE_Node<T>);
+                  (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
+                  ACE_Node<T>);
 
   // Make the list circular by pointing it back to itself.
   this->head_->next_ = this->head_;
@@ -1499,8 +1498,8 @@ ACE_Unbounded_Set<T>::ACE_Unbounded_Set (const ACE_Unbounded_Set<T> &us)
     this->allocator_ = ACE_Allocator::instance ();
 
   ACE_NEW_MALLOC (this->head_,
-		  (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
-		  ACE_Node<T>);
+                  (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
+                  ACE_Node<T>);
   this->head_->next_ = this->head_;
   this->copy_nodes (us);
 }
@@ -1567,7 +1566,7 @@ ACE_Unbounded_Set<T>::remove (const T &item)
       curr->next_ = temp->next_;
       this->cur_size_--;
       ACE_DES_FREE_TEMPLATE (temp, this->allocator_->free,
-			     ACE_Node, <T>);
+                             ACE_Node, <T>);
       return 0;
     }
 }
@@ -1780,7 +1779,8 @@ ACE_Ordered_MultiSet<T>::insert (const T &item)
 }
 
 template <class T> int
-ACE_Ordered_MultiSet<T>::insert (const T &item, ITERATOR &iter)
+ACE_Ordered_MultiSet<T>::insert (const T &item,
+                                 ACE_Ordered_MultiSet_Iterator<T> &iter)
 {
 // ACE_TRACE ("ACE_Ordered_MultiSet<T>::insert using iterator");
 
@@ -1821,14 +1821,15 @@ ACE_Ordered_MultiSet<T>::remove (const T &item)
 
     ACE_DES_FREE_TEMPLATE (node, this->allocator_->free, ACE_DNode, <T>);
 
-	return 0;
+        return 0;
   }
 
   return -1;
 }
 
 template <class T> int
-ACE_Ordered_MultiSet<T>::find (const T &item, ITERATOR &iter) const
+ACE_Ordered_MultiSet<T>::find (const T &item,
+                               ACE_Ordered_MultiSet_Iterator<T> &iter) const
 {
   // search an occurance of item, using iterator's current position as a hint
   ACE_DNode<T> *node = iter.current_;
@@ -1943,7 +1944,7 @@ ACE_Ordered_MultiSet<T>::insert_from (const T &item, ACE_DNode<T> *position,
 
       default:
         return -1;
-		break;
+                break;
     }
   }
   else
@@ -1959,7 +1960,7 @@ ACE_Ordered_MultiSet<T>::insert_from (const T &item, ACE_DNode<T> *position,
 }
 
 template <class T> int
-ACE_Ordered_MultiSet<T>::locate (const T &item, ACE_DNode<T> *start_position, 
+ACE_Ordered_MultiSet<T>::locate (const T &item, ACE_DNode<T> *start_position,
                                  ACE_DNode<T> *&new_position) const
 {
   if (! start_position)
@@ -1969,10 +1970,10 @@ ACE_Ordered_MultiSet<T>::locate (const T &item, ACE_DNode<T> *start_position,
 
   // if starting before the item, move forward
   // until at or just before item
-  while (start_position && start_position->item_ < item && 
+  while (start_position && start_position->item_ < item &&
          start_position->next_)
   {
-    start_position = start_position->next_;    
+    start_position = start_position->next_;
   }
 
   // if starting after the item, move back
@@ -2004,15 +2005,15 @@ ACE_Ordered_MultiSet<T>::locate (const T &item, ACE_DNode<T> *start_position,
     return 0;
   }
 }
-  // looks for first occurance of <item> in the ordered set, using the 
+  // looks for first occurance of <item> in the ordered set, using the
   // passed starting position as a hint: if there is such an instance, it
   // updates the new_position pointer to point to one such node and returns 0;
-  // if there is no such node, then if there is a node before where the 
+  // if there is no such node, then if there is a node before where the
   // item would have been, it updates the new_position pointer to point
   // to this node and returns -1; if there is no such node, then if there
-  // is a node after where the item would have been, it updates the 
-  // new_position pointer to point to this node (or 0 if there is no such 
-  // node) and returns 1; 
+  // is a node after where the item would have been, it updates the
+  // new_position pointer to point to this node (or 0 if there is no such
+  // node) and returns 1;
 
 template <class T> void
 ACE_Ordered_MultiSet<T>::copy_nodes (const ACE_Ordered_MultiSet<T> &us)
@@ -2065,8 +2066,7 @@ ACE_Ordered_MultiSet_Iterator<T>::next (T *&item)
     return 1;
   }
 
-  return 0;  
+  return 0;
 }
-
 
 #endif /* ACE_CONTAINERS_C */
