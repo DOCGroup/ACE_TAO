@@ -56,7 +56,7 @@ TAO_NS_Notify_Service::init (int argc, char *argv[])
           int dispatching_threads = ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
-                  
+
           if (dispatching_threads > 0)
             {
               NotifyExt::ThreadPoolParams tp_params = 
@@ -224,4 +224,19 @@ TAO_NS_Notify_Service::remove (TAO_NS_EventChannelFactory* /*ecf*/ ACE_ENV_ARG_D
   // NOP.
 }
 
+/*********************************************************************************************************************/
+
+TAO_NS_Cos_Notification_Service_Initializer::TAO_NS_Cos_Notification_Service_Initializer (void)
+{
+  ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_TAO_NS_Notify_Service);
+}
+
+/*********************************************************************************************************************/
+
+ACE_STATIC_SVC_DEFINE (TAO_NS_Notify_Service,
+                       ACE_TEXT (TAO_NS_COS_NOTIFICATION_SERVICE_NAME),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (TAO_NS_Notify_Service),
+                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+                       0)
 ACE_FACTORY_DEFINE (TAO_Notify, TAO_NS_Notify_Service)

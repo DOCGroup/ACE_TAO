@@ -1,3 +1,28 @@
+Fri Nov 01 11:09:29 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.cpp:
+	  Changed <execute> method parameter to
+	  ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+	
+        * orbsvcs/orbsvcs/Notify/Service.h:
+          Corrected the comment above the <init> method.
+
+        * orbsvcs/orbsvcs/Notify/Service.h:
+          Added a #define to define the string used to load the Cos
+          Notification Service.
+
+        * orbsvcs/orbsvcs/Notify/Notify_Service.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Service.cpp:
+          Added class TAO_NS_CosNotification_Service_Initializer.
+          This is a helper to load the Cos Notification service into the service conf. for static links.
+
+        * orbsvcs/Notify_Service/svc.conf:
+          Changed the conf file to load the Cos Notification wih the static command.
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+          Changed the string to obtain the Cos Notification Service via
+	  the Service Configurator.
+
 Fri Nov  1 09:44:43 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/DsNotifyLogAdmin.dsp:
