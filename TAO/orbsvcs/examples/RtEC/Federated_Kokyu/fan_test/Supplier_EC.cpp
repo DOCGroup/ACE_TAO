@@ -14,7 +14,6 @@
 #include "orbsvcs/Event/EC_Kokyu_Factory.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/Event/EC_Event_Limit.h"
 #include "tao/ORB_Core.h"
 
 #include "Kokyu_EC.h"
@@ -211,22 +210,16 @@ int
 main (int argc, char* argv[])
 {
   //TAO_EC_Default_Factory::init_svcs ();
-#ifdef ACE_HAS_DSUI
-  ds_control* ds_cntl = new ds_control ("Fan_Test_Supplier","supplier_enabled.dsui");
-#endif //ACE_HAS_DSUI
-
   TAO_EC_Kokyu_Factory::init_svcs ();
   TAO_EC_Gateway_IIOP_Factory::init_svcs ();
-
-  //@BT
-  //DSTRM_EVENT(MAIN_GROUP_FAM, START,1,0,NULL);
-  ACE_Time_Value now(ACE_OS::gettimeofday());
-  ACE_OS::printf("Supplier_EC START at %isec %iusec\n",now.sec(),now.usec());
-  DSTRM_EVENT(MAIN_GROUP_FAM, START,0,0,NULL);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+#ifdef ACE_HAS_DSUI
+      ds_control ds_cntl("Fan_Test_Supplier","supplier_enabled.dsui");
+#endif //ACE_HAS_DSUI
+
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
@@ -292,6 +285,7 @@ main (int argc, char* argv[])
       supplier_ec.start(ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+#ifdef ACE_HAS_DSUI
       //@BT: Timeouts start when orb starts, similar to starting the DT worker thread
       //DSTRM_EVENT (MAIN_GROUP_FAM, WORKER_ACTIVATED, 1, 0, NULL);
       ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t WORKER_ACTIVATED at %u\n",ACE_OS::gettimeofday().msec()));
@@ -300,43 +294,30 @@ main (int argc, char* argv[])
       ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t WORKER_STARTED at %u\n",ACE_OS::gettimeofday().msec()));
       DSTRM_EVENT (WORKER_GROUP_FAM, WORKER_STARTED, 0, 0, NULL);
 
-#ifdef ACE_HAS_DSUI
-      EC_Event_Limit* e_limit = new EC_Event_Limit (orb, ds_cntl);
-#else
-      EC_Event_Limit* e_limit = new EC_Event_Limit (orb);
+      //@BT
+      //DSTRM_EVENT(MAIN_GROUP_FAM, START,1,0,NULL);
+      ACE_Time_Value now(ACE_OS::gettimeofday());
+      ACE_OS::printf("Supplier_EC START at %isec %iusec\n",now.sec(),now.usec());
+      DSTRM_EVENT(MAIN_GROUP_FAM, START,0,0,NULL);
 #endif //ACE_HAS_DSUI
-      ACE_Time_Value ticker (120);
-      //orb->orb_core()->reactor()->schedule_timer(e_limit,0, ticker);
-      long timer_id = rt.reactor()->schedule_timer(e_limit,0,ticker);
-      if (timer_id < 0)
-        {
-          ACE_DEBUG((LM_DEBUG,"Supplier_EC (%t) could not schedule EC_Event_Limit timer\n"));
-        }
 
       rt.activate(); //need thread creation flags? or priority?
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_Time_Value stop_time(300,0);
+      orb->run (stop_time ACE_ENV_ARG_PARAMETER);
+      //orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+#ifdef ACE_HAS_DSUI
+      //@BT
+      //DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
+      ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t STOP at %u\n",ACE_OS::gettimeofday().msec()));
+      DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
+#endif //ACE_HAS_DSUI
       // ****************************************************************
-
-      //@BT: ORB shutting down; currently, this isn't expected to happen
-      //DSTRM_EVENT (MAIN_GROUP_FAM, CALL_SERVER_SHUTDOWN, 1, 0, NULL);
-      ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t CALL_SERVER_SHUTDOWN at %u\n",ACE_OS::gettimeofday().msec()));
-      DSTRM_EVENT (MAIN_GROUP_FAM, CALL_SERVER_SHUTDOWN, 0, 0, NULL);
-
-      //@BT: Scheduler shuts down with the EC and ORB
-      //DSTRM_EVENT (MAIN_GROUP_FAM, SCHEDULER_SHUTDOWN, 1, 0, NULL);
-      ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t SCHEDULER_SHUTDOWN at %u\n",ACE_OS::gettimeofday().msec()));
-      DSTRM_EVENT (MAIN_GROUP_FAM, SCHEDULER_SHUTDOWN, 0, 0, NULL);
 
       // We should do a lot of cleanup (disconnect from the EC,
       // deactivate all the objects with the POA, etc.) but this is
       // just a simple demo so we are going to be lazy.
-
-      //@BT: Done clean up
-      //DSTRM_EVENT (MAIN_GROUP_FAM, AFTER_SERVER_SHUTDOWN, 1, 0, NULL);
-      ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t AFTER_SERVER_SHUTDOWN at %u\n",ACE_OS::gettimeofday().msec()));
-      DSTRM_EVENT (MAIN_GROUP_FAM, AFTER_SERVER_SHUTDOWN, 0, 0, NULL);
 
     }
   ACE_CATCHANY
@@ -345,11 +326,6 @@ main (int argc, char* argv[])
       return 1;
     }
   ACE_ENDTRY;
-
-  //@BT
-  //DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
-  ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t STOP at %u\n",ACE_OS::gettimeofday().msec()));
-  DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
 
   return 0;
 }
