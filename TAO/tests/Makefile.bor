@@ -44,6 +44,7 @@ DIRS = \
 	MT_Timeout \
         Multiple \
 	Multiple_Inheritance \
+        Muxed_GIOP_Versions \
 	Muxing \
         Native_Exceptions \
 	Nested_Event_Loop \
