@@ -17,7 +17,7 @@
 #if !defined (ACE_XTREACTOR_H)
 #define ACE_XTREACTOR_H
 
-#include "ace/Reactor.h"
+#include "ace/Select_Reactor.h"
 
 #if defined (ACE_HAS_XT)
 
@@ -28,16 +28,10 @@
 // Forward decl.
 struct ACE_XtReactorID;
 
-class ACE_XtReactor : public ACE_Reactor
+class ACE_XtReactor : public ACE_Select_Reactor
   // = TITLE
   //     An object oriented event demultiplexor and event handler
   //     dispatcher that uses the X Toolkit functions.
-  //     
-  // = DESCRIPTION
-  //     The ACE_Reactor is an object-oriented event demultiplexor
-  //     and event handler dispatcher.  The sources of events that the
-  //     ACE_Reactor waits for and dispatches includes I/O events,
-  //     signals, and timer events.
 {
 public:
   // = Initialization and termination methods.
@@ -97,9 +91,9 @@ private:
   static void TimerCallbackProc (XtPointer closure, XtIntervalId *id);
   static void InputCallbackProc (XtPointer closure, int* source, XtInputId *id);
 
-  // = Disable copying and assignment.
-  ACE_XtReactor (const ACE_Reactor &);
-  void operator = (const ACE_Reactor &);
+  ACE_XtReactor (const ACE_XtReactor &);
+  ACE_XtReactor &operator = (const ACE_XtReactor &);
+  // Deny access since member-wise won't work...
 };
 #endif /* ACE_HAS_XT */
 
