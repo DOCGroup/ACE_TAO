@@ -257,4 +257,6 @@ Notifier_Input_Handler::handle_input (ACE_HANDLE)
       return -1;
     }
   TAO_ENDTRY;
+
+return 0;
 }
