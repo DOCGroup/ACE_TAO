@@ -2,10 +2,9 @@
 // This file is generated with "generate_component_mpc.pl -l .. -p BasicSP_EC -i -c EC"
 
 project(BasicSP_EC_EC_stub): ciao_client {
-  depends += BasicSP_EC_stub
+  after += BasicSP_EC_stub
   sharedname = EC_stub
   idlflags += -Wb,stub_export_macro=EC_STUB_Export -Wb,stub_export_include=EC_stub_export.h -Wb,skel_export_macro=EC_SVNT_Export -Wb,skel_export_include=EC_svnt_export.h
-  dllflags   = EC_STUB_BUILD_DLL
 
   IDL_Files {
     EC.idl
@@ -17,12 +16,11 @@ project(BasicSP_EC_EC_stub): ciao_client {
 }
 
 project(BasicSP_ECEC_svnt) : ciao_servant {
-  depends += BasicSP_EC_svnt EC_stub
+  after += BasicSP_EC_svnt EC_stub
   sharedname  = EC_svnt
   libs    += EC_stub BasicSP_EC_stub BasicSP_EC_svnt
   libpaths += ..
   idlflags  +=  -Wb,export_macro=EC_SVNT_Export -Wb,export_include=EC_svnt_export.h
-  dllflags = EC_SVNT_BUILD_DLL
 
   CIDL_Files {
     EC.cidl
@@ -41,13 +39,11 @@ project(BasicSP_ECEC_svnt) : ciao_servant {
 
 
 project(BasicSP_EC_EC_exec) : ciao_component {
-  depends   += EC_svnt
+  after   += EC_svnt
   sharedname = EC_exec
   libs      += EC_stub EC_svnt BasicSP_EC_stub BasicSP_EC_svnt
   libpaths += ..
   idlflags  +=  -Wb,export_macro=EC_EXEC_Export -Wb,export_include=EC_exec_export.h
-  dllflags   = EC_EXEC_BUILD_DLL
-
   IDL_Files {
     ECEI.idl
   }
@@ -62,7 +58,7 @@ project(BasicSP_EC_EC_exec) : ciao_component {
 
 project (BasicSP_EC_EC_client) : ciao_client {
   exename = client
-  depends += EC_stub BasicSP_EC_stub
+  after += EC_stub BasicSP_EC_stub
   libpaths += ..
 
   IDL_Files {
