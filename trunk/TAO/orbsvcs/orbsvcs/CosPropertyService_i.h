@@ -22,10 +22,6 @@
 #include "orbsvcs/CosPropertyServiceS.h"
 #include "orbsvcs/CosProperty_Hash.h"
 
-// @@ Alex, please don't use global consts.  Instead, put them inside
-// of the scope of a class, e.g., as an enum!
-const int HASH_TABLE_SIZE = 256;
-
 class TAO_PropertySetFactory :  public virtual POA_CosPropertyService::PropertySetFactory
 {
 // @@ Alex, can you please add the normal = TITLE and = DESCRIPTION
@@ -74,56 +70,71 @@ class TAO_PropertySet :  public virtual POA_CosPropertyService::PropertySet
 {    
   // = TITLE
   //    Gives operations for defining, deleting, enumerating and
-  //    checking for the existence of properties.
-// @@ Alex, can you please add the normal = TITLE and = DESCRIPTION
-// comments here?  In addition, can you please comment the various methods.
+  //    checking of properties.
+  //
+  // = DESCRIPTION
+  //     Uses a HashTable to manage the properties. 
 public:
+  typdef Hash_Property_Map<EXT_ID, INT_ID, ACE_Null_Mutex> CosProperty_Hash_Map;
+  
   TAO_PropertySet (void);
+  // Default constructor 
 
   virtual ~TAO_PropertySet (void);
+  // Destructor function
   
   virtual void define_property (const char *property_name,
                                 const CORBA::Any &property_value,
                                 CORBA::Environment &env);
+  // Store the property in the hash after checking for validity of the
+  // property name, duplicate name, type code over writing etc.
 
   virtual void define_properties (const CosPropertyService::Properties &nproperties,
                                   CORBA::Environment &env);
+  // Define a sequence of properties at a time
     
   virtual CORBA::ULong get_number_of_properties ( CORBA::Environment &env);
-  
+  // Get the number of properties that are currently defined in the PropertySet
+
   virtual void get_all_property_names (CORBA::ULong how_many, 
                                        CosPropertyService::PropertyNames_out property_names, 
                                        CosPropertyService::PropertyNamesIterator_out rest,  CORBA::Environment &env);
+  // Get the names of all the properties that are currently defined
+  // in the property set.
   
   virtual CORBA::Any *get_property_value (const char *property_name,
                                           CORBA::Environment &env);
+  // Get the value of the property, given the name
 
   virtual CORBA::Boolean get_properties (const CosPropertyService::PropertyNames &property_names,
                                          CosPropertyService::Properties_out nproperties,
                                          CORBA::Environment &env);
+  // Get all names and their property values
 
   virtual void get_all_properties (CORBA::ULong how_many,
                                    CosPropertyService::Properties_out nproperties, 
                                    CosPropertyService::PropertiesIterator_out rest,
                                    CORBA::Environment &env);
-   
+  // Get all the property values alone
+
   virtual void delete_property (const char *property_name,
                                 CORBA::Environment &env);
+  // Delete a property given a name
 
   virtual void delete_properties (const CosPropertyService::PropertyNames &property_names,
                                   CORBA::Environment &env);
+  // Delete all the these properties from this property set
 
   virtual CORBA::Boolean delete_all_properties (CORBA::Environment &env);
+  // Delete everything from this property set
 
   virtual CORBA::Boolean is_property_defined (const char *property_name,
                                               CORBA::Environment &env);
+  // Tell whether this property is defined or no. Forget about the value
 
 private:
-  // = Data Members
-
-  Hash_Property_Map hash_table_;
-  // @@ Alex, please give a short explanation of what this data member
-  // is used for.
+  CosProperty_Hash_Map hash_table_;
+  // This Hash_Table is the storage for our properties 
 };
 
 class TAO_PropertySetDef : public virtual TAO_PropertySet
@@ -159,6 +170,7 @@ public:
   virtual void set_property_mode (const char *property_name,
                                   CosPropertyService::PropertyModeType property_mode, 
                                   CORBA::Environment &env);
+  
   
   virtual void set_property_modes (const CosPropertyService::PropertyModes &property_modes,
                                    CORBA::Environment &env);
