@@ -135,6 +135,12 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
           temp = get_opt.optarg;
           // Now tokenize the string to get all the flags
           this->tokenize (temp);
+          // If LOGGER was specified, set up the default logger key.
+          // The key can be changed by the -k option also, so if it's
+          // been set already, don't set it.
+          if (ACE_BIT_ENABLED (this->flags_, ACE_Log_Msg::LOGGER) &&
+              this->logger_key_ == 0)
+            this->logger_key_ = ACE::strnew (ACE_DEFAULT_LOGGER_KEY);
           break;
         case 'i':
           // Interval (in secs) at which logfile size is sampled.
@@ -216,7 +222,7 @@ ACE_Logging_Strategy::ACE_Logging_Strategy (void)
   ACE_OS::strcat (this->filename_,
                   ACE_LIB_TEXT ("logfile"));
 #endif /* ACE_DEFAULT_LOGFILE */
-  this->logger_key_ = ACE::strnew (ACE_DEFAULT_LOGGER_KEY);
+  this->logger_key_ = 0;
   this->program_name_ = 0;
 }
 
