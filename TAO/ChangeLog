@@ -1,3 +1,21 @@
+Wed Dec 31 23:48:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+	  Fixed code generation for smart proxies. We never invoked the
+	  smart proxy during a _narrow () or _unchecked_narrow (). Our
+	  great tests are simply of no use to detect such important
+	  problems.  This should fix [BUGID 1697]. Thanks to Chris Liebig
+	  for reporting this problem. 
+	
+	* orbsvcs/tests/Notify/lib/Command_Factory_T.h:
+
+	  Fixed a warning with g++.
+	
+	* tests/Smart_Proxies/Policy/Makefile:
+
+	  Fixed dependancies. 
+
 Wed Dec 31 15:46:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tests/Bug_1361_Regression/Server_Thread_Pool.cpp:
