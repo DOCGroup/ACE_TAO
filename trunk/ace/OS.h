@@ -5932,16 +5932,7 @@ ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
 #define ACE_RTSIG_MAX 8
 #endif /* _POSIX_RTSIG_MAX */
   
-  // For the Proactor implementation that uses POSIX <aio_> calls, we
-  // are using SIGRTMIN for all the <aio_read> operations and
-  // (SIGRTMIN + 1) for all the <aio_write> operations. These two
-  // signals will be masked 
-  // in the process. These two signals are default signals for the
-  // read and the write operations. User can also specify other signals
-  // that should be used for the <aio_> calls. In that case, those
-  // signals will also be masked in the process.
-  // @@ Whatif SIGRTMIN is not defined by that name in some
-  // platform?(Alex)
+  // The signal used for all the Asynch_Operations.
 #define ACE_SIG_AIO SIGRTMIN
 
 #endif /* ACE_HAS_AIO_CALLS */
