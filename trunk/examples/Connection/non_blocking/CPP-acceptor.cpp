@@ -3,7 +3,6 @@
 
 #define CPP_ACCEPTOR_C
 
-
 #include "ace/Service_Config.h"
 #include "CPP-acceptor.h"
 

@@ -194,15 +194,6 @@ typedef int key_t;
 // configuration file (e.g., config-sunos5-sunc++-4.x.h).  
 #include "ace/config.h"
 
-#if defined (ACE_LACKS_SIGACTION)
-struct sigaction 
-{
-  int sa_flags;
-  ACE_SignalHandlerV sa_handler;
-  sigset_t sa_mask;
-};
-#endif /* ACE_LACKS_SIGACTION */
-
 #if defined (ACE_HAS_CHARPTR_SPRINTF)
 #define ACE_SPRINTF_ADAPTER(X) ::strlen (X)
 #else
@@ -1986,6 +1977,15 @@ typedef fd_set ACE_FD_SET_TYPE;
 #define MAXNAMELEN 256
 #endif /* FILENAME_MAX */
 #endif /* MAXNAMELEN */
+
+#if defined (ACE_LACKS_SIGACTION)
+struct sigaction 
+{
+  int sa_flags;
+  ACE_SignalHandlerV sa_handler;
+  sigset_t sa_mask;
+};
+#endif /* ACE_LACKS_SIGACTION */
 
 // This one exists only to please Service_Config.h and
 // Service_Manager.cpp
