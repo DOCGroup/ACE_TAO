@@ -24,12 +24,6 @@
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-namespace CORBA
-{
-  class PolicyError;
-  class PolicyList;
-}
-
 namespace TAO
 {
   namespace Portable_Server

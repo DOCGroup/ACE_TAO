@@ -1,6 +1,7 @@
 #include "IdUniquenessPolicy.h"
 #include "IdUniquenessPolicyValue.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Service_Config.h"
 
 #define TAO_PORTABLESERVER_SAFE_INCLUDE
 #include "PortableServerC.h"
@@ -42,30 +43,32 @@ namespace TAO
         case ::PortableServer::UNIQUE_ID :
           {
             this->value_ =
-              ACE_Dynamic_Service<Unique_IdUniqueness_Policy>::instance ("Unique_IdUniqueness_Policy");
+              ACE_Dynamic_Service<IdUniquenessPolicyValue>::instance ("Unique_IdUniqueness_Policy");
 
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::Portable_Server::ace_svc_desc_Unique_IdUniqueness_Policy);
+                  ACE_TEXT("dynamic Unique_IdUniqueness_Policy Service_Object *")
+                  ACE_TEXT("TAO_PortableServer:_make_Unique_IdUniqueness_Policy()"));
 
                 this->value_ =
-                  ACE_Dynamic_Service<Unique_IdUniqueness_Policy>::instance ("Unique_IdUniqueness_Policy");
+                  ACE_Dynamic_Service<IdUniquenessPolicyValue>::instance ("Unique_IdUniqueness_Policy");
               }
             break;
           }
         case ::PortableServer::MULTIPLE_ID :
           {
             this->value_ =
-              ACE_Dynamic_Service<Multiple_IdUniqueness_Policy>::instance ("Multiple_IdUniqueness_Policy");
+              ACE_Dynamic_Service<IdUniquenessPolicyValue>::instance ("Multiple_IdUniqueness_Policy");
 
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::Portable_Server::ace_svc_desc_Multiple_IdUniqueness_Policy);
+                  ACE_TEXT("dynamic Multiple_IdUniqueness_Policy Service_Object *")
+                  ACE_TEXT("TAO_PortableServer:_make_Multiple_IdUniqueness_Policy()"));
 
                 this->value_ =
-                  ACE_Dynamic_Service<Multiple_IdUniqueness_Policy>::instance ("Multiple_IdUniqueness_Policy");
+                  ACE_Dynamic_Service<IdUniquenessPolicyValue>::instance ("Multiple_IdUniqueness_Policy");
               }
 
             break;
