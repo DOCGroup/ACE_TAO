@@ -38,6 +38,8 @@ CPP_SRCS += \
   SHMIOP_Acceptor \
   SHMIOP_Connection_Handler \
   SHMIOP_Endpoint \
+  GIOP_Message_NonReactive_Base \
+  GIOP_Message_NonReactive_Handler \
   TAO_Strategies_Internal \
   uiop_endpoints \
   advanced_resource \
