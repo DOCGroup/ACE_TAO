@@ -1,3 +1,9 @@
+Mon Jun 19 12:45:45 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-lynxos.h: removed the ACE_LACKS_PTHREAD_SIGMASK,
+          and added back the pthread_sigmask () declaration.  With
+          extern "C", this time.
+
 Mon Jun 19 11:49:43 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_lynxos.GNU: export environment
