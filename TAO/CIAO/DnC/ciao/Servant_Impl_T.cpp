@@ -29,10 +29,11 @@ namespace CIAO
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ::Components::FacetDescriptions_var retval;
-    ACE_NEW_RETURN (retval.out (),
+    ::Components::FacetDescriptions *fd_ptr = 0;
+    ACE_NEW_RETURN (fd_ptr,
                     ::Components::FacetDescriptions,
                     0);
+    ::Components::FacetDescriptions_var retval = fd_ptr;
                     
     retval->length (this->facet_table_.current_size ());
     CORBA::ULong i = 0;
@@ -55,10 +56,11 @@ namespace CIAO
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ::Components::ConsumerDescriptions_var retval;
-    ACE_NEW_RETURN (retval.out (),
+    ::Components::ConsumerDescriptions *cd_ptr = 0;
+    ACE_NEW_RETURN (cd_ptr,
                     ::Components::ConsumerDescriptions,
                     0);
+    ::Components::ConsumerDescriptions_var retval = cd_ptr;
                     
     retval->length (this->consumer_table_.current_size ());
     CORBA::ULong i = 0;
