@@ -129,5 +129,5 @@ private:
   int is_consumer_ec_connected_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_ECG_RECONNECT_CONSUMEREC_CONTROL_H */
