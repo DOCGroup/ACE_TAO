@@ -1342,7 +1342,7 @@ be_interface::gen_perfect_hash_methods (void)
                        "Error:%p:Env variable 'ACE_ROOT' not found. Can't locate GPERF Program\n"), 
                       -1);
   
-  process_options.command_line ("%s/apps/gperf/src/gperf"
+  process_options.command_line ("%s/bin/gperf"
                                 " "
                                 "-m -M -J -c -C"
                                 " "
