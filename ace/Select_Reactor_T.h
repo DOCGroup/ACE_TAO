@@ -72,8 +72,8 @@ class ACE_Select_Reactor_Token_T : public ACE_SELECT_REACTOR_MUTEX
 public:
 
   ACE_Select_Reactor_Token_T (ACE_Select_Reactor_Impl &r,
-                              int s_queue = ACE_SELECT_REACTOR_MUTEX::FIFO);
-  ACE_Select_Reactor_Token_T (int s_queue = ACE_SELECT_REACTOR_MUTEX::FIFO);
+                              int s_queue = ACE_SELECT_TOKEN::FIFO);
+  ACE_Select_Reactor_Token_T (int s_queue = ACE_SELECT_TOKEN::FIFO);
   virtual ~ACE_Select_Reactor_Token_T (void);
 
   /// Called just before the ACE_Event_Handler goes to sleep.
@@ -111,6 +111,7 @@ template <class ACE_SELECT_REACTOR_TOKEN>
 class ACE_Select_Reactor_T : public ACE_Select_Reactor_Impl
 {
 public:
+
   // = Initialization and termination methods.
 
   /// If <disable_notify_pipe> is non-0 then the reactor will
@@ -125,7 +126,7 @@ public:
                         int disable_notify_pipe = 0,
                         ACE_Reactor_Notify *notify = 0,
                         int mask_signals = 1,
-                        int s_queue = ACE_SELECT_REACTOR_TOKEN::FIFO);
+                        int s_queue = ACE_SELECT_TOKEN::FIFO);
 
   /// Initialize @c ACE_Select_Reactor with size @arg size.
   /// If @arg disable_notify_pipe is non-0 then the reactor will
@@ -150,7 +151,7 @@ public:
                         int disable_notify_pipe = 0,
                         ACE_Reactor_Notify *notify = 0,
                         int mask_signals = 1,
-                        int s_queue = ACE_SELECT_REACTOR_TOKEN::FIFO);
+                        int s_queue = ACE_SELECT_TOKEN::FIFO);
 
   /**
    * Initialize the @c ACE_Select_Reactor to manage
