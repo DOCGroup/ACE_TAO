@@ -71,10 +71,10 @@ ACE_TTY_IO::control (Control_Mode cmd,
         case 19200:
           c_cflag |= B19200;
           break;
-#if 0
         case 38400:
           c_cflag |= B38400;
           break;
+#if 0
         case 56000:
           c_cflag |= B56000;
           break;
