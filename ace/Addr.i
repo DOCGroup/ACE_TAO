@@ -19,13 +19,13 @@ ACE_Addr::set_addr (void *, int)
 ACE_INLINE int 
 ACE_Addr::operator == (const ACE_Addr &sap) const
 {
-  return sap.addr_type_ == 0;
+  return sap.addr_type_ == this->addr_type_;
 }
 
 ACE_INLINE int
 ACE_Addr::operator != (const ACE_Addr &sap) const
 {
-  return sap.addr_type_ != 0;
+  return sap.addr_type_ != this->addr_type_;
 }
 
 // Return the size of the address. 
