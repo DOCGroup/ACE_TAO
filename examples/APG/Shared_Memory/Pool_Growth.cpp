@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Malloc.h"
 #include "ace/PI_Malloc.h"
 #include "ace/Process_Mutex.h"
