@@ -1,3 +1,16 @@
+Sat Jul 13 09:26:53 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Stack_Recursion/client.cpp:
+	* tests/Stack_Recursion/Client_Task.h:
+	* tests/Stack_Recursion/Client_Task.cpp (svc): 
+	* tests/Stack_Recursion/Sender.cpp:
+	* tests/Stack_Recursion/Sender.h:
+	* tests/Stack_Recursion/server.cpp:
+	* tests/Stack_Recursion/Server_Task.h:
+	* tests/Stack_Recursion/Server_Task.cpp: 
+	* tests/Stack_Recursion/Test.idl:
+	* tests/Stack_Recursion/run_test.pl: 
+
 Fri Jul 12 13:52:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Makefile.bor:
