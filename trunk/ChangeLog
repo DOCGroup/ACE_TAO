@@ -29,7 +29,8 @@ Fri Jan 26 14:13:32 2001  Ossama Othman  <ossama@uci.edu>
 	* ace/config-linux-common.h:
 
 	  Undefine ACE_LACKS_{LLSEEK,LSEEK64}_PROTOTYPE prior to include
-	  the KCC configuration file.
+ 	  the KCC configuration file.  Thanks to Jeff Greif
+ 	  <jgreif@befree.com> for reporting this.
 
 	* ace/README:
 
@@ -3181,7 +3182,7 @@ Fri Nov 10 20:26:01 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
         * ace/Profile_Timer.cpp: Replaced ACE_OS::perror() with
           ACE_ERROR macros so that the output can be redirected to the
           same place that the ACE logging output is configured to go.
-          Thanks to Jeff Greif <jgreif@befree.com> for reportin this.
+          Thanks to Jeff Greif <jgreif@befree.com> for reporting this.
 
 Fri Nov 10 17:15:42 2000  Darrell Brunsch  <brunsch@uci.edu>
 
