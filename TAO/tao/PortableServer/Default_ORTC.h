@@ -96,7 +96,6 @@ TAO_NAMESPACE  TAO_Default_ORT
     ObjectReferenceTemplate_var &operator= (const ObjectReferenceTemplate_var &);
     ObjectReferenceTemplate* operator-> (void) const;
 
-    operator const ObjectReferenceTemplate* () const;
     operator ObjectReferenceTemplate* ();
     // in, inout, out, _retn
     ObjectReferenceTemplate* in (void) const;
