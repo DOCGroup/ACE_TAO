@@ -1,3 +1,11 @@
+Mon Mar 01 14:54:14 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests\MT_Reference_Counted_Notify_Test.cpp (Simple_Event_Handler): 
+	* tests\Timer_Queue_Reference_Counting_Test.cpp (Simple_Event_Handler): 
+
+	  Removed asserts in add_reference() and remove_reference() for
+	  event handlers not participating in reference counting.
+
 Sun Feb 29 14:45:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/MakeProjectCreator/templates/gnu.mpd:
