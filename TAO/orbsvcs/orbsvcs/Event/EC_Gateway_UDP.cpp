@@ -20,18 +20,18 @@ TAO_ECG_UDP_Sender::get_local_addr (ACE_INET_Addr& addr)
   return this->dgram_->get_local_addr (addr);
 }
 
-void 
+void
 TAO_ECG_UDP_Sender::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
-			  RtecScheduler::Scheduler_ptr lcl_sched,
-			  const char* lcl_name,
-			  RtecUDPAdmin::AddrServer_ptr addr_server,
-			  ACE_SOCK_Dgram *dgram,
-			  CORBA::Environment &_env)
+                          RtecScheduler::Scheduler_ptr lcl_sched,
+                          const char* lcl_name,
+                          RtecUDPAdmin::AddrServer_ptr addr_server,
+                          ACE_SOCK_Dgram *dgram,
+                          CORBA::Environment &_env)
 {
-  this->lcl_ec_ = 
+  this->lcl_ec_ =
     RtecEventChannelAdmin::EventChannel::_duplicate (lcl_ec);
 
-  this->addr_server_ = 
+  this->addr_server_ =
     RtecUDPAdmin::AddrServer::_duplicate (addr_server);
 
   this->dgram_ = dgram;
@@ -44,14 +44,14 @@ TAO_ECG_UDP_Sender::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
   TimeBase::TimeT time;
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
   lcl_sched->set (this->lcl_info_,
-		  RtecScheduler::VERY_HIGH_CRITICALITY,
-		  time, time, time,
-		  25000 * 10,
-		  RtecScheduler::VERY_LOW_IMPORTANCE,
-		  time,
-		  0,
-		  RtecScheduler::OPERATION,
-		  _env);
+                  RtecScheduler::VERY_HIGH_CRITICALITY,
+                  time, time, time,
+                  25000 * 10,
+                  RtecScheduler::VERY_LOW_IMPORTANCE,
+                  time,
+                  0,
+                  RtecScheduler::OPERATION,
+                  _env);
   if (_env.exception () != 0) return;
 }
 
@@ -65,7 +65,7 @@ TAO_ECG_UDP_Sender::shutdown (CORBA::Environment& _env)
 
 void
 TAO_ECG_UDP_Sender::open (RtecEventChannelAdmin::ConsumerQOS& sub,
-			  CORBA::Environment &_env)
+                          CORBA::Environment &_env)
 {
   // ACE_DEBUG ((LM_DEBUG, "ECG (%t) Open gateway\n"));
   if (CORBA::is_nil (this->lcl_ec_.in ()))
@@ -101,8 +101,8 @@ TAO_ECG_UDP_Sender::open (RtecEventChannelAdmin::ConsumerQOS& sub,
   //ACE_ConsumerQOS_Factory::debug (sub);
 
   this->supplier_proxy_->connect_push_consumer (consumer_ref.in (),
-						sub,
-						_env);
+                                                sub,
+                                                _env);
   if (_env.exception () != 0) return;
 }
 
@@ -124,12 +124,12 @@ TAO_ECG_UDP_Sender::disconnect_push_consumer (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "ECG (%t): Supplier-consumer received "
-	      "disconnect from channel.\n"));
+              "disconnect from channel.\n"));
 }
 
 void
 TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
-			  CORBA::Environment & _env)
+                          CORBA::Environment & _env)
 {
   // ACE_DEBUG ((LM_DEBUG, "ECG_UDP_Sender::push - "));
 
@@ -143,19 +143,19 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
 
   // @@ TODO, there is an extra data copy here, we should do the event
   // modification without it and only compact the necessary events.
-  int count = 0;
+  // int count = 0;
   RtecEventComm::EventSet out (events.length ());
   for (u_int i = 0; i < events.length (); ++i)
     {
       if (events[i].header.ttl <= 0)
-	continue;
+        continue;
 
       const RtecEventComm::Event& e = events[i];
 
       // Copy only the header...
       RtecEventComm::EventHeader header = e.header;
       header.ttl--;
-      
+
       RtecUDPAdmin::UDP_Addr udp_addr;
       this->addr_server_->get_addr (header, udp_addr, _env);
       TAO_CHECK_ENV_RETURN_VOID(_env);
@@ -181,13 +181,13 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
       *ACE_reinterpret_cast(CORBA::ULong*,buf) = bodylen;
 #else
       if (!cdr.do_byte_swap ())
-	{
-	  *ACE_reinterpret_cast(CORBA::ULong*, buf) = bodylen;
-	}
+        {
+          *ACE_reinterpret_cast(CORBA::ULong*, buf) = bodylen;
+        }
       else
-	{
-	  CDR::swap_4 (ACE_reinterpret_cast(char*,&bodylen), buf);
-	}
+        {
+          CDR::swap_4 (ACE_reinterpret_cast(char*,&bodylen), buf);
+        }
 #endif
 
       // This is a good maximum, because Dgrams cannot be longer than
@@ -198,33 +198,33 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
       ACE_IO_Vector iov[TAO_WRITEV_MAX];
 
       int iovcnt = 0;
-      for (const ACE_Message_Block* i = cdr.begin ();
-	   i != cdr.end () && iovcnt < TAO_WRITEV_MAX;
-	   i = i->cont ())
-	{
-	  iov[iovcnt].buffer (i->rd_ptr ());
-	  iov[iovcnt].length (i->length ());
-	  iovcnt++;
-	}
+      for (const ACE_Message_Block* b = cdr.begin ();
+           b != cdr.end () && iovcnt < TAO_WRITEV_MAX;
+           b = b->cont ())
+        {
+          iov[iovcnt].buffer (b->rd_ptr ());
+          iov[iovcnt].length (b->length ());
+          iovcnt++;
+        }
 
       ACE_INET_Addr inet_addr (udp_addr.port, udp_addr.ipaddr);
       // ACE_DEBUG ((LM_DEBUG, "sending to (%d,%u)\n",
       // udp_addr.port, udp_addr.ipaddr));
       ssize_t n = this->dgram_->send (iov, iovcnt, inet_addr);
       if (n == -1)
-	{
-	  // @@ TODO Use a Event Channel specific exception
-	  ACE_DEBUG ((LM_DEBUG,
-		      "ECG_UDP (%t) send failed %p\n", ""));
-	  TAO_THROW(CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
-	}
+        {
+          // @@ TODO Use a Event Channel specific exception
+          ACE_DEBUG ((LM_DEBUG,
+                      "ECG_UDP (%t) send failed %p\n", ""));
+          TAO_THROW(CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+        }
       else if (n == 0)
-	{
-	  // @@ TODO Use a Event Channel specific exception
-	  ACE_DEBUG ((LM_DEBUG,
-		      "ECG_UDP (%t) EOF on send \n"));
-	  TAO_THROW(CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
-	}
+        {
+          // @@ TODO Use a Event Channel specific exception
+          ACE_DEBUG ((LM_DEBUG,
+                      "ECG_UDP (%t) EOF on send \n"));
+          TAO_THROW(CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+        }
     }
 }
 
@@ -234,16 +234,16 @@ TAO_ECG_UDP_Receiver::TAO_ECG_UDP_Receiver (void)
 {
 }
 
-void 
+void
 TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
-			    RtecScheduler::Scheduler_ptr lcl_sched,
-			    const char* lcl_name,
-			    const ACE_INET_Addr& ignore_from,
-			    CORBA::Environment &_env)
+                            RtecScheduler::Scheduler_ptr lcl_sched,
+                            const char* lcl_name,
+                            const ACE_INET_Addr& ignore_from,
+                            CORBA::Environment &_env)
 {
   this->ignore_from_ = ignore_from;
 
-  this->lcl_ec_ = 
+  this->lcl_ec_ =
     RtecEventChannelAdmin::EventChannel::_duplicate (lcl_ec);
 
   this->lcl_info_ =
@@ -254,20 +254,20 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
   TimeBase::TimeT time;
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
   lcl_sched->set (this->lcl_info_,
-		  RtecScheduler::VERY_HIGH_CRITICALITY,
-		  time, time, time,
-		  25000 * 10,
-		  RtecScheduler::VERY_LOW_IMPORTANCE,
-		  time,
-		  1,
-		  RtecScheduler::OPERATION,
-		  _env);
+                  RtecScheduler::VERY_HIGH_CRITICALITY,
+                  time, time, time,
+                  25000 * 10,
+                  RtecScheduler::VERY_LOW_IMPORTANCE,
+                  time,
+                  1,
+                  RtecScheduler::OPERATION,
+                  _env);
   if (_env.exception () != 0) return;
 }
 
 void
 TAO_ECG_UDP_Receiver::open (RtecEventChannelAdmin::SupplierQOS& pub,
-			    CORBA::Environment &_env)
+                            CORBA::Environment &_env)
 {
   if (CORBA::is_nil (this->lcl_ec_.in ()))
     return;
@@ -301,8 +301,8 @@ TAO_ECG_UDP_Receiver::open (RtecEventChannelAdmin::SupplierQOS& pub,
   ACE_SupplierQOS_Factory::debug (pub);
 
   this->consumer_proxy_->connect_push_supplier (supplier_ref.in (),
-						pub,
-						_env);
+                                                pub,
+                                                _env);
   if (_env.exception () != 0) return;
 }
 
@@ -325,7 +325,7 @@ TAO_ECG_UDP_Receiver::disconnect_push_supplier (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "ECG (%t): Supplier received "
-	      "disconnect from channel.\n"));
+              "disconnect from channel.\n"));
 }
 
 void
@@ -347,11 +347,11 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
   ssize_t n = dgram.recv (header, sizeof(header), from, MSG_PEEK);
   if (n == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "ECG_UDP_Receive_EH::handle_input - peek\n"), -1);
+                       "ECG_UDP_Receive_EH::handle_input - peek\n"), -1);
   else if (n == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "ECG_UDP_Receive_EH::handle_input - peek 0\n"),
-		      0);
+                       "ECG_UDP_Receive_EH::handle_input - peek 0\n"),
+                      0);
 
   char* buf = ACE_reinterpret_cast(char*,header);
   int byte_order = buf[0];
@@ -360,9 +360,9 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
   if (byte_order != TAO_ENCAP_BYTE_ORDER)
     {
       CDR::swap_4 (buf + 4,
-		   ACE_reinterpret_cast(char*,&length));
+                   ACE_reinterpret_cast(char*,&length));
     }
-  
+
   ACE_Message_Block mb (length + CDR::MAX_ALIGNMENT);
   CDR::mb_align (&mb);
   mb.wr_ptr (length);
@@ -371,11 +371,11 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
 
   if (n == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "ECG_UDP_Receive_EH::handle_input - read\n"), -1);
+                       "ECG_UDP_Receive_EH::handle_input - read\n"), -1);
   else if (n == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "ECG_UDP_Receive_EH::handle_input - read 0\n"),
-		      0);
+                       "ECG_UDP_Receive_EH::handle_input - read 0\n"),
+                      0);
   // This is to avoid receiving the events we send; notice that we
   // drop the message after reading it.
   if (from == this->ignore_from_)
@@ -388,7 +388,7 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
 
       RtecEventComm::EventSet events;
       cdr.decode (RtecEventComm::_tc_EventSet, &events, 0,
-		  TAO_TRY_ENV);
+                  TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       this->consumer_proxy_->push (events, TAO_TRY_ENV);
@@ -415,16 +415,16 @@ TAO_ECG_UDP_EH::open (const ACE_INET_Addr& ipaddr)
   if (this->dgram_.open (ipaddr) == -1)
     return -1;
   return this->reactor ()->register_handler (this,
-					     ACE_Event_Handler::READ_MASK);
+                                             ACE_Event_Handler::READ_MASK);
 }
 
 int
 TAO_ECG_UDP_EH::close (void)
 {
   if (this->reactor ()->remove_handler (this,
-					ACE_Event_Handler::READ_MASK) == -1)
+                                        ACE_Event_Handler::READ_MASK) == -1)
     return -1;
-      
+
   return this->dgram_.close ();
 }
 
@@ -451,7 +451,7 @@ int
 TAO_ECG_Mcast_EH::open (void)
 {
   return this->reactor ()->register_handler (this,
-					     ACE_Event_Handler::READ_MASK);
+                                             ACE_Event_Handler::READ_MASK);
 }
 
 int
@@ -470,9 +470,9 @@ int
 TAO_ECG_Mcast_EH::close (void)
 {
   if (this->reactor ()->remove_handler (this,
-					ACE_Event_Handler::READ_MASK) == -1)
+                                        ACE_Event_Handler::READ_MASK) == -1)
     return -1;
-      
+
   return this->dgram_.unsubscribe ();
 }
 
