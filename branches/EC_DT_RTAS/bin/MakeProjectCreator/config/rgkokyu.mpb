@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project : acelib {
+  after    += RGKokyu
+  libs     += RGKokyu dsui
+  libpaths += $(DATASTREAM_ROOT)/lib
+  includes += $(ACE_ROOT)/Kokyu $(DATASTREAM_ROOT)/include
+}
