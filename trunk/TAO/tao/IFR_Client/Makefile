@@ -65,7 +65,8 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/IFR_BaseC.o .obj/IFR_BaseC.SO .shobj/IFR_BaseC.o .shobj/IFR_BaseC.SO: IFR_BaseC.cpp IFR_BaseC.h $(ACE_ROOT)/ace/pre.h \
+.obj/IFR_BaseC.o .obj/IFR_BaseC.so .shobj/IFR_BaseC.o .shobj/IFR_BaseC.so: IFR_BaseC.cpp IFR_BaseC.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -89,7 +90,8 @@ endif
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
-  $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
@@ -100,7 +102,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -290,9 +293,6 @@ endif
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
@@ -310,7 +310,8 @@ endif
   $(TAO_ROOT)/tao/IOP_CodecC.i \
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  ifr_client_export.h IFR_BaseC.i $(TAO_ROOT)/tao/Stub.h \
+  ifr_client_export.h IFR_BaseC.i \
+  $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/MProfile.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
@@ -425,7 +426,7 @@ endif
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
-.obj/IFR_BasicC.o .obj/IFR_BasicC.SO .shobj/IFR_BasicC.o .shobj/IFR_BasicC.SO: IFR_BasicC.cpp IFR_BasicC.h \
+.obj/IFR_BasicC.o .obj/IFR_BasicC.so .shobj/IFR_BasicC.o .shobj/IFR_BasicC.so: IFR_BasicC.cpp IFR_BasicC.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
@@ -450,7 +451,8 @@ endif
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
-  $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
@@ -461,7 +463,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -651,9 +654,6 @@ endif
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
@@ -787,7 +787,7 @@ endif
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
-.obj/IFR_ExtendedC.o .obj/IFR_ExtendedC.SO .shobj/IFR_ExtendedC.o .shobj/IFR_ExtendedC.SO: IFR_ExtendedC.cpp IFR_ExtendedC.h \
+.obj/IFR_ExtendedC.o .obj/IFR_ExtendedC.so .shobj/IFR_ExtendedC.o .shobj/IFR_ExtendedC.so: IFR_ExtendedC.cpp IFR_ExtendedC.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
@@ -812,7 +812,8 @@ endif
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
-  $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
@@ -823,7 +824,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -1013,9 +1015,6 @@ endif
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
@@ -1034,7 +1033,8 @@ endif
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   ifr_client_export.h IFR_BasicC.h IFR_BaseC.h IFR_BaseC.i IFR_BasicC.i \
-  IFR_ExtendedC.i $(TAO_ROOT)/tao/Stub.h \
+  IFR_ExtendedC.i \
+  $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/MProfile.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
@@ -1149,7 +1149,7 @@ endif
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
-.obj/IFR_ComponentsC.o .obj/IFR_ComponentsC.SO .shobj/IFR_ComponentsC.o .shobj/IFR_ComponentsC.SO: IFR_ComponentsC.cpp IFR_ComponentsC.h \
+.obj/IFR_ComponentsC.o .obj/IFR_ComponentsC.so .shobj/IFR_ComponentsC.o .shobj/IFR_ComponentsC.so: IFR_ComponentsC.cpp IFR_ComponentsC.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
@@ -1174,7 +1174,8 @@ endif
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
-  $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
   $(ACE_ROOT)/ace/OS_String.h \
@@ -1185,7 +1186,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -1375,9 +1377,6 @@ endif
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
@@ -1512,8 +1511,9 @@ endif
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
-.obj/IFR_Client_Adapter_Impl.o .obj/IFR_Client_Adapter_Impl.SO .shobj/IFR_Client_Adapter_Impl.o .shobj/IFR_Client_Adapter_Impl.SO: IFR_Client_Adapter_Impl.cpp \
-  IFR_Client_Adapter_Impl.h $(ACE_ROOT)/ace/pre.h \
+.obj/IFR_Client_Adapter_Impl.o .obj/IFR_Client_Adapter_Impl.so .shobj/IFR_Client_Adapter_Impl.o .shobj/IFR_Client_Adapter_Impl.so: IFR_Client_Adapter_Impl.cpp \
+  IFR_Client_Adapter_Impl.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/IFR_Client_Adapter.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -1547,7 +1547,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -1555,7 +1556,8 @@ endif
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/Service_Object.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
-  $(ACE_ROOT)/ace/Exception_Macros.h ifr_client_export.h \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
+  ifr_client_export.h \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
@@ -1636,7 +1638,8 @@ endif
   $(ACE_ROOT)/ace/Timer_Queue_T.i \
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h IFR_ExtendedC.h \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
+  IFR_ExtendedC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
@@ -1745,9 +1748,6 @@ endif
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Array_VarOut_T.h \
   $(TAO_ROOT)/tao/Array_VarOut_T.inl \
   $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
@@ -1764,8 +1764,8 @@ endif
   $(TAO_ROOT)/tao/IOP_CodecC.h \
   $(TAO_ROOT)/tao/IOP_CodecC.i \
   $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i IFR_BasicC.h \
-  IFR_BaseC.h IFR_BaseC.i IFR_BasicC.i IFR_ExtendedC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  IFR_BasicC.h IFR_BaseC.h IFR_BaseC.i IFR_BasicC.i IFR_ExtendedC.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
   $(TAO_ROOT)/tao/Policy_Set.h \

@@ -76,13 +76,14 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Twoway_Asynch_Invocation.o .obj/Twoway_Asynch_Invocation.SO .shobj/Twoway_Asynch_Invocation.o .shobj/Twoway_Asynch_Invocation.SO: Twoway_Asynch_Invocation.cpp \
-  Twoway_Asynch_Invocation.h $(ACE_ROOT)/ace/pre.h \
+.obj/Twoway_Asynch_Invocation.o .obj/Twoway_Asynch_Invocation.so .shobj/Twoway_Asynch_Invocation.o .shobj/Twoway_Asynch_Invocation.so: Twoway_Asynch_Invocation.cpp \
+  Twoway_Asynch_Invocation.h \
+  $(ACE_ROOT)/ace/pre.h \
   Messaging.h messaging_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
-  $(ACE_ROOT)/ace/ace_wchar.inl MessagingC.h \
-  Messaging_SyncScope_PolicyC.h \
+  $(ACE_ROOT)/ace/ace_wchar.inl \
+  MessagingC.h Messaging_SyncScope_PolicyC.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/Object.h \
@@ -121,7 +122,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -275,11 +277,11 @@ endif
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
-  $(TAO_ROOT)/tao/TimeBaseC.i Messaging_RT_PolicyC.i \
-  Messaging_No_ImplC.h Messaging_No_ImplC.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
+  Messaging_RT_PolicyC.i Messaging_No_ImplC.h Messaging_No_ImplC.i \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.h \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.inl \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.h \
   $(TAO_ROOT)/tao/Valuetype/valuetype_export.h \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.inl \
@@ -287,8 +289,8 @@ endif
   $(TAO_ROOT)/tao/Valuetype/ValueFactory.inl \
   MessagingC.i TAO_ExtC.h TAO_ExtC.i \
   $(TAO_ROOT)/tao/TAOC.h \
-  $(TAO_ROOT)/tao/TAOC.i Asynch_Reply_Dispatcher.h \
-  Asynch_Timeout_Handler.h \
+  $(TAO_ROOT)/tao/TAOC.i \
+  Asynch_Reply_Dispatcher.h Asynch_Timeout_Handler.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher_Base.h \
   $(TAO_ROOT)/tao/Transport.h \
   $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
@@ -334,7 +336,8 @@ endif
   $(TAO_ROOT)/tao/operation_details.i \
   $(TAO_ROOT)/tao/Invocation.i \
   $(TAO_ROOT)/tao/Asynch_Invocation.i \
-  Twoway_Asynch_Invocation.i $(TAO_ROOT)/tao/Stub.h \
+  Twoway_Asynch_Invocation.i \
+  $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/MProfile.i \
   $(TAO_ROOT)/tao/ORB.h \
@@ -427,13 +430,14 @@ endif
   $(TAO_ROOT)/tao/Stub.i \
   $(TAO_ROOT)/tao/Transport_Mux_Strategy.h
 
-.obj/Asynch_Reply_Dispatcher.o .obj/Asynch_Reply_Dispatcher.SO .shobj/Asynch_Reply_Dispatcher.o .shobj/Asynch_Reply_Dispatcher.SO: Asynch_Reply_Dispatcher.cpp \
-  Asynch_Reply_Dispatcher.h $(ACE_ROOT)/ace/pre.h \
+.obj/Asynch_Reply_Dispatcher.o .obj/Asynch_Reply_Dispatcher.so .shobj/Asynch_Reply_Dispatcher.o .shobj/Asynch_Reply_Dispatcher.so: Asynch_Reply_Dispatcher.cpp \
+  Asynch_Reply_Dispatcher.h \
+  $(ACE_ROOT)/ace/pre.h \
   Messaging.h messaging_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
-  $(ACE_ROOT)/ace/ace_wchar.inl MessagingC.h \
-  Messaging_SyncScope_PolicyC.h \
+  $(ACE_ROOT)/ace/ace_wchar.inl \
+  MessagingC.h Messaging_SyncScope_PolicyC.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/Object.h \
@@ -472,7 +476,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -626,11 +631,11 @@ endif
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
-  $(TAO_ROOT)/tao/TimeBaseC.i Messaging_RT_PolicyC.i \
-  Messaging_No_ImplC.h Messaging_No_ImplC.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
+  Messaging_RT_PolicyC.i Messaging_No_ImplC.h Messaging_No_ImplC.i \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.h \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.inl \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.h \
   $(TAO_ROOT)/tao/Valuetype/valuetype_export.h \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.inl \
@@ -638,7 +643,8 @@ endif
   $(TAO_ROOT)/tao/Valuetype/ValueFactory.inl \
   MessagingC.i TAO_ExtC.h TAO_ExtC.i \
   $(TAO_ROOT)/tao/TAOC.h \
-  $(TAO_ROOT)/tao/TAOC.i Asynch_Timeout_Handler.h \
+  $(TAO_ROOT)/tao/TAOC.i \
+  Asynch_Timeout_Handler.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher_Base.h \
   $(TAO_ROOT)/tao/Transport.h \
   $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
@@ -662,7 +668,8 @@ endif
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher_Base.i \
-  Asynch_Reply_Dispatcher.i $(TAO_ROOT)/tao/ORB_Core.h \
+  Asynch_Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/ServicesC.h \
   $(TAO_ROOT)/tao/ServicesC.i \
@@ -752,8 +759,10 @@ endif
   $(ACE_ROOT)/ace/Thread_Manager.i \
   $(TAO_ROOT)/tao/ORB_Core.i
 
-.obj/Asynch_Timeout_Handler.o .obj/Asynch_Timeout_Handler.SO .shobj/Asynch_Timeout_Handler.o .shobj/Asynch_Timeout_Handler.SO: Asynch_Timeout_Handler.cpp \
-  Asynch_Timeout_Handler.h $(ACE_ROOT)/ace/pre.h \
+.obj/Asynch_Timeout_Handler.o .obj/Asynch_Timeout_Handler.so .shobj/Asynch_Timeout_Handler.o .shobj/Asynch_Timeout_Handler.so: Asynch_Timeout_Handler.cpp \
+  Asynch_Timeout_Handler.h \
+  $(ACE_ROOT)/ace/pre.h \
+  messaging_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -785,9 +794,11 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Event_Handler.i Asynch_Reply_Dispatcher.h \
-  Messaging.h MessagingC.h Messaging_SyncScope_PolicyC.h \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Event_Handler.i \
+  Asynch_Reply_Dispatcher.h Messaging.h MessagingC.h \
+  Messaging_SyncScope_PolicyC.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/Object.h \
@@ -950,11 +961,11 @@ endif
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
-  $(TAO_ROOT)/tao/TimeBaseC.i Messaging_RT_PolicyC.i \
-  Messaging_No_ImplC.h Messaging_No_ImplC.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
+  Messaging_RT_PolicyC.i Messaging_No_ImplC.h Messaging_No_ImplC.i \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.h \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.inl \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.h \
   $(TAO_ROOT)/tao/Valuetype/valuetype_export.h \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.inl \
@@ -993,8 +1004,9 @@ endif
   $(TAO_ROOT)/tao/IOP_CodecC.i \
   $(TAO_ROOT)/tao/IOPC.i
 
-.obj/Connection_Timeout_Policy_i.o .obj/Connection_Timeout_Policy_i.SO .shobj/Connection_Timeout_Policy_i.o .shobj/Connection_Timeout_Policy_i.SO: Connection_Timeout_Policy_i.cpp \
-  Connection_Timeout_Policy_i.h $(ACE_ROOT)/ace/pre.h \
+.obj/Connection_Timeout_Policy_i.o .obj/Connection_Timeout_Policy_i.so .shobj/Connection_Timeout_Policy_i.o .shobj/Connection_Timeout_Policy_i.so: Connection_Timeout_Policy_i.cpp \
+  Connection_Timeout_Policy_i.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/post.h \
@@ -1003,7 +1015,8 @@ endif
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Export.h TAO_ExtC.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  TAO_ExtC.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/Object.h \
@@ -1036,7 +1049,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1187,8 +1201,9 @@ endif
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
-  $(TAO_ROOT)/tao/TimeBaseC.i messaging_export.h \
-  TAO_ExtC.i $(TAO_ROOT)/tao/LocalObject.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
+  messaging_export.h TAO_ExtC.i \
+  $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/ORB.h \
@@ -1286,11 +1301,13 @@ endif
   $(TAO_ROOT)/tao/ORB_Core_Auto_Ptr.inl \
   $(TAO_ROOT)/tao/Stub.i
 
-.obj/Messaging.o .obj/Messaging.SO .shobj/Messaging.o .shobj/Messaging.SO: Messaging.cpp Messaging.h $(ACE_ROOT)/ace/pre.h \
+.obj/Messaging.o .obj/Messaging.so .shobj/Messaging.o .shobj/Messaging.so: Messaging.cpp Messaging.h \
+  $(ACE_ROOT)/ace/pre.h \
+  messaging_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
-  $(ACE_ROOT)/ace/ace_wchar.inl MessagingC.h \
-  Messaging_SyncScope_PolicyC.h \
+  $(ACE_ROOT)/ace/ace_wchar.inl \
+  MessagingC.h Messaging_SyncScope_PolicyC.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/Object.h \
@@ -1329,7 +1346,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1483,11 +1501,11 @@ endif
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
-  $(TAO_ROOT)/tao/TimeBaseC.i Messaging_RT_PolicyC.i \
-  Messaging_No_ImplC.h Messaging_No_ImplC.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
+  Messaging_RT_PolicyC.i Messaging_No_ImplC.h Messaging_No_ImplC.i \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.h \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.inl \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.h \
   $(TAO_ROOT)/tao/Valuetype/valuetype_export.h \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.inl \
@@ -1495,7 +1513,8 @@ endif
   $(TAO_ROOT)/tao/Valuetype/ValueFactory.inl \
   MessagingC.i TAO_ExtC.h TAO_ExtC.i \
   $(TAO_ROOT)/tao/TAOC.h \
-  $(TAO_ROOT)/tao/TAOC.i Messaging_ORBInitializer.h \
+  $(TAO_ROOT)/tao/TAOC.i \
+  Messaging_ORBInitializer.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
@@ -1592,12 +1611,13 @@ endif
   $(TAO_ROOT)/tao/ORB_Core_Auto_Ptr.inl \
   $(TAO_ROOT)/tao/Stub.i
 
-.obj/MessagingC.o .obj/MessagingC.SO .shobj/MessagingC.o .shobj/MessagingC.SO: MessagingC.cpp Messaging.h \
-  $(ACE_ROOT)/ace/pre.h messaging_export.h \
+.obj/MessagingC.o .obj/MessagingC.so .shobj/MessagingC.o .shobj/MessagingC.so: MessagingC.cpp Messaging.h \
+  $(ACE_ROOT)/ace/pre.h \
+  messaging_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
-  $(ACE_ROOT)/ace/ace_wchar.inl MessagingC.h \
-  Messaging_SyncScope_PolicyC.h \
+  $(ACE_ROOT)/ace/ace_wchar.inl \
+  MessagingC.h Messaging_SyncScope_PolicyC.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/Object.h \
@@ -1636,7 +1656,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1790,11 +1811,11 @@ endif
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
-  $(TAO_ROOT)/tao/TimeBaseC.i Messaging_RT_PolicyC.i \
-  Messaging_No_ImplC.h Messaging_No_ImplC.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
+  Messaging_RT_PolicyC.i Messaging_No_ImplC.h Messaging_No_ImplC.i \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.h \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.inl \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.h \
   $(TAO_ROOT)/tao/Valuetype/valuetype_export.h \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.inl \
@@ -1941,12 +1962,13 @@ endif
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
-.obj/MessagingS.o .obj/MessagingS.SO .shobj/MessagingS.o .shobj/MessagingS.SO: MessagingS.cpp MessagingS.h \
-  $(ACE_ROOT)/ace/pre.h Messaging.h messaging_export.h \
+.obj/MessagingS.o .obj/MessagingS.so .shobj/MessagingS.o .shobj/MessagingS.so: MessagingS.cpp MessagingS.h \
+  $(ACE_ROOT)/ace/pre.h \
+  Messaging.h messaging_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
-  $(ACE_ROOT)/ace/ace_wchar.inl MessagingC.h \
-  Messaging_SyncScope_PolicyC.h \
+  $(ACE_ROOT)/ace/ace_wchar.inl \
+  MessagingC.h Messaging_SyncScope_PolicyC.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/Object.h \
@@ -1985,7 +2007,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -2139,11 +2162,11 @@ endif
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
-  $(TAO_ROOT)/tao/TimeBaseC.i Messaging_RT_PolicyC.i \
-  Messaging_No_ImplC.h Messaging_No_ImplC.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
+  Messaging_RT_PolicyC.i Messaging_No_ImplC.h Messaging_No_ImplC.i \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.h \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.inl \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.h \
   $(TAO_ROOT)/tao/Valuetype/valuetype_export.h \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.inl \
@@ -2314,7 +2337,7 @@ endif
   $(ACE_ROOT)/ace/Dynamic_Service.i \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/Messaging_No_ImplC.o .obj/Messaging_No_ImplC.SO .shobj/Messaging_No_ImplC.o .shobj/Messaging_No_ImplC.SO: Messaging_No_ImplC.cpp Messaging_No_ImplC.h \
+.obj/Messaging_No_ImplC.o .obj/Messaging_No_ImplC.so .shobj/Messaging_No_ImplC.o .shobj/Messaging_No_ImplC.so: Messaging_No_ImplC.cpp Messaging_No_ImplC.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -2334,7 +2357,8 @@ endif
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/corbafwd.i messaging_export.h \
+  $(TAO_ROOT)/tao/corbafwd.i \
+  messaging_export.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/Object.h \
@@ -2357,7 +2381,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -2508,9 +2533,10 @@ endif
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
-  $(TAO_ROOT)/tao/TimeBaseC.i Messaging_No_ImplC.i
+  $(TAO_ROOT)/tao/TimeBaseC.i \
+  Messaging_No_ImplC.i
 
-.obj/Messaging_RT_PolicyC.o .obj/Messaging_RT_PolicyC.SO .shobj/Messaging_RT_PolicyC.o .shobj/Messaging_RT_PolicyC.SO: Messaging_RT_PolicyC.cpp Messaging_RT_PolicyC.h \
+.obj/Messaging_RT_PolicyC.o .obj/Messaging_RT_PolicyC.so .shobj/Messaging_RT_PolicyC.o .shobj/Messaging_RT_PolicyC.so: Messaging_RT_PolicyC.cpp Messaging_RT_PolicyC.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -2553,7 +2579,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -2699,15 +2726,18 @@ endif
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
-  $(TAO_ROOT)/tao/PolicyC.i messaging_export.h \
+  $(TAO_ROOT)/tao/PolicyC.i \
+  messaging_export.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
-  $(TAO_ROOT)/tao/TimeBaseC.i Messaging_RT_PolicyC.i
+  $(TAO_ROOT)/tao/TimeBaseC.i \
+  Messaging_RT_PolicyC.i
 
-.obj/Messaging_SyncScope_PolicyC.o .obj/Messaging_SyncScope_PolicyC.SO .shobj/Messaging_SyncScope_PolicyC.o .shobj/Messaging_SyncScope_PolicyC.SO: Messaging_SyncScope_PolicyC.cpp \
-  Messaging_SyncScope_PolicyC.h $(ACE_ROOT)/ace/pre.h \
+.obj/Messaging_SyncScope_PolicyC.o .obj/Messaging_SyncScope_PolicyC.so .shobj/Messaging_SyncScope_PolicyC.o .shobj/Messaging_SyncScope_PolicyC.so: Messaging_SyncScope_PolicyC.cpp \
+  Messaging_SyncScope_PolicyC.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/Object.h \
@@ -2749,7 +2779,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -2895,10 +2926,12 @@ endif
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
-  $(TAO_ROOT)/tao/PolicyC.i messaging_export.h \
+  $(TAO_ROOT)/tao/PolicyC.i \
+  messaging_export.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
-  Messaging_SyncScope_PolicyC.i $(TAO_ROOT)/tao/Stub.h \
+  Messaging_SyncScope_PolicyC.i \
+  $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/MProfile.i \
   $(TAO_ROOT)/tao/ORB.h \
@@ -2997,7 +3030,8 @@ endif
   $(TAO_ROOT)/tao/ORB_Core_Auto_Ptr.inl \
   $(TAO_ROOT)/tao/Stub.i
 
-.obj/TAO_ExtC.o .obj/TAO_ExtC.SO .shobj/TAO_ExtC.o .shobj/TAO_ExtC.SO: TAO_ExtC.cpp TAO_ExtC.h $(ACE_ROOT)/ace/pre.h \
+.obj/TAO_ExtC.o .obj/TAO_ExtC.so .shobj/TAO_ExtC.o .shobj/TAO_ExtC.so: TAO_ExtC.cpp TAO_ExtC.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/Object.h \
@@ -3039,7 +3073,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -3190,11 +3225,12 @@ endif
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
-  $(TAO_ROOT)/tao/TimeBaseC.i messaging_export.h \
-  TAO_ExtC.i
+  $(TAO_ROOT)/tao/TimeBaseC.i \
+  messaging_export.h TAO_ExtC.i
 
-.obj/Messaging_ORBInitializer.o .obj/Messaging_ORBInitializer.SO .shobj/Messaging_ORBInitializer.o .shobj/Messaging_ORBInitializer.SO: Messaging_ORBInitializer.cpp \
-  Messaging_ORBInitializer.h $(ACE_ROOT)/ace/pre.h \
+.obj/Messaging_ORBInitializer.o .obj/Messaging_ORBInitializer.so .shobj/Messaging_ORBInitializer.o .shobj/Messaging_ORBInitializer.so: Messaging_ORBInitializer.cpp \
+  Messaging_ORBInitializer.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/post.h \
@@ -3213,7 +3249,8 @@ endif
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/corbafwd.i messaging_export.h \
+  $(TAO_ROOT)/tao/corbafwd.i \
+  messaging_export.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
@@ -3235,7 +3272,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -3401,7 +3439,8 @@ endif
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/LocalObject.h \
-  $(TAO_ROOT)/tao/LocalObject.i Messaging_Policy_i.h \
+  $(TAO_ROOT)/tao/LocalObject.i \
+  Messaging_Policy_i.h \
   Messaging.h \
   messaging_export.h \
   MessagingC.h \
@@ -3413,9 +3452,9 @@ endif
   Messaging_RT_PolicyC.i \
   Messaging_No_ImplC.h \
   Messaging_No_ImplC.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.h \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.inl \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.h \
   $(TAO_ROOT)/tao/Valuetype/valuetype_export.h \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.inl \
@@ -3425,8 +3464,9 @@ endif
   TAO_ExtC.h \
   TAO_ExtC.i \
   $(TAO_ROOT)/tao/TAOC.h \
-  $(TAO_ROOT)/tao/TAOC.i Messaging_Policy_i.i \
-  Connection_Timeout_Policy_i.h TAO_ExtC.h Messaging_PolicyFactory.h \
+  $(TAO_ROOT)/tao/TAOC.i \
+  Messaging_Policy_i.i Connection_Timeout_Policy_i.h TAO_ExtC.h \
+  Messaging_PolicyFactory.h \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/ServicesC.h \
@@ -3503,8 +3543,9 @@ endif
   $(ACE_ROOT)/ace/Thread_Manager.i \
   $(TAO_ROOT)/tao/ORB_Core.i
 
-.obj/Messaging_PolicyFactory.o .obj/Messaging_PolicyFactory.SO .shobj/Messaging_PolicyFactory.o .shobj/Messaging_PolicyFactory.SO: Messaging_PolicyFactory.cpp \
-  Messaging_PolicyFactory.h $(ACE_ROOT)/ace/pre.h \
+.obj/Messaging_PolicyFactory.o .obj/Messaging_PolicyFactory.so .shobj/Messaging_PolicyFactory.o .shobj/Messaging_PolicyFactory.so: Messaging_PolicyFactory.cpp \
+  Messaging_PolicyFactory.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/post.h \
@@ -3523,7 +3564,8 @@ endif
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(TAO_ROOT)/tao/corbafwd.i messaging_export.h \
+  $(TAO_ROOT)/tao/corbafwd.i \
+  messaging_export.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
@@ -3545,7 +3587,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -3711,7 +3754,8 @@ endif
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/LocalObject.h \
-  $(TAO_ROOT)/tao/LocalObject.i Messaging_Policy_i.h \
+  $(TAO_ROOT)/tao/LocalObject.i \
+  Messaging_Policy_i.h \
   Messaging.h \
   messaging_export.h \
   MessagingC.h \
@@ -3723,9 +3767,9 @@ endif
   Messaging_RT_PolicyC.i \
   Messaging_No_ImplC.h \
   Messaging_No_ImplC.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.h \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.inl \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.h \
   $(TAO_ROOT)/tao/Valuetype/valuetype_export.h \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.inl \
@@ -3735,12 +3779,12 @@ endif
   TAO_ExtC.h \
   TAO_ExtC.i \
   $(TAO_ROOT)/tao/TAOC.h \
-  $(TAO_ROOT)/tao/TAOC.i Messaging_Policy_i.i \
-  Connection_Timeout_Policy_i.h TAO_ExtC.h \
+  $(TAO_ROOT)/tao/TAOC.i \
+  Messaging_Policy_i.i Connection_Timeout_Policy_i.h TAO_ExtC.h \
   $(TAO_ROOT)/tao/Buffering_Constraint_Policy.h \
   $(TAO_ROOT)/tao/Buffering_Constraint_Policy.i
 
-.obj/Messaging_Policy_i.o .obj/Messaging_Policy_i.SO .shobj/Messaging_Policy_i.o .shobj/Messaging_Policy_i.SO: Messaging_Policy_i.cpp \
+.obj/Messaging_Policy_i.o .obj/Messaging_Policy_i.so .shobj/Messaging_Policy_i.o .shobj/Messaging_Policy_i.so: Messaging_Policy_i.cpp \
   Messaging_Policy_i.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -3788,7 +3832,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -3947,9 +3992,9 @@ endif
   Messaging_RT_PolicyC.i \
   Messaging_No_ImplC.h \
   Messaging_No_ImplC.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.h \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.inl \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.h \
   $(TAO_ROOT)/tao/Valuetype/valuetype_export.h \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.inl \
@@ -4057,8 +4102,10 @@ endif
   $(TAO_ROOT)/tao/ORB_Core_Auto_Ptr.inl \
   $(TAO_ROOT)/tao/Stub.i
 
-.obj/AMI_ClientRequestInfo_i.o .obj/AMI_ClientRequestInfo_i.SO .shobj/AMI_ClientRequestInfo_i.o .shobj/AMI_ClientRequestInfo_i.SO: AMI_ClientRequestInfo_i.cpp \
-  AMI_ClientRequestInfo_i.h $(ACE_ROOT)/ace/pre.h \
+.obj/AMI_ClientRequestInfo_i.o .obj/AMI_ClientRequestInfo_i.so .shobj/AMI_ClientRequestInfo_i.o .shobj/AMI_ClientRequestInfo_i.so: AMI_ClientRequestInfo_i.cpp \
+  AMI_ClientRequestInfo_i.h \
+  $(ACE_ROOT)/ace/pre.h \
+  messaging_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -4100,7 +4147,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -4275,12 +4323,13 @@ endif
   $(TAO_ROOT)/tao/ClientRequestInfo_i.inl \
   Twoway_Asynch_Invocation.h Messaging.h MessagingC.h \
   Messaging_SyncScope_PolicyC.h Messaging_SyncScope_PolicyC.i \
-  Messaging_RT_PolicyC.h $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i Messaging_RT_PolicyC.i \
-  Messaging_No_ImplC.h Messaging_No_ImplC.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
+  Messaging_RT_PolicyC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
+  Messaging_RT_PolicyC.i Messaging_No_ImplC.h Messaging_No_ImplC.i \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.h \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.inl \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.h \
   $(TAO_ROOT)/tao/Valuetype/valuetype_export.h \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.inl \
@@ -4288,8 +4337,8 @@ endif
   $(TAO_ROOT)/tao/Valuetype/ValueFactory.inl \
   MessagingC.i TAO_ExtC.h TAO_ExtC.i \
   $(TAO_ROOT)/tao/TAOC.h \
-  $(TAO_ROOT)/tao/TAOC.i Asynch_Reply_Dispatcher.h \
-  Asynch_Timeout_Handler.h \
+  $(TAO_ROOT)/tao/TAOC.i \
+  Asynch_Reply_Dispatcher.h Asynch_Timeout_Handler.h \
   $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher_Base.h \
   $(TAO_ROOT)/tao/Transport.h \
   $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \

@@ -1,3 +1,8 @@
+Mon May  5 01:10:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/*/Makefile: Updated dependencies.
+	* tao/Policy_ForwardC.cpp: Fixed a typo in #include.
+
 Mon May  5 06:02:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Makefile.bor:

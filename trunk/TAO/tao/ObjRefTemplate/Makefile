@@ -61,8 +61,10 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/ObjectReferenceTemplateC.o .obj/ObjectReferenceTemplateC.SO .shobj/ObjectReferenceTemplateC.o .shobj/ObjectReferenceTemplateC.SO: ObjectReferenceTemplateC.cpp \
-  ObjectReferenceTemplateC.h $(ACE_ROOT)/ace/pre.h \
+.obj/ObjectReferenceTemplateC.o .obj/ObjectReferenceTemplateC.so .shobj/ObjectReferenceTemplateC.o .shobj/ObjectReferenceTemplateC.so: ObjectReferenceTemplateC.cpp \
+  ObjectReferenceTemplateC.h \
+  $(ACE_ROOT)/ace/pre.h \
+  ort_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -102,7 +104,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -222,9 +225,6 @@ endif
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
-  $(TAO_ROOT)/tao/Value_VarOut_T.h \
-  $(TAO_ROOT)/tao/Value_VarOut_T.inl \
-  $(TAO_ROOT)/tao/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -257,10 +257,17 @@ endif
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.h \
   $(TAO_ROOT)/tao/Valuetype/valuetype_export.h \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.h \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.inl \
+  $(TAO_ROOT)/tao/Valuetype/Value_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.inl \
   $(TAO_ROOT)/tao/Valuetype/ValueFactory.h \
   $(TAO_ROOT)/tao/Valuetype/ValueFactory.inl \
-  ObjectReferenceTemplateC.i $(TAO_ROOT)/tao/Stub.h \
+  $(TAO_ROOT)/tao/Valuetype/Sequence_T.h \
+  $(TAO_ROOT)/tao/Valuetype/Sequence_T.inl \
+  $(TAO_ROOT)/tao/Valuetype/Sequence_T.cpp \
+  ObjectReferenceTemplateC.i \
+  $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
