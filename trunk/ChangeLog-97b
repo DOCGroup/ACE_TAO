@@ -5,6 +5,9 @@ Mon Sep 29 13:28:05 1997  David L. Levine  <levine@cs.wustl.edu>
 	  <fxpopp@immd9.informatik.uni-erlangen.de> for letting us know
 	  about this Irix 6.2/3 system function, and for testing it out.
 
+	* ace/ACE.cpp (handle_timed_complete) force recv check on VxWorks
+	  because its read handle is always not set.
+
 	* apps/JAWS/server/HTTP_Server_T.cpp (accept): fixed typo,
 	  "remote_address" instead of "remote_adrress".
 
