@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:171
+// be\be_codegen.cpp:153
 
 #ifndef _TAO_IDL_ORIG_DYNAMICANYC_H_
 #define _TAO_IDL_ORIG_DYNAMICANYC_H_
@@ -38,13 +38,15 @@
 #error "You should not include DynamicAnyC.h directly, use DynamicAny.h"
 #endif /* !TAO_DYNAMICANY_SAFE_INCLUDE */
 
-#include "tao/ORB.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "dynamicany_export.h"
+#include "tao/ORB.h"
+#include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
 #include "tao/Typecode.h"
@@ -54,6 +56,8 @@
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 #include "tao/VarOut_T.h"
+
+#include "tao/Typecode_typesC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -68,9 +72,7 @@
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -96,7 +98,7 @@ namespace DynamicAny
 {
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:603
 
 #if !defined (_DYNAMICANY_DYNANY__VAR_OUT_CH_)
 #define _DYNAMICANY_DYNANY__VAR_OUT_CH_
@@ -243,25 +245,25 @@ namespace DynamicAny
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void assign (
-        DynamicAny::DynAny_ptr dyn_any
+        ::DynamicAny::DynAny_ptr dyn_any
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void from_any (
-        const CORBA::Any & value
+        const ::CORBA::Any & value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -278,7 +280,7 @@ namespace DynamicAny
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::Boolean equal (
-        DynamicAny::DynAny_ptr dyn_any
+        ::DynamicAny::DynAny_ptr dyn_any
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -309,117 +311,117 @@ namespace DynamicAny
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_boolean (
-        CORBA::Boolean value
+        ::CORBA::Boolean value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_octet (
-        CORBA::Octet value
+        ::CORBA::Octet value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_char (
-        CORBA::Char value
+        ::CORBA::Char value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_short (
-        CORBA::Short value
+        ::CORBA::Short value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_ushort (
-        CORBA::UShort value
+        ::CORBA::UShort value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_long (
-        CORBA::Long value
+        ::CORBA::Long value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_ulong (
-        CORBA::ULong value
+        ::CORBA::ULong value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_float (
-        CORBA::Float value
+        ::CORBA::Float value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_double (
-        CORBA::Double value
+        ::CORBA::Double value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -430,87 +432,87 @@ namespace DynamicAny
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_reference (
-        CORBA::Object_ptr value
+        ::CORBA::Object_ptr value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_typecode (
-        CORBA::TypeCode_ptr value
+        ::CORBA::TypeCode_ptr value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_longlong (
-        CORBA::LongLong value
+        ::CORBA::LongLong value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_ulonglong (
-        CORBA::ULongLong value
+        ::CORBA::ULongLong value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_longdouble (
-        CORBA::LongDouble value
+        ::CORBA::LongDouble value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_wchar (
-        CORBA::WChar value
+        ::CORBA::WChar value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -521,48 +523,48 @@ namespace DynamicAny
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_any (
-        const CORBA::Any & value
+        const ::CORBA::Any & value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_dyn_any (
-        DynamicAny::DynAny_ptr value
+        ::DynamicAny::DynAny_ptr value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void insert_val (
-        CORBA::ValueBase * value
+        ::CORBA::ValueBase * value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -572,9 +574,9 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -584,9 +586,9 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -596,9 +598,9 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -608,9 +610,9 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -620,9 +622,9 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -632,9 +634,9 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -644,9 +646,9 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -656,9 +658,9 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -668,9 +670,9 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -680,9 +682,9 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -692,9 +694,9 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -704,9 +706,9 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -716,9 +718,9 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -728,9 +730,9 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -740,9 +742,9 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -752,9 +754,9 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -764,9 +766,9 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -776,9 +778,9 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -788,9 +790,9 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -800,16 +802,16 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::Boolean seek (
-        CORBA::Long index
+        ::CORBA::Long index
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -853,8 +855,8 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -884,7 +886,7 @@ namespace DynamicAny
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:603
 
 #if !defined (_DYNAMICANY_DYNFIXED__VAR_OUT_CH_)
 #define _DYNAMICANY_DYNFIXED__VAR_OUT_CH_
@@ -913,7 +915,7 @@ namespace DynamicAny
 #define _DYNAMICANY_DYNFIXED_CH_
   
   class TAO_DynamicAny_Export DynFixed
-    : public virtual DynamicAny::DynAny
+    : public virtual ::DynamicAny::DynAny
   {
   public:
     typedef DynFixed_ptr _ptr_type;
@@ -957,9 +959,9 @@ namespace DynamicAny
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -989,7 +991,7 @@ namespace DynamicAny
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:603
 
 #if !defined (_DYNAMICANY_DYNENUM__VAR_OUT_CH_)
 #define _DYNAMICANY_DYNENUM__VAR_OUT_CH_
@@ -1018,7 +1020,7 @@ namespace DynamicAny
 #define _DYNAMICANY_DYNENUM_CH_
   
   class TAO_DynamicAny_Export DynEnum
-    : public virtual DynamicAny::DynAny
+    : public virtual ::DynamicAny::DynAny
   {
   public:
     typedef DynEnum_ptr _ptr_type;
@@ -1062,8 +1064,8 @@ namespace DynamicAny
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -1080,12 +1082,12 @@ namespace DynamicAny
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_as_ulong (
-        CORBA::ULong value
+        ::CORBA::ULong value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -1274,7 +1276,7 @@ namespace DynamicAny
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:603
 
 #if !defined (_DYNAMICANY_DYNSTRUCT__VAR_OUT_CH_)
 #define _DYNAMICANY_DYNSTRUCT__VAR_OUT_CH_
@@ -1303,7 +1305,7 @@ namespace DynamicAny
 #define _DYNAMICANY_DYNSTRUCT_CH_
   
   class TAO_DynamicAny_Export DynStruct
-    : public virtual DynamicAny::DynAny
+    : public virtual ::DynamicAny::DynAny
   {
   public:
     typedef DynStruct_ptr _ptr_type;
@@ -1336,9 +1338,9 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -1348,9 +1350,9 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -1367,13 +1369,13 @@ namespace DynamicAny
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_members (
-        const DynamicAny::NameValuePairSeq & value
+        const ::DynamicAny::NameValuePairSeq & value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -1390,13 +1392,13 @@ namespace DynamicAny
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_members_as_dyn_any (
-        const DynamicAny::NameDynAnyPairSeq & value
+        const ::DynamicAny::NameDynAnyPairSeq & value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -1426,7 +1428,7 @@ namespace DynamicAny
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:603
 
 #if !defined (_DYNAMICANY_DYNUNION__VAR_OUT_CH_)
 #define _DYNAMICANY_DYNUNION__VAR_OUT_CH_
@@ -1455,7 +1457,7 @@ namespace DynamicAny
 #define _DYNAMICANY_DYNUNION_CH_
   
   class TAO_DynamicAny_Export DynUnion
-    : public virtual DynamicAny::DynAny
+    : public virtual ::DynamicAny::DynAny
   {
   public:
     typedef DynUnion_ptr _ptr_type;
@@ -1495,12 +1497,12 @@ namespace DynamicAny
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_discriminator (
-        DynamicAny::DynAny_ptr d
+        ::DynamicAny::DynAny_ptr d
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -1510,8 +1512,8 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -1521,8 +1523,8 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -1552,8 +1554,8 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -1563,8 +1565,8 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -1574,8 +1576,8 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -1704,7 +1706,7 @@ namespace DynamicAny
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:603
 
 #if !defined (_DYNAMICANY_DYNSEQUENCE__VAR_OUT_CH_)
 #define _DYNAMICANY_DYNSEQUENCE__VAR_OUT_CH_
@@ -1733,7 +1735,7 @@ namespace DynamicAny
 #define _DYNAMICANY_DYNSEQUENCE_CH_
   
   class TAO_DynamicAny_Export DynSequence
-    : public virtual DynamicAny::DynAny
+    : public virtual ::DynamicAny::DynAny
   {
   public:
     typedef DynSequence_ptr _ptr_type;
@@ -1773,12 +1775,12 @@ namespace DynamicAny
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_length (
-        CORBA::ULong len
+        ::CORBA::ULong len
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -1795,13 +1797,13 @@ namespace DynamicAny
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_elements (
-        const DynamicAny::AnySeq & value
+        const ::DynamicAny::AnySeq & value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -1818,13 +1820,13 @@ namespace DynamicAny
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_elements_as_dyn_any (
-        const DynamicAny::DynAnySeq & value
+        const ::DynamicAny::DynAnySeq & value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -1854,7 +1856,7 @@ namespace DynamicAny
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:603
 
 #if !defined (_DYNAMICANY_DYNARRAY__VAR_OUT_CH_)
 #define _DYNAMICANY_DYNARRAY__VAR_OUT_CH_
@@ -1883,7 +1885,7 @@ namespace DynamicAny
 #define _DYNAMICANY_DYNARRAY_CH_
   
   class TAO_DynamicAny_Export DynArray
-    : public virtual DynamicAny::DynAny
+    : public virtual ::DynamicAny::DynAny
   {
   public:
     typedef DynArray_ptr _ptr_type;
@@ -1923,13 +1925,13 @@ namespace DynamicAny
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_elements (
-        const DynamicAny::AnySeq & value
+        const ::DynamicAny::AnySeq & value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -1946,13 +1948,13 @@ namespace DynamicAny
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_elements_as_dyn_any (
-        const DynamicAny::DynAnySeq & value
+        const ::DynamicAny::DynAnySeq & value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -1982,7 +1984,7 @@ namespace DynamicAny
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:603
 
 #if !defined (_DYNAMICANY_DYNVALUE__VAR_OUT_CH_)
 #define _DYNAMICANY_DYNVALUE__VAR_OUT_CH_
@@ -2011,7 +2013,7 @@ namespace DynamicAny
 #define _DYNAMICANY_DYNVALUE_CH_
   
   class TAO_DynamicAny_Export DynValue
-    : public virtual DynamicAny::DynAny
+    : public virtual ::DynamicAny::DynAny
   {
   public:
     typedef DynValue_ptr _ptr_type;
@@ -2044,9 +2046,9 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -2056,9 +2058,9 @@ namespace DynamicAny
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -2075,13 +2077,13 @@ namespace DynamicAny
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_members (
-        const DynamicAny::NameValuePairSeq & value
+        const ::DynamicAny::NameValuePairSeq & value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -2098,13 +2100,13 @@ namespace DynamicAny
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_members_as_dyn_any (
-        const DynamicAny::NameDynAnyPairSeq & value
+        const ::DynamicAny::NameDynAnyPairSeq & value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAny::TypeMismatch
-        , DynamicAny::DynAny::InvalidValue
+        CORBA::SystemException,
+        ::DynamicAny::DynAny::TypeMismatch,
+        ::DynamicAny::DynAny::InvalidValue
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -2134,7 +2136,7 @@ namespace DynamicAny
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:603
 
 #if !defined (_DYNAMICANY_DYNANYFACTORY__VAR_OUT_CH_)
 #define _DYNAMICANY_DYNANYFACTORY__VAR_OUT_CH_
@@ -2232,24 +2234,24 @@ namespace DynamicAny
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DynamicAny::DynAny_ptr create_dyn_any (
-        const CORBA::Any & value
+        const ::CORBA::Any & value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAnyFactory::InconsistentTypeCode
+        CORBA::SystemException,
+        ::DynamicAny::DynAnyFactory::InconsistentTypeCode
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual ::DynamicAny::DynAny_ptr create_dyn_any_from_type_code (
-        CORBA::TypeCode_ptr type
+        ::CORBA::TypeCode_ptr type
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , DynamicAny::DynAnyFactory::InconsistentTypeCode
+        CORBA::SystemException,
+        ::DynamicAny::DynAnyFactory::InconsistentTypeCode
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -2294,17 +2296,17 @@ namespace TAO
 #define _DYNAMICANY_DYNANY__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynAny>
+  struct TAO_DynamicAny_Export Objref_Traits< ::DynamicAny::DynAny>
   {
-    static DynamicAny::DynAny_ptr duplicate (
-        DynamicAny::DynAny_ptr
+    static ::DynamicAny::DynAny_ptr duplicate (
+        ::DynamicAny::DynAny_ptr
       );
     static void release (
-        DynamicAny::DynAny_ptr
+        ::DynamicAny::DynAny_ptr
       );
-    static DynamicAny::DynAny_ptr nil (void);
+    static ::DynamicAny::DynAny_ptr nil (void);
     static CORBA::Boolean marshal (
-        DynamicAny::DynAny_ptr p,
+        ::DynamicAny::DynAny_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2315,17 +2317,17 @@ namespace TAO
 #define _DYNAMICANY_DYNFIXED__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynFixed>
+  struct TAO_DynamicAny_Export Objref_Traits< ::DynamicAny::DynFixed>
   {
-    static DynamicAny::DynFixed_ptr duplicate (
-        DynamicAny::DynFixed_ptr
+    static ::DynamicAny::DynFixed_ptr duplicate (
+        ::DynamicAny::DynFixed_ptr
       );
     static void release (
-        DynamicAny::DynFixed_ptr
+        ::DynamicAny::DynFixed_ptr
       );
-    static DynamicAny::DynFixed_ptr nil (void);
+    static ::DynamicAny::DynFixed_ptr nil (void);
     static CORBA::Boolean marshal (
-        DynamicAny::DynFixed_ptr p,
+        ::DynamicAny::DynFixed_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2336,17 +2338,17 @@ namespace TAO
 #define _DYNAMICANY_DYNENUM__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynEnum>
+  struct TAO_DynamicAny_Export Objref_Traits< ::DynamicAny::DynEnum>
   {
-    static DynamicAny::DynEnum_ptr duplicate (
-        DynamicAny::DynEnum_ptr
+    static ::DynamicAny::DynEnum_ptr duplicate (
+        ::DynamicAny::DynEnum_ptr
       );
     static void release (
-        DynamicAny::DynEnum_ptr
+        ::DynamicAny::DynEnum_ptr
       );
-    static DynamicAny::DynEnum_ptr nil (void);
+    static ::DynamicAny::DynEnum_ptr nil (void);
     static CORBA::Boolean marshal (
-        DynamicAny::DynEnum_ptr p,
+        ::DynamicAny::DynEnum_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2357,17 +2359,17 @@ namespace TAO
 #define _DYNAMICANY_DYNSTRUCT__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynStruct>
+  struct TAO_DynamicAny_Export Objref_Traits< ::DynamicAny::DynStruct>
   {
-    static DynamicAny::DynStruct_ptr duplicate (
-        DynamicAny::DynStruct_ptr
+    static ::DynamicAny::DynStruct_ptr duplicate (
+        ::DynamicAny::DynStruct_ptr
       );
     static void release (
-        DynamicAny::DynStruct_ptr
+        ::DynamicAny::DynStruct_ptr
       );
-    static DynamicAny::DynStruct_ptr nil (void);
+    static ::DynamicAny::DynStruct_ptr nil (void);
     static CORBA::Boolean marshal (
-        DynamicAny::DynStruct_ptr p,
+        ::DynamicAny::DynStruct_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2378,17 +2380,17 @@ namespace TAO
 #define _DYNAMICANY_DYNUNION__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynUnion>
+  struct TAO_DynamicAny_Export Objref_Traits< ::DynamicAny::DynUnion>
   {
-    static DynamicAny::DynUnion_ptr duplicate (
-        DynamicAny::DynUnion_ptr
+    static ::DynamicAny::DynUnion_ptr duplicate (
+        ::DynamicAny::DynUnion_ptr
       );
     static void release (
-        DynamicAny::DynUnion_ptr
+        ::DynamicAny::DynUnion_ptr
       );
-    static DynamicAny::DynUnion_ptr nil (void);
+    static ::DynamicAny::DynUnion_ptr nil (void);
     static CORBA::Boolean marshal (
-        DynamicAny::DynUnion_ptr p,
+        ::DynamicAny::DynUnion_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2399,17 +2401,17 @@ namespace TAO
 #define _DYNAMICANY_DYNSEQUENCE__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynSequence>
+  struct TAO_DynamicAny_Export Objref_Traits< ::DynamicAny::DynSequence>
   {
-    static DynamicAny::DynSequence_ptr duplicate (
-        DynamicAny::DynSequence_ptr
+    static ::DynamicAny::DynSequence_ptr duplicate (
+        ::DynamicAny::DynSequence_ptr
       );
     static void release (
-        DynamicAny::DynSequence_ptr
+        ::DynamicAny::DynSequence_ptr
       );
-    static DynamicAny::DynSequence_ptr nil (void);
+    static ::DynamicAny::DynSequence_ptr nil (void);
     static CORBA::Boolean marshal (
-        DynamicAny::DynSequence_ptr p,
+        ::DynamicAny::DynSequence_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2420,17 +2422,17 @@ namespace TAO
 #define _DYNAMICANY_DYNARRAY__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynArray>
+  struct TAO_DynamicAny_Export Objref_Traits< ::DynamicAny::DynArray>
   {
-    static DynamicAny::DynArray_ptr duplicate (
-        DynamicAny::DynArray_ptr
+    static ::DynamicAny::DynArray_ptr duplicate (
+        ::DynamicAny::DynArray_ptr
       );
     static void release (
-        DynamicAny::DynArray_ptr
+        ::DynamicAny::DynArray_ptr
       );
-    static DynamicAny::DynArray_ptr nil (void);
+    static ::DynamicAny::DynArray_ptr nil (void);
     static CORBA::Boolean marshal (
-        DynamicAny::DynArray_ptr p,
+        ::DynamicAny::DynArray_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2441,17 +2443,17 @@ namespace TAO
 #define _DYNAMICANY_DYNVALUE__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynValue>
+  struct TAO_DynamicAny_Export Objref_Traits< ::DynamicAny::DynValue>
   {
-    static DynamicAny::DynValue_ptr duplicate (
-        DynamicAny::DynValue_ptr
+    static ::DynamicAny::DynValue_ptr duplicate (
+        ::DynamicAny::DynValue_ptr
       );
     static void release (
-        DynamicAny::DynValue_ptr
+        ::DynamicAny::DynValue_ptr
       );
-    static DynamicAny::DynValue_ptr nil (void);
+    static ::DynamicAny::DynValue_ptr nil (void);
     static CORBA::Boolean marshal (
-        DynamicAny::DynValue_ptr p,
+        ::DynamicAny::DynValue_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2462,17 +2464,17 @@ namespace TAO
 #define _DYNAMICANY_DYNANYFACTORY__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynAnyFactory>
+  struct TAO_DynamicAny_Export Objref_Traits< ::DynamicAny::DynAnyFactory>
   {
-    static DynamicAny::DynAnyFactory_ptr duplicate (
-        DynamicAny::DynAnyFactory_ptr
+    static ::DynamicAny::DynAnyFactory_ptr duplicate (
+        ::DynamicAny::DynAnyFactory_ptr
       );
     static void release (
-        DynamicAny::DynAnyFactory_ptr
+        ::DynamicAny::DynAnyFactory_ptr
       );
-    static DynamicAny::DynAnyFactory_ptr nil (void);
+    static ::DynamicAny::DynAnyFactory_ptr nil (void);
     static CORBA::Boolean marshal (
-        DynamicAny::DynAnyFactory_ptr p,
+        ::DynamicAny::DynAnyFactory_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -2521,13 +2523,13 @@ TAO_DynamicAny_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_DynamicAny_AnySeq_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:978
+// be\be_codegen.cpp:958
 
 #if defined (__ACE_INLINE__)
-#include "DynamicAnyC.i"
+#include "DynamicAnyC.inl"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
@@ -2538,4 +2540,5 @@ TAO_DynamicAny_Export CORBA::Boolean operator>> (
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
+
 

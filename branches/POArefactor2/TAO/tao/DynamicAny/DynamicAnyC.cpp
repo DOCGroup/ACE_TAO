@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:323
+// be\be_codegen.cpp:301
 
 
 #include "DynamicAny.h"
@@ -38,7 +38,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "DynamicAnyC.i"
+#include "DynamicAnyC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
@@ -91,12 +91,12 @@ TAO::Objref_Traits<DynamicAny::DynAny>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*DynamicAny__TAO_DynAny_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 DynamicAny::DynAny::InvalidValue::InvalidValue (void)
@@ -131,7 +131,7 @@ DynamicAny::DynAny::InvalidValue::_downcast (CORBA::Exception *_tao_excp)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/DynamicAny/DynAny/InvalidValue:1.0", _tao_excp->_rep_id ()))
     {
-      return ACE_dynamic_cast (InvalidValue *, _tao_excp);
+      return dynamic_cast<InvalidValue *> (_tao_excp);
     }
   else
     {
@@ -181,7 +181,7 @@ void DynamicAny::DynAny::InvalidValue::_tao_decode (
 
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 DynamicAny::DynAny::TypeMismatch::TypeMismatch (void)
@@ -216,7 +216,7 @@ DynamicAny::DynAny::TypeMismatch::_downcast (CORBA::Exception *_tao_excp)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/DynamicAny/DynAny/TypeMismatch:1.0", _tao_excp->_rep_id ()))
     {
-      return ACE_dynamic_cast (TypeMismatch *, _tao_excp);
+      return dynamic_cast<TypeMismatch *> (_tao_excp);
     }
   else
     {
@@ -1614,7 +1614,7 @@ DynamicAny::DynAnyFactory::InconsistentTypeCode::_downcast (CORBA::Exception *_t
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/DynamicAny/DynAnyFactory/InconsistentTypeCode:1.0", _tao_excp->_rep_id ()))
     {
-      return ACE_dynamic_cast (InconsistentTypeCode *, _tao_excp);
+      return dynamic_cast<InconsistentTypeCode *> (_tao_excp);
     }
   else
     {
@@ -1789,7 +1789,7 @@ CORBA::Boolean operator<< (
     const DynamicAny::NameValuePairSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
@@ -1861,7 +1861,7 @@ CORBA::Boolean operator<< (
     const DynamicAny::AnySeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
@@ -1923,7 +1923,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_DynamicAny_AnySeq_CPP_ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1628
+// be\be_visitor_root/root.cpp:1629
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -2502,4 +2502,3 @@ CORBA::Boolean operator>> (
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
