@@ -56,7 +56,7 @@ namespace TAO
       /// Constructor.
       Struct (char const * id,
               char const * name,
-              Field<StringType> const * fields,
+              Struct_Field<StringType> const * fields,
               CORBA::ULong nfields);
 
       /**
@@ -103,7 +103,7 @@ namespace TAO
     private:
 
       /// Get pointer to the underlying @c Field array.
-      Field<StringType> const * fields (void) const;
+      Struct_Field<StringType> const * fields (void) const;
 
     private:
 

@@ -16,7 +16,7 @@ TAO::TypeCode::Struct<StringType,
                       RefCountPolicy>::Struct (
   char const * id,
   char const * name,
-  Field<StringType> const * fields,
+  Struct_Field<StringType> const * fields,
   CORBA::ULong nfields)
   : base_attributes_ (id, name)
   , nfields_ (nfields)
@@ -28,7 +28,7 @@ template <typename StringType,
           class FieldArrayType,
           CORBA::TCKind Kind,
           class RefCountPolicy>
-ACE_INLINE TAO::TypeCode::Field<StringType> const *
+ACE_INLINE TAO::TypeCode::Struct_Field<StringType> const *
 TAO::TypeCode::Struct<StringType,
                       FieldArrayType,
                       Kind,
