@@ -245,7 +245,7 @@ ACE_OS::gethostbyname_r (const char *name,
 ACE_INLINE struct hostent *
 ACE_OS::getipnodebyaddr (const void *src, size_t len, int family)
 {
-#if defined (ACE_HAS_IPV6)
+#if defined (ACE_HAS_IPV6) && !defined (ACE_WIN32)
 #  if defined (__GLIBC__)
   ACE_UNUSED_ARG (src);
   ACE_UNUSED_ARG (len);
@@ -280,7 +280,7 @@ ACE_OS::getipnodebyname (const char *name, int family, int flags)
   ACE_UNUSED_ARG (family);
   ACE_UNUSED_ARG (flags);
   ACE_NOTSUP_RETURN (0);
-# elif defined (ACE_HAS_IPV6)
+# elif defined (ACE_HAS_IPV6) && !defined (ACE_WIN32)
 #   if defined (__GLIBC__)
   ACE_UNUSED_ARG (flags);
 #     if defined (ACE_HAS_NONCONST_GETBY)
