@@ -1162,6 +1162,12 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
 #   define S_IWOTH 00002           /* write permission: other. */
 #   define S_IXOTH 00001           /* execute permission: other. */
 
+// eVC doesn't define these bits, but MSVC does. The bit settings are copied
+// from the MSVC defs.
+#   if defined (ACE_HAS_WINCE)
+#     define S_IFDIR 0040000
+#     define S_IFREG 0100000
+#   endif /* ACE_HAS_WINCE */
 # endif /* ACE_LACKS_MODE_MASKS */
 
 # if defined (ACE_LACKS_SEMBUF_T)
