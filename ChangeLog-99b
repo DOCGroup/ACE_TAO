@@ -1,23 +1,30 @@
+Tue Mar 09 15:15:19 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/create_ace_build: check for ace/ and include/ directories
+          in top level directory, instead of ace/, examples/ and netsvcs/.
+          This allows use with trimmed-down workspaces.  Thanks to Jeff
+          for suggesting this.
+
 Tue Mar  9 12:59:09 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* docs/ACE-subsets.html: Updated the subsets to reflect what's
- 	  actually in the ACE Makefile.
+        * docs/ACE-subsets.html: Updated the subsets to reflect what's
+          actually in the ACE Makefile.
 
-	* ace/Message_Block.h: Changed the private section in both
- 	  ACE_Message_Block and ACE_Data_Block to protected allowing
- 	  derived classes to access data members of the parent class;
- 	  Thanks to Alexander Davidovich <sasha@ms.com> for suggesting
- 	  this.
+        * ace/Message_Block.h: Changed the private section in both
+          ACE_Message_Block and ACE_Data_Block to protected allowing
+          derived classes to access data members of the parent class;
+          Thanks to Alexander Davidovich <sasha@ms.com> for suggesting
+          this.
 
-	* ace/Message_Block: Added new reference counting accessor methods
- 	  to Message_Block and Data_Block.  Thanks to Alexander Davidovich
- 	  <sasha@ms.com> for suggesting this.
+        * ace/Message_Block: Added new reference counting accessor methods
+          to Message_Block and Data_Block.  Thanks to Alexander Davidovich
+          <sasha@ms.com> for suggesting this.
 
 Tue Mar 09 11:21:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Message_Block.h: For some reason, default ctor and operator=
-	  must be declared private instead of protected if they are not to
-	  be accessable.  Otherwise, VC complains.
+        * ace/Message_Block.h: For some reason, default ctor and operator=
+          must be declared private instead of protected if they are not to
+          be accessable.  Otherwise, VC complains.
 
 Tue Mar 09 01:06:44 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -29,11 +36,11 @@ Tue Mar 09 00:39:23 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Mon Mar 08 23:23:35 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Thread_Manager.{h,cpp} (thread_within,hthread_within,
-	  thread_grp_list,hthread_grp_list): Added new functions to
-	  check if a thread is managed by the thread manager and collect
-	  the thread ids/handles in a thread group.  Thanks to XuYifeng
-	  <wj@puclic.hz.zj.cn> for motivating the addition.
+        * ace/Thread_Manager.{h,cpp} (thread_within,hthread_within,
+          thread_grp_list,hthread_grp_list): Added new functions to
+          check if a thread is managed by the thread manager and collect
+          the thread ids/handles in a thread group.  Thanks to XuYifeng
+          <wj@puclic.hz.zj.cn> for motivating the addition.
 
 Mon Mar 08 22:23:33 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -156,11 +163,11 @@ Tue Mar 09 00:39:23 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Mon Mar 08 23:23:35 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Thread_Manager.{h,cpp} (thread_within,hthread_within,
-	  thread_grp_list,hthread_grp_list): Added new functions to
-	  check if a thread is managed by the thread manager and collect
-	  the thread ids/handles in a thread group.  Thanks to XuYifeng
-	  <wj@puclic.hz.zj.cn> for motivating the addition.
+        * ace/Thread_Manager.{h,cpp} (thread_within,hthread_within,
+          thread_grp_list,hthread_grp_list): Added new functions to
+          check if a thread is managed by the thread manager and collect
+          the thread ids/handles in a thread group.  Thanks to XuYifeng
+          <wj@puclic.hz.zj.cn> for motivating the addition.
 
 Mon Mar 08 22:23:33 1999  David L. Levine  <levine@cs.wustl.edu>
 
