@@ -208,10 +208,6 @@ SOURCE=.\request.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\roa.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\server_factory.cpp
 # End Source File
 # Begin Source File
