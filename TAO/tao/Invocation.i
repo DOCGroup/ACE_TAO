@@ -77,7 +77,7 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   return TAO_GIOP_Invocation::invoke (0, ACE_TRY_ENV);
 }
 
-// ****************************************************************
+// *********************************************************************
 
 ACE_INLINE
 TAO_GIOP_Locate_Request_Invocation::

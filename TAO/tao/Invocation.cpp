@@ -312,6 +312,8 @@ TAO_GIOP_Invocation::write_request_header
 }
 
 
+// @@ Does this comment make sense?. We dont wait for reply, right?
+// (alex)  
 // Send request, block until any reply comes back, and unmarshal reply
 // parameters as appropriate.
 
@@ -636,8 +638,9 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
 
 int
 TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // Just send the request, without trying to wait for the reply.  
   int retval = TAO_GIOP_Invocation::invoke (1, ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
   ACE_UNUSED_ARG (retval);
@@ -677,7 +680,43 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   // according to POSIX, all C stack frames must also have their
   // (explicitly coded) handlers called.  We assume a POSIX.1c/C/C++
   // environment.
+  
+  // Get the reply status.
+  
+  TAO_GIOP_ReplyStatusType reply_status =
+    this->transport_->wait_for_reply (this->request_id_,
+                                      ACE_TRY_ENV);
+  ACE_CHECK_RETURN (reply_status);
+  
+  switch (reply_status)
+    {
+    case TAO_GIOP_NO_EXCEPTION:
+      // Return so that the STUB can demarshal the reply.
+      return TAO_INVOKE_OK;
+      // NOT REACHED.
+      
+    case TAO_GIOP_USER_EXCEPTION:
+      // Return so that the STUB can demarshal the user exception. 
+      return TAO_INVOKE_EXCEPTION;
+      // NOTREACHED.
+      
+    case TAO_GIOP_SYSTEM_EXCEPTION:
+      {
+	// Demarshal the system exception and raise it!
+        return TAO_INVOKE_EXCEPTION;
+      }
+      // NOTREACHED.
 
+    case TAO_GIOP_LOCATION_FORWARD:
+      // Handle the forwarding and return so the stub restarts the
+      // request!
+      return this->location_forward (this->inp_stream_, ACE_TRY_ENV);
+      // NOT REACHED.
+    }
+  return 0;
+}
+
+#if 0  
   // @@ Fred: if it makes sense to have a wrapper for send_request on
   //    the TAO_Transport class then it should also make sense to have
   //    one for recv_request(), right?
@@ -687,12 +726,6 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
   // suspend was called in TAO_Client_Connection_Handler::handle_input
   this->transport_->resume_connection (this->orb_core_->reactor ());
-
-  switch (m)
-    {
-    case TAO_GIOP::Reply:
-      // The reply is handled at the end of this switch() statement.
-      break;
 
     case TAO_GIOP::CloseConnection:
       // Try the same profile again, but open a new connection.
@@ -890,6 +923,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
   return TAO_INVOKE_EXCEPTION;
 }
+#endif /* 0 */
 
 // ****************************************************************
 

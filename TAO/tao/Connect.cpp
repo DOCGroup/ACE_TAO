@@ -875,8 +875,7 @@ TAO_Client_Connection_Handler::send_request (TAO_ORB_Core *,
 int
 TAO_Client_Connection_Handler::handle_input (ACE_HANDLE)
 {
-  errno = ENOTSUP;
-  return -1;
+  return this->transport_->handle_client_input ();
 }
 
 int
@@ -1177,7 +1176,7 @@ TAO_MT_Client_Connection_Handler::send_request (TAO_ORB_Core *orb_core,
   // Save the ORB_Core for the handle_input callback...
   this->orb_core_ = orb_core;
 
-  // NOTE: Here would also be a fine place to calculate a digital
+  // NOTE: Here would also be a find place to calculate a digital
   // signature for the message and place it into a preallocated slot
   // in the "ServiceContext".  Similarly, this is a good spot to
   // encrypt messages (or just the message bodies) if that's needed in
@@ -1280,7 +1279,7 @@ TAO_MT_Client_Connection_Handler::send_request (TAO_ORB_Core *orb_core,
       // TAO_ORB_Core.
 
       this->orb_core_->set_leader_thread ();
-      // this might increase the recount of the leader
+      // this might increase the refcount of the leader
 
       if (this->orb_core_->leader_follower_lock ().release () == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -1334,7 +1333,7 @@ TAO_MT_Client_Connection_Handler::handle_input (ACE_HANDLE)
 
   if (!this->expecting_response_)
     {
-      // we got something, but did not want
+      // we got something, but did not want.
       // @@ wake up an other thread, we are lost
 
       if (this->orb_core_->leader_follower_lock ().release () == -1)

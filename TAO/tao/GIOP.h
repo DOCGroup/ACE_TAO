@@ -303,7 +303,8 @@ public:
     //   All GIOP messages include a header and message type.  Not
     //   really a message type, but needed to bring that information
     //   back somehow.
-
+    
+    ShortRead = -3,             // Short read.
     CommunicationError = -2,    // Invalid request.
     EndOfFile = -1,             // "discovered" by either.
     Request = 0,                // sent by client.
@@ -329,10 +330,11 @@ public:
                                       TAO_ORB_Core* orb_core);
   // Send message, returns TRUE if success, else FALSE.
 
-  static TAO_GIOP::Message_Type recv_request (TAO_Transport *transport,
+  static TAO_GIOP::Message_Type recv_message (TAO_Transport *transport,
                                               TAO_InputCDR &msg,
-                                              TAO_ORB_Core *orb_core);
-  // Reads message, returns message type from header.
+                                              TAO_ORB_Core *orb_core,
+                                              TAO_GIOP_Version &version);
+  // Reads message returns message type from header.  
 
   static void dump_msg (const char *label,
                         const u_char *ptr,
