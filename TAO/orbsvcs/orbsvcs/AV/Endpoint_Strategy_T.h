@@ -24,7 +24,7 @@
 #include "Endpoint_Strategy.h"
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy
+class TAO_AV_Export TAO_AV_Endpoint_Reactive_Strategy
 : public TAO_AV_Endpoint_Strategy
 {
   // = DESCRIPTION
@@ -68,7 +68,7 @@ protected:
 // ----------------------------------------------------------------------
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy_A
+class TAO_AV_Export TAO_AV_Endpoint_Reactive_Strategy_A
   : public TAO_AV_Endpoint_Reactive_Strategy<T_StreamEndpoint, T_VDev , T_MediaCtrl>
 {
   // = DESCRIPTION
@@ -94,7 +94,7 @@ public:
 
 // ----------------------------------------------------------------------
 template <class T_StreamEndpoint, class T_Vdev , class T_MediaCtrl>
-class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy_B
+class TAO_AV_Export TAO_AV_Endpoint_Reactive_Strategy_B
   : public TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_Vdev, T_MediaCtrl>
 {
   // = DESCRIPTION
@@ -119,7 +119,7 @@ public:
 // ----------------------------------------------------------------------
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-class TAO_ORBSVCS_Export TAO_AV_Child_Process
+class TAO_AV_Export TAO_AV_Child_Process
 {
   // = DESCRIPTION
   //    Helper class for the child process created in TAO_AV_Endpoint_Process_Strategy
@@ -204,7 +204,7 @@ protected:
 // ----------------------------------------------------------------------
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-class TAO_ORBSVCS_Export TAO_AV_Child_Process_A
+class TAO_AV_Export TAO_AV_Child_Process_A
   : public TAO_AV_Child_Process <T_StreamEndpoint, T_VDev, T_MediaCtrl>
 {
   // = DESCRIPTION
@@ -221,7 +221,7 @@ public:
 // ----------------------------------------------------------------------
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-class TAO_ORBSVCS_Export TAO_AV_Child_Process_B
+class TAO_AV_Export TAO_AV_Child_Process_B
   : public TAO_AV_Child_Process <T_StreamEndpoint, T_VDev, T_MediaCtrl>
 {
   // = DESCRIPTION

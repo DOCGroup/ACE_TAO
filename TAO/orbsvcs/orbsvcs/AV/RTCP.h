@@ -189,7 +189,7 @@ public:
 
 class TAO_AV_Callback;
 
-class TAO_ORBSVCS_Export TAO_AV_RTCP_Object : public TAO_AV_Protocol_Object
+class TAO_AV_Export TAO_AV_RTCP_Object : public TAO_AV_Protocol_Object
 {
 public:
   TAO_AV_RTCP_Object (TAO_AV_Callback *callback,
@@ -224,7 +224,7 @@ public:
 };
 
 
-class TAO_ORBSVCS_Export TAO_AV_RTCP_Flow_Factory
+class TAO_AV_Export TAO_AV_RTCP_Flow_Factory
   :public TAO_AV_Flow_Protocol_Factory
 {
 public:
@@ -238,7 +238,7 @@ public:
                                                         TAO_AV_Transport *transport);
 };
 
-class TAO_ORBSVCS_Export TAO_AV_RTCP_Callback : public TAO_AV_Callback
+class TAO_AV_Export TAO_AV_RTCP_Callback : public TAO_AV_Callback
 {
 public:
   TAO_AV_RTCP_Callback (void);

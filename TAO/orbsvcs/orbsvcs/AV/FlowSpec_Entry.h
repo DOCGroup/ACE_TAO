@@ -19,11 +19,11 @@
 #ifndef TAO_AV_FLOWSPEC_ENTRY_H
 #define TAO_AV_FLOWSPEC_ENTRY_H
 
-#include "orbsvcs/orbsvcs_export.h"
+#include "orbsvcs/AV/AV_export.h"
 #include "AV_Core.h"
 #include "ace/Addr.h"
 
-class TAO_ORBSVCS_Export TAO_Tokenizer
+class TAO_AV_Export TAO_Tokenizer
 {
 public:
   TAO_Tokenizer (const char *string,char delimiter);
@@ -55,7 +55,7 @@ class TAO_AV_Transport;
 class TAO_AV_Flow_Handler;
 class TAO_AV_Protocol_Object;
 
-class TAO_ORBSVCS_Export TAO_FlowSpec_Entry
+class TAO_AV_Export TAO_FlowSpec_Entry
 {
 public:
   // = TITLE
@@ -202,7 +202,7 @@ protected:
   Role role_;
 };
 
-class TAO_ORBSVCS_Export TAO_Forward_FlowSpec_Entry
+class TAO_AV_Export TAO_Forward_FlowSpec_Entry
   :public TAO_FlowSpec_Entry
 {
 public:
@@ -237,7 +237,7 @@ public:
   // construct the entry from a string specified by the flowSpec grammar.
 };
 
-class TAO_ORBSVCS_Export TAO_Reverse_FlowSpec_Entry
+class TAO_AV_Export TAO_Reverse_FlowSpec_Entry
   :public TAO_FlowSpec_Entry
 {
 public:

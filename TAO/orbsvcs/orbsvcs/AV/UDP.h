@@ -21,7 +21,7 @@
 #include "ace/OS.h"
 #include "Protocol_Factory.h"
 
-class TAO_ORBSVCS_Export TAO_AV_UDP_Factory : public TAO_AV_Transport_Factory
+class TAO_AV_Export TAO_AV_UDP_Factory : public TAO_AV_Transport_Factory
 {
 public:
   TAO_AV_UDP_Factory (void);
@@ -164,7 +164,7 @@ protected:
   TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
 };
 
-class TAO_ORBSVCS_Export TAO_AV_UDP_Object  : public TAO_AV_Protocol_Object
+class TAO_AV_Export TAO_AV_UDP_Object  : public TAO_AV_Protocol_Object
 {
 public:
   TAO_AV_UDP_Object (TAO_AV_Callback *callback,
