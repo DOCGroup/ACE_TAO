@@ -1205,11 +1205,11 @@ detect_cycles_i (ACE_ENV_SINGLE_ARG_DECL)
   // Sort the pointers to entries in order of descending forward
   // finish times, which produces a topological ordering, with
   // callers ahead of called nodes.
-  ::qsort (ACE_reinterpret_cast (void *, entry_ptr_array_),
-           this->rt_info_count_,
-           sizeof (TAO_Reconfig_Scheduler_Entry *),
-           ACE_reinterpret_cast (COMP_FUNC,
-                                 RECONFIG_SCHED_STRATEGY::comp_entry_finish_times));
+  ACE_OS::qsort (ACE_reinterpret_cast (void *, entry_ptr_array_),
+                 this->rt_info_count_,
+                 sizeof (TAO_Reconfig_Scheduler_Entry *),
+                 ACE_reinterpret_cast (COMP_FUNC,
+                                       RECONFIG_SCHED_STRATEGY::comp_entry_finish_times));
 
   // Traverse entries in reverse topological order,
   // looking for strongly connected components (cycles).
@@ -1283,11 +1283,11 @@ assign_priorities_i (ACE_ENV_SINGLE_ARG_DECL)
   // Sort the pointers to entries in descending order
   // of static priority and static subpriority, according
   // to our given scheduling strategy.
-  ::qsort (ACE_reinterpret_cast (void *, entry_ptr_array_),
-           this->rt_info_count_,
-           sizeof (TAO_Reconfig_Scheduler_Entry *),
-           ACE_reinterpret_cast (COMP_FUNC,
-                                 RECONFIG_SCHED_STRATEGY::total_priority_comp));
+  ACE_OS::qsort (ACE_reinterpret_cast (void *, entry_ptr_array_),
+                 this->rt_info_count_,
+                 sizeof (TAO_Reconfig_Scheduler_Entry *),
+                 ACE_reinterpret_cast (COMP_FUNC,
+                                       RECONFIG_SCHED_STRATEGY::total_priority_comp));
 
   // Empty out the previously stored configuration infos, if any.
   RtecScheduler::Preemption_Priority_t config_priority;
