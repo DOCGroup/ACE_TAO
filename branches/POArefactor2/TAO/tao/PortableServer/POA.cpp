@@ -4102,6 +4102,32 @@ TAO_POA::ORT_adapter_i (void)
   return this->ort_adapter_;
 }
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
+PortableServer::AdapterActivator_ptr
+TAO_POA::the_activator (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD_RETURN (PortableServer::AdapterActivator::_nil ());
+
+  return PortableServer::AdapterActivator::_duplicate (this->adapter_activator_.in ());
+}
+
+void
+TAO_POA::the_activator (PortableServer::AdapterActivator_ptr adapter_activator
+                        ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD;
+
+  this->adapter_activator_ = PortableServer::AdapterActivator::_duplicate (adapter_activator);
+}
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+
 TAO::ORT_Adapter *
 TAO_POA::ORT_adapter (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
