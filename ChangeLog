@@ -1,9 +1,29 @@
+Tue Aug 07 16:40:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/Hash_Map_Manager_T.*:
+          Added const_iterator to the Hash_Map_Manager so that it is
+          possible to iterate over a hash map in a const method
+
+          The operator= of the iterator now check the value of this to
+          check that the iterator instance is assigned to itself
+
+        * tests/Hash_Map_Manager_Test.cpp
+          Extended this test to test the new const_iterator capabilities of
+          the hash map
+
+        * ace/Unbounded_Set.cpp:
+          Implemented missing operator* for the const iterator
+
+        * tests/Collection_test.cpp:
+          Extended test to test the operator* of the
+          Unbounded_Set_Const_Iterator
+
 Mon Aug  6 19:58:48 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/config-hpux-11.00.h: Added #define for ACE_HAS_TERM_IOCTLS.
 	  Thanks to Torbjorn Backstrom <torbjorn.k.backstrom@volvo.com>
  	  for reporting this.
-	
+
 	* ace/OS.h: Added a #include for <sys/modem.h> for HP/UX.  Thanks
 	  to Torbjorn Backstrom <torbjorn.k.backstrom@volvo.com> for
  	  reporting this.
@@ -29,7 +49,7 @@ Mon Aug 06 17:17:33 2001  Ossama Othman  <ossama@uci.edu>
 	  regression testing happy until the on-the-fly generation is
 	  implemented.  Once we start generating this file on-the-fly
 	  this file should disappear.
-	
+
 	* tests/Service_Config_Test.cpp (run_test):
 
 	  When using full Unicode support, use the version of the Service
@@ -62,9 +82,9 @@ Sun Aug  5 14:31:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  Service_Config_Test in static builds.
 
 Fri Aug 04 3:33:31 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
-	
+
 	* ace/QoS/SOCK_Dgram_Mcast_QoS.h:
-	* ace/QoS/SOCK_Dgram_Mcast_QoS.cpp: 	
+	* ace/QoS/SOCK_Dgram_Mcast_QoS.cpp:
 
 	  Made the open method public so we can open UDP sockets for
 	  non-multicast addresses.
