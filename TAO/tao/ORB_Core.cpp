@@ -381,6 +381,10 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           dotted_decimal_addresses =
             ACE_OS::atoi (current_arg);
 
+          ACE_DEBUG ((LM_DEBUG,
+                      "OSSAMA: -ORBDottedDecimalAddresses = %d\n",
+                      dotted_decimal_addresses));
+
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
@@ -937,11 +941,16 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
       ////////////////////////////////////////////////////////////////
       else if (arg_shifter.cur_arg_strncasecmp ("-ORB") != -1)
         {
-          if (TAO_debug_level > 0)     
-            ACE_DEBUG ((LM_WARNING,
-                        ASYS_TEXT ("WARNING: Unknown \"-ORB\" option <%s>.\n")
-                        ASYS_TEXT ("         Removing it from the argument list.\n"),
-                        ((current_arg == 0) ? "<NULL>" : current_arg)));
+          if (TAO_debug_level > 0)
+            {
+              current_arg = arg_shifter.get_current (); 
+              ACE_DEBUG ((LM_WARNING,
+                          ASYS_TEXT ("WARNING: Unknown \"-ORB\" option ")
+                          ASYS_TEXT ("<%s>.\n")
+                          ASYS_TEXT ("         Removing it from the ")
+                          ASYS_TEXT ("argument list.\n"),
+                          ((current_arg == 0) ? "<NULL>" : current_arg)));
+            }
 
           arg_shifter.consume_arg ();
         }
