@@ -1,3 +1,8 @@
+Wed Aug  6 15:01:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/ec_options.html:
+          Extended documentation of RTEC options.
+
 Tue Aug  5 15:20:00 UTC 2003  Gautam Thaker <gthaker@atl.lmco.com>
 
         Please email any questions/comments about this update to
@@ -107,7 +112,7 @@ Mon Aug  4 18:28:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h: Made the
 	  signature changes that were necessitated from "Mon Aug  4
 	  11:06:55 2003  Balachandran Natarajan
-	  <bala@dre.vanderbilt.edu>". 
+	  <bala@dre.vanderbilt.edu>".
 
 Mon Aug  4 18:01:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -139,31 +144,31 @@ Mon Aug  4 11:06:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Tagged_Components.cpp (remove_component):
 	* tao/Tagged_Components.h: Added a new method which removes tagged
 	  components from the list of tagged components based on component
-	  id. 
+	  id.
 
-	* tao/IORManipulation/IOR.pidl: 
+	* tao/IORManipulation/IOR.pidl:
 	* tao/IORManipulation/IORC.cpp:
 	* tao/IORManipulation/IORC.h:
 	* tao/IORManipulation/IORC.i: A new operation, remove_primary_tag
 	  ()  on TAO_IOP::TAO_IOR_Property interface. Please see
-	  documentation for details. 
+	  documentation for details.
 
 	  Further all operations in TAO_IOP::TAO_IOR_Property interface
 	  that modify parameters have been made inout instead of just
-	  in. This was causing all sorts of confusion for a normal user. 
-	
+	  in. This was causing all sorts of confusion for a normal user.
+
 	* tao/IORManipulation/IORManipulation.cpp:
 	* tao/IORManipulation/IORManipulation.h: A concrete implementation
-	  of remove_primary_tag () within the IORManipulation library. 
+	  of remove_primary_tag () within the IORManipulation library.
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
 	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h: A concrete
 	  implementation of remove_primary_tag () within the
-	  FaultTolerance library.  
+	  FaultTolerance library.
 
 	  Thanks to Milan Cvetkovic <mcvetcovic@mpathix.com>, for
-	  motivating the above changes and providing the patches. 
-	
+	  motivating the above changes and providing the patches.
+
 Mon Aug  4 000:09:26 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFRService/Container_i.cpp:
