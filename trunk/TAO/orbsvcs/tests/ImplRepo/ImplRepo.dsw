@@ -27,6 +27,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Nestea Client"=.\nestea_client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Nestea Server"=.\nestea_server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Repository_Test"=.\Repository_Test.dsp - Package Owner=<4>
 
 Package=<5>
