@@ -344,9 +344,8 @@ main (int argc, char *argv[])
 #else
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     "Xt not supported on this platform\n"),
-                    -1);
+  ACE_ERROR ((LM_ERROR,
+              "Xt not supported on this platform\n"));
 #endif /* ACE_HAS_XT */
   ACE_END_TEST;
   return 0;
