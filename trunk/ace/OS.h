@@ -1340,16 +1340,16 @@ typedef int ACE_thread_key_t;
 // This must come after signal.h is #included.
 #if defined (SCO)
 #define SIGIO SIGPOLL
-#endif 
+#include <sys/regset.h>
+#endif /* SCO */
 
-#if defined (SCO) || defined (FreeBSD)
+#if defined (ACE_HAS_SIG_MACROS)
 #undef sigemptyset
 #undef sigfillset
 #undef sigaddset
 #undef sigdelset
 #undef sigismember
-#include <sys/regset.h>
-#endif /* SCO */
+#endif /* ACE_HAS_SIG_MACROS */
 
 // This must come after signal.h is #included.  It's to counteract
 // the sigemptyset and sigfillset #defines, which only happen

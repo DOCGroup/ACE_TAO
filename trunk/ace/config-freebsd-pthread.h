@@ -21,6 +21,7 @@
 #define ACE_NEEDS_SYSTIME_H
 
 #define ACE_LACKS_STRRECVFD
+#define ACE_HAS_SIG_MACROS
 
 #define ACE_HAS_SIN_LEN
 
