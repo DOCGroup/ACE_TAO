@@ -15,6 +15,7 @@ bgcolor="#ffffff">
   <li><a href="#Introduction">Introduction</a>
   <li><a href="#Design Issues">Design Issues</a>
   <li><a href="#Design Overview">Design Overview</a>
+  <li><a href="#Implementation Issues">Implementation Issues</a>
   <li><a href="#Acknowledgements">Acknowledgements</a>
   <li><a href="#ref">References</a>
 </ul>
@@ -319,6 +320,20 @@ interface_ptr _unchecked_narrow (CORBA::Object obj,
 
 </pre>
 
+<h2><a name="Implementation Issues">Implementation Issues</a></h2>
+
+<p> 1) Native exceptions? How are these to be handled?</p>
+<p> Maybe just put it in the IDL compiler and generate code for pure
+exception code or not based on the -Ge option.
+
+<p> 2) What if the user wants to have a smart proxy which inherits from
+many interfaces?</p>
+<p> First have different smart proxies which inherit from the
+DefaultSmartProxy (every default smart proxy is for an interface) and
+then have a new smart proxy inheriting from the previously created
+smart proxies. But remember: the SmartProxyFactory should create the
+final smart proxy thru its create_proxy () method.
+
 <h2><a name="Acknowledgements">Acknowledgements</a></h2>
 
 <P><a href="mailto:nanbor@cs.wustl.edu">Nanbor Wang</a> and <a
@@ -329,7 +344,6 @@ designing and discussing this feature.
 
 <p> CORBA Distributed Objects using Orbix - Sean Baker </p>
 <p> Visigenic Documentation </p>
-
 
 <p><h2>Last update:</h2></p>
 
