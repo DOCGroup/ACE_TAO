@@ -1,3 +1,9 @@
+Wed Jun 13 14:18:22 2001  Steve Huston  <shuston@riverace.com>
+
+        * ACE-INSTALL.html: Modified the platforms/compilers section to
+          reflect the new roles of DOC, Riverace, OCI. Fixed up the
+          Solaris section a bit.
+
 Wed Jun 13 11:08:26 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Thread_Pool_Test.cpp: Casted message block pointers to
