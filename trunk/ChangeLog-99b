@@ -1,3 +1,8 @@
+Sat Nov 27 14:59:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/make_release:
+	  There was a non-scoped variable.
+
 Thu Nov 25 02:17:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Malloc.h: Added back some apparent bug fixes during the
