@@ -102,3 +102,6 @@ release:	INSTALL
 	@$(TIMESTAMP) (cd ..; \
 	 find $(RELEASE_FILES) $(FILTER) | cpio -o -H tar | gzip -9 > TAO.tar.gz; \
 	 chmod a+r TAO.tar.gz; )
+
+releaseall: INSTALL
+	@$(TIMESTAMP) true
