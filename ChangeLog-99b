@@ -1,64 +1,70 @@
+Wed Aug 11 10:12:11 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h,Auto_Ptr.h,SString.h,README: added support for
+          ACE_HAS_EXPLICIT_KEYWORD.  Thanks to Jody Hagins <jody@atdesk.com>
+          for suggesting this.
+
 Wed Aug 11 10:07:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Future.cpp:
-	* ace/Local_Tokens.cpp:
-	* ace/Log_Msg.cpp:
-	* ace/Log_Record.cpp:
-	* ace/Svc_Handler.cpp:
-	* netsvcs/lib/Token_Handler.cpp:
-	  Fixed several warnings and errors with gcc-2.95
+        * ace/Future.cpp:
+        * ace/Local_Tokens.cpp:
+        * ace/Log_Msg.cpp:
+        * ace/Log_Record.cpp:
+        * ace/Svc_Handler.cpp:
+        * netsvcs/lib/Token_Handler.cpp:
+          Fixed several warnings and errors with gcc-2.95
 
-	* include/makeinclude/wrapper_macros.GNU:
-	  Add -fcheck-new to the command-line of g++ when compiling with
-	  exceptions disabled.  In that case new operators could return 0
-	  and without this option the constructor will surely be invoked
-	  on invalid data.
+        * include/makeinclude/wrapper_macros.GNU:
+          Add -fcheck-new to the command-line of g++ when compiling with
+          exceptions disabled.  In that case new operators could return 0
+          and without this option the constructor will surely be invoked
+          on invalid data.
 
-	* bin/auto_compile:
-	  Use LOGNAME instead of USER to get the username because it is
-	  more portable.
+        * bin/auto_compile:
+          Use LOGNAME instead of USER to get the username because it is
+          more portable.
 
 Tue Aug 10 23:47:32 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Cached_Connect_Strategy_T.h:
-	* ace/Caching_Utility_T.h:
-	* ace/Caching_Strategies_T.h:
-	* ace/Cleanup_Strategies_T.h:
-	* ace/Cache_Map_Manager_T.h:
-	* ace/Hash_Cache_Map_Manager_T.h:
+        * ace/Cached_Connect_Strategy_T.h:
+        * ace/Caching_Utility_T.h:
+        * ace/Caching_Strategies_T.h:
+        * ace/Cleanup_Strategies_T.h:
+        * ace/Cache_Map_Manager_T.h:
+        * ace/Hash_Cache_Map_Manager_T.h:
 
-	  Defined macros to shorten lengthy class names for linkers which
-	  couldnt grok long names (example: Sun Linker). Thanks to
-	  Dr.Schmidt for this cool idea.
-	
+          Defined macros to shorten lengthy class names for linkers which
+          couldnt grok long names (example: Sun Linker). Thanks to
+          Dr.Schmidt for this cool idea.
+
 Tue Aug 10 19:07:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/run_tests.sh:
-	* tests/run_tests.pl:
-	* tests/run_tests.lst:
-	  Move the list of tests to a separate file. This file is used to
-	  drive both a perl version of the script and the old shell
-	  version.
-	  The new perl version is able to terminate programs that hang,
-	  but still has problem with processes that fork children who then 
-	  hang for some reason. The perl script has to be ported to Win32
-	  too.
+        * tests/run_tests.sh:
+        * tests/run_tests.pl:
+        * tests/run_tests.lst:
+          Move the list of tests to a separate file. This file is used to
+          drive both a perl version of the script and the old shell
+          version.
+          The new perl version is able to terminate programs that hang,
+          but still has problem with processes that fork children who then
+          hang for some reason. The perl script has to be ported to Win32
+          too.
 
-	* bin/run_all_list.pm:
-	  Use the new tests/run_tests.pl script on Unix.
+        * bin/run_all_list.pm:
+          Use the new tests/run_tests.pl script on Unix.
 
-	* bin/run_all.pl:
-	  Run all the test scripts in ACE and TAO, much like run_all_win32 
-	  but for unix systems.
+        * bin/run_all.pl:
+          Run all the test scripts in ACE and TAO, much like run_all_win32
+          but for unix systems.
 
-	* bin/auto_compile:
-	  Remember to remove the disable file in case of errors.
+        * bin/auto_compile:
+          Remember to remove the disable file in case of errors.
 
 Tue Aug 10 18:08:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* ace/CDR_Stream.h:
-	* ace/CDR_STream.i:
-	  Added all the necessary stuff for wstrings.
+        * ace/CDR_Stream.h:
+        * ace/CDR_STream.i:
+          Added all the necessary stuff for wstrings.
 
 Tue Aug 10 15:36:02 1999  David L. Levine  <levine@cs.wustl.edu>
 
