@@ -6,9 +6,9 @@
 //
 // = LIBRARY
 //    ACE
-// 
+//
 // = FILENAME
-//    ACE_Token_Collection.h
+//    Token_Collection.h
 //
 // = DESCRIPTION
 //    The ACE_Token class offers methods for acquiring, renewing,
@@ -22,7 +22,7 @@
 // = AUTHOR
 //    Douglas C. Schmidt (schmidt@cs.wustl.edu) and
 //    Tim Harrison (harrison@cs.wustl.edu)
-// 
+//
 // ============================================================================
 
 #if !defined (ACE_TOKEN_COLLECTION_H)
@@ -34,7 +34,7 @@
 
 class ACE_Export ACE_Token_Collection : public ACE_Token_Proxy
   // = TITLE
-  //   Allows atomic token group operations AND 
+  //   Allows atomic token group operations AND
   //   provides a ACE_Token manager interface.
   //
   // = DESCRIPTION
@@ -61,7 +61,7 @@ public:
   // <debug> print out verbose debugging messages. <name> will give a
   // name to the collection.  Collections don't really need names, but
   // are sometimes useful for debugging.
-  
+
 // Collection Management operations
 
   int insert (ACE_Token_Proxy &token);
