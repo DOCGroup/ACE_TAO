@@ -206,8 +206,8 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (LPCTSTR pool_name)
   ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc");
   if (this->open () == -1)
     ACE_ERROR ((LM_ERROR,
-                "%p",
-                "ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc"));
+                ASYS_TEXT ("%p"),
+                ASYS_TEXT ("ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc")));
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
@@ -221,8 +221,8 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (LPCTSTR pool_name,
   ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc");
   if (this->open () == -1)
     ACE_ERROR ((LM_ERROR,
-                "%p",
-                "ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc"));
+                ASYS_TEXT ("%p"),
+                ASYS_TEXT ("ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc")));
 }
 
 #if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
@@ -236,8 +236,8 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (LPCTSTR pool_name,
   ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc");
   if (this->open () == -1)
     ACE_ERROR ((LM_ERROR,
-                "%p",
-                "ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc"));
+                ASYS_TEXT ("%p"),
+                ASYS_TEXT ("ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc")));
 }
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
