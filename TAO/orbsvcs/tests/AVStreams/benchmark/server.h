@@ -1,4 +1,10 @@
+/* -*- C++ -*- */
 // $Id$
+
+
+// NOTE: If you encounter trouble resolving the Naming Service, try
+// running the Naming Service and the server in the same window. [MJB]
+
 
 #if !defined (TAO_AV_BENCH_SERVER_H)
 #define TAO_AV_BENCH_SERVER_H
@@ -66,7 +72,10 @@ private:
   TAO_ORB_Manager orb_manager_;
   // the TAO ORB manager.
 
-  CosNaming::NamingContext_var naming_context_;
+  TAO_Naming_Client my_name_client_;
+  // The TAO Naming server
+  
+  //CosNaming::NamingContext_var naming_context_;
   // The root naming context of the naming service
 
   //  AV_Server_Sig_Handler signal_handler_;
@@ -77,7 +86,7 @@ private:
   //  TAO_AV_Endpoint_Process_Strategy_B process_strategy_;
   // The proces strategy for the video.
 
-  TAO_AV_Endpoint_Reactive_Strategy_B<Bench_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
+  TAO_AV_Endpoint_Reactive_Strategy_B <Bench_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
   // Reactive strategy
 
   TAO_MMDevice *mmdevice_;
