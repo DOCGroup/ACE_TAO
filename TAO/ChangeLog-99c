@@ -1,6 +1,12 @@
+Sat Jul 10 19:20:55 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/Simple/bank/Account_i.{h,cpp}:
+	* examples/Simple/echo/Echo_i.{h,cpp}: Added no-op copy
+	  constructors to fool old g++ (2.7.2.3).
+
 Sat Jul 10 18:54:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
 	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
 	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
 	  Fixed warnings on HP-UX/aCC, thanks to Eric Mitchell for
