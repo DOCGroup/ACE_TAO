@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "tao/UIOP_Connect.h"
 
 #if TAO_HAS_UIOP == 1
@@ -13,6 +12,7 @@
 #include "tao/Timeprobe.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/Messaging_Policy_i.h"
+#include "tao/UIOP_Endpoint.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/UIOP_Connect.i"
@@ -60,25 +60,11 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_UIOP_Connect_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-TAO_UIOP_Handler_Base::TAO_UIOP_Handler_Base (TAO_ORB_Core *orb_core)
-    : TAO_UIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0)
-{
-}
-
-TAO_UIOP_Handler_Base::TAO_UIOP_Handler_Base (ACE_Thread_Manager *t)
-  : TAO_UIOP_SVC_HANDLER (t, 0, 0)
-{
-}
-
-// ****************************************************************
-
 TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_UIOP_Handler_Base (t),
+  : TAO_UIOP_SVC_HANDLER (t, 0, 0),
+    TAO_Connection_Handler (0),
     transport_ (this, 0),
-    orb_core_ (0),
-    tss_resources_ (0),
     refcount_ (1),
-    lite_flag_ (0),
     uiop_properties_ (0)
 {
   // This constructor should *never* get called, it is just here to
@@ -86,22 +72,20 @@ TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (ACE_Thre
   // Creation_Strategy requires a constructor with that signature, we
   // don't use that implementation, but some (most?) compilers
   // instantiate it anyway.
-  ACE_ASSERT (this->orb_core_ != 0);
+  ACE_ASSERT (this->orb_core () != 0);
 }
 
 TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core,
-                                                                        CORBA::Boolean flag,
+                                                                        CORBA::Boolean lite_flag,
                                                                         void *arg)
-  : TAO_UIOP_Handler_Base (orb_core),
+  : TAO_UIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
+    TAO_Connection_Handler (orb_core),
     transport_ (this, orb_core),
-    orb_core_ (orb_core),
-    tss_resources_ (orb_core->get_tss_resources ()),
     refcount_ (1),
-    lite_flag_ (flag),
     uiop_properties_ (ACE_static_cast
-                      (TAO_UIOP_Handler_Base::UIOP_Properties *, arg))
+                      (TAO_UIOP_Properties *, arg))
 {
-  if (lite_flag_)
+  if (lite_flag)
     {
       ACE_NEW (this->acceptor_factory_,
                TAO_GIOP_Message_Lite (orb_core));
@@ -115,42 +99,53 @@ TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (TAO_ORB_
 
 TAO_UIOP_Server_Connection_Handler::~TAO_UIOP_Server_Connection_Handler (void)
 {
-
   delete this->acceptor_factory_;
+
+  // If the socket has not already been closed.
+  if (this->transport_.handle () != ACE_INVALID_HANDLE)
+    {
+      // Cannot deal with errors, and therefore they are ignored.
+      this->transport_.send_buffered_messages ();
+    }
+  else
+    {
+      // Dequeue messages and delete message blocks.
+      this->transport_.dequeue_all ();
+    }
 }
 
 int
 TAO_UIOP_Server_Connection_Handler::open (void*)
 {
-#if !defined (ACE_LACKS_SOCKET_BUFSIZ)
-
-  if (this->peer ().set_option (SOL_SOCKET,
-                                SO_SNDBUF,
-                                ACE_reinterpret_cast (void *,
-                                                      &uiop_properties_->send_buffer_size),
-                                sizeof (int)) == -1
-      && errno != ENOTSUP)
+  if (this->set_socket_option (this->peer (),
+                               uiop_properties_->send_buffer_size,
+                               uiop_properties_->recv_buffer_size) == -1)
     return -1;
-  else if (this->peer ().set_option (SOL_SOCKET,
-                                     SO_RCVBUF,
-                                     ACE_reinterpret_cast (void *,
-                                                           &uiop_properties_->recv_buffer_size),
-                                     sizeof (int)) == -1
-           && errno != ENOTSUP)
-    return -1;
-#endif /* !ACE_LACKS_SOCKET_BUFSIZ */
 
-  (void) this->peer ().enable (ACE_CLOEXEC);
-  // Set the close-on-exec flag for that file descriptor. If the
-  // operation fails we are out of luck (some platforms do not support
-  // it and return -1).
-
-  // Called by the <Strategy_Acceptor> when the handler is completely
+   // Called by the <Strategy_Acceptor> when the handler is completely
   // connected.
   ACE_UNIX_Addr addr;
 
   if (this->peer ().get_remote_addr (addr) == -1)
     return -1;
+
+  // Construct an  UIOP_Endpoint object
+  TAO_UIOP_Endpoint endpoint (addr);
+
+
+  // Construct a property object
+  TAO_Base_Connection_Property prop (&endpoint);
+
+  // Add the handler to Cache
+  if (this->orb_core ()->connection_cache ().cache_handler (&prop,
+                                                            this) == -1)
+    {
+      if (TAO_debug_level > 4)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) unable to cache the handle \n")));
+        }
+    }
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -207,16 +202,15 @@ TAO_UIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
   --this->refcount_;
   if (this->refcount_ == 0)
     {
-      // Remove the handle from the ORB Core's handle set so that it
-      // isn't included in the set that is passed to the reactor upon
-      // ORB destruction.
-      TAO_Server_Strategy_Factory *f =
-        this->orb_core_->server_factory ();
+      // Set the flag to indicate that it is no longer registered with
+      // the reactor, so that it isn't included in the set that is
+      // passed to the reactor on ORB destruction.
+      this->is_registered (0);
 
-      if (f->activate_server_connections () == 0)
-        (void) this->orb_core_->remove_handle (handle);
+      // Decrement the reference count
+      this->decr_ref_count ();
 
-      return TAO_UIOP_SVC_HANDLER::handle_close (handle, rm);
+      //return TAO_UIOP_SVC_HANDLER::handle_close (handle, rm);
     }
 
   return 0;
@@ -227,59 +221,9 @@ TAO_UIOP_Server_Connection_Handler::svc (void)
 {
   // This method is called when an instance is "activated", i.e.,
   // turned into an active object.  Presumably, activation spawns a
-  // thread with this method as the "worker function."
-  int result = 0;
-
-  // Inheriting the ORB_Core tss stuff from the parent thread.
-  this->orb_core_->inherit_from_parent_thread (this->tss_resources_);
-
-  if (TAO_orbdebug)
-    ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) TAO_UIOP_Server_Connection_Handler::svc begin\n"));
-
-  // Here we simply synthesize the "typical" event loop one might find
-  // in a reactive handler, except that this can simply block waiting
-  // for input.
-
-  ACE_Time_Value *max_wait_time = 0;
-  ACE_Time_Value timeout;
-  ACE_Time_Value current_timeout;
-  if (this->orb_core_->thread_per_connection_timeout (timeout))
-    {
-      current_timeout = timeout;
-      max_wait_time = &current_timeout;
-    }
-
-  while (!this->orb_core_->has_shutdown ()
-         && result >= 0)
-    {
-      result = handle_input_i (ACE_INVALID_HANDLE, max_wait_time);
-
-      if (result == -1 && errno == ETIME)
-        {
-          // Ignore timeouts, they are only used to wake up and
-          // shutdown.
-          result = 0;
-
-          // Reset errno to make sure we don't trip over an old value
-          // of errno in case it is not reset when the recv() call
-          // fails if the socket has been closed.
-          errno = 0;
-        }
-
-      current_timeout = timeout;
-
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) UIOP_Server_Connection_Handler::svc - ")
-                    ACE_TEXT ("loop <%d>\n"), current_timeout.msec ()));
-    }
-
-  if (TAO_orbdebug)
-    ACE_DEBUG  ((LM_DEBUG,
-                 "(%P|%t) TAO_UIOP_Server_Connection_Handler::svc end\n"));
-
-  return result;
+  // thread with this method as the "worker function".
+  // Call the implementation here
+  return this->svc_i ();
 }
 
 int
@@ -296,7 +240,7 @@ TAO_UIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
 
   int result =
     this->acceptor_factory_->handle_input (this->transport (),
-                                           this->orb_core_,
+                                           this->orb_core (),
                                            this->transport_.message_state_,
                                            max_wait_time);
 
@@ -312,7 +256,8 @@ TAO_UIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
     {
       --this->refcount_;
       if (this->refcount_ == 0)
-        this->TAO_UIOP_SVC_HANDLER::handle_close ();
+        this->decr_ref_count ();
+        // this->TAO_UIOP_SVC_HANDLER::handle_close ();
       return result;
     }
 
@@ -334,14 +279,14 @@ TAO_UIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
 
   // Steal the input CDR from the message state.
   TAO_InputCDR input_cdr (ACE_InputCDR::Transfer_Contents (ms.cdr),
-                          this->orb_core_);
+                          this->orb_core ());
 
   // Reset the message state.
   this->transport_.message_state_.reset (0);
 
   result =
     this->acceptor_factory_->process_client_message (this->transport (),
-                                                     this->orb_core_,
+                                                     this->orb_core (),
                                                      input_cdr,
                                                      message_type);
 
@@ -350,23 +295,29 @@ TAO_UIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
 
   --this->refcount_;
   if (this->refcount_ == 0)
-    this->TAO_UIOP_SVC_HANDLER::handle_close ();
+    this->decr_ref_count ();
+  // this->TAO_UIOP_SVC_HANDLER::handle_close ();
 
   return result;
 }
 
+ACE_HANDLE
+TAO_UIOP_Server_Connection_Handler::fetch_handle (void)
+{
+  return this->get_handle ();
+}
+
+
 // ****************************************************************
 
 TAO_UIOP_Client_Connection_Handler::
-TAO_UIOP_Client_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_UIOP_Handler_Base (t),
+TAO_UIOP_Client_Connection_Handler (ACE_Thread_Manager * /* t */)
+  : TAO_Connection_Handler (0),
     transport_ (this, 0),
-    orb_core_ (0),
-    lite_flag_ (0),
     uiop_properties_ (0)
 {
   // This constructor should *never* get called.  See comments in .h
-  ACE_ASSERT (this->orb_core_ != 0);
+  ACE_ASSERT (this->orb_core () != 0);
 }
 
 TAO_UIOP_Client_Connection_Handler::
@@ -374,19 +325,28 @@ TAO_UIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
                                     TAO_ORB_Core* orb_core,
                                     CORBA::Boolean flag,
                                     void *arg)
-  : TAO_UIOP_Handler_Base (t),
+  : TAO_UIOP_SVC_HANDLER (t, 0, 0),
+    TAO_Connection_Handler (orb_core),
     transport_ (this, orb_core),
-    orb_core_ (orb_core),
-    lite_flag_ (flag),
     uiop_properties_ (ACE_static_cast
-                      (TAO_UIOP_Handler_Base::UIOP_Properties *, arg))
+                      (TAO_UIOP_Properties *, arg))
 {
   this->transport_.use_lite (flag);
 }
 
 TAO_UIOP_Client_Connection_Handler::~TAO_UIOP_Client_Connection_Handler (void)
 {
-  //no-op
+  // If the socket has not already been closed.
+  if (this->transport_.handle () != ACE_INVALID_HANDLE)
+    {
+      // Cannot deal with errors, and therefore they are ignored.
+      this->transport_.send_buffered_messages ();
+    }
+  else
+    {
+      // Dequeue messages and delete message blocks.
+      this->transport_.dequeue_all ();
+    }
 }
 
 // @@ Should I do something here to enable non-blocking?? (Alex).
@@ -400,28 +360,10 @@ TAO_UIOP_Client_Connection_Handler::~TAO_UIOP_Client_Connection_Handler (void)
 int
 TAO_UIOP_Client_Connection_Handler::open (void *)
 {
-#if !defined (ACE_LACKS_SOCKET_BUFSIZ)
-
-  if (this->peer ().set_option (SOL_SOCKET,
-                                SO_SNDBUF,
-                                ACE_reinterpret_cast (void *,
-                                                      &uiop_properties_->send_buffer_size),
-                                sizeof (int)) == -1
-      && errno != ENOTSUP)
+  if (this->set_socket_option (this->peer (),
+                               uiop_properties_->send_buffer_size,
+                               uiop_properties_->recv_buffer_size) == -1)
     return -1;
-  else if (this->peer ().set_option (SOL_SOCKET,
-                                     SO_RCVBUF,
-                                     ACE_reinterpret_cast (void *,
-                                                           &uiop_properties_->recv_buffer_size),
-                                     sizeof (int)) == -1
-           && errno != ENOTSUP)
-    return -1;
-#endif /* ACE_LACKS_SOCKET_BUFSIZ */
-
-  (void) this->peer ().enable (ACE_CLOEXEC);
-  // Set the close-on-exec flag for that file descriptor. If the
-  // operation fails we are out of luck (some platforms do not support
-  // it and return -1).
 
   // Called by the <Strategy_Acceptor> when the handler is completely
   // connected.
@@ -458,19 +400,25 @@ TAO_UIOP_Client_Connection_Handler::handle_input (ACE_HANDLE)
 }
 
 int
+TAO_UIOP_Client_Connection_Handler::handle_input_i (ACE_HANDLE,
+                                                    ACE_Time_Value *)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
+int
 TAO_UIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &,
                                                     const void *)
 {
-  //
   // This method is called when buffering timer expires.
   //
-
   ACE_Time_Value *max_wait_time = 0;
+
   TAO_Stub *stub = 0;
   int has_timeout;
-  this->orb_core_->call_timeout_hook (stub,
-                                      has_timeout,
-                                      *max_wait_time);
+  this->orb_core ()->call_timeout_hook (stub,
+                                        has_timeout,
+                                        *max_wait_time);
 
   // Cannot deal with errors, and therefore they are ignored.
   this->transport ()->send_buffered_messages (max_wait_time);
@@ -497,9 +445,6 @@ TAO_UIOP_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
                  handle,
                  rm));
 
-  if (this->recycler ())
-    this->recycler ()->mark_as_closed (this->recycling_act ());
-
   // Deregister this handler with the ACE_Reactor.
   return this->handle_cleanup ();
 }
@@ -523,40 +468,43 @@ TAO_UIOP_Client_Connection_Handler::handle_close_i (ACE_HANDLE handle,
                  handle,
                  rm));
 
-  if (this->recycler ())
-    this->recycler ()->mark_as_closed_i (this->recycling_act ());
-
   return this->handle_cleanup ();
 }
 
 int
 TAO_UIOP_Client_Connection_Handler::handle_cleanup (void)
 {
-  // Deregister this handler with the ACE_Reactor.
+    // Call the implementation.
   if (this->reactor ())
     {
-      ACE_Reactor_Mask mask =
-        ACE_Event_Handler::ALL_EVENTS_MASK | ACE_Event_Handler::DONT_CALL;
-
       // Make sure there are no timers.
       this->reactor ()->cancel_timer (this);
-
-      // Remove self from reactor.
-      this->reactor ()->remove_handler (this, mask);
     }
 
-  this->peer ().close ();
+  // Now do the decerment of the ref count
+  this->decr_ref_count ();
 
+  this->peer ().close ();
   return 0;
 }
 
+
+ACE_HANDLE
+TAO_UIOP_Client_Connection_Handler::fetch_handle (void)
+{
+  return this->get_handle ();
+}
 
 // ****************************************************************
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* TAO_HAS_UIOP == 1 */
+#endif /*TAO_HAS_UIOP == 1*/

@@ -64,6 +64,11 @@ public:
                        int use_dotted_decimal_addresses);
   // Constructor.
 
+  TAO_SHMIOP_Endpoint (const ACE_INET_Addr &addr,
+                       int use_dotted_decimal_addresses);
+  // Constructor. -- More of a extension of the previous one. One of
+  // them need to go. We will decide about that as time goes by.
+
   TAO_SHMIOP_Endpoint (const char *host,
                        CORBA::UShort port,
                        CORBA::Short priority);
@@ -78,6 +83,15 @@ public:
   virtual TAO_Endpoint *next (void);
   virtual int addr_to_string (char *buffer, size_t length);
   virtual void reset_hint (void);
+  virtual TAO_Endpoint *duplicate (void);
+  // Return a copy of <this>
+
+  CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
+  // Return true if this endpoint is equivalent to <other_endpoint>.  Two
+  // endpoints are equivalent iff their port and host are the same.
+
+  CORBA::ULong hash (void);
+  // Return a hash value for this object.
 
   // = SHMIOP_Endpoint-specific methods.
 
@@ -100,13 +114,6 @@ public:
 
   TAO_SHMIOP_Client_Connection_Handler *&hint (void);
   // Access to our <hint_>.
-
-  CORBA::Boolean is_equivalent (const TAO_SHMIOP_Endpoint *other_endpoint);
-  // Return true if this endpoint is equivalent to <other_endpoint>.  Two
-  // endpoints are equivalent iff their port and host are the same.
-
-  CORBA::ULong hash (void);
-  // Return a hash value for this object.
 
 private:
   int set (const ACE_INET_Addr &addr,

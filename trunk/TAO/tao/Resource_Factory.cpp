@@ -11,19 +11,6 @@ ACE_RCSID(tao, Resource_Factory, "$Id$")
 
 // ****************************************************************
 
-TAO_Cached_Connector_Lock::TAO_Cached_Connector_Lock (TAO_ORB_Core *orb_core)
-{
-  this->lock_ = orb_core->client_factory ()->create_cached_connector_lock ();
-}
-
-TAO_Cached_Connector_Lock::~TAO_Cached_Connector_Lock (void)
-{
-  delete this->lock_;
-  this->lock_ = 0;
-}
-
-// ****************************************************************
-
 TAO_Protocol_Item::TAO_Protocol_Item (const ACE_CString &name)
   :   name_ (name),
       factory_ (0),
@@ -169,6 +156,12 @@ TAO_Resource_Factory::get_parser_names (char **&,
   return 0;
 }
 
+ACE_Lock *
+TAO_Resource_Factory::create_cached_connection_lock (void)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Dynamic_Service<TAO_Resource_Factory>;
@@ -176,25 +169,11 @@ template class ACE_Node<TAO_Protocol_Item*>;
 template class ACE_Unbounded_Set<TAO_Protocol_Item*>;
 template class ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*>;
 
-template class auto_ptr<TAO_Cached_Connector_Lock>;
-template class ACE_Auto_Basic_Ptr<TAO_Cached_Connector_Lock>;
-
-template class ACE_Guard<TAO_Cached_Connector_Lock>;
-template class ACE_Reverse_Lock<TAO_Cached_Connector_Lock>;
-template class ACE_Guard<ACE_Reverse_Lock<TAO_Cached_Connector_Lock> >;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Dynamic_Service<TAO_Resource_Factory>
 #pragma instantiate ACE_Node<TAO_Protocol_Item*>
 #pragma instantiate ACE_Unbounded_Set<TAO_Protocol_Item*>
 #pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*>
-
-#pragma instantiate auto_ptr<TAO_Cached_Connector_Lock>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Cached_Connector_Lock>
-
-#pragma instantiate ACE_Guard<TAO_Cached_Connector_Lock>
-#pragma instantiate ACE_Reverse_Lock<TAO_Cached_Connector_Lock>
-#pragma instantiate ACE_Guard<ACE_Reverse_Lock<TAO_Cached_Connector_Lock> >
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -56,9 +56,6 @@ public:
   virtual TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
   // Create the correct client <wait_for_reply> strategy.
 
-  virtual ACE_Lock *create_cached_connector_lock (void);
-  // Create the lock to be used by the cached connector.
-
   virtual ACE_Lock *create_ft_service_retention_id_lock (void);
   // Create a lock to be used by the TAO_Fault_Tolerant_Service class
   // to generate unique retention ids
