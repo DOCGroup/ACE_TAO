@@ -1,8 +1,8 @@
 Mon Mar 01 08:28:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * tao/ORB_Core.cpp: removed ACE_Guard<ACE_SYNCH_MUTEX>,
-          because it collided with ACE_Guard<ACE_Thread_Mutex>
-          in ace/Synch.cpp.
+        * tao/ORB_Core.cpp: removed ACE_Guard<ACE_SYNCH_MUTEX>
+          template instantiation, because it collided with
+          ACE_Guard<ACE_Thread_Mutex> in ace/Synch.cpp.
 
 Sat Feb 27 20:05:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
