@@ -1,15 +1,18 @@
 // $Id$
-//
+
 //===========================================================================
+//
 // = FILENAME 
 //     server.cpp
 // 
 // = DESCRIPTION
-//     In this example,
-//        - A new POA (childPOA) is created and its objects are 
-//          made persistant. 
+//
+//     In this example, a new POA (childPOA) is created and its
+//     policy is set so that it object references are persistent.
+//
 // = AUTHOR
-//     Priyanka Gontla
+//     Priyanka Gontla <pgontla@ece.uci.edu>
+//
 //============================================================================
 
 #include "Stock_Factory_i.h"
@@ -57,8 +60,8 @@ main (int argc, char* argv[])
     // Create the childPOA under the RootPOA.
     PortableServer::POA_var child_poa = 
       root_poa->create_POA ("childPOA", 
-                             poa_manager.in (),
-                             policies);
+                            poa_manager.in (),
+                            policies);
     
     // Destroy policy objects.
     idassignment->destroy ();
