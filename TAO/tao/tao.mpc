@@ -197,6 +197,9 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_co
       Sync_Strategies.cpp
       TAO_Internal.cpp
       TAO_Server_Request.cpp
+      Null_RefCount_Policy.cpp
+      True_RefCount_Policy.cpp
+      Empty_Param_TypeCode.cpp
       Typecode_Constants.cpp
       PredefinedType_Seq_Tmplinst.cpp
       TypeCodeFactory_Adapter.cpp
