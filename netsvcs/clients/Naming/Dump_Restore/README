@@ -1,9 +1,8 @@
 This file describes the usage of the Dump-Restore utility for the ACE
 Name Server.
 
-Similar to the test application provided in the Client-Server
-directory, a simple ASCII menu-driven interface is provided to the
-user:
+Similar to the test application provided in the ../Client/ directory,
+a simple ASCII menu-driven interface is provided to the user:
 
          Name Service Main Menu
          ----------------------
