@@ -2,8 +2,8 @@ Fri Sep  8 14:27:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/MProfile/client.cpp:
 	* tests/MProfile/Makefile:
-	* tests/Mprofile_Forwarding/Manager.cpp:
-	* tests/Mprofile_Forwarding/Makefile
+	* tests/MProfile_Forwarding/Manager.cpp:
+	* tests/MProfile_Forwarding/Makefile
 	* tests/IORManipulation/IORTest.cpp:
 	* tests/IORManipulation/Makefile: Modifications to accomodate
 	  changes that were made to load the IORManipulation library
