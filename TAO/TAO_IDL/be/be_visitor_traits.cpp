@@ -110,7 +110,7 @@ be_visitor_traits::visit_interface (be_interface *node)
       os->gen_ifdef_macro (node->flat_name (), "traits");
 
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+          << "template<>" << be_nl
           << "struct " << be_global->stub_export_macro () << " Objref_Traits<"
           << " ::" << node->name () << ">" << be_nl
           << "{" << be_idt_nl
@@ -185,7 +185,7 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
       os->gen_ifdef_macro (node->flat_name (), "traits");
 
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+          << "template<>" << be_nl
           << "struct " << be_global->stub_export_macro () << " Value_Traits<"
           << node->name () << ">" << be_nl
           << "{" << be_idt_nl
@@ -387,7 +387,7 @@ be_visitor_traits::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl
-      << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+      << "template<>" << be_nl
       << "struct " << be_global->stub_export_macro () << " Array_Traits<"
       << be_idt << be_idt_nl
       << name << "," << be_nl

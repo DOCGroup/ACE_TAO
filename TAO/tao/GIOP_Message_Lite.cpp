@@ -1293,7 +1293,7 @@ int
 TAO_GIOP_Message_Lite::parse_request_header (TAO_ServerRequest &request)
 {
   // Get the input CDR in the request class
-  TAO_InputCDR& input = request.incoming ();
+  TAO_InputCDR & input = *request.incoming ();
 
   CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
 

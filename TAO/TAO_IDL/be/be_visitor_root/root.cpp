@@ -46,6 +46,8 @@ int be_visitor_root::visit_root (be_root *node)
                         -1);
     }
 
+  TAO_OutStream * const os = this->ctx_->stream ();
+
   int status = 0;
   be_visitor_context ctx = *this->ctx_;
 
@@ -69,6 +71,18 @@ int be_visitor_root::visit_root (be_root *node)
         break;
       case TAO_CodeGen::TAO_ROOT_SS:
         {
+          be_visitor_arg_traits arg_visitor ("S", &ctx);
+          status = node->accept (&arg_visitor);
+
+          if (status == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_root::"
+                                 "visit_root - "
+                                 "failed to generate skeleton arg traits\n"),
+                                -1);
+            }
+
           if (be_global->gen_thru_poa_collocation ()
               || be_global->gen_direct_collocation ())
             {
@@ -80,9 +94,107 @@ int be_visitor_root::visit_root (be_root *node)
                   ACE_ERROR_RETURN ((LM_ERROR,
                                      "(%N:%l) be_visitor_root::"
                                      "visit_root - "
-                                     "failed to generate stub arg traits\n"),
+                                     "failed to generate collocated skeleton arg traits\n"),
                                     -1);
                 }
+            }
+
+          // Generate stub/skeleton argument selection function templates
+          // in skeleton.
+          if (be_global->gen_thru_poa_collocation ())
+            {
+              *os << be_nl << be_nl
+                  << "// Stub/skeleton argument selection function templates."
+                  << be_nl
+                  << "// TAO_IDL - Generated from "
+                  << __FILE__ << ":" << __LINE__;
+
+              *os << be_nl << be_nl
+                  << "namespace" << be_nl
+                  << "{" << be_idt_nl;
+
+              // Return value selection function template
+              *os << "template<typename T>" << be_nl
+                  << "typename TAO::SArg_Traits<T>::ret_arg_type" << be_nl
+                  << "get_ret_arg (TAO_Operation_Details const * details,"
+                  << be_nl
+                  << "             TAO::Argument * const * skel_args)" << be_nl
+                  << "{" << be_idt_nl
+                  << "return" << be_idt_nl
+                  << "details" << be_nl
+                  << "? static_cast<typename TAO::Arg_Traits<T>::ret_val *> ("
+                  << be_idt << be_idt_nl
+                // return value is always the first element in the
+                // TAO::Argument array
+                  << "details->args ()[0])->arg ()"
+                  << be_uidt << be_uidt_nl
+                  << ": static_cast<typename TAO::SArg_Traits<T>::ret_val *> ("
+                  << be_idt << be_idt_nl
+                  << "skel_args[0])->arg ();" << be_uidt << be_uidt
+                  << be_uidt << be_uidt_nl
+                  << "}" << be_nl << be_nl;
+
+              // IN argument selection function template
+              *os << "template<typename T>" << be_nl
+                  << "typename TAO::SArg_Traits<T>::in_arg_type" << be_nl
+                  << "get_in_arg (TAO_Operation_Details const * details,"
+                  << be_nl
+                  << "            TAO::Argument * const * skel_args," << be_nl
+                  << "            size_t i)" << be_nl
+                  << "{" << be_idt_nl
+                  << "return" << be_idt_nl
+                  << "details" << be_nl
+                  << "? static_cast<typename TAO::Arg_Traits<T>::in_arg_val *> ("
+                  << be_idt << be_idt_nl
+                  << "details->args ()[i])->arg ()"
+                  << be_uidt << be_uidt_nl
+                  << ": static_cast<typename TAO::SArg_Traits<T>::in_arg_val *> ("
+                  << be_idt << be_idt_nl
+                  << "skel_args[i])->arg ();" << be_uidt << be_uidt
+                  << be_uidt << be_uidt_nl
+                  << "}" << be_nl << be_nl;
+
+              // INOUT argument selection function template
+              *os << "template<typename T>" << be_nl
+                  << "typename TAO::SArg_Traits<T>::inout_arg_type" << be_nl
+                  << "get_inout_arg (TAO_Operation_Details const * details,"
+                  << be_nl
+                  << "               TAO::Argument * const * skel_args," << be_nl
+                  << "               size_t i)" << be_nl
+                  << "{" << be_idt_nl
+                  << "return" << be_idt_nl
+                  << "details" << be_nl
+                  << "? static_cast<typename TAO::Arg_Traits<T>::inout_arg_val *> ("
+                  << be_idt << be_idt_nl
+                  << "details->args ()[i])->arg ()"
+                  << be_uidt << be_uidt_nl
+                  << ": static_cast<typename TAO::SArg_Traits<T>::inout_arg_val *> ("
+                  << be_idt << be_idt_nl
+                  << "skel_args[i])->arg ();" << be_uidt << be_uidt
+                  << be_uidt << be_uidt_nl
+                  << "}" << be_nl << be_nl;
+
+              // OUT argument selection function template
+              *os << "template<typename T>" << be_nl
+                  << "typename TAO::SArg_Traits<T>::out_arg_type" << be_nl
+                  << "get_out_arg (TAO_Operation_Details const * details,"
+                  << be_nl
+                  << "             TAO::Argument * const * skel_args," << be_nl
+                  << "             size_t i)" << be_nl
+                  << "{" << be_idt_nl
+                  << "return" << be_idt_nl
+                  << "details" << be_nl
+                  << "? static_cast<typename TAO::Arg_Traits<T>::out_arg_val *> ("
+                  << be_idt << be_idt_nl
+                  << "details->args ()[i])->arg ()"
+                  << be_uidt << be_uidt_nl
+                  << ": static_cast<typename TAO::SArg_Traits<T>::out_arg_val *> ("
+                  << be_idt << be_idt_nl
+                  << "skel_args[i])->arg ();" << be_uidt << be_uidt
+                  << be_uidt << be_uidt_nl
+                  << "}" << be_uidt << be_uidt_nl;
+
+              *os << "}" << be_uidt_nl;
             }
         }
 
@@ -98,8 +210,6 @@ int be_visitor_root::visit_root (be_root *node)
                          "codegen for scope failed\n"),
                         -1);
     }
-
-  TAO_OutStream *os = this->ctx_->stream ();
 
   // If we are generating the client header file, this is the place to
   // generate the proxy broker factory function pointer declarations
@@ -1549,7 +1659,7 @@ be_visitor_root::gen_explicit_tmplinst (be_root *node,
       if (be_global->gen_anyop_files ())
         {
           tao_cg->anyop_source ()->gen_endif_AHETI ();
-          
+
           *tao_cg->anyop_source () << "\n";
         }
     }

@@ -1,10 +1,15 @@
 #include "Collocated_Invocation.h"
 #include "Collocation_Proxy_Broker.h"
+#include "ORB_Core.h"
+#include "Request_Dispatcher.h"
+#include "TAO_Server_Request.h"
 #include "operation_details.h"
+
 
 ACE_RCSID (tao,
            Collocated_Invocation,
            "$Id$")
+
 
 namespace TAO
 {
@@ -41,15 +46,35 @@ namespace TAO
 
     ACE_TRY
       {
-        cpb->dispatch (this->effective_target (),
-                       this->forwarded_to_.out (),
-                       this->details_.args (),
-                       this->details_.args_num (),
-                       this->details_.opname (),
-                       this->details_.opname_len (),
-                       strat
-                       ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        if (strat == TAO_CS_THRU_POA_STRATEGY)
+          {
+            TAO_ORB_Core * const orb_core = this->orb_core ();
+
+            TAO_ServerRequest request (orb_core,
+                                       this->details_,
+                                       this->effective_target ());
+
+            TAO_Request_Dispatcher * const dispatcher =
+              orb_core->request_dispatcher ();
+
+            dispatcher->dispatch (orb_core,
+                                  request,
+                                  this->forwarded_to_.out ()
+                                  ACE_ENV_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+          }
+        else
+          {
+            cpb->dispatch (this->effective_target (),
+                           this->forwarded_to_.out (),
+                           this->details_.args (),
+                           this->details_.args_num (),
+                           this->details_.opname (),
+                           this->details_.opname_len (),
+                           strat
+                           ACE_ENV_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+          }
 
         // Invocation completed succesfully
         s = TAO_INVOKE_SUCCESS;

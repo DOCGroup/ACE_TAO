@@ -59,23 +59,24 @@ TAO_Operation_Table::~TAO_Operation_Table (void)
 }
 
 // constructor
-TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (const TAO_operation_db_entry *db,
-                                                    CORBA::ULong dbsize,
-                                                    CORBA::ULong hashtblsize,
-                                                    ACE_Allocator *alloc)
+TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (
+  TAO_operation_db_entry const * db,
+  CORBA::ULong dbsize,
+  CORBA::ULong hashtblsize,
+  ACE_Allocator *alloc)
   : hash_ (hashtblsize, alloc)
 {
   // Iterate thru each entry in the database and bind the operation
   // name to its corresponding skeleton.
-  for (CORBA::ULong i = 0; i < dbsize; i++)
+  for (CORBA::ULong i = 0; i < dbsize; ++i)
     {
       TAO::Operation_Skeletons s;
-      s.skel_ptr_ = db[i].skel_ptr_;
-      s.thruPOA_skel_ptr_ = db[i].thruPOA_skel_ptr_;
-      s.direct_skel_ptr_ = db[i].direct_skel_ptr_;
+      s.skel_ptr = db[i].skel_ptr;
+      s.thruPOA_skel_ptr = db[i].skel_ptr;
+      s.direct_skel_ptr = db[i].direct_skel_ptr;
 
       // @@ (ASG): what happens if bind fails ???
-      if (this->bind (db[i].opname_, s) == -1)
+      if (this->bind (db[i].opname, s) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n"),
                     ACE_TEXT ("bind failed")));
@@ -122,7 +123,7 @@ TAO_Dynamic_Hash_OpTable::find (const char *opname,
 
   if (retval != -1)
     {
-      skel_ptr = s.skel_ptr_;
+      skel_ptr = s.skel_ptr;
     }
 
   return retval;
@@ -145,11 +146,8 @@ TAO_Dynamic_Hash_OpTable::find (const char *opname,
     {
       switch (s)
         {
-        case TAO::TAO_CS_THRU_POA_STRATEGY:
-          skel_ptr = skel.thruPOA_skel_ptr_;
-          break;
         case TAO::TAO_CS_DIRECT_STRATEGY:
-          skel_ptr = skel.direct_skel_ptr_;
+          skel_ptr = skel.direct_skel_ptr;
           break;
         default:
           return -1;
@@ -183,14 +181,14 @@ TAO_Linear_Search_OpTable::find (const char *opname,
 {
   ACE_FUNCTION_TIMEPROBE (TAO_LINEAR_SEARCH_OPTABLE_FIND_START);
 
-  const TAO_operation_db_entry *entry = lookup (opname);
+  TAO_operation_db_entry const * const entry = lookup (opname);
   if (entry == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("TAO_Linear_Search_Table:find failed\n")),
                       -1);
 
   // Valid entry. Figure out the skel_ptr.
-  skelfunc = entry->skel_ptr_;
+  skelfunc = entry->skel_ptr;
 
   return 0;
 }
@@ -204,7 +202,7 @@ TAO_Linear_Search_OpTable::find (const char *opname,
 {
   ACE_FUNCTION_TIMEPROBE (TAO_LINEAR_SEARCH_OPTABLE_FIND_START);
 
-  const TAO_operation_db_entry *entry = lookup (opname);
+  TAO_operation_db_entry const * const entry = lookup (opname);
   if (entry == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("TAO_Linear_Search_Table:find failed\n")),
@@ -212,11 +210,8 @@ TAO_Linear_Search_OpTable::find (const char *opname,
 
   switch (st)
     {
-    case TAO::TAO_CS_THRU_POA_STRATEGY:
-      skelfunc = entry->thruPOA_skel_ptr_;
-      break;
     case TAO::TAO_CS_DIRECT_STRATEGY:
-      skelfunc = entry->direct_skel_ptr_;
+      skelfunc = entry->direct_skel_ptr;
       break;
     default:
       return -1;
@@ -242,12 +237,12 @@ TAO_Active_Demux_OpTable::TAO_Active_Demux_OpTable (const
   for (CORBA::ULong i=0; i < dbsize; i++)
     {
       TAO::Operation_Skeletons s;
-      s.skel_ptr_ = db[i].skel_ptr_;
-      s.thruPOA_skel_ptr_ = db[i].thruPOA_skel_ptr_;
-      s.direct_skel_ptr_ = db[i].direct_skel_ptr_;
+      s.skel_ptr = db[i].skel_ptr;
+      s.thruPOA_skel_ptr = db[i].skel_ptr;
+      s.direct_skel_ptr = db[i].direct_skel_ptr;
 
       // @@ (ASG): what happens if bind fails ???
-      (void) this->bind (db[i].opname_, s);
+      (void) this->bind (db[i].opname, s);
     }
 }
 
@@ -257,14 +252,14 @@ TAO_Active_Demux_OpTable::~TAO_Active_Demux_OpTable (void)
 }
 
 int
-TAO_Active_Demux_OpTable::bind (const char *opname,
+TAO_Active_Demux_OpTable::bind (const char * opname,
                                 const TAO::Operation_Skeletons skel_ptr)
 {
   CORBA::ULong i = ACE_OS::atoi (opname);
 
   if (i < this->tablesize_)
     {
-      if (this->tbl_[i].op_skel_ptr_.skel_ptr_ != 0)
+      if (this->tbl_[i].op_skel_ptr_.skel_ptr != 0)
         // overwriting previous one
         return 1;
       else
@@ -286,7 +281,7 @@ TAO_Active_Demux_OpTable::find (const char *opname,
   CORBA::ULong i = ACE_OS::atoi (opname);
 
   ACE_ASSERT (i < this->tablesize_);
-  skel_ptr = this->tbl_[i].op_skel_ptr_.skel_ptr_;
+  skel_ptr = this->tbl_[i].op_skel_ptr_.skel_ptr;
   return 0; //success
 }
 
@@ -305,11 +300,8 @@ TAO_Active_Demux_OpTable::find (const char *opname,
 
   switch (st)
     {
-    case TAO::TAO_CS_THRU_POA_STRATEGY:
-      skel_ptr = this->tbl_[i].op_skel_ptr_.thruPOA_skel_ptr_;
-      break;
     case TAO::TAO_CS_DIRECT_STRATEGY:
-      skel_ptr = this->tbl_[i].op_skel_ptr_.direct_skel_ptr_;
+      skel_ptr = this->tbl_[i].op_skel_ptr_.direct_skel_ptr;
       break;
     default:
       return -1;
@@ -343,8 +335,8 @@ TAO_Perfect_Hash_OpTable::find (const char *opname,
 {
   ACE_FUNCTION_TIMEPROBE (TAO_PERFECT_HASH_OPTABLE_FIND_START);
 
-  const TAO_operation_db_entry *entry = lookup (opname,
-                                                length);
+  TAO_operation_db_entry const * const entry = lookup (opname,
+                                                       length);
   if (entry == 0)
     {
       skelfunc = 0; // insure that somebody can't call a wrong function!
@@ -356,7 +348,7 @@ TAO_Perfect_Hash_OpTable::find (const char *opname,
     }
 
   // Valid entry. Figure out the skel_ptr.
-  skelfunc = entry->skel_ptr_;
+  skelfunc = entry->skel_ptr;
 
   return 0;
 }
@@ -369,8 +361,8 @@ TAO_Perfect_Hash_OpTable::find (const char *opname,
 {
   ACE_FUNCTION_TIMEPROBE (TAO_PERFECT_HASH_OPTABLE_FIND_START);
 
-  const TAO_operation_db_entry *entry = lookup (opname,
-                                                length);
+  TAO_operation_db_entry const * const entry = lookup (opname,
+                                                       length);
   if (entry == 0)
     {
       skelfunc = 0; // insure that somebody can't call a wrong function!
@@ -383,11 +375,8 @@ TAO_Perfect_Hash_OpTable::find (const char *opname,
 
   switch (st)
     {
-    case TAO::TAO_CS_THRU_POA_STRATEGY:
-      skelfunc = entry->thruPOA_skel_ptr_;
-      break;
     case TAO::TAO_CS_DIRECT_STRATEGY:
-      skelfunc = entry->direct_skel_ptr_;
+      skelfunc = entry->direct_skel_ptr;
       break;
     default:
       return -1;
@@ -419,14 +408,14 @@ TAO_Binary_Search_OpTable::find (const char *opname,
 {
   ACE_FUNCTION_TIMEPROBE (TAO_BINARY_SEARCH_OPTABLE_FIND_START);
 
-  const TAO_operation_db_entry *entry = lookup (opname);
+  TAO_operation_db_entry const * const entry = lookup (opname);
 
   if (entry == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("TAO_Binary_Search_Table:find failed\n")),
                       -1);
   // Valid entry. Figure out the skel_ptr.
-  skelfunc = entry->skel_ptr_;
+  skelfunc = entry->skel_ptr;
 
   return 0;
 }
@@ -440,7 +429,7 @@ TAO_Binary_Search_OpTable::find (const char *opname,
 {
   ACE_FUNCTION_TIMEPROBE (TAO_BINARY_SEARCH_OPTABLE_FIND_START);
 
-  const TAO_operation_db_entry *entry = lookup (opname);
+  TAO_operation_db_entry const * const entry = lookup (opname);
 
   if (entry == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -449,11 +438,8 @@ TAO_Binary_Search_OpTable::find (const char *opname,
 
   switch (st)
     {
-    case TAO::TAO_CS_THRU_POA_STRATEGY:
-      skelfunc = entry->thruPOA_skel_ptr_;
-      break;
     case TAO::TAO_CS_DIRECT_STRATEGY:
-      skelfunc = entry->direct_skel_ptr_;
+      skelfunc = entry->direct_skel_ptr;
       break;
     default:
       return -1;
@@ -518,7 +504,7 @@ TAO_Operation_Table_Factory::~TAO_Operation_Table_Factory (void)
 TAO_Operation_Table *
 TAO_Operation_Table_Factory::opname_lookup_strategy (void)
 {
-  TAO_Operation_Table_Parameters *p =
+  TAO_Operation_Table_Parameters * const p =
     TAO_OP_TABLE_PARAMETERS::instance ();
 
   return p->concrete_strategy ();
@@ -526,9 +512,9 @@ TAO_Operation_Table_Factory::opname_lookup_strategy (void)
 
 /**************************************************************/
 TAO::Operation_Skeletons::Operation_Skeletons (void)
-  : skel_ptr_ (0)
-    , thruPOA_skel_ptr_ (0)
-    , direct_skel_ptr_ (0)
+  : skel_ptr (0)
+    , thruPOA_skel_ptr (0)
+    , direct_skel_ptr (0)
 {
 }
 

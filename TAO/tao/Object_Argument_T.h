@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,6 +15,7 @@
 #define TAO_OBJECT_ARGUMENT_T_H
 
 #include /**/ "ace/pre.h"
+
 #include "tao/Argument.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -70,7 +71,7 @@ namespace TAO
     S_ptr & arg (void);
 
   private:
-    mutable S_ptr & x_;
+    S_ptr & x_;
   };
 
   /**
@@ -92,7 +93,7 @@ namespace TAO
     S_out arg (void);
 
   private:
-    mutable S_ptr & x_;
+    S_ptr & x_;
   };
 
   /**
@@ -105,6 +106,7 @@ namespace TAO
   class Ret_Object_Argument_T : public Argument
   {
   public:
+
     Ret_Object_Argument_T (void);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);

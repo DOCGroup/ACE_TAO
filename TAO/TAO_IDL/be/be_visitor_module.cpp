@@ -70,4 +70,3 @@
 ACE_RCSID (be, 
            be_visitor_module, 
            "$Id$")
-

@@ -81,8 +81,8 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
         }
 
       *os << be_nl
-          << "TAO_InputCDR &_tao_in ="
-          << " _tao_server_request.incoming ();" << be_nl << be_nl
+          << "TAO_InputCDR & _tao_in ="
+          << " *_tao_server_request.incoming ();" << be_nl << be_nl
           << "if (!(" << be_idt << be_idt;
 
       // Marshal each in and inout argument.
@@ -233,8 +233,8 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
     }
 
   *os << be_nl
-      << "TAO_InputCDR &_tao_in ="
-      << " _tao_server_request.incoming ();"
+      << "TAO_InputCDR & _tao_in ="
+      << " *_tao_server_request.incoming ();"
       << be_nl << be_nl
       << "if (!(" << be_idt << be_idt;
 
@@ -330,8 +330,8 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
       << skel_prefix
       << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest &_tao_server_request," << be_nl
-      << "void *_tao_object_reference, " << be_nl
+      << "TAO_ServerRequest & _tao_server_request," << be_nl
+      << "void * _tao_servant, " << be_nl
       << "void * /* context */ " << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
@@ -341,10 +341,10 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
   *os << "{" << be_idt_nl;
 
   // Get the right object implementation.
-  *os << amh_skel_name.c_str () << " *_tao_impl =" << be_idt_nl
+  *os << amh_skel_name.c_str () << " * const _tao_impl =" << be_idt_nl
       << "static_cast<" << be_idt << be_idt_nl
       << amh_skel_name.c_str () << " *> (" << be_nl
-      << "_tao_object_reference" << be_uidt_nl
+      << "_tao_servant" << be_uidt_nl
       << ");" << be_uidt << be_uidt;
 
   return 0;

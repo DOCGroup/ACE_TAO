@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:546
+// be/be_codegen.cpp:546
 
 #ifndef _TAO_IDL_ORIG_POLICYS_T_H_
 #define _TAO_IDL_ORIG_POLICYS_T_H_
@@ -40,13 +40,13 @@
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_root/root_sth.cpp:116
+// be/be_visitor_root/root_sth.cpp:116
 
 namespace POA_CORBA
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_interface/tie_sh.cpp:87
+  // be/be_visitor_interface/tie_sh.cpp:87
   
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
@@ -86,7 +86,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/tie_sh.cpp:60
+    // be/be_visitor_operation/tie_sh.cpp:60
     
     CORBA::PolicyType policy_type (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -96,7 +96,7 @@ namespace POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/tie_sh.cpp:60
+    // be/be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::Policy_ptr copy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -106,7 +106,7 @@ namespace POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/tie_sh.cpp:60
+    // be/be_visitor_operation/tie_sh.cpp:60
     
     void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -127,7 +127,7 @@ namespace POA_CORBA
 } // module CORBA
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:1094
+// be/be_codegen.cpp:1094
 
 #if defined (__ACE_INLINE__)
 #include "PolicyS_T.inl"

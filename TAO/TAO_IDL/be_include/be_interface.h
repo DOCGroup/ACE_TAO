@@ -1,4 +1,5 @@
-/* -*- c++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 // ============================================================================
@@ -234,12 +235,6 @@ public:
   // Helper method passed to the template method that generates code for the
   // is_a method.
 
-  static int downcast_helper (be_interface *,
-                              be_interface *,
-                              TAO_OutStream *os);
-  // Helper method passed to the template method that generates code for the
-  // downcast.
-
   static int ami_handler_gen_optable_helper (be_interface *,
                                              be_interface *,
                                              TAO_OutStream *os);
@@ -297,7 +292,7 @@ public:
                            const char *full_skeleton_name,
                            TAO_OutStream *os);
   // generate the operation table entries.
-  
+
   int convert_parent_ops (be_visitor *visitor);
   // If we are local, regenerate non-local base class operations as
   // pure virtual.
@@ -338,7 +333,7 @@ public:
 
   int has_mixed_parentage (void);
   // Do we have both abstract and concrete parents?
-  
+
   int session_component_child (void);
   // Is Components::SessionComponent an immediate parent?
 
@@ -379,7 +374,7 @@ private:
 
   static void gen_throw_spec (UTL_ExceptList *list,
                               TAO_OutStream *os);
-  // Helper for the helpers that generate collocated static 
+  // Helper for the helpers that generate collocated static
   // base class methods.
 
 protected:
@@ -403,7 +398,7 @@ private:
 
   int has_mixed_parentage_;
   // Do we have both abstract and concrete parents?
-  
+
   int session_component_child_;
   // Are we a direct child of Components::SessionComponent?
 };

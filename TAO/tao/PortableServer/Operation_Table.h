@@ -61,18 +61,16 @@ typedef void (*TAO_Collocated_Skeleton)(
  * corresponding skeleton.  A table of such entries is used to
  * initialize the different lookup strategies.
  */
-class TAO_operation_db_entry
+struct TAO_operation_db_entry
 {
-public:
   /// Operation name
-  const char* opname_;
+  char const * const opname;
 
-  /// Remote skeleton pointer
-  TAO_Skeleton skel_ptr_;
+  /// Remote/thru-POA skeleton pointer
+  TAO_Skeleton skel_ptr;
 
   /// Collocated skeleton pointers.
-  TAO_Collocated_Skeleton thruPOA_skel_ptr_;
-  TAO_Collocated_Skeleton direct_skel_ptr_;
+  TAO_Collocated_Skeleton direct_skel_ptr;
 };
 
 
@@ -92,11 +90,11 @@ namespace TAO
     Operation_Skeletons (void);
 
     /// Remote skeleton pointer
-    TAO_Skeleton skel_ptr_;
+    TAO_Skeleton skel_ptr;
 
     /// Collocated skeleton pointers.
-    TAO_Collocated_Skeleton thruPOA_skel_ptr_;
-    TAO_Collocated_Skeleton direct_skel_ptr_;
+    TAO_Skeleton thruPOA_skel_ptr;
+    TAO_Collocated_Skeleton direct_skel_ptr;
   };
 }
 

@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -41,7 +41,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S const & arg (void);
+    S const & arg (void) const;
 
   private:
     S const & x_;
@@ -67,7 +67,7 @@ namespace TAO
     S & arg (void);
 
   private:
-    mutable S & x_;
+    S & x_;
   };
 
   /**

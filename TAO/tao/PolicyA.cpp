@@ -33,7 +33,7 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be/be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_CORBA_PolicyErrorCode[] =
 {
@@ -68,12 +68,12 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_PolicyErrorCode (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_PolicyErrorCode =
+  ::CORBA::TypeCode_ptr const _tc_PolicyErrorCode =
     &_tc_TAO_tc_CORBA_PolicyErrorCode;
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be/be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_CORBA_Policy[] =
 {
@@ -102,12 +102,12 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_Policy (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_Policy =
+  ::CORBA::TypeCode_ptr const _tc_Policy =
     &_tc_TAO_tc_CORBA_Policy;
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be/be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_CORBA_PolicyManager[] =
 {
@@ -139,12 +139,12 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_PolicyManager (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_PolicyManager =
+  ::CORBA::TypeCode_ptr const _tc_PolicyManager =
     &_tc_TAO_tc_CORBA_PolicyManager;
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be/be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_CORBA_PolicyCurrent[] =
 {
@@ -176,12 +176,12 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_PolicyCurrent (
 
 namespace CORBA
 {
-  ::CORBA::TypeCode_ptr _tc_PolicyCurrent =
+  ::CORBA::TypeCode_ptr const _tc_PolicyCurrent =
     &_tc_TAO_tc_CORBA_PolicyCurrent;
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/any_op_cs.cpp:50
+// be/be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -266,7 +266,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/any_op_cs.cpp:50
+// be/be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -351,7 +351,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -406,7 +406,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -475,7 +475,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean

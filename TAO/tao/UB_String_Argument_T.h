@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -14,6 +14,7 @@
 #define TAO_UB_STRING_ARGUMENT_T_H
 
 #include /**/ "ace/pre.h"
+
 #include "tao/Argument.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -38,10 +39,10 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    const S * arg (void) const;
+    S const * arg (void) const;
 
   private:
-    const S * x_;
+    S const * x_;
   };
 
   /**
@@ -132,7 +133,7 @@ namespace TAO
   struct UB_String_Arg_Traits_T
   {
     typedef T *                                         ret_type;
-    typedef const T *                                   in_type;
+    typedef T const *                                   in_type;
     typedef T *&                                        inout_type;
     typedef T_out                                       out_type;
 

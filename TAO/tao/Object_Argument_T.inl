@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 template<typename S_ptr>

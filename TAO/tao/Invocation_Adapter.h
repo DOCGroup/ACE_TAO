@@ -240,40 +240,43 @@ namespace TAO
     void set_response_flags (TAO_Stub *stub,
                              TAO_Operation_Details &details);
 
+  private:
+    /// Dont allow default initializations
+    Invocation_Adapter (void);
+
+    // Prevent copying
+    Invocation_Adapter (Invocation_Adapter const &);
+    Invocation_Adapter & operator= (const Invocation_Adapter &);
+
   protected:
 
     /// The target object on which this invocation is carried out.
     CORBA::Object_ptr target_;
 
     /// Array of arguments for this operation
-    Argument **args_;
+    Argument ** const args_;
 
     /// Number of arguments for this operation.
     /**
      * This includes the return values too
      */
-    const int number_args_;
+    int const number_args_;
 
     /// Name of the operation.
-    const char *operation_;
+    char const * operation_;
 
     /// String length of the operation name.
-    const int op_len_;
-
+    int const op_len_;
+    
     /// Collocation proxy broker for this operation.
-    Collocation_Proxy_Broker *cpb_;
+    Collocation_Proxy_Broker * const cpb_;
 
     /// The invocation type
-    Invocation_Type type_;
+    Invocation_Type const type_;
 
     /// The invocation mode
-    Invocation_Mode mode_;
+    Invocation_Mode const mode_;
 
-  private:
-    /// Dont allow default initializations
-    ACE_UNIMPLEMENTED_FUNC (Invocation_Adapter (void))
-
-    ACE_UNIMPLEMENTED_FUNC (Invocation_Adapter & operator= (const Invocation_Adapter &))
   };
 } // End namespace TAO
 

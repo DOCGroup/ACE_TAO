@@ -322,7 +322,7 @@ TAO_GIOP_Message_Generator_Parser_10::parse_request_header (
   // infrastructure.
 
   // Get the input CDR in the request class
-  TAO_InputCDR& input = request.incoming ();
+  TAO_InputCDR & input = *request.incoming ();
 
   IOP::ServiceContextList &service_info =
     request.request_service_info ();

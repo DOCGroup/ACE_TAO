@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -39,7 +39,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    const S_slice * arg (void) const;
+    S_slice const * arg (void) const;
 
   private:
     S_forany x_;
@@ -84,7 +84,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-   S_slice *& arg (void);
+    S_slice *& arg (void);
 
   private:
     S_forany x_;
@@ -141,7 +141,7 @@ namespace TAO
   struct Fixed_Array_Arg_Traits_T
   {
     typedef T_slice *                                   ret_type;
-    typedef const T                                     in_type;
+    typedef T const                                     in_type;
     typedef T                                           inout_type;
     typedef T                                           out_type;
 
