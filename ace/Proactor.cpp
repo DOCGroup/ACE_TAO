@@ -261,8 +261,13 @@ ACE_Proactor::handle_events (ACE_Time_Value *how_long)
 					    (ACE_OVERLAPPED **) &overlapped,
 					    timeout);
 
-      // Check for a failed dequeue.  Stash the error value.
-      if (result == FALSE && overlapped == 0)
+      // Check for a failed dequeue.  This can happen either because
+      // of problems with the IO completion port (in which case
+      // overlapped == 0) or due to problems with the completion
+      // operation (in which case overlapped != 0).  In either case,
+      // we'll stash the error value so that we can update errno
+      // appropriate later on.
+      if (result == FALSE)
 	error = ::GetLastError ();
     }
 
@@ -276,7 +281,7 @@ ACE_Proactor::handle_events (ACE_Time_Value *how_long)
   // the caller!
 
   // GetQueued returned because of a error or timer.
-  if (error != 0)
+  if (error != 0 && overlapped == 0)
     { 
       // @@  What's the WIN32 constant for 258?!?!?!
       if (error == ACE_TIMEOUT_OCCURRED)
@@ -287,14 +292,14 @@ ACE_Proactor::handle_events (ACE_Time_Value *how_long)
 			 "%p GetQueuedCompletionStatus failed errno = %d.\n",
 			 "ACE_Proactor::handle_events", error), -1);
     }
-
 #endif /* ACE_WIN32 */
 
   // Dequeued a failed or successful operation.  Dispatch the
   // Event_Handler.  Note that GetQueuedCompletionStatus returns false
   // when operations fail, but they still need to be dispatched.
-  // Should we propogate this to the handler somehow?  Maybe an extra
-  // failed/succeeded flag in the dispatch call?
+  // We propagate the error status to the callee by setting errno  =
+  // error (which is the value returned by ::GetLastError().
+  errno = error;
   int dispatch_result = this->dispatch (overlapped, bytes_transferred);
 
   // Return -1 (failure), or return 1.  Remember that 0 is reserved

@@ -174,7 +174,7 @@ protected:
   ACE_Manual_Event shared_event_;
   // Win32 HANDLE associated with every operation that signals when
   // any operation completes (used to transparently integrate the
-  // <ACE_Proactor> with the <ACE_Dispatcher>).
+  // <ACE_Proactor> with the <ACE_ReactorEx>).
 };
 
 class ACE_Export ACE_Overlapped_File
