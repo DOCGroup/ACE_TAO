@@ -45,9 +45,9 @@ ACE_Based_Pointer_Repository::find (void *addr,
                                     void *&base_addr)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->rep_->lock_, -1);
-  MAP_ITERATOR iter = this->rep_->addr_map_;
+  MAP_ENTRY *ce = 0;
 
-  for (MAP_ENTRY *ce = 0;
+  for (MAP_ITERATOR iter = this->rep_->addr_map_;
        iter.next (ce) != 0;
        iter.advance ())
     // Check to see if <addr> is within any of the regions.
@@ -97,11 +97,11 @@ int
 ACE_Based_Pointer_Repository::unbind (void *addr)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->rep_->lock_, -1);
-  MAP_ITERATOR iter = this->rep_->addr_map_;
+  MAP_ENTRY *ce = 0;
 
   // Search for service handlers that requested notification.
 
-  for (MAP_ENTRY *ce = 0;
+  for (MAP_ITERATOR iter = this->rep_->addr_map_;
        iter.next (ce) != 0;
        iter.advance ())
     {
