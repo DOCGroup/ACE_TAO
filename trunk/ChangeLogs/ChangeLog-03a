@@ -1,9 +1,15 @@
+Fri Feb  9 16:47:44 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* ace/Makefile.am:
+	  Removed references to the AQoSA files.
+
 Fri Feb  9 16:42:10 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* examples/QOS/client.dsp:
 	* examples/QOS/server.dsp:
 	  Updated the corrected project files. 
-
+	  Thanks to Darrell for pointing this out.
+	
 Thu Feb  8 19:25:03 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* performance-tests/RPC/run_test.pl:
