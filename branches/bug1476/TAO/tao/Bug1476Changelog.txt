@@ -1,3 +1,12 @@
+Mon Aug  2 09:16:36 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport_Connectoror.cpp (connect):
+          Refactored this method so that checking for errors is easier, seems
+          to me that part of this method can be factored out again and can
+          then also be called from IIOP_Connector::make_connection(). Added
+          some remarks for Bala, in case we do a wait of zero on a non
+          blocking connection, how to handle any return value?
+
 Mon Aug  2 07:54:36 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.{h,cpp}:

@@ -243,10 +243,6 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                                     timeout);
     }
 
-  // If connected return..
-  if (base_transport->is_connected())
-    return base_transport;
-
   if (TAO_debug_level > 4)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - Transport_Connector::connect, "
@@ -254,33 +250,63 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                 base_transport->is_connected() ? "connected" : "unconnected",
                 base_transport->id ()));
 
-  // Now if we are not completely connected...
-  if (r->blocked ())
+  // If connected return..
+  if (base_transport->is_connected())
+    return base_transport;
+
+// @bala, Makes it sense to move the code below to a separate method called
+// for example wait_for_connect(r, bese_transport, timeout), this looks
+// very much similar to a part of TAO_IIOP_Connector::make_connection
+
+  // If we don't need to block for a transport just set the timeout to
+  // be zero.
+  ACE_Time_Value tmp_zero (ACE_Time_Value::zero);
+  if (!r->blocked ())
     {
-      // Wait until the connection is ready
-      int result =
-        this->active_connect_strategy_->wait (
-          base_transport, 
-          timeout);
+      timeout = &tmp_zero;
+    }
 
-      if (TAO_debug_level > 2)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - Transport_Connector::connect, "
-                    "wait done result = %d\n",
-                    result));
+  // Wait until the connection is ready, when non-blocking we just do a wait
+  // with zero time
+  int result =
+    this->active_connect_strategy_->wait (
+      base_transport,
+      timeout);
 
-      // There are three possibilities when wait() returns: (a)
-      // connection succeeded; (b) connection failed; (c) wait()
-      // failed because of some other error.  It is easy to deal with
-      // (a) and (b).  (c) is tricky since the connection is still
-      // pending and may get completed by some other thread.  The
-      // following method deals with (c).
-      // @@ Johnny why don't you consider using the call
-      // transport->event_handler_i () instead. All you need is a
-      // ACE_Svc_Handler and that would prevent a bunch of canypptions
-      // in the code. BTW, I would also recommend changing the method
-      // name event_handler_i () to event_handler ().
-      if (result == -1)
+  if (TAO_debug_level > 2)
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) - Transport_Connector::connect, "
+                "wait done result = %d\n",
+                result));
+
+  // There are three possibilities when wait() returns: (a)
+  // connection succeeded; (b) connection failed; (c) wait()
+  // failed because of some other error.  It is easy to deal with
+  // (a) and (b).  (c) is tricky since the connection is still
+  // pending and may get completed by some other thread.  The
+  // following method deals with (c).
+
+  // @@ Johnny why don't you consider using the call
+  // transport->event_handler_i () instead. All you need is a
+  // ACE_Svc_Handler and that would prevent a bunch of canypptions
+  // in the code. BTW, I would also recommend changing the method
+  // name event_handler_i () to event_handler ().
+  if (result == -1)
+    {
+
+// @bala, what is the best way to check this, we did a wait of zero time
+// on a non blocking connection, -1 doesn't then indicate a connection
+// failure
+
+      // When we need to get a connected transport
+      if (!r->blocked () && errno == ETIME)
+        {
+// @bala, this part I really am in doubt
+          // If we did a non blocking connect, just ignore
+          // any timeout errors
+          result = 0;
+        }
+      else
         {
           result =
             this->check_connection_closure (
@@ -298,20 +324,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                         "connection failed.\n"));
           return 0;
         }
-
-      return base_transport;
     }
-
-  // Now, if we are supossed to be non-blocking, drive the reactor
-  // event loop for a 0 timeout
-  ACE_Time_Value zero (ACE_Time_Value::zero);
-  int result =
-    this->active_connect_strategy_->wait (base_transport,
-                                          &zero);
-
-  // @@ Johnny, yes you need to check error. More importantly the last
-  // if () and the present status can be combined and a single error
-  // handling can be called.
 
   // Connection not ready yet, just use this base_transport, if
   // we need a connected one we will block later to make sure
