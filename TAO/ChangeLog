@@ -1,3 +1,11 @@
+Wed May 12 09:24:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Muxed_TMS.cpp:
+          Improved formatting of some debug lines, in the dispatch_reply()
+          in case of an unbind error it is not needed to check the result
+          again because this is already done by an if, also we logged the
+          request id twice, removed one logging.
+
 Wed May 12 09:09:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Codeset_Manager.cpp:
