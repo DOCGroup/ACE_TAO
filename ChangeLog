@@ -1,3 +1,21 @@
+Wed May 12 11:34:22 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-freebsd.h: Reverted this change:
+	  Tue May 11 12:33:49 2004  Steve Huston  <shuston@riverace.com>
+	  because I mistakenly wiped out AIOCB_Proactor support, not
+	  CB_Proactor support. Thanks to Matthew Corey for correcting
+	  me on this.
+
+	* ace/POSIX_CB_Proactor.{h cpp}: Also related to:
+	  Tue May 11 12:33:49 2004  Steve Huston  <shuston@riverace.com>
+	  Removed the __FreeBSD_version_ check and all FreeBSD-specific
+	  code from ACE_POSIX_CB_Proactor. This class is no longer compiled
+	  on FreeBSD per Matthew Corey's advice.
+
+	* ace/Proactor.cpp (ctor): Added __FreeBSD__ to the condition under
+	  which ACE_POSIX_CB_Proactor is not used as the default
+	  implementation. Thanks to Bill Cassanova for reporting this.
+
 Wed May 12 13:29:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_socket.inl(sendv):
@@ -31,7 +49,8 @@ Wed May 12 07:03:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
           none of the config files set this define at this moment.
 
         * ace/Thread_Manager.h:
-          Removed usage of ACE_INLINE_FOR_GNUC and improved doxygen documentation
+          Removed usage of ACE_INLINE_FOR_GNUC and improved doxygen
+	  documentation
 
         * ace/Memory_Pool.h:
           Improved doxygen documentation
