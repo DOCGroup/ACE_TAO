@@ -1,4 +1,10 @@
-Mon Jan  5 21:38:53 2004    <boris@kolpackov.net>
+Tue Jan  6 10:16:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tools/Assembly_Deployer/Assembly_Manager.cpp:
+
+	  Fixed a warning using _var.
+
+Mon Jan  5 21:38:53 2004  Boris Kolpackov  <boris@kolpackov.net>
 
 	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
 	* CIDLC/ExecutorMappingGenerator.cpp:
