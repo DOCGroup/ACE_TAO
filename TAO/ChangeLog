@@ -1,3 +1,8 @@
+Fri Jan 17 08:34:57 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h: Removed an extra
+	  ';'. This may nor may not help the Borland builds.
+
 Thu Jan 16 17:24:30 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.cpp:
