@@ -207,7 +207,7 @@ Identity_Client::run (ACE_ENV_SINGLE_ARG_DECL)
   // invocation from our <Object_Group>.
   Identity_var identity_object;
   CORBA::String_var identity;
-  CORBA_String_var objref;
+  CORBA::String_var objref;
 
   for (size_t ind = 0; ind < this->number_of_invocations_; ++ind)
     {

@@ -130,7 +130,7 @@ Test_DynAny::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(Any)/insert/get\n"));
 
-      CORBA_Any in (CORBA::_tc_TypeCode);
+      CORBA::Any in (CORBA::_tc_TypeCode);
       DynamicAny::DynAny_var fa2 =
         dynany_factory->create_dyn_any (in
                                         ACE_ENV_ARG_PARAMETER);

@@ -373,7 +373,7 @@ Object_Group_Factory_i::resolve (const char * id
     ACE_THROW_RETURN (Load_Balancer::no_such_group (),
                       0);
 
-  CORBA_Object_var objref =
+  CORBA::Object_var objref =
     this->orb_->string_to_object (ior
                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());

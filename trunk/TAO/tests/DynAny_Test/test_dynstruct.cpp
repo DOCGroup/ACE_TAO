@@ -179,12 +179,12 @@ Test_DynStruct::run_test (void)
       ts.l = data.m_long1;
       ts.es.f = data.m_float1;
       ts.es.s = data.m_short1;
-      CORBA_Any in_any2;
+      CORBA::Any in_any2;
       in_any2 <<= ts;
       ftc1->from_any (in_any2
                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      CORBA_Any_var out_any1 = ftc1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Any_var out_any1 = ftc1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       DynAnyTests::test_struct* ts_out;
       out_any1.in () >>= ts_out;

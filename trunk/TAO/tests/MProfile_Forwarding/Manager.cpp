@@ -229,7 +229,7 @@ Manager::make_iors_register (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (-1);
 
   // Get an object reference for the ORBs IORManipultion object!
-  CORBA_Object_ptr IORM =
+  CORBA::Object_ptr IORM =
     this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
                                             0
                                             ACE_ENV_ARG_PARAMETER);
@@ -248,7 +248,7 @@ Manager::make_iors_register (ACE_ENV_SINGLE_ARG_DECL)
   iors [2] = CORBA::Object::_duplicate (this->new_manager_ior_.in ());
 
   // Create a merged set 1;
-  CORBA_Object_var merged_set1 =
+  CORBA::Object_var merged_set1 =
     iorm->merge_iors (iors ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
@@ -267,7 +267,7 @@ Manager::make_iors_register (ACE_ENV_SINGLE_ARG_DECL)
   iors_again [2] = CORBA::Object::_duplicate (this->new_manager_ior_.in ());
 
   // Create merged set 2
-  CORBA_Object_var merged_set2 =
+  CORBA::Object_var merged_set2 =
     iorm->merge_iors (iors_again ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 

@@ -85,8 +85,8 @@ DatabaseImpl::Entry::is_a (CORBA::ServerRequest_ptr request
                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA_NamedValue_ptr nv = list->item (0
-                                        ACE_ENV_ARG_PARAMETER);
+  CORBA::NamedValue_ptr nv = list->item (0
+                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Any_ptr ap = nv->value ();

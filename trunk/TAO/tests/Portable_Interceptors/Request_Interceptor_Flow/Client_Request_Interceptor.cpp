@@ -19,7 +19,6 @@ Client_Request_Interceptor::send_request (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-
   CORBA::Boolean client_side =
     this->client_side_test (ri ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

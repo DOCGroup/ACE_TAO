@@ -75,7 +75,7 @@ Test_DynUnion::run_test (void)
 
       tu._d (DynAnyTests::TE_SECOND);
       tu.tc (data.m_typecode2);
-      CORBA_Any in_any1;
+      CORBA::Any in_any1;
       in_any1 <<= tu;
       DynamicAny::DynAny_var dp1 =
         dynany_factory->create_dyn_any (in_any1
@@ -107,7 +107,7 @@ Test_DynUnion::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
 
-      CORBA_Any_var out_any1 = fa1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Any_var out_any1 = fa1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       DynamicAny::DynAny_var ftc1_base =
         dynany_factory->create_dyn_any_from_type_code (DynAnyTests::_tc_test_union
