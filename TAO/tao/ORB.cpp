@@ -938,20 +938,20 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
   TAO_Stub_Auto_Ptr safe_data (data);
 
   // Create the CORBA level proxy
-  CORBA_Object *new_obj =
+  CORBA::Object_var new_obj =
     this->orb_core_->optimize_collocation_objects () ?
-    new CORBA_Object (data, servant, collocated) :
-    new CORBA_Object (data, 0, 0);
+    new CORBA::Object (safe_data.get (), servant, collocated) :
+    new CORBA::Object (safe_data.get (), 0, 0);
 
   // Clean up in case of errors.
-  if (CORBA::is_nil (new_obj))
-      ACE_THROW_RETURN (CORBA::INTERNAL (), CORBA::Object::_nil ());
+  if (CORBA::is_nil (new_obj.in ()))
+    ACE_THROW_RETURN (CORBA::INTERNAL (), CORBA::Object::_nil ());
 
   safe_data.get ()->servant_orb (CORBA::ORB::_duplicate (this));
 
   data = safe_data.release ();
 
-  return new_obj;
+  return new_obj._retn ();
 }
 
 void
