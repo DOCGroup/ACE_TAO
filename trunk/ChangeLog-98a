@@ -8,7 +8,7 @@ Mon Feb 02 21:26:30 1998  David L. Levine  <levine@cs.wustl.edu>
           warning 610, nonoverriding_function_decl.
 
         * ace/config-chorus.h,config-freebsd*.h,,config-hpux-10.x-g++.h,
-          config-irix{5.3,6.x}-g++.h:
+          config-irix{5.3,6.x}-g++.h,config-osf1-4.0.h:
           migrated to config-g++-common.h.
 
         * examples/Reactor/Misc/test_event_handler_t.cpp: renamed
