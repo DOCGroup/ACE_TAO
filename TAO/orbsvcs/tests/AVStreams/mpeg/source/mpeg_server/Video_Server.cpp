@@ -247,6 +247,7 @@ Video_Server::initialize_orb (int argc,
                               char **argv,
                               CORBA::Environment &env)
 {
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
   int result;
 
   // Initialize the orb_manager

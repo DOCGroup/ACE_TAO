@@ -34,6 +34,7 @@
 #include "tao/TAO.h"
 #include "mpeg_shared/Video_ControlC.h"
 #include "orbsvcs/CosNamingC.h"
+#include "ace/SOCK_CODgram.h"
 
 class Command_Handler 
   : public virtual ACE_Event_Handler
@@ -98,7 +99,14 @@ public:
 
   int stop_playing (void);
 
+  int connect_to_server (char *address,
+                         int *ctr_fd,
+                         int *data_fd,
+                         int *max_pkt_size);
+
 private:
+  ACE_SOCK_CODgram dgram_;
+  // UDP datagram on which to send/recv data
 
   ACE_HANDLE command_handle_;
   // The fd for the UNIX command socket

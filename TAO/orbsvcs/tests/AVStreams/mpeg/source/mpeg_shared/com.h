@@ -83,6 +83,7 @@ void ComCloseClient(void);
 	  than it is safer to indicate it as discard.
    */
 int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size);
+int VideoComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size);
 
 
 /* returns: -1 -- failed,  >=0 -- fd */
