@@ -11,6 +11,7 @@
 #include "tao/debug.h"
 
 #include "tao/target_specification.h"
+#include "tao/Base_Connection_Property.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Pluggable.i"
@@ -252,7 +253,9 @@ TAO_Transport::start_locate (TAO_ORB_Core *,
 
 // Connector
 TAO_Connector::TAO_Connector (CORBA::ULong tag)
-  : tag_(tag)
+  : tag_(tag),
+    orb_core_ (0)
+
 {
 }
 
@@ -428,6 +431,9 @@ TAO_Connector::make_mprofile (const char *string,
 
   return 0;  // Success
 }
+
+
+
 
 // ****************************************************************
 

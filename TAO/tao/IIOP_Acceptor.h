@@ -130,7 +130,7 @@ protected:
   TAO_ORB_Core *orb_core_;
   // ORB Core.
 
-  TAO_IIOP_Handler_Base::TCP_Properties tcp_properties_;
+  TAO_IIOP_Properties tcp_properties_;
   // TCP configuration properties to be used for all
   // connections opened by this acceptor.
 

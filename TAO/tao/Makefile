@@ -90,6 +90,7 @@ PLUGGABLE_PROTOCOLS_FILES = \
   Profile \
   Endpoint \
   Connector_Registry \
+  Connection_Handler \
   Acceptor_Registry \
   Protocol_Factory \
   Acceptor_Filter \
@@ -110,14 +111,14 @@ PLUGGABLE_PROTOCOLS_FILES = \
   UIOP_Connector \
   UIOP_Acceptor \
   UIOP_Connect \
-  UIOP_Endpoint \
-  SHMIOP_Factory \
-  SHMIOP_Profile \
-  SHMIOP_Transport \
-  SHMIOP_Connector \
-  SHMIOP_Acceptor \
-  SHMIOP_Connect \
-  SHMIOP_Endpoint
+  UIOP_Endpoint
+#  SHMIOP_Factory \
+#  SHMIOP_Profile \
+#  SHMIOP_Transport \
+#  SHMIOP_Connector \
+#  SHMIOP_Acceptor \
+#  SHMIOP_Connect \
+#  SHMIOP_Endpoint
 
 PLUGGABLE_MESSAGING_FILES = \
   Pluggable_Messaging \
@@ -246,6 +247,9 @@ ORB_CORE_FILES = \
   ORBInitInfo \
   ORBInitializer_Registry \
   PolicyFactory_Registry
+  Cache_Entries \
+  Base_Connection_Property \
+  Connection_Cache_Manager
 
 DYNAMIC_ANY_FILES =
 
@@ -308,7 +312,7 @@ ORB_CORE_FILES += \
   RTCORBAS \
   RT_PolicyFactory \
   RT_ORBInitializer
-  
+
 #rtcorbafwd
 
 endif # rt_corba
@@ -467,4 +471,5 @@ realclean:
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

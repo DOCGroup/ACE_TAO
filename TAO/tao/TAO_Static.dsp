@@ -41,7 +41,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "LIB\Release"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /I "../" /D "_WINDOWS" /D "_CONSOLE" /D "TAO_AS_STATIC_LIBS" /D "NDEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /I "../" /D ACE_OS_HAS_DLL=0 /D "TAO_AS_STATIC_LIB" /D "_WINDOWS" /D "_CONSOLE" /D "_DEBUG" /D "TAO_AS_STATIC_LIBS" /D "NDEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
@@ -123,6 +123,10 @@ SOURCE=.\Asynch_Reply_Dispatcher.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Base_Connection_Property.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Bind_Dispatcher_Guard.h
 # End Source File
 # Begin Source File
@@ -132,6 +136,10 @@ SOURCE=.\BoundsC.h
 # Begin Source File
 
 SOURCE=.\Buffering_Constraint_Policy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cache_Entries.h
 # End Source File
 # Begin Source File
 
@@ -148,6 +156,14 @@ SOURCE=.\Client_Strategy_Factory.h
 # Begin Source File
 
 SOURCE=.\ClientRequestInfo.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Cache_Manager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Handler.h
 # End Source File
 # Begin Source File
 
@@ -611,6 +627,10 @@ SOURCE=.\servant_base.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Server_Request.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Server_Strategy_Factory.h
 # End Source File
 # Begin Source File
@@ -804,15 +824,7 @@ SOURCE=.\WrongTransactionC.h
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter "i,inl"
-# Begin Group "Template Files"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\TAO_Singleton.cpp
-# End Source File
-# End Group
+# PROP Default_Filter "i"
 # Begin Source File
 
 SOURCE=.\Acceptor_Filter.i
@@ -839,6 +851,10 @@ SOURCE=.\Asynch_Invocation.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Base_Connection_Property.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Bind_Dispatcher_Guard.i
 # End Source File
 # Begin Source File
@@ -851,11 +867,27 @@ SOURCE=.\Buffering_Constraint_Policy.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cache_Entries.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\cdr.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\Client_Priority_Policy.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Cache_Manager.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Handler.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Context.i
 # End Source File
 # Begin Source File
 
@@ -1167,6 +1199,10 @@ SOURCE=.\Sequence_T.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Server_Request.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Service_Callbacks.i
 # End Source File
 # Begin Source File
@@ -1196,10 +1232,6 @@ SOURCE=.\Single_Reactor.i
 # Begin Source File
 
 SOURCE=.\Smart_Proxies.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\StringSeq.inl
 # End Source File
 # Begin Source File
 
@@ -1290,6 +1322,14 @@ SOURCE=.\ValueFactory_Map.i
 SOURCE=.\tao.rc
 # End Source File
 # End Group
+# Begin Group "Template Files"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\TAO_Singleton.cpp
+# End Source File
+# End Group
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp"
@@ -1327,6 +1367,10 @@ SOURCE=.\Asynch_Reply_Dispatcher.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Base_Connection_Property.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Bind_Dispatcher_Guard.cpp
 # End Source File
 # Begin Source File
@@ -1336,6 +1380,10 @@ SOURCE=.\BoundsC.cpp
 # Begin Source File
 
 SOURCE=.\Buffering_Constraint_Policy.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cache_Entries.cpp
 # End Source File
 # Begin Source File
 
@@ -1352,6 +1400,14 @@ SOURCE=.\Client_Strategy_Factory.cpp
 # Begin Source File
 
 SOURCE=.\ClientRequestInfo.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Cache_Manager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Handler.cpp
 # End Source File
 # Begin Source File
 
