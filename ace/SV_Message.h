@@ -33,8 +33,10 @@ public:
   ACE_SV_Message (long type = 0);
   ~ACE_SV_Message (void);
 
-  // = Get/set the message type.
+  /// Get the message type.
   long type (void) const;
+
+  /// Set the message type.
   void type (long);
 
   /// Dump the state of an object.
