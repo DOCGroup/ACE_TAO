@@ -150,7 +150,7 @@ public:
         CORBA::SystemException
         , PortableGroup::ObjectGroupNotFound
       ));
-      
+
   //@}
 
   /// TAO-specific member addition method.

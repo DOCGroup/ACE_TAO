@@ -67,7 +67,7 @@ add_ft_prop (CORBA::ORB_ptr o,
 
   // Domain id
   const char *id = "version_testing";
-  ft_tag_component.ft_domain_id = id;
+  ft_tag_component.group_domain_id = id;
 
   // Object group id
   ft_tag_component.object_group_id =
