@@ -1,3 +1,17 @@
+Mon Nov 24 11:31:55 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/orbsvcs/Makefile:
+          Reorganized in order to support parallel builds by removing
+          .NOTPARALLEL target and code that called this Makefile
+          recursively.  Instead, I've added a pattern target that invokes
+          the submakefiles in parallel, and a set of targets to handle the
+          inter-library dependencies.
+
+        * orbsvcs/orbsvcs/Makefile.IFRService:
+        * orbsvcs/orbsvcs/Makefile.RTKokyuEvent:
+        * orbsvcs/orbsvcs/Makefile.RT_Notification:
+          Reordered library lists.
+
 Sun Nov 23 23:22:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
