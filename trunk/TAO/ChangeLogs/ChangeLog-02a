@@ -1,63 +1,70 @@
+Tue Nov 20 11:44:50 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/CosNotification.dsp:
+          Add missing dependency (TAO_CosEventd.lib), it was working only
+          because each workspace listed the dependency explicitly, but
+          doing so is error prone and hard to maintain.
+
 Tue Nov 20 11:36:29 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Xt_Stopwatch/Control.cpp: Fixed some warnings with Sun CC
-	  5.2.  
+        * tests/Xt_Stopwatch/Control.cpp: Fixed some warnings with Sun CC
+          5.2.
 
 Mon Nov 19 21:16:35 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/orbsvcs/RTEvent.dsp:
-	* orbsvcs/orbsvcs/RTEvent_Static.dsp:
-	  Just helping Jaiganesh add the new files to the MSVC project
-	  files.
+        * orbsvcs/orbsvcs/RTEvent.dsp:
+        * orbsvcs/orbsvcs/RTEvent_Static.dsp:
+          Just helping Jaiganesh add the new files to the MSVC project
+          files.
 
-	* orbsvcs/orbsvcs/Event/README:
-	  Removed obsolete file.
+        * orbsvcs/orbsvcs/Event/README:
+          Removed obsolete file.
 
 Mon Nov 19 20:19:48 2001  Jaiganesh Balasubramanian  <jai@balar.ece.uci.edu>
 
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.h:
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.i:
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
-	  Modified the TAO_ECG_Mcast_EH class to handle large numbers of
-	  multicast subscriptions.  Because most OSes impose a limit on
-	  the number of subscription that a single socket supports, we
-	  needed to keep a collection of sockets.
-	  Furthermore, we need to track on what socket each multicast
-	  group is subscribed, so a map from multicast groups to sockets
-	  is also maintained.
-	  Using this new map we can optimize the algorithm used to remove
-	  multicast group subscriptions, previous versions of this class
-	  simply closed the socket, but that has been reported as too
-	  expensive by Mark Hyett <mhyett@std.saic.com>.  With this new
-	  change the class only unsubscribes from the multicast groups no
-	  longer needed, without closing the socket.
-	  The changes revealed some bugs in ACE_SOCK_Dgram_Mcast, the bug
-	  was fixed and the changes are documented in the ACE ChangeLog
-	  file.
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.i:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+          Modified the TAO_ECG_Mcast_EH class to handle large numbers of
+          multicast subscriptions.  Because most OSes impose a limit on
+          the number of subscription that a single socket supports, we
+          needed to keep a collection of sockets.
+          Furthermore, we need to track on what socket each multicast
+          group is subscribed, so a map from multicast groups to sockets
+          is also maintained.
+          Using this new map we can optimize the algorithm used to remove
+          multicast group subscriptions, previous versions of this class
+          simply closed the socket, but that has been reported as too
+          expensive by Mark Hyett <mhyett@std.saic.com>.  With this new
+          change the class only unsubscribes from the multicast groups no
+          longer needed, without closing the socket.
+          The changes revealed some bugs in ACE_SOCK_Dgram_Mcast, the bug
+          was fixed and the changes are documented in the ACE ChangeLog
+          file.
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i:
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
-	  Moved the class TAO_ECG_Mcast_EH to its own file. 
-	  (See ECG_Mcast_EH.h)
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+          Moved the class TAO_ECG_Mcast_EH to its own file.
+          (See ECG_Mcast_EH.h)
 
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.h:
-	* orbsvcs/examples/RtEC/MCast/MCast.cpp:
-	  Add new header file for TAO_ECG_Mcast_EH
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.h:
+        * orbsvcs/examples/RtEC/MCast/MCast.cpp:
+          Add new header file for TAO_ECG_Mcast_EH
 
-	* orbsvcs/tests/EC_Mcast/Makefile:
-	* orbsvcs/examples/RtEC/MCast/Makefile:
-	  Updated dependencies
+        * orbsvcs/tests/EC_Mcast/Makefile:
+        * orbsvcs/examples/RtEC/MCast/Makefile:
+          Updated dependencies
 
-	* orbsvcs/tests/EC_Mcast/sample.cfg:
-	  Changed this file so users can test the support for large
-	  numbers of multicast groups.
+        * orbsvcs/tests/EC_Mcast/sample.cfg:
+          Changed this file so users can test the support for large
+          numbers of multicast groups.
 
-	* orbsvcs/orbsvcs/Makefile.RTEvent:
-	* orbsvcs/orbsvcs/RTEvent.bor:
-	* orbsvcs/orbsvcs/Event/Makefile.am:
-	  Added a new file Event/TAO_ECG_Mcast_EH.cpp.  Update
-	  dependencies for the GNUMake makefile.
+        * orbsvcs/orbsvcs/Makefile.RTEvent:
+        * orbsvcs/orbsvcs/RTEvent.bor:
+        * orbsvcs/orbsvcs/Event/Makefile.am:
+          Added a new file Event/TAO_ECG_Mcast_EH.cpp.  Update
+          dependencies for the GNUMake makefile.
 
 Mon Nov 19 02:06:53 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -82,97 +89,97 @@ Mon Nov 19 02:06:53 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Sun Nov 18 17:33:41 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORB_Core.cpp (init):
+        * tao/ORB_Core.cpp (init):
 
-	  Fixed incorrect use of a CORBA::String_var in some
-	  -ORBDefaultInitRef related code.  It was being used as if it was
-	  a pointer to char, resulting in a subtle memory corruption
-	  problem due to consecutive assignments to the CORBA::String_var.
+          Fixed incorrect use of a CORBA::String_var in some
+          -ORBDefaultInitRef related code.  It was being used as if it was
+          a pointer to char, resulting in a subtle memory corruption
+          problem due to consecutive assignments to the CORBA::String_var.
 
 Sun Nov 18 13:32:10 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* orbsvcs/orbsvcs/AV/md5c.c (MD5Init): Converted to ISO/ANSI C
-	  prototype to remove KAI C++ warning.
+        * orbsvcs/orbsvcs/AV/md5c.c (MD5Init): Converted to ISO/ANSI C
+          prototype to remove KAI C++ warning.
 
 Sat Nov 17 13:22:21 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* tao/Invocation_Endpoint_Selectors.cpp:
-	* tao/Invocation_Endpoint_Selectors.i:  Moved constructors
-	  from .i to .cpp file to remove VC++ warning.
+        * tao/Invocation_Endpoint_Selectors.cpp:
+        * tao/Invocation_Endpoint_Selectors.i:  Moved constructors
+          from .i to .cpp file to remove VC++ warning.
 
 Sat Nov 17 10:09:33 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* orbsvcs/orbsvcs/AV/RTCP.cpp (send_report): Changed sdes_type from
-	ACE_UINT16 to unsigned char to remove VC++ warning.
+        * orbsvcs/orbsvcs/AV/RTCP.cpp (send_report): Changed sdes_type from
+        ACE_UINT16 to unsigned char to remove VC++ warning.
 
 Fri Nov 16 23:11:33 2001  Ossama Othman  <ossama@uci.edu>
 
- 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h (ssl_component):
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.i (ssl_component):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h (ssl_component):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.i (ssl_component):
 
-	  New accessor method for the SSLIOP::SSL structure associated
-	  with the acceptor.
+          New accessor method for the SSLIOP::SSL structure associated
+          with the acceptor.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (get_listen_point):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (get_listen_point):
 
-	  Place the SSLIOP port into the listen point, not the IIOP port.
-	  Fixes a problem with bidirectional GIOP over SSLIOP.
+          Place the SSLIOP port into the listen point, not the IIOP port.
+          Fixes a problem with bidirectional GIOP over SSLIOP.
 
 Fri Nov 16 16:41:45 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* orbsvcs/orbsvcs/AV/RTCP.cpp (send_report):  Moved code
-	  around to eliminate VC++ warning about casting arguments.
+        * orbsvcs/orbsvcs/AV/RTCP.cpp (send_report):  Moved code
+          around to eliminate VC++ warning about casting arguments.
 
-	* orbsvcs/orbsvcs/AV/RTP.cpp (TAO_AV_RTP_Object): Imported
-	  code from AVStreams_i.cpp for calling alloc_srcid() to eliminate
-	  IA64 warning.
-	  Thanks to Rob Ruff for providing these fixes.
+        * orbsvcs/orbsvcs/AV/RTP.cpp (TAO_AV_RTP_Object): Imported
+          code from AVStreams_i.cpp for calling alloc_srcid() to eliminate
+          IA64 warning.
+          Thanks to Rob Ruff for providing these fixes.
 
 Fri Nov 16 13:36:09 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:  Removed deletes from
-	  destructor.  Was causing Multicast and Pluggable tests to crash.
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:  Removed deletes from
+          destructor.  Was causing Multicast and Pluggable tests to crash.
 
-	* orbsvcs/orbsvcs/AV/UDP.cpp (open_i): Added a check of the
-	  result variable to remove a KAI C++ warning.
+        * orbsvcs/orbsvcs/AV/UDP.cpp (open_i): Added a check of the
+          result variable to remove a KAI C++ warning.
 
-	* orbsvcs/orbsvcs/AV/RTCP.cpp (rtcp_interval): Replaced argument
-	  to ACE_OS::srand() with ACE_OS::time() to eliminate IA64 warning.
+        * orbsvcs/orbsvcs/AV/RTCP.cpp (rtcp_interval): Replaced argument
+          to ACE_OS::srand() with ACE_OS::time() to eliminate IA64 warning.
 
 Thu Nov 15 17:54:41 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* orbsvcs/orbsvcs/AV/RTCP_Channel.h:
-	* orbsvcs/orbsvcs/AV/RTCP_Packet.h:  Added #includes of ace/pre.h,
-	  and ace/post.h.  Thanks to Rob Ruff.
+        * orbsvcs/orbsvcs/AV/RTCP_Channel.h:
+        * orbsvcs/orbsvcs/AV/RTCP_Packet.h:  Added #includes of ace/pre.h,
+          and ace/post.h.  Thanks to Rob Ruff.
 
-	* orbsvcs/orbsvcs/AV/md5.h:  Added names of variables to function
-	  prototypes to appease HPUX compiler.
+        * orbsvcs/orbsvcs/AV/md5.h:  Added names of variables to function
+          prototypes to appease HPUX compiler.
 
-	* orbsvcs/orbsvcs/AV/md5.c:  Changed prototypes from "classic"
-	  to ISO/ANSI style function prototyping to appease KAI C++.
+        * orbsvcs/orbsvcs/AV/md5.c:  Changed prototypes from "classic"
+          to ISO/ANSI style function prototyping to appease KAI C++.
 
 Wed Nov 14 13:42:42 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* orbsvcs/orbsvcs/AV/RTCP.h:
-	* orbsvcs/orbsvcs/AV/RTCP.cpp: Moved typedef of struct md5_string
-	  from .cpp file to header file.  Cast third parameter of
-	  sdes.add_item() to unsigned char.
+        * orbsvcs/orbsvcs/AV/RTCP.h:
+        * orbsvcs/orbsvcs/AV/RTCP.cpp: Moved typedef of struct md5_string
+          from .cpp file to header file.  Cast third parameter of
+          sdes.add_item() to unsigned char.
 
 Tue Nov 13 20:58:02 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* orbsvcs/orbsvcs/AV/md5.h: Changed comments from C++ style
-	  to C style in C file.
+        * orbsvcs/orbsvcs/AV/md5.h: Changed comments from C++ style
+          to C style in C file.
 
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
-	  Default initialized variables.
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+          Default initialized variables.
 
-	* orbsvcs/orbsvcs/AV/RTCP_Packet.cpp:
-	  Default initialized variable.
+        * orbsvcs/orbsvcs/AV/RTCP_Packet.cpp:
+          Default initialized variable.
 
-	* orbsvcs/orbsvcs/AV/Transport.cpp: Hide unused variable
-	  with ACE_UNUSED_ARG.
+        * orbsvcs/orbsvcs/AV/Transport.cpp: Hide unused variable
+          with ACE_UNUSED_ARG.
 
-	* orbsvcs/orbsvcs/AV/UDP.cpp: Removed unused variable.
+        * orbsvcs/orbsvcs/AV/UDP.cpp: Removed unused variable.
 
 Tue Nov 13 19:23:24 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -189,137 +196,137 @@ Tue Nov 13 19:23:24 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 Tue Nov 13 18:01:57 2001  Craig Rodrigues <crodrigu@bbn.com>
 
-	* orbsvcs/orbsvcs/AV.dsp: Added md5c.c
-	* orbsvcs/orbsvcs/AV_Static.dsp: Added md5c.c
-	* orbsvcs/orbsvcs/AV/md5c.c: Add a CVS Id tag.
-	* orbsvcs/orbsvcs/AV/RTCP.cpp:
-	  Fix comments in TAO_AV_RTCP_Flow_Factory::make_protocol_object().
-	  Do not return void in TAO_AV_RTCP_Object::ts_offset().
+        * orbsvcs/orbsvcs/AV.dsp: Added md5c.c
+        * orbsvcs/orbsvcs/AV_Static.dsp: Added md5c.c
+        * orbsvcs/orbsvcs/AV/md5c.c: Add a CVS Id tag.
+        * orbsvcs/orbsvcs/AV/RTCP.cpp:
+          Fix comments in TAO_AV_RTCP_Flow_Factory::make_protocol_object().
+          Do not return void in TAO_AV_RTCP_Object::ts_offset().
 
-	* orbsvcs/orbsvcs/AV/RTCP_Channel.cpp: Fixed comment.
+        * orbsvcs/orbsvcs/AV/RTCP_Channel.cpp: Fixed comment.
 
 Tue Nov 13 14:31:44 2001  Craig Rodrigues <crodrigu@bbn.com>
 
-	* orbsvcs/orbsvcs/AV.dsp: (updated)
-	* orbsvcs/orbsvcs/AV_Static.dsp: (updated)
+        * orbsvcs/orbsvcs/AV.dsp: (updated)
+        * orbsvcs/orbsvcs/AV_Static.dsp: (updated)
 
 Tue Nov 13 14:14:24 2001  Craig Rodrigues <crodrigu@bbn.com>
 
-	Fixes provided by Rob Ruff <rruff@scires.com>:
+        Fixes provided by Rob Ruff <rruff@scires.com>:
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
-	* orbsvcs/orbsvcs/AV/AVStreams_i.i:
-	* orbsvcs/orbsvcs/AV/AV_Core.cpp:
-	* orbsvcs/orbsvcs/AV/AV_Core.h:
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.i:
-	* orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
-	* orbsvcs/orbsvcs/AV/QoS_UDP.h:
-	* orbsvcs/orbsvcs/AV/TCP.cpp:
-	* orbsvcs/orbsvcs/AV/TCP.h:
-	* orbsvcs/orbsvcs/AV/Transport.cpp:
-	* orbsvcs/orbsvcs/AV/Transport.h:
-	* orbsvcs/orbsvcs/AV/UDP.cpp:
-	* orbsvcs/orbsvcs/AV/UDP.h:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.i:
+        * orbsvcs/orbsvcs/AV/AV_Core.cpp:
+        * orbsvcs/orbsvcs/AV/AV_Core.h:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.i:
+        * orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
+        * orbsvcs/orbsvcs/AV/QoS_UDP.h:
+        * orbsvcs/orbsvcs/AV/TCP.cpp:
+        * orbsvcs/orbsvcs/AV/TCP.h:
+        * orbsvcs/orbsvcs/AV/Transport.cpp:
+        * orbsvcs/orbsvcs/AV/Transport.h:
+        * orbsvcs/orbsvcs/AV/UDP.cpp:
+        * orbsvcs/orbsvcs/AV/UDP.h:
 
-	  The previous implementation used separate flow specifications
-	  for the data and control portions of the same stream.  This
-	  meant that RTP could not be used with the light profile of the
-	  AV service (since it only allows one flow between stream
-	  endpoints). The code was modified to allow data and control
-	  information to be passed as part of the same flow.
+          The previous implementation used separate flow specifications
+          for the data and control portions of the same stream.  This
+          meant that RTP could not be used with the light profile of the
+          AV service (since it only allows one flow between stream
+          endpoints). The code was modified to allow data and control
+          information to be passed as part of the same flow.
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
-	  Added/renamed several properties defined in the CORBA AV spec.
-	  Implemented the TAO_StreamCtrl::unbind operation.
-	  Fixed several memory leaks.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+          Added/renamed several properties defined in the CORBA AV spec.
+          Implemented the TAO_StreamCtrl::unbind operation.
+          Fixed several memory leaks.
 
-	* orbsvcs/orbsvcs/AV/AV_Core.cpp:
-	  Added code to clean up transport/flow factories (fix memory leak).
-	  Added get_transport_factory(const char *transport_protocol).
-	  Added get_flow_protocol_factory(const char *flow_protocol).
+        * orbsvcs/orbsvcs/AV/AV_Core.cpp:
+          Added code to clean up transport/flow factories (fix memory leak).
+          Added get_transport_factory(const char *transport_protocol).
+          Added get_flow_protocol_factory(const char *flow_protocol).
 
-	* orbsvcs/orbsvcs/AV/AV_Core.h:
-	  Added get_transport_factory(const char *transport_protocol).
-	  Added get_flow_protocol_factory(const char *flow_protocol).
+        * orbsvcs/orbsvcs/AV/AV_Core.h:
+          Added get_transport_factory(const char *transport_protocol).
+          Added get_flow_protocol_factory(const char *flow_protocol).
 
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
-	  Added a remove_ref call to activate_mediactrl.
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+          Added a remove_ref call to activate_mediactrl.
 
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
-	  Changed the flow specification to better conform to the AV Service
-	  spec.
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+          Changed the flow specification to better conform to the AV Service
+          spec.
 
-	* orbsvcs/orbsvcs/AV/MCast.cpp:
-	  TAO_AV_UDP_MCast_Flow_Handler::handle_input now returns the value
-	  returned by protocol_object->handle_input rather than 0.
+        * orbsvcs/orbsvcs/AV/MCast.cpp:
+          TAO_AV_UDP_MCast_Flow_Handler::handle_input now returns the value
+          returned by protocol_object->handle_input rather than 0.
 
-	* orbsvcs/orbsvcs/AV/MCast.h:
-	  Made the TAO_AV_UDP_MCast_Flow_Handler destructor virtual.
+        * orbsvcs/orbsvcs/AV/MCast.h:
+          Made the TAO_AV_UDP_MCast_Flow_Handler destructor virtual.
 
-	* orbsvcs/orbsvcs/AV/RTCP.cpp:
-	* orbsvcs/orbsvcs/AV/RTCP.h:
-	  Added full RFC compliant RTCP control protocol implementation.
-	  Modified the ssrc allocation operation to use the MD5 algorithm to
-	  more reliably choose a unique id.
+        * orbsvcs/orbsvcs/AV/RTCP.cpp:
+        * orbsvcs/orbsvcs/AV/RTCP.h:
+          Added full RFC compliant RTCP control protocol implementation.
+          Modified the ssrc allocation operation to use the MD5 algorithm to
+          more reliably choose a unique id.
 
-	* orbsvcs/orbsvcs/AV/RTCP_Channel.h: (added)
-	* orbsvcs/orbsvcs/AV/RTCP_Channel.cpp: (added)
-	  These files contain two classes, one used to represent incoming RTP
-	  streams and one to represent outgoing streams.  They keep track of
-	  transmission/reception statistics.
+        * orbsvcs/orbsvcs/AV/RTCP_Channel.h: (added)
+        * orbsvcs/orbsvcs/AV/RTCP_Channel.cpp: (added)
+          These files contain two classes, one used to represent incoming RTP
+          streams and one to represent outgoing streams.  They keep track of
+          transmission/reception statistics.
 
-	* orbsvcs/orbsvcs/AV/RTCP_Packet.h: (added)
-	* orbsvcs/orbsvcs/AV/RTCP_Packet.cpp: (added)
-	  These files contain classes to represent each of the control packet
-	  message types.
+        * orbsvcs/orbsvcs/AV/RTCP_Packet.h: (added)
+        * orbsvcs/orbsvcs/AV/RTCP_Packet.cpp: (added)
+          These files contain classes to represent each of the control packet
+          message types.
 
-	* orbsvcs/orbsvcs/AV/RTP.cpp:
-	* orbsvcs/orbsvcs/AV/RTP.h:
-	  Made several changes to support the RTCP implementation.
-	  Added a class to represent an RTP packet.
+        * orbsvcs/orbsvcs/AV/RTP.cpp:
+        * orbsvcs/orbsvcs/AV/RTP.h:
+          Made several changes to support the RTCP implementation.
+          Added a class to represent an RTP packet.
 
-	* orbsvcs/orbsvcs/AV/Transport.cpp:
-	  Modified code to use the get_xxx_factory routines added to AV_Core
-	  rather than doing the search in this file.
+        * orbsvcs/orbsvcs/AV/Transport.cpp:
+          Modified code to use the get_xxx_factory routines added to AV_Core
+          rather than doing the search in this file.
 
-	* orbsvcs/orbsvcs/AV/UDP.cpp:
-	  When the protocol is RTP/UDP, an even/odd port pair will be reserved
-	  as is called out in the RTP RFC.
-	  The class TAO_AV_UDP_Connection_Setup was added to replace duplicated
-	  code used for both the TAO_AV_UDP_Acceptor and TAO_AV_UDP_Connector.
+        * orbsvcs/orbsvcs/AV/UDP.cpp:
+          When the protocol is RTP/UDP, an even/odd port pair will be reserved
+          as is called out in the RTP RFC.
+          The class TAO_AV_UDP_Connection_Setup was added to replace duplicated
+          code used for both the TAO_AV_UDP_Acceptor and TAO_AV_UDP_Connector.
 
-	* orbsvcs/orbsvcs/AV/global.h: (added)
-	* orbsvcs/orbsvcs/AV/md5.h: (added)
-	* orbsvcs/orbsvcs/AV/md5c.c: (added)
-	  Used by the operation to allocate ssrc's in RTCP.cpp to help guarantee
-	  a unique id.
+        * orbsvcs/orbsvcs/AV/global.h: (added)
+        * orbsvcs/orbsvcs/AV/md5.h: (added)
+        * orbsvcs/orbsvcs/AV/md5c.c: (added)
+          Used by the operation to allocate ssrc's in RTCP.cpp to help guarantee
+          a unique id.
 
-	* orbsvcs/orbsvcs/AV/source.cpp: (removed)
-	* orbsvcs/orbsvcs/AV/source.h: (removed)
-	* orbsvcs/orbsvcs/AV/source.i: (removed)
-	  The functionality contained in these files is now implemented in the
-	  RTCP*.* files.
+        * orbsvcs/orbsvcs/AV/source.cpp: (removed)
+        * orbsvcs/orbsvcs/AV/source.h: (removed)
+        * orbsvcs/orbsvcs/AV/source.i: (removed)
+          The functionality contained in these files is now implemented in the
+          RTCP*.* files.
 
-	* orbsvcs/orbsvcs/Makefile.av: (updated)
-	* orbsvcs/orbsvcs/AV.bor: (updated)
+        * orbsvcs/orbsvcs/Makefile.av: (updated)
+        * orbsvcs/orbsvcs/AV.bor: (updated)
 
 Tue Nov 13 08:58:13 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.cpp
-	  (dispatch_event_i):
-	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.cpp
-	  (dispatch_event_i):
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.cpp
+          (dispatch_event_i):
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.cpp
+          (dispatch_event_i):
 
-	  Silence a fuzz warning.  The code is correct.
+          Silence a fuzz warning.  The code is correct.
 
 Mon Nov 12 21:28:01 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl
-	  (run_test_helper): Disabled running the test with SHMIOP
-	  protocol on Win32 platform as it is carshing the OS on single
-	  CPU machines.
+        * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl
+          (run_test_helper): Disabled running the test with SHMIOP
+          protocol on Win32 platform as it is carshing the OS on single
+          CPU machines.
 
 Mon Nov 12 20:26:35 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -369,220 +376,220 @@ Mon Nov 12 17:37:24 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Nov 12 14:06:40 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp (TAO_IOR_Multicast):
-	  Missed initializing the new private variable in the
-	  contructors. Thanks to Jeff for reporting a problem which arose
-	  because of this.
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp (TAO_IOR_Multicast):
+          Missed initializing the new private variable in the
+          contructors. Thanks to Jeff for reporting a problem which arose
+          because of this.
 
 Mon Nov 12 11:38:03 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/tests/Security/Big_Request/client.cpp (main):
+        * orbsvcs/tests/Security/Big_Request/client.cpp (main):
 
-	  Added a check that verifies both the sent and received octet
-	  sequences actually match.  This is a sanity check.
+          Added a check that verifies both the sent and received octet
+          sequences actually match.  This is a sanity check.
 
 Mon Nov 12 12:15:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
-	* tao/IIOP_Transport.cpp (get_listen_point): Removed some code
-	  that was there, more for historic reasons.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * tao/IIOP_Transport.cpp (get_listen_point): Removed some code
+          that was there, more for historic reasons.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Added a
-	  debug statement.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Added a
+          debug statement.
 
 Mon Nov 12 09:59:50 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.cpp
-	  (dispatch_event_i):
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.cpp
+          (dispatch_event_i):
 
-	  Added missing ACE_TRY_CHECK;
+          Added missing ACE_TRY_CHECK;
 
 Sun Nov 11 23:50:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* tests/Exposed_Policies/Policy_Tester.cpp:
-	  More const char * fixes.
+        * tests/Exposed_Policies/Policy_Tester.cpp:
+          More const char * fixes.
 
 Sun Nov 11 14:15:23 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
-	* docs/configurations.html: Fixed some documentation
-	  inconsistencies.
+        * docs/configurations.html: Fixed some documentation
+          inconsistencies.
 
 Sun Nov 11 11:40:23 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
-	* docs/Options.html: Fixed the documentation to be more helpful.
+        * docs/Options.html: Fixed the documentation to be more helpful.
 
 Sun Nov 11 11:02:23 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
-	* tests/Exposed_Policies/Policy_Verifier.cpp:
-	* orbsvcs/Notify_Service/Notify_Service.cpp:
-	* orbsvcs/ImplRepo_Service/Options.h:
-	* orbsvcs/ImplRepo_Service/Options.cpp:
-	* orbsvcs/tests/Event/lib:
-	* orbsvcs/tests/Event/Basic/Observer.cpp:
-	* orbsvcs/tests/Event/Basic/BCast.cpp:
-	* orbsvcs/tests/Event/Basic/Random.cpp:
-	* orbsvcs/tests/Event/Performance/Connect.cpp:
-	* orbsvcs/tests/Event/Performance/Inversion.cpp:
-	* orbsvcs/tests/CosEvent/Basic/Random.cpp:
-	* orbsvcs/tests/Trading/TT_Info.cpp:
-	* orbsvcs/tests/Notify/Basic/LifeCycleTest.cpp:
-	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
-	* orbsvcs/tests/Notify/Basic/IdAssignment.cpp:
-	* orbsvcs/tests/Notify/Basic/Events_Test.cpp:
-	* orbsvcs/tests/Notify/Basic/AdminProperties_Test.cpp:
-	* orbsvcs/tests/Notify/Basic/Simple.cpp:
-	* orbsvcs/tests/Notify/Basic/Updates.cpp:
-	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
-	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * tests/Exposed_Policies/Policy_Verifier.cpp:
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/ImplRepo_Service/Options.h:
+        * orbsvcs/ImplRepo_Service/Options.cpp:
+        * orbsvcs/tests/Event/lib:
+        * orbsvcs/tests/Event/Basic/Observer.cpp:
+        * orbsvcs/tests/Event/Basic/BCast.cpp:
+        * orbsvcs/tests/Event/Basic/Random.cpp:
+        * orbsvcs/tests/Event/Performance/Connect.cpp:
+        * orbsvcs/tests/Event/Performance/Inversion.cpp:
+        * orbsvcs/tests/CosEvent/Basic/Random.cpp:
+        * orbsvcs/tests/Trading/TT_Info.cpp:
+        * orbsvcs/tests/Notify/Basic/LifeCycleTest.cpp:
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
+        * orbsvcs/tests/Notify/Basic/IdAssignment.cpp:
+        * orbsvcs/tests/Notify/Basic/Events_Test.cpp:
+        * orbsvcs/tests/Notify/Basic/AdminProperties_Test.cpp:
+        * orbsvcs/tests/Notify/Basic/Simple.cpp:
+        * orbsvcs/tests/Notify/Basic/Updates.cpp:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
           More const char * fixes.
 
 Sat Nov 10 23:13:37 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/tests/Security/Secure_Invocation/run_test.pl:
-	* orbsvcs/tests/Security/SecurityLevel1/run_test.pl:
+        * orbsvcs/tests/Security/Secure_Invocation/run_test.pl:
+        * orbsvcs/tests/Security/SecurityLevel1/run_test.pl:
 
-	  Updated/modernized these scripts to conform to our current
-	  regression test script conventions.
+          Updated/modernized these scripts to conform to our current
+          regression test script conventions.
 
 Sat Nov 10 23:06:13 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/tests/Security/Big_Request/Big_Request.dsw:
-	* orbsvcs/tests/Security/Big_Request/README:
-	* orbsvcs/tests/Security/Big_Request/TX_Object.idl:
-	* orbsvcs/tests/Security/Big_Request/TX_Object_i.cpp:
-	* orbsvcs/tests/Security/Big_Request/TX_Object_i.h:
-	* orbsvcs/tests/Security/Big_Request/cacert.pem:
-	* orbsvcs/tests/Security/Big_Request/client.conf:
-	* orbsvcs/tests/Security/Big_Request/client.cpp:
-	* orbsvcs/tests/Security/Big_Request/client.dsp:
-	* orbsvcs/tests/Security/Big_Request/client_cert.pem:
-	* orbsvcs/tests/Security/Big_Request/client_key.pem:
-	* orbsvcs/tests/Security/Big_Request/run_test.pl:
-	* orbsvcs/tests/Security/Big_Request/server.conf:
-	* orbsvcs/tests/Security/Big_Request/server.cpp:
-	* orbsvcs/tests/Security/Big_Request/server.dsp:
-	* orbsvcs/tests/Security/Big_Request/server_cert.pem:
-	* orbsvcs/tests/Security/Big_Request/server_key.pem:
+        * orbsvcs/tests/Security/Big_Request/Big_Request.dsw:
+        * orbsvcs/tests/Security/Big_Request/README:
+        * orbsvcs/tests/Security/Big_Request/TX_Object.idl:
+        * orbsvcs/tests/Security/Big_Request/TX_Object_i.cpp:
+        * orbsvcs/tests/Security/Big_Request/TX_Object_i.h:
+        * orbsvcs/tests/Security/Big_Request/cacert.pem:
+        * orbsvcs/tests/Security/Big_Request/client.conf:
+        * orbsvcs/tests/Security/Big_Request/client.cpp:
+        * orbsvcs/tests/Security/Big_Request/client.dsp:
+        * orbsvcs/tests/Security/Big_Request/client_cert.pem:
+        * orbsvcs/tests/Security/Big_Request/client_key.pem:
+        * orbsvcs/tests/Security/Big_Request/run_test.pl:
+        * orbsvcs/tests/Security/Big_Request/server.conf:
+        * orbsvcs/tests/Security/Big_Request/server.cpp:
+        * orbsvcs/tests/Security/Big_Request/server.dsp:
+        * orbsvcs/tests/Security/Big_Request/server_cert.pem:
+        * orbsvcs/tests/Security/Big_Request/server_key.pem:
 
-	  New test excercises the ability of the SSLIOP pluggable protocol
-	  to send very large requests and replies.  It is intended to make
-	  the ORB send the message and reply in multiple parts
-	  (e.g. chains in a message block that fill several elements of an
-	  "iovec" vector to be sent through a scatter write/send
-	  interface).  In particular, it is difficult to completely
-	  reproduce the semantics of the writev() system call with
-	  SSL_write().  As such, if the semantics are not emulated
-	  properly, large requests and replies will fail.
+          New test excercises the ability of the SSLIOP pluggable protocol
+          to send very large requests and replies.  It is intended to make
+          the ORB send the message and reply in multiple parts
+          (e.g. chains in a message block that fill several elements of an
+          "iovec" vector to be sent through a scatter write/send
+          interface).  In particular, it is difficult to completely
+          reproduce the semantics of the writev() system call with
+          SSL_write().  As such, if the semantics are not emulated
+          properly, large requests and replies will fail.
 
-	  All that is really done is to send a 3MB octet sequence as an
-	  "in" argument, and receive the same 3MB octet sequence from the
-	  server through an "out" argument.
+          All that is really done is to send a 3MB octet sequence as an
+          "in" argument, and receive the same 3MB octet sequence from the
+          server through an "out" argument.
 
-	  The initial version of this test was contributed by Andrew
-	  Finnell.  Additional modifications (simplifications,
-	  improvements, etc) were made by the DOC Group prior to inclusion
-	  in the TAO distribution.
+          The initial version of this test was contributed by Andrew
+          Finnell.  Additional modifications (simplifications,
+          improvements, etc) were made by the DOC Group prior to inclusion
+          in the TAO distribution.
 
 Sat Nov 10 18:50:40 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h (preconnect):
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (preconnect):
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h (preconnect):
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (preconnect):
 
-	  Removed this no-op implementation.  Just use the one in the
-	  IIOP_Connector base class.
+          Removed this no-op implementation.  Just use the one in the
+          IIOP_Connector base class.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp
-	  (create_shared_profile):
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp
+          (create_shared_profile):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
 
-	  Use IOP::TAG_INTERNET_IOP as the profile tag instead of
-	  TAO_TAG_IIOP_PROFILE.  The former is more technically correct.
+          Use IOP::TAG_INTERNET_IOP as the profile tag instead of
+          TAO_TAG_IIOP_PROFILE.  The former is more technically correct.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
 
-	  Correct TAO_SSLIOP_Connector class documentation.
+          Correct TAO_SSLIOP_Connector class documentation.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
-	  (handle_input, handle_output):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
+          (handle_input, handle_output):
 
-	  Force the connection handler to be called before waiting for
-	  additional events if there is still data in OpenSSL's internal
-	  buffers by returning a value greater than one.  That buffer must
-	  be flushed before additional events on the SSLIOP handle can be
-	  polled.
+          Force the connection handler to be called before waiting for
+          additional events if there is still data in OpenSSL's internal
+          buffers by returning a value greater than one.  That buffer must
+          be flushed before additional events on the SSLIOP handle can be
+          polled.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (send_i):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (send_i):
 
-	  Pass the timeout value to the ACE_SSL_SOCK_Stream::sendv()
-	  method in order to support timeouts.
+          Pass the timeout value to the ACE_SSL_SOCK_Stream::sendv()
+          method in order to support timeouts.
 
-	  (register_handler_i):
+          (register_handler_i):
 
-	  Reverted code that registered a reactor and a handler with the
-	  underlying ACE_SSL_SOCK_Stream instance.  It is no longer
-	  needed.
+          Reverted code that registered a reactor and a handler with the
+          underlying ACE_SSL_SOCK_Stream instance.  It is no longer
+          needed.
 
 Sat Nov 10 19:08:06 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tao/Strategies/SHMIOP_Factory.cpp (init):
-	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp (init):
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp (init):
-	  Added some more fixes for the "const" changes to
-	  ACE_Arg_Shifter.  Thanks to Craig Rodrigues for providing these.
+        * tao/Strategies/SHMIOP_Factory.cpp (init):
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp (init):
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp (init):
+          Added some more fixes for the "const" changes to
+          ACE_Arg_Shifter.  Thanks to Craig Rodrigues for providing these.
 
 Sat Nov 10 16:31:10 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/ORB_Core.cpp (init):
-	  Did some checking before actually changing the default value
-	  of the TAO_ORB_Parameters::default_init_ref_. Was doing wrong
-	  things when this checking wasnt done.
+        * tao/ORB_Core.cpp (init):
+          Did some checking before actually changing the default value
+          of the TAO_ORB_Parameters::default_init_ref_. Was doing wrong
+          things when this checking wasnt done.
 
-	* tao/MCAST_Parser.cpp :
-	  Modified to include the default port values for the services
-	  other than Naming Service. Previously, irrespective of the
-	  service, the default port for any multicast service was made the
-	  same as that for Naming Service. But, this is not maintaining
-	  backward compatibility for other services. So, the default
-	  multicast port now is dependent on the service being run.
+        * tao/MCAST_Parser.cpp :
+          Modified to include the default port values for the services
+          other than Naming Service. Previously, irrespective of the
+          service, the default port for any multicast service was made the
+          same as that for Naming Service. But, this is not maintaining
+          backward compatibility for other services. So, the default
+          multicast port now is dependent on the service being run.
 
-	  Thanks to Michael Sawczyn <msawczyn@columbus.rr.com> for
-	  reporting the bug.
+          Thanks to Michael Sawczyn <msawczyn@columbus.rr.com> for
+          reporting the bug.
 
 Sat Nov 10 15:31:15 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* docs/Options.html :
-	  Added documentation about mcast parser and the new format of
-	  ORBMulticastDiscoveryEndpoint.
+        * docs/Options.html :
+          Added documentation about mcast parser and the new format of
+          ORBMulticastDiscoveryEndpoint.
 
-	* tao/ORB_Core.cpp
-	  Modified the format of the value that is passed to the
-	  -ORBMulticastDiscoveryEndpoint ORB option. One can also pass the
-	  the name of the network interface that they want the multicast
-	  service to be running on. The MulticastDiscoveryEndpoint can be
-	  in the format mcast_address:port@nic_name. Backward
-	  compatibility is also preserved. So, in case you dont need to
-	  choose the nic, you could use the previous format of
-	  mcast_address:port also. All this is specified in the comments.
+        * tao/ORB_Core.cpp
+          Modified the format of the value that is passed to the
+          -ORBMulticastDiscoveryEndpoint ORB option. One can also pass the
+          the name of the network interface that they want the multicast
+          service to be running on. The MulticastDiscoveryEndpoint can be
+          in the format mcast_address:port@nic_name. Backward
+          compatibility is also preserved. So, in case you dont need to
+          choose the nic, you could use the previous format of
+          mcast_address:port also. All this is specified in the comments.
 
-	* orbsvcs/orbsvcs/IOR_Multicast.h :
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp :
-	  Added support so that if a nic name has also been in the
-	  mcast_addr that is passed to TAO_IOR_Multicast::init method,
-	  the nic name is also passed to the subscribe call.
+        * orbsvcs/orbsvcs/IOR_Multicast.h :
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp :
+          Added support so that if a nic name has also been in the
+          mcast_addr that is passed to TAO_IOR_Multicast::init method,
+          the nic name is also passed to the subscribe call.
 
 Sat Nov 10 08:58:06 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Sched_Factory.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
-	* tao/TAO_Internal.cpp:
-	* tao/ORB_Core.cpp:
-  	* tao/ORB.cpp: Added "const" to char *variables that are
-	  initialized by ACE_Arg_Shifter methods that now return
-	  const char *.
+        * orbsvcs/orbsvcs/Event/EC_Sched_Factory.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * tao/TAO_Internal.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/ORB.cpp: Added "const" to char *variables that are
+          initialized by ACE_Arg_Shifter methods that now return
+          const char *.
 
 Thu Nov  8 15:48:11 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -596,29 +603,29 @@ Thu Nov  8 15:48:11 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Nov  8 13:57:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Asynch_Reply_Dispatcher.cpp:
-	* tao/Synch_Reply_Dispatcher.cpp:
-	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp (dispatch_reply):
-	  Fixed a leak. The leak was occuring because of a unreleased
-	  datablock.
+        * tao/Asynch_Reply_Dispatcher.cpp:
+        * tao/Synch_Reply_Dispatcher.cpp:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp (dispatch_reply):
+          Fixed a leak. The leak was occuring because of a unreleased
+          datablock.
 
-	  The Reply Dispatchers are created by the invocation object on
-	  the stack for every invocation. Once the invocation is done,
-	  destructor takes care of deleting the datablock into which the
-	  incoming reply was copied, if it was created on the heap. There
-	  was a subtle assumption made. That is, we assumed that the
-	  object is created and destroyed for every invocation. Under
-	  special conditions like the ones in BUGID 1029, the invocation
-	  object reuses the same object across multiple invocations.  This
-	  leads to a memory leak as the old datablocks are not
-	  deleted. This fixes BUGID 1029. Thanks to Benjamin Fry
-	  <ben@thrownet.com> for finding this problem and giving us a
-	  small example to reproduce the problem. Chris Cleeland
-	  <cleeland@ociweb.com> made the task of fixing this quite easier
-	  by running leaky and providing a trace for it and thanks to him
-	  too.
+          The Reply Dispatchers are created by the invocation object on
+          the stack for every invocation. Once the invocation is done,
+          destructor takes care of deleting the datablock into which the
+          incoming reply was copied, if it was created on the heap. There
+          was a subtle assumption made. That is, we assumed that the
+          object is created and destroyed for every invocation. Under
+          special conditions like the ones in BUGID 1029, the invocation
+          object reuses the same object across multiple invocations.  This
+          leads to a memory leak as the old datablocks are not
+          deleted. This fixes BUGID 1029. Thanks to Benjamin Fry
+          <ben@thrownet.com> for finding this problem and giving us a
+          small example to reproduce the problem. Chris Cleeland
+          <cleeland@ociweb.com> made the task of fixing this quite easier
+          by running leaky and providing a trace for it and thanks to him
+          too.
 
-	* orbsvcs/orbsvcs/FaultTolerance.bor: Added the new files.
+        * orbsvcs/orbsvcs/FaultTolerance.bor: Added the new files.
 
 Wed Nov  7 13:20:50 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -638,41 +645,41 @@ Wed Nov  7 13:12:01 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Tue Nov  6 16:51:28 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/ORB_Core.cpp :
-	  Fixed some memory leaks. Thanks to Ossama for finding them out.
+        * tao/ORB_Core.cpp :
+          Fixed some memory leaks. Thanks to Ossama for finding them out.
 
-	* tao/ORB.cpp (resolve_service):
-	  Fixed bug 1057  by rearranging the order in the
+        * tao/ORB.cpp (resolve_service):
+          Fixed bug 1057  by rearranging the order in the
           resolve_initial_references method. The new order is such that
           everything else is checked before the defaultinitref values are
           checked.
 
-	  Thanks to Alex Hornby <alex@anvil.co.uk> for reporting this and
-	  Bruce McIntosh <Bruce.McIntosh@Australia.Boeing.com> for
-	  the bug report.
+          Thanks to Alex Hornby <alex@anvil.co.uk> for reporting this and
+          Bruce McIntosh <Bruce.McIntosh@Australia.Boeing.com> for
+          the bug report.
 
-	* tao/params.cpp (TAO_ORB_Parameters):
-	  Removed an extra colon in the default value for default_init_ref_
-	  variable. The extra colon lead to a position where the ttl value
-	  is set to ':'.
-	  Thanks to Mark Laffoon <mark.laffoon@burning-glass.com> for
-	  reporting this.
+        * tao/params.cpp (TAO_ORB_Parameters):
+          Removed an extra colon in the default value for default_init_ref_
+          variable. The extra colon lead to a position where the ttl value
+          is set to ':'.
+          Thanks to Mark Laffoon <mark.laffoon@burning-glass.com> for
+          reporting this.
 
 Mon Nov  5 06:51:16 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp (copy_in_follow_option):
-	  Added casts to the ternary operators to work around bugs with
- 	  HP/UX 11.  Thanks to Steve Osselton
- 	  <steve@prismtechnologies.com> for reporting this.
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.cpp (copy_in_follow_option):
+          Added casts to the ternary operators to work around bugs with
+          HP/UX 11.  Thanks to Steve Osselton
+          <steve@prismtechnologies.com> for reporting this.
 
-	* utils/IOR-parser/ior-handler.{h,cpp}: Changed struct IOR to
-	  IOR_Manager to avoid clashes with macros named IOR on HP/UX.
-  	  Thanks to Steve Osselton <steve@prismtechnologies.com> for
- 	  reporting this.
+        * utils/IOR-parser/ior-handler.{h,cpp}: Changed struct IOR to
+          IOR_Manager to avoid clashes with macros named IOR on HP/UX.
+          Thanks to Steve Osselton <steve@prismtechnologies.com> for
+          reporting this.
 
-	* orbsvcs/orbsvcs/Concurrency/CC_LockSet.h: #undef the lock_held
-	  macro to work around clashing macros on HP/UX.  Thanks to Steve
- 	  Osselton <steve@prismtechnologies.com> for reporting this.
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSet.h: #undef the lock_held
+          macro to work around clashing macros on HP/UX.  Thanks to Steve
+          Osselton <steve@prismtechnologies.com> for reporting this.
 
 Mon Nov  5 13:53:21 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -743,97 +750,97 @@ Mon Nov  5 12:56:15 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Mon Nov  5 19:23:03 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.cpp:
-	  Corrected formatting in ACE_DEBUG.
-	* orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.cpp:
-	  Corrected to use prefix++ operation in get() method.
-	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.cpp:
-	  Call shutdown to disconnect from unresponsive consumers.
-	  Thanks to Alex Hornby <alex.anvil.co.uk> for providing the fixes.
+        * orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.cpp:
+          Corrected formatting in ACE_DEBUG.
+        * orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.cpp:
+          Corrected to use prefix++ operation in get() method.
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.cpp:
+          Call shutdown to disconnect from unresponsive consumers.
+          Thanks to Alex Hornby <alex.anvil.co.uk> for providing the fixes.
 
 Sun Nov  4 09:43:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile.FaultTolerance: Updated dependencies.
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.h:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.h:
-	  Added TAO_FT_Export to the class declarations. The export
-	  directives were wrong. This should set the build problems on
-	  Win2K right.
+        * orbsvcs/orbsvcs/Makefile.FaultTolerance: Updated dependencies.
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.h:
+          Added TAO_FT_Export to the class declarations. The export
+          directives were wrong. This should set the build problems on
+          Win2K right.
 
 Fri Nov  2 09:07:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Fault_Tolerance.dsp: Added the new files.
+        * orbsvcs/orbsvcs/Fault_Tolerance.dsp: Added the new files.
 
 Fri Nov  2 07:05:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Invocation.h:
-	* tao/Invocation.cpp: Added a new method reset_states () in
-	  TAO_GIOP_Twoway_Invocation class. This method, as the name
-	  indicates, is used to reset the state of the Invocation
-	  object. This is specifically useful for something like the FT
-	  service, which tries connecting to a secondary incase of a
-	  failure using the same invocation object. Using the same object
-	  to make the next invocation could lead to carrying over some of
-	  the states which is not desired.
+        * tao/Invocation.h:
+        * tao/Invocation.cpp: Added a new method reset_states () in
+          TAO_GIOP_Twoway_Invocation class. This method, as the name
+          indicates, is used to reset the state of the Invocation
+          object. This is specifically useful for something like the FT
+          service, which tries connecting to a secondary incase of a
+          failure using the same invocation object. Using the same object
+          to make the next invocation could lead to carrying over some of
+          the states which is not desired.
 
-	* tao/Stub.i: Added comments around code that would no longer be
-	  used. The FT service was using this. Just leaving the code there
-	  for the time being, till 1.2.1 goes out.
+        * tao/Stub.i: Added comments around code that would no longer be
+          used. The FT service was using this. Just leaving the code there
+          for the time being, till 1.2.1 goes out.
 
-	* tao/LF_Event.h:
-	* tao/LF_Event.inl: Added a method reset_state (). This method
-	  just resets the state to the said state without caring about the
-	  history of states. This is needed if the same invocation object
-	  is used to connect to a different transport. The history of the
-	  states in the LF_Event, doesnt help. The way LF_Event remembers
-	  the states is needed for the life time of a single invocation
-	  object (read as one invocation). But that will not help if the
-	  same object reconnects to a different target to which the
-	  invocation is *not* forwarded.
+        * tao/LF_Event.h:
+        * tao/LF_Event.inl: Added a method reset_state (). This method
+          just resets the state to the said state without caring about the
+          history of states. This is needed if the same invocation object
+          is used to connect to a different transport. The history of the
+          states in the LF_Event, doesnt help. The way LF_Event remembers
+          the states is needed for the life time of a single invocation
+          object (read as one invocation). But that will not help if the
+          same object reconnects to a different target to which the
+          invocation is *not* forwarded.
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.h:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.h:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.inl:
-	  Added an endpoint selector factory. The factory creates the
-	  endpoint selectors. The endpoint selectors now detect the right
-	  endpoints to be used with every invocation. The implementation
-	  is in line with RTCORBA and ORB core's way of selecting
-	  endpoints. Added a few optimizations, wherein we dont hold any
-	  lock if the primary is the first profile but holds a lock if the
-	  primary is in the subsequent profiles. The holding of a lock is
-	  done only once in the life time of the endpoint.
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.inl:
+          Added an endpoint selector factory. The factory creates the
+          endpoint selectors. The endpoint selectors now detect the right
+          endpoints to be used with every invocation. The implementation
+          is in line with RTCORBA and ORB core's way of selecting
+          endpoints. Added a few optimizations, wherein we dont hold any
+          lock if the primary is the first profile but holds a lock if the
+          primary is in the subsequent profiles. The holding of a lock is
+          done only once in the life time of the endpoint.
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp: Added
-	  FT_Endpoint_Selector_Factory to the list of services.
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp: Added
+          FT_Endpoint_Selector_Factory to the list of services.
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp: The old
-	  implementations in select_profile () and reselect_profile ()
-	  will be deprecated after 1.2.1. The definition and declaration
-	  just exists for the sake of backward compatibility. Will be gone
-	  anyway.
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp: The old
+          implementations in select_profile () and reselect_profile ()
+          will be deprecated after 1.2.1. The definition and declaration
+          just exists for the sake of backward compatibility. Will be gone
+          anyway.
 
-	* orbsvcs/orbsvcs/Makefile.FaultTolerance: Added the new files.
+        * orbsvcs/orbsvcs/Makefile.FaultTolerance: Added the new files.
 
-	  Thanks to Russ Carter <rcarter@pinyon.org> who by reporting a
-	  bug motivated this whole set of changes.
+          Thanks to Russ Carter <rcarter@pinyon.org> who by reporting a
+          bug motivated this whole set of changes.
 
 
 Thu Nov  1 12:27:28 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp: The parens were
-	  messed up...  Thanks to Mark Laffoon
- 	  <mark.laffoon@burning-glass.com> for reporting this.
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp: The parens were
+          messed up...  Thanks to Mark Laffoon
+          <mark.laffoon@burning-glass.com> for reporting this.
 
 Tue Oct 30 17:40:06 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tao/IOPC.h: #undef the IOR symbol to protect against weird
-	  clashes on HP/UX 11.11.  Thanks to Steve Osselton
- 	  <steve@prismtechnologies.com> for reporting this.
+        * tao/IOPC.h: #undef the IOR symbol to protect against weird
+          clashes on HP/UX 11.11.  Thanks to Steve Osselton
+          <steve@prismtechnologies.com> for reporting this.
 
 Thu Nov  1 14:01:40 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -874,10 +881,10 @@ Wed Oct 31 17:32:38 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed Oct 31 15:41:21 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Portable_Interceptors/PICurrent/test_i.cpp (invoke_me):
+        * tests/Portable_Interceptors/PICurrent/test_i.cpp (invoke_me):
 
-	  Fixed incorrect ACE_TRY_CHECK macro where ACE_TRY_CHECK_EX macro
-	  was expected.
+          Fixed incorrect ACE_TRY_CHECK macro where ACE_TRY_CHECK_EX macro
+          was expected.
 
 Tue Oct 30 15:34:32 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -906,97 +913,97 @@ Tue Oct 30 15:34:32 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Sat Oct 27 13:49:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Invocation_Endpoint_Selectors.h (endpoint_from_profile):
-	* tao/Invocation_Endpoint_Selectors.cpp: Added a new method in
-	  TAO_Default_Endpoint_Selector. This method extracts an endpoint
-	  from a profile and tests its validity. This method is just an
-	  abstraction to reuse code from the inherited classes.
+        * tao/Invocation_Endpoint_Selectors.h (endpoint_from_profile):
+        * tao/Invocation_Endpoint_Selectors.cpp: Added a new method in
+          TAO_Default_Endpoint_Selector. This method extracts an endpoint
+          from a profile and tests its validity. This method is just an
+          abstraction to reuse code from the inherited classes.
 
-	* tao/Stub.h:
-	* tao/Stub.i: Added a method to return the profile_lock_ptr. This
-	  is useful for modules that are outside the ORB and requires
-	  parsing the list of profiles to pick one for invocation, like
-	  the FT service.
+        * tao/Stub.h:
+        * tao/Stub.i: Added a method to return the profile_lock_ptr. This
+          is useful for modules that are outside the ORB and requires
+          parsing the list of profiles to pick one for invocation, like
+          the FT service.
 
 Wed Oct 24 14:51:03 2001  Angelo Corsaro  <corsaro@doc.ece.uci.edu>
 
-	* examples/Quoter/Client.bor:
-	* examples/Quoter/Server.bor:
-	* examples/Quoter/Generic_factory.bor:
-	* examples/Quoter/Factory_finder.bor:
+        * examples/Quoter/Client.bor:
+        * examples/Quoter/Server.bor:
+        * examples/Quoter/Generic_factory.bor:
+        * examples/Quoter/Factory_finder.bor:
 
-	  Updated makefiles to use ACE_ROOT instead of TAO_ROOT
-	  environment variable when referring to the include paths. Thanks
-	  to Christopher Kohlhoff <chris@kohlhoff.com> and Johnny
-	  Willemsen" <johnny_willemsen@planet.nl>, for traking this
-	  problem.
+          Updated makefiles to use ACE_ROOT instead of TAO_ROOT
+          environment variable when referring to the include paths. Thanks
+          to Christopher Kohlhoff <chris@kohlhoff.com> and Johnny
+          Willemsen" <johnny_willemsen@planet.nl>, for traking this
+          problem.
 
-	* orbsvcs/orbsvcs/AV/AV_Pluggable_Framework.html:
+        * orbsvcs/orbsvcs/AV/AV_Pluggable_Framework.html:
 
-	  Fixed Fuzzes.
+          Fixed Fuzzes.
 
 Wed Oct 24 14:12:29 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/PortableInterceptor.cpp:
-	* tao/PortableInterceptor.i:
+        * tao/PortableInterceptor.cpp:
+        * tao/PortableInterceptor.i:
 
-	  Removed these vestigial files.  They were split up into client
-	  and server side files months ago, and are no longer used.
+          Removed these vestigial files.  They were split up into client
+          and server side files months ago, and are no longer used.
 
 Tue Oct 23 18:55:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/examples/Security/Send_File/Makefile: Updated
-	  dependencies.
+        * orbsvcs/examples/Security/Send_File/Makefile: Updated
+          dependencies.
 
 Tue Oct 23 09:49:01 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* examples/Quoter/Client.bor:
-	* examples/Quoter/Server.bor:
-	* examples/Quoter/Generic_factory.bor:
-	* examples/Quoter/Factory_finder.bor:
+        * examples/Quoter/Client.bor:
+        * examples/Quoter/Server.bor:
+        * examples/Quoter/Generic_factory.bor:
+        * examples/Quoter/Factory_finder.bor:
 
-	  Changed CPPDIR from ".;.." to "." this should fix the build
-	  problem. Thanks to Jonny Willemsen for suggesting this fix.
+          Changed CPPDIR from ".;.." to "." this should fix the build
+          problem. Thanks to Jonny Willemsen for suggesting this fix.
 
 Mon Oct 22 23:48:13 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/default_resource.cpp:
+        * orbsvcs/orbsvcs/AV/default_resource.cpp:
 
-	  Fixed compile errors on Win2K.
+          Fixed compile errors on Win2K.
 
 Mon Oct 22 18:54:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV.dsp:
-	* orbsvcs/orbsvcs/AV_Static.dsp: Added missing files. Should fix
-	  build problems in Win2K builds.
+        * orbsvcs/orbsvcs/AV.dsp:
+        * orbsvcs/orbsvcs/AV_Static.dsp: Added missing files. Should fix
+          build problems in Win2K builds.
 
 Mon Oct 22 15:41:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Endpoint.cpp (is_equivalent):
-	* tao/Strategies/DIOP_Endpoint.cpp: Instead of checking the
-	  hostname in the above method, we check the ip addresses. This
-	  solves the following problems
+        * tao/IIOP_Endpoint.cpp (is_equivalent):
+        * tao/Strategies/DIOP_Endpoint.cpp: Instead of checking the
+          hostname in the above method, we check the ip addresses. This
+          solves the following problems
 
-	  (1) If the a connection is created using an IOR to a host A
-	      using a dotted decimal address and at some later point in
-	      time a corbaloc call uses the host name to resolve a service
-	      on the same machine, we happen to create a new connection
+          (1) If the a connection is created using an IOR to a host A
+              using a dotted decimal address and at some later point in
+              time a corbaloc call uses the host name to resolve a service
+              on the same machine, we happen to create a new connection
 
-	  (2) Variation of 1, if the initial connection is established
-	      using a fully qualified name and the corbaloc uses a partial
-	      name.
+          (2) Variation of 1, if the initial connection is established
+              using a fully qualified name and the corbaloc uses a partial
+              name.
 
-	  (3) If an alias'ed name is used.
+          (3) If an alias'ed name is used.
 
-	  Thanks to Jonathan Reis <reis@stentor.com>,  Wayne Erchak
-	  <wayne@stentor.com> and Chris Hughes <chughes@stentor.com> for
-	  finding this one out and providing a patch.
+          Thanks to Jonathan Reis <reis@stentor.com>,  Wayne Erchak
+          <wayne@stentor.com> and Chris Hughes <chughes@stentor.com> for
+          finding this one out and providing a patch.
 
 
 Mon Oct 22 07:54:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/Security/SecurityLevel1/makefile:
-	* orbsvcs/tests//Security/Secure_Invocation/Makefile:
+        * orbsvcs/tests/Security/SecurityLevel1/makefile:
+        * orbsvcs/tests//Security/Secure_Invocation/Makefile:
           Updated dependencies.
 
 Mon Oct 22 14:21:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
@@ -1062,54 +1069,54 @@ Wed Oct 17 18:59:53 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Wed Oct 17 12:22:09 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
-	  (add_transport_to_cache, process_listen_point_list):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
+          (add_transport_to_cache, process_listen_point_list):
 
-	  Set the SSL port in the TAO_SSLIOP_Endpoint.  Previously we were
-	  relying on the port that was set in the underlying
-	  TAO_IIOP_Endpoint, which is not technically correct.  This fix
-	  also addresses a bi-dir GIOP over SSLIOP issue.
+          Set the SSL port in the TAO_SSLIOP_Endpoint.  Previously we were
+          relying on the port that was set in the underlying
+          TAO_IIOP_Endpoint, which is not technically correct.  This fix
+          also addresses a bi-dir GIOP over SSLIOP issue.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (get_listen_point):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (get_listen_point):
 
-	  Synchronized this method implementation with the more up-to-date
-	  IIOP version.
+          Synchronized this method implementation with the more up-to-date
+          IIOP version.
 
 Wed Oct 17 11:01:19 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile.av: Generated dependency. This should
-	  hopefully fix the builds on many platforms.
+        * orbsvcs/orbsvcs/Makefile.av: Generated dependency. This should
+          hopefully fix the builds on many platforms.
 
 Tue Oct 16 11:19:17 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/Resource_Factory.h:
-	* orbsvcs/orbsvcs/AV/default_factory.h:
-	* orbsvcs/orbsvcs/AV/default_factory.cpp:
-	* orbsvcs/orbsvcs/AV/AV_Core.h:
-	* orbsvcs/orbsvcs/AV/AV_Core.cpp:
-	* orbsvcs/orbsvcs/AV/Makefile.av:
+        * orbsvcs/orbsvcs/AV/Resource_Factory.h:
+        * orbsvcs/orbsvcs/AV/default_factory.h:
+        * orbsvcs/orbsvcs/AV/default_factory.cpp:
+        * orbsvcs/orbsvcs/AV/AV_Core.h:
+        * orbsvcs/orbsvcs/AV/AV_Core.cpp:
+        * orbsvcs/orbsvcs/AV/Makefile.av:
 
-	  Initially the AV Streams framework was pluggable for default
-	  transport and flow protocols. Made it truly pluggable for new
-	  transport and flow protocols too. The Resource_Factory abstract
-	  class and the default_resource factory provide the means to load
-	  pluggable transport and flow protocols through the
-	  -AVTransportFactory and -AVFlowProtocolFactory options
-	  respectively.
+          Initially the AV Streams framework was pluggable for default
+          transport and flow protocols. Made it truly pluggable for new
+          transport and flow protocols too. The Resource_Factory abstract
+          class and the default_resource factory provide the means to load
+          pluggable transport and flow protocols through the
+          -AVTransportFactory and -AVFlowProtocolFactory options
+          respectively.
 
-	* orbsvcs/orbsvcs/AV/AV_Pluggable_Framework.html:
+        * orbsvcs/orbsvcs/AV/AV_Pluggable_Framework.html:
 
-	  Added documentation for implementing the AV Streams Pluggable
-	  Protocol.
+          Added documentation for implementing the AV Streams Pluggable
+          Protocol.
 
-	* orbsvcs/orbsvcs/AV/UDP.cpp:
-	* orbsvcs/orbsvcs/AV/TCP.cpp:
-	* orbsvcs/orbsvcs/AV/sfp.cpp:
-	* orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
-	* orbsvcs/orbsvcs/AV/RTP.cpp:
-	* orbsvcs/orbsvcs/AV/RTCP.cpp:
+        * orbsvcs/orbsvcs/AV/UDP.cpp:
+        * orbsvcs/orbsvcs/AV/TCP.cpp:
+        * orbsvcs/orbsvcs/AV/sfp.cpp:
+        * orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
+        * orbsvcs/orbsvcs/AV/RTP.cpp:
+        * orbsvcs/orbsvcs/AV/RTCP.cpp:
 
-	  Changed the lib in ACE_FACTORY_DEFINE to the TAO_AV lib.
+          Changed the lib in ACE_FACTORY_DEFINE to the TAO_AV lib.
 
 Mon Oct 15 22:41:17 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
@@ -1141,26 +1148,26 @@ Fri Oct 12 00:42:42 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 Wed Oct 10 17:12:04 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/ORB_Core.cpp :
-	  Fixed backward compatibility for the multicast services when the
-	  ORBNameServicePort is used.
+        * tao/ORB_Core.cpp :
+          Fixed backward compatibility for the multicast services when the
+          ORBNameServicePort is used.
 
-	  Thanks to Jeffrey Wilder <jwilder@dsrnet.com> for pointing this
-	  out.
+          Thanks to Jeffrey Wilder <jwilder@dsrnet.com> for pointing this
+          out.
 
 Tue Oct  9 17:46:07 2001  Angelo Corsaro  <corsaro@doc.ece.uci.edu>
 
-	* orbsvcs/tests/AVStreams/Modify_QoS/receiver.h:
-	* orbsvcs/tests/AVStreams/Modify_QoS/receiver.cpp:
-	* orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp:
+        * orbsvcs/tests/AVStreams/Modify_QoS/receiver.h:
+        * orbsvcs/tests/AVStreams/Modify_QoS/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp:
 
-	  Added missing $Id$. This will fix the FUZZ build.
+          Added missing $Id$. This will fix the FUZZ build.
 
 Tue Oct 09 14:00:46 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
-	  Changed to wrap the two ACE_Barriers in a struct instead of
-	  using an array as egcs can not properly initialize the array.
+        * performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
+          Changed to wrap the two ACE_Barriers in a struct instead of
+          using an array as egcs can not properly initialize the array.
 
 Tue Oct  9 14:20:51 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -1177,149 +1184,149 @@ Tue Oct  9 14:20:51 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 Mon Oct 08 11:43:05 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
-	  Added another barrier to synchronize shutdown.  Thanks to Frank
-	  Wolf <fwolf@gum.de> for reporting the problem.
+        * performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
+          Added another barrier to synchronize shutdown.  Thanks to Frank
+          Wolf <fwolf@gum.de> for reporting the problem.
 
 Sun Oct 07 18:19:14 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/PortableServer/ServerRequestInfo.cpp
-	  (target_most_derived_interface):
+        * tao/PortableServer/ServerRequestInfo.cpp
+          (target_most_derived_interface):
 
-	  Fixed erroneous minor code.  The minor code is an OMG assigned
-	  one, so it must be logically or'ed with the OMG's vendor minor
-	  code ID.
+          Fixed erroneous minor code.  The minor code is an OMG assigned
+          one, so it must be logically or'ed with the OMG's vendor minor
+          code ID.
 
 Sun Oct  7 04:00:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tao/TypeCodeFactory/Makefile:
+        * tao/TypeCodeFactory/Makefile:
 
-	  Changed a wrong "-I" in the linker flags to "-L".
+          Changed a wrong "-I" in the linker flags to "-L".
 
 Sat Oct 06 23:41:11 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp
-	  (register_handler_i):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp
+          (register_handler_i):
 
-	  Set the reactor and handler in the ACE_SSL_SOCK_Stream so that
-	  the reactor is notified if data is still pending for read or
-	  write.  This is necessary since SSL is record-oriented, and the
-	  underlying SSL implementation may buffer data.  [Bug 943]
+          Set the reactor and handler in the ACE_SSL_SOCK_Stream so that
+          the reactor is notified if data is still pending for read or
+          write.  This is necessary since SSL is record-oriented, and the
+          underlying SSL implementation may buffer data.  [Bug 943]
 
 Sat Oct  6 11:14:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/MessagingC.h: Moved the #if defines before #include
-	  "ace/post.h".  Thanks to Adrian Mercieca <adrian@anvilmalta.com>
-	  for reporting the problem and Chris Kohlhoff for verifying the
-	  fix.
+        * tao/MessagingC.h: Moved the #if defines before #include
+          "ace/post.h".  Thanks to Adrian Mercieca <adrian@anvilmalta.com>
+          for reporting the problem and Chris Kohlhoff for verifying the
+          fix.
 
 Fri Oct  5 18:56:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
-	* TAO_IDL/driver/drv_preproc.cpp:
-	* TAO_IDL/fe/idl.yy:
-	* TAO_IDL/fe/y.tab.cpp: Reverted the changes made in "Fri Oct  5
-	  16:44:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>"
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp: Reverted the changes made in "Fri Oct  5
+          16:44:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>"
 
 Fri Oct  5 17:42:53 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* TAO_IDL/include/utl_identifier.h:
-	* TAO_IDL/include/utl_idlist.h:
-	* TAO_IDL/include/utl_indenter.h:
-	* TAO_IDL/include/utl_scope.h:
-	* TAO_IDL/include/utl_string.h:
-	* TAO_IDL/include/utl_strlist.h:
-	* TAO_IDL/include/utl_tmpl/utl_idlist.h:
-	* TAO_IDL/include/utl_tmpl/utl_strlist.h:
-	* TAO_IDL/util/utl_identifier.cpp:
-	* TAO_IDL/util/utl_idlist.cpp:
-	* TAO_IDL/util/utl_indenter.cpp:
-	* TAO_IDL/util/utl_scope.cpp:
-	* TAO_IDL/util/utl_string.cpp:
-	* TAO_IDL/util/utl_strlist.cpp:
-	* TAO_IDL/util/utl_tmpl/utl_idlist.cpp:
-	* TAO_IDL/util/utl_tmpl/utl_strlist.cpp: Some more changes of
-	  ostream to ACE_OSTREAM_TYPE
+        * TAO_IDL/include/utl_identifier.h:
+        * TAO_IDL/include/utl_idlist.h:
+        * TAO_IDL/include/utl_indenter.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/include/utl_string.h:
+        * TAO_IDL/include/utl_strlist.h:
+        * TAO_IDL/include/utl_tmpl/utl_idlist.h:
+        * TAO_IDL/include/utl_tmpl/utl_strlist.h:
+        * TAO_IDL/util/utl_identifier.cpp:
+        * TAO_IDL/util/utl_idlist.cpp:
+        * TAO_IDL/util/utl_indenter.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+        * TAO_IDL/util/utl_string.cpp:
+        * TAO_IDL/util/utl_strlist.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_idlist.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_strlist.cpp: Some more changes of
+          ostream to ACE_OSTREAM_TYPE
 
 Fri Oct  5 16:44:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
-	* TAO_IDL/driver/drv_preproc.cpp:
-	* TAO_IDL/fe/idl.yy:
-	* TAO_IDL/fe/y.tab.cpp: Patches from Russ Noseworthy that were
-	  needed to compile with GCC  2.95.3 which properly supported
-	  namespace std (Apparently Russ seems to have a modified compiler
-	  that supports this)
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp: Patches from Russ Noseworthy that were
+          needed to compile with GCC  2.95.3 which properly supported
+          namespace std (Apparently Russ seems to have a modified compiler
+          that supports this)
 
 Fri Oct  5 16:03:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* TAO_IDL/include/ast_argument.h:
-	* TAO_IDL/include/ast_array.h:
-	* TAO_IDL/include/ast_attribute.h:
-	* TAO_IDL/include/ast_constant.h:
-	* TAO_IDL/include/ast_decl.h:
-	* TAO_IDL/include/ast_enum.h:
-	* TAO_IDL/include/ast_enum_val.h:
-	* TAO_IDL/include/ast_exception.h:
-	* TAO_IDL/include/ast_expression.h:
-	* TAO_IDL/include/ast_field.h:
-	* TAO_IDL/include/ast_interface.h:
-	* TAO_IDL/include/ast_interface_fwd.h:
-	* TAO_IDL/include/ast_module.h:
-	* TAO_IDL/include/ast_native.h:
-	* TAO_IDL/include/ast_operation.h:
-	* TAO_IDL/include/ast_predefined_type.h:
-	* TAO_IDL/include/ast_root.h:
-	* TAO_IDL/include/ast_sequence.h:
-	* TAO_IDL/include/ast_string.h:
-	* TAO_IDL/include/ast_structure.h:
-	* TAO_IDL/include/ast_typedef.h:
-	* TAO_IDL/include/ast_union.h:
-	* TAO_IDL/include/ast_union_bran.h:
-	* TAO_IDL/include/ast_union_label.h:
+        * TAO_IDL/include/ast_argument.h:
+        * TAO_IDL/include/ast_array.h:
+        * TAO_IDL/include/ast_attribute.h:
+        * TAO_IDL/include/ast_constant.h:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_enum.h:
+        * TAO_IDL/include/ast_enum_val.h:
+        * TAO_IDL/include/ast_exception.h:
+        * TAO_IDL/include/ast_expression.h:
+        * TAO_IDL/include/ast_field.h:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/ast_interface_fwd.h:
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/ast_native.h:
+        * TAO_IDL/include/ast_operation.h:
+        * TAO_IDL/include/ast_predefined_type.h:
+        * TAO_IDL/include/ast_root.h:
+        * TAO_IDL/include/ast_sequence.h:
+        * TAO_IDL/include/ast_string.h:
+        * TAO_IDL/include/ast_structure.h:
+        * TAO_IDL/include/ast_typedef.h:
+        * TAO_IDL/include/ast_union.h:
+        * TAO_IDL/include/ast_union_bran.h:
+        * TAO_IDL/include/ast_union_label.h:
         * TAO_IDL/ast/ast_array.cpp:
-	* TAO_IDL/ast/ast_attribute.cpp:
-	* TAO_IDL/ast/ast_constant.cpp:
-	* TAO_IDL/ast/ast_decl.cpp:
-	* TAO_IDL/ast/ast_enum.cpp:
-	* TAO_IDL/ast/ast_enum_val.cpp:
-	* TAO_IDL/ast/ast_exception.cpp:
-	* TAO_IDL/ast/ast_expression.cpp:
-	* TAO_IDL/ast/ast_field.cpp:
-	* TAO_IDL/ast/ast_interface.cpp:
-	* TAO_IDL/ast/ast_interface_fwd.cpp:
-	* TAO_IDL/ast/ast_module.cpp:
-	* TAO_IDL/ast/ast_native.cpp:
-	* TAO_IDL/ast/ast_operation.cpp:
-	* TAO_IDL/ast/ast_predefined_type.cpp:
-	* TAO_IDL/ast/ast_root.cpp:
-	* TAO_IDL/ast/ast_sequence.cpp:
-	* TAO_IDL/ast/ast_string.cpp:
-	* TAO_IDL/ast/ast_structure.cpp:
-	* TAO_IDL/ast/ast_typedef.cpp:
-	* TAO_IDL/ast/ast_union.cpp:
-	* TAO_IDL/ast/ast_union_branch.cpp:
-	* TAO_IDL/ast/ast_union_label.cpp: Changed instances of ostream to
-	  ACE_OSTREAM_TYPE. Thanks to Russ Noseworthy for suggesting this.
+        * TAO_IDL/ast/ast_attribute.cpp:
+        * TAO_IDL/ast/ast_constant.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_enum.cpp:
+        * TAO_IDL/ast/ast_enum_val.cpp:
+        * TAO_IDL/ast/ast_exception.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_field.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_interface_fwd.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_native.cpp:
+        * TAO_IDL/ast/ast_operation.cpp:
+        * TAO_IDL/ast/ast_predefined_type.cpp:
+        * TAO_IDL/ast/ast_root.cpp:
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/ast/ast_string.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        * TAO_IDL/ast/ast_typedef.cpp:
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/ast/ast_union_branch.cpp:
+        * TAO_IDL/ast/ast_union_label.cpp: Changed instances of ostream to
+          ACE_OSTREAM_TYPE. Thanks to Russ Noseworthy for suggesting this.
 
 Fri Oct  5 14:44:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* be/be_visitor.cpp:
-	* be/be_visitor_sequence/sequence_base.cpp:
-	* be/be_visitor_valuetype/valuetype_obv_ch.cpp:
-	* be_include/be_visitor_sequence/sequence_base.h: Applied patches
-	  provided by Russ Noseworthy to fix problems with generated code
-	  in OBV.
+        * be/be_visitor.cpp:
+        * be/be_visitor_sequence/sequence_base.cpp:
+        * be/be_visitor_valuetype/valuetype_obv_ch.cpp:
+        * be_include/be_visitor_sequence/sequence_base.h: Applied patches
+          provided by Russ Noseworthy to fix problems with generated code
+          in OBV.
 
 Fri Oct  5 14:31:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.h: Added a forward
-	  declaration for  class ACE_Command_Base.
-	* orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.cpp: Included the header
-	  file ace/Functor.h. These were part of the patches that Russ
-	  Noseworthy <j.russell.noseworthy@objectsciences.com>
-	  provided. He had to to use this patch to get it compiling in his
-	  environment.
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.h: Added a forward
+          declaration for  class ACE_Command_Base.
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.cpp: Included the header
+          file ace/Functor.h. These were part of the patches that Russ
+          Noseworthy <j.russell.noseworthy@objectsciences.com>
+          provided. He had to to use this patch to get it compiling in his
+          environment.
 
 Fri Oct 05 05:58:58 2001  Balachandran  <bala@cs.wustl.edu>
 
@@ -1335,136 +1342,136 @@ Thu Oct  4 18:06:59 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Oct  4 10:11:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport_Cache_Manager.cpp (purge_entry_i): Added a check
-	  for a null in the above method. This incidentally close
-	  #1046. Thanks to Donald Acton <acton@opentext.com> for
-	  reporting this.
+        * tao/Transport_Cache_Manager.cpp (purge_entry_i): Added a check
+          for a null in the above method. This incidentally close
+          #1046. Thanks to Donald Acton <acton@opentext.com> for
+          reporting this.
 
 Tue Oct  2 11:26:27 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/examples/Security/Send_File/server_key.pem:
-	* orbsvcs/examples/Security/Send_File/server_cert.pem:
-	* orbsvcs/examples/Security/Send_File/client_key.pem:
-	* orbsvcs/examples/Security/Send_File/client_cert.pem:
-	* orbsvcs/examples/Security/Send_File/cacert.pem:
-	  Regenerated as the previous ones have expired.
+        * orbsvcs/examples/Security/Send_File/server_key.pem:
+        * orbsvcs/examples/Security/Send_File/server_cert.pem:
+        * orbsvcs/examples/Security/Send_File/client_key.pem:
+        * orbsvcs/examples/Security/Send_File/client_cert.pem:
+        * orbsvcs/examples/Security/Send_File/cacert.pem:
+          Regenerated as the previous ones have expired.
 
 Tue Oct  2 12:13:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Base.cpp: If the read message is less than the
-	  size of the GIOP message, then we make the missing_data as -1 so
-	  that the message would be automatically queued. This should fix
-	  the Blocking_Sync_None tests hanging once in a while on
-	  guajira.cs builds.
+        * tao/GIOP_Message_Base.cpp: If the read message is less than the
+          size of the GIOP message, then we make the missing_data as -1 so
+          that the message would be automatically queued. This should fix
+          the Blocking_Sync_None tests hanging once in a while on
+          guajira.cs builds.
 
 Tue Oct  2 11:05:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.cpp: Removed a debug statement that made no
-	  sense.
+        * tao/Transport.cpp: Removed a debug statement that made no
+          sense.
 
 Mon Oct  1 14:24:04 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/Options.html: Changed the default in the
-	  -ORBTransportMuxStrategy option.  We have been using Muxed for
-	  sometime now and it seems to be going fine. In all probability
-	  we would go for x.2 with this option. Thanks to Ossama for
-	  poiting this out.
+        * docs/Options.html: Changed the default in the
+          -ORBTransportMuxStrategy option.  We have been using Muxed for
+          sometime now and it seems to be going fine. In all probability
+          we would go for x.2 with this option. Thanks to Ossama for
+          poiting this out.
 
 Mon Oct  1 07:49:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/SHMIOP_Endpoint.i:
-	* tao/Strategies/DIOP_Endpoint.i: Applied the same changes from
-	  this entry "Sat Sep 29 18:07:55 2001  Ossama Othman
-	  <ossama@uci.edu>"  to the above classes.
+        * tao/Strategies/SHMIOP_Endpoint.i:
+        * tao/Strategies/DIOP_Endpoint.i: Applied the same changes from
+          this entry "Sat Sep 29 18:07:55 2001  Ossama Othman
+          <ossama@uci.edu>"  to the above classes.
 
 Mon Oct  1 07:10:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connection_Handler.cpp:
-	* tao/Strategies/UIOP_Connection_Handler.cpp:
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
-	* tao/Strategies/DIOP_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
-	  One of the long standing race conditions that came to the fore
-	  recently. The problem was that we were returning a -1 to the
-	  reactor if the number of upcalls dropped to 0. This was wrong
-	  for many reasons with the latest set of changes for bug 575,
-	  which enhanced the concurrency on the server side. Imagine a
-	  thread being unblocked by notify () dispatching a
-	  request. During the process the thread could have resumed the
-	  handler. Another thread in the Reactor could come around and
-	  tried closing the connection. Before the thread from the Reactor
-	  finishes with the cleanup job, the thread that was dispatching
-	  because of notify () could return dropping the upcall count. It
-	  would also return with a -1 to the reactor. At this stage we
-	  would have two threads trying to do a handle_close () which
-	  could be deleterious. We now return with a 0 to the reactor
-	  after we handle_close_i (). We are sure that with handle_close_i
-	  () the handlers are closed and returning a 0 would be harmless.
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
+          One of the long standing race conditions that came to the fore
+          recently. The problem was that we were returning a -1 to the
+          reactor if the number of upcalls dropped to 0. This was wrong
+          for many reasons with the latest set of changes for bug 575,
+          which enhanced the concurrency on the server side. Imagine a
+          thread being unblocked by notify () dispatching a
+          request. During the process the thread could have resumed the
+          handler. Another thread in the Reactor could come around and
+          tried closing the connection. Before the thread from the Reactor
+          finishes with the cleanup job, the thread that was dispatching
+          because of notify () could return dropping the upcall count. It
+          would also return with a -1 to the reactor. At this stage we
+          would have two threads trying to do a handle_close () which
+          could be deleterious. We now return with a 0 to the reactor
+          after we handle_close_i (). We are sure that with handle_close_i
+          () the handlers are closed and returning a 0 would be harmless.
 
 
 Sun Sep 30 09:26:30 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/File_IO/server.cpp (main):
+        * tests/File_IO/server.cpp (main):
 
-	  Fixed compile-time problems found in VxWorks builds.  VxWorks
-	  does not define the POSIX file mode contants.
+          Fixed compile-time problems found in VxWorks builds.  VxWorks
+          does not define the POSIX file mode contants.
 
-	  (svc):
+          (svc):
 
-	  Print the exception if one is caught and return -1.  An
-	  exception should be considered an error in this case.
+          Print the exception if one is caught and return -1.  An
+          exception should be considered an error in this case.
 
 Sun Sep 30 09:08:59 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/tests/Security/MT_SSLIOP/client.dsp:
-	* orbsvcs/tests/Security/MT_SSLIOP/server.dsp:
+        * orbsvcs/tests/Security/MT_SSLIOP/client.dsp:
+        * orbsvcs/tests/Security/MT_SSLIOP/server.dsp:
 
-	  Added missing custom build step for the test IDL file.  Fixes
-	  builds on Windows.
+          Added missing custom build step for the test IDL file.  Fixes
+          builds on Windows.
 
 Sat Sep 29 18:58:06 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp
-	  (TAO_SSLIOP_Endpoint):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp
+          (TAO_SSLIOP_Endpoint):
 
-	  Invalidate the object_addr until the first attempt to use it is
-	  made.  Needed for the double checked locking optimization
-	  described below.
+          Invalidate the object_addr until the first attempt to use it is
+          made.  Needed for the double checked locking optimization
+          described below.
 
-	  (addr_to_string):
+          (addr_to_string):
 
-	  Fixed this method so that it returns the correct stringified
-	  address.  Previously it was returning the stringified non-SSL
-	  INET_Addr instead of the stringified SSL INET_Addr.
+          Fixed this method so that it returns the correct stringified
+          address.  Previously it was returning the stringified non-SSL
+          INET_Addr instead of the stringified SSL INET_Addr.
 
 Sat Sep 29 18:07:55 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/IIOP_Endpoint.i (object_addr):
+        * tao/IIOP_Endpoint.i (object_addr):
 
-	  Use the double-checked locking optimization to remove a lock
-	  from the critical path.  The lock will only be acquired/released
-	  once per initialization of the IIOP_Endpoint instead of
-	  once per invocation of this method.
+          Use the double-checked locking optimization to remove a lock
+          from the critical path.  The lock will only be acquired/released
+          once per initialization of the IIOP_Endpoint instead of
+          once per invocation of this method.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i (object_addr):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i (object_addr):
 
-	  Removed erroneous comment about deadlocking due to acquiring a
-	  lock in this method.  The underlying IIOP_Endpoint and the
-	  SSLIOP_Endpoint each have their own lock instance.  No deadlock
-	  will occur.
+          Removed erroneous comment about deadlocking due to acquiring a
+          lock in this method.  The underlying IIOP_Endpoint and the
+          SSLIOP_Endpoint each have their own lock instance.  No deadlock
+          will occur.
 
-	  Acquire a lock before setting the port number in the
-	  SSLIOP_Endpoint.  Double checked locking is used to prevent the
-	  lock from being acquired during each invocation.  Fixes a race
-	  condition.  [Bug 943]
+          Acquire a lock before setting the port number in the
+          SSLIOP_Endpoint.  Double checked locking is used to prevent the
+          lock from being acquired during each invocation.  Fixes a race
+          condition.  [Bug 943]
 
 Sat Sep 29 14:06:30 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/tests/Security/MT_SSLIOP/MT_SSLIOP.dsw:
-	* orbsvcs/tests/Security/MT_SSLIOP/client.dsp:
-	* orbsvcs/tests/Security/MT_SSLIOP/server.dsp:
+        * orbsvcs/tests/Security/MT_SSLIOP/MT_SSLIOP.dsw:
+        * orbsvcs/tests/Security/MT_SSLIOP/client.dsp:
+        * orbsvcs/tests/Security/MT_SSLIOP/server.dsp:
 
-	  New MSVC++ workspace/project files for this test.
+          New MSVC++ workspace/project files for this test.
 
 Fri Sep 28 15:40:26 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -1477,25 +1484,25 @@ Fri Sep 28 15:40:26 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Fri Sep 28 13:52:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connection_Handler.cpp (handle_input): Fixed a unused
-	  variable warning.
+        * tao/IIOP_Connection_Handler.cpp (handle_input): Fixed a unused
+          variable warning.
 
 Fri Sep 28 12:33:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
-	* tao/IIOP_Connection_Handler.cpp (handle_close):
-	* tao/Strategies/UIOP_Connection_Handler.cpp:
-	* tao/Strategies/DIOP_Connection_Handler.cpp:
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp: Added some debug
-	  statements.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connection_Handler.cpp (handle_close):
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp: Added some debug
+          statements.
 
 Fri Sep 28 11:41:50 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/File_IO/server.cpp (main): Made the program create a big
-	  file for use.
+        * tests/File_IO/server.cpp (main): Made the program create a big
+          file for use.
 
-	* tests/File_IO/big.txt: Removed the file from the repo. Thanks to
-	  Ossama for driving some sense in me.
+        * tests/File_IO/big.txt: Removed the file from the repo. Thanks to
+          Ossama for driving some sense in me.
 
 Fri Sep 28 10:17:24 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -1505,65 +1512,65 @@ Fri Sep 28 10:17:24 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Fri Sep 28 06:17:27 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ACE-INSTALL.html: Improved the installation instructions for BCB 4/5.
-	  Thanks to Chris Kohloff for contributing this and to Jan Kalin
- 	  <jan.kalin@zag.si> for motivating this.
+        * ACE-INSTALL.html: Improved the installation instructions for BCB 4/5.
+          Thanks to Chris Kohloff for contributing this and to Jan Kalin
+          <jan.kalin@zag.si> for motivating this.
 
 Fri Sep 28 06:40:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Fixed a
-	  cut and paste error :(.  This should clear of many of the
-	  builds.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Fixed a
+          cut and paste error :(.  This should clear of many of the
+          builds.
 
 Thu Sep 27 22:26:23 2001  Ossama Othman  <ossama@uci.edu>
 
-	* docs/interceptors.html:
+        * docs/interceptors.html:
 
-	  The Portable Interceptors specification is now part of the CORBA
-	  2.5 specification.  Updated accordingly.
+          The Portable Interceptors specification is now part of the CORBA
+          2.5 specification.  Updated accordingly.
 
 Thu Sep 27 17:31:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connection_Handler.cpp (handle_close):
-	* tao/IIOP_Connection_Handler.h: We always depended on the
-	  handle_close () to cleanup memory, the cache and the
-	  transport. The cleanup would not start if the number of upcalls
-	  is greater than zero. This could create problems for multi-threaded
-	  cases like this one
+        * tao/IIOP_Connection_Handler.cpp (handle_close):
+        * tao/IIOP_Connection_Handler.h: We always depended on the
+          handle_close () to cleanup memory, the cache and the
+          transport. The cleanup would not start if the number of upcalls
+          is greater than zero. This could create problems for multi-threaded
+          cases like this one
 
-	  - One of the threads is woken up by the Reactor to handle
+          - One of the threads is woken up by the Reactor to handle
             upcalls.
 
-	  - After the upcall is dispatched another thread could be woken
-	    up to close the connection. The second thread would call
-	    handle_close () religiously, but cleanup wouldnt have
-	    occurred.
+          - After the upcall is dispatched another thread could be woken
+            up to close the connection. The second thread would call
+            handle_close () religiously, but cleanup wouldnt have
+            occurred.
 
-	  We need to start cleanup only after the upcall count reaches
-	  0. We now have a method handle_close_i () which does the cleanup
-	  activity. This method is called whenever there is a possibility
-	  of the upcall count reaching zero.
+          We need to start cleanup only after the upcall count reaches
+          0. We now have a method handle_close_i () which does the cleanup
+          activity. This method is called whenever there is a possibility
+          of the upcall count reaching zero.
 
-	* tao/Strategies/UIOP_Connection_Handler.h:
-	* tao/Strategies/UIOP_Connection_Handler.cpp:
-	* tao/Strategies/DIOP_Connection_Handler.h:
-	* tao/Strategies/DIOP_Connection_Handler.cpp:
-	* tao/Strategies/SHMIOP_Connection_Handler.h:
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
-	  Applied the same fix to the above protocols too.
+        * tao/Strategies/UIOP_Connection_Handler.h:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.h:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.h:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+          Applied the same fix to the above protocols too.
 
 Thu Sep 27 17:12:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/File_IO/client.cpp:
-	* tests/File_IO/server.cpp: scaled this program down as it was
-	  creating problems  with our daily builds on many
-	  platforms. Retained the essence of the prgoram though. We now run
-	  only 2 threads on the server end 4 threads on the client
-	  end. We now request only 128 K of data (ie. twice the normal
-	  socket buffer size). Hopefully this will go well on all
-	  platforms.
+        * tests/File_IO/client.cpp:
+        * tests/File_IO/server.cpp: scaled this program down as it was
+          creating problems  with our daily builds on many
+          platforms. Retained the essence of the prgoram though. We now run
+          only 2 threads on the server end 4 threads on the client
+          end. We now request only 128 K of data (ie. twice the normal
+          socket buffer size). Hopefully this will go well on all
+          platforms.
 
 Thu Sep 27 16:23:34 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -1582,103 +1589,103 @@ Thu Sep 27 13:11:56 2001  Bala  <bala@cs.wustl.edu>
 
 Thu Sep 27 02:41:32 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* orbsvcs/tests/Simple_Naming/client.cpp: Improved debug
-	  statements.  Also replace the %8.8x and ACE_OS::thr_self combo
-	  with %t.
+        * orbsvcs/tests/Simple_Naming/client.cpp: Improved debug
+          statements.  Also replace the %8.8x and ACE_OS::thr_self combo
+          with %t.
 
 Wed Sep 26 15:30:31 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Thread_Pool/client.cpp: Allow the user
-	  to set the invocation thread priority at thread creating time or
-	  after thread creation.  Also improved parse_args().
+        * performance-tests/RTCorba/Thread_Pool/client.cpp: Allow the user
+          to set the invocation thread priority at thread creating time or
+          after thread creation.  Also improved parse_args().
 
 Tue Sep 25 23:45:30 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Thread_Pool/client.cpp:
+        * performance-tests/RTCorba/Thread_Pool/client.cpp:
 
-	  - Include tests/RTCORBA/Linear_Priority/readers.cpp to reuse
-	    common file parsing code.  This way we can removed the
-	    get_rates() function.
+          - Include tests/RTCORBA/Linear_Priority/readers.cpp to reuse
+            common file parsing code.  This way we can removed the
+            get_rates() function.
 
-	  - Invocation priorities can either be automatically
-	    calculated (as before) or can be explicitly specified
-	    through the <invocation_priorities_file> option.
+          - Invocation priorities can either be automatically
+            calculated (as before) or can be explicitly specified
+            through the <invocation_priorities_file> option.
 
-	* performance-tests/RTCorba/Thread_Pool/server.cpp:
+        * performance-tests/RTCorba/Thread_Pool/server.cpp:
 
-	  - Include tests/RTCORBA/Linear_Priority/readers.cpp to reuse
-	    common file parsing code.  Auto lane priorities and bands
-	    calculations were moved to readers.cpp.
+          - Include tests/RTCORBA/Linear_Priority/readers.cpp to reuse
+            common file parsing code.  Auto lane priorities and bands
+            calculations were moved to readers.cpp.
 
           - Lane priorities and bands can either be automatically
-	    calculated (as before) or can be explicitly specified
-	    through the <bands_file> and <lanes_file> options.
+            calculated (as before) or can be explicitly specified
+            through the <bands_file> and <lanes_file> options.
 
-	* performance-tests/RTCorba/Thread_Pool/empty_file
-	* performance-tests/RTCorba/Thread_Pool/invocation_priorities
-	* performance-tests/RTCorba/Thread_Pool/lanes
-	* performance-tests/RTCorba/Thread_Pool/bands
+        * performance-tests/RTCorba/Thread_Pool/empty_file
+        * performance-tests/RTCorba/Thread_Pool/invocation_priorities
+        * performance-tests/RTCorba/Thread_Pool/lanes
+        * performance-tests/RTCorba/Thread_Pool/bands
 
-	  New files.
+          New files.
 
-	* tests/RTCORBA/Linear_Priority/client.cpp (main): Renamed
-	  Priorities to Short_Array.
+        * tests/RTCORBA/Linear_Priority/client.cpp (main): Renamed
+          Priorities to Short_Array.
 
-	* tests/RTCORBA/Linear_Priority/readers.cpp: Generalized some
-	  methods.
+        * tests/RTCORBA/Linear_Priority/readers.cpp: Generalized some
+          methods.
 
 Tue Sep 25 17:40:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/AMI_Buffering/client.cpp (run_buffer_size):
-	* tests/Oneway_Buffering/client.cpp: Changed all the ACE_ERROR
-	  statements to ACE_DEBUG statements. Changed the ERROR in the
-	  debug messages as DEBUG. We know that this test shows a problem
-	  with the ORB/Reactor. The error statements create too much of
-	  noise for the builds czars todo any good work. The bug #982 and
-	  #1031 that has been captured in the bugzilla talks about the
-	  problem.
+        * tests/AMI_Buffering/client.cpp (run_buffer_size):
+        * tests/Oneway_Buffering/client.cpp: Changed all the ACE_ERROR
+          statements to ACE_DEBUG statements. Changed the ERROR in the
+          debug messages as DEBUG. We know that this test shows a problem
+          with the ORB/Reactor. The error statements create too much of
+          noise for the builds czars todo any good work. The bug #982 and
+          #1031 that has been captured in the bugzilla talks about the
+          problem.
 
 Tue Sep 25 11:32:39 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Strategies/advanced_resource.cpp (TAO_Resource_Factory_Changer):
+        * tao/Strategies/advanced_resource.cpp (TAO_Resource_Factory_Changer):
 
-	  Last night I removed:
+          Last night I removed:
 
-	  ACE_STATIC_SVC_REQUIRE(TAO_Advanced_Resource_Factory)
+          ACE_STATIC_SVC_REQUIRE(TAO_Advanced_Resource_Factory)
 
-	  but forgot to add the replacement:
+          but forgot to add the replacement:
 
-	  ACE_Service_Config::process_directive (ace_svc_desc_TAO_Advanced_Resource_Factory);
+          ACE_Service_Config::process_directive (ace_svc_desc_TAO_Advanced_Resource_Factory);
 
-	  This caused all apps using the Advanced_Resource_Factory to
-	  fail.
+          This caused all apps using the Advanced_Resource_Factory to
+          fail.
 
 Tue Sep 25 00:17:57 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* auto_run_tests.lst: The following tests were removed from the
-	  single threaded run list since they call
-	  RT_Protocols_Hooks::get_thread_priority is not supported on
-	  single threaded platforms:
+        * auto_run_tests.lst: The following tests were removed from the
+          single threaded run list since they call
+          RT_Protocols_Hooks::get_thread_priority is not supported on
+          single threaded platforms:
 
-	  - tests/RTCORBA/Client_Protocol
-	  - tests/RTCORBA/Explicit_Binding
-	  - tests/RTCORBA/Private_Connection
+          - tests/RTCORBA/Client_Protocol
+          - tests/RTCORBA/Explicit_Binding
+          - tests/RTCORBA/Private_Connection
 
 Mon Sep 24 19:23:29 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/TAO_Internal.cpp (open_services_i):
-	* tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.cpp (Initializer):
-	* tao/TypeCodeFactory/TypeCodeFactory_Loader.cpp (Initializer):
-	* tao/Strategies/advanced_resource.cpp (TAO_Resource_Factory_Changer):
-	* tao/RTPortableServer/RTPortableServer.cpp (TAO_RTPortableServer_Initializer):
-	* tao/RTCORBA/RTCORBA.cpp (TAO_RTCORBA_Initializer):
-	* tao/PortableServer/PortableServer.cpp (init):
-	* tao/IORTable/IORTable.cpp (init):
-	* tao/IORManipulation/IORManip_Loader.cpp (Initializer):
-	* tao/IFR_Client/IFR_Client_Adapter_Impl.cpp (Initializer):
-	* tao/DynamicInterface/Dynamic_Adapter_Impl.cpp (Initializer):
-	* tao/DynamicAny/DynamicAny.cpp (Initializer):
-	* tao/BiDir_GIOP/BiDirGIOP.cpp (Initializer):
+        * tao/TAO_Internal.cpp (open_services_i):
+        * tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.cpp (Initializer):
+        * tao/TypeCodeFactory/TypeCodeFactory_Loader.cpp (Initializer):
+        * tao/Strategies/advanced_resource.cpp (TAO_Resource_Factory_Changer):
+        * tao/RTPortableServer/RTPortableServer.cpp (TAO_RTPortableServer_Initializer):
+        * tao/RTCORBA/RTCORBA.cpp (TAO_RTCORBA_Initializer):
+        * tao/PortableServer/PortableServer.cpp (init):
+        * tao/IORTable/IORTable.cpp (init):
+        * tao/IORManipulation/IORManip_Loader.cpp (Initializer):
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.cpp (Initializer):
+        * tao/DynamicInterface/Dynamic_Adapter_Impl.cpp (Initializer):
+        * tao/DynamicAny/DynamicAny.cpp (Initializer):
+        * tao/BiDir_GIOP/BiDirGIOP.cpp (Initializer):
 
           - Changed
 
@@ -1697,272 +1704,272 @@ Mon Sep 24 19:23:29 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
             irrespective of whether Service_Config::open has already
             being run.
 
-	* tao/Strategies/TAO_Strategies_Internal.cpp:
-	* tao/Strategies/TAO_Strategies_Internal.h:
+        * tao/Strategies/TAO_Strategies_Internal.cpp:
+        * tao/Strategies/TAO_Strategies_Internal.h:
 
-	  Removed unused files.
+          Removed unused files.
 
-	* tao/Strategies/Makefile.bor:
-	* tao/Strategies/Makefile:
-	* tao/Strategies/TAO_Strategies.dsp:
-	* tao/Strategies/TAO_Strategies_Static.dsp:
+        * tao/Strategies/Makefile.bor:
+        * tao/Strategies/Makefile:
+        * tao/Strategies/TAO_Strategies.dsp:
+        * tao/Strategies/TAO_Strategies_Static.dsp:
 
-	  Removed TAO_Strategies_Internal.
+          Removed TAO_Strategies_Internal.
 
-	* tao/Strategies/advanced_resource.h:
-	  "ACE_STATIC_SVC_REQUIRE(TAO_Advanced_Resource_Factory)" removed
-	  as it was not needed.
+        * tao/Strategies/advanced_resource.h:
+          "ACE_STATIC_SVC_REQUIRE(TAO_Advanced_Resource_Factory)" removed
+          as it was not needed.
 
-	* tao/default_resource.cpp (get_parser_names): Removed unnecessary
-	  lookup of parsers.
+        * tao/default_resource.cpp (get_parser_names): Removed unnecessary
+          lookup of parsers.
 
-	* tao/orbconf.h: Removed default defines for
-	  TAO_DEFAULT_RESOURCE_FACTORY_ARGS,
-	  TAO_ADVANCED_RESOURCE_FACTORY_ARGS,
-	  TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS, and
-	  TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS since they are we
-	  horribly out of date and the defaults work fine.  User can still
-	  define them as needed.
+        * tao/orbconf.h: Removed default defines for
+          TAO_DEFAULT_RESOURCE_FACTORY_ARGS,
+          TAO_ADVANCED_RESOURCE_FACTORY_ARGS,
+          TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS, and
+          TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS since they are we
+          horribly out of date and the defaults work fine.  User can still
+          define them as needed.
 
-	* tao/TAO_Internal.cpp:
+        * tao/TAO_Internal.cpp:
 
-	  - Since TAO_DEFAULT_RESOURCE_FACTORY_ARGS,
-	    TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS, and
-	    TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS are no longer
-	    defined by default, the initialization of the
-	    corresponding statics in TAO_Internal had to be modified.
+          - Since TAO_DEFAULT_RESOURCE_FACTORY_ARGS,
+            TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS, and
+            TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS are no longer
+            defined by default, the initialization of the
+            corresponding statics in TAO_Internal had to be modified.
 
           - For consistency, <server_strategy_args_> and
             <client_strategy_args_> got renamed to
             <server_strategy_factory_args_> and
             <client_strategy_factory_args_> respectively.
 
-	* tao/ORB_Core.cpp: Fixed some incorrect comments.
+        * tao/ORB_Core.cpp: Fixed some incorrect comments.
 
-	* tao/MCAST_Parser.h: Removed extra OS.h include.
+        * tao/MCAST_Parser.h: Removed extra OS.h include.
 
-	* examples/Simple/time-date/Time_Date.cpp: Removed extra
-	  TAO_Singleton.h include.
+        * examples/Simple/time-date/Time_Date.cpp: Removed extra
+          TAO_Singleton.h include.
 
 Mon Sep 24 14:12:11 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/MCAST_Parser.cpp (assign_to_variables):
-	  Modified so that if the nic address isnt specified in the mcast
-	  format, the kernel chooses the nic. This is because the nic is
-	  platform specific and we cant default it to eth0.
+        * tao/MCAST_Parser.cpp (assign_to_variables):
+          Modified so that if the nic address isnt specified in the mcast
+          format, the kernel chooses the nic. This is because the nic is
+          platform specific and we cant default it to eth0.
 
-	  Thanks to Ossama for pointing it out.
+          Thanks to Ossama for pointing it out.
 
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input): Added
-	  MCASTServer in the list of multicast services that are valid. This
-	  is needed for the test (orbsvcs/tests/IOR_MCAST).
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input): Added
+          MCASTServer in the list of multicast services that are valid. This
+          is needed for the test (orbsvcs/tests/IOR_MCAST).
 
 Mon Sep 24 12:22:32 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/params.cpp:
-	  Made mcast://:::: as the default multicast address. This address
-	  will default to
-	  mcast://ACE_DEFAULT_MULTICAST_ADDR:
-	          TAO_DEFAULT_NAME_SERVER_REQUEST_PORT:eth0:1.
+        * tao/params.cpp:
+          Made mcast://:::: as the default multicast address. This address
+          will default to
+          mcast://ACE_DEFAULT_MULTICAST_ADDR:
+                  TAO_DEFAULT_NAME_SERVER_REQUEST_PORT:eth0:1.
 
-	  With this change, to get the previous multicast behaviour, the user
-	  doesnt have to use any extra variables.
+          With this change, to get the previous multicast behaviour, the user
+          doesnt have to use any extra variables.
 
-	* orbsvcs/tests/Simple_Naming/run_test.pl:
-	  Reverted the change to run_test.pl
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+          Reverted the change to run_test.pl
 
 Mon Sep 24 12:17:28 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/PICurrent.cpp (~TAO_PICurrent_Impl, get_slot, set_slot):
+        * tao/PICurrent.cpp (~TAO_PICurrent_Impl, get_slot, set_slot):
 
-	  Use C-style casts to get around Sun CC 4.2 static_cast brain
-	  damage.  Sun CC 4.2 could not handle statically casting from a
-	  "void *&" to a "CORBA::Any *".  Thanks to Bala for the tip.
+          Use C-style casts to get around Sun CC 4.2 static_cast brain
+          damage.  Sun CC 4.2 could not handle statically casting from a
+          "void *&" to a "CORBA::Any *".  Thanks to Bala for the tip.
 
-	  Note that we could get around this problem by making the slot
-	  table contain CORBA::Any pointers instead void pointers, but
-	  that would increase footprint.
+          Note that we could get around this problem by making the slot
+          table contain CORBA::Any pointers instead void pointers, but
+          that would increase footprint.
 
 Mon Sep 24 11:47:34 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORB.cpp:
+        * tao/ORB.cpp:
 
-	  Fixed problem where ORBInitializer variables were not declared
-	  in builds where CORBA messaging was disabled.
+          Fixed problem where ORBInitializer variables were not declared
+          in builds where CORBA messaging was disabled.
 
-	* tao/PICurrent.cpp:
+        * tao/PICurrent.cpp:
 
-	  Include "tao/debug.h" to pull in the declaration of the
-	  TAO_debug_level variable.
+          Include "tao/debug.h" to pull in the declaration of the
+          TAO_debug_level variable.
 
-	* tao/PICurrent_ORBInitializer.h:
+        * tao/PICurrent_ORBInitializer.h:
 
-	  Moved `LocalObject.h' include outside of the
-	  TAO_HAS_INTERCEPTORS block to pull in TAO-specific configuration
-	  headers.  TAO_HAS_INTERCEPTORS was previously not pulled in.
+          Moved `LocalObject.h' include outside of the
+          TAO_HAS_INTERCEPTORS block to pull in TAO-specific configuration
+          headers.  TAO_HAS_INTERCEPTORS was previously not pulled in.
 
 Mon Sep 24 11:03:17 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/PICurrent_ORBInitializer.h:
-	* tao/PICurrent_ORBInitializer.cpp:
+        * tao/PICurrent_ORBInitializer.h:
+        * tao/PICurrent_ORBInitializer.cpp:
 
-	  Only make code "visible" if the TAO_HAS_INTERCEPTORS
-	  preprocessor macro is set to "1".  Fixes build problems in
-	  configurations where request interceptors are disabled.
+          Only make code "visible" if the TAO_HAS_INTERCEPTORS
+          preprocessor macro is set to "1".  Fixes build problems in
+          configurations where request interceptors are disabled.
 
-	* tao/PICurrent.h:
-	* tao/PICurrent.cpp:
+        * tao/PICurrent.h:
+        * tao/PICurrent.cpp:
 
-	  "Nuked" trailing whitespace.
+          "Nuked" trailing whitespace.
 
-	* tao/Makefile:
-	* tao/*/Makefile:
+        * tao/Makefile:
+        * tao/*/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Mon Sep 24 01:21:16 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/PICurrent.h:
-	* tao/PICurrent.inl:
-	* tao/PICurrent.cpp:
+        * tao/PICurrent.h:
+        * tao/PICurrent.inl:
+        * tao/PICurrent.cpp:
 
-	  Implementation of the "PICurrent" object, i.e. the
-	  PortableInterceptor::Current interface.
+          Implementation of the "PICurrent" object, i.e. the
+          PortableInterceptor::Current interface.
 
-	* tao/PICurrent_ORBInitializer.h:
-	* tao/PICurrent_ORBInitializer.cpp:
+        * tao/PICurrent_ORBInitializer.h:
+        * tao/PICurrent_ORBInitializer.cpp:
 
-	  ORBInitializer that registers the PICurrent object with each
-	  ORB.
+          ORBInitializer that registers the PICurrent object with each
+          ORB.
 
-	* tao/Makefile:
-	* tao/Makefile.bor:
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
+        * tao/Makefile:
+        * tao/Makefile.bor:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
 
-	  Added new PICurrent source files to these Makefiles and project
-	  files.
+          Added new PICurrent source files to these Makefiles and project
+          files.
 
-	* tao/ClientInterceptorAdapter.h:
-	* tao/PortableServer/ServerInterceptorAdapter.h:
+        * tao/ClientInterceptorAdapter.h:
+        * tao/PortableServer/ServerInterceptorAdapter.h:
 
-	  Updated list of authors.
+          Updated list of authors.
 
-	* tao/ClientRequestInfo.cpp (get_slot):
-	* tao/ORBInitInfo.cpp (allocated_slot_id):
+        * tao/ClientRequestInfo.cpp (get_slot):
+        * tao/ORBInitInfo.cpp (allocated_slot_id):
 
-	  Implemented these methods.
+          Implemented these methods.
 
-	* tao/ORB.cpp (init_orb_globals):
+        * tao/ORB.cpp (init_orb_globals):
 
-	  Register the PICurrent ORB initializer.
+          Register the PICurrent ORB initializer.
 
-	* tao/ORB_Core.h:
+        * tao/ORB_Core.h:
 
-	  Added TSS portion of the PICurrent object to the ORB Core TSS
-	  resources object.
+          Added TSS portion of the PICurrent object to the ORB Core TSS
+          resources object.
 
-	  Cache the PICurrent object reference for speed/efficiency
-	  reasons.
+          Cache the PICurrent object reference for speed/efficiency
+          reasons.
 
-	* tao/ORB_Core.i (pi_current):
+        * tao/ORB_Core.i (pi_current):
 
-	  New methods to set and get the cached thread-scope PICurrent
-	  object reference.
+          New methods to set and get the cached thread-scope PICurrent
+          object reference.
 
-	* tao/ORB_Core.cpp (TAO_ORB_Core):
+        * tao/ORB_Core.cpp (TAO_ORB_Core):
 
-	  Initialize the pointer to the PICurrent object reference to
-	  zero.
+          Initialize the pointer to the PICurrent object reference to
+          zero.
 
-	* tao/PolicyFactory_Registry.cpp (~TAO_PolicyFactory_Registry):
+        * tao/PolicyFactory_Registry.cpp (~TAO_PolicyFactory_Registry):
 
-	  Close the factory map for the sake of completeness.
+          Close the factory map for the sake of completeness.
 
-	* tao/TAO_Server_Request.h (TAO_ServerRequest):
+        * tao/TAO_Server_Request.h (TAO_ServerRequest):
 
-	  The "request scope" PICurrent object implementation for the
-	  server side is now held in this class.
+          The "request scope" PICurrent object implementation for the
+          server side is now held in this class.
 
-	* tao/TAO_Server_Request.i (rs_pi_current):
+        * tao/TAO_Server_Request.i (rs_pi_current):
 
-	  Accessor for the request scope PICurrent object implementation.
+          Accessor for the request scope PICurrent object implementation.
 
-	* tao/TAO_Server_Request.cpp (TAO_ServerRequest):
+        * tao/TAO_Server_Request.cpp (TAO_ServerRequest):
 
-	  Added request scope PICurrent attribute to the base member
-	  initializer list.
+          Added request scope PICurrent attribute to the base member
+          initializer list.
 
-	* tao/PortableServer/ServerInterceptorAdapter.cpp:
+        * tao/PortableServer/ServerInterceptorAdapter.cpp:
 
-	  Instantiate a "PICurrent" guard before invoking the
-	  receive_request_service_contexts() interception point.  Upon
-	  leaving the scope, the request PICurrent will be logically
-	  copied to the thread scope PICurrent.
+          Instantiate a "PICurrent" guard before invoking the
+          receive_request_service_contexts() interception point.  Upon
+          leaving the scope, the request PICurrent will be logically
+          copied to the thread scope PICurrent.
 
-	* tao/PortableServer/ServerRequestInfo.h:
-	* tao/PortableServer/ServerRequestInfo.inl (server_request):
+        * tao/PortableServer/ServerRequestInfo.h:
+        * tao/PortableServer/ServerRequestInfo.inl (server_request):
 
-	  Added accessor to return a reference to the cached
-	  TAO_ServerRequest object.
+          Added accessor to return a reference to the cached
+          TAO_ServerRequest object.
 
-	* tao/PortableServer/ServerRequestInfo.cpp (get_server_policy):
+        * tao/PortableServer/ServerRequestInfo.cpp (get_server_policy):
 
-	  Implemented this method.  However, see comments in the
-	  implementation for important details.
+          Implemented this method.  However, see comments in the
+          implementation for important details.
 
-	  (get_slot, set_slot):
+          (get_slot, set_slot):
 
-	  Also implemented these methods.  They are used to get and set
-	  data in the "request scope" "PICurrent" object.
+          Also implemented these methods.  They are used to get and set
+          data in the "request scope" "PICurrent" object.
 
-	* TAO_IDL/be/be_codegen.cpp (start_server_skeletons):
+        * TAO_IDL/be/be_codegen.cpp (start_server_skeletons):
 
-	  Generate code to include the `tao/PICurrent.h' header.
+          Generate code to include the `tao/PICurrent.h' header.
 
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
-	  (visit_operation):
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+          (visit_operation):
 
-	  Generate code that instantiates a "TAO_PICurrent_Guard" before
-	  the code that invokes the receive_request() interception point
-	  and the upcall.  The thread scope PICurrent must be copied to
-	  the request scope PICurrent object when the upcall is done.
+          Generate code that instantiates a "TAO_PICurrent_Guard" before
+          the code that invokes the receive_request() interception point
+          and the upcall.  The thread scope PICurrent must be copied to
+          the request scope PICurrent object when the upcall is done.
 
-	* tests/Portable_Interceptors/PICurrent/ServerORBInitializer.cpp:
-	* tests/Portable_Interceptors/PICurrent/ServerORBInitializer.h:
-	* tests/Portable_Interceptors/PICurrent/ServerRequestInterceptor.cpp:
-	* tests/Portable_Interceptors/PICurrent/ServerRequestInterceptor.h:
-	* tests/Portable_Interceptors/PICurrent/client.cpp:
-	* tests/Portable_Interceptors/PICurrent/server.cpp:
-	* tests/Portable_Interceptors/PICurrent/test.idl:
-	* tests/Portable_Interceptors/PICurrent/test_i.cpp:
-	* tests/Portable_Interceptors/PICurrent/test_i.h:
-	* tests/Portable_Interceptors/PICurrent/Makefile:
-	* tests/Portable_Interceptors/PICurrent/Makefile.bor:
-	* tests/Portable_Interceptors/PICurrent/client.bor:
-	* tests/Portable_Interceptors/PICurrent/server.bor:
-	* tests/Portable_Interceptors/PICurrent/PICurrent.dsw:
-	* tests/Portable_Interceptors/PICurrent/client.dsp:
-	* tests/Portable_Interceptors/PICurrent/server.dsp:
+        * tests/Portable_Interceptors/PICurrent/ServerORBInitializer.cpp:
+        * tests/Portable_Interceptors/PICurrent/ServerORBInitializer.h:
+        * tests/Portable_Interceptors/PICurrent/ServerRequestInterceptor.cpp:
+        * tests/Portable_Interceptors/PICurrent/ServerRequestInterceptor.h:
+        * tests/Portable_Interceptors/PICurrent/client.cpp:
+        * tests/Portable_Interceptors/PICurrent/server.cpp:
+        * tests/Portable_Interceptors/PICurrent/test.idl:
+        * tests/Portable_Interceptors/PICurrent/test_i.cpp:
+        * tests/Portable_Interceptors/PICurrent/test_i.h:
+        * tests/Portable_Interceptors/PICurrent/Makefile:
+        * tests/Portable_Interceptors/PICurrent/Makefile.bor:
+        * tests/Portable_Interceptors/PICurrent/client.bor:
+        * tests/Portable_Interceptors/PICurrent/server.bor:
+        * tests/Portable_Interceptors/PICurrent/PICurrent.dsw:
+        * tests/Portable_Interceptors/PICurrent/client.dsp:
+        * tests/Portable_Interceptors/PICurrent/server.dsp:
 
-	  Test that verifies PICurrent support is working properly.
+          Test that verifies PICurrent support is working properly.
 
-	* tests/Portable_Interceptors/Makefile:
-	* tests/Portable_Interceptors/Makefile.bor:
+        * tests/Portable_Interceptors/Makefile:
+        * tests/Portable_Interceptors/Makefile.bor:
 
-	  Added PICurrent test directory to the build list.
+          Added PICurrent test directory to the build list.
 
-	* docs/interceptors.html:
+        * docs/interceptors.html:
 
-	  Updated PortableInterceptor release notes.
+          Updated PortableInterceptor release notes.
 
 Sun Sep 23 20:34:23 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Typecode.cpp (BadKind, Bounds):
+        * tao/Typecode.cpp (BadKind, Bounds):
 
-	  Fixed bugs where the RepositoryId for these TypeCode user
-	  exceptions contained the incorrect prefix, i.e. "omg.orb"
-	  instead of "omg.org."
+          Fixed bugs where the RepositoryId for these TypeCode user
+          exceptions contained the incorrect prefix, i.e. "omg.orb"
+          instead of "omg.org."
 
 Sun Sep 23 20:11:45 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
@@ -1973,12 +1980,12 @@ Sun Sep 23 20:11:45 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Sun Sep 23 15:01:08 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Invocation.cpp (location_forward):
+        * tao/Invocation.cpp (location_forward):
 
-	  Use the "CORBA::Object_var::out()" method instead of the
-	  "inout()" method to make sure the previous forward object
-	  reference is released before assigning another object reference
-	  Thanks to Gergely Timar <timarok@elender.hu> for the fix.
+          Use the "CORBA::Object_var::out()" method instead of the
+          "inout()" method to make sure the previous forward object
+          reference is released before assigning another object reference
+          Thanks to Gergely Timar <timarok@elender.hu> for the fix.
 
 Sun Sep 23 14:13:35 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -1991,200 +1998,200 @@ Sun Sep 23 14:13:35 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Sat Sep 22 11:47:48 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Profile.cpp (policies):
+        * tao/Profile.cpp (policies):
 
-	  Use the lame "ignore check_for_ace_check" comment hack to
-	  silence fuzz.
+          Use the lame "ignore check_for_ace_check" comment hack to
+          silence fuzz.
 
 Fri Sep 21 22:31:33 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/default_resource.cpp (get_parser_names):
+        * tao/default_resource.cpp (get_parser_names):
 
-	  Fixed bug where the "corbaname" parser's name was not properly
-	  inserted into the list of names of registered parsers.  Instead
-	  the "corbaloc" IOR's parser name was inserted.  "corbaname" IORs
-	  should now be supported by default, as was originally designed.
+          Fixed bug where the "corbaname" parser's name was not properly
+          inserted into the list of names of registered parsers.  Instead
+          the "corbaloc" IOR's parser name was inserted.  "corbaname" IORs
+          should now be supported by default, as was originally designed.
 
 Fri Sep 21 22:23:11 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Profile.cpp (policies):
+        * tao/Profile.cpp (policies):
 
-	  Fixed "unused parameter" warning in the minimum CORBA builds.
+          Fixed "unused parameter" warning in the minimum CORBA builds.
 
 Fri Sep 21 21:39:22 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Util.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Util.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Util.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Util.cpp:
 
-	  New SSLIOP utility class containing code common to both the
-	  SSLIOP client side and the server side.
+          New SSLIOP utility class containing code common to both the
+          SSLIOP client side and the server side.
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
 
-	  Added new attributed that contains the state to be passed to
-	  each new TAO_SSLIOP_Connection_Handler.
+          Added new attributed that contains the state to be passed to
+          each new TAO_SSLIOP_Connection_Handler.
 
-	  Doxygenated this header.
+          Doxygenated this header.
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.cpp (open_i):
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (open):
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (ssliop_open_i):
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (open):
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.cpp (open_i):
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (open):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (ssliop_open_i):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (open):
 
-	  Invoke the new TAO_SSLIOP_Util::setup_handler_state() method,
-	  and pass the created state to the creation strategy.
+          Invoke the new TAO_SSLIOP_Util::setup_handler_state() method,
+          and pass the created state to the creation strategy.
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.h:
 
-	  Cache a reference to the SSLIOP::Current object to avoid any
-	  reference resolution overhead in the critical path.
+          Cache a reference to the SSLIOP::Current object to avoid any
+          reference resolution overhead in the critical path.
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.cpp (handle_input_i):
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.cpp (handle_input_i):
 
-	  Pass cached SSLIOP::Current reference to the
-	  TAO_Null_SSL_State_Guard.  Saves an
-	  ORB::resolve_initial_references() in th critical path.
+          Pass cached SSLIOP::Current reference to the
+          TAO_Null_SSL_State_Guard.  Saves an
+          ORB::resolve_initial_references() in th critical path.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h:
 
-	  Generated and added "TAO_SSLIOP_Current" downcast and reference
-	  count related methods.  For example, it is now possible to
-	  _narrow() a SSLIOP::Current object reference to
-	  TAO_SSLIOP_Current object reference.  This makes it possible to
-	  gain access to the methods in TAO_SSLIOP_Current not defined in
-	  the SSLIOP::Current IDL without relying on dynamic_cast, which
-	  may not work properly when using compilers that do not support
-	  RTTI.
+          Generated and added "TAO_SSLIOP_Current" downcast and reference
+          count related methods.  For example, it is now possible to
+          _narrow() a SSLIOP::Current object reference to
+          TAO_SSLIOP_Current object reference.  This makes it possible to
+          gain access to the methods in TAO_SSLIOP_Current not defined in
+          the SSLIOP::Current IDL without relying on dynamic_cast, which
+          may not work properly when using compilers that do not support
+          RTTI.
 
-	  (orb_id_):
+          (orb_id_):
 
-	  No longer any need for this attribute.  (See below.)
+          No longer any need for this attribute.  (See below.)
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp (TAO_SSLIOP_Current):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp (TAO_SSLIOP_Current):
 
-	  This constructor now accepts a pointer to the ORB Core.  This
-	  obviates the need to cache the ORBid.
+          This constructor now accepts a pointer to the ORB Core.  This
+          obviates the need to cache the ORBid.
 
-	  (init):
+          (init):
 
-	  Removed this method.  It is no longer needed since a pointer to
-	  the ORB Core is now cached in the TAO_SSLIOP_Current instance at
-	  ORB bootstrap time.
+          Removed this method.  It is no longer needed since a pointer to
+          the ORB Core is now cached in the TAO_SSLIOP_Current instance at
+          ORB bootstrap time.
 
-	  (setup, teardown):
+          (setup, teardown):
 
-	  These methods now accept parameters that contain the state that
-	  will be used when setting up the TSS portion of the
-	  SSLIOP::Current object.  This makes these mades thread-safe and
-	  reentrant without introducing any locks.  [Bug 943]
+          These methods now accept parameters that contain the state that
+          will be used when setting up the TSS portion of the
+          SSLIOP::Current object.  This makes these mades thread-safe and
+          reentrant without introducing any locks.  [Bug 943]
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.inl (implementation):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.inl (implementation):
 
-	  Don't call init().  That method has been removed.
+          Don't call init().  That method has been removed.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp (pre_init):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp (pre_init):
 
-	  Retrieve a pointer to the ORB Core from the TAO_ORBInitInfo
-	  object and pass it to the TAO_SSLIOP_Current constructor when
-	  creating the TAO_SSLIOP_Current object.
+          Retrieve a pointer to the ORB Core from the TAO_ORBInitInfo
+          object and pass it to the TAO_SSLIOP_Current constructor when
+          creating the TAO_SSLIOP_Current object.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
-	  (TAO_SSLIOP_Connection_Handler_State):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
+          (TAO_SSLIOP_Connection_Handler_State):
 
-	  New class that contains state that must be passed to a
-	  TAO_SSLIOP_Connection_Handler up on creation.
+          New class that contains state that must be passed to a
+          TAO_SSLIOP_Connection_Handler up on creation.
 
-	  (TAO_SSL_State_Guard):
+          (TAO_SSL_State_Guard):
 
-	  No need to export this class.  It is only used internally by the
-	  TAO_SSLIOP library.
+          No need to export this class.  It is only used internally by the
+          TAO_SSLIOP library.
 
-	  This class now stores additional state.  Specifically, it
-	  contains a pointer to the "previous" SSLIOP::Current
-	  implementation that was stored in TSS, the current
-	  SSLIOP::Current implementation, and a flag that specifies
-	  whether or not the TSS portion of SSLIOP::Current was setup.
-	  This state is passed to the connection handler each time a
-	  request is handled.  Since this class is instantiated each time
-	  a request is handled, the encapsulated state is
-	  request-specific, meaning that SSL state setup in TSS is
-	  reentrant and thread-safe.  [Bug 943]
+          This class now stores additional state.  Specifically, it
+          contains a pointer to the "previous" SSLIOP::Current
+          implementation that was stored in TSS, the current
+          SSLIOP::Current implementation, and a flag that specifies
+          whether or not the TSS portion of SSLIOP::Current was setup.
+          This state is passed to the connection handler each time a
+          request is handled.  Since this class is instantiated each time
+          a request is handled, the encapsulated state is
+          request-specific, meaning that SSL state setup in TSS is
+          reentrant and thread-safe.  [Bug 943]
 
-	  No longer any need to cache a pointer to the ORB Core.  Adjusted
-	  the constructor signature and removed the attribute
-	  accordingly.
+          No longer any need to cache a pointer to the ORB Core.  Adjusted
+          the constructor signature and removed the attribute
+          accordingly.
 
-	  (TAO_SSLIOP_Connection_Handler):
+          (TAO_SSLIOP_Connection_Handler):
 
-	  This connection handler no longer retains an instance of the
-	  TAO_SSLIOP_Current_Impl object.  That object was subject to a
-	  race condition.  [Bug 943]
+          This connection handler no longer retains an instance of the
+          TAO_SSLIOP_Current_Impl object.  That object was subject to a
+          race condition.  [Bug 943]
 
-	  (current):
+          (current):
 
-	  New methods to get and set the cached TAO_SSLIOP_Current
-	  reference.  There is no longer any need to perform a
-	  dynamic_cast on the SSLIOP::Current object reference to gain
-	  access to TAO_SSLIOP_Current-specific methods.
+          New methods to get and set the cached TAO_SSLIOP_Current
+          reference.  There is no longer any need to perform a
+          dynamic_cast on the SSLIOP::Current object reference to gain
+          access to TAO_SSLIOP_Current-specific methods.
 
-	  (setup_ssl_state):
+          (setup_ssl_state):
 
-	  It is no longer necessary to retrieve the SSLIOP::Current object
-	  reference during the first attempt to set up the TSS portion of
-	  the SSLIOP::Current object.  That object reference is now
-	  retrieved and cached at ORB bootstrap time.  (See the
-	  description of the changes to SSLIOP_ORBInitializer.cpp above
-	  for details.)
+          It is no longer necessary to retrieve the SSLIOP::Current object
+          reference during the first attempt to set up the TSS portion of
+          the SSLIOP::Current object.  That object reference is now
+          retrieved and cached at ORB bootstrap time.  (See the
+          description of the changes to SSLIOP_ORBInitializer.cpp above
+          for details.)
 
-	  (setup_ssl_state, teardown_ssl_state):
+          (setup_ssl_state, teardown_ssl_state):
 
-	  These methods now accept parameters that contain the state that
-	  will be used when setting up the TSS portion of the
-	  SSLIOP::Current object.  This makes these mades thread-safe and
-	  reentrant without introducing any locks.  [Bug 943]
+          These methods now accept parameters that contain the state that
+          will be used when setting up the TSS portion of the
+          SSLIOP::Current object.  This makes these mades thread-safe and
+          reentrant without introducing any locks.  [Bug 943]
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.i:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.i:
 
-	  Updated the calls to the setup/teardown_ssl_state() in the
-	  TAO_SSL_State_Guard constructor and destructor to match the new
-	  method signatures.
+          Updated the calls to the setup/teardown_ssl_state() in the
+          TAO_SSL_State_Guard constructor and destructor to match the new
+          method signatures.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (handle_input_i):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (handle_input_i):
 
-	  The signature of the TAO_SSL_State_Guard constructor changed.
-	  Adjusted the instantiation accordingly.
+          The signature of the TAO_SSL_State_Guard constructor changed.
+          Adjusted the instantiation accordingly.
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp:
 
-	  Changes analogous to those made in the SSLIOP_Connection_Handler
-	  counterparts.  See above for details.
+          Changes analogous to those made in the SSLIOP_Connection_Handler
+          counterparts.  See above for details.
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.inl:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.inl:
 
-	  Inlined the TAO_Null_SSL_State_Guard constructor and destructor
-	  for speed/efficiency reasons.
+          Inlined the TAO_Null_SSL_State_Guard constructor and destructor
+          for speed/efficiency reasons.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.h:
 
-	  Corrected destructor comment.
+          Corrected destructor comment.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.inl:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.inl:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp:
 
-	  Inlined the TAO_SSLIOP_Current_Impl constructor for
-	  speed/efficiency reasons, i.e. since it is instantiated in the
-	  critical path.
+          Inlined the TAO_SSLIOP_Current_Impl constructor for
+          speed/efficiency reasons, i.e. since it is instantiated in the
+          critical path.
 
-	* orbsvcs/orbsvcs/Makefile.SSLIOP (FILES):
-	* orbsvcs/orbsvcs/SSLIOP.bor (OBJFILES):
+        * orbsvcs/orbsvcs/Makefile.SSLIOP (FILES):
+        * orbsvcs/orbsvcs/SSLIOP.bor (OBJFILES):
 
-	  Added new SSLIOP_Util sources to the list of files to	compile
-	  and link.
+          Added new SSLIOP_Util sources to the list of files to compile
+          and link.
 
 Fri Sep 21 13:01:53 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -2197,40 +2204,40 @@ Fri Sep 21 12:36:36 2001  Ossama Othman  <ossama@uci.edu>
 
         * tao/Profile.cpp (policies):
 
-	  Added missing CORBA::Environment parameter to the call to
-	  CORBA::Policy::policy_type().  Removes a TSS access during each
-	  policy insertion into the TAG_POLICIES IOR tagged component.
-	  Also fixes a potential problem where an emulated exception would
-	  not be caught if thrown during a remote
-	  CORBA::Policy::policy_type() invocation.
+          Added missing CORBA::Environment parameter to the call to
+          CORBA::Policy::policy_type().  Removes a TSS access during each
+          policy insertion into the TAG_POLICIES IOR tagged component.
+          Also fixes a potential problem where an emulated exception would
+          not be caught if thrown during a remote
+          CORBA::Policy::policy_type() invocation.
 
-	* tao/ClientInterceptorAdapter.cpp (receive_exception):
-	* tao/PortableServer/ServerInterceptorAdapter.cpp (send_exception):
+        * tao/ClientInterceptorAdapter.cpp (receive_exception):
+        * tao/PortableServer/ServerInterceptorAdapter.cpp (send_exception):
 
-	  Only re-throw the exception if it hasn't been transformed
-	  (e.g. to a LOCATION_FORWARD) by the receive_exception() and
-	  send_exception() interception points, respectively.
+          Only re-throw the exception if it hasn't been transformed
+          (e.g. to a LOCATION_FORWARD) by the receive_exception() and
+          send_exception() interception points, respectively.
 
-	* tao/PortableServer/POA.cpp (client_exposed_policies):
+        * tao/PortableServer/POA.cpp (client_exposed_policies):
 
-	  Improved exception-safety of this method by storing the
-	  allocated CORBA::PolicyList in a CORBA::PolicyList_var.  Fixes a
-	  memory leak that occurred if an exception was thrown within this
-	  method.
+          Improved exception-safety of this method by storing the
+          allocated CORBA::PolicyList in a CORBA::PolicyList_var.  Fixes a
+          memory leak that occurred if an exception was thrown within this
+          method.
 
-	* TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp
-	  (gen_marshal_and_invoke):
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
-	  (visit_operation):
+        * TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp
+          (gen_marshal_and_invoke):
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+          (visit_operation):
 
-	  Do not call the generated instantiation of the RequestInfo
-	  object "ri."  Doing so will cause conflicts with IDL that
-	  uses an operation parameter of the same name.  The generated
-	  code now uses "_tao_ri" to avoid namespace pollution.
+          Do not call the generated instantiation of the RequestInfo
+          object "ri."  Doing so will cause conflicts with IDL that
+          uses an operation parameter of the same name.  The generated
+          code now uses "_tao_ri" to avoid namespace pollution.
 
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor_Flow.dsw:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/client.dsp:
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/server.dsp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor_Flow.dsw:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/client.dsp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/server.dsp:
 
           Corrected spelling.  "Inteceptor" --> "Interceptor"
 
