@@ -58,7 +58,8 @@ STUB_Object::set_profile_in_use_i (TAO_Profile *pfile)
 
 ACE_INLINE
 STUB_Object::STUB_Object (char *repository_id)
-  : base_profiles_ ((CORBA::ULong) 0),
+  : type_id (repository_id),
+    base_profiles_ ((CORBA::ULong) 0),
     fwd_profiles_ (0),
     profile_in_use_ (0),
     fwd_profile_ (0),
@@ -69,7 +70,6 @@ STUB_Object::STUB_Object (char *repository_id)
     use_locate_request_ (0),
     first_locate_request_ (0)
 {
-  ACE_UNUSED_ARG (repository_id);
   this->profile_lock_ptr_ = 
     TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
 }
@@ -93,7 +93,8 @@ STUB_Object::set_profiles (TAO_MProfile *mprofiles)
 ACE_INLINE
 STUB_Object::STUB_Object (char *repository_id,
                           TAO_MProfile &profiles)
-  : base_profiles_ ((CORBA::ULong) 0),
+  : type_id (repository_id),
+    base_profiles_ ((CORBA::ULong) 0),
     fwd_profiles_ (0),
     profile_in_use_ (0),
     fwd_profile_ (0),
@@ -104,7 +105,6 @@ STUB_Object::STUB_Object (char *repository_id,
     use_locate_request_ (0),
     first_locate_request_ (0)
 {
-  ACE_UNUSED_ARG (repository_id);
 
   this->profile_lock_ptr_ =  
     TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
@@ -115,7 +115,8 @@ STUB_Object::STUB_Object (char *repository_id,
 ACE_INLINE
 STUB_Object::STUB_Object (char *repository_id,
                           TAO_Profile *profile)
-  : base_profiles_ ((CORBA::ULong) 0),
+  : type_id (repository_id),
+    base_profiles_ ((CORBA::ULong) 0),
     fwd_profiles_ (0),
     profile_in_use_ (0),
     fwd_profile_ (0),
@@ -126,8 +127,6 @@ STUB_Object::STUB_Object (char *repository_id,
     use_locate_request_ (0),
     first_locate_request_ (0)
 {
-  ACE_UNUSED_ARG (repository_id);
-
   // @@ XXX need to verify type and deal with wrong types
 
   this->profile_lock_ptr_ =  
@@ -141,7 +140,8 @@ STUB_Object::STUB_Object (char *repository_id,
 ACE_INLINE
 STUB_Object::STUB_Object (char *repository_id,
                           TAO_MProfile *profiles)
-  : base_profiles_ ((CORBA::ULong) 0),
+  : type_id (repository_id),
+    base_profiles_ ((CORBA::ULong) 0),
     fwd_profiles_ (0),
     profile_in_use_ (0),
     fwd_profile_ (0),

@@ -1,3 +1,7 @@
+Sun Feb  7 21:35:17 1999 Fred Kuhns <fredk@cs.wustl.edu>
+        * Stub.i - added initialization for type_id
+	  from arg repository_id.
+
 Sun Feb  7 20:01:29 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/Stub.i (STUB_Object): Fixed warnings about repository_id
