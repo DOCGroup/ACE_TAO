@@ -19,9 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_interface.h"
 
@@ -57,7 +57,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
   *os << "void operator<<= (CORBA::Any &_tao_any, "
       << node->name () << "_ptr _tao_elem)" << be_nl
       << "{" << be_idt_nl
-      << "CORBA::Object_ptr *_tao_obj_ptr;" << be_nl
+      << "CORBA::Object_ptr *_tao_obj_ptr = 0;" << be_nl
       << "TAO_TRY" << be_nl
       << "{" << be_idt_nl
       << "ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);" << be_nl
