@@ -34,6 +34,9 @@ public:
   int in_use (void);
   // Returns the current use flag.
 
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+		    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+
 private:
   int in_use_;
   // Are we currently in use?
