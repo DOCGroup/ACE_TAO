@@ -64,6 +64,7 @@
 #      endif /* ACE_HAS_USING_KEYWORD */
 #      define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #      define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+#      define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 #    endif /* __IBMCPP__ >= 500 */
 #  endif /* __IBMCPP__ */
 
@@ -252,7 +253,7 @@
 // Platform has XPG4 wide character type and functions
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
-#define ACE_LACKS_TCP_H
+#define ACE_LACKS_NETINET_TCP_H
 
 // AIX uses LIBPATH to search for libraries
 #define ACE_LD_SEARCH_PATH "LIBPATH"
