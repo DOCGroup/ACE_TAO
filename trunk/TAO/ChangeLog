@@ -1,3 +1,10 @@
+Sun Apr 27 17:34:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/PortableServer/PortableServerC.cpp:
+	* tao/PortableServer/PortableServerC.i: Moved marshal_value ()
+	  method from the cpp file to the inlined file. This shodl fix
+	  BCB5 build problems. Thanks to Johnny for helping me with this. 
+
 Sun Apr 27 11:31:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/GIOPC.{h,cpp,i}: Regenerated code
