@@ -146,7 +146,7 @@ init (int config_count,
       // Make sure the new config info is cleaned up if we exit abruptly.
       new_config_info_ptr.reset (new_config_info);
 
-      result = config_info_map_.bind (config_info [config_info_count].preemption_priority,
+      result = config_info_map_.bind (config_info [config_info_count_].preemption_priority,
                                       new_config_info);
       switch (result)
         {
@@ -163,11 +163,11 @@ init (int config_count,
         }
 
       new_config_info->preemption_priority =
-        config_info [config_info_count].preemption_priority;
+        config_info [config_info_count_].preemption_priority;
       new_config_info->thread_priority =
-        config_info [config_info_count].thread_priority;
+        config_info [config_info_count_].thread_priority;
       new_config_info->dispatching_type =
-        config_info [config_info_count].dispatching_type;
+        config_info [config_info_count_].dispatching_type;
 
       if (new_config_info->preemption_priority >
           last_scheduled_priority_)
@@ -624,6 +624,10 @@ compute_scheduling (CORBA::Long minimum_priority,
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
   ACE_CHECK;
+
+  // @@ TO DO - use these to establish the bounds of priority assignment.
+  ACE_UNUSED_ARG (minimum_priority);
+  ACE_UNUSED_ARG (maximum_priority);
 
   // If everything is already up to date, we're done.
   if (SCHED_ALL_STABLE == stability_flags_)
