@@ -1,3 +1,10 @@
+Fri Jan  2 08:38:19 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/Smart_Proxies/Collocation/Coll_Test_Stubs.bor:
+	* tests/Smart_Proxies/Collocation/Collocation.bor:
+	* tests/Smart_Proxies/Collocation/Diamond.bor:
+	  Updated these BCB makefiles
+
 Fri Jan  2 08:30:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tao/Utils/Server_Main.cpp:
