@@ -1,3 +1,10 @@
+Wed Sep 15 13:19:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Service_Config.cpp (process_directive): Added ace_yyrestart
+	  to make sure the service config parser has a valid buffer to
+	  work on.  Thanks to Lothar Werzinger
+	  <werzinger.lothar@krones.de> for reporting this.
+
 Wed Sep 15 10:50:21 1999  James Hu <jxh@entera.com>
 
         * ace/TP_Reactor.{cpp,h,i} (mask_ops): Fixed a problem where
