@@ -167,6 +167,9 @@ AC_CONFIG_FILES([
   Makefile
   TAO_IDL/Makefile
   tao/Makefile
+  orbsvcs/Makefile
+  orbsvcs/PSS/Makefile
+  orbsvcs/TAO_Service/Makefile
  ])
 
 dnl Note that the "TAO_VERSION" in the message below is an M4 macro
