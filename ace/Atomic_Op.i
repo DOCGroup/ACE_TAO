@@ -111,7 +111,8 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (const ACE_Atomic_Op<ACE_LOCK, TYPE> &r
   ACE_Guard<ACE_LOCK> m (this->lock_);
   // This will call ACE_Atomic_Op::TYPE(), which will ensure the value
   // of <rhs> is acquired atomically.
-  this->value_ = rhs; 
+
+  this->value_ = rhs.value ();
 }
 
 template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
