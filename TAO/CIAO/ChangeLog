@@ -1,3 +1,10 @@
+Thu Jan  1 13:53:53 2004  Boris Kolpackov  <boris@kolpackov.net>
+
+	* CCF/CCF/IDL2/SemanticGraph/Elements.hpp (class Nameable)
+
+	  Added support for iteration over Names edges.
+	
+
 Thu Jan  1 17:23:44 UTC 2004  Don Hinton  <dhinton@dresystems.com>
 
         * Makefile:
@@ -179,7 +186,7 @@ Wed Dec 31 18:13:21 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	  Minor cosmetic changes and cleanups.
 
-	
+
 Wed Dec 31 12:27:16 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* docs/tutorial/Hello/hello.mpc:
