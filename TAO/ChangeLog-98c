@@ -1,81 +1,86 @@
+Tue Jun 30 22:08:38 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/be/be_codegen.cpp (lookup_strategy): added full
+          qualification of return type TAO_CodeGen::LOOKUP_STRATEGY.
+
 Tue Jun 30 18:27:49 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Sequence_T.i: 
-	  Another ACE_CAST_CONST problem, thanks to Seth Widoff
-	  (sbw1@cs.wustl.edu) for catching this one.
+        * tao/Sequence_T.i:
+          Another ACE_CAST_CONST problem, thanks to Seth Widoff
+          (sbw1@cs.wustl.edu) for catching this one.
 
 Tue Jun 30 18:21:04 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* tests/Quoter/Makefile:
-	Remove STL includes --- no longer needed for Trading Service.
+        * tests/Quoter/Makefile:
+        Remove STL includes --- no longer needed for Trading Service.
 
 Tue Jun 30 16:50:12 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	First round of changes for GPERF + TAO_IDL integration. Execute
-	tao_idl with -P option to enable PERFECT_HASH operation lookup
-	strategy.
+        First round of changes for GPERF + TAO_IDL integration. Execute
+        tao_idl with -P option to enable PERFECT_HASH operation lookup
+        strategy.
 
-	IDL-Attributes are not supported yet.
+        IDL-Attributes are not supported yet.
 
-	* TAO_IDL/driver/drv_args.cpp: Added option -P to enable
-	PERFECT_HASH operation lookup strategy.
+        * TAO_IDL/driver/drv_args.cpp: Added option -P to enable
+        PERFECT_HASH operation lookup strategy.
 
-	* TAO_IDL/be_include/be_interface.h: Added methods to generate
-	perfect hashing operation lookup table in the server skeleton
-	code.
+        * TAO_IDL/be_include/be_interface.h: Added methods to generate
+        perfect hashing operation lookup table in the server skeleton
+        code.
 
-	* TAO_IDL/be_include/be_helper.h (class TAO_OutStream): Added a
-	new stream type GPERF_INPUT to indicate the outstream is for
-	gperf's input file.
+        * TAO_IDL/be_include/be_helper.h (class TAO_OutStream): Added a
+        new stream type GPERF_INPUT to indicate the outstream is for
+        gperf's input file.
 
-	* TAO_IDL/be_include/be_codegen.h (class TAO_CodeGen):  Added <enum
-	LOOKUP_STRATEGY {...}> to indicate various lookup
-	strategies. Added the member and access methods that keeps track
-	of the TAO_OutStream that corresponds to the gperf's input file.
+        * TAO_IDL/be_include/be_codegen.h (class TAO_CodeGen):  Added <enum
+        LOOKUP_STRATEGY {...}> to indicate various lookup
+        strategies. Added the member and access methods that keeps track
+        of the TAO_OutStream that corresponds to the gperf's input file.
 
-	* TAO_IDL/be_include/be.h: Included "ace/Process.h".
+        * TAO_IDL/be_include/be.h: Included "ace/Process.h".
 
-	* TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_interface.cpp:
 
-	* TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_helper.cpp:
 
-	* TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
 
-	* tao/Operation_Table.h (TAO_Perfect_Hash_OpTable):
- 	* tao/Operation_Table.cpp :
-		Defined the class TAO_Perfect_Hash_OpTable, the factory
-	class for Perfect_Hashing-Operation_Lookup strategy.
+        * tao/Operation_Table.h (TAO_Perfect_Hash_OpTable):
+        * tao/Operation_Table.cpp :
+                Defined the class TAO_Perfect_Hash_OpTable, the factory
+        class for Perfect_Hashing-Operation_Lookup strategy.
 
 Tue Jun 30 13:23:59 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Scheduler_Factory.cpp:
-	  Workaround Sun/CC problem when compiling with -O (but not
-	  -fast). Apparently it does not like to use static (file) scope
-	  symbols in the definition of a template.
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+          Workaround Sun/CC problem when compiling with -O (but not
+          -fast). Apparently it does not like to use static (file) scope
+          symbols in the definition of a template.
 
 Tue Jun 30 10:40:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* docs/configurations.html: Added documentation about the
-	  -ORBiiopprofilelock switch.
+        * docs/configurations.html: Added documentation about the
+          -ORBiiopprofilelock switch.
 
-	* tao/Client_Strategy_Factory.{h,cpp}: Added the create_iiop_profile_lock (void)
+        * tao/Client_Strategy_Factory.{h,cpp}: Added the create_iiop_profile_lock (void)
 
-	* tao/GIOP.cpp: Use ACE_Lock instead of ACE_SYNCH_MUTEX.
+        * tao/GIOP.cpp: Use ACE_Lock instead of ACE_SYNCH_MUTEX.
 
-	* tao/IIOP_Object.cpp: Added the initialization of the fwd_profile_lock_ptr to
-	  the constructor.
+        * tao/IIOP_Object.cpp: Added the initialization of the fwd_profile_lock_ptr to
+          the constructor.
 
-	* tao/IIOP_Object.h: Changed the forward profile lock to a pointer to a lock.
+        * tao/IIOP_Object.h: Changed the forward profile lock to a pointer to a lock.
 
-	* tao/IIOP_Object.i: Added the initialization of the fwd_profile_lock_ptr to
-	  the constructor.
+        * tao/IIOP_Object.i: Added the initialization of the fwd_profile_lock_ptr to
+          the constructor.
 
-	* tao/default_client.{h,cpp}: Added the parsing of "-ORBportiiopproflielock" to
-	  the parse_args method. "thread" (default) means to use a mutex lock
-	  on the access of the forwarding iiop profile. "null" means, use a null
-	  mutex, which is faster, but does not provide any protection.
-	  Added also the function create_iiop_profile_lock () to allow
-	  others to create a new lock, depending on the above mentioned switch.
+        * tao/default_client.{h,cpp}: Added the parsing of "-ORBportiiopproflielock" to
+          the parse_args method. "thread" (default) means to use a mutex lock
+          on the access of the forwarding iiop profile. "null" means, use a null
+          mutex, which is faster, but does not provide any protection.
+          Added also the function create_iiop_profile_lock () to allow
+          others to create a new lock, depending on the above mentioned switch.
 
 Tue Jun 30 00:58:57 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 

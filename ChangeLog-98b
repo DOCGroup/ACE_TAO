@@ -1,42 +1,47 @@
+Tue Jun 30 22:05:01 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Dynamic_Priority_Test.cpp: added template
+          instantiations.
+
 Tue Jun 30 18:55:45 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* ace/Message_Queue_T.{cpp, h}
+        * ace/Message_Queue_T.{cpp, h}
 
-	  Added methods to ACE_Message_Queue_Factory to
-	  create an ACE_Dynamic_Message_Queue with the
-	  deadline and laxity with cleanup strategies.
-	
-	* tests/Dynamic_Priority_Test.cpp
+          Added methods to ACE_Message_Queue_Factory to
+          create an ACE_Dynamic_Message_Queue with the
+          deadline and laxity with cleanup strategies.
 
-	  Added tests for the new cleanup strategy factory methods
+        * tests/Dynamic_Priority_Test.cpp
+
+          Added tests for the new cleanup strategy factory methods
 
 Tue Jun 30 18:03:15 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* ace/Message_Queue_T.{cpp, h}
-	  ace/Message_Block.{cpp, h, i}
+        * ace/Message_Queue_T.{cpp, h}
+          ace/Message_Block.{cpp, h, i}
 
-	  Reorganized ACE_Dynamic_Message_Queue and related classes,
-	  fixed bugs that turned up in testing: it's ready to put
-	  on the road and see how it runs ;-)
-	
-	* tests/Dynamic_Priority_Test.{cpp, dsp}
+          Reorganized ACE_Dynamic_Message_Queue and related classes,
+          fixed bugs that turned up in testing: it's ready to put
+          on the road and see how it runs ;-)
+
+        * tests/Dynamic_Priority_Test.{cpp, dsp}
           tests/tests.dsw
-	  tests/Makefile
+          tests/Makefile
           tests/run_tests.{bat, sh}
 
-	  Added a test for the static and dynamic (both deadline and laxity 
-	  based) message queues, which assigns various message attributes,
-	  pushes messages into the queue, and makes sure the resulting
-	  dequeue order is correct for the given kind of queue.
+          Added a test for the static and dynamic (both deadline and laxity
+          based) message queues, which assigns various message attributes,
+          pushes messages into the queue, and makes sure the resulting
+          dequeue order is correct for the given kind of queue.
 
 Tue Jun 30 14:04:42 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/Message_Queue_T.cpp: Fixed references to an undeclared
-	  priority_eval_func_ptr_ - I think I figured out what it was
-	  supposed to be doing, but I'm not quite sure.  It compiles ;-)
+        * ace/Message_Queue_T.cpp: Fixed references to an undeclared
+          priority_eval_func_ptr_ - I think I figured out what it was
+          supposed to be doing, but I'm not quite sure.  It compiles ;-)
 
-	* ace/Synch.h (ACE_Adaptive_Lock): Removed "= 0" (pure virtual) from
-	  destructor decl.  The function is defined in Synch.cpp.
+        * ace/Synch.h (ACE_Adaptive_Lock): Removed "= 0" (pure virtual) from
+          destructor decl.  The function is defined in Synch.cpp.
 
 Tue Jun 30 13:13:21 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
