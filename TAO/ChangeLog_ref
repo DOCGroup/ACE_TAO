@@ -1,3 +1,19 @@
+Sat Jul 12 14:14:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Basic_Arguments.cpp:
+        * tao/Special_Basic_Arguments.cpp:
+        * tao/UB_String_Arguments.cpp:
+
+          Added explicit template instantiations of the individual
+          argument direction and return value classes for the IDL
+          basic types, including unbounded (w)strings.
+
+        * tao/Fixed_Array_Argument_T.cpp:
+        * tao/Fixed_Size_Argument_T.cpp:
+        * tao/Var_Array_Argument_T.inl:
+
+          Fixed typos and made cosmetic changes.
+
 Sat Jul 12 11:35:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_arg_tmplinst.cpp:
