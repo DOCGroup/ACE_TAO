@@ -12,11 +12,6 @@ Fri Sep 29 14:37:12 2000  Ossama Othman  <ossama@uci.edu>
 	* TAO_IDL/narrow/Makefile.am:
 
 	  Generate libtool convenience library instead of a static one.
-	  This saves disk space since a static library is no longer
-	  created in each directory where the static library once existed.
-	  Convenience libraries are actually a file with the list of files
-	  associated with the convenience library.  The static libraries
-	  were only being used as convenience libraries to begin with.
 
 	* TAO_IDL/include/Makefile.am (noinst_HEADERS):
 
