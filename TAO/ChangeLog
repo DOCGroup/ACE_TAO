@@ -1,8 +1,15 @@
+Fri Jun 11 21:47:12 2004  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * interop-tests/wchar/interop_wchar.mpc:
+        * tao/UTF16_BOM_Factory.h:
+        * tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16.h:
+          More fuzz fixes
+
 Fri Jun 11 15:30:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/Invocation_Adapter.cpp:
 
-	  Fixed a memory leak from forwarded object references.  
+	  Fixed a memory leak from forwarded object references.
 
 Fri Jun 11 12:11:16 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
