@@ -37,7 +37,7 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
+#include "tao/Collocation_Proxy_Broker.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/PortableServer/Collocated_Object.h"
@@ -182,8 +182,22 @@ TAO_NAMESPACE  POA_Test
 
     virtual ~_TAO_Hello_Strategized_Collocation_Proxy_Broker (void);
 
-    bool collocated_check (CORBA::Object *p);
+    TAO::Collocation_Strategy get_strategy (CORBA::Object *o
+                                            ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
+    void dispatch (CORBA::Object *obj,
+                   CORBA::Object_out forward_obj,
+                   TAO::Argument **arg,
+                   int num_args,
+                   const char *op,
+                   int op_len,
+                   TAO::Collocation_Strategy strategy
+                   ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    static _TAO_Hello_Strategized_Collocation_Proxy_Broker *the_TAO_Hello_Strategized_Collocation_Proxy_Broker (void);
   };
 
   //
@@ -209,10 +223,12 @@ TAO_NAMESPACE  POA_Test
     // TAO_IDL - Generated from
     // be/be_visitor_operation/proxy_impl_xh.cpp:24
 
-    static void get_string (CORBA::Object *_collocated_tao_target_,
-                            TAO::Argument **args,
-                            int args_number
-                            ACE_ENV_ARG_DECL)
+    static void get_string (
+        CORBA::Object *obj,
+        CORBA::Object_out forward,
+        TAO::Argument **arg,
+        int num_args
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
@@ -220,14 +236,14 @@ TAO_NAMESPACE  POA_Test
     // TAO_IDL - Generated from
     // be/be_visitor_operation/proxy_impl_xh.cpp:24
 
-    /*static void shutdown (CORBA::Object *_collocated_tao_target_,
-                            TAO::Argument **args,
-                            int args_number
-                           ACE_ENV_ARG_DECL)
-      )
+    static void shutdown (CORBA::Object *obj,
+                          CORBA::Object_out forward,
+                          TAO::Argument **arg,
+                          int num_args
+                          ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
-        CORBA::SystemException
-        ));*/
+                       CORBA::SystemException
+        ));
   };
 
   //
@@ -242,8 +258,6 @@ TAO_NAMESPACE_CLOSE // module Test
 
 // TAO_IDL - Generated from
 // be/be_codegen.cpp:993
-
-#include "TestS_T.h"
 
 #if defined (__ACE_INLINE__)
 #include "TestS.i"
