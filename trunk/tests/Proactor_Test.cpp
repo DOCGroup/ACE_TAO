@@ -101,6 +101,15 @@ static ACE_TCHAR headers[] =
 static ACE_TCHAR end_of_request_header[] =
   ACE_TEXT ("\r\n");
 
+static ACE_TCHAR complete_message[] =
+  "GET / HTTP/1.1\r\n"
+  "Accept: */*\r\n"
+  "Accept-Language: C++\r\n"
+  "Accept-Encoding: gzip, deflate\r\n"
+  "User-Agent: Proactor_Test/1.0 (non-compatible)\r\n"
+  "Connection: Keep-Alive\r\n"
+  "\r\n";
+
 class LogLocker 
 {
 public:
@@ -1087,24 +1096,24 @@ Sender::initiate_write_stream (void)
   if (this->flg_cancel_ != 0)
     return -1;
 
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
   static const size_t request_line_length = ACE_OS::strlen (request_line);
   static const size_t headers_length = ACE_OS::strlen (headers);
   static const size_t end_of_request_header_length = ACE_OS::strlen (end_of_request_header);
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
   ACE_Message_Block *mb1 = 0, 
                     *mb2 = 0, 
                     *mb3 = 0;
 
-  ACE_NEW_RETURN (mb1, ACE_Message_Block (request_line_length), -1);
-  ACE_NEW_RETURN (mb2, ACE_Message_Block (headers_length), -1);
-  ACE_NEW_RETURN (mb3, ACE_Message_Block (end_of_request_header_length), -1);
-
-  mb1->init (request_line, request_line_length);
+  // No need to allocate +1 for proper printing - the memory includes it already
+  ACE_NEW_RETURN (mb1, ACE_Message_Block (request_line,
+                                          request_line_length), -1);
   mb1->wr_ptr (request_line_length);
-  mb2->init (headers, headers_length);
+  ACE_NEW_RETURN (mb2, ACE_Message_Block (headers,
+                                          headers_length), -1);
   mb2->wr_ptr (headers_length);
-  mb3->init (end_of_request_header, end_of_request_header_length);
+  ACE_NEW_RETURN (mb3, ACE_Message_Block (end_of_request_header,
+                                          end_of_request_header_length), -1);
   mb3->wr_ptr (end_of_request_header_length);
 
   // chain them together
@@ -1113,29 +1122,26 @@ Sender::initiate_write_stream (void)
 
   if (this->ws_.writev (*mb1, mb1->total_length ()) == -1)
     {
+      mb1->release ();
       ACE_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT ("%p\n"),
                         ACE_TEXT ("Sender::ACE_Asynch_Stream::writev")),
                        -1);
     }
 #else /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+  static const size_t complete_message_length = ACE_OS::strlen (complete_message);
+
   ACE_Message_Block *mb = 0;
 
+  // No need to allocate +1 for proper printing - the memory includes it already
   ACE_NEW_RETURN (mb, 
-                  ACE_Message_Block (request_line_length
-                                     + headers_length
-                                     + end_of_request_header_length)
-                  , -1);
-
-  mb->copy (request_line, request_line_length);
-  mb->wr_ptr (request_line_length);
-  mb->copy (headers, headers_length);
-  mb->wr_ptr (headers_length);
-  mb->copy (end_of_request_header, end_of_request_header_length);
-  mb->wr_ptr (end_of_request_header_length);
+                  ACE_Message_Block (complete_message, complete_message_length),
+                  -1);
+  mb->wr_ptr (complete_message_length);
 
   if (this->ws_.write (*mb, mb->length ()) == -1)
     {
+      mb->release ();
       ACE_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT ("%p\n"),
                         ACE_TEXT ("Sender::ACE_Asynch_Stream::write")),
@@ -1155,21 +1161,29 @@ Sender::initiate_read_stream (void)
   if (this->flg_cancel_ != 0)
     return -1;
 
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
   static const size_t request_line_length = ACE_OS::strlen (request_line);
   static const size_t headers_length = ACE_OS::strlen (headers);
   static const size_t end_of_request_header_length = ACE_OS::strlen (end_of_request_header);
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
   ACE_Message_Block *mb1 = 0, 
                     *mb2 = 0, 
                     *mb3 = 0;
 
-  ACE_NEW_RETURN (mb1, ACE_Message_Block (request_line_length), -1);
-  ACE_NEW_RETURN (mb2, ACE_Message_Block (headers_length), -1);
-  ACE_NEW_RETURN (mb3, ACE_Message_Block (end_of_request_header_length), -1);
+  // We allocate +1 only for proper printing - we can just set the last byte 
+  // to '\0' before printing out
+  ACE_NEW_RETURN (mb1, ACE_Message_Block (request_line_length + 1), -1);
+  ACE_NEW_RETURN (mb2, ACE_Message_Block (headers_length + 1), -1);
+  ACE_NEW_RETURN (mb3, ACE_Message_Block (end_of_request_header_length + 1), -1);
 
   mb1->cont (mb2);
   mb2->cont (mb3);
+
+  // hide last byte in each message block, reserving it for later to set '\0'
+  // for proper printouts
+  mb1->size (mb1->size () - 1);
+  mb2->size (mb2->size () - 1);
+  mb3->size (mb3->size () - 1);
 
   // Inititiate read
   if (this->rs_.readv (*mb1, mb1->total_size () - 1) == -1)
@@ -1177,20 +1191,22 @@ Sender::initiate_read_stream (void)
       mb1->release ();
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("Sender::ACE_Asynch_Read_Stream::read")),
+                         ACE_TEXT ("Sender::ACE_Asynch_Read_Stream::readv")),
                         -1);
     }
 #else /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+  static const size_t complete_message_length = ACE_OS::strlen (complete_message);
+
   ACE_Message_Block *mb = 0;
 
+  // We allocate +1 only for proper printing - we can just set the last byte 
+  // to '\0' before printing out
   ACE_NEW_RETURN (mb, 
-                  ACE_Message_Block (request_line_length
-                                     + headers_length
-                                     + end_of_request_header_length)
+                  ACE_Message_Block (complete_message_length + 1)
                   , -1);
 
   // Inititiate read
-  if (this->rs_.read (*mb, mb->total_size () - 1) == -1)
+  if (this->rs_.read (*mb, mb->size () - 1) == -1)
     {
       mb->release ();
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -1254,6 +1270,10 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
            (mb_i != 0) && (bytes_transferred > 0); 
            mb_i = mb_i->cont ())
       {
+        // write 0 at string end for proper printout (if end of mb, it's 0 already)
+        mb_i->rd_ptr()[0]  = '\0'; 
+
+        // move rd_ptr backwards as required for printout
         if (mb_i->rd_ptr () - mb_i->base () >= bytes_transferred)
         {
           mb_i->rd_ptr (- bytes_transferred);
@@ -1267,23 +1287,21 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
         }
 
         ++index;
-        char message[1024];
-        ACE_OS::strncpy (message, mb_i->rd_ptr (), mb_i->length ());
-        message[mb_i->length ()] = 0;
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s%d = %s\n"),
                     ACE_TEXT ("message_block, part "),
                     index,
-                    message));
+                    mb_i->rd_ptr ()));
       }
 #else /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
-      char message[1024];
-      ACE_OS::strncpy (message, mb.rd_ptr (), mb.length ());
-      message[mb.length ()] = 0;
+      // write 0 at string end for proper printout (if end of mb, it's 0 already)
+      mb.rd_ptr()[0]  = '\0'; 
+      // move rd_ptr backwards as required for printout
+      mb.rd_ptr (- result.bytes_transferred ());
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%s = %s\n"),
                   ACE_TEXT ("message_block"),
-                  message));
+                  mb.rd_ptr ()));
 #endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
       ACE_DEBUG ((LM_DEBUG,
@@ -1358,23 +1376,22 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
            mb_i = mb_i->cont ())
       {
         ++index;
-        char message[1024];
-        ACE_OS::strncpy (message, mb_i->rd_ptr (), mb_i->length ());
-        message[mb_i->length ()] = 0;
+        // write 0 at string end for proper printout
+        mb_i->wr_ptr()[0]  = '\0';
+
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s%d = %s\n"),
                     ACE_TEXT ("message_block, part "),
                     index,
-                    message));
+                    mb_i->rd_ptr ()));
       }
 #else /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
-      char message[1024];
-      ACE_OS::strncpy (message, mb.rd_ptr (), mb.length ());
-      message[mb.length ()] = 0;
+      // write 0 at string end for proper printout
+      mb.rd_ptr()[result.bytes_transferred ()]  = '\0'; // for proper printout
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%s = %s\n"),
                   ACE_TEXT ("message_block"),
-                  message));
+                  mb.rd_ptr ()));
 #endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
       ACE_DEBUG ((LM_DEBUG,
@@ -1548,8 +1565,6 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Proactor_Test"));
-
-  ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR); // Edan
 
   if (::parse_args (argc, argv) == -1)
     return -1;
