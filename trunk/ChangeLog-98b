@@ -1,3 +1,7 @@
+Tue Aug 25 13:04:00 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Memory_Pool: Added virtual destructors.
+
 Tue Aug 25 10:38:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * bin/auto_compile:
