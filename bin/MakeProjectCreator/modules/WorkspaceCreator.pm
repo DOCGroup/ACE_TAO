@@ -70,6 +70,8 @@ sub new {
   $self->{'project_files'}  = [];
   $self->{'scoped_assign'}  = {};
   $self->{'cacheok'}        = 1;
+  $self->{'exclude'}        = {};
+  $self->{'wctype'}         = $self->extractType("$self");
 
   return $self;
 }
@@ -156,7 +158,14 @@ sub parse_line {
         if (defined $name) {
           $name =~ s/^\(\s*//;
           $name =~ s/\s*\)$//;
-          $self->{'workspace_name'} = $name;
+          if ($name =~ /[\/\\]/) {
+            $status = 0;
+            $errorString = 'ERROR: Workspaces can not have a slash ' .
+                           'or a back slash in the name';
+          }
+          else {
+            $self->{'workspace_name'} = $name;
+          }
         }
         $self->{$typecheck} = 1;
       }
@@ -189,10 +198,16 @@ sub parse_line {
       }
     }
     elsif ($values[0] eq 'component') {
-      ($status, $errorString) = $self->parse_scope($ih,
-                                                   $values[1],
-                                                   $values[2],
-                                                   \%validNames);
+      if ($values[1] eq 'exclude') {
+        ($status, $errorString) = $self->parse_exclude($ih,
+                                                       $values[2]);
+      }
+      else {
+        ($status, $errorString) = $self->parse_scope($ih,
+                                                     $values[1],
+                                                     $values[2],
+                                                     \%validNames);
+      }
     }
     else {
       $errorString = "ERROR: Unrecognized line: $line";
@@ -205,6 +220,62 @@ sub parse_line {
   }
 
   return $status, $errorString;
+}
+
+
+sub parse_exclude {
+  my($self)        = shift;
+  my($fh)          = shift;
+  my($typestr)     = shift;
+  my($status)      = 0;
+  my($errorString) = 'ERROR: Unable to process exclude';
+
+  if ($typestr eq 'default') {
+    $errorString = 'ERROR: You must specify a project type ' .
+                   'for exclusions';
+  }
+  else {
+    my(@types)   = split(/\s+/, $typestr);
+    my(@exclude) = ();
+
+    while(<$fh>) {
+      my($line) = $self->strip_line($_);
+
+      if ($line eq '') {
+      }
+      elsif ($line =~ /^}/) {
+        $status = 1;
+        $errorString = '';
+        last;
+      }
+      else {
+        push(@exclude, $line);
+      }
+    }
+
+    foreach my $type (@types) {
+      if (!defined $self->{'exclude'}->{$type}) {
+        $self->{'exclude'}->{$type} = [];
+      }
+      push(@{$self->{'exclude'}->{$type}}, @exclude);
+    }
+  }
+
+  return $status, $errorString;
+}
+
+
+sub excluded {
+  my($self) = shift;
+  my($file) = shift;
+
+  foreach my $excluded (@{$self->{'exclude'}->{$self->{'wctype'}}}) {
+    if ($excluded eq $file || $file =~ /$excluded\//) {
+      return 1;
+    }
+  }
+
+  return 0;
 }
 
 
@@ -295,14 +366,16 @@ sub generate_default_components {
     ## If we have files, then process directories
     my(@built) = ();
     foreach my $file (@$pjf) {
-      if (-d $file) {
-        my(@found) = ();
-        my(@gen)   = $self->generate_default_file_list($file);
-        $self->search_for_files(\@gen, \@exts, \@found);
-        push(@built, @found);
-      }
-      else {
-        push(@built, $file);
+      if (!$self->excluded($file)) {
+        if (-d $file) {
+          my(@found) = ();
+          my(@gen)   = $self->generate_default_file_list($file);
+          $self->search_for_files(\@gen, \@exts, \@found);
+          push(@built, @found);
+        }
+        else {
+          push(@built, $file);
+        }
       }
     }
 
@@ -346,6 +419,11 @@ sub generate_defaults {
       $self->{'workspace_name'} = $self->base_directory();
     }
     else {
+      ## Since files on UNIX can have back slashes, we transform them
+      ## into underscores.
+      $current =~ s/\\/_/g;
+
+      ## Take off the extension
       $current =~ s/\.[^\.]+$//;
       $self->{'workspace_name'} = $current;
     }
@@ -429,7 +507,7 @@ sub save_project_info {
 
 sub generate_project_files {
   my($self)      = shift;
-  my($status)    = 0;
+  my($status)    = (scalar @{$self->{'project_files'}} == 0 ? 1 : 0);
   my(@projects)  = ();
   my(%pi)        = ();
   my($generator) = $self->project_creator();
@@ -445,113 +523,119 @@ sub generate_project_files {
   $postkey =~ s/=.*//;
 
   foreach my $ofile (@{$self->{'project_files'}}) {
-    my($file)    = $ofile;
-    my($dir)     = dirname($file);
-    my($restore) = 0;
+    if (!$self->excluded($ofile)) {
+      my($file)    = $ofile;
+      my($dir)     = dirname($file);
+      my($restore) = 0;
 
-    if (defined $self->{'scoped_assign'}->{$ofile}) {
-      ## Handle the implicit assignment
-      my($oi) = $self->{'scoped_assign'}->{$ofile}->{'implicit'};
-      if (defined $oi) {
-        $previmpl = $impl;
-        $impl     = $oi;
+      if (defined $self->{'scoped_assign'}->{$ofile}) {
+        ## Handle the implicit assignment
+        my($oi) = $self->{'scoped_assign'}->{$ofile}->{'implicit'};
+        if (defined $oi) {
+          $previmpl = $impl;
+          $impl     = $oi;
+        }
+
+        ## Handle the cmdline assignment
+        my($cmdline) = $self->{'scoped_assign'}->{$ofile}->{'cmdline'};
+        if (defined $cmdline && $cmdline ne '') {
+          ## Save the cacheok value
+          $prevcache = $self->{'cacheok'};
+
+          ## Get the current parameters and process the command line
+          my(%parameters) = $self->current_parameters();
+          $self->process_cmdline($cmdline, \%parameters);
+
+          ## Set the parameters on the generator
+          $generator->restore_state(\%parameters);
+          $restore = 1;
+        }
       }
 
-      ## Handle the cmdline assignment
-      my($cmdline) = $self->{'scoped_assign'}->{$ofile}->{'cmdline'};
-      if (defined $cmdline && $cmdline ne '') {
-        ## Save the cacheok value
-        $prevcache = $self->{'cacheok'};
-
-        ## Get the current parameters and process the command line
-        my(%parameters) = $self->current_parameters();
-        $self->process_cmdline($cmdline, \%parameters);
-
-        ## Set the parameters on the generator
-        $generator->restore_state(\%parameters);
-        $restore = 1;
+      ## If we are generating implicit projects and the file is a
+      ## directory, then we set the dir to the file and empty the file
+      if ($impl && -d $file) {
+        $dir  = $file;
+        $file = '';
       }
-    }
 
-    ## If we are generating implicit projects and the file is a
-    ## directory, then we set the dir to the file and empty the file
-    if ($impl && -d $file) {
-      $dir  = $file;
-      $file = '';
-    }
+      ## Generate the key for this project file
+      my($prkey) = $self->getcwd() . "/$file-$postkey";
 
-    ## Generate the key for this project file
-    my($prkey) = $self->getcwd() . "/$file-$postkey";
+      ## We must change to the subdirectory for
+      ## which this project file is intended
+      if ($self->cd($dir)) {
+        my($gen) = [];
+        my($gpi) = [];
+        if ($self->{'cacheok'} && defined $allprojects{$prkey}) {
+          $gen = $allprojects{$prkey};
+          $gpi = $allprinfo{$prkey};
+          $status = 1;
+        }
+        else {
+          $status = $generator->generate(basename($file));
 
-    ## We must change to the subdirectory for
-    ## which this project file is intended
-    if ($self->cd($dir)) {
-      my($gen) = [];
-      my($gpi) = [];
-      if ($self->{'cacheok'} && defined $allprojects{$prkey}) {
-        $gen = $allprojects{$prkey};
-        $gpi = $allprinfo{$prkey};
-        $status = 1;
+          ## If any one project file fails, then stop
+          ## processing altogether.
+          if (!$status) {
+            ## We don't restore the state before we leave,
+            ## but that's ok since we will be exiting soon.
+            return $status, $generator;
+          }
+
+          ## Get the individual project information and
+          ## generated file name(s)
+          $gen = $generator->get_files_written();
+          $gpi = $generator->get_project_info();
+
+          ## If we need to generate a workspace file per project
+          ## then we generate a temporary project info and projects
+          ## array and call write_project().
+          if ($dir ne '.' && defined $$gen[0] && $self->workspace_per_project()) {
+            my(%perpi)       = ();
+            my(@perprojects) = ();
+            $self->save_project_info($gen, $gpi, '.', \@perprojects, \%perpi);
+
+            ## Set our per project information
+            $self->{'projects'}     = \@perprojects;
+            $self->{'project_info'} = \%perpi;
+
+            ## Write our per project workspace
+            $self->write_workspace($generator);
+
+            ## Reset our project information to empty
+            $self->{'projects'}     = [];
+            $self->{'project_info'} = {};
+          }
+
+          if ($self->{'cacheok'}) {
+            $allprojects{$prkey} = $gen;
+            $allprinfo{$prkey}   = $gpi;
+          }
+        }
+        $self->cd($cwd);
+        $self->save_project_info($gen, $gpi, $dir, \@projects, \%pi);
       }
       else {
-        $status = $generator->generate(basename($file));
+        ## Unable to change to the directory.
+        ## We don't restore the state before we leave,
+        ## but that's ok since we will be exiting soon.
+        return 0, $generator;
+      }
 
-        ## If any one project file fails, then stop
-        ## processing altogether.
-        if (!$status) {
-          ## We don't restore the state before we leave,
-          ## but that's ok since we will be exiting soon.
-          return $status, $generator;
-        }
+      ## Return things to the way they were
+      if (defined $self->{'scoped_assign'}->{$ofile}) {
+        $impl = $previmpl;
 
-        ## Get the individual project information and
-        ## generated file name(s)
-        $gen = $generator->get_files_written();
-        $gpi = $generator->get_project_info();
-
-        ## If we need to generate a workspace file per project
-        ## then we generate a temporary project info and projects
-        ## array and call write_project().
-        if ($dir ne '.' && defined $$gen[0] && $self->workspace_per_project()) {
-          my(%perpi)       = ();
-          my(@perprojects) = ();
-          $self->save_project_info($gen, $gpi, '.', \@perprojects, \%perpi);
-
-          ## Set our per project information
-          $self->{'projects'}     = \@perprojects;
-          $self->{'project_info'} = \%perpi;
-
-          ## Write our per project workspace
-          $self->write_workspace($generator);
-
-          ## Reset our project information to empty
-          $self->{'projects'}     = [];
-          $self->{'project_info'} = {};
-        }
-
-        if ($self->{'cacheok'}) {
-          $allprojects{$prkey} = $gen;
-          $allprinfo{$prkey}   = $gpi;
+        if ($restore) {
+          $self->{'cacheok'} = $prevcache;
+          $generator->restore_state(\%gstate);
         }
       }
-      $self->cd($cwd);
-      $self->save_project_info($gen, $gpi, $dir, \@projects, \%pi);
     }
     else {
-      ## Unable to change to the directory.
-      ## We don't restore the state before we leave,
-      ## but that's ok since we will be exiting soon.
-      return 0, $generator;
-    }
-
-    ## Return things to the way they were
-    if (defined $self->{'scoped_assign'}->{$ofile}) {
-      $impl = $previmpl;
-
-      if ($restore) {
-        $self->{'cacheok'} = $prevcache;
-        $generator->restore_state(\%gstate);
-      }
+      ## This one was excluded, so status is ok
+      $status = 1;
     }
   }
 

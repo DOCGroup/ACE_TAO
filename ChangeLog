@@ -1,3 +1,16 @@
+Tue Apr 22 09:16:29 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Changed the behavior when project names contain slashes or back
+          slashes.  This is now an error due to the fact that GHS build
+          files are put in subdirectories.
+
+          Also, the ability to exclude files and directories based on
+          project type was added to the WorkspaceCreator.
+
 Tue Apr 22 07:10:14 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/ChangeLogEditor/ChangeLogEdit.pm:
@@ -10,8 +23,8 @@ Tue Apr 22 07:10:14 2003  Chad Elliott  <elliott_c@ociweb.com>
 
 Tue Apr 22 12:43:17 2003  Simon McQueen  <sm@prismtechnologies.com>
 
-	* tests/Proactor_Scatter_Gather_Test.cpp:
-	  Fixed build error on win32.
+        * tests/Proactor_Scatter_Gather_Test.cpp:
+          Fixed build error on win32.
 
 Tue Apr 22 07:30:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -39,24 +52,24 @@ Tue Apr 22 06:14:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Apr 21 15:45:25 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/SOCK_SEQPACK_Acceptor.h:
+        * ace/SOCK_SEQPACK_Acceptor.h:
 
-	  No need to include "ace/Time_Value.h".  Forward declare
-	  ACE_Time_Value instead.
+          No need to include "ace/Time_Value.h".  Forward declare
+          ACE_Time_Value instead.
 
 Mon Apr 21 15:27:21 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Makefile.am (libACE_Sockets_la_SOURCES, HEADER_FILES):
-	  (INLINE_FILES):
+        * ace/Makefile.am (libACE_Sockets_la_SOURCES, HEADER_FILES):
+          (INLINE_FILES):
 
-	  Added new SCTP related files to these variables.
+          Added new SCTP related files to these variables.
 
 Mon Apr 21 15:23:44 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/SSL/Makefile.in:
+        * ace/SSL/Makefile.in:
 
-	  Removed this generated file.  It shouldn't exist in the CVS
-	  repository.
+          Removed this generated file.  It shouldn't exist in the CVS
+          repository.
 
 Mon Apr 21 21:20:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
