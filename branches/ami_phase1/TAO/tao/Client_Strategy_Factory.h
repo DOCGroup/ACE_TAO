@@ -42,6 +42,11 @@ public:
   // the TAO_GIOP_Invocation::location_forward and the
   // TAO_GIOP_Invocation::start
 
+  // @@ Alex: you can add methods here to create the WS and RMS
+  //    strategies, the implementation is empty, a derived class
+  //    (Default_Client_Strategy_Factory) fills in a nice
+  //    implementation.
+
   virtual ACE_Creation_Strategy<TAO_Client_Connection_Handler> *create_client_creation_strategy (void);
   // Create the correct client connection creation strategy
 };

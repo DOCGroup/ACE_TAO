@@ -814,6 +814,8 @@ TAO_Client_Connection_Handler::TAO_Client_Connection_Handler (ACE_Thread_Manager
     expecting_response_ (0),
     input_available_ (0)
 {
+  // @@ Alex: Allocate this on-demand and use the orb_core to create
+  // the strategies.
   iiop_transport_ = new TAO_IIOP_Client_Transport(this);
 }
 
@@ -1082,8 +1084,8 @@ TAO_ST_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
     return -1;
 
   return 0;
-  
-#if 0 
+
+#if 0
   // @@ I guess we can handle the case of handling unexpected input
   //    message in the Transport class itself. (Alex).
 
@@ -1123,19 +1125,19 @@ TAO_ST_Client_Connection_Handler::handle_input (ACE_HANDLE)
   // Temporarily remove ourself from notification so that if
   // another sub event loop is in effect still waiting for its
   // response, it doesn't spin tightly gobbling up CPU.
-  
+
   // @@ Why is this not transport_->orb_core ()?? (Alex).
   ACE_Reactor *reactor = TAO_ORB_Core_instance ()->reactor ();
   reactor->suspend_handler (this);
 
   // Handle the client input without blocking.
-  
+
   // @@ Should nt we check the return value and if it is 0 (means all
   //    input is not yet read), then we should resume the handler
   //    right here , I guess. Is that right? (Alex).
 
   int result =  this->transport ()->handle_client_input (0);
-  
+
   // If message is not read fully, resume the handler.
   if (result == 0)
     reactor->resume_handler (this);
