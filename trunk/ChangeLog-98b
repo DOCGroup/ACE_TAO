@@ -3,6 +3,10 @@ Mon Jul 20 11:12:44 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/Object_Manager.{h,cpp}: added ACE_TSS_BASE_LOCK, to
           support ACE_HAS_TSS_EMULATION with ACE_USE_NATIVE_KEYS.
 
+        * include/makeinclude/rules.lib.GNU: (INSTALL): use += to
+          define INSTALL instead of =, so that applications' INSTALL
+          won't be overwritten.
+
 Mon Jul 20 11:06:44 1998  Arturo Montes  <mitosys@colomsat.net.co>
 
         * ace/OS.*: added support for TSS emulation with Pthreads.

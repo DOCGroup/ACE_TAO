@@ -1,3 +1,8 @@
+Mon Jul 20 16:02:18 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * src/Makefile: fixed INSTALL.  It works with the latest
+          $ACE_ROOT/include/makeinclude/rules.lib.GNU.
+
 Mon Jul 20 15:35:59 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
         * Wrapped all the files with "#if defined (ACE_HAS_GPERF)" so that
