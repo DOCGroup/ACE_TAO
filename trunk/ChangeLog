@@ -1,3 +1,15 @@
+Tue Jul 31 05:34:48 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/OS.h: Removed a spurious WNOHANG definition.  Thanks to
+	  Christina Junru <junruli@lucent.com> for reporting this.
+
+Mon Jul 30 15:31:42 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Log_Msg.{h,i,cpp}: Fixed this class so that all of its fields
+	  are ACE_UINT32 or ACE_INT32 internally so that it'll always be
+ 	  the same on all platforms.  Thanks to Fabris
+ 	  <fabris65@my-deja.com> for reporting this.
+
 Tue Jul 31 10:22:38 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Makefile:
@@ -16,7 +28,8 @@ Mon Jul 30 13:41:00 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.cpp (ACE_Time_Value::FILETIME_to_timval_skew): Updated
 	  docuementation to better explain the meaning of this constant.
-	  Thanks to <mvitalo@sprynet.com> for motivating the change.
+  	  Thanks to Mike Vitalo <mvitalo@sprynet.com> for motivating the
+ 	  change.
 
 Mon Jul 30 09:43:06 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
