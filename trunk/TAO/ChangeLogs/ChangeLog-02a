@@ -15,6 +15,36 @@ Thu May 25 11:09:24 2000  Chad Elliott  <elliott_c@ociweb.com>
         * tests/Smart_Proxies/client.cpp
           Corrected the 'i' option in the parse_args function.
 
+Wed May 24 22:14:03 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+ 
+       * orbsvcs/tests/Notify/Makefile:
+       * orbsvcs/tests/Notify/Basic/Makefile:
+       * orbsvcs/tests/Notify/Basic/Updates.h:
+       * orbsvcs/tests/Notify/Basic/Updates.cpp:
+       * orbsvcs/tests/Notify/Basic/README:
+         Added files for the Basic tests.
+         The Updates test is under construction.
+ 
+       * orbsvcs/tests/Notify/lib/Notify_Test_Client.h:
+       * orbsvcs/tests/Notify/lib/Notify_Test_Client.cpp:
+       * orbsvcs/tests/Notify/lib/Makefile:
+         Added a generic test driver for the Notify tests.
+ 
+       * orbsvcs/examples/Notify/Subscribe/Subscribe.h:
+       * orbsvcs/examples/Notify/Subscribe/Subscribe.cpp:
+         Some code review corrections.
+
+
+Wed May 24 19:23:05 2000  Carlos O'Ryan  <coryan@uci.edu>
+ 
+       * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+         Add templates instantiation, it used to be instantiated in one
+         of the libraries, but we don't use the library anymore.
+ 
+       * orbsvcs/tests/EC_Mcast/Makefile:
+         Updated dependencies
+
+
 Wed May 24 20:48:51 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Makefile: 
@@ -29,7 +59,7 @@ Wed May 24 20:48:51 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 	  Thanks to Craig Rodrigues <crodrigu@bbn.com> for pointing them
 	  out and help fix them.
 	  
-	
+
 
 Wed May 24 17:53:12 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
