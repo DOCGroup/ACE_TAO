@@ -24,7 +24,7 @@
 
 #include "TestConfig.h"
 #include "Consumer.h"
-#include "TimeoutConsumer.h"
+#include "Supplier.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -40,7 +40,7 @@ typedef ACE_Array<RtecScheduler::Importance_t> ImportanceList;
 typedef ACE_Array<RtecScheduler::Criticality_t> CritList;
 
 typedef ACE_Array<Consumer*> ConsumerList;
-typedef ACE_Array<TimeoutConsumer*> SupplierList;
+typedef ACE_Array<Supplier*> SupplierList;
 
 template <class SCHED_STRAT>
 class ECConfig : public Test_Config {
