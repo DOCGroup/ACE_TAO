@@ -1211,7 +1211,7 @@ page_stats_t *page_stats_total;
 
     fprintf(stdout, "Total number of clients: \t%d\n", totalnumclients);
     testtime = sumedh_end.tv_sec - sumedh_start.tv_sec;
-    fprintf(stderr,"Test time: \t\t\t%d seconds\n", testtime);
+    fprintf(stdout,"Test time: \t\t\t%d seconds\n", testtime);
     
     fprintf(stdout, "Server connection rate: \t%3.2f connections/sec\n",
             (double)(masterstat.rs.totalconnects)/(testtime));
@@ -1364,8 +1364,6 @@ main(const int argc, char *argv[])
 
 
     gettimeofday (&sumedh_start, NULL);
-    fprintf (stderr, "test started at %d\n", sumedh_start.tv_sec);
-
     SendGo( totalnumclients, socknum);
 
     /*
@@ -1389,7 +1387,6 @@ main(const int argc, char *argv[])
 	       statarray);
 
     gettimeofday (&sumedh_end, NULL);
-    fprintf (stderr, "test ended at %d\n", sumedh_end.tv_sec);
     PrintResults( page_stats, endtime, timestr, totalnumclients, statarray,
 		 page_stats_total);
 
