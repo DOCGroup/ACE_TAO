@@ -150,7 +150,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (be_operation *node
   if (!be_global->exception_support ())
     *os << be_nl
         << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-        << ");" << be_nl << be_uidt;
+        << ");" << be_uidt_nl;
   else
     *os << be_uidt_nl << ");" << be_uidt_nl;
 
@@ -165,7 +165,27 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (be_operation *node
                           -1);
       }
 
-  os->indent ();
+  if (!be_global->exception_support ())
+    os->indent ();
+
+  *os << "servant_upcall.pre_invoke_collocated_request (";
+  if (!be_global->exception_support ())
+    *os << "ACE_ENV_SINGLE_ARG_PARAMETER";
+  *os << ");" << be_nl;
+
+  // check if there is an exception
+  if (!be_global->exception_support ())
+    if (this->gen_check_exception (bt) == -1)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
+                           "visit_operation - "
+                           "codegen for checking exception failed\n"),
+                          -1);
+      }
+
+  if (!be_global->exception_support ())
+    os->indent ();
 
   if (!this->void_return_type (bt))
     {

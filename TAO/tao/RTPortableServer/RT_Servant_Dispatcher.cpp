@@ -10,45 +10,20 @@
 
 ACE_RCSID(tao, Default_Acceptor_Filter, "$Id$")
 
-RT_Priority_Model_Processing::RT_Priority_Model_Processing (TAO_POA &poa,
-                                                            CORBA::Short servant_priority)
-  : state_ (NO_ACTION_REQUIRED),
-    poa_ (poa),
-    original_native_priority_ (0),
-    original_CORBA_priority_ (0),
-    servant_priority_ (servant_priority)
+TAO_RT_Servant_Dispatcher::~TAO_RT_Servant_Dispatcher (void)
 {
-}
-
-RT_Priority_Model_Processing::~RT_Priority_Model_Processing (void)
-{
-  if (this->state_ == PRIORITY_RESET_REQUIRED)
-    {
-      ACE_DECLARE_NEW_CORBA_ENV;
-
-      ACE_TRY
-        {
-          this->post_invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          // Eat up the exception.
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Exception caught: TAO (%P|%t) - Priority_Model_Processing::~Priority_Model_Processing");
-        }
-      ACE_ENDTRY;
-    }
 }
 
 void
-RT_Priority_Model_Processing::pre_invoke (
-   TAO_Service_Context &request_service_context,
-   TAO_Service_Context &reply_service_context
-   ACE_ENV_ARG_DECL)
+TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (TAO_POA &poa,
+                                                      CORBA::Short servant_priority,
+                                                      TAO_Service_Context &request_service_context,
+                                                      TAO_Service_Context &reply_service_context,
+                                                      TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
+                                                      ACE_ENV_ARG_DECL)
 {
   TAO_Thread_Pool *thread_pool =
-    (TAO_Thread_Pool *) this->poa_.thread_pool ();
+    (TAO_Thread_Pool *) poa.thread_pool ();
 
   if (thread_pool != 0 &&
       thread_pool->with_lanes ())
@@ -61,7 +36,7 @@ RT_Priority_Model_Processing::pre_invoke (
         {
           // Get the ORB_Core's TSS resources.
           TAO_ORB_Core_TSS_Resources *tss =
-            this->poa_.orb_core ().get_tss_resources ();
+            poa.orb_core ().get_tss_resources ();
 
           /// Get the lane attribute in TSS.
           TAO_Thread_Lane *lane =
@@ -84,11 +59,11 @@ RT_Priority_Model_Processing::pre_invoke (
 
   // Remember current thread's priority.
   TAO_Protocols_Hooks *tph =
-    this->poa_.orb_core ().get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
+    poa.orb_core ().get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (tph->get_thread_CORBA_and_native_priority (this->original_CORBA_priority_,
-                                                 this->original_native_priority_
+  if (tph->get_thread_CORBA_and_native_priority (pre_invoke_state.original_CORBA_priority_,
+                                                 pre_invoke_state.original_native_priority_
                                                  ACE_ENV_ARG_PARAMETER)
       == -1)
     ACE_THROW (CORBA::DATA_CONVERSION (1,
@@ -97,7 +72,7 @@ RT_Priority_Model_Processing::pre_invoke (
   const char *priority_model;
   RTCORBA::Priority target_priority = TAO_INVALID_PRIORITY;
   TAO_POA_Cached_Policies &cached_policies =
-    this->poa_.cached_policies ();
+    poa.cached_policies ();
 
   // NOT_SPECIFIED PriorityModel processing.
   if (cached_policies.priority_model () ==
@@ -150,7 +125,7 @@ RT_Priority_Model_Processing::pre_invoke (
       priority_model = "RTCORBA::SERVER_DECLARED";
 
       // Use the request associated with the servant.
-      target_priority = this->servant_priority_;
+      target_priority = servant_priority;
     }
 
   char thread_pool_id[BUFSIZ];
@@ -168,14 +143,15 @@ RT_Priority_Model_Processing::pre_invoke (
   // Change the priority of the current thread for the duration of
   // request.
   if (target_priority != TAO_INVALID_PRIORITY &&
-      target_priority != this->original_CORBA_priority_)
+      target_priority != pre_invoke_state.original_CORBA_priority_)
     {
       if (tph->set_thread_CORBA_priority (target_priority
                                           ACE_ENV_ARG_PARAMETER)
           == -1)
         ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
 
-      this->state_ = PRIORITY_RESET_REQUIRED;
+      pre_invoke_state.state_ =
+        TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED;
 
       if (TAO_debug_level > 0)
         {
@@ -189,15 +165,15 @@ RT_Priority_Model_Processing::pre_invoke (
                       ACE_TEXT ("temporarily changed to CORBA/native priority %d/%d\n"),
                       priority_model,
                       thread_pool_id,
-                      this->original_CORBA_priority_,
-                      this->original_native_priority_,
+                      pre_invoke_state.original_CORBA_priority_,
+                      pre_invoke_state.original_native_priority_,
                       target_priority,
                       native_priority));
         }
     }
   // No change in priority required.
   else if (target_priority != TAO_INVALID_PRIORITY &&
-           target_priority == this->original_CORBA_priority_)
+           target_priority == pre_invoke_state.original_CORBA_priority_)
     {
       if (TAO_debug_level > 0)
         {
@@ -207,8 +183,8 @@ RT_Priority_Model_Processing::pre_invoke (
                       ACE_TEXT ("is the same as the target priority\n"),
                       priority_model,
                       thread_pool_id,
-                      this->original_CORBA_priority_,
-                      this->original_native_priority_));
+                      pre_invoke_state.original_CORBA_priority_,
+                      pre_invoke_state.original_native_priority_));
         }
     }
   // Target priority is invalid.
@@ -222,68 +198,110 @@ RT_Priority_Model_Processing::pre_invoke (
                       ACE_TEXT ("not changed\n"),
                       priority_model,
                       thread_pool_id,
-                      this->original_CORBA_priority_,
-                      this->original_native_priority_));
+                      pre_invoke_state.original_CORBA_priority_,
+                      pre_invoke_state.original_native_priority_));
         }
     }
 }
 
 void
-RT_Priority_Model_Processing::post_invoke (
-    ACE_ENV_SINGLE_ARG_DECL)
+TAO_RT_Servant_Dispatcher::pre_invoke_collocated_request (TAO_POA &poa,
+                                                          CORBA::Short servant_priority,
+                                                          TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
+                                                          ACE_ENV_ARG_DECL)
 {
-  if (this->state_ == PRIORITY_RESET_REQUIRED)
+  TAO_Thread_Pool *thread_pool =
+    (TAO_Thread_Pool *) poa.thread_pool ();
+
+  if (thread_pool == 0 ||
+      thread_pool->with_lanes ())
     {
-      this->state_ = NO_ACTION_REQUIRED;
+      //
+      // We don't mess with the priority of threads in lanes or for
+      // the default thread pool.
+      //
+      return;
+    }
 
-      // Reset the priority of the current thread back to its original
-      // value.
-      TAO_Protocols_Hooks *tph =
-        this->poa_.orb_core ().get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+  TAO_POA_Cached_Policies &cached_policies =
+    poa.cached_policies ();
 
-      if (tph->set_thread_native_priority (this->original_native_priority_
-                                           ACE_ENV_ARG_PARAMETER)
+  if (cached_policies.priority_model () !=
+      TAO_POA_Cached_Policies::SERVER_DECLARED ||
+      servant_priority == TAO_INVALID_PRIORITY)
+    {
+      //
+      // We either don't have server declared model or servant
+      // priority is invalid.
+      //
+      return;
+    }
+
+  //
+  // SERVER_DECLARED PriorityModel processing.
+  //
+
+  // Remember current thread's priority.
+  TAO_Protocols_Hooks *tph =
+    poa.orb_core ().get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (tph->get_thread_CORBA_and_native_priority (pre_invoke_state.original_CORBA_priority_,
+                                                 pre_invoke_state.original_native_priority_
+                                                 ACE_ENV_ARG_PARAMETER)
+      == -1)
+    ACE_THROW (CORBA::DATA_CONVERSION (1,
+                                       CORBA::COMPLETED_NO));
+
+  // Change the priority of the current thread for the duration of
+  // request.
+  if (servant_priority != pre_invoke_state.original_CORBA_priority_)
+    {
+      if (tph->set_thread_CORBA_priority (servant_priority
+                                          ACE_ENV_ARG_PARAMETER)
           == -1)
         ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
+
+      pre_invoke_state.state_ =
+        TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED;
     }
 }
 
-/////////////////////////////////////////////////////////////////////////
-
-TAO_RT_Servant_Dispatcher::~TAO_RT_Servant_Dispatcher (void)
-{
-}
-
 void
-TAO_RT_Servant_Dispatcher::dispatch (TAO_Object_Adapter::Servant_Upcall &servant_upcall,
-                                     TAO_ServerRequest &req
-                                     ACE_ENV_ARG_DECL)
+TAO_RT_Servant_Dispatcher::post_invoke (TAO_POA &poa,
+                                        TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state)
+
 {
-  // RTCORBA PriorityModelPolicy processing (may need to be
-  // moved/adjusted when POA threadpools are added).  This is the
-  // earliest place we can do the processing, since only at this point
-  // we know the target POA.
-  RT_Priority_Model_Processing priority_processing (servant_upcall.poa (),
-                                                    servant_upcall.priority ());
+  if (pre_invoke_state.state_ ==
+      TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED)
+    {
+      pre_invoke_state.state_ =
+        TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State::NO_ACTION_REQUIRED;
 
-  // Set thread's priority.
-  priority_processing.pre_invoke (req.request_service_context (),
-                                  req.reply_service_context ()
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+      ACE_DECLARE_NEW_CORBA_ENV;
 
-  // Servant dispatch.
-  servant_upcall.servant ()->_dispatch (req,
-                                        &servant_upcall
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+      ACE_TRY
+        {
+          // Reset the priority of the current thread back to its original
+          // value.
+          TAO_Protocols_Hooks *tph =
+            poa.orb_core ().get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
-  // Reset thread's priority to its original value.  If this method
-  // isn't reached, i.e., because of an exception, the reset takes
-  // place in Priority_Model_Processing destructor.
-  priority_processing.post_invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+          if (tph->set_thread_native_priority (pre_invoke_state.original_native_priority_
+                                               ACE_ENV_ARG_PARAMETER)
+              == -1)
+            ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          // Eat up the exception.
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "Exception caught: TAO (%P|%t) - Priority_Model_Processing::~Priority_Model_Processing");
+        }
+      ACE_ENDTRY;
+    }
 }
 
 TAO_POA *

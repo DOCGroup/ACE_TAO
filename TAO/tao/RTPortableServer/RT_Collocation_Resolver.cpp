@@ -40,6 +40,11 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
   TAO_Thread_Pool *target_thread_pool =
     (TAO_Thread_Pool *) poa->thread_pool ();
 
+  // If the target POA does not have a dedicated thread pool, then all
+  // calls to it are collocated.
+  if (target_thread_pool == 0)
+    return 1;
+
   /// Get the ORB_Core's TSS resources.
   TAO_ORB_Core_TSS_Resources &tss =
     *orb_core->get_tss_resources ();
