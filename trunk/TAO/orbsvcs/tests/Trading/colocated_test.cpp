@@ -45,8 +45,8 @@ main (int argc, char** argv)
       TAO_Service_Type_Repository type_repos;
       auto_ptr<TAO_Trader_Factory::TAO_TRADER> trader =
 	auto_ptr<TAO_Trader_Factory::TAO_TRADER>(TAO_Trader_Factory::create_trader (argc, argv));
-      TAO_Support_Attributes_Impl& sup_attr = trader->support_attributes ();
-      TAO_Trading_Components_Impl& trd_comp = trader->trading_components ();
+      TAO_Support_Attributes_i& sup_attr = trader->support_attributes ();
+      TAO_Trading_Components_i& trd_comp = trader->trading_components ();
 
       // Set the service type repository
       sup_attr.type_repos (type_repos._this (TAO_TRY_ENV));
