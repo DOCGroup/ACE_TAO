@@ -88,6 +88,16 @@ main (int argc, char *argv[])
 
       txObject->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      // Sanity check
+      if (data_output->length () != len
+          || ACE_OS::memcmp (data_input.get_buffer (),
+                             data_output->get_buffer (),
+                             len) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "ERROR: Received octet sequence does not match "
+                           "the one that was sent.\n"),
+                          -1);
     }
   ACE_CATCHANY
     {
