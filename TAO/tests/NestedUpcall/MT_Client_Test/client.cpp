@@ -312,10 +312,7 @@ main (int argc, char **argv)
                                                    argc,
                                                    argv,
                                                    &orb_manager);
-      if (server->activate (THR_BOUND | THR_SCHED_FIFO,
-                            1,
-                            0,
-                            ACE_DEFAULT_THREAD_PRIORITY) != 0)
+      if (server->activate () != 0)
         {
           delete server;
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -331,10 +328,7 @@ main (int argc, char **argv)
         clients[i] = new MT_Client_Task (argc, argv, i);
 
       for (i = 0; i < threads; i++)
-        if (clients[i]->activate (THR_BOUND | THR_SCHED_FIFO,
-                                  1,
-                                  0,
-                                  ACE_DEFAULT_THREAD_PRIORITY) != 0)
+        if (clients[i]->activate () != 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                       "CLIENT ERROR: Unable to activate "
                       "MT_Client_Task.\n"),
