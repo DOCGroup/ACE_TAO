@@ -9,6 +9,10 @@ ACE_RCSID(ace, OS_String, "$Id$")
 # include "ace/OS_String.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
+#if defined (ACE_LACKS_WCSDUP_PROTOTYPE)
+extern "C" wchar_t *wcsdup __P ((__const wchar_t *__s)); 
+#endif /* ACE_LACKS_WCSDUP_PROTOTYPE */
+
 const char *
 ACE_OS_String::strnstr (const char *s1, const char *s2, size_t len2)
 {
@@ -126,7 +130,7 @@ const wchar_t *
 ACE_OS_String::strnchr (const wchar_t *s, wint_t c, size_t len)
 {
   for (size_t i = 0; i < len; i++)
-    if (s[i] == c)
+    if (s[i] == ACE_static_cast(wchar_t, c))
       return s + i;
 
   return 0;
@@ -167,7 +171,7 @@ ACE_OS_String::strrchr_emulation (const wchar_t *s, wint_t c)
 {
   const wchar_t *p = s + ACE_OS_String::strlen (s);
 
-  while (*p != c)
+  while (*p != ACE_static_cast (wchar_t, c))
     if (p == s)
       return 0;
     else
@@ -181,7 +185,7 @@ ACE_OS_String::strrchr_emulation (wchar_t *s, wint_t c)
 {
   wchar_t *p = s + ACE_OS_String::strlen (s);
 
-  while (*p != c)
+  while (*p != ACE_static_cast(wchar_t, c))
     if (p == s)
       return 0;
     else

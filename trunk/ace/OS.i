@@ -1428,7 +1428,16 @@ ACE_OS::vsprintf (char *buffer, const char *format, va_list argptr)
 ACE_INLINE int
 ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
 {
+# if defined (ACE_HAS_VSWPRINTF)
   return ::vswprintf (buffer, format, argptr);
+
+# else
+  ACE_UNUSED_ARG (buffer);
+  ACE_UNUSED_ARG (format);
+  ACE_UNUSED_ARG (argptr);
+  ACE_NOTSUP_RETURN (-1);  
+
+# endif /* ACE_HAS_VSWPRINTF */
 }
 #endif /* ACE_HAS_WCHAR */
 

@@ -132,14 +132,6 @@
 # endif /* ! ACE_HAS_MUTABLE_KEYWORD */
 
 // ============================================================================
-// UNICODE macros (to be added later)
-// ============================================================================
-
-// Get the unicode (i.e. ACE_TCHAR) defines
-# include "ace/ace_wchar.h"
-
-
-// ============================================================================
 // EXPORT macros
 //
 // Since Win32 DLL's do not export all symbols by default, they must be
@@ -308,6 +300,14 @@
 #     define ACE_CAST_CONST
 #   endif /* ! __SUNPRO_CC */
 # endif /* ! ACE_CAST_CONST */
+
+// ============================================================================
+// UNICODE macros (to be added later)
+// ============================================================================
+
+// Get the unicode (i.e. ACE_TCHAR) defines
+# include "ace/ace_wchar.h"
+
 
 // ============================================================================
 // Compiler Silencing macros

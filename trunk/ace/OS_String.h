@@ -179,7 +179,6 @@ private:
   static int strncasecmp_emulation (const wchar_t *s, 
                                     const wchar_t *t, 
                                     size_t len);
-  static wchar_t *itoa_emulation (int value, wchar_t *string, int radix);
 #endif /* ACE_HAS_WCHAR */
 
 

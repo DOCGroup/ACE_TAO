@@ -218,6 +218,9 @@
 #define ACE_LACKS_REWINDDIR
 #define ACE_LACKS_READDIR_R
 
+#define ACE_HAS_VSWPRINTF
+#define ACE_HAS_VFWPRINTF
+
 #define ACE_SIZEOF_LONG_LONG 8
 typedef unsigned __int64 ACE_UINT64;
 

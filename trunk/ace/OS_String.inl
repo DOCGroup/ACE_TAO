@@ -530,7 +530,13 @@ ACE_OS_String::strtok (char *s, const char *tokens)
 ACE_INLINE wchar_t *
 ACE_OS_String::strtok (wchar_t *s, const wchar_t *tokens)
 {
+# if defined (ACE_HAS_SAFE_WCSTOK)
+  ACE_UNUSED_ARG(s);
+  ACE_UNUSED_ARG(tokens);
+  ACE_NOTSUP_RETURN (0);
+# else
   return ::wcstok (s, tokens);
+# endif /* ACE_HAS_SAFE_WCSTOK */
 }
 #endif /* ACE_HAS_WCHAR */
 
