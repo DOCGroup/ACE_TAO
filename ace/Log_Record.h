@@ -6,10 +6,9 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 // These need to go outside of the #ifdef to avoid problems with
 // circular dependencies...
@@ -29,7 +28,6 @@
 class ACE_Export ACE_Log_Record
 {
 public:
-
   enum
   {
     /// Maximum size of a logging message.
@@ -140,7 +138,7 @@ public:
   void length (long);
 
   /// Get the time stamp of the <Log_Record>.
-  const ACE_Time_Value &time_stamp (void) const;
+  ACE_Time_Value time_stamp (void) const;
 
   /// Set the time stamp of the <Log_Record>.
   void time_stamp (const ACE_Time_Value &);
@@ -179,13 +177,14 @@ private:
   ACE_INT32 length_;
 
   /// Type of logging record.
-  long type_;
+  ACE_UINT32 type_;
 
   /// Time that the logging record was generated.
-  ACE_Time_Value time_stamp_;
+  ACE_UINT32 secs_;
+  ACE_UINT32 usecs_;
 
   /// Id of process that generated the logging record.
-  long pid_;
+  ACE_UINT32 pid_;
 
   /// Logging record data
   ACE_TCHAR msg_data_[MAXLOGMSGLEN];
