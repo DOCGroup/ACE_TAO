@@ -83,7 +83,8 @@ ImR_Activator_i::init_with_orb(CORBA::ORB_ptr orb, const Options& opts ACE_ENV_A
       ACE_DEBUG((LM_DEBUG, "ImR Activator: Starting %s\n", name_.c_str()));
 
     // initialize our process manager.
-    ACE_Reactor *reactor = orb_->orb_core ()->reactor ();
+    // This requires a reactor that has signal handling.
+    ACE_Reactor *reactor = ACE_Reactor::instance ();
     if (reactor != 0)
     {
       if (this->process_mgr_.open (ACE_Process_Manager::DEFAULT_SIZE, reactor) == -1)
