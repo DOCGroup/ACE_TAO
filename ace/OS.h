@@ -2309,7 +2309,15 @@ extern "C"
 #endif
 
 #include /**/ <netinet/in.h>
+#if defined(VXWORKS) && defined(ghs)
+// Works around a lack of proper prototypes for these functions on VxWorks
+unsigned long inet_addr(const char *);
+char    *inet_ntoa(const struct in_addr);
+struct  in_addr inet_makeaddr(const int, const int);
+unsigned long inet_network(const char *);
+#else
 #include /**/ <arpa/inet.h>
+#endif /* VXWORKS && ghs */  
 }
 #if !defined (ACE_LACKS_TCP_H)
 #include /**/ <netinet/tcp.h>
