@@ -1,3 +1,18 @@
+Tue Dec 19 14:40:26 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Filecache.cpp: Changed definition of R_MASK and W_MASK to
+          0 for ACE_WIN32 () used to be for __BORLANDC__. This is related
+          to the change below because the third arg to ACE_OS::open is
+          not ignored any longer for Win32.
+
+        * tests/Capabilities_Test.cpp: On ACE_OS::open, don't supply a
+          <perms> arg - let it default. The file gets deleted at the end of
+          the test and has nothing to be protected. Related to the below
+          change as well.
+
+        * tests/Mem_Map_Test.cpp: Changed all the 0666 args to ACE_OS::open
+          to ACE_DEFAULT_FILE_PERMS.
+
 Tue Dec 19 11:02:41 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.{h cpp} (open(char), open(wchar)): Changed the <perms>
