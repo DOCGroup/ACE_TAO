@@ -46,6 +46,14 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
+  be_type *bt;
+
+  // set the right type;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
   // output the class defn
   
   *os << "class TAO_" << node->flat_name () 
@@ -57,9 +65,10 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << be_nl << be_nl
       << "virtual ~TAO_" << node->flat_name ()
       << "_Default_Proxy_Factory (void);" << be_nl << be_nl
-      << "virtual "<< node->full_name () 
+      << "virtual "<< node->local_name () 
       << "_ptr create_proxy (" << be_idt << be_idt_nl 
-      << node->full_name () << "_ptr proxy," << be_nl
+      << node->local_name () 
+      << "_ptr proxy," << be_nl
       << "CORBA::Environment &env = " << be_idt_nl
       << "TAO_default_environment ()" << be_uidt << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
@@ -80,8 +89,9 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << "CORBA::Environment &env = " << be_idt_nl
       << "TAO_default_environment ()" << be_uidt << be_uidt_nl
       << ");" << be_uidt_nl << be_nl
-      << node->full_name () << "_ptr create_proxy (" << be_idt << be_idt_nl 
-      << node->full_name () << "_ptr proxy," << be_nl
+      << node->local_name ()
+      << "_ptr create_proxy (" << be_idt << be_idt_nl 
+      << node->local_name () << "_ptr proxy," << be_nl
       << "CORBA::Environment &env = " << be_idt_nl
       << "TAO_default_environment ()" << be_uidt << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl << be_nl
@@ -107,12 +117,14 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << node->flat_name ()<< "_PROXY_FACTORY_ADAPTER;"<<be_nl;
   
   *os << "class TAO_"<< node->flat_name () 
-      << "_Smart_Proxy_Base : public virtual "<< node->full_name ()
+      << "_Smart_Proxy_Base : public virtual " 
+      << bt->nested_type_name (this->ctx_->scope ())
       << be_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
       << "TAO_"<< node->flat_name () << "_Smart_Proxy_Base ("
-      << node->full_name () << "_ptr proxy);" << be_nl
+      << "::" << node->full_name () 
+      << "_ptr proxy);" << be_nl
     // Just to keep Old g++ complier (version: 2.7.2.3) happy its necessary 
     // to declare and define the destructor explicitly.
       << "~TAO_"<< node->flat_name () << "_Smart_Proxy_Base (void);"<<be_uidt_nl;
@@ -132,7 +144,8 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
   
   os->decr_indent ();  
   *os << "private:" << be_idt_nl
-      << node->full_name () << "_var base_proxy_;" 
+      << "::" << node->full_name () 
+      << "_var base_proxy_;" 
       << be_uidt_nl
       << "};\n\n";
   
