@@ -1,3 +1,8 @@
+Mon Mar 11 16:38:49 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Reactor_Notify_Test.cpp: Added missing #include "ace/Reactor.h"
+          to fix Visual Age C++ compile error.
+
 Mon Mar 11 16:27:59 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv1/RT_Thread_Per_Connection_Logging_Server.cpp:
