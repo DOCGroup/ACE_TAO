@@ -50,27 +50,27 @@ $(foreach ext, $(IDL_EXT) $(IDL_EXT2), %$(ext)): %.idl $(TAO_IDL)
 else
 #### You can redefine the following in your platform_macros.GNU
 
-ifndef SRCDIR
-  SRCDIR  =       /project/doc/nanbor/mom
+ifndef FLICK_SRCDIR
+  FLICK_SRCDIR  =       /project/doc/nanbor/mom
 endif
-ifndef OBJDIR
-  OBJDIR  =       /project/doc/nanbor/dad
+ifndef FLICK_OBJDIR
+  FLICK_OBJDIR  =       /project/doc/nanbor/dad
 endif
 
-CCFLAGS += -I$(OBJDIR)/runtime/headers -I$(SRCDIR)/runtime/headers # -g
+CCFLAGS += -I$(FLICK_OBJDIR)/runtime/headers -I$(FLICK_SRCDIR)/runtime/headers
 
-CORBA_FE=$(OBJDIR)/bin/flick-fe-newcorba
-CORBA_PG=$(OBJDIR)/bin/flick-c-pfe-corbaxx
-CORBA_BE=$(OBJDIR)/bin/flick-c-pbe-iiopxx
+CORBA_FE=$(FLICK_OBJDIR)/bin/flick-fe-newcorba
+CORBA_PG=$(FLICK_OBJDIR)/bin/flick-c-pfe-corbaxx
+CORBA_BE=$(FLICK_OBJDIR)/bin/flick-c-pbe-iiopxx
 
 $(foreach ext, $(IDL_EXT) $(IDL_EXT2), %$(ext)): %.idl
 	$(CORBA_FE) $< && \
 	$(CORBA_PG) -c -o $*-client.prc $*.aoi && \
-	$(CORBA_BE) $*-client.prc -o $*C.cpp -h $*C.h -f $*S.h && \
+	$(CORBA_BE) $*-client.prc -o $*C.cpp -h $*C.h -f $*S.h -F $*S.h --presentation_implementation $(FLICK_SRCDIR)/runtime/headers/flick/pres/tao_cxx.scml && \
 	echo > $*C.i
 	$(CORBA_FE) $< && \
 	$(CORBA_PG) -s -o $*-server.prc $*.aoi && \
-	$(CORBA_BE) $*-server.prc --no_mu_stubs -o $*S.cpp -h $*S.h -F $*C.h && \
+	$(CORBA_BE) $*-server.prc --no_mu_stubs -o $*S.cpp -h $*S.h -F $*C.h --presentation_implementation $(FLICK_SRCDIR)/runtime/headers/flick/pres/tao_cxx.scml && \
 	echo > $*S.i && \
         echo > $*S_T.h && \
         echo > $*S_T.i && \
