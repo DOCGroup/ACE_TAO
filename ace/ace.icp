@@ -1,7 +1,0 @@
-// $Id$
-//
-// Visual Age C++ 5 project file for building libACE.
-
-subproject ace icc "ace.icc", ics "ace.ics"
-{
-}
