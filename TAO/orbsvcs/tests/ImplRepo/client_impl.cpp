@@ -93,10 +93,12 @@ Client_i::cube_long (int i)
 {
   // Cube a long.
   CORBA::Long ret_long;
-  {
-    ret_long = this->server_->simple_method (i, this->env_);
-  }
+  ACE_OS::sleep (2);
+  ret_long = this->server_->simple_method (i, this->env_);
+  //this->server_->shutdown (this->env_);
+  //ACE_OS::sleep (2);
 
+//  ACE_DEBUG ((LM_DEBUG, "FOO!!! %d\n", i));
   ACE_DEBUG ((LM_DEBUG, "The cube of %d is %d\n", i, ret_long));
 
   if (this->env_.exception () != 0)
@@ -125,7 +127,7 @@ Client_i::run ()
 {
   u_int i;
 
-  for (i = 0; i < this->loop_count_; i++)
+  for (i = 1; i <= this->loop_count_; i++)
     this->cube_long (i);
 
   if (this->shutdown_)

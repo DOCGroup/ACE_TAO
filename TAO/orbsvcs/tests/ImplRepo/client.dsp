@@ -17,13 +17,12 @@ CFG=ImplRepoTest Client - Win32 Release
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "ImplRepoTest Client - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "ImplRepoTest Client - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "ImplRepoTest Client - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "ImplRepoTest Client - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -77,7 +76,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib TAOd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
+# ADD LINK32 aced.lib TAOd.lib /nologo /subsystem:console /incremental:no /debug /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 
 !ENDIF 
 
@@ -122,12 +121,13 @@ SOURCE=.\Simple_Object.idl
 
 !IF  "$(CFG)" == "ImplRepoTest Client - Win32 Release"
 
-# Begin Custom Build
+USERDEP__SIMPL="..\..\..\..\bin\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Simple_Object.idl
 InputName=Simple_Object
 
 BuildCmds= \
-	..\..\..\tao_idl\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -136,17 +136,36 @@ BuildCmds= \
    $(BuildCmds)
 
 "$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
 !ELSEIF  "$(CFG)" == "ImplRepoTest Client - Win32 Debug"
 
-# Begin Custom Build
+USERDEP__SIMPL="..\..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Simple_Object.idl
 InputName=Simple_Object
 
 BuildCmds= \
-	..\..\..\tao_idl\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -155,6 +174,24 @@ BuildCmds= \
    $(BuildCmds)
 
 "$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
