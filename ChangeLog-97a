@@ -52,6 +52,25 @@ Thu Mar 27 14:10:39 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
  	  ACE_HAS_IP_MULTICAST.  Thanks to Daniel Montalibet
  	  <daniel_montalibet@stortek.com> for reporting this.
 
+Thu Mar 27 15:54:10 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* ace/{Thread,Thread_Manager}.{h,i,cpp} (ACE_Thread): Changed type
+ 	for priority arg to spawn*() from u_int to long to support changes
+ 	in thr_create indicated below.  Thanks to Thilo Kielmann
+ 	<kielmann@informatik.uni-siegen.de> for these changes.
+
+	* ace/OS.cpp: Ensure that whenever either a priority of a
+ 	scheduling policy is set explicitly, with POSIX threads, the other
+ 	argument and the flag THR_EXPLICIT_SCHED is set automatically.  A
+ 	range check for priority values for POSIX 1003.1c is also
+ 	included.  Thanks to Thilo Kielmann
+ 	<kielmann@informatik.uni-siegen.de> for these changes.
+
+	* ace/OS.h: Changed type and default value of priority arg to
+ 	thr_create from u_int to long and 0 to -1.  Thanks to Thilo Kielmann
+ 	<kielmann@informatik.uni-siegen.de> for these changes.
+	Also added ACE_MAX and ACE_MIN macros.
+
 Thu Mar 27 11:25:38 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* netsvcs/servers/Makefile: removed SHOBJ so that main.so is not

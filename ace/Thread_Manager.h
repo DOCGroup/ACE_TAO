@@ -97,7 +97,7 @@ public:
 	     long flags = THR_NEW_LWP, 
 	     ACE_thread_t * = 0, 
 	     ACE_hthread_t *t_handle = 0,
-	     u_int priority = 0,
+	     long priority = 0,
 	     int grp_id = -1,
 	     void *stack = 0, 
 	     size_t stack_size = 0);
@@ -109,7 +109,7 @@ public:
 	       ACE_THR_FUNC func, 
 	       void *args = 0,
 	       long flags = THR_NEW_LWP,
-	       u_int priority = 0,
+	       long priority = 0,
 	       int grp_id = -1,
 	       ACE_Task_Base *task = 0);
   // Create N new threads, all of which execute <func>.  
@@ -121,7 +121,7 @@ public:
 	       ACE_THR_FUNC func, 
 	       void *args,
 	       long flags, 
-	       u_int priority = 0,
+	       long priority = 0,
 	       int grp_id = -1,
 	       void *stack[] = 0,
 	       size_t stack_size[] = 0,

@@ -34,7 +34,7 @@ public:
 		    long flags = THR_NEW_LWP,
 		    ACE_thread_t *t_id = 0, 
 		    ACE_hthread_t *t_handle = 0,
-		    u_int priority = 0,
+		    long priority = -1,
 		    void *stack = 0, 
 		    size_t stack_size = 0);
   // Spawn a new thread, which executes "func" with argument "arg".
@@ -43,7 +43,7 @@ public:
 		      ACE_THR_FUNC func,
 		      void *arg = 0, 
 		      long flags = THR_NEW_LWP,
-		      u_int priority = 0,
+		      long priority = -1,
 		      void *stack[] = 0, 
 		      size_t stack_size[] = 0);
   // Spawn N new threads, which execute <func> with argument <arg>.
@@ -60,7 +60,7 @@ public:
 		      ACE_THR_FUNC func, 
 		      void *arg, 
 		      long flags, 
-		      u_int priority = 0,
+		      long priority = -1,
 		      void *stack[] = 0,
 		      size_t stack_size[] = 0,
 		      ACE_hthread_t thread_handles[] = 0);
