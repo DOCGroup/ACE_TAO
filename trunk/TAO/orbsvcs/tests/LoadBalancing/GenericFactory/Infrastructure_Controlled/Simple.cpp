@@ -3,7 +3,7 @@
 
 ACE_RCSID (Infrastructure_Controlled,
            Simple,
-           "$Id$");
+           "$Id$")
 
 
 Simple::Simple (void)
