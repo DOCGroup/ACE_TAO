@@ -50,8 +50,8 @@ be_decl::be_decl (void)
 
 // Constructor
 be_decl::be_decl (AST_Decl::NodeType type,
-		  UTL_ScopedName *n,
-		  UTL_StrList *pragmas)
+                  UTL_ScopedName *n,
+                  UTL_StrList *pragmas)
   : AST_Decl (type, n, pragmas),
     cli_hdr_gen_ (I_FALSE),
     cli_stub_gen_ (I_FALSE),
@@ -194,7 +194,7 @@ be_decl::compute_flatname (void)
       // in the first loop compute the total length
       namelen = 0;
       i = new UTL_IdListActiveIterator (this->name ());
-      
+
       while (!(i->is_done ()))
         {
           if (!first)
@@ -347,16 +347,16 @@ be_decl::compute_prefix ()
   if (this->pragmas () != 0)
     {
       for (UTL_StrlistActiveIterator i (this->pragmas ());
-	   !i.is_done ();
-	   i.next ())
-	{
-	  const char* s = i.item ()->get_string ();
+           !i.is_done ();
+           i.next ())
+        {
+          const char* s = i.item ()->get_string ();
 
-	  if (ACE_OS::strncmp (s, "#pragma prefix", 14) == 0)
-	    {
-	      pragma = s;
-	    }
-	}
+          if (ACE_OS::strncmp (s, "#pragma prefix", 14) == 0)
+            {
+              pragma = s;
+            }
+        }
     }
 
   if (pragma != 0)
@@ -366,12 +366,12 @@ be_decl::compute_prefix ()
       const char* end = ACE_OS::strchr (tmp, '"');
 
       if (end == 0)
-	{
-	  idl_global->err ()->syntax_error
-	    (IDL_GlobalData::PS_PragmaPrefixSyntax);
-	  this->prefix_ = ACE::strnew ("");
-	  return;
-	}
+        {
+          idl_global->err ()->syntax_error
+            (IDL_GlobalData::PS_PragmaPrefixSyntax);
+          this->prefix_ = ACE::strnew ("");
+          return;
+        }
       int l = end - tmp;
       this->prefix_ = new char[l+1];
       ACE_OS::strncpy (this->prefix_, tmp, end - tmp);
@@ -385,12 +385,12 @@ be_decl::compute_prefix ()
     this->prefix_ = ACE::strnew ("");
   else
     {
-      be_scope* scope = 
-	be_scope::narrow_from_scope (this->defined_in ());
+      be_scope* scope =
+        be_scope::narrow_from_scope (this->defined_in ());
       if (scope == 0)
-	this->prefix_ = ACE::strnew ("");
+        this->prefix_ = ACE::strnew ("");
       else
-	this->prefix_ = ACE::strnew (scope->decl()->prefix ());
+        this->prefix_ = ACE::strnew (scope->decl()->prefix ());
     }
 }
 

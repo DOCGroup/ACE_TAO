@@ -9,26 +9,26 @@
 //    TAO IDL
 //
 // = FILENAME
-//    cdr_op_ch.h
+//    cdr_op_ci.h
 //
 // = DESCRIPTION
 //    Concrete visitor for the Typedef class
 //    This provides the code generation for the CDR operators of the Typedef
-//    class in the client header.
+//    class in the client stubs.
 //
 // = AUTHOR
 //    Aniruddha Gokhale
 //
 // ============================================================================
 
-#ifndef _BE_VISITOR_TYPEDEF_CDR_OP_CH_H_
-#define _BE_VISITOR_TYPEDEF_CDR_OP_CH_H_
+#ifndef _BE_VISITOR_TYPEDEF_CDR_OP_CI_H_
+#define _BE_VISITOR_TYPEDEF_CDR_OP_CI_H_
 
-class be_visitor_typedef_cdr_op_ch : public be_visitor_typedef
+class be_visitor_typedef_cdr_op_ci : public be_visitor_typedef
 {
   //
   // = TITLE
-  //   be_visitor_typedef_cdr_op_ch
+  //   be_visitor_typedef_cdr_op_ci
   //
   // = DESCRIPTION
   //   This is a concrete visitor for typedef that generates the CDR operator
@@ -36,10 +36,10 @@ class be_visitor_typedef_cdr_op_ch : public be_visitor_typedef
   //
 
 public:
-  be_visitor_typedef_cdr_op_ch (be_visitor_context *ctx);
+  be_visitor_typedef_cdr_op_ci (be_visitor_context *ctx);
   // constructor
 
-  ~be_visitor_typedef_cdr_op_ch (void);
+  ~be_visitor_typedef_cdr_op_ci (void);
   // destructor
 
   virtual int visit_typedef (be_typedef *node);
@@ -65,4 +65,4 @@ public:
 
 };
 
-#endif /* _BE_VISITOR_TYPEDEF_CDR_OP_CH_H_*/
+#endif /* _BE_VISITOR_TYPEDEF_CDR_OP_CI_H_*/

@@ -8,7 +8,7 @@
 //    TAO IDL
 //
 // = FILENAME
-//    cdr_op_cs.h
+//    cdr_op_ci.h
 //
 // = DESCRIPTION
 //    Visitors for generation of code for Arrays in client stubs. This one
@@ -19,18 +19,18 @@
 //
 // ============================================================================
 
-#ifndef _BE_VISITOR_ARRAY_CDR_OP_CS_H_
-#define _BE_VISITOR_ARRAY_CDR_OP_CS_H_
+#ifndef _BE_VISITOR_ARRAY_CDR_OP_CI_H_
+#define _BE_VISITOR_ARRAY_CDR_OP_CI_H_
 
 // ************************************************************
 // class be_visitor_array_cs
 // ************************************************************
 
-class be_visitor_array_cdr_op_cs : public be_visitor_decl
+class be_visitor_array_cdr_op_ci : public be_visitor_decl
 {
   //
   // = TITLE
-  //   be_visitor_array_cdr_op_cs
+  //   be_visitor_array_cdr_op_ci
   //
   // = DESCRIPTION
   //   This is a concrete visitor for array that generates the CDR operator
@@ -38,10 +38,10 @@ class be_visitor_array_cdr_op_cs : public be_visitor_decl
   //
 
 public:
-  be_visitor_array_cdr_op_cs (be_visitor_context *ctx);
+  be_visitor_array_cdr_op_ci (be_visitor_context *ctx);
   // constructor
 
-  ~be_visitor_array_cdr_op_cs (void);
+  ~be_visitor_array_cdr_op_ci (void);
   // destructor
 
   virtual int visit_array (be_array *node);
@@ -83,4 +83,4 @@ protected:
 
 };
 
-#endif /* _BE_VISITOR_ARRAY_CDR_OP_CS_H_ */
+#endif /* _BE_VISITOR_ARRAY_CDR_OP_CI_H_ */

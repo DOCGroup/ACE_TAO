@@ -264,6 +264,7 @@ be_visitor_valuetype::visit_constant (be_constant *node)
     case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CH:
     case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CS:
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CI:
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS:
     case TAO_CodeGen::TAO_VALUETYPE_CI:
     case TAO_CodeGen::TAO_VALUETYPE_SH:
@@ -337,6 +338,9 @@ be_visitor_valuetype::visit_enum (be_enum *node)
       break;
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CS);
+      break;
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CI:
+      ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CI);
       break;
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CI:
@@ -432,6 +436,9 @@ be_visitor_valuetype::visit_structure (be_structure *node)
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CH:
       ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CH);
       break;
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CI:
+      ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CI);
+      break;
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CS);
       break;
@@ -510,6 +517,9 @@ be_visitor_valuetype::visit_union (be_union *node)
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CH:
       ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CH);
       break;
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CI:
+      ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CI);
+      break;
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CS);
       break;
@@ -587,6 +597,9 @@ be_visitor_valuetype::visit_typedef (be_typedef *node)
       break;
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CH:
       ctx.state (TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CI:
+      ctx.state (TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CI);
       break;
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS);

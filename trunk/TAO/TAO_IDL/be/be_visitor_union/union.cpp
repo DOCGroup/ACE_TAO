@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_union.h"
 
@@ -81,6 +81,9 @@ be_visitor_union::visit_union_branch (be_union_branch *node)
       break;
     case TAO_CodeGen::TAO_UNION_CDR_OP_CH:
       ctx.state (TAO_CodeGen::TAO_UNION_BRANCH_CDR_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_UNION_CDR_OP_CI:
+      ctx.state (TAO_CodeGen::TAO_UNION_BRANCH_CDR_OP_CI);
       break;
     case TAO_CodeGen::TAO_UNION_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_UNION_BRANCH_CDR_OP_CS);

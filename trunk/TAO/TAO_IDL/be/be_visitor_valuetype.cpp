@@ -38,7 +38,7 @@
 //#include "be_visitor_valuetype/any_op_ch.cpp"
 //#include "be_visitor_valuetype/any_op_cs.cpp"
 #include "be_visitor_valuetype/cdr_op_ch.cpp"
-#include "be_visitor_valuetype/cdr_op_cs.cpp"
+#include "be_visitor_valuetype/cdr_op_ci.cpp"
 #include "be_visitor_valuetype/marshal_ch.cpp"
 #include "be_visitor_valuetype/marshal_cs.cpp"
 #include "be_visitor_valuetype/arglist.cpp"
@@ -48,4 +48,3 @@
 #include "be_visitor_valuetype/obv_module.cpp"
 
 #endif /* IDL_HAS_VALUETYPE */
-

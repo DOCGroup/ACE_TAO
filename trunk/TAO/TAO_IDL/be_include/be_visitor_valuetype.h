@@ -33,7 +33,7 @@
 //#include "be_visitor_valuetype/any_op_ch.h"
 //#include "be_visitor_valuetype/any_op_cs.h"
 #include "be_visitor_valuetype/cdr_op_ch.h"
-#include "be_visitor_valuetype/cdr_op_cs.h"
+#include "be_visitor_valuetype/cdr_op_ci.h"
 #include "be_visitor_valuetype/marshal_ch.h"
 #include "be_visitor_valuetype/marshal_cs.h"
 #include "be_visitor_valuetype/arglist.h"

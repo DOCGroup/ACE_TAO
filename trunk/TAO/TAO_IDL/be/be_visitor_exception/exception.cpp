@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_exception.h"
 
@@ -69,6 +69,9 @@ be_visitor_exception::visit_field (be_field *node)
       break;
     case TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CH:
       ctx.state (TAO_CodeGen::TAO_FIELD_CDR_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CI:
+      ctx.state (TAO_CodeGen::TAO_FIELD_CDR_OP_CI);
       break;
     case TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_FIELD_CDR_OP_CS);

@@ -9,7 +9,7 @@
 //    TAO IDL
 //
 // = FILENAME
-//    cdr_op_cs.h
+//    cdr_op_ci.h
 //
 // = DESCRIPTION
 //    Concrete visitor for valuetypes.
