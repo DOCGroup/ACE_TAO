@@ -461,6 +461,11 @@ namespace
         interface_emitter.edge_traverser (defines_);
         interface_emitter.edge_traverser (inherits_);
 
+        AttributeEmitter<SemanticGraph::Interface> attribute_emitter (ctx, i);
+        ReadOnlyAttributeEmitter<SemanticGraph::Interface> read_only_attribute_emitter (ctx, i);
+        defines_.node_traverser (attribute_emitter);
+        defines_.node_traverser (read_only_attribute_emitter);
+
         OperationEmitter<SemanticGraph::UnconstrainedInterface> operation_emitter (ctx, i);
         defines_.node_traverser (operation_emitter);
         inherits_.node_traverser (interface_emitter);
@@ -2330,6 +2335,11 @@ namespace
         Traversal::Inherits inherits;
         interface_emitter.edge_traverser (defines);
         interface_emitter.edge_traverser (inherits);
+
+        AttributeEmitter<SemanticGraph::Component> attribute_emitter (ctx, t);
+        ReadOnlyAttributeEmitter<SemanticGraph::Component> read_only_attribute_emitter (ctx, t);
+        defines.node_traverser (attribute_emitter);
+        defines.node_traverser (read_only_attribute_emitter);
 
         OperationEmitter<SemanticGraph::Component> operation_emitter (ctx, t);
         defines.node_traverser (operation_emitter);
