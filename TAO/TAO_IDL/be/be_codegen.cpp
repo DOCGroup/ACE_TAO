@@ -1647,6 +1647,8 @@ TAO_CodeGen::gen_skel_src_includes (void)
                               "tao/DynamicC.h");
   this->gen_standard_include (this->server_skeletons_,
                               "tao/CDR.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/PortableInterceptor.h");
 
   if (be_global->gen_thru_poa_collocation ()
       || be_global->gen_direct_collocation ())

@@ -22,9 +22,6 @@ ACE_RCSID (be_visitor_interface,
            upcall_command_ss,
            "$Id$")
 
-// ************************************************************
-//  interceptor class in header
-// ************************************************************
 
 be_visitor_interface_upcall_command_ss
 ::be_visitor_interface_upcall_command_ss (be_visitor_context * ctx)
