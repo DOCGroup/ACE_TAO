@@ -212,6 +212,12 @@ public:
   // <ACE_Recursive_Mutex>.
   // NOTE: the right name would be lock_, but HP/C++ will choke on that!
 
+  TYPE &value_i (void);
+  // Explicitly return <value_> (by reference).  This gives the user
+  // full, unrestricted access to the underlying value.  This method
+  // will usually be used in conjunction with explicit access to the
+  // lock.  Use with care ;-)
+
 private:
   ACE_LOCK mutex_;
   // Type of synchronization mechanism.
