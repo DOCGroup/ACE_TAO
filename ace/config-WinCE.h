@@ -145,6 +145,8 @@ typedef long off_t;
 #define stdin 0
 #define stdout 0
 
+#define ACE_HAS_STRDUP_EMULATION
+
 // @@ This needs to be defined and initialized as a static. (Singleton?)
 #define ACE_CE_DEFAULT_LOG_STREAM 0
 

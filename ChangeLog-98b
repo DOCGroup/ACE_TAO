@@ -1,3 +1,12 @@
+Mon Aug 24 13:05:03 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-{chorus,WinCE,vxworks5.x}.h: Added
+ 	  ACE_HAS_STRDUP_EMULATION.  Thanks to Chuck Gehr for this
+ 	  suggestion.
+
+	* ace/OS.i (strdup): Removed complicated #ifdef and replaced it
+	  with ACE_HAS_STRDUP_EMULATION.
+
 Mon Aug 24 10:41:07 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* ace/OS.h: Provided null defitions for all the <wstat> wait

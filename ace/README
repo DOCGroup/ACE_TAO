@@ -182,6 +182,7 @@ ACE_HAS_SSIZE_T                         Compiler supports the ssize_t typedef
 ACE_HAS_STHREADS                        Platform supports Solaris threads
 ACE_HAS_STANDARD_CPP_LIBRARY            Platform/compiler supports Standard C++ Library
 ACE_HAS_STRBUF_T                        Compiler/platform supports struct strbuf
+ACE_HAS_STRDUP_EMULATION                Platform/compiler lacks strdup() (e.g., VxWorks, Chorus, WinCE)
 ACE_HAS_STREAMS                         Platform supports STREAMS
 ACE_HAS_STREAM_PIPES                    Platform supports STREAM pipes
 ACE_HAS_STRERROR                        Compiler/platform supports strerror ()

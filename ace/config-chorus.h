@@ -118,6 +118,7 @@
 #define ACE_HAS_SIGWAIT
 #define ACE_LACKS_CONDATTR_PSHARED
 #define ACE_LACKS_SEMBUF_T
+#define ACE_HAS_STRDUP_EMULATION
 
 // By default, don't include RCS Id strings in object code.
 #if !defined (ACE_USE_RCSID)
