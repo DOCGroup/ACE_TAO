@@ -20,7 +20,8 @@ ACE_RCSID (tao, GIOP_Message_Base, "$Id$")
 
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                                               size_t /*input_cdr_size*/)
-  : message_state_ (orb_core,
+  : orb_core_ (orb_core),
+    message_state_ (orb_core,
                     this),
     output_ (0),
     generator_parser_ (0)
@@ -323,9 +324,7 @@ TAO_GIOP_Message_Base::parse_incoming_messages (ACE_Message_Block &incoming)
       return -1;
     }
 
-  // Set the state internally for parsing and generating messages
-  this->set_state (this->message_state_.giop_version_.major,
-                   this->message_state_.giop_version_.minor);
+
   return 0;
 }
 
@@ -336,12 +335,12 @@ TAO_GIOP_Message_Base::missing_data (ACE_Message_Block &incoming)
   CORBA::ULong msg_size =
     this->message_state_.message_size ();
 
-  ssize_t len = incoming.length ();
+  size_t len = incoming.length ();
 
   if (len > msg_size)
     {
       // Move the rd_ptr so that we can extract the next message.
-      incoming.rd_ptr (msg_size);
+      // incoming.rd_ptr (msg_size);
       return -1;
      }
   else if (len == msg_size)
@@ -353,55 +352,156 @@ TAO_GIOP_Message_Base::missing_data (ACE_Message_Block &incoming)
 
 int
 TAO_GIOP_Message_Base::extract_next_message (ACE_Message_Block &incoming,
-                                             TAO_Queued_Data *qd)
+                                             TAO_Queued_Data *&qd)
 {
-  TAO_GIOP_Message_State msg_state;
+  TAO_GIOP_Message_State state (this->orb_core_,
+                                this);
 
   if (incoming.length () < TAO_GIOP_MESSAGE_HEADER_LEN)
     {
       if (incoming.length () > 0)
         {
+          // Make a node which has a message block of the size of
+          // MESSAGE_HEADER_LEN.
           qd =
-            this->make_queued_data (incoming.length ());
+            this->make_queued_data (TAO_GIOP_MESSAGE_HEADER_LEN);
 
-          qd.missing_data_ = -1;
+          qd->msg_block_->copy (incoming.rd_ptr (),
+                                incoming.length ());
+          qd->missing_data_ = -1;
         }
       return 0;
     }
 
-
-  if (msg_state.parse_message_header (incoming) == -1)
+  if (state.parse_message_header (incoming) == -1)
     {
       return -1;
     }
 
-  size_t copying_len = msg_state.message_size ();
+  size_t copying_len = state.message_size ();
 
   qd = this->make_queued_data (copying_len);
 
   if (copying_len > incoming.length ())
     {
-      qd.missing_data_ =
+      qd->missing_data_ =
         copying_len - incoming.length ();
 
       copying_len -= incoming.length ();
     }
 
-  new_mb.copy (incoming.rd_ptr (),
-               copying_len);
+  qd->msg_block_->copy (incoming.rd_ptr (),
+                        copying_len);
 
   incoming.rd_ptr (copying_len);
-  qd.byte_order_ = msg_state.byte_order_;
-  qd.major_version_ = msg_state.giop_version_.major_version;
-  qd.minor_version_ = msg_state.giop_version_.minor_version;
+  qd->byte_order_ = state.byte_order_;
+  qd->major_version_ = state.giop_version_.major;
+  qd->minor_version_ = state.giop_version_.minor;
 
   return 1;
 }
 
-CORBA::Octet
-TAO_GIOP_Message_Base::byte_order (void)
+int
+TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
+                                         ACE_Message_Block &incoming)
 {
-  return this->message_state_.byte_order_;
+  // Look to see whether we had atleast parsed the GIOP header ...
+  if (qd->missing_data_ == -1)
+    {
+      // The data length that has been stuck in there during the last
+      // read ....
+      size_t len =
+        qd->msg_block_->length ();
+
+      // We know that we would have space for
+      // TAO_GIOP_MESSAGE_HEADER_LEN here.  So copy that much of data
+      // from the <incoming> into the message block in <qd>
+      qd->msg_block_->copy (incoming.rd_ptr (),
+                            len - TAO_GIOP_MESSAGE_HEADER_LEN);
+
+      // Move the rd_ptr () in the incoming message block..
+      incoming.rd_ptr (len - TAO_GIOP_MESSAGE_HEADER_LEN);
+
+      TAO_GIOP_Message_State state (this->orb_core_,
+                                    this);
+
+      // Parse the message header now...
+      if (state.parse_message_header (*qd->msg_block_) == -1)
+        return -1;
+
+      // Now grow the message block so that we can copy the rest of
+      // the data...
+      ACE_CDR::grow (qd->msg_block_,
+                     state.message_size ());
+
+      // Copy the pay load..
+
+      // Calculate the bytes that needs to be copied in the queue...
+      size_t copy_len =
+        state.message_size () - TAO_GIOP_MESSAGE_HEADER_LEN;
+
+      // If teh data that needs to be copied is more than that is
+      // available to us ..
+      if (copy_len > incoming.length ())
+        {
+          // Calculate the missing data..
+          qd->missing_data_ =
+            copy_len - incoming.length ();
+
+          // Set the actual possible copy_len that is available...
+          copy_len = incoming.length ();
+        }
+
+      // ..now we are set to copy the right amount of data to the
+      // node..
+      qd->msg_block_->copy (incoming.rd_ptr (),
+                            copy_len);
+
+      // Set the <rd_ptr> of the <incoming>..
+      qd->msg_block_->rd_ptr (copy_len);
+
+      // Get the other details...
+      qd->byte_order_ = state.byte_order_;
+      qd->major_version_ = state.giop_version_.major;
+      qd->minor_version_ = state.giop_version_.minor;
+    }
+  else
+    {
+      // @@todo: Need to abstract this out to a seperate method...
+      size_t copy_len = qd->missing_data_;
+
+      if (copy_len > incoming.length ())
+        {
+          // Calculate the missing data..
+          qd->missing_data_ =
+            copy_len - incoming.length ();
+
+          // Set the actual possible copy_len that is available...
+          copy_len = incoming.length ();
+        }
+
+      // Copy the right amount of data in to the node...
+      // node..
+      qd->msg_block_->copy (incoming.rd_ptr (),
+                            copy_len);
+
+      // Set the <rd_ptr> of the <incoming>..
+      qd->msg_block_->rd_ptr (copy_len);
+    }
+
+  return 0;
+}
+
+
+void
+TAO_GIOP_Message_Base::get_message_data (TAO_Queued_Data *qd)
+{
+  qd->byte_order_ =
+    this->message_state_.byte_order_;
+  qd->major_version_ =
+    this->message_state_.giop_version_.major;
+  qd->minor_version_ =
+    this->message_state_.giop_version_.minor;
 }
 
 int
@@ -414,24 +514,29 @@ TAO_GIOP_Message_Base::is_message_complete (ACE_Message_Block & /*incoming*/)
 int
 TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                                                 TAO_ORB_Core *orb_core,
-                                                ACE_Message_Block &incoming,
-                                                CORBA::Octet byte_order)
+                                                TAO_Queued_Data *qd)
+
 {
   // Set the upcall thread
   orb_core->lf_strategy ().set_upcall_thread (orb_core->leader_follower ());
+
+  // Set the state internally for parsing and generating messages
+  this->set_state (qd->major_version_,
+                   qd->minor_version_);
 
   // Reset the output CDR stream.
   // @@@@Is it necessary  here?
   this->output_->reset ();
 
   // Get the read and write positions before we steal data.
-  size_t rd_pos = incoming.rd_ptr () - incoming.base ();
-  size_t wr_pos = incoming.wr_ptr () - incoming.base ();
+  size_t rd_pos = qd->msg_block_->rd_ptr () - qd->msg_block_->base ();
+  size_t wr_pos = qd->msg_block_->wr_ptr () - qd->msg_block_->base ();
   rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
 
   this->dump_msg ("recv",
-                  ACE_reinterpret_cast (u_char *, incoming.rd_ptr ()),
-                  incoming.length ());
+                  ACE_reinterpret_cast (u_char *,
+                                        qd->msg_block_->rd_ptr ()),
+                  qd->msg_block_->length ());
 
 
   // Create a input CDR stream.
@@ -439,13 +544,13 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // we pass it on to the higher layers of the ORB. So we dont to any
   // copies at all here. The same is also done in the higher layers.
 
-  TAO_InputCDR input_cdr (incoming.data_block (),
+  TAO_InputCDR input_cdr (qd->msg_block_->data_block (),
                           ACE_Message_Block::DONT_DELETE,
                           rd_pos,
                           wr_pos,
-                          byte_order,
-                          this->message_state_.giop_version_.major,
-                          this->message_state_.giop_version_.minor,
+                          qd->byte_order_,
+                          qd->major_version_,
+                          qd->minor_version_,
                           orb_core);
 
   // Set giop version info for the outstream so that server replies
@@ -485,32 +590,32 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
 int
 TAO_GIOP_Message_Base::process_reply_message (
     TAO_Pluggable_Reply_Params &params,
-    ACE_Message_Block &incoming,
-    CORBA::Octet byte_order
-  )
+    TAO_Queued_Data *qd)
 {
 
   // Get the read and write positions before we steal data.
-  size_t rd_pos = incoming.rd_ptr () - incoming.base ();
-  size_t wr_pos = incoming.wr_ptr () - incoming.base ();
+  size_t rd_pos = qd->msg_block_->rd_ptr () - qd->msg_block_->base ();
+  size_t wr_pos = qd->msg_block_->wr_ptr () - qd->msg_block_->base ();
   rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
 
   this->dump_msg ("recv",
-                  ACE_reinterpret_cast (u_char *, incoming.rd_ptr ()),
-                  incoming.length ());
+                  ACE_reinterpret_cast (u_char *,
+                                        qd->msg_block_->rd_ptr ()),
+                  qd->msg_block_->length ());
 
 
   // Create a empty buffer on stack
   // NOTE: We use the same data block in which we read the message and
   // we pass it on to the higher layers of the ORB. So we dont to any
   // copies at all here. The same is alos done in the higher layers.
-  TAO_InputCDR input_cdr (incoming.data_block (),
+  TAO_InputCDR input_cdr (qd->msg_block_->data_block (),
                           ACE_Message_Block::DONT_DELETE,
                           rd_pos,
                           wr_pos,
-                          this->message_state_.giop_version_.major,
-                          this->message_state_.giop_version_.minor,
-                          byte_order);
+                          qd->byte_order_,
+                          qd->major_version_,
+                          qd->minor_version_,
+                          this->orb_core_);
 
   // Reset the message state. Now, we are ready for the next nested
   // upcall if any.

@@ -1,17 +1,18 @@
 // $Id$
 
-#include "tao/IIOP_Connection_Handler.h"
-#include "tao/Timeprobe.h"
-#include "tao/debug.h"
-#include "tao/ORB_Core.h"
-#include "tao/ORB.h"
-#include "tao/CDR.h"
-#include "tao/Messaging_Policy_i.h"
-#include "tao/Server_Strategy_Factory.h"
-#include "tao/IIOP_Transport.h"
-#include "tao/IIOP_Endpoint.h"
-#include "tao/Transport_Cache_Manager.h"
-#include "tao/Base_Transport_Property.h"
+#include "IIOP_Connection_Handler.h"
+#include "Timeprobe.h"
+#include "debug.h"
+#include "ORB_Core.h"
+#include "ORB.h"
+#include "CDR.h"
+#include "Messaging_Policy_i.h"
+#include "Server_Strategy_Factory.h"
+#include "IIOP_Transport.h"
+#include "IIOP_Endpoint.h"
+#include "Transport_Cache_Manager.h"
+#include "Base_Transport_Property.h"
+#include "Resume_Handle.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Connection_Handler.i"
@@ -250,8 +251,12 @@ TAO_IIOP_Connection_Handler::resume_handler (void)
 }
 
 int
-TAO_IIOP_Connection_Handler::handle_output (ACE_HANDLE)
+TAO_IIOP_Connection_Handler::handle_output (ACE_HANDLE h)
 {
+  // Instantiate the resume handle here.. This will automatically
+  // resume the handle once data is written..
+  TAO_Resume_Handle  resume_handle (this->orb_core (),
+                                    h);
   return this->transport ()->handle_output ();
 }
 
@@ -322,7 +327,10 @@ TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE h)
   // Increase the reference count on the upcall that have passed us.
   this->pending_upcalls_++;
 
- int retval = this->transport ()->handle_input_i (h);
+  TAO_Resume_Handle  resume_handle (this->orb_core (),
+                                    h);
+
+  int retval = this->transport ()->handle_input_i (resume_handle);
 
   // The upcall is done. Bump down the reference count
   if (--this->pending_upcalls_ <= 0)

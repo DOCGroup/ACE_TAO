@@ -26,6 +26,7 @@
 
 
 class TAO_ORB_Core;
+class TAO_GIOP_Message_Base;
 
 
 /**
@@ -45,10 +46,11 @@ class TAO_ORB_Core;
 
 class TAO_Export TAO_GIOP_Message_State
 {
-
 public:
-  friend class TAO_GIOP_Message_Base;
 
+  /// Ctor
+  TAO_GIOP_Message_State (TAO_ORB_Core *orb_core,
+                          TAO_GIOP_Message_Base *base);
 
   enum TAO_GIOP_Message_Status
   {
@@ -77,9 +79,9 @@ public:
 
 private:
 
-  /// Ctor
-  TAO_GIOP_Message_State (TAO_ORB_Core *orb_core,
-                          TAO_GIOP_Message_Base *base);
+  friend class TAO_GIOP_Message_Base;
+
+
 
   /// @@Bala: Documentation please...
   int parse_message_header_i (ACE_Message_Block &incoming);

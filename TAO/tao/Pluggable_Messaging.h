@@ -31,6 +31,7 @@ class TAO_Transport;
 class TAO_Operation_Details;
 class TAO_Target_Specification;
 class TAO_OutputCDR;
+class TAO_Queued_Data;
 
 // @@ The more I think I about this class, I feel that this class need
 // not be a ABC as it is now. Instead we have these options
@@ -128,24 +129,27 @@ public:
 
   virtual ssize_t missing_data (ACE_Message_Block &incoming) = 0;
 
-  virtual CORBA::Octet byte_order (void) = 0;
+  virtual void get_message_data (TAO_Queued_Data *qd) = 0;
 
   virtual int extract_next_message (ACE_Message_Block &incoming,
-                                    TAO_Queued_Data *qd) = 0;
+                                    TAO_Queued_Data *&qd) = 0;
+
+  virtual int consolidate_node (TAO_Queued_Data *qd,
+                                ACE_Message_Block &incoming) = 0;
 
   /// Parse the request message, make an upcall and send the reply back
   /// to the "request initiator"
   virtual int process_request_message (TAO_Transport *transport,
                                        TAO_ORB_Core *orb_core,
-                                       ACE_Message_Block &m,
-                                       CORBA::Octet byte_order) = 0;
+                                       TAO_Queued_Data *qd) = 0;
+
 
   /// Parse the reply message that we received and return the reply
   /// information though <reply_info>
   virtual int process_reply_message (
       TAO_Pluggable_Reply_Params &reply_info,
-      ACE_Message_Block &m,
-      CORBA::Octet byte_order) = 0;
+      TAO_Queued_Data *qd) = 0;
+
 
   /// Generate a reply message with the exception <ex>.
   virtual int generate_exception_reply (

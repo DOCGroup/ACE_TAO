@@ -7,19 +7,30 @@ TAO_Incoming_Message_Queue::queue_length (void)
 }
 
 ACE_INLINE int
-TAO_Incoming_Message_Queue::is_complete_message (void)
+TAO_Incoming_Message_Queue::is_tail_complete (void)
 {
-  if (this->size_ != 0 &&
-      this->queued_data_->missing_data_ == 0)
-    return 0;
+  // If the size is 0 return -1
+  if (this->size_ == 0)
+    return -1;
 
-  return 1;
+  if (this->size_ &&
+      this->queued_data_->missing_data_ == 0)
+    return 1;
+
+  return 0;
 }
 
-ACE_INLINE char *
-TAO_Incoming_Message_Queue::wr_ptr (void) const
+ACE_INLINE int
+TAO_Incoming_Message_Queue::is_head_complete (void)
 {
-  return this->queued_data_->msg_block_->wr_ptr ();
+  if (this->size_ == 0)
+    return -1;
+
+  if (this->size_  &&
+      this->queued_data_->next_->missing_data_ == 0)
+    return 1;
+
+  return 0;
 }
 
 ACE_INLINE size_t
@@ -32,8 +43,23 @@ TAO_Incoming_Message_Queue::missing_data (void) const
 }
 
 
-ACE_INLINE TAO_Incoming_Message_Queue::TAO_Queued_Data *
-TAO_Incoming_Message_Queue::get_queued_data (void)
+
+ACE_INLINE TAO_Queued_Data *
+TAO_Incoming_Message_Queue::get_node (void)
+{
+  return TAO_Queued_Data::get_queued_data ();
+}
+
+
+
+ACE_INLINE
+TAO_Queued_Data::~TAO_Queued_Data (void)
+{
+}
+
+
+ACE_INLINE TAO_Queued_Data *
+TAO_Queued_Data::get_queued_data (void)
 {
   // @@TODO: Use the global pool for allocationg...
   TAO_Queued_Data *qd = 0;
@@ -42,19 +68,4 @@ TAO_Incoming_Message_Queue::get_queued_data (void)
                   0);
 
   return qd;
-}
-
-ACE_INLINE TAO_Incoming_Message_Queue::TAO_Queued_Data *
-TAO_Incoming_Message_Queue::get_node (void)
-{
-  return TAO_Incoming_Message_Queue::get_queued_data ();
-}
-
-ACE_INLINE
-TAO_Incoming_Message_Queue::TAO_Queued_Data::TAO_Queued_Data (void)
-  : msg_block_ (0),
-    missing_data_ (0),
-    byte_order_ (0),
-    next_ (0)
-{
 }
