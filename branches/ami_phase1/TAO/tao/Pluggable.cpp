@@ -23,7 +23,7 @@ TAO_Transport::TAO_Transport (TAO_IIOP_Request_Multiplexing_Strategy *rms,
   
   // @@ Hardcoding the WS here. (alex)
   ACE_NEW (ws_,
-           TAO_Wait_On_Read (this));
+           TAO_Wait_On_Reactor (this));
 }
    
 TAO_Transport::~TAO_Transport (void)
