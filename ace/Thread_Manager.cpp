@@ -1269,19 +1269,15 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
         return -1;
 
     // Release the guard, giving other threads a chance to run.
-  } 
+  }
 
 #if !defined (VXWORKS)
-  {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
-
     ACE_Thread_Descriptor item;
 
     while (this->terminated_thr_queue_.dequeue_head (item) == 0)
       if (ACE_BIT_DISABLED (item.flags_, (THR_DETACHED | THR_DAEMON))
           || ACE_BIT_ENABLED (item.flags_, THR_JOINABLE))
         ACE_Thread::join (item.thr_handle_);
-  }
 #endif /* VXWORKS */
 #else
   ACE_UNUSED_ARG (timeout);
