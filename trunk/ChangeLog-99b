@@ -1,24 +1,29 @@
+Tue Feb 09 10:21:33 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * Service_Types.{i,cpp},README: removed obsolete references to
+          Service_Record.
+
 Mon Feb 08 14:32:43 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/exceptions.html: Added guidelines of switching from TAO try
-	  macros to ACE try macros.  Other cosmetic changes.
+        * docs/exceptions.html: Added guidelines of switching from TAO try
+          macros to ACE try macros.  Other cosmetic changes.
 
 Mon Feb  8 13:54:32 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* docs/tutorials/011/task.cpp :
-	In the open return this->activate (THR_NEW_LWP,
+        * docs/tutorials/011/task.cpp :
+        In the open return this->activate (THR_NEW_LWP,
         this->n_threads_); was taking an udefined variable threads.
 
-	* docs/tutorials/011/message_queue.cpp:
-	Corrected Compilation error due to a typo (static misspelt as
-	statuc!!!)
+        * docs/tutorials/011/message_queue.cpp:
+        Corrected Compilation error due to a typo (static misspelt as
+        statuc!!!)
 
 Mon Feb  8 09:21:10 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Map_T.h,
-	  ace/Pair_T.h: Aded parens around the #pragma implementation file
- 	  names so the AIX compiler would be happy.  Thanks to Martin
- 	  Krumpolec <krumpo@pobox.sk> for reporting this.
+        * ace/Map_T.h,
+          ace/Pair_T.h: Aded parens around the #pragma implementation file
+          names so the AIX compiler would be happy.  Thanks to Martin
+          Krumpolec <krumpo@pobox.sk> for reporting this.
 
 Mon Feb 08 00:39:49 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -26,14 +31,14 @@ Mon Feb 08 00:39:49 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Feb  7 22:48:01 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/CORBA_macros.h (ACE_THROW_RETURN): The second macro argument
-	  was missing.
+        * ace/CORBA_macros.h (ACE_THROW_RETURN): The second macro argument
+          was missing.
 
 Sun Feb  7 22:32:21 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/CORBA_macros.h: It wasn't clear why the ACE_THROW_RETURN
- 	  macro for non-NT platforms wasn't taking a second RETV
- 	  parameter.  I've fixed this, however.
+        * ace/CORBA_macros.h: It wasn't clear why the ACE_THROW_RETURN
+          macro for non-NT platforms wasn't taking a second RETV
+          parameter.  I've fixed this, however.
 
 Sun Feb 07 13:55:15 1999  David L. Levine  <levine@cs.wustl.edu>
 
