@@ -170,11 +170,6 @@ private:
 private:
 
   /**
-   * A human-readable string to distinguish this from other Notifiers.
-   */
-  ACE_CString identity_;
-
-  /**
    * Protect internal state.
    * Mutex should be locked by corba methods, or by
    * external (public) methods before calling implementation
@@ -210,6 +205,10 @@ private:
    */
   const char * ior_output_file_;
 
+  /**
+   * A human-readable string to distinguish this from other Notifiers.
+   */
+  ACE_CString identity_;
 
   /**
    * bool: true if we found a replication manager

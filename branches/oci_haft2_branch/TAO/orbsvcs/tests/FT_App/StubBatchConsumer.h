@@ -3,6 +3,9 @@
 // $Id$
 #ifndef STUBBATCHCONSUMER_H
 #define STUBBATCHCONSUMER_H
+#include /**/ <ace/pre.h>
+#include <ace/ACE.h>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -141,5 +144,6 @@ private:
   ::FT::FaultNotifier::ConsumerId consumer_id_;
 };
 
+#include /**/ <ace/post.h>
 
 #endif /* STUBBATCHCONSUMER_H  */

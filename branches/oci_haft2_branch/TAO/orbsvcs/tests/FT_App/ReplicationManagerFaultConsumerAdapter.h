@@ -3,7 +3,8 @@
 // $Id$
 #ifndef REPLICATION_MANAGER_FAULT_CONSUMER_ADAPTER_H
 #define REPLICATION_MANAGER_FAULT_CONSUMER_ADAPTER_H
-
+#include /**/ <ace/pre.h>
+#include <ace/ACE.h>
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -144,6 +145,6 @@ private:
   PortableServer::ServantBase_var consumer_servant_;
 
 };
-
+#include /**/ <ace/post.h>
 
 #endif /* REPLICATION_MANAGER_FAULT_CONSUMER_ADAPTER_H  */
