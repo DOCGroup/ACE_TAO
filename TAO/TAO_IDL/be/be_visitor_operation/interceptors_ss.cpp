@@ -55,6 +55,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
   if (this->generate_class_definition (os, node) == -1)
     return -1;
 
+  return 0;
 }
 
 int
