@@ -9,6 +9,7 @@
 #include "tao/Thread_Lane_Resources_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Acceptor_Registry.h"
+#include "tao/PortableServer/POA_Cached_Policies.h"
 
 ACE_RCSID(tao, POA, "$Id$")
 
@@ -110,8 +111,10 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies,
                                                   CORBA::Environment &ACE_TRY_ENV)
 {
   // Initialize to the default priority/priority model.
-  RTCORBA::Priority priority = TAO_INVALID_PRIORITY;
-  RTCORBA::PriorityModel rt_priority_model = RTCORBA::CLIENT_PROPAGATED;
+  CORBA::Short priority =
+    TAO_INVALID_PRIORITY;
+  TAO_POA_Cached_Policies::PriorityModel rt_priority_model =
+    TAO_POA_Cached_Policies::NOT_SPECIFIED;
 
   CORBA::Policy_var policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL);
@@ -126,12 +129,22 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies,
       priority = priority_model->server_priority (ACE_TRY_ENV);
       ACE_CHECK;
 
-      rt_priority_model = priority_model->priority_model (ACE_TRY_ENV);
+      rt_priority_model =
+        TAO_POA_Cached_Policies::PriorityModel (
+          priority_model->priority_model (ACE_TRY_ENV));
       ACE_CHECK;
 
       // Check that the priority is in bounds.
       if (priority < RTCORBA::minPriority ||
           priority > RTCORBA::maxPriority)
+        ACE_THROW (PortableServer::POA::InvalidPolicy ());
+    }
+  else
+    // If priority model was not specified, then we better not have a
+    // thread pool with lanes.
+    {
+      if (this->thread_pool_ != 0 &&
+          this->thread_pool_->with_lanes ())
         ACE_THROW (PortableServer::POA::InvalidPolicy ());
     }
 
@@ -148,6 +161,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies,
                       priority_bands.in ());
 
   // If priority banded connections are set, make sure that:
+  //  0. A priority model was specified.
   //  1. There is at least one band.
   //  2a. low is not < RTCORBA::minPriority
   //  2b. low <= high
@@ -159,6 +173,10 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies,
   //  i.e., whose priority falls into the band's range.
   if (bands_policy != 0)
     {
+      // Checks 0.
+      if (rt_priority_model == TAO_POA_Cached_Policies::NOT_SPECIFIED)
+        ACE_THROW (PortableServer::POA::InvalidPolicy ());
+
       RTCORBA::PriorityBands &bands =
         bands_policy->priority_bands_rep ();
 

@@ -96,20 +96,31 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
                                  PortableServer::POAManager_ptr poa_manager,
                                  PortableServer::POA_ptr root_poa,
                                  CORBA::ORB_ptr orb,
+                                 RTCORBA::RTORB_ptr rt_orb,
                                  CORBA_Environment &ACE_TRY_ENV)
 {
   // Policies for the firstPOA to be created.
-  CORBA::PolicyList policies (2); policies.length (2);
+  CORBA::PolicyList policies (3); policies.length (3);
 
   // Implicit_activation policy.
   policies[0] =
-    root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION,
-                                                 ACE_TRY_ENV);
+    root_poa->create_implicit_activation_policy
+      (PortableServer::IMPLICIT_ACTIVATION,
+       ACE_TRY_ENV);
   ACE_CHECK;
 
   // Thread pool policy.
   policies[1] =
     CORBA::Policy::_duplicate (threadpool_policy);
+
+  // Priority Model policy.
+  RTCORBA::Priority default_priority =
+    RTCORBA::Priority (ACE_DEFAULT_THREAD_PRIORITY);
+  policies[2] =
+    rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
+                                          default_priority,
+                                          ACE_TRY_ENV);
+  ACE_TRY_CHECK;
 
   // Create the POA under the RootPOA.
   PortableServer::POA_var poa =
@@ -269,6 +280,7 @@ main (int argc, char *argv[])
                                          poa_manager.in (),
                                          root_poa.in (),
                                          orb.in (),
+                                         rt_orb.in (),
                                          ACE_TRY_ENV)
         ACE_TRY_CHECK;
       if (result != 0)
@@ -280,6 +292,7 @@ main (int argc, char *argv[])
                                          poa_manager.in (),
                                          root_poa.in (),
                                          orb.in (),
+                                         rt_orb.in (),
                                          ACE_TRY_ENV)
         ACE_TRY_CHECK;
       if (result != 0)
