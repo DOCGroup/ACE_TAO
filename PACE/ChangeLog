@@ -1,3 +1,13 @@
+Thu Dec 21 18:22:28 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* docs/index.html: 	
+	* docs/legend.html: 	
+	* docs/overview.html:
+	* docs/todo.html: 	
+
+	  Begin moving PACE documentation to main distribution.
+	  Also rewriting much of this.
+
 Thu Dec 21 18:02:23 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/docs/todo.txt
