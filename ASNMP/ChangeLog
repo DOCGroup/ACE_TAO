@@ -1,3 +1,9 @@
+Sun Jun  4 14:51:33 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * asnmp-overview.html:
+          
+          Added missing CVS Id string.
+
 Tue Dec 21 16:22:21 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/*.cpp: removed the unnecessary explicit template
