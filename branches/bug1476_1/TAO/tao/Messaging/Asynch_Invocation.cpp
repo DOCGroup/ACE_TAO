@@ -9,7 +9,6 @@
 #include "tao/Bind_Dispatcher_Guard.h"
 #include "tao/Transport.h"
 #include "tao/Muxed_TMS.h"
-#include "tao/Pluggable_Messaging.h"
 #include "tao/ORB_Constants.h"
 
 ACE_RCSID (Messaging,
@@ -78,7 +77,7 @@ namespace TAO
     dispatch_guard.status (TAO_Bind_Dispatcher_Guard::NO_UNBIND);
 
     TAO_OutputCDR &cdr =
-      this->resolver_.transport ()->messaging_object ()->out_stream ();
+      this->resolver_.transport ()->out_stream ();
 
     // We have started the interception flow. We need to call the
     // ending interception flow if things go wrong. The purpose of the

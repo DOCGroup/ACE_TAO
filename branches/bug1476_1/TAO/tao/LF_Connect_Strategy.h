@@ -51,6 +51,10 @@ public:
   virtual int wait (TAO_Connection_Handler *ch,
                     ACE_Time_Value *val);
 
+  virtual int wait (TAO_Transport *ch,
+                    ACE_Time_Value *val);
+
+
 };
 
 #include /**/ "ace/post.h"

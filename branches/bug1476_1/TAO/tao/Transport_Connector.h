@@ -35,6 +35,7 @@ class TAO_MProfile;
 class TAO_ORB_Core;
 class TAO_Connect_Strategy;
 class TAO_Transport;
+class TAO_Connection_Handler;
 
 namespace TAO
 {
@@ -58,10 +59,10 @@ class TAO_Export TAO_Connector
 {
 public:
 
-  /// default constructor.
+  /// Default constructor.
   TAO_Connector (CORBA::ULong tag);
 
-  /// the destructor.
+  /// The destructor.
   virtual ~TAO_Connector (void);
 
   /**
@@ -75,12 +76,14 @@ public:
 
   /// Parse a string containing a URL style IOR and return an
   /// MProfile.
-  int make_mprofile (const char *ior,
-                     TAO_MProfile &mprofile
-                     ACE_ENV_ARG_DECL);
+  int make_mprofile (
+      const char *ior,
+      TAO_MProfile &mprofile
+      ACE_ENV_ARG_DECL);
 
   ///  Initialize object and register with reactor.
-  virtual int open (TAO_ORB_Core *orb_core) = 0;
+  virtual int open (
+      TAO_ORB_Core *orb_core) = 0;
 
   /// Shutdown Connector bridge and concrete Connector.
   virtual int close (void) = 0;
@@ -90,18 +93,21 @@ public:
    * connect ()  method so it can be called from the invocation code
    * independent of the actual transport protocol in use.
    */
-  virtual TAO_Transport* connect (TAO::Profile_Transport_Resolver *r,
-                                  TAO_Transport_Descriptor_Interface *desc,
-                                  ACE_Time_Value *timeout
-                                  ACE_ENV_ARG_DECL);
+  virtual TAO_Transport* connect (
+      TAO::Profile_Transport_Resolver *r,
+      TAO_Transport_Descriptor_Interface *desc,
+      ACE_Time_Value *timeout
+      ACE_ENV_ARG_DECL);
 
   /// Create a profile for this protocol and initialize it based on the
   /// encapsulation in @a cdr
-  virtual TAO_Profile *create_profile (TAO_InputCDR& cdr) = 0;
+  virtual TAO_Profile *create_profile (
+      TAO_InputCDR& cdr) = 0;
 
   /// Check that the prefix of the provided endpoint is valid for use
   /// with a given pluggable protocol.
-  virtual int check_prefix (const char *endpoint) = 0;
+  virtual int check_prefix (
+      const char *endpoint) = 0;
 
   /// Return the object key delimiter to use or expect.
   virtual char object_key_delimiter (void) const = 0;
@@ -115,9 +121,35 @@ protected:
   /// remote *_Addr's which have not been done during IOR decode.
   virtual int set_validate_endpoint (TAO_Endpoint *endpoint) = 0;
 
-  virtual TAO_Transport* make_connection (TAO::Profile_Transport_Resolver *r,
-                                          TAO_Transport_Descriptor_Interface &desc,
-                                          ACE_Time_Value *timeout) = 0;
+  /// Make a connection
+  virtual TAO_Transport* make_connection (
+      TAO::Profile_Transport_Resolver *r,
+      TAO_Transport_Descriptor_Interface &desc,
+      ACE_Time_Value *timeout) = 0;
+
+  /// Cancel the passed cvs handler from the connector
+  virtual int cancel_svc_handler (
+      TAO_Connection_Handler *svc_handler) = 0;
+
+  /// Check whether the connection is not closed
+  /**
+   * @retval 0 The connection happens to be not closed, but is now open
+   * because an other thread managed to open the handler
+   * @retval -1 The connection is closed
+   */
+  virtual int check_connection_closure (
+      TAO_Connection_Handler *connection_handler);
+
+  /**
+   * Wait for connection completion. We have a transport that is not
+   * connected yet, wait until it is connected.
+   * @retval true When we could use @a transport
+   * @return false When we can't use the @a transport
+   */
+  virtual bool wait_for_connection_completion(
+      TAO::Profile_Transport_Resolver *r,
+      TAO_Transport *&transport,
+      ACE_Time_Value *timeout);
 
   /// Set the ORB Core pointer
   void orb_core (TAO_ORB_Core *orb_core);

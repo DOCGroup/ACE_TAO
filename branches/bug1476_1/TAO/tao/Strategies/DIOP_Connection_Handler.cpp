@@ -124,8 +124,11 @@ TAO_DIOP_Connection_Handler::open (void*)
                  this->local_addr_.get_port_number ()));
   }
 
-  // Set the id in the transport now that we're active.
-  this->transport ()->id ((size_t) this->get_handle ());
+  // Set that the transport is now connected, if fails we return -1
+  // Use C-style cast b/c otherwise we get warnings on lots of
+  // compilers
+  if (!this->transport ()->post_open ((size_t) this->get_handle ()))
+    return -1;
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS);
 
@@ -218,9 +221,7 @@ TAO_DIOP_Connection_Handler::handle_close (ACE_HANDLE,
 int
 TAO_DIOP_Connection_Handler::close (u_long)
 {
-  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
-  this->transport ()->remove_reference ();
-  return 0;
+  return this->close_handler ();
 }
 
 int

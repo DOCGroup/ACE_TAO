@@ -73,6 +73,9 @@ public:
   virtual int check_prefix (const char *endpoint);
 
   virtual char object_key_delimiter (void) const;
+
+  /// Cancel the passed cvs handler from the connector
+  virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
   //@}
 
 public:

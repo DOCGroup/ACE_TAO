@@ -8,6 +8,8 @@
 #include "debug.h"
 #include "Connect_Strategy.h"
 #include "Client_Strategy_Factory.h"
+#include "Connection_Handler.h"
+#include "Profile_Transport_Resolver.h"
 
 #include "ace/OS_NS_string.h"
 
@@ -216,43 +218,135 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                         ACE_Time_Value *timeout
                         ACE_ENV_ARG_DECL_NOT_USED)
 {
-  if ((this->set_validate_endpoint (desc->endpoint ()) == -1) || desc == 0)
-    {
-      return 0;
-    }
+  if (desc == 0 ||
+      (this->set_validate_endpoint (desc->endpoint ()) == -1))
+    return 0;
 
   TAO_Transport *base_transport = 0;
+
+  TAO_Transport_Cache_Manager &tcm =
+    this->orb_core ()->lane_resources ().transport_cache ();
 
   // Check the Cache first for connections
   // If transport found, reference count is incremented on assignment
   // @@todo: We need to send the timeout value to the cache registry
   // too. That should be the next step!
-  if (this->orb_core ()->lane_resources ().transport_cache ().find_transport (
-        desc,
-        base_transport) == 0)
+  if (tcm.find_transport (desc,
+                          base_transport) != 0)
     {
-      if (TAO_debug_level > 2)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Transport_Connector::connect, "
-                      "got an existing Transport[%d]\n",
-                      base_transport->id ()));
-        }
+      // @@TODO: This is not the right place for this!
+      // Purge connections (if necessary)
+      tcm.purge ();
 
-      // No need to _duplicate since things are taken care within the
-      // cache manager.
-      return base_transport;
+      return this->make_connection (r,
+                                    *desc,
+                                    timeout);
     }
 
-  // @@TODO: This is not the right place for this!
-  // Purge connections (if necessary)
-  this->orb_core_->lane_resources ().transport_cache ().purge ();
+  if (TAO_debug_level > 4)
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) - Transport_Connector::connect, "
+                "got an existing %s Transport[%d]\n",
+                base_transport->is_connected () ? "connected" : "unconnected",
+                base_transport->id ()));
 
-  return this->make_connection (r,
-                                *desc,
-                                timeout);
+  // If connected return..
+  if (base_transport->is_connected ())
+    return base_transport;
+
+  if (!this->wait_for_connection_completion (r,
+                                             base_transport,
+                                             timeout))
+      if (TAO_debug_level > 2)
+        ACE_ERROR ((LM_ERROR,
+                    "TAO (%P|%t) - Transport_Connector::"
+                    "connect, "
+                    "wait for completion failed\n"));
+
+  return base_transport;
 }
 
+bool
+TAO_Connector::wait_for_connection_completion (
+    TAO::Profile_Transport_Resolver *r,
+    TAO_Transport *&transport,
+    ACE_Time_Value *timeout)
+{
+  if (TAO_debug_level > 2)
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Transport_Connector::wait_for_connection_completion, "
+                  "going to wait for connection completion on transport"
+                  "[%d]\n",
+                  transport->id ()));
+
+  // If we don't need to block for a transport just set the timeout to
+  // be zero.
+  ACE_Time_Value tmp_zero (ACE_Time_Value::zero);
+  if (!r->blocked ())
+    {
+      timeout = &tmp_zero;
+    }
+
+  // Wait until the connection is ready, when non-blocking we just do a wait
+  // with zero time
+  int result =
+    this->active_connect_strategy_->wait (
+      transport,
+      timeout);
+
+  if (TAO_debug_level > 2)
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) - Transport_Connector::wait_for_connection_completion, "
+                "transport [%d], wait done result = %d\n",
+                transport->id(), result));
+
+  // There are three possibilities when wait() returns: (a)
+  // connection succeeded; (b) connection failed; (c) wait()
+  // failed because of some other error.  It is easy to deal with
+  // (a) and (b).  (c) is tricky since the connection is still
+  // pending and may get completed by some other thread.  The
+  // following method deals with (c).
+
+  if (result == -1)
+    {
+      if (!r->blocked () && errno == ETIME)
+        {
+          // If we did a non blocking connect, just ignore
+          // any timeout errors
+          result = 0;
+        }
+      else
+        {
+          // When we need to get a connected transport
+          result =
+            this->check_connection_closure (
+              transport->connection_handler ());
+        }
+
+      // In case of errors.
+      if (result == -1)
+        {
+          // Report that making the connection failed, don't print errno
+          // because we touched the reactor and errno could be changed
+          if (TAO_debug_level > 2)
+            ACE_ERROR ((LM_ERROR,
+                        "TAO (%P|%t) - Transport_Connector::"
+                        "wait_for_connection_completion, "
+                        "transport [%d], wait for completion failed\n",
+                        transport->id()));
+
+          // Set transport to zero, it is not usable
+          transport = 0;
+
+          return false;
+        }
+    }
+
+  // Connection not ready yet but we can use this transport, if
+  // we need a connected one we will block later to make sure
+  // it is connected
+  return true;
+}
 
 int
 TAO_Connector::create_connect_strategy (void)
@@ -270,4 +364,58 @@ TAO_Connector::create_connect_strategy (void)
     }
 
   return 0;
+}
+
+int
+TAO_Connector::check_connection_closure (
+  TAO_Connection_Handler *connection_handler)
+{
+  int result = -1;
+
+  // Check if the handler has been closed.
+  int closed =
+    connection_handler->is_closed ();
+
+  // In case of failures and close() has not be called.
+  if (!closed)
+    {
+      // First, cancel from connector.
+      if (this->cancel_svc_handler (connection_handler) == -1)
+        return -1;
+
+      // Double check to make sure the handler has not been closed
+      // yet.  This double check is required to ensure that the
+      // connection handler was not closed yet by some other
+      // thread since it was still registered with the connector.
+      // Once connector.cancel() has been processed, we are
+      // assured that the connector will no longer open/close this
+      // handler.
+      closed = connection_handler->is_closed ();
+
+      // If closed, there is nothing to do here.  If not closed,
+      // it was either opened or is still pending.
+      if (!closed)
+        {
+          // Check if the handler has been opened.
+          const int open = connection_handler->is_open ();
+
+          // Some other thread was able to open the handler even
+          // though wait failed for this thread.
+          if (open)
+            {
+              // Set the result to 0, we have an open connection
+              result = 0;
+            }
+          else
+            {
+              // Assert that it is still connecting.
+              ACE_ASSERT (connection_handler->is_connecting ());
+
+              // Force close the handler now.
+              connection_handler->close_handler ();
+            }
+        }
+    }
+
+  return result;
 }

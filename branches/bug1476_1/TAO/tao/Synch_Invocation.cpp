@@ -8,7 +8,6 @@
 #include "Stub.h"
 #include "Bind_Dispatcher_Guard.h"
 #include "operation_details.h"
-#include "Pluggable_Messaging.h"
 #include "Wait_Strategy.h"
 #include "debug.h"
 #include "ORB_Constants.h"
@@ -88,7 +87,7 @@ namespace TAO
 #endif /*TAO_HAS_INTERCEPTORS */
 
     TAO_OutputCDR &cdr =
-      this->resolver_.transport ()->messaging_object ()->out_stream ();
+      this->resolver_.transport ()->out_stream ();
 
     // We have started the interception flow. We need to call the
     // ending interception flow if things go wrong. The purpose of the
@@ -291,7 +290,7 @@ namespace TAO
         if (TAO_debug_level > 3)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) - Synch_Twoway_Invocation::wait_for_reply , "
+                        "TAO (%P|%t) - Synch_Twoway_Invocation::wait_for_reply, "
                         "recovering after an error \n"));
           }
 
@@ -629,7 +628,7 @@ namespace TAO
     if (TAO_debug_level > 4)
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Synch_Twoway_Invocation::"
-                  "handle_system_exception  about to raise\n"));
+                  "handle_system_exception, about to raise\n"));
 
     mon.set_status (TAO_INVOKE_SYSTEM_EXCEPTION);
 
@@ -659,16 +658,21 @@ namespace TAO
     const CORBA::Octet response_flags =
        this->details_.response_flags ();
 
+    Invocation_Status s = TAO_INVOKE_FAILURE;
+
     if (response_flags == CORBA::Octet (Messaging::SYNC_WITH_SERVER) ||
         response_flags == CORBA::Octet (Messaging::SYNC_WITH_TARGET))
-      return Synch_Twoway_Invocation::remote_twoway (max_wait_time
-                                                     ACE_ENV_ARG_PARAMETER);
+      {
+        s = Synch_Twoway_Invocation::remote_twoway (max_wait_time
+                                                    ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+        return s;
+      }
 
     TAO_Target_Specification tspec;
     this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
-
-    Invocation_Status s = TAO_INVOKE_FAILURE;
 
 #if TAO_HAS_INTERCEPTORS == 1
     s = this->send_request_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -678,8 +682,11 @@ namespace TAO
       return s;
 #endif /*TAO_HAS_INTERCEPTORS */
 
+    TAO_Transport* transport =
+      this->resolver_.transport ();
+
     TAO_OutputCDR &cdr =
-      this->resolver_.transport ()->messaging_object ()->out_stream ();
+      transport->out_stream ();
 
     ACE_TRY
       {
@@ -694,21 +701,24 @@ namespace TAO
 
         countdown.update ();
 
-        if (response_flags == CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT))
+        if (transport->is_connected())
           {
+            // We have a connected transport so we can send the message
             s = this->send_message (cdr,
-                                    TAO_Transport::TAO_TWOWAY_REQUEST,
+                                    TAO_Transport::TAO_ONEWAY_REQUEST,
                                     max_wait_time
                                     ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
           }
         else
           {
-            s = this->send_message (cdr,
-                                    TAO_Transport::TAO_ONEWAY_REQUEST,
-                                    max_wait_time
-                                    ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            if (TAO_debug_level > 4)
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - Synch_Oneway_Invocation::"
+                          "remote_oneway, queueing message\n"));
+
+            if (transport->format_queue_message (cdr) != 0)
+              s = TAO_INVOKE_FAILURE;
           }
 
 #if TAO_HAS_INTERCEPTORS == 1

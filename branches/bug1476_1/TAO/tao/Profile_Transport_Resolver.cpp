@@ -1,4 +1,5 @@
 // $Id$
+
 #include "Profile_Transport_Resolver.h"
 #include "Profile.h"
 #include "Transport.h"
@@ -77,6 +78,7 @@ namespace TAO
           ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
+    // Select the endpoint
     es->select_endpoint (this,
                          max_time_val
                          ACE_ENV_ARG_PARAMETER);
@@ -107,6 +109,7 @@ namespace TAO
         tcm->set_tcs (*this->profile_, *this->transport_);
       }
   }
+
 
   bool
   Profile_Transport_Resolver::try_connect (
@@ -147,6 +150,7 @@ namespace TAO
       {
         max_wait_time = max_time_value;
       }
+
 
     // Obtain a connection.
     this->transport_ =

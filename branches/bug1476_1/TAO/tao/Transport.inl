@@ -145,6 +145,18 @@ TAO_Transport::first_request_sent (void)
   this->first_request_ = 0;
 }
 
+ACE_INLINE bool
+TAO_Transport::is_connected (void) const
+{
+  return is_connected_;
+}
+
+ACE_INLINE TAO_Connection_Handler *
+TAO_Transport::connection_handler (void)
+{
+  return this->connection_handler_i();
+}
+
 /*****************************************************/
 
 ACE_INLINE

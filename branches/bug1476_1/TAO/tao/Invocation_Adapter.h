@@ -201,7 +201,7 @@ namespace TAO
      * is forwarded to a new location.
      */
     virtual Invocation_Status invoke_twoway (
-        TAO_Operation_Details &op,
+        TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time
@@ -215,7 +215,7 @@ namespace TAO
      * is forwarded to a new location to take appropriate action.
      */
     virtual Invocation_Status invoke_oneway (
-        TAO_Operation_Details &op,
+        TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time
@@ -235,6 +235,11 @@ namespace TAO
     void object_forwarded (CORBA::Object_var &effective_target,
                            TAO_Stub *stub
                            ACE_ENV_ARG_DECL);
+
+    /// Helper method to set the response flags within @a details
+    void set_response_flags (TAO_Stub *stub,
+                             TAO_Operation_Details &details);
+
   protected:
 
     /// The target object on which this invocation is carried out.

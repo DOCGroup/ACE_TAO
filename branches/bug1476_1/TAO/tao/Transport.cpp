@@ -122,6 +122,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , purging_order_ (0)
   , recv_buffer_size_ (0)
   , sent_byte_count_ (0)
+  , is_connected_ (false)
   , char_translator_ (0)
   , wchar_translator_ (0)
   , tcs_set_ (0)
@@ -145,8 +146,18 @@ TAO_Transport::~TAO_Transport (void)
 
   delete this->handler_lock_;
 
-  // By the time the destructor is reached all the connection stuff
-  // *must* have been cleaned up
+  if (!this->is_connected_)
+    {
+      // When we have a not connected transport we could have buffered
+      // messages on this transport which we have to cleanup now.
+      this->cleanup_queue_i();
+
+      // Cleanup our cache entry
+      this->purge_entry();
+    }
+
+  // By the time the destructor is reached here all the connection stuff
+  // *must* have been cleaned up.
   ACE_ASSERT (this->head_ == 0);
   ACE_ASSERT (this->cache_map_entry_ == 0);
 }
@@ -269,21 +280,22 @@ TAO_Transport::generate_request_header (
 }
 
 /// @todo Ideally the following should be inline.
+/// @todo purge_entry has a return value, use it
 int
 TAO_Transport::recache_transport (TAO_Transport_Descriptor_Interface *desc)
 {
   // First purge our entry
-  this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
+  this->purge_entry ();
 
   // Then add ourselves to the cache
   return this->transport_cache_manager ().cache_transport (desc,
                                                            this);
 }
 
-void
+int
 TAO_Transport::purge_entry (void)
 {
-  this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
+  return this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
 }
 
 int
@@ -336,6 +348,17 @@ TAO_Transport::handle_output (void)
 
   // Any errors are returned directly to the Reactor
   return retval;
+}
+
+int
+TAO_Transport::format_queue_message (TAO_OutputCDR &stream)
+{
+  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
+
+  if (this->messaging_object ()->format_message (stream) != 0)
+    return -1;
+
+  return this->queue_message_i (stream.begin());
 }
 
 int
@@ -845,6 +868,32 @@ TAO_Transport::drain_queue_i (void)
 }
 
 void
+TAO_Transport::cleanup_queue_i ()
+{
+  if (TAO_debug_level > 4)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Transport[%d]::cleanup_queue_i, "
+                  "cleaning up complete queue\n",
+                  this->id ()));
+    }
+
+  // Cleanup all messages
+  while (this->head_ != 0)
+    {
+      TAO_Queued_Message *i = this->head_;
+
+       // @@ This is a good point to insert a flag to indicate that a
+       //    CloseConnection message was successfully received.
+      i->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
+
+      i->remove_from_list (this->head_, this->tail_);
+
+      i->destroy ();
+   }
+}
+
+void
 TAO_Transport::cleanup_queue (size_t byte_count)
 {
   while (this->head_ != 0 && byte_count > 0)
@@ -957,18 +1006,7 @@ TAO_Transport::send_connection_closed_notifications (void)
 void
 TAO_Transport::send_connection_closed_notifications_i (void)
 {
-  while (this->head_ != 0)
-    {
-      TAO_Queued_Message *i = this->head_;
-
-      // @@ This is a good point to insert a flag to indicate that a
-      //    CloseConnection message was successfully received.
-      i->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
-
-      i->remove_from_list (this->head_, this->tail_);
-
-      i->destroy ();
-    }
+  this->cleanup_queue_i ();
 
   this->messaging_object ()->reset ();
 }
@@ -979,6 +1017,9 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
                                       const ACE_Message_Block *message_block,
                                       ACE_Time_Value *max_wait_time)
 {
+
+// @todo Bala mentioned that this has to go out here
+// {
   if (message_semantics == TAO_Transport::TAO_TWOWAY_REQUEST)
     {
       return this->send_synchronous_message_i (message_block,
@@ -989,6 +1030,7 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
       return this->send_reply_message_i (message_block,
                                          max_wait_time);
     }
+ // }
 
   // Let's figure out if the message should be queued without trying
   // to send first:
@@ -1043,7 +1085,7 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
             {
               if (TAO_debug_level > 0)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
+                  ACE_ERROR ((LM_ERROR,
                               "TAO (%P|%t) - Transport[%d]::send_message_shared_i, "
                               "fatal error in "
                               "send_message_block_chain_i - %m\n",
@@ -1095,13 +1137,15 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
                   this->id ()));
     }
 
-  TAO_Queued_Message *queued_message = 0;
-  ACE_NEW_RETURN (queued_message,
-                  TAO_Asynch_Queued_Message (message_block,
-                                             0,
-                                             1),
-                  -1);
-  queued_message->push_back (this->head_, this->tail_);
+  if (this->queue_message_i(message_block) == -1)
+  {
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) - Transport[%d]::send_message_shared_i, "
+                "cannot queue message for "
+                " - %m\n",
+                this->id ()));
+    return -1;
+  }
 
   // ... if the queue is full we need to activate the output on the
   // queue ...
@@ -1127,6 +1171,20 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
 
       (void) flushing_strategy->flush_transport (this);
     }
+
+  return 0;
+}
+
+int
+TAO_Transport::queue_message_i(const ACE_Message_Block *message_block)
+{
+  TAO_Queued_Message *queued_message = 0;
+  ACE_NEW_RETURN (queued_message,
+                  TAO_Asynch_Queued_Message (message_block,
+                                             0,
+                                             1),
+                  -1);
+  queued_message->push_back (this->head_, this->tail_);
 
   return 0;
 }
@@ -2055,6 +2113,61 @@ ACE_Event_Handler::Reference_Count
 TAO_Transport::remove_reference (void)
 {
   return this->event_handler_i ()->remove_reference ();
+}
+
+TAO_OutputCDR &
+TAO_Transport::out_stream (void)
+{
+  return this->messaging_object ()->out_stream ();
+}
+
+bool
+TAO_Transport::post_open (size_t id)
+{
+  bool result = false;
+
+  this->id_ = id;
+  this->is_connected_ = true;
+
+  // If the wait strategy wants us to be registered with the reactor
+  // then we do so. If registeration is required and it succeeds,
+  // #REFCOUNT# becomes two.
+  int register_handler_result =
+    this->wait_strategy ()->register_handler ();
+
+  if (register_handler_result == 0)
+    {
+      result = true;
+
+      // When we have data in our outgoing queue schedule ourselves for output
+      if (!this->queue_is_empty_i ())
+        {
+          TAO_Flushing_Strategy *flushing_strategy =
+            this->orb_core ()->flushing_strategy ();
+          (void) flushing_strategy->schedule_output (this);
+        }
+     }
+  else
+    {
+      // Registration failures.
+
+      // Purge from the connection cache, if we are not in the cache, this
+      // just does nothing.
+      (void) this->purge_entry ();
+
+      // Close the handler.
+      (void) this->close_connection ();
+
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    "TAO (%P|%t) - Transport[%d]::set_connected, "
+                    "could not register the transport "
+                    "in the reactor.\n",
+                    this->id()));
+
+    }
+
+  return result;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

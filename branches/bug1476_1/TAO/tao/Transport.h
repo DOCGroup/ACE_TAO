@@ -205,7 +205,7 @@ struct iovec;
  *
  * <B>See Also:</B>
  *
- * http://deuce.doc.wustl.edu/cvsweb/ace-latest.cgi/ACE_wrappers/TAO/docs/pluggable_protocols/index.html
+ * http://cvs.doc.wustl.edu/ace-latest.cgi/ACE_wrappers/TAO/docs/pluggable_protocols/index.html
  *
  */
 class TAO_Export TAO_Transport
@@ -296,13 +296,6 @@ public:
    *        transport should place its handler
    */
   void provide_handler (TAO_Connection_Handler_Set &handlers);
-
-
-  /// Remove all messages from the outgoing queue.
-  /**
-   * @todo shouldn't this be automated?
-   */
-  // void dequeue_all (void);
 
   /// Register the handler with the reactor.
   /**
@@ -448,8 +441,22 @@ public:
    * adapter class (TAO_Transport_Event_Handler or something), this
    * will reduce footprint and simplify the process of implementing a
    * pluggable protocol.
+   *
+   * @todo This method has to be renamed to event_handler()
    */
   virtual ACE_Event_Handler * event_handler_i (void) = 0;
+
+  /// Is this transport really connected
+  bool is_connected (void) const;
+
+  /// Perform all the actions when this transport get opened
+  bool post_open (size_t id);
+
+  /// Get the connection handler for this transport
+  TAO_Connection_Handler * connection_handler (void);
+
+  /// Accessor for the output CDR stream
+  TAO_OutputCDR &out_stream (void);
 
 protected:
 
@@ -634,7 +641,12 @@ protected:
                              const ACE_Message_Block *message_block,
                              ACE_Time_Value *max_wait_time);
 
+  /// Queue a message for @a message_block
+  int queue_message_i (const ACE_Message_Block *message_block);
+
 public:
+  /// Format and queue a message for @a stream
+  int format_queue_message (TAO_OutputCDR &stream);
 
   /// Send a message block chain,
   int send_message_block_chain (const ACE_Message_Block *message_block,
@@ -646,7 +658,7 @@ public:
                                   size_t &bytes_transferred,
                                   ACE_Time_Value *max_wait_time);
   /// Cache management
-  void purge_entry (void);
+  int purge_entry (void);
 
   /// Cache management
   int make_idle (void);
@@ -766,8 +778,8 @@ private:
    */
   void cleanup_queue (size_t byte_count);
 
-  /// Copy the contents of a message block into a Queued_Message
-  /// TAO_Queued_Message *copy_message_block (const ACE_Message_Block *mb);
+  /// Cleanup the complete queue
+  void cleanup_queue_i ();
 
   /// Check if the buffering constraints have been reached
   int check_buffering_constraints_i (TAO_Stub *stub, int &must_flush);
@@ -905,6 +917,11 @@ protected:
   /// Number of bytes sent.
   size_t sent_byte_count_;
 
+  /// Is this transport really connected or not. In case of oneways with
+  /// SYNC_NONE Policy we don't wait until the connection is ready and we
+  /// buffer the requests in this transport until the connection is ready
+  bool is_connected_;
+
 private:
 
   /// @@Phil, I think it would be nice if we could think of a way to
@@ -938,7 +955,7 @@ private:
 /**
  * @class TAO_Transport_Refcount_Guard
  *
- * @brief Helper class that increments the refount on construction
+ * @brief Helper class that increments the refcount on construction
  *  and decrements the refcount on destruction.
  */
 class TAO_Export TAO_Transport_Refcount_Guard
