@@ -13,7 +13,7 @@ Mon Mar 18 18:37:07 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Messaging/MessagingC.cpp:
 	* tao/Messaging/MessagingS.h:
 	* tao/Messaging/Messaging_Policy_i.h: Included Messaging.h. The
-	  diifs for the generated code needs regeneration. I am going to
+	  diffs for the generated code needs regeneration. I am going to
 	  ask Jai to do it, as I had spent lots of time trying to chase a
 	  bug because of the problem. 
 	
