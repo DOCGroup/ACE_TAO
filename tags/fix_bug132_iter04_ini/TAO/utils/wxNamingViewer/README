@@ -1,0 +1,50 @@
+wxNamingViewer - a wxWindows implementation of NamingViewer
+Author: Charlie Frasch (cfrasch@spawar.navy.mil)
+
+Based on NamingViewer by Chris Hafey (chris@stentorsoft.com)
+
+
+1. This is an (almost) exact port of NamingViewer to wxWindows. There are some
+differences and a few minor improvements. The port was done with
+ACE 5.1.4/TAO 1.1.4 and wxWindows 2.1.5 on Borland C++ Builder 4. Chris Hafey
+contributed changes for MSVC.
+
+*) put <null> as the "root" of the naming context if a naming service cannot be
+found
+
+*) allows definition of objects with no valid IOR, uses CORBA::Object::_nil().
+
+*) uses Profile::to_string() to generate the profile(s) in the View IOR dialog
+
+*) minor changes to dialogs to enable and disable controls as appropriate
+
+*) added Edit menu with Copy item
+
+
+2. Limitations.
+
+*) (still) does not support circularly defined naming contexts.
+
+
+3. To build.
+
+For Borland C++ Builder:
+
+*) Obtain, make and install wxWindows. See http://www.wxwindows.org.
+
+*) Obtain ACE/TAO. See http://www.cs.wustl.edu/~schmidt/ACE.html.
+
+*) Build the the dynamically linked release version of ACE and TAO. See
+http://www.tenermerx.com/programming/corba/tao_bcb/index.html.
+
+*) Make the wxNamingViewer using either the command line compiler with
+make -f makefile.b32 (set ACE_ROOT as usual; set BCCDIR to your C++ Builder
+install directory) or use the C++ Builder IDE (double-click on
+wxNamingViewer.bpr. You may need to modify the include and library paths to
+suit your particular installation.
+
+
+For others: (TBD)
+
+
+

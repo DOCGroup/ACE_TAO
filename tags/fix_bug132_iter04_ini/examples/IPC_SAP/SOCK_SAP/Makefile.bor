@@ -1,0 +1,26 @@
+#
+# Makefile for building the IPC_SAP SOCK_SAP ace examples
+#
+
+NAMES = \
+	CPP-inclient \
+	CPP-unclient \
+	CPP-inserver \
+	CPP-inserver-fancy \
+	CPP-inserver-poll \
+	CPP-unserver \
+	FD-unclient \
+	FD-unserver \
+	C-inclient \
+	C-inserver
+
+OBJFILES = $(OBJDIR)\$(NAME).obj
+
+CFLAGS = $(ACE_CFLAGS)
+
+CPPDIR = .
+
+LIBFILES = $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>

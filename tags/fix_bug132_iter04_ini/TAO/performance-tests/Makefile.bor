@@ -1,0 +1,14 @@
+
+#
+# Makefile for building the TAO performance-tests
+#
+
+DIRS = \
+        Callback \
+        Cubit \
+        Latency \
+        Pluggable \
+        POA \
+        RTCorba \
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -1,0 +1,257 @@
+--- orig/DomainC.i	Tue Apr  3 17:47:30 2001
++++ patched/DomainC.i	Tue Apr  3 20:26:11 2001
+@@ -20,193 +20,6 @@
+ //     http://www.cs.wustl.edu/~schmidt/TAO.html
+ 
+ 
+-#if !defined (_CORBA_INTERFACEDEF___CI_)
+-#define _CORBA_INTERFACEDEF___CI_
+-
+-ACE_INLINE
+-CORBA::InterfaceDef::InterfaceDef (
+-    TAO_Stub *objref,
+-    CORBA::Boolean _tao_collocated,
+-    TAO_Abstract_ServantBase *servant
+-  )
+-  : CORBA_Object (objref, _tao_collocated, servant)
+-{
+-  this->CORBA_InterfaceDef_setup_collocation (_tao_collocated);
+-}
+-
+-#endif /* end #if !defined */
+-
+-
+-#if !defined (_CORBA_INTERFACEDEF___VAR_CI_)
+-#define _CORBA_INTERFACEDEF___VAR_CI_
+-
+-// *************************************************************
+-// Inline operations for class CORBA::InterfaceDef_var
+-// *************************************************************
+-
+-ACE_INLINE
+-CORBA::InterfaceDef_var::InterfaceDef_var (void) // default constructor
+-  : ptr_ (InterfaceDef::_nil ())
+-{}
+-
+-ACE_INLINE ::CORBA::InterfaceDef_ptr
+-CORBA::InterfaceDef_var::ptr (void) const
+-{
+-  return this->ptr_;
+-}
+-
+-ACE_INLINE
+-CORBA::InterfaceDef_var::InterfaceDef_var (const ::CORBA::InterfaceDef_var &p) // copy constructor
+-  : TAO_Base_var (),
+-    ptr_ (InterfaceDef::_duplicate (p.ptr ()))
+-{}
+-
+-ACE_INLINE
+-CORBA::InterfaceDef_var::~InterfaceDef_var (void) // destructor
+-{
+-  CORBA::release (this->ptr_);
+-}
+-
+-ACE_INLINE CORBA::InterfaceDef_var &
+-CORBA::InterfaceDef_var::operator= (InterfaceDef_ptr p)
+-{
+-  CORBA::release (this->ptr_);
+-  this->ptr_ = p;
+-  return *this;
+-}
+-
+-ACE_INLINE CORBA::InterfaceDef_var &
+-CORBA::InterfaceDef_var::operator= (const ::CORBA::InterfaceDef_var &p)
+-{
+-  if (this != &p)
+-  {
+-    CORBA::release (this->ptr_);
+-    this->ptr_ = ::CORBA::InterfaceDef::_duplicate (p.ptr ());
+-  }
+-  return *this;
+-}
+-
+-ACE_INLINE 
+-CORBA::InterfaceDef_var::operator const ::CORBA::InterfaceDef_ptr &() const // cast
+-{
+-  return this->ptr_;
+-}
+-
+-ACE_INLINE 
+-CORBA::InterfaceDef_var::operator ::CORBA::InterfaceDef_ptr &() // cast 
+-{
+-  return this->ptr_;
+-}
+-
+-ACE_INLINE ::CORBA::InterfaceDef_ptr
+-CORBA::InterfaceDef_var::operator-> (void) const
+-{
+-  return this->ptr_;
+-}
+-
+-ACE_INLINE ::CORBA::InterfaceDef_ptr
+-CORBA::InterfaceDef_var::in (void) const
+-{
+-  return this->ptr_;
+-}
+-
+-ACE_INLINE ::CORBA::InterfaceDef_ptr &
+-CORBA::InterfaceDef_var::inout (void)
+-{
+-  return this->ptr_;
+-}
+-
+-ACE_INLINE ::CORBA::InterfaceDef_ptr &
+-CORBA::InterfaceDef_var::out (void)
+-{
+-  CORBA::release (this->ptr_);
+-  this->ptr_ = ::CORBA::InterfaceDef::_nil ();
+-  return this->ptr_;
+-}
+-
+-ACE_INLINE ::CORBA::InterfaceDef_ptr
+-CORBA::InterfaceDef_var::_retn (void)
+-{
+-  // yield ownership of managed obj reference
+-  ::CORBA::InterfaceDef_ptr val = this->ptr_;
+-  this->ptr_ = ::CORBA::InterfaceDef::_nil ();
+-  return val;
+-}
+-
+-
+-#endif /* end #if !defined */
+-
+-
+-#if !defined (_CORBA_INTERFACEDEF___OUT_CI_)
+-#define _CORBA_INTERFACEDEF___OUT_CI_
+-
+-// *************************************************************
+-// Inline operations for class CORBA::InterfaceDef_out
+-// *************************************************************
+-
+-ACE_INLINE
+-CORBA::InterfaceDef_out::InterfaceDef_out (InterfaceDef_ptr &p)
+-  : ptr_ (p)
+-{
+-  this->ptr_ = ::CORBA::InterfaceDef::_nil ();
+-}
+-
+-ACE_INLINE
+-CORBA::InterfaceDef_out::InterfaceDef_out (InterfaceDef_var &p) // constructor from _var
+-  : ptr_ (p.out ())
+-{
+-  CORBA::release (this->ptr_);
+-  this->ptr_ = ::CORBA::InterfaceDef::_nil ();
+-}
+-
+-ACE_INLINE
+-CORBA::InterfaceDef_out::InterfaceDef_out (const ::CORBA::InterfaceDef_out &p) // copy constructor
+-  : ptr_ (ACE_const_cast (InterfaceDef_out &, p).ptr_)
+-{}
+-
+-ACE_INLINE ::CORBA::InterfaceDef_out &
+-CORBA::InterfaceDef_out::operator= (const ::CORBA::InterfaceDef_out &p)
+-{
+-  this->ptr_ = ACE_const_cast (InterfaceDef_out&, p).ptr_;
+-  return *this;
+-}
+-
+-ACE_INLINE CORBA::InterfaceDef_out &
+-CORBA::InterfaceDef_out::operator= (const ::CORBA::InterfaceDef_var &p)
+-{
+-  this->ptr_ = ::CORBA::InterfaceDef::_duplicate (p.ptr ());
+-  return *this;
+-}
+-
+-ACE_INLINE CORBA::InterfaceDef_out &
+-CORBA::InterfaceDef_out::operator= (InterfaceDef_ptr p)
+-{
+-  this->ptr_ = p;
+-  return *this;
+-}
+-
+-ACE_INLINE 
+-CORBA::InterfaceDef_out::operator ::CORBA::InterfaceDef_ptr &() // cast
+-{
+-  return this->ptr_;
+-}
+-
+-ACE_INLINE ::CORBA::InterfaceDef_ptr &
+-CORBA::InterfaceDef_out::ptr (void) // ptr
+-{
+-  return this->ptr_;
+-}
+-
+-ACE_INLINE ::CORBA::InterfaceDef_ptr
+-CORBA::InterfaceDef_out::operator-> (void)
+-{
+-  return this->ptr_;
+-}
+-
+-
+-#endif /* end #if !defined */
+-
+-
+ #if !defined (_CORBA_DOMAINMANAGER___CI_)
+ #define _CORBA_DOMAINMANAGER___CI_
+ 
+@@ -951,55 +764,6 @@
+ ACE_INLINE CORBA::Boolean
+ operator<< (
+     TAO_OutputCDR &,
+-    const CORBA::InterfaceDef_ptr
+-  );
+-ACE_INLINE CORBA::Boolean
+-operator>> (
+-    TAO_InputCDR &,
+-    CORBA::InterfaceDef_ptr &
+-  );
+-
+-ACE_INLINE CORBA::Boolean
+-operator<< (
+-    TAO_OutputCDR &strm,
+-    const CORBA::InterfaceDef_ptr _tao_objref
+-  )
+-{
+-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+-  return (strm << _tao_corba_obj);
+-}
+-
+-ACE_INLINE CORBA::Boolean
+-operator>> (
+-    TAO_InputCDR &strm,
+-    CORBA::InterfaceDef_ptr &_tao_objref
+-  )
+-{
+-  ACE_TRY_NEW_ENV
+-  {
+-    CORBA::Object_var obj;
+-    if ((strm >> obj.inout ()) == 0)
+-      return 0;
+-    // narrow to the right type
+-    _tao_objref =
+-      CORBA::InterfaceDef::_unchecked_narrow (
+-          obj.in (),
+-          ACE_TRY_ENV
+-        );
+-    ACE_TRY_CHECK;
+-    return 1;
+-  }
+-  ACE_CATCHANY
+-  {
+-    // do nothing
+-  }
+-  ACE_ENDTRY;
+-  return 0;
+-}
+-
+-ACE_INLINE CORBA::Boolean
+-operator<< (
+-    TAO_OutputCDR &,
+     const CORBA_DomainManager_ptr
+   );
+ ACE_INLINE CORBA::Boolean
+@@ -1109,4 +873,3 @@
+   );
+ 
+ #endif /* _TAO_CDR_OP_CORBA_DomainManagerList_I_ */
+-

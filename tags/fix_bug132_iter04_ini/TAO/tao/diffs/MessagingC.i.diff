@@ -1,0 +1,194 @@
+--- orig/MessagingC.i	Tue Apr  3 22:01:25 2001
++++ patched/MessagingC.i	Tue Apr  3 22:05:33 2001
+@@ -27,6 +27,8 @@
+ // Inline operations for class Messaging::RebindPolicy_var
+ // *************************************************************
+ 
++#if (TAO_HAS_REBIND_POLICY == 1)
++
+ ACE_INLINE
+ Messaging::RebindPolicy_var::RebindPolicy_var (void) // default constructor
+   : ptr_ (RebindPolicy::_nil ())
+@@ -208,6 +210,10 @@
+   return this->ptr_;
+ }
+ 
++#endif /* TAO_HAS_REBIND_POLICY == 1 */
++
++#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
++
+ ACE_INLINE
+ Messaging::SyncScopePolicy_var::SyncScopePolicy_var (const ::Messaging::SyncScopePolicy_var &p) // copy constructor
+   : TAO_Base_var (),
+@@ -359,6 +365,10 @@
+ 
+ #endif /* end #if !defined */
+ 
++#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
++
++#if (TAO_HAS_PRIORITY_POLICIES == 1)
++
+ // *************************************************************
+ // Inline operations for class Messaging::PriorityRange_var
+ // *************************************************************
+@@ -852,6 +862,10 @@
+ // Inline operations for class Messaging::RequestStartTimePolicy_var
+ // *************************************************************
+ 
++#endif /* TAO_HAS_PRIORITY_POLICIES == 1 */
++
++#if (TAO_HAS_REQUEST_START_TIME_POLICY == 1)
++
+ ACE_INLINE
+ Messaging::RequestStartTimePolicy_var::RequestStartTimePolicy_var (void) // default constructor
+   : ptr_ (RequestStartTimePolicy::_nil ())
+@@ -1039,6 +1053,10 @@
+     ptr_ (RequestEndTimePolicy::_duplicate (p.ptr ()))
+ {}
+ 
++#endif /* TAO_HAS_REQUEST_START_TIME_POLICY == 1 */
++
++#if (TAO_HAS_REQUEST_END_TIME_POLICY == 1)
++
+ ACE_INLINE
+ Messaging::RequestEndTimePolicy_var::~RequestEndTimePolicy_var (void) // destructor
+ {
+@@ -1209,6 +1227,10 @@
+     ptr_ (ReplyStartTimePolicy::_duplicate (p.ptr ()))
+ {}
+ 
++#endif /* TAO_HAS_REQUEST_END_TIME_POLICY == 1 */
++
++#if (TAO_HAS_REPLY_START_TIME_POLICY == 1)
++
+ ACE_INLINE
+ Messaging::ReplyStartTimePolicy_var::~ReplyStartTimePolicy_var (void) // destructor
+ {
+@@ -1379,6 +1401,10 @@
+     ptr_ (ReplyEndTimePolicy::_duplicate (p.ptr ()))
+ {}
+ 
++#endif /* TAO_HAS_REPLY_START_TIME_POLICY == 1 */
++
++#if (TAO_HAS_REPLY_END_TIME_POLICY == 1)
++
+ ACE_INLINE
+ Messaging::ReplyEndTimePolicy_var::~ReplyEndTimePolicy_var (void) // destructor
+ {
+@@ -1549,6 +1575,10 @@
+     ptr_ (RelativeRequestTimeoutPolicy::_duplicate (p.ptr ()))
+ {}
+ 
++#endif /* TAO_HAS_REPLY_END_TIME_POLICY == 1 */
++
++#if (TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1)
++
+ ACE_INLINE
+ Messaging::RelativeRequestTimeoutPolicy_var::~RelativeRequestTimeoutPolicy_var (void) // destructor
+ {
+@@ -1719,6 +1749,10 @@
+     ptr_ (RelativeRoundtripTimeoutPolicy::_duplicate (p.ptr ()))
+ {}
+ 
++#endif /* TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1 */
++
++#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
++
+ ACE_INLINE
+ Messaging::RelativeRoundtripTimeoutPolicy_var::~RelativeRoundtripTimeoutPolicy_var (void) // destructor
+ {
+@@ -1868,6 +1902,10 @@
+ // Inline operations for class Messaging::RoutingTypeRange_var
+ // *************************************************************
+ 
++#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
++
++#if (TAO_HAS_ROUTING_POLICY == 1)
++
+ ACE_INLINE
+ Messaging::RoutingTypeRange_var::RoutingTypeRange_var (void) // default constructor
+   : ptr_ (0)
+@@ -2204,6 +2242,10 @@
+     ptr_ (MaxHopsPolicy::_duplicate (p.ptr ()))
+ {}
+ 
++#endif /* TAO_HAS_ROUTING_POLICY == 1 */
++
++#if (TAO_HAS_MAX_HOPS_POLICY == 1)
++
+ ACE_INLINE
+ Messaging::MaxHopsPolicy_var::~MaxHopsPolicy_var (void) // destructor
+ {
+@@ -2457,6 +2499,10 @@
+ // Inline operations for class Messaging::QueueOrderPolicy_out
+ // *************************************************************
+ 
++#endif /* TAO_HAS_MAX_HOPS_POLICY == 1 */
++
++#if (TAO_HAS_QUEUE_ORDER_POLICY == 1)
++
+ ACE_INLINE
+ Messaging::QueueOrderPolicy_out::QueueOrderPolicy_out (QueueOrderPolicy_ptr &p)
+   : ptr_ (p)
+@@ -2519,6 +2565,8 @@
+ 
+ #endif /* end #if !defined */
+ 
++#endif /* TAO_HAS_QUEUE_ORDER_POLICY == 1 */
++
+ // *************************************************************
+ // Inline operations for class Messaging::PolicyValue_var
+ // *************************************************************
+@@ -3106,6 +3154,8 @@
+ 
+ #endif /* end #if !defined */
+ 
++#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
++
+ ACE_INLINE
+ Messaging::ExceptionHolder::ExceptionHolder () // default constructor
+ {}
+@@ -3237,6 +3287,9 @@
+ #if !defined (_MESSAGING_EXCEPTIONHOLDER___OUT_CI_)
+ #define _MESSAGING_EXCEPTIONHOLDER___OUT_CI_
+ 
++#if !defined (_MESSAGING_EXCEPTIONHOLDER___VAR_CI_)
++#define _MESSAGING_EXCEPTIONHOLDER___VAR_CI_
++
+ // *************************************************************
+ // Inline operations for class Messaging::ExceptionHolder_out
+ // *************************************************************
+@@ -3445,6 +3498,10 @@
+   this->ptr_ = ::Messaging::ReplyHandler::_nil ();
+ }
+ 
++
++
++#endif /* end #if !defined */
++
+ ACE_INLINE
+ Messaging::ReplyHandler_out::ReplyHandler_out (const ::Messaging::ReplyHandler_out &p) // copy constructor
+   : ptr_ (ACE_const_cast (ReplyHandler_out &, p).ptr_)
+@@ -3492,6 +3549,8 @@
+ 
+ #endif /* end #if !defined */
+ 
++#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
++
+ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Messaging::PriorityRange &_tao_aggregate)
+ {
+   if (
+@@ -3594,6 +3653,8 @@
+ 
+ #endif /* _TAO_CDR_OP_Messaging_PolicyValueSeq_I_ */
+ 
++#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
++
+ ACE_INLINE CORBA::Boolean
+ operator<< (TAO_OutputCDR &strm, const Messaging::ExceptionHolder *_tao_valuetype)
+ {
+@@ -3685,3 +3746,4 @@
+   return 0;
+ }
+ 
++#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */

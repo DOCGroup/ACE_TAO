@@ -1,0 +1,45 @@
+<HTML>
+<!-- $Id$ -->
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Ambreen Ilyas">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
+   <TITLE>Example 4</TITLE>
+</HEAD>
+<BODY>
+<FONT COLOR="#CC0000">/////////////////////////////////////////////////////////////////////////////////////////////////////////////////</FONT>
+<BR><FONT COLOR="#CC0000">//// This example is from the ACE Programmers
+Guide.</FONT>
+<BR><FONT COLOR="#CC0000">////&nbsp; Chapter:&nbsp; "The Acceptor/Connector"&nbsp;
+(Connection Initialization)</FONT>
+<BR><FONT COLOR="#CC0000">//// For details please see the guide at</FONT>
+<BR><FONT COLOR="#CC0000">//// http://www.cs.wustl.edu/~schmidt/ACE.html</FONT>
+<BR><FONT COLOR="#CC0000">////&nbsp; AUTHOR: Umar Syyid (usyyid@hns.com)</FONT>
+<BR><FONT COLOR="#CC0000">//// and Ambreen Ilyas (ambreen@bitsmart.com)</FONT>
+<BR><FONT COLOR="#CC0000">/////////////////////////////////////////////////////////////////////////////////////////////////////////////</FONT>
+
+<P><FONT COLOR="#CC0000">//Example 4 (Use in conjunction with other examples
+to create running example)</FONT><FONT COLOR="#CC0000"></FONT>
+
+<P>typedef ACE_Connector&lt;My_Svc_Handler,ACE_SOCK_CONNECTOR> MyConnector;
+
+<P>int main(int argc, char * argv[]){
+<BR>&nbsp;ACE_INET_Addr addr(PORT_NO,HOSTNAME);
+<BR>&nbsp;My_Svc_Handler * handler= new My_Svc_Handler;
+
+<P><FONT COLOR="#FF0000">//Create the connector</FONT>
+<BR>&nbsp;MyConnector connector;
+
+<P><FONT COLOR="#FF0000">//Connects to remote machine</FONT>
+<BR>&nbsp;if(connector.connect(handler,addr)==-1)
+<BR>&nbsp; ACE_ERROR(LM_ERROR,?%P|%t, %p?,?Connection failed?);
+<BR>&nbsp;
+
+<P><FONT COLOR="#FF0000">//Registers with the Reactor</FONT>
+<BR>&nbsp;while(1)
+<BR>&nbsp; ACE_Reactor::instance()->handle_events();
+<BR>}
+
+<P>&nbsp;<A HREF="ex05.html">Next Example</A>
+</BODY>
+</HTML>
