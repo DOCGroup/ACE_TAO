@@ -1,3 +1,14 @@
+Tue Apr 10 12:13:48 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/TypeCodeFactory/TAO_TypeCodeFactory_i.cpp:
+
+          Removed unnecessary check for an unsigned >= 0.
+
+        * orbsvcs/tests/InterfaceRepo/Application_Test/Application_Test.dsp:
+
+          Added missing link to TAO_IFR_Client library in the release
+          version.
+
 Tue Apr 10 09:14:37 2001  Ossama Othman  <ossama@uci.edu>
 
 	* configure.in:
