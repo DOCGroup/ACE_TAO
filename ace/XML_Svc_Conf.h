@@ -44,6 +44,8 @@
 class ACE_Export ACE_XML_Svc_Conf
 {
 public:
+  typedef ACE_XML_Svc_Conf *(*Factory)(void);
+
   virtual ~ACE_XML_Svc_Conf (void) = 0;
 
   virtual int parse_file (const ACE_TCHAR file[]) = 0;
