@@ -1060,7 +1060,7 @@ CORBA_ORB::create_interface_tc (const char * id,
   // Send the name
   cdr << name;
 
-  CORBA_TypeCode_ptr interface_typecode = CORBA::TypeCode_ptr::_nil ();
+  CORBA_TypeCode_ptr interface_typecode = CORBA::TypeCode::_nil ();
   ACE_NEW_THROW_EX (interface_typecode,
                     CORBA_TypeCode (CORBA::tk_objref,
                                     cdr.total_length (),
@@ -1068,7 +1068,7 @@ CORBA_ORB::create_interface_tc (const char * id,
                                     0,
                                     0),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::TypeCode_ptr::_nil ());
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   return interface_typecode;
 }
@@ -1098,7 +1098,7 @@ CORBA_ORB::create_enum_tc (const char *id,
       cdr << members[index].in ();
     } 
 
-  CORBA_TypeCode_ptr interface_typecode = CORBA::TypeCode_ptr::_nil ();
+  CORBA_TypeCode_ptr interface_typecode = CORBA::TypeCode::_nil ();
   ACE_NEW_THROW_EX (interface_typecode,
                     CORBA_TypeCode (CORBA::tk_enum,
                                     cdr.total_length (),
@@ -1106,7 +1106,7 @@ CORBA_ORB::create_enum_tc (const char *id,
                                     0,
                                     0),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::TypeCode_ptr::_nil ());
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   return interface_typecode;
 }
@@ -1141,7 +1141,7 @@ CORBA_ORB::create_exception_tc (const char *id,
       cdr << struct_member.type.in ();
     }
 
-  CORBA_TypeCode_ptr interface_typecode = CORBA::TypeCode_ptr::_nil ();
+  CORBA_TypeCode_ptr interface_typecode = CORBA::TypeCode::_nil ();
   ACE_NEW_THROW_EX (interface_typecode,
                     CORBA_TypeCode (CORBA::tk_except,
                                     cdr.total_length (),
@@ -1149,7 +1149,7 @@ CORBA_ORB::create_exception_tc (const char *id,
                                     0,
                                     0),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::TypeCode_ptr::_nil ());
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   return interface_typecode;
 }
