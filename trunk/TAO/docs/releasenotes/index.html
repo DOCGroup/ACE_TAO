@@ -435,6 +435,62 @@ Support for #pragma prefix has been revamped and improved to be compliant
 (the prefix is now cleared when leaving the scope or the included IDL file where it
 was defined), and support for #pragma version and #pragma ID has been added.</li>
 
+<li>
+Support for forward declared structs and unions has been added. In compliance with
+CORBA 2.6, such forward declarations must be fully defined in the same compilation
+unit, and may be used only in sequence declarations, which in turn may be used in
+the declaration of recursive structs and unions. Use of a forward declared struct
+or union as an aggregate type member or as an operation parameter will generat
+an error message.</li>
+
+<li>
+Support for enum constants has been added.</li>
+
+<li>
+The IDL compiler can now handle concatenation of string literals, for example<br>
+<blockquote>
+const string foo = "hel" "lo " "the" "re";<br>
+</blockquote>
+</li>
+
+<li>
+Support for abstract interfaces has been added.</li>
+
+<li>
+Support for valuetypes has been expanded.<br>
+<ul>
+<li>Forward declared valuetypes not defined in the same compilation unit</li>
+<li>Type codes for valuetypes</li>
+<li>Generation of Any insertion/extraction operators</li>
+<li>Abstract valuetypes</li>
+<li>Valuetype members of all IDL aggregate types</li>
+<li>Interface supports list</li>
+</ul>
+</li>
+
+<li>
+CCM-related keywords are recognized:<br>
+<ul>
+<li>component</li>
+<li>consumes</li>
+<li>emits</li>
+<li>eventtype</li>
+<li>finder</li>
+<li>getraises</li>
+<li>home</li>
+<li>import</li>
+<li>multiple</li>
+<li>primarykey</li>
+<li>provides</li>
+<li>publishes</li>
+<li>setraises</li>
+<li>typeid</li>
+<li>typeprefix</li>
+<li>uses</li>
+</ul>
+Full support for CORBA Components is in progress.
+</li>
+
 </ul>
 
 <p><h4>Known Issues:</h4>
@@ -460,6 +516,11 @@ Another way to avoid the problem is to change the Release project Optimization
 setting to 'Minimize Size'. Reportedly the problem has been fixed in MSVC version
 7.0.
 </li>
+<li>
+In conditional #includes, where there is an inclusion for either value of the 
+condition, and where the non-included base filename is a substring of the included
+one, both files will be included.
+</li>
 </ul>
 
 <p><h4>Future work:</h4>
@@ -475,29 +536,16 @@ implemented include:<p>
 
 <ul>
 <li>
-Value types as members of a constructed type (struct, union or sequence).<p>
-
+Boxed value types<p>
 <li>
-Boxed value types.<p>
+Custom marshaling<p>
+<li>
+Truncation<p>
+<li>
+Marshaling of complex state (graphs with cycles)<p>
 </ul>
 
 For a complete description of value type semantics, see chapter 5 in the
-CORBA specification.<p>
-
-<li>
-Support for forward declaration of IDL structs and unions. This feature
-appeared in CORBA 2.4, as a way to improve the semantics for recursive
-types in IDL. In IDL, a recursive struct or union is one that has a member
-which is an IDL sequence of the struct or union itself, or contains such a
-sequence. Without forward declaration of structs or unions, the only way to
-accomplish this was by use of so-called anonymous sequences, that is,
-sequences that are simply declared where they are used and not given a
-name in a previous typedef declaration. The use of forward declared structs
-and unions to create recursive types makes the use of anonymous sequences
-unnecessary, and their use is now deprecated by the OMG. Note that, unlike
-IDL interfaces and value types, forward declared structs and unions must be
-defined in the same IDL file. For more information about recursive,
-anonymous, constructed and template types in IDL, see section 3.10 in the
 CORBA specification.<p>
 
 <li>
