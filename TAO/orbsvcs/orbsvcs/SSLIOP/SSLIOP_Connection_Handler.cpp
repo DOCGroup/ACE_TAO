@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SSLIOP_Connection_Handler.h"
 #include "SSLIOP_Current.h"
 #include "SSLIOP_Endpoint.h"
@@ -238,7 +236,7 @@ TAO_SSLIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
 }
 
 void
-TAO_SSLIOP_Connection_Handler::handle_close_i (ACE_HANDLE handle)
+TAO_SSLIOP_Connection_Handler::handle_close_i (ACE_HANDLE)
 {
   if (TAO_debug_level)
     ACE_DEBUG  ((LM_DEBUG,
