@@ -388,10 +388,92 @@ be_visitor_valuetype::visit_operation (be_operation *)
 
 // visit an exception (not used)
 int
-be_visitor_valuetype::visit_exception (be_exception *)
+be_visitor_valuetype::visit_exception (be_exception *node)
 {
- ACE_ASSERT (0);
- return 0;
+  // instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node); // set the node to be the node being visited. The scope is
+  // still the same
+
+  // this switch is acceptable rather than having derived visitors overriding
+  // this method and differing only in what state they set
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_VALUETYPE_CH:
+      ctx.state (TAO_CodeGen::TAO_EXCEPTION_CH);
+      break;
+    case TAO_CodeGen::TAO_VALUETYPE_CI:
+      ctx.state (TAO_CodeGen::TAO_EXCEPTION_CI);
+      break;
+    case TAO_CodeGen::TAO_VALUETYPE_CS:
+      ctx.state (TAO_CodeGen::TAO_EXCEPTION_CS);
+      break;
+    case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_EXCEPTION_ANY_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_EXCEPTION_ANY_OP_CS);
+      break;
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CI:
+      ctx.state (TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CI);
+      break;
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CS);
+      break;
+
+    case TAO_CodeGen::TAO_VALUETYPE_SH:
+    case TAO_CodeGen::TAO_VALUETYPE_IH:
+    case TAO_CodeGen::TAO_VALUETYPE_SI:
+    case TAO_CodeGen::TAO_VALUETYPE_SS:
+    case TAO_CodeGen::TAO_VALUETYPE_IS:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_VALUETYPE_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_VALUETYPE_MARSHAL_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_MARSHAL_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_ARGLIST_CH:
+      return 0; // nothing to be done
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_interface::"
+                           "visit_exception - "
+                           "Bad context state\n"
+                           ), -1);
+      }
+    }
+
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interface::"
+                         "visit_exception - "
+                         "NUL visitor\n"
+                         ),  -1);
+    }
+
+  // let the node accept this visitor
+  if (node->accept (visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interface::"
+                         "visit_exception - "
+                         "failed to accept visitor\n"
+                         ),  -1);
+    }
+  delete visitor;
+  return 0;
 }
 
 // visit a structure
