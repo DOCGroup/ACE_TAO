@@ -1,9 +1,298 @@
-Fri Apr 26 16:23:32 UTC 2002  Don Hinton  <dhinton@ieee.org>
+Fri Apr 26 12:31:10 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
-	This entry will be added later.  I'm out of time tonight and 
-	want to get Bala to do a test compile for me if possible, so I'll
-	replace this note with the real entry later.
+	* ace/*.{h,i,cpp}: 
+
+	  Move included in cpp after include of inline.
+
+	  Reorded includes in *.cpp files so that all includes, except
+	  for the corresponding *.h file, come after the conditional 
+	  *.i include.  This makes it easier to determine which headers
+	  are required at each level (*.h, then *.i, then *.cpp) and 
+	  removed a potential difference between inlined and non-inlined
+	  builds.  Non-inlined builds are much faster, but may mask 
+	  dependencies if the *.i comes after other includes in the *.cpp
+	  file.
+
+	* ace/CDR_Base.{h,inl}:
+
+	  moved a bunch of cdr specific macros to header.
+	  moved Message_Block.h include to the inl and added forward declaration to 
+	  header..
+
+	* ace/Configuration.{h,cpp}:
+
+	  Removed include of ACE.h and Malloc.h from the header and added include
+	  of ace_unistd.h to cpp.
+
+	* ace/String_Base.{h,i}:
+
+	  Moved ACE.h to *.i and added ace_sys_types.h to header.  Added other includes
+	  to *.i. (in hopes ACE.h can be removed soon.)
 	
+	* ace/Basic_Types.h:
+
+	  removed BYTE_ORDER stuff
+	  added ACE_U_ONE_SECOND* macros from ?
+	  added ACE_LOFF_T typedefs from ?
+	  added hrtime_t typedefs from ?
+	  made ACE_HRTIMER_START, etc. enums from ACE_OS macros to reduce
+	  interdependancies.
+	  removed LPSECURITY_ATTRIBUTES, etc macros to ace_stdio.h
+	  removed ssize_t typedef to ace_sys_types.h
+	  moved ACE_SIGRTMIN, etc macros here from OS.h
+	  moved ACE_RTSIG_MAX here from OS.h but commented them out
+	  since they don't appear to be used.
+	  Moved file buffer defines here, but probably need to move them
+	  to ace_stdio.h later.
+	  moved the ACE_align_binary, et al, macros here, but may need to
+	  find a better home for them.
+	  moved ACE_timer_t typedef here.
+	
+	* ace/Based_Pointer_T.cpp:
+
+	  Removed ACE_TRACEX macro and included Trace.h instead.
+
+	* ace/Asynch_IO.h:
+	
+	  Adjusted includes to take advantage of the new "ace_*.h" file
+
+	* ace/DLL.{h,cpp}:
+
+	  removed include of ACE.h and added OS.h and Lib_Find.h in cpp
+	  removed OS.h from h and added ACE_export.h, ace_dlfcn.h and Global_Macros.h
+
+	* ace/Date_Time.{h,i
+
+	  h: removed ACE.h and added ACE_export.h
+	  i: added Trace.H, Time_Value.h and OS.h
+
+	* ace/Default_Constants.h 
+	  removed ACE_MAX_USERID (in config-win32-common.h)
+
+	* ace/Dirent_Selectory.h: added OS_Dirent.h
+
+	* ace/Dump.h: removed Synch.h and added ACE_export.h.
+
+	* ace/Dynamic.{h,i}: 
+
+	  h: removed ACE.h added config-all.h and ACE_export.h
+	  i: added Trace.h
+
+	* ace/Event_Handler.h: removed OS.h added ace_signal.h and ace_threads.h
+
+	* ace/FIFO.h: removed ACE.h added ace_sys_param.h
+
+	* ace/FIFO_Recv.i: added ACE.h
+
+	* ace/FIFO_Send.i: added ACE.h
+
+	* ace/FILE_Addr.{h,cpp}: 
+
+	  h: -ace_stdio.h  +ace_dirent.h, ace_socket.h, Global_Macros.h
+	  cpp: added OS.h
+
+	* ace/FILE_Connector.{h,i}: 
+
+	  h: added Trace.h, Log_Msg.h
+	  i: removed Log_Msg.h
+
+	* ace/FILE_IO.{h,i}:
+
+	  h: -ACE.h
+	  i: +ACE.h
+
+	* ace/FILE_Lock.{h,cpp,inl}:
+
+	  cpp (dump): removed lock_dump() call.
+	  h: -OS.h +ace_fcntl.h, changed ACE_OS::ace_flock_t to ace_flock_t.
+	  inl: +OS.h
+	
+	* ace/Filecache.cpp: +ace_unistd.h for ACE_WIN32 builds.
+
+	* ace/Get_Opt.h: -ACE.h
+
+	* ace/Global_Macros.h: lots of changes...
+
+	* ace/Handle_Set.{h,cpp}:
+
+	  h,cpp: changed ACE_FD_SET_TYPE to ACE_SELECT_FD_SET_TYPE since it 
+	  isn't the type that changed, but type used in calls to select.
+	  
+	  h: moved FD_SET* macros here...
+
+	* ace/High_Res_timer.{h,i}:
+
+	  h: -OS.h +config-all.h, ACE_export.h, Basic_Types.h, Time_Value.h
+	  changed ACE_OS::ACE_HRTIMER* types to int and use ACE_HRTIMER* definitions in ???
+
+	  i: +Time_Value.h (need to remove this)
+	     +OS.h, Trace.h and ACE_HRTIMER* changes
+
+	* ace/INET_Addr.{h,cpp,i}:
+
+	  h: -ACE.h, +config-all.h, ace_sys_socke.h, Basic_Types.h
+	  cpp: +OS_String.h, OS.h
+	  i: +Trace.h
+
+	* ace/IOStream.i: +OS.h
+
+	* ace/IO_SAP.{h,cpp,i}:  
+
+	  h: -Flag_Manip.h, config-all.h, ACE_export.h, ace_sys_types.h
+	  cpp: +Flag_Manip.h
+	  i: +Trace.h, +OS.h
+
+	* ace/IPC_SAP.{h,cpp,i}:
+
+	  h: -Flag_Manip.h, +config-all.h, ACE_export.h, ace_sys_types.h
+	  cpp: +Flag_Manip.h
+	  i: +Trace.h, +OS.h
+
+	* ace/Log_Msg_NT_Event_Log.cpp: + OS.h
+
+	* ace/Log_Msg_UNIX_Syslog.h: +syslog.h
+
+	* ace/Lib_Find.cpp: 
+	* ace/Local_Name_Stace.cpp: +ace_unistd.h
+
+	* ace/Logging_Strategy.h: -Log_Msg.h +fwd decl ACE_Log_Msg
+
+	* ace/Mem_Map.{h,i}: 
+
+	  h: -ACE.h, +config-all.h, ACE_export.h, ace_sys_param.h,
+	  ace_sys_mman.h, ace_stdio.h, ace_fcntl.h, Global_Macros.h, Default_Constants.h
+
+	  i: +Trace.h, OS.h
+
+	* ace/Memory_Pool.cpp: +ace_sys_shm.h
+
+	* ace/OS.cpp: +ace_time.h removed ace_flock_t, removed remaining PACE ifdef
+
+	* ace/OS.h: beaucoup changes...
+
+	* ace/OS.i: ditto...
+
+	* ace/OS_Dirent.h: -sys/types.h, unistd.h, dirent.h + ace_dirent.h
+
+	* ace/OS_Log_Msg_Attributes.h: -stdarg.h, stdio.h + ace_stdio.h, 
+	  moved ACE_OSTREAM_TYPE to ???
+
+	* ace/OS_String.inl: moved string ifdefs to ace_string.h and included it.
+
+	* ace/OS_TLI.h: moved defs of LOCALNAME and REMOTENAME here.
+
+	* ace/POSIX_Asynch_IO.h: +ace_aio.h
+
+	* ace/POSIX_Proactor.cpp: removed _SC_AIO_MAX def to ???
+
+	* ace/Parse_Node.h: added fwd decl of ACE_Service_Config;
+
+	* ace/Process.{h,i}: 
+
+	  h: - SString.h, +ace_sys_param.h, ace_signal.h, ace_stdio.h, 
+	  fwd decl ACE_Time_Value
+	  i: +ACE.h
+
+	* ace/RB_Process_Mutex.h: +Default_Constants.h
+
+	* ace/Registry.h: +ace_stdio.h
+
+	* ace/SOCK_Dgram.cpp: 
+	* ace/SOCK_Dgram_Bcast.cpp: 
+	* ace/SOCK_Dgram_Mcast.cpp: +ace_netinet_in.h, ace_sys_ioctl.h
+
+	* ace/SOCK_Dgram_Mcast.h: moved ip_mreq typedef here.
+
+	* ace/SString.cpp: removed conditional include of Service_Config.h for 
+	  ACE_HAS_WINCE.
+
+	* ace/SV_Message_Queue.h:
+	* ace/SV_Semaphore_Simple.h: 
+	* ace/SV_Shared_Memory.h: +ace_sys_ipc.h
+
+	* ace/Sched_Params.h: 
+
+	  -OS.h, +config-all.h, ACE_export.h, Time_Value.h, ace_threads.h; 
+	  +typedef for ACE_Sched_Priority moved from ??
+
+	* ace/Service_Object.{h,cpp,i}:
+
+	  cpp: +Trace.h
+	  h: +ace_dlfcn.h
+	  i: +ACE.h
+
+	* ace/Shared_Object.{h,cpp}: 
+
+	  cpp: +Trace.h
+	  h: -ACE.h, +config-all.h, ACE_export.h, ace_sys_types.h
+
+	* ace/Sock_Connect.{h,cpp}:
+
+	  h: -OS.h, +ACE_export.h, Basic_Types.h, ace_sys_socket.h
+	  cpp: +ace_netinet_in.h, ace_sys_ioctl.h
+
+	* ace/Stats.cpp: +ace_string.h
+
+	* ace/Stream.cpp: -Module.h
+
+	* ace/Synch.{h,cpp,i}: 
+
+	  cpp: +ace_sys_mman.h
+	  h: -ACE.h, +config-all.h, ACE_export.h, Global_Macros.h
+	  i: +OS.h
+
+	* ace/Synch_T.h: +Global_Macros.h
+
+	* ace/TTY_IO.{h,cpp}:
+
+	  cpp: +ace_sys_ioctl.h, ace_termios.h
+	  h: -OS.h, +config-all.h
+
+	* ace/Time_Request_Reply.h: +ace_sys_types.h
+
+	* ace/Timeprobe.cpp: -OS.h
+
+	* ace/Timer_Heap_T.cpp: +ace_unistd.h
+
+	* ace/Token.cpp: -Synch_T.h
+
+	* ace/UNIX_Addr.h: 
+
+	  +sys/un.h
+
+	* ace/Proactor.h: -OS.h, +ACE.h, Synch.h
+
+	* ace/ace_sys_wait.h:
+	* ace/ace_unistd.h:
+	* ace/ace_string.h:
+	* ace/ace_stdlib.h:
+	* ace/ace_aio.h:
+	* ace/ace_ctype.h:
+	* ace/ace_dlfcn.h:
+	* ace/ace_fcntl.h
+	* ace/ace_netinet_in.h:
+	* ace/ace_new.h:
+	* ace/ace_poll.h:
+	* ace/ace_pwd.h:
+	* ace/ace_sched.h:
+	* ace/ace_signal.h:
+	* ace/ace_stddef.h
+	* ace/ace_sys_ioctl.h:
+	* ace/ace_sys_ipc.h:
+	* ace/ace_sys_select.h:
+	* ace/ace_sys_shm.h:
+	* ace/ace_sys_times.h:
+	* ace/ace_sys_utsname.h:
+	* ace/ace_termios.h:
+	* ace/ace_utime.h:	
+
+	  Added additional include wrappers and moved the typedefs, etc., to
+	  the appropriate file.
+
+	* ace/OS.h:
+	* ace/Main_Macros.h:  Moved the ACE_MAIN, etc., macros from OS.h
+	  to the new file Main_Macros.h.
+
 Fri Apr 19 13:42:28 UTC 2002  Don Hinton  <dhinton@ieee.org>
 	
 	* ace/ARGV.cpp:
