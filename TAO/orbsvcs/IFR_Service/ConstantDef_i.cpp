@@ -162,16 +162,17 @@ TAO_ConstantDef_i::value (CORBA::Environment &ACE_TRY_ENV)
   CORBA::TypeCode_var tc = this->type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  char *data;
+  void *ref = 0;
   size_t length = 0;
 
   this->repo_->config ()->get_binary_value (
                               this->section_key_,
                               "value",
-                              ACE_static_cast (void *&, 
-                                               data),
+                              ref,
                               length
                             );
+
+  char *data = ACE_static_cast (char *, ref);
 
   auto_ptr<char> safety (data);
 
