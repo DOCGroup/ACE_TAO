@@ -1,6 +1,4 @@
 project(OBV Factory Server): server {
-  idlflags += -Gv
-
   Source_Files {
     FactoryC_impl.cpp
     FactoryS_impl.cpp
@@ -9,8 +7,6 @@ project(OBV Factory Server): server {
 }
 
 project(OBV Factory Client): client {
-  idlflags += -Gv
-
   Source_Files {
     FactoryC.cpp
     FactoryC_impl.cpp

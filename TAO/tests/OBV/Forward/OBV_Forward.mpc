@@ -1,6 +1,4 @@
 project(OBV Forward Server): server {
-  idlflags += -Gv
-
   Source_Files {
     Test_impl.cpp
     server.cpp
@@ -8,8 +6,6 @@ project(OBV Forward Server): server {
 }
 
 project(OBV Forward Client): client {
-  idlflags += -Gv
-
   Source_Files {
     TreeBaseC.cpp
     TreeControllerC.cpp

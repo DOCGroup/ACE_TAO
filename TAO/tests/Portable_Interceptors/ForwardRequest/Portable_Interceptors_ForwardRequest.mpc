@@ -1,6 +1,6 @@
 project(Portable Interceptors ForwardRequest Server): server {
   requires += interceptors
-  idlflags += -Gv -DCORBA3 -I$(TAO_ROOT)
+  idlflags += -DCORBA3 -I$(TAO_ROOT)
 
   Source_Files {
     test_i.cpp
@@ -12,7 +12,7 @@ project(Portable Interceptors ForwardRequest Server): server {
 
 project(Portable Interceptors ForwardRequest Client): client {
   requires += interceptors
-  idlflags += -Gv -DCORBA3 -I$(TAO_ROOT)
+  idlflags += -DCORBA3 -I$(TAO_ROOT)
 
   Source_Files {
     testC.cpp
