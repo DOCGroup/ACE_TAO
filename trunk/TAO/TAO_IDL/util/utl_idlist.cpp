@@ -153,18 +153,25 @@ UTL_IdList::compare (UTL_IdList *other)
 
   if (ACE_OS::strlen (this->pd_car_data->get_string ()) == 0)
     {
-      if (this_length > 1)
-        {
-          return ((UTL_IdList *) this->tail ())->compare (other);
-        }
-      else
+      UTL_List *this_tail = this->tail ();
+
+      if (this_tail == 0)
         {
           return 1;
         }
+     
+      return ((UTL_IdList *) this_tail)->compare (other);
     }
 
   if (ACE_OS::strlen (other->pd_car_data->get_string ()) == 0)
     {
+      UTL_List *other_tail = other->tail ();
+
+      if (other_tail == 0)
+        {
+          return 1;
+        }
+
       return this->compare ((UTL_IdList *) other->tail ());
     }
 

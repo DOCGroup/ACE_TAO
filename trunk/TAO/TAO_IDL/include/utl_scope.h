@@ -256,6 +256,10 @@ public:
   idl_bool has_prefix (void);
   void has_prefix (idl_bool val);
 
+  // Accessors for the prefix_socpe_ member.
+  UTL_Scope *prefix_scope (void);
+  void prefix_scope (UTL_Scope *s);
+
   // Cleanup function.
   virtual void destroy (void);
 
@@ -339,6 +343,9 @@ private:
 
   // Have we seen a #pragma prefix declaration in this scope?
   idl_bool has_prefix_;
+
+  // The scope in which our prefix, if any, was assigned.
+  UTL_Scope *prefix_scope_;
 
   // Friend class UTL_ScopeActiveIterator defines active iterator for
   // UTL_Scope. Definition follows below.
