@@ -8,20 +8,19 @@ Tue Apr 06 05:04:51 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	    POAs, we have added a active demux hint field in the object
 	    key.  This hint is in addition to the persistent POA name.
 
-	  - POA identifiers for transient POAs in the Object Key are of
-	    fixed size. For persistent POAs, the Object Key contains a
+	  - POA identifiers for transient POAs in the object key are of
+	    fixed size. For persistent POAs, the object key contains a
 	    number that specifies how long the POA name is.  This feature
 	    speeds up things since there is no need for sequential, byte
-	    by byte searching.
+	    by byte searching for field separators.
 
           - The use of the active demux hint for the POA name in the
 	    object key is optional.  If used, the lookups are faster
 	    (unless the hint is invalidated by a deactivation or by
-	    restarting a persistent POA).  However, using the hint results
-	    in a larger IOR, and more memory being used in the active
-	    object map.  This option can be controlled through the
-	    -ORBactivehintinpoanames runtime switch and is turned on by
-	    default.
+	    restarting a persistent POA).  However, using the hint results in
+	    a larger IOR, and more memory being used in the active object map.
+	    This option can be controlled through the -ORBactivehintinpoanames
+	    runtime switch and is turned on by default.
 
           - The POA related classes have been rewritten with respect to
 	    exceptions.  Memory management in case of exceptions from
