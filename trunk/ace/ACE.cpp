@@ -827,7 +827,12 @@ ACE::ldfind (const ASYS_TCHAR filename[],
   // OS platform).
   else
     {
-      char *ld_path = ACE_OS::getenv (ACE_LD_SEARCH_PATH);
+      char *ld_path =
+#if defined ACE_DEFAULT_LD_SEARCH_PATH
+        ACE_DEFAULT_LD_SEARCH_PATH;
+#else
+        ACE_OS::getenv (ACE_LD_SEARCH_PATH);
+#endif /* ACE_DEFAULT_LD_SEARCH_PATH */
 
 #if defined (ACE_WIN32)
       char *ld_path_temp = 0;

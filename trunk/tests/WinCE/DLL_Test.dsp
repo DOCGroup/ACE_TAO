@@ -1,4 +1,4 @@
-# Microsoft Developer Studio Project File - Name="Atomic_Op_Test" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="DLL_Test" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
@@ -6,22 +6,22 @@
 # TARGTYPE "Win32 (WCE SH3) Application" 0x8101
 # TARGTYPE "Win32 (WCE MIPS) Application" 0x8201
 
-CFG=Atomic_Op_Test - Win32 (WCE x86em) Debug
+CFG=DLL_Test - Win32 (WCE x86em) Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "Atomic_Op_Test.mak".
+!MESSAGE NMAKE /f "DLL_Test.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Atomic_Op_Test.mak" CFG="Atomic_Op_Test - Win32 (WCE x86em) Debug"
+!MESSAGE NMAKE /f "DLL_Test.mak" CFG="DLL_Test - Win32 (WCE x86em) Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Atomic_Op_Test - Win32 (WCE x86em) Debug" (based on "Win32 (WCE x86em) Application")
-!MESSAGE "Atomic_Op_Test - Win32 (WCE MIPS) Debug" (based on "Win32 (WCE MIPS) Application")
-!MESSAGE "Atomic_Op_Test - Win32 (WCE SH3) Debug" (based on "Win32 (WCE SH3) Application")
+!MESSAGE "DLL_Test - Win32 (WCE x86em) Debug" (based on "Win32 (WCE x86em) Application")
+!MESSAGE "DLL_Test - Win32 (WCE MIPS) Debug" (based on "Win32 (WCE MIPS) Application")
+!MESSAGE "DLL_Test - Win32 (WCE SH3) Debug" (based on "Win32 (WCE SH3) Application")
 !MESSAGE 
 
 # Begin Project
@@ -30,7 +30,7 @@ CFG=Atomic_Op_Test - Win32 (WCE x86em) Debug
 # PROP Scc_LocalPath "H/PC Ver. 2.00"
 # PROP WCE_FormatVersion "6.0"
 
-!IF  "$(CFG)" == "Atomic_Op_Test - Win32 (WCE x86em) Debug"
+!IF  "$(CFG)" == "DLL_Test - Win32 (WCE x86em) Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -63,7 +63,7 @@ LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib /nologo /subsystem:windows /debug /machine:I386 /windowsce:emulation
 # ADD LINK32 aced.lib /nologo /entry:"wWinMainCRTStartup" /subsystem:windows /debug /machine:I386 /nodefaultlib:"$(CENoDefaultLib)" /libpath:"..\..\ace\WCE\x86em" /windowsce:emulation
 
-!ELSEIF  "$(CFG)" == "Atomic_Op_Test - Win32 (WCE MIPS) Debug"
+!ELSEIF  "$(CFG)" == "DLL_Test - Win32 (WCE MIPS) Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -98,7 +98,7 @@ LINK32=link.exe
 # ADD LINK32 aced.lib /nologo /entry:"wWinMainCRTStartup" /debug /machine:MIPS /nodefaultlib:"$(CENoDefaultLib)" /libpath:"..\..\ace\WCE\MIPS" /subsystem:$(CESubsystem)
 # SUBTRACT LINK32 /pdb:none /nodefaultlib
 
-!ELSEIF  "$(CFG)" == "Atomic_Op_Test - Win32 (WCE SH3) Debug"
+!ELSEIF  "$(CFG)" == "DLL_Test - Win32 (WCE SH3) Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -137,14 +137,14 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "Atomic_Op_Test - Win32 (WCE x86em) Debug"
-# Name "Atomic_Op_Test - Win32 (WCE MIPS) Debug"
-# Name "Atomic_Op_Test - Win32 (WCE SH3) Debug"
+# Name "DLL_Test - Win32 (WCE x86em) Debug"
+# Name "DLL_Test - Win32 (WCE MIPS) Debug"
+# Name "DLL_Test - Win32 (WCE SH3) Debug"
 # Begin Source File
 
 SOURCE=..\..\WindozeCE\ACEApp.cpp
 
-!IF  "$(CFG)" == "Atomic_Op_Test - Win32 (WCE x86em) Debug"
+!IF  "$(CFG)" == "DLL_Test - Win32 (WCE x86em) Debug"
 
 DEP_CPP_ACEAP=\
 	"..\..\ace\ACE.h"\
@@ -175,7 +175,7 @@ DEP_CPP_ACEAP=\
 	"..\..\WindozeCE\stdafx.h"\
 	
 
-!ELSEIF  "$(CFG)" == "Atomic_Op_Test - Win32 (WCE MIPS) Debug"
+!ELSEIF  "$(CFG)" == "DLL_Test - Win32 (WCE MIPS) Debug"
 
 DEP_CPP_ACEAP=\
 	"..\..\ace\ACE.h"\
@@ -245,7 +245,7 @@ NODEP_CPP_ACEAP=\
 	"..\..\ace\sys_conf.h"\
 	
 
-!ELSEIF  "$(CFG)" == "Atomic_Op_Test - Win32 (WCE SH3) Debug"
+!ELSEIF  "$(CFG)" == "DLL_Test - Win32 (WCE SH3) Debug"
 
 DEP_CPP_ACEAP=\
 	"..\..\ace\ACE.h"\
@@ -320,9 +320,9 @@ NODEP_CPP_ACEAP=\
 # End Source File
 # Begin Source File
 
-SOURCE=..\Atomic_Op_Test.cpp
+SOURCE=..\DLL_Test.cpp
 
-!IF  "$(CFG)" == "Atomic_Op_Test - Win32 (WCE x86em) Debug"
+!IF  "$(CFG)" == "DLL_Test - Win32 (WCE x86em) Debug"
 
 DEP_CPP_ATOMI=\
 	"..\..\ace\ACE.h"\
@@ -369,7 +369,7 @@ DEP_CPP_ATOMI=\
 	"..\test_config.h"\
 	
 
-!ELSEIF  "$(CFG)" == "Atomic_Op_Test - Win32 (WCE MIPS) Debug"
+!ELSEIF  "$(CFG)" == "DLL_Test - Win32 (WCE MIPS) Debug"
 
 DEP_CPP_ATOMI=\
 	"..\..\ace\ACE.h"\
@@ -438,7 +438,7 @@ NODEP_CPP_ATOMI=\
 	"..\..\ace\sys_conf.h"\
 	
 
-!ELSEIF  "$(CFG)" == "Atomic_Op_Test - Win32 (WCE SH3) Debug"
+!ELSEIF  "$(CFG)" == "DLL_Test - Win32 (WCE SH3) Debug"
 
 DEP_CPP_ATOMI=\
 	"..\..\ace\ACE.h"\
@@ -514,19 +514,19 @@ NODEP_CPP_ATOMI=\
 
 SOURCE=..\..\WindozeCE\StdAfx.cpp
 
-!IF  "$(CFG)" == "Atomic_Op_Test - Win32 (WCE x86em) Debug"
+!IF  "$(CFG)" == "DLL_Test - Win32 (WCE x86em) Debug"
 
 DEP_CPP_STDAF=\
 	"..\..\WindozeCE\stdafx.h"\
 	
 
-!ELSEIF  "$(CFG)" == "Atomic_Op_Test - Win32 (WCE MIPS) Debug"
+!ELSEIF  "$(CFG)" == "DLL_Test - Win32 (WCE MIPS) Debug"
 
 DEP_CPP_STDAF=\
 	"..\..\WindozeCE\stdafx.h"\
 	
 
-!ELSEIF  "$(CFG)" == "Atomic_Op_Test - Win32 (WCE SH3) Debug"
+!ELSEIF  "$(CFG)" == "DLL_Test - Win32 (WCE SH3) Debug"
 
 DEP_CPP_STDAF=\
 	"..\..\WindozeCE\stdafx.h"\
@@ -539,7 +539,7 @@ DEP_CPP_STDAF=\
 
 SOURCE=..\..\WindozeCE\WindozeCE.cpp
 
-!IF  "$(CFG)" == "Atomic_Op_Test - Win32 (WCE x86em) Debug"
+!IF  "$(CFG)" == "DLL_Test - Win32 (WCE x86em) Debug"
 
 DEP_CPP_WINDO=\
 	"..\..\ace\ACE.h"\
@@ -572,7 +572,7 @@ DEP_CPP_WINDO=\
 	"..\..\WindozeCE\WindozeCEDlg.h"\
 	
 
-!ELSEIF  "$(CFG)" == "Atomic_Op_Test - Win32 (WCE MIPS) Debug"
+!ELSEIF  "$(CFG)" == "DLL_Test - Win32 (WCE MIPS) Debug"
 
 DEP_CPP_WINDO=\
 	"..\..\ace\ACE.h"\
@@ -644,7 +644,7 @@ NODEP_CPP_WINDO=\
 	"..\..\ace\sys_conf.h"\
 	
 
-!ELSEIF  "$(CFG)" == "Atomic_Op_Test - Win32 (WCE SH3) Debug"
+!ELSEIF  "$(CFG)" == "DLL_Test - Win32 (WCE SH3) Debug"
 
 DEP_CPP_WINDO=\
 	"..\..\ace\ACE.h"\
@@ -727,11 +727,11 @@ SOURCE=..\..\WindozeCE\res\WindozeCE.ico
 
 SOURCE=..\..\WindozeCE\WindozeCE.rc
 
-!IF  "$(CFG)" == "Atomic_Op_Test - Win32 (WCE x86em) Debug"
+!IF  "$(CFG)" == "DLL_Test - Win32 (WCE x86em) Debug"
 
-!ELSEIF  "$(CFG)" == "Atomic_Op_Test - Win32 (WCE MIPS) Debug"
+!ELSEIF  "$(CFG)" == "DLL_Test - Win32 (WCE MIPS) Debug"
 
-!ELSEIF  "$(CFG)" == "Atomic_Op_Test - Win32 (WCE SH3) Debug"
+!ELSEIF  "$(CFG)" == "DLL_Test - Win32 (WCE SH3) Debug"
 
 !ENDIF 
 
@@ -740,7 +740,7 @@ SOURCE=..\..\WindozeCE\WindozeCE.rc
 
 SOURCE=..\..\WindozeCE\WindozeCEDlg.cpp
 
-!IF  "$(CFG)" == "Atomic_Op_Test - Win32 (WCE x86em) Debug"
+!IF  "$(CFG)" == "DLL_Test - Win32 (WCE x86em) Debug"
 
 DEP_CPP_WINDOZ=\
 	"..\..\ace\ACE.h"\
@@ -817,7 +817,7 @@ DEP_CPP_WINDOZ=\
 	"..\..\WindozeCE\WindozeCEDlg.h"\
 	
 
-!ELSEIF  "$(CFG)" == "Atomic_Op_Test - Win32 (WCE MIPS) Debug"
+!ELSEIF  "$(CFG)" == "DLL_Test - Win32 (WCE MIPS) Debug"
 
 DEP_CPP_WINDOZ=\
 	"..\..\ace\ACE.h"\
@@ -892,7 +892,7 @@ NODEP_CPP_WINDOZ=\
 	"..\..\ace\sys_conf.h"\
 	
 
-!ELSEIF  "$(CFG)" == "Atomic_Op_Test - Win32 (WCE SH3) Debug"
+!ELSEIF  "$(CFG)" == "DLL_Test - Win32 (WCE SH3) Debug"
 
 DEP_CPP_WINDOZ=\
 	"..\..\ace\ACE.h"\

@@ -13,6 +13,11 @@
 #endif /* ACE_HAS_DLL */
 #define ACE_HAS_DLL 1
 
+// Need to define LD search path explicitly on CE because
+// CE doesn't have environment variables and we can't get
+// the information using getenv.
+#define ACE_DEFAULT_LD_SEARCH_PATH ".\\;\\windows"
+
 // CE is not NT.
 #if defined (ACE_HAS_WINNT4)
 # undef ACE_HAS_WINNT4

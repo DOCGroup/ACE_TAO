@@ -63,6 +63,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "DLL_Test"=.\DLL_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Enum_Interfaces_Test"=.\Enum_Interfaces_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -159,7 +171,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Message_Queue_Test"=.\Message_Queue_Test.dsp - Package Owner=<4>
+Project: "Message_Queue_Notifications_Test"=.\Message_Queue_Notifications_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -171,7 +183,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Message_Queue_Notifications_Test"=.\Message_Queue_Notifications_Test.dsp - Package Owner=<4>
+Project: "Message_Queue_Test"=.\Message_Queue_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -470,3 +482,4 @@ Package=<3>
 }}}
 
 ###############################################################################
+
