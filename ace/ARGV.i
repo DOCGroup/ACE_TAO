@@ -44,10 +44,10 @@ ACE_ARGV::argv (void)
 
       // Convert buf_ to argv_
       if (this->string_to_argv () == -1)
-        return 0;
+        return (ASYS_TCHAR **) 0;
     }
 
-  return this->argv_;
+  return (ASYS_TCHAR **) this->argv_;
 }
 
 // Subscript operator.  
