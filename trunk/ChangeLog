@@ -1,8 +1,19 @@
+Sat Jan 17 18:43:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/msvc_static_compile.pl:
+	* bin/msvc_static_order.lst:
+	  When using static projects we cannot use the dependencies between
+	  different libraries. Therefor we have to explicitly define the
+	  build order. The existing msvc_auto_compile.pl script was getting
+	  to complex, so added a new msvc_static_compile.pl script that will
+	  be used for building statically. In the msvc_static_order.lst the
+	  order of building can be specified.
+
 Sat Jan 17 09:46:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/TMCast/Group.cpp:
-	 
-	  Fixed compile errors with VC++ 6. 
+
+	  Fixed compile errors with VC++ 6.
 
 Sat Jan 17 15:29:01 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
