@@ -15,6 +15,92 @@ Video_Control_State::get_state (void)
   return this->state_;
 }
 
+CORBA::Boolean 
+Video_Control_State::init_video (const Video_Control::INITvideoPara &para)
+{
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_State::stat_stream (CORBA::Char_out ch,
+                              CORBA::Long_out size)
+                              
+{
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_State::close (void)
+{
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_State::stat_sent (void)
+{
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_State::fast_forward (const Video_Control::FFpara &para)
+                               
+{
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_State::fast_backward (const Video_Control::FFpara &para)
+                                
+{
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_State::step (const Video_Control::STEPpara &para)
+                       
+{
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_State::play (const Video_Control::PLAYpara &para,
+                       CORBA::Long_out vts)
+                       
+{
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_State::position (const Video_Control::POSITIONpara &para)
+                           
+{
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_State::speed (const Video_Control::SPEEDpara &para)
+                        
+{
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_State::stop (CORBA::Long cmdsn)
+                       
+{
+  return 0;
+}
+
 // ----------------------------------------------------------------------
 
 Video_Control_Waiting_State::Video_Control_Waiting_State (void)
@@ -33,12 +119,7 @@ Video_Control_Waiting_State::handle_input (ACE_HANDLE h)
   VIDEO_SINGLETON::instance ()->precmd = VIDEO_SINGLETON::instance ()->cmd;
   result = VIDEO_SINGLETON::instance ()->CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmd, 1);
   if (result != 0)
-    {
-      cerr << result;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%P|%t) VideoServer "),
-                        result);
-    }
+    return -1;
   fprintf(stderr, "VS got VIDEO_SINGLETON::instance ()->cmd %d\n", VIDEO_SINGLETON::instance ()->cmd);
     
   switch (VIDEO_SINGLETON::instance ()->cmd)
@@ -87,6 +168,95 @@ Video_Control_Waiting_State::handle_input (ACE_HANDLE h)
   return 0;
   
 }
+
+CORBA::Boolean 
+Video_Control_Waiting_State::init_video (const Video_Control::INITvideoPara &para)
+{
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_Waiting_State::stat_stream (CORBA::Char_out ch,
+                              CORBA::Long_out size)
+                              
+{
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_Waiting_State::close (void)
+{
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_Waiting_State::stat_sent (void)
+{
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_Waiting_State::fast_forward (const Video_Control::FFpara &para)
+                               
+{
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_Waiting_State::fast_backward (const Video_Control::FFpara &para)
+                                
+{
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_Waiting_State::step (const Video_Control::STEPpara &para)
+                       
+{
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_Waiting_State::play (const Video_Control::PLAYpara &para,
+                       CORBA::Long_out vts)
+                       
+{
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_Waiting_State::position (const Video_Control::POSITIONpara &para)
+                           
+{
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_Waiting_State::speed (const Video_Control::SPEEDpara &para)
+                        
+{
+  return 0;
+}
+
+
+CORBA::Boolean 
+Video_Control_Waiting_State::stop (CORBA::Long cmdsn)
+                       
+{
+  return 0;
+}
+
+
+// Video_Control_Play_State methods
 
 Video_Control_Play_State::Video_Control_Play_State (void)
 {

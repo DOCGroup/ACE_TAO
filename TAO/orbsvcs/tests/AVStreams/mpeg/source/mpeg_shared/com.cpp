@@ -40,10 +40,11 @@
 #include <sys/un.h>
 #include <time.h>
 #include <sys/time.h>
-#include "common.h"
+#include "include/common.h"
 #include "fileio.h"
 #include "routine.h"
 #include "com.h"
+#include "ace/OS.h"
 
 #ifdef NATIVE_ATM
 #include "atmcom.h"

@@ -37,7 +37,7 @@
 #include <X11/Xutil.h>
 #include <X11/Intrinsic.h>
 
-#include "common.h"
+#include "include/common.h"
 #include "server_proto.h"
 
 #ifdef LIVE_AUDIO
@@ -182,8 +182,6 @@ int ReadLiveAudioSamples(char * buf, int samples)
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/Intrinsic.h>
-
-#include "common.h"
 
 static int sunfd1;
 static int bps;
