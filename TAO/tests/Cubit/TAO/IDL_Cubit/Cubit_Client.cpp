@@ -652,7 +652,7 @@ Cubit_Client::cube_rti_data (int i, int numUpdates, int numAttrs)
           Cubit::HandleValuePair &hvp = oumh.messagePayload[k];
           hvp.handle = k * k;
           char *d1 = "somedata";
-          hvp.data.length (ACE_OS::strlen (d1));
+          hvp.data.length (ACE_OS::strlen (d1)+1);
           ACE_OS::strcpy ((char *) hvp.data.get_buffer (), d1);
         }
     }
@@ -868,6 +868,7 @@ Cubit_Client::run (int testing_collocation)
   timer.elapsed_time (elapsed_time);
   this->print_stats ("cube mixin (short/octet/long)", elapsed_time);
 
+#if 0
   // RTI
   this->call_count_ = 0;
   this->error_count_ = 0;
@@ -877,6 +878,7 @@ Cubit_Client::run (int testing_collocation)
   timer.stop ();
   timer.elapsed_time (elapsed_time);
   this->print_stats ("cube_rti_data", elapsed_time);
+#endif /* 0 */
 
   if (testing_collocation)
     {
