@@ -41,7 +41,8 @@ FILES= 24bit            \
        vb               \
        vd               \
        video            \
-       vp               
+       vp               \
+       Command_Handler
 
 
 
