@@ -1,3 +1,10 @@
+Thu Apr  5 09:31:26 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/corbafwd.h:
+        * tao/IFR_TypeCodes.cpp:
+
+          Added missing typedef and typecode for ContextIdentifier.
+
 Thu Apr  5 09:40:11 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * examples/TypeCode_Creation/makefile.bor
