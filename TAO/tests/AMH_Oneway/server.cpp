@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
 #include "TestS.h"
 

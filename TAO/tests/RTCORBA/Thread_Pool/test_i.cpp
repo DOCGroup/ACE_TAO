@@ -1,6 +1,7 @@
 // $Id$
 
 #include "test_i.h"
+#include "ace/OS_NS_unistd.h"
 #include "tao/ORB_Core.h"
 #include "tao/RTCORBA/Thread_Pool.h"
 

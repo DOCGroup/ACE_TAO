@@ -20,6 +20,7 @@
 #include "tao/TAOC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Timed_Buffered_Oneways, client, "$Id$")
 
@@ -316,7 +317,7 @@ main (int argc, char **argv)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+                           "Client side exception caught:");
       return -1;
     }
   ACE_ENDTRY;

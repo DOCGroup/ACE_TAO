@@ -2,6 +2,7 @@
 
 #include "test_i.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
 #include "tao/ORB_Core.h"
 #include "ace/Task.h"
 #include "tao/RTPortableServer/RTPortableServer.h"

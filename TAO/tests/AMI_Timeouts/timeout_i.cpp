@@ -17,7 +17,7 @@
 // ============================================================================
 
 #include "timeout_i.h"
-
+#include "ace/OS_NS_unistd.h"
 
 Timeout_i::Timeout_i (CORBA::ORB_ptr orb)
 {
