@@ -63,6 +63,7 @@ BIN =   Aio_Platform_Test \
         OrdMultiSet_Test \
         OS_Test \
 	Proactor_Test \
+	Proactor_Timer_Test \
         Process_Mutex_Test \
         Process_Strategy_Test \
         Priority_Buffer_Test \

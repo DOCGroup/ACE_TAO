@@ -857,8 +857,10 @@ public:
   int wait (void);
 
   /// Same as wait() above, but this one can be timed
-  /// <abstime> is absolute time-of-day.
-  int wait (const ACE_Time_Value *abstime);
+  /// <abstime> is absolute time-of-day if if <use_absolute_time> 
+  /// is non-0, else it is relative time.
+  int wait (const ACE_Time_Value *abstime, 
+            int use_absolute_time = 1);
 
   /**
    * if MANUAL reset

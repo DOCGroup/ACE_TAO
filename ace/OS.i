@@ -4823,7 +4823,8 @@ ACE_OS::event_wait (ACE_event_t *event)
 
 ACE_INLINE int
 ACE_OS::event_timedwait (ACE_event_t *event,
-                         ACE_Time_Value *timeout)
+                         ACE_Time_Value *timeout,
+                         int use_absolute_time)
 {
 #if defined (ACE_WIN32)
   DWORD result;
@@ -4840,16 +4841,27 @@ ACE_OS::event_timedwait (ACE_event_t *event,
       // that we must convert between absolute time (which is passed
       // as a parameter) and relative time (which is what
       // WaitForSingleObjects() expects).
-      ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
-
-      // Watchout for situations where a context switch has caused the
-      // current time to be > the timeout.  Thanks to Norbert Rapp
-      // <NRapp@nexus-informatics.de> for pointing this.
+      // <timeout> parameter is given in absolute or relative value
+      // depending on parameter <use_absolute_time>.
       int msec_timeout;
-      if (relative_time < ACE_Time_Value::zero)
-        msec_timeout = 0;
-      else
-        msec_timeout = relative_time.msec ();
+      if (use_absolute_time)
+        {
+          // Time is given in absolute time, we should use
+          // gettimeofday() to calculate relative time
+          ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
+ 
+          // Watchout for situations where a context switch has caused
+          // the current time to be > the timeout.  Thanks to Norbert
+          // Rapp <NRapp@nexus-informatics.de> for pointing this.
+          if (relative_time < ACE_Time_Value::zero)
+            msec_timeout = 0;
+          else
+            msec_timeout = relative_time.msec ();
+        }
+       else
+         // time is given in relative time, just convert it into
+         // milliseconds and use it
+         msec_timeout = timeout->msec ();
       result = ::WaitForSingleObject (*event, msec_timeout);
     }
 
@@ -4883,6 +4895,11 @@ ACE_OS::event_timedwait (ACE_event_t *event,
         // event is currently not signaled
         {
           event->waiting_threads_++;
+
+          // cond_timewait() expects absolute time, check
+          // <use_absolute_time> flag.
+          if (use_absolute_time == 0 && timeout != 0)
+            *timeout += ACE_OS::gettimeofday ();
 
           if (ACE_OS::cond_timedwait (&event->condition_,
                                       &event->lock_,
