@@ -46,13 +46,13 @@ namespace TAO
   {
   public:
     /**
-     * @param target, The target on which this invocation was
+     * @param target The target on which this invocation was
      *  started.
      *
-     * @param resolver, Comntainer of the profile and transport on
+     * @param resolver Container of the profile and transport on
      * which this invocation is on
      *
-     * @param detail, Operation details of the invocation on @a
+     * @param detail Operation details of the invocation on @a
      * target. This is of no practical importance since it is not used
      * in this class. This is just to keep our base class happy.
      *

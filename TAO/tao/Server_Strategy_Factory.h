@@ -53,29 +53,29 @@ public:
     /// Constructor.
     Active_Object_Map_Creation_Parameters (void);
 
+    /// Default size of object lookup table.
     CORBA::ULong active_object_map_size_;
-    // Default size of object lookup table.
 
+    /// The type of lookup/demultiplexing strategy being used for user
+    /// id policy
     TAO_Demux_Strategy object_lookup_strategy_for_user_id_policy_;
-    // The type of lookup/demultiplexing strategy being used for user
-    // id policy
 
+    /// The type of lookup/demultiplexing strategy being used for
+    /// system id policy
     TAO_Demux_Strategy object_lookup_strategy_for_system_id_policy_;
-    // The type of lookup/demultiplexing strategy being used for
-    // system id policy
 
+    /// The type of reverse lookup/demultiplexing strategy being used
+    /// for the UNIQUE_ID policy
     TAO_Demux_Strategy reverse_object_lookup_strategy_for_unique_id_policy_;
-    // The type of reverse lookup/demultiplexing strategy being used
-    // for the UNIQUE_ID policy
 
+    /// Flag to indicate whether the active hint should be used with
+    /// the IOR.
     int use_active_hint_in_ids_;
-    // Flag to indicate whether the active hint should be used with
-    // the IOR.
 
+    /// Flag to indicate whether reactivations of servants was required
+    /// (under the system id policy).  If not, certain resources may
+    /// not be required.
     int allow_reactivation_of_system_ids_;
-    // Flag to indicate whether reactivations of servants was required
-    // (under the system id policy).  If not, certain resources may
-    // not be required.
 
     CORBA::ULong poa_map_size_;
 
@@ -121,7 +121,7 @@ public:
   virtual int server_connection_thread_count (void);
 
   /// Return the active object map creation parameters.
-  virtual 
+  virtual
   const Active_Object_Map_Creation_Parameters &
   active_object_map_creation_parameters (void) const;
 

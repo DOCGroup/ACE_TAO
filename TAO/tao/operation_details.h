@@ -47,13 +47,13 @@ namespace TAO
  * infancy now but I expect this one to grow as we come with
  * different varieties of use cases.
  *
- * @@TODO: Put this in namespace TAO.
+ * @todo Put this in namespace TAO.
  */
 class TAO_Export TAO_Operation_Details
 {
 public:
 
-  ///Constructor
+  /// Constructor
   TAO_Operation_Details (const char *name,
                          CORBA::ULong len,
                          CORBA::Boolean argument_flag,

@@ -1,21 +1,15 @@
 // -*- C++ -*-
-// $Id$
-
-// ============================================================================
-//
-// = LIBRARY
-//    PortableServer
-//
-// = FILENAME
-//    RT_Acceptor_Filters.h
-//
-// = DESCRIPTION
-//     RTCORBA strategies for populating mprofile.
-//
-// = AUTHOR
-//     Marina Spivak <marina@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    RT_Acceptor_Filters.h
+ *
+ *  $Id$
+ *
+ *  RTCORBA strategies for populating mprofile.
+ *
+ *  @author  Marina Spivak <marina@cs.wustl.edu>
+ */
+// ===================================================================
 
 #ifndef TAO_RT_ACCEPTOR_FILTER_H
 #define TAO_RT_ACCEPTOR_FILTER_H
@@ -61,7 +55,7 @@ public:
   /// Constructor
   TAO_Server_Protocol_Acceptor_Filter (RTCORBA::ProtocolList &protocols);
 
-  /// Populate <mprofile> based on what's in <protocols_>.
+  /// Populate @a mprofile based on what's in <protocols_>.
   int fill_profile (const TAO::ObjectKey &object_key,
                     TAO_MProfile &mprofile,
                     TAO_Acceptor **acceptors_begin,
