@@ -1,3 +1,13 @@
+Sun Jan 24 22:46:43 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	Made changes to the following Makefiles to incorporate the
+	Implementation Repository service.
+
+	* orbsvcs/orbsvcs/Makefile
+	* orbsvcs/Makefile
+	* orbsvcs/orbsvcs/ImplRepo_Service/Makefile
+	* orbsvcs/orbsvcs/Time_Service/Makefile
+
 Sun Jan 24 17:04:47 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/tests/ImplRepo/Repository_Test.cpp: Removed inclusion of
