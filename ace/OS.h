@@ -389,7 +389,11 @@ typedef struct
 
 // Used for dynamic linking.
 #   if !defined (ACE_DEFAULT_SVC_CONF)
-#     define ACE_DEFAULT_SVC_CONF "./svc.conf"
+#     if defined (ACE_USES_CLASSIC_SVC_CONF) && (ACE_USES_CLASSIC_SVC_CONF == 1)
+#       define ACE_DEFAULT_SVC_CONF "./svc.conf"
+#     else
+#       define ACE_DEFAULT_SVC_CONF "./svc.conf.xml"
+#     endif /* ACE_USES_CLASSIC_SVC_CONF && ACE_USES_CLASSIC_SVC_CONF ==1 */
 #   endif /* ACE_DEFAULT_SVC_CONF */
 
 #   if !defined (ACE_DEFAULT_SEM_KEY)
@@ -2584,7 +2588,7 @@ typedef unsigned int size_t;
 #   if !defined (ACE_LACKS_NEW_H)
 #     if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
 #       include /**/ <new>
-#     else     
+#     else
 #       include /**/ <new.h>
 #     endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 #   endif /* ! ACE_LACKS_NEW_H */
@@ -2945,7 +2949,11 @@ typedef void (*ACE_SignalHandlerV)(...);
 
 // Used for dynamic linking
 #   if !defined (ACE_DEFAULT_SVC_CONF)
-#     define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT (".\\svc.conf")
+#     if defined (ACE_USES_CLASSIC_SVC_CONF) && (ACE_USES_CLASSIC_SVC_CONF == 1)
+#       define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT (".\\svc.conf")
+#     else
+#       define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT (".\\svc.conf.xml")
+#     endif /* ACE_USES_CLASSIC_SVC_CONF && ACE_USES_CLASSIC_SVC_CONF ==1 */
 #   endif /* ACE_DEFAULT_SVC_CONF */
 
 // The following are #defines and #includes that are specific to
@@ -3280,7 +3288,11 @@ typedef ACE_UINT64 ACE_hrtime_t;
 
 // Used for dynamic linking.
 #   if !defined (ACE_DEFAULT_SVC_CONF)
-#     define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT ("./svc.conf")
+#     if defined (ACE_USES_CLASSIC_SVC_CONF) && (ACE_USES_CLASSIC_SVC_CONF == 1)
+#       define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT ("./svc.conf")
+#     else
+#       define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT ("./svc.conf.xml")
+#     endif /* ACE_USES_CLASSIC_SVC_CONF && ACE_USES_CLASSIC_SVC_CONF ==1 */
 #   endif /* ACE_DEFAULT_SVC_CONF */
 
 // The following are #defines and #includes that are specific to UNIX.

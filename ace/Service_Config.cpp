@@ -14,6 +14,8 @@
 #include "ace/Framework_Component.h"
 
 #include "ace/Service_Config.h"
+#include "ace/XML_Svc_Conf.h"
+#include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Service_Config.i"
@@ -323,6 +325,30 @@ ACE_Service_Config::process_directives_i (ACE_Svc_Conf_Param *param)
   else
     return 0;
 }
+#else
+ACE_XML_Svc_Conf *
+ACE_Service_Config::get_xml_svc_conf (ACE_DLL &xmldll)
+{
+  xmldll.open (ACE_LIB_TEXT ("ACEXML_XML_Svc_Conf_Parser"));
+
+  void *foo;
+
+  // @@ Now this sucks..  Why can't we just pass the operation name to dll.symbol?
+  ACE_TCHAR *cdecl_str = ACE::ldname (ACE_TEXT ("_ACEXML_create_XML_Svc_Conf_Object"));
+  foo = xmldll.symbol (cdecl_str);
+  delete[] cdecl_str;
+
+  // Cast the void* to long first.
+  long tmp = ACE_reinterpret_cast (long, foo);
+  ACE_XML_Svc_Conf::Factory factory = ACE_reinterpret_cast (ACE_XML_Svc_Conf::Factory, tmp);
+  if (factory == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("%p\n"),
+                       xmldll.error ()),
+                      0);
+
+  return factory ();
+}
 #endif /* ACE_USES_CLASSIC_SVC_CONF && ACE_USES_CLASSIC_SVC_CONF == 1 */
 
 int
@@ -357,9 +383,17 @@ ACE_Service_Config::process_file (const ACE_TCHAR file[])
 
       (void) ACE_OS::fclose (fp);
     }
-#endif /* ACE_USES_CLASSIC_SVC_CONF && ACE_USES_CLASSIC_SVC_CONF == 1 */
-
   return result;
+#else
+  ACE_DLL dll;
+
+  auto_ptr<ACE_XML_Svc_Conf> xml_svc_conf (ACE_Service_Config::get_xml_svc_conf (dll));
+
+  if (xml_svc_conf.get () == 0)
+    return -1;
+
+  return xml_svc_conf->parse_file (file);
+#endif /* ACE_USES_CLASSIC_SVC_CONF && ACE_USES_CLASSIC_SVC_CONF == 1 */
 }
 
 int
@@ -381,7 +415,14 @@ ACE_Service_Config::process_directive (const ACE_TCHAR directive[])
 
   return result;
 #else
-  return -1;
+  ACE_DLL dll;
+
+  auto_ptr<ACE_XML_Svc_Conf> xml_svc_conf (ACE_Service_Config::get_xml_svc_conf (dll));
+
+  if (xml_svc_conf.get () == 0)
+    return -1;
+
+  return xml_svc_conf->parse_string (directive);
 #endif /* ACE_USES_CLASSIC_SVC_CONF && ACE_USES_CLASSIC_SVC_CONF == 1 */
 }
 

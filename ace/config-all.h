@@ -633,6 +633,15 @@ typedef void *(*ACE_THR_C_FUNC)(void *);
 #endif /* ACE_USES_CLASSIC_SVC_CONF */
 
 // ============================================================================
+// Default svc.conf file extension.
+// ============================================================================
+#if defined (ACE_USES_CLASSIC_SVC_CONF) && (ACE_USES_CLASSIC_SVC_CONF == 1)
+# define ACE_DEFAULT_SVC_CONF_EXT   ".conf"
+#else
+# define ACE_DEFAULT_SVC_CONF_EXT   ".conf.xml"
+#endif /* ACE_USES_CLASSIC_SVC_CONF && ACE_USES_CLASSIC_SVC_CONF == 1 */
+
+// ============================================================================
 // Miscellaneous macros
 // ============================================================================
 
