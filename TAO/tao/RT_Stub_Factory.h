@@ -24,6 +24,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if (TAO_HAS_RT_CORBA == 1)
+
 /**
  * @class TAO_RT_Stub_Factory
  *
@@ -44,6 +46,8 @@ public:
                                  TAO_ORB_Core *orb_core,
                                  CORBA::Environment &ACE_TRY_ENV);
 };
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
 #include "ace/post.h"
 #endif /* TAO_RT_STUB_FACTORY_H_ */
