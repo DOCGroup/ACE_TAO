@@ -20,8 +20,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype, 
-           valuetype_init_ch, 
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_init_ch,
            "$Id$")
 
 be_visitor_valuetype_init_ch::be_visitor_valuetype_init_ch (
@@ -106,13 +106,13 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
       // generate create_for_unmarshal
       os << be_nl << be_nl
          << "virtual CORBA::ValueBase *"
-         << "create_for_unmarshal (void);";
+         << "create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);";
 
       if (node->supports_abstract ())
         {
           os << be_nl << be_nl
              << "virtual CORBA::AbstractBase_ptr "
-             << "create_for_unmarshal_abstract (void);";
+             << "create_for_unmarshal_abstract (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);";
         }
     }
 

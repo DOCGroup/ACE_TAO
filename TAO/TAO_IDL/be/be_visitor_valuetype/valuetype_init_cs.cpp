@@ -20,8 +20,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype, 
-           valuetype_init_cs, 
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_init_cs,
            "$Id$")
 
 be_visitor_valuetype_init_cs::be_visitor_valuetype_init_cs (
@@ -54,7 +54,7 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
   // (3) There is at least one operation and at least one initializer.
   //     In this case we need to generate abstract factory class.
 
-  be_valuetype::FactoryStyle factory_style = 
+  be_valuetype::FactoryStyle factory_style =
     node->determine_factory_style ();
 
   if (factory_style == be_valuetype::FS_NO_FACTORY)
@@ -67,18 +67,18 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
   char fname [NAMEBUFSIZE];  // to hold the full and
   char lname [NAMEBUFSIZE];  // local _out names
 
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
-  ACE_OS::sprintf (fname, 
-                   "%s_init", 
+  ACE_OS::sprintf (fname,
+                   "%s_init",
                    node->full_name ());
 
-  ACE_OS::memset (lname, 
-                  '\0', 
+  ACE_OS::memset (lname,
+                  '\0',
                   NAMEBUFSIZE);
-  ACE_OS::sprintf (lname, 
-                   "%s_init", 
+  ACE_OS::sprintf (lname,
+                   "%s_init",
                    node->local_name ());
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
@@ -109,13 +109,13 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
       *os << be_nl << be_nl
           << "CORBA::ValueBase *" << be_nl
           << fname << "::create_for_unmarshal" << " "
-          << "(void)" << be_nl
+          << "(ACE_ENV_SINGLE_ARG_DECL)" << be_nl
           << "{" << be_idt_nl
           << "CORBA::ValueBase *ret_val = 0;" << be_nl
-          << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+          << "ACE_NEW_THROW_EX (" << be_idt << be_idt_nl
           << "ret_val," << be_nl
           << "OBV_" << node->full_name () << "," << be_nl
-          << "0" << be_uidt_nl
+          << "CORBA::NO_MEMORY ()" << be_uidt_nl
           << ");" << be_uidt_nl
           << "return ret_val;"
           << be_uidt_nl << "}";
@@ -130,7 +130,7 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
                 << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
                 << "ret_val," << be_nl
                 << "OBV_" << node->full_name () << "," << be_nl
-                << "0" << be_uidt_nl
+                << "CORBA::NO_MEMORY ()" << be_uidt_nl
                 << ");" << be_uidt_nl
                 << "return ret_val;"
                 << be_uidt_nl << "}";
