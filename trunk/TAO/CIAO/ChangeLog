@@ -1,3 +1,10 @@
+Sat Jun 12 16:51:11 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Property_Handler.cpp:
+        * DnC/Config_Handlers/TPD_Handler.cpp:
+
+          Made some coding standard changes.
+
 Fri Jun 11 20:34:12 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp
@@ -16,6 +23,7 @@ Fri Jun 11 20:34:12 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 	* DnC/ciao/Deployment_Core.idl
 	* DnC/ciao/NodeApplication_Impl.cpp
 	* DnC/ciao/NodeApplication_Impl.h
+
 	  Many Changes of the files. Now on linux it runs up to 3 times
 	  correctly and hangs on the fourth time. I am moving to windows
 	  for this now. Don't commit any change till I send out
@@ -54,7 +62,7 @@ Fri Jun 11 16:46:25 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
         * DnC/Config_Handlers/Process_Basic_Type.i:
         * DnC/RepositoryManager/Repository_Manager.cpp:
 
-          Made some more cosing standard changes.
+          Made some more coding standard changes.
 
 Fri Jun 11 16:12:54 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -69,7 +77,7 @@ Fri Jun 11 16:12:54 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
         * DnC/Config_Handlers/PCI_Handler.cpp:
         * DnC/Config_Handlers/PC_Handler.cpp:
 
-          Made some more cosing standard compliance changes.
+          Made some more coding standard compliance changes.
 
 Fri Jun 11 15:44:00 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
