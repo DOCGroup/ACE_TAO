@@ -1,3 +1,8 @@
+Tue Jun  1 06:51:08 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Simple/Simple_util: Fixed more inconsistent programming
+	  style.  Thanks to David Levine for reporting this.
+
 Mon May 31 20:22:54 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp
