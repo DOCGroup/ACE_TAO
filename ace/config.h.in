@@ -1005,6 +1005,12 @@
 /* Platform lacks getppid() call. */
 #undef ACE_LACKS_GETPPID
 
+/* Platform lacks setregid() call. */
+#undef ACE_LACKS_SETREGID
+
+/* Platform lacks setreuid() call. */
+#undef ACE_LACKS_SETREUID
+
 /* Platforms lacks getservbyname() (e.g., VxWorks and Chorus). */
 #undef ACE_LACKS_GETSERVBYNAME
 
@@ -1227,6 +1233,12 @@
 
 /* Platform/compiler lacks the getpgid() prototype */
 #undef ACE_LACKS_GETPGID_PROTOTYPE
+
+/* Platform/compiler lacks the setregid() prototype */
+#undef ACE_LACKS_SETREGID_PROTO
+
+/* Platform/compiler lacks the setreuid() prototype */
+#undef ACE_LACKS_SETREUID_PROTO
 
 /* Platform/compiler lacks the strptime() prototype */
 #undef ACE_LACKS_STRPTIME_PROTOTYPE

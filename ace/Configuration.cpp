@@ -1761,11 +1761,8 @@ ACE_Configuration_Heap::remove_value (const ACE_Configuration_Section_Key& key,
 // ACE_SYNCH_MUTEX should not be used in the template instantiations
 // because the resulting template instantiation for the
 // single-threaded case already exists in ACE.
-template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Thread_Mutex> >;
 template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex> >;
-template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Thread_Mutex>;
 template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex>;
-template class ACE_Malloc_T<ACE_LOCAL_MEMORY_POOL, ACE_Thread_Mutex, ACE_Control_Block>;
 template class ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex, ACE_Control_Block>;
 #endif /* ACE_HAS_THREADS */
 template class ACE_Hash_Map_Entry<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId>;
@@ -1776,7 +1773,7 @@ template class ACE_Hash_Map_Iterator_Base_Ex<ACE_Configuration_ExtId, ACE_Config
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_Configuration_ExtId, int, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
 
 
-// Added to fix problems in SunOs CC5.0
+// Added to fix problems in SunOS CC5.0
 template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_Configuration_ExtId,ACE_Configuration_Value_IntId,ACE_Hash<ACE_Configuration_ExtId>,ACE_Equal_To<ACE_Configuration_ExtId>,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<ACE_Configuration_ExtId,ACE_Configuration_Value_IntId,ACE_Hash<ACE_Configuration_ExtId>,ACE_Equal_To<ACE_Configuration_ExtId>,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<ACE_Configuration_ExtId,int,ACE_Hash<ACE_Configuration_ExtId>,ACE_Equal_To<ACE_Configuration_ExtId>,ACE_Null_Mutex>;
@@ -1802,11 +1799,8 @@ template class ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, int>;
 // ACE_SYNCH_MUTEX should not be used in the template instantiations
 // because the resulting template instantiation for the
 // single-threaded case already exists in ACE.
-#pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Thread_Mutex> >
 #pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex> >
-#pragma instantiate ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Thread_Mutex>
 #pragma instantiate ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex>
-#pragma instantiate ACE_Malloc_T<ACE_LOCAL_MEMORY_POOL, ACE_Thread_Mutex, ACE_Control_Block>
 #pragma instantiate ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Thread_Mutex, ACE_Control_Block>
 #endif /* ACE_HAS_THREADS */
 #pragma instantiate ACE_Hash_Map_Entry<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId>
