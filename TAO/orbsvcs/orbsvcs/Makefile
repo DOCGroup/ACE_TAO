@@ -130,6 +130,7 @@ FILES += \
         Trader/Offer_Filter \
         Trader/Offer_Id_Iterator \
         Trader/Offer_Iterator \
+	Trader/Offer_Iterator_Collection \
         Trader/Offer_Modifier \
         Trader/Policies \
         Trader/Policy_Manager \
@@ -143,7 +144,7 @@ FILES += \
         Trader/Service_Type_Map \
         Trader/Service_Type_Repository \
         Trader/Trader \
-        Trader/Trader_Base
+        Trader/Trader_T
 endif
 
 DEFS    = $(addsuffix .h,$(FILES))
