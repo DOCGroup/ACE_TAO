@@ -17,7 +17,12 @@ Thu Mar 15 11:26:35 2001  Ossama Othman  <ossama@uci.edu>
 
 	  Make sure the handle is set for the ACE_SSL_SOCK_Acceptor, after
 	  initializing the underlying ACE_SOCK_Acceptor.  This ensures
-	  that OpenSSL has the proper handle.
+	  that OpenSSL has the proper handle.  Thanks to Greg McCain
+	  <greg.mccain@veritas.com> for suggesting this fix.
+
+	* THANKS:
+
+	   Added Greg to the hall of the fame.
 
 Thu Mar 15 05:46:59 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
