@@ -260,8 +260,8 @@ realclean:
  $(ACE_ROOT)/ace/OS.i
 
 .obj/cinset.o .obj/cinset.so .shobj/cinset.o .shobj/cinset.so: cinset.cpp
-c++
-.obj/inset.o .obj/inset.so .shobj/inset.o .shobj/inset.so: c++inset.cpp
+
+.obj/c++inset.o .obj/c++inset.so .shobj/c++inset.o .shobj/c++inset.so: c++inset.cpp
 
 .obj/iinset.o .obj/iinset.so .shobj/iinset.o .shobj/iinset.so: iinset.cpp
 
