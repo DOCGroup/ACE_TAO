@@ -346,10 +346,12 @@ poa_creation_exception_test (PortableServer::POA_ptr root_poa,
 int
 main (int argc, char *argv[])
 {
+  CORBA::ORB_var orb;
+
   ACE_TRY_NEW_ENV
     {
       // Initialize ORB.
-      CORBA::ORB_var orb =
+      orb =
         CORBA::ORB_init (argc,
                          argv,
                          ""
@@ -588,6 +590,25 @@ main (int argc, char *argv[])
       // Destroy ORB.
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::INTERNAL, exception)
+    {
+      int minor_code =
+        exception.minor ();
+
+      if (ACE_BIT_ENABLED (minor_code, TAO_RTCORBA_THREAD_CREATION_LOCATION_CODE) &&
+          errno == EPERM)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot create thread with scheduling policy %s\n"
+                             "because the user does not have the appropriate privileges, terminating program....\n"
+                             "Check svc.conf options and/or run as root\n",
+                             sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
+                            2);
+        }
+      else
+        // Unexpected error.
+        ACE_ASSERT (0);
     }
   ACE_CATCHANY
     {

@@ -1,3 +1,15 @@
+Fri Apr 25 15:21:58 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao\RTCORBA\Thread_Pool.cpp: 
+
+	  In create_threadpool_helper(), finalize thread pool resource in
+	  case of thread creation errors.  This will fix a memory leak.
+
+	* tests\RTCORBA\Banded_Connections\client.cpp: 
+	* tests\RTCORBA\Banded_Connections\server.cpp: 
+
+	  Report meaningful message in case of thread creation errors.
+
 Fri Apr 25 08:59:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IFR_Client/IFR_BaseC.cpp:
