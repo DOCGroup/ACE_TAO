@@ -507,7 +507,7 @@ typedef int key_t;
 #  else /* Microsoft: */
 #    define ACE_Proper_Export_Flag __declspec (dllexport)
 #    define ACE_Proper_Import_Flag __declspec (dllimport)
-#    define ACE_EXPORT_SINGLETON_DECLATATION(T)  template class __declspec (dllexport) T
+#    define ACE_EXPORT_SINGLETON_DECLARATION(T)  template class __declspec (dllexport) T
 #    define ACE_IMPORT_SINGLETON_DECLARATION(T)  extern template class T
 #    define ACE_PROPER_SINGLETON_INSTANTIATION(T) template class T
 #  endif /* !_MSC_VER */
