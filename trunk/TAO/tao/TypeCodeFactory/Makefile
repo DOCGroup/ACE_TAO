@@ -59,7 +59,8 @@ realclean: clean
 
 
 .obj/TypeCodeFactoryC.o .obj/TypeCodeFactoryC.so .shobj/TypeCodeFactoryC.o .shobj/TypeCodeFactoryC.so: TypeCodeFactoryC.cpp TypeCodeFactory_Loader.h \
- $(ACE_ROOT)/ace/pre.h typecodefactory_export.h \
+ $(ACE_ROOT)/ace/pre.h \
+ typecodefactory_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -71,7 +72,6 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -92,6 +92,19 @@ realclean: clean
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -103,6 +116,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
@@ -122,7 +139,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Malloc_Allocator.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc_Allocator.i \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
@@ -146,21 +162,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Unbounded_Set.inl \
  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/CDR_Base.inl \
- $(ACE_ROOT)/ace/CORBA_macros.h \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/varbase.h \
- $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/String_Base_Const.h \
- $(ACE_ROOT)/ace/String_Base.i \
- $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
@@ -169,12 +170,17 @@ realclean: clean
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+ $(ACE_ROOT)/ace/XML_Svc_Conf.h \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -188,7 +194,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h TypeCodeFactoryC.h \
+ TypeCodeFactoryC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Policy_ForwardC.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -205,10 +211,12 @@ realclean: clean
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Policy_ForwardC.i \
- $(TAO_ROOT)/tao/Object.i TypeCodeFactoryC.inl
+ $(TAO_ROOT)/tao/Object.i \
+ TypeCodeFactoryC.inl
 
 .obj/TypeCodeFactory_i.o .obj/TypeCodeFactory_i.so .shobj/TypeCodeFactory_i.o .shobj/TypeCodeFactory_i.so: TypeCodeFactory_i.cpp TypeCodeFactory_i.h \
- $(ACE_ROOT)/ace/pre.h TypeCodeFactory_Loader.h \
+ $(ACE_ROOT)/ace/pre.h \
+ TypeCodeFactory_Loader.h typecodefactory_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -220,7 +228,6 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -241,6 +248,19 @@ realclean: clean
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -252,6 +272,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
@@ -271,7 +295,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Malloc_Allocator.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc_Allocator.i \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
@@ -295,21 +318,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Unbounded_Set.inl \
  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/CDR_Base.inl \
- $(ACE_ROOT)/ace/CORBA_macros.h \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/varbase.h \
- $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/String_Base_Const.h \
- $(ACE_ROOT)/ace/String_Base.i \
- $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
@@ -318,12 +326,17 @@ realclean: clean
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+ $(ACE_ROOT)/ace/XML_Svc_Conf.h \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -337,7 +350,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h TypeCodeFactoryC.h \
+ TypeCodeFactoryC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Policy_ForwardC.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -354,7 +367,8 @@ realclean: clean
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Policy_ForwardC.i \
- $(TAO_ROOT)/tao/Object.i TypeCodeFactoryC.inl \
+ $(TAO_ROOT)/tao/Object.i \
+ TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
@@ -378,6 +392,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
@@ -403,7 +418,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp
 
 .obj/TypeCodeFactory_Adapter_Impl.o .obj/TypeCodeFactory_Adapter_Impl.so .shobj/TypeCodeFactory_Adapter_Impl.o .shobj/TypeCodeFactory_Adapter_Impl.so: TypeCodeFactory_Adapter_Impl.cpp \
- TypeCodeFactory_Adapter_Impl.h $(ACE_ROOT)/ace/pre.h \
+ TypeCodeFactory_Adapter_Impl.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/TypeCodeFactory_Adapter.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -415,7 +431,6 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -436,6 +451,19 @@ realclean: clean
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -447,6 +475,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
@@ -466,7 +498,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Malloc_Allocator.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc_Allocator.i \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
@@ -490,21 +521,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Unbounded_Set.inl \
  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/CDR_Base.inl \
- $(ACE_ROOT)/ace/CORBA_macros.h \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/varbase.h \
- $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/String_Base_Const.h \
- $(ACE_ROOT)/ace/String_Base.i \
- $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
@@ -513,12 +529,17 @@ realclean: clean
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
  typecodefactory_export.h \
  $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+ $(ACE_ROOT)/ace/XML_Svc_Conf.h \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -532,10 +553,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h TypeCodeFactory_i.h \
- TypeCodeFactory_Loader.h \
+ TypeCodeFactory_i.h TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
- $(TAO_ROOT)/tao/Object_Loader.i TypeCodeFactoryC.h \
+ $(TAO_ROOT)/tao/Object_Loader.i \
+ TypeCodeFactoryC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Policy_ForwardC.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -552,7 +573,8 @@ realclean: clean
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Policy_ForwardC.i \
- $(TAO_ROOT)/tao/Object.i TypeCodeFactoryC.inl \
+ $(TAO_ROOT)/tao/Object.i \
+ TypeCodeFactoryC.inl \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -561,6 +583,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
@@ -637,8 +660,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PICurrent.h \
  $(TAO_ROOT)/tao/PICurrent.inl \
- $(TAO_ROOT)/tao/Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -648,11 +669,18 @@ realclean: clean
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Framework_Component.h \
+ $(ACE_ROOT)/ace/Framework_Component.inl \
+ $(ACE_ROOT)/ace/Framework_Component_T.h \
+ $(ACE_ROOT)/ace/Framework_Component_T.inl \
+ $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/TypeCodeFactory_Loader.o .obj/TypeCodeFactory_Loader.so .shobj/TypeCodeFactory_Loader.o .shobj/TypeCodeFactory_Loader.so: TypeCodeFactory_Loader.cpp \
- TypeCodeFactory_Loader.h $(ACE_ROOT)/ace/pre.h \
+ TypeCodeFactory_Loader.h \
+ $(ACE_ROOT)/ace/pre.h \
+ typecodefactory_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -664,7 +692,6 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -685,6 +712,19 @@ realclean: clean
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -696,6 +736,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
@@ -715,7 +759,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Malloc_Allocator.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc_Allocator.i \
  $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
@@ -739,21 +782,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Unbounded_Set.inl \
  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/CDR_Base.inl \
- $(ACE_ROOT)/ace/CORBA_macros.h \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/varbase.h \
- $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/String_Base_Const.h \
- $(ACE_ROOT)/ace/String_Base.i \
- $(ACE_ROOT)/ace/String_Base.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
@@ -762,12 +790,17 @@ realclean: clean
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+ $(ACE_ROOT)/ace/XML_Svc_Conf.h \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -781,7 +814,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h TypeCodeFactoryC.h \
+ TypeCodeFactoryC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Policy_ForwardC.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -798,8 +831,9 @@ realclean: clean
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Policy_ForwardC.i \
- $(TAO_ROOT)/tao/Object.i TypeCodeFactoryC.inl \
- TypeCodeFactory_i.h $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/Object.i \
+ TypeCodeFactoryC.inl TypeCodeFactory_i.h \
+ $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
