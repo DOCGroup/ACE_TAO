@@ -663,7 +663,7 @@ ACE_Reactor_Notify::handle_input (ACE_HANDLE handle)
   ssize_t n;
   int number_dispatched = 0;
 
-  while ((n = ACE::recv (handle, (char *) &buffer, sizeof buffer)) != -1)
+  while ((n = ACE::recv (handle, (char *) &buffer, sizeof buffer)) > 0)
     {
       // If eh == 0 then another thread is unblocking the ACE_Reactor
       // to update the ACE_Reactor's internal structures.  Otherwise,
@@ -705,7 +705,7 @@ ACE_Reactor_Notify::handle_input (ACE_HANDLE handle)
 
   // Reassign number_dispatched to -1 if things have gone seriously
   // wrong.
-  if (n == -1 && errno != EWOULDBLOCK)
+  if (n <= 0 && errno != EWOULDBLOCK)
     number_dispatched = -1;
 
   // Enqueue ourselves into the list of waiting threads.  When we
