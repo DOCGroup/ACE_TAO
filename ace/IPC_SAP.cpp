@@ -56,6 +56,7 @@ ACE_IPC_SAP::enable (int signum) const
         u_long nonblock = 1;
         return ACE_OS::ioctl (this->handle_, FIONBIO, &nonblock);
       }
+      case 
     default:
       ACE_NOTSUP_RETURN (-1);
     }
@@ -82,6 +83,12 @@ ACE_IPC_SAP::enable (int signum) const
       return -1;
 #endif /* F_SETOWN && FASYNC */
 #endif /* SIGIO <== */
+    case F_SETFD:
+      if (ACE_OS::fcntl (this->handle_, F_SETFD, 1) == -1)
+	return 1;
+      else
+	return 0;
+      break;
     case ACE_NONBLOCK:
       if (ACE::set_flags (this->handle_, ACE_NONBLOCK) == ACE_INVALID_HANDLE)
         return -1;
@@ -139,6 +146,12 @@ ACE_IPC_SAP::disable (int signum) const
       return -1;
 #endif /* F_SETOWN && FASYNC */
 #endif /* SIGIO <== */
+    case F_SETFD:
+      if (ACE_OS::fcntl (this->handle_, F_SETFD, 0) == -1)
+	return 1;
+      else
+	return 0;
+      break;
     case ACE_NONBLOCK:
       if (ACE::clr_flags (this->handle_, ACE_NONBLOCK) == -1)
         return -1;
