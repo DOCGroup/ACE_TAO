@@ -168,6 +168,13 @@ namespace ACE_OS {
   extern ACE_Export 
   void *realloc (void *, size_t);
 
+#if !defined (ACE_LACKS_REALPATH)
+  ACE_NAMESPACE_INLINE_FUNCTION
+#else
+  extern ACE_Export 
+#endif /* !ACE_LACKS_REALPATH */
+  ACE_TCHAR *realpath (const ACE_TCHAR *file_name, ACE_TCHAR *resolved_name);
+  
   // exit_hook and set_exit_hook not in spec
   /// Function that is called by <ACE_OS::exit>, if non-null.
   extern ACE_Export ACE_EXIT_HOOK exit_hook_;
