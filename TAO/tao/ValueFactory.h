@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (TAO_HAS_VALUETYPE)
+#if (TAO_HAS_VALUETYPE == 1)
 
 #include "ace/Synch_T.h"
 
@@ -114,6 +114,6 @@ private:
 # include "tao/ValueFactory.i"
 #endif /* __ACE_INLINE__) */
 
-#endif /* TAO_HAS_VALUETYPE */
+#endif /* TAO_HAS_VALUETYPE == 1 */
 #include "ace/post.h"
 #endif /* TAO_VALUEFACTORY_H */

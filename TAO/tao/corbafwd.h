@@ -229,7 +229,7 @@ typedef class CORBA_Principal *CORBA_Principal_ptr;
 
 typedef class CORBA_ImplementationDef *CORBA_ImplementationDef_ptr;
 
-#if defined (TAO_HAS_VALUETYPE)
+#if (TAO_HAS_VALUETYPE == 1)
 class CORBA_ValueBase;
 class CORBA_ValueBase_var;
 class CORBA_ValueBase_out;
@@ -238,7 +238,7 @@ class CORBA_ValueFactoryBase_var;
 typedef CORBA_ValueFactoryBase *CORBA_ValueFactory;
 typedef CORBA_ValueFactoryBase_var CORBA_ValueFactory_var;
 class CORBA_DefaultValueRefCountBase;
-#endif /* TAO_HAS_VALUETYPE */
+#endif /* TAO_HAS_VALUETYPE == 1 */
 
 class CORBA_AbstractBase;
 typedef CORBA_AbstractBase *CORBA_AbstractBase_ptr;
@@ -755,7 +755,7 @@ TAO_NAMESPACE CORBA
   typedef CORBA_TypeCodeFactory_var TypeCodeFactory_var;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_TypeCodeFactory;
 
-#if defined (TAO_HAS_VALUETYPE)
+#if (TAO_HAS_VALUETYPE == 1)
   typedef CORBA_ValueBase ValueBase;
   typedef CORBA_ValueBase *ValueBase_ptr;
   typedef CORBA_ValueBase_var ValueBase_var;
@@ -774,7 +774,7 @@ TAO_NAMESPACE CORBA
   typedef CORBA_AbstractBase *AbstractBase_ptr;
   typedef CORBA_AbstractBase_var AbstractBase_var;
   typedef CORBA_AbstractBase_out AbstractBase_out;
-#endif /* TAO_HAS_VALUETYPE */
+#endif /* TAO_HAS_VALUETYPE == 1*/
 
   // enum values defined in nvlist.hh, bitwise ORed.
   typedef u_int Flags;

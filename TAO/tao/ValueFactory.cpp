@@ -16,13 +16,13 @@
 
 #include "tao/ValueFactory.h"
 
-#if defined (TAO_HAS_VALUETYPE)
+#if (TAO_HAS_VALUETYPE == 1)
 
 #if !defined (__ACE_INLINE__)
 # include "tao/ValueFactory.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao, 
+ACE_RCSID (tao,
            ValueFactory, "$Id$")
 
 CORBA_ValueFactoryBase::~CORBA_ValueFactoryBase (void)
@@ -36,4 +36,4 @@ CORBA_ValueFactoryBase::create_for_unmarshal_abstract (void)
   return 0;
 }
 
-#endif /* TAO_HAS_VALUETYPE */
+#endif /* TAO_HAS_VALUETYPE == 1*/

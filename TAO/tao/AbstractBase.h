@@ -25,7 +25,7 @@
 #include "tao/ValueBase.h"
 #include "tao/ValueFactory.h"
 
-#if defined (TAO_HAS_VALUETYPE)
+#if (TAO_HAS_VALUETYPE == 1)
 
 /**
  * @class CORBA_AbstractBase
@@ -149,7 +149,7 @@ public:
   static CORBA::AbstractBase_ptr tao_duplicate (CORBA::AbstractBase_ptr);
   static void tao_release (CORBA::AbstractBase_ptr);
   static CORBA::AbstractBase_ptr tao_nil (void);
-  static CORBA::AbstractBase_ptr tao_narrow (CORBA::AbstractBase * 
+  static CORBA::AbstractBase_ptr tao_narrow (CORBA::AbstractBase *
                                              ACE_ENV_ARG_DECL_NOT_USED);
   static CORBA::AbstractBase * tao_upcast (void *);
 
@@ -189,7 +189,7 @@ operator>> (TAO_InputCDR &, CORBA_AbstractBase_ptr &);
 # include "tao/AbstractBase.inl"
 #endif /* __ACE_INLINE__) */
 
-#endif /* TAO_HAS_VALUETYPE */
+#endif /* TAO_HAS_VALUETYPE == 1 */
 
 #include "ace/post.h"
 

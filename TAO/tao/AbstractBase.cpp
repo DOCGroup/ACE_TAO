@@ -20,14 +20,14 @@
 #include "tao/ValueFactory.h"
 #include "tao/debug.h"
 
-#if defined (TAO_HAS_VALUETYPE)
+#if (TAO_HAS_VALUETYPE == 1)
 
 #if !defined (__ACE_INLINE__)
 # include "tao/AbstractBase.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao, 
-           AbstractBase, 
+ACE_RCSID (tao,
+           AbstractBase,
            "$Id$")
 
 int CORBA_AbstractBase::_tao_class_id = 0;
@@ -41,7 +41,7 @@ CORBA_AbstractBase::CORBA_AbstractBase (void)
     refcount_ (1),
     refcount_lock_ (0)
 {
-  ACE_NEW (this->refcount_lock_, 
+  ACE_NEW (this->refcount_lock_,
            TAO_SYNCH_MUTEX);
 }
 
@@ -64,7 +64,7 @@ CORBA_AbstractBase::CORBA_AbstractBase (const CORBA_AbstractBase &rhs)
       // instantiated in the critical path.  Instantiating a lock for
       // unconstrained objects alone optimizes instantiation of such
       // locality-constrained objects.
-      ACE_NEW (this->refcount_lock_, 
+      ACE_NEW (this->refcount_lock_,
                TAO_SYNCH_MUTEX);
     }
 }
@@ -90,7 +90,7 @@ CORBA_AbstractBase::CORBA_AbstractBase (TAO_Stub * protocol_proxy,
       // instantiated in the critical path.  Instantiating a lock for
       // unconstrained objects alone optimizes instantiation of such
       // locality-constrained objects.
-      ACE_NEW (this->refcount_lock_, 
+      ACE_NEW (this->refcount_lock_,
                TAO_SYNCH_MUTEX);
     }
 }
@@ -109,7 +109,7 @@ void *
 CORBA_AbstractBase::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &CORBA_AbstractBase::_tao_class_id)
@@ -117,12 +117,12 @@ CORBA_AbstractBase::_tao_QueryInterface (ptr_arith_t type)
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
@@ -297,7 +297,7 @@ operator>> (TAO_InputCDR &strm, CORBA_AbstractBase_ptr &abs)
 
           if (!TAO_OBV_GIOP_Flags::is_value_tag (value_tag))
             {
-              ACE_DEBUG ((LM_DEBUG, 
+              ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("operator>> CORBA::AbstractBase ")
                           ACE_TEXT ("not value_tag\n")));
               return 0;
@@ -325,13 +325,13 @@ operator>> (TAO_InputCDR &strm, CORBA_AbstractBase_ptr &abs)
                 }
             }
 
-          CORBA::ValueFactory_var factory = 
+          CORBA::ValueFactory_var factory =
             orb_core->orb ()->lookup_value_factory (repo_id_stream.in ());
 
           // We should throw an exception, if there were an appropriate one.
           if (factory == 0)
             {
-              ACE_DEBUG ((LM_ERROR, 
+              ACE_DEBUG ((LM_ERROR,
                           ACE_TEXT ("(%N:%l) OBV factory is null !!!\n")));
               return 0;
             }
@@ -353,7 +353,7 @@ operator>> (TAO_InputCDR &strm, CORBA_AbstractBase_ptr &abs)
 
               if (stores_orb)
                 {
-                  orb_core = 
+                  orb_core =
                     concrete_stubobj->servant_orb_var ()->orb_core ();
                 }
 
@@ -393,5 +393,4 @@ CORBA_AbstractBase::_tao_to_value (void)
   return 0;
 }
 
-#endif /* TAO_HAS_VALUETYPE */
-
+#endif /* TAO_HAS_VALUETYPE == 1 */
