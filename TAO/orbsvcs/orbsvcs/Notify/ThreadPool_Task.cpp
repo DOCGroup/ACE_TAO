@@ -38,7 +38,7 @@ TAO_NS_ThreadPool_Task::init (TAO_NS_AdminProperties& admin_properties)
 void
 TAO_NS_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params, TAO_NS_AdminProperties& admin_properties  ACE_ENV_ARG_DECL)
 {
-  long flags = THR_SCHED_DEFAULT|THR_BOUND|THR_NEW_LWP;
+  long flags = THR_NEW_LWP | THR_JOINABLE;
 
   flags |=
     TAO_NS_PROPERTIES::instance()->scope_policy () |

@@ -1,3 +1,11 @@
+Mon Nov 18 11:04:35 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/run_test.pl:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl:
+	Appended Structured_ suffix to executable name. 
+	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+	Reverted thread creation flags.
+	
 Mon Nov 18 07:32:10 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Notify/Event.h: Work around for a weird BCB6
@@ -79,8 +87,6 @@ Fri Nov 15 15:29:24 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/performance-tests/RedGreen/run_test.pl:
 	  - Modified to run all 3 test cases described in the README.   	    
-	* orbsvcs/tests/Notify/performance-tests/RedGreen/Red
-	 
 	* orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp:
 	  Changed hardcoded "10" to the expected number of events that can 
 	  be specified on the command line.
