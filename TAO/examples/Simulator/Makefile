@@ -10,7 +10,7 @@
 
 DIRS  =	Event_Supplier \
 	DOVEMIB \
-#        DOVEBrowser
+        DOVEBrowser
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
