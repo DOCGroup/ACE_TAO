@@ -26,7 +26,6 @@ UTILS_FILES = \
   Flag_Manip \
   Handle_Ops \
   Lib_Find \
-  Sock_Connect \
   Malloc_Instantiations \
   Active_Map_Manager \
   Arg_Shifter \
@@ -105,6 +104,8 @@ CONNECTION_FILES = \
   POSIX_Asynch_IO \
   Strategies
 SOCKETS_FILES = \
+  Addr \
+  INET_Addr \
   IPC_SAP \
   LSOCK \
   LSOCK_Acceptor \
@@ -115,6 +116,7 @@ SOCKETS_FILES = \
   SOCK \
   SOCK_Acceptor \
   SOCK_CODgram \
+  Sock_Connect \
   SOCK_Connector \
   SOCK_Dgram \
   SOCK_Dgram_Bcast \
@@ -122,7 +124,6 @@ SOCKETS_FILES = \
   SOCK_IO \
   SOCK_Stream
 IPC_FILES = \
-  Addr \
   ATM_Addr \
   ATM_Acceptor \
   ATM_Connector \
@@ -143,7 +144,6 @@ IPC_FILES = \
   FILE \
   FILE_Connector \
   FILE_IO \
-  INET_Addr \
   IO_SAP \
   IOStream \
   Pipe \
@@ -609,8 +609,7 @@ endif # GHS
  OS.i \
  Template_Instantiations.cpp
 
-.obj/OS.o .obj/OS.so .shobj/OS.o .shobj/OS.so: OS.cpp \
- OS.h \
+.obj/OS.o .obj/OS.so .shobj/OS.o .shobj/OS.so: OS.cpp OS.h \
  pre.h \
  config-all.h \
  config.h \
@@ -702,8 +701,7 @@ endif # GHS
  OS_Memory.h \
  OS_Memory.inl
 
-.obj/OS_TLI.o .obj/OS_TLI.so .shobj/OS_TLI.o .shobj/OS_TLI.so: OS_TLI.cpp \
- OS_TLI.h \
+.obj/OS_TLI.o .obj/OS_TLI.so .shobj/OS_TLI.o .shobj/OS_TLI.so: OS_TLI.cpp OS_TLI.h \
  pre.h \
  config-all.h \
  config.h \
@@ -871,8 +869,7 @@ endif # GHS
  OS.i \
  Sched_Params.i
 
-.obj/ACE.o .obj/ACE.so .shobj/ACE.o .shobj/ACE.so: ACE.cpp \
- ACE.h \
+.obj/ACE.o .obj/ACE.so .shobj/ACE.o .shobj/ACE.so: ACE.cpp ACE.h \
  pre.h \
  OS.h \
  config-all.h \
@@ -1110,63 +1107,6 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
-.obj/Sock_Connect.o .obj/Sock_Connect.so .shobj/Sock_Connect.o .shobj/Sock_Connect.so: Sock_Connect.cpp \
- Sock_Connect.h \
- pre.h \
- OS.h \
- config-all.h \
- config.h \
- config-linux-lxpthreads.h \
- config-linux.h \
- config-linux-common.h \
- config-g++-common.h \
- post.h \
- ACE_export.h \
- svc_export.h \
- ace_wchar.h \
- ace_wchar.inl \
- OS_Dirent.h \
- OS_Export.h \
- OS_Dirent.inl \
- OS_String.h \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Min_Max.h \
- streams.h \
- Basic_Types.h \
- Basic_Types.i \
- Trace.h \
- OS.i \
- Sock_Connect.i \
- INET_Addr.h \
- ACE.h \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- ACE.i \
- Addr.h \
- Addr.i \
- INET_Addr.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl \
- Handle_Set.h \
- Handle_Set.i \
- Auto_Ptr.h \
- Auto_Ptr.i \
- Auto_Ptr.cpp
-
 .obj/Malloc_Instantiations.o .obj/Malloc_Instantiations.so .shobj/Malloc_Instantiations.o .shobj/Malloc_Instantiations.so: Malloc_Instantiations.cpp \
  Malloc.h \
  pre.h \
@@ -1403,8 +1343,7 @@ endif # GHS
  Trace.h \
  OS.i
 
-.obj/ARGV.o .obj/ARGV.so .shobj/ARGV.o .shobj/ARGV.so: ARGV.cpp \
- ARGV.h \
+.obj/ARGV.o .obj/ARGV.so .shobj/ARGV.o .shobj/ARGV.so: ARGV.cpp ARGV.h \
  pre.h \
  ACE.h \
  OS.h \
@@ -1826,8 +1765,7 @@ endif # GHS
  Hash_Map_With_Allocator_T.i \
  Hash_Map_With_Allocator_T.cpp
 
-.obj/Dirent.o .obj/Dirent.so .shobj/Dirent.o .shobj/Dirent.so: Dirent.cpp \
- Dirent.h \
+.obj/Dirent.o .obj/Dirent.so .shobj/Dirent.o .shobj/Dirent.so: Dirent.cpp Dirent.h \
  pre.h \
  OS_Dirent.h \
  config-all.h \
@@ -1864,8 +1802,7 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
-.obj/Dynamic.o .obj/Dynamic.so .shobj/Dynamic.o .shobj/Dynamic.so: Dynamic.cpp \
- Dynamic.h \
+.obj/Dynamic.o .obj/Dynamic.so .shobj/Dynamic.o .shobj/Dynamic.so: Dynamic.cpp Dynamic.h \
  pre.h \
  ACE.h \
  OS.h \
@@ -1981,8 +1918,7 @@ endif # GHS
  Functor_T.i \
  Functor_T.cpp
 
-.obj/Get_Opt.o .obj/Get_Opt.so .shobj/Get_Opt.o .shobj/Get_Opt.so: Get_Opt.cpp \
- Get_Opt.h \
+.obj/Get_Opt.o .obj/Get_Opt.so .shobj/Get_Opt.o .shobj/Get_Opt.so: Get_Opt.cpp Get_Opt.h \
  pre.h \
  ACE.h \
  OS.h \
@@ -2498,8 +2434,7 @@ endif # GHS
  Trace.h \
  OS.i
 
-.obj/SString.o .obj/SString.so .shobj/SString.o .shobj/SString.so: SString.cpp \
- Malloc.h \
+.obj/SString.o .obj/SString.so .shobj/SString.o .shobj/SString.so: SString.cpp Malloc.h \
  pre.h \
  ACE.h \
  OS.h \
@@ -2610,8 +2545,7 @@ endif # GHS
  Auto_Ptr.i \
  Auto_Ptr.cpp
 
-.obj/Stats.o .obj/Stats.so .shobj/Stats.o .shobj/Stats.so: Stats.cpp \
- Stats.h \
+.obj/Stats.o .obj/Stats.so .shobj/Stats.o .shobj/Stats.so: Stats.cpp Stats.h \
  pre.h \
  ACE.h \
  OS.h \
@@ -2922,8 +2856,7 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
-.obj/Timeprobe.o .obj/Timeprobe.so .shobj/Timeprobe.o .shobj/Timeprobe.so: Timeprobe.cpp \
- OS.h \
+.obj/Timeprobe.o .obj/Timeprobe.so .shobj/Timeprobe.o .shobj/Timeprobe.so: Timeprobe.cpp OS.h \
  pre.h \
  config-all.h \
  config.h \
@@ -3567,8 +3500,7 @@ endif # GHS
  Managed_Object.i \
  Managed_Object.cpp
 
-.obj/Dump.o .obj/Dump.so .shobj/Dump.o .shobj/Dump.so: Dump.cpp \
- Synch_T.h \
+.obj/Dump.o .obj/Dump.so .shobj/Dump.o .shobj/Dump.so: Dump.cpp Synch_T.h \
  pre.h \
  Synch.h \
  ACE.h \
@@ -4000,8 +3932,7 @@ endif # GHS
  Shared_Object.i \
  Service_Object.i
 
-.obj/Trace.o .obj/Trace.so .shobj/Trace.o .shobj/Trace.so: Trace.cpp \
- config-all.h \
+.obj/Trace.o .obj/Trace.so .shobj/Trace.o .shobj/Trace.so: Trace.cpp config-all.h \
  pre.h \
  config.h \
  config-linux-lxpthreads.h \
@@ -4193,8 +4124,7 @@ endif # GHS
  Method_Request.h \
  Activation_Queue.i
 
-.obj/Process.o .obj/Process.so .shobj/Process.o .shobj/Process.so: Process.cpp \
- OS.h \
+.obj/Process.o .obj/Process.so .shobj/Process.o .shobj/Process.so: Process.cpp OS.h \
  pre.h \
  config-all.h \
  config.h \
@@ -4398,8 +4328,7 @@ endif # GHS
  Managed_Object.i \
  Managed_Object.cpp
 
-.obj/Synch.o .obj/Synch.so .shobj/Synch.o .shobj/Synch.so: Synch.cpp \
- Thread.h \
+.obj/Synch.o .obj/Synch.so .shobj/Synch.o .shobj/Synch.so: Synch.cpp Thread.h \
  pre.h \
  ACE.h \
  OS.h \
@@ -4712,8 +4641,7 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
-.obj/Thread.o .obj/Thread.so .shobj/Thread.o .shobj/Thread.so: Thread.cpp \
- Thread.h \
+.obj/Thread.o .obj/Thread.so .shobj/Thread.o .shobj/Thread.so: Thread.cpp Thread.h \
  pre.h \
  ACE.h \
  OS.h \
@@ -5138,8 +5066,7 @@ endif # GHS
  Managed_Object.cpp \
  Thread_Manager.i
 
-.obj/Token.o .obj/Token.so .shobj/Token.o .shobj/Token.so: Token.cpp \
- Thread.h \
+.obj/Token.o .obj/Token.so .shobj/Token.o .shobj/Token.so: Token.cpp Thread.h \
  pre.h \
  ACE.h \
  OS.h \
@@ -5947,8 +5874,7 @@ endif # GHS
  Stream_Modules.h \
  Stream_Modules.cpp
 
-.obj/Reactor.o .obj/Reactor.so .shobj/Reactor.o .shobj/Reactor.so: Reactor.cpp \
- Reactor.h \
+.obj/Reactor.o .obj/Reactor.so .shobj/Reactor.o .shobj/Reactor.so: Reactor.cpp Reactor.h \
  pre.h \
  Handle_Set.h \
  ACE.h \
@@ -7288,8 +7214,96 @@ endif # GHS
  WFMO_Reactor.i \
  Strategies.i
 
-.obj/IPC_SAP.o .obj/IPC_SAP.so .shobj/IPC_SAP.o .shobj/IPC_SAP.so: IPC_SAP.cpp \
- IPC_SAP.h \
+.obj/Addr.o .obj/Addr.so .shobj/Addr.o .shobj/Addr.so: Addr.cpp Addr.h \
+ pre.h \
+ OS.h \
+ config-all.h \
+ config.h \
+ config-linux-lxpthreads.h \
+ config-linux.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ACE_export.h \
+ svc_export.h \
+ ace_wchar.h \
+ ace_wchar.inl \
+ OS_Dirent.h \
+ OS_Export.h \
+ OS_Dirent.inl \
+ OS_String.h \
+ OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
+ Min_Max.h \
+ streams.h \
+ Basic_Types.h \
+ Basic_Types.i \
+ Trace.h \
+ OS.i \
+ Addr.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
+ OS_Log_Msg_Attributes.h \
+ OS_Log_Msg_Attributes.inl
+
+.obj/INET_Addr.o .obj/INET_Addr.so .shobj/INET_Addr.o .shobj/INET_Addr.so: INET_Addr.cpp \
+ INET_Addr.h \
+ pre.h \
+ ACE.h \
+ OS.h \
+ config-all.h \
+ config.h \
+ config-linux-lxpthreads.h \
+ config-linux.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ACE_export.h \
+ svc_export.h \
+ ace_wchar.h \
+ ace_wchar.inl \
+ OS_Dirent.h \
+ OS_Export.h \
+ OS_Dirent.inl \
+ OS_String.h \
+ OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
+ Min_Max.h \
+ streams.h \
+ Basic_Types.h \
+ Basic_Types.i \
+ Trace.h \
+ OS.i \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ Sock_Connect.h \
+ Sock_Connect.i \
+ ACE.i \
+ Addr.h \
+ Addr.i \
+ INET_Addr.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
+ OS_Log_Msg_Attributes.h \
+ OS_Log_Msg_Attributes.inl
+
+.obj/IPC_SAP.o .obj/IPC_SAP.so .shobj/IPC_SAP.o .shobj/IPC_SAP.so: IPC_SAP.cpp IPC_SAP.h \
  pre.h \
  Flag_Manip.h \
  OS.h \
@@ -7328,8 +7342,7 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
-.obj/LSOCK.o .obj/LSOCK.so .shobj/LSOCK.o .shobj/LSOCK.so: LSOCK.cpp \
- LSOCK.h \
+.obj/LSOCK.o .obj/LSOCK.so .shobj/LSOCK.o .shobj/LSOCK.so: LSOCK.cpp LSOCK.h \
  pre.h \
  SOCK.h \
  ACE.h \
@@ -7725,8 +7738,7 @@ endif # GHS
  LSOCK.i \
  LSOCK_Stream.i
 
-.obj/SOCK.o .obj/SOCK.so .shobj/SOCK.o .shobj/SOCK.so: SOCK.cpp \
- SOCK.h \
+.obj/SOCK.o .obj/SOCK.so .shobj/SOCK.o .shobj/SOCK.so: SOCK.cpp SOCK.h \
  pre.h \
  ACE.h \
  OS.h \
@@ -7918,6 +7930,63 @@ endif # GHS
  Log_Record.i \
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
+
+.obj/Sock_Connect.o .obj/Sock_Connect.so .shobj/Sock_Connect.o .shobj/Sock_Connect.so: Sock_Connect.cpp \
+ Sock_Connect.h \
+ pre.h \
+ OS.h \
+ config-all.h \
+ config.h \
+ config-linux-lxpthreads.h \
+ config-linux.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ACE_export.h \
+ svc_export.h \
+ ace_wchar.h \
+ ace_wchar.inl \
+ OS_Dirent.h \
+ OS_Export.h \
+ OS_Dirent.inl \
+ OS_String.h \
+ OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
+ Min_Max.h \
+ streams.h \
+ Basic_Types.h \
+ Basic_Types.i \
+ Trace.h \
+ OS.i \
+ Sock_Connect.i \
+ INET_Addr.h \
+ ACE.h \
+ Flag_Manip.h \
+ Flag_Manip.i \
+ Handle_Ops.h \
+ Handle_Ops.i \
+ Lib_Find.h \
+ Lib_Find.i \
+ Init_ACE.h \
+ Init_ACE.i \
+ ACE.i \
+ Addr.h \
+ Addr.i \
+ INET_Addr.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
+ OS_Log_Msg_Attributes.h \
+ OS_Log_Msg_Attributes.inl \
+ Handle_Set.h \
+ Handle_Set.i \
+ Auto_Ptr.h \
+ Auto_Ptr.i \
+ Auto_Ptr.cpp
 
 .obj/SOCK_Connector.o .obj/SOCK_Connector.so .shobj/SOCK_Connector.o .shobj/SOCK_Connector.so: SOCK_Connector.cpp \
  SOCK_Connector.h \
@@ -8172,8 +8241,7 @@ endif # GHS
  SOCK_Dgram.i \
  SOCK_Dgram_Mcast.i
 
-.obj/SOCK_IO.o .obj/SOCK_IO.so .shobj/SOCK_IO.o .shobj/SOCK_IO.so: SOCK_IO.cpp \
- SOCK_IO.h \
+.obj/SOCK_IO.o .obj/SOCK_IO.so .shobj/SOCK_IO.o .shobj/SOCK_IO.so: SOCK_IO.cpp SOCK_IO.h \
  pre.h \
  SOCK.h \
  ACE.h \
@@ -8281,44 +8349,6 @@ endif # GHS
  SOCK.i \
  SOCK_IO.i \
  SOCK_Stream.i
-
-.obj/Addr.o .obj/Addr.so .shobj/Addr.o .shobj/Addr.so: Addr.cpp \
- Addr.h \
- pre.h \
- OS.h \
- config-all.h \
- config.h \
- config-linux-lxpthreads.h \
- config-linux.h \
- config-linux-common.h \
- config-g++-common.h \
- post.h \
- ACE_export.h \
- svc_export.h \
- ace_wchar.h \
- ace_wchar.inl \
- OS_Dirent.h \
- OS_Export.h \
- OS_Dirent.inl \
- OS_String.h \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Min_Max.h \
- streams.h \
- Basic_Types.h \
- Basic_Types.i \
- Trace.h \
- OS.i \
- Addr.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl
 
 .obj/ATM_Addr.o .obj/ATM_Addr.so .shobj/ATM_Addr.o .shobj/ATM_Addr.so: ATM_Addr.cpp \
  ATM_Addr.h \
@@ -8518,8 +8548,7 @@ endif # GHS
  Sock_Connect.i \
  ACE.i
 
-.obj/ATM_QoS.o .obj/ATM_QoS.so .shobj/ATM_QoS.o .shobj/ATM_QoS.so: ATM_QoS.cpp \
- ATM_QoS.h \
+.obj/ATM_QoS.o .obj/ATM_QoS.so .shobj/ATM_QoS.o .shobj/ATM_QoS.so: ATM_QoS.cpp ATM_QoS.h \
  pre.h \
  ACE.h \
  OS.h \
@@ -8669,8 +8698,7 @@ endif # GHS
  ATM_Addr.h \
  ATM_Addr.i
 
-.obj/DEV.o .obj/DEV.so .shobj/DEV.o .shobj/DEV.so: DEV.cpp \
- DEV.h \
+.obj/DEV.o .obj/DEV.so .shobj/DEV.o .shobj/DEV.so: DEV.cpp DEV.h \
  pre.h \
  IO_SAP.h \
  Flag_Manip.h \
@@ -8840,8 +8868,7 @@ endif # GHS
  OS_Log_Msg_Attributes.inl \
  DEV_Connector.i
 
-.obj/DEV_IO.o .obj/DEV_IO.so .shobj/DEV_IO.o .shobj/DEV_IO.so: DEV_IO.cpp \
- DEV_IO.h \
+.obj/DEV_IO.o .obj/DEV_IO.so .shobj/DEV_IO.o .shobj/DEV_IO.so: DEV_IO.cpp DEV_IO.h \
  pre.h \
  DEV.h \
  IO_SAP.h \
@@ -8901,8 +8928,7 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
-.obj/FIFO.o .obj/FIFO.so .shobj/FIFO.o .shobj/FIFO.so: FIFO.cpp \
- FIFO.h \
+.obj/FIFO.o .obj/FIFO.so .shobj/FIFO.o .shobj/FIFO.so: FIFO.cpp FIFO.h \
  pre.h \
  IPC_SAP.h \
  Flag_Manip.h \
@@ -9228,8 +9254,7 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
-.obj/FILE.o .obj/FILE.so .shobj/FILE.o .shobj/FILE.so: FILE.cpp \
- FILE.h \
+.obj/FILE.o .obj/FILE.so .shobj/FILE.o .shobj/FILE.so: FILE.cpp FILE.h \
  pre.h \
  IO_SAP.h \
  Flag_Manip.h \
@@ -9344,8 +9369,7 @@ endif # GHS
  OS_Log_Msg_Attributes.inl \
  FILE_Connector.i
 
-.obj/FILE_IO.o .obj/FILE_IO.so .shobj/FILE_IO.o .shobj/FILE_IO.so: FILE_IO.cpp \
- FILE_IO.h \
+.obj/FILE_IO.o .obj/FILE_IO.so .shobj/FILE_IO.o .shobj/FILE_IO.so: FILE_IO.cpp FILE_IO.h \
  pre.h \
  FILE.h \
  IO_SAP.h \
@@ -9405,60 +9429,7 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
-.obj/INET_Addr.o .obj/INET_Addr.so .shobj/INET_Addr.o .shobj/INET_Addr.so: INET_Addr.cpp \
- INET_Addr.h \
- pre.h \
- ACE.h \
- OS.h \
- config-all.h \
- config.h \
- config-linux-lxpthreads.h \
- config-linux.h \
- config-linux-common.h \
- config-g++-common.h \
- post.h \
- ACE_export.h \
- svc_export.h \
- ace_wchar.h \
- ace_wchar.inl \
- OS_Dirent.h \
- OS_Export.h \
- OS_Dirent.inl \
- OS_String.h \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Min_Max.h \
- streams.h \
- Basic_Types.h \
- Basic_Types.i \
- Trace.h \
- OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Addr.h \
- Addr.i \
- INET_Addr.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl
-
-.obj/IO_SAP.o .obj/IO_SAP.so .shobj/IO_SAP.o .shobj/IO_SAP.so: IO_SAP.cpp \
- IO_SAP.h \
+.obj/IO_SAP.o .obj/IO_SAP.so .shobj/IO_SAP.o .shobj/IO_SAP.so: IO_SAP.cpp IO_SAP.h \
  pre.h \
  Flag_Manip.h \
  OS.h \
@@ -9549,8 +9520,7 @@ endif # GHS
  IOStream_T.i \
  IOStream_T.cpp
 
-.obj/Pipe.o .obj/Pipe.so .shobj/Pipe.o .shobj/Pipe.so: Pipe.cpp \
- Pipe.h \
+.obj/Pipe.o .obj/Pipe.so .shobj/Pipe.o .shobj/Pipe.so: Pipe.cpp Pipe.h \
  pre.h \
  ACE.h \
  OS.h \
@@ -9617,8 +9587,7 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
-.obj/Signal.o .obj/Signal.so .shobj/Signal.o .shobj/Signal.so: Signal.cpp \
- Synch_T.h \
+.obj/Signal.o .obj/Signal.so .shobj/Signal.o .shobj/Signal.so: Signal.cpp Synch_T.h \
  pre.h \
  Synch.h \
  ACE.h \
@@ -9759,8 +9728,7 @@ endif # GHS
  SString.i \
  Malloc_Base.h
 
-.obj/SPIPE.o .obj/SPIPE.so .shobj/SPIPE.o .shobj/SPIPE.so: SPIPE.cpp \
- SPIPE.h \
+.obj/SPIPE.o .obj/SPIPE.so .shobj/SPIPE.o .shobj/SPIPE.so: SPIPE.cpp SPIPE.h \
  pre.h \
  IPC_SAP.h \
  Flag_Manip.h \
@@ -10240,8 +10208,7 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
-.obj/TLI.o .obj/TLI.so .shobj/TLI.o .shobj/TLI.so: TLI.cpp \
- TLI.h \
+.obj/TLI.o .obj/TLI.so .shobj/TLI.o .shobj/TLI.so: TLI.cpp TLI.h \
  pre.h \
  IPC_SAP.h \
  Flag_Manip.h \
@@ -10450,8 +10417,7 @@ endif # GHS
  ACE.i \
  INET_Addr.i
 
-.obj/TTY_IO.o .obj/TTY_IO.so .shobj/TTY_IO.o .shobj/TTY_IO.so: TTY_IO.cpp \
- TTY_IO.h \
+.obj/TTY_IO.o .obj/TTY_IO.so .shobj/TTY_IO.o .shobj/TTY_IO.so: TTY_IO.cpp TTY_IO.h \
  OS.h \
  pre.h \
  config-all.h \
@@ -11436,8 +11402,7 @@ endif # GHS
  MEM_Addr.i \
  MEM_Connector.i
 
-.obj/MEM_IO.o .obj/MEM_IO.so .shobj/MEM_IO.o .shobj/MEM_IO.so: MEM_IO.cpp \
- MEM_IO.h \
+.obj/MEM_IO.o .obj/MEM_IO.so .shobj/MEM_IO.o .shobj/MEM_IO.so: MEM_IO.cpp MEM_IO.h \
  pre.h \
  SOCK.h \
  ACE.h \
@@ -11560,8 +11525,7 @@ endif # GHS
  Handle_Set.h \
  Handle_Set.i
 
-.obj/MEM_SAP.o .obj/MEM_SAP.so .shobj/MEM_SAP.o .shobj/MEM_SAP.so: MEM_SAP.cpp \
- MEM_SAP.h \
+.obj/MEM_SAP.o .obj/MEM_SAP.so .shobj/MEM_SAP.o .shobj/MEM_SAP.so: MEM_SAP.cpp MEM_SAP.h \
  pre.h \
  PI_Malloc.h \
  ACE.h \
@@ -11790,8 +11754,7 @@ endif # GHS
  MEM_IO.i \
  MEM_Stream.i
 
-.obj/DLL.o .obj/DLL.so .shobj/DLL.o .shobj/DLL.so: DLL.cpp \
- DLL.h \
+.obj/DLL.o .obj/DLL.so .shobj/DLL.o .shobj/DLL.so: DLL.cpp DLL.h \
  pre.h \
  OS.h \
  config-all.h \
@@ -13612,8 +13575,7 @@ endif # GHS
  Strategies.i \
  Message_Queue.i
 
-.obj/Task.o .obj/Task.so .shobj/Task.o .shobj/Task.so: Task.cpp \
- Task.h \
+.obj/Task.o .obj/Task.so .shobj/Task.o .shobj/Task.so: Task.cpp Task.h \
  pre.h \
  Service_Object.h \
  Shared_Object.h \
@@ -13897,8 +13859,7 @@ endif # GHS
  Managed_Object.i \
  Managed_Object.cpp
 
-.obj/Malloc.o .obj/Malloc.so .shobj/Malloc.o .shobj/Malloc.so: Malloc.cpp \
- Malloc.h \
+.obj/Malloc.o .obj/Malloc.so .shobj/Malloc.o .shobj/Malloc.so: Malloc.cpp Malloc.h \
  pre.h \
  ACE.h \
  OS.h \
@@ -14162,8 +14123,7 @@ endif # GHS
  Atomic_Op.i \
  Synch_T.cpp
 
-.obj/Mem_Map.o .obj/Mem_Map.so .shobj/Mem_Map.o .shobj/Mem_Map.so: Mem_Map.cpp \
- Mem_Map.h \
+.obj/Mem_Map.o .obj/Mem_Map.so .shobj/Mem_Map.o .shobj/Mem_Map.so: Mem_Map.cpp Mem_Map.h \
  pre.h \
  ACE.h \
  OS.h \
@@ -14315,8 +14275,7 @@ endif # GHS
  Managed_Object.i \
  Managed_Object.cpp
 
-.obj/Obstack.o .obj/Obstack.so .shobj/Obstack.o .shobj/Obstack.so: Obstack.cpp \
- Obstack.h \
+.obj/Obstack.o .obj/Obstack.so .shobj/Obstack.o .shobj/Obstack.so: Obstack.cpp Obstack.h \
  pre.h \
  Malloc.h \
  ACE.h \
