@@ -6919,26 +6919,24 @@ Mon Aug 21 16:40:21 2000  Jeff Parsons  <parsons@cs.wustl.edu>
         * tao/RTCORBAC.i:
         * tao/ifrfwd.h:
 
-          In order to ensure that enum values are 32 bits,
-          as required by the CORBA spec, the IDL
-          compiler has been adding an extra value to generated
-          enums with the value 0x7FFFFFF. It turns out that
-          this is a problem when developers use a strict C++
-          compiler, one which requires that all possible case
-          values be handled in a switch statement. If there is
-          a switch statement in application code that uses a
-          generated enum value, developers must add a
-          default case to their switch statement, and TAO's
-          enforcement of the 32-bit requirement for enum
-          values is not transparent. Since TAO no longer
-          supports interpretive marshaling, Carlos points out
-          that we can remove the extra enum member, and
-          enforce 32-bit values in the enum CDR operators.
-          Those changes have been made in the above files.
-          In the extraction operator, since a memcpy has been
-          replaced by a cast, performance should improve
-          slightly. Thanks to Alex Hornby <alex@anvil.co.uk>
-          for reporting this problem.
+          In order to ensure that enum values are 32 bits, as required
+          by the CORBA spec, the IDL compiler has been adding an extra
+          value to generated enums with the value
+          _TAO_ENUM_32BIT_ENFORCER = 0xFFFFFFFF. It turns out that
+          this is a problem when developers use a strict C++ compiler,
+          one which requires that all possible case values be handled
+          in a switch statement. If there is a switch statement in
+          application code that uses a generated enum value,
+          developers must add a default case to their switch
+          statement, and TAO's enforcement of the 32-bit requirement
+          for enum values is not transparent. Since TAO no longer
+          supports interpretive marshaling, Carlos points out that we
+          can remove the extra enum member, and enforce 32-bit values
+          in the enum CDR operators.  Those changes have been made in
+          the above files.  In the extraction operator, since a memcpy
+          has been replaced by a cast, performance should improve
+          slightly. Thanks to Alex Hornby <alex@anvil.co.uk> for
+          reporting this problem.
 
 Mon Aug 21 15:40:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
