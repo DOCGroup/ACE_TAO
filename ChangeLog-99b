@@ -1,3 +1,29 @@
+Tue Apr 27 12:57:06 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* configure.in: 
+
+	  Removed `tests/log/Makefile' from the list of files to
+	  generate (i.e. removed from AC_OUTPUT macro call).
+
+	* tests/Makefile.am: 
+
+	  Corrected a typo.  I neglected to add "_SOURCES" to the end
+	  of the Collection_Test source variable variable.  Also added
+	  more missing tests to the list of test programs.  Commented out
+	  Cache_Manager_Test.  It appears to need a header that doesn't
+	  exist.
+
+	* ace/Makefile.am (pkginclude_HEADERS): 
+
+	  Removed `Timer_Queue.i' from the list of headers.
+
+Tue Apr 27 12:04:29 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* bin/autogen:
+	* bin/bootstrap: 
+
+	  Renamed the `autogen' script to `bootstrap'.
+
 Tue Apr 27 11:54:53 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* configure.in:
