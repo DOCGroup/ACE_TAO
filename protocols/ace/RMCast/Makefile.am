@@ -8,9 +8,12 @@
 ##  Process this file with automake to create Makefile.in
 ##
 
-INCLUDES = -I$(top_builddir) -I$(top_srcdir)
+AM_CPPFLAGS = -I$(top_builddir) -I$(top_srcdir)
 
 lib_LTLIBRARIES = libACE_RMCast.la
+
+## ACE_RMCast library version is same as ACE's version.
+libACE_RMCast_la_LDFLAGS = -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
 
 libACE_RMCast_la_SOURCES = \
   RMCast.cpp \
