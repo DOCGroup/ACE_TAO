@@ -447,6 +447,9 @@ public:
   void dump (void) const;
   // Dump the state of an object.
 
+  int reference_count (void) const;
+  // Get the current reference count.
+
 private:
   ACE_Data_Block *release_i (void);
   // Internal release implementation
