@@ -1,3 +1,12 @@
+Sat May 18 08:19:48 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_Connector.h:
+	* ace/SSL/SSL_Connector.cpp:
+
+	  Temporarily removed these files since there are still some
+	  thread-safefy issues to be addressed in the implementation.
+	  Better to wait until after the forthcoming beta to ship them.
+
 Fri May 17 07:32:49 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Log_Msg.cpp: Replaced ACE_NEW_RETURN_I with ACE_NEW_RETURN.
