@@ -1,3 +1,9 @@
+Sat Jun 26 09:35:11 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Makefile: on LynxOS/ppc only, for POA.cpp only,
+          with optimization only, replaced -O2 with -O to
+          avoid internal compiler error.
+
 Sat Jun 26 08:58:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Sequence_T.{i,cpp}: replaced a bunch of CORBA::ULong
