@@ -107,16 +107,8 @@ be_visitor_operation_interceptors_ss::
 
   *os << " : public TAO_ServerRequestInfo" << be_nl
       << "{" << be_nl
-      << "public:" << be_idt_nl
+      << "public:" << be_idt_nl;
 
-    // Need to declare the stub as a friend so that it can access the
-    // private members of the Request Info class.
-      << "friend class ";
-
-  be_decl *parent =
-    be_scope::narrow_from_scope (node->defined_in ())->decl ();
-
-  *os << "POA_" << parent->full_name () << ";"<<be_nl;
   *os << "TAO_ServerRequestInfo_"<< node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
@@ -236,8 +228,43 @@ be_visitor_operation_interceptors_ss::
       << "const char * id," << be_nl
       << "CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())"
       << be_uidt_nl
-      << "ACE_THROW_SPEC ((CORBA::SystemException));"
+      << "ACE_THROW_SPEC ((CORBA::SystemException));\n"
       << be_uidt_nl;
+
+  // Store the result for later use.
+  // generate the return type.
+  bt = be_type::narrow_from_decl (node->return_type ());
+
+  if (!bt)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interceptors_ch::"
+                         "visit_operation - "
+                         "Bad return type\n"),
+                        -1);
+    }
+
+  // Grab the right visitor to generate the return type if its not
+  // void since we cant have a private member to be of void type.
+  if (!this->void_return_type (bt))
+    {
+      *os << "void result (";
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_CH);
+      visitor = tao_cg->make_visitor (&ctx);
+
+      if (!visitor || (bt->accept (visitor) == -1))
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_cs::"
+                             "visit_operation - "
+                             "codegen for retval pre invoke failed\n"),
+                            -1);
+        }
+
+      *os << " result);\n";
+    }
 
   *os << be_uidt_nl << "private:" << be_idt_nl;
 
@@ -377,42 +404,6 @@ be_visitor_operation_interceptors_ss::
 
   delete visitor;
 
-  // Store the result for later use.
-  // generate the return type.
-  bt = be_type::narrow_from_decl (node->return_type ());
-
-  if (!bt)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interceptors_ch::"
-                         "visit_operation - "
-                         "Bad return type\n"),
-                        -1);
-    }
-
-  // Grab the right visitor to generate the return type if its not
-  // void since we cant have a private member to be of void type.
-  if (!this->void_return_type (bt))
-    {
-      *os << "void result (";
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_CH);
-      visitor = tao_cg->make_visitor (&ctx);
-
-      if (!visitor || (bt->accept (visitor) == -1))
-        {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_cs::"
-                             "visit_operation - "
-                             "codegen for retval pre invoke failed\n"),
-                            -1);
-        }
-
-      *os << " result);" << be_nl
-          << "// update the result " << be_nl;
-    }
-
   // Generate the result data member.
   // Generate the return type.
 
@@ -474,14 +465,6 @@ be_visitor_operation_interceptors_ss::
 
   // Generate the ServerRequestInfo object definition per operation
   // to be used by the interceptors.
-  if (node->is_nested ())
-    {
-      be_decl *parent =
-        be_scope::narrow_from_scope (node->defined_in ())->decl ();
-
-      *os << "POA_" << parent->full_name () << "::";
-    }
-
   *os << "TAO_ServerRequestInfo_" << node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
@@ -617,14 +600,6 @@ be_visitor_operation_interceptors_ss::
   // -----------------------------------------------------------------
   *os << "Dynamic::ParameterList *" << be_nl;
 
-  if (node->is_nested ())
-    {
-      be_decl *parent =
-        be_scope::narrow_from_scope (node->defined_in ())->decl ();
-
-      *os << "POA_" << parent->full_name () << "::";
-    }
-
   *os << "TAO_ServerRequestInfo_"<<node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
@@ -713,14 +688,6 @@ be_visitor_operation_interceptors_ss::
   // -----------------------------------------------------------------
   *os << "Dynamic::ExceptionList *" << be_nl;
 
-  if (node->is_nested ())
-    {
-      be_decl *parent =
-        be_scope::narrow_from_scope (node->defined_in ())->decl ();
-
-      *os << "POA_" << parent->full_name () << "::";
-    }
-
   *os << "TAO_ServerRequestInfo_"<<node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
@@ -801,14 +768,6 @@ be_visitor_operation_interceptors_ss::
   // PortableInterceptor::ServerRequestInfo::result()
   // -----------------------------------------------------------------
   *os << "CORBA::Any * " << be_nl;
-
-  if (node->is_nested ())
-    {
-      be_decl *parent =
-        be_scope::narrow_from_scope (node->defined_in ())->decl ();
-
-      *os << "POA_" << parent->full_name () << "::";
-    }
 
   *os << "TAO_ServerRequestInfo_"<< node->flat_name ();
 
@@ -899,14 +858,6 @@ be_visitor_operation_interceptors_ss::
   // -----------------------------------------------------------------
   *os << "char *" << be_nl;
 
-  if (node->is_nested ())
-    {
-      be_decl *parent =
-        be_scope::narrow_from_scope (node->defined_in ())->decl ();
-
-      *os << "POA_" << parent->full_name () << "::";
-    }
-
   *os << "TAO_ServerRequestInfo_"<< node->flat_name ();
 
     // We need the interface node in which this operation was defined. However,
@@ -952,14 +903,6 @@ be_visitor_operation_interceptors_ss::
   // PortableInterceptor::ServerRequestInfo::target_is_a()
   // -----------------------------------------------------------------
   *os << "CORBA::Boolean" << be_nl;
-
-  if (node->is_nested ())
-    {
-      be_decl *parent =
-        be_scope::narrow_from_scope (node->defined_in ())->decl ();
-
-      *os << "POA_" << parent->full_name () << "::";
-    }
 
   *os << "TAO_ServerRequestInfo_"<< node->flat_name ();
 
@@ -1022,14 +965,6 @@ be_visitor_operation_interceptors_ss::
   if (!this->void_return_type (bt))
     {
       *os << "void " << be_nl;
-
-      if (node->is_nested ())
-        {
-          be_decl *parent =
-            be_scope::narrow_from_scope (node->defined_in ())->decl ();
-
-          *os << "POA_"<< parent->full_name () << "::";
-        }
 
       *os << "TAO_ServerRequestInfo_" << node->flat_name ();
 
