@@ -7,13 +7,13 @@
 // anything.  It's operator/ only returns 32 bits not 64 bits, among
 // other things.
 
-#include "ace/High_Res_Timer.h"
+#include "ace/Timer/High_Res_Timer.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/High_Res_Timer.i"
+#include "ace/Timer/High_Res_Timer.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Stats.h"
+#include "ace/Utils/Stats.h"
 
 ACE_RCSID(ace, High_Res_Timer, "$Id$")
 
@@ -26,8 +26,8 @@ ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
      defined (ACE_HAS_PENTIUM) || defined (ACE_HAS_ALPHA_TIMER)) && \
     !defined (ACE_HAS_HI_RES_TIMER)
 
-# include "ace/Synch.h"
-# include "ace/Object_Manager.h"
+# include "ace/Threads/Synch.h"
+# include "ace/Utils/Object_Manager.h"
 
   // Initialize the global_scale_factor_ to 1.  The first
   // ACE_High_Res_Timer instance construction will override this

@@ -1,10 +1,10 @@
 // $Id$
 
-#include "ace/Stats.h"
-#include "ace/High_Res_Timer.h"
+#include "ace/Utils/Stats.h"
+#include "ace/Timer/High_Res_Timer.h"
 
 #if !defined (__ACE_INLINE__)
-# include "ace/Stats.i"
+# include "ace/Utils/Stats.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Stats, "$Id$")
@@ -521,8 +521,10 @@ ACE_Throughput_Stats::dump_results (const ACE_TCHAR* msg,
 {
   if (this->samples_count () == 0u)
     {
+#ifdef ACE_SUBSET_0
       ACE_DEBUG ((LM_DEBUG,
                   ACE_LIB_TEXT ("%s : no data collected\n"), msg));
+#endif
       return;
     }
 
@@ -594,9 +596,11 @@ ACE_Throughput_Stats::dump_throughput (const ACE_TCHAR *msg,
   seconds /= ACE_HR_SCALE_CONVERSION; 
   double t_avg = samples_count / seconds;
 
+#ifdef ACE_SUBSET_0
   ACE_DEBUG ((LM_DEBUG,
               ACE_LIB_TEXT ("%s throughput: %.2f (events/second)\n"),
               msg, t_avg));
+#endif
 }
 
 // ****************************************************************
