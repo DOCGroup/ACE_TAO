@@ -87,7 +87,7 @@ export_properties (CORBA::ORB_ptr orb,
       TAO_CHECK_ENV;
 
       // Instantiate the property exporter helper class. 
-      TAO_Property_Exporter prop_exporter (lookup_if.ptr (), prop_set);
+      TAO_Property_Exporter prop_exporter (lookup_if, prop_set);
       
       // Add properties to server description.
 

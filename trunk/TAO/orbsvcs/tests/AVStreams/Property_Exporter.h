@@ -38,7 +38,7 @@ class TAO_Property_Exporter
 {
  public:
   
-  TAO_Property_Exporter (CosTrading::Lookup_ptr lookup_if,
+  TAO_Property_Exporter (CosTrading::Lookup_var lookup_if,
 			 CosPropertyService::PropertySet_ptr prop_set,
 			 CORBA::ULong initial_size = 10);
   
@@ -128,7 +128,7 @@ class TAO_Property_Modifier
 {
 public:
 
-  TAO_Property_Modifier (CosTrading::Lookup_ptr lookup_if,
+  TAO_Property_Modifier (CosTrading::Lookup_var lookup_if,
 			 CosPropertyService::PropertySet_ptr prop_set,
 			 CORBA::ULong initial_size = 10);
 
