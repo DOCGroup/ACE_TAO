@@ -111,7 +111,8 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::ForwardRequest *_tao_ele
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ForwardRequest *&_tao_elem)
 {
   CORBA::Environment _tao_env;
-  if (!_tao_any.type ()->equal (PortableServer::_tc_ForwardRequest, _tao_env)) return 0; // not equal
+  CORBA::TypeCode_var type = _tao_any.type ();
+  if (!type->equal (PortableServer::_tc_ForwardRequest, _tao_env)) return 0; // not equal
   if (_tao_any.any_owns_data ())
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::ForwardRequest, 0);
@@ -119,7 +120,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::ForwardR
       if (stream.decode (PortableServer::_tc_ForwardRequest, _tao_elem, 0, _tao_env)
           == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          ((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), _tao_elem, 1, _tao_env);
+          ((CORBA::Any *)&_tao_any)->replace (PortableServer::_tc_ForwardRequest, _tao_elem, 1, _tao_env);
           return 1;
         }
       else
@@ -929,7 +930,8 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POAManager::AdapterInact
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POAManager::AdapterInactive *&_tao_elem)
 {
   CORBA::Environment _tao_env;
-  if (!_tao_any.type ()->equal (PortableServer::POAManager::_tc_AdapterInactive, _tao_env)) return 0; // not equal
+  CORBA::TypeCode_var type = _tao_any.type ();
+  if (!type->equal (PortableServer::POAManager::_tc_AdapterInactive, _tao_env)) return 0; // not equal
   if (_tao_any.any_owns_data ())
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POAManager::AdapterInactive, 0);
@@ -937,7 +939,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POAManag
       if (stream.decode (PortableServer::POAManager::_tc_AdapterInactive, _tao_elem, 0, _tao_env)
           == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          ((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), _tao_elem, 1, _tao_env);
+          ((CORBA::Any *)&_tao_any)->replace (PortableServer::POAManager::_tc_AdapterInactive, _tao_elem, 1, _tao_env);
           return 1;
         }
       else
@@ -1284,7 +1286,8 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::AdapterAlreadyExist
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::AdapterAlreadyExists *&_tao_elem)
 {
   CORBA::Environment _tao_env;
-  if (!_tao_any.type ()->equal (PortableServer::POA::_tc_AdapterAlreadyExists, _tao_env)) return 0; // not equal
+  CORBA::TypeCode_var type = _tao_any.type ();
+  if (!type->equal (PortableServer::POA::_tc_AdapterAlreadyExists, _tao_env)) return 0; // not equal
   if (_tao_any.any_owns_data ())
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POA::AdapterAlreadyExists, 0);
@@ -1292,7 +1295,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Ada
       if (stream.decode (PortableServer::POA::_tc_AdapterAlreadyExists, _tao_elem, 0, _tao_env)
           == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          ((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), _tao_elem, 1, _tao_env);
+          ((CORBA::Any *)&_tao_any)->replace (PortableServer::POA::_tc_AdapterAlreadyExists, _tao_elem, 1, _tao_env);
           return 1;
         }
       else
@@ -1371,7 +1374,8 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::AdapterInactive *_t
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::AdapterInactive *&_tao_elem)
 {
   CORBA::Environment _tao_env;
-  if (!_tao_any.type ()->equal (PortableServer::POA::_tc_AdapterInactive, _tao_env)) return 0; // not equal
+  CORBA::TypeCode_var type = _tao_any.type ();
+  if (!type->equal (PortableServer::POA::_tc_AdapterInactive, _tao_env)) return 0; // not equal
   if (_tao_any.any_owns_data ())
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POA::AdapterInactive, 0);
@@ -1379,7 +1383,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Ada
       if (stream.decode (PortableServer::POA::_tc_AdapterInactive, _tao_elem, 0, _tao_env)
           == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          ((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), _tao_elem, 1, _tao_env);
+          ((CORBA::Any *)&_tao_any)->replace (PortableServer::POA::_tc_AdapterInactive, _tao_elem, 1, _tao_env);
           return 1;
         }
       else
@@ -1458,7 +1462,8 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::AdapterNonExistent 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::AdapterNonExistent *&_tao_elem)
 {
   CORBA::Environment _tao_env;
-  if (!_tao_any.type ()->equal (PortableServer::POA::_tc_AdapterNonExistent, _tao_env)) return 0; // not equal
+  CORBA::TypeCode_var type = _tao_any.type ();
+  if (!type->equal (PortableServer::POA::_tc_AdapterNonExistent, _tao_env)) return 0; // not equal
   if (_tao_any.any_owns_data ())
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POA::AdapterNonExistent, 0);
@@ -1466,7 +1471,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Ada
       if (stream.decode (PortableServer::POA::_tc_AdapterNonExistent, _tao_elem, 0, _tao_env)
           == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          ((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), _tao_elem, 1, _tao_env);
+          ((CORBA::Any *)&_tao_any)->replace (PortableServer::POA::_tc_AdapterNonExistent, _tao_elem, 1, _tao_env);
           return 1;
         }
       else
@@ -1555,7 +1560,8 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::InvalidPolicy *_tao
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::InvalidPolicy *&_tao_elem)
 {
   CORBA::Environment _tao_env;
-  if (!_tao_any.type ()->equal (PortableServer::POA::_tc_InvalidPolicy, _tao_env)) return 0; // not equal
+  CORBA::TypeCode_var type = _tao_any.type ();
+  if (!type->equal (PortableServer::POA::_tc_InvalidPolicy, _tao_env)) return 0; // not equal
   if (_tao_any.any_owns_data ())
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POA::InvalidPolicy, 0);
@@ -1563,7 +1569,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Inv
       if (stream.decode (PortableServer::POA::_tc_InvalidPolicy, _tao_elem, 0, _tao_env)
           == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          ((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), _tao_elem, 1, _tao_env);
+          ((CORBA::Any *)&_tao_any)->replace (PortableServer::POA::_tc_InvalidPolicy, _tao_elem, 1, _tao_env);
           return 1;
         }
       else
@@ -1645,7 +1651,8 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::NoServant *_tao_ele
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::NoServant *&_tao_elem)
 {
   CORBA::Environment _tao_env;
-  if (!_tao_any.type ()->equal (PortableServer::POA::_tc_NoServant, _tao_env)) return 0; // not equal
+  CORBA::TypeCode_var type = _tao_any.type ();
+  if (!type->equal (PortableServer::POA::_tc_NoServant, _tao_env)) return 0; // not equal
   if (_tao_any.any_owns_data ())
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POA::NoServant, 0);
@@ -1653,7 +1660,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::NoS
       if (stream.decode (PortableServer::POA::_tc_NoServant, _tao_elem, 0, _tao_env)
           == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          ((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), _tao_elem, 1, _tao_env);
+          ((CORBA::Any *)&_tao_any)->replace (PortableServer::POA::_tc_NoServant, _tao_elem, 1, _tao_env);
           return 1;
         }
       else
@@ -1733,7 +1740,8 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::ObjectAlreadyActive
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::ObjectAlreadyActive *&_tao_elem)
 {
   CORBA::Environment _tao_env;
-  if (!_tao_any.type ()->equal (PortableServer::POA::_tc_ObjectAlreadyActive, _tao_env)) return 0; // not equal
+  CORBA::TypeCode_var type = _tao_any.type ();
+  if (!type->equal (PortableServer::POA::_tc_ObjectAlreadyActive, _tao_env)) return 0; // not equal
   if (_tao_any.any_owns_data ())
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POA::ObjectAlreadyActive, 0);
@@ -1741,7 +1749,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Obj
       if (stream.decode (PortableServer::POA::_tc_ObjectAlreadyActive, _tao_elem, 0, _tao_env)
           == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          ((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), _tao_elem, 1, _tao_env);
+          ((CORBA::Any *)&_tao_any)->replace (PortableServer::POA::_tc_ObjectAlreadyActive, _tao_elem, 1, _tao_env);
           return 1;
         }
       else
@@ -1821,7 +1829,8 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::ObjectNotActive *_t
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::ObjectNotActive *&_tao_elem)
 {
   CORBA::Environment _tao_env;
-  if (!_tao_any.type ()->equal (PortableServer::POA::_tc_ObjectNotActive, _tao_env)) return 0; // not equal
+  CORBA::TypeCode_var type = _tao_any.type ();
+  if (!type->equal (PortableServer::POA::_tc_ObjectNotActive, _tao_env)) return 0; // not equal
   if (_tao_any.any_owns_data ())
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POA::ObjectNotActive, 0);
@@ -1829,7 +1838,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Obj
       if (stream.decode (PortableServer::POA::_tc_ObjectNotActive, _tao_elem, 0, _tao_env)
           == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          ((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), _tao_elem, 1, _tao_env);
+          ((CORBA::Any *)&_tao_any)->replace (PortableServer::POA::_tc_ObjectNotActive, _tao_elem, 1, _tao_env);
           return 1;
         }
       else
@@ -1909,7 +1918,8 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::ServantAlreadyActiv
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::ServantAlreadyActive *&_tao_elem)
 {
   CORBA::Environment _tao_env;
-  if (!_tao_any.type ()->equal (PortableServer::POA::_tc_ServantAlreadyActive, _tao_env)) return 0; // not equal
+  CORBA::TypeCode_var type = _tao_any.type ();
+  if (!type->equal (PortableServer::POA::_tc_ServantAlreadyActive, _tao_env)) return 0; // not equal
   if (_tao_any.any_owns_data ())
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POA::ServantAlreadyActive, 0);
@@ -1917,7 +1927,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Ser
       if (stream.decode (PortableServer::POA::_tc_ServantAlreadyActive, _tao_elem, 0, _tao_env)
           == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          ((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), _tao_elem, 1, _tao_env);
+          ((CORBA::Any *)&_tao_any)->replace (PortableServer::POA::_tc_ServantAlreadyActive, _tao_elem, 1, _tao_env);
           return 1;
         }
       else
@@ -1997,7 +2007,8 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::ServantNotActive *_
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::ServantNotActive *&_tao_elem)
 {
   CORBA::Environment _tao_env;
-  if (!_tao_any.type ()->equal (PortableServer::POA::_tc_ServantNotActive, _tao_env)) return 0; // not equal
+  CORBA::TypeCode_var type = _tao_any.type ();
+  if (!type->equal (PortableServer::POA::_tc_ServantNotActive, _tao_env)) return 0; // not equal
   if (_tao_any.any_owns_data ())
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POA::ServantNotActive, 0);
@@ -2005,7 +2016,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Ser
       if (stream.decode (PortableServer::POA::_tc_ServantNotActive, _tao_elem, 0, _tao_env)
           == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          ((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), _tao_elem, 1, _tao_env);
+          ((CORBA::Any *)&_tao_any)->replace (PortableServer::POA::_tc_ServantNotActive, _tao_elem, 1, _tao_env);
           return 1;
         }
       else
@@ -2085,7 +2096,8 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::WrongAdapter *_tao_
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::WrongAdapter *&_tao_elem)
 {
   CORBA::Environment _tao_env;
-  if (!_tao_any.type ()->equal (PortableServer::POA::_tc_WrongAdapter, _tao_env)) return 0; // not equal
+  CORBA::TypeCode_var type = _tao_any.type ();
+  if (!type->equal (PortableServer::POA::_tc_WrongAdapter, _tao_env)) return 0; // not equal
   if (_tao_any.any_owns_data ())
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POA::WrongAdapter, 0);
@@ -2093,7 +2105,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Wro
       if (stream.decode (PortableServer::POA::_tc_WrongAdapter, _tao_elem, 0, _tao_env)
           == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          ((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), _tao_elem, 1, _tao_env);
+          ((CORBA::Any *)&_tao_any)->replace (PortableServer::POA::_tc_WrongAdapter, _tao_elem, 1, _tao_env);
           return 1;
         }
       else
@@ -2173,7 +2185,8 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::POA::WrongPolicy *_tao_e
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::WrongPolicy *&_tao_elem)
 {
   CORBA::Environment _tao_env;
-  if (!_tao_any.type ()->equal (PortableServer::POA::_tc_WrongPolicy, _tao_env)) return 0; // not equal
+  CORBA::TypeCode_var type = _tao_any.type ();
+  if (!type->equal (PortableServer::POA::_tc_WrongPolicy, _tao_env)) return 0; // not equal
   if (_tao_any.any_owns_data ())
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::POA::WrongPolicy, 0);
@@ -2181,7 +2194,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::POA::Wro
       if (stream.decode (PortableServer::POA::_tc_WrongPolicy, _tao_elem, 0, _tao_env)
           == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          ((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), _tao_elem, 1, _tao_env);
+          ((CORBA::Any *)&_tao_any)->replace (PortableServer::POA::_tc_WrongPolicy, _tao_elem, 1, _tao_env);
           return 1;
         }
       else
@@ -2315,7 +2328,8 @@ void operator<<= (CORBA::Any &_tao_any, PortableServer::Current::NoContext *_tao
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::Current::NoContext *&_tao_elem)
 {
   CORBA::Environment _tao_env;
-  if (!_tao_any.type ()->equal (PortableServer::Current::_tc_NoContext, _tao_env)) return 0; // not equal
+  CORBA::TypeCode_var type = _tao_any.type ();
+  if (!type->equal (PortableServer::Current::_tc_NoContext, _tao_env)) return 0; // not equal
   if (_tao_any.any_owns_data ())
     {
       ACE_NEW_RETURN (_tao_elem, PortableServer::Current::NoContext, 0);
@@ -2323,7 +2337,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::Current:
       if (stream.decode (PortableServer::Current::_tc_NoContext, _tao_elem, 0, _tao_env)
           == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          ((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), _tao_elem, 1, _tao_env);
+          ((CORBA::Any *)&_tao_any)->replace (PortableServer::Current::_tc_NoContext, _tao_elem, 1, _tao_env);
           return 1;
         }
       else

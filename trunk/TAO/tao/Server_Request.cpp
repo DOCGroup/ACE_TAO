@@ -194,7 +194,7 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
       // This is exactly what the TAO IDL compiler generated skeletons do.
 
       CORBA::Any_ptr any = nv->value ();
-      CORBA::TypeCode_ptr tc = CORBA::TypeCode::_duplicate (any->type ());
+      CORBA::TypeCode_var tc = any->type ();
 
       void *value;
       if (!any->value ())
@@ -204,27 +204,16 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
           if (env.exception () != 0)
             return;
 
-          any->replace (tc, value, CORBA::B_TRUE, env);
+          any->replace (tc.in (), value, CORBA::B_TRUE, env);
           if (env.exception () != 0)
             return;
 
-          // Decrement the refcount of "tc".
-          //
-          // The earlier TypeCode::_duplicate is needed since
-	  // Any::replace () releases the typecode inside the Any.
-	  // Without the dup, the reference count can go to zero, and
-	  // the typecode would then be deleted.
-          //
-          // This _release that the reference count is correct so the
-	  // typecode can be deleted some other time.
-
-          CORBA::release (tc);
         }
       else
         value = (void *)any->value (); // memory was already preallocated
 
       // Then just unmarshal the value.
-      (void) incoming_->decode (tc, value, 0, env);
+      (void) incoming_->decode (tc.in (), value, 0, env);
       if (env.exception () != 0)
         {
           const char* param_name = nv->name ();
@@ -267,7 +256,10 @@ IIOP_ServerRequest::set_result (const CORBA::Any &value,
   else
     {
       this->retval_ = new CORBA::Any;
-      this->retval_->replace (value.type (), value.value (), 1, env);
+      // @@ TODO Does this work in all the cases? Shouldn't we use
+      // operator= or something similar?
+      CORBA::TypeCode_var type = value.type ();
+      this->retval_->replace (type, value.value (), 1, env);
     }
 }
 
@@ -295,7 +287,10 @@ IIOP_ServerRequest::set_exception (const CORBA::Any &value,
     else
      {
        this->exception_ = new CORBA::Any;
-       this->exception_->replace (value.type (), value.value (), 1, env);
+       // @@ TODO Does this work in all the cases? Shouldn't we use
+       // operator= or something similar?
+       CORBA::TypeCode_var type = value.type ();
+       this->exception_->replace (type, value.value (), 1, env);
 
        // @@ This cast is not safe, but we haven't implemented the >>=
        // and <<= operators for base exceptions (yet).
@@ -490,9 +485,6 @@ IIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
   // the language mapped one should be used for system exceptions.
 
 
-  CORBA::TypeCode_ptr tc;
-  const void *value;
-
   // only if there wasn't any exception, we proceed
   if (this->exception_type_ == TAO_GIOP_NO_EXCEPTION &&
       CORBA::is_nil (this->forward_location_.in ()))
@@ -500,15 +492,17 @@ IIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
       // ... then send any return value ...
       if (this->retval_)
         {
-          tc = this->retval_->type ();
-          value = this->retval_->value ();
-          if (this->retval_->any_owns_data ())
+          CORBA::TypeCode_var tc = this->retval_->type ();
+	  void* value = ACE_const_cast(void*,this->retval_->value ());
+	  if (this->retval_->any_owns_data ())
             {
               TAO_InputCDR cdr ((ACE_Message_Block *)value);
-              (void) this->outgoing_->append (tc, &cdr, env);
+              (void) this->outgoing_->append (tc.in (), &cdr, env);
             }
           else
-            (void) this->outgoing_->encode (tc, value, 0, env);
+	    {
+	      (void) this->outgoing_->encode (tc.in (), value, 0, env);
+	    }
         }
 
       // ... Followed by "inout" and "out" parameters, left to right
@@ -519,21 +513,19 @@ IIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
                i++)
             {
               CORBA::NamedValue_ptr nv = this->params_->item (i, env);
-              CORBA::Any_ptr any;
-
               if (!(nv->flags () & (CORBA::ARG_INOUT|CORBA::ARG_OUT)))
                 continue;
 
-              any = nv->value ();
-              tc = any->type ();
-              value = any->value ();
+              CORBA::Any_ptr any = nv->value ();
+              CORBA::TypeCode_var tc = any->type ();
+              void* value = ACE_const_cast(void*,any->value ());
               if (any->any_owns_data ())
                 {
                   TAO_InputCDR cdr ((ACE_Message_Block *)value);
-                  (void) this->outgoing_->append (tc, &cdr, env);
+                  (void) this->outgoing_->append (tc.in (), &cdr, env);
                 }
               else
-                (void) this->outgoing_->encode (tc, value, 0, env);
+                (void) this->outgoing_->encode (tc.in (), value, 0, env);
             }
         }
     }

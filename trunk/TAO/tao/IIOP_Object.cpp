@@ -718,8 +718,7 @@ IIOP_Object::do_dynamic_call (const char *opname,
 
                   if (!(flags & CORBA::OUT_LIST_MEMORY))
                     {
-                      CORBA::TypeCode_ptr tcp =
-			CORBA::TypeCode::_duplicate (result->value ()->type ());
+                      CORBA::TypeCode_var tcp = result->value ()->type ();
                       size_t size = tcp->size (env);
                       dexc (env, "do_dynamic_call, get result size");
 
@@ -727,7 +726,7 @@ IIOP_Object::do_dynamic_call (const char *opname,
                         {
                           void *ptr = new CORBA::Octet [size];
 
-                          result->value ()->replace (tcp, ptr,
+                          result->value ()->replace (tcp.in (), ptr,
                                                      CORBA::B_TRUE, env);
                           dexc (env, "do_dynamic_call, set result mem");
                         }
@@ -747,14 +746,14 @@ IIOP_Object::do_dynamic_call (const char *opname,
 
                       begin = call.inp_stream ().rd_ptr ();
                       // skip the parameter to get the ending position
-                      retval = temp.skip (any->type (), env);
+                      retval = temp.skip (any->type_, env);
                       if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                         {
                           end = temp.rd_ptr ();
                           any->cdr_ = new ACE_Message_Block (end - begin);
                           TAO_OutputCDR out (any->cdr_);
 
-                          retval = out.append (any->type (),
+                          retval = out.append (any->type_,
                                                &call.inp_stream (), env);
                           if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                             {
@@ -767,8 +766,8 @@ IIOP_Object::do_dynamic_call (const char *opname,
                     {
                       // the application had allocated the top level
                       // storage. We simply retrieve the data
-                      call.get_value (result->value ()->type (),
-                                      (void *) result->value ()->value_, env);
+                      call.get_value (result->value ()->type_,
+                                      result->value ()->value_, env);
                     }
                 }
 
@@ -787,8 +786,7 @@ IIOP_Object::do_dynamic_call (const char *opname,
                       // memory for this parameter ...
                       if (!(flags & CORBA::OUT_LIST_MEMORY))
                         {
-                          CORBA::TypeCode_ptr tcp =
-			    CORBA::TypeCode::_duplicate (value->value ()->type ());
+                          CORBA::TypeCode_var tcp = value->value ()->type ();
                           size_t size = tcp->size (env);
                           dexc (env, "do_dynamic_call, get param size");
 
@@ -796,7 +794,7 @@ IIOP_Object::do_dynamic_call (const char *opname,
                             {
                               CORBA::Octet *ptr = new CORBA::Octet [size];
 
-                              value->value ()->replace (tcp, ptr,
+                              value->value ()->replace (tcp.in (), ptr,
                                                         CORBA::B_TRUE, env);
                               dexc (env, "do_dynamic_call, set result mem");
                             }
@@ -815,14 +813,14 @@ IIOP_Object::do_dynamic_call (const char *opname,
 
                           begin = call.inp_stream ().rd_ptr ();
                           // skip the parameter to get the ending position
-                          retval = temp.skip (any->type (), env);
+                          retval = temp.skip (any->type_, env);
                           if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                             {
                               end = temp.rd_ptr ();
                               any->cdr_ = new ACE_Message_Block (end - begin);
                               TAO_OutputCDR out (any->cdr_);
 
-                              retval = out.append (any->type (),
+                              retval = out.append (any->type_,
                                                    &call.inp_stream (), env);
                               if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                                 {
@@ -835,7 +833,7 @@ IIOP_Object::do_dynamic_call (const char *opname,
                         {
                           // the application had allocated the top level
                           // storage. We simply retrieve the data
-                          call.get_value (any->type (),
+                          call.get_value (any->type_,
                                           (void *) any->value_, env);
                         }
                       if (env.exception ())
@@ -888,12 +886,12 @@ IIOP_Object::put_params (TAO_GIOP_Invocation &call,
             {
               TAO_OutputCDR &cdr = call.out_stream ();
               TAO_InputCDR in (value->value ()->cdr_);
-              cdr.append (value->value ()->type (), &in, env);
+              cdr.append (value->value ()->type_, &in, env);
             }
           else
             {
-              call.put_param (value->value ()->type (),
-                              (void *) value->value ()->value_, env);
+              call.put_param (value->value ()->type_,
+                              value->value ()->value_, env);
             }
           if (env.exception ())
             {

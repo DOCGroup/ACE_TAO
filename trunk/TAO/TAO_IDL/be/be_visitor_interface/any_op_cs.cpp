@@ -62,7 +62,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << "::_duplicate (_tao_elem);" << be_nl
       << "_tao_any.replace (" << node->tc_name () << ", "
       << "_tao_obj_ptr, 1, _tao_env);" << be_uidt_nl
-      << "}" << be_nl;
+      << "}\n" << be_nl;
 
   *os << "void operator<<= (CORBA::Any &_tao_any, "
       << node->name () << "_ptr *_tao_elem) // non copying" << be_nl
@@ -70,14 +70,15 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << "CORBA::Environment _tao_env;" << be_nl
       << "_tao_any.replace (" << node->tc_name () << ", "
       << "_tao_elem, 1, _tao_env); // consume it" << be_uidt_nl
-      << "}" << be_nl;
+      << "}\n" << be_nl;
 
   *os << "CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, "
       << node->name () << "_ptr &_tao_elem)" << be_nl
       << "{" << be_idt_nl
       << "CORBA::Environment _tao_env;" << be_nl
       << "_tao_elem = " << node->name () << "::_nil ();" << be_nl
-      << "if (!_tao_any.type ()->equal (" << node->tc_name ()
+      << "CORBA::TypeCode_var type = _tao_any.type ();" << be_nl
+      << "if (!type->equal (" << node->tc_name ()
       << ", _tao_env)) return 0; // not equal" << be_nl
       << "TAO_InputCDR stream ((ACE_Message_Block *)_tao_any.value ());"
       << be_nl
@@ -92,9 +93,8 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << "if (_tao_env.exception ()) return 0; // narrow failed" << be_nl
       << "CORBA::release (*_tao_obj_ptr);" << be_nl
       << "*_tao_obj_ptr = _tao_elem;" << be_nl
-      << "((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), "
-      << "_tao_obj_ptr, 1, _tao_env);"
-      << be_nl
+      << "((CORBA::Any *)&_tao_any)->replace ("
+      << node->tc_name () << ", _tao_obj_ptr, 1, _tao_env);" << be_nl
       << "if (_tao_env.exception ()) return 0; // narrow failed" << be_nl
       << "return 1;" << be_uidt_nl
       << "}" << be_nl

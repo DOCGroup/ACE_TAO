@@ -440,7 +440,8 @@ TAO_Marshal_Union::deep_copy (CORBA::TypeCode_ptr tc,
 			      CORBA::Boolean discrim_matched = CORBA::B_FALSE;
 
 			      // do the matching
-			      switch (member_label->type ()->kind (env))
+			      CORBA::TypeCode_var type = member_label->type ();
+			      switch (type->kind (env))
 				{
 				case CORBA::tk_short:
 				case CORBA::tk_ushort:

@@ -87,7 +87,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_Current_ptr &_tao_
 {
   CORBA::Environment _tao_env;
   _tao_elem = CORBA_Current::_nil ();
-  if (!_tao_any.type ()->equal (CORBA::_tc_Current, _tao_env)) return 0; // not equal
+  CORBA::TypeCode_var type = _tao_any.type ();
+  if (!type->equal (CORBA::_tc_Current, _tao_env)) return 0; // not equal
   TAO_InputCDR stream ((ACE_Message_Block *)_tao_any.value ());
   CORBA::Object_ptr *_tao_obj_ptr;
   ACE_NEW_RETURN (_tao_obj_ptr, CORBA::Object_ptr, 0);
@@ -98,7 +99,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_Current_ptr &_tao_
     if (_tao_env.exception ()) return 0; // narrow failed
     CORBA::release (*_tao_obj_ptr);
     *_tao_obj_ptr = _tao_elem;
-    ((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), _tao_obj_ptr, 1, _tao_env);
+    ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_Current, _tao_obj_ptr, 1, _tao_env);
     if (_tao_env.exception ()) return 0; // narrow failed
     return 1;
   }
