@@ -1,3 +1,10 @@
+Wed Mar 03 19:08:52 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Map_T.h (ACE_Map): Further degraded my code to make it
+	  compile with lame compilers ;-) This time it was the lame pSOS
+	  diab compiler that could not recongnize a typedef in the base
+	  template class.
+
 Wed Mar 03 11:31:00 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: added guideline to try to limit
