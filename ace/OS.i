@@ -3909,7 +3909,7 @@ ACE_OS::rw_tryrdlock (ACE_rwlock_t *rw)
 {
   ACE_TRACE ("ACE_OS::rw_tryrdlock");
 #if defined (ACE_HAS_THREADS)
-# if !defined (ACE_LACKS_RWLOCK_T)
+# if !defined (ACE_LACKS_RWLOCK_T) || defined (ACE_HAS_PTHREADS_UNIX98_EXT)
 #  if defined (ACE_HAS_PTHREADS_UNIX98_EXT)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_rwlock_tryrdlock (rw),
                                        ace_result_),
@@ -3950,7 +3950,7 @@ ACE_OS::rw_trywrlock (ACE_rwlock_t *rw)
 {
   ACE_TRACE ("ACE_OS::rw_trywrlock");
 #if defined (ACE_HAS_THREADS)
-# if !defined (ACE_LACKS_RWLOCK_T)
+# if !defined (ACE_LACKS_RWLOCK_T) || defined (ACE_HAS_PTHREADS_UNIX98_EXT)
 #  if defined (ACE_HAS_PTHREADS_UNIX98_EXT)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_rwlock_trywrlock (rw),
                                        ace_result_),
@@ -3991,7 +3991,7 @@ ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
 {
   ACE_TRACE ("ACE_OS::rw_rdlock");
 #if defined (ACE_HAS_THREADS)
-# if !defined (ACE_LACKS_RWLOCK_T)
+# if !defined (ACE_LACKS_RWLOCK_T) || defined (ACE_HAS_PTHREADS_UNIX98_EXT)
 #  if defined (ACE_HAS_PTHREADS_UNIX98_EXT)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_rwlock_rdlock (rw),
                                        ace_result_),
@@ -4040,7 +4040,7 @@ ACE_OS::rw_wrlock (ACE_rwlock_t *rw)
 {
   ACE_TRACE ("ACE_OS::rw_wrlock");
 #if defined (ACE_HAS_THREADS)
-# if !defined (ACE_LACKS_RWLOCK_T)
+# if !defined (ACE_LACKS_RWLOCK_T) || defined (ACE_HAS_PTHREADS_UNIX98_EXT)
 #  if defined (ACE_HAS_PTHREADS_UNIX98_EXT)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_rwlock_wrlock (rw),
                                        ace_result_),
@@ -4091,7 +4091,7 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
 {
   ACE_TRACE ("ACE_OS::rw_unlock");
 #if defined (ACE_HAS_THREADS)
-# if !defined (ACE_LACKS_RWLOCK_T)
+# if !defined (ACE_LACKS_RWLOCK_T) || defined (ACE_HAS_PTHREADS_UNIX98_EXT)
 #  if defined (ACE_HAS_PTHREADS_UNIX98_EXT)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_rwlock_unlock (rw),
                                        ace_result_),
@@ -4215,7 +4215,8 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
 #endif /* ACE_HAS_THREADS */
 }
 
-#if defined (ACE_HAS_THREADS) && !defined (ACE_LACKS_RWLOCK_T)
+#if defined (ACE_HAS_THREADS) && (!defined (ACE_LACKS_RWLOCK_T) || \
+                                   defined (ACE_HAS_PTHREADS_UNIX98_EXT))
 ACE_INLINE int
 ACE_OS::rwlock_init (ACE_rwlock_t *rw,
                      int type,
@@ -4251,7 +4252,7 @@ ACE_OS::rwlock_destroy (ACE_rwlock_t *rw)
 {
   ACE_TRACE ("ACE_OS::rwlock_destroy");
 #if defined (ACE_HAS_THREADS)
-# if !defined (ACE_LACKS_RWLOCK_T)
+# if !defined (ACE_LACKS_RWLOCK_T) || defined (ACE_HAS_PTHREADS_UNIX98_EXT)
 #  if defined (ACE_HAS_PTHREADS_UNIX98_EXT)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_rwlock_destroy (rw),
                                        ace_result_),

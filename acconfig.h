@@ -648,6 +648,10 @@
 /* Platform supports POSIX.1c-1995 threads */
 #undef ACE_HAS_PTHREADS_STD
 
+/* Platform has the UNIX98 extensions to Pthreads (suspend, continue,
+   rwlocks) */
+#undef ACE_HAS_PTHREADS_UNIX98_EXT
+
 /* Platform has pthread_condattr_setkind_np(). */
 #undef ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP
 
