@@ -1,3 +1,15 @@
+Fri Feb 25 10:45:48 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/include/idl_global.h:
+	* TAO_IDL/util/utl_global.h:
+	* TAO_IDL/driver.drv_args.cpp:
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_visitor_exception/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_exception/cdr_op_ci.cpp:
+	  Added command line option -So to suppress the
+	  generation of ostream operators for exceptions.
+	  Suggested by Greg Holtmeyer <Greg.Holtmeyer@MW.Boeing.com>.
+
 Fri Feb 25 09:44:28 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* performance-tests/Latency/dii_client.cpp:
