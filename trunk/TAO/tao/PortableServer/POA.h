@@ -230,8 +230,8 @@ public:
   PortableInterceptor::ObjectReferenceTemplate * get_adapter_template ();
 
   void set_adapter_template (PortableInterceptor::ObjectReferenceTemplate *
-                             object_ref_template,
-                             CORBA::Environment &ACE_TRY_ENV);
+                             object_ref_template
+                             TAO_ENV_ARG_DECL);
   /// @}
 
   /// {@ Accessor methods to PortableInterceptor::ObjectReferenceFactory
@@ -243,7 +243,7 @@ public:
   /// @}
 
   /// Call the establish components.
-  void tao_establish_components (TAO_ENV_SINGLE_ARG_PARAMETER);
+  void tao_establish_components (TAO_ENV_SINGLE_ARG_DECL);
   
   /// Give each registered IOR interceptor the opportunity to add
   /// tagged components to profiles of each created servant.
@@ -730,6 +730,9 @@ protected:
                      PortableServer::POA::WrongPolicy));
 
   TAO_Active_Object_Map &active_object_map (void) const;
+
+  void components_established_i (PortableInterceptor::IORInfo *info
+                                 TAO_ENV_ARG_DECL);
 
   int delete_child (const String &child);
 

@@ -61,7 +61,7 @@ TAO_IORInfo::add_ior_component (const IOP::TaggedComponent &component
 {
   // Add the given tagged component to all profiles.
   this->poa_->save_ior_component (component
-                                  TAO_ENV_ARG_DECL);
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -77,7 +77,7 @@ TAO_IORInfo::add_ior_component_to_profile (
 
   this->poa_->save_ior_component_and_profile_id (component,
                                                  profile_id
-                                                 TAO_ENV_ARG_DECL);
+                                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -87,7 +87,7 @@ TAO_IORInfo::manager_id ( TAO_ENV_SINGLE_ARG_DECL)
 {
   /// This method is used to provide a handle to the manager of the
   /// adapter.
-  return this->poa_->get_manager_id (TAO_ENV_SINGLE_ARG_DECL);
+  return this->poa_->get_manager_id (TAO_ENV_SINGLE_ARG_PARAMETER);
 
   ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
                                           CORBA::COMPLETED_NO),
@@ -98,7 +98,7 @@ PortableInterceptor::AdapterState
 TAO_IORInfo::state (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->poa_->get_adapter_state (TAO_ENV_SINGLE_ARG_DECL);
+  return this->poa_->get_adapter_state (TAO_ENV_SINGLE_ARG_PARAMETER);
 
   ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
                                           CORBA::COMPLETED_NO),
@@ -147,7 +147,7 @@ current_factory (PortableInterceptor::ObjectReferenceFactory * current_factory
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->poa_->set_obj_ref_factory (current_factory
-                                   TAO_ENV_ARG_DECL);
+                                   TAO_ENV_ARG_PARAMETER);
 
   return;
 
