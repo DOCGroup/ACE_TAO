@@ -5,14 +5,14 @@
 
 // Constructor.
 CC_Client::CC_Client (void)
-  : cc_factory_key_ (0),
-    shutdown_ (0),
-    cc_factory_ior_file_ (0),
-    f_handle_ (ACE_INVALID_HANDLE),
-    use_naming_service_ (1),
-    run_basic_tests_ (0),
-    run_extended_tests_ (0),
-    naming_service_ (0)
+  : naming_service_ (0),
+  cc_factory_ior_file_ (0),
+  cc_factory_key_ (0),
+  f_handle_ (ACE_INVALID_HANDLE),
+  shutdown_ (0),
+  use_naming_service_ (1),
+  run_basic_tests_ (0),
+  run_extended_tests_ (0)
 {
 }
 
@@ -116,13 +116,13 @@ CC_Client::run (void)
   int success = CC_SUCCESS;
   // Did test succeed?
 
-  if (this->run_basic_tests_ && success == CC_SUCCESS) 
+  if (this->run_basic_tests_ && success == CC_SUCCESS)
     {
       success = run_basic_tests ();
       tests_run = 1;
     }
 
-  if (this->run_extended_tests_ && success == CC_SUCCESS) 
+  if (this->run_extended_tests_ && success == CC_SUCCESS)
     {
       success = run_extended_tests (this->extended_tests_params_);
       tests_run = 1;
@@ -170,7 +170,7 @@ CC_Client::run_basic_tests (void)
     return CC_FAIL;
 }
 
-int 
+int
 CC_Client::run_extended_tests (char *params)
 {
   int success = CC_FAIL;

@@ -19,7 +19,7 @@ run in the reactive model.
 
 The server itself is located in the
 
-$TAO_ROOT/orbsvcs/Concurrency_Service 
+$TAO_ROOT/orbsvcs/Concurrency_Service
 
 directory.
 
@@ -66,7 +66,7 @@ directory.  There are two types of tests:
           locks and lock them in all the different lock modes
 
         . A more extended test which requires two (or more)
-          processes. 
+          processes.
 
 The server accepts the following options:
 
@@ -80,13 +80,13 @@ The server accepts the following options:
           format of the argument to the -e option is <test;arg1;arg2>
           where test is the name of the test (at present test =
           {1,2,3}) and arg1 and arg2 are arguments to the test.  See
-          the example below. 
+          the example below.
 
         . The [-f] option reads the factory IOR from a file. This is
           currently not supported.
 
         . The [-k] option takes the factory IOR as argument on the
-          commandline. This is currently not supported. 
+          commandline. This is currently not supported.
 
         . The [-x] option tells the server to shut down
           gracefully. Currently this has no effect.
@@ -103,6 +103,12 @@ EXAMPLE TEST RUN
         Window-2> ./CC_client -e '1;Name'
         Window-2> ./CC_client -e '2;Name'
         Window-3> ./CC_client -e '3;Name'
+
+NOTE: It seems that there is a problem using the naming service the
+      first time the client is run. This error does not appear if the
+      environment variable 'NameService' is set to the IOR of the naming
+      service (the IOR of the naming service is printed when the
+      Concurrency_Control server is started).
 
 ----------------------------------------
 
