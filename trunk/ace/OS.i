@@ -4210,7 +4210,7 @@ void **&
 ACE_TSS_Emulation::tss_base ()
 {
 #if defined (VXWORKS)
-  return ((void **) taskIdCurrent->spare4);
+  return ((void **&) taskIdCurrent->spare4);
 #else
   return tss_collection_ [ACE_OS::thr_self ()];
 #endif /* VXWORKS */
