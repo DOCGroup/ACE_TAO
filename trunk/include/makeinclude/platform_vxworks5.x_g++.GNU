@@ -76,6 +76,13 @@ ifeq ($(CPU),PPC604)
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
   TOOLENV = ppc
 else
+ifeq ($(CPU),PPC860)
+  BINXSYM_NAME = xsym
+  CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC860 -m=860
+  CCFLAGS += -fno-implicit-templates
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
+  TOOLENV = ppc
+else
 ifeq ($(CPU),I80486)
   #### Note: -fno-implicit-templates doesn't seem to work well with g++
   #### cygnus-2.7.2-960126 for pc486 target.  Some member functions don't
@@ -93,6 +100,7 @@ else
   CCFLAGS += -fno-implicit-templates
 endif # I80386
 endif # I80486
+endif # PPC860
 endif # PPC604
 
 
