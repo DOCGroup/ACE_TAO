@@ -1,3 +1,8 @@
+Sat Jan 18 12:07:14 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* orbsvcs/orbsvcs/Notify/Properties.cpp: Fixed my fix by removing
+	a #define I used to test the fix.
+
 Sat Jan 18 10:40:58 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/orbconf.h: Added TAO_RD_TABLE_SIZE and set the value to be

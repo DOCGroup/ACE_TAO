@@ -20,7 +20,6 @@ TAO_NS_Properties::~TAO_NS_Properties ()
 {
 }
 
-#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class TAO_Singleton<TAO_NS_Properties, TAO_SYNCH_MUTEX>;
