@@ -55,7 +55,8 @@ Test_DynSequence::run_test (void)
                  data.labels[11]));
 
       ACE_DEBUG ((LM_DEBUG,
-                 "testing: constructor(Any)/insert/get/seek/rewind/current_component\n"));
+                 "testing: constructor(Any)/insert/get/seek/"
+                 "rewind/current_component\n"));
 
       CORBA::Object_var factory_obj =
         this->orb_->resolve_initial_references ("DynAnyFactory",
@@ -82,8 +83,9 @@ Test_DynSequence::run_test (void)
         dynany_factory->create_dyn_any (in_any1,
                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      DynamicAny::DynSequence_var fa1 = DynamicAny::DynSequence::_narrow (dp1.in (),
-                                                              ACE_TRY_ENV);
+      DynamicAny::DynSequence_var fa1 = 
+        DynamicAny::DynSequence::_narrow (dp1.in (),
+                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
       fa1->seek (1,
                  ACE_TRY_ENV);
@@ -133,7 +135,8 @@ Test_DynSequence::run_test (void)
 
       for (i = 0; i < length; ++i)
         {
-          elem_any <<= values[i];
+          elem_any <<= CORBA::Any::from_string (values[i],
+                                                8);
           elements[i] = dynany_factory->create_dyn_any (elem_any,
                                                         ACE_TRY_ENV);
           ACE_TRY_CHECK;
@@ -186,8 +189,10 @@ Test_DynSequence::run_test (void)
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
 
       DynamicAny::DynAny_var ftc1_base =
-        dynany_factory->create_dyn_any_from_type_code (DynAnyTests::_tc_test_seq,
-                                                       ACE_TRY_ENV);
+        dynany_factory->create_dyn_any_from_type_code (
+                            DynAnyTests::_tc_test_seq,
+                            ACE_TRY_ENV
+                          );
       ACE_TRY_CHECK;
 
       DynamicAny::DynSequence_var ftc1 =
@@ -240,10 +245,10 @@ Test_DynSequence::run_test (void)
       DynamicAny::AnySeq as_in (3);
       as_in.length (3);
       CORBA_Any in_any3;
-      in_any3 <<= CORBA::Any::from_string (data.m_string2, 0);
+      in_any3 <<= CORBA::Any::from_string (data.m_string2, 8);
       as_in[0] = in_any3;
       as_in[1] = in_any3;
-      in_any3 <<= CORBA::Any::from_string (data.m_string1, 0);
+      in_any3 <<= CORBA::Any::from_string (data.m_string1, 8);
       as_in[2] = in_any3;
       ftc1->set_elements (as_in,
                           ACE_TRY_ENV);
@@ -253,7 +258,7 @@ Test_DynSequence::run_test (void)
       CORBA::ULong index = 2;
       CORBA_Any out_any2 = as_out[index];
       char* out_str2;
-      out_any2 >>= CORBA::Any::to_string (out_str2, 0);
+      out_any2 >>= CORBA::Any::to_string (out_str2, 8);
 
       if (ACE_OS::strcmp (out_str2, data.m_string1))
         {
