@@ -360,7 +360,6 @@ be_visitor_typedef::visit_structure (be_structure *node)
     case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CS);
       break;
-      return 0; // nothing to be done
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -430,7 +429,6 @@ be_visitor_typedef::visit_union (be_union *node)
     case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CS);
       break;
-      return 0; // nothing to be done
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,

@@ -197,14 +197,17 @@ int
 be_visitor_args_pre_docall_cs::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
+  // get the argument node
+  be_argument *arg = this->ctx_->be_node_as_argument ();
+
+#if 0
   // if the current type is an alias, use that
   be_type *bt;
   if (this->ctx_->alias ())
     bt = this->ctx_->alias ();
   else
     bt = node;
+#endif
 
   // pre do_static_call processing is valid only for pseudo objects and for Any
   switch (node->pt ())
