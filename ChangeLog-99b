@@ -1,6 +1,7 @@
 Mon Dec 06 21:16:53 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/SOCK_Dgram.cpp (send): Added missing timed send.
+	  Thanks to Yuval Yosef <yuvi@isdn.net.il> for motivating this.
 
 	* ace/SOCK_IO.h (ACE_SOCK_IO): Most methods now support an
 	  optional timeout parameter.
@@ -146,11 +147,12 @@ Mon Dec  6 07:55:05 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * netsvcs/lib/Client_Logging_Handler.cpp (handle_signal):
           If SIGPIPE occurs, ACE_Client_Logging_Handler::handle_signal()
-          returns -1, thus removing svc handler from reactor.  Since svc
-          handler is implemented as a singleton here, all next incoming
-          SPIPE connections operate on object that is already destroyed ->
-          SIGSEGV/SIGBUS.  Therefore, we now return 0 in handle_signal().
-          Thanks to Dmitry Ergy <dergy@websci.ru> for reporting this.
+ 	  returns -1, thus removing svc handler from reactor.  Since svc
+ 	  handler is implemented as a singleton here, all next incoming
+ 	  SPIPE connections operate on object that is already destroyed ->
+ 	  SIGSEGV/SIGBUS.  Therefore, we now return 0 in handle_signal().
+  	  Thanks to Alexander Dergatch <dergy@websci.ru> for reporting
+ 	  this.
 
         * netsvcs/lib/Server_Logging_Handler_T.cpp (svc): The following
           loop
@@ -164,7 +166,8 @@ Mon Dec  6 07:55:05 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
             while ((result = this->handle_input ()) == 0)
 
-          Thanks to Dmitry Ergy <dergy@websci.ru> for reporting this.
+          Thanks to Alexander Dergatch <dergy@websci.ru> for reporting
+ 	  this.
 
 Sun Dec 05 21:54:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -635,7 +638,7 @@ Thu Nov 25 13:32:00 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
         * netsvcs/lib/Logging_Strategy.cpp (parse_args): Fixed up this
           code so that we correctly allocated and deallocate filename_
           using strdup()/free() to prevent weird memory problems.  Thanks
-          to Dmitry Ergy <dergy@websci.ru> for reporting this.
+          to Alexander Dergatch <dergy@websci.ru> for reporting this.
 
 Sat Nov 27 15:01:44 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -977,7 +980,7 @@ Tue Nov 16 07:58:11 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
         * netsvcs/lib/Client_Logging_Handler.cpp (fini):
           Make sure to dynamically allocate the logger_key_ and
           server_host_ so that we don't end up with weird memory problems.
-          Thanks to Dmitry Ergy <dergy@websci.ru> for reporting this.
+          Thanks to Alexander Dergatch <dergy@websci.ru> for reporting this.
 
         * ace/config-irix6.x-common.h: Added
           ACE_LACKS_PLACEMENT_OPERATOR_DELETE to keep Irix compilers from
