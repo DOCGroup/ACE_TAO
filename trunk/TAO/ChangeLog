@@ -1,3 +1,19 @@
+Mon Jul 28 09:14:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp:
+
+          Changed settings to exclude template source file from build.
+
+        * orbsvcs/tests/Redundant_Naming/client.dsp:
+
+          Turned on RTTI in project settings.
+
+        * tao/IORInterceptor/IORInterceptor_Adapter_Factory_Impl.cpp:
+        * orbsvcs/tests/Notify/lib/Peer_T.cpp:
+
+          Fixed problems with usage of environment variable, and cosmetic
+          changes.
+
 Mon Jul 28 09:04:14 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.ll:

@@ -367,14 +367,17 @@ SOURCE=.\Command_Factory_T.cpp
 # Begin Source File
 
 SOURCE=.\Consumer_T.cpp
+# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
 SOURCE=.\Peer_T.cpp
+# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
 SOURCE=.\Supplier_T.cpp
+# PROP Exclude_From_Build 1
 # End Source File
 # End Group
 # Begin Group "Documentation"
