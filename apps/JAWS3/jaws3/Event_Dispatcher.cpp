@@ -10,7 +10,7 @@
 
 #include "jaws3/Event_Dispatcher.h"
 
-static void *
+static ACE_THR_FUNC_RETURN
 JAWS_Event_Dispatcher_Proactor_Event_Loop (void *)
 {
   ACE_Proactor::run_event_loop ();
