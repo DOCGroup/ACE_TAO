@@ -1036,7 +1036,6 @@ ACE_Fixed_Set<T, ACE_SIZE>::find (const T &item) const
 
 template <class T, size_t ACE_SIZE> int
 ACE_Fixed_Set<T, ACE_SIZE>::insert (const T &item)
-
 {
   ACE_TRACE ("ACE_Fixed_Set<T, ACE_SIZE>::insert");
   int first_free = -1;   // Keep track of first free slot.
