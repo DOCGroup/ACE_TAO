@@ -285,6 +285,7 @@ HEADER_FILES = \
   InterceptorC.h \
   InterceptorS.h \
   InterfaceC.h \
+  InterfaceS.h \
   Invocation.h \
   Key_Adapters.h \
   Leader_Follower.h \
@@ -412,6 +413,7 @@ INLINE_FILES = \
   Interceptor.i \
   InterceptorC.i \
   InterfaceC.i \
+  InterfaceS.i \
   Invocation.i \
   Key_Adapters.i \
   Leader_Follower.i \

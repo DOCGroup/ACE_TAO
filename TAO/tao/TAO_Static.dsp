@@ -334,6 +334,10 @@ SOURCE=.\InterfaceC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\InterfaceS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Invocation.cpp
 # End Source File
 # Begin Source File
@@ -898,6 +902,10 @@ SOURCE=.\InterfaceC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\InterfaceS.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Invocation.h
 # End Source File
 # Begin Source File
@@ -1363,6 +1371,10 @@ SOURCE=.\InterceptorC.i
 # Begin Source File
 
 SOURCE=.\InterfaceC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\InterfaceS.i
 # End Source File
 # Begin Source File
 
