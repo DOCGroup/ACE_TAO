@@ -878,7 +878,7 @@ TAO_ST_Client_Connection_Handler::handle_input (ACE_HANDLE)
 }
 
 int
-TAO_MT_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
+TAO_MT_Client_Connection_Handler::send_request (TAO_ORB_Core *orb_core,
                                                 TAO_OutputCDR &stream,
                                                 int is_twoway)
 {

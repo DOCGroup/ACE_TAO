@@ -110,7 +110,8 @@ TAO_GIOP::dump_msg (const char *label,
 {
   if (TAO_debug_level >= 2)
     {
-      ACE_DEBUG ((LM_DEBUG, "%s GIOP v%c.%c msg, %d data bytes, %s endian, %s\n",
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s GIOP v%c.%c msg, %d data bytes, %s endian, %s\n",
                   label,
                   digits[ptr[4]],
                   digits[ptr[5]],
@@ -119,94 +120,76 @@ TAO_GIOP::dump_msg (const char *label,
                   (ptr[7] <= TAO_GIOP::MessageError) ? names [ptr[7]] : "UNKNOWN TYPE"));
 
       if (TAO_debug_level >= 4)
-        ACE_HEX_DUMP ((LM_DEBUG, (const char*)ptr, len, "(%P|%t) data bytes\n"));
+        ACE_HEX_DUMP ((LM_DEBUG,
+                       (const char*)ptr,
+                       len,
+                       "(%P|%t) data bytes\n"));
     }
 }
 
 CORBA_Boolean
-operator<<(TAO_OutputCDR& cdr, const TAO_GIOP_ServiceContext& x)
+operator<<(TAO_OutputCDR &cdr,
+           const TAO_GIOP_ServiceContext &x)
 {
-  if ( (cdr << x.context_id)
-       && (cdr << x.context_data) )
+  if (cdr << x.context_id
+       && cdr << x.context_data)
     return 1;
-  return 0;
+  else
+    return 0;
 }
 
 CORBA_Boolean
-
-operator>>(TAO_InputCDR& cdr, TAO_GIOP_ServiceContext& x)
+operator>>(TAO_InputCDR &cdr,
+           TAO_GIOP_ServiceContext &x)
 {
-  if ( (cdr >> x.context_id)
-       && (cdr >> x.context_data) )
+  if (cdr >> x.context_id
+      && cdr >> x.context_data)
     return 1;
-  return 0;
+  else
+    return 0;
 }
 
 CORBA_Boolean
-operator<<(TAO_OutputCDR& cdr, const TAO_GIOP_ServiceContextList& x)
+operator<< (TAO_OutputCDR &cdr,
+            const TAO_GIOP_ServiceContextList &x)
 {
   CORBA::ULong length = x.length ();
+
   cdr.write_ulong (length);
-  for (CORBA::ULong i = 0; i < length && cdr.good_bit (); ++i)
+
+  for (CORBA::ULong i = 0; 
+       i < length && cdr.good_bit ();
+       ++i)
     cdr << x[i];
+
   return cdr.good_bit ();
 }
 
 CORBA_Boolean
-operator>>(TAO_InputCDR& cdr, TAO_GIOP_ServiceContextList& x)
+operator>>(TAO_InputCDR &cdr,
+           TAO_GIOP_ServiceContextList &x)
 {
   CORBA::ULong length;
+
   cdr.read_ulong (length);
+
   if (cdr.good_bit ())
     {
       x.length (length);
-      for (CORBA::ULong i = 0; i < length && cdr.good_bit (); ++i)
+
+      for (CORBA::ULong i = 0;
+           i < length && cdr.good_bit ();
+           ++i)
         cdr >> x[i];
     }
+
   return cdr.good_bit ();
 }
-
-// @@ TODO: this is a good candidate for an ACE routine, even more,
-// all the code to write a Message_Block chain could be encapsulated
-// in ACE.
-static ssize_t
-writev_n (ACE_HANDLE h, iovec *iov, int iovcnt)
-{
-  ssize_t writelen = 0;
-  int s = 0;
-  while (s < iovcnt)
-    {
-      ssize_t n = ACE_OS::sendv (h, iov + s, iovcnt - s);
-
-      if (n == -1)
-        {
-          return n;
-        }
-      else
-        {
-          writelen += n;
-          while (s < iovcnt && n >= ACE_static_cast (ssize_t, iov[s].iov_len))
-            {
-              n -= iov[s].iov_len;
-              s++;
-            }
-          if (n != 0)
-            {
-              char* base = ACE_reinterpret_cast (char*, iov[s].iov_base);
-
-              iov[s].iov_base = base + n;
-              iov[s].iov_len = iov[s].iov_len - n;
-            }
-        }
-    }
-  return writelen;
-}
-
 
 CORBA::Boolean
 TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
                         TAO_OutputCDR &stream,
-                        TAO_ORB_Core* orb_core)
+                        TAO_ORB_Core *orb_core)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_GIOP_SEND_REQUEST_START);
 
@@ -223,31 +206,33 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
   // in the "ServiceContext".  Similarly, this is a good spot to
   // encrypt messages (or just the message bodies) if that's needed in
   // this particular environment and that isn't handled by the
-  // networking infrastructure (e.g. IPSEC).
+  // networking infrastructure (e.g., IPSEC).
 
   size_t offset = 8;
+  // @@ Carlos, can you please make this more "abstract" rather
+  // than hard-coding it to 8!!!
   size_t header_len = TAO_GIOP_HEADER_LEN;
   if (orb_core->orb_params ()->use_IIOP_lite_protocol ())
     {
       offset = 0;
+      // @@ Carlos, can you please make this more "abstract" rather
+      // than hard-coding it to 5!!!
       header_len = 5;
     }
 
   CORBA::ULong bodylen = buflen - header_len;
-  
 
 #if !defined (TAO_ENABLE_SWAP_ON_WRITE)
   *ACE_reinterpret_cast(CORBA::ULong*,buf + offset) = bodylen;
 #else
   if (!stream->do_byte_swap ())
-    {
-      *ACE_reinterpret_cast(CORBA::ULong*, buf + offset) = bodylen;
-    }
+    *ACE_reinterpret_cast (CORBA::ULong *,
+                           buf + offset) = bodylen;
   else
-    {
-      CDR::swap_4 (ACE_reinterpret_cast(char*,&bodylen), buf + offset);
-    }
-#endif
+    CDR::swap_4 (ACE_reinterpret_cast (char *,
+                                       &bodylen),
+                 buf + offset);
+#endif /* TAO_ENABLE_SWAP_ON_WRITE */
 
   // Strictly speaking, should not need to loop here because the
   // socket never gets set to a nonblocking mode ... some Linux
@@ -257,22 +242,24 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
   TAO_GIOP::dump_msg ("send",
                       ACE_reinterpret_cast (u_char *, buf),
                       buflen);
-#endif
+#endif /* 0 */
 
   TAO_SOCK_Stream &peer = handler->peer ();
 
-  const int TAO_WRITEV_MAX = 16;
+  const int TAO_WRITEV_MAX = IOV_MAX;
   iovec iov[TAO_WRITEV_MAX];
   int iovcnt = 0;
-  for (const ACE_Message_Block* i = stream.begin ();
+
+  for (const ACE_Message_Block *i = stream.begin ();
        i != stream.end ();
        i = i->cont ())
     {
       iov[iovcnt].iov_base = i->rd_ptr ();
-      iov[iovcnt].iov_len  = i->length ();
+      iov[iovcnt].iov_len = i->length ();
       iovcnt++;
 
       // The buffer is full make a OS call.
+
       // @@ TODO this should be optimized on a per-platform basis, for
       // instance, some platforms do not implement writev() there we
       // should copy the data into a buffer and call send_n(). In
@@ -280,13 +267,15 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
       // iovec, there we should set TAO_WRITEV_MAX to that limit.
       if (iovcnt == TAO_WRITEV_MAX)
         {
-          ssize_t n = writev_n (peer.get_handle (), iov, iovcnt);
+          ssize_t n = this->peers.sendv_n (iov,
+                                           iovcnt);
           if (n == -1)
             {
               if (TAO_orbdebug)
                 ACE_DEBUG ((LM_DEBUG,
                             "(%P|%t) closing conn %d after fault %p\n",
-                            peer.get_handle (), "GIOP::send_request"));
+                            peer.get_handle (),
+                            "GIOP::send_request"));
               handler->handle_close ();
               return 0;
             }
@@ -300,19 +289,22 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
               handler->handle_close ();
               return 0;
             }
+
           iovcnt = 0;
         }
     }
 
   if (iovcnt != 0)
     {
-      ssize_t n = writev_n (peer.get_handle (), iov, iovcnt);
+      ssize_t n = this->peer.sendv_n (iov,
+                                      iovcnt);
       if (n == -1)
         {
           if (TAO_orbdebug)
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) closing conn %d after fault %p\n",
-                        peer.get_handle (), "GIOP::send_request"));
+                        peer.get_handle (),
+                        "GIOP::send_request"));
           handler->handle_close ();
           return 0;
         }
@@ -372,14 +364,16 @@ TAO_GIOP::close_connection (TAO_Client_Connection_Handler *&handler,
                       (const u_char *) close_message,
                       TAO_GIOP_HEADER_LEN);
 
-  handler->peer ().send (close_message, TAO_GIOP_HEADER_LEN);
+  // @@ Carlos, can you please check the return value on this?
+  handler->peer ().send (close_message,
+                         TAO_GIOP_HEADER_LEN);
   ACE_HANDLE which = handler->peer ().get_handle ();
   handler->handle_close ();
   handler = 0;
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) shut down socket %d\n", which));
+              "(%P|%t) shut down socket %d\n",
+              which));
 }
-
 
 // Send an "I can't understand you" message -- again, the message is
 // prefabricated for simplicity.  This implies abortive disconnect (at
@@ -404,9 +398,15 @@ TAO_GIOP::send_error (TAO_SVC_HANDLER *&handler)
   TAO_GIOP::dump_msg ("send",
                       (const u_char *) error_message,
                       TAO_GIOP_HEADER_LEN);
-  handler->peer ().send_n (error_message, TAO_GIOP_HEADER_LEN);
+
+  // @@ Carlos, can you please check to see if <send_n> should have
+  // it's reply checked?
+  handler->peer ().send_n (error_message,
+                           TAO_GIOP_HEADER_LEN);
   if (TAO_orbdebug)
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) aborted socket %d\n", handler->peer ().get_handle ()));
+    ACE_DEBUG ((LM_DEBUG,
+                "(%P|%t) aborted socket %d\n",
+                handler->peer ().get_handle ()));
 //   handler->handle_close ();
   handler = 0;
 }
@@ -418,8 +418,8 @@ TAO_GIOP::read_buffer (TAO_SOCK_Stream &peer,
 {
   ACE_FUNCTION_TIMEPROBE (TAO_GIOP_READ_BUFFER_START);
 
-  ssize_t bytes_read = peer.recv_n (buf, len);
-
+  ssize_t bytes_read = peer.recv_n (buf,
+                                    len);
   if (bytes_read == -1 && errno == ECONNRESET)
     {
       // We got a connection reset (TCP RSET) from the other side,
@@ -479,8 +479,10 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
   if (orb_core->orb_params ()->use_IIOP_lite_protocol ())
     header_len = 5;
 
-  if (CDR::grow (&msg.start_, header_len) == -1)
-    return TAO_GIOP::CommunicationError; // This should probably be an exception.
+  if (CDR::grow (&msg.start_,
+                 header_len) == -1)
+    // This should probably be an exception.
+    return TAO_GIOP::CommunicationError; 
 
   char *header = msg.start_.rd_ptr ();
   ssize_t len = TAO_GIOP::read_buffer (connection,
@@ -513,7 +515,8 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
           if (TAO_orbdebug)
             ACE_DEBUG ((LM_ERROR,
                         "(%P|%t) GIOP::recv_request header read failed, only %d of %d bytes\n",
-                        len, header_len));
+                        len,
+                        header_len));
           break;
           /* NOTREACHED */
         }
@@ -534,8 +537,8 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
 			      orb_core) == -1)
     {
       TAO_GIOP::send_error (handler);
-      return TAO_GIOP::EndOfFile; // We didn't really receive 
-                                  // anything useful here.
+      return TAO_GIOP::EndOfFile; 
+      // We didn't really receive anything useful here.
     }
 
   // Make sure we have the full length in memory, growing the buffer
@@ -546,7 +549,8 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
 
   assert (message_size <= UINT_MAX);
 
-  if (CDR::grow (&msg.start_, header_len + message_size) == -1)
+  if (CDR::grow (&msg.start_,
+                 header_len + message_size) == -1)
     return TAO_GIOP::CommunicationError;
 
   // Growing the buffer may have reset the rd_ptr(), but we want to
@@ -585,7 +589,9 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
         default:
           if (TAO_orbdebug)
             ACE_DEBUG ((LM_ERROR,
-                        "(%P|%t) short read, only %d of %d bytes\n", len, message_size));
+                        "(%P|%t) short read, only %d of %d bytes\n",
+                        len,
+                        message_size));
           break;
           /* NOTREACHED */
         }
@@ -597,16 +603,17 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
     }
 
   TAO_GIOP::dump_msg ("recv",
-                      ACE_reinterpret_cast (u_char *, header),
+                      ACE_reinterpret_cast (u_char *,
+                                            header),
                       message_size + header_len);
   return retval;
 }
 
 int
 TAO_GIOP::parse_header_std (TAO_InputCDR &cdr,
-			    int& do_byte_swap,
-			    TAO_GIOP::Message_Type& message_type,
-			    CORBA::ULong& message_size)
+			    int &do_byte_swap,
+			    TAO_GIOP::Message_Type &message_type,
+			    CORBA::ULong &message_size)
 {
   char *header = cdr.start_.rd_ptr ();
   
@@ -615,7 +622,8 @@ TAO_GIOP::parse_header_std (TAO_InputCDR &cdr,
         && header [2] == 'O'
         && header [3] == 'P'))
     {
-      ACE_DEBUG ((LM_DEBUG, "bad header, magic word\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "bad header, magic word\n"));
       return -1;
     }
 
@@ -625,12 +633,13 @@ TAO_GIOP::parse_header_std (TAO_InputCDR &cdr,
   if (!(header [4] == TAO_GIOP_MessageHeader::MY_MAJOR
         && header [5] <= TAO_GIOP_MessageHeader::MY_MINOR))
     {
-      ACE_DEBUG ((LM_DEBUG, "bad header, version\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "bad header, version\n"));
       return -1;
     }
 
-  // Get the message type out and adjust the buffer's records to record
-  // that we've read everything except the length.
+  // Get the message type out and adjust the buffer's records to
+  // record that we've read everything except the length.
 
   message_type = (TAO_GIOP::Message_Type) header[7];
 
@@ -647,9 +656,9 @@ TAO_GIOP::parse_header_std (TAO_InputCDR &cdr,
 
 int
 TAO_GIOP::parse_header_lite (TAO_InputCDR &cdr,
-			     int& do_byte_swap,
-			     TAO_GIOP::Message_Type& message_type,
-			     CORBA::ULong& message_size)
+			     int &do_byte_swap,
+			     TAO_GIOP::Message_Type &message_type,
+			     CORBA::ULong &message_size)
 {
   do_byte_swap = 0;
 
@@ -668,10 +677,10 @@ TAO_GIOP::parse_header_lite (TAO_InputCDR &cdr,
 
 int
 TAO_GIOP::parse_header (TAO_InputCDR &cdr,
-			int& do_byte_swap,
-			TAO_GIOP::Message_Type& message_type,
-			CORBA::ULong& message_size,
-			TAO_ORB_Core* orb_core)
+			int &do_byte_swap,
+			TAO_GIOP::Message_Type &message_type,
+			CORBA::ULong &message_size,
+			TAO_ORB_Core *orb_core)
 {
   if (orb_core->orb_params ()->use_IIOP_lite_protocol ())
     return TAO_GIOP::parse_header_lite (cdr,
@@ -707,14 +716,18 @@ TAO_GIOP::start_message_std (TAO_GIOP::Message_Type type,
   // if (msg.size () < TAO_GIOP_HEADER_LEN)
   // return 0;
 
-  static CORBA::Octet header[] = {
+  static CORBA::Octet header[] = 
+  {
     'G', 'I', 'O', 'P',
     TAO_GIOP_MessageHeader::MY_MAJOR,
     TAO_GIOP_MessageHeader::MY_MINOR,
     TAO_ENCAP_BYTE_ORDER
   };
-  static int header_size = sizeof(header)/sizeof(header[0]);
-  msg.write_octet_array (header, header_size);
+
+  static int header_size =
+    sizeof(header)/sizeof(header[0]);
+  msg.write_octet_array (header,
+                         header_size);
   msg.write_octet (type);
 
   // Write a dummy <size> later it is set to the right value...
