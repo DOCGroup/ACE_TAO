@@ -182,7 +182,8 @@ sub check_for_id_string ()
 sub check_for_newline ()
 {
     print "Running newline check\n";
-    foreach $file (@files_cpp, @files_inl, @files_h, @files_idl, @files_pl) {
+    foreach $file (@files_cpp, @files_inl, @files_h, 
+                   @files_html, @files_idl, @files_pl) {
         if (open (FILE, $file)) {
             my $line;
             print "Looking at file $file\n" if $opt_d;
