@@ -25,10 +25,10 @@ be_visitor_interface_remote_proxy_broker_ch::visit_interface (be_interface *node
 
   // Generate the class declaration.
   os->indent ();
-  
+
   *os << be_nl
       << "///////////////////////////////////////////////////////////////////////" << be_nl
-      << "//                 Remote Proxy Broker Declaration " << be_nl 
+      << "//                 Remote Proxy Broker Declaration " << be_nl
       << "//" << be_nl << be_nl;
 
   *os << "class " << be_global->stub_export_macro () << " "
@@ -50,21 +50,32 @@ be_visitor_interface_remote_proxy_broker_ch::visit_interface (be_interface *node
       << node->remote_proxy_impl_name () << " remote_proxy_impl_;"
       << be_uidt_nl;
 
-  *os << "};" << be_nl << be_nl;
-
-  // Factory Function declaration.
-  *os << "// This funxtion is used to get an handle to the unique instance" << be_nl
+  // Factory Member Function declaration.
+  *os << "// This member function is used to get an handle to the unique instance" << be_nl
       << "// of the Remote Proxy Broker that is available for a given" << be_nl
       << "// interface."
       << be_nl << be_nl;
+  *os << "public:" << be_idt_nl
+      << "static " << node->remote_proxy_broker_name ()
+      << " *the" << node->remote_proxy_broker_name ()
+      << " (void);" << be_uidt_nl;
 
-  *os << node->remote_proxy_broker_name () << " *the" 
+  *os << "};" << be_nl << be_nl;
+
+
+  /*
+  if (node->is_nested ())
+    *os << "TAO_NAMESPACE_STORAGE_CLASS ";
+  else
+    *os << "static ";
+
+  *os << node->remote_proxy_broker_name () << " *the"
       << node->remote_proxy_broker_name ()
       << " (void);" << be_nl;
-
+  */
   *os << be_nl
       << "//" << be_nl
-      << "//              End Remote Proxy Broker Declaration " << be_nl 
+      << "//              End Remote Proxy Broker Declaration " << be_nl
       << "///////////////////////////////////////////////////////////////////////"
       << be_nl << be_nl;
 

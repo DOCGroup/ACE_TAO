@@ -93,7 +93,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
           << "{" << be_idt_nl // idt = 1
           << "ACE_UNUSED_ARG (obj);" << be_nl
           << "return "
-          << "::" << node->server_enclosing_scope () << "the"
+          << node->full_strategized_proxy_broker_name ()
+          << "::" <<"the"
           << node->strategized_proxy_broker_name ()
           << "();" << be_uidt_nl // idt = 0
           << "}" << be_nl << be_nl;

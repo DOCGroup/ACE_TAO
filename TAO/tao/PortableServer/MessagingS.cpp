@@ -131,7 +131,8 @@ static TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable tao_Messaging_ReplyHandle
 //
 
 // Factory function Implementation.
-POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker *POA_Messaging::the_TAO_ReplyHandler_Strategized_Proxy_Broker (void)
+POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker *
+POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::the_TAO_ReplyHandler_Strategized_Proxy_Broker (void)
 {
   static POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker strategized_proxy_broker;
   return &strategized_proxy_broker;
@@ -141,14 +142,14 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::_TAO_ReplyHandler_Str
 {
   for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::~_TAO_ReplyHandler_Strategized_Proxy_Broker (void)
 {
   for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 Messaging::_TAO_ReplyHandler_Proxy_Impl&
@@ -159,25 +160,25 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::select_proxy (
 {
   TAO_ORB_Core::TAO_Collocation_Strategies strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::create_proxy (
     TAO_ORB_Core::TAO_Collocation_Strategies strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
@@ -190,7 +191,7 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
+
         case TAO_ORB_Core::DIRECT_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -199,7 +200,7 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-          
+
         case TAO_ORB_Core::REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
@@ -209,9 +210,9 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::create_proxy (
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -225,21 +226,21 @@ Messaging::_TAO_ReplyHandler_Proxy_Broker *
 Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
 {
   ACE_UNUSED_ARG (obj);
-  return POA_Messaging::the_TAO_ReplyHandler_Strategized_Proxy_Broker();
+  return POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::the_TAO_ReplyHandler_Strategized_Proxy_Broker ();
 }
 
 int
 Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_Initializer (long _dummy_)
 {
   ACE_UNUSED_ARG (_dummy_);
-  
-  Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer = 
+
+  Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer =
     Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function;
-  
+
   return 0;
 }
 
-static int Messaging__TAO_ReplyHandler_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
+static int Messaging__TAO_ReplyHandler_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
   Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_Initializer));
 
 
@@ -371,14 +372,14 @@ POA_Messaging::ReplyHandler::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
   return ::Messaging::ReplyHandler::_unchecked_narrow (obj.in ());
 }
