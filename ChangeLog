@@ -1,3 +1,8 @@
+Fri Aug 30 05:48:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS.i (tempnam):
+          Changed defines because special things only happen on Win32
+
 Thu Aug 29 22:01:27 2002  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_hpux_gcc.GNU: Make the build options
