@@ -280,7 +280,7 @@ Mon Sep  7 19:45:15 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 Mon Sep  7 19:31:28 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
         * tests/Simple/time/run_test.pl: Added require Process. Changed
-          ACE::waitforfile to waitforfile. Thanks to bala for reporting
+          ACE::waitforfile to waitforfile. Thanks to Bala for reporting
           this.
 
 Mon Sep  7 10:22:19 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>

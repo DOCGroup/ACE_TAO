@@ -1,6 +1,5 @@
 // $Id$
 
-#include "global.h"
 #include "Options.h"
 #include "Multicast_Manager.h"
 #include "CM_Client.h"
@@ -12,16 +11,16 @@ CM_Client::open (short port_number)
 {
   int max_packet_size = UDP_PACKET_SIZE;
   
-  Comm_Manager::sokfd = ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
+  Comm_Manager::sokfd_ = ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
 
-  if (Comm_Manager::sokfd == ACE_INVALID_HANDLE)
+  if (Comm_Manager::sokfd_ == ACE_INVALID_HANDLE)
     return -1;
   
-  ACE_OS::memset ((char *) &this->sin,
+  ACE_OS::memset ((char *) &this->sin_,
                   0,
-                  sizeof this->sin);
-  this->sin.sin_family = AF_INET;
-  this->sin.sin_port = htons (port_number);
+                  sizeof this->sin_);
+  this->sin_.sin_family = AF_INET;
+  this->sin_.sin_port = htons (port_number);
 
   return 1;
 }
@@ -30,18 +29,18 @@ int
 CM_Client::receive (int timeout)
 {
   FD_ZERO (&this->read_fd_);
-  FD_SET (Comm_Manager::sokfd, &this->read_fd_);
+  FD_SET (Comm_Manager::sokfd_, &this->read_fd_);
 
   if (timeout > 0)
     {
-      this->time_out_.tv_sec = timeout;
-      this->time_out_.tv_usec = 0;
-      this->top_ = &time_out;
+      this->time_out_.sec (timeout);
+      this->time_out_.usec (0);
+      this->top_ = &time_out_;
     }
 
   while (Multicast_Manager::outstanding_hosts_remain ())
     {
-      if (ACE_OS::select (Comm_Manager::sokfd + 1,
+      if (ACE_OS::select (Comm_Manager::sokfd_ + 1,
                           &this->read_fd_,
                           0,
                           0, 
@@ -49,11 +48,12 @@ CM_Client::receive (int timeout)
 	break;
       else
 	{
-	  int sin_len = sizeof this->sin;
-	  ssize_t n = ACE_OS::recvfrom (Comm_Manager::sokfd,
-                                        this->recv_packet_, UDP_PACKET_SIZE,
+	  int sin_len = sizeof this->sin_;
+	  ssize_t n = ACE_OS::recvfrom (Comm_Manager::sokfd_,
+                                        this->recv_packet_,
+                                        UDP_PACKET_SIZE,
                                         0,
-                                        (sockaddr *) &this->sin,
+                                        (sockaddr *) &this->sin_,
                                         &sin_len);
 	  if (n < 0)
 	    return -1;
@@ -68,13 +68,13 @@ CM_Client::receive (int timeout)
 		  ACE_DEBUG ((LM_DEBUG,
                               "receiving from server host %s (%s)\n",
                               np->h_name,
-                              inet_ntoa (this->sin.sin_addr)));
+                              inet_ntoa (this->sin_.sin_addr)));
 		}
 
-	      if (this->demux (this->recv_packet, n) < 0)
+	      if (this->demux (this->recv_packet_, n) < 0)
 		return -1;
 
-	      Multicast_Manager::checkoff_host (this->sin.sin_addr);
+	      Multicast_Manager::checkoff_host (this->sin_.sin_addr);
 	    }
 	}
     }
@@ -93,38 +93,38 @@ CM_Client::send (void)
 {
   int packet_length = 0;
   
-  if (this->mux (this->send_packet, packet_length) < 0)
+  if (this->mux (this->send_packet_, packet_length) < 0)
     return -1;
   
   // Ship off the info to all the hosts.
 
-  while (Multicast_Manager::get_next_host_addr (this->sin.sin_addr) != 0)
+  while (Multicast_Manager::get_next_host_addr (this->sin_.sin_addr) != 0)
     {
       if (Options::get_opt (Options::DEBUG) != 0)
 	{
-	  hostent *np = ACE_OS::gethostbyaddr ((char *) &this->sin.sin_addr,
-                                               sizeof this->sin.sin_addr,
+	  hostent *np = ACE_OS::gethostbyaddr ((char *) &this->sin_.sin_addr,
+                                               sizeof this->sin_.sin_addr,
                                                AF_INET);
           
 	  ACE_DEBUG ((LM_DEBUG, 
                       "sending to server host %s (%s)\n",
                       np->h_name,
-                      inet_ntoa (this->sin.sin_addr)));
+                      inet_ntoa (this->sin_.sin_addr)));
 	}
 
-      if (sendto (Comm_Manager::sokfd,
-                  this->send_packet,
+      if (sendto (Comm_Manager::sokfd_,
+                  this->send_packet_,
                   packet_length,
                   0,
-                  (sockaddr *) &this->sin,
-                  sizeof this->sin) < 0)
+                  (sockaddr *) &this->sin_,
+                  sizeof this->sin_) < 0)
 	return -1;
     }
   return 1;
 }
 
 CM_Client::CM_Client (void)
-  : top (0)
+  : top_ (0)
 {
 }
 
@@ -134,6 +134,6 @@ CM_Client::~CM_Client (void)
     ACE_DEBUG ((LM_DEBUG,
                 "disposing CM_Client\n"));
 
-  ACE_OS::closesocket (Comm_Manager::sokfd);
+  ACE_OS::closesocket (Comm_Manager::sokfd_);
 }
 

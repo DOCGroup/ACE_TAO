@@ -2,7 +2,7 @@
 
 #include "Drwho_Node.h"
 
-Drwho_Node::Drwho_Node (char *h_name, Drwho_Node *n)
+Drwho_Node::Drwho_Node (const char *h_name, Drwho_Node *n)
      : next (n),
        inactive_count (0),
        active_count (0),
@@ -27,9 +27,10 @@ Drwho_Node::get_login_name (void)
 }
 
 char *
-Drwho_Node::set_login_name (char *str)
+Drwho_Node::set_login_name (const char *str)
 {
-  return this->key_name1 = str;
+  this->key_name1 = str;
+  return str;
 }
 
 char *
@@ -39,9 +40,10 @@ Drwho_Node::get_real_name (void)
 }
 
 char *
-Drwho_Node::set_real_name (char *str)
+Drwho_Node::set_real_name (const char *str)
 {
-  return this->key_name2 = str;
+  this->key_name2 = str;
+  return str;
 }
 
 char *
@@ -51,9 +53,10 @@ Drwho_Node::get_host_name (void)
 }
 
 char *
-Drwho_Node::set_host_name (char *str)
+Drwho_Node::set_host_name (const char *str)
 {
-  return this->key_name1 = str;
+  this->key_name1 = str;
+  return str;
 }
 
 int

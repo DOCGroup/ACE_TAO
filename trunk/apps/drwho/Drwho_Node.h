@@ -24,7 +24,7 @@ class Drwho_Node
   // = TITLE
   //   Stores information about a host for a specific friend.
 public:
-  Drwho_Node (char *host, Drwho_Node *next);
+  Drwho_Node (const char *host, Drwho_Node *next);
   Drwho_Node (void);
 
   int get_active_count (void);
@@ -34,11 +34,11 @@ public:
   int set_idle_time (int idle_time);
   int get_idle_time (void);
   char *get_host_name (void);
-  char *set_host_name (char *str);
+  char *set_host_name (const char *str);
   char *get_login_name (void);
-  char *set_login_name (char *);
+  char *set_login_name (const char *);
   char *get_real_name (void);
-  char *set_real_name (char *);
+  char *set_real_name (const char *);
 
   char *key_name1;
   char *key_name2;

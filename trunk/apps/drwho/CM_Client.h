@@ -7,7 +7,7 @@
 //    drwho
 //
 // = FILENAME
-//    BS_Server.h
+//    CM_Client.h
 //
 // = DESCRIPTION
 //    Provides a virtual communcations layer for the client in the
@@ -18,10 +18,9 @@
 //
 // ============================================================================
 
-#if defined (_CM_CLIENT_H)
+#if !defined (_CM_CLIENT_H)
 #define _CM_CLIENT_H
 
-#include "global.h"
 #include "Comm_Manager.h"
 
 class CM_Client : public Comm_Manager
@@ -45,8 +44,8 @@ public:
 
 private:
   fd_set read_fd_;
-  timeval time_out_;
-  timeval *top_;
+  ACE_Time_Value time_out_;
+  ACE_Time_Value *top_;
 };
 
 #endif /* _CM_CLIENT_H */
