@@ -37,12 +37,22 @@ pthread_attr_destroy (pace_pthread_attr_t * attr)
 int
 pthread_attr_init (pace_pthread_attr_t * attr)
 {
-  if (attr->init_ == 1)
-    {
-      /* ERROR: not initilalized properly! */
-      return -1;
-    }
+  /* These need to be the platform defaults!
+   * Since I made this, I need to maintain this invariant!
+   * Eventually, #define 'words' would be better than
+   * constants here! */
+
   attr->init_ = 1;
+  attr->detach_state_ = 0;
+  attr->policy_ = 0;
+  attr->sparam_.priority_ = 0;
+  attr->inherit_sched_ = 0;
+  attr->contention_scope_ = 0;
+  attr->guard_size_ = 0;
+  attr->stackaddr_set_ = 0;
+  attr->stack_addr_ = (void*)0;
+  attr->stack_size_ = 0;
+
   return 0;
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
