@@ -738,7 +738,7 @@ ACE_OS::default_win32_security_attributes (LPSECURITY_ATTRIBUTES sa)
     }
   return sa;
 #else /* !ACE_DEFINES_DEFAULT_WIN32_SECURITY_ATTRIBUTES */
-  return sa; 
+  return sa;
 #endif /* ACE_DEFINES_DEFAULT_WIN32_SECURITY_ATTRIBUTES */
 }
 
@@ -7564,7 +7564,7 @@ ACE_OS::shm_open (const char *filename,
 # else  /* ! ACE_HAS_SHM_OPEN */
   // Just used ::open.
   return ACE_OS::open (filename, mode, perms,
-                       ACE_OS::default_win32_security_attributes (sa));
+                       sa);
 # endif /* ! ACE_HAS_SHM_OPEN */
 }
 #endif /* ! ACE_HAS_MOSTLY_UNICODE_APIS */
@@ -7828,18 +7828,18 @@ ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   ACE_OS::adjust_flock_params (lock, whence, start, len);
 #  if defined (ACE_HAS_WINNT4)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, 
-                                                        LOCKFILE_EXCLUSIVE_LOCK, 
-                                                        0, 
-                                                        len, 
-                                                        0, 
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_,
+                                                        LOCKFILE_EXCLUSIVE_LOCK,
+                                                        0,
+                                                        len,
+                                                        0,
                                                         &lock->overlapped_),
                                           ace_result_), int, -1);
 #  else /* ACE_HAS_WINNT4 */
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFile (lock->handle_, 
-                                                      lock->overlapped_.Offset, 
-                                                      0, 
-                                                      len, 
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFile (lock->handle_,
+                                                      lock->overlapped_.Offset,
+                                                      0,
+                                                      len,
                                                       0),
                                           ace_result_), int, -1);
 #  endif /* ACE_HAS_WINNT4 */
@@ -7866,18 +7866,18 @@ ACE_OS::flock_rdlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   ACE_OS::adjust_flock_params (lock, whence, start, len);
 #  if defined (ACE_HAS_WINNT4)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, 
-                                                        0, 
-                                                        0, 
-                                                        len, 
-                                                        0, 
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_,
+                                                        0,
+                                                        0,
+                                                        len,
+                                                        0,
                                                         &lock->overlapped_),
                                           ace_result_), int, -1);
 #  else /* ACE_HAS_WINNT4 */
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFile (lock->handle_, 
-                                                      lock->overlapped_.Offset, 
-                                                      0, 
-                                                      len, 
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFile (lock->handle_,
+                                                      lock->overlapped_.Offset,
+                                                      0,
+                                                      len,
                                                       0),
                                           ace_result_), int, -1);
 #  endif /* ACE_HAS_WINNT4 */
@@ -7906,8 +7906,8 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, o
   ACE_OS::adjust_flock_params (lock, whence, start, len);
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_,
                                                         LOCKFILE_FAIL_IMMEDIATELY | LOCKFILE_EXCLUSIVE_LOCK,
-                                                        0, 
-                                                        len, 
+                                                        0,
+                                                        len,
                                                         0,
                                                         &lock->overlapped_),
                                           ace_result_), int, -1);
@@ -7952,8 +7952,8 @@ ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, o
   ACE_OS::adjust_flock_params (lock, whence, start, len);
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_,
                                                         LOCKFILE_FAIL_IMMEDIATELY,
-                                                        0, 
-                                                        len, 
+                                                        0,
+                                                        len,
                                                         0,
                                                         &lock->overlapped_),
                                           ace_result_), int, -1);
@@ -7995,10 +7995,10 @@ ACE_OS::flock_unlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_
   // ACE_TRACE ("ACE_OS::flock_unlock");
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   ACE_OS::adjust_flock_params (lock, whence, start, len);
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::UnlockFile (lock->handle_, 
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::UnlockFile (lock->handle_,
                                                         lock->overlapped_.Offset,
-                                                        0, 
-                                                        len, 
+                                                        0,
+                                                        len,
                                                         0),
                                           ace_result_), int, -1);
 #elif defined (ACE_LACKS_FILELOCKS)
@@ -9680,7 +9680,7 @@ ACE_OS::sigismember (sigset_t *s, int signum)
 {
 #if !defined (ACE_LACKS_SIGSET)
 #if defined (ACE_HAS_SIGISMEMBER_BUG)
-  if (signum < 1 || signum >= ACE_NSIG) 
+  if (signum < 1 || signum >= ACE_NSIG)
     {
       errno = EINVAL ;
       return -1 ;                 // Invalid signum, return error
