@@ -9,6 +9,11 @@ Tue Oct 27 08:22:41 1998  David L. Levine  <levine@cs.wustl.edu>
           put these in #ifndef STHREADS && #ifndef POSIX_SEM protection
           to avoid compiler warnings about unused variable/function.
 
+        * ace/config-sunos5.5.h: added comment to comment out
+          ACE_HAS_REGEX if there are link problems with g++ or egcs on
+          SunOS 5.5.  Thanks to Hakan Kallberg <hk@simulina.se> for
+          reporting this.
+
         * ACE-INSTALL.html: added note about segfault when attempting to
           register a signal handler on LynxOS 3.0.0/PowerPC.
 
