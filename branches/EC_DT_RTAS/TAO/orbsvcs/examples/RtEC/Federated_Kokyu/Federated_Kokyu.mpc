@@ -7,7 +7,7 @@ project(Consumer_EC): orbsvcsexe, rtevent, rtsched, rtschedevent, rtkokyuevent, 
     Kokyu_EC.cpp
     Consumer_EC.cpp
     Consumer.cpp
-    kokyu_dsui_vars.cpp
+    federated_dsui_vars.cpp
   }
 }
 
@@ -21,7 +21,7 @@ project(Supplier_EC): orbsvcsexe, rtevent, rtsched, rtschedevent, rtkokyuevent, 
     Kokyu_EC.cpp
     Supplier_EC.cpp
     Supplier.cpp
-    kokyu_dsui_vars.cpp
+    federated_dsui_vars.cpp
   }
 }
 

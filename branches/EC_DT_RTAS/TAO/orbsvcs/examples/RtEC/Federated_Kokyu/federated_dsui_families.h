@@ -3,7 +3,7 @@
 #ifndef _federated_DSUI_FAMILIES_H
 #define _federated_DSUI_FAMILIES_H
 
-#define NUM_FAMILIES 3
+#define federated_NUM_FAMILIES 3
 
 /* DSUI Family: TEST_ONE
  * "Description"

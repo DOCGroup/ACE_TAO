@@ -30,7 +30,8 @@ FILES = \
   Consumer \
   Kokyu_EC \
   Supplier_EC \
-  Supplier
+  Supplier \
+  federated_dsui_vars
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -75,7 +76,7 @@ all: idl_stubs
 
 # This rule forces make to run the idl_stubs
 # target before building any of the source files.
-FORCED_IDL_STUBS = RtSchedEventChannelC.cpp RtSchedEventChannelS.cpp Consumer.cpp Kokyu_EC.cpp Supplier_EC.cpp Supplier.cpp
+FORCED_IDL_STUBS = RtSchedEventChannelC.cpp RtSchedEventChannelS.cpp Consumer.cpp Kokyu_EC.cpp Supplier_EC.cpp Supplier.cpp federated_dsui_vars.cpp
 endif
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
