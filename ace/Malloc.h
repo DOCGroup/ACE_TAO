@@ -84,11 +84,12 @@ class ACE_Export ACE_Malloc_Header
   //    This is the control block header.  It's used by <ACE_Malloc>
   //    to keep track of each chunk of data when it's in the free
   //    list or in use.
-
 public:
 #if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+# define ACE_POINTER_CAST(PTR) ((PTR).addr ())
   typedef ACE_Based_Pointer<ACE_Malloc_Header> HEADER_PTR;
 #else 
+# define ACE_POINTER_CAST(PTR) ((PTR))
   typedef ACE_Malloc_Header *HEADER_PTR;
 #endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
@@ -112,21 +113,40 @@ public:
 class ACE_Export ACE_Name_Node
 {
   // = TITLE
-  //    This is stored as a linked list within the Memory_Pool
-  //    to allow "named memory chunks."
+  //    This class supports "named memory regions" within <ACE_Malloc>.
+  //
+  // = DESCRIPTION
+  //   Internally, the named memory regions are stored as a linked
+  //   list within the <Memory_Pool>.
 public:
   // = Initialization methods.
-  ACE_Name_Node (const char *name, void *, ACE_Name_Node *);
-  ACE_Name_Node (void);
-  ~ACE_Name_Node (void);
+  ACE_Name_Node (const char *name,
+                 char *,
+                 ACE_Name_Node *);
+  // Constructor.
 
-  char *name_;
+  ACE_Name_Node (const ACE_Name_Node &);
+  // Copy constructor.
+
+  ACE_Name_Node (void);
+  // Constructor.
+
+  ~ACE_Name_Node (void);
+  // Constructor.
+
+  const char *name (void) const;
+  // Return a pointer to the name of this node.
+
+  void name (const char *);
+  // Assign a name;
+
+  ACE_Based_Pointer_Basic<char> name_;
   // Name of the Node.
 
-  void *pointer_;
+  ACE_Based_Pointer_Basic<char> pointer_;
   // Pointer to the contents.
 
-  ACE_Name_Node *next_;
+  ACE_Based_Pointer<ACE_Name_Node> next_;
   // Pointer to the next node in the chain.
 
   void dump (void) const;
@@ -136,13 +156,13 @@ public:
 class ACE_Export ACE_Control_Block
 {
   // = TITLE
-  //    This information is stored in memory allocated by the MEMORY_POOL.
+  //    This information is stored in memory allocated by the <Memory_Pool>.
   //
   // = DESCRIPTION
   //    This class should be local to class ACE_Malloc, but some older
   //    C++ compilers don't like nested classes in templates...
 public:
-  ACE_Name_Node *name_head_;
+  ACE_Based_Pointer<ACE_Name_Node> name_head_;
   // Head of the linked list of Name Nodes.
 
   ACE_Malloc_Header::HEADER_PTR freep_;

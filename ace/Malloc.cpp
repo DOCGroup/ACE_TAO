@@ -29,8 +29,8 @@ ACE_Control_Block::dump (void) const
   ACE_TRACE ("ACE_Control_Block::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  this->name_head_->dump ();
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("freep_ = %x"), (void *) this->freep_));
+  ACE_POINTER_CAST (this->name_head_)->dump ();
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("freep_ = %x"), ACE_POINTER_CAST (this->freep_)));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -41,13 +41,31 @@ ACE_Name_Node::ACE_Name_Node (void)
 }
 
 ACE_Name_Node::ACE_Name_Node (const char *name,
-                              void *ptr,
+                              char *ptr,
                               ACE_Name_Node *next)
   : pointer_ (ptr),
     next_ (next)
 {
   ACE_TRACE ("ACE_Name_Node::ACE_Name_Node");
-  ACE_OS::strcpy (this->name_, name);
+  ACE_OS::strcpy (this->name_.addr (), name);
+}
+
+ACE_Name_Node::ACE_Name_Node (const ACE_Name_Node &)
+{
+  ACE_TRACE ("ACE_Name_Node::ACE_Name_Node");
+  ACE_ASSERT (!"not implemented!");
+}
+
+const char *
+ACE_Name_Node::name (void) const
+{
+  return this->name_.addr ();
+}
+
+void
+ACE_Name_Node::name (const char *)
+{
+  ACE_ASSERT (!"not implemented yet");
 }
 
 void
@@ -56,9 +74,9 @@ ACE_Name_Node::dump (void) const
   ACE_TRACE ("ACE_Name_Node");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("pointer = %x"), this->pointer_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\nnext_ = %x"), this->next_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\nname_ = %s"), this->name_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("pointer = %x"), ACE_POINTER_CAST (this->pointer_)));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\nnext_ = %x"), ACE_POINTER_CAST (this->next_)));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\nname_ = %s"), ACE_POINTER_CAST (this->name_)));
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -92,9 +110,9 @@ ACE_Allocator::instance (void)
           // destroy it.
           static void *allocator_instance = 0;
 
-          // Check this critical assumption.
-          // We put it in a variable first to avoid stupid compiler
-          // warnings that the condition may always be true/false.
+          // Check this critical assumption.  We put it in a variable
+          // first to avoid stupid compiler warnings that the
+          // condition may always be true/false.
 #         if !defined (ACE_NDEBUG)
           int assertion = (sizeof allocator_instance ==
                            sizeof (ACE_New_Allocator));
@@ -212,11 +230,17 @@ template class ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>;
 
 #if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Based_Pointer_Basic<ACE_Malloc_Header>;
+template class ACE_Based_Pointer_Basic<ACE_Name_Node>;
+template class ACE_Based_Pointer_Basic<char>;
 template class ACE_Based_Pointer<ACE_Malloc_Header>;
-template ACE_Based_Pointer<ACE_Malloc_Header> operator+ (const ACE_Based_Pointer<ACE_Malloc_Header> &lhs, long increment);
+template class ACE_Based_Pointer<ACE_Name_Node>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Based_Pointer_Basic<ACE_Malloc_Header>
+#pragma instantiate ACE_Based_Pointer_Basic<ACE_Name_Node>
+#pragma instantiate ACE_Based_Pointer_Basic<char>
 #pragma instantiate ACE_Based_Pointer<ACE_Malloc_Header>
-#pragma instantiate ACE_Based_Pointer<ACE_Malloc_Header> operator+ (const ACE_Based_Pointer<ACE_Malloc_Header> &lhs, long increment)
+#pragma instantiate ACE_Based_Pointer<ACE_Name_Node>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
