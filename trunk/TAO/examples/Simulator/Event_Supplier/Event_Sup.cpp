@@ -184,7 +184,7 @@ Event_Supplier::load_schedule_data
     {
       ACE_NEW (data, Schedule_Viewer_Data);
 
-      char *oper_name = 0;
+      const char *oper_name = 0;
       switch (i % 4)
       {
       case 0:
