@@ -465,25 +465,11 @@ class ACE_RB_Tree_Iterator_Base
 {
   // = TITLE
   //   Implements a common base class for iterators for a Red-Black Tree ADT.
+
 public:
-
-  // = Initialization and termination methods.
-
-  ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,
-                             int set_first);
-  // Constructor.  Takes an ACE_RB_Tree over which to iterate, and
-  // an integer indicating (if non-zero) to position the iterator
-  // at the first element in the tree (if this integer is 0, the
-  // iterator is positioned at the last element in the tree).
-
-  ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter);
-  // Copy constructor.
 
   void operator= (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter);
   // Assignment operator: copies both the tree reference and the position in the tree.
-
-  ~ACE_RB_Tree_Iterator_Base (void);
-  // Destructor.
 
   // = Iteration methods.
 
@@ -512,7 +498,22 @@ public:
 
 protected:
 
-  // = protected methods
+  // = Initialization and termination methods.
+
+  ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,
+                             int set_first);
+  // Constructor.  Takes an ACE_RB_Tree over which to iterate, and
+  // an integer indicating (if non-zero) to position the iterator
+  // at the first element in the tree (if this integer is 0, the
+  // iterator is positioned at the last element in the tree).
+
+  ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter);
+  // Copy constructor.
+
+  ~ACE_RB_Tree_Iterator_Base (void);
+  // Destructor.
+
+  // = Internal methods
 
   int forward_i (void);
   // Move forward by one element in the tree.  Returns 0 when
