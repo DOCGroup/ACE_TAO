@@ -218,51 +218,47 @@ TAO_OutputCDR::adjust (size_t size, size_t align, char*& buf)
       this->current_->wr_ptr (end);
       return 0;
     }
-  else
+
+  if (this->current_->cont () == 0
+      || this->current_->cont ()->size () < size + CDR::MAX_ALIGNMENT)
     {
-      if (this->current_->cont () == 0
-          || this->current_->size () < size + CDR::MAX_ALIGNMENT)
-        {
-          // Allocate the next block, it must be large enough.
-          size_t block_size = CDR::DEFAULT_BUFSIZE;
-          while (block_size < size + CDR::MAX_ALIGNMENT)
-            {
-              if (block_size < CDR::EXP_GROWTH_MAX)
-                block_size *= 2;
-              else
-                block_size += CDR::LINEAR_GROWTH_CHUNK;
-            }
-          this->good_bit_ = 0;
-          ACE_Message_Block* tmp;
-          ACE_NEW_RETURN (tmp, ACE_Message_Block (block_size), -1);
-          this->good_bit_ = 1;
+      // Allocate the next block, it must be large enough.
+      size_t block_size = CDR::DEFAULT_BUFSIZE;
+      while (block_size < size + CDR::MAX_ALIGNMENT)
+	{
+	  if (block_size < CDR::EXP_GROWTH_MAX)
+	    block_size *= 2;
+	  else
+	    block_size += CDR::LINEAR_GROWTH_CHUNK;
+	}
+      this->good_bit_ = 0;
+      ACE_Message_Block* tmp;
+      ACE_NEW_RETURN (tmp, ACE_Message_Block (block_size), -1);
+      this->good_bit_ = 1;
 
-          // The new block must start with the same alignment as the
-          // previous block finished.
-          ptr_arith_t tmpalign =
-            ptr_arith_t(tmp->wr_ptr ()) % CDR::MAX_ALIGNMENT;
-          ptr_arith_t curalign =
-            ptr_arith_t(this->current_->wr_ptr ()) % CDR::MAX_ALIGNMENT;
-          int offset = curalign - tmpalign;
-          if (offset < 0)
-            offset += CDR::MAX_ALIGNMENT;
-          tmp->rd_ptr (offset);
-          tmp->wr_ptr (tmp->rd_ptr ());
+      // The new block must start with the same alignment as the
+      // previous block finished.
+      ptr_arith_t tmpalign =
+	ptr_arith_t(tmp->wr_ptr ()) % CDR::MAX_ALIGNMENT;
+      ptr_arith_t curalign =
+	ptr_arith_t(this->current_->wr_ptr ()) % CDR::MAX_ALIGNMENT;
+      int offset = curalign - tmpalign;
+      if (offset < 0)
+	offset += CDR::MAX_ALIGNMENT;
+      tmp->rd_ptr (offset);
+      tmp->wr_ptr (tmp->rd_ptr ());
 
-          // grow the chain and set the current block.
-          tmp->cont (this->current_->cont ());
-          this->current_->cont (tmp);
-        }
-      this->current_ = this->current_->cont ();
-
-      // Now we are ready to set buf..
-      // recompute the position....
-      buf = ptr_align_binary (this->current_->wr_ptr(), align);
-      this->current_->wr_ptr (buf + size);
-      return 0;
+      // grow the chain and set the current block.
+      tmp->cont (this->current_->cont ());
+      this->current_->cont (tmp);
     }
+  this->current_ = this->current_->cont ();
 
-  ACE_NOTREACHED (this->good_bit_ = 0; return -1);
+  // Now we are ready to set buf..
+  // recompute the position....
+  buf = ptr_align_binary (this->current_->wr_ptr(), align);
+  this->current_->wr_ptr (buf + size);
+  return 0;
 }
 
 ACE_INLINE int
