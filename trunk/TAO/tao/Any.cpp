@@ -60,7 +60,7 @@ CORBA_Any::type (CORBA::TypeCode_ptr tc,
     }
   else
     {
-      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+      env.exception (new CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
     }
 }
 

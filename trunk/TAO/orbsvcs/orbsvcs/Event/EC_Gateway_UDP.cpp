@@ -354,14 +354,14 @@ TAO_ECG_UDP_Sender::send_fragment (const RtecUDPAdmin::UDP_Addr& udp_addr,
       // @@ TODO Use a Event Channel specific exception
       ACE_DEBUG ((LM_DEBUG,
                   "ECG_UDP (%t) send failed %p\n", ""));
-      TAO_THROW(CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+      TAO_THROW(CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
     }
   else if (n == 0)
     {
       // @@ TODO Use a Event Channel specific exception
       ACE_DEBUG ((LM_DEBUG,
                   "ECG_UDP (%t) EOF on send \n"));
-      TAO_THROW(CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+      TAO_THROW(CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
     }
 }
 

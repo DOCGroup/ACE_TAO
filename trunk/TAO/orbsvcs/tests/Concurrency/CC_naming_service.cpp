@@ -44,7 +44,7 @@ CC_naming_service::Init(CORBA::ORB_var orb, CORBA::Environment &TAO_IN_ENV)
 
   int success = init_naming_service ();
   if(success<0)
-    TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
+    TAO_THROW (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 }
 
 CC_naming_service::~CC_naming_service (void)

@@ -257,7 +257,7 @@ TAO_DynUnion_i::to_any (CORBA::Environment& ACE_TRY_ENV)
   ACE_NEW_THROW_EX (retval,
                     CORBA_Any (this->type (ACE_TRY_ENV),
                                in_cdr.start ()),
-                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
   return retval;
 }
@@ -1269,37 +1269,37 @@ TAO_DynUnion_i::get_extractor (CORBA::TCKind kind,
       case CORBA::tk_short:
         ACE_NEW_THROW_EX (retval,
                           DU_Extractor<CORBA::Short>,
-                          CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+                          CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
         ACE_CHECK_RETURN (0);
         return retval;
       case CORBA::tk_long:
         ACE_NEW_THROW_EX (retval,
                           DU_Extractor<CORBA::Long>,
-                          CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+                          CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
         ACE_CHECK_RETURN (0);
         return retval;
       case CORBA::tk_ushort:
         ACE_NEW_THROW_EX (retval,
                           DU_Extractor<CORBA::UShort>,
-                          CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+                          CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
         ACE_CHECK_RETURN (0);
         return retval;
       case CORBA::tk_ulong:
         ACE_NEW_THROW_EX (retval,
                           DU_Extractor<CORBA::ULong>,
-                          CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+                          CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
         ACE_CHECK_RETURN (0);
         return retval;
       case CORBA::tk_boolean:
         ACE_NEW_THROW_EX (retval,
                           DU_Extractor<CORBA::Boolean>,
-                          CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+                          CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
         ACE_CHECK_RETURN (0);
         return retval;
       case CORBA::tk_char:
         ACE_NEW_THROW_EX (retval,
                           DU_Extractor<CORBA::Char>,
-                          CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+                          CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
         ACE_CHECK_RETURN (0);
         return retval;
 
@@ -1308,7 +1308,7 @@ TAO_DynUnion_i::get_extractor (CORBA::TCKind kind,
       case CORBA::tk_longlong:
         ACE_NEW_THROW_EX (retval,
                           DU_Extractor<CORBA::LongLong>,
-                          CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+                          CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 
         ACE_CHECK_RETURN (0);
         return retval;
@@ -1317,19 +1317,19 @@ TAO_DynUnion_i::get_extractor (CORBA::TCKind kind,
       case CORBA::tk_ulonglong:
         ACE_NEW_THROW_EX (retval,
                           DU_Extractor<CORBA::ULongLong>,
-                          CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+                          CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
         ACE_CHECK_RETURN (0);
         return retval;
       case CORBA::tk_wchar:
         ACE_NEW_THROW_EX (retval,
                           WChar_extractor,
-                          CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+                          CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
         ACE_CHECK_RETURN (0);
         return retval;
       case CORBA::tk_enum:
         ACE_NEW_THROW_EX (retval,
                           Enum_extractor,
-                          CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+                          CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
         ACE_CHECK_RETURN (0);
         return retval;
       default:

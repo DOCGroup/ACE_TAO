@@ -101,7 +101,7 @@ void POA_CORBA::Current::_dispatch (CORBA::ServerRequest &req, void *context, CO
   // find the skeleton corresponding to this opname
   if (this->_find (opname, skel) == -1)
   {
-    env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
+    env.exception (new CORBA_BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
   }
 else

@@ -151,7 +151,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   if (node->has_native ()) // native exists => no stub
     {
       if (this->gen_raise_exception (bt, "CORBA::MARSHAL",
-                                     "CORBA::COMPLETED_NO") == -1)
+                                     "TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_operation_cs::"
@@ -170,7 +170,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
 
       // if the stub object was bad, then we raise a system exception
       if (this->gen_raise_exception (bt, "CORBA::INV_OBJREF",
-                                     "CORBA::COMPLETED_NO") == -1)
+                                     "TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_operation_cs::"
@@ -726,7 +726,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
 
       // if marshaling fails, raise exception
       if (this->gen_raise_exception (bt, "CORBA::MARSHAL",
-                                     "CORBA::COMPLETED_NO") == -1)
+                                     "TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_compiled_visitor_operation_cs::"
@@ -780,7 +780,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
 
   if (this->gen_raise_exception (bt,
                                  "CORBA::UNKNOWN",
-                                 "CORBA::COMPLETED_YES") == -1)
+                                 "TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES") == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_compiled_visitor_operation_cs::"
@@ -873,7 +873,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
           << "))" << be_nl;
       // if marshaling fails, raise exception
       if (this->gen_raise_exception (bt, "CORBA::MARSHAL",
-                                     "CORBA::COMPLETED_YES") == -1)
+                                     "TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_compiled_visitor_operation_cs::"

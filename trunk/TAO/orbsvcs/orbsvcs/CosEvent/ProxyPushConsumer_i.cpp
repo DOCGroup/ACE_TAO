@@ -157,7 +157,7 @@ TAO_CosEC_ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier
 
   ACE_NEW_THROW_EX (this->wrapper_,
                     TAO_CosEC_PushSupplierWrapper (push_supplier),
-                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
   ACE_CHECK;
 
   this->proxypushconsumer_->connect_push_supplier (this->wrapper_->_this (ACE_TRY_ENV),

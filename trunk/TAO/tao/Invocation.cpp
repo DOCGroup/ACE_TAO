@@ -135,14 +135,14 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
   // assert (this->stub_ != 0);
 
   if (this->stub_ == 0)
-    ACE_THROW (CORBA::INV_OBJREF (CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA::INV_OBJREF (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 
   // Get a pointer to the connector registry, which might be in
   // thread-specific storage, depending on the concurrency model.
   TAO_Connector_Registry *conn_reg = this->orb_core_->connector_registry ();
 
   if (conn_reg == 0)
-    ACE_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 
   // @@ It seems like this is the right spot to re-order the profiles
   // based on the policies in the ORB.
@@ -171,7 +171,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
       // Try moving to the next profile and starting over, if that
       // fails then we must raise the TRANSIENT exception.
       if (this->stub_->next_profile_retry () == 0)
-        ACE_THROW (CORBA::TRANSIENT (CORBA::COMPLETED_NO));
+        ACE_THROW (CORBA::TRANSIENT (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
     }
 
   const TAO_ObjectKey& key = this->profile_->object_key();
@@ -201,7 +201,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
   if (TAO_GIOP::start_message (message_type,
                                this->out_stream_,
                                this->orb_core_) == 0)
-    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 
   ACE_TIMEPROBE (TAO_GIOP_INVOCATION_START_START_MSG);
 
@@ -243,11 +243,11 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
       break;
 
     default:
-      ACE_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
+      ACE_THROW (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
     }
 
   if (!this->out_stream_.good_bit ())
-    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 
   ACE_TIMEPROBE (TAO_GIOP_INVOCATION_START_REQUEST_HDR);
 }
@@ -322,7 +322,7 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
 {
 
   if (this->transport_ == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO),
+    ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO),
                       TAO_INVOKE_EXCEPTION);
 
   int result =
@@ -417,7 +417,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
       // @@ If a forward exception or a LOCATION_FORWARD reply is sent
       //    then the request couldn't have completed. But we need to
       //    re-validate this to ensure "at most once" semantics.
-      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO),
+      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO),
                         TAO_INVOKE_EXCEPTION);
     }
 
@@ -434,7 +434,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
       // @@ If a forward exception or a LOCATION_FORWARD reply is sent
       //    then the request couldn't have completed. But we need to
       //    re-validate this to ensure "at most once" semantics.
-      ACE_THROW_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO),
+      ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO),
                         TAO_INVOKE_EXCEPTION);
     }
 
@@ -464,7 +464,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   // get created on a per-call basis. For now we'll play it safe.
 
   if (this->stub_->next_profile () == 0)
-    ACE_THROW_RETURN (CORBA::TRANSIENT (CORBA::COMPLETED_NO),
+    ACE_THROW_RETURN (CORBA::TRANSIENT (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO),
                       TAO_INVOKE_EXCEPTION);
 
   return TAO_INVOKE_RESTART;
@@ -500,7 +500,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
           //    failed, but the connection seems to be still
           //    valid!
           // this->transport_->close_connection ();
-          ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES),
+          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                             TAO_INVOKE_EXCEPTION);
         }
 
@@ -530,7 +530,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
           CORBA_Exception *exception;
           ACE_NEW_THROW_EX (exception,
                             CORBA_UnknownUserException (any),
-                            CORBA::NO_MEMORY (CORBA::COMPLETED_YES));
+                            CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
           ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
           // @@ Think about a better way to raise the exception here,
@@ -545,7 +545,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
       // @@ It would seem like if the remote exception is a
       //    UserException we can assume that the request was
       //    completed.
-      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES),
+      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                         TAO_INVOKE_EXCEPTION);
     }
 
@@ -586,7 +586,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
           //    failed, but the connection seems to be still
           //    valid!
           // this->transport_->close_connection ();
-          ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES),
+          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                             TAO_INVOKE_EXCEPTION);
         }
 
@@ -605,7 +605,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
           CORBA::Exception_ptr exception = excepts[i].alloc ();
 
           if (exception == 0)
-            ACE_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_YES),
+            ACE_THROW_RETURN (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                               TAO_INVOKE_EXCEPTION);
 
           this->inp_stream_.decode (exception->_type (),
@@ -627,7 +627,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
       // If we couldn't find the right exception, report it as
       // CORBA::UNKNOWN.
 
-      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES),
+      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                         TAO_INVOKE_EXCEPTION);
     }
 
@@ -736,7 +736,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
       // invocation may perfectly work.
       this->close_connection ();
 
-      ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE),
+      ACE_THROW_RETURN (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
                         TAO_INVOKE_EXCEPTION);
     }
 
@@ -781,7 +781,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
       //    is a problem, but we haven't lost synchronization with the
       //    server or anything.
       this->transport_->close_connection ();
-      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_MAYBE),
+      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
                         TAO_INVOKE_EXCEPTION);
     }
 
@@ -796,7 +796,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
       this->transport_->close_connection ();
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "TAO: (%P|%t) bad Response header\n"));
-      ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE),
+      ACE_THROW_RETURN (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
                         TAO_INVOKE_EXCEPTION);
     }
 
@@ -849,7 +849,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
             //    failed, but the connection seems to be still
             //    valid!
             this->transport_->close_connection ();
-            ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_MAYBE),
+            ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
                               TAO_INVOKE_EXCEPTION);
           }
 
@@ -903,7 +903,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   //    to refactor them.
 
   if (this->transport_ == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO),
+    ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO),
                       TAO_INVOKE_EXCEPTION);
 
   int result =
@@ -923,7 +923,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
       //    works? Or is that something that a higher level component
       //    should decide?  Remember that LocateRequests are part of
       //    the strategy to establish a connection.
-      ACE_THROW_RETURN (CORBA::TRANSIENT (CORBA::COMPLETED_MAYBE),
+      ACE_THROW_RETURN (CORBA::TRANSIENT (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
                         TAO_INVOKE_EXCEPTION);
     }
 
@@ -985,7 +985,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 
       this->close_connection ();
 
-      ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE),
+      ACE_THROW_RETURN (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
                         TAO_INVOKE_EXCEPTION);
     }
 
@@ -1004,7 +1004,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
       this->transport_->close_connection ();
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "TAO: (%P|%t) bad Response header\n"));
-      ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE),
+      ACE_THROW_RETURN (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
                         TAO_INVOKE_EXCEPTION);
     }
 
@@ -1014,7 +1014,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
       break;
 
     case TAO_GIOP_UNKNOWN_OBJECT:
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_YES),
+      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                         TAO_INVOKE_EXCEPTION);
       // NOTREACHED
 

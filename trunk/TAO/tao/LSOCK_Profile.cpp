@@ -389,12 +389,12 @@ TAO_LSOCK_Profile::parse_string (const char *string,
       string += 5;
     }
   else
-    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), 0);
+    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), 0);
 
   if (this->version_.major != TAO_LSOCK_Profile::DEF_LSOCK_MAJOR
       || this->version_.minor  > TAO_LSOCK_Profile::DEF_LSOCK_MINOR)
     {
-      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), -1);
+      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), -1);
     }
 
   // Pull off the "rendezvous_pointname:" part of the objref
@@ -406,7 +406,7 @@ TAO_LSOCK_Profile::parse_string (const char *string,
 
   if (cp == 0)
     {
-      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), -1);
+      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), -1);
     }
 
   if (this->rendezvous_point_)
@@ -435,7 +435,7 @@ TAO_LSOCK_Profile::parse_string (const char *string,
   if (cp == 0)
     {
       CORBA::string_free (this->rendezvous_point_);
-      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), -1);
+      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), -1);
     }
 
   this->object_addr_.set (this->rendezvous_point_);

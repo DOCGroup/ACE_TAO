@@ -62,7 +62,7 @@ Echo_i::echo_string (const char *mesg,
   // raised.
 
   if (str.in () == 0)
-    ACE_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), 0);
+    ACE_THROW_RETURN (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), 0);
 
   // Got thru! now, make a deep copy of the mesg string and send it
   // back to the client.

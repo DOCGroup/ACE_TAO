@@ -27,7 +27,7 @@ TAO_EC_ProxyPushSupplier_Set::connected_i (
       CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->all_suppliers_.insert (supplier) != 0)
-    ACE_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 }
 
 void

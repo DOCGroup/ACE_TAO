@@ -30,7 +30,7 @@ TAO_Time_Service_Server::universal_time (CORBA::Environment &ACE_TRY_ENV)
                                                + ACE_OS::gettimeofday ().usec () * 10),
                              0,
                              0),
-                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CosTime::UTO::_nil ());
 
   ACE_DEBUG ((LM_DEBUG,
@@ -56,7 +56,7 @@ TAO_Time_Service_Server::universal_time (CORBA::Environment &ACE_TRY_ENV)
 CosTime::UTO_ptr
 TAO_Time_Service_Server::secure_universal_time (CORBA::Environment &env)
 {
-  env.exception (new CORBA::NO_IMPLEMENT (CORBA::COMPLETED_NO));
+  env.exception (new CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
   return 0;
 }
 
@@ -74,7 +74,7 @@ TAO_Time_Service_Server::new_universal_time (TimeBase::TimeT time,
                     TAO_UTO (time,
                              inaccuracy,
                              tdf),
-                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CosTime::UTO::_nil ());
 
   return uto->_this ();
@@ -93,7 +93,7 @@ TAO_Time_Service_Server::uto_from_utc (const TimeBase::UtcT &utc,
                     TAO_UTO (utc.time,
                              utc.inacclo + utc.inacchi,
                              utc.tdf),
-                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CosTime::UTO::_nil ());
   return uto->_this ();
 }
@@ -110,7 +110,7 @@ TAO_Time_Service_Server::new_interval (TimeBase::TimeT lower,
   ACE_NEW_THROW_EX (tio,
                     TAO_TIO (lower,
                              upper),
-                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CosTime::TIO::_nil ());
   return tio->_this ();
 }

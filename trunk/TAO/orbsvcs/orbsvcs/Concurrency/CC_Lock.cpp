@@ -46,7 +46,7 @@ CC_Lock::lock (CORBA::Environment &)
   lock_held_++;
 
   //  if (semaphore_.acquire () == -1)
-  //    TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
+  //    TAO_THROW (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 }
 
 CORBA::Boolean
@@ -74,7 +74,7 @@ CC_Lock::try_lock (CORBA::Environment &TAO_IN_ENV)
           return 0;
         }
       else
-        TAO_THROW_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO),
+        TAO_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO),
                           0);
     }
   ACE_DEBUG ((LM_DEBUG,
@@ -95,7 +95,7 @@ CC_Lock::unlock (CORBA::Environment &TAO_IN_ENV)
   int success = 0; //semaphore_.release ();
 
   if (success == -1)
-    TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
+    TAO_THROW (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
 
   lock_held_--;
 
@@ -218,9 +218,9 @@ void CC_LockModeIterator::Next(CORBA::Environment &TAO_IN_ENV)
       current_ = CosConcurrencyControl::write;
       break;
     case CosConcurrencyControl::write:
-      TAO_THROW(CORBA::INTERNAL (CORBA::COMPLETED_NO));
+      TAO_THROW(CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
     default:
-      TAO_THROW(CORBA::INTERNAL (CORBA::COMPLETED_NO));
+      TAO_THROW(CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
     }
 }
 
