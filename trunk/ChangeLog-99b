@@ -1,3 +1,11 @@
+Wed Jun 30 16:31:11 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/Cache_Map_Manager_Test.cpp (purge_test_cache): Solved
+	  VxWorks compiler warnings by declaring ACE_USED_ARG where
+	  needed.
+	* tests/DLL_Test.cpp (cdecl_decoration): Removed "static" off the
+	  method declaration to make VxWorks happy.
+
 Wed Jun 30 16:13:58 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/Future_Set_Test.cpp: Added missing template instantiation
