@@ -3,7 +3,7 @@
     <META NAME="GENERATOR" CONTENT="Adobe PageMill 2.0 Mac">
     <TITLE>Configuring TAO's Components</TITLE>
   </HEAD>
-
+<!-- $Id$ -->
 <BODY text = "#000000"
 link="#000fff"
 vlink="#ff0f0f"
@@ -37,58 +37,133 @@ option).</p>
 <blockquote>
 <P>Details for the following configurations are provided.</P>
 
-<UL>
-<LI><A HREF="#reactive">Single-threaded, reactive model.</A>
-<LI><A HREF="#tpc">Multiple threads, thread-per-connection model.</A>
-<LI><A HREF="#multiorb">Multiple threads, ORB-per-Reactor-thread model.</A>
-<LI><A HREF="#multiorb-tpc">Multiple threads, ORB-per-thread,
-    thread-per-connection model.</A>
-<li><a href="#tpool">Multiple threads, thread-pool model.</a>
-    (Not yet implemented.)
-<li><a href="#multiorb-tpool">Multiple threads,
-    ORB-per-thread, thread-pool model.</a> (Not yet implemented.)
+<UL> 
+  <li><b><a href="#comp">Configurating key components</a>:</b>
+      <ul>
+        <li><a href="#concurrency">Server Concurrency Strategy.</a>
+        <li><a href="#orb">ORB and other resources.</a>
+        <li><a href="#poa">POA.</a>
+        <li><a href="#coltbl">Collocation Table.</a>
+      </ul>
+  <li><b><a href="#examples">Configuration examples</a></b>
+      <ul>
+        <LI><A HREF="#reactive">Single-threaded, reactive model.</A>
+        <LI><A HREF="#tpc">Multiple threads, thread-per-connection model.</A>
+        <LI><A HREF="#multiorb">Multiple threads, ORB-per-Reactor-thread model.</A>
+        <LI><A HREF="#multiorb-tpc">Multiple threads, ORB-per-thread,
+            thread-per-connection model.</A>
+        <li><a href="#tpool">Multiple threads, thread-pool model.</a>
+            (Not yet implemented.)
+        <li><a href="#multiorb-tpool">Multiple threads,
+            ORB-per-thread, thread-pool model.</a> (Not yet implemented.)
+        <li>Each configuration has the following information:</p>
+            
+            <table border=2 width="70%" cellspacing="2" cellpadding="0">
+              <tr align=left>
+                <th> Typical Use </th>
+                <td> A brief description of the scenario and its typical use. </td>
+              </tr>
+
+              <tr align=left>
+                <th>Number of Threads</th>
+                <td>The number of threads used by ORB-related activities.</td>
+              </tr>
+
+              <tr align=left>
+                <th>Thread Creator</th>
+                <td>Identifies the creator of the threads discussed above.</td>
+              </tr>
+
+              <tr align=left>
+                <th>Resource Location</th>
+                <td>Where information on various resources is stored.</td>
+              </tr>
+
+              <tr align=left>
+                <th>Thread task</th>
+                <td>Describes what task is undertaken for each thread.</td>
+              </tr>
+
+              <tr align=left>
+                <th>Options</th>
+                <td>Specifies the options for each service in order to utilize this configuration.</td>
+              </tr>
+            </table>
+      </ul>
 </UL>
 
-<p>Each configuration has the following information:</p>
-
-<p>
-<table border=2 width="90%" cellspacing="2" cellpadding="0">
-<tr>
-<tr align=left>
-  <th>Typical Use</th>
-  <td>A brief description of the scenario and its typical use.</td>
-</tr>
-
-<tr align=left>
-  <th>Number of Threads</th>
-  <td>The number of threads used by ORB-related activities.</td>
-</tr>
-
-<tr align=left>
-  <th>Thread Creator</th>
-  <td>Identifies the creator of the threads discussed above.</td>
-</tr>
-
-<tr align=left>
-  <th>Resource Location</th>
-  <td>Where information on various resources is stored.</td>
-</tr>
-
-<tr align=left>
-  <th>Thread task</th>
-  <td>Describes what task is undertaken for each thread.</td>
-</tr>
-<tr align=left>
-  <th>Options</th>
-  <td>Specifies the options for each service in order to utilize this configuration.</td>
-</tr>
-</table>
-</p>
 
 </blockquote>
 
 <HR><P>
-<H3>Configurations</H3>
+<h3>Configuring key components<a name="comp"></a></h3>
+
+<ul>
+  <li><a name="concurrency">Server concurrency strategy</a> specifies
+      the concurrency strategy an ORB uses.  It says nothing about how
+      many ORBs (or, threads) are there in a process.<p>
+ 
+      <ul>
+        <li><code>reactive</code>: The ORB handles requests
+            reactively, i.e., the ORB runs in one thread and service
+            multiple requests/connections simultaneously using
+            "<code>select</code>" call.  You can have multiple ORBs
+            accepting requests reactively and running in separate
+            threads.<p> 
+
+        <li><code>thread-per-connection</code>: The ORB handles new
+            connections by spawning a new thread whose job is to
+            service requests coming from the connection.  The new
+            threads inherits all properties from the ORB threads (see
+            below.) <p> 
+
+        <li><code>thread-pool</code> (not yet implemented):  ... to be
+            continued ... <p> 
+
+      </ul><p>
+
+  <li><a name="orb">ORB and other resources.</a><p>
+
+      <ul>
+        <li><code>global</code>: There's only one ORB process-wide.
+            ORB_init () must be called only once.  Every thread
+            accesses the same ORB.  <p>  
+
+        <li><code>tss</code>: In this case, the programmer is
+            responsible for spawning the ORB threads.  ORB_init must
+            be called for each ORB threads.  Any ORB spawned thread
+            shares the same resource the spawning ORB uses.<p>
+
+      </ul><p>
+
+  <li><a name="poa">POA.</a>
+      <ul>
+        <li><code>global</code>: All ORBs share the same POA.  The
+            advantage of this setting is that once an object is
+            registered under an ORB, it can be externalized from other
+            ORB.<p>
+
+        <li>per ORB (<code>tss</code>): Each ORB has its own POA,
+            which means, the programmer must also instantiate the POA
+            for each ORB (otherwise, a default RootPOA gets created,
+            which might not be what you what and thus, is discouraged.)<p>
+
+      </ul><p>
+
+  <li><a name="coltbl">Collocation Table.</a>
+      <ul>
+        <li><code>global</code>:<p>
+
+        <LI>per ORB (<code>tss</code>):<p>
+
+      </ul><p>
+
+</ul>
+
+
+
+<HR><P>
+<H3>Configuration Example<a name="examples"></a></H3>
 
 <UL>
 <LI>Single-threaded, reactive model.<A NAME="reactive"></A>
