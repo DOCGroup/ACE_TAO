@@ -1,3 +1,7 @@
+Wed Jan 21 20:49:51 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* TAO version 0.0.54, released Wed Jan 21 20:49:51 1998.
+
 Wed Jan 21 19:38:02 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/encode.cpp, decode.cpp: Fixed alignment problem. Done only
