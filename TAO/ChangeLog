@@ -1,3 +1,37 @@
+Wed Jun 18 16:54:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Event/CRC.h:
+	* orbsvcs/orbsvcs/Event/CRC.cpp: New file for CRC calculation. 
+
+	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.h:
+	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.i:
+	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.h:
+	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.i:
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.h:
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.i:
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Sender.h:
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Sender.inl: This set of checkins
+	  adds a capability to  perform CRC checksum calculations. This is
+	  what it does
+
+	  - The sender calculates the CRC checksum and sends it as part of
+	    the header. The field in the header which is padded, is used
+	    for CRC checksums. 
+
+	  - The receiver after receiving the message calculates the CRC
+	    checksum (ofocurse without the checksum value) and compares
+	    with the one received. 
+
+	 Ofcourse, all of the above ar optional, and can be chosen when
+	 the receiver is created by the create () call. 
+
+	 Thanks to Keith Snively <ksnively@d-a-s.com> and J. Russell
+         Noseworthy" <j.russell.noseworthy@objectsciences.com> for
+	 providing these patches.
+
 Wed Jun 18 16:39:51 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * TAO_IDL/be_include/be_valuetype.h
@@ -5,9 +39,9 @@ Wed Jun 18 16:39:51 2003  George Edwards <g.edwards@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp
         * TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp
 
-        Added mapping of operations of abstract interfaces inherited
-        by concrete interfaces supported by valuetypes to pure
-        virtual methods in the valuetype.
+          Added mapping of operations of abstract interfaces inherited by
+	  concrete interfaces supported by valuetypes to pure virtual
+	  methods in the valuetype. 
 
 Wed Jun 18 16:18:19 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 

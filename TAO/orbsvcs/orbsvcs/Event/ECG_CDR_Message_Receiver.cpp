@@ -2,7 +2,7 @@
 
 #include "ECG_CDR_Message_Receiver.h"
 #include "ECG_CDR_Message_Sender.h"
-
+#include "CRC.h"
 #include "tao/Exception.h"
 #include "ace/SOCK_Dgram.h"
 
@@ -280,6 +280,15 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
                          -1);
     }
 
+  u_int crc = 0;
+
+  if (this->check_crc_)
+    {
+      iov[0].iov_len -= 4;  // don't include crc
+
+      crc = TAO_Event_CRC::compute_crc (iov, 2);
+
+   }
   // Check whether the message is a loopback message.
   if (this->ignore_from_.get () != 0
       && this->ignore_from_->is_loopback (from))
@@ -289,8 +298,43 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
 
   // Decode and validate mcast header.
   Mcast_Header header;
-  if (header.read (header_buf, n) == -1)
+  if (header.read (header_buf, n, this->check_crc_) == -1)
     return -1;
+
+  if ( this->check_crc_ && header.crc != crc)
+    {
+      static unsigned int err_count = 0;
+      ACE_ERROR ((LM_DEBUG,
+                  "******************************\n"));
+
+      ACE_ERROR ((LM_DEBUG,
+                  "ERROR DETECTED \n"));
+
+      if (crc == 0)
+        {
+          ACE_ERROR ((LM_DEBUG,
+                      "Sending process may not have computed CRC \n"));
+        }
+      else
+        {
+          ACE_ERROR ((LM_DEBUG,
+                      " NETWORK CRC CHECKSUM FAILED\n"));
+        }
+
+      ACE_ERROR ((LM_ERROR,
+                  "Message was received from [%s:%s:%d] \n",
+                  from.get_host_name (),
+                  from.get_host_addr (),
+                  from.get_port_number()));
+
+      ACE_ERROR ((LM_ERROR,
+                  "Num errors = %d \n",
+                  ++err_count));
+      ACE_ERROR ((LM_ERROR,
+                  "This is a bad thing. Attempting to ignore ..\n"));
+
+      return 0;
+    }
 
   // Process received data.
   if (header.fragment_count == 1)
@@ -464,7 +508,8 @@ TAO_ECG_CDR_Message_Receiver::get_source_entry (const ACE_INET_Addr &from)
 // ****************************************************************
 int
 TAO_ECG_CDR_Message_Receiver::Mcast_Header::read (char *header,
-                                                  size_t bytes_received)
+                                                  size_t bytes_received,
+                                                  CORBA::Boolean checkcrc)
 {
   // Decode.
   this->byte_order = header[0];
@@ -502,6 +547,21 @@ TAO_ECG_CDR_Message_Receiver::Mcast_Header::read (char *header,
       ACE_ERROR_RETURN ((LM_ERROR,
                         "Error decoding mcast packet header."),
                         -1);
+    }
+
+  if (checkcrc)
+    {
+      CORBA::Octet padding[4];
+      header_cdr.read_octet_array (padding, 4);
+
+      unsigned char *crcparts = (unsigned char *)(&this->crc);
+
+      for (int cnt=0; cnt != 4; ++cnt)
+        {
+          crcparts[cnt] = padding[cnt];
+        }
+
+      this->crc = ntohl (this->crc);
     }
 
   // Validate.

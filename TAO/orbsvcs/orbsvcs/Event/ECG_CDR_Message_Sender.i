@@ -1,9 +1,10 @@
 // $Id$
 
 ACE_INLINE
-TAO_ECG_CDR_Message_Sender::TAO_ECG_CDR_Message_Sender (void)
-  :  endpoint_rptr_ (),
-     mtu_ (TAO_ECG_CDR_Message_Sender::ECG_DEFAULT_MTU)
+TAO_ECG_CDR_Message_Sender::TAO_ECG_CDR_Message_Sender (CORBA::Boolean crc)
+  :  endpoint_rptr_ ()
+     , mtu_ (TAO_ECG_CDR_Message_Sender::ECG_DEFAULT_MTU)
+     , checksum_ (crc)
 {
 }
 
