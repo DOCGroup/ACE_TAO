@@ -143,7 +143,7 @@ Quoter_Client::run (void)
   ACE_CATCHANY
     {
       ACE_ERROR ((LM_ERROR, "Quoter_Client::run - %s\n", exception_message));
-      ACE_TRY_ENV.print_exception ("Quoter_Client::run");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Quoter_Client::run");
       return -1;
     }
   ACE_ENDTRY;
@@ -279,12 +279,12 @@ Quoter_Client::init_naming_service (void)
   ACE_CATCH (CosLifeCycle::NoFactory, excpt)
     {
       ACE_ERROR ((LM_ERROR, "Quoter_Client::run - %s\n", exception_message));
-      ACE_TRY_ENV.print_exception ("Quoter::init_naming_service: No Factory available!");
+      ACE_PRINT_EXCEPTION (excpt, "Quoter::init_naming_service: No Factory available!");
     }
   ACE_CATCHANY
     {
       ACE_ERROR ((LM_ERROR, "Quoter_Client::init_naming_service - %s\n", exception_message));
-      ACE_TRY_ENV.print_exception ("Quoter::init_naming_service");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Quoter::init_naming_service");
       return -1;
     }
   ACE_ENDTRY;
@@ -358,7 +358,7 @@ Quoter_Client::init (int argc, char **argv)
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("Quoter::init");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Quoter::init");
       return -1;
     }
   ACE_ENDTRY;

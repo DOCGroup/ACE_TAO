@@ -557,63 +557,59 @@ CORBA_Object_ptr
 CORBA_ORB::resolve_implrepo_service (ACE_Time_Value *timeout,
                                      CORBA::Environment& ACE_TRY_ENV)
 {
-  // First check to see if we've already initialized this.
-  if (this->implrepo_service_ == CORBA_Object::_nil ())
-    {
-      ACE_CString implrepo_service_ior =
-        this->orb_core_->orb_params ()->implrepo_service_ior ();
+    CORBA_Object_var return_value = CORBA_Object::_nil ();
 
-      // Second, check to see if the user has give us a parameter on
-      // the command-line.
-      if (implrepo_service_ior.length () == 0)
-        // Third, check to see if the user has an environment variable.
-        implrepo_service_ior = ACE_OS::getenv ("ImplRepoServiceIOR");
+    // First check to see if we've already initialized this.
+    if (this->implrepo_service_ != CORBA_Object::_nil ())
+      {
+        return_value = this->implrepo_service_;
+      }
+    else
+      {
+        ACE_CString implrepo_service_ior =
+          this->orb_core_->orb_params ()->implrepo_service_ior ();
 
-      if (implrepo_service_ior.length () != 0)
-        {
-          ACE_TRY
-            {
-              this->implrepo_service_ =
-                this->string_to_object (implrepo_service_ior.c_str (),
-                                        ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-            }
-          ACE_CATCHANY
-            {
-              this->implrepo_service_ = CORBA_Object::_nil ();
+        // Second, check to see if the user has give us a parameter on
+        // the command-line.
+        if (implrepo_service_ior.length () == 0)
+          // Third, check to see if the user has an environment variable.
+          implrepo_service_ior = ACE_OS::getenv ("ImplRepoServiceIOR");
 
-              ACE_RETHROW;
-            }
-          ACE_ENDTRY;
-          ACE_CHECK_RETURN (CORBA_Object::_duplicate (this->implrepo_service_));
-        }
-      else
-        {
-          // First, determine if the port was supplied on the command line
-          // @@ FRED: need a generic rep for this!
-          u_short port =
-            this->orb_core_->orb_params ()->implrepo_service_port ();
+        if (implrepo_service_ior.length () != 0)
+          {
+            return_value =
+              this->string_to_object (implrepo_service_ior.c_str (), ACE_TRY_ENV);
+            ACE_CHECK_RETURN (CORBA_Object::_nil ());
+          }
+        else
+          {
+            // First, determine if the port was supplied on the command line
+            // @@ FRED: need a generic rep for this!
+            u_short port =
+              this->orb_core_->orb_params ()->implrepo_service_port ();
 
-          if (port == 0)
-            {
-              // Look for the port among our environment variables.
-              const char *port_number = ACE_OS::getenv ("ImplRepoServicePort");
+            if (port == 0)
+              {
+                // Look for the port among our environment variables.
+                const char *port_number = ACE_OS::getenv ("ImplRepoServicePort");
 
-              if (port_number != 0)
-                port = ACE_OS::atoi (port_number);
-              else
-                port = TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT;
-            }
+                if (port_number != 0)
+                  port = ACE_OS::atoi (port_number);
+                else
+                  port = TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT;
+              }
 
-          this->implrepo_service_ =
-            this->multicast_to_service ("ImplRepoService",
-                                        port,
-                                        timeout,
-                                        ACE_TRY_ENV);
-        }
-    }
+            return_value =
+              this->multicast_to_service ("ImplRepoService",
+                                          port,
+                                          timeout,
+                                          ACE_TRY_ENV);
+            ACE_CHECK_RETURN (CORBA_Object::_nil ());
+          }
+        this->implrepo_service_ = return_value.ptr ();
+      }
 
-  return CORBA_Object::_duplicate (this->implrepo_service_);
+    return CORBA_Object::_duplicate (return_value._retn ());
 }
 
 int

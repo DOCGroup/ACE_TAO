@@ -47,7 +47,7 @@ Time_Client_i::run (const char *name,
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("\tException");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "\tException");
       return -1;
     }
   ACE_ENDTRY;
