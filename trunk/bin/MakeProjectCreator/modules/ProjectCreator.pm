@@ -160,6 +160,8 @@ sub new {
   $self->{'defaulted'}             = {};
   $self->{'custom_types'}          = {};
   $self->{'feature_parser'}        = new FeatureParser($gfeature, $feature);
+  $self->{'convert_slashes'}       = $self->convert_slashes();
+  $self->{'sort_files'}            = $self->sort_files();
   $self->reset_generating_types();
 
   return $self;
@@ -991,8 +993,8 @@ sub generate_default_pch_filenames {
   if (!defined $self->get_assignment('pch_header')) {
     my($count)    = 0;
     my($matching) = undef;
-    foreach my $file (@$files) {
-      foreach my $ext (@{$self->{'valid_components'}->{'header_files'}}) {
+    foreach my $ext (@{$self->{'valid_components'}->{'header_files'}}) {
+      foreach my $file (@$files) {
         if ($file =~ /(.*_pch$ext)/) {
           $self->process_assignment('pch_header', $1);
           ++$count;
@@ -1011,8 +1013,8 @@ sub generate_default_pch_filenames {
   if (!defined $self->get_assignment('pch_source')) {
     my($count)    = 0;
     my($matching) = undef;
-    foreach my $file (@$files) {
-      foreach my $ext (@{$self->{'valid_components'}->{'source_files'}}) {
+    foreach my $ext (@{$self->{'valid_components'}->{'source_files'}}) {
+      foreach my $file (@$files) {
         if ($file =~ /(.*_pch$ext)/) {
           $self->process_assignment('pch_source', $1);
           ++$count;
@@ -1052,7 +1054,7 @@ sub remove_extra_pch_listings {
     if (defined $pch) {
       ## If we are converting slashes, then we need to
       ## convert the pch file back to forward slashes
-      if ($self->convert_slashes()) {
+      if ($self->{'convert_slashes'}) {
         $pch =~ s/\\/\//g;
       }
 
@@ -1381,7 +1383,7 @@ sub list_generated_file {
     foreach my $gen (@gen) {
       ## If we are converting slashes, then we need to
       ## convert the component back to forward slashes
-      if ($self->convert_slashes()) {
+      if ($self->{'convert_slashes'}) {
         $gen =~ s/\\/\//g;
       }
 
@@ -1423,7 +1425,11 @@ sub add_corresponding_component_files {
     foreach my $name (keys %$names) {
       my($comps) = $$names{$name};
       foreach my $comp (keys %$comps) {
-        push(@all, @{$$comps{$comp}});
+        foreach my $sfile (@{$$comps{$comp}}) {
+          my($scopy) = $sfile;
+          $scopy =~ s/\.[^\.]+$//;
+          push(@all, $scopy);
+        }
       }
     }
   }
@@ -1432,8 +1438,9 @@ sub add_corresponding_component_files {
   my($names) = $self->{$tag};
 
   foreach my $ext (@{$self->{'valid_components'}->{$tag}}) {
-    $ext =~ s/\\//g;
-    push(@exts, $ext);
+    my($ecpy) = $ext;
+    $ecpy =~ s/\\//g;
+    push(@exts, $ecpy);
   }
 
   foreach my $name (keys %$names) {
@@ -1441,24 +1448,21 @@ sub add_corresponding_component_files {
     foreach my $comp (keys %$comps) {
       my($array) = $$comps{$comp};
       foreach my $sfile (@all) {
-        my($found) = 0;
-        my($scopy) = $sfile;
-        $scopy =~ s/\.[^\.]+$//;
+        my($found)   = 0;
+        my(%scfiles) = ();
+        foreach my $ext (@exts) {
+          $scfiles{"$sfile$ext"} = 1;
+        }
         foreach my $file (@$array) {
-          foreach my $ext (@exts) {
-            if ("$scopy$ext" eq $file) {
-              $found = 1;
-              last;
-            }
-            if ($found) {
-              last;
-            }
+          if (defined $scfiles{$file}) {
+            $found = 1;
+            last;
           }
         }
 
         if (!$found) {
           foreach my $ext (@exts) {
-            my($built) = "$scopy$ext";
+            my($built) = "$sfile$ext";
             if (-r $built) {
                push(@$array, $built);
                $found = 1;
@@ -1468,7 +1472,7 @@ sub add_corresponding_component_files {
 
           if (!$found) {
             foreach my $gentype (keys %{$self->{'generated_exts'}}) {
-              $self->list_generated_file($gentype, $tag, $array, $scopy);
+              $self->list_generated_file($gentype, $tag, $array, $sfile);
             }
           }
         }
@@ -1600,13 +1604,13 @@ sub get_component_list {
     }
   }
 
-  if ($self->convert_slashes()) {
+  if ($self->{'convert_slashes'}) {
     for(my $i = 0; $i <= $#list; $i++) {
       $list[$i] = $self->slash_to_backslash($list[$i]);
     }
   }
 
-  if ($self->sort_files()) {
+  if ($self->{'sort_files'}) {
     @list = sort { $self->file_sorter($a, $b) } @list;
   }
 
@@ -1636,7 +1640,7 @@ sub check_custom_output {
         }
         else {
           my($base) = $built;
-          if ($self->convert_slashes()) {
+          if ($self->{'convert_slashes'}) {
             $base =~ s/\\/\//g;
           }
           my($re) = $self->escape_regex_special(basename($base));
