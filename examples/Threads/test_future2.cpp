@@ -214,7 +214,7 @@ Scheduler::svc (void)
     {
       // Dequeue the next method object (we use an auto pointer in
       // case an exception is thrown in the <call>).
-      auto_ptr<ACE_Method_Object> mo (this->activation_queue_.dequeue ());
+      ACE_Auto_Ptr<ACE_Method_Object> mo (this->activation_queue_.dequeue ());
 
       ACE_DEBUG ((LM_DEBUG, " (%t) calling method object\n"));
       // Call it.
@@ -275,7 +275,7 @@ Scheduler::name (void)
 	  // This scheduler is inactive... so we execute the user
 	  // request right away...
 	
-	  auto_ptr<ACE_Method_Object> mo (new Method_Object_name (this, new_future));
+	  ACE_Auto_Ptr<ACE_Method_Object> mo (new Method_Object_name (this, new_future));
 
 	  mo->call ();
 	  // Smart pointer destructor automatically deletes mo.
@@ -300,7 +300,7 @@ Scheduler::work (float newparam, int newcount)
 
       if (this->thr_count () == 0) 
 	{
-	  auto_ptr<ACE_Method_Object> mo 
+	  ACE_Auto_Ptr<ACE_Method_Object> mo 
 	    (new Method_Object_work (this, newparam, newcount, new_future));
 	  mo->call ();
 	  // Smart pointer destructor automatically deletes it.
