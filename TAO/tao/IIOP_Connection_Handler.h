@@ -26,6 +26,7 @@
 #include "tao/Wait_Strategy.h"
 #include "tao/Connection_Handler.h"
 #include "tao/IIOP_Transport.h"
+#include "tao/IIOPC.h"
 
 // Forward Decls
 class TAO_Pluggable_Messaging;
@@ -48,6 +49,7 @@ public:
   int recv_buffer_size;
   int no_delay;
 };
+
 
 
 // ****************************************************************
@@ -121,6 +123,8 @@ public:
   /// Add ourselves to Cache.
   int add_handler_to_cache (void);
 
+  /// Process the <listen_list>
+  int process_listen_point_list (IIOP::ListenPointList &listen_list);
 protected:
 
   /// = Event Handler overloads

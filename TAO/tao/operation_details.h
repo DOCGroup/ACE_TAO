@@ -13,10 +13,16 @@
 #ifndef TAO_OPERATION_DETAILS_H
 #define TAO_OPERATION_DETAILS_H
 #include "ace/pre.h"
-
 #include "tao/corbafwd.h"
-#include "tao/IOPC.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+
+#include "tao/Service_Context.h"
 #include "tao/target_specification.h"
+
 
 // @@ Bala: Why is this not part of the RequestHeader?!
 /**
@@ -29,6 +35,7 @@
  * infancy now but I expect     this one to grow as we come with
  * different varieties of use cases.
  */
+
 class TAO_Export TAO_Operation_Details
 {
 public:
@@ -57,6 +64,10 @@ public:
   /// Get the service context list
   IOP::ServiceContextList &service_info (void);
   const IOP::ServiceContextList &service_info (void) const;
+
+  /// Access the TAO_Service_Context
+  TAO_Service_Context &service_context (void);
+  const TAO_Service_Context &service_context (void) const;
 
   void request_id (CORBA::ULong id);
 
@@ -93,9 +104,9 @@ private:
   /// Response flags
   CORBA::Octet response_flags_;
 
-  /// The ServiceContextList sent to the        server side.  Only valid
+  /// The ServiceContextList sent to the server side.  Only valid
   /// when sending a request.
-  IOP::ServiceContextList service_info_;
+  TAO_Service_Context service_info_;
 
   // The first element of header is service context list;
   // transactional context would be acquired here using the
@@ -103,7 +114,7 @@ private:
   // undefined.
   //
 
-  /// Addressing        mode for this request.
+  /// Addressing  mode for this request.
   TAO_Target_Specification::TAO_Target_Address addressing_mode_;
 };
 

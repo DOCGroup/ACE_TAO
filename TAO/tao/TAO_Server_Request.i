@@ -83,14 +83,27 @@ TAO_ServerRequest::object_key (void)
 ACE_INLINE IOP::ServiceContextList &
 TAO_ServerRequest::service_info (void)
 {
-  return this->service_info_;
+  return this->service_context_.service_info ();
 }
 
 ACE_INLINE void
 TAO_ServerRequest::service_info (IOP::ServiceContextList &service_info)
 {
-  this->service_info_ = service_info;
+  this->service_context_.service_info () = service_info;
 }
+
+ACE_INLINE TAO_Service_Context &
+TAO_ServerRequest::service_context (void)
+{
+  return this->service_context_;
+}
+
+ACE_INLINE TAO_Transport *
+TAO_ServerRequest::transport (void)
+{
+  return this->transport_;
+}
+
 
 ACE_INLINE CORBA::ULong
 TAO_ServerRequest::request_id (void)

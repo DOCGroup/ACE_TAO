@@ -28,6 +28,19 @@ TAO_ORB_Core::connection_cache (void)
   return this->connection_cache_;
 }
 
+ACE_INLINE CORBA::Boolean
+TAO_ORB_Core::bidir_giop_policy (void)
+{
+  return this->bidir_giop_policy_;
+}
+
+ACE_INLINE void
+TAO_ORB_Core::bidir_giop_policy (CORBA::Boolean val)
+{
+  this->bidir_giop_policy_ = val;
+}
+
+
 ACE_INLINE TAO_Object_Ref_Table &
 TAO_ORB_Core::object_ref_table (void)
 {
@@ -704,7 +717,7 @@ TAO_ORB_Core::add_interceptor (
    CORBA_Environment &ACE_TRY_ENV)
 {
   this->ior_interceptors_.add_interceptor (interceptor,
-					   ACE_TRY_ENV);
+                                           ACE_TRY_ENV);
 }
 
 ACE_INLINE TAO_IORInterceptor_List::TYPE &

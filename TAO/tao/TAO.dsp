@@ -404,6 +404,82 @@ SOURCE=.\Base_Connection_Property.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\BiDir_ORBInitializer.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDir_Policy_i.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDir_PolicyFactory.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDirPolicyC.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Bind_Dispatcher_Guard.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -1469,6 +1545,25 @@ SOURCE=.\IIOP_Profile.cpp
 # Begin Source File
 
 SOURCE=.\IIOP_Transport.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOPC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -2798,6 +2893,25 @@ SOURCE=.\Service_Callbacks.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Service_Context.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Services.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3389,6 +3503,22 @@ SOURCE=.\Base_Connection_Property.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\BiDir_ORBInitializer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDir_Policy_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDir_PolicyFactory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDirPolicyC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Bind_Dispatcher_Guard.h
 # End Source File
 # Begin Source File
@@ -3638,6 +3768,10 @@ SOURCE=.\IIOP_Profile.h
 # Begin Source File
 
 SOURCE=.\IIOP_Transport.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOPC.h
 # End Source File
 # Begin Source File
 
@@ -3949,6 +4083,10 @@ SOURCE=.\Service_Callbacks.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Service_Context.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Services.h
 # End Source File
 # Begin Source File
@@ -4121,6 +4259,14 @@ SOURCE=.\Base_Connection_Property.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\BiDir_Policy_i.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDirPolicyC.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Bind_Dispatcher_Guard.i
 # End Source File
 # Begin Source File
@@ -4142,10 +4288,6 @@ SOURCE=.\cdr.i
 # Begin Source File
 
 SOURCE=.\Client_Priority_Policy.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ClientRequestInfo.inl
 # End Source File
 # Begin Source File
 
@@ -4318,6 +4460,10 @@ SOURCE=.\IIOP_Profile.i
 # Begin Source File
 
 SOURCE=.\IIOP_Transport.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOPC.i
 # End Source File
 # Begin Source File
 
@@ -4550,6 +4696,10 @@ SOURCE=.\Sequence_T.i
 # Begin Source File
 
 SOURCE=.\Service_Callbacks.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Service_Context.inl
 # End Source File
 # Begin Source File
 

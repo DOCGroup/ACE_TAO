@@ -1,3 +1,131 @@
+Fri Dec 15 20:59:49 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	This set of changes are for the support of BiDirGIOP in TAO.
+
+	* tao/BiDirPolicy.pidl:
+	* tao/BiDirPolicyC.cpp:
+	* tao/BiDirPolicyC.h:
+	* tao/BiDirPolicyC.i: The generated code and the pidl file for
+	  BiDirGIOP policy.
+
+	* tao/BiDir_ORBInitializer.cpp:
+	* tao/BiDir_ORBInitializer.h: The ORB initialiser that registers
+	  the policy factory with the PortableInterceptor.
+
+	* tao/BiDir_PolicyFactory.cpp:
+	* tao/BiDir_PolicyFactory.h: The PolicyFactory implementation for
+	  BiDirGIOP policy
+
+	* tao/BiDir_Policy_i.cpp:
+	* tao/BiDir_Policy_i.h:
+	* tao/BiDir_Policy_i.inl: The actual policy implementation for
+	  BiDirGIOP policy
+
+	* tao/Connection_Descriptor_Interface.h:
+	* tao/Connection_Descriptor_Interface.inl: Added a flag to
+	  indicate a BiDirectional connection. Provided a method to set
+	  the flag if the connection is bidirectional.
+
+	* tao/Connection_Handler.cpp:
+	* tao/Connection_Handler.h: Added a method recache_handler
+	  (). This method purges the previous entry and caches itself with
+	  new properties.
+
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Base.h: Added a method
+	  is_ready_for_bidirectional (). This method checks whether the
+	  messaging object is ready for bidirectional connections. This is
+	  done by actually delegating to the generator and parser class.
+
+	* tao/GIOP_Message_Generator_Parser.cpp:
+	* tao/GIOP_Message_Generator_Parser.h: Implementation for
+	  is_ready_for_bidirectional ().
+
+	* tao/GIOP_Message_Generator_Parser_12.cpp:
+	* tao/GIOP_Message_Generator_Parser_12.h: Other than the
+	  implementation of is_ready_for_bidirectional () added methods
+	  check_bidirectional_context () and process_bidirectional_context
+	  (). These methods as the name implies, checks whether there is a
+	  bidirectional context info in the request that came in.
+
+	* tao/GIOP_Message_Lite.cpp:
+	* tao/GIOP_Message_Lite.h: Implementation for
+	  is_ready_for_bidirectional ().
+
+	* tao/IIOP.pidl:
+	* tao/IIOPC.cpp:
+	* tao/IIOPC.h:
+	* tao/IIOPC.i: Generated code for IIOP module that has the
+	  definition for ListenPointList that needs to be sent with the
+	  service context to the server.
+
+	* tao/IIOP_Acceptor.h:
+	* tao/IIOP_Acceptor.i: Added a method endpoints () that returns
+	  the array of endpoints on which the acceptor is listening on.
+
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/IIOP_Connection_Handler.h: Added a method,
+	  process_listen_point_list (). This method finds out the port and
+	  host for which the connection needs to be used and recaches the
+	  handle with this new endpoint specification.
+
+	* tao/IIOP_Transport.cpp:
+	* tao/IIOP_Transport.h: Added the following methods
+	  tear_listen_point_list (), set_bidir_context_info () and
+	  get_listen_point (). The method tear_listen_point_list ()
+	  extracts the ListenPointList from the CDR stream of the seervice
+	  context. It then passes that information to the connection
+	  handler. The method set_bidir_context_info () sets the service
+	  context information that needs to be sent to
+	  server. get_listen_point () gets the list of endpoints on the
+	  same interface on which the clients connection is
+	  established. Added a flag to indicate that the BiDirContext info
+	  has already been sent on the connection.
+
+	* tao/Invocation.cpp: Left some comments for RT folks.
+
+	* tao/ORB.cpp: Registered the BiDirORB initializer with the
+	  PortableInterceptor.
+
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i: Added a a flag bidir_giop_policy () to indicate
+	  that BiDir GIOP policy has been set.
+
+	* tao/Pluggable.cpp:
+	* tao/Pluggable.h: Added a tear_listen_point_list () as a virtual
+	  method.
+
+	* tao/Pluggable_Messaging.h: Added a pure virtual method,
+	  is_ready_for_bidirectional ().
+
+	* tao/Service_Context.cpp:
+	* tao/Service_Context.h:
+	* tao/Service_Context.inl: A new class that would do the parsing,
+	  encoding, decoding and addition of contexts to the service
+	  context list. This class introduces quite a few changes for the
+	  RT folks.
+
+	* tao/TAO_Server_Request.cpp:
+	* tao/TAO_Server_Request.h:
+	* tao/TAO_Server_Request.i: Changed the reference of a service
+	  context list to TAO_Service_Context. Have left the old methods
+	  that return service_context_list as such so that we can clean up
+	  the stuff.
+
+	* tao/corba.h: Added the new file BiDirPolicyC.h.
+
+	* tao/operation_details.h:
+	* tao/operation_details.i: Chaged the reference of
+	  service_context_lsit to TAO_Service_Context.
+
+	* tao/POA.cpp: Parsing of BiDirPolicy. This parsing is a bit of a
+	  hack. It just parses the policy and sets a flag in the
+	  ORB_Core. This needs to change when the POA gets upgraded for RT
+	  and RT folks have agreed to do it.
+
+	* tao/Makefile: Added new files and updated dependencies.
+
 Fri Dec 15 15:17:12 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/LoadBalancing/Makefile:
