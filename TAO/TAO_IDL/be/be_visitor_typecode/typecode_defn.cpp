@@ -635,6 +635,7 @@ be_visitor_typecode_defn::visit_union_branch (be_union_branch *node)
       // error
       break;
     }
+
   ACE_ERROR_RETURN ((LM_ERROR,
                      ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn::")
                      ASYS_TEXT ("visit - bad sub state ")
@@ -1818,155 +1819,176 @@ be_visitor_typecode_defn::gen_encapsulation (be_union_branch *node)
        i < node->label_list_length ();
        ++i)
     {
-      os->indent ();
-  
-      // emit the case label value
-      if (node->label (i)->label_kind () == AST_UnionLabel::UL_label)
+      // Has the typecode for this member already been generated?
+      if (node->tc_generated () == 0)
         {
-          AST_Expression *expression = node->label (i)->label_val ();
-          AST_Expression::AST_ExprValue *ev = expression->ev ();
-          switch (ub->udisc_type ()) 
+          node->tc_generated (1);
+          os->indent ();
+  
+          // emit the case label value
+          if (node->label (i)->label_kind () == AST_UnionLabel::UL_label)
             {
-            case AST_Expression::EV_char:
-              os->print ("ACE_IDL_NCTOHL (0x%02.2x)", (unsigned char)ev->u.cval);
-              // size of char aligned to 4 bytes
-              this->tc_offset_ += sizeof (ACE_CDR::ULong);
-              break;
-            case AST_Expression::EV_bool:
-              os->print ("ACE_IDL_NCTOHL (0x%02.2x)", (unsigned char)ev->u.bval);
-              // size of bool aligned to 4 bytes
-              this->tc_offset_ += sizeof (ACE_CDR::ULong);
-              break;
-            case AST_Expression::EV_wchar:
-            case AST_Expression::EV_short:
-              os->print ("ACE_IDL_NSTOHL (0x%04.4x)", (unsigned short)ev->u.sval);
-              // size of short/wchar aligned to 4 bytes
-              this->tc_offset_ += sizeof (ACE_CDR::ULong);
-              break;
+              AST_Expression *expression = node->label (i)->label_val ();
+              AST_Expression::AST_ExprValue *ev = expression->ev ();
+              switch (ub->udisc_type ()) 
+                {
+                case AST_Expression::EV_char:
+                  os->print ("ACE_IDL_NCTOHL (0x%02.2x)", 
+                             (unsigned char)ev->u.cval);
+                  // size of char aligned to 4 bytes
+                  this->tc_offset_ += sizeof (ACE_CDR::ULong);
+                  break;
+                case AST_Expression::EV_bool:
+                  os->print ("ACE_IDL_NCTOHL (0x%02.2x)", 
+                             (unsigned char)ev->u.bval);
+                  // size of bool aligned to 4 bytes
+                  this->tc_offset_ += sizeof (ACE_CDR::ULong);
+                  break;
+                case AST_Expression::EV_wchar:
+                case AST_Expression::EV_short:
+                  os->print ("ACE_IDL_NSTOHL (0x%04.4x)", 
+                             (unsigned short)ev->u.sval);
+                  // size of short/wchar aligned to 4 bytes
+                  this->tc_offset_ += sizeof (ACE_CDR::ULong);
+                  break;
 
-            case AST_Expression::EV_ushort:
-              os->print ("ACE_IDL_NSTOHL (0x%04.4x)", (unsigned short)ev->u.usval);
-              // size of unsigned short aligned to 4 bytes
-              this->tc_offset_ += sizeof (ACE_CDR::ULong);
-              break;
+                case AST_Expression::EV_ushort:
+                  os->print ("ACE_IDL_NSTOHL (0x%04.4x)", 
+                             (unsigned short)ev->u.usval);
+                  // size of unsigned short aligned to 4 bytes
+                  this->tc_offset_ += sizeof (ACE_CDR::ULong);
+                  break;
 
-            case AST_Expression::EV_long:
-              os->print ("0x%08.8x", (unsigned long)ev->u.lval);
-              // size of long aligned to 4 bytes
-              this->tc_offset_ += sizeof (ACE_CDR::ULong);
-              break;
+                case AST_Expression::EV_long:
+                  os->print ("0x%08.8x", (unsigned long)ev->u.lval);
+                  // size of long aligned to 4 bytes
+                  this->tc_offset_ += sizeof (ACE_CDR::ULong);
+                  break;
 
-            case AST_Expression::EV_ulong:
-              os->print ("0x%08.8x", ev->u.ulval);
-              // size of unsigned long aligned to 4 bytes
-              this->tc_offset_ += sizeof (ACE_CDR::ULong);
-              break;
+                case AST_Expression::EV_ulong:
+                  os->print ("0x%08.8x", ev->u.ulval);
+                  // size of unsigned long aligned to 4 bytes
+                  this->tc_offset_ += sizeof (ACE_CDR::ULong);
+                  break;
 
-            case AST_Expression::EV_any:
-              // enum
-              os->print ("0x%08.8x", (unsigned long)ev->u.eval);
-              // size of any aligned to 4 bytes
-              this->tc_offset_ += sizeof (ACE_CDR::ULong);
-              break;
+                case AST_Expression::EV_any:
+                  // enum
+                  os->print ("0x%08.8x", (unsigned long)ev->u.eval);
+                  // size of any aligned to 4 bytes
+                  this->tc_offset_ += sizeof (ACE_CDR::ULong);
+                  break;
 
-            case AST_Expression::EV_ulonglong:
-            case AST_Expression::EV_longlong:
-              // unimplemented yet
+                case AST_Expression::EV_ulonglong:
+                case AST_Expression::EV_longlong:
+                  // unimplemented yet
 
-            default:
-              ACE_ERROR_RETURN ((LM_DEBUG,
-                                 "be_union_branch: (%N:%l) Label value "
-                                 "type (%d) is invalid\n", ev->et), -1);
-              ACE_NOTREACHED (break;)
+                default:
+                  ACE_ERROR_RETURN ((LM_DEBUG,
+                                     "be_union_branch: (%N:%l) Label value "
+                                     "type (%d) is invalid\n", ev->et), -1);
+                  ACE_NOTREACHED (break;)
+                }
+
+              *os << ", // union case label (evaluated value)" << be_nl;
+            }
+          else
+            {
+              // default case
+              be_union::DefaultValue dv;
+              if (ub->default_value (dv) == -1)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "(%N:%l) be_visitor_typecode::"
+                                     "gen_encapsulation (union_branch) - "
+                                     "computing default value failed\n"),
+                                    -1);
+                }
+
+              switch (ub->udisc_type ())
+                {
+                case AST_Expression::EV_char:
+                  os->print ("ACE_IDL_NCTOHL (0x%02.2x)", 
+                             (unsigned char)dv.u.char_val);
+                  // size of bool/char aligned to 4 bytes
+                  this->tc_offset_ += sizeof (ACE_CDR::ULong);
+                  break;
+                case AST_Expression::EV_bool:
+                  os->print ("ACE_IDL_NCTOHL (0x%02.2x)", 
+                             (unsigned char)dv.u.bool_val);
+                  // size of bool/char aligned to 4 bytes
+                  this->tc_offset_ += sizeof (ACE_CDR::ULong);
+                  break;
+                case AST_Expression::EV_wchar:
+                case AST_Expression::EV_short:
+                  os->print ("ACE_IDL_NSTOHL (0x%04.4x)", 
+                             (unsigned short)dv.u.short_val);
+                  // size of short/wchar aligned to 4 bytes
+                  this->tc_offset_ += sizeof (ACE_CDR::ULong);
+                  break;
+
+                case AST_Expression::EV_ushort:
+                  os->print ("ACE_IDL_NSTOHL (0x%04.4x)", 
+                             (unsigned short)dv.u.ushort_val);
+                  // size of short/wchar aligned to 4 bytes
+                  this->tc_offset_ += sizeof (ACE_CDR::ULong);
+                  break;
+
+                case AST_Expression::EV_long:
+                  os->print ("0x%08.8x", (unsigned long)dv.u.long_val);
+                  // size of short/wchar aligned to 4 bytes
+                  this->tc_offset_ += sizeof (ACE_CDR::ULong);
+                  break;
+
+                case AST_Expression::EV_ulong:
+                  os->print ("0x%08.8x", (unsigned long)dv.u.ulong_val);
+                  // size of short/wchar aligned to 4 bytes
+                  this->tc_offset_ += sizeof (ACE_CDR::ULong);
+                  break;
+
+                case AST_Expression::EV_any:
+                  // enum
+                  os->print ("0x%08.8x", (unsigned long)dv.u.enum_val);
+                  // size of short/wchar aligned to 4 bytes
+                  this->tc_offset_ += sizeof (ACE_CDR::ULong);
+                  break;
+
+                case AST_Expression::EV_ulonglong:
+                case AST_Expression::EV_longlong:
+                  // unimplemented yet
+
+                default:
+                  ACE_ERROR_RETURN ((LM_DEBUG,
+                                     "be_union_branch: (%N:%l) Label value "
+                                     "type (%d) is invalid\n", 
+                                     ub->udisc_type ()), 
+                                    -1);
+                  ACE_NOTREACHED (break;)
+                }
+
+              *os << ", // union default label (evaluated value)" << be_nl;        
             }
 
-          *os << ", // union case label (evaluated value)" << be_nl;
+          // emit name
+          this->gen_name (node);
+
+          // hand over code generation to our type node
+          bt = be_type::narrow_from_decl (node->field_type ());
+          this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
+          if (!bt || bt->accept (this) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                  ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                  ASYS_TEXT ("::gen_encapsulation (union_branch) - ")
+                  ASYS_TEXT ("failed to generate typecode\n")
+                ),
+               -1);
+            }
         }
       else
         {
-          // default case
-          be_union::DefaultValue dv;
-          if (ub->default_value (dv) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_typecode::"
-                                 "gen_encapsulation (union_branch) - "
-                                 "computing default value failed\n"),
-                                -1);
-            }
-
-          switch (ub->udisc_type ())
-            {
-            case AST_Expression::EV_char:
-              os->print ("ACE_IDL_NCTOHL (0x%02.2x)", (unsigned char)dv.u.char_val);
-              // size of bool/char aligned to 4 bytes
-              this->tc_offset_ += sizeof (ACE_CDR::ULong);
-              break;
-            case AST_Expression::EV_bool:
-              os->print ("ACE_IDL_NCTOHL (0x%02.2x)", (unsigned char)dv.u.bool_val);
-              // size of bool/char aligned to 4 bytes
-              this->tc_offset_ += sizeof (ACE_CDR::ULong);
-              break;
-            case AST_Expression::EV_wchar:
-            case AST_Expression::EV_short:
-              os->print ("ACE_IDL_NSTOHL (0x%04.4x)", (unsigned short)dv.u.short_val);
-              // size of short/wchar aligned to 4 bytes
-              this->tc_offset_ += sizeof (ACE_CDR::ULong);
-              break;
-
-            case AST_Expression::EV_ushort:
-              os->print ("ACE_IDL_NSTOHL (0x%04.4x)", (unsigned short)dv.u.ushort_val);
-              // size of short/wchar aligned to 4 bytes
-              this->tc_offset_ += sizeof (ACE_CDR::ULong);
-              break;
-
-            case AST_Expression::EV_long:
-              os->print ("0x%08.8x", (unsigned long)dv.u.long_val);
-              // size of short/wchar aligned to 4 bytes
-              this->tc_offset_ += sizeof (ACE_CDR::ULong);
-              break;
-
-            case AST_Expression::EV_ulong:
-              os->print ("0x%08.8x", (unsigned long)dv.u.ulong_val);
-              // size of short/wchar aligned to 4 bytes
-              this->tc_offset_ += sizeof (ACE_CDR::ULong);
-              break;
-
-            case AST_Expression::EV_any:
-              // enum
-              os->print ("0x%08.8x", (unsigned long)dv.u.enum_val);
-              // size of short/wchar aligned to 4 bytes
-              this->tc_offset_ += sizeof (ACE_CDR::ULong);
-              break;
-
-            case AST_Expression::EV_ulonglong:
-            case AST_Expression::EV_longlong:
-              // unimplemented yet
-
-            default:
-              ACE_ERROR_RETURN ((LM_DEBUG,
-                                 "be_union_branch: (%N:%l) Label value "
-                                 "type (%d) is invalid\n", ub->udisc_type ()), 
-                                -1);
-              ACE_NOTREACHED (break;)
-            }
-
-          *os << ", // union default label (evaluated value)" << be_nl;        
-        }
-
-      // emit name
-      this->gen_name (node);
-
-      // hand over code generation to our type node
-      bt = be_type::narrow_from_decl (node->field_type ());
-      this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
-      if (!bt || bt->accept (this) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                             ASYS_TEXT ("::gen_encapsulation (union_branch) - ")
-                             ASYS_TEXT ("failed to generate typecode\n")),
-                            -1);
+          // This member's typecode has already been generated, so we
+          // exit the loop
+          break;
         }
     } // end of for loop
 
