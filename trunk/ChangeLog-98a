@@ -50,6 +50,9 @@ Thu Dec 18 09:59:33 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/IOStream_T.i (eof): made the return type, int, explicit.
 
+        * ace/config-linux-common.h: started adding support for threads on
+          alpha (glibc).
+
 Thu Dec 18 00:15:02 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.6, released Thu Dec 18 00:15:02 1997.
