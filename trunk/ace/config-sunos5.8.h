@@ -11,6 +11,12 @@
 // #include the SunOS 5.7 config, then add any SunOS 5.8 updates below.
 #include "ace/config-sunos5.7.h"
 
+// This may be true for versions prior to Solaris 8 as well, but I don't
+// have any to try it on.
+#if !defined (ACE_HAS_TIMEZONE)
+#  define ACE_HAS_TIMEZONE
+#endif
+
 // The range of thread priorities for 5.8 differs from 5.7 in the
 // minimum priority for the SCHED_OTHER policy (i.e.,
 // ACE_THR_PRI_OTHER_MIN)
