@@ -239,9 +239,10 @@ class TAO_ORBSVCS_Export TAO_MUF_Reconfig_Sched_Strategy
 public:
 
   static int total_priority_comp (const void *, const void *);
-  // Ordering function used to qsort an array of TAO_Reconfig_Scheduler_Entry
-  // pointers into a total <priority, subpriority> ordering.  Returns -1 if the
-  // first one is higher, 0 if they're the same, and 1 if the second one is higher.
+  // Ordering function used to qsort an array of
+  // TAO_Reconfig_Scheduler_Entry pointers into a total <priority,
+  // subpriority> ordering.  Returns -1 if the first one is higher, 0
+  // if they're the same, and 1 if the second one is higher.
 
   static int compare_priority (TAO_Reconfig_Scheduler_Entry &,
                                TAO_Reconfig_Scheduler_Entry &);
