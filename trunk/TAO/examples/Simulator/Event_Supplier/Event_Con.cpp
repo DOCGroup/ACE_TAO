@@ -162,7 +162,8 @@ Demo_Consumer::push (const RtecEventComm::EventSet &events
       return;
     }
 
-  cout << "Number of events: " << received++ << endl;
+  ACE_DEBUG ((LM_DEBUG, "Number of events: %d\n", received));
+  ++received;
 
   for (CORBA::ULong i = 0; i < events.length (); ++i)
     {
@@ -182,27 +183,27 @@ Demo_Consumer::push (const RtecEventComm::EventSet &events
               int kind = events[i].data.any_value.type()->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              cout << "ID: " << events[i].data.any_value.type()->id(ACE_ENV_SINGLE_ARG_PARAMETER) << endl;
+              ACE_DEBUG ((LM_DEBUG, "ID: %s\n", events[i].data.any_value.type()->id(ACE_ENV_SINGLE_ARG_PARAMETER)));
               ACE_TRY_CHECK;
-              cout << "Name: " << events[i].data.any_value.type()->name(ACE_ENV_SINGLE_ARG_PARAMETER) << endl;
+              ACE_DEBUG ((LM_DEBUG, "Name: %s\n", events[i].data.any_value.type()->name(ACE_ENV_SINGLE_ARG_PARAMETER)));
               ACE_TRY_CHECK;
-              cout << "member_count: " << events[i].data.any_value.type()->member_count(ACE_ENV_SINGLE_ARG_PARAMETER) << endl;
+              ACE_DEBUG ((LM_DEBUG, "member_count: %u\n", events[i].data.any_value.type()->member_count(ACE_ENV_SINGLE_ARG_PARAMETER)));
               ACE_TRY_CHECK;
-              cout << "TCKind: " << kind << endl;
+              ACE_DEBUG ((LM_DEBUG, "TCKind: %d\n", kind));
 
               int ret = _tc_Navigation->equal (events[i].data.any_value.type() ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
               if (ret)
                 {
                   Navigation *navigation_ = (Navigation*) events[i].data.any_value.value ();
-                  cout << "Found a Navigation struct in the any: pos_lat = " << navigation_->position_latitude << endl;
+                  ACE_DEBUG ((LM_DEBUG, "Found a Navigation struct in the any: pos_lat = %d\n", navigation_->position_latitude));
                 }
               else {
                 ret = (_tc_Weapons->equal (events[i].data.any_value.type() ACE_ENV_ARG_PARAMETER));
                 ACE_TRY_CHECK;
                 if (ret) {
                   Weapons *weapons_ = (Weapons*) events[i].data.any_value.value ();
-                  cout << "Found a Navigation struct in the any: pos_lat = " << weapons_->number_of_weapons << endl;
+                  ACE_DEBUG ((LM_DEBUG, "Found a Weapons struct in the any: nr_of_weapons = %u\n", weapons_->number_of_weapons));
                 }
               }
             }
