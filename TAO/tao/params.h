@@ -22,9 +22,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/CORBA_String.h"
+#include "objectid.h"
+#include "CORBA_String.h"
 #include "ace/SString.h"
 #include "ace/Unbounded_Queue.h"
+
 
 // Forward decls.
 

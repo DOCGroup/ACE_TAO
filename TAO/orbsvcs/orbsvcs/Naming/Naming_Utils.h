@@ -26,6 +26,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/IOR_Multicast.h"
 #include "Naming_Context_Interface.h"
+#include "nsconf.h"
 
 // Forward decl;
 class TAO_Persistent_Context_Index;
