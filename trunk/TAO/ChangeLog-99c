@@ -1,3 +1,9 @@
+Sat May 22 14:07:57 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp} (TAO_Forward_FlowSpec_Entry): 
+	  Prefixed the enumerations with TAO_AV to avoid name
+	  clash. Thanks to David Levine for reporting this error.
+	
 Fri May 21 22:09:09 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao: Modified the following files to make minimum CORBA work
