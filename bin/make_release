@@ -32,7 +32,7 @@ if (-d '/pkg/gnu/bin') {
   $gnu = '';
 }
 
-$exec_prefix = '';
+$exec_prefix = $exec_suffix = '';
 $kit = '';
 $release_type = 'beta';
 $controlled_files = '';
@@ -105,7 +105,7 @@ if ($kit eq 'ace') {
   $KIT = 'TAO';
   $update_versions = (`pwd` eq "/project/adaptive/ACE_wrappers/TAO\n");
 } else {
-  $KIT = '';
+  #### Creating combined ACE+TAO kit.  Don't use $KIT.
 };
 
 $chmod = '/bin/chmod';
@@ -130,13 +130,13 @@ umask 022;
 ########
 ######## Main execution thread.
 ########
-if ($update_versions) {
+if ($update_versions  &&  "$kit" ne 'ace+tao') {
   $major_version = $minor_version = $beta_version = 0;
   $version = '';
 
   &check_workspace ()  ||
   &get_versions ()  ||
-  &update_versions ()  ||
+  &update_version_files ()  ||
   &update_changelog ()  ||
   &tag ()  ||
   &create_kit ();
@@ -158,14 +158,14 @@ sub cleanup {
 ########
 sub check_workspace () {
   if ("$controlled_files") {
-    @out_of_date = ();
+    my @out_of_date = ();
     open (CVS, "$cvs -nq update $controlled_files |")  ||
       die "$0: unable to open $cvs\n";
     while (<CVS>) {
       next if m%/tests/log/%;
       push (@out_of_date, $_) if "$_";
     }
-    close (CVS);
+    close CVS;
 
     if (! "$exec_prefix"  &&  @out_of_date) {
       warn "ERROR: workspace must be updated or cleaned: " .
@@ -184,17 +184,17 @@ sub get_versions () {
   open (VERSION, '< VERSION')  ||
     die "$0: unable to open VERSION\n";
   while (<VERSION>) {
-    if (/ACE version (\d+)\.(\d+)\.(\d+)/) {
+    if (/$KIT version (\d+)\.(\d+)\.(\d+)/o) {
       $major_version = $1;
       $minor_version = $2;
       $beta_version = $3;
       last;
-    } elsif (/ACE version (\d+)\.(\d+)[^\.]/) {
+    } elsif (/$KIT version (\d+)\.(\d+)[^\.]/o) {
       #### Previous release was a minor.
       $major_version = $1;
       $minor_version = $2;
       last;
-    } elsif (/ACE version (\d+)[^\.]/) {
+    } elsif (/$KIT version (\d+)[^\.]/o) {
       #### Previous release was a major.
       $major_version = $1;
       last;
@@ -223,7 +223,7 @@ sub get_versions () {
 ########
 ######## Update VERSION file(s).
 ########
-sub update_versions () {
+sub update_version_files () {
   system ("$exec_prefix" .
     "perl -pi -e " .
     "'s/$KIT version .*/$KIT version $version, released $now./' " .
@@ -242,8 +242,10 @@ sub update_versions () {
       "\#define ACE_BETA_VERSION (${beta_version}u)\n" .
       "\#define ACE_VERSION \"${version}\\0\"\n";
 
-    close ACE_VERSION_H
+    close ACE_VERSION_H;
   }
+
+  0;
 }
 
 ########
@@ -251,30 +253,26 @@ sub update_versions () {
 ######## permissions.
 ########
 sub update_changelog () {
-  $logname = $ENV{'LOGNAME'};
-  $signature = $ENV{'SIGNATURE'} || $logname;
-  $message = "$now  $signature  <$logname\\\@cs.wustl.edu>\n\n" .
-             "        * $KIT version $version released.\n\n";
+  my $logname = $ENV{'LOGNAME'};
+  my $signature = $ENV{'SIGNATURE'} || $logname;
+  my $message = "$now  $signature  <$logname\\\@cs.wustl.edu>\n\n" .
+                "        * $KIT version $version released.\n\n";
+  my $message_insert = "perl -pi -e 'BEGIN {\$message_printed = 0;}
+     if (! \$message_printed) {
+       print \"$message\";
+       ++\$message_printed; }' ChangeLog";
 
   if ("$exec_prefix") {
-    print "perl -pi -e " .
-      "'BEGIN {\$message_printed = 0;}
-        if (! \$message_printed) {
-          print \"$message\";
-          ++\$message_printed; }' ChangeLog\n";
+    print "$message_insert\n";
   } else {
-    system ("perl -pi -e " .
-      "'BEGIN {\$message_printed = 0;}
-        if (! \$message_printed) {
-          print \"$message\";
-          ++\$message_printed; }' ChangeLog");
+    system ($message_insert);
   }
 
   if ($kit =~ /^ace/) {
-    system ("$cvs commit -m'$version' VERSION ChangeLog ace/Version.h" .
+    system ("$cvs commit -m'$version' VERSION ChangeLog ace/Version.h " .
             "&& chmod 0644 VERSION ChangeLog ace/Version.h");
   } elsif ($kit =~ /tao/) {
-    system ("$cvs commit -m'$version' VERSION ChangeLog" .
+    system ("$cvs commit -m'$version' VERSION ChangeLog " .
             "&& chmod 0644 VERSION ChangeLog");
   }
   return 1 if $? >> 8;
@@ -286,14 +284,18 @@ sub update_changelog () {
 ######## Tag the release.
 ########
 sub tag () {
-  system ("$cvs -q tag $KIT-$version $controlled_files");
+  my $tag = "$KIT-$version";
+  #### cvs tag does not allow dots.
+  $tag =~ tr/./_/;
+
+  system ("$cvs -q tag $tag $controlled_files");
   return 1 if $? >> 8;
 
   0;
 }
 
 ########
-######## Create the tar file(s), and move to their proper location.
+######## Create the tar file(s) and move to their proper location.
 ########
 sub create_kit () {
   if ("$exec_prefix") {
