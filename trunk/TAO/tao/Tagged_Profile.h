@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/GIOPC.h"
+#include "tao/Object_KeyC.h"
 #include "ace/SString.h"
 
 /**
