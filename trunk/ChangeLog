@@ -1,3 +1,11 @@
+Tue Feb  1 19:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+          Reverted part of the change Fri Jan 28 20:46:12 UTC 2005.
+          Set shared_libs to empty and static_libs to 1, because of the
+          change our static builds are broken, we will figure this out
+          when we have setup some shared builds.
+
 Tue Feb 1 14:33:37 2005  Martin Corino  <mcorino@remedy.nl>
 
 	* test/OS_Test.cpp:
