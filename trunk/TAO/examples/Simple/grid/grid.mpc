@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): namingexe, naming_serv, utils {
+project(*server): namingexe, iortable, utils {
   Source_Files {
     Grid_i.cpp
     server.cpp
@@ -9,7 +9,7 @@ project(*server): namingexe, naming_serv, utils {
   }
 }
 
-project(*client): namingexe, naming_serv, utils {
+project(*client): namingexe, iortable, utils {
   exename = client
 
   Source_Files {

@@ -1,3 +1,21 @@
+Mon Mar 14 12:05:54 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* examples/Simple/bank/bank.mpc:
+	* examples/Simple/echo/echo.mpc:
+	* examples/Simple/grid/grid.mpc:
+	* examples/Simple/time/time.mpc:
+
+	  Added inheritance from iortable (its inheritance was previously
+	  implicit via naming_serv).
+
+	  Removed inheritance from naming_serv (they already inherit from
+	  namingexe).
+
+	* examples/Simple/Simple_util.cpp:
+	* examples/Simple/Simple_util.h:
+
+	  Changed to use TAO_Naming_Client instead of TAO_Naming_Server.
+
 Mon Mar 14 07:49:05 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Concurrency_Service/Makefile.am:
