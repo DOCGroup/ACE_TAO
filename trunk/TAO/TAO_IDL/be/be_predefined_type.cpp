@@ -396,7 +396,7 @@ be_predefined_type::gen_typecode (void)
     case AST_PredefinedType::PT_pseudo:
       {
         if (!ACE_OS::strcmp (this->local_name ()->get_string (), "TypeCode"))
-          *cs << "CORBA::tk_typecode,\n\n";
+          *cs << "CORBA::tk_TypeCode,\n\n";
         else
           if (!ACE_OS::strcmp (this->local_name ()->get_string (), "Object"))
             {
