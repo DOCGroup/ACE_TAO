@@ -4,6 +4,11 @@ Mon Apr 13 10:18:59 1998  David L. Levine  <levine@cs.wustl.edu>
           moved the cast to long to after the division by global_scale_factor_.
           This is necessary for compatibility with ACE_U_LongLong.
 
+        * bin/make_release (get_versions): use $KIT instead of hard-coded
+          ACE, so that it works with TAO.  (tag): translate dots to
+          underscores, because CVS doesn't allow dots in tags.  Thanks to
+          Doug and Hans Rohnert <rohnert@scr.siemens.com> for reporting these.
+
 Sun Apr 12 21:11:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/OS.h: Prevent using ACE_HAS_MOSTLY_UNICODE_APIS without UNICODE.
