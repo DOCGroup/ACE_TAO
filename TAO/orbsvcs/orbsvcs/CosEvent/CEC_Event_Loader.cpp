@@ -25,9 +25,12 @@
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 #include "tao/debug.h"
 
-ACE_RCSID (CosEvent, Event_Loader, "$Id$")
+ACE_RCSID (CosEvent,
+           Event_Loader,
+           "$Id$")
 
 TAO_CEC_Event_Loader::TAO_CEC_Event_Loader (void)
 {
@@ -218,21 +221,21 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
           ACE_TRY_CHECK;
 
           FILE *iorf = ACE_OS::fopen (ior_file, ACE_LIB_TEXT("w"));
-          if (iorf != 0) 
+          if (iorf != 0)
             {
               ACE_OS::fprintf (iorf, "%s\n", ior.in ());
               ACE_OS::fclose (iorf);
             }
         }
 
-      if (pid_file != 0) 
+      if (pid_file != 0)
         {
           FILE *pidf = ACE_OS::fopen (pid_file, "w");
           if (pidf != 0)
             {
-              ACE_OS::fprintf (pidf, 
+              ACE_OS::fprintf (pidf,
                                "%ld\n",
-                               ACE_static_cast (long, ACE_OS::getpid ()));
+                               static_cast<long> (ACE_OS::getpid ()));
               ACE_OS::fclose (pidf);
             }
         }
@@ -353,21 +356,21 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
               ACE_TRY_CHECK;
 
               FILE *iorf = ACE_OS::fopen (ior_file, "w");
-              if (iorf != 0) 
+              if (iorf != 0)
                 {
                   ACE_OS::fprintf (iorf, "%s\n", ior.in ());
                   ACE_OS::fclose (iorf);
                 }
             }
 
-          if (pid_file != 0) 
+          if (pid_file != 0)
             {
               FILE *pidf = ACE_OS::fopen (pid_file, "w");
               if (pidf != 0)
                 {
-                  ACE_OS::fprintf (pidf, 
+                  ACE_OS::fprintf (pidf,
                                    "%ld\n",
-                                   ACE_static_cast (long, ACE_OS::getpid ()));
+                                   static_cast<long> (ACE_OS::getpid ()));
 		  ACE_OS::fclose (pidf);
                 }
             }
