@@ -1,3 +1,39 @@
+Sun Jan 26 23:50:17 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Profile.cpp:
+	* tao/Profile.h:
+ 	* tao/Profile.i: Added a new method create_tagged_profile
+	  (). Infact, this method existed in the derived classes returning
+	  a reference to the underlying IOP::TaggedProfile. Since the
+	  method existed in all the derived classes and was doing similar
+	  things it has now been moved to the base class with a slight
+	  signature change. This now returns a pointer to the underlying
+	  IOP:TaggedProfile. The signatuer change has been needed because
+	  of the change mentioned below.
+
+	  We will henceforth hold a pointer to the IOP::TaggedProfile
+	  instead of an instance in the Profile classes. We will create an
+	  instance when needed, (heard of lazy evaluation?). This change
+	  is forced on us due to the runtime memory consumed by
+	  IOR's. Holding a pointer instead of the actual object instance
+	  gets us approximately 24 bytes per IOR on Linux on a 32 bit
+	  processor. 
+
+	* tao/IIOP_Profile.h:
+	* tao/IIOP_Profile.cpp: 
+	* tao/Strategies/UIOP_Profile.cpp:
+	* tao/Strategies/UIOP_Profile.h:
+	* tao/Strategies/SHMIOP_Profile.cpp:
+	* tao/Strategies/SHMIOP_Profile.h:
+	* tao/Strategies/DIOP_Profile.cpp:
+	* tao/Strategies/DIOP_Profile.h: Removed create_tagged_profile ()
+	  and the instance of IOP::TaggedProfile.
+	  
+	* tao/Invocation.cpp:
+	* tao/Stub.cpp:
+	* tao/ClientRequestInfo_i.cpp: Changes forced on us due to the
+	  signature change above.
+	
 Sun Jan 26 21:41:26 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* Mering with the main trunk and moving to a new branch. 
