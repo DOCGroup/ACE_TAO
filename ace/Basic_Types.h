@@ -131,7 +131,17 @@
 # else
 #   error: unsupported long long size, must be updated for this platform!
 # endif /* ULLONG_MAX */
-#else /* ! ACE_WIN32 && ! ULLONG_MAX && ! __GNUG__ */
+#elif defined (ULONGLONG_MAX)
+  // Irix 6.x, for example.
+# if (ULONGLONG_MAX) == 18446744073709551615ULL
+#   define ACE_SIZEOF_LONG_LONG 8
+#   if ACE_SIZEOF_INT != 8 && ACE_SIZEOF_LONG != 8
+      typedef unsigned long long ACE_UINT64;
+#   endif /* ACE_SIZEOF_INT != 8 && ACE_SIZEOF_LONG != 8 */
+# else
+#   error: unsupported long long size, must be updated for this platform!
+# endif /* ULLONG_MAX */
+#else /* ! ACE_WIN32 && ! ULLONG_MAX && ! __GNUG__ && ! ULONGLONG_MAX */
 # if defined (ACE_HAS_LONGLONG_T)
   // Assume 8-byte longs.  It would be better to #define
   // ACE_HAS_LONGLONG_T to the number of bytes in a long,
