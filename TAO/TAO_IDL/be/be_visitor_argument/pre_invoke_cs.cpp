@@ -113,7 +113,7 @@ be_visitor_args_pre_invoke_cs::visit_array (be_array *node)
           if (!this->void_return_type ())
             {
               *os << "ACE_ALLOCATOR_RETURN (" << arg->local_name ()
-                  << ".ptr (), " << bt->name () << "_alloc (), _tao_retval);\n";
+                  << ".ptr (), " << bt->name () << "_alloc (), 0);\n";
             }
           else
             {
@@ -172,7 +172,7 @@ be_visitor_args_pre_invoke_cs::visit_predefined_type (be_predefined_type *node)
           if (!this->void_return_type ())
             {
               *os << "ACE_NEW_RETURN (" << arg->local_name ()
-                  << ".ptr (), CORBA::Any, _tao_retval);\n";
+                  << ".ptr (), CORBA::Any, 0);\n";
             }
           else
             {
@@ -212,7 +212,7 @@ be_visitor_args_pre_invoke_cs::visit_sequence (be_sequence *node)
       if (!this->void_return_type ())
         {
           *os << "ACE_NEW_RETURN (" << arg->local_name ()
-              << ".ptr (), " << bt->name () << ", _tao_retval);\n";
+              << ".ptr (), " << bt->name () << ", 0);\n";
         }
       else
         {
@@ -255,7 +255,7 @@ be_visitor_args_pre_invoke_cs::visit_structure (be_structure *node)
           if (!this->void_return_type ())
             {
               *os << "ACE_NEW_RETURN (" << arg->local_name ()
-                  << ".ptr (), " << bt->name () << ", _tao_retval);\n";
+                  << ".ptr (), " << bt->name () << ", 0);\n";
             }
           else
             {
@@ -292,7 +292,7 @@ be_visitor_args_pre_invoke_cs::visit_union (be_union *node)
           if (!this->void_return_type ())
             {
               *os << "ACE_NEW_RETURN (" << arg->local_name ()
-                  << ".ptr (), " << bt->name () << ", _tao_retval);\n";
+                  << ".ptr (), " << bt->name () << ", 0);\n";
             }
           else
             {
