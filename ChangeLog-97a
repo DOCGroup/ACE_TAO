@@ -1,3 +1,13 @@
+Fri Jun 27 01:08:54 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Connector.cpp (create_AST): Replaced the gratuitous #ifdef
+ 	  for ACE_WIN32 and EXCEPT_MASK with the new CONNECT_MASK.  This
+ 	  is much cleaner!
+
+	* ace/Event_Handler.h: Added a new CONNECT_MASK that defaults to
+ 	  READ_MASK | WRITE_MASK (with | EXCEPT_MASK thrown in for Win32).
+  	  Thanks to Irfan for this suggestion.
+
 Thu Jun 26 19:53:11 1997  Nanbor Wang  <nw1@lambada.cs.wustl.edu>
 
 	* ace/OS.i (strtok_r): Added check on a null string so we won't go

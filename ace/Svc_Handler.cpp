@@ -146,7 +146,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::shutdown (void)
   // Deregister this handler with the ACE_Reactor.
   if (this->reactor ())
     {
-      ACE_Reactor_Mask mask = ACE_Event_Handler::WRITE_MASK | 
+      ACE_Reactor_Mask mask = ACE_Event_Handler::WRITE_MASK |
 	                      ACE_Event_Handler::READ_MASK  | 
 			      ACE_Event_Handler::DONT_CALL;
 
