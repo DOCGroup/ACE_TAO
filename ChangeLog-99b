@@ -1,3 +1,9 @@
+Fri Jan 08 13:24:12 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Synch.h (ACE_Process_Mutex): made data members
+          private instead of public.  Thanks to Peter Gross
+          <pgross@signalsoftcorp.com> for reporting this.
+
 Thu Jan 07 09:05:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.5.h: added ACE_HAS_SIG_C_FUNC with
