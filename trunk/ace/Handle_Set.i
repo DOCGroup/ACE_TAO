@@ -53,7 +53,7 @@ ACE_Handle_Set::is_set (ACE_HANDLE handle) const
 {
   ACE_TRACE ("ACE_Handle_Set::is_set");
 #if defined (ACE_HAS_BIG_FD_SET)
-  return FD_ISSET (handle, &this->mask_) && size_ > 0;
+  return FD_ISSET (handle, &this->mask_) && this->size_ > 0;
 #else
   return FD_ISSET (handle, &this->mask_);
 #endif /* ACE_HAS_BIG_FD_SET */
@@ -69,21 +69,21 @@ ACE_Handle_Set::set_bit (ACE_HANDLE handle)
     {
 #if defined (ACE_WIN32)
       FD_SET ((SOCKET) handle, &this->mask_);
-#else /* !ACE_WIN32 */
-#if defined (ACE_HAS_BIG_FD_SET)
-      if (this->size_++ == 0)
-         FD_ZERO(&this->mask_);
-#else /* ACE_HAS_BIG_FD_SET */
       this->size_++;
-#endif 
-      FD_SET (handle, &this->mask_);
-
-      if (handle > this->max_handle_)
-	this->max_handle_ = handle;
+#else /* ACE_WIN32 */
 #if defined (ACE_HAS_BIG_FD_SET)
+      if (this->size_ == 0)
+	FD_ZERO (&this->mask_);
+
       if (handle < this->min_handle_)
         this->min_handle_ = handle;
 #endif /* ACE_HAS_BIG_FD_SET */
+      
+      FD_SET (handle, &this->mask_);
+      this->size_++;
+      
+      if (handle > this->max_handle_)
+	this->max_handle_ = handle;      
 #endif /* ACE_WIN32 */
     }
 }
@@ -97,15 +97,13 @@ ACE_Handle_Set::clr_bit (ACE_HANDLE handle)
 
   if (this->is_set (handle))
     {
-#if defined (ACE_WIN32)
       FD_CLR ((SOCKET) handle, &this->mask_);
-#else /* !ACE_WIN32 */
-      FD_CLR (handle, &this->mask_);
       this->size_--;
-
+      
+#if !defined (ACE_WIN32)
       if (handle == this->max_handle_)
 	this->set_max (this->max_handle_);
-#endif /* ACE_WIN32 */
+#endif /* !ACE_WIN32 */
     }
 }
 
@@ -129,13 +127,9 @@ ACE_Handle_Set::operator fd_set *()
 {
   ACE_TRACE ("ACE_Handle_Set::operator ACE_FD_SET_TYPE *");
 
-#if defined (ACE_WIN32)
-  return (fd_set*) &this->mask_;
-#else
   if (this->size_ > 0)
     return (fd_set*) &this->mask_;
   else
     return (fd_set*) NULL;
-#endif /* ACE_WIN32 */
 }
 
