@@ -344,22 +344,26 @@ JAWS_Asynch_IO::send_confirmation_message (JAWS_IO_Handler *ioh,
                                            const char *buffer,
                                            unsigned int length)
 {
-  this->send_message (buffer, length, CONFIRMATION);
+  this->send_message (ioh, buffer, length, CONFIRMATION);
 }
 
 void
-JAWS_Asynch_IO::send_error_message (const char *buffer,
-                                    int length)
+JAWS_Asynch_IO::send_error_message (JAWS_IO_Handler *ioh,
+                                    const char *buffer,
+                                    unsigned int length)
 {
-  this->send_message (buffer, length, ERROR_MESSAGE);
+  this->send_message (ioh, buffer, length, ERROR_MESSAGE);
 }
 
 void
 JAWS_Asynch_IO::send_message (JAWS_IO_Handler *ioh,
                               const char *buffer,
-                              unsigned int length)
+                              unsigned int length,
                               int act)
 {
+  JAWS_Asynch_IO_Handler *aioh =
+    ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, ioh);
+
   ACE_Message_Block *mb;
   ACE_NEW (mb, ACE_Message_Block (buffer, length));
 
@@ -370,15 +374,15 @@ JAWS_Asynch_IO::send_message (JAWS_IO_Handler *ioh,
     }
 
   ACE_Asynch_Write_Stream aw;
-  if (aw.open (*this, this->handle_) == -1
+  if (aw.open (*(aioh->handler ()), aioh->handle ()) == -1
       || aw.write (*mb, length, (void *) act) == -1)
     {
       mb->release ();
 
       if (act == CONFORMATION)
-        this->handler_->confirmation_message_complete ();
+        ioh->confirmation_message_complete ();
       else
-        this->handler_->error_message_complete ();
+        ioh->error_message_complete ();
     }
 }
 
