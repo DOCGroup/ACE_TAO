@@ -56,8 +56,8 @@ TAO_Register_Offer_Iterator<TRADER>::max_left (CORBA::Environment& _env)
 
 template <class TRADER> CORBA::Boolean 
 TAO_Register_Offer_Iterator<TRADER>::next_n (CORBA::ULong n, 
-					     OfferSeq_out offers,
-					     CORBA::Environment& _env) 
+                                             CosTrading::OfferSeq_out offers,
+					      CORBA::Environment& _env) 
   TAO_THROW_SPEC (CORBA::SystemException)
 {
   offers = new CosTrading::OfferSeq;

@@ -21,7 +21,7 @@
 #include "Offer_Iterator.h"
 #include "stl.h"
 
-class TAO_Export TAO_Query_Only_Offer_Iterator : public TAO_Offer_Iterator
+class TAO_ORBSVCS_Export TAO_Query_Only_Offer_Iterator : public TAO_Offer_Iterator
   // = TITLE
   //     An implementation of the CosTrading::OfferIterator IDL
   //     interface that takes advantage of the fact that the trader is
