@@ -257,8 +257,8 @@ Cubit_i::cube_union (const Cubit::oneof &values,
 // Cube a sequence
 void
 Cubit_i::cube_long_sequence (const Cubit::long_seq &input,
-			     Cubit::long_seq_out output,
-			     CORBA::Environment &)
+                             Cubit::long_seq_out output,
+                             CORBA::Environment &)
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_LONG_SEQUENCE_START);
 
@@ -283,8 +283,8 @@ Cubit_i::cube_long_sequence (const Cubit::long_seq &input,
 // Cube an octet sequence
 void
 Cubit_i::cube_octet_sequence (const Cubit::octet_seq &input,
-			      Cubit::octet_seq_out output,
-			      CORBA::Environment &)
+                              Cubit::octet_seq_out output,
+                              CORBA::Environment &)
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_OCTET_SEQUENCE_START);
 
@@ -353,8 +353,8 @@ Cubit_i::cube_many_sequence (const Cubit::many_seq & input,
 
 void
 Cubit_i::cube_rti_data (const Cubit::RtiPacket &input,
-			Cubit::RtiPacket_out output,
-			CORBA::Environment &)
+                        Cubit::RtiPacket_out output,
+                        CORBA::Environment &)
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_LONG_SEQUENCE_START);
 
@@ -383,10 +383,8 @@ Cubit_i::cube_rti_data (const Cubit::RtiPacket &input,
 
 // Shutdown.
 
-void Cubit_i::shutdown (CORBA::Environment &env)
+void Cubit_i::shutdown (CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (env);
-
   ACE_DEBUG ((LM_DEBUG,
               "%s\n",
               "Cubit_i is shutting down"));

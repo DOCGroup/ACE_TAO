@@ -18,6 +18,7 @@ TAO_InputCDR::TAO_InputCDR (const char *buf,
                   byte_order),
     orb_core_ (orb_core)
 {
+  this->init_translators ();
 }
 
 ACE_INLINE
@@ -28,6 +29,7 @@ TAO_InputCDR::TAO_InputCDR (size_t bufsiz,
                   byte_order),
     orb_core_ (orb_core)
 {
+  this->init_translators ();
 }
 
 ACE_INLINE
@@ -38,6 +40,7 @@ TAO_InputCDR::TAO_InputCDR (const ACE_Message_Block *data,
                   byte_order),
     orb_core_ (orb_core)
 {
+  this->init_translators ();
 }
 
 ACE_INLINE
@@ -48,6 +51,7 @@ TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
                   byte_order),
     orb_core_ (orb_core)
 {
+  this->init_translators ();
 }
 
 ACE_INLINE
@@ -59,6 +63,7 @@ TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
                   offset),
     orb_core_ (rhs.orb_core_)
 {
+  this->init_translators ();
 }
 
 ACE_INLINE
@@ -68,6 +73,7 @@ TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
                   size),
     orb_core_ (rhs.orb_core_)
 {
+  this->init_translators ();
 }
 
 ACE_INLINE
@@ -75,6 +81,7 @@ TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs)
   : ACE_InputCDR (rhs),
     orb_core_ (rhs.orb_core_)
 {
+  this->init_translators ();
 }
 
 ACE_INLINE

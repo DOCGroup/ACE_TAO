@@ -24,8 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Acceptor_Registry.h"
-#include "tao/Connector_Registry.h"
 #include "tao/POA.h"
 #include "ace/Singleton.h"
 #include "ace/Service_Config.h"
@@ -53,12 +51,6 @@ public:
   // the objects held here.
 
   // = Resources
-
-  TAO_Acceptor_Registry ar_;
-  // The Acceptor Registry!
-
-  TAO_Connector_Registry cr_;
-  // The Connector Registry!
 
   ACE_Reactor *r_;
   // The Reactor.

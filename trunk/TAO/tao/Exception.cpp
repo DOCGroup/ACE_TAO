@@ -388,11 +388,25 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
                                             CORBA::Environment &TAO_IN_ENV)
 {
   // Create the TypeCode for the CORBA_UnknownUserException
+
+#if defined(ACE_MVS)
+  // @@ We need to use a translator to make sure that all TypeCodes
+  //    are stored in ISO8859 form, the problem is that this hack does
+  //    not scale as more native sets have to be supported
+  ACE_Codeset_IBM1047_ISO8859 translator;
+  TAO_OutputCDR stream (0,
+                        ACE_CDR_BYTE_ORDER,
+                        TAO_Exceptions::global_allocator_,
+                        TAO_Exceptions::global_allocator_,
+                        ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
+                        &translator);
+#else
   TAO_OutputCDR stream (0,
                         ACE_CDR_BYTE_ORDER,
                         TAO_Exceptions::global_allocator_,
                         TAO_Exceptions::global_allocator_,
                         ACE_DEFAULT_CDR_MEMCPY_TRADEOFF);
+#endif /* ACE_MVS */
 
   const char* interface_id =
     "IDL:omg.org/CORBA/UnknownUserException:1.0";
@@ -418,10 +432,10 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
 
 void
 TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
-                                       const char *name,
-                                       char *buffer,
-                                       size_t buflen,
-                                       CORBA::Environment &TAO_IN_ENV)
+                                        const char *name,
+                                        char *buffer,
+                                        size_t buflen,
+                                        CORBA::Environment &ACE_TRY_ENV)
 {
   // This function must only be called ONCE, and with a global lock
   // held!  The <CORBA::ORB_init> method is responsible for ensuring
@@ -432,12 +446,24 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   // Create a CDR stream ... juggle the alignment here a bit, we know
   // it's good enough for the typecode.
 
-  TAO_OutputCDR stream (buffer,
-                        buflen,
+#if defined(ACE_MVS)
+  // @@ We need to use a translator to make sure that all TypeCodes
+  //    are stored in ISO8859 form, the problem is that this hack does
+  //    not scale as more native sets have to be supported
+  ACE_Codeset_IBM1047_ISO8859 translator;
+  TAO_OutputCDR stream (buffer, buflen,
+                        ACE_CDR_BYTE_ORDER,
+                        TAO_Exceptions::global_allocator_,
+                        TAO_Exceptions::global_allocator_,
+                        ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
+                        &translator);
+#else
+  TAO_OutputCDR stream (buffer, buflen,
                         ACE_CDR_BYTE_ORDER,
                         TAO_Exceptions::global_allocator_,
                         TAO_Exceptions::global_allocator_,
                         ACE_DEFAULT_CDR_MEMCPY_TRADEOFF);
+#endif /* ACE_MVS */
 
   // into CDR stream, stuff (in order):
   //    - byte order flag [4 bytes]
@@ -446,29 +472,34 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   //    - number of members (2) [4 bytes ]
   //    - foreach member, { name string, typecode } [~40 bytes]
 
-  char full_id[100];
-  char *strptr = full_id;
+  const char prefix[] = "IDL:omg.org/CORBA/";
+  const char suffix[] = ":1.0";
+  char* full_id =
+    CORBA::string_alloc (sizeof(prefix)
+                         + ACE_OS::strlen (name)
+                         + sizeof(suffix));
 
-  (void) ACE_OS::sprintf (full_id,
-                         "IDL:omg.org/CORBA/%s:1.0",
-                         name);
-  // @@ Should this really be an assert or should we deal with it via
-  // exceptions?
-  assert (ACE_OS::strlen (full_id) <= sizeof full_id);
+  ACE_OS::strcpy (full_id, prefix);
+  ACE_OS::strcat (full_id, name);
+  ACE_OS::strcat (full_id, suffix);
 
   if (stream.write_octet (TAO_ENCAP_BYTE_ORDER) == 0
-      || stream.write_string (strptr) == 0
+      || stream.write_string (full_id) == 0
       || stream.write_string (name) == 0
       || stream.write_ulong (2L) != 1
       || stream.write_string (minor) == 0
       || stream.encode (CORBA::_tc_TypeCode,
-                       &CORBA::_tc_ulong, 0,
-                       TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
+                        &CORBA::_tc_ulong, 0,
+                        ACE_TRY_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
       || stream.write_string (completed) == 0
       || stream.encode (CORBA::_tc_TypeCode,
                         &TC_completion_status, 0,
-                        TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE)
-    TAO_THROW (CORBA_INITIALIZE ());
+                        ACE_TRY_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE)
+    ACE_THROW (CORBA::INITIALIZE ());
+  // @@ It is possible to throw an exception at this point?
+  //    What if the exception typecode has not been initialized yet?
+
+  CORBA::string_free (full_id);
 
   // OK, we stuffed the buffer we were given (or grew a bigger one;
   // hope to avoid that during initialization).  Now build and return
@@ -482,7 +513,8 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
                              sizeof (CORBA_SystemException));
 
   TAO_Exceptions::system_exceptions->add (tcp);
-  assert (tcp->length_ <= TAO_Exceptions::TC_BUFLEN);
+
+  ACE_ASSERT (tcp->length_ <= buflen);
   return;
 }
 
@@ -533,25 +565,25 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
 // @@ this actually doesn't guarantee "natural" alignment, but
 // it works that way in most systems.
 
+#define TAO_TC_BUF_LEN 256
+
 #define TAO_SYSTEM_EXCEPTION(name) \
-    static CORBA::Long tc_buf_ ## name [TAO_Exceptions::TC_BUFLEN / sizeof (long)]; \
+    static CORBA::Long tc_buf_##name[TAO_TC_BUF_LEN/sizeof(CORBA::Long)]; \
     TAO_NAMESPACE_TYPE(CORBA::TypeCode_ptr) \
     TAO_NAMESPACE_BEGIN (CORBA) \
     TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_##name, 0) \
     TAO_NAMESPACE_END
   STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
+#undef TAO_TC_BUF_LEN
 
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_UnknownUserException, 0)
 TAO_NAMESPACE_END
 
-//    static CORBA::TypeCode tc_std_ ## name (CORBA::tk_except);
-//    CORBA::TypeCode_ptr CORBA::_tc_ ## name = &tc_std_ ## name;
-
 void
-TAO_Exceptions::init (CORBA::Environment &env)
+TAO_Exceptions::init (CORBA::Environment &ACE_TRY_ENV)
 {
   // This routine should only be called once.
   // Initialize the start up allocator.
@@ -561,25 +593,27 @@ TAO_Exceptions::init (CORBA::Environment &env)
   ACE_NEW (TAO_Exceptions::system_exceptions, CORBA::ExceptionList);
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-  if (env.exception () == 0) \
-    TAO_Exceptions::make_standard_typecode (CORBA::_tc_ ## name, #name, \
-                                           (char *) tc_buf_ ## name, \
-                                           sizeof tc_buf_ ## name, env);
+  TAO_Exceptions::make_standard_typecode (CORBA::_tc_ ## name, \
+                                          #name, \
+                                          (char*)tc_buf_##name, \
+                                          sizeof(tc_buf_##name), \
+                                          ACE_TRY_ENV); \
+  ACE_CHECK;
   STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
 
-  if (env.exception () == 0)
-    TAO_Exceptions::make_unknown_user_typecode (CORBA::_tc_UnknownUserException,
-                                                env);
+  TAO_Exceptions::make_unknown_user_typecode (CORBA::_tc_UnknownUserException,
+                                              ACE_TRY_ENV);
 }
 
 CORBA_Exception*
 TAO_Exceptions::create_system_exception (const char* id,
-                                         CORBA::Environment& env)
+                                         CORBA::Environment& ACE_TRY_ENV)
 {
 #define TAO_SYSTEM_EXCEPTION(name) \
   { \
-    const char* xid = CORBA::_tc_ ## name ->id (env); \
+    const char* xid = CORBA::_tc_ ## name ->id (ACE_TRY_ENV); \
+    ACE_CHECK_RETURN (0); \
     if (ACE_OS::strcmp (id, xid) == 0) \
       return new CORBA:: name; \
   }
@@ -655,7 +689,6 @@ CORBA_ExceptionList::CORBA_ExceptionList (CORBA::ULong len,
 
 CORBA_ExceptionList::~CORBA_ExceptionList (void)
 {
-#if 1
   for (CORBA::ULong i = 0; i < this->count (); ++i)
     {
       CORBA::TypeCode_ptr *tc;
@@ -663,7 +696,6 @@ CORBA_ExceptionList::~CORBA_ExceptionList (void)
         return;
       CORBA::release (*tc);
     }
-#endif
 }
 
 void

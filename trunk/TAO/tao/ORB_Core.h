@@ -17,14 +17,15 @@
 #ifndef TAO_ORB_CORE_H
 #define TAO_ORB_CORE_H
 
-#include "ace/Singleton.h"
 #include "tao/corbafwd.h"
 #include "tao/Environment.h"
 #include "tao/Policy_Manager.h"
 #include "tao/Resource_Factory.h"
 #include "tao/params.h"
 #include "tao/POAC.h"
+
 #include "ace/Map_Manager.h"
+#include "ace/Singleton.h"
 
 // Forward declarations
 class TAO_POA;
@@ -80,15 +81,13 @@ public:
   TAO_POA_Current &poa_current (void) const;
   // Accessor to the POA current.
 
-  // = Set/get the connector registry - used to just be the connector.
-  TAO_Connector_Registry *connector_registry (TAO_Connector_Registry *c);
+  // = Get the connector registry
   TAO_Connector_Registry *connector_registry (void);
 
-  // = Set/get the acceptor registry - used to just be the acceptor!
-  TAO_Acceptor_Registry  *acceptor_registry  (TAO_Acceptor_Registry  *a);
+  // = Get the acceptor registry
   TAO_Acceptor_Registry  *acceptor_registry  (void);
 
-  TAO_ProtocolFactorySet *protocol_factories (TAO_ProtocolFactorySet *pf);
+  // = Get the protocol factories
   TAO_ProtocolFactorySet *protocol_factories (void);
 
   // = Set/get pointer to the ORB.
@@ -111,6 +110,42 @@ public:
                                               const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
                                               TAO_POA_Manager *poa_manager = 0,
                                               const TAO_POA_Policies *policies = 0);
+
+  // = Get the default codeset translators.
+  //   In most configurations these are just <nil> objects, but they
+  //   can be set to something different if the native character sets
+  //   are not ISO8869 (aka Latin/1, UTF-8) and UNICODE (aka UTF-16).
+
+  ACE_Char_Codeset_Translator *from_iso8859 (void) const;
+  // Convert from ISO8859 to the native character set
+
+  ACE_Char_Codeset_Translator *to_iso8859 (void) const;
+  // Convert from the native character set to ISO8859
+
+  ACE_WChar_Codeset_Translator *from_unicode (void) const;
+  // Convert from UNICODE to the native wide character set
+
+  ACE_WChar_Codeset_Translator *to_unicode (void) const;
+  // Convert from the native wide character set to UNICODE
+
+  // @@ This is just note on how could the translator database be
+  //    implemented: use the service configurator to load the
+  //    translator, and then use the CodesetId (an unsigned long) to
+  //    translate the character set code into the Service Object
+  //    name.
+  //    The default resource factory could parse command line options
+  //    like:
+  //    -ORBcharcodeset 0x00010001=ISO8859
+  //    -ORBcharcodeset 0x10020417=IBM1047
+  //    -ORBwcharcodeset 0x00010106=ISOIEC10646
+  //    that would let the user experiment with different translators
+  //    and plug them in on demand.
+  //
+  //    We should also think about how translators will report
+  //    conversion failures and how to simplify the implementation of
+  //    char translators (it would seem like just a couple of arrays
+  //    are needed, maybe the arrays should be dynamically loaded and
+  //    the implementation would remain constant?  Just a thought
 
   // = Set/get the collocation flags
   void optimize_collocation_objects (CORBA::Boolean opt);
@@ -374,6 +409,12 @@ protected:
 
   ACE_Thread_Manager tm_;
   // The Thread Manager
+
+  ACE_Char_Codeset_Translator *from_iso8859_;
+  ACE_Char_Codeset_Translator *to_iso8859_;
+  ACE_WChar_Codeset_Translator *from_unicode_;
+  ACE_WChar_Codeset_Translator *to_unicode_;
+  // Codeset translators for simple implementations.
 };
 
 // ****************************************************************

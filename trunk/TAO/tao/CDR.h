@@ -83,7 +83,9 @@ public:
                  int byte_order = ACE_CDR_BYTE_ORDER,
                  ACE_Allocator* buffer_allocator = 0,
                  ACE_Allocator* data_block_allocator = 0,
-                 size_t memcpy_tradeoff = 0);
+                 size_t memcpy_tradeoff = 0,
+                 ACE_Char_Codeset_Translator *char_translator = 0,
+                 ACE_WChar_Codeset_Translator *wchar_translator = 0);
   // Default constructor, allocates <size> bytes in the internal
   // buffer, if <size> == 0 it allocates the default size.
 
@@ -92,13 +94,17 @@ public:
                  int byte_order = ACE_CDR_BYTE_ORDER,
                  ACE_Allocator* buffer_allocator = 0,
                  ACE_Allocator* data_block_allocator = 0,
-                 size_t memcpy_tradeoff = 0);
+                 size_t memcpy_tradeoff = 0,
+                 ACE_Char_Codeset_Translator *char_translator = 0,
+                 ACE_WChar_Codeset_Translator *wchar_translator = 0);
   // Build a CDR stream with an initial buffer, it will *not* remove
   // <data>, since it did not allocated it.
 
   TAO_OutputCDR (ACE_Message_Block *data,
                  int byte_order = ACE_CDR_BYTE_ORDER,
-                 size_t memcpy_tradeoff = 0);
+                 size_t memcpy_tradeoff = 0,
+                 ACE_Char_Codeset_Translator *char_translator = 0,
+                 ACE_WChar_Codeset_Translator *wchar_translator = 0);
   // Build a CDR stream with an initial Message_Block chain, it will *not*
   // remove <data>, since it did not allocate it.
 
@@ -231,6 +237,9 @@ public:
 
   TAO_ORB_Core* orb_core (void) const;
   // Accessor
+
+private:
+  void init_translators (void);
 
 private:
   TAO_ORB_Core* orb_core_;

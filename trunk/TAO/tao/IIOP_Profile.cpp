@@ -453,9 +453,9 @@ TAO_IIOP_Profile::parse_string (const char *string,
 void
 TAO_IIOP_Profile::create_body (void)
 {
-  TAO_OutputCDR cdr;
 }
 // @@
+//  TAO_OutputCDR cdr;
 //   cdr << TAO_ENCAP_BYTE_ORDER;
 //   cdr << this->version_.major;
 //   cdr << this->version_.minor;

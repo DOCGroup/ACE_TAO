@@ -3,9 +3,6 @@
 
 #include "ace/Dynamic_Service.h"
 
-#define TAO_OC_RETRIEVE(member) \
-  ((this->member##_ == 0) ? (this->member##_ = this->resource_factory ()->get_##member ()) : (this->member##_) )
-
 ACE_INLINE ACE_Thread_Manager *
 TAO_ORB_Core::thr_mgr (void)
 {
@@ -76,12 +73,13 @@ TAO_ORB_Core::orb_params(void)
   return this->orb_params_;
 }
 
-ACE_INLINE TAO_Connector_Registry *
-TAO_ORB_Core::connector_registry (TAO_Connector_Registry *cr)
+#define TAO_OC_RETRIEVE(member) \
+  ((this->member##_ == 0) ? (this->member##_ = this->resource_factory ()->get_##member ()) : (this->member##_) )
+
+ACE_INLINE TAO_ProtocolFactorySet *
+TAO_ORB_Core::protocol_factories (void)
 {
-  TAO_Connector_Registry *old_cr = this->connector_registry_;
-  this->connector_registry_ = cr;
-  return old_cr;
+  return TAO_OC_RETRIEVE (protocol_factories);
 }
 
 ACE_INLINE TAO_Connector_Registry *
@@ -91,35 +89,36 @@ TAO_ORB_Core::connector_registry (void)
 }
 
 ACE_INLINE TAO_Acceptor_Registry *
-TAO_ORB_Core::acceptor_registry (TAO_Acceptor_Registry *ar)
-{
-  TAO_Acceptor_Registry *old_ar = this->acceptor_registry_;
-  this->acceptor_registry_ = ar;
-  return old_ar;
-}
-
-
-ACE_INLINE TAO_ProtocolFactorySet *
-TAO_ORB_Core::protocol_factories (TAO_ProtocolFactorySet *pf)
-{
-  TAO_ProtocolFactorySet *old = this->protocol_factories_;
-  this->protocol_factories_ = pf;
-  return old;
-}
-
-ACE_INLINE TAO_ProtocolFactorySet *
-TAO_ORB_Core::protocol_factories (void)
-{
-  return TAO_OC_RETRIEVE (protocol_factories);
-}
-
-ACE_INLINE TAO_Acceptor_Registry *
 TAO_ORB_Core::acceptor_registry (void)
 {
   return TAO_OC_RETRIEVE (acceptor_registry);
 }
 
 #undef TAO_OC_RETRIEVE
+
+ACE_INLINE ACE_Char_Codeset_Translator *
+TAO_ORB_Core::from_iso8859 (void) const
+{
+  return this->from_iso8859_;
+}
+
+ACE_INLINE ACE_Char_Codeset_Translator *
+TAO_ORB_Core::to_iso8859 (void) const
+{
+  return this->to_iso8859_;
+}
+
+ACE_INLINE ACE_WChar_Codeset_Translator *
+TAO_ORB_Core::from_unicode (void) const
+{
+  return this->from_unicode_;
+}
+
+ACE_INLINE ACE_WChar_Codeset_Translator *
+TAO_ORB_Core::to_unicode (void) const
+{
+  return this->to_unicode_;
+}
 
 ACE_INLINE ACE_Data_Block*
 TAO_ORB_Core::create_input_cdr_data_block (size_t size)
