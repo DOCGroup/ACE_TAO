@@ -127,6 +127,10 @@ private:
 #endif /* 0 */
 };
 
+#if defined (__ACE_INLINE__)
+# include "tao/default_server.i"
+#endif /* __ACE_INLINE__ */
+
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Server_Strategy_Factory)
 
 #endif /* TAO_DEFAULT_SERVER_FACTORY_H */

@@ -3,6 +3,10 @@
 #include "tao/corba.h"
 #include "tao/Timeprobe.h"
 
+#if !defined (__ACE_INLINE__)
+# include "tao/Connect.i"
+#endif /* ! __ACE_INLINE__ */
+
 TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (ACE_Thread_Manager* t)
   : TAO_SVC_HANDLER (t, 0, 0)
 {
@@ -46,9 +50,9 @@ TAO_Server_Connection_Handler::open (void*)
 #if defined (TCP_NODELAY)
   int nodelay = 1;
   if (this->peer ().set_option (IPPROTO_TCP,
-				TCP_NODELAY,
-				(void *) &nodelay,
-				sizeof (nodelay)) == -1)
+                                TCP_NODELAY,
+                                (void *) &nodelay,
+                                sizeof (nodelay)) == -1)
     return -1;
 #endif /* TCP_NODELAY */
 
@@ -61,8 +65,8 @@ TAO_Server_Connection_Handler::open (void*)
                       -1);
 
   ACE_DEBUG ((LM_DEBUG,
-	      "(%P|%t) connection from client %s\n",
-	      client));
+              "(%P|%t) connection from client %s\n",
+              client));
   return 0;
 }
 
@@ -71,8 +75,8 @@ TAO_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
                                              ACE_Reactor_Mask rm)
 {
   ACE_DEBUG  ((LM_DEBUG,
-	       "(%P|%t) TAO_Server_Connection_Handler::handle_close (%d, %d)\n",
-	       handle,
+               "(%P|%t) TAO_Server_Connection_Handler::handle_close (%d, %d)\n",
+               handle,
                rm));
 
   return TAO_SVC_HANDLER::handle_close (handle, rm);
@@ -132,7 +136,7 @@ TAO_Server_Connection_Handler::recv_request (CDR &msg,
     case TAO_GIOP::Reply:
     case TAO_GIOP::LocateReply:
     case TAO_GIOP::CloseConnection:
-    default:					// Unknown message
+    default:                                    // Unknown message
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Illegal message received by server\n"));
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
@@ -361,7 +365,7 @@ TAO_Server_Connection_Handler::handle_request (const TAO_GIOP_RequestHeader &hdr
            i < svr_req.params_->count ();
            i++)
         {
-          CORBA::NamedValue_ptr	nv = svr_req.params_->item (i, env);
+          CORBA::NamedValue_ptr nv = svr_req.params_->item (i, env);
           CORBA::Any_ptr any;
 
           if (!(nv->flags () & (CORBA::ARG_INOUT|CORBA::ARG_OUT)))
@@ -490,9 +494,9 @@ TAO_Client_Connection_Handler::open (void *)
 
   int nodelay = 1;
   if (this->peer ().set_option (IPPROTO_TCP,
-				TCP_NODELAY,
-				(void *) &nodelay,
-				sizeof (nodelay)) == -1)
+                                TCP_NODELAY,
+                                (void *) &nodelay,
+                                sizeof (nodelay)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "NODELAY failed\n"), -1);
 
   ACE_Reactor *r = TAO_ORB_Core_instance ()->reactor ();
@@ -629,8 +633,8 @@ TAO_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
                                              ACE_Reactor_Mask rm)
 {
   ACE_DEBUG  ((LM_DEBUG,
-	       "(%P|%t) TAO_Client_Connection_Handler::handle_close (%d, %d)\n",
-	       handle,
+               "(%P|%t) TAO_Client_Connection_Handler::handle_close (%d, %d)\n",
+               handle,
                rm));
 
   return BASECLASS::handle_close (handle, rm);
