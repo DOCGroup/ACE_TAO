@@ -1,3 +1,10 @@
+Wed Jun 18 02:14:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/config-cywin32.h:
+          Added following ACE_LACKS_* defines:  STDINT_H, INTTYPES_H,
+          SYS_IPC_H, SYS_SEM_H, SYS_MSG_H, and STROPTS_H.  Thanks to Jeff
+          Parsons for pointing this out.
+
 Tue Jun 17 15:25:20 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Sock_Connect.cpp (get_windows_version):
