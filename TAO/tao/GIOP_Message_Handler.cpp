@@ -19,18 +19,18 @@ TAO_GIOP_Message_Handler::TAO_GIOP_Message_Handler (TAO_ORB_Core * orb_core,
   : mesg_base_ (base),
     message_status_ (TAO_GIOP_WAITING_FOR_HEADER),
     message_size_ (ACE_CDR::DEFAULT_BUFSIZE),
-    current_buffer_ (ACE_CDR::DEFAULT_BUFSIZE),
-    // @@ This doesn't seem to work. The problem comes when we extract
-    // data portion from this buffer in the skeleton. Why?? Needs
-    // investigation.
-    // current_buffer_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE)),
+    current_buffer_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE)),
     supp_buffer_ (ACE_CDR::DEFAULT_BUFSIZE),
-    message_state_ (orb_core)
+    message_state_ (orb_core),
+    orb_core_ (orb_core)
 {
   ACE_CDR::mb_align (&this->current_buffer_);
-  ACE_CDR::mb_align (&this->supp_buffer_);
 }
 
+
+
+// @@ A general cleanup is required. Will look into this after
+// 1.1.14.  This have got a bit messy after the changes for BCB..
 
 int
 TAO_GIOP_Message_Handler::read_parse_message (TAO_Transport *transport)
@@ -217,11 +217,43 @@ TAO_GIOP_Message_Handler::get_payload_size (void)
   CORBA::ULong x = this->read_ulong (this->current_buffer_.rd_ptr ());
 
   if ((align_offset + x + TAO_GIOP_MESSAGE_HEADER_LEN) > this->message_size_)
-    {
-      // Increase the size of the <current_buffer_>
-      this->current_buffer_.size (align_offset + x + TAO_GIOP_MESSAGE_HEADER_LEN);
-      this->message_size_ = align_offset + x + TAO_GIOP_MESSAGE_HEADER_LEN;
-    }
+      {
+        size_t size = align_offset + x + TAO_GIOP_MESSAGE_HEADER_LEN;
+
+        // @@ This must come off the allocator. For some reason when I
+        // use the allocator things go for a toss. Need to revisit
+        // this...
+        ACE_Message_Block new_buffer (size);
+
+       ACE_CDR::mb_align (&new_buffer);
+
+       // Copy the data from the current buffer to the new large one.
+       new_buffer.copy (this->current_buffer_.base () + align_offset,
+                        this->message_size_ - align_offset);
+
+       // The rd_ptr and wr_ptr must be updated to match what is in the
+       // current buffer, but adjusted for the new alignment offset.
+       new_buffer.reset ();
+       ACE_CDR::mb_align (&new_buffer);
+       new_buffer.rd_ptr (this->rd_pos () - align_offset);
+       new_buffer.wr_ptr (this->wr_pos () - align_offset);
+
+       // @@ The transfer is tricky!
+       this->current_buffer_.data_block
+         (new_buffer.data_block ()->duplicate ());
+
+       // Transfer the new larger data block into the original buffer.
+       this->current_buffer_.rd_ptr (new_buffer.rd_ptr ());
+       this->current_buffer_.wr_ptr (new_buffer.wr_ptr ());
+
+       // new_buffer.data_block ()->base (0, 0);
+       // new_buffer.data_block (0);
+
+       // New message size is the size of the now larger buffer.
+       this->message_size_ = x +
+         TAO_GIOP_MESSAGE_HEADER_LEN +
+         ACE_CDR::MAX_ALIGNMENT;
+      }
 
   // Set the read pointer to the end of the GIOP message
   this->current_buffer_.rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN -
