@@ -210,109 +210,6 @@ public:
   CORBA::Boolean poll_next_response (CORBA_Environment &ACE_TRY_ENV =
                                      TAO_default_environment ());
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-  // = ORB event loop methods.
-
-  /**
-   * Instructs the ORB to initialize itself and run its event loop in
-   * the current thread, not returning until the ORB has shut down.
-   * If an error occurs during initialization or at run-time, a CORBA
-   * system exception will be thrown.
-   */
-  void run (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
-
-  /**
-   * Instructs the ORB to initialize itself and run its event loop in
-   * the current thread, not returning until the ORB has shut down.
-   * If an error occurs during initialization or at run-time, a CORBA
-   * system exception will be thrown.
-   */
-  void run (ACE_Time_Value &tv,
-            CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
-
-  /**
-   * Instructs the ORB to initialize itself and run its event loop in
-   * the current thread, not returning until the ORB has shut down.
-   * If an error occurs during initialization or at run-time, a CORBA
-   * system exception will be thrown.
-   */
-  void run (ACE_Time_Value *tv,
-            CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
-
-  /// Returns an indication of whether the ORB needs to perform some
-  /// work.
-  CORBA::Boolean work_pending (CORBA_Environment &ACE_TRY_ENV =
-                               TAO_default_environment ());
-
-  /**
-   * This operation performs an implementation-defined unit of
-   * work. Note that the default behavior is not to block; this
-   * behavior can be modified by passing an appropriate
-   * <ACE_Time_Value>.
-   */
-  void perform_work (CORBA_Environment &ACE_TRY_ENV =
-                     TAO_default_environment ());
-  void perform_work (ACE_Time_Value &,
-                     CORBA_Environment &ACE_TRY_ENV =
-                     TAO_default_environment ());
-  void perform_work (ACE_Time_Value *,
-                     CORBA_Environment &ACE_TRY_ENV =
-                     TAO_default_environment ());
-
-  /**
-   * This operation instructs the ORB to shut down. Shutting down the
-   * ORB causes all Object Adapters to be shut down. If
-   * <wait_for_completion> parameter is TRUE, this operation blocks
-   * until all ORB processing (including request processing and object
-   * deactivation or other operations associated with object adapters)
-   * has completed.
-   */
-  void shutdown (CORBA::Boolean wait_for_completion = 0,
-                 CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
-
-  /**
-   * Destroy the ORB, releasing any resources.  Notice that TAO *cannot*
-   * release the resources even if you have destroyed all the
-   * references to a particular ORB.  CORBA::ORB_init() is required to
-   * return the same pointer if called with the same ORBid, only after
-   * ORB::destroy() is called it may return a new one.
-   */
-  void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-
-  CORBA_Object_ptr resolve_initial_references (const char *name,
-                                               CORBA_Environment &ACE_TRY_ENV =
-                                               TAO_default_environment ());
-
-  /**
-   * This method acts as a mini-bootstrapping Naming Service, which is
-   * provided by the ORB for certain well-known object references.  TAO
-   * supports the "NameService", "TradingService", "RootPOA", "ImplRepo",
-   * and "POACurrent" via this method.  The <timeout> value bounds the
-   * amount of time the ORB blocks waiting to resolve the service.
-   * This is most useful for bootstrapping remote services, such as
-   * the "NameService" or "TradingService", that are commonly resolved
-   * via multicast.  By default, the value is 0, which means "use the
-   * <TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT> timeout period".  Note
-   * that by using a default value for the <timeout> parameter, TAO
-   * will remains compliant with the CORBA
-   * <resolve_initial_references> specification.
-   */
-  CORBA_Object_ptr resolve_initial_references (const char *name,
-                                               ACE_Time_Value *timeout,
-                                               CORBA_Environment &ACE_TRY_ENV =
-                                               TAO_default_environment ());
-
-  /// Returns a sequence of ObjectIds that lists which objects have
-  /// references available via the initial references mechanism.
-  CORBA_ORB_ObjectIdList_ptr list_initial_services (
-              CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-
-  CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                   const CORBA::Any& val,
-                                   CORBA_Environment &ACE_TRY_ENV =
-                                       TAO_default_environment ());
-
   /// The ORB TypeCode creation functions.
 
   CORBA::TypeCode_ptr create_struct_tc (
@@ -458,6 +355,109 @@ public:
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+  // = ORB event loop methods.
+
+  /**
+   * Instructs the ORB to initialize itself and run its event loop in
+   * the current thread, not returning until the ORB has shut down.
+   * If an error occurs during initialization or at run-time, a CORBA
+   * system exception will be thrown.
+   */
+  void run (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+
+  /**
+   * Instructs the ORB to initialize itself and run its event loop in
+   * the current thread, not returning until the ORB has shut down.
+   * If an error occurs during initialization or at run-time, a CORBA
+   * system exception will be thrown.
+   */
+  void run (ACE_Time_Value &tv,
+            CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+
+  /**
+   * Instructs the ORB to initialize itself and run its event loop in
+   * the current thread, not returning until the ORB has shut down.
+   * If an error occurs during initialization or at run-time, a CORBA
+   * system exception will be thrown.
+   */
+  void run (ACE_Time_Value *tv,
+            CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+
+  /// Returns an indication of whether the ORB needs to perform some
+  /// work.
+  CORBA::Boolean work_pending (CORBA_Environment &ACE_TRY_ENV =
+                               TAO_default_environment ());
+
+  /**
+   * This operation performs an implementation-defined unit of
+   * work. Note that the default behavior is not to block; this
+   * behavior can be modified by passing an appropriate
+   * <ACE_Time_Value>.
+   */
+  void perform_work (CORBA_Environment &ACE_TRY_ENV =
+                     TAO_default_environment ());
+  void perform_work (ACE_Time_Value &,
+                     CORBA_Environment &ACE_TRY_ENV =
+                     TAO_default_environment ());
+  void perform_work (ACE_Time_Value *,
+                     CORBA_Environment &ACE_TRY_ENV =
+                     TAO_default_environment ());
+
+  /**
+   * This operation instructs the ORB to shut down. Shutting down the
+   * ORB causes all Object Adapters to be shut down. If
+   * <wait_for_completion> parameter is TRUE, this operation blocks
+   * until all ORB processing (including request processing and object
+   * deactivation or other operations associated with object adapters)
+   * has completed.
+   */
+  void shutdown (CORBA::Boolean wait_for_completion = 0,
+                 CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+
+  /**
+   * Destroy the ORB, releasing any resources.  Notice that TAO *cannot*
+   * release the resources even if you have destroyed all the
+   * references to a particular ORB.  CORBA::ORB_init() is required to
+   * return the same pointer if called with the same ORBid, only after
+   * ORB::destroy() is called it may return a new one.
+   */
+  void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+
+  CORBA_Object_ptr resolve_initial_references (const char *name,
+                                               CORBA_Environment &ACE_TRY_ENV =
+                                               TAO_default_environment ());
+
+  /**
+   * This method acts as a mini-bootstrapping Naming Service, which is
+   * provided by the ORB for certain well-known object references.  TAO
+   * supports the "NameService", "TradingService", "RootPOA", "ImplRepo",
+   * and "POACurrent" via this method.  The <timeout> value bounds the
+   * amount of time the ORB blocks waiting to resolve the service.
+   * This is most useful for bootstrapping remote services, such as
+   * the "NameService" or "TradingService", that are commonly resolved
+   * via multicast.  By default, the value is 0, which means "use the
+   * <TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT> timeout period".  Note
+   * that by using a default value for the <timeout> parameter, TAO
+   * will remains compliant with the CORBA
+   * <resolve_initial_references> specification.
+   */
+  CORBA_Object_ptr resolve_initial_references (const char *name,
+                                               ACE_Time_Value *timeout,
+                                               CORBA_Environment &ACE_TRY_ENV =
+                                               TAO_default_environment ());
+
+  /// Returns a sequence of ObjectIds that lists which objects have
+  /// references available via the initial references mechanism.
+  CORBA_ORB_ObjectIdList_ptr list_initial_services (
+              CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+
+  CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
+                                   const CORBA::Any& val,
+                                   CORBA_Environment &ACE_TRY_ENV =
+                                       TAO_default_environment ());
 
   // ----------------------------------------------------------------
   // = TAO-specific extensions to the CORBA specification.
