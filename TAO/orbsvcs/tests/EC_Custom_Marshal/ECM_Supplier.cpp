@@ -222,7 +222,7 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
       TAO_OutputCDR cdr;
 
       CORBA::Boolean byte_order = TAO_ENCAP_BYTE_ORDER;
-      cdr << byte_order;
+      cdr << CORBA::Any::from_boolean (byte_order);
 
       // The typecode name standard, the encode method is not (in
       // general the CDR interface is not specified).
