@@ -32,8 +32,7 @@ int number_of_event_loop_threads = 3;
 int number_of_messages = 10;
 int sleep_time_in_msec = 100;
 int lock_upcall = 1;
-static const char *message =
-"Hello there!";
+static const char *message = "Hello there!";
 
 class Guard
 {
@@ -113,15 +112,14 @@ Handler::handle_input (ACE_HANDLE fd)
 
   ssize_t result =
     ACE::recv_n (fd,
-                 &message,
+                 &message.type_,
                  fixed_size_of_message);
   ACE_ASSERT (result == ssize_t (fixed_size_of_message));
 
   // On shutdown message, stop the event loop.
   if (message.type_ == Message::SHUTDOWN)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%t) Shutdown message\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Shutdown message\n")));
 
       this->shutdown_ = 1;
 
@@ -141,7 +139,7 @@ Handler::handle_input (ACE_HANDLE fd)
   message.data_[result] = '\0';
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) Starting to handle message %d: %s\n",
+              ACE_TEXT ("(%t) Starting to handle message %d: %s\n"),
               this->number_of_messages_read_ + 1,
               message.data_));
 
@@ -153,7 +151,7 @@ Handler::handle_input (ACE_HANDLE fd)
   this->number_of_messages_read_++;
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) Completed handling message %d\n",
+              ACE_TEXT ("(%t) Completed handling message %d\n"),
               this->number_of_messages_read_));
 
   return 0;
@@ -197,13 +195,12 @@ test_reactor_upcall (ACE_Reactor &reactor)
   data_message.type_ =
     Message::DATA;
   data_message.size_ =
-    ACE_OS::strlen (message);
-  ACE_OS::strcpy (data_message.data_,
-                  message);
+    ACE_OS_String::strlen (message);
+  ACE_OS_String::strcpy (data_message.data_, message);
 
-  size_t size_of_data_message =
-    sizeof (Message::Type) + sizeof (size_t) + data_message.size_;
-
+  // Send in two pieces because the char array may not be aligned
+  // directly after the size.
+  size_t header_size = sizeof (Message::Type) + sizeof (size_t);
   for (int i = 0;
        i < number_of_messages;
        ++i)
@@ -211,9 +208,14 @@ test_reactor_upcall (ACE_Reactor &reactor)
       // This should trigger a call to <handle_input>.
       result =
         ACE::send_n (handler.pipe_.write_handle (),
-                     &data_message,
-                     size_of_data_message);
-      ACE_ASSERT (result == ssize_t (size_of_data_message));
+                     &data_message.type_,
+                     header_size);
+      ACE_ASSERT (result == ssize_t (header_size));
+      result =
+        ACE::send_n (handler.pipe_.write_handle (),
+                     &data_message.data_,
+                     data_message.size_);
+      ACE_ASSERT (result == ssize_t (data_message.size_));
     }
 
   // We are done: send shutdown message.
@@ -222,15 +224,12 @@ test_reactor_upcall (ACE_Reactor &reactor)
     Message::SHUTDOWN;
   shutdown_message.size_ = 0;
 
-  size_t size_of_shutdown_message =
-    sizeof (Message::Type) + sizeof (size_t);
-
   // This should trigger a call to <handle_input>.
   result =
     ACE::send_n (handler.pipe_.write_handle (),
-                 &shutdown_message,
-                 size_of_shutdown_message);
-  ACE_ASSERT (result == ssize_t (size_of_shutdown_message));
+                 &shutdown_message.type_,
+                 header_size);
+  ACE_ASSERT (result == ssize_t (header_size));
 
   // Wait for the event loop tasks to exit.
   event_loop_task.wait ();
@@ -263,19 +262,20 @@ parse_args (int argc, ACE_TCHAR *argv[])
           ACE_OS::atoi (get_opt.opt_arg ());
         break;
       default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s\n"
-                           "\t-m <number of messages> (defaults to %d)\n"
-                           "\t-t <number of event loop threads> (defaults to %d)\n"
-                           "\t-s <sleep time in msec> (defaults to %d)\n"
-                           "\t-l <lock upcall> (defaults to %d)\n"
-                           "\n",
-                           argv [0],
-                           number_of_messages,
-                           number_of_event_loop_threads,
-                           sleep_time_in_msec,
-                           lock_upcall),
-                          -1);
+        ACE_ERROR_RETURN
+          ((LM_ERROR,
+            ACE_TEXT ("usage:  %s\n")
+            ACE_TEXT ("\t-m <number of messages> (defaults to %d)\n")
+            ACE_TEXT ("\t-t <number of event loop threads> (defaults to %d)\n")
+            ACE_TEXT ("\t-s <sleep time in msec> (defaults to %d)\n")
+            ACE_TEXT ("\t-l <lock upcall> (defaults to %d)\n")
+            ACE_TEXT ("\n"),
+            argv [0],
+            number_of_messages,
+            number_of_event_loop_threads,
+            sleep_time_in_msec,
+            lock_upcall),
+           -1);
       }
 
   return 0;
@@ -296,8 +296,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (result != 0)
     return result;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "\nTesting TP Reactor\n\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing TP Reactor\n")));
 
   ACE_TP_Reactor tp_reactor_impl;
   ACE_Reactor tp_reactor (&tp_reactor_impl);
@@ -306,8 +305,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 #if defined (ACE_WIN32)
 
-  ACE_DEBUG ((LM_DEBUG,
-              "\nTesting WFMO Reactor\n\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing WFMO Reactor\n")));
 
   ACE_WFMO_Reactor wfmo_reactor_impl;
   ACE_Reactor wfmo_reactor (&wfmo_reactor_impl);
