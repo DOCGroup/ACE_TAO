@@ -61,6 +61,18 @@ be_visitor_valuetype_fwd_cdr_op_ch::visit_valuetype_fwd (
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  be_valuetype *fvd = 
+    be_valuetype::narrow_from_decl (node->full_definition ());
+
+  if (fvd->gen_helper_header () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%N:%l) be_visitor_valuetype_fwd_cdr_op_ch::"
+                         "visit_valuetype_fwd - "
+                         "codegen for helper functions failed\n"), 
+                        -1);
+    }
+
   // generate the CDR << and >> operator declarations (prototypes)
 
   *os << "// TAO_IDL - Generated from" << be_nl

@@ -55,7 +55,6 @@ public:
   // Narrowing.
   DEF_NARROW_METHODS2 (be_valuetype_fwd, be_interface_fwd, AST_ValueTypeFwd);
   DEF_NARROW_FROM_DECL (be_valuetype_fwd);
-
 };
 
 #endif // if !defined

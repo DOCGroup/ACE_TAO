@@ -1,3 +1,16 @@
+Wed Jul  3 09:17:50 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_root/cdr_op.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/cdr_op_ch.cpp:
+        * TAO_IDL/be_include/be_valuetype_fwd.h:
+
+          Cosmetic and code generation format changes.
+
+        * TAO_IDL/be/be_visitor_valuetype_fwd/cdr_op_ch.cpp:
+
+          Added generation of CORBA::add_ref and CORBA::remove_ref
+          declarations for undefined forward declared valuetypes.
+
 Wed Jul  3 07:41:06 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Notify_Handler.h: Fixed a warming about an extra ; with the

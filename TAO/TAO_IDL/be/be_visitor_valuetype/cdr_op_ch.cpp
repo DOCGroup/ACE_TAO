@@ -44,6 +44,7 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
+
   if (!node->cli_hdr_cdr_op_gen ())
   {
     // Generate helper functions declaration.
@@ -71,7 +72,7 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
     }
 
   // Set the substate as generating code for the types defined in our scope.
-  this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_SCOPE);
+  this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_SCOPE);
 
   if (this->visit_scope (node) == -1)
     {
