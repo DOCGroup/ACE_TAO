@@ -1,3 +1,14 @@
+Wed Nov  5 22:38:08 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
+
+	* tests/Thruput_test/client.cpp (main): 
+	* tests/Thruput_test/server.cpp (main): Fixed missing declarations
+ 	and unused variables and labels.  Fixed uninitialized and unused
+ 	variables.
+
+	* tests/Thruput_test/ttcp_i.cpp (ttcp_sequence_i): 
+	* tests/Thruput_test/ttcp_i.h (class ttcp_sequence_i): Change to
+ 	use POA.  
+
 Wed Nov  5 22:46:47 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tao/params.i (addr): Fixed a bug where we should have been using
@@ -19,22 +30,23 @@ Wed Nov  5 22:46:47 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 Wed Nov  5 22:38:08 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
 	* tests/Cubit/TAO/DII_Cubit/README (server): Changed comment on
-	how to start the server to indicate the use of "-d" to see the IOR.
+ 	how to start the server to indicate the use of "-d" to see the
+ 	IOR.
 
-	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp (Cubit_Client): 
-	Reordered member initializers to match declaration order
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp (Cubit_Client): Reordered
+ 	member initializers to match declaration order
 	
 	* tests/Cubit/TAO/DII_Cubit/svr.cpp (main): Fixed comparison of
-	">=" on an unsigned variable to compare only ">".
+ 	">=" on an unsigned variable to compare only ">".
 
 Wed Nov 05 20:35:52 1997    <irfan@TWOSTEP>
 
 	* tao/orb_core.cpp (fini): Close down the connector. Other
- 	  ORB_Core specific objects also need to be cleaned up (and
- 	  deleted).
+ 	ORB_Core specific objects also need to be cleaned up (and
+ 	deleted).
 
 	* tests: Made sure that the orb pointer returned by ORB::init() is
- 	  correctly freed up.  Following files were updated:
+ 	correctly freed up.  Following files were updated:
 
 	  TAO/tests/Cubit/TAO/DII_Cubit/clnt.cpp
 	  TAO/tests/Cubit/TAO/DII_Cubit/svr.cpp
