@@ -33,6 +33,9 @@ Fri Mar 19 10:29:17 1999  David L. Levine  <levine@cs.wustl.edu>
           ace_components to record which components are in the ACE library.
           Suppress build/run of tests that use Token and Other.
 
+        * netsvcs/{clients,servers}/Makefile: use ace_components instead of
+          the current ACE_COMPONENTS setting to determine what should be built.
+
 Fri Mar 19 03:24:34 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/Singleton.cpp (instance): Commented out the call to
