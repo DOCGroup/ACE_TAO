@@ -243,10 +243,27 @@ ACE_INLINE CORBA_InvalidPolicies::_tao_seq_UShort_var &
 CORBA_InvalidPolicies::_tao_seq_UShort_var::operator= (const ::CORBA_InvalidPolicies::_tao_seq_UShort_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::CORBA_InvalidPolicies::_tao_seq_UShort (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          CORBA_InvalidPolicies::_tao_seq_UShort *deep_copy = 
+            new CORBA_InvalidPolicies::_tao_seq_UShort (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              CORBA_InvalidPolicies::_tao_seq_UShort *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -774,10 +791,27 @@ ACE_INLINE CORBA_PolicyList_var &
 CORBA_PolicyList_var::operator= (const ::CORBA_PolicyList_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::CORBA_PolicyList (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          CORBA_PolicyList *deep_copy = 
+            new CORBA_PolicyList (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              CORBA_PolicyList *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -1152,10 +1186,27 @@ ACE_INLINE CORBA_PolicyTypeSeq_var &
 CORBA_PolicyTypeSeq_var::operator= (const ::CORBA_PolicyTypeSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::CORBA_PolicyTypeSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          CORBA_PolicyTypeSeq *deep_copy = 
+            new CORBA_PolicyTypeSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              CORBA_PolicyTypeSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 

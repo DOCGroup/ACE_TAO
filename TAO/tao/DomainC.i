@@ -605,10 +605,27 @@ ACE_INLINE CORBA_DomainManagerList_var &
 CORBA_DomainManagerList_var::operator= (const ::CORBA_DomainManagerList_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::CORBA_DomainManagerList (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          CORBA_DomainManagerList *deep_copy = 
+            new CORBA_DomainManagerList (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              CORBA_DomainManagerList *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 

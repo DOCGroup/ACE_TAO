@@ -236,10 +236,27 @@ ACE_INLINE ::ImplementationRepository::EnvironmentVariable_var &
 ImplementationRepository::EnvironmentVariable_var::operator= (const ::ImplementationRepository::EnvironmentVariable_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::ImplementationRepository::EnvironmentVariable (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          ImplementationRepository::EnvironmentVariable *deep_copy = 
+            new ImplementationRepository::EnvironmentVariable (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              ImplementationRepository::EnvironmentVariable *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -592,10 +609,27 @@ ACE_INLINE ImplementationRepository::EnvironmentList_var &
 ImplementationRepository::EnvironmentList_var::operator= (const ::ImplementationRepository::EnvironmentList_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::ImplementationRepository::EnvironmentList (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          ImplementationRepository::EnvironmentList *deep_copy = 
+            new ImplementationRepository::EnvironmentList (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              ImplementationRepository::EnvironmentList *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -783,10 +817,27 @@ ACE_INLINE ::ImplementationRepository::StartupOptions_var &
 ImplementationRepository::StartupOptions_var::operator= (const ::ImplementationRepository::StartupOptions_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::ImplementationRepository::StartupOptions (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          ImplementationRepository::StartupOptions *deep_copy = 
+            new ImplementationRepository::StartupOptions (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              ImplementationRepository::StartupOptions *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -959,10 +1010,27 @@ ACE_INLINE ::ImplementationRepository::ServerInformation_var &
 ImplementationRepository::ServerInformation_var::operator= (const ::ImplementationRepository::ServerInformation_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::ImplementationRepository::ServerInformation (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          ImplementationRepository::ServerInformation *deep_copy = 
+            new ImplementationRepository::ServerInformation (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              ImplementationRepository::ServerInformation *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -1315,10 +1383,27 @@ ACE_INLINE ImplementationRepository::ServerInformationList_var &
 ImplementationRepository::ServerInformationList_var::operator= (const ::ImplementationRepository::ServerInformationList_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::ImplementationRepository::ServerInformationList (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          ImplementationRepository::ServerInformationList *deep_copy = 
+            new ImplementationRepository::ServerInformationList (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              ImplementationRepository::ServerInformationList *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 

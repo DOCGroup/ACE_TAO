@@ -55,10 +55,27 @@ ACE_INLINE ::RTCORBA::ThreadpoolLane_var &
 RTCORBA::ThreadpoolLane_var::operator= (const ::RTCORBA::ThreadpoolLane_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::RTCORBA::ThreadpoolLane (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          RTCORBA::ThreadpoolLane *deep_copy = 
+            new RTCORBA::ThreadpoolLane (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              RTCORBA::ThreadpoolLane *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -363,10 +380,27 @@ ACE_INLINE RTCORBA::ThreadpoolLanes_var &
 RTCORBA::ThreadpoolLanes_var::operator= (const ::RTCORBA::ThreadpoolLanes_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::RTCORBA::ThreadpoolLanes (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          RTCORBA::ThreadpoolLanes *deep_copy = 
+            new RTCORBA::ThreadpoolLanes (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              RTCORBA::ThreadpoolLanes *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -1115,10 +1149,27 @@ ACE_INLINE ::RTCORBA::PriorityBand_var &
 RTCORBA::PriorityBand_var::operator= (const ::RTCORBA::PriorityBand_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::RTCORBA::PriorityBand (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          RTCORBA::PriorityBand *deep_copy = 
+            new RTCORBA::PriorityBand (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              RTCORBA::PriorityBand *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -1423,10 +1474,27 @@ ACE_INLINE RTCORBA::PriorityBands_var &
 RTCORBA::PriorityBands_var::operator= (const ::RTCORBA::PriorityBands_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::RTCORBA::PriorityBands (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          RTCORBA::PriorityBands *deep_copy = 
+            new RTCORBA::PriorityBands (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              RTCORBA::PriorityBands *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -2691,10 +2759,27 @@ ACE_INLINE ::RTCORBA::Protocol_var &
 RTCORBA::Protocol_var::operator= (const ::RTCORBA::Protocol_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::RTCORBA::Protocol (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          RTCORBA::Protocol *deep_copy = 
+            new RTCORBA::Protocol (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              RTCORBA::Protocol *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -3047,10 +3132,27 @@ ACE_INLINE RTCORBA::ProtocolList_var &
 RTCORBA::ProtocolList_var::operator= (const ::RTCORBA::ProtocolList_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::RTCORBA::ProtocolList (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          RTCORBA::ProtocolList *deep_copy = 
+            new RTCORBA::ProtocolList (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              RTCORBA::ProtocolList *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 

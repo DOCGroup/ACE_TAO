@@ -60,10 +60,27 @@ ACE_INLINE ::IIOP::ListenPoint_var &
 IIOP::ListenPoint_var::operator= (const ::IIOP::ListenPoint_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IIOP::ListenPoint (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IIOP::ListenPoint *deep_copy = 
+            new IIOP::ListenPoint (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IIOP::ListenPoint *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -416,10 +433,27 @@ ACE_INLINE IIOP::ListenPointList_var &
 IIOP::ListenPointList_var::operator= (const ::IIOP::ListenPointList_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IIOP::ListenPointList (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IIOP::ListenPointList *deep_copy = 
+            new IIOP::ListenPointList (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IIOP::ListenPointList *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -613,10 +647,27 @@ ACE_INLINE ::IIOP::BiDirIIOPServiceContext_var &
 IIOP::BiDirIIOPServiceContext_var::operator= (const ::IIOP::BiDirIIOPServiceContext_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IIOP::BiDirIIOPServiceContext (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IIOP::BiDirIIOPServiceContext *deep_copy = 
+            new IIOP::BiDirIIOPServiceContext (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IIOP::BiDirIIOPServiceContext *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 

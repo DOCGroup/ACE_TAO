@@ -48,10 +48,27 @@ ACE_INLINE GIOP::IORAddressingInfo_var &
 GIOP::IORAddressingInfo_var::operator= (const GIOP::IORAddressingInfo_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, GIOP::IORAddressingInfo (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          GIOP::IORAddressingInfo *deep_copy = 
+            new GIOP::IORAddressingInfo (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              GIOP::IORAddressingInfo *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -343,10 +360,27 @@ ACE_INLINE GIOP::TargetAddress_var &
 GIOP::TargetAddress_var::operator= (const GIOP::TargetAddress_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, GIOP::TargetAddress (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          GIOP::TargetAddress *deep_copy = 
+            new GIOP::TargetAddress (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              GIOP::TargetAddress *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 

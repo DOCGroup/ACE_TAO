@@ -41,10 +41,27 @@ ACE_INLINE TimeBase::UtcT_var &
 TimeBase::UtcT_var::operator= (const TimeBase::UtcT_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    this->ptr_ = new TimeBase::UtcT (*p.ptr_);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          TimeBase::UtcT *deep_copy = 
+            new TimeBase::UtcT (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              TimeBase::UtcT *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -150,10 +167,27 @@ ACE_INLINE TimeBase::IntervalT_var &
 TimeBase::IntervalT_var::operator= (const TimeBase::IntervalT_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    this->ptr_ = new TimeBase::IntervalT (*p.ptr_);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          TimeBase::IntervalT *deep_copy = 
+            new TimeBase::IntervalT (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              TimeBase::IntervalT *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 

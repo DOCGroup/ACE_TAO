@@ -432,10 +432,27 @@ ACE_INLINE ::Messaging::PriorityRange_var &
 Messaging::PriorityRange_var::operator= (const ::Messaging::PriorityRange_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::Messaging::PriorityRange (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          Messaging::PriorityRange *deep_copy = 
+            new Messaging::PriorityRange (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              Messaging::PriorityRange *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -2052,10 +2069,27 @@ ACE_INLINE ::Messaging::RoutingTypeRange_var &
 Messaging::RoutingTypeRange_var::operator= (const ::Messaging::RoutingTypeRange_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::Messaging::RoutingTypeRange (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          Messaging::RoutingTypeRange *deep_copy = 
+            new Messaging::RoutingTypeRange (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              Messaging::RoutingTypeRange *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -2732,10 +2766,27 @@ ACE_INLINE ::Messaging::PolicyValue_var &
 Messaging::PolicyValue_var::operator= (const ::Messaging::PolicyValue_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::Messaging::PolicyValue (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          Messaging::PolicyValue *deep_copy = 
+            new Messaging::PolicyValue (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              Messaging::PolicyValue *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -2919,10 +2970,27 @@ ACE_INLINE Messaging::PolicyValue::_tao_seq_Octet_var &
 Messaging::PolicyValue::_tao_seq_Octet_var::operator= (const ::Messaging::PolicyValue::_tao_seq_Octet_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::Messaging::PolicyValue::_tao_seq_Octet (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          Messaging::PolicyValue::_tao_seq_Octet *deep_copy = 
+            new Messaging::PolicyValue::_tao_seq_Octet (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              Messaging::PolicyValue::_tao_seq_Octet *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -3295,10 +3363,27 @@ ACE_INLINE Messaging::PolicyValueSeq_var &
 Messaging::PolicyValueSeq_var::operator= (const ::Messaging::PolicyValueSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::Messaging::PolicyValueSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          Messaging::PolicyValueSeq *deep_copy = 
+            new Messaging::PolicyValueSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              Messaging::PolicyValueSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -3694,10 +3779,27 @@ ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet_var &
 Messaging::ExceptionHolder::_tao_seq_Octet_var::operator= (const ::Messaging::ExceptionHolder::_tao_seq_Octet_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::Messaging::ExceptionHolder::_tao_seq_Octet (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          Messaging::ExceptionHolder::_tao_seq_Octet *deep_copy = 
+            new Messaging::ExceptionHolder::_tao_seq_Octet (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              Messaging::ExceptionHolder::_tao_seq_Octet *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
