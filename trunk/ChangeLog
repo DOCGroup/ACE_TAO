@@ -1,23 +1,31 @@
+Fri Dec 12 08:37:45 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/create_ace_build.pl:
+
+          When creating a build on Windows and we run into a problem with
+          linking to a target that has a path that is "too long", we resort
+          to the short file name and everyone's happy.
+
 Thu Dec 11 18:25:39 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/Future.cpp: Added #include "ace/Guard_T.h" and
-	  "ace/Recursive_Thread_Mutex.h" if ACE_HAS_THREADS is defined.
-	  There are ACE_Guards that use it and AIX Visual Age C++ needs
-	  to see these headers to work right.
+        * ace/Future.cpp: Added #include "ace/Guard_T.h" and
+          "ace/Recursive_Thread_Mutex.h" if ACE_HAS_THREADS is defined.
+          There are ACE_Guards that use it and AIX Visual Age C++ needs
+          to see these headers to work right.
 
-	* ace/Future_Set.h: Added #include "ace/Null_Mutex.h" since this
-	  file references it in an ACE_Hash_Map_Manager declaration. Even if
-	  it may have been available during compile, Visual Age C++ needs to
-	  see the header during link time as well, and it only remembers to
-	  look at headers that were explicitly included.
+        * ace/Future_Set.h: Added #include "ace/Null_Mutex.h" since this
+          file references it in an ACE_Hash_Map_Manager declaration. Even if
+          it may have been available during compile, Visual Age C++ needs to
+          see the header during link time as well, and it only remembers to
+          look at headers that were explicitly included.
 
 Thu Dec 11 18:13:29 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_netdb.inl: Changed use of naked ::memset() calls to
-	  ACE_OS::memset(). Fixes compile errors on AIX 4.3.
+        * ace/OS_NS_netdb.inl: Changed use of naked ::memset() calls to
+          ACE_OS::memset(). Fixes compile errors on AIX 4.3.
 
-	* ace/OS_NS_stdio.cpp (gets): Added "ACE_STD_NAMESPACE::" prefix to
-	  getchar() call; fixes compile error on AIX 4.3.
+        * ace/OS_NS_stdio.cpp (gets): Added "ACE_STD_NAMESPACE::" prefix to
+          getchar() call; fixes compile error on AIX 4.3.
 
 Wed Dec 10 18:20:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -30,11 +38,11 @@ Wed Dec 10 18:20:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Dec 10 13:16:03 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/UUID.cpp (to_string):
+        * ace/UUID.cpp (to_string):
 
-	  Fixed incorrect delete() operator call.  Use vector delete[]()
-	  instead of scalar delete() since array was allocated with
-	  new[]().
+          Fixed incorrect delete() operator call.  Use vector delete[]()
+          instead of scalar delete() since array was allocated with
+          new[]().
 
 Wed Dec 10 15:09:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 

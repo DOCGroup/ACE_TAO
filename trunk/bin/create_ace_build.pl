@@ -123,20 +123,39 @@ sub cab_link {
     }
     $status = chdir($curdir);
     if (! $status) {
-       die "ERROR: cab_link() chdir " . $curdir . " failed.\n";
+      die "ERROR: cab_link() chdir " . $curdir . " failed.\n";
     }
     
     my($base_linked) = basename($linked);
 
     if (! -e $real) {
-       ## This should never happen, but there appears to be a bug
-       ## with the underlying win32 apis on Windows Server 2003.
-       ## Long paths will cause an error which perl will ignore.
-       ## Unicode versions of the apis seem to work fine. 
-       ## To experiment try Win32 _fullpath() and CreateHardLink with
-       ## long paths. 
-       print "ERROR : Skipping $real.\n";
-       return;
+      ## If the real file "doesn't exist", then we need to change back to
+      ## the starting directory and look up the short file name.
+      chdir($starting_dir);
+      my($short) = Win32::GetShortPathName($fixed);
+
+      ## If we were able to find the short file name, then we need to
+      ## modyfy $real.  Note, we don't need to change back to $curdir
+      ## unless the short name lookup was successful.
+      if (defined $short) {
+        ## Replace a section of $real (the part that isn't a relative
+        ## path) with the short file name.  The hard link will still have
+        ## the right name, it's just pointing to the short name.
+        substr($real, length($real) - length($fixed)) = $short;
+
+        ## Get back to the right directory for when we make the hard link
+        chdir($curdir);
+      }
+      else {
+        ## This should never happen, but there appears to be a bug
+        ## with the underlying win32 apis on Windows Server 2003.
+        ## Long paths will cause an error which perl will ignore.
+        ## Unicode versions of the apis seem to work fine. 
+        ## To experiment try Win32 _fullpath() and CreateHardLink with
+        ## long paths. 
+        print "ERROR : Skipping $real.\n";
+        return;
+      }
     }
 
     if (-e $base_linked) {
