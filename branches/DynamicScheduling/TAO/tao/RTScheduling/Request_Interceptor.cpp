@@ -174,6 +174,7 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
 		  "Received Exception %s\n",
 		  id));
       
+
       // If the remote host threw a THREAD_CANCELLED
       // exception, make sure to take the appropriate
       // local action.
@@ -251,16 +252,16 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   ACE_DEBUG ((LM_DEBUG,
 	      "Server_Interceptor::receive_request\n"));
 
-  RTScheduling::Current::IdType guid;
+  RTScheduling::Current::IdType_var guid_var;
   char* name = 0;
   CORBA::Policy_ptr sched_param = 0;
   CORBA::Policy_ptr implicit_sched_param = 0;
-
+  
   TAO_RTScheduler_Current_i* new_current;
   ACE_NEW_THROW_EX (new_current,
 		    TAO_RTScheduler_Current_i (this->current_->orb (),
 					       this->current_->dt_hash ()),
-			  CORBA::NO_MEMORY (
+		    CORBA::NO_MEMORY (
 					    CORBA::SystemException::_tao_minor_code (
 					  TAO_DEFAULT_MINOR_CODE,
 					  ENOMEM),
@@ -271,19 +272,38 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   // from request and populates the out
   // parameters.
   new_current->scheduler()->receive_request(ri,
-					    guid.out (),
+					    guid_var.out (),
 					    name,
 					    sched_param,
 					    implicit_sched_param);
-
+  
+  
+  RTScheduling::Current::IdType guid;	
+  guid.length (sizeof (long));	
+  ACE_OS::memcpy (guid.get_buffer (),
+		  guid_var->get_buffer (),
+		  sizeof (long));
+  
+  int id;
+  ACE_OS::memcpy (&id,
+		  guid.get_buffer (),
+		  guid.length ());
+  
+  ACE_DEBUG ((LM_DEBUG,
+	      "The Guid is %d \n",
+	      id));
 
       
   // Create new DT.
   RTScheduling::DistributableThread_var dt = TAO_DistributableThread_Factory::create_DT ();
       
   // Add new DT to map.
-  new_current->dt_hash ()->bind (guid, dt.in ());
-  
+  int result = new_current->dt_hash ()->bind (guid, dt);
+
+  if (result != 0)
+    {
+      ACE_THROW (CORBA::INTERNAL ());
+    }
   // Create new temporary current. Note that
   // the new <sched_param> is the current
   // <implicit_sched_param> and there is no
@@ -297,9 +317,6 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   // Install new current in the ORB and store the previous
   // current implementation
   //current->implementation (new_current) 
-
-  TAO_RTScheduler_Current_i *current = 0;
-  
   TAO_TSS_Resources *tss = TAO_TSS_RESOURCES::instance ();
   
   tss->rtscheduler_previous_current_impl_ = this->current_->implementation (new_current);
@@ -345,7 +362,6 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
 	  // Reset the previous current pointer.
 	  tss->rtscheduler_previous_current_impl_ = 0;
 	}
-      
     }
 }
   
