@@ -426,12 +426,12 @@ public:
                     CORBA_Environment &ACE_TRY_ENV =
                         TAO_default_environment ());
 
-  // The following are not implemented and just throw
-  // CORBA::NO_IMPLEMENT.
-
   void create_named_value (CORBA::NamedValue_ptr &nmval,
                            CORBA_Environment &ACE_TRY_ENV =
                                TAO_default_environment ());
+
+  // The following are not implemented and just throw
+  // CORBA::NO_IMPLEMENT.
 
   void create_exception_list (CORBA::ExceptionList_ptr &exclist,
                               CORBA_Environment &ACE_TRY_ENV =
