@@ -1,3 +1,9 @@
+Mon Feb 17 15:26:32 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/RTCORBA/MT_Client_Protocol_Priority/client.conf: This file
+	  missed the previous checkin somehow. Adding this file to the
+	  repo. 
+
 Mon Feb 17 09:09:54 2003  Heather Drury  <drury_h@ociweb.com>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h:
