@@ -1,3 +1,10 @@
+Fri Dec 29 17:08:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/auto_compile:
+
+          Added a -sendreport option to enable the sending of email at all.
+          Now by default it will not.
+
 Fri Dec 29 16:53:22 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp (main),
