@@ -1,32 +1,38 @@
+Thu May 21 17:36:37 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-sunos5.6.h: added support for POSIX 199506
+          extensions.  Thanks to J. Russell Noseworthy
+          <rnosewor@objectsciences.com> for providing this support.
+
 Thu May 21 15:28:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/test_config.h: Modified to write output from tests into
-	  log file.  Notice that log files on CE have extension name
-	  ".txt" instead of ".log".  
+        * tests/test_config.h: Modified to write output from tests into
+          log file.  Notice that log files on CE have extension name
+          ".txt" instead of ".log".
 
-	* ace/OS.i (strrchr): Added UNICODE version of this function.
+        * ace/OS.i (strrchr): Added UNICODE version of this function.
 
-	* ace/Log_Record.{h,cpp}: Generalized message formatting on CE by
-	  adding a new method format_msg().
+        * ace/Log_Record.{h,cpp}: Generalized message formatting on CE by
+          adding a new method format_msg().
 
-	* ace/Reactor_Impl.h: Removed an extra comma.
+        * ace/Reactor_Impl.h: Removed an extra comma.
 
-	* ace/XtReactor.cpp: Include "ace/Reactor.h"
+        * ace/XtReactor.cpp: Include "ace/Reactor.h"
 
-	* tests/Recursive_Mutex_Test.cpp:
-	* tests/Future.cpp: Removed iteration restriction on CE.
+        * tests/Recursive_Mutex_Test.cpp:
+        * tests/Future.cpp: Removed iteration restriction on CE.
 
 Thu May 21 12:13:36 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ace_{dll,lib}.dsp: Added Stats.cpp into projects.
+        * ace/ace_{dll,lib}.dsp: Added Stats.cpp into projects.
 
 Wed May 20 23:02:41 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/SOCK_Dgram_Mcast.cpp (subscribe): On Win32, if
-	  ACE::get_ip_interfaces finds less than 2 interfaces, call
-	  subscribe with "0.0.0.0".  This is sort of a hack and is meant
-	  only to help get things working again until ACE::get_ip_interfaces
-	  can be made to work correctly in all cases.
+        * ace/SOCK_Dgram_Mcast.cpp (subscribe): On Win32, if
+          ACE::get_ip_interfaces finds less than 2 interfaces, call
+          subscribe with "0.0.0.0".  This is sort of a hack and is meant
+          only to help get things working again until ACE::get_ip_interfaces
+          can be made to work correctly in all cases.
 
 Wed May 20 10:42:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -40,6 +46,8 @@ Wed May 20 10:42:12 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-sunos5.5-{sunc++-4.x,g++}.h: removed
           commented-out ACE_LACKS_{COND,MUTEX}ATTR_PSHARED.  Enabled
           ACE_HAS_CLOCK_GETTIME, because we always link with -lposix4.
+          Thanks to J. Russell Noseworthy <rnosewor@objectsciences.com>
+          for inspiring the ACE_HAS_CLOCK_GETTIME enable.
 
         * ace/config-osf1-4.0.h: removed uncommented
           ACE_LACKS_CONDATTR_PSHARED, so that we can test whether
@@ -52,10 +60,10 @@ Wed May 20 10:42:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Tue May 19 21:24:50 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Future_Test.cpp: Reduced the number of iterations on CE.
+        * tests/Future_Test.cpp: Reduced the number of iterations on CE.
 
-	* ace/Synch.i: Added #ifdef (ACE_HAS_THREADS) to make it compile
- 	  on non-threaded platforms.
+        * ace/Synch.i: Added #ifdef (ACE_HAS_THREADS) to make it compile
+          on non-threaded platforms.
 
 Tue May 19 10:05:07 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
@@ -81,7 +89,7 @@ Mon May 18 16:37:36 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/OS.h (ACE_OS): Added implementations for strrchr, strnchr,
           strnstr, and strstr.
-        
+
         * ace/ACE.cpp (hash_pjw): Added new versions of these that work
           with user specified string length.
 
@@ -129,7 +137,7 @@ Sun May 17 23:14:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
         * ace/Log_Msg.{h,cpp} (ACE_ASSERT): Use unicode in ACE_ASSERT.
           (log): Don't exit the program for now.  Exiting program here
           destroys all debugging message in the window.
-        
+
         * tests/Reader_Writer_Test.cpp: Reduced the number of iterations
           on WinCE.
 

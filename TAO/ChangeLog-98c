@@ -3,6 +3,9 @@ Thu May 21 17:28:55 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/GIOP.cpp (writev_n): added static cast of iov_len to
           ssize_t to avoid signed/unsigned comparison.
 
+        * tests/OctetSeq/OctetSeq.cpp (main): changed type of loop
+          index to u_int to avoid signed/unsigned comparison.
+
 Thu May 21 12:16:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tests/Cubit/TAO/MT_Cubit/Makefile:
