@@ -130,14 +130,14 @@ module PortableServer
   //
   // **************************************************
 
-  enum TAO_POA_LockingPolicyValue {
-    USE_DEFAULT_LOCK,
-    USE_NULL_LOCK,
-    USE_THREAD_LOCK
+  enum SynchronizationPolicyValue {
+    DEFAULT_LOCK,
+    NULL_LOCK,
+    THREAD_LOCK
   };
-  interface TAO_POA_LockingPolicy : CORBA::Policy
+  interface SynchronizationPolicy : CORBA::Policy
     {
-      readonly attribute TAO_POA_LockingPolicyValue value;
+      readonly attribute SynchronizationPolicyValue value;
     };
 
   // **************************************************
@@ -284,9 +284,9 @@ module PortableServer
       //
       // **************************************************
 
-      TAO_POA_LockingPolicy
-        create_TAO_POA_locking_policy
-        (in TAO_POA_LockingPolicyValue value);
+      SynchronizationPolicy
+        create_synchronization_policy
+        (in SynchronizationPolicyValue value);
 
       //--------------------------------------------------
       //

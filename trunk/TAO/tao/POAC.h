@@ -961,111 +961,111 @@ public:
   //
   // **************************************************
 
-  enum TAO_POA_LockingPolicyValue 
+  enum SynchronizationPolicyValue 
   {
-    USE_DEFAULT_LOCK,
-    USE_NULL_LOCK,
-    USE_THREAD_LOCK
+    DEFAULT_LOCK,
+    NULL_LOCK,
+    THREAD_LOCK
   };
-  typedef TAO_POA_LockingPolicyValue &TAO_POA_LockingPolicyValue_out;
-  static CORBA::TypeCode_ptr _tc_TAO_POA_LockingPolicyValue;
+  typedef SynchronizationPolicyValue &SynchronizationPolicyValue_out;
+  static CORBA::TypeCode_ptr _tc_SynchronizationPolicyValue;
 
 
-#if !defined (_PORTABLESERVER_TAO_POA_LOCKINGPOLICY___PTR_CH_)
-#define _PORTABLESERVER_TAO_POA_LOCKINGPOLICY___PTR_CH_
+#if !defined (_PORTABLESERVER_SYNCHRONIZATIONPOLICY___PTR_CH_)
+#define _PORTABLESERVER_SYNCHRONIZATIONPOLICY___PTR_CH_
 
-  class TAO_POA_LockingPolicy;
-  typedef TAO_POA_LockingPolicy *TAO_POA_LockingPolicy_ptr;
+  class SynchronizationPolicy;
+  typedef SynchronizationPolicy *SynchronizationPolicy_ptr;
 
 #endif // end #if !defined
 
 
-#if !defined (_PORTABLESERVER_TAO_POA_LOCKINGPOLICY___VAR_CH_)
-#define _PORTABLESERVER_TAO_POA_LOCKINGPOLICY___VAR_CH_
+#if !defined (_PORTABLESERVER_SYNCHRONIZATIONPOLICY___VAR_CH_)
+#define _PORTABLESERVER_SYNCHRONIZATIONPOLICY___VAR_CH_
 
-  class TAO_Export TAO_POA_LockingPolicy_var
+  class TAO_Export SynchronizationPolicy_var
   {
   public:
-    TAO_POA_LockingPolicy_var (void); // default constructor
-    TAO_POA_LockingPolicy_var (TAO_POA_LockingPolicy_ptr);
-    TAO_POA_LockingPolicy_var (const TAO_POA_LockingPolicy_var &); // copy constructor
-    ~TAO_POA_LockingPolicy_var (void); // destructor
+    SynchronizationPolicy_var (void); // default constructor
+    SynchronizationPolicy_var (SynchronizationPolicy_ptr);
+    SynchronizationPolicy_var (const SynchronizationPolicy_var &); // copy constructor
+    ~SynchronizationPolicy_var (void); // destructor
 
-    TAO_POA_LockingPolicy_var &operator= (TAO_POA_LockingPolicy_ptr);
-    TAO_POA_LockingPolicy_var &operator= (const TAO_POA_LockingPolicy_var &);
-    TAO_POA_LockingPolicy_ptr operator-> (void) const;
+    SynchronizationPolicy_var &operator= (SynchronizationPolicy_ptr);
+    SynchronizationPolicy_var &operator= (const SynchronizationPolicy_var &);
+    SynchronizationPolicy_ptr operator-> (void) const;
 
-    operator const TAO_POA_LockingPolicy_ptr &() const;
-    operator TAO_POA_LockingPolicy_ptr &();
+    operator const SynchronizationPolicy_ptr &() const;
+    operator SynchronizationPolicy_ptr &();
     // in, inout, out, _retn
-    TAO_POA_LockingPolicy_ptr in (void) const;
-    TAO_POA_LockingPolicy_ptr &inout (void);
-    TAO_POA_LockingPolicy_ptr &out (void);
-    TAO_POA_LockingPolicy_ptr _retn (void);
-    TAO_POA_LockingPolicy_ptr ptr (void) const;
+    SynchronizationPolicy_ptr in (void) const;
+    SynchronizationPolicy_ptr &inout (void);
+    SynchronizationPolicy_ptr &out (void);
+    SynchronizationPolicy_ptr _retn (void);
+    SynchronizationPolicy_ptr ptr (void) const;
 
   private:
-    TAO_POA_LockingPolicy_ptr ptr_;
+    SynchronizationPolicy_ptr ptr_;
   };
 
 
 #endif // end #if !defined
 
 
-#if !defined (_PORTABLESERVER_TAO_POA_LOCKINGPOLICY___OUT_CH_)
-#define _PORTABLESERVER_TAO_POA_LOCKINGPOLICY___OUT_CH_
+#if !defined (_PORTABLESERVER_SYNCHRONIZATIONPOLICY___OUT_CH_)
+#define _PORTABLESERVER_SYNCHRONIZATIONPOLICY___OUT_CH_
 
-  class TAO_Export TAO_POA_LockingPolicy_out
+  class TAO_Export SynchronizationPolicy_out
   {
   public:
-    TAO_POA_LockingPolicy_out (TAO_POA_LockingPolicy_ptr &);
-    TAO_POA_LockingPolicy_out (TAO_POA_LockingPolicy_var &);
-    TAO_POA_LockingPolicy_out (TAO_POA_LockingPolicy_out &);
-    TAO_POA_LockingPolicy_out &operator= (TAO_POA_LockingPolicy_out &);
-    TAO_POA_LockingPolicy_out &operator= (const TAO_POA_LockingPolicy_var &);
-    TAO_POA_LockingPolicy_out &operator= (TAO_POA_LockingPolicy_ptr);
-    operator TAO_POA_LockingPolicy_ptr &();
-    TAO_POA_LockingPolicy_ptr &ptr (void);
-    TAO_POA_LockingPolicy_ptr operator-> (void);
+    SynchronizationPolicy_out (SynchronizationPolicy_ptr &);
+    SynchronizationPolicy_out (SynchronizationPolicy_var &);
+    SynchronizationPolicy_out (SynchronizationPolicy_out &);
+    SynchronizationPolicy_out &operator= (SynchronizationPolicy_out &);
+    SynchronizationPolicy_out &operator= (const SynchronizationPolicy_var &);
+    SynchronizationPolicy_out &operator= (SynchronizationPolicy_ptr);
+    operator SynchronizationPolicy_ptr &();
+    SynchronizationPolicy_ptr &ptr (void);
+    SynchronizationPolicy_ptr operator-> (void);
 
   private:
-    TAO_POA_LockingPolicy_ptr &ptr_;
+    SynchronizationPolicy_ptr &ptr_;
   };
 
 
 #endif // end #if !defined
 
 
-#if !defined (_PORTABLESERVER_TAO_POA_LOCKINGPOLICY_CH_)
-#define _PORTABLESERVER_TAO_POA_LOCKINGPOLICY_CH_
+#if !defined (_PORTABLESERVER_SYNCHRONIZATIONPOLICY_CH_)
+#define _PORTABLESERVER_SYNCHRONIZATIONPOLICY_CH_
 
-  class TAO_Export TAO_POA_LockingPolicy: public virtual CORBA::Policy
+  class TAO_Export SynchronizationPolicy: public virtual CORBA::Policy
   {
   public:
     // the static operations
-    static TAO_POA_LockingPolicy_ptr _duplicate (TAO_POA_LockingPolicy_ptr obj);
-    static TAO_POA_LockingPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
-    static TAO_POA_LockingPolicy_ptr _nil (void);
+    static SynchronizationPolicy_ptr _duplicate (SynchronizationPolicy_ptr obj);
+    static SynchronizationPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
+    static SynchronizationPolicy_ptr _nil (void);
 
-    virtual TAO_POA_LockingPolicyValue value (CORBA::Environment &env);
+    virtual SynchronizationPolicyValue value (CORBA::Environment &env);
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
   protected:
-    TAO_POA_LockingPolicy (
+    SynchronizationPolicy (
                            STUB_Object *objref = 0,
                            TAO_ServantBase *servant = 0,
                            CORBA::Boolean collocated = CORBA::B_FALSE
                            );
   public:
-    virtual ~TAO_POA_LockingPolicy (void);
+    virtual ~SynchronizationPolicy (void);
   private:
-    TAO_POA_LockingPolicy (const TAO_POA_LockingPolicy&);
-    void operator= (const TAO_POA_LockingPolicy&);
+    SynchronizationPolicy (const SynchronizationPolicy&);
+    void operator= (const SynchronizationPolicy&);
   };
 
 
 #endif // end #if !defined
 
-  static CORBA::TypeCode_ptr _tc_TAO_POA_LockingPolicy;
+  static CORBA::TypeCode_ptr _tc_SynchronizationPolicy;
 
 
 #if !defined (_PORTABLESERVER_POAMANAGER___PTR_CH_)
@@ -2041,7 +2041,7 @@ public:
     //
     // **************************************************
 
-    virtual TAO_POA_LockingPolicy_ptr  create_TAO_POA_locking_policy (TAO_POA_LockingPolicyValue value, CORBA::Environment &env) = 0;
+    virtual SynchronizationPolicy_ptr  create_synchronization_policy (SynchronizationPolicyValue value, CORBA::Environment &env) = 0;
 
     virtual char * the_name (CORBA::Environment &env) = 0;
     virtual POA_ptr  the_parent (CORBA::Environment &env) = 0;

@@ -156,22 +156,22 @@ ACE_INLINE void POA_PortableServer::RequestProcessingPolicy::_get_policy_type_sk
 
 // skeleton destructor
 ACE_INLINE
-POA_PortableServer::TAO_POA_LockingPolicy::~TAO_POA_LockingPolicy (void)
+POA_PortableServer::SynchronizationPolicy::~SynchronizationPolicy (void)
 {
 }
-ACE_INLINE void POA_PortableServer::TAO_POA_LockingPolicy::copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env)
+ACE_INLINE void POA_PortableServer::SynchronizationPolicy::copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env)
 {
-  POA_CORBA::Policy_ptr impl = (POA_PortableServer::TAO_POA_LockingPolicy_ptr) obj;
+  POA_CORBA::Policy_ptr impl = (POA_PortableServer::SynchronizationPolicy_ptr) obj;
   POA_CORBA::Policy::copy_skel (req, (POA_CORBA::Policy_ptr) impl, context, env);
 }
-ACE_INLINE void POA_PortableServer::TAO_POA_LockingPolicy::destroy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env)
+ACE_INLINE void POA_PortableServer::SynchronizationPolicy::destroy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env)
 {
-  POA_CORBA::Policy_ptr impl = (POA_PortableServer::TAO_POA_LockingPolicy_ptr) obj;
+  POA_CORBA::Policy_ptr impl = (POA_PortableServer::SynchronizationPolicy_ptr) obj;
   POA_CORBA::Policy::destroy_skel (req, (POA_CORBA::Policy_ptr) impl, context, env);
 }
-ACE_INLINE void POA_PortableServer::TAO_POA_LockingPolicy::_get_policy_type_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env)
+ACE_INLINE void POA_PortableServer::SynchronizationPolicy::_get_policy_type_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env)
 {
-  POA_CORBA::Policy_ptr impl = (POA_PortableServer::TAO_POA_LockingPolicy_ptr) obj;
+  POA_CORBA::Policy_ptr impl = (POA_PortableServer::SynchronizationPolicy_ptr) obj;
   POA_CORBA::Policy::_get_policy_type_skel (req, (POA_CORBA::Policy_ptr) impl, context, env);
 }
 

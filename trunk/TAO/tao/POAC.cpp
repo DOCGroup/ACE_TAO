@@ -789,20 +789,20 @@ CORBA::TypeCode_ptr PortableServer::_tc_RequestProcessingPolicy = &_tc__tc_Porta
 //
 // **************************************************
 
-static const CORBA::Long _oc_PortableServer_TAO_POA_LockingPolicyValue[] =
+static const CORBA::Long _oc_PortableServer_SynchronizationPolicyValue[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  50, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f54), ACE_NTOHL (0x414f5f50), ACE_NTOHL (0x4f415f4c), ACE_NTOHL (0x6f636b69), ACE_NTOHL (0x6e67506f), ACE_NTOHL (0x6c696379), ACE_NTOHL (0x56616c75), ACE_NTOHL (0x653a312e), ACE_NTOHL (0x3000fdfd),  // repository ID = IDL:PortableServer/TAO_POA_LockingPolicyValue:1.0
-  27, ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x504f415f), ACE_NTOHL (0x4c6f636b), ACE_NTOHL (0x696e6750), ACE_NTOHL (0x6f6c6963), ACE_NTOHL (0x7956616c), ACE_NTOHL (0x756500fd),  // name = TAO_POA_LockingPolicyValue
+  50, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f53), ACE_NTOHL (0x796e6368), ACE_NTOHL (0x726f6e69), ACE_NTOHL (0x7a617469), ACE_NTOHL (0x6f6e506f), ACE_NTOHL (0x6c696379), ACE_NTOHL (0x56616c75), ACE_NTOHL (0x653a312e), ACE_NTOHL (0x3000fdfd),  // repository ID = IDL:PortableServer/SynchronizationPolicyValue:1.0
+  27, ACE_NTOHL (0x53796e63), ACE_NTOHL (0x68726f6e), ACE_NTOHL (0x697a6174), ACE_NTOHL (0x696f6e50), ACE_NTOHL (0x6f6c6963), ACE_NTOHL (0x7956616c), ACE_NTOHL (0x756500fd),  // name = SynchronizationPolicyValue
   3, // member count
-    17, ACE_NTOHL (0x5553455f), ACE_NTOHL (0x44454641), ACE_NTOHL (0x554c545f), ACE_NTOHL (0x4c4f434b), ACE_NTOHL (0xfdfdfd),  // name = USE_DEFAULT_LOCK
-    14, ACE_NTOHL (0x5553455f), ACE_NTOHL (0x4e554c4c), ACE_NTOHL (0x5f4c4f43), ACE_NTOHL (0x4b00fdfd),  // name = USE_NULL_LOCK
-    16, ACE_NTOHL (0x5553455f), ACE_NTOHL (0x54485245), ACE_NTOHL (0x41445f4c), ACE_NTOHL (0x4f434b00),  // name = USE_THREAD_LOCK
+    13, ACE_NTOHL (0x44454641), ACE_NTOHL (0x554c545f), ACE_NTOHL (0x4c4f434b), ACE_NTOHL (0xfdfdfd),  // name = DEFAULT_LOCK
+    10, ACE_NTOHL (0x4e554c4c), ACE_NTOHL (0x5f4c4f43), ACE_NTOHL (0x4b00fdfd),  // name = NULL_LOCK
+    12, ACE_NTOHL (0x54485245), ACE_NTOHL (0x41445f4c), ACE_NTOHL (0x4f434b00),  // name = THREAD_LOCK
 };
-static CORBA::TypeCode _tc__tc_PortableServer_TAO_POA_LockingPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_TAO_POA_LockingPolicyValue), (char *) &_oc_PortableServer_TAO_POA_LockingPolicyValue, CORBA::B_FALSE);
-CORBA::TypeCode_ptr PortableServer::_tc_TAO_POA_LockingPolicyValue = &_tc__tc_PortableServer_TAO_POA_LockingPolicyValue;
+static CORBA::TypeCode _tc__tc_PortableServer_SynchronizationPolicyValue (CORBA::tk_enum, sizeof (_oc_PortableServer_SynchronizationPolicyValue), (char *) &_oc_PortableServer_SynchronizationPolicyValue, CORBA::B_FALSE);
+CORBA::TypeCode_ptr PortableServer::_tc_SynchronizationPolicyValue = &_tc__tc_PortableServer_SynchronizationPolicyValue;
 
-PortableServer::TAO_POA_LockingPolicy_ptr PortableServer::TAO_POA_LockingPolicy::_duplicate (PortableServer::TAO_POA_LockingPolicy_ptr obj)
+PortableServer::SynchronizationPolicy_ptr PortableServer::SynchronizationPolicy::_duplicate (PortableServer::SynchronizationPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
     obj->AddRef ();
@@ -810,43 +810,43 @@ PortableServer::TAO_POA_LockingPolicy_ptr PortableServer::TAO_POA_LockingPolicy:
   return obj;
 } // end of _duplicate
 
-PortableServer::TAO_POA_LockingPolicy_ptr PortableServer::TAO_POA_LockingPolicy::_narrow (
+PortableServer::SynchronizationPolicy_ptr PortableServer::SynchronizationPolicy::_narrow (
                                                                                           CORBA::Object_ptr obj,
                                                                                           CORBA::Environment &env
                                                                                           )
 {
   if (CORBA::is_nil (obj))
-    return PortableServer::TAO_POA_LockingPolicy::_nil ();
-  if (!obj->_is_a ("IDL:PortableServer/TAO_POA_LockingPolicy:1.0", env))
-    return PortableServer::TAO_POA_LockingPolicy::_nil ();
+    return PortableServer::SynchronizationPolicy::_nil ();
+  if (!obj->_is_a ("IDL:PortableServer/SynchronizationPolicy:1.0", env))
+    return PortableServer::SynchronizationPolicy::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     {
-      PortableServer::TAO_POA_LockingPolicy_ptr
-        new_obj = new PortableServer::TAO_POA_LockingPolicy (obj->_get_parent ()); // construct obj ref using the stub object
+      PortableServer::SynchronizationPolicy_ptr
+        new_obj = new PortableServer::SynchronizationPolicy (obj->_get_parent ()); // construct obj ref using the stub object
       return new_obj;
     } // end of if
 
   STUB_Object *stub = obj->_servant ()->_create_stub (env);
   if (env.exception () != 0)
-    return PortableServer::TAO_POA_LockingPolicy::_nil ();
-  void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/TAO_POA_LockingPolicy:1.0");
-  return new POA_PortableServer::_tao_collocated_TAO_POA_LockingPolicy(
-                                                                       ACE_reinterpret_cast(POA_PortableServer::TAO_POA_LockingPolicy_ptr, servant),
+    return PortableServer::SynchronizationPolicy::_nil ();
+  void* servant = obj->_servant ()->_downcast ("IDL:PortableServer/SynchronizationPolicy:1.0");
+  return new POA_PortableServer::_tao_collocated_SynchronizationPolicy(
+                                                                       ACE_reinterpret_cast(POA_PortableServer::SynchronizationPolicy_ptr, servant),
                                                                        stub
                                                                        );
 }
 
-PortableServer::TAO_POA_LockingPolicyValue PortableServer::TAO_POA_LockingPolicy::value(CORBA::Environment &env)
+PortableServer::SynchronizationPolicyValue PortableServer::SynchronizationPolicy::value(CORBA::Environment &env)
 {
-  static const TAO_Param_Data _get_PortableServer_TAO_POA_LockingPolicy_value_paramdata [] =
+  static const TAO_Param_Data _get_PortableServer_SynchronizationPolicy_value_paramdata [] =
   {
-    {PortableServer::_tc_TAO_POA_LockingPolicyValue, PARAM_RETURN, 0}};
+    {PortableServer::_tc_SynchronizationPolicyValue, PARAM_RETURN, 0}};
 
-  static const TAO_Call_Data _get_PortableServer_TAO_POA_LockingPolicy_value_calldata =
-  {"_get_value", 1, 1, _get_PortableServer_TAO_POA_LockingPolicy_value_paramdata, 0, 0};
+  static const TAO_Call_Data _get_PortableServer_SynchronizationPolicy_value_calldata =
+  {"_get_value", 1, 1, _get_PortableServer_SynchronizationPolicy_value_paramdata, 0, 0};
 
-  PortableServer::TAO_POA_LockingPolicyValue retval =
-    ACE_static_cast (PortableServer::TAO_POA_LockingPolicyValue, -1);
+  PortableServer::SynchronizationPolicyValue retval =
+    ACE_static_cast (PortableServer::SynchronizationPolicyValue, -1);
   STUB_Object *istub;
 
   if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != TAO_NOERROR)
@@ -855,15 +855,15 @@ PortableServer::TAO_POA_LockingPolicyValue PortableServer::TAO_POA_LockingPolicy
       return retval;
     }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_static_call (env, &_get_PortableServer_TAO_POA_LockingPolicy_value_calldata, &retval);
+  istub->do_static_call (env, &_get_PortableServer_SynchronizationPolicy_value_calldata, &retval);
   return retval;
 
 }
 
-CORBA::Boolean PortableServer::TAO_POA_LockingPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
+CORBA::Boolean PortableServer::SynchronizationPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
   if (
-      (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/TAO_POA_LockingPolicy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/SynchronizationPolicy:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
       (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
     return 1; // success using local knowledge
@@ -871,14 +871,14 @@ CORBA::Boolean PortableServer::TAO_POA_LockingPolicy::_is_a (const CORBA::Char *
     return this->CORBA_Object::_is_a (value, _tao_environment); // remote call
 }
 
-static const CORBA::Long _oc_PortableServer_TAO_POA_LockingPolicy[] =
+static const CORBA::Long _oc_PortableServer_SynchronizationPolicy[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  45, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f54), ACE_NTOHL (0x414f5f50), ACE_NTOHL (0x4f415f4c), ACE_NTOHL (0x6f636b69), ACE_NTOHL (0x6e67506f), ACE_NTOHL (0x6c696379), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0xfdfdfd),  // repository ID = IDL:PortableServer/TAO_POA_LockingPolicy:1.0
-  22, ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x504f415f), ACE_NTOHL (0x4c6f636b), ACE_NTOHL (0x696e6750), ACE_NTOHL (0x6f6c6963), ACE_NTOHL (0x7900fdfd),  // name = TAO_POA_LockingPolicy,
+  45, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x506f7274), ACE_NTOHL (0x61626c65), ACE_NTOHL (0x53657276), ACE_NTOHL (0x65722f53), ACE_NTOHL (0x796e6368), ACE_NTOHL (0x726f6e69), ACE_NTOHL (0x7a617469), ACE_NTOHL (0x6f6e506f), ACE_NTOHL (0x6c696379), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0xfdfdfd),  // repository ID = IDL:PortableServer/SynchronizationPolicy:1.0
+  22, ACE_NTOHL (0x53796e63), ACE_NTOHL (0x68726f6e), ACE_NTOHL (0x697a6174), ACE_NTOHL (0x696f6e50), ACE_NTOHL (0x6f6c6963), ACE_NTOHL (0x7900fdfd),  // name = SynchronizationPolicy,
 };
-static CORBA::TypeCode _tc__tc_PortableServer_TAO_POA_LockingPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_TAO_POA_LockingPolicy), (char *) &_oc_PortableServer_TAO_POA_LockingPolicy, CORBA::B_FALSE);
-CORBA::TypeCode_ptr PortableServer::_tc_TAO_POA_LockingPolicy = &_tc__tc_PortableServer_TAO_POA_LockingPolicy;
+static CORBA::TypeCode _tc__tc_PortableServer_SynchronizationPolicy (CORBA::tk_objref, sizeof (_oc_PortableServer_SynchronizationPolicy), (char *) &_oc_PortableServer_SynchronizationPolicy, CORBA::B_FALSE);
+CORBA::TypeCode_ptr PortableServer::_tc_SynchronizationPolicy = &_tc__tc_PortableServer_SynchronizationPolicy;
 
 PortableServer::POAManager_ptr PortableServer::POAManager::_duplicate (PortableServer::POAManager_ptr obj)
 {

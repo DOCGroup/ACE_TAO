@@ -224,15 +224,15 @@ protected:
 //
 // **************************************************
 
-class TAO_Export TAO_POA_Locking_Policy : public POA_PortableServer::TAO_POA_LockingPolicy
+class TAO_Export TAO_Synchronization_Policy : public POA_PortableServer::SynchronizationPolicy
 {
 public:
-  TAO_POA_Locking_Policy (PortableServer::TAO_POA_LockingPolicyValue value,
-                          PortableServer::POA_ptr poa);
+  TAO_Synchronization_Policy (PortableServer::SynchronizationPolicyValue value,
+                              PortableServer::POA_ptr poa);
 
-  TAO_POA_Locking_Policy (const TAO_POA_Locking_Policy &rhs);
+  TAO_Synchronization_Policy (const TAO_Synchronization_Policy &rhs);
 
-  virtual PortableServer::TAO_POA_LockingPolicyValue value (CORBA::Environment &env);
+  virtual PortableServer::SynchronizationPolicyValue value (CORBA::Environment &env);
 
   virtual CORBA::Policy_ptr copy (CORBA::Environment &env);
 
@@ -243,7 +243,7 @@ public:
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);  
 
 protected:
-  PortableServer::TAO_POA_LockingPolicyValue value_;
+  PortableServer::SynchronizationPolicyValue value_;
 
   PortableServer::POA_var poa_;
 };
@@ -281,8 +281,8 @@ public:
   //
   // **************************************************
 
-  virtual PortableServer::TAO_POA_LockingPolicyValue TAO_POA_locking (void) const;
-  virtual void TAO_POA_locking (PortableServer::TAO_POA_LockingPolicyValue value);
+  virtual PortableServer::SynchronizationPolicyValue synchronization (void) const;
+  virtual void synchronization (PortableServer::SynchronizationPolicyValue value);
 
   virtual void parse_policies (const CORBA::PolicyList &policies,
                                CORBA::Environment &env);
@@ -314,7 +314,7 @@ protected:
   //
   // **************************************************
 
-  PortableServer::TAO_POA_LockingPolicyValue TAO_POA_locking_;
+  PortableServer::SynchronizationPolicyValue synchronization_;
 };
 
 class TAO_Temporary_Creation_Time;
@@ -418,7 +418,7 @@ public:
   //
   // **************************************************
 
-  virtual PortableServer::TAO_POA_LockingPolicy_ptr create_TAO_POA_locking_policy (PortableServer::TAO_POA_LockingPolicyValue value,
+  virtual PortableServer::SynchronizationPolicy_ptr create_synchronization_policy (PortableServer::SynchronizationPolicyValue value,
                                                                                    CORBA::Environment &env);
 
   virtual CORBA::String the_name (CORBA::Environment &env);
