@@ -1,3 +1,7 @@
+Wed Jul 07 11:26:06 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc_T.cpp: Added ASYS_TEXT macros.
+
 Wed Jul  7 09:05:32 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/Caching_Strategies_T.i (ACE_Caching_Strategy_Adapter<>::purge_
@@ -5,7 +9,7 @@ Wed Jul  7 09:05:32 1999  Steve Huston  <shuston@riverace.com>
 
 Wed Jul  7 08:55:53 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/Map_Manager_Test.cpp (test_cache_map_manager): 
+	* tests/Map_Manager_Test.cpp (test_cache_map_manager):
 	  Added <null_caching_strategy> to the construction of
 	  <cache_map_manager> and <hash_cache_map_manager> objects to make
 	  it in sync with the changes made below.
@@ -16,20 +20,20 @@ Tue Jul  6 17:54:52 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	  called ACE_Caching_Strategy and ACE_Caching_Strategy_Adaptor
 	  which facilitate changing of caching strategies at runtime using
 	  the External Polymorphism pattern.
-	
-	* ace/Cached_Connect_Strategy_T.{h, cpp}: Changed the signature of 
+
+	* ace/Cached_Connect_Strategy_T.{h, cpp}: Changed the signature of
 	  the constructor and also removed the <caching_strategy_> member.
 
-	* ace/Cache_Map_Manager_T.{h, cpp}: 
+	* ace/Cache_Map_Manager_T.{h, cpp}:
  	* ace/Hash_Cache_Map_Manager_T.{h,cpp}:
 	  Changed the signature of the constructor.This was needed to be
 	  able to use the External Polymorphism pattern.
 
 	* tests/Cache_Map_Manager_Test.cpp:
 	* tests/Cached_Conn_Test.cpp:
-	  Made necessary changes to reflect the changes above. 
+	  Made necessary changes to reflect the changes above.
 	  Thanks to Irfan of the DOC group for helping with this.
-	
+
 Tue Jul  6 17:34:52 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.x.h: Enabled ACE_HAS_PTHREADS_UNIX98_EXT and
