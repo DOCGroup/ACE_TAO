@@ -1,3 +1,7 @@
+Tue Jan 14 16:37:15 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Stack_Recursion/server.dsp: Adding this file to the repo.
+
 Tue Jan 14 16:37:44 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/Crash_Test/run_test.pl: The timeout was
