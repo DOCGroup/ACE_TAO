@@ -1351,7 +1351,7 @@ int be_visitor_operation_collocated_ss::visit_operation (be_operation *node)
   *os << "this->servant_->" << node->local_name () << " (" << be_idt << "\n";
 
   ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS);
   visitor = tao_cg->make_visitor (&ctx);
   if (!visitor || (node->accept (visitor) == -1))
     {
@@ -2448,7 +2448,8 @@ be_visitor_operation_rettype_vardecl_ss::visit_interface (be_interface *)
   // address of the objref to the marshaling routine, we use the base
   // CORBA::Object_ptr as the type for the return value even though the actual
   // return type may be some derived class
-  *os << "CORBA::Object_var _tao_retval = CORBA::Object::_nil ();\n";
+  *os << "CORBA::Object_var _tao_retval = CORBA::Object::_nil ();" << be_nl;
+  *os << "CORBA::Object_ptr &_tao_ptr_retval = _tao_retval.out ();\n";
   return 0;
 }
 
@@ -2463,7 +2464,8 @@ visit_interface_fwd (be_interface_fwd *)
   // address of the objref to the marshaling routine, we use the base
   // CORBA::Object_ptr as the type for the return value even though the actual
   // return type may be some derived class
-  *os << "CORBA::Object_var _tao_retval;\n";
+  *os << "CORBA::Object_var _tao_retval = CORBA::Object::_nil ();" << be_nl;
+  *os << "CORBA::Object_ptr &_tao_ptr_retval = _tao_retval.out ();\n";
   return 0;
 }
 
@@ -2483,11 +2485,13 @@ visit_predefined_type (be_predefined_type *node)
     {
     case AST_PredefinedType::PT_pseudo:
       os->indent ();
-      *os << bt->name () << "_var _tao_retval;\n";
+      *os << bt->name () << "_var _tao_retval;" << be_nl;
+      *os << bt->name () << "_ptr &_tao_ptr_retval = _tao_retval.out ();\n";
       break;
     case AST_PredefinedType::PT_any:
       os->indent ();
-      *os << bt->name () << "_var _tao_retval;\n";
+      *os << bt->name () << "_var _tao_retval;" << be_nl;
+      *os << bt->name () << "_ptr _tao_ptr_retval = _tao_retval.out ();\n";
       break;
     case AST_PredefinedType::PT_void:
       break;
@@ -2513,7 +2517,8 @@ be_visitor_operation_rettype_vardecl_ss::visit_sequence (be_sequence *node)
     bt = node;
 
   os->indent ();
-  *os << bt->name () << "_var _tao_retval;\n";
+  *os << bt->name () << "_var _tao_retval;" << be_nl;
+  *os << bt->name () << " *&_tao_ptr_retval = _tao_retval.out ();\n";
   return 0;
 }
 
@@ -2523,7 +2528,8 @@ be_visitor_operation_rettype_vardecl_ss::visit_string (be_string * /* node*/)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
-  *os << "CORBA::String_var _tao_retval;\n";
+  *os << "CORBA::String_var _tao_retval = 0;" << be_nl;
+  *os << "char *&_tao_ptr_retval = _tao_retval.out ();\n";
   return 0;
 }
 
@@ -2542,7 +2548,10 @@ be_visitor_operation_rettype_vardecl_ss::visit_structure (be_structure *node)
   // based on whether we are variable or not, we return a pointer or the
   // aggregate type
   if (node->size_type () == be_decl::VARIABLE)
-    *os << bt->name () << "_var _tao_retval;\n";
+    {
+      *os << bt->name () << "_var _tao_retval;" << be_nl;
+      *os << bt->name () << " *&_tao_ptr_retval = _tao_retval.out ();\n";
+    }
   else
     *os << bt->name () << " _tao_retval;\n";
   return 0;
@@ -2579,7 +2588,10 @@ be_visitor_operation_rettype_vardecl_ss::visit_union (be_union *node)
   // based on whether we are variable or not, we return a pointer or the
   // aggregate type
   if (node->size_type () == be_decl::VARIABLE)
-    *os << bt->name () << "_var _tao_retval;\n";
+    {
+      *os << bt->name () << "_var _tao_retval;" << be_nl;
+      *os << bt->name () << " *&_tao_ptr_retval = _tao_retval.out ();\n";
+    }
   else
     *os << bt->name () << " _tao_retval;\n";
   return 0;
@@ -2606,7 +2618,7 @@ be_visitor_operation_rettype_marshal_ss::visit_array (be_array *)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
-  *os << "_tao_retval.ptr ()";
+  *os << "_tao_ptr_retval";
   return 0;
 }
 
@@ -2627,7 +2639,7 @@ be_visitor_operation_rettype_marshal_ss::visit_interface (be_interface *)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
-  *os << "_tao_retval.ptr ()";
+  *os << "&_tao_ptr_retval";
 
   return 0;
 }
@@ -2639,7 +2651,7 @@ visit_interface_fwd (be_interface_fwd *)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
-  *os << "_tao_retval.ptr ()";
+  *os << "&_tao_ptr_retval";
 
   return 0;
 }
@@ -2658,11 +2670,11 @@ visit_predefined_type (be_predefined_type *node)
       break;
     case AST_PredefinedType::PT_pseudo:
       os->indent ();
-      *os << "_tao_retval.in ()";
+      *os << "&_tao_ptr_retval";
       break;
     case AST_PredefinedType::PT_any:
       os->indent ();
-      *os << "&_tao_retval.in ()";
+      *os << "_tao_ptr_retval";
       break;
     default:
       os->indent ();
@@ -2678,7 +2690,7 @@ be_visitor_operation_rettype_marshal_ss::visit_sequence (be_sequence *)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
-  *os << "_tao_retval.ptr ()";
+  *os << "_tao_ptr_retval";
 
   return 0;
 }
@@ -2689,7 +2701,7 @@ be_visitor_operation_rettype_marshal_ss::visit_string (be_string * /* node*/)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
-  *os << "_tao_retval.in ()";
+  *os << "&_tao_ptr_retval";
 
   return 0;
 }
@@ -2701,7 +2713,7 @@ be_visitor_operation_rettype_marshal_ss::visit_structure (be_structure *node)
 
   os->indent ();
   if (node->size_type () == be_type::VARIABLE)
-    *os << "_tao_retval.ptr ()";
+    *os << "_tao_ptr_retval";
   else
     *os << "&_tao_retval";
 
@@ -2731,7 +2743,7 @@ be_visitor_operation_rettype_marshal_ss::visit_union (be_union *node)
 
   os->indent ();
   if (node->size_type () == be_type::VARIABLE)
-    *os << "_tao_retval.ptr ()";
+    *os << "_tao_ptr_retval";
   else
     *os << "&_tao_retval";
 
@@ -2984,6 +2996,7 @@ be_visitor_operation_argument::post_process (void)
     {
     case TAO_CodeGen::TAO_OPERATION_ARG_DOCALL_CS:
     case TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS:
+    case TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS:
     case TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS:
     case TAO_CodeGen::TAO_OPERATION_ARG_MARSHAL_SS:
       *os << ",\n";
@@ -3071,6 +3084,9 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
       break;
     case TAO_CodeGen::TAO_OPERATION_ARG_PRE_UPCALL_SS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS);
+      break;
+    case TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS:
+      ctx.state (TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS);
       break;
     case TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS);

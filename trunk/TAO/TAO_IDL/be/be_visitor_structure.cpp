@@ -309,11 +309,14 @@ be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
 
   // generate the Any <<= and >>= operator declarations
   os->indent ();
-  *os << "void operator<<= (CORBA::Any &, const " << node->name ()
+  *os << "void " << idl_global->export_macro ()
+      << " operator<<= (CORBA::Any &, const " << node->name ()
       << " &); // copying version" << be_nl;
-  *os << "void operator<<= (CORBA::Any &, " << node->name ()
+  *os << "void " << idl_global->export_macro ()
+      << " operator<<= (CORBA::Any &, " << node->name ()
       << "*); // noncopying version" << be_nl;
-  *os << "CORBA::Boolean operator>>= (const CORBA::Any &, "
+  *os << "CORBA::Boolean " << idl_global->export_macro ()
+      << " operator>>= (const CORBA::Any &, "
       << node->name () << " *&);\n";
 
 

@@ -1389,8 +1389,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "&_tao_value" << be_uidt_nl
       << ");" << be_nl;
   *os << "if (_tao_environment.exception () != 0) return;" << be_nl;
-  *os << "_tao_retval = _tao_impl->_is_a (_tao_value, _tao_skel_environment);"
-      << be_nl;
+  *os << "_tao_retval = _tao_impl->_is_a (_tao_value, "
+      << "_tao_skel_environment);" << be_nl;
   *os << "_tao_server_request.marshal (" << be_idt_nl
       << "_tao_environment, " << be_nl
       << "_tao_skel_environment," << be_nl
@@ -1901,11 +1901,14 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
   // generate the Any <<= and >>= operator declarations
   os->indent ();
   *os << "// Any operators for interface " << node->name () << be_nl;
-  *os << "void operator<<= (CORBA::Any &, const " << node->name ()
+  *os << "void " << idl_global->export_macro ()
+      << " operator<<= (CORBA::Any &, const " << node->name ()
       << " &); // copying version" << be_nl;
-  *os << "void operator<<= (CORBA::Any &, " << node->name ()
+  *os << "void " << idl_global->export_macro ()
+      << " operator<<= (CORBA::Any &, " << node->name ()
       << "*); // noncopying version" << be_nl;
-  *os << "CORBA::Boolean operator>>= (const CORBA::Any &, "
+  *os << "CORBA::Boolean " << idl_global->export_macro ()
+      << " operator>>= (const CORBA::Any &, "
       << node->name () << " *&);\n";
 
   // all we have to do is to visit the scope and generate code

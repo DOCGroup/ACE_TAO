@@ -266,6 +266,7 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_OPERATION_ARG_POST_DOCALL_CS:
     case TAO_CodeGen::TAO_OPERATION_ARG_PRE_UPCALL_SS:
     case TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS:
+    case TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS:
     case TAO_CodeGen::TAO_OPERATION_ARG_POST_UPCALL_SS:
     case TAO_CodeGen::TAO_OPERATION_ARG_DECL_SS:
     case TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS:
@@ -291,6 +292,7 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS:
       return new be_visitor_args_pre_upcall_ss (new_ctx);
     case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+    case TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS:
       return new be_visitor_args_upcall_ss (new_ctx);
     case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
       return new be_visitor_args_post_upcall_ss (new_ctx);

@@ -74,6 +74,8 @@ public:
     TAO_ARGUMENT_PRE_UPCALL_SS,              // preprocessing of argument
                                              // variable before upcall
     TAO_ARGUMENT_UPCALL_SS,                  // passing argument variable to upcall
+    TAO_ARGUMENT_COLLOCATED_UPCALL_SS,                  // passing argument
+                                                        // variable to upcall 
     TAO_ARGUMENT_POST_UPCALL_SS,             // postprocessing of argument
                                              // variable after upcall
 
@@ -236,6 +238,8 @@ public:
     TAO_OPERATION_ARG_PRE_UPCALL_SS,         // pre upcall processing
     TAO_OPERATION_RETVAL_UPCALL_SS,          // passing return type var and argument
     TAO_OPERATION_ARG_UPCALL_SS,             // variables to upcall
+    TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS,  // variables to upcall for
+                                             // collocated op
     TAO_OPERATION_RETVAL_POST_UPCALL_SS,     // post upcall processing for
     TAO_OPERATION_ARG_POST_UPCALL_SS,        //   return and argument variables
     TAO_OPERATION_RESULT_SS,                 // XXXASG rm?
