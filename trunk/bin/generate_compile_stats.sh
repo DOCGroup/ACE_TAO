@@ -467,6 +467,8 @@ create_page ()
       # since you'll only have images if it's a composite, strip off the
       # path for the name
       echo "<a href=\"images/$i.png\">${i##*___}</a>"
+    else
+      echo "${i##*___}"
     fi
     echo '</TD><TD>'
     echo `tail -n1 .metrics/data/${i}.txt | cut -d" " -f1`
@@ -567,7 +569,7 @@ create_composite_list $TARGETS
 
 cat .metrics/composites.txt | process_composite_objects
 
-ls .metrics/data/*.txt | create_images $DEST
+find .metrics/data/ -name "*.txt" | create_images $DEST
 
 cat .metrics/composites.txt | create_html $DEST
 
