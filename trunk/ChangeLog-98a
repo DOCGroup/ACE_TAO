@@ -10,7 +10,8 @@ Mon Feb 02 21:26:30 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-chorus.h,config-freebsd*.h,,config-hpux-10.x-g++.h,
           config-irix{5.3,6.x}-g++.h,config-osf1-4.0.h,config-m88k.h,
           config-netbsd.h,config-psosim-g++.h,config-sco-4.2-nothread.h,
-          config-sco-5.0.0-mit-pthread.h:
+          config-sco-5.0.0-mit-pthread.h,config-sunos4-g++.h,
+          config-sunos5.4-g++.h,config-unixware-2.*.h:
           migrated to config-g++-common.h.
 
         * ace/config-sunos5.5-egcs*.h: removed.  config-sunos5.5-g++.h
