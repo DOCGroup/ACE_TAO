@@ -1,3 +1,10 @@
+Wed Dec 17 11:16:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/TMCast/TMCast.mpc:
+          TMCast uses native exceptions, so added requires += exceptions
+          to this mpc file. This fixes compile errors in no exception
+          builds.
+
 Tue Dec 16 11:48:11 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/config-aix-4.x.h:
