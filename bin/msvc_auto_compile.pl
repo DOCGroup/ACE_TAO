@@ -270,10 +270,10 @@ sub Build_All ()
         if ($Build_All
             || ($Build_DLL && $Build_Debug && $c =~ /Win32 Debug/)
             || ($Build_DLL && $Build_Release && $c =~ /Win32 Release/)
-            || ($Build_LIB && Use_MPC == 0 && $Build_Debug && $c =~ /Win32 Static Debug/)
-            || ($Build_LIB && Use_MPC == 0 && $Build_Release && $c =~ /Win32 Static Release/)
-            || ($Build_LIB && Use_MPC == 1 && $Build_Debug && $c =~ /Win32 Debug/)
-            || ($Build_LIB && Use_MPC == 1 && $Build_Release && $c =~ /Win32 Release/))
+            || ($Build_LIB && $Use_MPC == 0 && $Build_Debug && $c =~ /Win32 Static Debug/)
+            || ($Build_LIB && $Use_MPC == 0 && $Build_Release && $c =~ /Win32 Static Release/)
+            || ($Build_LIB && $Use_MPC == 1 && $Build_Debug && $c =~ /Win32 Debug/)
+            || ($Build_LIB && $Use_MPC == 1 && $Build_Release && $c =~ /Win32 Release/))
         {
             my $Status = 0;
             $Status = Build_Config ($c)
@@ -292,10 +292,10 @@ sub Build_All ()
         Build_Config ($c)
         if (($Build_DLL && $Build_Debug && $c =~ /Win32 Debug/)
            || ($Build_DLL && $Build_Release && $c =~ /Win32 Release/)
-           || ($Build_LIB && Use_MPC == 0 && $Build_Debug && $c =~ /Win32 Static Debug/)
-           || ($Build_LIB && Use_MPC == 0 && $Build_Release && $c =~ /Win32 Static Release/)
-           || ($Build_LIB && Use_MPC == 1 && $Build_Debug && $c =~ /Win32 Debug/)
-           || ($Build_LIB && Use_MPC == 1 && $Build_Release && $c =~ /Win32 Release/));
+           || ($Build_LIB && $Use_MPC == 0 && $Build_Debug && $c =~ /Win32 Static Debug/)
+           || ($Build_LIB && $Use_MPC == 0 && $Build_Release && $c =~ /Win32 Static Release/)
+           || ($Build_LIB && $Use_MPC == 1 && $Build_Debug && $c =~ /Win32 Debug/)
+           || ($Build_LIB && $Use_MPC == 1 && $Build_Release && $c =~ /Win32 Release/));
     }
 }
 
