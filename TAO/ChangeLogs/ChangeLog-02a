@@ -1,3 +1,11 @@
+Mon Nov 20 00:19:13 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* TAO_IDL\be_include\be_visitor_interface\remote_proxy_impl_cs.h:
+	* TAO_IDL\be\be_visitor_interface\remote_proxy_impl_cs.cpp:
+
+	  Visitor that generates the implemetation for the remote
+	  proxy implementation.
+
 Sun Nov 19 21:20:58 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB.cpp (resolve_initial_references):
@@ -88,7 +96,7 @@ Sun Nov 19 21:20:58 2000  Ossama Othman  <ossama@uci.edu>
 	  Added a "NoContext" exception to the SSLIOP::Current interface.
 	  All SSLIOP::Current operations will throw this exception if the
 	  current execution context is not run through an SSL session.
-	  
+
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.cpp:
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h:
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connect.cpp:
@@ -141,7 +149,7 @@ Sun Nov 19 21:20:58 2000  Ossama Othman  <ossama@uci.edu>
 	  (close):
 
 	  Close the insecure connection.  Previously, this was missing.
-	  
+
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
 
 	  Derive from the new IIOP_SSL_Connector class so that insecure
@@ -176,7 +184,7 @@ Sun Nov 19 21:20:58 2000  Ossama Othman  <ossama@uci.edu>
 
 	  Invoke the register_orb_initializer() helper method to cause
 	  SSLIOP_ORBInitializer registration.
-	  
+
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h:
 
