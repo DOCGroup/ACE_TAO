@@ -61,7 +61,7 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
           servant_upcall.prepare_for_upcall (this->_object_key (),
                                              "_non_existent",
                                              ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::Object::_nil ());
+          ACE_CHECK_RETURN (0);
           return servant_upcall.servant ()->_is_a (type_id, ACE_TRY_ENV);
         }
 
