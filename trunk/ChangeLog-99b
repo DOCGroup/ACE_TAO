@@ -1,3 +1,11 @@
+Fri Oct 29 17:01:58 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/OS.h: Added ACE_DEFAULT_SHLIB_MODE for KCC. Since this mode
+ 	  wasnt right the DLL_Test failed when compiled using the KAI
+	  compiler. This change fixes this problem too. Thanks to Nanbor
+ 	  <nanbor@cs.wustl.edu> and Michael Kircher
+	  <michael.kircher@mchp.siemens.de> for helping me on this task.
+	
 Fri Oct 29 07:08:16 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/rules.local.GNU,
