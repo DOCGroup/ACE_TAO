@@ -126,6 +126,9 @@ namespace CCF
         receives_post (T&);
 
         virtual void
+        receives_none (T&);
+
+        virtual void
         raises (T&, EdgeDispatcherBase&);
 
         virtual void

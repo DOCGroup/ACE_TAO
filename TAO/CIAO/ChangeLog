@@ -1,16 +1,25 @@
+Sat Jan  3 16:34:35 2004  Boris Kolpackov  <boris@kolpackov.net>
+
+	* CCF/CCF/IDL2/Traversal/Operation.hpp:
+	* CCF/CCF/IDL2/Traversal/Operation.tpp:
+	* CCF/CCF/IDL3/Traversal/Home.cpp:
+	* CCF/CCF/IDL3/Traversal/Home.hpp:
+
+	  Added receives_none() member function.
+
 Fri Jan  2 16:09:32 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* ciao/Container_Base.cpp:
 
 	  Fixed a compile error in single threaded configuration.
-	
+
 	* tools/Assembly_Deployer/Assembly_Impl.cpp:
 	* tools/Assembly_Deployer/Assembly_Manager.cpp:
 	* tools/ComponentServer/ComponentServer.cpp:
 	* tools/XML_Helpers/RTConfig_Handlers.cpp:
 
 	  Fixed more warnings with g++, mostly from the wrong usage of
-	  _var's. 
+	  _var's.
 
 Fri Jan  2 15:36:07 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
@@ -19,7 +28,7 @@ Fri Jan  2 15:36:07 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 	* CIDLC/ExecutorMappingGenerator.cpp:
 	* CIDLC/ExecutorMappingGenerator.hpp:
 
-	  Changed pass-by-value to pass-by-const-ref for fs::path argument. 
+	  Changed pass-by-value to pass-by-const-ref for fs::path argument.
 
 Fri Jan  2 14:41:35 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
