@@ -21,8 +21,12 @@ project(Hello_Base_svnt) : ciao_server {
   sharedname  = Hello_Base_svnt
   libs    += Hello_Base_stub 
   
-  idlflags  +=  -Wb,export_macro=HELLO_BASE_SVNT_Export -Wb,export_include=Hello_Base_svnt_export.h
+  idlflags  += -Wb,stub_export_macro=HELLO_BASE_STUB_Export -Wb,stub_export_include=Hello_Base_stub_export.h -Wb,skel_export_macro=HELLO_BASE_SVNT_Export -Wb,skel_export_include=Hello_Base_svnt_export.h
   dynamicflags = HELLO_BASE_SVNT_BUILD_DLL
+
+  IDL_Files {
+    Hello_Base.idl
+  }
 
   Source_Files {
     Hello_BaseS.cpp
