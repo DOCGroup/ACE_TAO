@@ -1013,17 +1013,10 @@ private:
   /// Obtain and cache the dynamic any factory object reference.
   void resolve_ior_table_i (ACE_ENV_SINGLE_ARG_DECL);
 
-  /// Try to create a new collocated object, using <other_orb> as the
-  /// target ORB.  If not possible return 0.
-  CORBA::Object_ptr create_collocated_object (TAO_Stub *the_stub,
-                                              TAO_ORB_Core *other_orb,
-                                              const TAO_MProfile &mprofile);
-
-  /// Try to initialize a new collocated object, using <other_orb> as the
-  /// target ORB.  If not possible return -1.
-  CORBA::Long initialize_collocated_object (TAO_Stub *the_stub,
-                                            TAO_ORB_Core *other_orb,
-                                            CORBA::Object_ptr obj);
+  /// Checks to see whether collocation optimizations have to be
+  /// applied on objects in the <other_orb>
+  CORBA::Boolean is_collocation_enabled (TAO_ORB_Core *other_orb,
+                                         const TAO_MProfile &mp);
 protected:
 
   /// Synchronize internal state...

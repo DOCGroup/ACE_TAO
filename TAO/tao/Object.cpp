@@ -88,8 +88,6 @@ CORBA::Object::Object (IOP::IOR *ior,
 {
   this->refcount_lock_ =
     this->orb_core_->resource_factory ()->create_corba_object_lock ();
-
-
 }
 
 // Too lazy to do this check in every method properly! This is useful
@@ -105,7 +103,8 @@ if (!this->is_evaluated_) \
 if (!this->is_evaluated_) \
   { \
     ACE_GUARD_RETURN (ACE_Lock , mon, *this->refcount_lock_, 0); \
-    CORBA::Object::tao_object_initialize (this); \
+    if (!this->is_evaluated_) \
+      CORBA::Object::tao_object_initialize (this); \
   }
 
 void
@@ -669,11 +668,6 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Object* x)
 /*static*/ void
 CORBA::Object::tao_object_initialize (CORBA::Object *obj)
 {
-  // Check if already evaluated..
-  if (obj->is_evaluated_)
-    return;
-
-
   CORBA::ULong profile_count =
     obj->ior_->profiles.length ();
 
@@ -767,11 +761,10 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
 
   TAO_Stub_Auto_Ptr safe_objdata (objdata);
 
-  // No hope. What happens if this fails or returns an error? No
-  // chance to initialize the object again. Just give up. We will throw
-  // an exception when someone tries to access something..
-  (void) orb_core->initialize_object (safe_objdata.get (),
-                                      obj);
+  if (orb_core->initialize_object (safe_objdata.get (),
+                                   obj) == -1)
+    return;
+
   obj->protocol_proxy_ = objdata;
 
   // If the object is collocated then set the broker using the

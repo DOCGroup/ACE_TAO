@@ -1,3 +1,19 @@
+Wed Mar 26 14:32:40 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp: Removed methods initialize_collocated_object
+	  () and create_collocated_object (). Added a new method
+	  is_collocation_enabled () which abstracts the common code in the
+	  above two methods. 
+
+	* tao/Object.cpp: Cosmetic fixes!
+
+	* tao/PortableServer/Object_Adapter.cpp:
+	* tao/PortableServer/Object_Adapter.h: Added a new method
+	  get_collocated_servant (), which houses the common code in
+	  create_collocated_object () and initialize_collocated_object
+	  (). 
+	
 Tue Mar 25 18:16:05 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Profile.cpp: Missed a definition of a constructor during the

@@ -799,60 +799,34 @@ CORBA::Object_ptr
 TAO_Object_Adapter::create_collocated_object (TAO_Stub *stub,
                                               const TAO_MProfile &mp)
 {
-  for (TAO_PHandle j = 0;
-       j != mp.profile_count ();
-       ++j)
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
-      const TAO_Profile *profile = mp.get_profile (j);
-      TAO::ObjectKey_var objkey = profile->_key ();
+      TAO_ServantBase *sb =
+        this->get_collocated_servant (stub,
+                                      mp
+                                      ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-      if (ACE_OS::memcmp (objkey->get_buffer (),
-                          &TAO_POA::objectkey_prefix[0],
-                          TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
-        continue;
-
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      if (sb)
         {
-          TAO_ServantBase *servant = 0;
+          CORBA::Object_ptr x;
+          ACE_NEW_RETURN (x,
+                          CORBA::Object (stub,
+                                         1,
+                                         sb),
+                          CORBA::Object::_nil ());
 
-          TAO_SERVANT_LOCATION servant_location =
-            this->find_servant (objkey.in (),
-                                servant
-                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          if (servant_location != TAO_SERVANT_NOT_FOUND)
-            {
-              // Found collocated object.  Perhaps we can get around
-              // by simply setting the servant_orb, but let get this
-              // to work first.
-
-              // There could only be one ORB which is us.
-
-              // @@ Do not duplicate the ORB here!
-              //    TAO_Stub::servant_orb()  duplicates it.
-              //       -Ossama
-              stub->servant_orb (this->orb_core_.orb ());
-
-              CORBA::Object_ptr x;
-              ACE_NEW_RETURN (x,
-                              CORBA::Object (stub,
-                                             1,
-                                             servant),
-                              CORBA::Object::_nil ());
-
-              // Here we set the strategized Proxy Broker.
-              x->_proxy_broker (the_tao_strategized_object_proxy_broker ());
-              return x;
-            }
+          // Here we set the strategized Proxy Broker.
+          x->_proxy_broker (the_tao_strategized_object_proxy_broker ());
+          return x;
         }
-      ACE_CATCHANY
-        {
-          // Ignore the exception and continue with the next one.
-        }
-      ACE_ENDTRY;
     }
+  ACE_CATCHANY
+    {
+      // Ignore the exception and continue with the next one.
+    }
+  ACE_ENDTRY;
 
   return 0;
 }
@@ -866,6 +840,40 @@ TAO_Object_Adapter::initialize_collocated_object (TAO_Stub *stub,
   const TAO_MProfile &mp =
     stub->base_profiles ();
 
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
+    {
+      TAO_ServantBase *sb =
+        this->get_collocated_servant (stub,
+                                      mp
+                                      ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (sb)
+        {
+          obj->set_collocated_servant (sb);
+
+          // Here we set the strategized Proxy Broker.
+          obj->_proxy_broker (the_tao_strategized_object_proxy_broker ());
+
+          return 0;
+        }
+    }
+  ACE_CATCHANY
+    {
+      // Ignore exceptions..
+    }
+  ACE_ENDTRY;
+
+  return -1;
+}
+
+TAO_ServantBase *
+TAO_Object_Adapter::get_collocated_servant (TAO_Stub *stub,
+                                            const TAO_MProfile &mp
+                                            ACE_ENV_ARG_DECL)
+{
   for (TAO_PHandle j = 0;
        j != mp.profile_count ();
        ++j)
@@ -878,47 +886,34 @@ TAO_Object_Adapter::initialize_collocated_object (TAO_Stub *stub,
                           TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
         continue;
 
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      TAO_ServantBase *servant = 0;
+
+      TAO_SERVANT_LOCATION servant_location =
+        this->find_servant (objkey.in (),
+                            servant
+                            ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      if (servant_location != TAO_SERVANT_NOT_FOUND)
         {
-          TAO_ServantBase *servant = 0;
+          // Found collocated object.  Perhaps we can get around
+          // by simply setting the servant_orb, but let get this
+          // to work first.
 
-          TAO_SERVANT_LOCATION servant_location =
-            this->find_servant (objkey.in (),
-                                servant
-                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          // There could only be one ORB which is us.
 
-          if (servant_location != TAO_SERVANT_NOT_FOUND)
-            {
-              // Found collocated object.  Perhaps we can get around
-              // by simply setting the servant_orb, but let get this
-              // to work first.
+          // @@ Do not duplicate the ORB here!
+          //    TAO_Stub::servant_orb()  duplicates it.
+          //       -Ossama
+          stub->servant_orb (this->orb_core_.orb ());
 
-              // There could only be one ORB which is us.
-
-              // @@ Do not duplicate the ORB here!
-              //    TAO_Stub::servant_orb()  duplicates it.
-              //       -Ossama
-              stub->servant_orb (this->orb_core_.orb ());
-
-              obj->set_collocated_servant (servant);
-
-              // Here we set the strategized Proxy Broker.
-              obj->_proxy_broker (the_tao_strategized_object_proxy_broker ());
-
-              return 1;
-            }
+          return servant;
         }
-      ACE_CATCHANY
-        {
-          // Ignore the exception and continue with the next one.
-        }
-      ACE_ENDTRY;
+
     }
-
   return 0;
 }
+
 
 // ****************************************************************
 
