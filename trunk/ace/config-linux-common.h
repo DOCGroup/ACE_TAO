@@ -53,14 +53,6 @@
   extern "C" char *strtok_r __P ((char *__s, __const char *__delim,
                                   char **__save_ptr));
   // NOTE:  end of glibc 2.0 (0.961212-5)-specific configuration.
-
-#if defined (__alpha)
-  // To avoid compilation warnings about TCP_NODELAY and TCP_MAXSEG
-  // being redefined, because they're defined in linux/socket.h:
-# define ACE_LACKS_TCP_H
-#endif /* ! __alpha */
-
-#else
 #endif /* __GLIBC__ */
 
 
