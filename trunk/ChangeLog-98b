@@ -13,6 +13,16 @@ Fri Nov 06 22:41:21 1998  David L. Levine  <levine@cs.wustl.edu>
           const to loop index to avoid egcs warning about discarding
           const.
 
+        * ace/OS.h,Basic_Types.h: moved ACE_UINT64_FORMAT_SPECIFIER from
+          OS.h to Basic_Types.h, because other 64-bit int support is
+          there.  Changes default ACE_UINT64_FORMAT_SPECIFIER to
+          "%llu", because that's what Solaris 2.x uses.
+
+        * ace/config-win32-common.h,ace/config-linux-common.h: added
+          ACE_UINT64_FORMAT_SPECIFIER overrides.
+
+        * ace/Log_Msg.cpp (log): added ACE_U_LongLong support.
+
 Fri Nov  6 13:29:11 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/OS.h (ACE_UINT64_FORMAT_SPECIFIER): Changed
