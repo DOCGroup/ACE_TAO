@@ -404,7 +404,7 @@ ACE_Location_Node::open_handle (void)
     return 0;
 
   // Set the handle
-  this->handle (ACE_OS::dlopen (ASYS_ONLY_MULTIBYTE_STRING (dl_pathname)));
+  this->handle (ACE_OS::dlopen (dl_pathname));
 
   if (this->handle () == 0)
     {
