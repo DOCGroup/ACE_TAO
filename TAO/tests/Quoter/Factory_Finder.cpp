@@ -76,7 +76,9 @@ Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& 
                                  env);
 
   // Failure while activating the Quoter Factory Finder object
-  if (str == 0)
+  // @@ TODO Is this the right way to check this? Shouldn't env
+  // contain an exception?
+  if (str.in () == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init: Failure while activating the Quoter Factory Finder Impl.\n"),
