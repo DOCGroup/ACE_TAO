@@ -85,12 +85,10 @@ IOR_corbaloc_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
   ACE_CATCH (CORBA::SystemException, ex)
     {
       ACE_PRINT_EXCEPTION (ex, "A system exception on client side");
-      return -1;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
-      return -1;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
@@ -99,12 +97,14 @@ IOR_corbaloc_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
 }
 
 int
-IOR_corbaloc_Client_i::init (int argc, char **argv)
+IOR_corbaloc_Client_i::init (int argc,
+                             char **argv,
+                             CORBA::Environment &ACE_TRY_ENV)
 {
+
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
 
@@ -124,7 +124,7 @@ IOR_corbaloc_Client_i::init (int argc, char **argv)
       if (CORBA::is_nil (naming_context_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot resolve Naming Service\n : client"),
-                          1);
+                          -1);
 
       // Narrow to get the correct reference
       this->naming_context_ =
@@ -135,18 +135,19 @@ IOR_corbaloc_Client_i::init (int argc, char **argv)
       if (CORBA::is_nil (this->naming_context_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot narrow Naming Service\n :client"),
-                          1);
+                          -1);
     }
   ACE_CATCH (CORBA::SystemException, ex)
     {
+      ACE_PRINT_EXCEPTION (ex, "client");
       return -1;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
-      return 1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
