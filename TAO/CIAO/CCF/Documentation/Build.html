@@ -131,9 +131,8 @@ it to some convenient place.</p>
 <p>Before you can start building CCF you need to specify the location
 of Boost Libraries and Utility Library. There are two ways you can do
 this. The first way is to specify environment variables <code>{BOOST_ROOT,
-BOOST_INCLUDE, BOOST_LIB}</code> and <code>{UTILITY_ROOT, UTILITY_INCLUDE,
-UTILITY_BUILD_RULES}</code>. Below are some examples of how you may do
-that.</p>
+BOOST_INCLUDE, BOOST_LIB}</code> and <code>UTILITY_ROOT</code>. Below are 
+some examples of how you may do that.</p>
 
 <p>If you would like to use Boost/Utility from the build directory:</p>
 
@@ -153,7 +152,7 @@ $ export UTILITY_ROOT=~/build/Utility-1.2.2
 compiler searches there by default you may leave <code>BOOST_*</code>
 uninitialized.</p>
 
-<p>Alternatively, you can specify values for <code>BOOST_*</code> and 
+<p>Alternatively, you can specify values for <code>BOOST_*</code> and
 <code>UTILITY_*</code> in <code>CCF/Config.rules</code></p>
 
 <p>Finally, you can start the build process:</p>
