@@ -92,7 +92,7 @@ TAO_EC_Basic_Factory::destroy_supplier_admin (TAO_EC_SupplierAdmin *x)
 TAO_EC_ProxyPushSupplier*
 TAO_EC_Basic_Factory::create_proxy_push_supplier (TAO_EC_Event_Channel *ec)
 {
-  return new TAO_EC_ProxyPushSupplier (ec);
+  return new TAO_EC_ProxyPushSupplier (ec, TAO_EC_DEFAULT_CONSUMER_VALIDATE_CONNECTION);
 }
 
 void

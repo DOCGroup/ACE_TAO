@@ -155,6 +155,9 @@ protected:
 
   /// The supplier control timeout in usecs
   ACE_Time_Value supplier_control_timeout_;
+
+  /// Validate the connection to consumer on connect
+  int consumer_validate_connection_;
 };
 
 #if defined (__ACE_INLINE__)
