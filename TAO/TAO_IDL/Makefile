@@ -272,10 +272,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -291,6 +293,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -300,10 +306,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -377,10 +379,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -396,6 +400,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -405,10 +413,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -482,10 +486,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -501,6 +507,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -510,10 +520,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -587,10 +593,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -606,6 +614,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -615,10 +627,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -688,20 +696,20 @@ tags:
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  include/drv_private.h include/drv_link.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -713,10 +721,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -732,6 +742,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -741,10 +755,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -831,10 +841,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -850,6 +862,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -859,10 +875,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -936,10 +948,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -955,6 +969,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -964,10 +982,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -1059,10 +1073,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1078,6 +1094,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -1087,10 +1107,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -1165,10 +1181,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1184,6 +1202,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -1193,10 +1215,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -1271,10 +1289,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1290,6 +1310,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -1299,10 +1323,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -1377,10 +1397,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1396,6 +1418,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -1405,10 +1431,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -1483,10 +1505,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1502,6 +1526,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -1511,10 +1539,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -1589,10 +1613,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1608,6 +1634,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -1617,10 +1647,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -1695,10 +1721,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1714,6 +1742,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -1723,10 +1755,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -1799,10 +1827,12 @@ tags:
 
 .obj/lex.yy.o .obj/lex.yy.so .shobj/lex.yy.o .shobj/lex.yy.so: fe/lex.yy.cpp $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1817,7 +1847,11 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i include/idl.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
@@ -1828,10 +1862,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -1906,10 +1936,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -1925,6 +1957,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -1934,10 +1970,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -2010,10 +2042,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -2029,6 +2063,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -2038,10 +2076,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -2114,10 +2148,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -2133,6 +2169,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -2142,10 +2182,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -2218,10 +2254,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -2237,6 +2275,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -2246,10 +2288,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -2322,10 +2360,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -2341,6 +2381,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -2350,10 +2394,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -2426,10 +2466,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -2445,6 +2487,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -2454,10 +2500,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -2530,10 +2572,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -2549,6 +2593,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -2558,10 +2606,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -2634,10 +2678,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -2653,6 +2699,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -2662,10 +2712,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -2738,10 +2784,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -2757,6 +2805,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -2766,10 +2818,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -2842,10 +2890,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -2861,6 +2911,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -2870,10 +2924,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -2946,10 +2996,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -2965,6 +3017,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -2974,10 +3030,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -3050,10 +3102,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -3069,6 +3123,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -3078,10 +3136,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -3154,10 +3208,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -3173,6 +3229,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -3182,10 +3242,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -3258,10 +3314,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -3277,6 +3335,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -3286,10 +3348,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -3362,10 +3420,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -3381,6 +3441,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -3390,10 +3454,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -3466,10 +3526,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -3485,6 +3547,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -3494,10 +3560,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -3570,10 +3632,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -3589,6 +3653,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -3598,10 +3666,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -3674,10 +3738,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -3693,6 +3759,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -3702,10 +3772,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -3778,10 +3844,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -3797,6 +3865,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -3806,10 +3878,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -3882,10 +3950,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -3901,6 +3971,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -3910,10 +3984,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -3986,10 +4056,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -4005,6 +4077,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -4014,10 +4090,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -4090,10 +4162,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -4109,6 +4183,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -4118,10 +4196,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -4194,10 +4268,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -4213,6 +4289,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -4222,10 +4302,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -4298,10 +4374,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -4317,6 +4395,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -4326,10 +4408,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -4402,10 +4480,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -4421,6 +4501,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -4430,10 +4514,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -4506,10 +4586,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -4525,6 +4607,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -4534,10 +4620,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -4610,10 +4692,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -4629,6 +4713,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -4638,10 +4726,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -4714,10 +4798,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -4733,6 +4819,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -4742,10 +4832,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -4818,10 +4904,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -4837,6 +4925,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -4846,10 +4938,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -4922,10 +5010,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -4941,6 +5031,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -4950,10 +5044,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -5026,10 +5116,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -5045,6 +5137,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -5054,10 +5150,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -5130,10 +5222,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -5149,6 +5243,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -5158,10 +5256,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -5234,10 +5328,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -5253,6 +5349,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -5262,10 +5362,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -5338,10 +5434,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -5357,6 +5455,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -5366,10 +5468,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -5442,10 +5540,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -5461,6 +5561,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -5470,10 +5574,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -5546,10 +5646,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -5565,6 +5667,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -5574,10 +5680,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -5650,10 +5752,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -5669,6 +5773,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -5678,10 +5786,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -5754,10 +5858,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -5773,6 +5879,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -5782,10 +5892,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -5858,10 +5964,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -5877,6 +5985,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -5886,10 +5998,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -5962,10 +6070,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -5981,6 +6091,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -5990,10 +6104,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -6066,10 +6176,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -6085,6 +6197,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -6094,10 +6210,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -6170,10 +6282,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -6189,6 +6303,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -6198,10 +6316,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -6274,10 +6388,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -6293,6 +6409,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -6302,10 +6422,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -6378,10 +6494,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -6397,6 +6515,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -6406,10 +6528,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -6482,10 +6600,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -6501,6 +6621,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -6510,10 +6634,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -6586,10 +6706,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -6605,6 +6727,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -6614,10 +6740,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -6690,10 +6812,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -6709,6 +6833,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -6718,10 +6846,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -6790,20 +6914,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -6815,10 +6939,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -6834,6 +6960,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -6843,10 +6973,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -6915,20 +7041,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -6940,10 +7066,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -6959,6 +7087,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -6968,10 +7100,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -7040,20 +7168,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -7065,10 +7193,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -7084,6 +7214,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -7093,10 +7227,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -7165,20 +7295,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -7190,10 +7320,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -7209,6 +7341,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -7218,10 +7354,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -7290,20 +7422,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -7315,10 +7447,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -7334,6 +7468,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -7343,10 +7481,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -7415,20 +7549,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -7440,10 +7574,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -7459,6 +7595,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -7468,10 +7608,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -7540,20 +7676,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -7565,10 +7701,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -7584,6 +7722,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -7593,10 +7735,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -7665,20 +7803,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -7690,10 +7828,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -7709,6 +7849,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -7718,10 +7862,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -7790,20 +7930,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -7815,10 +7955,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -7834,6 +7976,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -7843,10 +7989,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -7938,12 +8080,141 @@ tags:
  be_include/be_visitor_interface/tie_si.h \
  be_include/be_visitor_interface/ami_interface_ch.h \
  be_include/be_visitor_interface/smart_proxy_ch.h \
- be_include/be_visitor_interface/smart_proxy_cs.h be_include/be.h \
+ be_include/be_visitor_interface/smart_proxy_cs.h \
+ be_include/be_visitor_interface/interceptors_ch.h \
+ be_include/be_visitor_interface/interceptors_cs.h \
+ be_include/be_visitor_interface/interceptors_sh.h \
+ be_include/be_visitor_interface/interceptors_ss.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_interface_fwd.h \
+ be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
+ be_include/be_structure.h be_include/be_exception.h \
+ be_include/be_expression.h be_include/be_enum.h \
+ be_include/be_operation.h be_include/be_operation_strategy.h \
+ be_include/be_field.h be_include/be_argument.h \
+ be_include/be_attribute.h be_include/be_union.h \
+ be_include/be_union_branch.h be_include/be_union_label.h \
+ be_include/be_constant.h be_include/be_enum_val.h \
+ be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
+ be_include/be_helper.h be_include/be_stream_factory.h \
+ be_include/be_visitor_factory.h be_include/be_visitor_context.h \
+ be_include/be_visitor_ami_pre_proc.h \
+ be_include/be_interface_strategy.h
+
+.obj/be_interface_strategy.o .obj/be_interface_strategy.so .shobj/be_interface_strategy.o .shobj/be_interface_strategy.so: be/be_interface_strategy.cpp include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
+ include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
+ include/idl_bool.h include/utl_string.h include/utl_identifier.h \
+ include/ast.h include/utl_scoped_name.h include/ast_decl.h \
+ include/ast_expression.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
+ include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
+ include/ast_interface.h include/ast_interface_fwd.h \
+ include/ast_structure.h include/ast_exception.h include/ast_enum.h \
+ include/ast_operation.h include/utl_list.h include/ast_field.h \
+ include/ast_argument.h include/ast_attribute.h include/ast_union.h \
+ include/ast_union_branch.h include/ast_union_label.h \
+ include/ast_constant.h include/ast_enum_val.h include/ast_array.h \
+ include/ast_sequence.h include/ast_string.h include/ast_typedef.h \
+ include/ast_native.h include/utl_strlist.h include/utl_exprlist.h \
+ include/ast_generator.h include/util.h include/utl_stack.h \
+ include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
+ include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
+ include/utl_err.h include/utl_indenter.h include/idl_extern.h \
+ include/fe_extern.h include/be_extern.h include/drv_extern.h \
+ include/ast_extern.h include/nr_extern.h include/global_extern.h \
+ be_include/be.h $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
  be_include/be_interface_fwd.h be_include/be_valuetype.h \
  be_include/be_valuetype_fwd.h be_include/be_structure.h \
  be_include/be_exception.h be_include/be_expression.h \
@@ -7956,130 +8227,6 @@ tags:
  be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
- be_include/be_visitor_factory.h be_include/be_visitor_context.h \
- be_include/be_visitor_ami_pre_proc.h \
- be_include/be_interface_strategy.h
-
-.obj/be_interface_strategy.o .obj/be_interface_strategy.so .shobj/be_interface_strategy.o .shobj/be_interface_strategy.so: be/be_interface_strategy.cpp include/idl.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/svc_export.h \
- $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
- $(ACE_ROOT)/ace/OS_Dirent.inl \
- $(ACE_ROOT)/ace/OS_String.h \
- $(ACE_ROOT)/ace/OS_String.inl \
- $(ACE_ROOT)/ace/OS_Memory.h \
- $(ACE_ROOT)/ace/OS_Memory.inl \
- $(ACE_ROOT)/ace/OS_TLI.h \
- $(ACE_ROOT)/ace/OS_TLI.inl \
- $(ACE_ROOT)/ace/Min_Max.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
- include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
- include/idl_bool.h include/utl_string.h include/utl_identifier.h \
- include/ast.h include/utl_scoped_name.h include/ast_decl.h \
- include/ast_expression.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Based_Pointer_T.h \
- $(ACE_ROOT)/ace/Based_Pointer_T.i \
- $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
- $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
- include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
- include/ast_interface.h include/ast_interface_fwd.h \
- include/ast_structure.h include/ast_exception.h include/ast_enum.h \
- include/ast_operation.h include/utl_list.h include/ast_field.h \
- include/ast_argument.h include/ast_attribute.h include/ast_union.h \
- include/ast_union_branch.h include/ast_union_label.h \
- include/ast_constant.h include/ast_enum_val.h include/ast_array.h \
- include/ast_sequence.h include/ast_string.h include/ast_typedef.h \
- include/ast_native.h include/utl_strlist.h include/utl_exprlist.h \
- include/ast_generator.h include/util.h include/utl_stack.h \
- include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
- include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
- include/utl_err.h include/utl_indenter.h include/idl_extern.h \
- include/fe_extern.h include/be_extern.h include/drv_extern.h \
- include/ast_extern.h include/nr_extern.h include/global_extern.h \
- be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
- be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
- be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
  be_include/be_visitor_context.h be_include/be_visitor_ami_pre_proc.h \
  be_include/be_visitor_scope.h be_include/be_visitor_decl.h \
@@ -8089,10 +8236,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -8108,6 +8257,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -8117,10 +8270,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -8189,20 +8338,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -8214,10 +8363,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -8233,6 +8384,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -8242,10 +8397,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -8314,20 +8465,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -8339,10 +8490,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -8358,6 +8511,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -8367,10 +8524,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -8439,20 +8592,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -8464,10 +8617,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -8483,6 +8638,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -8492,10 +8651,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -8564,20 +8719,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -8589,10 +8744,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -8608,6 +8765,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -8617,10 +8778,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -8689,20 +8846,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -8714,10 +8871,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -8733,6 +8892,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -8742,10 +8905,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -8814,20 +8973,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -8839,10 +8998,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -8858,6 +9019,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -8867,10 +9032,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -8939,20 +9100,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -8964,10 +9125,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -8983,6 +9146,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -8992,10 +9159,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -9064,20 +9227,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -9089,10 +9252,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -9108,6 +9273,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -9117,10 +9286,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -9189,20 +9354,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -9214,10 +9379,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -9233,6 +9400,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -9242,10 +9413,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -9314,20 +9481,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -9350,10 +9517,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -9369,6 +9538,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -9378,10 +9551,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -9450,20 +9619,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -9475,10 +9644,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -9494,6 +9665,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -9503,10 +9678,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -9575,20 +9746,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -9600,10 +9771,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -9619,6 +9792,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -9628,10 +9805,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -9700,20 +9873,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -9725,10 +9898,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -9744,6 +9919,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -9753,10 +9932,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -9825,20 +10000,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -9850,10 +10025,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -9869,6 +10046,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -9878,10 +10059,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -9950,20 +10127,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -9975,10 +10152,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -9994,6 +10173,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -10003,10 +10186,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -10075,20 +10254,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -10100,10 +10279,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -10119,6 +10300,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -10128,10 +10313,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -10200,20 +10381,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -10225,10 +10406,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -10244,6 +10427,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -10253,10 +10440,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -10325,20 +10508,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -10350,10 +10533,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -10369,6 +10554,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -10378,10 +10567,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -10450,20 +10635,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -10475,10 +10660,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -10494,6 +10681,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -10503,10 +10694,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -10575,20 +10762,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -10600,10 +10787,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -10619,6 +10808,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -10628,10 +10821,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -10700,20 +10889,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -10725,10 +10914,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -10744,6 +10935,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -10753,10 +10948,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -10825,20 +11016,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -10850,10 +11041,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -10869,6 +11062,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -10878,10 +11075,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -10950,20 +11143,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -10975,10 +11168,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -10994,6 +11189,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -11003,10 +11202,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -11075,20 +11270,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -11100,10 +11295,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -11119,6 +11316,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -11128,10 +11329,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -11200,20 +11397,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -11225,10 +11422,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -11244,6 +11443,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -11253,10 +11456,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -11325,20 +11524,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -11350,10 +11549,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -11369,6 +11570,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -11378,10 +11583,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -11450,20 +11651,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -11475,10 +11676,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -11494,6 +11697,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -11503,10 +11710,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -11575,20 +11778,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -11604,6 +11807,13 @@ tags:
  be_include/be_visitor_argument/pre_invoke_cs.h \
  be_include/be_visitor_argument/invoke_cs.h \
  be_include/be_visitor_argument/post_invoke_cs.h \
+ be_include/be_visitor_argument/request_info_ch.h \
+ be_include/be_visitor_argument/request_info_cs.h \
+ be_include/be_visitor_argument/paramlist.h \
+ be_include/be_visitor_argument/request_info_sh.h \
+ be_include/be_visitor_argument/request_info_ss.h \
+ be_include/be_visitor_argument/request_info_result.h \
+ be_include/be_visitor_argument/request_info_arglist.h \
  be_include/be_visitor_array.h be_include/be_visitor_array/array.h \
  be_include/be_visitor_array/array_ch.h \
  be_include/be_visitor_array/array_ci.h \
@@ -11666,6 +11876,10 @@ tags:
  be_include/be_visitor_interface/ami_interface_ch.h \
  be_include/be_visitor_interface/smart_proxy_ch.h \
  be_include/be_visitor_interface/smart_proxy_cs.h \
+ be_include/be_visitor_interface/interceptors_ch.h \
+ be_include/be_visitor_interface/interceptors_cs.h \
+ be_include/be_visitor_interface/interceptors_sh.h \
+ be_include/be_visitor_interface/interceptors_ss.h \
  be_include/be_visitor_interface_fwd.h \
  be_include/be_visitor_interface_fwd/interface_fwd_ch.h \
  be_include/be_visitor_interface_fwd/interface_fwd_ci.h \
@@ -11738,6 +11952,14 @@ tags:
  be_include/be_visitor_operation/ami_exception_holder_operation_cs.h \
  be_include/be_visitor_operation/smart_proxy_ch.h \
  be_include/be_visitor_operation/smart_proxy_cs.h \
+ be_include/be_visitor_operation/interceptors_ch.h \
+ be_include/be_visitor_operation/interceptors_cs.h \
+ be_include/be_visitor_operation/interceptors_arglist.h \
+ be_include/be_visitor_operation/interceptors_sh.h \
+ be_include/be_visitor_operation/interceptors_ss.h \
+ be_include/be_visitor_operation/interceptors_exceptlist.h \
+ be_include/be_visitor_operation/interceptors_info_rettype.h \
+ be_include/be_visitor_operation/interceptors_result.h \
  be_include/be_visitor_root.h be_include/be_visitor_root/root.h \
  be_include/be_visitor_root/root_ch.h \
  be_include/be_visitor_root/root_ci.h \
@@ -11811,10 +12033,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -11830,6 +12054,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -11839,10 +12067,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -11909,20 +12133,20 @@ tags:
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
  include/utl_err.h include/utl_indenter.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -11937,10 +12161,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -11956,6 +12182,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -11965,10 +12195,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -12037,20 +12263,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -12061,10 +12287,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -12080,6 +12308,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -12089,10 +12321,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -12159,20 +12387,20 @@ tags:
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
  include/utl_err.h include/utl_indenter.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -12191,6 +12419,13 @@ tags:
  be_include/be_visitor_argument/pre_invoke_cs.h \
  be_include/be_visitor_argument/invoke_cs.h \
  be_include/be_visitor_argument/post_invoke_cs.h \
+ be_include/be_visitor_argument/request_info_ch.h \
+ be_include/be_visitor_argument/request_info_cs.h \
+ be_include/be_visitor_argument/paramlist.h \
+ be_include/be_visitor_argument/request_info_sh.h \
+ be_include/be_visitor_argument/request_info_ss.h \
+ be_include/be_visitor_argument/request_info_result.h \
+ be_include/be_visitor_argument/request_info_arglist.h \
  be/be_visitor_argument/arglist.cpp \
  be/be_visitor_argument/argument.cpp \
  be/be_visitor_argument/marshal_ss.cpp \
@@ -12199,16 +12434,25 @@ tags:
  be/be_visitor_argument/vardecl_ss.cpp \
  be/be_visitor_argument/pre_invoke_cs.cpp \
  be/be_visitor_argument/invoke_cs.cpp \
- be/be_visitor_argument/post_invoke_cs.cpp
+ be/be_visitor_argument/post_invoke_cs.cpp \
+ be/be_visitor_argument/request_info_ch.cpp \
+ be/be_visitor_argument/request_info_cs.cpp \
+ be/be_visitor_argument/paramlist.cpp \
+ be/be_visitor_argument/request_info_sh.cpp \
+ be/be_visitor_argument/request_info_ss.cpp \
+ be/be_visitor_argument/request_info_result.cpp \
+ be/be_visitor_argument/request_info_arglist.cpp
 
 .obj/be_visitor_array.o .obj/be_visitor_array.so .shobj/be_visitor_array.o .shobj/be_visitor_array.so: be/be_visitor_array.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -12224,6 +12468,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -12233,10 +12481,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -12305,20 +12549,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -12343,10 +12587,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -12362,6 +12608,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -12371,10 +12621,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -12443,20 +12689,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -12470,10 +12716,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -12489,6 +12737,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -12498,10 +12750,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -12570,20 +12818,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -12599,10 +12847,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -12618,6 +12868,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -12627,10 +12881,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -12699,20 +12949,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -12724,10 +12974,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -12743,6 +12995,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -12752,10 +13008,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -12824,20 +13076,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -12849,10 +13101,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -12868,6 +13122,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -12877,10 +13135,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -12949,20 +13203,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -12983,10 +13237,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -13002,6 +13258,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -13011,10 +13271,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -13083,20 +13339,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -13136,10 +13392,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -13155,6 +13413,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -13164,10 +13426,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -13236,20 +13494,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -13270,10 +13528,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -13289,6 +13549,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -13298,10 +13562,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -13370,20 +13630,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -13413,6 +13673,10 @@ tags:
  be_include/be_visitor_interface/ami_interface_ch.h \
  be_include/be_visitor_interface/smart_proxy_ch.h \
  be_include/be_visitor_interface/smart_proxy_cs.h \
+ be_include/be_visitor_interface/interceptors_ch.h \
+ be_include/be_visitor_interface/interceptors_cs.h \
+ be_include/be_visitor_interface/interceptors_sh.h \
+ be_include/be_visitor_interface/interceptors_ss.h \
  be/be_visitor_interface/interface.cpp \
  be/be_visitor_interface/interface_ch.cpp \
  be/be_visitor_interface/interface_ci.cpp \
@@ -13434,16 +13698,22 @@ tags:
  be/be_visitor_interface/cdr_op_cs.cpp \
  be/be_visitor_interface/smart_proxy_ch.cpp \
  be/be_visitor_interface/smart_proxy_cs.cpp \
- be/be_visitor_interface/ami_interface_ch.cpp
+ be/be_visitor_interface/ami_interface_ch.cpp \
+ be/be_visitor_interface/interceptors_ch.cpp \
+ be/be_visitor_interface/interceptors_cs.cpp \
+ be/be_visitor_interface/interceptors_sh.cpp \
+ be/be_visitor_interface/interceptors_ss.cpp
 
 .obj/be_visitor_interface_fwd.o .obj/be_visitor_interface_fwd.so .shobj/be_visitor_interface_fwd.o .shobj/be_visitor_interface_fwd.so: be/be_visitor_interface_fwd.cpp \
  include/idl.h $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -13459,6 +13729,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -13468,10 +13742,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -13540,20 +13810,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -13574,10 +13844,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -13593,6 +13865,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -13602,10 +13878,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -13674,20 +13946,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -13761,6 +14033,14 @@ tags:
  be_include/be_visitor_operation/ami_exception_holder_operation_cs.h \
  be_include/be_visitor_operation/smart_proxy_ch.h \
  be_include/be_visitor_operation/smart_proxy_cs.h \
+ be_include/be_visitor_operation/interceptors_ch.h \
+ be_include/be_visitor_operation/interceptors_cs.h \
+ be_include/be_visitor_operation/interceptors_arglist.h \
+ be_include/be_visitor_operation/interceptors_sh.h \
+ be_include/be_visitor_operation/interceptors_ss.h \
+ be_include/be_visitor_operation/interceptors_exceptlist.h \
+ be_include/be_visitor_operation/interceptors_info_rettype.h \
+ be_include/be_visitor_operation/interceptors_result.h \
  be/be_visitor_valuetype/field_ch.cpp \
  be/be_visitor_valuetype/field_ci.cpp \
  be/be_visitor_valuetype/field_cs.cpp \
@@ -13780,10 +14060,12 @@ tags:
  include/idl.h $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -13799,6 +14081,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -13808,10 +14094,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -13880,20 +14162,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -13909,10 +14191,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -13928,6 +14212,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -13937,10 +14225,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -14009,20 +14293,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -14043,10 +14327,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -14062,6 +14348,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -14071,10 +14361,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -14143,20 +14429,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -14198,6 +14484,14 @@ tags:
  be_include/be_visitor_operation/ami_exception_holder_operation_cs.h \
  be_include/be_visitor_operation/smart_proxy_ch.h \
  be_include/be_visitor_operation/smart_proxy_cs.h \
+ be_include/be_visitor_operation/interceptors_ch.h \
+ be_include/be_visitor_operation/interceptors_cs.h \
+ be_include/be_visitor_operation/interceptors_arglist.h \
+ be_include/be_visitor_operation/interceptors_sh.h \
+ be_include/be_visitor_operation/interceptors_ss.h \
+ be_include/be_visitor_operation/interceptors_exceptlist.h \
+ be_include/be_visitor_operation/interceptors_info_rettype.h \
+ be_include/be_visitor_operation/interceptors_result.h \
  be/be_visitor_operation/operation.cpp \
  be/be_visitor_operation/arglist.cpp \
  be/be_visitor_operation/argument.cpp \
@@ -14223,6 +14517,13 @@ tags:
  be_include/be_visitor_argument/pre_invoke_cs.h \
  be_include/be_visitor_argument/invoke_cs.h \
  be_include/be_visitor_argument/post_invoke_cs.h \
+ be_include/be_visitor_argument/request_info_ch.h \
+ be_include/be_visitor_argument/request_info_cs.h \
+ be_include/be_visitor_argument/paramlist.h \
+ be_include/be_visitor_argument/request_info_sh.h \
+ be_include/be_visitor_argument/request_info_ss.h \
+ be_include/be_visitor_argument/request_info_result.h \
+ be_include/be_visitor_argument/request_info_arglist.h \
  be/be_visitor_operation/operation_is.cpp \
  be/be_visitor_operation/rettype.cpp \
  be/be_visitor_operation/rettype_is.cpp \
@@ -14240,16 +14541,26 @@ tags:
  be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp \
  be/be_visitor_operation/ami_exception_holder_operation_cs.cpp \
  be/be_visitor_operation/smart_proxy_ch.cpp \
- be/be_visitor_operation/smart_proxy_cs.cpp
+ be/be_visitor_operation/smart_proxy_cs.cpp \
+ be/be_visitor_operation/interceptors_ch.cpp \
+ be/be_visitor_operation/interceptors_cs.cpp \
+ be/be_visitor_operation/interceptors_arglist.cpp \
+ be/be_visitor_operation/interceptors_sh.cpp \
+ be/be_visitor_operation/interceptors_ss.cpp \
+ be/be_visitor_operation/interceptors_exceptlist.cpp \
+ be/be_visitor_operation/interceptors_info_rettype.cpp \
+ be/be_visitor_operation/interceptors_result.cpp
 
 .obj/be_visitor_root.o .obj/be_visitor_root.so .shobj/be_visitor_root.o .shobj/be_visitor_root.so: be/be_visitor_root.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -14265,6 +14576,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -14274,10 +14589,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -14346,20 +14657,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -14387,10 +14698,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -14406,6 +14719,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -14415,10 +14732,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -14487,20 +14800,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -14512,10 +14825,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -14531,6 +14846,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -14540,10 +14859,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -14612,20 +14927,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -14677,10 +14992,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -14696,6 +15013,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -14705,10 +15026,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -14777,20 +15094,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -14826,10 +15143,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -14845,6 +15164,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -14854,10 +15177,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -14926,20 +15245,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -14955,10 +15274,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -14974,6 +15295,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -14983,10 +15308,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -15055,20 +15376,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -15098,10 +15419,12 @@ tags:
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -15117,6 +15440,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -15126,10 +15453,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -15198,20 +15521,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
@@ -15242,10 +15565,12 @@ tags:
  include/idl.h $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -15261,6 +15586,10 @@ tags:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i include/intlmacros.h \
  include/idl_narrow.h include/idl_defines.h include/idl_fwd.h \
  include/idl_bool.h include/utl_string.h include/utl_identifier.h \
@@ -15270,10 +15599,6 @@ tags:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -15342,20 +15667,20 @@ tags:
  include/fe_extern.h include/be_extern.h include/drv_extern.h \
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be.h $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i \
- be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
- be_include/be_type.h be_include/be_predefined_type.h \
- be_include/be_module.h be_include/be_interface.h \
- be_include/be_codegen.h be_include/be_interface_fwd.h \
- be_include/be_valuetype.h be_include/be_valuetype_fwd.h \
- be_include/be_structure.h be_include/be_exception.h \
- be_include/be_expression.h be_include/be_enum.h \
- be_include/be_operation.h be_include/be_operation_strategy.h \
- be_include/be_field.h be_include/be_argument.h \
- be_include/be_attribute.h be_include/be_union.h \
- be_include/be_union_branch.h be_include/be_union_label.h \
- be_include/be_constant.h be_include/be_enum_val.h \
- be_include/be_array.h be_include/be_sequence.h be_include/be_string.h \
+ $(ACE_ROOT)/ace/Process.i be_include/be_decl.h \
+ be_include/be_scope.h be_include/be_generator.h be_include/be_type.h \
+ be_include/be_predefined_type.h be_include/be_module.h \
+ be_include/be_interface.h be_include/be_codegen.h \
+ be_include/be_interface_fwd.h be_include/be_valuetype.h \
+ be_include/be_valuetype_fwd.h be_include/be_structure.h \
+ be_include/be_exception.h be_include/be_expression.h \
+ be_include/be_enum.h be_include/be_operation.h \
+ be_include/be_operation_strategy.h be_include/be_field.h \
+ be_include/be_argument.h be_include/be_attribute.h \
+ be_include/be_union.h be_include/be_union_branch.h \
+ be_include/be_union_label.h be_include/be_constant.h \
+ be_include/be_enum_val.h be_include/be_array.h \
+ be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
  be_include/be_helper.h be_include/be_stream_factory.h \
  be_include/be_visitor.h be_include/be_visitor_factory.h \
