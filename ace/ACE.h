@@ -363,7 +363,8 @@ public:
   static const char *strend (const char *s);
 
   /// This method is just like <strdup>, except that it uses <operator
-  /// new> rather than <malloc>.
+  /// new> rather than <malloc>.  If <s> is NULL returns NULL rather than
+  /// segfaulting...
   static char *strnew (const char *s);
 
   /// Create a fresh new copy of <str>, up to <n> chars long.  Uses
