@@ -261,7 +261,14 @@ include $(TAO_ROOT)/taoconfig.mk
 
 ifeq ($(fakesvcconf),1)
   CPPFLAGS += -DTAO_PLATFORM_SVC_CONF_FILE_NOTSUP
-endif
+endif # fakesvcconf
+
+ifeq ($(LYNXTARGET),ppc)
+#### POA.cpp raises internal compiler error with LynxOS 3.0.0 g++, but
+#### only when optimization is enabled.  Disable it . . .
+$(VDIR)POA.o: POA.cpp
+	$(subst $(OCFLAGS),-O,$(COMPILE.cc)) -o $@ $<
+endif # LYNXTARGET == ppc
 
 #RLDFLAGS := $(subst -L,-Wl\,-rpath ,$(LDFLAGS))
 LDFLAGS += $(RLDFLAGS)
