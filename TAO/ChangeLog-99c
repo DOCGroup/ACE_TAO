@@ -1,3 +1,20 @@
+Wed Sep  1 09:52:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_sequence.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_co.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+	  Changes to enable code generation for nested IDL sequences. Any
+	  number of levels of nesting will work. Thanks to 
+	  Lars <lars@ibp.de> (forwarded email had no last name) for
+ 	  sending in the example that got the ball rolling.
+
 Wed Sep  1 07:09:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tests/AMI/simple_client.cpp:
