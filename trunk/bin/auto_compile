@@ -1,4 +1,4 @@
-#
+# -*- perl -*-
 # $Id$
 #
 # This script checkouts ACE from CVS, updates the "clone" directory,
@@ -41,9 +41,24 @@ $MODULE='ACE_wrappers';
      'tests',
      'TAO');
 
-# This are the pairs "sub-directory,script" we run.
+# This are the pairs "sub-directory , script" we run; the separator
+# *must* be a space followed by a comma and then another space.
 
-%RUN_LIST=('tests' => 'run_tests.sh');
+@RUN_LIST =
+    ( 'tests , run_tests.sh',
+      'TAO/tests/Cubit/TAO/IDL_Cubit , run_test.pl',
+      'TAO/tests/Cubit/TAO/DII_Cubit , run_test.pl',
+      'TAO/tests/Param_Test , run_test.pl',
+      'TAO/tests/Param_Test , run_test.pl -i dii',
+      'TAO/tests/Simple , run_test.pl',
+      'TAO/tests/NestedUpcall/Reactor , run_test.pl',
+      'TAO/tests/NestedUpcall/Triangle_Test , run_test.pl',
+      'TAO/tests/NestedUpcall/MT_Client_Test , run_test.pl',
+      'TAO/orbsvcs/tests/Simple_Naming , run_test.pl',
+      'TAO/orbsvcs/tests/Event_Latency , run_test.pl',
+      'TAO/orbsvcs/tests/EC_Throughput , run_test.pl',
+      'TAO/orbsvcs/tests/EC_Multiple , run_test.pl',
+      'TAO/tests/Cubit/TAO/MT_Cubit , run_test.pl' );
 
 # We obtain our revision to report errors in a "nice" manner.
 $REVISION='$Revision$';
@@ -152,7 +167,7 @@ $ENV{'TAO_ROOT'} = $CHECKOUT . '/' . $MODULE . '/build/' . $BUILD . '/TAO';
 foreach $i (@BUILD_LIST) {
     $date = localtime;
     print LOG "$CMD: make for $i started at ", $date, "\n";
-    open(MAKE, "make -k shared_libs_only=1 -C $i 2>&1 |")
+    open(MAKE, "make -k optimize=1 shared_libs_only=1 -C $i 2>&1 |")
 	|| mydie "cannot start make for $i";
     $make_errors = 0;
     while (<MAKE>) {
@@ -170,29 +185,45 @@ foreach $i (@BUILD_LIST) {
     }
 }
 
-while (($directory,$program) = each %RUN_LIST) {
+@failures = ();
+foreach $i (@RUN_LIST) {
+    local @test_info = split (/\ \,\ /, $i);
+    local $directory = $test_info[0];
+    local $program = $test_info[1];
+
     $date = localtime;
     print LOG "$CMD: running $program in $directory at ", $date, "\n";
-    chdir($directory)
-	|| mydie "cannot chdir to $directory";
+    local $subdir =
+	$CHECKOUT .'/'. $MODULE .'/build/'. $BUILD .'/'. $directory;
+    chdir ($subdir)
+	|| mydie "cannot chdir to $subdir";
 
-    open(RUN, "$program 2>&1 |")
-	|| mydie "cannot run $program";
     $run_error = 0;
+    if (open(RUN, "$program 2>&1 |") == 0) {
+	push @failures, "cannot run $program in $directory";
+	next;
+    }
     while (<RUN>) {
 	print LOG $_;
 	if (m/^Error/ || m/FAILED/) {
 	    $run_error = 1;
 	}
     }
-    close(RUN)
-	|| mydie "cannot finish $program";
+    if (close(RUN) == 0) {
+	push @failures, "cannot finish $program in $directory";
+	next;
+    }
     $date = localtime;
     print LOG "$CMD: $program finished ", $date, "\n";
 
     if ($run_error != 0) {
-	mydie "errors detected while running $program in $directory";
+	push @failures, 
+	    "errors detected while running $program in $directory";
     }
+}
+
+if ($#failures >= 0) {
+    mydie join ("\n", @failures);
 }
 
 close(LOG)
