@@ -1,6 +1,5 @@
 //$Id$
-project(TAO) : acelib, taoversion, core, tao_output, extra_core {
-  includes    += $(TAO_ROOT) $(TAO_ROOT)/tao
+project(TAO) : acelib, taoversion, core, tao_output, taodefaults, extra_core {
   sharedname   = TAO
   dynamicflags = TAO_BUILD_DLL
   include_dir  = tao
