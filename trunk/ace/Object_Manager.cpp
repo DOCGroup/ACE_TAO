@@ -3,6 +3,7 @@
 #define ACE_BUILD_DLL
 
 #include "ace/Object_Manager.h"
+#include "ace/Containers.h"
 #include "ace/Service_Repository.h"
 #include "ace/Log_Msg.h"
 
@@ -14,8 +15,9 @@
 ACE_Object_Manager *ACE_Object_Manager::instance_ = 0;
 
 ACE_Object_Manager::ACE_Object_Manager (void)
-  : registered_objects_ (), shutting_down_(0)
+  : shutting_down_(0)
 {
+  ACE_NEW (registered_objects_, ACE_Unbounded_Queue<object_info_t>);
 }
 
 ACE_Object_Manager::~ACE_Object_Manager (void)
@@ -28,15 +30,24 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   // some object tries to register, it won't be.
   shutting_down_ = 1;
   ACE_Trace::stop_tracing();
-  while (registered_objects_.dequeue_head (info) != -1)
-    (*info.cleanup_hook_) (info.object_, info.param_);
+  while (registered_objects_ &&
+         registered_objects_->dequeue_head (info) != -1)
+    {
+      (*info.cleanup_hook_) (info.object_, info.param_);
+    }
+
+  delete registered_objects_;
+  registered_objects_ = 0;
 
   // This call closes and deletes all ACE library services and
   // singletons.
   ACE_Service_Config::close ();
 
-  // Finally, close the Log_Msg instance.
+  // Close the Log_Msg instance.
   ACE_Log_Msg::close ();
+
+  // Finally, close the ACE_Allocator and ACE_Static_Object_Lock.
+  ACE_Static_Object_Lock::close_singleton ();
 }
 
 ACE_Object_Manager *
@@ -56,19 +67,21 @@ ACE_Object_Manager::at_exit_i (void *object,
                                ACE_CLEANUP_FUNC cleanup_hook,
                                void *param)
 {
-  object_info_t *info = 0;
-
   if (shutting_down_)
     return -1;
 
   // Check for already in queue, and return 1 if so.
-
-  for (ACE_Unbounded_Queue_Iterator<object_info_t> iter (registered_objects_);
+  object_info_t *info = 0;
+  for (ACE_Unbounded_Queue_Iterator<object_info_t> iter (*registered_objects_);
        iter.next (info) != 0;
        iter.advance ())
-    if (info->object_ == object)
-      // The object has already been registered.
-      return 1;
+    {
+      if (info->object_ == object)
+        {
+          // The object has already been registered.
+          return 1;
+        }
+    }
 
   object_info_t new_info;
   new_info.object_ = object;
@@ -77,7 +90,7 @@ ACE_Object_Manager::at_exit_i (void *object,
 
   // Returns -1 if unable to allocate storage.  Enqueue at the head
   // and dequeue from the head to get LIFO ordering.
-  return registered_objects_.enqueue_head (new_info);
+  return registered_objects_->enqueue_head (new_info);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
