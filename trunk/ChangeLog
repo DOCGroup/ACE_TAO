@@ -1,9 +1,12 @@
-Tue Sep 21 12:16:39 2004  Steve Huston  <shuston@riverace.com>
+Tue Sep 21 18:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ACEXML/parser/parser/Parser.cpp: parse_encoding_decl(), don't
-	  crash if the input source doesn't declare an encoding.
-	  reset(), if current_ is already 0 (the case if no parsing ever
-	  really got started) don't dereference it.
+        * ace/OS_NS_unistd.inl (readlink):
+          Only when ACE_LACKS_READLINK this is not supported, the checks for
+          win32 or wince are removed.
+
+        * ace/config-WinCE.h:
+        * ace/config-win32-common.h:
+          Define ACE_LACKS_READLINK
 
 Tue Sep 21 15:29:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -205,6 +208,14 @@ Thu Sep 16 08:14:14 2004  Chad Elliott  <elliott_c@ociweb.com>
           64-bit HP-UX applications.
 
 Thu Sep 16 07:47:09 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          Added a CUSTOM_TARGETS macro that will allow users to access
+          custom targets that can be generated with the use of the
+          'verbatim' clause in mpc files.
+
+:09 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
 
