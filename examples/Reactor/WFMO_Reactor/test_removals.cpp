@@ -49,8 +49,6 @@ public:
 
   virtual int handle_signal (int index, siginfo_t *, ucontext_t *)
     {
-      ACE_DEBUG ((LM_DEBUG, "event %d occured.\n", event_number_));
-
       if (this->close_down_)
 	return -1;
       else

@@ -27,6 +27,8 @@ public:
 			     siginfo_t *,
 			     ucontext_t *)
   {
+    // @@ Note that this code is not portable to all OS platforms
+    // since it uses print statements within signal handler context.
     ACE_DEBUG ((LM_DEBUG,
                 "Executed ACE signal handler for signal %S, count = %d\n", 
 		sig,

@@ -629,17 +629,7 @@ ACE_Service_Config::handle_signal (int sig,
                                    siginfo_t *,
                                    ucontext_t *)
 {
-  ACE_TRACE ("ACE_Service_Config::handle_signal");
-
-  if (ACE_Service_Config::signum_ != sig)
-    ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("error, signal %S does match %S\n"),
-                sig,
-                ACE_Service_Config::signum_));
-  if (ACE::debug ())
-    ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("signal %S occurred\n"),
-                sig));
+  ACE_ASSERT (ACE_Service_Config::signum_ == sig);
   ACE_Service_Config::reconfig_occurred_ = 1;
 }
 

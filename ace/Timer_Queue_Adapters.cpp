@@ -118,9 +118,6 @@ ACE_Async_Timer_Queue_Adapter<TQ>::handle_signal (int signum,
                                                   siginfo_t *,
                                                   ucontext_t *)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("handling signal %S\n"),
-              signum));
   switch (signum)
     {
     case SIGALRM:
@@ -131,15 +128,9 @@ ACE_Async_Timer_Queue_Adapter<TQ>::handle_signal (int signum,
         // @@ We need to figure out how to implement interval timers...
         expired_timers = this->timer_queue_.expire ();
 
-        if (expired_timers > 0)
-          ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("time = %d, timers expired = %d\n"),
-                      ACE_OS::time (),
-                      expired_timers));
-
-        // Only schedule a new timer if there is one in the list.
-        // @@ This code should also become smarter to avoid
-        // unnecessary calls to ualarm().
+        // Only schedule a new timer if there is one in the list.  @@
+        // This code should also become smarter to avoid unnecessary
+        // calls to ualarm().
         if (this->timer_queue_.is_empty () == 0)
           return this->schedule_ualarm ();
         else
@@ -147,7 +138,10 @@ ACE_Async_Timer_Queue_Adapter<TQ>::handle_signal (int signum,
         /* NOTREACHED */
       }
     default:
-      ACE_ERROR_RETURN ((LM_ERROR, "unexpected signal %S\n", signum), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "unexpected signal %S\n",
+                         signum),
+                        -1);
       /* NOTREACHED */
     }
 }

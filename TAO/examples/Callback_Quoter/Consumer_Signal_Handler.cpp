@@ -37,6 +37,7 @@ Consumer_Signal_Handler::handle_signal (int signum,
 {
   ACE_DEBUG ((LM_DEBUG,
               " Exiting on receiving ^C\n"));
+
   quit_on_signal ();
   
   return 0;
@@ -52,7 +53,6 @@ Consumer_Signal_Handler::handle_close (ACE_HANDLE,
 
   return 0;
 }
-
 
 int
 Consumer_Signal_Handler::quit_on_signal (void)
@@ -70,7 +70,7 @@ Consumer_Signal_Handler::quit_on_signal (void)
 	  this->consumer_handler_->server_->unregister_callback 
             (this->consumer_handler_->consumer_var_.in ());
 	  ACE_DEBUG ((LM_DEBUG,
-		      " Consumer Unregistered \n "));
+		      "Consumer Unregistered\n"));
 	  TAO_CHECK_ENV;
 	}
       this->consumer_handler_->consumer_servant_->shutdown 

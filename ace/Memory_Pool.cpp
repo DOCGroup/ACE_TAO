@@ -237,10 +237,11 @@ ACE_MMAP_Memory_Pool::map_file (off_t file_offset)
   if (this->mmap_.map (file_offset, PROT_RDWR,
                        this->flags_, this->base_addr_, 0, this->sa_) == -1
       || this->base_addr_ != 0 && this->mmap_.addr () != this->base_addr_)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("(%P|%t) addr = %u, base_addr = %u, file_offset = %u, %p\n"),
-                      this->mmap_.addr (), this->base_addr_,
-                       file_offset, this->backing_store_name_), -1);
+    return -1;
+  // ACE_ERROR_RETURN ((LM_ERROR,
+  //                   ASYS_TEXT ("(%P|%t) addr = %u, base_addr = %u, file_offset = %u, %p\n"),
+  //                   this->mmap_.addr (), this->base_addr_,
+  //                   file_offset, this->backing_store_name_), -1);
 
   return 0;
 }
@@ -374,12 +375,8 @@ base_addr_ = (void *)temp;
 int
 ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t *)
 {
-  ACE_TRACE ("ACE_MMAP_Memory_Pool::handle_signal");
-
   if (signum != SIGSEGV)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("(%P|%t) ignoring signal %S\n"),
-                       signum), -1);
+    return -1;
   else
     ; // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("(%P|%t) received %S\n"), signum));
 
@@ -393,8 +390,9 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
     {
       // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("(%P|%t) si_signo = %d, si_code = %d, addr = %u\n"), siginfo->si_signo, siginfo->si_code, siginfo->si_addr));
       if (this->remap ((void *) siginfo->si_addr) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) address %u out of range\n",
-                           siginfo->si_addr), -1);
+        return -1;
+      // ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) address %u out of range\n",
+      // siginfo->si_addr), -1);
       return 0;
     }
 #else

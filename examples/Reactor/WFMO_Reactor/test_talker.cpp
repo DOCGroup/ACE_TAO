@@ -503,9 +503,8 @@ STDIN_Handler::register_thread_exit_hook (void)
 int 
 STDIN_Handler::handle_signal (int, siginfo_t *si, ucontext_t *)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) STDIN thread has exited.\n"));
   ACE_ASSERT (this->thr_handle_ == si->si_handle_);
-  ACE_Reactor::end_event_loop();
+  ACE_Reactor::end_event_loop ();
   return 0;
 }
 
