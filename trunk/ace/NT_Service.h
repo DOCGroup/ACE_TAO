@@ -333,12 +333,10 @@ protected:
    * most <wait_time> to get to the desired state.  If <wait_time> is
    * 0, then the function keeps waiting until the desired state is
    * reached or the service doesn't update its state any further.  The
-   * svc_status_ class member is updated upon return.  NOTE - the
-   * timeout doesn't currently work - it always acts like
-   * ACE_Time_Value::zero is passed - it checks the state once but
-   * doesn't wait after that.
+   * svc_status_ class member is updated upon return.
    */
-  void wait_for_service_state (DWORD desired_state, ACE_Time_Value *wait_time);
+  void wait_for_service_state (DWORD desired_state, 
+                               ACE_Time_Value *wait_time);
 
   /// Called by <handle_control> when a stop/shutdown was requested.
   virtual void stop_requested (DWORD control_code);
