@@ -48,8 +48,7 @@ ACE_INLINE const RtecEventChannelAdmin::ConsumerQOS&
 TAO_EC_ProxyPushSupplier::subscriptions (void) const
 {
   // @@ TODO There should be a better way to signal errors here.
-  static RtecEventChannelAdmin::ConsumerQOS empty_qos;
-  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, empty_qos);
+  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, this->qos_);
 
   return this->qos_;
 }

@@ -141,21 +141,30 @@ main (int argc, char* argv[])
 
       // ****************************************************************
 
-      CEC_Counting_Consumer_Task consumer_task_10 (&consumer_10, 0);
+      CEC_Counting_Consumer_Task consumer_task_10 (&consumer_10,
+                                                   10);
       if (consumer_task_10.activate (THR_BOUND|THR_NEW_LWP, 1) != 0)
         {
-          ACE_ERROR ((LM_ERROR, "Cannot activate task 01\n"));
+          ACE_ERROR ((LM_ERROR, "Cannot activate task 10\n"));
         }
 
       // ****************************************************************
 
-      ACE_Time_Value tv (100, 0);
+      ACE_Time_Value tv (15, 0);
+      ACE_OS::sleep (tv);
+
+      task_00.stop ();
+      task_01.stop ();
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Events pulled (so far) by Consumer/01 = %d\n",
+                  consumer_task_01.pull_count ()));
+
+      tv = ACE_Time_Value (5, 0);
       ACE_OS::sleep (tv);
 
       consumer_task_10.stop ();
       consumer_task_01.stop ();
-      task_00.stop ();
-      task_01.stop ();
 
       // Wait for all the threads to complete and the return
       ACE_Thread_Manager::instance ()->wait ();
