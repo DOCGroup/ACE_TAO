@@ -523,8 +523,7 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
       ACE_OS::sprintf (poa_id,
                        "%s_%ld",
                        this->poa_id_.c_str (),
-                       ACE_reinterpret_cast (long,
-                                             this->counter_++));
+                       (*this->counter_)++);
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId (poa_id);
 
