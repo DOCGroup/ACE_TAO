@@ -9,7 +9,7 @@ LIB_DIR		= $(HOST_DIR)/powerpc-wrs-vxworks/lib
 GCCLIB_DIR	= $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
 
 CC		= $(BIN_DIR)/g++ppc
-#### CXX		= $(BIN_DIR)/g++ppc -I. -D__INLINE__
+#### CXX		= $(BIN_DIR)/g++ppc -D__INLINE__
 CXX		= $(BIN_DIR)/g++ppc
 CCFLAGS		+= -B$(GCCLIB_DIR)/ -DCPU=PPC604 -DVXWORKS
 INCLDIRS	+= -I$(TARGET_DIR)/h
