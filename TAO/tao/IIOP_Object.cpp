@@ -338,6 +338,8 @@ IIOP_Object::IIOP_Object (const char *host,
     refcount_ (1),
     handler_ (0)
 {
+  this->fwd_profile_lock_ptr_ = 
+    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();
 }
 
 // Constructor.  It will usually be used by the server side.
@@ -351,9 +353,8 @@ IIOP_Object::IIOP_Object (char *repository_id,
     refcount_ (1),
     handler_ (0)
 {
-  this->fwd_profile_lock_ptr_ =  TAO_ORB_Core_instance ()
-                                ->client_factory ()
-                                  ->create_iiop_profile_lock ();
+  this->fwd_profile_lock_ptr_ = 
+    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();
 }
 
 // THREADING NOTE: Code below this point is of course thread-safe (at

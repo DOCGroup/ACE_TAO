@@ -1,3 +1,24 @@
+Mon Sep 21 01:27:19 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Conn_Test.cpp: Fixed template instantiations.
+
+	* ace/Strategies_T.cpp (ACE_Cached_Connect_Strategy): New methods
+ 	  find_or_create_svc_handler_i and check_hint_i to simplify
+ 	  connect_svc_handler. Also added _i methods to implement
+	  non-locking versions.
+
+	* ace/Strategies.h (ACE_Connection_Recycling_Strategy):
+	  New methods: mark_as_close and cleanup_hint.
+
+	* ace/Strategies: Added three new classes: ACE_Recyclable,
+ 	  ACE_Hashable, and ACE_Refcountable.  Also added
+ 	  ACE_Refcounted_Hash_Recyclable. Deprecated ACE_Recyclable<T> and
+ 	  ACE_Hash_Recyclable<T>
+
+	* ace/Svc_Handler.h (cleanup_hint): Added new method.  This can be
+ 	  used by users when they are through with using the svc_handler
+ 	  as a hint.
+
 Mon Sep 21 00:40:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
 
         * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.{h,cpp}

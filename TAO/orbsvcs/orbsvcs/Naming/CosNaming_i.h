@@ -45,10 +45,6 @@ public:
   // Default constructor, which initializes the <size> of the table,
   // and sets a root flag.
 
-  int init (void);
-  // Initialize the lock.  The ORB must be initialized when this
-  // constructor is called.
-
   ~TAO_NamingContext (void);
   // destructor.
 

@@ -370,7 +370,7 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
   // Send Request, return on error or if we're done
 
   if (this->data_->handler ()->send_request (this->out_stream_,
-                                           is_roundtrip) == -1)
+                                             is_roundtrip) == -1)
     {
       // send_request () closed the connection; we just set the
       // handler to 0 here.
@@ -423,7 +423,7 @@ TAO_GIOP_Invocation::close_connection (void)
     // resets the flag of the first call locate request to true
   }
 
-  this->data_->handler ()->close ();
+  this->data_->handler ()->handle_close ();
   this->data_->reset_handler ();
   return TAO_GIOP_LOCATION_FORWARD;
 }
@@ -1038,8 +1038,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &env)
 {
   // Send Request, return on error or if we're done
 
-  if (this->data_->handler ()->send_request (this->out_stream_,
-                                           1) == -1)
+  if (this->data_->handler ()->send_request (this->out_stream_, 1) == -1)
     {
       // send_request () closed the connection; we just set the
       // handler to 0 here.
