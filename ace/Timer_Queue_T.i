@@ -121,7 +121,7 @@ ACE_Timer_Node_T<TYPE>::set_timer_id (long timer_id)
 }
 
 template <class TYPE> ACE_INLINE void
-ACE_Timer_Node_T<TYPE>::get_dispatch_info (DISPATCH_INFO &info)
+ACE_Timer_Node_T<TYPE>::get_dispatch_info (ACE_Timer_Node_T<TYPE>::DISPATCH_INFO &info)
 {
   // Yes, do a copy
   info.type_ = this->type_;
