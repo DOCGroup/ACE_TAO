@@ -1,12 +1,15 @@
 //$Id$
 #include "Log.h"
-#include "ace/OS.h"
-#include "ace/Log_Msg.h"
+
+#if !defined(__ACE_INLINE__)
+#include "Log.inl"
+#endif /* __ACE_INLINE__ */
 
 namespace TAO_FTRTEC {
 
   unsigned int Log::log_level_;
 
+#ifndef NDEBUG
   Log::Log (unsigned int log_level, const ACE_TCHAR* format, ...)
   {
     if (log_level_ >= log_level) {
@@ -18,9 +21,6 @@ namespace TAO_FTRTEC {
       va_end(p);
     }
   }
+#endif
 
-  void Log::level(unsigned int log_level)
-  {
-    log_level_ = log_level;
-  }
 }

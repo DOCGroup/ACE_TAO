@@ -17,207 +17,220 @@ ACE_RCSID (EventChannel,
            FTEC_Event_Channel_Impl,
            "$Id$")
 
-void obtain_push_supplier(TAO_FTEC_Event_Channel_Impl* ec,
-                          FtRtecEventChannelAdmin::Operation& op
-                          ACE_ENV_ARG_DECL)
-{
-  ec->consumer_admin()->obtain_proxy(op ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-}
-
-void obtain_push_consumer(TAO_FTEC_Event_Channel_Impl* ec,
-                          FtRtecEventChannelAdmin::Operation& op
-                          ACE_ENV_ARG_DECL)
-{
-  ec->supplier_admin()->obtain_proxy(op ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-}
-
-void obtain_push_consumer_and_connect(TAO_FTEC_Event_Channel_Impl* ec,
-                           const FtRtecEventChannelAdmin::ObjectId& oid,
-                           RtecEventComm::PushSupplier_ptr push_supplier,
-                           const RtecEventChannelAdmin::SupplierQOS & qos
-                           ACE_ENV_ARG_DECL)
-{
-  Request_Context_Repository().set_object_id(oid ACE_ENV_ARG_PARAMETER);
-
-  RtecEventChannelAdmin::ProxyPushConsumer_var consumer =
-    ec->supplier_admin()->obtain(ACE_ENV_SINGLE_ARG_PARAMETER);
-
-  ACE_CHECK;
-
-  ScopeGuard guard = MakeObjGuard(*ec->supplier_admin(),
-                                  &TAO_FTEC_SupplierAdmin::disconnect,
-                                  consumer.in());
-
-  consumer->connect_push_supplier(push_supplier, qos
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  guard.Dismiss();
-}
-
-
-void connect_push_supplier(TAO_FTEC_Event_Channel_Impl* ec,
-                           FtRtecEventChannelAdmin::Operation& op
-                           ACE_ENV_ARG_DECL)
-{
-  PortableServer::POA_var poa= ec->supplier_poa();
-  ACE_CHECK;
-  FtRtecEventChannelAdmin::Connect_push_supplier_param& param
-    = op.param.connect_supplier_param();
-
-  TAO_FTEC_ProxyPushConsumer* proxy
-    = ec->find_proxy_push_consumer(op.object_id);
-
-  if (proxy == NULL)  {
-    obtain_push_consumer_and_connect(ec,
-                                     op.object_id,
-                                     param.push_supplier.in(),
-                                     param.qos
-                                     ACE_ENV_ARG_PARAMETER);
+namespace {
+  void obtain_push_supplier(TAO_FTEC_Event_Channel_Impl* ec,
+    FtRtecEventChannelAdmin::Operation& op
+    ACE_ENV_ARG_DECL)
+  {
+    TAO_FTRTEC::Trace("obtain_push_supplier");
+    ec->consumer_admin()->obtain_proxy(op ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
   }
-  else {
-    proxy->connect_push_supplier(param.push_supplier.in(),
-      param.qos
+
+  void obtain_push_consumer(TAO_FTEC_Event_Channel_Impl* ec,
+    FtRtecEventChannelAdmin::Operation& op
+    ACE_ENV_ARG_DECL)
+  {
+    TAO_FTRTEC::Trace("obtain_push_consumer");
+    ec->supplier_admin()->obtain_proxy(op ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+  }
+
+  void obtain_push_consumer_and_connect(TAO_FTEC_Event_Channel_Impl* ec,
+    const FtRtecEventChannelAdmin::ObjectId& oid,
+    RtecEventComm::PushSupplier_ptr push_supplier,
+    const RtecEventChannelAdmin::SupplierQOS & qos
+    ACE_ENV_ARG_DECL)
+  {
+    TAO_FTRTEC::Trace("obtain_push_consumer_and_connect");
+    Request_Context_Repository().set_object_id(oid ACE_ENV_ARG_PARAMETER);
+
+    RtecEventChannelAdmin::ProxyPushConsumer_var consumer =
+      ec->supplier_admin()->obtain(ACE_ENV_SINGLE_ARG_PARAMETER);
+
+    ACE_CHECK;
+
+    ScopeGuard guard = MakeObjGuard(*ec->supplier_admin(),
+      &TAO_FTEC_SupplierAdmin::disconnect,
+      consumer.in());
+
+    consumer->connect_push_supplier(push_supplier, qos
       ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    guard.Dismiss();
   }
-  ACE_CHECK;
-}
-
-void obtain_push_supplier_and_connect(TAO_FTEC_Event_Channel_Impl* ec,
-                           const FtRtecEventChannelAdmin::ObjectId& oid,
-                           RtecEventComm::PushConsumer_ptr push_consumer,
-                           const RtecEventChannelAdmin::ConsumerQOS & qos
-                           ACE_ENV_ARG_DECL)
-{
-  Request_Context_Repository().set_object_id(oid ACE_ENV_ARG_PARAMETER);
-
-  RtecEventChannelAdmin::ProxyPushSupplier_var supplier =
-    ec->consumer_admin()->obtain(ACE_ENV_SINGLE_ARG_PARAMETER);
-
-  ACE_CHECK;
-
-  ScopeGuard guard = MakeObjGuard(*ec->consumer_admin(),
-                                  &TAO_FTEC_ConsumerAdmin::disconnect,
-                                  supplier.in());
-
-  supplier->connect_push_consumer(push_consumer, qos
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  guard.Dismiss();
-}
 
 
-void connect_push_consumer(TAO_FTEC_Event_Channel_Impl* ec,
-                           FtRtecEventChannelAdmin::Operation& op
-                           ACE_ENV_ARG_DECL)
-{
-  PortableServer::POA_var poa= ec->consumer_poa();
-  ACE_CHECK;
-  FtRtecEventChannelAdmin::Connect_push_consumer_param& param
-    = op.param.connect_consumer_param();
+  void connect_push_supplier(TAO_FTEC_Event_Channel_Impl* ec,
+    FtRtecEventChannelAdmin::Operation& op
+    ACE_ENV_ARG_DECL)
+  {
+    TAO_FTRTEC::Trace("connect_push_supplier");
+    PortableServer::POA_var poa= ec->supplier_poa();
+    ACE_CHECK;
+    FtRtecEventChannelAdmin::Connect_push_supplier_param& param
+      = op.param.connect_supplier_param();
 
-  TAO_FTEC_ProxyPushSupplier* proxy = ec->find_proxy_push_supplier(op.object_id);
+    TAO_FTEC_ProxyPushConsumer* proxy
+      = ec->find_proxy_push_consumer(op.object_id);
 
-  if (proxy == NULL){
-    obtain_push_supplier_and_connect(ec,
-                                     op.object_id,
-                                     param.push_consumer.in(),
-                                     param.qos
-                                     ACE_ENV_ARG_PARAMETER);
+    if (proxy == NULL)  {
+      obtain_push_consumer_and_connect(ec,
+        op.object_id,
+        param.push_supplier.in(),
+        param.qos
+        ACE_ENV_ARG_PARAMETER);
+    }
+    else {
+      proxy->connect_push_supplier(param.push_supplier.in(),
+        param.qos
+        ACE_ENV_ARG_PARAMETER);
+    }
+    ACE_CHECK;
   }
-  else {
-    proxy->connect_push_consumer(param.push_consumer.in(),
-      param.qos
+
+  void obtain_push_supplier_and_connect(TAO_FTEC_Event_Channel_Impl* ec,
+    const FtRtecEventChannelAdmin::ObjectId& oid,
+    RtecEventComm::PushConsumer_ptr push_consumer,
+    const RtecEventChannelAdmin::ConsumerQOS & qos
+    ACE_ENV_ARG_DECL)
+  {
+    TAO_FTRTEC::Trace("obtain_push_supplier_and_connect");
+    Request_Context_Repository().set_object_id(oid ACE_ENV_ARG_PARAMETER);
+
+    RtecEventChannelAdmin::ProxyPushSupplier_var supplier =
+      ec->consumer_admin()->obtain(ACE_ENV_SINGLE_ARG_PARAMETER);
+
+    ACE_CHECK;
+
+    ScopeGuard guard = MakeObjGuard(*ec->consumer_admin(),
+      &TAO_FTEC_ConsumerAdmin::disconnect,
+      supplier.in());
+
+    supplier->connect_push_consumer(push_consumer, qos
       ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    guard.Dismiss();
   }
-  ACE_CHECK;
-}
-
-void disconnect_push_supplier(TAO_FTEC_Event_Channel_Impl* ec,
-                              FtRtecEventChannelAdmin::Operation& op
-                              ACE_ENV_ARG_DECL)
-{
-  PortableServer::POA_var poa= ec->consumer_poa();
-  ACE_CHECK;
-
-  TAO_FTEC_ProxyPushSupplier* proxy = ec->find_proxy_push_supplier(op.object_id);
 
 
-  if (proxy == NULL) // proxy not found
-    ACE_THROW(FTRT::InvalidUpdate());
+  void connect_push_consumer(TAO_FTEC_Event_Channel_Impl* ec,
+    FtRtecEventChannelAdmin::Operation& op
+    ACE_ENV_ARG_DECL)
+  {
+    TAO_FTRTEC::Trace("connect_push_consumer");
+    PortableServer::POA_var poa= ec->consumer_poa();
+    ACE_CHECK;
+    FtRtecEventChannelAdmin::Connect_push_consumer_param& param
+      = op.param.connect_consumer_param();
 
-  ACE_CHECK;
-  proxy->disconnect_push_supplier(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-}
+    TAO_FTEC_ProxyPushSupplier* proxy = ec->find_proxy_push_supplier(op.object_id);
 
-void disconnect_push_consumer(TAO_FTEC_Event_Channel_Impl* ec,
-                              FtRtecEventChannelAdmin::Operation& op
-                              ACE_ENV_ARG_DECL)
-{
-  PortableServer::POA_var poa= ec->supplier_poa();
-  ACE_CHECK;
+    if (proxy == NULL){
+      obtain_push_supplier_and_connect(ec,
+        op.object_id,
+        param.push_consumer.in(),
+        param.qos
+        ACE_ENV_ARG_PARAMETER);
+    }
+    else {
+      proxy->connect_push_consumer(param.push_consumer.in(),
+        param.qos
+        ACE_ENV_ARG_PARAMETER);
+    }
+    ACE_CHECK;
+  }
 
-  TAO_FTEC_ProxyPushConsumer* proxy = ec->find_proxy_push_consumer(op.object_id);
+  void disconnect_push_supplier(TAO_FTEC_Event_Channel_Impl* ec,
+    FtRtecEventChannelAdmin::Operation& op
+    ACE_ENV_ARG_DECL)
+  {
+    TAO_FTRTEC::Trace("disconnect_push_supplier");
+    PortableServer::POA_var poa= ec->consumer_poa();
+    ACE_CHECK;
 
-  if (proxy == NULL) // proxy not found
-    ACE_THROW(FTRT::InvalidUpdate());
-
-  ACE_CHECK;
-  proxy->disconnect_push_consumer(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-}
-
-
-void suspend_connection (TAO_FTEC_Event_Channel_Impl* ec,
-                         FtRtecEventChannelAdmin::Operation& op
-                         ACE_ENV_ARG_DECL)
-{
-  PortableServer::POA_var poa= ec->consumer_poa();
-  ACE_CHECK;
-
-  TAO_FTEC_ProxyPushSupplier* proxy = ec->find_proxy_push_supplier(op.object_id);
-
-
-  if (proxy == NULL) // proxy not found
-    ACE_THROW(FTRT::InvalidUpdate());
-
-  ACE_CHECK;
-  proxy->suspend_connection(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-}
-
-void resume_connection(TAO_FTEC_Event_Channel_Impl* ec,
-                       FtRtecEventChannelAdmin::Operation& op
-                       ACE_ENV_ARG_DECL)
-{
-  TAO_FTEC_ProxyPushSupplier* proxy = ec->find_proxy_push_supplier(op.object_id);
+    TAO_FTEC_ProxyPushSupplier* proxy = ec->find_proxy_push_supplier(op.object_id);
 
 
-  if (proxy == NULL) // proxy not found
-    ACE_THROW(FTRT::InvalidUpdate());
+    if (proxy == NULL) // proxy not found
+      ACE_THROW(FTRT::InvalidUpdate());
 
-  ACE_CHECK;
-  proxy->resume_connection(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-}
+    ACE_CHECK;
+    proxy->disconnect_push_supplier(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+  }
+
+  void disconnect_push_consumer(TAO_FTEC_Event_Channel_Impl* ec,
+    FtRtecEventChannelAdmin::Operation& op
+    ACE_ENV_ARG_DECL)
+  {
+    TAO_FTRTEC::Trace("disconnect_push_consumer");
+    PortableServer::POA_var poa= ec->supplier_poa();
+    ACE_CHECK;
+
+    TAO_FTEC_ProxyPushConsumer* proxy = ec->find_proxy_push_consumer(op.object_id);
+
+    if (proxy == NULL) // proxy not found
+      ACE_THROW(FTRT::InvalidUpdate());
+
+    ACE_CHECK;
+    proxy->disconnect_push_consumer(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+  }
 
 
-typedef void (*Set_update_fun)(TAO_FTEC_Event_Channel_Impl* ec,
-                               FtRtecEventChannelAdmin::Operation& op
-                               ACE_ENV_ARG_DECL);
+  void suspend_connection (TAO_FTEC_Event_Channel_Impl* ec,
+    FtRtecEventChannelAdmin::Operation& op
+    ACE_ENV_ARG_DECL)
+  {
+    TAO_FTRTEC::Trace("suspend_connection");
+    PortableServer::POA_var poa= ec->consumer_poa();
+    ACE_CHECK;
 
-Set_update_fun update_table[] = {
+    TAO_FTEC_ProxyPushSupplier* proxy = ec->find_proxy_push_supplier(op.object_id);
+
+
+    if (proxy == NULL) // proxy not found
+      ACE_THROW(FTRT::InvalidUpdate());
+
+    ACE_CHECK;
+    proxy->suspend_connection(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+  }
+
+  void resume_connection(TAO_FTEC_Event_Channel_Impl* ec,
+    FtRtecEventChannelAdmin::Operation& op
+    ACE_ENV_ARG_DECL)
+  {
+    TAO_FTRTEC::Trace("resume_connection");
+    TAO_FTEC_ProxyPushSupplier* proxy = ec->find_proxy_push_supplier(op.object_id);
+
+
+    if (proxy == NULL) // proxy not found
+      ACE_THROW(FTRT::InvalidUpdate());
+
+    ACE_CHECK;
+    proxy->resume_connection(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+  }
+
+
+  typedef void (*Set_update_fun)(TAO_FTEC_Event_Channel_Impl* ec,
+    FtRtecEventChannelAdmin::Operation& op
+    ACE_ENV_ARG_DECL);
+
+  Set_update_fun update_table[] = {
     &obtain_push_supplier,
-    &obtain_push_consumer,
-    &disconnect_push_supplier,
-    &disconnect_push_consumer,
-    &suspend_connection,
-    &resume_connection,
-    &connect_push_supplier,
-    &connect_push_consumer
-};
+      &obtain_push_consumer,
+      &disconnect_push_supplier,
+      &disconnect_push_consumer,
+      &suspend_connection,
+      &resume_connection,
+      &connect_push_supplier,
+      &connect_push_consumer
+  };
+
+} //namespace
 
 TAO_FTEC_Event_Channel_Impl::TAO_FTEC_Event_Channel_Impl(
   const TAO_EC_Event_Channel_Attributes& attributes)
@@ -246,12 +259,11 @@ TAO_FTEC_Event_Channel_Impl::factory()
 /// After this call the EC can be used.
 void
 TAO_FTEC_Event_Channel_Impl::activate (
-  CORBA::ORB_var orb,
-  const PortableServer::ObjectId& supplier_admin_oid,
-  const PortableServer::ObjectId& consumer_admin_oid
-  ACE_ENV_ARG_DECL)
+                                       CORBA::ORB_var orb,
+                                       const PortableServer::ObjectId& supplier_admin_oid,
+                                       const PortableServer::ObjectId& consumer_admin_oid
+                                       ACE_ENV_ARG_DECL)
 {
-
   iogr_maker_.init(orb.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -274,6 +286,7 @@ RtecEventChannelAdmin::ConsumerAdmin_ptr
 TAO_FTEC_Event_Channel_Impl::for_consumers (ACE_ENV_SINGLE_ARG_DECL)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_FTRTEC::Trace("TAO_FTEC_Event_Channel_Impl::for_consumers");
   CORBA::Object_var obj = consumer_admin()->reference(ACE_ENV_SINGLE_ARG_PARAMETER);
   obj = IOGR_Maker::instance()->forge_iogr(obj.in()
     ACE_ENV_ARG_PARAMETER);
@@ -287,6 +300,8 @@ RtecEventChannelAdmin::SupplierAdmin_ptr
 TAO_FTEC_Event_Channel_Impl::for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_FTRTEC::Trace("TAO_FTEC_Event_Channel_Impl::for_suppliers");
+
   CORBA::Object_var obj = supplier_admin()->reference(ACE_ENV_SINGLE_ARG_PARAMETER);
   obj = IOGR_Maker::instance()->forge_iogr(obj.in()
     ACE_ENV_ARG_PARAMETER);
@@ -301,6 +316,7 @@ TAO_FTEC_Event_Channel_Impl::connect_push_consumer (
         ACE_ENV_ARG_DECL
       )
 {
+  TAO_FTRTEC::Trace("TAO_FTEC_Event_Channel_Impl::connect_push_consumer");
   CORBA::Any_var any
     = Request_Context_Repository().get_cached_result(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN(0);
@@ -341,6 +357,7 @@ TAO_FTEC_Event_Channel_Impl::connect_push_supplier (
         ACE_ENV_ARG_DECL
       )
 {
+  TAO_FTRTEC::Trace("TAO_FTEC_Event_Channel_Impl::connect_push_supplier");
   CORBA::Any_var any
     = Request_Context_Repository().get_cached_result(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN(0);
@@ -378,7 +395,7 @@ void TAO_FTEC_Event_Channel_Impl::disconnect_push_supplier (
         ACE_ENV_ARG_DECL
       )
 {
-  TAO_FTRTEC::Log(3,"TAO_FTEC_Event_Channel_Impl::disconnect_push_supplier\n");
+  TAO_FTRTEC::Trace("TAO_FTEC_Event_Channel_Impl::disconnect_push_supplier");
 
   if (Request_Context_Repository().is_executed_request())
     return;
@@ -398,7 +415,7 @@ void TAO_FTEC_Event_Channel_Impl::disconnect_push_consumer (
         ACE_ENV_ARG_DECL
       )
 {
-  TAO_FTRTEC::Log(3,"TAO_FTEC_Event_Channel_Impl::disconnect_push_consumer\n");
+  TAO_FTRTEC::Trace("TAO_FTEC_Event_Channel_Impl::disconnect_push_consumer");
 
   if (Request_Context_Repository().is_executed_request())
     return;
@@ -418,6 +435,7 @@ void TAO_FTEC_Event_Channel_Impl::suspend_push_supplier (
         ACE_ENV_ARG_DECL
       )
 {
+  TAO_FTRTEC::Trace("TAO_FTEC_Event_Channel_Impl::suspend_push_supplier");
   if (Request_Context_Repository().is_executed_request())
     return;
 
@@ -437,6 +455,7 @@ void TAO_FTEC_Event_Channel_Impl::resume_push_supplier (
         ACE_ENV_ARG_DECL
       )
 {
+  TAO_FTRTEC::Trace("TAO_FTEC_Event_Channel_Impl::resume_push_supplier");
   if (Request_Context_Repository().is_executed_request())
     return;
 
@@ -456,6 +475,7 @@ void TAO_FTEC_Event_Channel_Impl::push (
         ACE_ENV_ARG_DECL
       )
 {
+  TAO_FTRTEC::Trace("TAO_FTEC_Event_Channel_Impl::push");
   TAO_FTEC_ProxyPushConsumer* proxy = this->find_proxy_push_consumer(oid);
 
   if (proxy == NULL) // proxy not found
@@ -472,6 +492,7 @@ void TAO_FTEC_Event_Channel_Impl::get_state (
                                         ACE_ENV_ARG_DECL
                                         )
 {
+  TAO_FTRTEC::Trace("TAO_FTEC_Event_Channel_Impl::get_state");
   FtEventServiceInterceptor::instance()->get_state(state.cached_operation_results);
   this->supplier_admin()->get_state(state.supplier_admin_state ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -484,6 +505,7 @@ void TAO_FTEC_Event_Channel_Impl::get_state (
 void TAO_FTEC_Event_Channel_Impl::set_state (const FTRT::State & stat
                                              ACE_ENV_ARG_DECL)
 {
+  TAO_FTRTEC::Trace("TAO_FTEC_Event_Channel_Impl::set_state");
   FtRtecEventChannelAdmin::EventChannelState state;
 
   TAO_InputCDR cdr((const char*)stat.get_buffer(), stat.length());
@@ -501,6 +523,7 @@ void TAO_FTEC_Event_Channel_Impl::set_update (const FTRT::State & s
                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException, FTRT::InvalidUpdate))
 {
+  TAO_FTRTEC::Trace("TAO_FTEC_Event_Channel_Impl::set_update");
   FTRTEC::Replication_Service::instance()->check_validity(ACE_ENV_SINGLE_ARG_PARAMETER);
 
   if (!Request_Context_Repository().is_executed_request()) {
@@ -534,6 +557,7 @@ TAO_FTEC_SupplierAdmin* TAO_FTEC_Event_Channel_Impl::supplier_admin (void) const
 TAO_FTEC_ProxyPushSupplier*
 TAO_FTEC_Event_Channel_Impl::find_proxy_push_supplier(const PortableServer::ObjectId& id)
 {
+  TAO_FTRTEC::Trace("TAO_FTEC_Event_Channel_Impl::find_proxy_push_supplier");
   ACE_TRY_NEW_ENV {
     PortableServer::POA_var poa = consumer_poa();
 
@@ -557,6 +581,7 @@ TAO_FTEC_Event_Channel_Impl::find_proxy_push_supplier(const PortableServer::Obje
 TAO_FTEC_ProxyPushConsumer*
 TAO_FTEC_Event_Channel_Impl::find_proxy_push_consumer(const PortableServer::ObjectId& id)
 {
+  TAO_FTRTEC::Trace("TAO_FTEC_Event_Channel_Impl::find_proxy_push_consumer");
   ACE_TRY_NEW_ENV {
     PortableServer::POA_var poa= supplier_poa();
 
