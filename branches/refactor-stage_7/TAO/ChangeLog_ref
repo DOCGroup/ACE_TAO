@@ -1,3 +1,8 @@
+Tue Sep 23 09:37:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/DynamicInterface/DII_Invocation.cpp (TAO): Fixed a compile
+	  error due to incorrect exception throw spec.
+
 Tue Sep 23 09:15:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Collocated_Invocation.h:
