@@ -1,7 +1,20 @@
+Wed Feb 25 11:28:11 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/OS_NS_unistd.inl:
+
+          If ACE_HAS_CLOCK_GETTIME is defined, use nanosleep() in
+          ACE_OS::sleep (const ACE_Time_Value &tv) as is used in
+          the other version, ACE_OS::sleep (u_int seconds).
+
+        * ace/other.mpb:
+        * ace/uuid.mpb:
+
+          Removed unnecessary macros.
+
 Wed Feb 25 12:09:31 2004  Steve Huston  <shuston@riverace.com>
 
-	* tests/Proactor_Test_IPV6.cpp: Fixed problems with mismatched
-	  char/wchar_t usage.
+        * tests/Proactor_Test_IPV6.cpp: Fixed problems with mismatched
+          char/wchar_t usage.
 
 Wed Feb 25 10:43:32 2004  Chad Elliott  <elliott_c@ociweb.com>
 
