@@ -17,11 +17,15 @@
 CC		= cc
 CXX		= CC
 CFLAGS		+= $(DCFLAGS) -mt
-#### Exception handling breaks on MP machines, see config*h files.
+#### Exception handling breaks on MP machines prior to Sun C++ 4.2
+#### with jumbo patch 104631-02, see ace/config-sunos5.5-sunc++-4.x.h.
+#### If you are using a version of Sun C++ prior to 4,2, or haven't
+#### applied that jumbo patch to your 4.2, then add "-noex" to
+#### CCFLAGS below.
 #### -pta instantiates all template members, which makes libraries bigger.
 #### But, it's supposed to put each member into it's own .o, so executable
 #### size should not be penalized.
-CCFLAGS		+= $(CFLAGS) -noex -pta
+CCFLAGS		+= $(CFLAGS) -pta
 DCFLAGS		+= -g
 DLD		= $(CXX) 
 LD		= $(CXX)
