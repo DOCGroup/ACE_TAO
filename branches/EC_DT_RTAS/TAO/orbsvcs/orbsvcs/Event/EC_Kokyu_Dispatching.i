@@ -34,6 +34,9 @@ TAO_EC_Kokyu_Push_Command::TAO_EC_Kokyu_Push_Command (
   Object_ID event_id;
   event_id.id = buffer->header.eid.id;
   event_id.tid = buffer->header.eid.tid;
+  event_id.pid = buffer->header.eid.pid;
+  event_id.queue_id = buffer->header.eid.queue_id;
+  event_id.type = buffer->header.type;
   Kokyu::Dispatch_Command::setID (event_id);
   event_.replace (maximum, length, buffer, 1);
 
