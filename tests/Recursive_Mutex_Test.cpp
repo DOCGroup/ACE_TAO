@@ -66,7 +66,7 @@ worker (void *arg)
 int
 main (int, char *argv[])
 {
-  ACE_START_TEST ("Recursive_Mutex_Test.cpp");
+  ACE_START_TEST ("Recursive_Mutex_Test");
 
 #if defined (ACE_HAS_THREADS)
   ACE_Recursive_Thread_Mutex rm;

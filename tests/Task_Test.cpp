@@ -93,7 +93,7 @@ Barrier_Task::svc (void)
 int 
 main (int, char *argv[])
 {
-  ACE_START_TEST ("Task_Test.cpp");
+  ACE_START_TEST ("Task_Test");
 
 #if defined (ACE_HAS_THREADS)
   int n_threads = ACE_MAX_THREADS;

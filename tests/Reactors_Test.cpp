@@ -179,7 +179,7 @@ template class ACE_Atomic_Op<ACE_Thread_Mutex, u_long>;
 int 
 main (int, char *argv[])
 {
-  ACE_START_TEST ("Reactors_Test.cpp");
+  ACE_START_TEST ("Reactors_Test");
 
 #if defined (ACE_HAS_THREADS)
   ACE_Service_Config daemon; // We need this to make sure the Reactor Singleton gets deleted!

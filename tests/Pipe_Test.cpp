@@ -88,7 +88,7 @@ main (int argc, char *argv[])
     }
   else
     {
-      ACE_START_TEST ("Pipe_Test.cpp");
+      ACE_START_TEST ("Pipe_Test");
       ACE_INIT_LOG ("Pipe_Test-children");      
   
       char *s_argv[4];

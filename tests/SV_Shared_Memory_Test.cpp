@@ -97,7 +97,7 @@ child (char *shm)
 int
 main (int, char *argv[])
 {
-  ACE_START_TEST ("SV_Shared_Memory_Test.cpp");
+  ACE_START_TEST ("SV_Shared_Memory_Test");
 
 #if defined (ACE_HAS_SYSV_IPC)
   char *shm = (char *) allocator.malloc (27);

@@ -28,7 +28,7 @@ typedef ACE_Message_Queue_Reverse_Iterator <ACE_NULL_SYNCH> REVERSE_ITERATOR;
 int 
 main (int, char *argv[])
 {
-  ACE_START_TEST ("Message_Queue_Test.cpp");
+  ACE_START_TEST ("Message_Queue_Test");
 
   const int ITERATIONS = 5;
   QUEUE queue;
