@@ -1,2 +1,7 @@
-Default corbaloc:iiop:localhost:10000/ServerActivator
-Remote  corbaloc:iiop:localhost:12000/ServerActivator
+CAOCHost corbaloc:iiop:CAOC.bbn-uav-ciao-ec.pces.emulab.net:20000/ServerActivator
+EngagementBattleHost  corbaloc:iiop:EngagementBattle.bbn-uav-ciao-ec.pces.emulab.net:20000/ServerActivator
+SatelliteHost corbaloc:iiop:Satellite.bbn-uav-ciao-ec.pces.emulab.net:20000/ServerActivator
+UAVGSHost  corbaloc:iiop:UAVGS.bbn-uav-ciao-ec.pces.emulab.net:20000/ServerActivator
+UAVHost corbaloc:iiop:UAVHost.bbn-uav-ciao-ec.pces.emulab.net:20000/ServerActivator
+UCAVGSHost  corbaloc:iiop:UCAVGS.bbn-uav-ciao-ec.pces.emulab.net:20000/ServerActivator
+UCAVHost corbaloc:iiop:UCAVHost.bbn-uav-ciao-ec.pces.emulab.net:20000/ServerActivator
