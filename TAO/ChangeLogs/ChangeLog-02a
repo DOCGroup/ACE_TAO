@@ -1,35 +1,45 @@
+Sun Mar 25 09:55:38 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+          Change handle_close() method, the object should be deleted even
+          if it is not registered with the Reactor.  I think this fixes
+          [BUGID:837]
+
 Sun Mar 25 11:44:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.cpp: Fixed a warning in cxx. The problem was in
-	  casting 'this' pointer to an 'int'. Changed the cast to 'long'
-	  so that cxx doesnt complain.
+        * tao/Transport.cpp: Fixed a warning in cxx. The problem was in
+          casting 'this' pointer to an 'int'. Changed the cast to 'long'
+          so that cxx doesnt complain.
 
 Sun Mar 25 11:17:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.h: 
-	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.h:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp: Removed
-	  redundant guards for old g++. These files got missed in the last
-	  change. 
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.h:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.h:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp: Removed
+          redundant guards for old g++. These files got missed in the last
+          change.
 
 Sun Mar 25 08:52:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile.RTSched: Added guards for old g++. 
-	
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.h:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h: Removed redundant
-	  guards  in the files. This should fix a small compilation
-	  problem in LYNX-I386 builds.
+        * orbsvcs/orbsvcs/Makefile.RTSched: Added guards for old g++.
+
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.h:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h: Removed redundant
+          guards  in the files. This should fix a small compilation
+          problem in LYNX-I386 builds.
 
 Sun Mar 25 07:42:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp :
-	  Under Win32 the handle() has to be cast before setting the id()
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp :
+          Under Win32 the handle() has to be cast before setting the id()
           field on TAO_Transport.
-	
+
 Sat Mar 24 22:15:23 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Invocation.cpp:
