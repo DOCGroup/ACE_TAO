@@ -1,3 +1,9 @@
+Sat Apr 29 22:41:57 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Pluggable_Messaging.h:
+	* tao/Pluggable_Messaging.cpp: Fixed a compile error in
+	  KAI. Thanks to Darrell for reporting this.
+
 Sat Apr 29 19:41:15 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/Invocation.cpp:

@@ -120,7 +120,7 @@ public:
                       TAO_Pluggable_Reply_Params &params,
                       CORBA::Environment &ACE_TRY_ENV =
                       TAO_default_environment ())
-     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+     ACE_THROW_SPEC ((CORBA::SystemException));
   // Write the reply header
   // The reply header is a part of any messaging protocol. The
   // messaging protocol implementation would implement the way the
